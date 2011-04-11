@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <settings>
+      <item type="error" name="PortIsRequired">
+        <translation language="nl"><![CDATA[Poort is verplicht.]]></translation>
+        <translation language="en"><![CDATA[Port is required.]]></translation>
+      </item>
+      <item type="error" name="ServerIsRequired">
+        <translation language="nl"><![CDATA[Server is verplicht.]]></translation>
+        <translation language="en"><![CDATA[Server is required.]]></translation>
+      </item>
+      <item type="label" name="AdminIds">
+        <translation language="nl"><![CDATA[admin-ids]]></translation>
+        <translation language="en"><![CDATA[admin ids]]></translation>
+      </item>
+      <item type="label" name="ApplicationId">
+        <translation language="nl"><![CDATA[toepassings-id]]></translation>
+        <translation language="en"><![CDATA[application id]]></translation>
+      </item>
+      <item type="label" name="ApplicationSecret">
+        <translation language="nl"><![CDATA[app secret]]></translation>
+        <translation language="en"><![CDATA[app secret]]></translation>
+      </item>
+      <item type="message" name="ConfigurationError">
+        <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
+        <translation language="en"><![CDATA[Some settings are not yet configured.]]></translation>
+      </item>
+      <item type="message" name="HelpAPIKeys">
+        <translation language="nl"><![CDATA[Toegangscodes voor gebruikte webservices:]]></translation>
+        <translation language="en"><![CDATA[Access codes for webservices.]]></translation>
+      </item>
+      <item type="message" name="HelpDateFormatLong">
+        <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
+        <translation language="en"><![CDATA[Format that's used on overview and detail pages.]]></translation>
+      </item>
+      <item type="message" name="HelpDateFormatShort">
+        <translation language="nl"><![CDATA[Dit formaat wordt voornamelijk gebruikt bij tabelweergaves.]]></translation>
+        <translation language="en"><![CDATA[This format is mostly used in table overviews.]]></translation>
+      </item>
+      <item type="message" name="HelpDomains">
+        <translation language="nl"><![CDATA[Vul de domeinen in waarop de website te bereiken is (1 domein per regel)]]></translation>
+        <translation language="en"><![CDATA[Enter the domains on which this website can be reached. (Split domains with linebreaks.)]]></translation>
+      </item>
+      <item type="message" name="HelpEmailWebmaster">
+        <translation language="nl"><![CDATA[Stuur notificaties van het CMS naar dit e-mailadres.]]></translation>
+        <translation language="en"><![CDATA[Send CMS notifications to this e-mailaddress.]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookAdminIds">
+        <translation language="nl"><![CDATA[Een lijst met de Facebook-gebruikers hun ID en/of het id van de Facebook-applicatie die de paginas mogen beheren.]]></translation>
+        <translation language="en"><![CDATA[Either Facebook user IDs or a Facebook Platform application ID that administers this website.]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookApiKey">
+        <translation language="nl"><![CDATA[De API-sleutel van je Facebook-toepassing]]></translation>
+        <translation language="en"><![CDATA[The API key of your Facebook application.]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookApplicationId">
+        <translation language="nl"><![CDATA[Het toepassings-id van je Facebook-toepassing.]]></translation>
+        <translation language="en"><![CDATA[The id of your Facebook application]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookApplicationSecret">
+        <translation language="nl"><![CDATA[De App Secret van je Facebook-toepassing.]]></translation>
+        <translation language="en"><![CDATA[The secret of your Facebook application.]]></translation>
+      </item>
+      <item type="message" name="HelpLanguages">
+        <translation language="nl"><![CDATA[Duid aan welke talen toegankelijk zijn voor bezoekers]]></translation>
+        <translation language="en"><![CDATA[Select the languages that are accessible for visitors.]]></translation>
+      </item>
+      <item type="message" name="HelpNumberFormat">
+        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van getallen in de frontend.]]></translation>
+        <translation language="en"><![CDATA[This format is used to display numbers on the website.]]></translation>
+      </item>
+      <item type="message" name="HelpRedirectLanguages">
+        <translation language="nl"><![CDATA[Duid aan in welke talen mensen op basis van hun browser mogen terechtkomen.]]></translation>
+        <translation language="en"><![CDATA[Select the languages that people may automatically be redirect to by their browser.]]></translation>
+      </item>
+      <item type="message" name="HelpSendingEmails">
+        <translation language="nl"><![CDATA[Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken]]></translation>
+        <translation language="en"><![CDATA[You can send emails in 2 ways. By using PHP's built-in mail method or via SMTP. We advice you to use SMTP]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsFoot">
+        <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden. (bvb. Google Analytics)]]></translation>
+        <translation language="en"><![CDATA[Paste code that needs to be loaded at the end of the <code>&lt;body&gt;</code> tag here (e.g. Google Analytics).]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsFootLabel">
+        <translation language="nl"><![CDATA[Einde van <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="en"><![CDATA[End of <code>&lt;body&gt;</code> script(s)]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsHead">
+        <translation language="nl"><![CDATA[Plaats hier code die op elke pagina geladen moet worden in de <code>&lt;head&gt;</code>-tag.]]></translation>
+        <translation language="en"><![CDATA[Paste code that needs to be loaded in the <code>&lt;head&gt;</code> section here.]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsHeadLabel">
+        <translation language="nl"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
+        <translation language="en"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
+      </item>
+      <item type="message" name="HelpThemes">
+        <translation language="nl"><![CDATA[Duid aan welk thema je wil gebruiken.]]></translation>
+        <translation language="en"><![CDATA[Select the theme you wish to use.]]></translation>
+      </item>
+      <item type="message" name="HelpTimeFormat">
+        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
+        <translation language="en"><![CDATA[This format is used to display dates on the website.]]></translation>
+      </item>
+      <item type="message" name="NoAdminIds">
+        <translation language="nl"><![CDATA[Nog geen admin-ids]]></translation>
+        <translation language="en"><![CDATA[No admin ids yet.]]></translation>
+      </item>
+      <item type="message" name="SendTestMail">
+        <translation language="nl"><![CDATA[verstuur testmail]]></translation>
+        <translation language="en"><![CDATA[send test email]]></translation>
+      </item>
+      <item type="message" name="TestMessage">
+        <translation language="nl"><![CDATA[dit is een test]]></translation>
+        <translation language="en"><![CDATA[this is just a test]]></translation>
+      </item>
+      <item type="message" name="TestWasSent">
+        <translation language="nl"><![CDATA[De testmail is verzonden.]]></translation>
+        <translation language="en"><![CDATA[The test email was sent.]]></translation>
+      </item>
+    </settings>
+  </backend>
+</locale>

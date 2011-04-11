@@ -224,9 +224,9 @@ class BackendFaqModel
 
 		// update extra (item id is now known)
 		$extra['data'] = serialize(array('id' => $item['id'],
-											'extra_label' => ucfirst(BL::lbl('Faq', 'core')) .': '. $item['name'],
+											'extra_label' => ucfirst(BL::lbl('Faq', 'core')) . ': ' . $item['name'],
 											'language' => $item['language'],
-											'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id']));
+											'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id']));
 		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// return the new id
@@ -279,9 +279,9 @@ class BackendFaqModel
 						'label' => 'Faq',
 						'action' => 'category',
 						'data' => serialize(array('id' => $item['id'],
-													'extra_label' => ucfirst(BL::lbl('Faq', 'core')) .': '. $item['name'],
+													'extra_label' => ucfirst(BL::lbl('Faq', 'core')) . ': ' . $item['name'],
 													'language' => $item['language'],
-													'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id'])),
+													'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])),
 						'hidden' => 'N');
 
 		// update extra

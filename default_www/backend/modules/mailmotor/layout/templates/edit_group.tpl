@@ -14,6 +14,17 @@
 			<label for="name">{$lblName|ucfirst}</label>
 			{$txtName} {$txtNameError}
 		</div>
+		<div class="options">
+			<p class="helpTxt">{$msgDefaultGroup|ucfirst}</p>
+			<ul class="inputList">
+				{iteration:default}
+				<li>
+					{$default.rbtDefault}
+					<label for="{$default.id}">{$default.label}</label>
+				</li>
+				{/iteration:default}
+			</ul>
+		</div>
 	</div>
 
 	<div class="fullwidthOptions">

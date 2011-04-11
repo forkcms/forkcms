@@ -32,10 +32,10 @@ class BackendBlogComments extends BackendBaseActionIndex
 	public static function addPostData($text, $title, $URL, $id)
 	{
 		// reset URL
-		$URL = BackendModel::getURLForBlock('blog', 'detail') .'/'. $URL .'#comment-'. $id;
+		$URL = BackendModel::getURLForBlock('blog', 'detail') . '/' . $URL . '#comment-' . $id;
 
 		// build HTML
-		return '<p><em>'. sprintf(BL::msg('CommentOnWithURL'), $URL, $title) .'</em></p>'."\n". (string) $text;
+		return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $URL, $title) . '</em></p>' . "\n" . (string) $text;
 	}
 
 
@@ -94,8 +94,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setSortParameter('desc');
 
 		// add column
-		$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
+		$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
 
 		// hide columns
 		$this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
@@ -132,8 +132,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setSortParameter('desc');
 
 		// add column
-		$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
+		$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
 
 		// hide columns
 		$this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');
@@ -172,7 +172,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setSortParameter('desc');
 
 		// add column
-		$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
+		$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
 
 		// hide columns
 		$this->dgSpam->setColumnsHidden('post_id', 'post_title', 'post_url');

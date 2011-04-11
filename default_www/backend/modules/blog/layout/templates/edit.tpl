@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-e	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
+	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
 	<div class="buttonHolderRight">
 		<a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="button icon iconZoom previewButton targetBlank">
 			<span>{$lblView|ucfirst}</span>
@@ -11,6 +11,7 @@ e	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
 </div>
 
 {form:edit}
+	<label for="title">{$lblTitle|ucfirst}</label>
 	{$txtTitle} {$txtTitleError}
 
 	<div id="pageUrl">
@@ -173,7 +174,7 @@ e	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
 	</div>
 
 	<div class="fullwidthOptions">
-		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
 		<div class="buttonHolderRight">
@@ -186,6 +187,16 @@ e	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
 		<p>
 			{$msgConfirmDelete|sprintf:{$item.title}}
 		</p>
+	</div>
+
+	<div id="addCategoryDialog" class="forkForms" title="{$lblAddCategory|ucfirst}" style="display: none;">
+		<div id="templateList">
+			<p>
+				<label for="categoryTitle">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<input type="text" name="categoryTitle" id="categoryTitle" class="inputText" maxlength="255" />
+				<span class="formError" id="categoryTitleError" style="display: none;">{$errFieldIsRequired|ucfirst}</span>
+			</p>
+		</div>
 	</div>
 {/form:edit}
 

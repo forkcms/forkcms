@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendMailmotorUnsubscribe
  * This is the index-action
  *
  * @package		frontend
@@ -148,7 +147,7 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 				try
 				{
 					// unsubscribe the user from our default group
-					FrontendMailmotorCMHelper::unsubscribe($email->getValue());
+					FrontendMailmotorCMHelper::unsubscribe($email->getValue(), $this->group);
 
 					// redirect
 					$this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'unsubscribe') . '?sent=true#unsubscribeForm');

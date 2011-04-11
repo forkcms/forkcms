@@ -11,10 +11,18 @@
 			<h3>{$lblEmail|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<h4>{$lblSendingEmails|ucfirst}</h4>
+			<h4><label for="mailerType">{$lblSendingEmails|ucfirst}</label></h4>
 			<p>{$msgHelpSendingEmails}</p>
 			<p>
-				<label for="mailerType">{$ddmMailerType} {$ddmMailerTypeError}</label>
+				{$ddmMailerType} {$ddmMailerTypeError}
+
+				{* @todo @yoni: style me *}
+				<small>
+					<a id="testEmailConnection" href="#">{$msgSendTestMail}</a>
+					<span id="testEmailConnectionSpinner" style="display: none;"><img style="margin-top: 3px;" src="/backend/core/layout/images/spinner.gif" width="12px" height="12px" alt="loading" /></span>
+					<span id="testEmailConnectionError" style="display: none;" class="formError">{$errErrorWhileSendingEmail}</span>
+					<span id="testEmailConnectionSuccess" style="display: none;" class="formSuccess">{$msgTestWasSent}</span>
+				</small>
 			</p>
 		</div>
 		<div class="options">

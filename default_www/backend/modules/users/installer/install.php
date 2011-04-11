@@ -31,10 +31,10 @@ class UsersInstall extends ModuleInstaller
 			$avatar32x32 = '/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAYEBAQFBAYFBQYJBgUGCQsIBgYICwwKCgsKCgwQDAwMDAwMEAwODxAPDgwTExQUExMcGxsbHCAgICAgICAgICD/2wBDAQcHBw0MDRgQEBgaFREVGiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICD/wAARCAAgACADAREAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABwYIBf/EACsQAAICAQIFBAEEAwAAAAAAAAECAwQFBhEABxIhMRMiI0EUMkJRYjNxsf/EABkBAAMBAQEAAAAAAAAAAAAAAAMEBQIGAP/EACcRAAEDBAIBAgcAAAAAAAAAAAEAAgMEERIhMUEFIlETMkNhYqGx/9oADAMBAAIRAxEAPwBd1Bm1xmDzV+Svt+BUllsM/T6khrwGWIORsQC3j7HHNwRZWB1/U05yxbe5081Ll6S42pr8Mkm/x15mhiUH9qxpsoA4viBgFraS2S1Fye5jZXWOlMdmZ7rS5DDQvTyVLZfnn7BbMkh9wYxDwPvfhCqFiiN91eQx5OxkJQd54W96vI3tA3I6Ytu/b+3HqSLM5FYlJGlj7W/OPm1ee9pjJl8dFKHr28U9dRMVYbFXZ19TwPrbhmOnYPVz91oZHQU7hOXmTyVCC4sRaNmPXGp6JNlOzfqBA8cDkr2tdiqcPiHPYHXtfpNPK/HZ3GtJiNKYWrSW2yPYzF+zLO3WnYdEaxhSR32UrtvxhlQ2XraHW0PwBzdO2D6sLh5IL99rFwyrHJb+wG3YHuz+Bue7H/g4ZpiP2pkiMuYNXEZ2pm1BE+o5HEWIlkhTrgesAy2I32L+mxU9R+h54lxEg/imC/E3HKOMflreJ3qWBFHLY91doyWg3bb1CjDfdQd+FpI966XYRS5NBPe0kcrxaTHZC8bnVEfhrtGpQI0fySfqALbp+76/3wSL0hSfLG9gqGjmFs5RKNf5UqL+Shk3d36wAqEnzsfP3xuNxCiH2WcNYc58jdpCpg3kgntwSQ5O6B0hhZ2M0MCHqIDEDqlJ63/qO3FaOmtyg5KpwFFtQ6arXHhia56MT+kjArJ6a+mZFU90l9vu2Pu+u/lOuhsch2rfiq76b+BwqPR0WZ01pzJay3rtiJJoqn4lpmWKaMSrBMP4j7vv1n+O443Rw32UPzE+8Grsya+0lj9RVYI6k+IztpDUmh6W/wAtdDtH0AyKrk+xl7HurKWB4bkomO+XSiNkIX//2Q==';
 
 			// store files
-			SpoonFile::setContent(PATH_WWW .'/frontend/files/backend_users/avatars/source/god.jpg', base64_decode($avatar124x124));
-			SpoonFile::setContent(PATH_WWW .'/frontend/files/backend_users/avatars/128x128/god.jpg', base64_decode($avatar124x124));
-			SpoonFile::setContent(PATH_WWW .'/frontend/files/backend_users/avatars/64x64/god.jpg', base64_decode($avatar64x64));
-			SpoonFile::setContent(PATH_WWW .'/frontend/files/backend_users/avatars/32x32/god.jpg', base64_decode($avatar32x32));
+			SpoonFile::setContent(PATH_WWW . '/frontend/files/backend_users/avatars/source/god.jpg', base64_decode($avatar124x124));
+			SpoonFile::setContent(PATH_WWW . '/frontend/files/backend_users/avatars/128x128/god.jpg', base64_decode($avatar124x124));
+			SpoonFile::setContent(PATH_WWW . '/frontend/files/backend_users/avatars/64x64/god.jpg', base64_decode($avatar64x64));
+			SpoonFile::setContent(PATH_WWW . '/frontend/files/backend_users/avatars/32x32/god.jpg', base64_decode($avatar32x32));
 
 			// build settings
 			$settings['nickname'] = serialize('Fork CMS');
@@ -43,7 +43,7 @@ class UsersInstall extends ModuleInstaller
 			$settings['interface_language'] = serialize('en');
 			$settings['date_format'] = serialize('j F Y');
 			$settings['time_format'] = serialize('H:i');
-			$settings['datetime_format'] = serialize(unserialize($settings['date_format']) .' '. unserialize($settings['time_format']));
+			$settings['datetime_format'] = serialize(unserialize($settings['date_format']) . ' ' . unserialize($settings['time_format']));
 			$settings['number_format'] = serialize('dot_nothing');
 			$settings['password_key'] = serialize(uniqid());
 			$settings['avatar'] = serialize('god.jpg');
@@ -77,7 +77,7 @@ class UsersInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'users' as a module
 		$this->addModule('users', 'User management.');
@@ -96,35 +96,8 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
 
-		// insert locale (nl)
-		$this->insertLocale('nl', 'backend', 'users', 'lbl', 'Add', 'gebruiker toevoegen');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Added', 'De gebruiker "%1$s" werd toegevoegd.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Deleted', 'De gebruiker "%1$s" werd verwijderd.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Edited', 'De instellingen voor "%1$s" werden opgeslagen.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'EditUser', 'bewerk gebruiker "%1$s"');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Geef deze account toegang tot het CMS.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Geef deze account toegang tot de API.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Restored', 'De gebruiker "%1$s" werd terug geactiveerd.');
-		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
-		$this->insertLocale('nl', 'backend', 'users', 'err', 'EmailWasDeletedBefore', 'Een gebruiker met dit emailadres werd vroeger verwijderd. <a href="%1$s">Activeer deze gebruiker terug</a>.');
-		$this->insertLocale('nl', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'Je kan het emailadres van deze gebruiker niet aanpassen.');
-
-		// insert locale (en)
-		$this->insertLocale('en', 'backend', 'users', 'lbl', 'Add', 'add user');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Added', 'The user "%1$s" was added.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the user "%1$s"?');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Deleted', 'The user "%1$s" was deleted.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Edited', 'The settings for "%1$s" were saved.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'EditUser', 'edit user "%1$s"');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Enable API access for this account.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passwords consist of a combination of capitals, digits, lowercase and special characters.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Restored', 'The user "%1$s" is restored.');
-		$this->insertLocale('en', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'You can\'t change the emailaddres of the GOD-user.');
-		$this->insertLocale('en', 'backend', 'users', 'err', 'EmailWasDeletedBefore', 'A user with this emailaddress was deleted. <a href="%1$s">Restore this user</a>.');
-		$this->insertLocale('en', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// add default user
 		$this->addUser();

@@ -212,6 +212,9 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		// create form
 		$this->frm = new FrontendForm('search', null, 'get', null, false);
 
+		// could also have been submitted by our widget
+		if(!SpoonFilter::getGetValue('q', null, '')) $_GET['q'] = SpoonFilter::getGetValue('q_widget', null, '');
+
 		// create elements
 		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
 	}

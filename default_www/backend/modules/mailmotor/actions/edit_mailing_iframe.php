@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorEditMailingIframe
  * This is the edit-action, it will display a form to edit the mailing contents through an iframe
  *
  * @package		backend
@@ -43,11 +42,11 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 			$this->parse();
 
 			// display the page
-			$this->display(BACKEND_MODULE_PATH .'/layout/templates/edit_mailing_iframe.tpl');
+			$this->display(BACKEND_MODULE_PATH . '/layout/templates/edit_mailing_iframe.tpl');
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -65,7 +64,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		$this->template = BackendMailmotorModel::getTemplate($this->record['language'], $this->record['template']);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -96,7 +95,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		require 'external/css_to_inline_styles.php';
 
 		// template content is empty
-		if(!isset($this->template['content'])) $this->redirect(BackendModel::createURLForAction('edit') .'&id='. $this->id .'&step=2&exclude_id='. $this->id .'&error=template-does-not-exist');
+		if(!isset($this->template['content'])) $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=2&exclude_id=' . $this->id . '&error=template-does-not-exist');
 
 		// set CSS object
 		$css = new CSSToInlineStyles($this->template['content'], $this->template['css']);

@@ -24,9 +24,9 @@
 					<div class="options">
 						<div id="dataChartPieChart" class="hidden">
 							<ul class="data">
-								{option:stats.unique_opens}<li><span class="label">{$lblOpenedMailings|ucfirst}</span><span class="value">{$stats.unique_opens}</span><span class="percentage">{$pieGraphData.percentage}</span></li>	{/option:stats.unique_opens}
-								{option:stats.unopens}<li><span class="label">{$lblUnopenedMailings|ucfirst}</span><span class="value">{$stats.unopens}</span><span class="percentage">{$pieGraphData.percentage}</span></li>{/option:stats.unopens}
-								{option:stats.bounces}<li><span class="label">{$lblBounces|ucfirst}</span><span class="value">{$stats.bounces}</span><span class="percentage">{$pieGraphData.percentage}</span></li>{/option:stats.bounces}
+								{option:stats.unique_opens}<li><span class="label">{$lblOpenedMailings|ucfirst}</span><span class="value">{$stats.unique_opens}</span><span class="percentage">{$stats.unique_opens_percentage}</span></li>{/option:stats.unique_opens}
+								{option:stats.unopens}<li><span class="label">{$lblUnopenedMailings|ucfirst}</span><span class="value">{$stats.unopens}</span><span class="percentage">{$stats.unopens_percentage}</span></li>{/option:stats.unopens}
+								{option:stats.bounces}<li><span class="label">{$lblBounces|ucfirst}</span><span class="value">{$stats.bounces}</span><span class="percentage">{$stats.bounces_percentage}</span></li>{/option:stats.bounces}
 							</ul>
 						</div>
 						<div id="chartPieChart">&nbsp;</div>

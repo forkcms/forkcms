@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorEdit
  * This is the edit-action, it will display a form to edit a mailing
  *
  * @package		backend
@@ -68,7 +67,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			$this->loadWizardSteps();
 
 			// load the appropriate step
-			$this->{'loadStep'. $this->stepId}();
+			$this->{'loadStep' . $this->stepId}();
 
 			// parse the datagrid
 			$this->parse();
@@ -78,7 +77,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
 	}
 
 
@@ -94,7 +93,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->record = (array) BackendMailmotorModel::getMailing($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=non-existing');
+		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
 	}
 
 
@@ -115,7 +114,6 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$template = BackendMailmotorModel::getTemplate($this->record['language'], $this->record['template']);
 
 		// declare stats array
-		$stats = array();
 		$stats['recipients'] = count($this->record['recipients']);
 		$stats['mailing'] = $this->record['name'];
 		$stats['label_persons'] = ($stats['recipients'] > 1) ? BL::lbl('Persons', 'core') : BL::lbl('Person', 'core');
@@ -224,7 +222,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$templates = BackendMailmotorModel::getTemplatesForCheckboxes($this->record['language']);
 
 		// no templates found
-		if(empty($templates)) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=1&amp;error=no-templates');
+		if(empty($templates)) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-templates');
 
 		// loop the templates
 		foreach($templates as &$record)
@@ -255,7 +253,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadFormForStep3()
 	{
 		// check if we have to redirect back to step 2 (template is not set)
-		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=2&amp;error=complete-step-2');
+		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=2&amp;error=complete-step-2');
 
 		// check if we should show the plain text box
 		$this->showPlainTextBox = BackendModel::getModuleSetting('mailmotor', 'plain_text_editable');
@@ -285,12 +283,12 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadFormForStep4()
 	{
 		// check if we have to redirect back to step 3 (HTML content is not set)
-		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3&amp;error=complete-step-3');
+		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=3&amp;error=complete-step-3');
 
 		// get preview URL
 		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
 
-		// @todo dave - add check for preview URL
+		// check if the mailmotor is linked
 		if(BackendModel::getURLForBlock('mailmotor', 'detail') == BackendModel::getURL(404)) $previewURL = false;
 
 		// parse the preview URL
@@ -377,7 +375,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadWizardSteps()
 	{
 		// check if this template path exists
-		$templatePath = SpoonDirectory::exists(BACKEND_MODULE_PATH .'/templates/'. $this->record['language'] .'/'. $this->record['template']);
+		$templatePath = SpoonDirectory::exists(BACKEND_MODULE_PATH . '/templates/' . $this->record['language'] . '/' . $this->record['template']);
 
 		// set wizard values
 		$wizard = array();
@@ -479,24 +477,23 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set values
-				$variables = array();
-				$variables['id'] = $this->id;
-				$variables['name'] = $txtName->getValue();
-				$variables['from_name'] = $txtFromName->getValue();
-				$variables['from_email'] = $txtFromEmail->getValue();
-				$variables['reply_to_email'] = $txtReplyToEmail->getValue();
-				$variables['language'] = $rbtLanguages->getValue();
-				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-				if(isset($values['campaign']) && (!empty($values['campaign']) || $values['campaign'] == 0)) $variables['campaign_id'] = $this->frm->getField('campaign')->getValue();
+				$item['id'] = $this->id;
+				$item['name'] = $txtName->getValue();
+				$item['from_name'] = $txtFromName->getValue();
+				$item['from_email'] = $txtFromEmail->getValue();
+				$item['reply_to_email'] = $txtReplyToEmail->getValue();
+				$item['language'] = $rbtLanguages->getValue();
+				$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				if(isset($values['campaign']) && (!empty($values['campaign']) || $values['campaign'] == 0)) $item['campaign_id'] = $this->frm->getField('campaign')->getValue();
 
 				// update the concept
-				BackendMailmotorModel::updateMailing($variables);
+				BackendMailmotorModel::updateMailing($item);
 
 				// update groups for this mailing
 				BackendMailmotorModel::updateGroupsForMailing($this->id, $values['groups']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=2');
 			}
 		}
 	}
@@ -528,16 +525,15 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set values
-				$variables = array();
-				$variables['id'] = $this->id;
-				$variables['template'] = $rbtTemplates->getValue();
-				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				$item['id'] = $this->id;
+				$item['template'] = $rbtTemplates->getValue();
+				$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 				// update the concept
-				BackendMailmotorModel::updateMailing($variables);
+				BackendMailmotorModel::updateMailing($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=3');
 			}
 		}
 	}
@@ -586,9 +582,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting('mailmotor', 'reply_to_email') : $this->record['reply_to_email'];
 
 				// build URL
-				$url = BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=4';
+				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';
 
-				$subject = '[TEST] '. $this->record['subject'];
+				$subject = '[TEST] ' . $this->record['subject'];
 				$HTML = $this->record['data']['full_content_html'];
 				$plainText = (!empty($this->record['content_plain'])) ? $this->record['content_plain'] : null;
 
@@ -596,7 +592,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true);
 
 				// send the preview
-				$this->redirect($url .'&amp;report=preview-sent&amp;var='. $txtEmail->getValue());
+				$this->redirect($url . '&amp;report=preview-sent&amp;var=' . $txtEmail->getValue());
 			}
 		}
 	}

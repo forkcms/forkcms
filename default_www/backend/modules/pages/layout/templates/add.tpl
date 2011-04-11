@@ -273,6 +273,7 @@
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="addButton" class="button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
 	</div>
 {/form:add}

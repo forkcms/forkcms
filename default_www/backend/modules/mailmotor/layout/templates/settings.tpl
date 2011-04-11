@@ -15,48 +15,131 @@
 	</div>
 {/option:!clientId}
 
-{form:settings}
-	<div class="box horizontal{option:account} hidden{/option:account}" id="accountBox">
-		<div class="heading">
-			<h3>CampaignMonitor - Account</h3>
-		</div>
+<div class="tabs">
+	<ul>
+		<li><a href="#tabSettingsGeneral">{$lblGeneral|ucfirst}</a></li>
+		<li><a href="#tabSettingsAccount">CampaignMonitor - {$lblAccountSettings|ucfirst}</a></li>
+		{option:account}<li><a href="#tabSettingsClient">CampaignMonitor - {$lblClientSettings|ucfirst}</a></li>{/option:account}
+	</ul>
 
-		<div class="options">
-			<p>
-				<label for="url">{$lblURL|uppercase} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-				{$txtUrl} {$txtUrlError}
-				<span class="helpTxt">{$msgHelpCMURL}</span>
-			</p>
-			<p>
-				<label for="username">{$lblUsername|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-				{$txtUsername} {$txtUsernameError}
-			</p>
-			<p>
-				<label for="password">{$lblPassword|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-				{$txtPassword} {$txtPasswordError}
-			</p>
-			<div class="buttonHolder">
-				<a id="linkAccount" href="#" class="button"><span>{$msgLinkCMAccount}</span></a>
+	<div id="tabSettingsGeneral">
+		{form:settingsGeneral}
+		<div id="general">
+			<div class="box horizontal">
+				<div class="heading">
+					<h3>{$lblSender|ucfirst}</h3>
+				</div>
+
+				<div class="options">
+					<p>
+						<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtFromName} {$txtFromNameError}
+					</p>
+
+					<p>
+						<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtFromEmail} {$txtFromEmailError}
+					</p>
+				</div>
+			</div>
+
+			<div class="box horizontal">
+				<div class="heading">
+					<h3>{$lblReplyTo|ucfirst}</h3>
+				</div>
+
+				<div class="options">
+					<p>
+						<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtReplyToEmail} {$txtReplyToEmailError}
+					</p>
+				</div>
+			</div>
+
+			<div class="box">
+				<div class="heading">
+					<h3>{$lblPlainTextVersion|ucfirst}</h3>
+				</div>
+
+				<div class="options">
+					<ul class="inputList p0">
+						<li>{$chkPlainTextEditable} <label for="plainTextEditable">{$msgPlainTextEditable|ucfirst}</label></li>
+					</ul>
+				</div>
+			</div>
+
+			{option:userIsGod}
+			<div class="box horizontal">
+				<div class="heading">
+					<h3>{$lblPricePerSentMailing|ucfirst}</h3>
+				</div>
+
+				<div class="options">
+					<p>
+						<label for="pricePerEmail">{$lblPrice|ucfirst} in &euro; <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtPricePerEmail} {$txtPricePerEmailError}
+					</p>
+				</div>
+			</div>
+			{/option:userIsGod}
+
+			<div class="fullwidthOptions">
+				<div class="buttonHolderRight">
+					<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+				</div>
 			</div>
 		</div>
+		{/form:settingsGeneral}
 	</div>
 
-	<div id="clientIDBox"{option:!account} class="hidden"{/option:!account}>
+	<div id="tabSettingsAccount">
+		{form:settingsAccount}
+		<div class="box horizontal" id="accountBox">
+			<div class="heading">
+				<h3>CampaignMonitor - Account</h3>
+			</div>
+			<div class="options">
+				<p>
+					<label for="url">{$lblURL|uppercase} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					{$txtUrl} {$txtUrlError}
+					<span class="helpTxt">{$msgHelpCMURL}</span>
+				</p>
+				<p>
+					<label for="username">{$lblUsername|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					{$txtUsername} {$txtUsernameError}
+				</p>
+				<p>
+					<label for="password">{$lblPassword|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					{$txtPassword} {$txtPasswordError}
+				</p>
+				<div class="buttonHolder">
+					{option:!account}<a id="linkAccount" href="#" class="askConfirmation button inputButton"><span>{$msgLinkCMAccount}</span></a>{/option:!account}
+					{option:account}
+					<a id="unlinkAccount" href="#" class="askConfirmation submitButton button inputButton"><span>{$msgUnlinkCMAccount}</span></a>
+					{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
+					{/option:account}
+				</div>
+			</div>
+		</div>
+		{/form:settingsAccount}
+	</div>
+
+	{option:account}
+	<div id="tabSettingsClient">
+		{form:settingsClient}
 		<div class="box horizontal">
 			<div class="heading">
-				<h3>CampaignMonitor - {$lblClientID|ucfirst} </h3>
+				<h3>CampaignMonitor - Client</h3>
 			</div>
-
-			{option:clientId}
 			<div class="options id">
-				<label for="clientId">{$lblClientID|ucfirst}</label>
-				{$clientId}
+				<p>
+					<label for="clientId">{$lblClient|ucfirst}</label>
+					{$ddmClientId}
+				</p>
+				{option:!clientId}<p class="formError"><strong>{$msgNoClientID}</strong></p>{/option:!clientId}
 			</div>
-			{/option:clientId}
 
-			{option:!clientId}
 			<div class="options generate">
-				<p class="formError"><strong>{$msgNoClientID}</strong></p>
 				<p>
 					<label for="companyName">{$lblCompanyName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtCompanyName} {$txtCompanyNameError}
@@ -78,76 +161,17 @@
 					{$ddmTimezones} {$ddmTimezonesError}
 				</p>
 			</div>
-			{/option:!clientId}
-		</div>
 
-		{option:clientId}
-		<div class="box horizontal">
-			<div class="heading">
-				<h3>{$lblSender|ucfirst}</h3>
-			</div>
-
-			<div class="options">
-				<p>
-					<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtFromName} {$txtFromNameError}
-				</p>
-
-				<p>
-					<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtFromEmail} {$txtFromEmailError}
-				</p>
+			<div class="fullwidthOptions">
+				<div class="buttonHolderRight">
+					<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+				</div>
 			</div>
 		</div>
-
-		<div class="box horizontal">
-			<div class="heading">
-				<h3>{$lblReplyTo|ucfirst}</h3>
-			</div>
-
-			<div class="options">
-				<p>
-					<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtReplyToEmail} {$txtReplyToEmailError}
-				</p>
-			</div>
-		</div>
-
-		<div class="box">
-			<div class="heading">
-				<h3>{$lblPlainTextVersion|ucfirst}</h3>
-			</div>
-
-			<div class="options">
-				<ul class="inputList p0">
-					<li>{$chkPlainTextEditable} <label for="plainTextEditable">{$msgPlainTextEditable|ucfirst}</label></li>
-				</ul>
-			</div>
-		</div>
-
-		{option:userIsGod}
-		<div class="box horizontal">
-			<div class="heading">
-				<h3>{$lblPricePerEmail|ucfirst}</h3>
-			</div>
-
-			<div class="options">
-				<p>
-					<label for="pricePerEmail">{$lblPrice|ucfirst} in &euro; <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtPricePerEmail} {$txtPricePerEmailError}
-				</p>
-			</div>
-		</div>
-		{/option:userIsGod}
-		{/option:clientId}
-
-		<div class="fullwidthOptions">
-			<div class="buttonHolderRight">
-				<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
-			</div>
-		</div>
+		{/form:settingsClient}
 	</div>
-{/form:settings}
+	{/option:account}
+</div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

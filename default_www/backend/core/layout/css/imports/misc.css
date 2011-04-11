@@ -13,3 +13,9 @@
 #statusBar {
 	display: none;
 }
+
+#editDashboard {
+	text-align: center;
+	font-size: 11px;
+	display: block;
+}

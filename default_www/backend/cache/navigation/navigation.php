@@ -179,11 +179,9 @@ $navigation = array(
 					'mailmotor/edit_mailing_campaign',
 					'mailmotor/statistics',
 					'mailmotor/statistics_link',
-					'statistics_bounces',
-					'statistics_campaign',
-					'statistics_opens',
-					'statistics_unopens',
-					'reset'
+					'mailmotor/statistics_bounces',
+					'mailmotor/statistics_campaign',
+					'mailmotor/statistics_opens'
 				)
 			),
 			array(
@@ -203,7 +201,7 @@ $navigation = array(
 					'mailmotor/edit_group',
 					'mailmotor/custom_fields',
 					'mailmotor/add_custom_field',
-					'mailmotor/edit_custom_field'
+					'mailmotor/import_groups'
 				)
 			),
 			array(

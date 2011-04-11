@@ -194,13 +194,13 @@ jsFrontend.search =
 		var chunks = document.location.pathname.split('/');
 
 		// autosuggest (search widget)
-		if($('input[name=q].autoSuggest').length > 0) jsFrontend.search.autosuggest(chunks[1], 55);
+		if($('input.autoSuggest').length > 0) jsFrontend.search.autosuggest(chunks[1], 55);
 
 		// autocomplete (search results page: autocomplete based on known search terms)
-		if($('input[name=q].autoComplete').length > 0) jsFrontend.search.autocomplete(chunks[1]);
+		if($('input.autoComplete').length > 0) jsFrontend.search.autocomplete(chunks[1]);
 
 		// livesuggest (search results page: live feed of matches)
-		if($('input[name=q].liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest(chunks[1]);
+		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest(chunks[1]);
 	},
 
 
@@ -208,7 +208,7 @@ jsFrontend.search =
 	autocomplete: function(language)
 	{
 		// autocomplete (based on saved search terms) on results page
-		$('input[name=q].autoComplete').autocomplete(
+		$('input.autoComplete').autocomplete(
 		{
 			minLength: 1,
 			source: function(request, response) 
@@ -264,7 +264,7 @@ jsFrontend.search =
 		if(typeof length == 'undefined') length = 100;
 
 		// search widget suggestions
-		$('input[name=q].autoSuggest').autocomplete(
+		$('input.autoSuggest').autocomplete(
 		{
 			minLength: 1,
 			source: function(request, response) 
@@ -328,7 +328,7 @@ jsFrontend.search =
 		var allowCall = true;
 
 		// change in input = do the dance: live search results completion
-		$('input[name=q].liveSuggest').keyup(function()
+		$('input.liveSuggest').keyup(function()
 		{
 			// make sure we're allowed to do the call (= previous call is no longer processing)
 			if(allowCall)

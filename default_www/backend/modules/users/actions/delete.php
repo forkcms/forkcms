@@ -29,17 +29,20 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			parent::execute();
 
 			// get data
-			$this->record = (array) BackendUsersModel::get($this->id);
+			$user = new BackendUser($this->id);
+
+			// God-users can't be deleted
+			if($user->isGod()) $this->redirect(BackendModel::createURLForAction('index') . '&error=cant-delete-god');
 
 			// delete item
 			BackendUsersModel::delete($this->id);
 
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. $this->record['settings']['nickname']);
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . $user->getSetting('nickname'));
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
 

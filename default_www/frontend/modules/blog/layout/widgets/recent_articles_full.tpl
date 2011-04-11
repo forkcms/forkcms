@@ -24,7 +24,7 @@
 											{option:!widgetBlogRecentArticlesFull.comments_multiple}<a href="{$widgetBlogRecentArticlesFull.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!widgetBlogRecentArticlesFull.comments_multiple}
 										{/option:widgetBlogRecentArticlesFull.comments}
 									</li>
-									<li><a href="{$widgetBlogRecentArticlesFull.category_full_url}" title="{$widgetBlogRecentArticlesFull.category_name}">{$widgetBlogRecentArticlesFull.category_name}</a></li>
+									<li><a href="{$widgetBlogRecentArticlesFull.category_full_url}" title="{$widgetBlogRecentArticlesFull.category_title}">{$widgetBlogRecentArticlesFull.category_title}</a></li>
 								</ul>
 							</header>
 							<div class="bd content">

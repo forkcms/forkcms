@@ -242,13 +242,11 @@ class FrontendMailer
 			$SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
 			$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
 
+			// set server and connect with SMTP
+			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+
 			// set authentication if needed
-			if($SMTPUsername !== null && $SMTPPassword !== null)
-			{
-				// set server and connect with SMTP
-				$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-				$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
-			}
+			if($SMTPUsername !== null && $SMTPPassword !== null) $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
 		}
 
 		// set some properties

@@ -50,9 +50,9 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		$this->parseExitPages();
 
 		// init google url
-		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
+		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
-		$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+		$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
 
 		// parse links to google
 		$this->tpl->assign('googleTopExitPagesURL', sprintf($googleURL, 'exits', $googleTableId, $googleDate));
@@ -136,7 +136,7 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 			$datagrid->setColumnHidden('page_encoded');
 
 			// set url
-			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') .'&amp;page=[page_encoded]');
+			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
 			$this->tpl->assign('dgPages', $datagrid->getContent());
@@ -177,7 +177,7 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 			$exitsPercentage = ($results['exitPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['exitPagesPageviews']) * 100, 0);
 			$exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 0);
 			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
-			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+'. $exitsPercentageDifference;
+			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+' . $exitsPercentageDifference;
 
 			// parse data
 			$this->tpl->assign('exits', $results['exits']);

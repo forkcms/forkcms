@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendMailmotorAjaxSaveSendDate
+ * This saved the date on which the mailing is to be sent
  *
  * @package		backend
  * @subpackage	mailmotor
@@ -36,13 +36,12 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 
 		// reverse the date and make it a proper
 		$explodedDate = explode('/', $sendOnDate);
-		$sendOnDate = $explodedDate[2] .'-'. $explodedDate[1] .'-'. $explodedDate[0];
+		$sendOnDate = $explodedDate[2] . '-' . $explodedDate[1] . '-' . $explodedDate[0];
 
 		// calc full send timestamp
-		$sendTimestamp = strtotime($sendOnDate .' '. $sendOnTime);
+		$sendTimestamp = strtotime($sendOnDate . ' ' . $sendOnTime);
 
 		// build data
-		$item = array();
 		$item['id'] = $mailingId;
 		$item['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $sendTimestamp);
 		$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');

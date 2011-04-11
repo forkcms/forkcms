@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorExportStatisticsCampaign
  * This action is used to export statistics for a given campaign ID
  *
  * @package		backend
@@ -26,13 +25,13 @@ class BackendMailmotorExportStatisticsCampaign extends BackendBaseAction
 		$id = SpoonFilter::getGetValue('id', null, 0);
 
 		// no id's provided
-		if(!BackendMailmotorModel::existsCampaign($id)) $this->redirect(BackendModel::createURLForAction('campaigns') .'&error=campaign-does-not-exist');
+		if(!BackendMailmotorModel::existsCampaign($id)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
 
 		// at least one id
 		else BackendMailmotorModel::exportStatisticsByCampaignID($id);
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('groups') .'&report=export-failed');
+		$this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
 	}
 }
 

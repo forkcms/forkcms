@@ -81,13 +81,13 @@ class BackendAJAXAction
 	public function execute()
 	{
 		// build action-class-name
-		$actionClassName = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_ajax_'. $this->getAction());
+		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_ajax_' . $this->getAction());
 
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
-		require_once BACKEND_MODULE_PATH .'/ajax/'. $this->getAction() .'.php';
+		require_once BACKEND_MODULE_PATH . '/ajax/' . $this->getAction() . '.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($actionClassName)) throw new BackendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
+		if(!class_exists($actionClassName)) throw new BackendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
@@ -131,19 +131,19 @@ class BackendAJAXAction
 	public function loadConfig()
 	{
 		// build path to the module and define it. This is a constant because we can use this in templates.
-		define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH .'/'. $this->getModule());
+		define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists(BACKEND_MODULE_PATH .'/config.php')) throw new BackendException('The configfile for the module ('. $this->getModule() .') can\'t be found.');
+		if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
 
 		// build config-object-name
-		$configClassName = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_config');
+		$configClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
 
 		// require the config file, we validated before for existence.
-		require_once BACKEND_MODULE_PATH .'/config.php';
+		require_once BACKEND_MODULE_PATH . '/config.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: '. $configClassName .'.');
+		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: ' . $configClassName . '.');
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName($this->getModule());

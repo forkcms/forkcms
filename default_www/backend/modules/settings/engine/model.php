@@ -82,17 +82,17 @@ class BackendSettingsModel
 		foreach($activeModules as $module)
 		{
 			// model class
-			$class = 'Backend'. SpoonFilter::toCamelCase($module) .'Model';
+			$class = 'Backend' . SpoonFilter::toCamelCase($module) . 'Model';
 
 			// model file exists
-			if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php'))
+			if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php'))
 			{
 				// require class
-				require_once BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php';
+				require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
 			}
 
 			// method exists
-			if(method_exists($class, 'checkSettings'))
+			if(is_callable(array($class, 'checkSettings')))
 			{
 				// add possible warnings
 				$warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));

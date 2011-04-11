@@ -34,15 +34,15 @@ class BackendUsersUndoDelete extends BackendBaseAction
 				$user = new BackendUser(null, $email);
 
 				// item was deleted, so redirect
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $user->getUserId() .'&report=restored&var='. $user->getSetting('nickname') .'&highlight=row-'. $user->getUserId());
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $user->getUserId() . '&report=restored&var=' . $user->getSetting('nickname') . '&highlight=row-' . $user->getUserId());
 			}
 
 			// invalid user
-			else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+			else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
 

@@ -59,7 +59,7 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 			$datagrid->setHeaderLabels($headers);
 
 			// set url
-			$datagrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') .'&amp;page=[page_encoded]');
+			$datagrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// add the multicheckbox column
 			$datagrid->setMassActionCheckboxes('checkbox', '[id]');

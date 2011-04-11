@@ -26,10 +26,12 @@ jsBackend.mailmotor.charts =
 	{
 		if($('#chartPieChart').length > 0 || $('#chartDoubleMetricPerDay').length > 0 || $('#chartSingleMetricPerDay').length > 0 || $('#chartWidget').length > 0)
 		{
-			Highcharts.setOptions({
+			Highcharts.setOptions(
+			{
 				colors: ['#058DC7', '#50b432', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
 				title: { text: '' },
-				legend: {
+				legend:
+				{
 					layout: 'vertical',
 					backgroundColor: '#FFF',
 					borderWidth: 0,
@@ -65,33 +67,42 @@ jsBackend.mailmotor.chartPieChart =
 
 		pieChartValues.each(function()
 		{
-			pieChartData.push({
+			pieChartData.push(
+			{
 				'name': $(this).children('span.label').html(),
 				'y': parseInt($(this).children('span.value').html()),
 				'percentage': parseInt($(this).children('span.percentage').html())
 			});
 		});
 
-		var chart = new Highcharts.Chart({
+		var chart = new Highcharts.Chart(
+		{
 			chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]	},
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
-			tooltip: {
-				formatter: function() {
+			tooltip:
+			{
+				formatter: function()
+				{
 					var percentage = String(this.point.percentage);
-					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, percentage.indexOf('.') + 3) + '%)';
+					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, percentage.indexOf('.') + 4) + '%)';
 				},
 				borderWidth: 2,
 				shadow: false
 			},
-			plotOptions: {
-				pie: { allowPointSelect: true,
-						dataLabels: { enabled: true,
-										formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-										color: 'white',
-										style: { display: 'none' }
-									}
+			plotOptions:
+			{
+				pie:
+				{
+					allowPointSelect: true,
+					dataLabels:
+					{
+						enabled: true,
+						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
+						color: 'white',
+						style: { display: 'none' }
 					}
+				}
 			},
 			legend: { style: { right: '10px' } },
 			series: [ {type: 'pie', data: pieChartData } ]
@@ -162,6 +173,53 @@ jsBackend.mailmotor.linkAccount =
 			// do the call to link the account
 			jsBackend.mailmotor.linkAccount.doCall();
 		});
+		
+		// create client is checked
+		$('#clientId').change(function(e)
+		{
+			var clientId = $(this).val();
+
+			// '0' is the 'create new client' option, so we have to reset the input
+			if(clientId == '0')
+			{
+				$('#companyName').val('');
+				$('#contactName').val('');
+				$('#contactEmail').val('');
+			}
+			
+			// an existing client was chosen, so we have to update the info fields with the current details of the client
+			else
+			{
+				$.ajax(
+				{
+					cache: false, 
+					url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=load_client_info&language=' + jsBackend.current.language,
+					data: 'client_id='+ clientId,
+					success: function(data, textStatus)
+					{
+						$.each($('#countries').find('option'), function(index, item)
+						{
+							if($(this).text() == data.data.country)
+							{
+								$(this).attr('selected', true);
+							}
+						});
+						
+						$.each($('#timezones').find('option'), function(index, item)
+						{
+							if($(this).text() == data.data.timezone)
+							{
+								$(this).attr('selected', true);
+							}
+						});
+						
+						$('#companyName').val(data.data.company);
+						$('#contactName').val(data.data.contact_name);
+						$('#contactEmail').val(data.data.email);
+					}
+				});
+			}
+		});
 	},
 
 
@@ -186,10 +244,7 @@ jsBackend.mailmotor.linkAccount =
 				if(data.code == 200)
 				{
 					// client_id field is set
-					if(data.data.client_id) window.location = document.location.pathname +'?token=true&report='+ data.data.message;
-
-					// client_id field was empty, so a redirect is easier to filter out the new form
-					else window.location = document.location.pathname +'?token=true';
+					window.location = document.location.pathname +'?token=true&report='+ data.data.message +'#tabSettingsClient';
 				}
 				else
 				{
@@ -218,13 +273,13 @@ jsBackend.mailmotor.resizing =
 		var iframeBox = $('#iframeBox');
 
 		// make the plain content textarea resizable
-		$('#contentPlain').resizable({
-			handles: 's'
-		});
+		$('#contentPlain').resizable({ handles: 's' });
 
 		// make the iframe resizable
-		iframeBox.resizable({
+		iframeBox.resizable(
+		{
 			handles: 's',
+
 			/*
 				This is a hack to fix sloppy default resizing in jqueryui. The default behaviour stops resizing as soon as your mouse
 				enters the content viewport of an iframe, meaning quick resizing is not possible. What we do here is adding an overlay
@@ -240,7 +295,8 @@ jsBackend.mailmotor.resizing =
 				overlay[0].id = 'iframeOverlay';
 
 				// the overlay should be absolutely positioned with the top value aligned to the top of the iframe
-				overlay.css({
+				overlay.css(
+				{
 					left: 0,
 					position:'absolute',
 					top: iframe.position().top
@@ -250,7 +306,8 @@ jsBackend.mailmotor.resizing =
 				overlay.height(iframe.height());
 				overlay.width('100%');
 			},
-			stop: function(){
+			stop: function()
+			{
 				// remove the overlay
 				$('#iframeOverlay').remove();
 			}
@@ -301,7 +358,8 @@ jsBackend.mailmotor.step3 =
 				var bodyHTML = encodeURIComponent(body.html());
 
 				// make the call
-				$.ajax({
+				$.ajax(
+				{
 					url: url,
 					data: 'mailing_id='+ variables.mailingId +'&subject='+ subject +'&content_plain='+ plainText +'&content_html=' + textareaValue +'&full_content_html='+ bodyHTML,
 					success: function(data, textStatus)
@@ -347,13 +405,15 @@ jsBackend.mailmotor.step4 =
 		var sendTime = oSendTime.val();
 
 		// initalize the confirmation modal
-		confirmBox.dialog({
+		confirmBox.dialog(
+		{
 			autoOpen: false,
 			draggable: false,
 			width: 500,
 			modal: true,
 			resizable: false,
-			buttons: {
+			buttons:
+			{
 				'{$lblSendMailing|ucfirst}': function()
 				{
 					// send the mailing
@@ -420,7 +480,8 @@ jsBackend.mailmotor.step4 =
 		var sendOnTime = $('#sendOnTime').val();
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
 			url: url,
 			data: 'mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
 			success: function(data, textStatus)
@@ -475,7 +536,8 @@ jsBackend.mailmotor.step4 =
 		buttonPane.addClass('loading');
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
 			url: url,
 			data: 'id='+ variables.mailingId,
 			success: function(data, textStatus)

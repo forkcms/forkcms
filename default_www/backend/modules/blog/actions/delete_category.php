@@ -34,11 +34,11 @@ class BackendBlogDeleteCategory extends BackendBaseActionDelete
 			BackendBlogModel::deleteCategory($this->id);
 
 			// user was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('categories') .'&report=deleted-category&var='. urlencode($this->record['name']));
+			$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('categories') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
 	}
 }
 

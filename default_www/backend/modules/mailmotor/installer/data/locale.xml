@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <frontend>
+    <core>
+      <item type="action" name="Preview">
+        <translation language="en"><![CDATA[preview]]></translation>
+        <translation language="nl"><![CDATA[preview]]></translation>
+      </item>
+      <item type="action" name="Subscribe">
+        <translation language="en"><![CDATA[subscribe]]></translation>
+        <translation language="nl"><![CDATA[inschrijven]]></translation>
+      </item>
+      <item type="action" name="Unsubscribe">
+        <translation language="en"><![CDATA[unsubscribe]]></translation>
+        <translation language="nl"><![CDATA[uitschrijven]]></translation>
+      </item>
+      <item type="error" name="AlreadySubscribed">
+        <translation language="en"><![CDATA[This e-mail address is already subscribed to the newsletter.]]></translation>
+        <translation language="nl"><![CDATA[Dit e-mailadres is reeds ingeschreven op de nieuwsbrief.]]></translation>
+      </item>
+      <item type="error" name="AlreadyUnsubscribed">
+        <translation language="en"><![CDATA[This e-mail address is already unsubscribed from the newsletter]]></translation>
+        <translation language="nl"><![CDATA[Dit e-mailadres is reeds uitschreven uit de nieuwsbrief.]]></translation>
+      </item>
+      <item type="error" name="EmailNotInDatabase">
+        <translation language="en"><![CDATA[This e-mail address does not exist in the database.]]></translation>
+        <translation language="nl"><![CDATA[Dit e-mailadres bestaat niet in onze database.]]></translation>
+      </item>
+      <item type="error" name="SubscribeFailed">
+        <translation language="en"><![CDATA[Subscribing failed]]></translation>
+        <translation language="nl"><![CDATA[Het inschrijven is niet gelukt]]></translation>
+      </item>
+      <item type="error" name="UnsubscribeFailed">
+        <translation language="en"><![CDATA[Unsubscribing failed]]></translation>
+        <translation language="nl"><![CDATA[Het uitschrijven is niet gelukt]]></translation>
+      </item>
+      <item type="label" name="Sent">
+        <translation language="en"><![CDATA[sent]]></translation>
+        <translation language="nl"><![CDATA[verzonden]]></translation>
+      </item>
+      <item type="message" name="NoSentMailings">
+        <translation language="en"><![CDATA[So far]]></translation>
+        <translation language="nl"><![CDATA[Er zijn tot dusver nog geen nieuwsbrieven verzonden.]]></translation>
+      </item>
+      <item type="message" name="SubscribeSuccess">
+        <translation language="en"><![CDATA[You have successfully subscribed to the newsletter.]]></translation>
+        <translation language="nl"><![CDATA[Je bent met success ingeschreven op de nieuwsbrief.]]></translation>
+      </item>
+      <item type="message" name="UnsubscribeSuccess">
+        <translation language="en"><![CDATA[You have successfully unsubscribed from the newsletter.]]></translation>
+        <translation language="nl"><![CDATA[Je bent met success uitgeschreven uit de nieuwsbrief.]]></translation>
+      </item>
+    </core>
+  </frontend>
+  <backend>
+    <core>
+      <item type="label" name="AccountSettings">
+        <translation language="en"><![CDATA[account settings]]></translation>
+        <translation language="nl"><![CDATA[account instellingen]]></translation>
+      </item>
+      <item type="label" name="Addresses">
+        <translation language="en"><![CDATA[e-mail addresses]]></translation>
+        <translation language="nl"><![CDATA[e-mailadressen]]></translation>
+      </item>
+      <item type="label" name="AllAddresses">
+        <translation language="en"><![CDATA[all e-mail addresses]]></translation>
+        <translation language="nl"><![CDATA[alle e-mailadressen,]]></translation>
+      </item>
+      <item type="label" name="Bounces">
+        <translation language="en"><![CDATA[bounces]]></translation>
+        <translation language="nl"><![CDATA[bounces]]></translation>
+      </item>
+      <item type="label" name="BounceType">
+        <translation language="en"><![CDATA[bounce type]]></translation>
+        <translation language="nl"><![CDATA[bounce type]]></translation>
+      </item>
+      <item type="label" name="Campaigns">
+        <translation language="en"><![CDATA[campaigns]]></translation>
+        <translation language="nl"><![CDATA[campagnes]]></translation>
+      </item>
+      <item type="label" name="ClientSettings">
+        <translation language="en"><![CDATA[client settings]]></translation>
+        <translation language="nl"><![CDATA[client instellingen]]></translation>
+      </item>
+      <item type="label" name="Copy">
+        <translation language="en"><![CDATA[copy]]></translation>
+        <translation language="nl"><![CDATA[kopieer]]></translation>
+      </item>
+      <item type="label" name="Country">
+        <translation language="en"><![CDATA[country]]></translation>
+        <translation language="nl"><![CDATA[land]]></translation>
+      </item>
+      <item type="label" name="Created">
+        <translation language="en"><![CDATA[created]]></translation>
+        <translation language="nl"><![CDATA[aangemaakt]]></translation>
+      </item>
+      <item type="label" name="CreatedOn">
+        <translation language="en"><![CDATA[created on]]></translation>
+        <translation language="nl"><![CDATA[aangemaakt op]]></translation>
+      </item>
+      <item type="label" name="EN">
+        <translation language="en"><![CDATA[english]]></translation>
+        <translation language="nl"><![CDATA[engels]]></translation>
+      </item>
+      <item type="label" name="Export">
+        <translation language="en"><![CDATA[export]]></translation>
+        <translation language="nl"><![CDATA[exporteren]]></translation>
+      </item>
+      <item type="label" name="For">
+        <translation language="en"><![CDATA[for]]></translation>
+        <translation language="nl"><![CDATA[voor]]></translation>
+      </item>
+      <item type="label" name="FR">
+        <translation language="en"><![CDATA[french]]></translation>
+        <translation language="nl"><![CDATA[frans]]></translation>
+      </item>
+      <item type="label" name="MailmotorGroups">
+        <translation language="en"><![CDATA[groups]]></translation>
+        <translation language="nl"><![CDATA[doelgroepen]]></translation>
+      </item>
+      <item type="label" name="Import">
+        <translation language="en"><![CDATA[import]]></translation>
+        <translation language="nl"><![CDATA[importeren]]></translation>
+      </item>
+      <item type="label" name="ImportNoun">
+        <translation language="en"><![CDATA[import]]></translation>
+        <translation language="nl"><![CDATA[import]]></translation>
+      </item>
+      <item type="label" name="In">
+        <translation language="en"><![CDATA[in]]></translation>
+        <translation language="nl"><![CDATA[in]]></translation>
+      </item>
+      <item type="label" name="Mailmotor">
+        <translation language="en"><![CDATA[mailmotor]]></translation>
+        <translation language="nl"><![CDATA[mailmotor]]></translation>
+      </item>
+      <item type="label" name="MailmotorClicks">
+        <translation language="en"><![CDATA[clicks]]></translation>
+        <translation language="nl"><![CDATA[kliks]]></translation>
+      </item>
+      <item type="label" name="MailmotorLatestMailing">
+        <translation language="en"><![CDATA[last sent mailing]]></translation>
+        <translation language="nl"><![CDATA[laatst verzonden mailing]]></translation>
+      </item>
+      <item type="label" name="MailmotorOpened">
+        <translation language="en"><![CDATA[opened]]></translation>
+        <translation language="nl"><![CDATA[geopend]]></translation>
+      </item>
+      <item type="label" name="MailmotorSendDate">
+        <translation language="en"><![CDATA[send date]]></translation>
+        <translation language="nl"><![CDATA[verzenddatum]]></translation>
+      </item>
+      <item type="label" name="MailmotorSent">
+        <translation language="en"><![CDATA[sent]]></translation>
+        <translation language="nl"><![CDATA[verzonden]]></translation>
+      </item>
+      <item type="label" name="MailmotorStatistics">
+        <translation language="en"><![CDATA[statistics]]></translation>
+        <translation language="nl"><![CDATA[statistieken]]></translation>
+      </item>
+      <item type="label" name="MailmotorSubscriptions">
+        <translation language="en"><![CDATA[subscriptions]]></translation>
+        <translation language="nl"><![CDATA[inschrijvingen]]></translation>
+      </item>
+      <item type="label" name="MailmotorUnsubscriptions">
+        <translation language="en"><![CDATA[unsubscriptions]]></translation>
+        <translation language="nl"><![CDATA[uitschrijvingen]]></translation>
+      </item>
+      <item type="label" name="Newsletters">
+        <translation language="en"><![CDATA[mailings]]></translation>
+        <translation language="nl"><![CDATA[mailings]]></translation>
+      </item>
+      <item type="label" name="NL">
+        <translation language="en"><![CDATA[dutch]]></translation>
+        <translation language="nl"><![CDATA[nederlands]]></translation>
+      </item>
+      <item type="label" name="Person">
+        <translation language="en"><![CDATA[person]]></translation>
+        <translation language="nl"><![CDATA[persoon]]></translation>
+      </item>
+      <item type="label" name="Persons">
+        <translation language="en"><![CDATA[people]]></translation>
+        <translation language="nl"><![CDATA[personen]]></translation>
+      </item>
+      <item type="label" name="Price">
+        <translation language="en"><![CDATA[price]]></translation>
+        <translation language="nl"><![CDATA[prijs]]></translation>
+      </item>
+      <item type="label" name="QuantityNo">
+        <translation language="en"><![CDATA[no]]></translation>
+        <translation language="nl"><![CDATA[geen]]></translation>
+      </item>
+      <item type="label" name="SentMailings">
+        <translation language="en"><![CDATA[sent mailings]]></translation>
+        <translation language="nl"><![CDATA[verzonden mailings]]></translation>
+      </item>
+      <item type="label" name="SentOn">
+        <translation language="en"><![CDATA[sent on]]></translation>
+        <translation language="nl"><![CDATA[verzonden op]]></translation>
+      </item>
+      <item type="label" name="Source">
+        <translation language="en"><![CDATA[source]]></translation>
+        <translation language="nl"><![CDATA[bron]]></translation>
+      </item>
+      <item type="label" name="Subscriptions">
+        <translation language="en"><![CDATA[subscriptions]]></translation>
+        <translation language="nl"><![CDATA[inschrijvingen]]></translation>
+      </item>
+      <item type="label" name="SubscribeForm">
+        <translation language="en"><![CDATA[subscribe form]]></translation>
+        <translation language="nl"><![CDATA[inschrijfformulier]]></translation>
+      </item>
+      <item type="label" name="Timezone">
+        <translation language="en"><![CDATA[timezone]]></translation>
+        <translation language="nl"><![CDATA[tijdzone]]></translation>
+      </item>
+      <item type="label" name="ToStep">
+        <translation language="en"><![CDATA[to step]]></translation>
+        <translation language="nl"><![CDATA[naar stap]]></translation>
+      </item>
+      <item type="label" name="Unsubscriptions">
+        <translation language="en"><![CDATA[unsubscriptions]]></translation>
+        <translation language="nl"><![CDATA[uitschrijvingen]]></translation>
+      </item>
+      <item type="label" name="UnsubscribeForm">
+        <translation language="en"><![CDATA[unsubscribe form]]></translation>
+        <translation language="nl"><![CDATA[uitschrijfformulier]]></translation>
+      </item>
+      <item type="message" name="AllAddresses">
+        <translation language="en"><![CDATA[All addresses sorted by subscription date.]]></translation>
+        <translation language="nl"><![CDATA[alle adressen gesorteerd op inschrijfdatum]]></translation>
+      </item>
+      <item type="message" name="NoSentMailings">
+        <translation language="en"><![CDATA[No mailings have been sent yet.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn nog geen mailings verzonden.]]></translation>
+      </item>
+      <item type="message" name="NoSubscriptions">
+        <translation language="en"><![CDATA[No one subscribed to the mailinglist yet.]]></translation>
+        <translation language="nl"><![CDATA[Er is nog niemand ingeschreven.]]></translation>
+      </item>
+      <item type="message" name="NoUnsubscriptions">
+        <translation language="en"><![CDATA[No one unsubscribed from from the mailinglist yet.]]></translation>
+        <translation language="nl"><![CDATA[Er is nog niemand uitgeschreven.]]></translation>
+      </item>
+    </core>
+    <mailmotor>
+      <item type="error" name="AnalysisNoCMAccount">
+        <translation language="en"><![CDATA[There is no link with a CampaignMonitor account yet. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="nl"><![CDATA[Er is nog geen CampaignMonitor account gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
+      </item>
+      <item type="error" name="AnalysisNoCMClientID">
+        <translation language="en"><![CDATA[There is no client linked to the CampaignMonitor account yet. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="nl"><![CDATA[Er is nog geen client aan de CampaignMonitor account gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
+      </item>
+      <item type="error" name="AddressDoesNotExist">
+        <translation language="en"><![CDATA[The given e-mail address does not exist.]]></translation>
+        <translation language="nl"><![CDATA[Het opgegeven e-mailadres bestaat niet.]]></translation>
+      </item>
+      <item type="error" name="AlreadySubscribed">
+        <translation language="en"><![CDATA[This e-mail address is already subscribed to the mailinglist.]]></translation>
+        <translation language="nl"><![CDATA[Dit e-mailadres is reeds ingeschreven op de mailing.]]></translation>
+      </item>
+      <item type="error" name="AddMailingNoGroups">
+        <translation language="en"><![CDATA[There are no groups to put subscribers in yet. Create a group first.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn nog geen doelgroepen aangemaakt om subscribers in te plaatsen. Maak eerst een doelgroep aan.]]></translation>
+      </item>
+      <item type="error" name="CampaignDoesNotExist">
+        <translation language="en"><![CDATA[The given campaign does not exist.]]></translation>
+        <translation language="nl"><![CDATA[De opgegeven campagne bestaat niet.]]></translation>
+      </item>
+      <item type="error" name="CampaignExists">
+        <translation language="en"><![CDATA[This campaign name already exists.]]></translation>
+        <translation language="nl"><![CDATA[Deze campagnenaam is reeds in gebruik.]]></translation>
+      </item>
+      <item type="error" name="CampaignNotEdited">
+        <translation language="en"><![CDATA[The campaign wasn't edited.]]></translation>
+        <translation language="nl"><![CDATA[De campagne werd niet gewijzigd.]]></translation>
+      </item>
+      <item type="error" name="CampaignMonitorError">
+        <translation language="en"><![CDATA[CampaignMonitor error: %1$s]]></translation>
+        <translation language="nl"><![CDATA[CampaignMonitor fout: %1$s]]></translation>
+      </item>
+      <item type="error" name="ChooseAtLeastOneGroup">
+        <translation language="en"><![CDATA[You need to choose at least one group.]]></translation>
+        <translation language="nl"><![CDATA[Je dient minstens 1 doelgroep te kiezen.]]></translation>
+      </item>
+      <item type="error" name="ChooseTemplateLanguage">
+        <translation language="en"><![CDATA[Choose the language of the template to use.]]></translation>
+        <translation language="nl"><![CDATA[Kies eerst de taal van het te gebruiken template.]]></translation>
+      </item>
+      <item type="error" name="ClassDoesNotExist">
+        <translation language="en"><![CDATA[The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external]]></translation>
+        <translation language="nl"><![CDATA[De CampaignMonitor wrapper class is niet gevonden. Localiseer en plaats hem in /library/external]]></translation>
+      </item>
+      <item type="error" name="CmTimeout">
+        <translation language="en"><![CDATA[Could not make a connection with CampaignMonitor,m try again.]]></translation>
+        <translation language="nl"><![CDATA[Kon geen connectie leggen naar CampaignMonitor]]></translation>
+      </item>
+      <item type="error" name="CompleteStep2">
+        <translation language="en"><![CDATA[Complete step 2 first]]></translation>
+        <translation language="nl"><![CDATA[Vervolledig eerst stap 2]]></translation>
+      </item>
+      <item type="error" name="CompleteStep3">
+        <translation language="en"><![CDATA[Complete step 3 first]]></translation>
+        <translation language="nl"><![CDATA[Vervolledig eerst stap 3]]></translation>
+      </item>
+      <item type="error" name="CSVIsRequired">
+        <translation language="en"><![CDATA[Choose a .csv file to upload.]]></translation>
+        <translation language="nl"><![CDATA[Kies een .csv bestand om te uploaden.]]></translation>
+      </item>
+      <item type="error" name="CouldNotConnect">
+        <translation language="en"><![CDATA[Could not connect to CampaignMonitor]]></translation>
+        <translation language="nl"><![CDATA[Fork kan momenteel niet verbinden met CampaignMonitor]]></translation>
+      </item>
+      <item type="error" name="CustomFieldExists">
+        <translation language="en"><![CDATA[This field name is already in use.]]></translation>
+        <translation language="nl"><![CDATA[Deze veldnaam is reeds in gebruik.]]></translation>
+      </item>
+      <item type="error" name="DuplicateCampaignName">
+        <translation language="en"><![CDATA[The name of this mailing already exists in the archives of CampaignMonitor. Change the name before sending.]]></translation>
+        <translation language="nl"><![CDATA[De naam van deze mailing bestaat reeds in het archief van CampaignMonitor. Verander de naam alvorens te verzenden.]]></translation>
+      </item>
+      <item type="error" name="GroupAlreadyExists">
+        <translation language="en"><![CDATA[This group already exists]]></translation>
+        <translation language="nl"><![CDATA[Deze groep bestaat reeds]]></translation>
+      </item>
+      <item type="error" name="GroupsNoRecipients">
+        <translation language="en"><![CDATA[The selected group(s) don't contain any addresses.]]></translation>
+        <translation language="nl"><![CDATA[De geselecteerde doelgroep(en) bevat(ten) geen e-mailadressen.]]></translation>
+      </item>
+      <item type="error" name="HTMLContentURLRequired">
+        <translation language="en"><![CDATA[CampaignMonitor could not find an URL to the HTML content. (The URL needs to be accessible)]]></translation>
+        <translation language="nl"><![CDATA[CampaignMonitor kon geen URL naar de HTML content vinden. (Als je lokaal werkt is dit normaal]]></translation>
+      </item>
+      <item type="error" name="ImportedAddresses">
+        <translation language="en"><![CDATA[%1$s addresses are imported in %2$s group(s)]]></translation>
+        <translation language="nl"><![CDATA[%1$s adressen zijn ge&iuml;mporteerd in %2$s doelgroep(en)]]></translation>
+      </item>
+      <item type="error" name="InvalidAccountCredentials">
+        <translation language="en"><![CDATA[The CampaignMonitor account credentials are invalid.]]></translation>
+        <translation language="nl"><![CDATA[De CampaignMonitor accountgegevens zijn niet geldig.]]></translation>
+      </item>
+      <item type="error" name="InvalidCSV">
+        <translation language="en"><![CDATA[The CSV file is empty]]></translation>
+        <translation language="nl"><![CDATA[Het CSV bestand is leeg]]></translation>
+      </item>
+      <item type="error" name="LinkDoesNotExist">
+        <translation language="en"><![CDATA[This link doesn't exists.]]></translation>
+        <translation language="nl"><![CDATA[Deze link bestaat niet.]]></translation>
+      </item>
+      <item type="error" name="LinkDoesNotExists">
+        <translation language="en"><![CDATA[This link doesn't exists.]]></translation>
+        <translation language="nl"><![CDATA[Deze link bestaat niet.]]></translation>
+      </item>
+      <item type="error" name="MailingAlreadyExists">
+        <translation language="en"><![CDATA[This mailing already exists]]></translation>
+        <translation language="nl"><![CDATA[Deze mailing bestaat al]]></translation>
+      </item>
+      <item type="error" name="MailingAlreadySent">
+        <translation language="en"><![CDATA[The given mailing has already been sent!]]></translation>
+        <translation language="nl"><![CDATA[De opgegeven mailing is reeds verzonden!]]></translation>
+      </item>
+      <item type="error" name="MailingDoesNotExist">
+        <translation language="en"><![CDATA[The given mailing does not exist.]]></translation>
+        <translation language="nl"><![CDATA[De opgegeven mailing bestaat niet.]]></translation>
+      </item>
+      <item type="error" name="NoActionSelected">
+        <translation language="en"><![CDATA[No action selected.]]></translation>
+        <translation language="nl"><![CDATA[Geen actie geselecteerd.]]></translation>
+      </item>
+      <item type="error" name="NoBounces">
+        <translation language="en"><![CDATA[There are no bounces for this mailing.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn geen bounces voor deze mailing.]]></translation>
+      </item>
+      <item type="error" name="NoCMAccount">
+        <translation language="en"><![CDATA[There is no link with a CampaignMonitor account yet.]]></translation>
+        <translation language="nl"><![CDATA[Er is nog geen CampaignMonitor account gekoppeld.]]></translation>
+      </item>
+      <item type="error" name="NoCMClientID">
+        <translation language="en"><![CDATA[There is no client linked to the CampaignMonitor account yet.]]></translation>
+        <translation language="nl"><![CDATA[Er is nog geen client aan de CampaignMonitor account gekoppeld.]]></translation>
+      </item>
+      <item type="error" name="NoCMAccountCredentials">
+        <translation language="en"><![CDATA[Please enter your CampaignMonitor credentials.]]></translation>
+        <translation language="nl"><![CDATA[Geef je CampaignMonitor gegevens in.]]></translation>
+      </item>
+      <item type="error" name="NoGroups">
+        <translation language="en"><![CDATA[Select a group.]]></translation>
+        <translation language="nl"><![CDATA[Gelieve een groep te selecteren.]]></translation>
+      </item>
+      <item type="error" name="NoSubject">
+        <translation language="en"><![CDATA[Enter a subject for this mailing.]]></translation>
+        <translation language="nl"><![CDATA[Geef een onderwerp op voor deze mailing.]]></translation>
+      </item>
+      <item type="error" name="NoSubscribers">
+        <translation language="en"><![CDATA[None of your groups have subscribers yet! You can import your current subscriber list by uploading a .csv-file.]]></translation>
+        <translation language="nl"><![CDATA[Je hebt nog geen e-mailadressen in je groepen! Je kan er importeren met behulp van een .csv-bestand.]]></translation>
+      </item>
+      <item type="error" name="NoTemplates">
+        <translation language="en"><![CDATA[No templates are available for this language]]></translation>
+        <translation language="nl"><![CDATA[Voor die taal zijn geen templates beschikbaar]]></translation>
+      </item>
+      <item type="error" name="NoPreviewSent">
+        <translation language="en"><![CDATA[The preview-mail to %1$s was not sent.]]></translation>
+        <translation language="nl"><![CDATA[De preview-mail naar %1$s werd niet verzonden.]]></translation>
+      </item>
+      <item type="error" name="NoPricePerEmail">
+        <translation language="en"><![CDATA[No price per sent mail has been set yet.]]></translation>
+        <translation language="nl"><![CDATA[Er is nog geen prijs per verzonden e-mail ingesteld.]]></translation>
+      </item>
+      <item type="error" name="NoStatisticsLoaded">
+        <translation language="en"><![CDATA[There are no statistics available yet for mailing &ldquo;%1$s&rdquo;.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken beschikbaar voor mailing &ldquo;%1$s&rdquo;.]]></translation>
+      </item>
+      <item type="error" name="PaymentDetailsRequired">
+        <translation language="en"><![CDATA[The payment details of the active user (%1$s) are not yet set in the CampaignMonitor backend.]]></translation>
+        <translation language="nl"><![CDATA[De betalingsgegevens van de actieve gebruiker (%1$s) zijn nog niet ingegeven in CampaignMonitor.]]></translation>
+      </item>
+      <item type="error" name="TemplateIsRequired">
+        <translation language="en"><![CDATA[Choose a template first before proceeding to the next step.]]></translation>
+        <translation language="nl"><![CDATA[Kies eerst een template alvorens door te gaan naar de volgende stap.]]></translation>
+      </item>
+      <item type="error" name="TemplateDoesNotExist">
+        <translation language="en"><![CDATA[This template does not exist]]></translation>
+        <translation language="nl"><![CDATA[Deze template bestaat niet]]></translation>
+      </item>
+      <item type="label" name="AddCampaign">
+        <translation language="en"><![CDATA[add campaign]]></translation>
+        <translation language="nl"><![CDATA[campagne toevoegen]]></translation>
+      </item>
+      <item type="label" name="AddCustomField">
+        <translation language="en"><![CDATA[add custom field]]></translation>
+        <translation language="nl"><![CDATA[variabel veld toevoegen]]></translation>
+      </item>
+      <item type="label" name="AddEmail">
+        <translation language="en"><![CDATA[add e-mail address]]></translation>
+        <translation language="nl"><![CDATA[e-mailadres toevoegen]]></translation>
+      </item>
+      <item type="label" name="AddGroup">
+        <translation language="en"><![CDATA[add group]]></translation>
+        <translation language="nl"><![CDATA[doelgroep toevoegen]]></translation>
+      </item>
+      <item type="label" name="AddNewMailing">
+        <translation language="en"><![CDATA[create new mailing]]></translation>
+        <translation language="nl"><![CDATA[nieuwe mailing maken]]></translation>
+      </item>
+      <item type="label" name="AddMailing">
+        <translation language="en"><![CDATA[add mailing]]></translation>
+        <translation language="nl"><![CDATA[mailing toevoegen]]></translation>
+      </item>
+      <item type="label" name="AddressList">
+        <translation language="en"><![CDATA[mailinglist]]></translation>
+        <translation language="nl"><![CDATA[e-mailadressenlijst]]></translation>
+      </item>
+      <item type="label" name="BounceRate">
+        <translation language="en"><![CDATA[bounce-rate]]></translation>
+        <translation language="nl"><![CDATA[bounce-rate]]></translation>
+      </item>
+      <item type="label" name="Campaign">
+        <translation language="en"><![CDATA[campaign]]></translation>
+        <translation language="nl"><![CDATA[campagne]]></translation>
+      </item>
+      <item type="label" name="CampaignName">
+        <translation language="en"><![CDATA[campaign]]></translation>
+        <translation language="nl"><![CDATA[campagne]]></translation>
+      </item>
+      <item type="label" name="ChooseTemplate">
+        <translation language="en"><![CDATA[choose a template]]></translation>
+        <translation language="nl"><![CDATA[kies een template]]></translation>
+      </item>
+      <item type="label" name="CompanyName">
+        <translation language="en"><![CDATA[company name]]></translation>
+        <translation language="nl"><![CDATA[bedrijfsnaam]]></translation>
+      </item>
+      <item type="label" name="ContactName">
+        <translation language="en"><![CDATA[contact]]></translation>
+        <translation language="nl"><![CDATA[contactpersoon]]></translation>
+      </item>
+      <item type="label" name="ClickRate">
+        <translation language="en"><![CDATA[click-rate]]></translation>
+        <translation language="nl"><![CDATA[click-rate]]></translation>
+      </item>
+      <item type="label" name="Clicks">
+        <translation language="en"><![CDATA[clicks]]></translation>
+        <translation language="nl"><![CDATA[kliks]]></translation>
+      </item>
+      <item type="label" name="Client">
+        <translation language="en"><![CDATA[client]]></translation>
+        <translation language="nl"><![CDATA[client]]></translation>
+      </item>
+      <item type="label" name="ClientID">
+        <translation language="en"><![CDATA[client ID]]></translation>
+        <translation language="nl"><![CDATA[client ID]]></translation>
+      </item>
+      <item type="label" name="CreateNewClient">
+        <translation language="en"><![CDATA[create a new client]]></translation>
+        <translation language="nl"><![CDATA[maak een nieuwe client aan]]></translation>
+      </item>
+      <item type="label" name="CustomFields">
+        <translation language="en"><![CDATA[custom fields]]></translation>
+        <translation language="nl"><![CDATA[variabele velden]]></translation>
+      </item>
+      <item type="label" name="EditCampaign">
+        <translation language="en"><![CDATA[edit campaign]]></translation>
+        <translation language="nl"><![CDATA[campagne bewerken]]></translation>
+      </item>
+      <item type="label" name="EditMailingCampaign">
+        <translation language="en"><![CDATA[edit campaign]]></translation>
+        <translation language="nl"><![CDATA[wijzig campagne]]></translation>
+      </item>
+      <item type="label" name="EditCustomField">
+        <translation language="en"><![CDATA[edit custom field]]></translation>
+        <translation language="nl"><![CDATA[variabel veld bewerken]]></translation>
+      </item>
+      <item type="label" name="EditEmail">
+        <translation language="en"><![CDATA[edit e-mail address]]></translation>
+        <translation language="nl"><![CDATA[e-mailadres bewerken]]></translation>
+      </item>
+      <item type="label" name="EditGroup">
+        <translation language="en"><![CDATA[edit group]]></translation>
+        <translation language="nl"><![CDATA[doelgroep bewerken]]></translation>
+      </item>
+      <item type="label" name="EmailAddress">
+        <translation language="en"><![CDATA[e-mail address]]></translation>
+        <translation language="nl"><![CDATA[e-mailadres]]></translation>
+      </item>
+      <item type="label" name="EmailAddresses">
+        <translation language="en"><![CDATA[e-mail addresses]]></translation>
+        <translation language="nl"><![CDATA[e-mailadressen]]></translation>
+      </item>
+      <item type="label" name="ExampleFile">
+        <translation language="en"><![CDATA[an example file]]></translation>
+        <translation language="nl"><![CDATA[een voorbeeldbestand]]></translation>
+      </item>
+      <item type="label" name="ExportAddresses">
+        <translation language="en"><![CDATA[export addresses]]></translation>
+        <translation language="nl"><![CDATA[e-mailadressen exporteren]]></translation>
+      </item>
+      <item type="label" name="ExportStatistics">
+        <translation language="en"><![CDATA[export statistics]]></translation>
+        <translation language="nl"><![CDATA[statistieken exporteren]]></translation>
+      </item>
+      <item type="label" name="Group">
+        <translation language="en"><![CDATA[group]]></translation>
+        <translation language="nl"><![CDATA[doelgroep]]></translation>
+      </item>
+      <item type="label" name="Groups">
+        <translation language="en"><![CDATA[groups]]></translation>
+        <translation language="nl"><![CDATA[doelgroepen]]></translation>
+      </item>
+      <item type="label" name="ImportAddresses">
+        <translation language="en"><![CDATA[import addresses]]></translation>
+        <translation language="nl"><![CDATA[e-mailadressen importeren]]></translation>
+      </item>
+      <item type="label" name="IpAddress">
+        <translation language="en"><![CDATA[IP address]]></translation>
+        <translation language="nl"><![CDATA[IP adres]]></translation>
+      </item>
+      <item type="label" name="Manual">
+        <translation language="en"><![CDATA[manual]]></translation>
+        <translation language="nl"><![CDATA[manueel]]></translation>
+      </item>
+      <item type="label" name="MailingsWithoutCampaign">
+        <translation language="en"><![CDATA[mailings without campaign]]></translation>
+        <translation language="nl"><![CDATA[mailings zonder campagne]]></translation>
+      </item>
+      <item type="label" name="NoCampaign">
+        <translation language="en"><![CDATA[no campaign]]></translation>
+        <translation language="nl"><![CDATA[geen campagne]]></translation>
+      </item>
+      <item type="label" name="OpenedMailings">
+        <translation language="en"><![CDATA[opened mailings]]></translation>
+        <translation language="nl"><![CDATA[geopende mailings]]></translation>
+      </item>
+      <item type="label" name="PlainTextVersion">
+        <translation language="en"><![CDATA[plain text version]]></translation>
+        <translation language="nl"><![CDATA[plain text versie]]></translation>
+      </item>
+      <item type="label" name="PricePerSentMailing">
+        <translation language="en"><![CDATA[price per sent mailing]]></translation>
+        <translation language="nl"><![CDATA[prijs per verzonden e-mail]]></translation>
+      </item>
+      <item type="label" name="QueuedMailings">
+        <translation language="en"><![CDATA[queued mailings]]></translation>
+        <translation language="nl"><![CDATA[mailings in de wachtrij]]></translation>
+      </item>
+      <item type="label" name="Recipients">
+        <translation language="en"><![CDATA[groups]]></translation>
+        <translation language="nl"><![CDATA[doelgroepen]]></translation>
+      </item>
+      <item type="label" name="ReplyTo">
+        <translation language="en"><![CDATA[reply-to address]]></translation>
+        <translation language="nl"><![CDATA[reply-to adres]]></translation>
+      </item>
+      <item type="label" name="Reset">
+        <translation language="en"><![CDATA[reset]]></translation>
+        <translation language="nl"><![CDATA[resetten]]></translation>
+      </item>
+      <item type="label" name="SendDate">
+        <translation language="en"><![CDATA[send date]]></translation>
+        <translation language="nl"><![CDATA[verzenddatum]]></translation>
+      </item>
+      <item type="label" name="Sender">
+        <translation language="en"><![CDATA[sender]]></translation>
+        <translation language="nl"><![CDATA[afzender]]></translation>
+      </item>
+      <item type="label" name="SendMailing">
+        <translation language="en"><![CDATA[send mailing]]></translation>
+        <translation language="nl"><![CDATA[verzend mailing]]></translation>
+      </item>
+      <item type="label" name="SendOn">
+        <translation language="en"><![CDATA[send on]]></translation>
+        <translation language="nl"><![CDATA[verzenden op]]></translation>
+      </item>
+      <item type="label" name="SendPreview">
+        <translation language="en"><![CDATA[send preview]]></translation>
+        <translation language="nl"><![CDATA[verzend preview]]></translation>
+      </item>
+      <item type="label" name="Sent">
+        <translation language="en"><![CDATA[sent]]></translation>
+        <translation language="nl"><![CDATA[verzonden]]></translation>
+      </item>
+      <item type="label" name="SentMailings">
+        <translation language="en"><![CDATA[sent mailings]]></translation>
+        <translation language="nl"><![CDATA[verzonden mailings]]></translation>
+      </item>
+      <item type="label" name="SettingsAccount">
+        <translation language="en"><![CDATA[account settings]]></translation>
+        <translation language="nl"><![CDATA[account instellingen]]></translation>
+      </item>
+      <item type="label" name="SettingsClient">
+        <translation language="en"><![CDATA[client settings]]></translation>
+        <translation language="nl"><![CDATA[client instellingen]]></translation>
+      </item>
+      <item type="label" name="Subject">
+        <translation language="en"><![CDATA[subject]]></translation>
+        <translation language="nl"><![CDATA[onderwerp]]></translation>
+      </item>
+      <item type="label" name="TemplateDefault">
+        <translation language="en"><![CDATA[default template]]></translation>
+        <translation language="nl"><![CDATA[default template]]></translation>
+      </item>
+      <item type="label" name="TemplateEmpty">
+        <translation language="en"><![CDATA[empty template]]></translation>
+        <translation language="nl"><![CDATA[leeg template]]></translation>
+      </item>
+      <item type="label" name="TemplateFork">
+        <translation language="en"><![CDATA[Fork CMS template]]></translation>
+        <translation language="nl"><![CDATA[Fork CMS template]]></translation>
+      </item>
+      <item type="label" name="TemplateLanguage">
+        <translation language="en"><![CDATA[template language]]></translation>
+        <translation language="nl"><![CDATA[taal template]]></translation>
+      </item>
+      <item type="label" name="TotalSentMailings">
+        <translation language="en"><![CDATA[sent mailings]]></translation>
+        <translation language="nl"><![CDATA[verzonden mailings]]></translation>
+      </item>
+      <item type="label" name="UnopenedMailings">
+        <translation language="en"><![CDATA[unopened mailings]]></translation>
+        <translation language="nl"><![CDATA[ongeopende mailings]]></translation>
+      </item>
+      <item type="label" name="UnsentMailings">
+        <translation language="en"><![CDATA[concepts]]></translation>
+        <translation language="nl"><![CDATA[concepten]]></translation>
+      </item>
+      <item type="label" name="Who">
+        <translation language="en"><![CDATA[who?]]></translation>
+        <translation language="nl"><![CDATA[wie?]]></translation>
+      </item>
+      <item type="label" name="WillBeSentOn">
+        <translation language="en"><![CDATA[will be sent on]]></translation>
+        <translation language="nl"><![CDATA[wordt verzonden op]]></translation>
+      </item>
+      <item type="label" name="WizardInformation">
+        <translation language="en"><![CDATA[configuration]]></translation>
+        <translation language="nl"><![CDATA[configuratie]]></translation>
+      </item>
+      <item type="label" name="WizardTemplate">
+        <translation language="en"><![CDATA[template]]></translation>
+        <translation language="nl"><![CDATA[template]]></translation>
+      </item>
+      <item type="label" name="WizardContent">
+        <translation language="en"><![CDATA[content]]></translation>
+        <translation language="nl"><![CDATA[inhoud]]></translation>
+      </item>
+      <item type="label" name="WizardSend">
+        <translation language="en"><![CDATA[send]]></translation>
+        <translation language="nl"><![CDATA[verzenden]]></translation>
+      </item>
+      <item type="message" name="AccountLinked">
+        <translation language="en"><![CDATA[Your CampaignMonitor account is now linked to Fork.]]></translation>
+        <translation language="nl"><![CDATA[Uw CampaignMonitor account is met succes gekoppeld aan Fork.]]></translation>
+      </item>
+      <item type="message" name="AddMultipleEmails">
+        <translation language="en"><![CDATA[add multiple email addresses by using a comma (,) as a delimiter]]></translation>
+        <translation language="nl"><![CDATA[voeg meerdere email adressen toe door deze te scheiden met een komma (,)]]></translation>
+      </item>
+      <item type="message" name="BackToCampaigns">
+        <translation language="en"><![CDATA[Back to campaign overview]]></translation>
+        <translation language="nl"><![CDATA[Terug naar het campagne-overzicht]]></translation>
+      </item>
+      <item type="message" name="BackToMailings">
+        <translation language="en"><![CDATA[Back to mailings overview]]></translation>
+        <translation language="nl"><![CDATA[Terug naar het mailings-overzicht]]></translation>
+      </item>
+      <item type="message" name="BackToStatistics">
+        <translation language="en"><![CDATA[Back to statistics for &ldquo;%1$s&rdquo;]]></translation>
+        <translation language="nl"><![CDATA[Terug naar de statistieken voor &ldquo;%1$s&rdquo;]]></translation>
+      </item>
+      <item type="message" name="CampaignAdded">
+        <translation language="en"><![CDATA[The campaign has been added successfully.]]></translation>
+        <translation language="nl"><![CDATA[De campagne werd met succes toegevoegd.]]></translation>
+      </item>
+      <item type="message" name="CampaignEdited">
+        <translation language="en"><![CDATA[The campaign has been edited successfully.]]></translation>
+        <translation language="nl"><![CDATA[De campagne werd met succes gewijzigd.]]></translation>
+      </item>
+      <item type="message" name="CampaignMailings">
+        <translation language="en"><![CDATA[mailings in this campaign]]></translation>
+        <translation language="nl"><![CDATA[mailings in deze campagne]]></translation>
+      </item>
+      <item type="message" name="ClickedLinks">
+        <translation language="en"><![CDATA[ontvangers hebben op links geklikt.]]></translation>
+        <translation language="nl"><![CDATA[ontvangers hebben op links geklikt.]]></translation>
+      </item>
+      <item type="message" name="ClicksAmount">
+        <translation language="en"><![CDATA[number of clicks]]></translation>
+        <translation language="nl"><![CDATA[aantal keer aangeklikt]]></translation>
+      </item>
+      <item type="message" name="ClicksBreakdown">
+        <translation language="en"><![CDATA[%1$s of opened]]></translation>
+        <translation language="nl"><![CDATA[%1$s van geopend]]></translation>
+      </item>
+      <item type="message" name="ClicksOpened">
+        <translation language="en"><![CDATA[times opened]]></translation>
+        <translation language="nl"><![CDATA[aantal keer geopend]]></translation>
+      </item>
+      <item type="message" name="ClientLinked">
+        <translation language="en"><![CDATA[The client &ldquo;%1$s&rdquo; is now linked to Fork.]]></translation>
+        <translation language="nl"><![CDATA[De client &ldquo;%1$s&rdquo; is met succes gekoppeld aan Fork.]]></translation>
+      </item>
+      <item type="message" name="CreateGroupByAddresses">
+        <translation language="en"><![CDATA[Create a new group with the addresses below.]]></translation>
+        <translation language="nl"><![CDATA[Maak een nieuwe doelgroep aan met onderstaande e-mailadressen]]></translation>
+      </item>
+      <item type="message" name="DefaultGroup">
+        <translation language="en"><![CDATA[Selecting a language here will mark this as the default group for that language. This means visitors who subscribe to your mailinglist in this language version of your website will end up in this group. Only one default group can be set for each language.]]></translation>
+        <translation language="nl"><![CDATA[Een taal selecteren markeert deze doelgroep als de standaard groep voor die taal. Dit betekent dat bezoekers die zich inschrijven voor de mailinglist in deze taal-versie van je website terechtkomen in deze groep. Er kan maar &eacute;&eacute; doelgroep gekozen worden per taal.]]></translation>
+      </item>
+      <item type="message" name="DeleteAddresses">
+        <translation language="en"><![CDATA[The address(es) have been deleted successfully.]]></translation>
+        <translation language="nl"><![CDATA[De e-mail(s) werd(en) met succes verwijderd.]]></translation>
+      </item>
+      <item type="message" name="DeleteBounces">
+        <translation language="en"><![CDATA[Delete all hard bounces]]></translation>
+        <translation language="nl"><![CDATA[Verwijder alle hard bounces]]></translation>
+      </item>
+      <item type="message" name="DeletedBounces">
+        <translation language="en"><![CDATA[The hard bounces for this mailing have been deleted.]]></translation>
+        <translation language="nl"><![CDATA[De hard bounces voor deze mailing zijn verwijderd.]]></translation>
+      </item>
+      <item type="message" name="DeletedCustomFields">
+        <translation language="en"><![CDATA[The custom fields for group &ldquo;%1$s&rdquo; have been deleted successfully.]]></translation>
+        <translation language="nl"><![CDATA[De variabele velden voor doelgroep &ldquo;%1$s&rdquo; zijn verwijderd.]]></translation>
+      </item>
+      <item type="message" name="DeleteCampaigns">
+        <translation language="en"><![CDATA[The campaigns have been deleted successfully.]]></translation>
+        <translation language="nl"><![CDATA[De campagne(s) werd(en) met succes verwijderd.]]></translation>
+      </item>
+      <item type="message" name="DeleteGroups">
+        <translation language="en"><![CDATA[The groups have been deleted successfully.]]></translation>
+        <translation language="nl"><![CDATA[De doelgroep(en) werd(en) met succes verwijderd.]]></translation>
+      </item>
+      <item type="message" name="DeleteMailings">
+        <translation language="en"><![CDATA[The mailings have been deleted successfully.]]></translation>
+        <translation language="nl"><![CDATA[De mailing(s) werd(en) met succes verwijderd.]]></translation>
+      </item>
+      <item type="message" name="EditMailingCampaign">
+        <translation language="en"><![CDATA[Edit campaign]]></translation>
+        <translation language="nl"><![CDATA[Wijzig campagne]]></translation>
+      </item>
+      <item type="message" name="ExportFailed">
+        <translation language="en"><![CDATA[Export failed.]]></translation>
+        <translation language="nl"><![CDATA[Er ging iets mis bij het exporteren.]]></translation>
+      </item>
+      <item type="message" name="GroupAdded">
+        <translation language="en"><![CDATA[The group has been added successfully.]]></translation>
+        <translation language="nl"><![CDATA[De doelgroep werd met succes toegevoegd.]]></translation>
+      </item>
+      <item type="message" name="GroupsImported">
+        <translation language="en"><![CDATA[%1$s group(s) and %2$s email-addresses were imported from CampaignMonitor. Don't forget to select a default group for each language!]]></translation>
+        <translation language="nl"><![CDATA[Er werden %1$s groep(en) met %2$s adressen geïmporteerd uit CampaignMonitor. Vergeet niet de standaard-doelgroep per taal in te stellen!]]></translation>
+      </item>
+      <item type="message" name="GroupsNumberOfRecipients">
+        <translation language="en"><![CDATA[This group contains %1$s address(es).]]></translation>
+        <translation language="nl"><![CDATA[Deze doelgroep bevat %1$s adres(sen).]]></translation>
+      </item>
+      <item type="message" name="HelpCMURL">
+        <translation language="en"><![CDATA[The URL of the CampaignMonitor API for your account. (ex. *.createsend.com)]]></translation>
+        <translation language="nl"><![CDATA[De URL van de CampaignMonitor API voor jouw account. (vb. *.createsend.com)]]></translation>
+      </item>
+      <item type="message" name="HelpCustomFields">
+        <translation language="en"><![CDATA[Custom fields are variables that hold a unique value for each e-mail address in a group. This way you can send personalized mailings.]]></translation>
+        <translation language="nl"><![CDATA[Variabele velden zijn velden die per e-mailadres in een doelgroep een unieke waarde kunnen hebben]]></translation>
+      </item>
+      <item type="message" name="ImportedAddresses">
+        <translation language="en"><![CDATA[%1$s addresses are imported in %2$s group(s).]]></translation>
+        <translation language="nl"><![CDATA[%1$s adressen zijn ge&iuml;mporteerd in %2$s doelgroep(en).]]></translation>
+      </item>
+      <item type="message" name="ImportFailedDownloadCSV">
+        <translation language="en"><![CDATA[Download a CSV with the failed addresses <a href="%1$s">here</a>.]]></translation>
+        <translation language="nl"><![CDATA[<a href="%1$s">Download hier</a> een CSV-bestand met de foute adressen.]]></translation>
+      </item>
+      <item type="message" name="ImportGroupsTitle">
+        <translation language="en"><![CDATA[Import groups from CampaignMonitor]]></translation>
+        <translation language="nl"><![CDATA[Importeer doelgroepen uit CampaignMonitor]]></translation>
+      </item>
+      <item type="message" name="ImportGroups">
+        <translation language="en"><![CDATA[Fork has found the following groups in Campaignmonitor]]></translation>
+        <translation language="nl"><![CDATA[Fork heeft de volgende doelgroepen gevonden in Campaignmonitor]]></translation>
+      </item>
+      <item type="message" name="ImportRecentlyFailed">
+        <translation language="en"><![CDATA[Not all addresses were imported.]]></translation>
+        <translation language="nl"><![CDATA[Niet alle adressen werden geïmporteerd.]]></translation>
+      </item>
+      <item type="message" name="LinkCMAccount">
+        <translation language="en"><![CDATA[Link CampaignMonitor account]]></translation>
+        <translation language="nl"><![CDATA[Koppel uw CampaignMonitor account]]></translation>
+      </item>
+      <item type="message" name="MailingAdded">
+        <translation language="en"><![CDATA[The mailing has been added successfully.]]></translation>
+        <translation language="nl"><![CDATA[De mailing werd met succes toegevoegd.]]></translation>
+      </item>
+      <item type="message" name="MailingConfirmSend">
+        <translation language="en"><![CDATA[Are you sure you want to send the mailing?]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u deze mailing wil versturen?]]></translation>
+      </item>
+      <item type="message" name="MailingConfirmTitle">
+        <translation language="en"><![CDATA[Send this mailing.]]></translation>
+        <translation language="nl"><![CDATA[Verstuur deze mailing.]]></translation>
+      </item>
+      <item type="message" name="MailingCopied">
+        <translation language="en"><![CDATA[The mailing &ldquo;%1$s&rdquo; has been copied successfully.]]></translation>
+        <translation language="nl"><![CDATA[De mailing &ldquo;%1$s&rdquo; werd met succes gekopi&euml;erd.]]></translation>
+      </item>
+      <item type="message" name="MailingCSVBounces">
+        <translation language="en"><![CDATA[bounces]]></translation>
+        <translation language="nl"><![CDATA[bounces]]></translation>
+      </item>
+      <item type="message" name="MailingCSVBouncesPercentage">
+        <translation language="en"><![CDATA[% bounces]]></translation>
+        <translation language="nl"><![CDATA[% bounces]]></translation>
+      </item>
+      <item type="message" name="MailingCSVOpens">
+        <translation language="en"><![CDATA[opened mailings]]></translation>
+        <translation language="nl"><![CDATA[geopende mailings]]></translation>
+      </item>
+      <item type="message" name="MailingCSVRecipients">
+        <translation language="en"><![CDATA[total sent mailings]]></translation>
+        <translation language="nl"><![CDATA[totaal verzonden mailings]]></translation>
+      </item>
+      <item type="message" name="MailingCSVUniqueOpens">
+        <translation language="en"><![CDATA[uniquely opened mailings]]></translation>
+        <translation language="nl"><![CDATA[uniek geopende mailings]]></translation>
+      </item>
+      <item type="message" name="MailingCSVUniqueOpensPercentage">
+        <translation language="en"><![CDATA[% opened mailings]]></translation>
+        <translation language="nl"><![CDATA[% geopende mailings]]></translation>
+      </item>
+      <item type="message" name="MailingCSVUnopens">
+        <translation language="en"><![CDATA[opened mailings]]></translation>
+        <translation language="nl"><![CDATA[ongeopende mailings]]></translation>
+      </item>
+      <item type="message" name="MailingCSVUnopensPercentage">
+        <translation language="en"><![CDATA[% unopened mailings]]></translation>
+        <translation language="nl"><![CDATA[% ongeopende mailings]]></translation>
+      </item>
+      <item type="message" name="MailingCSVUnsubscribes">
+        <translation language="en"><![CDATA[unsubscribes]]></translation>
+        <translation language="nl"><![CDATA[unsubscribes]]></translation>
+      </item>
+      <item type="message" name="MailingEdited">
+        <translation language="en"><![CDATA[The mailing has been edited successfully.]]></translation>
+        <translation language="nl"><![CDATA[De mailing werd met succes gewijzigd.]]></translation>
+      </item>
+      <item type="message" name="MailingLinks">
+        <translation language="en"><![CDATA[links in this mailing]]></translation>
+        <translation language="nl"><![CDATA[links in deze mailing]]></translation>
+      </item>
+      <item type="message" name="MailingSent">
+        <translation language="en"><![CDATA[The mailing has been sent successfully.]]></translation>
+        <translation language="nl"><![CDATA[De mailing werd met succes verstuurd!]]></translation>
+      </item>
+      <item type="message" name="NameInternalUseOnly">
+        <translation language="en"><![CDATA[This name is for internal use only.]]></translation>
+        <translation language="nl"><![CDATA[Deze naam is enkel voor intern gebruik.]]></translation>
+      </item>
+      <item type="message" name="NoClientID">
+        <translation language="en"><![CDATA[No CampaignMonitor client has been linked to Fork yet. Choose an existing client from the dropdown]]></translation>
+        <translation language="nl"><![CDATA[Er is nog geen CampaignMonitor client gekoppeld aan Fork. Kies een bestaande client uit de lijst]]></translation>
+      </item>
+      <item type="message" name="NoDefault">
+        <translation language="en"><![CDATA[This is not a default group.]]></translation>
+        <translation language="nl"><![CDATA[Dit is geen standaard doelgroep.]]></translation>
+      </item>
+      <item type="message" name="NoDefaultsSet">
+        <translation language="en"><![CDATA[A default group for a language is the group where visitors end up in when they subscribe through the subscribe-forms on your Fork website. Edit a group and select a language to set it as the default group for that language.]]></translation>
+        <translation language="nl"><![CDATA[Een standaard-doelgroep voor een taal is de groep waar bezoekers in terechtkomen wanneer ze zich inschrijven via de inschrijfformulieren op je Fork-website. Editeer een groep en kies een taal om hem in te stellen als standaard-groep voor die taal.]]></translation>
+      </item>
+      <item type="message" name="NoDefaultsSetTitle">
+        <translation language="en"><![CDATA[Not all default groups were set.]]></translation>
+        <translation language="nl"><![CDATA[niet alle standaard-doelgroepen zijn ingesteld.]]></translation>
+      </item>
+      <item type="message" name="NoResultsForFilter">
+        <translation language="en"><![CDATA[No results for search term &ldquo;%1$s&rdquo;.]]></translation>
+        <translation language="nl"><![CDATA[Geen resultaten voor de zoekopdracht &ldquo;%1$s&rdquo;.]]></translation>
+      </item>
+      <item type="message" name="NoUnsentMailings">
+        <translation language="en"><![CDATA[There are no concepts available.]]></translation>
+        <translation language="nl"><![CDATA[Er zijn geen concepten.]]></translation>
+      </item>
+      <item type="message" name="PeopleGroups">
+        <translation language="en"><![CDATA[These people come from the following groups:]]></translation>
+        <translation language="nl"><![CDATA[Deze personen komen uit volgende doelgroepen:]]></translation>
+      </item>
+      <item type="message" name="PlainTextEditable">
+        <translation language="en"><![CDATA[Make the textual version of each individual mail adjustable.]]></translation>
+        <translation language="nl"><![CDATA[De tekstuele versie van iedere]]></translation>
+      </item>
+      <item type="message" name="PreviewSent">
+        <translation language="en"><![CDATA[The preview-mail has been sent to %1$s.]]></translation>
+        <translation language="nl"><![CDATA[De preview-mail werd verzonden naar %1$s.]]></translation>
+      </item>
+      <item type="message" name="Reason">
+        <translation language="en"><![CDATA[reason]]></translation>
+        <translation language="nl"><![CDATA[reden]]></translation>
+      </item>
+      <item type="message" name="RecipientStatisticsCampaign">
+        <translation language="en"><![CDATA[You are about to send the mailing "%1$s" from campaign "%2$s" to %3$s %4$s.]]></translation>
+        <translation language="nl"><![CDATA[U staat op het punt om de mailing "%1$s" uit de campagne "%2$s" naar %3$s %4$s te sturen.]]></translation>
+      </item>
+      <item type="message" name="RecipientStatisticsNoCampaign">
+        <translation language="en"><![CDATA[You are about to send the mailing "%1$s" to %2$s %3$s.]]></translation>
+        <translation language="nl"><![CDATA[U staat op het punt om de mailing "%1$s" naar %2$s %3$s te sturen.]]></translation>
+      </item>
+      <item type="message" name="ResetCampaigns">
+        <translation language="en"><![CDATA[campaigns]]></translation>
+        <translation language="nl"><![CDATA[campagnes]]></translation>
+      </item>
+      <item type="message" name="ResetDone">
+        <translation language="en"><![CDATA[Don't forget to remove the client in the CampaignMonitor backend if it's no longer to be used.<br />This is done because there is a limit to the number of clients you can add through the API.<br /><br />Use the following client ID if you don't wish to remove your client: <strong>%1$s</strong>]]></translation>
+        <translation language="nl"><![CDATA[Vergeet niet om de client te verwijderen in CM via (http://nieuwsbrieven.netlash.com)<br />Dit moet zo omdat er een limiet is hoeveel keer een IP clients kan toevoegen/verwijderen via de API.<br /><br />Gebruik de volgende client ID als je de huidige wenst te blijven gebruiken: <strong>%1$s</strong>]]></translation>
+      </item>
+      <item type="message" name="ResetGroups">
+        <translation language="en"><![CDATA[groups (with addresses)]]></translation>
+        <translation language="nl"><![CDATA[doelgroepen (m&eacute;t adressen)]]></translation>
+      </item>
+      <item type="message" name="ResetLabels">
+        <translation language="en"><![CDATA[labels]]></translation>
+        <translation language="nl"><![CDATA[labels]]></translation>
+      </item>
+      <item type="message" name="ResetMailings">
+        <translation language="en"><![CDATA[mailings]]></translation>
+        <translation language="nl"><![CDATA[mailings]]></translation>
+      </item>
+      <item type="message" name="ResetSettings">
+        <translation language="en"><![CDATA[module settings]]></translation>
+        <translation language="nl"><![CDATA[module-settings]]></translation>
+      </item>
+      <item type="message" name="SendOn">
+        <translation language="en"><![CDATA[The mailing will be sent on %1$s at %2$s.]]></translation>
+        <translation language="nl"><![CDATA[De mailing wordt verzonden op %1$s om %2$s.]]></translation>
+      </item>
+      <item type="message" name="TemplateLanguage">
+        <translation language="en"><![CDATA[language of the template]]></translation>
+        <translation language="nl"><![CDATA[taal van de template]]></translation>
+      </item>
+      <item type="message" name="UnlinkCMAccount">
+        <translation language="en"><![CDATA[Unlink CampaignMonitor account]]></translation>
+        <translation language="nl"><![CDATA[Ontkoppel CampaignMonitor account]]></translation>
+      </item>
+      <item type="message" name="Unlinked">
+        <translation language="en"><![CDATA[The CampaignMonitor account has been unlinked.]]></translation>
+        <translation language="nl"><![CDATA[De CampaignMonitor account is ontkoppeld.]]></translation>
+      </item>
+      <item type="message" name="ViewMailings">
+        <translation language="en"><![CDATA[Go to your mailings overview]]></translation>
+        <translation language="nl"><![CDATA[Bekijk je mailings]]></translation>
+      </item>
+    </mailmotor>
+    <pages>
+      <item type="label" name="SentMailings">
+        <translation language="en"><![CDATA[sent mailings]]></translation>
+        <translation language="nl"><![CDATA[verzonden nieuwsbrieven]]></translation>
+      </item>
+      <item type="label" name="SubscribeForm">
+        <translation language="en"><![CDATA[subscribe form]]></translation>
+        <translation language="nl"><![CDATA[inschrijvingsformulier]]></translation>
+      </item>
+      <item type="label" name="UnsubscribeForm">
+        <translation language="en"><![CDATA[unsubscribe form]]></translation>
+        <translation language="nl"><![CDATA[uitschrijvingsformulier]]></translation>
+      </item>
+    </pages>
+  </backend>
+</locale>

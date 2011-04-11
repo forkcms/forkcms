@@ -198,8 +198,8 @@
 				// remove events
 				element.unbind('click').unbind('focus');
 
-				// set html
-				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
+				// set html (replacing quotes with htmlentity, otherwise the inputfield is 'broken')
+				element.html('<input type="text" class="' + options.inputClasses + '" value="' + utils.string.replaceAll(options.current.value, '"', '&quot;') + '" />');
 
 				// store element
 				options.current.element = $(element.find('input')[0]);
@@ -268,6 +268,17 @@
 						{
 							// destroy the element
 							destroyElement();
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown)
+						{
+							// reset
+							options.current.element.val(options.current.value);
+							
+							// destroy the element
+							destroyElement();
+							
+							// show message
+							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
 					});
 				}

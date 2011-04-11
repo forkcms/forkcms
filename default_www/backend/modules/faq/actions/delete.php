@@ -34,11 +34,11 @@ class BackendFaqDelete extends BackendBaseActionDelete
 			BackendFaqModel::deleteQuestion($this->id);
 
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['question']));
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['question']));
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
 

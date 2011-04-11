@@ -63,16 +63,16 @@ class BackendFaqIndex extends BackendBaseActionIndex
 			$datagrid->setPaging(false);
 
 			// set colum URLs
-			$datagrid->setColumnURL('question', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
+			$datagrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 			// set colums hidden
 			$datagrid->setColumnsHidden(array('category_id', 'sequence'));
 
 			// add edit column
-			$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
+			$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 			// add a column for the handle, so users have something to hold while draging
-			$datagrid->addColumn('dragAndDropHandle', null, '<span>'. BL::lbl('Move') .'</span>');
+			$datagrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
 
 			// make sure the column with the handler is the first one
 			$datagrid->setColumnsSequence('dragAndDropHandle');

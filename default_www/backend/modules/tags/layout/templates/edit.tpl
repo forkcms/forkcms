@@ -1,8 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
-{form:edit}
+<div class="pageTitle">
+	<h2>{$lblTags|ucfirst}: {$msgEditTag|sprintf:{$name}}</h2>
+</div>
 
+{form:edit}
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblTags|ucfirst}: {$msgEditTag|sprintf:{$name}}</h3>

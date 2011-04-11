@@ -6,6 +6,7 @@
 </div>
 
 {form:add}
+	<label for="title">{$lblTitle|ucfirst}</label>
 	{$txtTitle} {$txtTitleError}
 
 	<div id="pageUrl">
@@ -130,6 +131,16 @@
 		<div class="buttonHolderRight">
 			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
 			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
+		</div>
+	</div>
+
+	<div id="addCategoryDialog" class="forkForms" title="{$lblAddCategory|ucfirst}" style="display: none;">
+		<div id="templateList">
+			<p>
+				<label for="categoryTitle">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<input type="text" name="categoryTitle" id="categoryTitle" class="inputText" maxlength="255" />
+				<span class="formError" id="categoryTitleError" style="display: none;">{$errFieldIsRequired|ucfirst}</span>
+			</p>
 		</div>
 	</div>
 {/form:add}

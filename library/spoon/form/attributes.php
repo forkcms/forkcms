@@ -66,7 +66,7 @@ class SpoonFormAttributes extends SpoonFormElement
 		foreach($this->attributes as $key => $value)
 		{
 			// class?
-			if($key == 'class' && method_exists($this, 'getClassHTML'))
+			if($key == 'class' && is_callable(array($this, 'getClassHTML')))
 			{
 				$html .= $this->getClassHTML();
 			}

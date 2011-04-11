@@ -49,7 +49,7 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// set method label
 		$this->datagrid->setColumnFunction(array('BackendFormBuilderModel', 'getLocale'), array('Method_[method]'), 'method');
@@ -58,7 +58,7 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendFormBuilderIndex', 'parseNumForms'), array('[id]', '[sent_forms]'), 'sent_forms');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::getLabel('Edit'));
 	}
 
 
@@ -96,7 +96,7 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 		else $output = sprintf(BL::getMessage('SentForms'), $sentForms);
 
 		// output
-		return '<a href="'. BackendModel::createURLForAction('data') .'&amp;id='. $formId .'" title="'. $output .'">'. $output .'</a>';
+		return '<a href="' . BackendModel::createURLForAction('data') . '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
 	}
 }
 

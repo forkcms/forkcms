@@ -1,12 +1,13 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
-{form:edit}
-	<div class="pageTitle">
-		<h2>{$lblLocation|ucfirst}: {$lblAdd}</h2>
-	</div>
+<div class="pageTitle">
+	<h2>{$lblLocation|ucfirst}: {$lblEdit}</h2>
+</div>
 
+{form:edit}
 	<p>
+		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 	</p>
 

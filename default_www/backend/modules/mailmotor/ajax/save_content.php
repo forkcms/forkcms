@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendMailmotorAjaxSaveContent
+ * This saves the mailing content
  *
  * @package		backend
  * @subpackage	mailmotor
@@ -41,7 +41,6 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
 
 		// build the google vars query
-		$params = array();
 		$params['utm_source'] = 'mailmotor';
 		$params['utm_medium'] = 'email';
 		$params['utm_campaign'] = SpoonFilter::urlise($this->mailing['name']);
@@ -56,8 +55,8 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 			if(strpos($match, '#') > -1) continue;
 
 			// add results to search/replace stack
-			$search[] = 'href="'. $match .'"';
-			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
+			$search[] = 'href="' . $match . '"';
+			$replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
 		}
 
 		// replace the content HTML with the replace values
@@ -98,7 +97,6 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
 
 		// build data
-		$item = array();
 		$item['id'] = $this->mailing['id'];
 		$item['subject'] = $subject;
 		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
@@ -137,22 +135,20 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);
 
 		// replace bracketed entities with their proper counterpart
-		$fullContentHTML = preg_replace('/\[(.*?)]/', '&${1};', $fullContentHTML);
+		$fullContentHTML = preg_replace('/\[ent=(.*?)]/', '&${1};', $fullContentHTML);
 
 		// add Google UTM parameters to all anchors
 		$fullContentHTML = $this->addUTMParameters($fullContentHTML);
 
 		// search values
-		$search = array();
 		$search[] = '{$siteURL}';
 		$search[] = '&quot;';
 		$search[] = 'src="/';
 
 		// replace values
-		$replace = array();
 		$replace[] = SITE_URL;
 		$replace[] = '"';
-		$replace[] = 'src="'. SITE_URL .'/';
+		$replace[] = 'src="' . SITE_URL . '/';
 
 		// replace some variables
 		$fullContentHTML = str_replace($search, $replace, $fullContentHTML);

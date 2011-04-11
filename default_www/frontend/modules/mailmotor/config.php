@@ -4,7 +4,6 @@
 require_once 'engine/helper.php';
 
 /**
- * FrontendMailmotorConfig
  * This is the configuration-object
  *
  * @package		frontend

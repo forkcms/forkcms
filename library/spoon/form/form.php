@@ -130,6 +130,7 @@ class SpoonForm
 		// required field
 		$this->setName($name);
 		$this->add(new SpoonFormHidden('form', $this->name));
+		if(SPOON_CHARSET == 'utf-8') $this->add(new SpoonFormHidden('_utf8', '&#9731;'));
 		$this->objects['form']->setAttribute('id', SpoonFilter::toCamelCase('form_' . $this->name, '_', true));
 
 		// optional fields
@@ -924,7 +925,7 @@ class SpoonForm
 		// loop objects
 		foreach($this->objects as $object)
 		{
-			if(method_exists($object, 'getValue') && !in_array($object->getName(), $excluded)) $values[$object->getName()] = $object->getValue();
+			if(is_callable(array($object, 'getValue')) && !in_array($object->getName(), $excluded)) $values[$object->getName()] = $object->getValue();
 		}
 
 		// return data
@@ -1120,7 +1121,7 @@ class SpoonForm
 		foreach($this->objects as $oElement)
 		{
 			// check, since some objects don't have this method!
-			if(method_exists($oElement, 'getErrors')) $errors .= $oElement->getErrors();
+			if(is_callable(array($oElement, 'getErrors'))) $errors .= $oElement->getErrors();
 		}
 
 		// affect correct status

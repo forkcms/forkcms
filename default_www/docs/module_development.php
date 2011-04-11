@@ -104,7 +104,7 @@
 							<strong>BACKEND_PATH</strong>: The path to the backend, eg: /home/fork/default_www/backend
 						</li>
 						<li>
-							<strong>FORK_VERSION</strong>: The current version of Fork, eg: 2.0.0
+							<strong>FORK_VERSION</strong>: The current version of Fork, eg: 2.1.0
 						</li>
 						<li>
 							<strong>FRONTEND_CACHE_PATH</strong>: The path to the frontend cache-folder, eg: /home/fork/default_www/frontend/cache
