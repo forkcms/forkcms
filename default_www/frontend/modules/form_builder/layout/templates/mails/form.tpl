@@ -1,8 +1,8 @@
 <html>
 <head>
-<title>Fork CMS</title>
 {* do NOT remove the UTF-8 part *}
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Fork CMS</title>
 <style>
 	body { background-color:#ebf3f9 }
 	h2 {font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; color: #000000; margin: 12px 0 12px 0; padding: 0; text-align: left;}
