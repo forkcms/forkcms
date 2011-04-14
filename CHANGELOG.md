@@ -5,6 +5,7 @@ Bugfixes:
 	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
 	* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
 	* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions. 
+	* Bugfix: improve "incomplete" (autocomplete) searching for multiple words (only the last word should be considered incomplete)
 
 Improvements:
 	* Core: when using datefields with till, from, range set, it will be validated according the type.
