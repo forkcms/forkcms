@@ -41,7 +41,7 @@ class BackendPagesTemplates extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_TEMPLATES);
+		$this->datagrid = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_TEMPLATES, array(BackendModel::getModuleSetting('core', 'theme', 'core')));
 
 		// set colum URLs
 		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit_template') . '&amp;id=[id]');

@@ -25,5 +25,5 @@
 	</div>
 {/form:import}
 
-{include:'{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:'{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

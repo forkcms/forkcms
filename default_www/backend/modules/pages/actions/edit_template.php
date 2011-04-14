@@ -92,7 +92,11 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$maximumBlocks = 20;
 		$defaultId = BackendModel::getModuleSetting('pages', 'default_template');
 
+		// available themes
+		$themes = SpoonDirectory::getList(FRONTEND_PATH . '/themes', true);
+
 		// create elements
+		$this->frm->addDropdown('theme', array_combine($themes, $themes));
 		$this->frm->addText('label', $this->record['label']);
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
 		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), $this->record['num_blocks']);
