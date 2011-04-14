@@ -755,6 +755,7 @@ class BackendBaseConfig
  * @subpackage	core
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendBaseCronjob
@@ -882,6 +883,9 @@ class BackendBaseCronjob
 	 */
 	protected function setBusyFile()
 	{
+		// do not set busy file in debug mode
+		if(SPOON_DEBUG) return;
+
 		// build path
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
