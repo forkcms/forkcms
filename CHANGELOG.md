@@ -1,4 +1,4 @@
-2.1.1 (xxxx-xx-xx)
+2.2.0 (xxxx-xx-xx)
 --
 Bugfixes:
 	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
