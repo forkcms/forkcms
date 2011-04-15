@@ -875,7 +875,7 @@
         <translation language="en"><![CDATA[none]]></translation>
       </item>
       <item type="label" name="Notifications">
-        <translation language="nl"><![CDATA[verwitigingen]]></translation>
+        <translation language="nl"><![CDATA[verwittigingen]]></translation>
         <translation language="en"><![CDATA[notifications]]></translation>
       </item>
       <item type="label" name="NoTheme">
