@@ -5,9 +5,17 @@ Bugfixes:
 	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
 	* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
 	* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions. 
+	* Bugfix: improve "incomplete" (autocomplete) searching for multiple words (only the last word should be considered incomplete.)
 
 Improvements:
 	* Core: when using datefields with till, from, range set, it will be validated according the type.
+	* Core: changed theme's folder layout to match codebase folder layout - folder 'layout/' should be included in theme;.
+	* Core: changed addJavascript function to addJS (consistency with addCSS + less typing.)
+	* Core: added class FrontendTheme with functions pertaining to themes. Bundled functionality to fetch a file's theme path to this class.
+	* Core: added template modifier 'getPath', to fetch the desired path to a file (theme file if available, core file otherwise.)
+	* Core: no more need to enter absolute path to core or theme template in an include (still possible though); template compiler will use theme file if available, core file otherwise.
+	* Core: removed scratch theme. Triton is now the default theme.
+	* Core: only show templates belonging to the current selected theme.
 	* Blog: creating categories can now be done without leaving the add/edit screen.
 	* Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
 	* Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.
@@ -16,6 +24,7 @@ Improvements:
 	* Pages: when changing templates the textual-content isn't deleted anymore.
 	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
 	* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
+	* Installer: refactored pages installation.
 
 2.1.0 (2011-03-14)
 --

@@ -108,7 +108,7 @@ class BackendHeader
 	 * @param	bool[optional] $overwritePath		Should we overwrite the full path?
 	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addJavascript($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
+	public function addJS($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
 	{
 		// redefine
 		$fileName = (string) $fileName;

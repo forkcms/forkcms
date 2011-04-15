@@ -462,6 +462,9 @@ class ModuleInstaller
 		$revision = (array) $revision;
 		$meta = (array) $meta;
 
+		// deactive previous revisions
+		if(isset($revision['id']) && isset($revision['language'])) $this->getDB()->update('pages', array('status' => 'archive'), 'id = ? AND language = ?', array($revision['id'], $revision['language']));
+
 		// build revision
 		if(!isset($revision['language'])) throw new SpoonException('language is required for installing pages');
 		if(!isset($revision['title'])) throw new SpoonException('title is required for installing pages');
@@ -510,7 +513,7 @@ class ModuleInstaller
 		$revision['revision_id'] = $this->getDB()->insert('pages', $revision);
 
 		// get number of blocks to insert
-		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE active = ?', array('Y'));
+		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE theme = ? AND active = ?', array($this->getSetting('core', 'theme'), 'Y'));
 
 		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
 		$blocks = array();

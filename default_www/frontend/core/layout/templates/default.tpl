@@ -1,4 +1,4 @@
-{include:{$FRONTEND_CORE_PATH}/layout/templates/head.tpl}
+{include:core/layout/templates/head.tpl}
 
 <body class="{$LANGUAGE}">
 	<div id="container">
@@ -10,7 +10,7 @@
 
 			{* Language *}
 			<div>
-				{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
+				{include:core/layout/templates/languages.tpl}
 			</div>
 		</header>
 
@@ -21,7 +21,7 @@
 
 		<section>
 			{* Breadcrumb *}
-			{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
+			{include:core/layout/templates/breadcrumb.tpl}
 
 			{* Page title *}
 			{option:!hideContentTitle}
@@ -48,7 +48,7 @@
 		</section>
 
 		<footer>
-			{include:{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl}
+			{include:core/layout/templates/footer.tpl}
 		</footer>
 	</div>
 

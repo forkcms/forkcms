@@ -25,5 +25,5 @@
 
 {* don't remove this container nor replace the id - it'll be used to populate the search results live as you type *}
 <div id="searchContainer">
-	{include:{$FRONTEND_MODULES_PATH}/search/layout/templates/results.tpl}
+	{include:modules/search/layout/templates/results.tpl}
 </div>

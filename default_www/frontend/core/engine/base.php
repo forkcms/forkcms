@@ -359,7 +359,7 @@ class FrontendBaseBlock
 	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
 	 * @param	bool[optional] $addTimestamp		May we add a timestamp for caching purposes?
 	 */
-	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
+	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -369,7 +369,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJavascript($file, $minify, $parseThroughPHP, $addTimestamp);
+		$this->header->addJS($file, $minify, $parseThroughPHP, $addTimestamp);
 	}
 
 
@@ -388,10 +388,10 @@ class FrontendBaseBlock
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
 	}
 
 
@@ -823,7 +823,7 @@ class FrontendBaseWidget
 	 * @param	bool[optional] $minify				Should the file be minified?
 	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
 	 */
-	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
 	{
 		// redefine
 		$file = (string) $file;
@@ -833,7 +833,7 @@ class FrontendBaseWidget
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJavascript($file, $minify, $parseThroughPHP);
+		$this->header->addJS($file, $minify, $parseThroughPHP);
 	}
 
 
@@ -852,10 +852,10 @@ class FrontendBaseWidget
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
 	}
 
 

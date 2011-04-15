@@ -29,7 +29,7 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		$this->setColumn('left');
 
 		// add highchart javascript
-		$this->header->addJavascript('dashboard.js', 'analytics');
+		$this->header->addJS('dashboard.js', 'analytics');
 
 		// parse
 		$this->parse();

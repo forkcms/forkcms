@@ -1,5 +1,5 @@
-{include:'{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:'{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblExitPages|ucfirst}</h2>
@@ -12,7 +12,7 @@
 {/option:!dataAvailable}
 
 <div class="box">
-	{include:'{$BACKEND_MODULE_PATH}/layout/templates/period.tpl'}
+	{include:{$BACKEND_MODULE_PATH}/layout/templates/period.tpl}
 
 	<div class="options content">
 		<div class="analyticsColWrapper">
@@ -91,5 +91,5 @@
 	{/option:!dgPages}
 </div>
 
-{include:'{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:'{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
