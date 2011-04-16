@@ -1056,9 +1056,6 @@ class SpoonDatabase
 		// add where clause
 		if($where != '') $query .= ' WHERE ' . (string) $where;
 
-		// finalize query
-		$query .= '';
-
 		// update parameters
 		$parameters = array_merge($aTmpParameters, $parameters);
 
