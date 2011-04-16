@@ -30,6 +30,7 @@ Improvements:
 	* Pages: implemented drafts, similar to Blog.
 	* Pages: when changing templates the textual-content isn't deleted anymore.
 	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
+	* Locale: export for missing locale.
 	* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
 	* Mailmotor: added extra validation for adding address(es).
 	* Mailmotor: adding multiple addresses now uses the multipleTextbox-functionality.
