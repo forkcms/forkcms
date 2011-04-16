@@ -14,7 +14,9 @@
 			<div class="options">
 				<p>
 					<label for="email">{$lblEmailAddress|ucfirst}</label>
-					{$txtEmail} {$txtEmailError}
+					<span style="float: left;">
+						{$txtEmail} {$txtEmailError}
+					</span>
 				</p>
 			</div>
 		</div>
