@@ -674,6 +674,10 @@
         <translation language="nl"><![CDATA[algemene instellingen]]></translation>
         <translation language="en"><![CDATA[general settings]]></translation>
       </item>
+      <item type="label" name="Generate">
+        <translation language="nl"><![CDATA[genereer]]></translation>
+        <translation language="en"><![CDATA[generate]]></translation>
+      </item>
       <item type="label" name="GoToPage">
         <translation language="nl"><![CDATA[ga naar pagina]]></translation>
         <translation language="en"><![CDATA[go to page]]></translation>

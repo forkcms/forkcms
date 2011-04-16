@@ -20,6 +20,7 @@ Improvements:
 	* Core: removed scratch theme. Triton is now the default theme.
 	* Core: only show templates belonging to the current selected theme.
 	* Core: locales analyse-tool will check only the active modules from now on.
+	* Core: added a jQuery-plugin to implement a passwordGenerator.
 	* Blog: creating categories can now be done without leaving the add/edit screen.
 	* Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
 	* Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.
