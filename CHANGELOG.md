@@ -27,6 +27,8 @@ Improvements:
 	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
 	* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
 	* Installer: refactored pages installation.
+	* Mailmotor: added extra validation for adding address(es)
+	* Mailmotor: adding multiple addresses now uses the multipleTextbox-functionality.
 
 2.1.0 (2011-03-14)
 --

@@ -15,7 +15,6 @@
 				<p>
 					<label for="email">{$lblEmailAddress|ucfirst}</label>
 					{$txtEmail} {$txtEmailError}
-					<span class="helpTxt">{$msgAddMultipleEmails|ucfirst}</span>
 				</p>
 			</div>
 		</div>
@@ -26,6 +25,7 @@
 						{iteration:groups}<li>{$groups.chkGroups} <label for="{$groups.id}">{$groups.label|ucfirst}</label></li>{/iteration:groups}
 					</ul>
 				{/option:groups}
+				{$chkGroupsError}
 			</div>
 		</div>
 	</div>

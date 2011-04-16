@@ -180,6 +180,11 @@ input[type="submit"] {
 			width: 210px;
 		}
 
+.forkForms .horizontal .multipleTextWrapper {
+	margin-left: 115px;
+}
+		
+		
 .forkForms .section {
 	clear: both;
 	padding: 6px 0;

@@ -304,6 +304,10 @@
         <translation language="en"><![CDATA[Complete step 3 first]]></translation>
         <translation language="nl"><![CDATA[Vervolledig eerst stap 3]]></translation>
       </item>
+      <item type="error" name="ContainsInvalidEmail">
+        <translation language="en"><![CDATA[This field contains an invalid emailaddress.]]></translation>
+        <translation language="nl"><![CDATA[Dit veld bevat een ongeldig emailadres.]]></translation>
+      </item>
       <item type="error" name="CSVIsRequired">
         <translation language="en"><![CDATA[Choose a .csv file to upload.]]></translation>
         <translation language="nl"><![CDATA[Kies een .csv bestand om te uploaden.]]></translation>
