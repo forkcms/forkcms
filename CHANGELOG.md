@@ -21,14 +21,16 @@ Improvements:
 	* Blog: creating categories can now be done without leaving the add/edit screen.
 	* Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
 	* Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.
+	* Blog: in the dropdown to filter on a category the count is now included.
+	* Blog: when canceling adding a new category the previous selected one will be reselected, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/147
 	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
 	* Pages: implemented drafts, similar to Blog.
 	* Pages: when changing templates the textual-content isn't deleted anymore.
 	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
 	* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
-	* Installer: refactored pages installation.
 	* Mailmotor: added extra validation for adding address(es)
 	* Mailmotor: adding multiple addresses now uses the multipleTextbox-functionality.
+	* Installer: refactored pages installation.
 
 2.1.0 (2011-03-14)
 --
