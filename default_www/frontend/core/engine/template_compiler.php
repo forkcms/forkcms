@@ -47,10 +47,10 @@ class FrontendTemplateCompiler extends SpoonTemplateCompiler
 				?>' . $match[1] . '<?php
 				$includes[] = str_replace(\'//\', \'/\', eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\'));
 				ob_start();
-				?>'. $this->variables['THEME_PATH'] . '/' . $match[1] . '<?php
+				?>' . $this->variables['THEME_PATH'] . '/' . $match[1] . '<?php
 				$includes[] = str_replace(\'//\', \'/\', eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\'));
 				ob_start();
-				?>'. $this->variables['FRONTEND_PATH'] . '/' . $match[1] . '<?php
+				?>' . $this->variables['FRONTEND_PATH'] . '/' . $match[1] . '<?php
 				$includes[] = str_replace(\'//\', \'/\', eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\'));
 				foreach($includes as $include) if(@file_exists($include) && is_file($include)) break;
 				if($this->getForceCompile()) $this->compile(\'' . dirname(realpath($this->template)) . '\', $include);
