@@ -6,8 +6,9 @@ Bugfixes:
 	* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
 	* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions. 
 	* Bugfix: improve "incomplete" (autocomplete) searching for multiple words (only the last word should be considered incomplete.)
-	* Bugfix: removed empty widgets, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/150
+	* Bugfix: removed empty widgets, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/150.
 	* Bugfix: hover-event wasn't unbind correctly when sorting the widgets was done.
+	* Bugfix: importing addresses into the mailmotor was borked, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/143.
 
 Improvements:
 	* Core: when using datefields with till, from, range set, it will be validated according the type.
@@ -28,7 +29,7 @@ Improvements:
 	* Pages: when changing templates the textual-content isn't deleted anymore.
 	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
 	* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
-	* Mailmotor: added extra validation for adding address(es)
+	* Mailmotor: added extra validation for adding address(es).
 	* Mailmotor: adding multiple addresses now uses the multipleTextbox-functionality.
 	* Installer: refactored pages installation.
 
