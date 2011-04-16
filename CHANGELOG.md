@@ -6,6 +6,8 @@ Bugfixes:
 	* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
 	* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions. 
 	* Bugfix: improve "incomplete" (autocomplete) searching for multiple words (only the last word should be considered incomplete.)
+	* Bugfix: removed empty widgets, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/150
+	* Bugfix: hover-event wasn't unbind correctly when sorting the widgets was done.
 
 Improvements:
 	* Core: when using datefields with till, from, range set, it will be validated according the type.
