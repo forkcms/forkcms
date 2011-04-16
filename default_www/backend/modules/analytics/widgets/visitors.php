@@ -32,8 +32,8 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		$this->header->addCSS('widgets.css', 'analytics');
 
 		// add highchart javascript
-		$this->header->addJavascript('highcharts.js', 'analytics');
-		$this->header->addJavascript('analytics.js', 'analytics');
+		$this->header->addJS('highcharts.js', 'analytics');
+		$this->header->addJS('analytics.js', 'analytics');
 
 		// parse
 		$this->parse();

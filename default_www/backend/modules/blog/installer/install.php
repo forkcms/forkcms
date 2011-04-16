@@ -98,10 +98,10 @@ class BlogInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// fetch current categoryId
-			$currentCategoryId = $this->getCategory($language);
+			$this->defaultCategoryId = $this->getCategory($language);
 
 			// no category exists
-			if($currentCategoryId == 0)
+			if($this->defaultCategoryId == 0)
 			{
 				// add category
 				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');

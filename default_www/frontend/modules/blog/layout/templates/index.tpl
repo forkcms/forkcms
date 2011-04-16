@@ -34,7 +34,7 @@
 
 								{* Tags*}
 								{option:items.tags}
-									{$lblWith} {$lblThe} {$lblTags} 
+									{$lblWith} {$lblThe} {$lblTags}
 									{iteration:items.tags}
 										<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.name}">{$items.tags.name}</a>{option:!items.tags.last}, {/option:!items.tags.last}{option:items.tags.last}.{/option:items.tags.last}
 									{/iteration:items.tags}
@@ -42,11 +42,11 @@
 							</li>
 							<li>
 								{* Comments *}
-								{option:!comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
-								{option:comments}
-									{option:blogCommentsMultiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
-									{option:!blogCommentsMultiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
-								{/option:comments}
+								{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
+								{option:items.comments}
+									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
+								{/option:items.comments}
 							</li>
 						</ul>
 					</header>
@@ -58,5 +58,5 @@
 			</article>
 		{/iteration:items}
 	</div>
-	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
+	{include:core/layout/templates/pagination.tpl}
 {/option:items}

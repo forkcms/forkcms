@@ -291,7 +291,7 @@ class SpoonFormPassword extends SpoonFormInput
 		if($this->attributes['name'] == '') throw new SpoonFormException('A name is required for a password field. Please provide a name.');
 
 		// start html generation
-		$output = '<input type="password" value="' . str_replace(array('"', '<', '>'), array('&quot;', '&lt;', '&gt'), $this->getValue()) . '"';
+		$output = '<input type="password" value="' . str_replace(array('"', '<', '>'), array('&quot;', '&lt;', '&gt;'), $this->getValue()) . '"';
 
 		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) . ' />';

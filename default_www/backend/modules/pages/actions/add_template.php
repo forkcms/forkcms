@@ -49,7 +49,11 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		// init var
 		$maximumBlocks = 20;
 
+		// available themes
+		$themes = SpoonDirectory::getList(FRONTEND_PATH . '/themes', true);
+
 		// create elements
+		$this->frm->addDropdown('theme', array_combine($themes, $themes));
 		$this->frm->addText('label');
 		$this->frm->addText('file');
 		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), 3);
