@@ -96,8 +96,21 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		// paths that should be ignored
 		$ignore = array(BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/tiny_mce', FRONTEND_CACHE_PATH);
 
+		// get active modules
+		$activeModules = BackendModel::getModules(true);
+
 		// get the folder listing
-		$items = SpoonDirectory::getList($path, true, array('.svn'));
+		$items = SpoonDirectory::getList($path, true, array('.svn', '.git'));
+
+		// already in the modules?
+		if(substr_count($path, '/modules/') > 0)
+		{
+			// get last chunk
+			$moduleName = substr($path, strrpos($path, '/') + 1);
+
+			// don't go any deeper
+			if(!in_array($moduleName, $activeModules)) return $tree;
+		}
 
 		// loop items
 		foreach($items as $item)
@@ -206,7 +219,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$lbl = array();
 
 		// get labels from navigation
-		array_walk_recursive($navigation->navigation, array('self', 'getLabelsFromBackendNavigation'), &$lbl);
+		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), &$lbl);
 		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
 
 		// get labels from table
