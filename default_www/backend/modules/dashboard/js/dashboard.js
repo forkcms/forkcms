@@ -56,7 +56,7 @@ jsBackend.dashboard =
 		$('.sortableWidget').each(function() {
 			if($(this).find('.box').length == 0) $(this).remove();
 		})
-		
+
 		// make them sortable
 		$('.column').sortable(
 			{
