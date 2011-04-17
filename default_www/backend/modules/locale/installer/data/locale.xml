@@ -228,7 +228,7 @@
       </item>
       <item type="error" name="JavascriptNotEnabled">
         <translation language="nl"><![CDATA[Om Fork CMS te gebruiken moet Javascript geactiveerd zijn in uw browser. Activeer javascript en vernieuw deze pagina.]]></translation>
-        <translation language="en"><![CDATA[To use Fork CMS]]></translation>
+        <translation language="en"><![CDATA[To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.]]></translation>
       </item>
       <item type="error" name="JPGGIFAndPNGOnly">
         <translation language="nl"><![CDATA[Enkel jpg]]></translation>
@@ -678,6 +678,10 @@
         <translation language="nl"><![CDATA[algemene instellingen]]></translation>
         <translation language="en"><![CDATA[general settings]]></translation>
       </item>
+      <item type="label" name="Generate">
+        <translation language="nl"><![CDATA[genereer]]></translation>
+        <translation language="en"><![CDATA[generate]]></translation>
+      </item>
       <item type="label" name="GoToPage">
         <translation language="nl"><![CDATA[ga naar pagina]]></translation>
         <translation language="en"><![CDATA[go to page]]></translation>
@@ -879,7 +883,7 @@
         <translation language="en"><![CDATA[none]]></translation>
       </item>
       <item type="label" name="Notifications">
-        <translation language="nl"><![CDATA[verwitigingen]]></translation>
+        <translation language="nl"><![CDATA[verwittigingen]]></translation>
         <translation language="en"><![CDATA[notifications]]></translation>
       </item>
       <item type="label" name="NoTheme">

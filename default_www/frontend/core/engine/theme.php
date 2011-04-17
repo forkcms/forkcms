@@ -41,7 +41,7 @@ class FrontendTheme
 			if(strpos($file, 'frontend/themes/' . $theme) === false)
 			{
 				// add theme location
-				$themeTemplate = str_replace(array('frontend/'), array('frontend/themes/' . $theme .'/'), $file);
+				$themeTemplate = str_replace(array('frontend/'), array('frontend/themes/' . $theme . '/'), $file);
 
 				// check if this template exists
 				if(SpoonFile::exists(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) $file = $themeTemplate;

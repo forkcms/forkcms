@@ -256,7 +256,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->tpl->assign('dgRecent', (is_object($this->dgRecent) && $this->dgRecent->getNumResults() != 0) ? $this->dgRecent->getContent() : false);
 
 		// get categories
-		$categories = BackendBlogModel::getCategories();
+		$categories = BackendBlogModel::getCategories(true);
 
 		// multiple categories?
 		if(count($categories) > 1)

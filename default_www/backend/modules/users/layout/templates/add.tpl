@@ -22,10 +22,12 @@
 						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
-					<p>
-						<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtPassword} {$txtPasswordError}
-					</p>
+					<div class="oneLiner" style="margin-bottom: 6px;">
+						<p>
+							<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtPassword} {$txtPasswordError}
+						</p>
+					</div>
 					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
 						<tr>
 							<td class="strength" id="passwordStrength">
