@@ -609,7 +609,12 @@ class BackendModel
 		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
 
 		// create array
-		return array_combine($themes, $themes);
+		$themes = array_combine($themes, $themes);
+
+		// add core templates
+		$themes = array_merge(array('core' => BL::lbl('NoTheme')), $themes);
+
+		return $themes;
 	}
 
 

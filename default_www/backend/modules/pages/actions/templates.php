@@ -66,7 +66,7 @@ class BackendPagesTemplates extends BackendBaseActionEdit
 		$this->selectedTheme = $this->getParameter('theme', 'string');
 
 		// build available themes
-		$this->availableThemes = array_merge(array('core' => BL::lbl('NoTheme')), BackendModel::getThemes());
+		$this->availableThemes = BackendModel::getThemes();
 
 		// determine selected theme, based upon submitted form or default theme
 		$this->selectedTheme = SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('core', 'theme', 'core'));
