@@ -31,10 +31,10 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 			$success = false;
 
 			// get template (we need the title)
-			$template = BackendPagesModel::getTemplate($this->id);
+			$item = BackendPagesModel::getTemplate($this->id);
 
 			// valid template?
-			if(!empty($template))
+			if(!empty($item))
 			{
 				// delete the page
 				$success = BackendPagesModel::deleteTemplate($this->id);
@@ -44,7 +44,7 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 			}
 
 			// page is deleted, so redirect to the overview
-			if($success) $this->redirect(BackendModel::createURLForAction('templates') . '&report=deleted-template&var=' . urlencode($template['label']));
+			if($success) $this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
 			else $this->redirect(BackendModel::createURLForAction('templates') . '&error=non-existing');
 		}
 

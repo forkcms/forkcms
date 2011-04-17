@@ -17,7 +17,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 *
 	 * @var	array
 	 */
-	private $blocks = array(), $blocksContent = array();
+	private $blocks = array();
 
 
 	/**

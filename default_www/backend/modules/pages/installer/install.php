@@ -40,9 +40,6 @@ class PagesInstall extends ModuleInstaller
 		// set rights
 		$this->setRights();
 
-		// set settings
-		$this->setSettings();
-
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
@@ -262,7 +259,10 @@ class PagesInstall extends ModuleInstaller
 
 		// recalculate num_blocks
 		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates'), true);
+
+		// disable meta navigation
 		$this->setSetting('pages', 'meta_navigation', false);
+
 	}
 
 
@@ -463,20 +463,6 @@ class PagesInstall extends ModuleInstaller
 		$this->setActionRights(1, 'pages', 'delete_template');
 
 		$this->setActionRights(1, 'pages', 'settings');
-	}
-
-
-	/**
-	 * Store the settings
-	 *
-	 * @return	void
-	 */
-	private function setSettings()
-	{
-		// general settings
-		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates'));
-		$this->setSetting('pages', 'meta_navigation', true);
-		$this->setSetting('pages', 'default_template', 1);
 	}
 }
 

@@ -49,11 +49,8 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		// init var
 		$maximumBlocks = 20;
 
-		// available themes
-		$themes = SpoonDirectory::getList(FRONTEND_PATH . '/themes', true);
-
 		// create elements
-		$this->frm->addDropdown('theme', array_combine($themes, $themes));
+		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', 'core'));
 		$this->frm->addText('label');
 		$this->frm->addText('file');
 		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), 3);
@@ -156,6 +153,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build array
+				$item['theme'] = $this->frm->getField('theme')->getValue();
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
@@ -177,10 +175,10 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$item['id'] = BackendPagesModel::insertTemplate($item);
 
 				// set default template
-				if($this->frm->getField('default')->getChecked()) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('templates') . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

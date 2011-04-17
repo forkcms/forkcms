@@ -266,6 +266,10 @@
         <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No items were selected.]]></translation>
       </item>
+      <item type="error" name="NoTemplatesAvailable">
+        <translation language="nl"><![CDATA[Het geselecteerde thema heeft nog geen templates. Gelieve eerst minstens een template aan te maken.]]></translation>
+        <translation language="en"><![CDATA[The selected theme does not yet have templates. Please create at least one template first.]]></translation>
+      </item>
       <item type="error" name="PasswordIsRequired">
         <translation language="nl"><![CDATA[Gelieve een wachtwoord in te geven.]]></translation>
         <translation language="en"><![CDATA[Please provide a password.]]></translation>
