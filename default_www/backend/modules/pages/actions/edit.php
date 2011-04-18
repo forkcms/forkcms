@@ -58,9 +58,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->loadData();
 
 		// add js
-		$this->header->addJavascript('jstree/jquery.tree.js');
-		$this->header->addJavascript('jstree/lib/jquery.cookie.js');
-		$this->header->addJavascript('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js');
+		$this->header->addJS('jstree/lib/jquery.cookie.js');
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
@@ -85,7 +85,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i,);
+		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i);
 
 		// load the form
 		$this->loadForm();
@@ -117,54 +117,62 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// get record
 		$this->id = $this->getParameter('id', 'int');
 
-		// validate id
-		if($this->id !== null && BackendPagesModel::exists($this->id))
+		// check if something went wrong
+		if($this->id === null || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+
+		// get the record
+		$this->record = BackendPagesModel::get($this->id);
+
+		// load blocks
+		$this->blocksContent = BackendPagesModel::getBlocks($this->id);
+
+		// is there a revision specified?
+		$revisionToLoad = $this->getParameter('revision', 'int');
+
+		// if this is a valid revision
+		if($revisionToLoad !== null)
 		{
-			// get the record
-			$this->record = BackendPagesModel::get($this->id);
+			// save current template
+			$templateId = $this->record['template_id'];
+
+			// overwrite the current record
+			$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
+
+			// template is not part of revision; only data
+			$this->record['template_id'] = $templateId;
 
 			// load blocks
-			$this->blocksContent = BackendPagesModel::getBlocks($this->id);
+			$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
 
-			// is there a revision specified?
-			$revisionToLoad = $this->getParameter('revision', 'int');
-
-			// if this is a valid revision
-			if($revisionToLoad !== null)
-			{
-				// overwrite the current record
-				$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
-
-				// load blocks
-				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
-
-				// show warning
-				$this->tpl->assign('appendRevision', true);
-			}
-
-			// is there a revision specified?
-			$draftToLoad = $this->getParameter('draft', 'int');
-
-			// if this is a valid revision
-			if($draftToLoad !== null)
-			{
-				// overwrite the current record
-				$this->record = (array) BackendPagesModel::getRevision($this->id, $draftToLoad);
-
-				// load blocks
-				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $draftToLoad);
-
-				// show warning
-				$this->tpl->assign('appendRevision', true);
-			}
-
-			// reset some vars
-			$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
-			$this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
+			// show warning
+			$this->tpl->assign('appendRevision', true);
 		}
 
-		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		// is there a revision specified?
+		$draftToLoad = $this->getParameter('draft', 'int');
+
+		// if this is a valid revision
+		if($draftToLoad !== null)
+		{
+			// save current template
+			$templateId = $this->record['template_id'];
+
+			// overwrite the current record
+			$this->record = (array) BackendPagesModel::getRevision($this->id, $draftToLoad);
+
+			// template is not part of draft; only data
+			$this->record['template_id'] = $templateId;
+
+			// load blocks
+			$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $draftToLoad);
+
+			// show warning
+			$this->tpl->assign('appendRevision', true);
+		}
+
+		// reset some vars
+		$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
+		$this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
 	}
 
 
@@ -432,52 +440,66 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// build blocks
 				$blocks = array();
 
+				// no blocks should go to waste; even if the new template has fewer blocks, retain existing content
+				$maxNumBlocks = max(count($this->blocksContent), $this->templates[$page['template_id']]['num_blocks']);
+
 				// loop blocks in template
-				for($i = 0; $i < $this->templates[$page['template_id']]['num_blocks']; $i++)
+				for($i = 0; $i < $maxNumBlocks; $i++)
 				{
-					// get the extra id
-					$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
-
-					// reset some stuff
-					if($extraId <= 0) $extraId = null;
-
-					// init var
-					$html = null;
-
-					// extra-type is HTML
-					if($extraId === null)
+					// check if this block has been submitted
+					if(isset($_POST['block_extra_id_' . $i]))
 					{
-						// reset vars
-						$extraId = null;
-						$html = (string) $this->frm->getField('block_html_' . $i)->getValue();
+						// get the extra id
+						$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
+
+						// reset some stuff
+						if($extraId <= 0) $extraId = null;
+
+						// init var
+						$html = null;
+
+						// extra-type is HTML
+						if($extraId === null)
+						{
+							// reset vars
+							$extraId = null;
+							$html = (string) $this->frm->getField('block_html_' . $i)->getValue();
+						}
+
+						// not HTML
+						else
+						{
+							// type of block
+							if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
+							{
+								// home can't have blocks
+								if($this->record['id'] == 1) throw new BackendException('Home can\'t have any blocks.');
+
+								// set error
+								if($hasBlock) throw new BackendException('Can\'t add 2 blocks');
+
+								// reset var
+								$hasBlock = true;
+							}
+						}
+
+						// build block
+						$block = array();
+						$block['id'] = (isset($this->blocksContent[$i]['id'])) ? $this->blocksContent[$i]['id'] : BackendPagesModel::getMaximumBlockId() + ($i + 1);
+						$block['revision_id'] = $page['revision_id'];
+						$block['extra_id'] = $extraId;
+						$block['html'] = $html;
+						$block['status'] = 'active';
+						$block['created_on'] = (isset($this->blocksContent[$i]['created_on'])) ? BackendModel::getUTCDate(null, $this->blocksContent[$i]['created_on']) : BackendModel::getUTCDate();
+						$block['edited_on'] = BackendModel::getUTCDate();
 					}
 
-					// not HTML
+					// block was not submitted: use existing data
 					else
 					{
-						// type of block
-						if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
-						{
-							// home can't have blocks
-							if($this->record['id'] == 1) throw new BackendException('Home can\'t have any blocks.');
-
-							// set error
-							if($hasBlock) throw new BackendException('Can\'t add 2 blocks');
-
-							// reset var
-							$hasBlock = true;
-						}
+						$block = $this->blocksContent[$i];
+						$block['revision_id'] = $page['revision_id'];
 					}
-
-					// build block
-					$block = array();
-					$block['id'] = (isset($this->blocksContent[$i]['id'])) ? $this->blocksContent[$i]['id'] : BackendPagesModel::getMaximumBlockId() + ($i + 1);
-					$block['revision_id'] = $page['revision_id'];
-					$block['extra_id'] = $extraId;
-					$block['html'] = $html;
-					$block['status'] = 'active';
-					$block['created_on'] = (isset($this->blocksContent[$i]['created_on'])) ? BackendModel::getUTCDate(null, $this->blocksContent[$i]['created_on']) : BackendModel::getUTCDate();
-					$block['edited_on'] = BackendModel::getUTCDate();
 
 					// add block
 					$blocks[] = $block;

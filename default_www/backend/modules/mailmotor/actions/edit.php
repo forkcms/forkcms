@@ -58,7 +58,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			parent::execute();
 
 			// load jquery tiny
-			$this->header->addJavascript('tiny_mce/jquery.tinymce.js', 'core');
+			$this->header->addJS('tiny_mce/jquery.tinymce.js', 'core');
 
 			// get all data for the item we want to edit
 			$this->getData();

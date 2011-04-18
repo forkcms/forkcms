@@ -37,7 +37,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	string
 	 */
-	private $cacheDirectory = '.';
+	protected $cacheDirectory = '.';
 
 
 	/**
@@ -45,7 +45,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	string
 	 */
-	private $compileDirectory = '.';
+	protected $compileDirectory = '.';
 
 
 	/**
@@ -53,7 +53,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	string
 	 */
-	private $content;
+	protected $content;
 
 
 	/**
@@ -61,7 +61,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	bool
 	 */
-	private $forceCompile = false;
+	protected $forceCompile = false;
 
 
 	/**
@@ -69,7 +69,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	array
 	 */
-	private $forms = array();
+	protected $forms = array();
 
 
 	/**
@@ -77,7 +77,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	array
 	 */
-	private $iterations = array();
+	protected $iterations = array();
 
 
 	/**
@@ -85,7 +85,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	int
 	 */
-	private $iterationsCounter;
+	protected $iterationsCounter;
 
 
 	/**
@@ -93,7 +93,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	array
 	 */
-	private $modifiers = array();
+	protected $modifiers = array();
 
 
 	/**
@@ -101,7 +101,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	bool
 	 */
-	private $parsed = false;
+	protected $parsed = false;
 
 
 	/**
@@ -109,7 +109,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	string
 	 */
-	private $template;
+	protected $template;
 
 
 	/**
@@ -117,7 +117,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	array
 	 */
-	private $templateVariables = array();
+	protected $templateVariables = array();
 
 
 	/**
@@ -125,7 +125,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	array
 	 */
-	private $variables = array();
+	protected $variables = array();
 
 
 	/**
@@ -148,7 +148,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The unique filename used to store the compiled template in the compile directory.
 	 * @param	string $template	The name of the template.
 	 */
-	private function getCompileName($template)
+	protected function getCompileName($template)
 	{
 		return md5(realpath($template)) . '_' . basename($template) . '.php';
 	}
@@ -171,7 +171,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @return	void
 	 */
-	private function parse()
+	protected function parse()
 	{
 		// not yet parsed
 		if(!$this->parsed)
@@ -234,7 +234,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing the parsed cache tags.
 	 * @param	string $content		The content that may contain the parse tags.
 	 */
-	private function parseCache($content)
+	protected function parseCache($content)
 	{
 		// regex pattern
 		$pattern = '/\{cache:(.*?)}.*?\{\/cache:\\1\}/is';
@@ -280,7 +280,7 @@ class SpoonTemplateCompiler
 	 * @param	string $content		The content that may contain the cycle tags.
 	 * @param	string $iteration	The iteration.
 	 */
-	private function parseCycle($content, $iteration)
+	protected function parseCycle($content, $iteration)
 	{
 		// regex pattern
 		$pattern = '/\{cycle((:(.*?))+)\}/is';
@@ -340,7 +340,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing the parsed form tags.
 	 * @param	string $content		The content that may contain the form tags.
 	 */
-	private function parseForms($content)
+	protected function parseForms($content)
 	{
 		// regex pattern
 		$pattern = '/\{form:([a-z0-9_]+?)\}?/siU';
@@ -403,7 +403,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing the parsed include tags.
 	 * @param	string $content		The content that may contain the include tags.
 	 */
-	private function parseIncludes($content)
+	protected function parseIncludes($content)
 	{
 		// regex pattern
 		// no unified restriction can be done on the allowed characters, that differs from one OS to another (see http://www.comentum.com/File-Systems-HFS-FAT-UFS.html)
@@ -457,7 +457,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing the parsed iteration tags.
 	 * @param	string $content		The content that may contain the iteration tags.
 	 */
-	private function parseIterations($content)
+	protected function parseIterations($content)
 	{
 		// fetch iterations
 		$pattern = '/(\{iteration_([0-9]+):([a-z0-9_]*)((\.[a-z0-9_]*)*)((-\>[a-z0-9_]*((\.[a-z0-9_]*)*))?)\})(.*?)(\{\/iteration_\\2:\\3\\4\\6\})/is';
@@ -590,7 +590,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing the parsed option tags.
 	 * @param	string $content		The content that may contain the option tags.
 	 */
-	private function parseOptions($content)
+	protected function parseOptions($content)
 	{
 		// regex pattern
 		$pattern = '/\{option:(\!?)([a-z0-9_]*)((\.[a-z0-9_]*)*)(-\>[a-z0-9_]*((\.[a-z0-9_]*)*))?}.*?\{\/option:\\1\\2\\3\\5?\}/is';
@@ -696,7 +696,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing the parsed variables.
 	 * @param	string $content		The content that may contain variables.
 	 */
-	private function parseVariables($content)
+	protected function parseVariables($content)
 	{
 		// we want to keep parsing vars until none can be found
 		while(1)
@@ -902,7 +902,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing reworked (unique) iteration tags.
 	 * @param	string $content		The content that may contain the iteration tags.
 	 */
-	private function prepareIterations($content)
+	protected function prepareIterations($content)
 	{
 		// fetch iterations - for iterations that are present more than one, only the last one will
 		// be matched, previous ones will be matches later on another run through our while loop
@@ -928,7 +928,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated iteration, containing a reworked (unique) iteration tag.
 	 * @param	string $match		The regex-match for an iteration.
 	 */
-	private function prepareIterationsCallback($match)
+	protected function prepareIterationsCallback($match)
 	{
 		// increment iterations counter
 		$this->iterationsCounter++;
@@ -944,7 +944,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, containing reworked fully parsed variables.
 	 * @param	string $content		The content that may contain the partially parsed variables.
 	 */
-	private function replaceVariables($content)
+	protected function replaceVariables($content)
 	{
 		// keep finding those variables!
 		while(1)
@@ -1025,7 +1025,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, no longer containing php code.
 	 * @param	string $content		The content that may contain php code.
 	 */
-	private function stripCode($content)
+	protected function stripCode($content)
 	{
 		return $content = preg_replace('/\<\?(php)?(.*)\?\>/si', '', $content);
 	}
@@ -1037,7 +1037,7 @@ class SpoonTemplateCompiler
 	 * @return	string				The updated content, no longer containing template comments.
 	 * @param	string $content		The content that may contain template comments.
 	 */
-	private function stripComments($content)
+	protected function stripComments($content)
 	{
 		// we want to keep stripping comments until none can be found
 		do

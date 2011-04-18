@@ -462,13 +462,16 @@ class ModuleInstaller
 		$revision = (array) $revision;
 		$meta = (array) $meta;
 
+		// deactive previous revisions
+		if(isset($revision['id']) && isset($revision['language'])) $this->getDB()->update('pages', array('status' => 'archive'), 'id = ? AND language = ?', array($revision['id'], $revision['language']));
+
 		// build revision
 		if(!isset($revision['language'])) throw new SpoonException('language is required for installing pages');
 		if(!isset($revision['title'])) throw new SpoonException('title is required for installing pages');
 		if(!isset($revision['id'])) $revision['id'] = (int) $this->getDB()->getVar('SELECT MAX(id) + 1 FROM pages WHERE language = ?', array($revision['language']));
 		if(!$revision['id']) $revision['id'] = 1;
 		if(!isset($revision['user_id'])) $revision['user_id'] = $this->getDefaultUserID();
-		if(!isset($revision['template_id'])) $revision['template_id'] = 1;
+		if(!isset($revision['template_id'])) $revision['template_id'] = $this->getDB()->getVar('SELECT id FROM pages_templates WHERE theme = ? ORDER BY path = ? DESC, id ASC', array($this->getSetting('core', 'theme'), 'core/layout/templates/default.tpl'));
 		if(!isset($revision['type'])) $revision['type'] = 'page';
 		if(!isset($revision['parent_id'])) $revision['parent_id'] = ($revision['type'] == 'page' ? 1 : 0);
 		if(!isset($revision['navigation_title'])) $revision['navigation_title'] = $revision['title'];
@@ -510,7 +513,7 @@ class ModuleInstaller
 		$revision['revision_id'] = $this->getDB()->insert('pages', $revision);
 
 		// get number of blocks to insert
-		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE active = ?', array('Y'));
+		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE theme = ? AND active = ?', array($this->getSetting('core', 'theme'), 'Y'));
 
 		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
 		$blocks = array();

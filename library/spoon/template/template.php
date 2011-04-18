@@ -37,7 +37,7 @@ class SpoonTemplate
 	 *
 	 * @var	array
 	 */
-	private $cache = array();
+	protected $cache = array();
 
 
 	/**
@@ -45,7 +45,7 @@ class SpoonTemplate
 	 *
 	 * @var	string
 	 */
-	private $cacheDirectory = '.';
+	protected $cacheDirectory = '.';
 
 
 	/**
@@ -53,7 +53,7 @@ class SpoonTemplate
 	 *
 	 * @var	string
 	 */
-	private $compileDirectory = '.';
+	protected $compileDirectory = '.';
 
 
 	/**
@@ -61,7 +61,7 @@ class SpoonTemplate
 	 *
 	 * @var	bool
 	 */
-	private $forceCompile = false;
+	protected $forceCompile = false;
 
 
 	/**
@@ -69,7 +69,7 @@ class SpoonTemplate
 	 *
 	 * @var	array
 	 */
-	private $forms = array();
+	protected $forms = array();
 
 
 	/**
@@ -77,7 +77,7 @@ class SpoonTemplate
 	 *
 	 * @var	array
 	 */
-	private $iterations = array();
+	protected $iterations = array();
 
 
 	/**
@@ -85,7 +85,7 @@ class SpoonTemplate
 	 *
 	 * @var	array
 	 */
-	private $variables = array();
+	protected $variables = array();
 
 
 	/**
@@ -371,7 +371,7 @@ class SpoonTemplate
 	 * @param	string $template		The filename of the template.
 	 * @param	string[optional] $path	The optional path to this template.
 	 */
-	private function getCompileName($template, $path = null)
+	protected function getCompileName($template, $path = null)
 	{
 		// redefine template
 		if($path !== null && realpath($template) === false) $template = $path . '/' . $template;

@@ -356,16 +356,29 @@ class BackendBlogModel
 	 * Get all categories
 	 *
 	 * @return	array
+	 * @param	bool[optional] $includeCount	Include the count?
 	 */
-	public static function getCategories()
+	public static function getCategories($includeCount = false)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getDB();
+
+		// we should include the count
+		if($includeCount)
+		{
+			return (array) BackendModel::getDB()->getPairs('SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
+															FROM blog_categories AS i
+															LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.language = p.language AND p.status = ?
+															WHERE i.language = ?
+															GROUP BY i.id',
+															array('active', BL::getWorkingLanguage()));
+		}
 
 		// get records and return them
 		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.title
 														FROM blog_categories AS i
-														WHERE i.language = ?', array(BL::getWorkingLanguage()));
+														WHERE i.language = ?',
+														array(BL::getWorkingLanguage()));
 	}
 
 
