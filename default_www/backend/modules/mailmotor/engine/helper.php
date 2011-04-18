@@ -684,16 +684,19 @@ class BackendMailmotorCMHelper
 		$listStats = self::getCM()->getListStatistics($listId);
 
 		// pagecount is calculated by getting the total amount of subscribers divided by 1k, which is the return limit for CM's getSubscribers()
-		$pageCount = (int) round($listStats['total_subscribers'] / 1000);
+		$pageCount = (int) ceil($listStats['total_subscribers'] / 1000);
 
 		// reserve a result stack
 		$results = array();
 
 		// check if we have at least 1 page
-		if($pageCount > 0)
+		if($listStats['total_subscribers'] !== 0)
 		{
+			// set the pagecount to 1 by default
+			$pageCount++;
+
 			// loop the total amount of pages and fetch the subscribers accordingly
-			for($i = 1; $i != ($pageCount + 1); $i++)
+			for($i = $pageCount; $i != 0; $i--)
 			{
 				// get the subscribers
 				$subscribers = self::getCM()->getSubscribers($listId, null, $i, 1000);
