@@ -1174,6 +1174,7 @@ class BackendPagesModel
 	 * Get templates
 	 *
 	 * @return	array
+	 * @param	string[optional] $theme		The thele we want to fetch the templates from.
 	 */
 	public static function getTemplates($theme = null)
 	{
@@ -1769,79 +1770,6 @@ class BackendPagesModel
 
 
 	/**
-	 * Switch templates for all existing pages
-	 *
-	 * @return	void
-	 * @param	int $oldTemplateId			The id of the new template to replace.
-	 * @param	int $newTemplateId			The id of the new template to use.
-	 */
-	public static function updatePagesTemplates($oldTemplateId, $newTemplateId)
-	{
-		// fetch new template data
-		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
-
-		// loop to update all pages
-		while(true)
-		{
-			// fetch a page
-			$page = BackendModel::getDB()->getRecord('SELECT *
-														FROM pages
-														WHERE template_id = ? AND status IN (?, ?)
-														LIMIT 1',
-														array($oldTemplateId, 'active', 'draft'));
-
-			// none found?
-			if(!$page) break;
-
-			// fetch blocks
-			$blocksContent = BackendPagesModel::getBlocksRevision($page['id'], $page['revision_id'], $page['language']);
-
-			// unset revision id
-			unset($page['revision_id']);
-
-			// change template
-			$page['template_id'] = $newTemplateId;
-
-			// save new page revision
-			$page['revision_id'] = BackendPagesModel::update($page);
-
-			// init blocks array
-			$blocks = array();
-
-			// loop missing blocks
-			for($i = 0; $i < max(count($blocksContent), (int) $newTemplate['num_blocks']); $i++)
-			{
-				$block = array();
-
-				// block already exists
-				if(isset($blocksContent[$i]))
-				{
-					$block = $blocksContent[$i];
-					$block['revision_id'] = $page['revision_id'];
-				}
-				// create missing blocks as editor
-				else
-				{
-					$block['id'] = BackendPagesModel::getMaximumBlockId() + $i + 1;
-					$block['revision_id'] = $page['revision_id'];
-					$block['extra_id'] = null;
-					$block['html'] = '';
-					$block['status'] = 'active';
-					$block['created_on'] = BackendModel::getUTCDate();
-					$block['edited_on'] = $block['created_on'];
-				}
-
-				// add block
-				$blocks[] = $block;
-			}
-
-			// insert the blocks
-			BackendPagesModel::insertBlocks($blocks, ($page['has_extra'] == 'Y'));
-		}
-	}
-
-
-	/**
 	 * Convert the template syntax into an array to work with
 	 *
 	 * @return	array
@@ -1961,6 +1889,79 @@ class BackendPagesModel
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
+	}
+
+
+	/**
+	 * Switch templates for all existing pages
+	 *
+	 * @return	void
+	 * @param	int $oldTemplateId			The id of the new template to replace.
+	 * @param	int $newTemplateId			The id of the new template to use.
+	 */
+	public static function updatePagesTemplates($oldTemplateId, $newTemplateId)
+	{
+		// fetch new template data
+		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
+
+		// loop to update all pages
+		while(true)
+		{
+			// fetch a page
+			$page = BackendModel::getDB()->getRecord('SELECT *
+														FROM pages
+														WHERE template_id = ? AND status IN (?, ?)
+														LIMIT 1',
+														array($oldTemplateId, 'active', 'draft'));
+
+			// none found?
+			if(!$page) break;
+
+			// fetch blocks
+			$blocksContent = BackendPagesModel::getBlocksRevision($page['id'], $page['revision_id'], $page['language']);
+
+			// unset revision id
+			unset($page['revision_id']);
+
+			// change template
+			$page['template_id'] = $newTemplateId;
+
+			// save new page revision
+			$page['revision_id'] = BackendPagesModel::update($page);
+
+			// init blocks array
+			$blocks = array();
+
+			// loop missing blocks
+			for($i = 0; $i < max(count($blocksContent), (int) $newTemplate['num_blocks']); $i++)
+			{
+				$block = array();
+
+				// block already exists
+				if(isset($blocksContent[$i]))
+				{
+					$block = $blocksContent[$i];
+					$block['revision_id'] = $page['revision_id'];
+				}
+				// create missing blocks as editor
+				else
+				{
+					$block['id'] = BackendPagesModel::getMaximumBlockId() + $i + 1;
+					$block['revision_id'] = $page['revision_id'];
+					$block['extra_id'] = null;
+					$block['html'] = '';
+					$block['status'] = 'active';
+					$block['created_on'] = BackendModel::getUTCDate();
+					$block['edited_on'] = $block['created_on'];
+				}
+
+				// add block
+				$blocks[] = $block;
+			}
+
+			// insert the blocks
+			BackendPagesModel::insertBlocks($blocks, ($page['has_extra'] == 'Y'));
+		}
 	}
 
 
