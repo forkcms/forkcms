@@ -47,6 +47,38 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Compile a given template.
+	 *
+	 * @return	void
+	 * @param	string $path		The path to the template, excluding the template filename.
+	 * @param 	string $template	The filename of the template within the path.
+	 */
+	public function compile($path, $template)
+	{
+		// redefine template
+		if(realpath($template) === false) $template = $path . '/' . $template;
+
+		// source file does not exist
+		if(!SpoonFile::exists($template)) return false;
+
+		// create object
+		$compiler = new FrontendTemplateCompiler($template, $this->variables);
+
+		// set some options
+		$compiler->setCacheDirectory($this->cacheDirectory);
+		$compiler->setCompileDirectory($this->compileDirectory);
+		$compiler->setForceCompile($this->forceCompile);
+		$compiler->setForms($this->forms);
+
+		// compile & save
+		$compiler->parseToFile();
+
+		// status
+		return true;
+	}
+
+
+	/**
 	 * Output the template into the browser
 	 * Will also assign the labels and all user-defined constants.
 	 * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
@@ -83,10 +115,40 @@ class FrontendTemplate extends SpoonTemplate
 		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
 
 		// get template path
-		$template = $this->getTemplatePath($template);
+		$template = FrontendTheme::getPath($template);
 
-		// call the parent
-		parent::display($template);
+		/*
+		 * Code below is exactly the same as from our parent (SpoonTemplate::display), exept
+		 * for the compiler being used. We want our own compiler extension here.
+		 */
+
+		// redefine
+		$template = (string) $template;
+
+		// validate name
+		if(trim($template) == '' || !SpoonFile::exists($template)) throw new SpoonTemplateException('Please provide an existing template.');
+
+		// compiled name
+		$compileName = $this->getCompileName((string) $template);
+
+		// compiled if needed
+		if($this->forceCompile || !SpoonFile::exists($this->compileDirectory . '/' . $compileName))
+		{
+			// create compiler
+			$compiler = new FrontendTemplateCompiler((string) $template, $this->variables);
+
+			// set some options
+			$compiler->setCacheDirectory($this->cacheDirectory);
+			$compiler->setCompileDirectory($this->compileDirectory);
+			$compiler->setForceCompile($this->forceCompile);
+			$compiler->setForms($this->forms);
+
+			// compile & save
+			$compiler->parseToFile();
+		}
+
+		// load template
+		require $this->compileDirectory . '/' . $compileName;
 	}
 
 
@@ -100,9 +162,6 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	public function getContent($template, $customHeaders = false, $parseCustom = false)
 	{
-		// get template path
-		$template = $this->getTemplatePath($template);
-
 		// turn on output buffering
 		ob_start();
 
@@ -111,43 +170,6 @@ class FrontendTemplate extends SpoonTemplate
 
 		// return template content
 		return ob_get_clean();
-	}
-
-
-	/**
-	 * Get the template path based on the theme.
-	 * If it does not exist in the theme it will return $template.
-	 *
-	 * @return	string					Path to the (theme) template.
-	 * @param	string $template		Path to the template.
-	 */
-	public function getTemplatePath($template)
-	{
-		// redefine
-		$template = (string) $template;
-
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// theme not yet specified
-			if(stripos($template, 'frontend/themes/' . $theme) === false)
-			{
-				// add theme location
-				$themeTemplate = str_replace(array('frontend', 'layout/'), array('frontend/themes/' . $theme, ''), $template);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $template = $themeTemplate;
-			}
-		}
-
-		// check if the file exists
-		if(!SpoonFile::exists($template)) throw new FrontendException('The template (' . $template . ') doesn\'t exists.');
-
-		// return template path
-		return $template;
 	}
 
 
@@ -174,7 +196,10 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function mapCustomModifiers()
 	{
-		// formating
+		// fetch the path for an include (theme file if available, core file otherwise)
+		$this->mapModifier('getpath', array('FrontendTemplateModifiers', 'getPath'));
+
+		// formatting
 		$this->mapModifier('formatcurrency', array('FrontendTemplateModifiers', 'formatCurrency'));
 
 		// URL for a specific pageId
@@ -541,6 +566,22 @@ class FrontendTemplateModifiers
 
 		// return page info
 		return $page[$field];
+	}
+
+
+	/**
+	 * Fetch the path for an include (theme file if available, core file otherwise)
+	 *
+	 * @return	string
+	 * @param	string $var		The variable.
+	 * @param	string $file	The base path.
+	 */
+	public static function getPath($var, $file)
+	{
+		// trick codensiffer
+		$var = (string) $var;
+
+		return FrontendTheme::getPath($file);
 	}
 
 

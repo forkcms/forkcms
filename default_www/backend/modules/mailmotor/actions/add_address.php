@@ -83,11 +83,27 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// shorten fields
-			$txtEmail = $this->frm->getField('email');
-
 			// validate fields
-			$txtEmail->isFilled(BL::err('EmailIsRequired'));
+			$this->frm->getField('email')->isFilled(BL::err('EmailIsRequired'));
+
+			// get addresses
+			$addresses = (array) explode(',', $this->frm->getField('email')->getValue());
+
+			// loop addresses
+			foreach($addresses as $email)
+			{
+				// validate email
+				if(!SpoonFilter::isEmail(trim($email)))
+				{
+					// add error if needed
+					$this->frm->getField('email')->addError(BL::err('ContainsInvalidEmail'));
+
+					// stop looking
+					break;
+				}
+			}
+
+			$this->frm->getField('groups')->isFilled(BL::err('ChooseAtLeastOneGroup'));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -97,27 +113,17 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 				$item['source'] = BL::lbl('Manual');
 				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
-				// groups found
-				if(!empty($item['groups']))
+				// loop the groups
+				foreach($item['groups'] as $group)
 				{
-					// loop the groups
-					foreach($item['groups'] as $group)
+					foreach($addresses as $email)
 					{
-						$emails = explode(',', $txtEmail->getValue());
-
-						foreach($emails as $email)
-						{
-							// trim whitespaces
-							$email = trim($email);
-
-							// insert the subscriber
-							if(SpoonFilter::isEmail($email)) BackendMailmotorCMHelper::subscribe($email, $group);
-						}
+						BackendMailmotorCMHelper::subscribe(trim($email), $group);
 					}
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']);
+				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added');
 			}
 		}
 	}

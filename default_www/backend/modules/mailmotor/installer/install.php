@@ -127,28 +127,28 @@ class MailmotorInstall extends ModuleInstaller
 		$unsubscribeFormID = $this->insertExtra('mailmotor', 'block', 'UnsubscribeForm', 'unsubscribe', null, 'N', 3002);
 		$widgetSubscribeFormID = $this->insertExtra('mailmotor', 'widget', 'SubscribeForm', 'subscribe', null, 'N', 3003);
 
-		// get the default templates
-		$templateID = (int) $this->getDB()->getVar('SELECT id FROM pages_templates WHERE label = ?', array('Triton - Default'));
+		// fetch template ids
+		$templateIds = $this->getDB()->getPairs('SELECT label, id FROM pages_templates WHERE theme = ?', array('triton'));
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
 			$parentID = (int) $this->insertPage(array('title' => 'Sent mailings',
-														'template_id' => $templateID,
+														'template_id' => $templateIds['Default'],
 														'type' => 'root',
 														'language' => $language),
 												null,
 												array('extra_id' => $sentMailingsID));
 
 			$this->insertPage(array('parent_id' => $parentID,
-									'template_id' => $templateID,
+									'template_id' => $templateIds['Default'],
 									'title' => 'Subscribe',
 									'language' => $language),
 								null,
 								array('extra_id' => $subscribeFormID));
 
 			$this->insertPage(array('parent_id' => $parentID,
-									'template_id' => $templateID,
+									'template_id' => $templateIds['Default'],
 									'title' => 'Unsubscribe',
 									'language' => $language),
 								null,

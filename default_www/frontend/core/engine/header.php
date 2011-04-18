@@ -81,10 +81,10 @@ class FrontendHeader extends FrontendBaseObject
 		if(SPOON_DEBUG) $this->addCSS('/frontend/core/layout/css/debug.css');
 
 		// add default javascript-files
-		$this->addJavascript('/frontend/core/js/jquery/jquery.js', false);
-		$this->addJavascript('/frontend/core/js/jquery/jquery.ui.js', false);
-		$this->addJavascript('/frontend/core/js/frontend.js', true);
-		$this->addJavascript('/frontend/core/js/utils.js', true);
+		$this->addJS('/frontend/core/js/jquery/jquery.js', false);
+		$this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
+		$this->addJS('/frontend/core/js/frontend.js', true);
+		$this->addJS('/frontend/core/js/utils.js', true);
 	}
 
 
@@ -102,32 +102,8 @@ class FrontendHeader extends FrontendBaseObject
 		$file = (string) $file;
 		$minify = (bool) $minify;
 
-		// theme is set
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core module
-			if(strpos($file, 'frontend/core/') !== false)
-			{
-				// path to possible theme css
-				$themeCSS = str_replace('frontend/core/layout', 'frontend/themes/' . $theme . '/core', $file);
-
-				// does this css exist?
-				if(SpoonFile::exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
-			}
-
-			// other modules
-			else
-			{
-				// path to possible theme css
-				$themeCSS = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/' . $theme . '/modules', ''), $file);
-
-				// does this css exist
-				if(SpoonFile::exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
-			}
-		}
+		// get file path
+		$file = FrontendTheme::getPath($file);
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
@@ -157,6 +133,8 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Add a javascript file into the array
 	 *
+	 * @deprecated	Deprecated since version 2.2.0. Will be removed in the next version.
+	 *
 	 * @return	void
 	 * @param 	string $file						The path to the javascript-file that should be loaded.
 	 * @param	bool[optional] $minify				Should the file be minified?
@@ -165,36 +143,27 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function addJavascript($file, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
 	{
+		$this->addJavascript($file, $minify, $parseThroughPHP, $addTimestamp);
+	}
+
+
+	/**
+	 * Add a javascript file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file						The path to the javascript-file that should be loaded.
+	 * @param	bool[optional] $minify				Should the file be minified?
+	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 * @param	bool[optional] $addTimestamp		May we add a timestamp for caching purposes?
+	 */
+	public function addJS($file, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
+	{
 		// redefine
 		$file = (string) $file;
 		$minify = (bool) $minify;
 
-		// theme set
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core module
-			if(strpos($file, 'frontend/core/') !== false)
-			{
-				// path to possible theme js
-				$themeJS = str_replace('frontend/core', 'frontend/themes/' . $theme . '/core', $file);
-
-				// does this js exist?
-				if(SpoonFile::exists(PATH_WWW . $themeJS)) $file = $themeJS;
-			}
-
-			// other modules
-			else
-			{
-				// path to possible theme js
-				$themeJS = str_replace('frontend/modules', 'frontend/themes/' . $theme . '/modules', $file);
-
-				// does this js exist
-				if(SpoonFile::exists(PATH_WWW . $themeJS)) $file = $themeJS;
-			}
-		}
+		// get file path
+		$file = FrontendTheme::getPath($file);
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;

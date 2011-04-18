@@ -115,6 +115,7 @@ class FrontendInit
 		$exceptions['frontendbaseobject'] = FRONTEND_CORE_PATH . '/engine/base.php';
 		$exceptions['frontendblockextra'] = FRONTEND_CORE_PATH . '/engine/block.php';
 		$exceptions['frontendblockwidget'] = FRONTEND_CORE_PATH . '/engine/block.php';
+		$exceptions['frontendtemplatecompiler'] = FRONTEND_CORE_PATH . '/engine/template_compiler.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
@@ -164,7 +165,7 @@ class FrontendInit
 						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
 						{
 							require_once $pathToLoad;
-							break;;
+							break;
 						}
 					}
 				}

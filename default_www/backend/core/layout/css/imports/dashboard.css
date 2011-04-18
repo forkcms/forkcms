@@ -29,6 +29,7 @@
 #dashboardWidgets .rightColumn {
 	float: left;
 	max-width: 407px;
+	min-height: 100px;
 	width: 33.3%;
 }
 

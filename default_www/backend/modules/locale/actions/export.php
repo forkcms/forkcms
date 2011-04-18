@@ -99,65 +99,8 @@ class BackendLocaleExport extends BackendBaseActionIndex
 	 */
 	private function createXML()
 	{
-		// init XML
-		$xml = new DOMDocument('1.0', 'utf-8');
-
-		// set some properties
-		$xml->preserveWhiteSpace = false;
-		$xml->formatOutput = true;
-
-		// locale root element
-		$root = $xml->createElement('locale');
-		$xml->appendChild($root);
-
-		// loop applications
-		foreach($this->locale as $application => $modules)
-		{
-			// create application element
-			$applicationElement = $xml->createElement($application);
-			$root->appendChild($applicationElement);
-
-			// loop modules
-			foreach($modules as $module => $types)
-			{
-				// create application element
-				$moduleElement = $xml->createElement($module);
-				$applicationElement->appendChild($moduleElement);
-
-				// loop types
-				foreach($types as $type => $items)
-				{
-					// loop items
-					foreach($items as $name => $translations)
-					{
-						// create application element
-						$itemElement = $xml->createElement('item');
-						$moduleElement->appendChild($itemElement);
-
-						// attributes
-						$itemElement->setAttribute('type', BackendLocaleModel::getTypeName($type));
-						$itemElement->setAttribute('name', $name);
-
-						// loop translations
-						foreach($translations as $translation)
-						{
-							// create translation
-							$translationElement = $xml->createElement('translation');
-							$itemElement->appendChild($translationElement);
-
-							// attributes
-							$translationElement->setAttribute('language', $translation['language']);
-
-							// set content
-							$translationElement->appendChild(new DOMCdataSection($translation['value']));
-						}
-					}
-				}
-			}
-		}
-
-		// save xml output
-		$xmlOutput = $xml->saveXML();
+		// create XML
+		$xmlOutput = BackendLocaleModel::createXMLForExport($this->locale);
 
 		// xml headers
 		$headers[] = 'Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"';

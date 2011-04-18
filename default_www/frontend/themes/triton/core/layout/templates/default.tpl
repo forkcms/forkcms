@@ -1,4 +1,4 @@
-{include:'{$THEME_PATH}/core/templates/head.tpl'}
+{include:core/layout/templates/head.tpl}
 
 <body class="{$LANGUAGE}">
 	<div id="topWrapper">
@@ -24,7 +24,7 @@
 				{* Language *}
 				<nav id="headerLanguage">
 					<h4>{$lblLanguage|ucfirst}</h4>
-					{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
+					{include:core/layout/templates/languages.tpl}
 				</nav>
 
 				{* Block 10 (default: Search) *}
@@ -42,8 +42,8 @@
 
 				{* Breadcrumb *}
 				<div id="breadcrumb">
-					<h4>{$lblBreadcrumb}</h4>
-					{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
+					<h4>{$lblBreadcrumb|ucfirst}</h4>
+					{include:core/layout/templates/breadcrumb.tpl}
 				</div>
 
 				{* Block 9 (default: Editor) *}
@@ -224,7 +224,7 @@
 		</noscript>
 	</div>
 	<div id="bottomWrapper">
-		{include:{$THEME_PATH}/core/templates/footer.tpl}
+		{include:core/layout/templates/footer.tpl}
 	</div>
 
 	{* Site wide HTML *}
