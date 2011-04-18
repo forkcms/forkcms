@@ -100,7 +100,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$contentPlain = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
 
 		// add unsubscribe link
-		if(mb_strpos($contentPlain, '[unsubscribe]') === false) $contentPlain .= PHP_EOL .'[unsubscribe]';
+		if(mb_strpos($contentPlain, '[unsubscribe]') === false) $contentPlain .= PHP_EOL . '[unsubscribe]';
 
 		// build data
 		$item['id'] = $this->mailing['id'];

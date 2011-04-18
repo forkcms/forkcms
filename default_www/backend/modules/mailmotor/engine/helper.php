@@ -676,7 +676,7 @@ class BackendMailmotorCMHelper
 	 * Returns all subscribers, regardless of the page limit CM gives us.
 	 *
 	 * @return	array
-	 * @param	string $listId
+	 * @param	string $listId	The list ID to get the subscribers from.
 	 */
 	public static function getSubscribers($listId)
 	{
