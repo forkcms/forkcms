@@ -673,6 +673,42 @@ class BackendMailmotorCMHelper
 
 
 	/**
+	 * Returns all subscribers, regardless of the page limit CM gives us.
+	 *
+	 * @return	array
+	 * @param	string $listId
+	 */
+	public static function getSubscribers($listId)
+	{
+		// get list statistics, so we can obtain the total subscribers for this list
+		$listStats = self::getCM()->getListStatistics($listId);
+
+		// pagecount is calculated by getting the total amount of subscribers divided by 1k, which is the return limit for CM's getSubscribers()
+		$pageCount = (int) round($listStats['total_subscribers'] / 1000);
+
+		// reserve a result stack
+		$results = array();
+
+		// check if we have at least 1 page
+		if($pageCount > 0)
+		{
+			// loop the total amount of pages and fetch the subscribers accordingly
+			for($i = 1; $i != ($pageCount + 1); $i++)
+			{
+				// get the subscribers
+				$subscribers = self::getCM()->getSubscribers($listId, null, $i, 1000);
+
+				// add the subscribers to the result stack
+				$results = array_merge($results, $subscribers);
+			}
+		}
+
+		// return the results
+		return $results;
+	}
+
+
+	/**
 	 * Returns the CampaignMonitor countries as pairs
 	 *
 	 * @return	array
