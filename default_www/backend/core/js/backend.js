@@ -1283,7 +1283,7 @@ jsBackend.tinyMCE =
 		$tmp.find('a[target=_blank]').addClass('targetBlank').removeAttr('target');
 
 		// resave
-		object.content = $tmp.html();
+		object.content = utils.string.xhtml($tmp.html());
 	},
 
 
@@ -1297,7 +1297,7 @@ jsBackend.tinyMCE =
 		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
 
 		// resave
-		object.content = $tmp.html();
+		object.content = utils.string.xhtml($tmp.html());
 	},
 
 
