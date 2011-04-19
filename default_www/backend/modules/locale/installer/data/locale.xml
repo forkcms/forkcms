@@ -228,7 +228,7 @@
       </item>
       <item type="error" name="JavascriptNotEnabled">
         <translation language="nl"><![CDATA[Om Fork CMS te gebruiken moet Javascript geactiveerd zijn in uw browser. Activeer javascript en vernieuw deze pagina.]]></translation>
-        <translation language="en"><![CDATA[To use Fork CMS]]></translation>
+        <translation language="en"><![CDATA[To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.]]></translation>
       </item>
       <item type="error" name="JPGGIFAndPNGOnly">
         <translation language="nl"><![CDATA[Enkel jpg]]></translation>
@@ -265,6 +265,10 @@
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No items were selected.]]></translation>
+      </item>
+      <item type="error" name="NoTemplatesAvailable">
+        <translation language="nl"><![CDATA[Het geselecteerde thema heeft nog geen templates. Gelieve eerst minstens een template aan te maken.]]></translation>
+        <translation language="en"><![CDATA[The selected theme does not yet have templates. Please create at least one template first.]]></translation>
       </item>
       <item type="error" name="PasswordIsRequired">
         <translation language="nl"><![CDATA[Gelieve een wachtwoord in te geven.]]></translation>
@@ -674,6 +678,10 @@
         <translation language="nl"><![CDATA[algemene instellingen]]></translation>
         <translation language="en"><![CDATA[general settings]]></translation>
       </item>
+      <item type="label" name="Generate">
+        <translation language="nl"><![CDATA[genereer]]></translation>
+        <translation language="en"><![CDATA[generate]]></translation>
+      </item>
       <item type="label" name="GoToPage">
         <translation language="nl"><![CDATA[ga naar pagina]]></translation>
         <translation language="en"><![CDATA[go to page]]></translation>
@@ -875,7 +883,7 @@
         <translation language="en"><![CDATA[none]]></translation>
       </item>
       <item type="label" name="Notifications">
-        <translation language="nl"><![CDATA[verwitigingen]]></translation>
+        <translation language="nl"><![CDATA[verwittigingen]]></translation>
         <translation language="en"><![CDATA[notifications]]></translation>
       </item>
       <item type="label" name="NoTheme">

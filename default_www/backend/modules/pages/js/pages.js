@@ -148,7 +148,7 @@ jsBackend.pages.extras =
 						if($('#templateList input:radio:checked').val() != $('#templateId').val())
 						{
 							// empty extra's (because most of the time extra's will be linked from the template)
-							$('.block_extra_id').val('');
+//							$('.block_extra_id').val('');
 
 							// clear content
 							for(var i in tinyMCE.editors) {

@@ -17,7 +17,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 *
 	 * @var	array
 	 */
-	private $blocks = array(), $blocksContent = array();
+	private $blocks = array();
 
 
 	/**
@@ -47,9 +47,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
-		$this->header->addJavascript('jstree/jquery.tree.js');
-		$this->header->addJavascript('jstree/lib/jquery.cookie.js');
-		$this->header->addJavascript('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js');
+		$this->header->addJS('jstree/lib/jquery.cookie.js');
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);

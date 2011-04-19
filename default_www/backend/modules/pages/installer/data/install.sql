@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `pages_extras` (
 
 CREATE TABLE IF NOT EXISTS `pages_templates` (
  `id` int(11) NOT NULL auto_increment COMMENT 'Unique ID for the template.',
+ `theme` varchar(255) default NULL COMMENT 'The name of the theme.',
  `label` varchar(255) NOT NULL COMMENT 'The label for the template, will be used for displaying purposes.',
  `path` varchar(255) NOT NULL COMMENT 'Filename for the template.',
  `num_blocks` int(11) NOT NULL default '1' COMMENT 'The number of blocks used in the template.',

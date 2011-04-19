@@ -583,7 +583,7 @@ class BackendTemplateModifiers
 	 * Convert this string into a well formed label.
 	 *
 	 * @return	string
-	 * @param	string $value
+	 * @param	string $value	The value to convert to a label.
 	 */
 	public static function toLabel($value)
 	{
