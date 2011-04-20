@@ -144,7 +144,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
 		$this->frm->addText('name', $this->filter['name']);
 		$this->frm->addText('value', $this->filter['value']);
-		$this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox(), $this->filter['language'], 'noFocus');
+		$this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod), $this->filter['language'], 'noFocus');
 		$this->frm->addMultiCheckbox('type', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus');
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
 		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::lbl('ChooseAModule')));
