@@ -24,8 +24,6 @@ jsBackend.faq =
 
 	/**
 	 * Check for empty categories and make it still possible to drop questions
-	 * 
-	 * @todo Look for a better way to do this... Kind of nasty
 	 */
 	checkForEmptyCategories: function()
 	{
