@@ -573,11 +573,14 @@ class FrontendTemplateModifiers
 	 * Fetch the path for an include (theme file if available, core file otherwise)
 	 *
 	 * @return	string
-	 * @param	string $var						The variable.
-	 * @param	string $path					The base path.
+	 * @param	string $var		The variable.
+	 * @param	string $file	The base path.
 	 */
 	public static function getPath($var, $file)
 	{
+		// trick codensiffer
+		$var = (string) $var;
+
 		return FrontendTheme::getPath($file);
 	}
 

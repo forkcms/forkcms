@@ -63,8 +63,8 @@
         <translation language="en"><![CDATA[The synonym for the searchterm "%1$s" was saved.]]></translation>
       </item>
       <item type="message" name="HelpWeight">
-        <translation language="nl"><![CDATA[Het standaard gewicht is 1. Als je zoekresultaten van een specifieke module belangrijker vindt]]></translation>
-        <translation language="en"><![CDATA[The default weight is 1. If you want to give search results from a specific module more importance]]></translation>
+        <translation language="nl"><![CDATA[Het standaard gewicht is 1. Als je zoekresultaten van een specifieke module belangrijker vindt.]]></translation>
+        <translation language="en"><![CDATA[The default weight is 1. If you want to give search results from a specific module more importance.]]></translation>
       </item>
       <item type="message" name="HelpWeightGeneral">
         <translation language="nl"><![CDATA[Definieer de belangrijkheid van iedere module in de zoekresultaten.]]></translation>

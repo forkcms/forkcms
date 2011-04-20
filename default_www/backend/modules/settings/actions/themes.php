@@ -7,6 +7,7 @@
  * @subpackage	settings
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSettingsThemes extends BackendBaseActionIndex
@@ -54,8 +55,7 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 		$this->frm = new BackendForm('settingsThemes');
 
 		// theme
-		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', null));
-		$this->frm->getField('theme')->setDefaultElement(BL::lbl('NoTheme'));
+		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', 'core'));
 	}
 
 
@@ -81,11 +81,80 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// no errors ?
+			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// theme
-				BackendModel::setModuleSetting('core', 'theme', $this->frm->getField('theme')->getValue());
+				// determine themes
+				$newTheme = $this->frm->getField('theme')->getValue();
+				$oldTheme = BackendModel::getModuleSetting('core', 'theme', 'core');
+
+				// check if we actually switched themes
+				if($newTheme != $oldTheme)
+				{
+					// fetch templates
+					$oldTemplates = BackendPagesModel::getTemplates($oldTheme);
+					$newTemplates = BackendPagesModel::getTemplates($newTheme);
+
+					// check if templates already exist
+					if(empty($newTemplates))
+					{
+						// templates do not yet exist; don't switch
+						$this->redirect(BackendModel::createURLForAction('themes') . '&error=no-templates-available');
+						exit;
+					}
+
+					// fetch current default template
+					$oldDefaultTemplatePath = $oldTemplates[BackendModel::getModuleSetting('pages', 'default_template')]['path'];
+
+					// loop new templates
+					foreach($newTemplates as $newTemplateId => $newTemplate)
+					{
+						// check if a a similar default template exists
+						if($newTemplate['path'] == $oldDefaultTemplatePath)
+						{
+							// set new default id
+							$newDefaultTemplateId = (int) $newTemplateId;
+							break;
+						}
+					}
+
+					// no default template was found, set first template as default
+					if(!isset($newDefaultTemplateId))
+					{
+						$newDefaultTemplateId = array_keys($newTemplates);
+						$newDefaultTemplateId = $newDefaultTemplateId[0];
+					}
+
+					// update theme
+					BackendModel::setModuleSetting('core', 'theme', $newTheme);
+
+					// set amount of blocks
+					BackendPagesModel::setMaximumBlocks();
+
+					// save new default template
+					BackendModel::setModuleSetting('pages', 'default_template', $newDefaultTemplateId);
+
+					// loop old templates
+					foreach($oldTemplates as $oldTemplateId => $oldTemplate)
+					{
+						// loop new templates
+						foreach($newTemplates as $newTemplateId => $newTemplate)
+						{
+							// check if we have a matching template
+							if($oldTemplate['path'] == $newTemplate['path'])
+							{
+								// switch template
+								BackendPagesModel::updatePagesTemplates($oldTemplateId, $newTemplateId);
+
+								// break loop
+								continue 2;
+							}
+						}
+
+						// getting here meant we found no matching template for the new theme; pick first theme's template as default
+						BackendPagesModel::updatePagesTemplates($oldTemplateId, $newDefaultTemplateId);
+					}
+				}
 
 				// assign report
 				$this->tpl->assign('report', true);

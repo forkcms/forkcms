@@ -92,6 +92,76 @@ class BackendLocaleModel
 
 
 	/**
+	 * Create an XML-string that can be used for export.
+	 *
+	 * @return	string
+	 * @param	array $items	The items.
+	 */
+	public static function createXMLForExport(array $items)
+	{
+		// init XML
+		$xml = new DOMDocument('1.0', 'utf-8');
+
+		// set some properties
+		$xml->preserveWhiteSpace = false;
+		$xml->formatOutput = true;
+
+		// locale root element
+		$root = $xml->createElement('locale');
+		$xml->appendChild($root);
+
+		// loop applications
+		foreach($items as $application => $modules)
+		{
+			// create application element
+			$applicationElement = $xml->createElement($application);
+			$root->appendChild($applicationElement);
+
+			// loop modules
+			foreach($modules as $module => $types)
+			{
+				// create application element
+				$moduleElement = $xml->createElement($module);
+				$applicationElement->appendChild($moduleElement);
+
+				// loop types
+				foreach($types as $type => $items)
+				{
+					// loop items
+					foreach($items as $name => $translations)
+					{
+						// create application element
+						$itemElement = $xml->createElement('item');
+						$moduleElement->appendChild($itemElement);
+
+						// attributes
+						$itemElement->setAttribute('type', BackendLocaleModel::getTypeName($type));
+						$itemElement->setAttribute('name', $name);
+
+						// loop translations
+						foreach($translations as $translation)
+						{
+							// create translation
+							$translationElement = $xml->createElement('translation');
+							$itemElement->appendChild($translationElement);
+
+							// attributes
+							$translationElement->setAttribute('language', $translation['language']);
+
+							// set content
+							$translationElement->appendChild(new DOMCdataSection($translation['value']));
+						}
+					}
+				}
+			}
+		}
+
+		// save xml output
+		return $xml->saveXML();
+	}
+
+
+	/**
 	 * Delete (multiple) items from locale
 	 *
 	 * @return	void
@@ -169,6 +239,620 @@ class BackendLocaleModel
 	public static function get($id)
 	{
 		return (array) BackendModel::getDB()->getRecord('SELECT * FROM locale WHERE id = ?', array((int) $id));
+	}
+
+
+	/**
+	 * Get the passed key should be treated as a label we add it to the array
+	 *
+	 * @return	void
+	 * @param	mixed $value	The value of the element.
+	 * @param	mixed $key		The key of the element.
+	 * @param	array $items	The array to append the found values to.
+	 */
+	private static function getLabelsFromBackendNavigation($value, $key, $items)
+	{
+		// add if needed
+		if((string) $key == 'label') $items[] = $value;
+	}
+
+
+	/**
+	 * Get the locale that is used in the backend but doesn't exists.
+	 *
+	 * @return	array
+	 * @param	string $language	The language to check.
+	 */
+	public static function getNonExistingBackendLocale($language)
+	{
+		// init some vars
+		$tree = self::getTree(BACKEND_PATH);
+		$modules = BackendModel::getModules(false);
+
+		// search fo the error module
+		$key = array_search('error', $modules);
+
+		// remove error module
+		if($key !== false) unset($modules[$key]);
+
+		$used = array();
+		$navigation = Spoon::get('navigation');
+		$lbl = array();
+
+		// get labels from navigation
+		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), &$lbl);
+		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
+
+		// get labels from table
+		$lbl = (array) BackendModel::getDB()->getColumn('SELECT label FROM pages_extras');
+		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
+
+		// loop files
+		foreach($tree as $file)
+		{
+			// grab content
+			$content = SpoonFile::getContent($file);
+
+			// process based on extension
+			switch(SpoonFile::getExtension($file))
+			{
+				// javascript file
+				case 'js':
+					$matches = array();
+
+					// get matches
+					preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $content, $matches);
+
+					// any matches?
+					if(isset($matches[2]))
+					{
+						// loop matches
+						foreach($matches[2] as $key => $match)
+						{
+							// set type
+							$type = $matches[1][$key];
+
+							// loop modules
+							foreach($modules as $module)
+							{
+								// determine if this is a module specific locale
+								if(substr($match, 0, mb_strlen($module)) == SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module))
+								{
+									// cleanup
+									$match = str_replace(SpoonFilter::toCamelCase($module), '', $match);
+
+									// init if needed
+									if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+									// add module
+									$used[$type][$match]['module_specific'][] = $module;
+								}
+							}
+
+							// init if needed
+							if(!isset($used[$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+							// add file
+							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+						}
+					}
+				break;
+
+				// PHP file
+				case 'php':
+					$matches = array();
+					$matchesURL = array();
+
+					// get matches
+					preg_match_all('/(BackendLanguage|BL)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU', $content, $matches);
+
+					// match errors
+					preg_match_all('/&(amp;)?(error|report)=([A-Z0-9-_]+)/i', $content, $matchesURL);
+
+					// any errormessages
+					if(!empty($matchesURL[0]))
+					{
+						// loop matches
+						foreach($matchesURL[3] as $key => $match)
+						{
+							$type = 'lbl';
+							if($matchesURL[2][$key] == 'error') $type = 'Error';
+							if($matchesURL[2][$key] == 'report') $type = 'Message';
+
+							$matches[0][] = '';
+							$matches[1][] = 'BL';
+							$matches[2][] = '';
+							$matches[3][] = $type;
+							$matches[4][] = SpoonFilter::toCamelCase($match, array('-', '_'));
+							$matches[5][] = '';
+						}
+					}
+
+					// any matches?
+					if(!empty($matches[4]))
+					{
+						// loop matches
+						foreach($matches[4] as $key => $match)
+						{
+							// set type
+							$type = 'lbl';
+							if($matches[3][$key] == 'Error' || $matches[2][$key] == 'err') $type = 'err';
+							if($matches[3][$key] == 'Message' || $matches[2][$key] == 'msg') $type = 'msg';
+
+							// specific module?
+							if(isset($matches[5][$key]) && $matches[5][$key] != '')
+							{
+								// try to grab the module
+								$specificModule = $matches[5][$key];
+								$specificModule = trim(str_replace(array(',', '\''), '', $specificModule));
+
+								// not core?
+								if($specificModule != 'core')
+								{
+									// dynamic module
+									if($specificModule == '$this->URL->getModule(')
+									{
+										// init var
+										$count = 0;
+
+										// replace
+										$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+
+										// validate
+										if($count == 1)
+										{
+											// split into chunks
+											$chunks = (array) explode('/', trim($modulePath, '/'));
+
+											// set specific module
+											if(isset($chunks[0])) $specificModule = $chunks[0];
+
+											// skip
+											else continue;
+										}
+									}
+
+									// init if needed
+									if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+									// add module
+									$used[$type][$match]['module_specific'][] = $specificModule;
+								}
+							}
+
+							else
+							{
+								// loop modules
+								foreach($modules as $module)
+								{
+									// determine if this is a module specific locale
+									if(substr($match, 0, mb_strlen($module)) == SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module) && ctype_upper(substr($match, mb_strlen($module) + 1, 1)))
+									{
+										// cleanup
+										$match = str_replace(SpoonFilter::toCamelCase($module), '', $match);
+
+										// init if needed
+										if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+										// add module
+										$used[$type][$match]['module_specific'][] = $module;
+									}
+								}
+							}
+
+							// init if needed
+							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+							// add file
+							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+						}
+					}
+				break;
+
+				// template file
+				case 'tpl':
+					$matches = array();
+
+					// get matches
+					preg_match_all('/\{\$(act|err|lbl|msg)([A-Z][a-zA-Z_]*)(\|.*)?\}/U', $content, $matches);
+
+					// any matches?
+					if(isset($matches[2]))
+					{
+						// loop matches
+						foreach($matches[2] as $key => $match)
+						{
+							// set type
+							$type = $matches[1][$key];
+
+							// loop modules
+							foreach($modules as $module)
+							{
+								// determine if this is a module specific locale
+								if(substr($match, 0, mb_strlen($module)) == SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module))
+								{
+									// cleanup
+									$match = str_replace(SpoonFilter::toCamelCase($module), '', $match);
+
+									// init if needed
+									if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+									// add module
+									$used[$type][$match]['module_specific'][] = $module;
+								}
+							}
+
+							// init if needed
+							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+							// add file
+							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+						}
+					}
+				break;
+			}
+		}
+
+		// init var
+		$nonExisting = array();
+
+		// check if the locale is present in the current language
+		foreach($used as $type => $items)
+		{
+			// loop items
+			foreach($items as $key => $data)
+			{
+				// process based on type
+				switch($type)
+				{
+					// error
+					case 'err':
+						// module specific?
+						if(!empty($data['module_specific']))
+						{
+							// loop modules
+							foreach($data['module_specific'] as $module)
+							{
+								// if the error isn't found add it to the list
+								if(substr_count(BL::err($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+							}
+						}
+
+						// not specific
+						else
+						{
+							// if the error isn't found add it to the list
+							if(substr_count(BL::err($key), '{$' . $type) > 0)
+							{
+								// init var
+								$exists = false;
+
+								// loop files
+								foreach($data['files'] as $file)
+								{
+									// init var
+									$count = 0;
+
+									// replace
+									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+
+									// validate
+									if($count == 1)
+									{
+										// split into chunks
+										$chunks = (array) explode('/', trim($modulePath, '/'));
+
+										// first part is the module
+										if(isset($chunks[0]) && BL::err($key, $chunks[0]) != '{$' . $type . SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
+									}
+								}
+
+								// doesn't exists
+								if(!$exists) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+							}
+						}
+					break;
+
+					// label
+					case 'lbl':
+						// module specific?
+						if(!empty($data['module_specific']))
+						{
+							// loop modules
+							foreach($data['module_specific'] as $module)
+							{
+								// if the label isn't found add it to the list
+								if(substr_count(BL::lbl($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+							}
+						}
+
+						// not specific
+						else
+						{
+							// if the label isn't found, check in the specific module
+							if(substr_count(BL::lbl($key), '{$' . $type) > 0)
+							{
+								// init var
+								$exists = false;
+
+								// loop files
+								foreach($data['files'] as $file)
+								{
+									// init var
+									$count = 0;
+
+									// replace
+									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+
+									// validate
+									if($count == 1)
+									{
+										// split into chunks
+										$chunks = (array) explode('/', trim($modulePath, '/'));
+
+										// first part is the module
+										if(isset($chunks[0]) && BL::lbl($key, $chunks[0]) != '{$' . $type . SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
+									}
+								}
+
+								// doesn't exists
+								if(!$exists) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+							}
+						}
+					break;
+
+					// message
+					case 'msg':
+						// module specific?
+						if(!empty($data['module_specific']))
+						{
+							// loop modules
+							foreach($data['module_specific'] as $module)
+							{
+								// if the message isn't found add it to the list
+								if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+							}
+						}
+
+						// not specific
+						else
+						{
+							// if the message isn't found add it to the list
+							if(substr_count(BL::msg($key), '{$' . $type) > 0)
+							{
+								// init var
+								$exists = false;
+
+								// loop files
+								foreach($data['files'] as $file)
+								{
+									// init var
+									$count = 0;
+
+									// replace
+									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+
+									// validate
+									if($count == 1)
+									{
+										// split into chunks
+										$chunks = (array) explode('/', trim($modulePath, '/'));
+
+										// first part is the module
+										if(isset($chunks[0]) && BL::msg($key, $chunks[0]) != '{$' . $type . SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
+									}
+								}
+
+								// doesn't exists
+								if(!$exists) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+							}
+						}
+					break;
+				}
+			}
+		}
+
+		// return
+		return $nonExisting;
+	}
+
+
+	/**
+	 * Get the locale that is used in the frontend but doesn't exists.
+	 *
+	 * @return	array
+	 * @param	string $language	The language to check.
+	 */
+	public static function getNonExistingFrontendLocale($language)
+	{
+		// get files to process
+		$tree = self::getTree(FRONTEND_PATH);
+		$used = array();
+
+		// loop files
+		foreach($tree as $file)
+		{
+			// grab content
+			$content = SpoonFile::getContent($file);
+
+			// process the file based on extension
+			switch(SpoonFile::getExtension($file))
+			{
+				// javascript file
+				case 'js':
+					$matches = array();
+
+					// get matches
+					preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $content, $matches);
+
+					// any matches?
+					if(isset($matches[2]))
+					{
+						// loop matches
+						foreach($matches[2] as $key => $match)
+						{
+							// set type
+							$type = $matches[1][$key];
+
+							// init if needed
+							if(!isset($used[$match])) $used[$type][$match] = array('files' => array());
+
+							// add file
+							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+						}
+					}
+				break;
+
+				// PHP file
+				case 'php':
+					$matches = array();
+
+					// get matches
+					preg_match_all('/(FrontendLanguage|FL)::(get(Action|Label|Error|Message)|act|lbl|err|msg)\(\'(.*)\'\)/iU', $content, $matches);
+
+					// any matches?
+					if(!empty($matches[4]))
+					{
+						// loop matches
+						foreach($matches[4] as $key => $match)
+						{
+							$type = 'lbl';
+							if($matches[3][$key] == 'Action') $type = 'act';
+							if($matches[2][$key] == 'act') $type = 'act';
+							if($matches[3][$key] == 'Error') $type = 'err';
+							if($matches[2][$key] == 'err') $type = 'err';
+							if($matches[3][$key] == 'Message') $type = 'msg';
+							if($matches[2][$key] == 'msg') $type = 'msg';
+
+							// init if needed
+							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
+
+							// add file
+							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+						}
+					}
+				break;
+
+				// template file
+				case 'tpl':
+					$matches = array();
+
+					// get matches
+					preg_match_all('/\{\$(act|err|lbl|msg)([a-z-_]*)(\|.*)?\}/iU', $content, $matches);
+
+					// any matches?
+					if(isset($matches[2]))
+					{
+						// loop matches
+						foreach($matches[2] as $key => $match)
+						{
+							// set type
+							$type = $matches[1][$key];
+
+							// init if needed
+							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
+
+							// add file
+							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+						}
+					}
+				break;
+			}
+		}
+
+		// init var
+		$nonExisting = array();
+
+		// set language
+		FrontendLanguage::setLocale($language);
+
+		// check if the locale is present in the current language
+		foreach($used as $type => $items)
+		{
+			// loop items
+			foreach($items as $key => $data)
+			{
+				// process based on type
+				switch($type)
+				{
+					// action
+					case 'act':
+						// if the action isn't available add it to the list
+						if(FL::act($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+					break;
+
+					// error
+					case 'err':
+						// if the error isn't available add it to the list
+						if(FL::err($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+					break;
+
+					// label
+					case 'lbl':
+						// if the label isn't available add it to the list
+						if(FL::lbl($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+					break;
+
+					// message
+					case 'msg':
+						// if the message isn't available add it to the list
+						if(FL::msg($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+					break;
+				}
+			}
+		}
+
+		// return
+		return $nonExisting;
+	}
+
+
+	/**
+	 * Get the filetree
+	 *
+	 * @return	array
+	 * @param	string $path			The path to get the filetree for.
+	 * @param	array[optional] $tree	An array to hold the results.
+	 */
+	private static function getTree($path, array $tree = array())
+	{
+		// paths that should be ignored
+		$ignore = array(BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/tiny_mce', FRONTEND_CACHE_PATH);
+
+		// get active modules
+		$activeModules = BackendModel::getModules(true);
+
+		// get the folder listing
+		$items = SpoonDirectory::getList($path, true, array('.svn', '.git'));
+
+		// already in the modules?
+		if(substr_count($path, '/modules/') > 0)
+		{
+			// get last chunk
+			$moduleName = substr($path, strrpos($path, '/') + 1);
+
+			// don't go any deeper
+			if(!in_array($moduleName, $activeModules)) return $tree;
+		}
+
+		// loop items
+		foreach($items as $item)
+		{
+			// if the path should be ignored, skip it
+			if(in_array($path . '/' . $item, $ignore)) continue;
+
+			// if the item is a directory we should index it also (recursive)
+			if(is_dir($path . '/' . $item)) $tree = self::getTree($path . '/' . $item, $tree);
+
+			else
+			{
+				// if the file has an extension that has to be processed add it into the tree
+				if(in_array(SpoonFile::getExtension($item), array('js', 'php', 'tpl'))) $tree[] = $path . '/' . $item;
+			}
+		}
+
+		// return
+		return $tree;
 	}
 
 

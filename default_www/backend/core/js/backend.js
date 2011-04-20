@@ -188,6 +188,7 @@ jsBackend.controls =
 		jsBackend.controls.bindFullWidthSwitch();
 		jsBackend.controls.bindMassCheckbox();
 		jsBackend.controls.bindMassAction();
+		jsBackend.controls.bindPasswordGenerator();
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
 		jsBackend.controls.bindTableCheckbox();
@@ -521,6 +522,23 @@ jsBackend.controls =
 	},
 
 
+	bindPasswordGenerator: function() 
+	{
+		if($('.passwordGenerator').length > 0)
+		{
+			$('.passwordGenerator').passwordGenerator(
+				{
+					length: 8,
+					numbers: false,
+					lowercase: true,
+					uppercase: true,
+					generateLabel: '{$lblGenerate|ucfirst}'
+				}
+			);
+		}
+	},
+	
+	
 	// bind the password strength meter to the correct inputfield(s)
 	bindPasswordStrengthMeter: function()
 	{
@@ -542,7 +560,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).bind('keyup', function()
+				$('#'+ id).live('keyup', function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
