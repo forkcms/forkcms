@@ -15,6 +15,14 @@
 class BackendContentBlocksEdit extends BackendBaseActionEdit
 {
 	/**
+	 * The available templates
+	 *
+	 * @var	array
+	 */
+	private $templates = array();
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -29,6 +37,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
+
+			// get available templates
+			$this->getTemplates();
 
 			// get all data for the item we want to edit
 			$this->getData();
@@ -77,6 +88,31 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			// show warning
 			$this->tpl->assign('usingRevision', true);
 		}
+
+		// check if selected template is still available
+		if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
+	}
+
+
+	/**
+	 * Get available templates
+	 *
+	 * @return	void
+	 */
+	private function getTemplates()
+	{
+		// fetch templates available in core
+		$this->templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
+
+		// fetch current active theme
+		$theme = BackendModel::getModuleSetting('core', 'theme', 'core');
+
+		// fetch theme templates if a theme is selected
+		if($theme != 'core') $this->templates = array_merge($this->templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets'));
+
+		// no duplicates (core templates will be overridden by theme templates) and sort alphabetically
+		$this->templates = array_unique($this->templates);
+		sort($this->templates);
 	}
 
 
@@ -94,6 +130,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
+
+		// if we have multiple templates, add a dropdown to select them
+		if(count($this->templates) > 1) $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record['template']);
 	}
 
 
@@ -170,6 +209,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				// build item
 				$item['id'] = $this->id;
 				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['template'] = count($this->templates) > 1 ? $this->frm->getField('template')->getValue() : $this->templates[0];
 				$item['language'] = $this->record['language'];
 				$item['extra_id'] = $this->record['extra_id'];
 				$item['title'] = $this->frm->getField('title')->getValue();

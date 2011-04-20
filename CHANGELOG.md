@@ -23,6 +23,7 @@ Improvements:
 * Core: theme switch will automatically link pages to templates of the new theme.
 * Core: when a new template with less blocks is selected for a page, the redundant blocks' content will be kept.
 * Core: blocks data does not get lost when switching template/theme.
+* Core: content blocks can now be linked to a content block-template.
 * Core: locales analyse-tool will check only the active modules from now on.
 * Core: added a jQuery-plugin to implement a passwordGenerator.
 * Blog: creating categories can now be done without leaving the add/edit screen.
