@@ -270,6 +270,9 @@ class FrontendModel
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
+		// determine amount of blocks needed
+		$numBlocks = count($record['template_data']['names']);
+
 		// get blocks
 		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
 														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
@@ -278,6 +281,9 @@ class FrontendModel
 														WHERE pb.revision_id = ? AND pb.status = ?
 														ORDER BY pb.id',
 														array($record['revision_id'], 'active'));
+
+		// remove redundant blocks
+		$record['blocks'] = array_splice($record['blocks'], 0, $numBlocks);
 
 		// loop blocks
 		foreach($record['blocks'] as $index => $row)
