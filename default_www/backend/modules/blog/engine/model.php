@@ -751,6 +751,10 @@ class BackendBlogModel
 			// get the record of the exact item we're editing
 			$revision = self::getRevision($item['id'], $item['revision_id']);
 
+			// assign values
+			$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $revision['created_on']);
+			$item['num_comments'] = $revision['num_comments'];
+
 			// if it used to be a draft that we're now publishing, remove drafts
 			if($revision['status'] == 'draft') BackendModel::getDB(true)->delete('blog_posts', 'id = ? AND status = ?', array($item['id'], $revision['status']));
 		}
