@@ -1,10 +1,9 @@
 $(document).ready(function() 
 {
-	// Step 3 - DB configuration
-	$('#javascriptDisabled').remove();
-	$('#installerButton').removeAttr('disabled');
-
-	// Step 4 - general settings (modules, languages, ...)
+	/*
+	 * Step 3 - general settings (languages)
+	 */
+	
 	if($('#languageTypeMultiple').is(':checked')) 
 	{
 		$('#languages').show();
@@ -108,7 +107,19 @@ $(document).ready(function()
 		}
 	}
 
-	// Step 6 - confirmation
+	
+	/*
+	 * Step 5 - DB configuration
+	 */
+
+	$('#javascriptDisabled').remove();
+	$('#installerButton').removeAttr('disabled');
+
+	
+	/*
+	 * Step 7 - confirmation
+	 */
+
 	$('#showPassword').bind('change', function(evt) 
 	{
 		evt.preventDefault();

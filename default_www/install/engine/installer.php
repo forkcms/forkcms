@@ -8,6 +8,7 @@ require_once 'step_3.php';
 require_once 'step_4.php';
 require_once 'step_5.php';
 require_once 'step_6.php';
+require_once 'step_7.php';
 
 
 /**
@@ -76,7 +77,7 @@ class Installer
 		if($step !== 1)
 		{
 			// invalid requirements, so force step 1
-			if(!InstallerStep2::checkRequirements()) $step = 2;
+			if(!InstallerStep2::checkRequirements()) $step = 1;
 		}
 
 		// installer step class exists

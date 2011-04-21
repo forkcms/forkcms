@@ -36,10 +36,13 @@ Improvements:
 * Pages: when changing templates the textual-content isn't deleted anymore.
 * Locale: you can now import/export locale from/to xml. The installers also use xml's.
 * Locale: export for missing locale.
+* Locale: remove deprecated insertLocale function.
 * Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
 * Mailmotor: added extra validation for adding address(es).
 * Mailmotor: adding multiple addresses now uses the multipleTextbox-functionality.
 * Installer: refactored pages installation.
+* Installer: split up step languages & modules into 2 steps; moved db step behind those.
+* Installer: ask for backend interface languages seperate from frontend languages.
 
 2.1.0 (2011-03-14)
 --
