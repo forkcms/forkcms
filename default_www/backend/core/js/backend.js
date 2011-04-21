@@ -46,6 +46,9 @@ jsBackend =
 		// IE fixes
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
+
+		// do not move, should be run as the last item.
+		jsBackend.forms.unloadWarning();
 	},
 
 
@@ -774,6 +777,8 @@ jsBackend.effects =
  */
 jsBackend.forms =
 {
+	stringified: '',
+		
 	// init, something like a constructor
 	init: function()
 	{
@@ -960,6 +965,41 @@ jsBackend.forms =
 		}
 	},
 
+	// stringify all forms on the page, but before the real stringify happens the fields will be sorted. 
+	stringify: function(object) 
+	{
+		// trigger the save event
+		tinyMCE.triggerSave();
+
+		// init some vars
+		var data = {};
+		var sortedData = [];
+		var keys = [];
+
+		// loop forms
+		object.each(function() {
+			var fields = $(this).serializeArray();
+		
+			// loop fields
+			for(var i in fields)
+			{
+				// append data
+				data[fields[i].name] = fields[i];
+				
+				// push keys
+				keys.push(fields[i].name);
+			}
+		});
+
+		// sort the keys
+		keys.sort();
+
+		// loop the sorted keys
+		for(var i in keys) sortedData.push(data[keys[i]]);
+		
+		// because we have the
+		return JSON.stringify(sortedData);
+	},
 
 	// replaces buttons with <a><span>'s (to allow more flexible styling) and handle the form submission for them
 	submitWithLinks: function()
@@ -1012,6 +1052,44 @@ jsBackend.forms =
 	{
 		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
+	},
+	
+	
+	// show a warning when people are leaving the 
+	unloadWarning: function() 
+	{
+		// only execute when there is a form on the page
+		if($('form:visible').length > 0)
+		{
+			// loop visible forms
+			$('form:visible').each(function() {
+				// serialize
+				$(this).data('initialData', jsBackend.forms.stringify($(this)));
+			})
+
+			$(window).bind('beforeunload', function(evt) {
+				var changed = false;
+				
+				$('form:visible').each(function() {
+					var data = jsBackend.forms.stringify($(this));
+					
+					console.log($(this).data('initialData'));
+					console.log(data);
+				})
+				
+				
+				console.log('hoer');
+				if(confirm('Zeker?'))
+				{
+					// unbind event
+					$(window).unbind('beforeunload');
+				}
+				else
+				{
+					evt.preventDefault();
+				}
+			})
+		}
 	},
 
 
