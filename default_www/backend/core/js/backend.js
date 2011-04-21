@@ -35,10 +35,10 @@ jsBackend =
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
 		jsBackend.effects.init();
+		jsBackend.tabs.init();
 		jsBackend.forms.init();
 		jsBackend.layout.init();
 		jsBackend.messages.init();
-		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
 		jsBackend.tinyMCE.init();
