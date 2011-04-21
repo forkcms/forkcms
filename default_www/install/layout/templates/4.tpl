@@ -4,9 +4,9 @@
 {form:step4}
 	{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}
 		<div>
-			<h3>Modules</h3>
+			<h3 class="noPadding">Modules</h3>
 			<p>Which modules would you like to install?</p>
-			<ul id="moduleList" class="inputList">
+			<ul id="moduleList" class="inputList noPadding">
 				{iteration:modules}
 					<li>{$modules.chkModules} <label for="{$modules.id}">{$modules.label}</label></li>
 				{/iteration:modules}
@@ -16,30 +16,50 @@
 			<p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
 
 			<ul class="inputList">
-				{iteration:languageType}
-					<li>{$languageType.rbtLanguageType} <label for="{$languageType.id}">{$languageType.label}</label>
-					{option:languageType.multiple}
-						<ul id="languages" class="hidden inputList">
+				{iteration:language_type}
+					<li>{$language_type.rbtLanguageType} <label for="{$language_type.id}">{$language_type.label}</label>
+					{option:language_type.multiple}
+						<ul id="languages" class="hidden inputList noPadding">
 							{iteration:languages}
 								<li>{$languages.chkLanguages} <label for="{$languages.id}">{$languages.label}</label></li>
 							{/iteration:languages}
 						</ul>
-					{/option:languageType.multiple}
+					{/option:language_type.multiple}
 					</li>
-					{option:languageType.single}
+					{option:language_type.single}
 						<li id="languageSingle" class="hidden">
 							{$ddmLanguage} {$ddmLanguageError}
 						</li>
-					{/option:languageType.single}
-				{/iteration:languageType}
+					{/option:language_type.single}
+				{/iteration:language_type}
 			</ul>
 			<div id="defaultLanguageContainer">
 				<p>What is the default language we should use for the website?</p>
 				<p>{$ddmDefaultLanguage} {$ddmDefaultLanguageError}</p>
 			</div>
+
+			<h3>CMS interface languages</h3>
+			<p>What languages do you plan to use in the CMS interface?</p>
+
+			<ul class="inputList">
+				<li>
+					{$chkSameInterfaceLanguage} <label for="sameInterfaceLanguage">Use the same language(s) for the CMS interface.</label>
+					<p id="interfaceLanguagesExplanation" class="hidden noPadding">Select the language(s) you would like to use use in the CMS interface.</p>
+					<ul id="interfaceLanguages" class="hidden inputList noPadding">
+						{iteration:interfaceLanguages}
+							<li>{$interfaceLanguages.chkInterfaceLanguages} <label for="{$interfaceLanguages.id}">{$interfaceLanguages.label}</label></li>
+						{/iteration:interfaceLanguages}
+					</ul>
+				</li>
+			</ul>
+			<div id="defaultInterfaceLanguageContainer">
+				<p>What is the default language we should use for the CMS interface?</p>
+				<p>{$ddmDefaultInterfaceLanguage} {$ddmDefaultInterfaceLanguageError}</p>
+			</div>
+
 			<h3>Example data</h3>
 			<p>If you are new to Fork CMS, you might prefer to have an example website with a default theme set up.</p>
-			<ul class="inputList">
+			<ul class="inputList noPadding">
 				<li>
 					{$chkExampleData} <label for="exampleData">Install example data </label>
 					<span class="helpTxt">(The blog-module is required and will be installed)</span>

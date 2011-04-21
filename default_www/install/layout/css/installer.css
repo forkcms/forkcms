@@ -58,6 +58,14 @@ ul#moduleList {
 	/* No webkit since support is buggy */
 }
 
+h3 {
+	padding-top: 12px;
+}
+
+.noPadding {
+	padding: 0 !important;
+}
+
 /*
 	Step 6
 */
