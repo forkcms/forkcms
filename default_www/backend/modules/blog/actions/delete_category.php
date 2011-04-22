@@ -24,17 +24,25 @@ class BackendBlogDeleteCategory extends BackendBaseActionDelete
 		// does the item exist
 		if($this->id !== null && BackendBlogModel::existsCategory($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
-			parent::execute();
-
 			// get data
 			$this->record = (array) BackendBlogModel::getCategory($this->id);
 
-			// delete item
-			BackendBlogModel::deleteCategory($this->id);
+			// allowed to delete?
+			if(BackendBlogModel::deleteCategoryAllowed($this->id))
+			{
+				// call parent, this will probably add some general CSS/JS or other required files
+				parent::execute();
 
-			// user was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
+				// delete item
+				BackendBlogModel::deleteCategory($this->id);
+
+				// user was deleted, so redirect
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
+			}
+
+			// delete not allowed
+			else $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
+
 		}
 
 		// something went wrong
