@@ -1163,7 +1163,7 @@ jsBackend.formBuilder.fields =
 	toggleValidationErrors: function(id)
 	{
 		// remove highlights
-		$($('#'+ id +' .ui-tabs-nav a').parent()).removeClass('ui-state-error');
+		$('#'+ id +' .ui-tabs-nav a').parent().removeClass('ui-state-error');
 		
 		// loop tabs
 		$('#'+ id +' .tabs .ui-tabs-panel').each(function()
@@ -1175,7 +1175,7 @@ jsBackend.formBuilder.fields =
 			$(this).find('.formError').each(function()
 			{
 				// has a message so highlight tab
-				if($(this).html() != ''){ $($('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent()).addClass('ui-state-error'); }
+				if($(this).html() != ''){ $('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent().addClass('ui-state-error'); }
 			});
 		});
 		

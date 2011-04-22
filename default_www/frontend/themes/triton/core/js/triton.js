@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$('.content p img').each(function(i)
 	{
 		// get parent (p)
-		var parent = $($(this).parents('p').get(0));
+		var parent = $(this).parents('p').get(0);
 
 		// copy of parent
 		parentCopy = parent.clone();

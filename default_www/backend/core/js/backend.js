@@ -205,8 +205,8 @@ jsBackend.controls =
 			// check if needed element exists
 			if($(this).find('input:checkbox').length > 0 && $(this).find('input:text').length > 0)
 			{
-				var checkbox = $($(this).find('input:checkbox')[0]);
-				var textField = $($(this).find('input:text')[0]);
+				var checkbox = $(this).find('input:checkbox').eq(0);
+				var textField = $(this).find('input:text').eq(0);
 
 				checkbox.bind('change', function(evt)
 				{
@@ -402,7 +402,7 @@ jsBackend.controls =
 		$('table input:checkbox').change(function(evt)
 		{
 			// get parent table
-			var table = $($(this).parents('table.datagrid'));
+			var table = $(this).parents('table.datagrid').eq(0);
 
 			// any item checked?
 			if(table.find('input:checkbox:checked').length > 0)
@@ -441,7 +441,7 @@ jsBackend.controls =
 							$(this).dialog('close');
 
 							// submit the form
-							$($('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form')[0]).submit();
+							$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
@@ -483,11 +483,11 @@ jsBackend.controls =
 					}
 
 					// no confirm
-					else $($(this).parents('form')).submit();
+					else $(this).parents('form').submit();
 				}
 
 				// no confirm
-				else $($(this).parents('form')).submit();
+				else $(this).parents('form').submit();
 			}
 		});
 	},
@@ -500,11 +500,11 @@ jsBackend.controls =
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt)
 		{
 			// check or uncheck all the checkboxes in this datagrid
-			$($(this).closest('table').find('td input:checkbox')).attr('checked', $(this).is(':checked'));
+			$(this).closest('table').find('td input:checkbox').attr('checked', $(this).is(':checked'));
 
 			// set selected class
-			if($(this).is(':checked')) $($(this).parents().filter('table')[0]).find('tbody tr').addClass('selected');
-			else $($(this).parents().filter('table')[0]).find('tbody tr').removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('table').eq(0).find('tbody tr').addClass('selected');
+			else $(this).parents().filter('table').eq(0).find('tbody tr').removeClass('selected');
 		});
 
 		// single checkbox changed
@@ -649,13 +649,13 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function() { $($(this).parents().filter('tr')[0]).addClass('selected'); });
+		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
 		$('tr td input:checkbox').live('change', function(evt)
 		{
-			if($(this).is(':checked')) $($(this).parents().filter('tr')[0]).addClass('selected');
-			else $($(this).parents().filter('tr')[0]).removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
+			else $(this).parents().filter('tr').eq(0).removeClass('selected');
 		});
 	},
 
@@ -1153,7 +1153,7 @@ jsBackend.messages =
 		$('#messaging .formMessage .iconClose').live('click', function(evt)
 		{
 			evt.preventDefault();
-			jsBackend.messages.hide($($(this).parents('.formMessage')));
+			jsBackend.messages.hide($(this).parents('.formMessage'));
 		});
 	},
 
@@ -1211,7 +1211,7 @@ jsBackend.tabs =
 			$('.tabs .ui-tabs-panel').each(function()
 			{
 				if($(this).find('.formError:visible').length > 0) {
-					$($('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent()).addClass('ui-state-error');
+					$('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent().addClass('ui-state-error');
 				}
 			});
 		}

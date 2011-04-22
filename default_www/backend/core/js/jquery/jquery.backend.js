@@ -287,7 +287,7 @@
 			$(this).html('<span>' + $(this).html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
 
 			// grab element
-			var element = $($(this).find('span')[0]);
+			var element = $(this).find('span').eq(0);
 
 			// bind events
 			element.bind('click focus', createElement);
@@ -298,12 +298,12 @@
 				function()
 				{
 					$(this).addClass('inlineEditHover');
-					$($(this).find('span')[1]).show();
+					$(this).find('span').eq(1).show();
 				},
 				function()
 				{
 					$(this).removeClass('inlineEditHover');
-					$($(this).find('span')[1]).hide();
+					$(this).find('span').eq(1).hide();
 				}
 			);
 
@@ -471,7 +471,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);
@@ -761,7 +761,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);
