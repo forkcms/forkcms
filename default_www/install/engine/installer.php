@@ -76,8 +76,8 @@ class Installer
 
 		if($step !== 1)
 		{
-			// invalid requirements, so force step 1
-			if(!InstallerStep2::checkRequirements()) $step = 1;
+			// invalid requirements, so force step 2
+			if(!InstallerStep2::checkRequirements()) $step = 2;
 		}
 
 		// installer step class exists
