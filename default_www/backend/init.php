@@ -90,7 +90,6 @@ class BackendInit
 
 		// start session
 		$this->initSession();
-		Spoon::dump(ini_get('allow_call_time_pass_reference'));
 	}
 
 
