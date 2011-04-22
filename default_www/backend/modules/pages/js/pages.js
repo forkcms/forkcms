@@ -33,7 +33,7 @@ jsBackend.pages =
 		});
 		
 		// do meta
-		if($('#title').length > 0) $('#title').doMeta();
+		$('#title').doMeta();
 	},
 
 
@@ -101,75 +101,69 @@ jsBackend.pages.extras =
 		});
 
 		// initialize the modal for choosing an extra
-		if($('#chooseExtra').length > 0)
+		$('#chooseExtra').dialog(
 		{
-			$('#chooseExtra').dialog(
+			autoOpen: false,
+			draggable: false,
+			resizable: false,
+			modal: true,
+			width: 500,
+			buttons:
 			{
-				autoOpen: false,
-				draggable: false,
-				resizable: false,
-				modal: true,
-				width: 500,
-				buttons:
+				'{$lblOK|ucfirst}': function()
 				{
-					'{$lblOK|ucfirst}': function()
-					{
-						// change the extra for real
-						jsBackend.pages.extras.changeExtra();
+					// change the extra for real
+					jsBackend.pages.extras.changeExtra();
 
-						// close dialog
-						$(this).dialog('close');
-					},
-					'{$lblCancel|ucfirst}': function()
-					{
-						// empty the extraForBlock
-						$('#extraForBlock').val('');
+					// close dialog
+					$(this).dialog('close');
+				},
+				'{$lblCancel|ucfirst}': function()
+				{
+					// empty the extraForBlock
+					$('#extraForBlock').val('');
 
-						// close the dialog
-						$(this).dialog('close');
-					}
+					// close the dialog
+					$(this).dialog('close');
 				}
-			 });
-		}
+			}
+		 });
 
-		if($('#chooseTemplate').length > 0)
+		$('#chooseTemplate').dialog(
 		{
-			$('#chooseTemplate').dialog(
+			autoOpen: false,
+			draggable: false,
+			resizable: false,
+			modal: true,
+			width: 940,
+			buttons:
 			{
-				autoOpen: false,
-				draggable: false,
-				resizable: false,
-				modal: true,
-				width: 940,
-				buttons:
+				'{$lblOK|ucfirst}': function()
 				{
-					'{$lblOK|ucfirst}': function()
+					if($('#templateList input:radio:checked').val() != $('#templateId').val())
 					{
-						if($('#templateList input:radio:checked').val() != $('#templateId').val())
-						{
-							// empty extra's (because most of the time extra's will be linked from the template)
-//							$('.block_extra_id').val('');
+						// empty extra's (because most of the time extra's will be linked from the template)
+//						$('.block_extra_id').val('');
 
-							// clear content
-							for(var i in tinyMCE.editors) {
-								//jsBackend.pages.extras.store[i] = tinyMCE.editors[i].getContent();
-							}
-
-							// change the template for real
-							jsBackend.pages.template.changeTemplate(true);
+						// clear content
+						for(var i in tinyMCE.editors) {
+							//jsBackend.pages.extras.store[i] = tinyMCE.editors[i].getContent();
 						}
 
-						// close dialog
-						$(this).dialog('close');
-					},
-					'{$lblCancel|ucfirst}': function()
-					{
-						// close the dialog
-						$(this).dialog('close');
+						// change the template for real
+						jsBackend.pages.template.changeTemplate(true);
 					}
-				 }
-			 });
-		}
+
+					// close dialog
+					$(this).dialog('close');
+				},
+				'{$lblCancel|ucfirst}': function()
+				{
+					// close the dialog
+					$(this).dialog('close');
+				}
+			 }
+		 });
 	},
 
 

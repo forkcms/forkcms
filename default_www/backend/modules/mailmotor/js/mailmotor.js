@@ -14,15 +14,13 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.templateSelection.init();
 		
 		// multiple text box for adding multiple emailaddresses
-		if($('form#add #email').length > 0) {
-			$('form#add #email').multipleTextbox(
-				{ 
-					emptyMessage: '', 
-					addLabel: '{$lblAdd|ucfirst}', 
-					removeLabel: '{$lblDelete|ucfirst}',
-					canAddNew: true
-				}); 
-		}
+		$('form#add #email').multipleTextbox(
+			{ 
+				emptyMessage: '', 
+				addLabel: '{$lblAdd|ucfirst}', 
+				removeLabel: '{$lblDelete|ucfirst}',
+				canAddNew: true
+			}); 
 	},
 
 

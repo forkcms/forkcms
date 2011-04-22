@@ -338,22 +338,19 @@ jsBackend.analytics.loading =
 
 	init: function()
 	{
-		if($('#longLoader').length > 0)
-		{
-			// loading bar stuff
-			$('#longLoader').show();
+		// loading bar stuff
+		$('#longLoader').show();
 
-			// get the page to get data for
-			var page = $('#page').html();
-			var identifier = $('#identifier').html();
+		// get the page to get data for
+		var page = $('#page').html();
+		var identifier = $('#identifier').html();
 
-			// save data
-			jsBackend.analytics.loading.page = page;
-			jsBackend.analytics.loading.identifier = identifier;
+		// save data
+		jsBackend.analytics.loading.page = page;
+		jsBackend.analytics.loading.identifier = identifier;
 
-			// check status every 5 seconds
-			jsBackend.analytics.loading.interval = setInterval("jsBackend.analytics.loading.checkStatus()", 5000);
-		}
+		// check status every 5 seconds
+		jsBackend.analytics.loading.interval = setInterval("jsBackend.analytics.loading.checkStatus()", 5000);
 	},
 
 	checkStatus: function()

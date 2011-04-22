@@ -17,14 +17,11 @@ jsBackend.locale.controls =
 {
 	init: function()
 	{
-		if($('select#application').length > 0 && $('select#module').length > 0) 
-		{
-			// bind
-			$('select#application').bind('change', jsBackend.locale.controls.enableDisableModules);
+		// bind
+		$('select#application').bind('change', jsBackend.locale.controls.enableDisableModules);
 			
-			// call to start
-			jsBackend.locale.controls.enableDisableModules();
-		}
+		// call to start
+		jsBackend.locale.controls.enableDisableModules();
 	},
 
 	enableDisableModules: function() 

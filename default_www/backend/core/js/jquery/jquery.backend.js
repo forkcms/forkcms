@@ -28,27 +28,21 @@
 			$(this).bind('keyup', calculateMeta);
 
 			// bind change on the checkboxes
-			if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+			$('#pageTitleOverwrite').change(function(evt)
 			{
-				$('#pageTitleOverwrite').change(function(evt)
+				if(!$(this).is(':checked'))
 				{
-					if(!$(this).is(':checked'))
-					{
-						$('#pageTitle').val(element.val());
-					}
-				});
-			}
-
-			if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+					$('#pageTitle').val(element.val());
+				}
+			});
+			
+			$('#navigationTitleOverwrite').change(function(evt)
 			{
-				$('#navigationTitleOverwrite').change(function(evt)
+				if(!$(this).is(':checked'))
 				{
-					if(!$(this).is(':checked'))
-					{
-						$('#navigationTitle').val(element.val());
-					}
-				});
-			}
+					$('#navigationTitle').val(element.val());
+				}
+			});
 
 			$('#metaDescriptionOverwrite').change(function(evt)
 			{
@@ -80,20 +74,14 @@
 			{
 				var title = (typeof element != 'undefined') ? element.val() : $(this).val();
 
-				if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+				if(!$('#pageTitleOverwrite').is(':checked'))
 				{
-					if(!$('#pageTitleOverwrite').is(':checked'))
-					{
-						$('#pageTitle').val(title);
-					}
+					$('#pageTitle').val(title);
 				}
 
-				if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+				if(!$('#navigationTitleOverwrite').is(':checked'))
 				{
-					if(!$('#navigationTitleOverwrite').is(':checked'))
-					{
-						$('#navigationTitle').val(title);
-					}
+					$('#navigationTitle').val(title);
 				}
 
 				if(!$('#metaDescriptionOverwrite').is(':checked'))
@@ -1053,11 +1041,8 @@
 			});
 
 			// remove previous HTML
-			if($('#elementList-' + id).length > 0)
-			{
-				$('#elementList-' + id).parent('.multipleSelectWrapper').remove();
-			}
-
+			$('#elementList-' + id).parent('.multipleSelectWrapper').remove();
+			
 			// build replace html
 			var html =	'<div class="multipleSelectWrapper">' + 
 						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' + 
@@ -1284,10 +1269,7 @@
 			});
 
 			// remove previous HTML
-			if($('#elementList-' + id).length > 0)
-			{
-				$('#elementList-' + id).parent('.multipleTextWrapper').remove();
-			}
+			$('#elementList-' + id).parent('.multipleTextWrapper').remove();
 
 			// build replace html
 			var html = '<div class="multipleTextWrapper">' + '	<div id="elementList-' + id + '" class="multipleTextList">' + '	</div>' + '	<div class="oneLiner">' + '		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';

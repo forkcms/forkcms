@@ -150,7 +150,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeIn(500);
 
 				// set focus on first visible field
-				if($('#'+ id +' form input:visible:first').length > 0) $('#'+ id +' form input:visible:first').focus();
+				$('#'+ id +' form input:visible:first').focus();
 
 				// bind resize
 				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ id)); });
@@ -524,32 +524,39 @@ jsBackend.controls =
 
 	bindPasswordGenerator: function() 
 	{
-		if($('.passwordGenerator').length > 0)
-		{
-			$('.passwordGenerator').passwordGenerator(
-				{
-					length: 8,
-					numbers: false,
-					lowercase: true,
-					uppercase: true,
-					generateLabel: '{$lblGenerate|ucfirst}'
-				}
-			);
-		}
+		$('.passwordGenerator').passwordGenerator(
+			{
+				length: 8,
+				numbers: false,
+				lowercase: true,
+				uppercase: true,
+				generateLabel: '{$lblGenerate|ucfirst}'
+			}
+		);
 	},
 	
 	
 	// bind the password strength meter to the correct inputfield(s)
 	bindPasswordStrengthMeter: function()
 	{
-		if($('.passwordStrength').length > 0)
+		$('.passwordStrength').each(function()
 		{
-			$('.passwordStrength').each(function()
-			{
-				// grab id
-				var id = $(this).data('id');
-				var wrapperId = $(this).attr('id');
+			// grab id
+			var id = $(this).data('id');
+			var wrapperId = $(this).attr('id');
 
+			// hide all
+			$('#'+ wrapperId +' p.strength').hide();
+
+			// excecute function directly
+			var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
+
+			// show
+			$('#'+ wrapperId +' p.'+ classToShow).show();
+
+			// bind keypress
+			$('#'+ id).live('keyup', function()
+			{
 				// hide all
 				$('#'+ wrapperId +' p.strength').hide();
 
@@ -558,21 +565,8 @@ jsBackend.controls =
 
 				// show
 				$('#'+ wrapperId +' p.'+ classToShow).show();
-
-				// bind keypress
-				$('#'+ id).live('keyup', function()
-				{
-					// hide all
-					$('#'+ wrapperId +' p.strength').hide();
-
-					// excecute function directly
-					var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
-
-					// show
-					$('#'+ wrapperId +' p.'+ classToShow).show();
-				});
 			});
-		}
+		});
 	},
 
 
@@ -788,108 +782,96 @@ jsBackend.forms =
 	datefields: function()
 	{
 		// the default, nothing special
-		if($('.inputDatefieldNormal').length > 0)
+		$('.inputDatefieldNormal').each(function()
 		{
-			$('.inputDatefieldNormal').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					showAnim: 'slideDown'
-				});
+			$(this).datepicker(
+			{
+				dateFormat: data.mask,
+				dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
+				dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				firstDay: data.firstday,
+				hideIfNoPrevNext: true,
+				monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
+				monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
+				nextText: '{$lblNext}',
+				prevText: '{$lblPrevious}',
+				showAnim: 'slideDown'
 			});
-		}
+		});
 
 		// datefields that have a certain startdate
-		if($('.inputDatefieldFrom').length > 0)
+		$('.inputDatefieldFrom').each(function()
 		{
-			$('.inputDatefieldFrom').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10)),
-					showAnim: 'slideDown'
-				});
+			$(this).datepicker(
+			{
+				dateFormat: data.mask,
+				dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
+				dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				firstDay: data.firstday,
+				hideIfNoPrevNext: true,
+				monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
+				monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
+				nextText: '{$lblNext}',
+				prevText: '{$lblPrevious}',
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10)),
+				showAnim: 'slideDown'
 			});
-		}
+		});
 
 		// datefields that have a certain enddate
-		if($('.inputDatefieldTill').length > 0)
+		$('.inputDatefieldTill').each(function()
 		{
-			$('.inputDatefieldTill').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10)),
-					showAnim: 'slideDown'
-				});
+			$(this).datepicker(
+			{
+				dateFormat: data.mask,
+				dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
+				dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				firstDay: data.firstday,
+				hideIfNoPrevNext: true,
+				monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
+				monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
+				nextText: '{$lblNext}',
+				prevText: '{$lblPrevious}',
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10)),
+				showAnim: 'slideDown'
 			});
-		}
+		});
 
 		// datefields that have a certain range
-		if($('.inputDatefieldRange').length > 0)
+		$('.inputDatefieldRange').each(function()
 		{
-			$('.inputDatefieldRange').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59),
-					showAnim: 'slideDown'
-				});
+			$(this).datepicker(
+			{
+				dateFormat: data.mask,
+				dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
+				dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
+				firstDay: data.firstday,
+				hideIfNoPrevNext: true,
+				monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
+				monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
+				nextText: '{$lblNext}',
+				prevText: '{$lblPrevious}',
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59),
+				showAnim: 'slideDown'
 			});
-		}
+		});
 	},
 
 
@@ -968,50 +950,47 @@ jsBackend.forms =
 		var replaceHTML = '<a class="{class}" href="#{id}"><span>{label}</span></a>';
 
 		// are there any forms that should be submitted with a link?
-		if($('form.submitWithLink').length > 0)
+		$('form.submitWithLink').each(function()
 		{
-			$('form.submitWithLink').each(function()
+			// get id
+			var formId = $(this).attr('id');
+			var dontSubmit = false;
+
+			// validate id
+			if(formId != '')
 			{
-				// get id
-				var formId = $(this).attr('id');
-				var dontSubmit = false;
-
-				// validate id
-				if(formId != '')
+				// loop every button to be replaced
+				$('form#'+ formId + '.submitWithLink input:submit').each(function()
 				{
-					// loop every button to be replaced
-					$('form#'+ formId + '.submitWithLink input:submit').each(function()
-					{
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
-					});
+					$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
+				});
 
-					// add onclick event for button (button can't have the name submit)
-					$('form#'+ formId + ' a.submitButton').bind('click', function(evt)
-					{
-						evt.preventDefault();
+				// add onclick event for button (button can't have the name submit)
+				$('form#'+ formId + ' a.submitButton').bind('click', function(evt)
+				{
+					evt.preventDefault();
 
-						// is the button disabled?
-						if($(this).attr('disabled') == 'disabled') return false;
-						else $('form#'+ formId).submit();
-					});
+					// is the button disabled?
+					if($(this).attr('disabled') == 'disabled') return false;
+					else $('form#'+ formId).submit();
+				});
 
-					// dont submit the form on certain elements
-					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
-					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
+				// dont submit the form on certain elements
+				$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
+				$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
 
-					// hijack the submit event
-					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
-				}
-			});
-		}
+				// hijack the submit event
+				$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
+			}
+		});
 	},
 
 
 	// add tagbox to the correct input fields
 	tagBoxes: function()
 	{
-		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
-		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
+		$('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' });
+		$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false });
 	},
 
 
@@ -1204,18 +1183,15 @@ jsBackend.tabs =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.tabs').length > 0)
+		$('.tabs').tabs();
+
+		$('.tabs .ui-tabs-panel').each(function()
 		{
-			$('.tabs').tabs();
-
-			$('.tabs .ui-tabs-panel').each(function()
-			{
-				if($(this).find('.formError:visible').length > 0) {
-					$('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent().addClass('ui-state-error');
-				}
-			});
-		}
-
+			if($(this).find('.formError:visible').length > 0) {
+				$('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent().addClass('ui-state-error');
+			}
+		});
+		
 		$('.ui-tabs-nav a').click(function(e)
 		{
 			// if the browser supports history.pushState(), use it to update the URL with the fragment identifier, without triggering a scroll/jump
@@ -1240,15 +1216,12 @@ jsBackend.tabs =
 		});
 
 		// select tab
-		if($('.tabSelect').length > 0)
+		$('.tabSelect').live('click', function(evt)
 		{
-			$('.tabSelect').live('click', function(evt)
-			{
-				// prevent default
-				evt.preventDefault();
-				$('.tabs').tabs('select', $(this).attr('href'));
-			});
-		}
+			// prevent default
+			evt.preventDefault();
+			$('.tabs').tabs('select', $(this).attr('href'));
+		});
 	},
 
 
@@ -1384,10 +1357,7 @@ jsBackend.tooltip =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.help').length > 0)
-		{
-			$('.help').tooltip({ effect: 'fade', relative: true }).dynamic();
-		}
+		$('.help').tooltip({ effect: 'fade', relative: true }).dynamic();
 	},
 
 
@@ -1460,85 +1430,82 @@ jsBackend.tableSequenceByDragAndDrop =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.sequenceByDragAndDrop tbody').length > 0)
+		$('.sequenceByDragAndDrop tbody').sortable(
 		{
-			$('.sequenceByDragAndDrop tbody').sortable(
+			items: 'tr',
+			handle: 'td.dragAndDropHandle',
+			placeholder: 'dragAndDropPlaceholder',
+			forcePlaceholderSize: true,
+			stop: function(event, ui)
 			{
-				items: 'tr',
-				handle: 'td.dragAndDropHandle',
-				placeholder: 'dragAndDropPlaceholder',
-				forcePlaceholderSize: true,
-				stop: function(event, ui)
+				// the table
+				var table = $(this);
+				var action = (typeof $(table.parents('table.datagrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.datagrid')).data('action').toString();
+
+				// buil ajax-url
+				var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
+
+				// append
+				if(typeof $(table.parents('table.datagrid')).data('extra-params') != 'undefined') url += $(table.parents('table.datagrid')).data('extra-params');
+
+				// init var
+				var rows = $(this).find('tr');
+				var newIdSequence = new Array();
+
+				// loop rowIds
+				rows.each(function() { newIdSequence.push($(this).data('id')); });
+
+				// make the call
+				$.ajax(
 				{
-					// the table
-					var table = $(this);
-					var action = (typeof $(table.parents('table.datagrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.datagrid')).data('action').toString();
-
-					// buil ajax-url
-					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
-
-					// append
-					if(typeof $(table.parents('table.datagrid')).data('extra-params') != 'undefined') url += $(table.parents('table.datagrid')).data('extra-params');
-
-					// init var
-					var rows = $(this).find('tr');
-					var newIdSequence = new Array();
-
-					// loop rowIds
-					rows.each(function() { newIdSequence.push($(this).data('id')); });
-
-					// make the call
-					$.ajax(
+					cache: false,
+					type: 'POST',
+					dataType: 'json',
+					url: url,
+					data: 'new_id_sequence=' + newIdSequence.join(','),
+					success: function(data, textStatus)
 					{
-						cache: false,
-						type: 'POST',
-						dataType: 'json',
-						url: url,
-						data: 'new_id_sequence=' + newIdSequence.join(','),
-						success: function(data, textStatus)
+						// not a succes so revert the changes
+						if(data.code != 200)
 						{
-							// not a succes so revert the changes
-							if(data.code != 200)
-							{
-								// revert
-								table.sortable('cancel');
-
-								// show message
-								jsBackend.messages.add('error', 'alter sequence failed.');
-							}
-
-							// redo odd-even
-							table.find('tr').removeClass('odd').removeClass('even');
-							table.find('tr:even').addClass('odd');
-							table.find('tr:odd').addClass('even');
-
-							// alert the user
-							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
-
-							// show message
-							jsBackend.messages.add('success', 'Changed order successfully.');
-						},
-						error: function(XMLHttpRequest, textStatus, errorThrown)
-						{
-							// init var
-							var textStatus = 'alter sequence failed.';
-
-							// get real message
-							if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
-
-							// show message
-							jsBackend.messages.add('error', textStatus);
-
 							// revert
 							table.sortable('cancel');
 
-							// alert the user
-							if(jsBackend.debug) alert(textStatus);
+							// show message
+							jsBackend.messages.add('error', 'alter sequence failed.');
 						}
-					});
-				}
-			});
-		}
+
+						// redo odd-even
+						table.find('tr').removeClass('odd').removeClass('even');
+						table.find('tr:even').addClass('odd');
+						table.find('tr:odd').addClass('even');
+
+						// alert the user
+						if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+
+						// show message
+						jsBackend.messages.add('success', 'Changed order successfully.');
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown)
+					{
+						// init var
+						var textStatus = 'alter sequence failed.';
+
+						// get real message
+						if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
+
+						// show message
+						jsBackend.messages.add('error', textStatus);
+
+						// revert
+						table.sortable('cancel');
+
+						// alert the user
+						if(jsBackend.debug) alert(textStatus);
+					}
+				});
+			}
+		});
 	},
 
 
