@@ -253,7 +253,7 @@ class BackendLocaleModel
 	private static function getLabelsFromBackendNavigation($value, $key, $items)
 	{
 		// add if needed
-		if((string) $key == 'label') $items[] = $value;
+		if((string) $key == 'label') echo '"' . $value . '",';
 	}
 
 
@@ -280,12 +280,16 @@ class BackendLocaleModel
 		$lbl = array();
 
 		// get labels from navigation
-		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), &$lbl);
-		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
+		// @todo: this is an incredibly nasty fix; please change this when this functionality has moved to the DB
+		ob_start();
+		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), $lbl);
+		$lbl = ob_get_clean();
+		eval('$lbl = array(' . $lbl . ');');
+		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
 
 		// get labels from table
 		$lbl = (array) BackendModel::getDB()->getColumn('SELECT label FROM pages_extras');
-		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
+		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
 
 		// loop files
 		foreach($tree as $file)
