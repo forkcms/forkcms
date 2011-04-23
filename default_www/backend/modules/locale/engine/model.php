@@ -253,7 +253,7 @@ class BackendLocaleModel
 	private static function getLabelsFromBackendNavigation($value, $key, $items)
 	{
 		// add if needed
-		if((string) $key == 'label') $items[] = $value;
+		if((string) $key == 'label') echo '"' . $value . '",';
 	}
 
 
@@ -280,12 +280,16 @@ class BackendLocaleModel
 		$lbl = array();
 
 		// get labels from navigation
-		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), &$lbl);
-		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
+		// @todo: this is an incredibly nasty fix; please change this when this functionality has moved to the DB
+		ob_start();
+		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), $lbl);
+		$lbl = ob_get_clean();
+		eval('$lbl = array(' . $lbl . ');');
+		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
 
 		// get labels from table
 		$lbl = (array) BackendModel::getDB()->getColumn('SELECT label FROM pages_extras');
-		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
+		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
 
 		// loop files
 		foreach($tree as $file)
@@ -910,19 +914,23 @@ class BackendLocaleModel
 	/**
 	 * Import a locale XML file.
 	 *
-	 * @return	void
+	 * @return	array								Import statistics.
 	 * @param	SimpleXMLElement $xml				The locale XML.
 	 * @param	bool[optional] $overwriteConflicts	Should we overwrite when there is a conflict?
 	 */
 	public static function importXML(SimpleXMLElement $xml, $overwriteConflicts = false)
 	{
-		// recast
+		// init
 		$overwriteConflicts = (bool) $overwriteConflicts;
+		$statistics = array(
+			'total' => 0,
+			'imported' => 0
+		);
 
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
 		$possibleModules = BackendModel::getModules(false);
-		$possibleLanguages = BL::getActiveLanguages();
+		$possibleLanguages = array('frontend' => array_keys(BL::getWorkingLanguages()), 'backend' => array_keys(BL::getInterfaceLanguages()));
 		$possibleTypes = array();
 
 		// types
@@ -961,9 +969,12 @@ class BackendLocaleModel
 					// translations
 					foreach($item->translation as $translation)
 					{
+						// statistics
+						$statistics['total']++;
+
 						// attributes
 						$attributes = $translation->attributes();
-						$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
+						$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages[$application], '');
 
 						// language does not exist
 						if($language == '') continue;
@@ -984,6 +995,9 @@ class BackendLocaleModel
 						// found a conflict, overwrite it with the imported translation
 						if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
 						{
+							// statistics
+							$statistics['imported']++;
+
 							// overwrite
 							BackendModel::getDB(true)->update('locale',
 																$locale,
@@ -994,6 +1008,9 @@ class BackendLocaleModel
 						// insert translation that doesnt exists yet
 						elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
 						{
+							// statistics
+							$statistics['imported']++;
+
 							// insert
 							BackendModel::getDB(true)->insert('locale', $locale);
 						}
@@ -1007,6 +1024,9 @@ class BackendLocaleModel
 		{
 			foreach($possibleLanguages as $language) self::buildCache($language, $application);
 		}
+
+		// return statistics
+		return $statistics;
 	}
 
 

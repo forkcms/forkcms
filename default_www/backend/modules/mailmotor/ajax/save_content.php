@@ -96,10 +96,16 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		// set full HTML
 		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
 
+		// set plain content
+		$contentPlain = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
+
+		// add unsubscribe link
+		if(mb_strpos($contentPlain, '[unsubscribe]') === false) $contentPlain .= PHP_EOL . '[unsubscribe]';
+
 		// build data
 		$item['id'] = $this->mailing['id'];
 		$item['subject'] = $subject;
-		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
+		$item['content_plain'] = $contentPlain;
 		$item['content_html'] = $contentHTML;
 		$item['data'] = serialize(array('full_content_html' => $HTML));
 		$item['edited_on'] = date('Y-m-d H:i:s');

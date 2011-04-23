@@ -71,7 +71,7 @@
 							{option:usingDraft}
 							<div class="options">
 								<div class="buttonHolder">
-									<a href="{$detailURL}/{$item.url}?draft={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
+									<a href="{$detailURL}/{$item.url}?revision={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
 								</div>
 							</div>
 							{/option:usingDraft}

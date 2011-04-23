@@ -1275,6 +1275,7 @@ jsBackend.messages =
 /**
  * Apply tabs
  *
+ * @author	Jan Moessen <jan@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tabs =
@@ -1310,7 +1311,7 @@ jsBackend.tabs =
 				var scrolled = $(window).scrollTop();
 
 				// set location hash
-				window.location.hash = this.getAttribute('href');
+				window.location.hash = '#'+ this.getAttribute('href').split('#')[1];
 
 				// reset scroll height
 				$(window).scrollTop(scrolled);
@@ -1369,54 +1370,31 @@ jsBackend.tinyMCE =
 	// format text (after retrieving it from the editor)
 	afterSave: function(editor, object)
 	{
-		// replace target _self
-		object.content = object.content.replace(new RegExp('<a(.*)target="_self"(.*)>', 'gim'), '<a$1$2>');
+		// create dom tree
+		var $tmp = $('<div />').html(object.content);
 
-		// get items with the target _blank
-		var matches = object.content.match(new RegExp('<a(.*)target="_blank"(.*)>', 'gim'));
+		// remove target="_self"
+		$tmp.find('a[target=_self]').removeAttr('target');
 
-		// loop the matches
-		for(var i in matches)
-		{
-			// already classes defined?
-			if(matches[i].indexOf('class="') > 0)
-			{
-				// remove target and add the class
-				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1$2>')
-										.replace('class="', 'class="targetBlank ');
-			}
-			else
-			{
-				// remove target and set class
-				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1class="targetBlank"$2>')
-			}
+		// replace target="_blank" with class="targetBlank"
+		$tmp.find('a[target=_blank]').addClass('targetBlank').removeAttr('target');
 
-			// replace
-			object.content = object.content.replace(matches[i], newLink.replace(/ {2,}/g, ' '));
-		}
+		// resave
+		object.content = utils.string.xhtml($tmp.html());
 	},
 
 
 	// format text (before placing it in the editor)
 	beforeLoad: function(editor, object)
 	{
-		// get items that have the targetBlank class
-		var matches = object.content.match(new RegExp('<a(.*)class="(.*)?targetBlank(.*)>', 'gim'));
+		// create dom tree
+		var $tmp = $('<div />').html(object.content);
 
-		// loop the matches
-		for(var i in matches)
-		{
-			// build new link by removing the class and adding the target again
-			var newLink = matches[i].replace('targetBlank', '')
-									.replace('<a', '<a target="_blank"')
-									.replace('class=""', '')
-									.replace(/ {2,}/g, ' ')
-									.replace('=" ', '="')
-									.replace(' " ', '" ');
+		// replace target="_blank" with class="targetBlank"
+		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
 
-			// replace in the content
-			object.content = object.content.replace(matches[i], newLink);
-		}
+		// resave
+		object.content = utils.string.xhtml($tmp.html());
 	},
 
 

@@ -29,6 +29,9 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
 		if($tag === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
 
+		// check if tag exists
+		if(BackendTagsModel::existsTag($tag)) $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
+
 		// build array
 		$item['id'] = $id;
 		$item['tag'] = SpoonFilter::htmlspecialchars($tag);

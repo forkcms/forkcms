@@ -45,6 +45,7 @@ class BackendInit
 		ini_set('pcre.recursion_limit', 999999999);
 		ini_set('memory_limit', '64M');
 
+
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
@@ -55,6 +56,15 @@ class BackendInit
 		 */
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
+
+		/**
+		 * Because of some array_walk_recursive code in locale/engine/model.php
+		 * (line 283) we need to enable the setting below. This should be
+		 * removed as soon as the issue has been fixed.
+		 *
+		 * @todo fix issue in model.php from locale as described above.
+		 */
+		ini_set('allow_call_time_pass_reference', 'On');
 
 		// require globals
 		$this->requireGlobals();

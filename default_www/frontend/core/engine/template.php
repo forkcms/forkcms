@@ -185,7 +185,7 @@ class FrontendTemplate extends SpoonTemplate
 		if(SPOON_DEBUG) return false;
 
 		// let parent do the actual check
-		else parent::isCached($name);
+		else return parent::isCached($name);
 	}
 
 

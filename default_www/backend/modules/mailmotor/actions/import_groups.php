@@ -71,7 +71,7 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 		foreach($this->externalGroups as &$group)
 		{
 			// add subscribers + count to the group stack
-			$group['subscribers'] = $this->cm->getSubscribers($group['id']);;
+			$group['subscribers'] = BackendMailmotorCMHelper::getSubscribers($group['id']);
 			$group['subscribers_amount'] = count($group['subscribers']);
 
 			// get the custom fields

@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `emails` (
  `subject` varchar(255) NOT NULL,
  `html` text NOT NULL,
  `plain_text` text NOT NULL,
+ `attachments` text,
  `send_on` datetime default NULL,
  `created_on` datetime NOT NULL,
  PRIMARY KEY (`id`)

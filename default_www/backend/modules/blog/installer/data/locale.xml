@@ -2,6 +2,10 @@
 <locale>
   <backend>
     <blog>
+      <item type="error" name="DeleteCategoryNotAllowed">
+        <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
+        <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>
+      </item>
       <item type="error" name="RSSDescription">
         <translation language="nl"><![CDATA[Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
         <translation language="en"><![CDATA[Blog RSS description is not yet provided. <a href="%1$s">Configure</a>]]></translation>

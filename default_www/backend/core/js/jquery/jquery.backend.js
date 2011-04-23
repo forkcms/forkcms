@@ -137,7 +137,7 @@
 			lowercase: true,
 			numbers: true, 
 			specialchars: false,
-			generateLabel: 'Generate',
+			generateLabel: 'Generate'
 		};
 
 		// extend options
@@ -283,27 +283,32 @@
 		// loop all elements
 		return this.each(function()
 		{
+			// get current object
+			var $this = $(this);
+
 			// add wrapper and tooltip
-			$(this).html('<span>' + $(this).html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
+			$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
 
 			// grab element
-			var element = $($(this).find('span')[0]);
+			var span = $this.find('span');
+			var element = span.eq(0);
+			var tooltip = span.eq(1);
 
 			// bind events
 			element.bind('click focus', createElement);
 
-			$('.inlineEditTooltip').bind('click', createElement);
+			tooltip.bind('click', createElement);
 
-			$(this).hover(
+			$this.hover(
 				function()
 				{
-					$(this).addClass('inlineEditHover');
-					$($(this).find('span')[1]).show();
+					$this.addClass('inlineEditHover');
+					tooltip.show();
 				},
 				function()
 				{
-					$(this).removeClass('inlineEditHover');
-					$($(this).find('span')[1]).hide();
+					$this.removeClass('inlineEditHover');
+					tooltip.hide();
 				}
 			);
 
@@ -319,10 +324,13 @@
 				// grab current value
 				options.current.value = element.html();
 
+				// get current object
+				var $this = $(this);
+
 				// grab extra params
-				if($(this).parent().data('id') != '')
+				if($this.parent().data('id') != '')
 				{
-					options.current.extraParams = eval('(' + $(this).parent().data('id') + ')');
+					options.current.extraParams = eval('(' + $this.parent().data('id') + ')');
 				}
 
 				// add class

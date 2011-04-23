@@ -23,10 +23,10 @@ class MailmotorInstall extends ModuleInstaller
 		$this->installSettings();
 
 		// install the DB
-		$this->installDatabase();
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// install locale
-		$this->installLocale();
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// install the mailmotor module
 		$this->installModule();
@@ -37,31 +37,7 @@ class MailmotorInstall extends ModuleInstaller
 
 
 	/**
-	 * Install the database
-	 *
-	 * @return	void
-	 */
-	private function installDatabase()
-	{
-		// load install.sql and labels.sql
-		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
-	}
-
-
-	/**
-	 * Install locale
-	 *
-	 * @return	void
-	 */
-	private function installLocale()
-	{
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
-	}
-
-
-	/**
-	 * Iinstall the module and it's actions
+	 * Install the module and it's actions
 	 *
 	 * @return	void
 	 */
