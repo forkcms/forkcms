@@ -11,7 +11,7 @@
 				<span>{$lblAdd|ucfirst}</span>
 			</a>
 			{option:!item.is_hidden}
-				<a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?revision={$item.revision_id}{/option:appendRevision}" class="button icon iconZoom previewButton targetBlank">
+				<a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" class="button icon iconZoom previewButton targetBlank">
 					<span>{$lblView|ucfirst}</span>
 				</a>
 			{/option:!item.is_hidden}
@@ -25,7 +25,7 @@
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 		<span class="oneLiner">
-			<span><a href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?revision={$item.revision_id}{/option:appendRevision}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></a></span>
+			<span><a href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></a></span>
 		</span>
 	</p>
 
