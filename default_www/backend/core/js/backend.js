@@ -1084,7 +1084,7 @@ jsBackend.forms =
 		}
 
 		// return if needed
-		return (changed) ? 'De wijzigingen zullen verloren gaan@todo label' : null;
+		return (changed) ? '{$msgValuesAreChanged}' : null;
 	},
 	
 	// end
