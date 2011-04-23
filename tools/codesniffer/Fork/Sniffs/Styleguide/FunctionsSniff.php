@@ -89,7 +89,7 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 
 				if(trim(substr($tokens[$i]['content'], 0, 10)) == '* @param')
 				{
-					if(!$returnFirst) $phpcsFile->addError('We expect "@return" before "@param".', $i);
+					if(!$returnFirst && $phpcsFile->getDeclarationName($stackPtr) !== '__construct') $phpcsFile->addError('We expect "@return" before "@param".', $i);
 
 					// find part
 					$content = trim(substr($tokens[$i]['content'], strpos($tokens[$i]['content'], "\t", 2)));

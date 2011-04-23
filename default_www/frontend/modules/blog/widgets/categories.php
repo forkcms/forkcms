@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendBlogWidgetCategories extends FrontendBaseWidget
@@ -39,12 +39,12 @@ class FrontendBlogWidgetCategories extends FrontendBaseWidget
 		// get categories
 		$categories = FrontendBlogModel::getAllCategories();
 
-		// build link
-		$link = FrontendNavigation::getURLForBlock('blog', 'category');
-
 		// any categories?
 		if(!empty($categories))
 		{
+			// build link
+			$link = FrontendNavigation::getURLForBlock('blog', 'category');
+
 			// loop and reset url
 			foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];
 		}

@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -72,8 +72,6 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
-		$this->frm->addCheckbox('is_default', (BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) == $this->id));
-		if((BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) == $this->id)) $this->frm->getField('is_default')->setAttribute('disabled', 'disabled');
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -93,17 +91,8 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		// assign
 		$this->tpl->assign('item', $this->record);
 
-		// get default category id
-		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null);
-
-		// get default category
-		$defaultCategory = BackendBlogModel::getCategory($defaultCategoryId);
-
-		// assign
-		if($defaultCategoryId !== null) $this->tpl->assign('defaultCategory', $defaultCategory);
-
-		// the default category may not be deleted
-		if($defaultCategoryId != $this->id) $this->tpl->assign('deleteAllowed', true);
+		// delete allowed?
+		$this->tpl->assign('deleteAllowed', BackendBlogModel::deleteCategoryAllowed($this->id));
 	}
 
 
@@ -139,13 +128,6 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 
 				// upate the item
 				BackendBlogModel::updateCategory($item);
-
-				// it isn't the default category but it should be.
-				if(BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) != $item['id'] && $this->frm->getField('is_default')->getChecked())
-				{
-					// store
-					BackendModel::setModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), $item['id']);
-				}
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);

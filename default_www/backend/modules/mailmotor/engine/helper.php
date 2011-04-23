@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorCMHelper
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
  * @package		backend
@@ -674,6 +673,45 @@ class BackendMailmotorCMHelper
 
 
 	/**
+	 * Returns all subscribers, regardless of the page limit CM gives us.
+	 *
+	 * @return	array
+	 * @param	string $listId	The list ID to get the subscribers from.
+	 */
+	public static function getSubscribers($listId)
+	{
+		// get list statistics, so we can obtain the total subscribers for this list
+		$listStats = self::getCM()->getListStatistics($listId);
+
+		// pagecount is calculated by getting the total amount of subscribers divided by 1k, which is the return limit for CM's getSubscribers()
+		$pageCount = (int) ceil($listStats['total_subscribers'] / 1000);
+
+		// reserve a result stack
+		$results = array();
+
+		// check if we have at least 1 page
+		if($listStats['total_subscribers'] !== 0)
+		{
+			// set the pagecount to 1 by default
+			$pageCount++;
+
+			// loop the total amount of pages and fetch the subscribers accordingly
+			for($i = $pageCount; $i != 0; $i--)
+			{
+				// get the subscribers
+				$subscribers = self::getCM()->getSubscribers($listId, null, $i, 1000);
+
+				// add the subscribers to the result stack
+				$results = array_merge($results, $subscribers);
+			}
+		}
+
+		// return the results
+		return $results;
+	}
+
+
+	/**
 	 * Returns the CampaignMonitor countries as pairs
 	 *
 	 * @return	array
@@ -945,7 +983,7 @@ class BackendMailmotorCMHelper
 		if($item['is_default'] === 'Y' && $item['language'] != '0')
 		{
 			// set all defaults to N
-			BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
+			BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', array($item['language']));
 		}
 
 		// update the group in our database

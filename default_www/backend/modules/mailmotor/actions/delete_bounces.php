@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorDeleteBounces
  * This action will delete all bounces for a specified mailing
  *
  * @package		backend

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorCampaigns
  * This page will display the overview of campaigns
  *
  * @package		backend

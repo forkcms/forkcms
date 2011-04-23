@@ -113,26 +113,26 @@ class BackendBaseAction
 		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/js/minified.js'))
 		{
 			// include the minified JS-file
-			$this->header->addJavascript('minified.js', 'core', false);
+			$this->header->addJS('minified.js', 'core', false);
 		}
 
 		// in debug-mode or minified files don't exist
 		else
 		{
 			// add jquery, we will need this in every action, so add it globally
-			$this->header->addJavascript('jquery/jquery.js', 'core');
-			$this->header->addJavascript('jquery/jquery.ui.js', 'core');
-			$this->header->addJavascript('jquery/jquery.tools.js', 'core');
-			$this->header->addJavascript('jquery/jquery.backend.js', 'core');
+			$this->header->addJS('jquery/jquery.js', 'core');
+			$this->header->addJS('jquery/jquery.ui.js', 'core');
+			$this->header->addJS('jquery/jquery.tools.js', 'core');
+			$this->header->addJS('jquery/jquery.backend.js', 'core');
 		}
 
 		// add items that always need to be loaded
-		$this->header->addJavascript('utils.js', 'core', true);
-		$this->header->addJavascript('backend.js', 'core', true);
+		$this->header->addJS('utils.js', 'core', true);
+		$this->header->addJS('backend.js', 'core', true);
 
 		// add default js file (if the file exists)
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) $this->header->addJavascript($this->getModule() . '.js', null, true);
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js')) $this->header->addJavascript($this->getAction() . '.js', null, true);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) $this->header->addJS($this->getModule() . '.js', null, true);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js')) $this->header->addJS($this->getAction() . '.js', null, true);
 
 		// if not in debug-mode we should include the minified version
 		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/layout/css/minified.css'))
@@ -755,6 +755,7 @@ class BackendBaseConfig
  * @subpackage	core
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendBaseCronjob
@@ -882,6 +883,9 @@ class BackendBaseCronjob
 	 */
 	protected function setBusyFile()
 	{
+		// do not set busy file in debug mode
+		if(SPOON_DEBUG) return;
+
 		// build path
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 

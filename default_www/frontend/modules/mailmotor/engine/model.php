@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendMailmotorModel
  * In this file we store all generic functions that we will be using in the mailmotor module
  *
  * @package		frontend
@@ -37,8 +36,8 @@ class FrontendMailmotorModel
 		$emails = (!is_array($emails)) ? array($emails) : $emails;
 
 		// delete records
-		$db->delete('mailmotor_addresses', 'email IN("' . implode('","', $emails) . '")');
-		$db->delete('mailmotor_addresses_groups', 'email IN("' . implode('","', $emails) . '")');
+		$db->delete('mailmotor_addresses', 'email IN ("' . implode('","', $emails) . '")');
+		$db->delete('mailmotor_addresses_groups', 'email IN ("' . implode('","', $emails) . '")');
 	}
 
 
@@ -51,7 +50,10 @@ class FrontendMailmotorModel
 	public static function exists($email)
 	{
 		// check the results
-		return (bool) FrontendModel::getDB()->getNumRows('SELECT email FROM mailmotor_addresses WHERE email = ?', array($email));
+		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(email)
+														FROM mailmotor_addresses
+														WHERE email = ?',
+														array((string) $email));
 	}
 
 
@@ -64,7 +66,10 @@ class FrontendMailmotorModel
 	public static function existsGroup($id)
 	{
 		// return the results
-		return (bool) (FrontendModel::getDB()->getNumRows('SELECT id FROM mailmotor_groups WHERE id = ?', array($id)) > 0);
+		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM mailmotor_groups
+														WHERE id = ?',
+														array((int) $id));
 	}
 
 
@@ -137,7 +142,7 @@ class FrontendMailmotorModel
 											LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
 											WHERE mag.email = ?
 											GROUP BY mg.id',
-											array($email));
+											array((string) $email));
 
 		// excludeId set
 		if(!empty($excludeId))
@@ -186,7 +191,6 @@ class FrontendMailmotorModel
 		$db = FrontendModel::getDB(true);
 
 		// set record values
-		$record = array();
 		$record['email'] = $item['email'];
 		$record['source'] = $item['source'];
 		$record['created_on'] = $item['created_on'];
@@ -318,7 +322,7 @@ class FrontendMailmotorModel
 			$subscriber['unsubscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
 			// unsubscribe the user
-			$db->update('mailmotor_addresses_groups', $subscriber, 'email = ?', $email);
+			$db->update('mailmotor_addresses_groups', $subscriber, 'email = ?', array($email));
 
 			// user unsubscribed
 			return true;

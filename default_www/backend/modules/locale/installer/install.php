@@ -9,7 +9,6 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class LocaleInstall extends ModuleInstaller
@@ -37,6 +36,9 @@ class LocaleInstall extends ModuleInstaller
 		$this->setActionRights(1, 'locale', 'add');
 		$this->setActionRights(1, 'locale', 'analyse');
 		$this->setActionRights(1, 'locale', 'edit');
+		$this->setActionRights(1, 'locale', 'export');
+		$this->setActionRights(1, 'locale', 'export_analyse');
+		$this->setActionRights(1, 'locale', 'import');
 		$this->setActionRights(1, 'locale', 'index');
 		$this->setActionRights(1, 'locale', 'mass_action');
 

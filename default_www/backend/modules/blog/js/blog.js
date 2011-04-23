@@ -12,7 +12,6 @@ jsBackend.blog =
 	init: function()
 	{
 		jsBackend.blog.controls.init();
-		jsBackend.blog.category.init();
 
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
@@ -24,29 +23,10 @@ jsBackend.blog =
 }
 
 
-jsBackend.blog.category =
-{
-	// init, something like a constructor
-	init: function()
-	{
-		if(jsBackend.current.action == 'categories' && $('.datagrid td.title').length > 0)
-		{
-			// buil ajax-url
-			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=edit_category&language='+ jsBackend.current.language;
-
-			// bind
-			$('.datagrid td.title').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
-		}
-	},
-
-
-	// end
-	eoo: true
-}
-
-
 jsBackend.blog.controls =
 {
+	currentCategory: null,
+		
 	// init, something like a constructor
 	init: function()
 	{
@@ -54,6 +34,11 @@ jsBackend.blog.controls =
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />');
 			$('form').submit();
+		});
+		
+		$('#filter #category').change(function(evt)
+		{
+			$('#filter').submit();
 		});
 		
 		if($('#addCategoryDialog').length > 0) {
@@ -87,7 +72,10 @@ jsBackend.blog.controls =
 									else
 									{
 										// add and set selected
-										$('#categoryId').append('<option value="'+ json.data.id +'">'+ json.data.title +'</option>').val(json.data.id);
+										$('#categoryId').append('<option value="'+ json.data.id +'">'+ json.data.title +'</option>');
+										
+										// reset value
+										jsBackend.blog.controls.currentCategory = json.data.id;
 										
 										// close dialog
 										$('#addCategoryDialog').dialog('close');
@@ -101,6 +89,11 @@ jsBackend.blog.controls =
 							// close the dialog
 							$(this).dialog('close');
 						}
+					},
+					close: function(event, ui) 
+					{
+						// reset value to previous selected item
+						$('#categoryId').val(jsBackend.blog.controls.currentCategory);
 					}
 				});
 
@@ -116,8 +109,13 @@ jsBackend.blog.controls =
 					// open dialog
 					$('#addCategoryDialog').dialog('open');
 				}
+				
+				// reset current category
+				else jsBackend.blog.controls.currentCategory = $('#categoryId').val();
 			});
 		}
+		
+		jsBackend.blog.controls.currentCategory = $('#categoryId').val();
 	},
 	
 

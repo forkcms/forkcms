@@ -12,6 +12,17 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.step3.init();
 		jsBackend.mailmotor.step4.init();
 		jsBackend.mailmotor.templateSelection.init();
+		
+		// multiple text box for adding multiple emailaddresses
+		if($('form#add #email').length > 0) {
+			$('form#add #email').multipleTextbox(
+				{ 
+					emptyMessage: '', 
+					addLabel: '{$lblAdd|ucfirst}', 
+					removeLabel: '{$lblDelete|ucfirst}',
+					canAddNew: true
+				}); 
+		}
 	},
 
 
@@ -26,10 +37,12 @@ jsBackend.mailmotor.charts =
 	{
 		if($('#chartPieChart').length > 0 || $('#chartDoubleMetricPerDay').length > 0 || $('#chartSingleMetricPerDay').length > 0 || $('#chartWidget').length > 0)
 		{
-			Highcharts.setOptions({
+			Highcharts.setOptions(
+			{
 				colors: ['#058DC7', '#50b432', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
 				title: { text: '' },
-				legend: {
+				legend:
+				{
 					layout: 'vertical',
 					backgroundColor: '#FFF',
 					borderWidth: 0,
@@ -65,33 +78,42 @@ jsBackend.mailmotor.chartPieChart =
 
 		pieChartValues.each(function()
 		{
-			pieChartData.push({
+			pieChartData.push(
+			{
 				'name': $(this).children('span.label').html(),
 				'y': parseInt($(this).children('span.value').html()),
 				'percentage': parseInt($(this).children('span.percentage').html())
 			});
 		});
 
-		var chart = new Highcharts.Chart({
+		var chart = new Highcharts.Chart(
+		{
 			chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]	},
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
-			tooltip: {
-				formatter: function() {
+			tooltip:
+			{
+				formatter: function()
+				{
 					var percentage = String(this.point.percentage);
 					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, percentage.indexOf('.') + 4) + '%)';
 				},
 				borderWidth: 2,
 				shadow: false
 			},
-			plotOptions: {
-				pie: { allowPointSelect: true,
-						dataLabels: { enabled: true,
-										formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-										color: 'white',
-										style: { display: 'none' }
-									}
+			plotOptions:
+			{
+				pie:
+				{
+					allowPointSelect: true,
+					dataLabels:
+					{
+						enabled: true,
+						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
+						color: 'white',
+						style: { display: 'none' }
 					}
+				}
 			},
 			legend: { style: { right: '10px' } },
 			series: [ {type: 'pie', data: pieChartData } ]
@@ -262,13 +284,13 @@ jsBackend.mailmotor.resizing =
 		var iframeBox = $('#iframeBox');
 
 		// make the plain content textarea resizable
-		$('#contentPlain').resizable({
-			handles: 's'
-		});
+		$('#contentPlain').resizable({ handles: 's' });
 
 		// make the iframe resizable
-		iframeBox.resizable({
+		iframeBox.resizable(
+		{
 			handles: 's',
+
 			/*
 				This is a hack to fix sloppy default resizing in jqueryui. The default behaviour stops resizing as soon as your mouse
 				enters the content viewport of an iframe, meaning quick resizing is not possible. What we do here is adding an overlay
@@ -284,7 +306,8 @@ jsBackend.mailmotor.resizing =
 				overlay[0].id = 'iframeOverlay';
 
 				// the overlay should be absolutely positioned with the top value aligned to the top of the iframe
-				overlay.css({
+				overlay.css(
+				{
 					left: 0,
 					position:'absolute',
 					top: iframe.position().top
@@ -294,7 +317,8 @@ jsBackend.mailmotor.resizing =
 				overlay.height(iframe.height());
 				overlay.width('100%');
 			},
-			stop: function(){
+			stop: function()
+			{
 				// remove the overlay
 				$('#iframeOverlay').remove();
 			}
@@ -345,7 +369,8 @@ jsBackend.mailmotor.step3 =
 				var bodyHTML = encodeURIComponent(body.html());
 
 				// make the call
-				$.ajax({
+				$.ajax(
+				{
 					url: url,
 					data: 'mailing_id='+ variables.mailingId +'&subject='+ subject +'&content_plain='+ plainText +'&content_html=' + textareaValue +'&full_content_html='+ bodyHTML,
 					success: function(data, textStatus)
@@ -391,13 +416,15 @@ jsBackend.mailmotor.step4 =
 		var sendTime = oSendTime.val();
 
 		// initalize the confirmation modal
-		confirmBox.dialog({
+		confirmBox.dialog(
+		{
 			autoOpen: false,
 			draggable: false,
 			width: 500,
 			modal: true,
 			resizable: false,
-			buttons: {
+			buttons:
+			{
 				'{$lblSendMailing|ucfirst}': function()
 				{
 					// send the mailing
@@ -464,7 +491,8 @@ jsBackend.mailmotor.step4 =
 		var sendOnTime = $('#sendOnTime').val();
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
 			url: url,
 			data: 'mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
 			success: function(data, textStatus)
@@ -519,7 +547,8 @@ jsBackend.mailmotor.step4 =
 		buttonPane.addClass('loading');
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
 			url: url,
 			data: 'id='+ variables.mailingId,
 			success: function(data, textStatus)

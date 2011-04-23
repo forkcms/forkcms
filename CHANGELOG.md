@@ -1,15 +1,53 @@
-2.1.1 (xxxx-xx-xx)
+2.2.0 (xxxx-xx-xx)
 --
 Bugfixes:
-	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
-	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
-	* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
+* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
+* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
+* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
+* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions. 
+* Bugfix: improve "incomplete" (autocomplete) searching for multiple words (only the last word should be considered incomplete.)
+* Bugfix: removed empty widgets, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/150.
+* Bugfix: hover-event wasn't unbind correctly when sorting the widgets was done.
+* Bugfix: importing addresses into the mailmotor was borked, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/143.
+* Bugfix: focusFirst was focusing on an element on hidden tabs, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/153.
+* Bugfix: click on tab wasn't working decent in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/154. 
+* Bugfix: page-revisions were interfering with blog-revisions, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/151.
 
 Improvements:
-	* Blog: creating categories can now be done without leaving the add/edit screen.
-	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
-	* Core: when using datefields with till, from, range set, it will be validated according the type.
-	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
+* Core: when using datefields with till, from, range set, it will be validated according the type.
+* Core: changed theme's folder layout to match codebase folder layout - folder 'layout/' should be included in theme;.
+* Core: changed addJavascript function to addJS (consistency with addCSS + less typing.)
+* Core: added class FrontendTheme with functions pertaining to themes. Bundled functionality to fetch a file's theme path to this class.
+* Core: added template modifier 'getPath', to fetch the desired path to a file (theme file if available, core file otherwise.)
+* Core: no more need to enter absolute path to core or theme template in an include (still possible though); template compiler will use theme file if available, core file otherwise.
+* Core: removed scratch theme. Triton is now the default theme.
+* Core: templates are now linked to a theme.
+* Core: only show templates belonging to a specific selected theme.
+* Core: theme switch will automatically link pages to templates of the new theme.
+* Core: when a new template with less blocks is selected for a page, the redundant blocks' content will be kept.
+* Core: blocks data does not get lost when switching template/theme.
+* Core: content blocks can now be linked to a content block-template.
+* Core: locales analyse-tool will check only the active modules from now on.
+* Core: added a jQuery-plugin to implement a passwordGenerator.
+* Core: added the possibility to add attachments to the frontend/backend mailers.
+* Blog: creating categories can now be done without leaving the add/edit screen.
+* Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
+* Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.
+* Blog: in the dropdown to filter on a category the count is now included.
+* Blog: when canceling adding a new category the previous selected one will be reselected, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/147
+* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
+* Pages: implemented drafts, similar to Blog.
+* Pages: when changing templates the textual-content isn't deleted anymore.
+* Locale: you can now import/export locale from/to xml. The installers also use xml's.
+* Locale: export for missing locale.
+* Locale: remove deprecated insertLocale function.
+* Locale: created an incredibly nasty hotfix for some deprecated PHP functionality.
+* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
+* Mailmotor: added extra validation for adding address(es).
+* Mailmotor: adding multiple addresses now uses the multipleTextbox-functionality.
+* Installer: refactored pages installation.
+* Installer: split up step languages & modules into 2 steps; moved db step behind those.
+* Installer: ask for backend interface languages seperate from frontend languages.
 
 2.1.0 (2011-03-14)
 --

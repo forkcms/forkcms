@@ -52,25 +52,31 @@ class InstallerStep3 extends InstallerStep
 	 */
 	private function loadForm()
 	{
-		// guess db & username
-		$host = $_SERVER['HTTP_HOST'];
-		$chunks = explode('.', $host);
+		// seperate frontend/backend languages?
+		$this->frm->addCheckbox('same_interface_language', (SpoonSession::exists('same_interface_language') ? SpoonSession::get('same_interface_language') : true));
 
-		// seems like windows can't handle localhost...
-		$dbHost = (substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost';
+		// multiple or single language (frontend)
+		$this->frm->addRadiobutton('language_type',	array(array('value' => 'multiple', 'label' => 'Multiple languages', 'variables' => array('multiple' => true)),
+													array('value' => 'single', 'label' => 'Just one language', 'variables' => array('single' => true))), (SpoonSession::exists('multiple_languages') && SpoonSession::get('multiple_languages')) ? 'multiple' : 'single');
 
-		// remove tld
-		array_pop($chunks);
+		// multiple languages (frontend)
+		$this->frm->addMultiCheckbox('languages', array(array('value' => 'en', 'label' => 'English'),
+														array('value' => 'fr', 'label' => 'French'),
+														array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'en'));
 
-		// create base
-		$base = implode('_', $chunks);
+		// multiple languages (backend)
+		$this->frm->addMultiCheckbox('interface_languages', array(array('value' => 'en', 'label' => 'English'),
+																	array('value' => 'fr', 'label' => 'French'),
+																	array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('interface_languages') ? SpoonSession::get('interface_languages') : 'en'));
 
-		// create input fields
-		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : $dbHost);
-		$this->frm->addText('port', SpoonSession::exists('db_port') ? SpoonSession::get('db_port') : 3306, 10);
-		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
-		$this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : $base);
-		$this->frm->addPassword('password', SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null);
+		// single language (frontend)
+		$this->frm->addDropdown('language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
+
+		// default language (frontend)
+		$this->frm->addDropdown('default_language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
+
+		// default language (backend)
+		$this->frm->addDropdown('default_interface_language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_interface_language') ? SpoonSession::get('default_interface_language') : 'en'));
 	}
 
 
@@ -84,58 +90,52 @@ class InstallerStep3 extends InstallerStep
 		// form submitted
 		if($this->frm->isSubmitted())
 		{
-			// database settings
-			$this->frm->getField('hostname')->isFilled('This field is required.');
-			$this->frm->getField('database')->isFilled('This field is required.');
-			$this->frm->getField('username')->isFilled('This field is required.');
-			$this->frm->getField('password')->isFilled('This field is required.');
-
-			// all filled out
-			if($this->frm->getField('hostname')->isFilled() && $this->frm->getField('database')->isFilled() && $this->frm->getField('username')->isFilled() && $this->frm->getField('password')->isFilled())
+			// multiple languages
+			if($this->frm->getField('language_type')->getValue() == 'multiple')
 			{
-				// test the database connection details
-				try
-				{
-					// get port
-					$port = ($this->frm->getField('port')->isFilled()) ? $this->frm->getField('port')->getValue() : 3306;
+				// list of languages
+				$languages = $this->frm->getField('languages')->getValue();
 
-					// create instance
-					$db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue(), $port);
+				// default language
+				if(!in_array($this->frm->getField('default_language')->getValue(), $languages)) $this->frm->getField('default_language')->setError('Your default language needs to be in the list of languages you chose.');
+			}
 
-					// test table
-					$table = 'test' . time();
+			// single language
+			else
+			{
+				// list of languages
+				$languages = (array) array($this->frm->getField('default_language')->getValue());
+			}
 
-					// attempt to create table
-					$db->execute('DROP TABLE IF EXISTS ' . $table);
-					$db->execute('CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM');
+			// same cms interface language
+			if($this->frm->getField('same_interface_language')->getChecked())
+			{
+				// list of languages
+				$interfaceLanguages = $languages;
+			}
 
-					// drop table
-					$db->drop($table);
-				}
+			// different interface language
+			else
+			{
+				// list of languages
+				$interfaceLanguages = $this->frm->getField('interface_languages')->getValue();
+			}
 
-				// catch possible exceptions
-				catch(Exception $e)
-				{
-					// add errors
-					$this->frm->addError('Problem with database credentials');
+			// default language
+			if(!in_array($this->frm->getField('default_interface_language')->getValue(), $interfaceLanguages)) $this->frm->getField('default_interface_language')->setError('Your default language needs to be in the list of languages you chose.');
 
-					// show error
-					$this->tpl->assign('formError', $e->getMessage());
-				}
+			// all valid
+			if($this->frm->isCorrect())
+			{
+				// set languages
+				SpoonSession::set('default_language', $this->frm->getField('default_language')->getValue());
+				SpoonSession::set('default_interface_language', $this->frm->getField('default_interface_language')->getValue());
+				SpoonSession::set('multiple_languages', ($this->frm->getField('language_type')->getValue() == 'multiple') ? true : false);
+				SpoonSession::set('languages', $languages);
+				SpoonSession::set('interface_languages', $interfaceLanguages);
 
-				// all valid
-				if($this->frm->isCorrect())
-				{
-					// update session
-					SpoonSession::set('db_hostname', $this->frm->getField('hostname')->getValue());
-					SpoonSession::set('db_database', $this->frm->getField('database')->getValue());
-					SpoonSession::set('db_username', $this->frm->getField('username')->getValue());
-					SpoonSession::set('db_password', $this->frm->getField('password')->getValue());
-					SpoonSession::set('db_port', $this->frm->getField('port')->getValue());
-
-					// redirect
-					SpoonHTTP::redirect('index.php?step=4');
-				}
+				// redirect
+				SpoonHTTP::redirect('index.php?step=4');
 			}
 		}
 	}

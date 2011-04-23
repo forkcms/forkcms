@@ -7,14 +7,22 @@
  * @subpackage	blog
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BlogInstall extends ModuleInstaller
 {
 	/**
-	 * Add the default category for a language
+	 * Default category id
+	 *
+	 * @var	int
+	 */
+	private $defaultCategoryId;
+
+
+	/**
+	 * Add a category for a language
 	 *
 	 * @return	int
 	 * @param	string $language	The language to use.
@@ -90,30 +98,13 @@ class BlogInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// fetch current categoryId
-			$currentCategoryId = $this->getCategory($language);
+			$this->defaultCategoryId = $this->getCategory($language);
 
 			// no category exists
-			if($currentCategoryId == 0)
+			if($this->defaultCategoryId == 0)
 			{
-				// add default category
-				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-
-				// insert default category setting
-				$this->setSetting('blog', 'default_category_' . $language, $defaultCategoryId, true);
-			}
-
-			// category exists
-			else
-			{
-				// current default categoryId
-				$currentDefaultCategoryId = $this->getSetting('blog', 'default_category_' . $language);
-
-				// does not exist
-				if(!$this->existsCategory($language, $currentDefaultCategoryId))
-				{
-					// insert default category setting
-					$this->setSetting('blog', 'default_category_' . $language, $currentCategoryId, true);
-				}
+				// add category
+				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
 			}
 
 			// feedburner URL
@@ -123,7 +114,6 @@ class BlogInstall extends ModuleInstaller
 			$this->setSetting('blog', 'rss_meta_' . $language, true);
 			$this->setSetting('blog', 'rss_title_' . $language, 'RSS');
 			$this->setSetting('blog', 'rss_description_' . $language, '');
-
 
 			// check if a page for blog already exists in this language
 			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
@@ -189,7 +179,7 @@ class BlogInstall extends ModuleInstaller
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array('id' => 1,
-											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
+											'category_id' => $this->defaultCategoryId,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
@@ -206,7 +196,7 @@ class BlogInstall extends ModuleInstaller
 
 			// insert sample blogpost 2
 			$db->insert('blog_posts', array('id' => 2,
-											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
+											'category_id' => $this->defaultCategoryId,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
 											'language' => $language,

@@ -59,8 +59,8 @@
         <translation language="en"><![CDATA[The translation]]></translation>
       </item>
       <item type="message" name="Imported">
-        <translation language="nl"><![CDATA[De vertalingen werden geimporteerd.]]></translation>
-        <translation language="en"><![CDATA[The translations were imported.]]></translation>
+        <translation language="nl"><![CDATA[%1$s vertalingen werden geimporteerd.]]></translation>
+        <translation language="en"><![CDATA[%1$s translations were imported.]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen vertalingen. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
@@ -228,7 +228,7 @@
       </item>
       <item type="error" name="JavascriptNotEnabled">
         <translation language="nl"><![CDATA[Om Fork CMS te gebruiken moet Javascript geactiveerd zijn in uw browser. Activeer javascript en vernieuw deze pagina.]]></translation>
-        <translation language="en"><![CDATA[To use Fork CMS]]></translation>
+        <translation language="en"><![CDATA[To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.]]></translation>
       </item>
       <item type="error" name="JPGGIFAndPNGOnly">
         <translation language="nl"><![CDATA[Enkel jpg]]></translation>
@@ -265,6 +265,10 @@
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No items were selected.]]></translation>
+      </item>
+      <item type="error" name="NoTemplatesAvailable">
+        <translation language="nl"><![CDATA[Het geselecteerde thema heeft nog geen templates. Gelieve eerst minstens een template aan te maken.]]></translation>
+        <translation language="en"><![CDATA[The selected theme does not yet have templates. Please create at least one template first.]]></translation>
       </item>
       <item type="error" name="PasswordIsRequired">
         <translation language="nl"><![CDATA[Gelieve een wachtwoord in te geven.]]></translation>
@@ -406,6 +410,10 @@
         <translation language="nl"><![CDATA[gearchiveerd]]></translation>
         <translation language="en"><![CDATA[archived]]></translation>
       </item>
+      <item type="label" name="Article">
+        <translation language="nl"><![CDATA[artikel]]></translation>
+        <translation language="en"><![CDATA[article]]></translation>
+      </item>
       <item type="label" name="Articles">
         <translation language="nl"><![CDATA[artikels]]></translation>
         <translation language="en"><![CDATA[articles]]></translation>
@@ -437,10 +445,6 @@
       <item type="label" name="Block">
         <translation language="nl"><![CDATA[blok]]></translation>
         <translation language="en"><![CDATA[block]]></translation>
-      </item>
-      <item type="label" name="Blog">
-        <translation language="nl"><![CDATA[blog]]></translation>
-        <translation language="en"><![CDATA[blog]]></translation>
       </item>
       <item type="label" name="BrowserNotSupported">
         <translation language="nl"><![CDATA[browser niet ondersteund]]></translation>
@@ -674,6 +678,10 @@
         <translation language="nl"><![CDATA[algemene instellingen]]></translation>
         <translation language="en"><![CDATA[general settings]]></translation>
       </item>
+      <item type="label" name="Generate">
+        <translation language="nl"><![CDATA[genereer]]></translation>
+        <translation language="en"><![CDATA[generate]]></translation>
+      </item>
       <item type="label" name="GoToPage">
         <translation language="nl"><![CDATA[ga naar pagina]]></translation>
         <translation language="en"><![CDATA[go to page]]></translation>
@@ -875,7 +883,7 @@
         <translation language="en"><![CDATA[none]]></translation>
       </item>
       <item type="label" name="Notifications">
-        <translation language="nl"><![CDATA[verwitigingen]]></translation>
+        <translation language="nl"><![CDATA[verwittigingen]]></translation>
         <translation language="en"><![CDATA[notifications]]></translation>
       </item>
       <item type="label" name="NoTheme">
@@ -1621,6 +1629,10 @@
       <item type="message" name="UsingARevision">
         <translation language="nl"><![CDATA[Je hebt een oudere versie ingeladen. Sla op om deze versie te gebruiken.]]></translation>
         <translation language="en"><![CDATA[You're using an older version. Save to overwrite the current version.]]></translation>
+      </item>
+      <item type="message" name="ValuesAreChanged">
+        <translation language="nl"><![CDATA[De gemaakte wijzigingen zullen verloren gaan.]]></translation>
+        <translation language="en"><![CDATA[Changes will be lost.]]></translation>
       </item>
     </core>
   </backend>

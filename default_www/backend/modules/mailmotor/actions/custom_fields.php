@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorCustomFields
  * This page will display the overview of custom fields
  *
  * @package		backend

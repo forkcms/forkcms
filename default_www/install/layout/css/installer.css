@@ -14,6 +14,10 @@
 	height: auto;
 }
 
+.noPadding {
+	padding: 0 !important;
+}
+
 /*
 	Make sure inputs are wide enough
 */
@@ -43,14 +47,7 @@ span.nok {
 }
 
 /*
-	Step 3: DB
-*/
-
-#installer input#hostname { width: 140px; }
-#installer input#port { width: 40px; }
-
-/*
-	Step 4: modules
+	Step 3/4: settings
 */
 
 ul#moduleList {
@@ -58,8 +55,19 @@ ul#moduleList {
 	/* No webkit since support is buggy */
 }
 
+h3 {
+	padding-top: 12px;
+}
+
 /*
-	Step 6
+	Step 5: DB
+*/
+
+#installer input#hostname { width: 140px; }
+#installer input#port { width: 40px; }
+
+/*
+	Step 7
 */
 
 .infoGrid {

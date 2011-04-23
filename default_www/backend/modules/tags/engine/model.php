@@ -60,6 +60,21 @@ class BackendTagsModel
 
 
 	/**
+	 * Check if a tag exists
+	 *
+	 * @return	bool
+	 * @param	string $tag		The tag to check for existence.
+	 */
+	public static function existsTag($tag)
+	{
+		return (BackendModel::getDB()->getVar('SELECT i.tag
+		                                             FROM tags AS i
+		                                             WHERE i.tag = ?',
+		                                             array((string) $tag)) != '');
+	}
+
+
+	/**
 	 * Get tag record.
 	 *
 	 * @return	array

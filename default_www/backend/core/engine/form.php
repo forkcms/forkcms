@@ -249,8 +249,8 @@ class BackendForm extends SpoonForm
 		$HTML = (bool) $HTML;
 
 		// we add JS because we need TinyMCE
-		$this->header->addJavascript('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJavascript('tiny_mce/tiny_mce_config.js', 'core', true);
+		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
+		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
 
 		// create and return a textarea for TinyMCE
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
@@ -507,7 +507,7 @@ class BackendFormDate extends SpoonFormDate
 	public function isValid($error = null)
 	{
 		// call parent (let them do the hard word)
-		$return = parent::isValid();
+		$return = parent::isValid($error);
 
 		// already errors detect, no more further testing is needed
 		if($return === false) return false;

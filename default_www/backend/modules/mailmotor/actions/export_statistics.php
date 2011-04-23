@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorExportStatistics
  * This action is used to export statistics by mailing ID
  *
  * @package		backend

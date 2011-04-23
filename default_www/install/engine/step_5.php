@@ -41,7 +41,7 @@ class InstallerStep5 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return (isset($_SESSION['default_language']) && isset($_SESSION['multiple_languages']) && isset($_SESSION['languages']));
+		return (isset($_SESSION['modules']) && isset($_SESSION['example_data']));
 	}
 
 
@@ -52,16 +52,25 @@ class InstallerStep5 extends InstallerStep
 	 */
 	private function loadForm()
 	{
-		// guess email
+		// guess db & username
 		$host = $_SERVER['HTTP_HOST'];
+		$chunks = explode('.', $host);
 
-		$this->frm->addText('email', (SpoonSession::exists('email') ? SpoonSession::get('email') : 'info@' . $host));
-		$this->frm->addPassword('password', (SpoonSession::exists('password') ? SpoonSession::get('password') : null), null, 'inputPassword', 'inputPasswordError', true);
-		$this->frm->addPassword('confirm', (SpoonSession::exists('confirm') ? SpoonSession::get('confirm') : null), null, 'inputPassword', 'inputPasswordError', true);
+		// seems like windows can't handle localhost...
+		$dbHost = (substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost';
 
-		// disable autocomplete
-		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));
-		$this->frm->getField('confirm')->setAttributes(array('autocomplete' => 'off'));
+		// remove tld
+		array_pop($chunks);
+
+		// create base
+		$base = implode('_', $chunks);
+
+		// create input fields
+		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : $dbHost);
+		$this->frm->addText('port', SpoonSession::exists('db_port') ? SpoonSession::get('db_port') : 3306, 10);
+		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
+		$this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : $base);
+		$this->frm->addPassword('password', SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null);
 	}
 
 
@@ -75,22 +84,58 @@ class InstallerStep5 extends InstallerStep
 		// form submitted
 		if($this->frm->isSubmitted())
 		{
-			// required fields
-			$this->frm->getField('email')->isEmail('Please provide a valid e-mailaddress.');
+			// database settings
+			$this->frm->getField('hostname')->isFilled('This field is required.');
+			$this->frm->getField('database')->isFilled('This field is required.');
+			$this->frm->getField('username')->isFilled('This field is required.');
 			$this->frm->getField('password')->isFilled('This field is required.');
-			$this->frm->getField('confirm')->isFilled('This field is required.');
-			if($this->frm->getField('password')->getValue() != $this->frm->getField('confirm')->getValue()) $this->frm->getField('confirm')->addError('The passwords do not match.');
 
-			// all valid
-			if($this->frm->isCorrect())
+			// all filled out
+			if($this->frm->getField('hostname')->isFilled() && $this->frm->getField('database')->isFilled() && $this->frm->getField('username')->isFilled() && $this->frm->getField('password')->isFilled())
 			{
-				// update session
-				SpoonSession::set('email', $this->frm->getField('email')->getValue());
-				SpoonSession::set('password', $this->frm->getField('password')->getValue());
-				SpoonSession::set('confirm', $this->frm->getField('confirm')->getValue());
+				// test the database connection details
+				try
+				{
+					// get port
+					$port = ($this->frm->getField('port')->isFilled()) ? $this->frm->getField('port')->getValue() : 3306;
 
-				// redirect
-				SpoonHTTP::redirect('index.php?step=6');
+					// create instance
+					$db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue(), $port);
+
+					// test table
+					$table = 'test' . time();
+
+					// attempt to create table
+					$db->execute('DROP TABLE IF EXISTS ' . $table);
+					$db->execute('CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM');
+
+					// drop table
+					$db->drop($table);
+				}
+
+				// catch possible exceptions
+				catch(Exception $e)
+				{
+					// add errors
+					$this->frm->addError('Problem with database credentials');
+
+					// show error
+					$this->tpl->assign('formError', $e->getMessage());
+				}
+
+				// all valid
+				if($this->frm->isCorrect())
+				{
+					// update session
+					SpoonSession::set('db_hostname', $this->frm->getField('hostname')->getValue());
+					SpoonSession::set('db_database', $this->frm->getField('database')->getValue());
+					SpoonSession::set('db_username', $this->frm->getField('username')->getValue());
+					SpoonSession::set('db_password', $this->frm->getField('password')->getValue());
+					SpoonSession::set('db_port', $this->frm->getField('port')->getValue());
+
+					// redirect
+					SpoonHTTP::redirect('index.php?step=6');
+				}
 			}
 		}
 	}

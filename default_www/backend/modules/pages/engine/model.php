@@ -8,6 +8,7 @@
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendPagesModel
@@ -25,6 +26,23 @@ class BackendPagesModel
 
 
 	/**
+	 * Overview of the drafts
+	 *
+	 * @va	string
+	 */
+	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+										FROM pages AS i
+										INNER JOIN
+										(
+											SELECT MAX(i.revision_id) AS revision_id
+											FROM pages AS i
+											WHERE i.status = ? AND i.user_id = ? AND i.language = ?
+											GROUP BY i.id
+										) AS p
+										WHERE i.revision_id = p.revision_id';
+
+
+	/**
 	 * Overview of a specific page's revisions
 	 *
 	 * @var	string
@@ -34,6 +52,16 @@ class BackendPagesModel
 									WHERE i.id = ? AND i.status = ? AND i.language = ?
 									ORDER BY i.edited_on DESC';
 
+	/**
+	 * Overview of a specific page's drafts
+	 *
+	 * @var	string
+	 */
+	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+													FROM pages AS i
+													WHERE i.id = ? AND i.status = ? AND i.language = ?
+													ORDER BY i.edited_on DESC';
+
 
 	/**
 	 * Overview of template
@@ -42,6 +70,7 @@ class BackendPagesModel
 	 */
 	const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
 									FROM pages_templates AS i
+									WHERE i.theme = ?
 									ORDER BY i.label ASC';
 
 
@@ -738,15 +767,16 @@ class BackendPagesModel
 	 * Get revisioned blocks for a certain page
 	 *
 	 * @return	array
-	 * @param 	int $id				The Id of the page.
-	 * @param	int $revisionId		The revision to grab.
+	 * @param 	int $id						The Id of the page.
+	 * @param	int $revisionId				The revision to grab.
+	 * @param	string[optional] $language	The language to use.
 	 */
-	public static function getBlocksRevision($id, $revisionId)
+	public static function getBlocksRevision($id, $revisionId, $language = null)
 	{
 		// redefine
 		$id = (int) $id;
 		$revisionId = (int) $revisionId;
-		$language = BackendLanguage::getWorkingLanguage();
+		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get page (active version)
 		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
@@ -956,7 +986,10 @@ class BackendPagesModel
 		}
 
 		// not availble
-		else throw new BackendException('keys-file isn\'t available.');
+		else
+		{
+			return false;
+		}
 
 		// if the is available in multiple languages we should add the current lang
 		if(SITE_MULTILANGUAGE) $URL = '/' . BackendLanguage::getWorkingLanguage() . '/' . $URL;
@@ -1141,18 +1174,22 @@ class BackendPagesModel
 	 * Get templates
 	 *
 	 * @return	array
+	 * @param	string[optional] $theme		The thele we want to fetch the templates from.
 	 */
-	public static function getTemplates()
+	public static function getTemplates($theme = null)
 	{
 		// get db
 		$db = BackendModel::getDB();
 
+		// validate input
+		$theme = SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
+
 		// get templates
 		$templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
 																FROM pages_templates AS i
-																WHERE i.active = ?
+																WHERE i.theme = ? AND i.active = ?
 																ORDER BY i.label ASC',
-																array('Y'), 'id');
+																array($theme, 'Y'), 'id');
 
 		// get extras
 		$extras = (array) self::getExtras();
@@ -1560,7 +1597,6 @@ class BackendPagesModel
 
 		// return
 		return $return;
-
 	}
 
 
@@ -1720,13 +1756,13 @@ class BackendPagesModel
 	 *
 	 * @return	void
 	 */
-	private static function setMaximumBlocks()
+	public static function setMaximumBlocks()
 	{
 		// get maximum number of blocks for active templates
 		$maximumNumberOfBlocks = (int) BackendModel::getDB()->getVar('SELECT MAX(i.num_blocks) AS max_num_blocks
 																		FROM pages_templates AS i
-																		WHERE i.active = ?',
-																		array('Y'));
+																		WHERE i.active = ? AND i.theme = ?',
+																		array('Y', BackendModel::getModuleSetting('core', 'theme', 'core')));
 
 		// store
 		BackendModel::setModuleSetting('pages', 'template_max_blocks', $maximumNumberOfBlocks);
@@ -1781,8 +1817,8 @@ class BackendPagesModel
 		$db = BackendModel::getDB(true);
 
 		// update old revisions
-		if($page['status'] != 'draft') $db->update('pages', array('status' => 'archive'), 'id = ? AND language = ?', array((int) $page['id'], BL::getWorkingLanguage()));
-		else $db->delete('pages', 'id = ? AND user_id = ? AND status = ? AND language = ?', array((int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', BL::getWorkingLanguage()));
+		if($page['status'] != 'draft') $db->update('pages', array('status' => 'archive'), 'id = ? AND language = ?', array((int) $page['id'], $page['language']));
+		else $db->delete('pages', 'id = ? AND user_id = ? AND status = ? AND language = ?', array((int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', $page['language']));
 
 		// insert
 		$page['revision_id'] = (int) $db->insert('pages', $page);
@@ -1853,6 +1889,79 @@ class BackendPagesModel
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
+	}
+
+
+	/**
+	 * Switch templates for all existing pages
+	 *
+	 * @return	void
+	 * @param	int $oldTemplateId			The id of the new template to replace.
+	 * @param	int $newTemplateId			The id of the new template to use.
+	 */
+	public static function updatePagesTemplates($oldTemplateId, $newTemplateId)
+	{
+		// fetch new template data
+		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
+
+		// loop to update all pages
+		while(true)
+		{
+			// fetch a page
+			$page = BackendModel::getDB()->getRecord('SELECT *
+														FROM pages
+														WHERE template_id = ? AND status IN (?, ?)
+														LIMIT 1',
+														array($oldTemplateId, 'active', 'draft'));
+
+			// none found?
+			if(!$page) break;
+
+			// fetch blocks
+			$blocksContent = BackendPagesModel::getBlocksRevision($page['id'], $page['revision_id'], $page['language']);
+
+			// unset revision id
+			unset($page['revision_id']);
+
+			// change template
+			$page['template_id'] = $newTemplateId;
+
+			// save new page revision
+			$page['revision_id'] = BackendPagesModel::update($page);
+
+			// init blocks array
+			$blocks = array();
+
+			// loop missing blocks
+			for($i = 0; $i < max(count($blocksContent), (int) $newTemplate['num_blocks']); $i++)
+			{
+				$block = array();
+
+				// block already exists
+				if(isset($blocksContent[$i]))
+				{
+					$block = $blocksContent[$i];
+					$block['revision_id'] = $page['revision_id'];
+				}
+				// create missing blocks as editor
+				else
+				{
+					$block['id'] = BackendPagesModel::getMaximumBlockId() + $i + 1;
+					$block['revision_id'] = $page['revision_id'];
+					$block['extra_id'] = null;
+					$block['html'] = '';
+					$block['status'] = 'active';
+					$block['created_on'] = BackendModel::getUTCDate();
+					$block['edited_on'] = $block['created_on'];
+				}
+
+				// add block
+				$blocks[] = $block;
+			}
+
+			// insert the blocks
+			BackendPagesModel::insertBlocks($blocks, ($page['has_extra'] == 'Y'));
+		}
 	}
 
 

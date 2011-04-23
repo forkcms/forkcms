@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorAddGroup
  * This is the add-action, it will display a form to create a new group
  *
  * @package		backend
@@ -95,13 +94,13 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 				$item['is_default'] = $rbtDefaultForLanguage->getChecked() ? 'Y' : 'N';
 
 				// insert the item
-				$id = BackendMailmotorCMHelper::insertGroup($item);
+				$item['id'] = BackendMailmotorCMHelper::insertGroup($item);
 
 				// check if all default groups were set
 				BackendMailmotorModel::checkDefaultGroups();
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $id);
+				$this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}
 		}
 	}

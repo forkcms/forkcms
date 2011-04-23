@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorIndex
  * This is the index-action (default), it will display the overview of mailings
  *
  * @package		backend

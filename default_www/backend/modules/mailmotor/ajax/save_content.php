@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendMailmotorAjaxSaveContent
+ * This saves the mailing content
  *
  * @package		backend
  * @subpackage	mailmotor
@@ -41,7 +41,6 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
 
 		// build the google vars query
-		$params = array();
 		$params['utm_source'] = 'mailmotor';
 		$params['utm_medium'] = 'email';
 		$params['utm_campaign'] = SpoonFilter::urlise($this->mailing['name']);
@@ -97,11 +96,16 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		// set full HTML
 		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
 
+		// set plain content
+		$contentPlain = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
+
+		// add unsubscribe link
+		if(mb_strpos($contentPlain, '[unsubscribe]') === false) $contentPlain .= PHP_EOL . '[unsubscribe]';
+
 		// build data
-		$item = array();
 		$item['id'] = $this->mailing['id'];
 		$item['subject'] = $subject;
-		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
+		$item['content_plain'] = $contentPlain;
 		$item['content_html'] = $contentHTML;
 		$item['data'] = serialize(array('full_content_html' => $HTML));
 		$item['edited_on'] = date('Y-m-d H:i:s');
@@ -143,13 +147,11 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$fullContentHTML = $this->addUTMParameters($fullContentHTML);
 
 		// search values
-		$search = array();
 		$search[] = '{$siteURL}';
 		$search[] = '&quot;';
 		$search[] = 'src="/';
 
 		// replace values
-		$replace = array();
 		$replace[] = SITE_URL;
 		$replace[] = '"';
 		$replace[] = 'src="' . SITE_URL . '/';

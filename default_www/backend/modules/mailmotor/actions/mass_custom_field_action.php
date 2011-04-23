@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorMassCustomFieldAction
  * This action is used to update one or more custom fields (delete, ...)
  *
  * @package		backend

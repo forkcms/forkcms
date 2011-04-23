@@ -4,7 +4,7 @@
 - Bugfix: template compiler now allows two equal iterations within another iteration.
 - Rewrote SpoonLog so it doesn't use any statics, but requires you to create an instance.
 - Changed method_exists to is_callable throughout the library.
-
+- When using UTF-8 as charset forms will be forced to submit as UTF-8
 
 1.3.0 (2011-02-18)
 ----

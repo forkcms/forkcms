@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorStatistics
  * This page will display the statistical overview of a sent mailing
  *
  * @package		backend
@@ -51,7 +50,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		parent::execute();
 
 		// add highchart javascript
-		$this->header->addJavascript('highcharts.js');
+		$this->header->addJS('highcharts.js');
 
 		// get the data
 		$this->getData();

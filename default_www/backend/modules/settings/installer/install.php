@@ -29,6 +29,7 @@ class SettingsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'settings', 'index');
 		$this->setActionRights(1, 'settings', 'themes');
 		$this->setActionRights(1, 'settings', 'email');
+		$this->setActionRights(1, 'settings', 'test_email_connection');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

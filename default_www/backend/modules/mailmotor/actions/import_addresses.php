@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorImportAddresses
  * This is the import-action, it will import records from a CSV file
  *
  * @package		backend
@@ -165,6 +164,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$batches = array_chunk($subscribers, 100);
 		$failed = array();
 		$feedback = array();
+		$failedSubscribersCSV = array();
 
 		// loop the batches
 		foreach($batches as $key => $batch)
@@ -279,10 +279,6 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 				// show a detailed report
 				$this->tpl->assign('import', false);
 
-				// write a CSV file to the cache
-				$csvFile = 'import-report-' . SpoonFilter::urlise(BackendModel::getUTCDate()) . '.csv';
-				SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers);
-
 				// no failed subscribers found
 				if(empty($failedSubscribers))
 				{
@@ -292,6 +288,10 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
 				else
 				{
+					// write a CSV file to the cache
+					$csvFile = 'import-report-' . SpoonFilter::urlise(BackendModel::getUTCDate()) . '.csv';
+					SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers);
+
 					// redirect to failed message with an additional parameter to display a download link to the report-csv form cache.
 					$this->redirect(BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' . count($failedSubscribers) . '&csv=' . $csvFile);
 				}

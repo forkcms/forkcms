@@ -17,7 +17,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 *
 	 * @var	array
 	 */
-	private $blocks = array(), $blocksContent = array();
+	private $blocks = array();
 
 
 	/**
@@ -47,9 +47,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
-		$this->header->addJavascript('jstree/jquery.tree.js');
-		$this->header->addJavascript('jstree/lib/jquery.cookie.js');
-		$this->header->addJavascript('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js');
+		$this->header->addJS('jstree/lib/jquery.cookie.js');
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
@@ -184,6 +184,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// get the status
+			$status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, $this->frm->getField('is_action')->getChecked()));
 
@@ -214,7 +217,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
 				$page['hidden'] = $this->frm->getField('hidden')->getValue();
-				$page['status'] = 'active';
+				$page['status'] = $status;
 				$page['publish_on'] = BackendModel::getUTCDate();
 				$page['created_on'] = BackendModel::getUTCDate();
 				$page['edited_on'] = BackendModel::getUTCDate();
@@ -230,7 +233,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
 
 				// insert page, store the id, we need it when building the blocks
-				$revisionId = BackendPagesModel::insert($page);
+				$page['revision_id'] = BackendPagesModel::insert($page);
 
 				// init var
 				$hasBlock = false;
@@ -275,7 +278,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					// build block
 					$block = array();
 					$block['id'] = BackendPagesModel::getMaximumBlockId() + ($i + 1);
-					$block['revision_id'] = $revisionId;
+					$block['revision_id'] = $page['revision_id'];
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;
 					$block['status'] = 'active';
@@ -289,27 +292,38 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// insert the blocks
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
-				// check if the method exists
-				if(is_callable(array('BackendSearchModel', 'addIndex')))
-				{
-					// init var
-					$text = '';
-
-					// build search-text
-					foreach($blocks as $block) $text .= ' ' . $block['html'];
-
-					// add
-					BackendSearchModel::addIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
-				}
-
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// build the cache
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
-				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);
+				// active
+				if($page['status'] == 'active')
+				{
+					// add search index
+					if(is_callable(array('BackendSearchModel', 'addIndex')))
+					{
+						// init var
+						$text = '';
+
+						// build search-text
+						foreach($blocks as $block) $text .= ' ' . $block['html'];
+
+						// add
+						BackendSearchModel::addIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
+					}
+
+					// everything is saved, so redirect to the overview
+					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);
+				}
+
+				// draft
+				elseif($page['status'] == 'draft')
+				{
+					// everything is saved, so redirect to the edit action
+					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=saved_as_draft&var=' . urlencode($page['title']) . '&highlight=row-' . $page['revision_id'] . '&draft=' . $page['revision_id']);
+				}
 			}
 		}
 	}

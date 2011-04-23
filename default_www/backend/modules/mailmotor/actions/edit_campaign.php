@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorEditCampaign
  * This is the edit-action, it will display a form to edit a campaign
  *
  * @package		backend
@@ -128,7 +127,7 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 				BackendMailmotorModel::updateCampaign($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $this->id);
+				$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}
 		}
 	}

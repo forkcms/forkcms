@@ -172,7 +172,7 @@ class SpoonDatabase
 		$query = 'DELETE FROM ' . (string) $table;
 
 		// add where class
-		$query = ($where != '') ? $query . ' WHERE ' . (string) $where . ';' : $query . ';';
+		$query = ($where != '') ? $query . ' WHERE ' . (string) $where : $query;
 
 		// set parameters
 		$parameters = (array) $parameters;
@@ -368,7 +368,7 @@ class SpoonDatabase
 		$field = (string) $field;
 
 		// build query
-		$query = 'SHOW COLUMNS FROM ' . $table . ' LIKE "' . $field . '";';
+		$query = 'SHOW COLUMNS FROM ' . $table . ' LIKE "' . $field . '"';
 
 		// get information
 		$row = $this->getRecord($query);
@@ -786,7 +786,7 @@ class SpoonDatabase
 			}
 
 			// finish query
-			$query .= ');';
+			$query .= ')';
 		}
 
 		// single array
@@ -812,7 +812,7 @@ class SpoonDatabase
 			if($numFields) $query = substr($query, 0, -2);
 
 			// end query
-			$query .= ');';
+			$query .= ')';
 
 			// set parameters
 			$parameters = $actualValues;
@@ -1055,9 +1055,6 @@ class SpoonDatabase
 
 		// add where clause
 		if($where != '') $query .= ' WHERE ' . (string) $where;
-
-		// finalize query
-		$query .= ';';
 
 		// update parameters
 		$parameters = array_merge($aTmpParameters, $parameters);

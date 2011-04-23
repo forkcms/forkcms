@@ -142,7 +142,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	{
 		/**
 		 * If we want to retrieve the checked status, we should first
-		 * ensure that the value we return is correct, therefor we
+		 * ensure that the value we return is correct, therefore we
 		 * check the $_POST/$_GET array for the right value & ajust it if needed.
 		 */
 

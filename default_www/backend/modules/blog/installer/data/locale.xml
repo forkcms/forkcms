@@ -2,6 +2,10 @@
 <locale>
   <backend>
     <blog>
+      <item type="error" name="DeleteCategoryNotAllowed">
+        <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
+        <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>
+      </item>
       <item type="error" name="RSSDescription">
         <translation language="nl"><![CDATA[Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
         <translation language="en"><![CDATA[Blog RSS description is not yet provided. <a href="%1$s">Configure</a>]]></translation>
@@ -13,6 +17,10 @@
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The article "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="ArticlesFor">
+        <translation language="nl"><![CDATA[Artikels in "%1$s"]]></translation>
+        <translation language="en"><![CDATA[Articles for "%1$s"]]></translation>
       </item>
       <item type="message" name="CommentOnWithURL">
         <translation language="nl"><![CDATA[Reactie op: <a href="%1$s">%2$s</a>]]></translation>
@@ -70,10 +78,6 @@
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
         <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam comments.]]></translation>
       </item>
-      <item type="message" name="MakeDefaultCategory">
-        <translation language="nl"><![CDATA[Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).]]></translation>
-        <translation language="en"><![CDATA[Make default category (current default category is: %1$s).]]></translation>
-      </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
         <translation language="en"><![CDATA[There are no articles yet. <a href="%1$s">Write the first article</a>.]]></translation>
@@ -94,7 +98,17 @@
         <translation language="nl"><![CDATA[Aantal items in recente artikels (lijst) widget]]></translation>
         <translation language="en"><![CDATA[Number of articles in the recent articles (list) widget]]></translation>
       </item>
+      <item type="message" name="ShowOnlyItemsInCategory">
+        <translation language="nl"><![CDATA[Toon enkel berichten in de categorie:]]></translation>
+        <translation language="en"><![CDATA[Show only articles for:]]></translation>
+      </item>
     </blog>
+    <core>
+     <item type="label" name="Blog">
+        <translation language="nl"><![CDATA[blog]]></translation>
+        <translation language="en"><![CDATA[blog]]></translation>
+      </item>
+    </core>
   </backend>
   <frontend>
     <core>
@@ -133,6 +147,14 @@
       <item type="label" name="Wrote">
         <translation language="nl"><![CDATA[schreef]]></translation>
         <translation language="en"><![CDATA[wrote]]></translation>
+      </item>
+      <item type="label" name="The">
+        <translation language="nl"><![CDATA[de]]></translation>
+        <translation language="en"><![CDATA[the]]></translation>
+      </item>
+      <item type="label" name="With">
+        <translation language="nl"><![CDATA[met]]></translation>
+        <translation language="en"><![CDATA[with]]></translation>
       </item>
       <item type="message" name="BlogAllComments">
         <translation language="nl"><![CDATA[Alle reacties op je blog.]]></translation>
