@@ -35,10 +35,10 @@ jsBackend =
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
 		jsBackend.effects.init();
+		jsBackend.tabs.init();
 		jsBackend.forms.init();
 		jsBackend.layout.init();
 		jsBackend.messages.init();
-		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
 		jsBackend.tinyMCE.init();
@@ -1197,6 +1197,7 @@ jsBackend.messages =
 /**
  * Apply tabs
  *
+ * @author	Jan Moessen <jan@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tabs =
@@ -1232,7 +1233,7 @@ jsBackend.tabs =
 				var scrolled = $(window).scrollTop();
 
 				// set location hash
-				window.location.hash = this.getAttribute('href');
+				window.location.hash = '#'+ this.getAttribute('href').split('#')[1];
 
 				// reset scroll height
 				$(window).scrollTop(scrolled);

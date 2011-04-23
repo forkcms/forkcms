@@ -1537,7 +1537,7 @@ class CampaignMonitor
 		$listId = empty($listId) ? $this->getListId() : $listId;
 
 		// check input
-		if(empty($timestamp)) $timestamp = strtotime('last week');
+		if(empty($timestamp)) $timestamp = strtotime('10 years ago');
 
 		// set parameters
 		$parameters['date'] = (string) date('Y-m-d', $timestamp);

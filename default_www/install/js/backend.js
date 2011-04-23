@@ -6,7 +6,8 @@ jsBackend =
 	debug: false,
 
 	// init, something like a constructor
-	init: function() {
+	init: function()
+	{
 		// init stuff
 		jsBackend.controls.init();
 		jsBackend.forms.init();

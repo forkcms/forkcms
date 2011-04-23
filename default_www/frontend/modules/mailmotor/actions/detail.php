@@ -117,8 +117,11 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 				// loop the matches
 				foreach($matches[0] as $match)
 				{
+					// get style attribute if one is provided
+					preg_match('/style=".*?"/is', $match, $styleAttribute);
+
 					// replace the match
-					$content = str_replace($match, '<unsubscribe>' . strip_tags($match) . '</unsubscribe>', $content);
+					$content = str_replace($match, '<unsubscribe' . (isset($styleAttribute[0]) ? ' ' . $styleAttribute[0] : '') . '>' . strip_tags($match) . '</unsubscribe>', $content);
 				}
 			}
 

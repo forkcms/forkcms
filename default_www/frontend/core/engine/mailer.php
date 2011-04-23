@@ -274,7 +274,7 @@ class FrontendMailer
 		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
 
 		// attachments added
-		if($emailRecord['attachments'] !== null)
+		if(isset($emailRecord['attachments']) && $emailRecord['attachments'] !== null)
 		{
 			// unserialize
 			$attachments = (array) unserialize($emailRecord['attachments']);

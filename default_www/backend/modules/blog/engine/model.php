@@ -112,17 +112,23 @@ class BackendBlogModel
 		// make sure $ids is an array
 		$ids = (array) $ids;
 
+		// loop and cast to integers
+		foreach($ids as &$id) $id = (int) $id;
+
+		// create an array with an equal amount of questionmarks as ids provided
+		$idPlaceHolders = array_fill(0, count($ids), '?');
+
 		// get db
 		$db = BackendModel::getDB(true);
 
 		// delete records
-		$db->delete('blog_posts', 'id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
-		$db->delete('blog_comments', 'post_id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
+		$db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
+		$db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
 		// get used meta ids
 		$metaIds = (array) $db->getColumn('SELECT meta_id
 											FROM blog_posts AS p
-											WHERE id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
+											WHERE id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
 		// delete meta
 		if(!empty($metaIds)) $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
@@ -178,16 +184,22 @@ class BackendBlogModel
 		// make sure $ids is an array
 		$ids = (array) $ids;
 
+		// loop and cast to integers
+		foreach($ids as &$id) $id = (int) $id;
+
+		// create an array with an equal amount of questionmarks as ids provided
+		$idPlaceHolders = array_fill(0, count($ids), '?');
+
 		// get db
 		$db = BackendModel::getDB(true);
 
 		// get ids
 		$itemIds = (array) $db->getColumn('SELECT i.post_id
 											FROM blog_comments AS i
-											WHERE i.id IN (' . implode(',', $ids) . ') AND i.language = ?', array(BL::getWorkingLanguage()));
+											WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ') AND i.language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
 		// update record
-		$db->delete('blog_comments', 'id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
+		$db->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
 		// recalculate the comment count
 		if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
@@ -447,7 +459,7 @@ class BackendBlogModel
 	{
 		return (array) BackendModel::getDB()->getRecords('SELECT *
 															FROM blog_comments AS i
-															WHERE i.id IN (' . implode(',', $ids) . ')');
+															WHERE i.id IN (' . implode(', ', array_fill(0, count($ids), '?')) . ')', $ids);
 	}
 
 
@@ -720,6 +732,7 @@ class BackendBlogModel
 												GROUP BY i.post_id',
 												array('published', BL::getWorkingLanguage(), 'active'));
 
+
 		// loop items
 		foreach($ids as $id)
 		{
@@ -844,16 +857,22 @@ class BackendBlogModel
 		// make sure $ids is an array
 		$ids = (array) $ids;
 
+		// loop and cast to integers
+		foreach($ids as &$id) $id = (int) $id;
+
+		// create an array with an equal amount of questionmarks as ids provided
+		$idPlaceHolders = array_fill(0, count($ids), '?');
+
 		// get ids
 		$itemIds = (array) BackendModel::getDB()->getColumn('SELECT i.post_id
 																FROM blog_comments AS i
-																WHERE i.id IN (' . implode(',', $ids) . ')');
+																WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
 		// update record
 		BackendModel::getDB(true)->execute('UPDATE blog_comments
 											SET status = ?
-											WHERE id IN (' . implode(',', $ids) . ')',
-											array((string) $status));
+											WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
+											array_merge(array((string) $status), $ids));
 
 		// recalculate the comment count
 		if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
