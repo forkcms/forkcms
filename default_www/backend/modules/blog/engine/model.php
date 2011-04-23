@@ -176,15 +176,15 @@ class BackendBlogModel
 	/**
 	 * Checks if it is allowed to delete the a category
 	 *
-	 * @return	void
+	 * @return	bool
 	 * @param	int $id		The id of the category.
 	 */
 	public static function deleteCategoryAllowed($id)
 	{
-		return (bool) !BackendModel::getDB()->getVar('SELECT COUNT(id)
-														FROM blog_posts AS i
-														WHERE i.category_id = ? AND i.language = ?',
-														array((int) $id, BL::getWorkingLanguage()));
+		return (BackendModel::getDB()->getVar('SELECT COUNT(id)
+												FROM blog_posts AS i
+												WHERE i.category_id = ? AND i.language = ?',
+												array((int) $id, BL::getWorkingLanguage())) == 0);
 	}
 
 
