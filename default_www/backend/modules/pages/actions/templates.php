@@ -118,6 +118,9 @@ class BackendPagesTemplates extends BackendBaseActionEdit
 
 		// assign datagrid
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+
+		// assign the selected theme, so we can propagate it to the add/edit actions.
+		$this->tpl->assign('selectedTheme', urlencode($this->selectedTheme));
 	}
 }
 

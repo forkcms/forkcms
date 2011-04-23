@@ -9,7 +9,7 @@
 		<div class="options">
 			<p>
 				<label for="file">{$msgPathToTemplate|ucfirst}</label>
-				{$ddmTheme}<small><code>/core/templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
+				{$ddmTheme}<small><code>/core/layout/templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
 				<span class="helpTxt">{$msgHelpTemplateLocation}</span>
 			</p>
 			<p>
