@@ -10,6 +10,7 @@ Bugfixes:
 * Bugfix: hover-event wasn't unbind correctly when sorting the widgets was done.
 * Bugfix: importing addresses into the mailmotor was borked, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/143.
 * Bugfix: focusFirst was focusing on an element on hidden tabs, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/153.
+* Bugfix: click on tab wasn't working decent in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/154. 
 
 Improvements:
 * Core: when using datefields with till, from, range set, it will be validated according the type.

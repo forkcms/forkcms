@@ -1197,6 +1197,7 @@ jsBackend.messages =
 /**
  * Apply tabs
  *
+ * @author	Jan Moessen <jan@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tabs =
@@ -1232,7 +1233,7 @@ jsBackend.tabs =
 				var scrolled = $(window).scrollTop();
 
 				// set location hash
-				window.location.hash = this.getAttribute('href');
+				window.location.hash = '#'+ this.getAttribute('href').split('#')[1];
 
 				// reset scroll height
 				$(window).scrollTop(scrolled);

@@ -137,7 +137,7 @@
 			lowercase: true,
 			numbers: true, 
 			specialchars: false,
-			generateLabel: 'Generate',
+			generateLabel: 'Generate'
 		};
 
 		// extend options
