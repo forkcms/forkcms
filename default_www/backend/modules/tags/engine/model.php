@@ -67,10 +67,10 @@ class BackendTagsModel
 	 */
 	public static function existsTag($tag)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT i.tag
+		return (BackendModel::getDB()->getVar('SELECT i.tag
 		                                             FROM tags AS i
 		                                             WHERE i.tag = ?',
-		                                             array((string) $tag));
+		                                             array((string) $tag)) != '');
 	}
 
 
