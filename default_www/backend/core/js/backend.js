@@ -1028,8 +1028,13 @@ jsBackend.forms =
 			// loop fields
 			$('form input, form select, form textarea').each(function() 
 			{
-				// store initial value
-				$(this).data('initial-value', $(this).val()).addClass('checkBeforeUnload');
+				var $this = $(this);
+				
+				if(!$this.hasClass('dontCheckBeforeUnload'))
+				{
+					// store initial value
+					$(this).data('initial-value', $(this).val()).addClass('checkBeforeUnload');
+				}
 			});
 
 			// bind before unload, this will ask the user if he really wants to leave the page

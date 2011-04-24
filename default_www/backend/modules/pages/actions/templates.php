@@ -102,7 +102,7 @@ class BackendPagesTemplates extends BackendBaseActionEdit
 		$this->frm = new BackendForm('themes');
 
 		// create elements
-		$this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme);
+		$this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme, false, 'inputDropdown dontCheckBeforeUnload', 'inputDropdownError dontCheckBeforeUnload');
 	}
 
 
