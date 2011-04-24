@@ -243,14 +243,13 @@ class BackendLocaleModel
 
 
 	/**
-	 * Get the passed key should be treated as a label we add it to the array
+	 * Output labels found in the backend navigation. Called as callback function from array_walk_recursive.
 	 *
 	 * @return	void
 	 * @param	mixed $value	The value of the element.
 	 * @param	mixed $key		The key of the element.
-	 * @param	array $items	The array to append the found values to.
 	 */
-	private static function getLabelsFromBackendNavigation($value, $key, $items)
+	private static function getLabelsFromBackendNavigation($value, $key)
 	{
 		// add if needed
 		if((string) $key == 'label') echo '"' . $value . '",';
@@ -282,7 +281,7 @@ class BackendLocaleModel
 		// get labels from navigation
 		// @todo: this is an incredibly nasty fix; please change this when this functionality has moved to the DB
 		ob_start();
-		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), $lbl);
+		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'));
 		$lbl = ob_get_clean();
 		eval('$lbl = array(' . $lbl . ');');
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
