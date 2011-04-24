@@ -1630,6 +1630,10 @@
         <translation language="nl"><![CDATA[Je hebt een oudere versie ingeladen. Sla op om deze versie te gebruiken.]]></translation>
         <translation language="en"><![CDATA[You're using an older version. Save to overwrite the current version.]]></translation>
       </item>
+      <item type="message" name="ValuesAreChanged">
+        <translation language="nl"><![CDATA[De gemaakte wijzigingen zullen verloren gaan.]]></translation>
+        <translation language="en"><![CDATA[Changes will be lost.]]></translation>
+      </item>
     </core>
   </backend>
   <frontend>

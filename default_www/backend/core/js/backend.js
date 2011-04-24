@@ -46,6 +46,9 @@ jsBackend =
 		// IE fixes
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
+
+		// do not move, should be run as the last item.
+		jsBackend.forms.unloadWarning();
 	},
 
 
@@ -774,6 +777,8 @@ jsBackend.effects =
  */
 jsBackend.forms =
 {
+	stringified: '',
+		
 	// init, something like a constructor
 	init: function()
 	{
@@ -960,7 +965,6 @@ jsBackend.forms =
 		}
 	},
 
-
 	// replaces buttons with <a><span>'s (to allow more flexible styling) and handle the form submission for them
 	submitWithLinks: function()
 	{
@@ -1013,8 +1017,81 @@ jsBackend.forms =
 		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
 	},
+	
+	
+	// show a warning when people are leaving the 
+	unloadWarning: function() 
+	{
+		// only execute when there is a form on the page
+		if($('form:visible').length > 0)
+		{
+			// loop fields
+			$('form input, form select, form textarea').each(function() 
+			{
+				var $this = $(this);
+				
+				if(!$this.hasClass('dontCheckBeforeUnload'))
+				{
+					// store initial value
+					$(this).data('initial-value', $(this).val()).addClass('checkBeforeUnload');
+				}
+			});
 
+			// bind before unload, this will ask the user if he really wants to leave the page
+			$(window).bind('beforeunload', jsBackend.forms.unloadWarningCheck);
+			
+			// if a form is submitted we don't want to ask the user if he wants to leave, we know for sure 
+			$('form').bind('submit', function(evt) 
+			{
+				if(!evt.isDefaultPrevented()) $(window).unbind('beforeunload');
+			});
+		}
+	},
+	
+	// check if any element has been changed
+	unloadWarningCheck: function() 
+	{
+		// initialize var
+		var changed = false;
+		
+		// save editors to the textarea-fields
+		if(typeof tinyMCE != 'undefined') tinyMCE.triggerSave();
+		
+		// loop fields
+		$('.checkBeforeUnload').each(function() 
+		{
+			// initialize
+			var $this = $(this);
+			
+			// compare values
+			if($this.data('initial-value') != $this.val())
+			{
+				// reset var
+				changed = true;
+				
+				// stop looking
+				return false;
+			}
+		});
+		
+		// not changed?
+		if(!changed) {
+			// prevent default
+			/* 
+			 * I know this line triggers errors, if you remove it the unload won't work anymore.
+			 * Probably you'll fix this by passing the evt as an argument of the function, well this will break the functionality also.. 
+			 * Uhu, a "wtf" is in place.. 
+			 */
+			evt.preventDefault();
+			
+			// unbind the event
+			$(window).unbind('beforeunload');
+		}
 
+		// return if needed
+		return (changed) ? '{$msgValuesAreChanged}' : null;
+	},
+	
 	// end
 	eoo: true
 }

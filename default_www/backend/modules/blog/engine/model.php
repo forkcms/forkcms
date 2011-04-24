@@ -174,6 +174,21 @@ class BackendBlogModel
 
 
 	/**
+	 * Checks if it is allowed to delete the a category
+	 *
+	 * @return	bool
+	 * @param	int $id		The id of the category.
+	 */
+	public static function deleteCategoryAllowed($id)
+	{
+		return (BackendModel::getDB()->getVar('SELECT COUNT(id)
+												FROM blog_posts AS i
+												WHERE i.category_id = ? AND i.language = ?',
+												array((int) $id, BL::getWorkingLanguage())) == 0);
+	}
+
+
+	/**
 	 * Deletes one or more comments
 	 *
 	 * @return	void
@@ -763,6 +778,10 @@ class BackendBlogModel
 
 			// get the record of the exact item we're editing
 			$revision = self::getRevision($item['id'], $item['revision_id']);
+
+			// assign values
+			$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $revision['created_on']);
+			$item['num_comments'] = $revision['num_comments'];
 
 			// if it used to be a draft that we're now publishing, remove drafts
 			if($revision['status'] == 'draft') BackendModel::getDB(true)->delete('blog_posts', 'id = ? AND status = ?', array($item['id'], $revision['status']));
