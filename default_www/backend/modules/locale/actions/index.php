@@ -37,6 +37,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		// is the user a GodUser?
+		$this->isGod = BackendAuthentication::getUser()->isGod();
+
 		// set filter
 		$this->setFilter();
 
@@ -63,12 +66,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	{
 		// init vars
 		$langWidth = (80 / count($this->filter['language']));
-
-		// get the user
-		$user = BackendAuthentication::getUser();
-
-		// is the user a GodUser?
-		$this->isGod = $user->isGod();
 
 		// get all the translations for the selected languages
 		$translations = BackendLocaleModel::getTranslations($this->filter['application'], $this->filter['module'], $this->filter['type'], $this->filter['language'], $this->filter['name'], $this->filter['value']);

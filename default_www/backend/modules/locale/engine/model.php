@@ -242,7 +242,7 @@ class BackendLocaleModel
 	 * Get the languages for a multicheckbox.
 	 *
 	 * @return	array
-	 * @param	bool $includeInterfaceLanguages		Should we also get the interfacelanguages?
+	 * @param	bool[optional] $includeInterfaceLanguages		Should we also get the interfacelanguages?
 	 */
 	public static function getLanguagesForMultiCheckbox($includeInterfaceLanguages = false)
 	{
@@ -250,7 +250,7 @@ class BackendLocaleModel
 		$aLanguages = BL::getWorkingLanguages();
 
 		// add the interface languages if needed
-		if($includeInterfaceLanguages) $aLanguages = array_merge($test, BL::getInterfaceLanguages());
+		if($includeInterfaceLanguages) $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
 
 		// create a new array to redefine the langauges for the multicheckbox
 		$languages = array();

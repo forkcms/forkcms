@@ -66,6 +66,9 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				// we are copying the given translation
 				$isCopy = true;
 			}
+
+			// this translation doesn't exist
+			else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing' . $this->filterQuery);
 		}
 
 		// not copying

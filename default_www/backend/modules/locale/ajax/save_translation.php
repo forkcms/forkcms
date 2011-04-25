@@ -21,22 +21,29 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		// user is god?
+		$isGod = BackendAuthentication::getUser()->isGod();
+
+		// get possible languages
+		if($isGod) $possibleLanguages = array_unique(array_merge(BL::getWorkingLanguages(), BL::getInterfaceLanguages()));
+		else $possibleLanguages = BL::getWorkingLanguages();
+
 		// get parameters
-		$language = SpoonFilter::getPostValue('language', null, null, 'string');
-		$module = SpoonFilter::getPostValue('module', null, null, 'string');
+		$language = SpoonFilter::getPostValue('language', $possibleLanguages, null, 'string');
+		$module = SpoonFilter::getPostValue('module', BackendModel::getModules(false), null, 'string');
 		$name = SpoonFilter::getPostValue('name', null, null, 'string');
-		$type = SpoonFilter::getPostValue('type', null, null, 'string');
-		$application = SpoonFilter::getPostValue('application', null, null, 'string');
+		$type = SpoonFilter::getPostValue('type', BackendModel::getDB()->getEnumValues('locale', 'type'), null, 'string');
+		$application = SpoonFilter::getPostValue('application', array('backend', 'frontend'), null, 'string');
 		$value = SpoonFilter::getPostValue('value', null, null, 'string');
 
 		// validate values
-		$error = null;
+		if(trim($value) == '' || $language == null || $module == null || $type == null || $application == null || ($application == 'frontend' && $module != 'core')) $error = BL::err('InvalidValue');
 
 		// in case this is a 'act' type, there are special rules concerning possible values
-		if($type == 'act') if(!SpoonFilter::isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', $value)) $error = BL::err('InvalidActionValue', 'locale');
+		if($type == 'act' && !isset($error)) if(!SpoonFilter::isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', $value)) $error = BL::err('InvalidActionValue', 'locale');
 
 		// no error?
-		if($error == null)
+		if(!isset($error))
 		{
 			// build item
 			$item['language'] = $language;
