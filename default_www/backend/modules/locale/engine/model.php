@@ -136,8 +136,14 @@ class BackendLocaleModel
 	 */
 	public static function delete(array $ids)
 	{
+		// loop and cast to integers
+		foreach($ids as &$id) $id = (int) $id;
+
+		// create an array with an equal amount of questionmarks as ids provided
+		$idPlaceHolders = array_fill(0, count($ids), '?');
+
 		// delete records
-		BackendModel::getDB(true)->delete('locale', 'id IN (' . implode(',', $ids) . ')');
+		BackendModel::getDB(true)->delete('locale', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
 		// rebuild cache
 		self::buildCache(BL::getWorkingLanguage(), 'backend');

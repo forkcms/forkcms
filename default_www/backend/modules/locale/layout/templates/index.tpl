@@ -7,7 +7,7 @@
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
 			<a href="{$var|geturl:'export'}{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
-			<a href="{$var|geturl:'import'}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
+			<a href="{$var|geturl:'import'}{$filter}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
 		</div>
 	{/option:isGod}
 </div>
@@ -141,6 +141,15 @@
 	{option:noItems}
 		<p>{$msgNoItemsFilter|sprintf:{$addURL}}</p>
 	{/option:noItems}
+
+
+	{option:isGod}
+		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+			<p>
+				{$msgConfirmDelete}
+			</p>
+		</div>
+	{/option:isGod}
 </div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

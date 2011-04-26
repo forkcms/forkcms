@@ -29,7 +29,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		else $possibleLanguages = BL::getWorkingLanguages();
 
 		// get parameters
-		$language = SpoonFilter::getPostValue('language', $possibleLanguages, null, 'string');
+		$language = SpoonFilter::getPostValue('language', array_keys($possibleLanguages), null, 'string');
 		$module = SpoonFilter::getPostValue('module', BackendModel::getModules(false), null, 'string');
 		$name = SpoonFilter::getPostValue('name', null, null, 'string');
 		$type = SpoonFilter::getPostValue('type', BackendModel::getDB()->getEnumValues('locale', 'type'), null, 'string');
@@ -37,7 +37,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		$value = SpoonFilter::getPostValue('value', null, null, 'string');
 
 		// validate values
-		if(trim($value) == '' || $language == null || $module == null || $type == null || $application == null || ($application == 'frontend' && $module != 'core')) $error = BL::err('InvalidValue');
+		if(trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'frontend' && $module != 'core')) $error = BL::err('InvalidValue');
 
 		// in case this is a 'act' type, there are special rules concerning possible values
 		if($type == 'act' && !isset($error)) if(!SpoonFilter::isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', $value)) $error = BL::err('InvalidActionValue', 'locale');
