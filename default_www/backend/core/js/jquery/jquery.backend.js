@@ -125,7 +125,7 @@
 			lowercase: true,
 			numbers: true, 
 			specialchars: false,
-			generateLabel: 'Generate',
+			generateLabel: 'Generate'
 		};
 
 		// extend options
@@ -150,11 +150,8 @@
 				// check if it isn't a text-element
 				if(currentElement.attr('type') != 'text')
 				{
-					// clone the current element
-					var newElement = currentElement.clone();
-					
-					// alter the type
-					newElement.attr('type', 'text');
+					// create the new element
+					var newElement = $(currentElement.clone().wrap('<div/>').parent().html().replace(/type=['"]?password['"]?/, 'type="text"'));
 					
 					// insert the new element
 					newElement.insertBefore(currentElement);
@@ -173,7 +170,8 @@
 				newElement.val(pass).keyup();
 			}
 			
-			function generatePass(length, uppercase, lowercase, numbers, specialchars) {
+			function generatePass(length, uppercase, lowercase, numbers, specialchars)
+			{
 				// the vowels
 				var v = new Array('a', 'e','u', 'ae', 'ea');
 				
