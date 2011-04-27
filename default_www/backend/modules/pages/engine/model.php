@@ -848,6 +848,7 @@ class BackendPagesModel
 			// build name
 			$name = ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
+			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// add human readable name
 			$row['human_name'] = BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type'])) . ': ' . $name;
@@ -902,6 +903,7 @@ class BackendPagesModel
 			// build name
 			$name = ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
+			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// create modulename
 			$moduleName = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
