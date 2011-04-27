@@ -1021,7 +1021,7 @@ class BackendLocaleModel
 		// rebuild cache
 		foreach($possibleApplications as $application)
 		{
-			foreach($possibleLanguages as $language) self::buildCache($language, $application);
+			foreach($possibleLanguages[$application] as $language) self::buildCache($language, $application);
 		}
 
 		// return statistics
