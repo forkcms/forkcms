@@ -12,6 +12,7 @@ Bugfixes:
 * Bugfix: focusFirst was focusing on an element on hidden tabs, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/153.
 * Bugfix: click on tab wasn't working decent in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/154. 
 * Bugfix: page-revisions were interfering with blog-revisions, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/151.
+* Bugfix: theme-css is now loaded again into TinyMCE.
 
 Improvements:
 * Core: when using datefields with till, from, range set, it will be validated according the type.

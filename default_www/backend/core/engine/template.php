@@ -219,8 +219,8 @@ class BackendTemplate extends SpoonTemplate
 		{
 			$this->assign('THEME', BackendModel::getModuleSetting('core', 'theme'));
 			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme'));
-			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/css/screen.css')));
-			$this->assign('THEME_HAS_EDITOR_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/css/editor_content.css')));
+			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css')));
+			$this->assign('THEME_HAS_EDITOR_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css')));
 		}
 	}
 
