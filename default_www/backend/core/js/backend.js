@@ -255,11 +255,14 @@ jsBackend.controls =
 					{
 						'{$lblOK|ucfirst}': function()
 						{
-								// close dialog
-								$(this).dialog('close');
+							// unbind the beforeunload event
+							$(window).unbind('beforeunload');
 
-								// goto link
-								window.location = url;
+							// close dialog
+							$(this).dialog('close');
+
+							// goto link
+							window.location = url;
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
