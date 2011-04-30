@@ -236,14 +236,6 @@ class BackendCronjobAction
 
 
 	/**
-	 * The id of the cronjob
-	 *
-	 * @var	int
-	 */
-	private $id;
-
-
-	/**
 	 * The current module
 	 *
 	 * @var	string
@@ -341,18 +333,6 @@ class BackendCronjobAction
 
 
 	/**
-	 * Get the id of the cronjob
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
-	 *
-	 * @return	int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-
-	/**
 	 * Get the current module
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
 	 *
@@ -373,18 +353,6 @@ class BackendCronjobAction
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
-	}
-
-
-	/**
-	 * Set the id
-	 *
-	 * @return	void
-	 * @param	int $id		The id of the cronjob.
-	 */
-	private function setId($id)
-	{
-		$this->id = (int) $id;
 	}
 
 
