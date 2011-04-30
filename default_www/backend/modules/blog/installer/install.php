@@ -139,19 +139,6 @@ class BlogInstall extends ModuleInstaller
 
 
 	/**
-	 * Does the category with this id exist within this language.
-	 *
-	 * @return	bool
-	 * @param	string $language	The langauge to use.
-	 * @param	int $id				The id to exclude.
-	 */
-	private function existsCategory($language, $id)
-	{
-		return (bool) $this->getDB()->getVar('SELECT COUNT(id) FROM blog_categories WHERE id = ? AND language = ?', array((int) $id, (string) $language));
-	}
-
-
-	/**
 	 * Fetch the id of the first category in this language we come across
 	 *
 	 * @return	int

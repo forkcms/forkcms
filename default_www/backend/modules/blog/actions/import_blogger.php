@@ -434,10 +434,6 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 				// move the file
 				$this->frm->getField('blogger')->moveFile(FRONTEND_FILES_PATH . '/blogger.xml');
 
-				// init vars
-				$searchHTML = array('<div><br /></div>', '<br /><br />', '...', '</p></p>', '<p><p>');
-				$replaceHTML = array('<br />', "</p>\n<p>", '…', '</p>', '<p>');
-
 				// init object
 				$reader = new XMLReader();
 
@@ -468,9 +464,6 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 							// validate
 							if($xml !== false)
 							{
-								// init var
-								$kind = 'unknown';
-
 								// loop the categories
 								foreach($xml->category as $category)
 								{
