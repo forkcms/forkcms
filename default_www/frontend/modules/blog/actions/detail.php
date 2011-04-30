@@ -268,7 +268,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// validate optional fields
 			if($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://')
 			{
-				$var = $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
+				$this->frm->getField('website')->isURL(FL::err('InvalidURL'));
 			}
 
 			// no errors?

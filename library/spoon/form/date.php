@@ -61,7 +61,7 @@ class SpoonFormDate extends SpoonFormInput
 		$this->attributes['name'] = (string) $name;
 
 		/**
-		 * The input mask defines the maxlength attribute, therefore
+		 * The input mask defines the maxlength attribute, therefor
 		 * this needs to be set anyhow. The mask needs to be updated
 		 * before the value is set, or the old mask (in case it differs)
 		 * will automatically be used.

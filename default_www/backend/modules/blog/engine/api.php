@@ -97,7 +97,7 @@ class BackendBlogAPI
 			if($text !== null) $text = (string) $text;
 			if($authorName !== null) $authorName = (string) $authorName;
 			if($authorEmail !== null) $authorEmail = (string) $authorEmail;
-			if($authorWebsite !== null) $website = (string) $authorWebsite;
+			if($authorWebsite !== null) $authorWebsite = (string) $authorWebsite;
 
 			// validate
 			if($status === null && $text === null && $authorName === null && $authorEmail === null && $authorWebsite === null) API::output(API::ERROR, array('message' => 'No data provided.'));

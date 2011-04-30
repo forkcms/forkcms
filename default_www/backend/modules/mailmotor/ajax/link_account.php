@@ -22,7 +22,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$url = SpoonFilter::getPostValue('url', null, '');
+		$url = ltrim(SpoonFilter::getPostValue('url', null, ''), 'http://');
 		$username = SpoonFilter::getPostValue('username', null, '');
 		$password = SpoonFilter::getPostValue('password', null, '');
 
@@ -44,7 +44,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			require_once 'external/campaignmonitor.php';
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 10);
+			new CampaignMonitor($url, $username, $password, 10);
 
 			// save the new data
 			BackendModel::setModuleSetting('mailmotor', 'cm_url', $url);

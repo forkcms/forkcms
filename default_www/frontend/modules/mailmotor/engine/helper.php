@@ -191,7 +191,7 @@ class FrontendMailmotorCMHelper
 			try
 			{
 				// unsubscribe the email from this group
-				self::getCM()->unsubscribe($email, $groupCMId);
+				$cm->unsubscribe($email, $groupCMId);
 			}
 
 			// for the unsubscribe function we ignore any errors

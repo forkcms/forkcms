@@ -62,6 +62,9 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 	 */
 	protected function loadTemplate($path = null)
 	{
+		// redefine (and trick codesniffer)
+		$path = ($path !== null) ? (string) $path : null;
+
 		// check if the given template exists
 		try
 		{

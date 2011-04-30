@@ -109,8 +109,8 @@
         <translation language="en"><![CDATA[e.g. [1,2],[/,2]]]></translation>
       </item>
       <item type="message" name="HelpTemplateLocation">
-        <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/templates</code> van je thema.]]></translation>
-        <translation language="en"><![CDATA[Put your templates in the <code>core/templates</code> folder of your theme.]]></translation>
+	    <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/layout/templates</code> van je thema.]]></translation>
+		<translation language="en"><![CDATA[Put your templates in the <code>core/layout/templates</code> folder of your theme.]]></translation>
       </item>
       <item type="message" name="IsAction">
         <translation language="nl"><![CDATA[Gebruik deze pagina als module-actie.]]></translation>

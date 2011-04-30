@@ -215,7 +215,6 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 
 			// init vars
 			$accounts = array();
-			$accountsDatagrids = array();
 
 			// no profiles? Or not authorized
 			if(!empty($this->profiles) && $this->profiles !== 'UNAUTHORIZED')

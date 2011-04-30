@@ -62,9 +62,6 @@ class BackendDashboardAjaxAlterSequence extends BackendBaseAJAXAction
 		// any settings?
 		if($currentSetting !== null)
 		{
-			// init var
-			$currentHidden = array();
-
 			// loop modules
 			foreach($currentSetting as $module => $widgets)
 			{

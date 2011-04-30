@@ -117,9 +117,6 @@ class InstallerStep1 extends InstallerStep
 	 */
 	private static function guessLibraryPath($directory, array &$library = null)
 	{
-		// init var
-		$location = '';
-
 		// loop directories
 		foreach((array) glob($directory . '/*') as $filename)
 		{

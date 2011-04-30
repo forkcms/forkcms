@@ -85,6 +85,9 @@ class SpoonFileCSV
 		// unset the excluded columns
 		if(!empty($excludeColumns)) foreach($excludeColumns as $column) unset($columns[array_search($column, $columns)]);
 
+		// escape enclosure chars
+		$columns = self::escapeEnclosure($columns, $enclosure);
+
 		// start the string with the columns
 		$csv = $enclosure . implode($enclosure . $delimiter . $enclosure, $columns) . $enclosure . PHP_EOL;
 
@@ -106,6 +109,9 @@ class SpoonFileCSV
 				// unset the excluded columns
 				foreach($excludeColumns as $column) unset($row[$column], $columns[array_search($column, $columns)]);
 			}
+
+			// escape enclosure chars
+			$row = self::escapeEnclosure($row, $enclosure);
 
 			// add this row to the CSV
 			$csv .= $enclosure . implode($enclosure . $delimiter . $enclosure, (array) $row) . $enclosure . PHP_EOL;
@@ -150,6 +156,28 @@ class SpoonFileCSV
 
 		// exit here
 		exit;
+	}
+
+
+	/**
+	 * Escape the character that is being used as enclosure in a csv row.
+	 *
+	 * @return	array				The escaped version of the row coming in.
+	 * @param	array $row			The row to escape.
+	 * @param	string $enclosure	The character being used as enclosure.
+	 */
+	public static function escapeEnclosure($row, $enclosure)
+	{
+		// init var
+		$escaped = array();
+
+		// apply enclosure
+		foreach($row as $key => $value)
+		{
+			$escaped[$key] = str_replace($enclosure, $enclosure . $enclosure, $value);
+		}
+
+		return $escaped;
 	}
 
 

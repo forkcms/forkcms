@@ -243,17 +243,30 @@ class BackendLocaleModel
 
 
 	/**
-	 * Get the passed key should be treated as a label we add it to the array
+	 * Grab labels found in the backend navigation.
 	 *
-	 * @return	void
-	 * @param	mixed $value	The value of the element.
-	 * @param	mixed $key		The key of the element.
-	 * @param	array $items	The array to append the found values to.
+	 * @return	array
+	 * @param	array $items				The items to get the labels from.
+	 * @param	array[optional] $labels		An array that will hold the labels.
 	 */
-	private static function getLabelsFromBackendNavigation($value, $key, $items)
+	private static function getLabelsFromBackendNavigation(array $items, $labels = array())
 	{
-		// add if needed
-		if((string) $key == 'label') echo '"' . $value . '",';
+		// loop items
+		foreach($items as $item)
+		{
+			// add the label
+			$labels[] = $item['label'];
+
+			// any children?
+			if(isset($item['children']) && is_array($item['children']))
+			{
+				// get the labels from the children
+				$labels = self::getLabelsFromBackendNavigation($item['children'], $labels);
+			}
+		}
+
+		// return
+		return $labels;
 	}
 
 
@@ -277,14 +290,9 @@ class BackendLocaleModel
 
 		$used = array();
 		$navigation = Spoon::get('navigation');
-		$lbl = array();
 
 		// get labels from navigation
-		// @todo: this is an incredibly nasty fix; please change this when this functionality has moved to the DB
-		ob_start();
-		array_walk_recursive($navigation->navigation, array(__CLASS__, 'getLabelsFromBackendNavigation'), $lbl);
-		$lbl = ob_get_clean();
-		eval('$lbl = array(' . $lbl . ');');
+		$lbl = self::getLabelsFromBackendNavigation($navigation->navigation);
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
 
 		// get labels from table
@@ -1022,7 +1030,7 @@ class BackendLocaleModel
 		// rebuild cache
 		foreach($possibleApplications as $application)
 		{
-			foreach($possibleLanguages as $language) self::buildCache($language, $application);
+			foreach($possibleLanguages[$application] as $language) self::buildCache($language, $application);
 		}
 
 		// return statistics

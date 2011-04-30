@@ -387,9 +387,6 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 			// valid form
 			if($this->frm->isCorrect())
 			{
-				// fields for the email template
-				$fields = array();
-
 				// item
 				$data['form_id'] = $this->item['id'];
 				$data['ip'] = SpoonHTTP::getIp();
