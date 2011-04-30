@@ -21,6 +21,7 @@ class EventsInstall extends ModuleInstaller
 	 */
 	private function addCategory($language, $title, $url)
 	{
+		// build array
 		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
 		$item['language'] = (string) $language;
 		$item['title'] = (string) $title;
@@ -139,135 +140,8 @@ class EventsInstall extends ModuleInstaller
 			if($this->installExample()) $this->installExampleData($language);
 		}
 
-
-		// insert locale (nl)
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'IntegerIsInvalid', 'Dit is een ongeldig geheel getal.');
-		$this->insertLocale('nl', 'backend', 'events', 'err', 'RSSDescription', 'Evenementen RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>');
-		$this->insertLocale('nl', 'backend', 'events', 'lbl', 'Add', 'evenement toevoegen');
-		$this->insertLocale('nl', 'backend', 'events', 'lbl', 'AllowSubscriptions', 'inschrijvingen toelaten');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Added', 'Het evenement "%1$s" werd toegevoegd.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'CommentOnWithURL', 'Reactie op: <a href="%1$s">%2$s</a>');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het evenement "%1$s" wil verwijderen?');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Deleted', 'De geselecteerde evenementen werden verwijderd.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'DeletedSpam', 'Alle spamberichten werden verwijderd.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'DeleteAllSpam', 'Verwijdere all spam:');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'EditArticle', 'bewerk evenement "%1$s"');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'EditCommentOn', 'bewerk reactie op "%1$s"');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Edited', 'Het evenement "%1$s" werd opgeslagen.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'EditedComment', 'De reactie werd opgeslagen.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'FollowAllCommentsInRSS', 'Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpMeta', 'Toon de meta informatie van de evenementen in de RSS feed (categorie, tags, ...)');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpPingServices', 'Laat verschillende blogservices weten wanneer je een nieuw evenement plaatst.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het evenementenoverzicht.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'MakeDefaultCategory', 'Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'MaxSubscriptions', 'Laat dit veld leeg als er geen maximum aantal deelnemers zijn.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NoItems', 'Er zijn nog geen evenementen. <a href="%1$s">Voeg het eerste evenement toe</a>.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewComment', 'Verwittig via email als er een nieuwe reactie is.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewCommentToModerate', 'Verwittig via email als er een nieuwe reactie te modereren is.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewSubscription', 'Verwittig via email als er een nieuwe inschrijving is.');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Dates', 'datums');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Enabled', 'ingeschakeld');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EndsOn', 'eindigt op');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Event', 'evenement');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Events', 'evenementen');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MaximumSubscriptions', 'maximum inschrijvingen');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'StartsOn', 'start op');
-		$this->insertLocale('nl', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'reacties-op-rss');
-		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Ical', 'ical');
-		$this->insertLocale('nl', 'frontend', 'core', 'act', 'IcalAll', 'ical-allemaal');
-		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Subscription', 'inschrijving');
-		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Subscriptions', 'inschrijvingen');
-		$this->insertLocale('nl', 'frontend', 'core', 'err', 'SubscriptionTimeout', 'Slow down cowboy, er moeten wat tijd tussen iedere inschrijving zijn.');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EventsArchive', 'evenementenarchief');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextEvent', 'volgend evenement');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousEvent', 'vorig evenement');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentEvents', 'recente evenement');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Subscribe', 'inschrijven');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Subscriptions', 'inschrijvingen');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllComments', 'Alle reacties op je evenementen.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllIcal', 'Download evenementen-kalender <small>(ical)</small>.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsDownloadIcal', 'Toevoegen aan agenda <small>(ical)</small>.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoComments', 'Reageer als eerste');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNumberOfComments', 'Al %1$s reacties');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsOneComment', 'Al 1 reactie');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentIsAdded', 'Je reactie werd toegevoegd.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentInModeration', 'Je reactie wacht op goedkeuring.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Je reactie werd gemarkeerd als spam.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s reageerde op <a href="%2$s">%3$s</a>.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoItems', 'Er zijn nog geen evenementen.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsSubscriptionIsAdded', 'Je inschrijving werd doorgegeven.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsSubscriptionInModeration', 'Je inschrijving wacht op goedkeuring.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsSubscriptionIsSpam', 'Je inschrijving werd gemarkeerd als spam.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'Subscribe', 'inschrijven');
-
-		// insert locale (en)
-		$this->insertLocale('en', 'backend', 'core', 'err', 'IntegerIsInvalid', 'Invalid integer.');
-		$this->insertLocale('en', 'backend', 'events', 'err', 'RSSDescription', 'Events RSS description is not yet provided. <a href="%1$s">Configure</a>');
-		$this->insertLocale('en', 'backend', 'events', 'lbl', 'Add', 'add event');
-		$this->insertLocale('en', 'backend', 'events', 'lbl', 'AllowSubscriptions', 'allow subscriptions');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'Added', 'The event "%1$s" was added.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'CommentOnWithURL', 'Comment on: <a href="%1$s">%2$s</a>');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the event "%1$s"?');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'Deleted', 'The selected events were deleted.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'DeletedSpam', 'All spam-comments were deleted.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'DeleteAllSpam', 'Delete all spam:');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'EditArticle', 'edit event "%1$s"');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'EditCommentOn', 'edit comment on "%1$s"');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'Edited', 'The event "%1$s" was saved.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'EditedComment', 'The comment was saved.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'FollowAllCommentsInRSS', 'Follow all comments in a RSS feed: <a href="%1$s">%1$s</a>.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpMeta', 'Show the meta information for the events in the RSS feed (category, tags, ...)');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpPingServices', 'Let various blogservices know when you\'ve posted a new event.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpSpamFilter', 'Enable the built-in spamfilter (Akismet) to help avoid spam comments.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'MakeDefaultCategory', 'Make default category (current default category is: %1$s).');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'MaxSubscriptions', 'Leave this field empty if there is no limit for the subscriptions.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'NoItems', 'There are no event yet. <a href="%1$s">Add the first event</a>.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewComment', 'Notify by email when there is a new comment.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewCommentToModerate', 'Notify by email when there is a new comment to moderate.');
-		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewSubscription', 'Notify by email when there is a new subscription.');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Dates', 'dates');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Enabled', 'enabled');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EndsOn', 'ends on');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Event', 'event');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Events', 'events');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MaximumSubscriptions', 'maximum subscriptions');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'StartsOn', 'starts on');
-		$this->insertLocale('en', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'comments-on-rss');
-		$this->insertLocale('en', 'frontend', 'core', 'act', 'Ical', 'ical');
-		$this->insertLocale('en', 'frontend', 'core', 'act', 'IcalAll', 'ical-all');
-		$this->insertLocale('en', 'frontend', 'core', 'act', 'Subscription', 'subscription');
-		$this->insertLocale('en', 'frontend', 'core', 'act', 'Subscriptions', 'subscriptions');
-		$this->insertLocale('en', 'frontend', 'core', 'err', 'SubscriptionTimeout', 'Slow down cowboy, er moeten wat tijd tussen iedere inschrijving zijn.');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'EventsArchive', 'events archive');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NextEvent', 'next event');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'PreviousEvent', 'previous event');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentEvents', 'recent events');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Subscribe', 'subscribe');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Subscriptions', 'subscriptions');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Wrote', 'wrote');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsAllComments', 'All comments on your events.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsAllIcal', 'Download events-feed <small>(ical)</small>.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsDownloadIcal', 'Add to calendar <small>(ical)</small>.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoComments', 'Be the first to comment');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNumberOfComments', '%1$s comments');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsOneComment', '1 comment already');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentIsAdded', 'Your comment was added.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentInModeration', 'Your comment is awaiting moderation.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Your comment was marked as spam.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s commented on <a href="%2$s">%3$s</a>.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoItems', 'There are no events yet.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsSubscriptionIsAdded', 'Your subscription was added.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsSubscriptionInModeration', 'Your subscription is awaiting moderation.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsSubscriptionIsSpam', 'Your subscription was marked as spam.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'Subscribe', 'subscribe');
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 
 

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+	<events>
+	  <item type="error" name="RSSDescription">
+		<translation language="nl"><![CDATA[Evenementen RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
+		<translation language="en"><![CDATA[Events RSS description is not yet provided. <a href="%1$s">Configure</a>]]></translation>
+	  </item>
+	  <item type="label" name="Add">
+		<translation language="nl"><![CDATA[evenement toevoegen]]></translation>
+		<translation language="en"><![CDATA[add event]]></translation>
+	  </item>
+	  <item type="label" name="AllowSubscriptions">
+		<translation language="nl"><![CDATA[inschrijvingen toelaten]]></translation>
+		<translation language="en"><![CDATA[allow subscriptions]]></translation>
+	  </item>
+	  <item type="message" name="Added">
+		<translation language="nl"><![CDATA[Het evenement "%1$s" werd toegevoegd.]]></translation>
+		<translation language="en"><![CDATA[The event "%1$s" was added.]]></translation>
+	  </item>
+	  <item type="message" name="CommentOnWithURL">
+		<translation language="nl"><![CDATA[Reactie op: <a href="%1$s">%2$s</a>]]></translation>
+		<translation language="en"><![CDATA[Comment on: <a href="%1$s">%2$s</a>]]></translation>
+	  </item>
+	  <item type="message" name="ConfirmDelete">
+		<translation language="nl"><![CDATA[Ben je zeker dat je het evenement "%1$s" wil verwijderen?]]></translation>
+		<translation language="en"><![CDATA[Are your sure you want to delete the event "%1$s"?]]></translation>
+	  </item>
+	  <item type="message" name="Deleted">
+		<translation language="nl"><![CDATA[De geselecteerde evenementen werden verwijderd.]]></translation>
+		<translation language="en"><![CDATA[The selected events were deleted.]]></translation>
+	  </item>
+	  <item type="message" name="DeletedSpam">
+		<translation language="nl"><![CDATA[Alle spamberichten werden verwijderd.]]></translation>
+		<translation language="en"><![CDATA[All spam-comments were deleted.]]></translation>
+	  </item>
+	  <item type="message" name="DeleteAllSpam">
+		<translation language="nl"><![CDATA[Verwijder alle spam:]]></translation>
+		<translation language="en"><![CDATA[Delete all spam:]]></translation>
+	  </item>
+	  <item type="message" name="EditArticle">
+		<translation language="nl"><![CDATA[bewerk evenement "%1$s"]]></translation>
+		<translation language="en"><![CDATA[edit event "%1$s"]]></translation>
+	  </item>
+	  <item type="message" name="EditCommentOn">
+		<translation language="nl"><![CDATA[bewerk reactie op "%1$s"]]></translation>
+		<translation language="en"><![CDATA[edit comment on "%1$s"]]></translation>
+	  </item>
+	  <item type="message" name="Edited">
+		<translation language="nl"><![CDATA[Het evenement "%1$s" werd opgeslagen.]]></translation>
+		<translation language="en"><![CDATA[The event "%1$s" was saved.]]></translation>
+	  </item>
+	  <item type="message" name="EditedComment">
+		<translation language="nl"><![CDATA[De reactie werd opgeslagen.]]></translation>
+		<translation language="en"><![CDATA[The comment was saved.]]></translation>
+	  </item>
+	  <item type="message" name="FollowAllCommentsInRSS">
+		<translation language="nl"><![CDATA[Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
+		<translation language="en"><![CDATA[Follow all comments in a RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
+	  </item>
+	  <item type="message" name="HelpMeta">
+		<translation language="nl"><![CDATA[Toon de meta informatie van de evenementen in de RSS feed (categorie, tags, ...)]]></translation>
+		<translation language="en"><![CDATA[Show the meta information for the events in the RSS feed (category, tags, ...)]]></translation>
+	  </item>
+	  <item type="message" name="HelpPingServices">
+		<translation language="nl"><![CDATA[Laat verschillende blogservices weten wanneer je een nieuw evenement plaatst.]]></translation>
+		<translation language="en"><![CDATA[Let various blogservices know when you\'ve posted a new event.]]></translation>
+	  </item>
+	  <item type="message" name="HelpSummary">
+		<translation language="nl"><![CDATA[Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het evenementenoverzicht.]]></translation>
+		<translation language="en"><![CDATA[Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.]]></translation>
+	  </item>
+	  <item type="message" name="HelpSpamFilter">
+		<translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
+		<translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam comments.]]></translation>
+	  </item>
+	  <item type="message" name="MakeDefaultCategory">
+		<translation language="nl"><![CDATA[Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).]]></translation>
+		<translation language="en"><![CDATA[Make default category (current default category is: %1$s).]]></translation>
+	  </item>
+	  <item type="message" name="MaxSubscriptions">
+		<translation language="nl"><![CDATA[Laat dit veld leeg als er geen maximum aantal deelnemers zijn.]]></translation>
+		<translation language="en"><![CDATA[Leave this field empty if there is no limit for the subscriptions.]]></translation>
+	  </item>
+	  <item type="message" name="NoItems">
+		<translation language="nl"><![CDATA[Er zijn nog geen evenementen. <a href="%1$s">Voeg het eerste evenement toe</a>.]]></translation>
+		<translation language="en"><![CDATA[There are no events yet. <a href="%1$s">Add the first event</a>.]]></translation>
+	  </item>
+	  <item type="message" name="NotifyByEmailOnNewComment">
+		<translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie is.]]></translation>
+		<translation language="en"><![CDATA[Notify by email when there is a new comment.]]></translation>
+	  </item>
+	  <item type="message" name="NotifyByEmailOnNewCommentToModerate">
+		<translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie te modereren is.]]></translation>
+		<translation language="en"><![CDATA[Notify by email when there is a new comment to moderate.]]></translation>
+	  </item>
+	  <item type="message" name="NotifyByEmailOnNewSubscription">
+		<translation language="nl"><![CDATA[Verwittig via email als er een nieuwe inschrijving is.]]></translation>
+		<translation language="en"><![CDATA[Notify by email when there is a new subscription.]]></translation>
+	  </item>
+	</events>
+	<core>
+	 <item type="error" name="IntegerIsInvalid">
+		<translation language="nl"><![CDATA[Dit is een ongeldig geheel getal.]]></translation>
+		<translation language="en"><![CDATA[Invalid integer.]]></translation>
+	 </item>
+	 <item type="label" name="Dates">
+		<translation language="nl"><![CDATA[datums]]></translation>
+		<translation language="en"><![CDATA[dates]]></translation>
+	  </item>
+	 <item type="label" name="Enabled">
+		<translation language="nl"><![CDATA[ingeschakeld]]></translation>
+		<translation language="en"><![CDATA[enabled]]></translation>
+	  </item>
+	 <item type="label" name="EndsOn">
+		<translation language="nl"><![CDATA[eindigt op]]></translation>
+		<translation language="en"><![CDATA[ends on]]></translation>
+	  </item>
+	 <item type="label" name="Event">
+		<translation language="nl"><![CDATA[evenement]]></translation>
+		<translation language="en"><![CDATA[event]]></translation>
+	  </item>
+	 <item type="label" name="Events">
+		<translation language="nl"><![CDATA[evenementen]]></translation>
+		<translation language="en"><![CDATA[events]]></translation>
+	  </item>
+	 <item type="label" name="MaximumSubscriptions">
+		<translation language="nl"><![CDATA[maximum inschrijvingen]]></translation>
+		<translation language="en"><![CDATA[maximum subscriptions]]></translation>
+	  </item>
+	 <item type="label" name="StartsOn">
+		<translation language="nl"><![CDATA[start op]]></translation>
+		<translation language="en"><![CDATA[starts on]]></translation>
+	  </item>
+	</core>
+  </backend>
+  <frontend>
+	<core>
+	  <item type="action" name="ArticleCommentsRss">
+		<translation language="nl"><![CDATA[reacties-op-rss]]></translation>
+		<translation language="en"><![CDATA[comments-on-rss]]></translation>
+	  </item>
+	  <item type="action" name="Ical">
+		<translation language="nl"><![CDATA[ical]]></translation>
+		<translation language="en"><![CDATA[ical]]></translation>
+	  </item>
+	  <item type="action" name="IcalAll">
+		<translation language="nl"><![CDATA[ical-allemaal]]></translation>
+		<translation language="en"><![CDATA[ical-all]]></translation>
+	  </item>
+	  <item type="action" name="Subscription">
+		<translation language="nl"><![CDATA[inschrijving]]></translation>
+		<translation language="en"><![CDATA[subscription]]></translation>
+	  </item>
+	  <item type="action" name="Subscriptions">
+		<translation language="nl"><![CDATA[inschrijvingen]]></translation>
+		<translation language="en"><![CDATA[subscriptions]]></translation>
+	  </item>	  
+	  <item type="error" name="SubscriptionTimeout">
+	    <translation language="nl"><![CDATA[Slow down cowboy, er moeten wat tijd tussen iedere inschrijving zijn.]]></translation>
+	    <translation language="en"><![CDATA[Slow down cowboy, er moeten wat tijd tussen iedere inschrijving zijn.]]></translation>
+	  </item>
+	  <item type="label" name="InTheCategory">
+		<translation language="nl"><![CDATA[in categorie]]></translation>
+		<translation language="en"><![CDATA[in category]]></translation>
+	  </item>
+	  <item type="label" name="SubscribeToTheRSSFeed">
+		<translation language="nl"><![CDATA[schrijf je in op de RSS-feed]]></translation>
+		<translation language="en"><![CDATA[subscribe to the RSS feed]]></translation>
+	  </item>
+	  <item type="label" name="EventsArchive">
+		<translation language="nl"><![CDATA[evenementenarchief]]></translation>
+		<translation language="en"><![CDATA[events archive]]></translation>
+	  </item>
+	  <item type="label" name="NextEvent">
+		<translation language="nl"><![CDATA[volgend evenement]]></translation>
+		<translation language="en"><![CDATA[next event]]></translation>
+	  </item>
+	  <item type="label" name="PreviousEvent">
+		<translation language="nl"><![CDATA[vorig evenement]]></translation>
+		<translation language="en"><![CDATA[previous event]]></translation>
+	  </item>
+	  <item type="label" name="RecentEvents">
+		<translation language="nl"><![CDATA[recente evenementen]]></translation>
+		<translation language="en"><![CDATA[recent events]]></translation>
+	  </item>
+	  <item type="label" name="Subscribe">
+		<translation language="nl"><![CDATA[inschrijven]]></translation>
+		<translation language="en"><![CDATA[subscribe]]></translation>
+	  </item>
+	  <item type="label" name="Subscriptions">
+		<translation language="nl"><![CDATA[inschrijvingen]]></translation>
+		<translation language="en"><![CDATA[subscriptions]]></translation>
+	  </item>
+	  <item type="label" name="Wrote">
+		<translation language="nl"><![CDATA[schreef]]></translation>
+		<translation language="en"><![CDATA[wrote]]></translation>
+	  </item>
+	  <item type="message" name="EventsAllComments">
+		<translation language="nl"><![CDATA[Alle reacties op je evenementen.]]></translation>
+		<translation language="en"><![CDATA[All comments on your events.]]></translation>
+	  </item>
+	  <item type="message" name="EventsAllIcal">
+		<translation language="nl"><![CDATA[Download evenementen-kalender <small>(ical)</small>.]]></translation>
+		<translation language="en"><![CDATA[Download events-feed <small>(ical)</small>.]]></translation>
+	  </item>
+	  <item type="message" name="EventsDownloadIcal">
+		<translation language="nl"><![CDATA[Toevoegen aan agenda <small>(ical)</small>.]]></translation>
+		<translation language="en"><![CDATA[Add to calendar <small>(ical)</small>.]]></translation>
+	  </item>
+	  <item type="message" name="EventsNoComments">
+		<translation language="nl"><![CDATA[Reageer als eerste]]></translation>
+		<translation language="en"><![CDATA[Be the first to comment]]></translation>
+	  </item>
+	  <item type="message" name="EventsNumberOfComments">
+		<translation language="nl"><![CDATA[Al %1$s reacties]]></translation>
+		<translation language="en"><![CDATA[%1$s comments]]></translation>
+	  </item>
+	  <item type="message" name="EventsOneComment">
+		<translation language="nl"><![CDATA[Al 1 reactie]]></translation>
+		<translation language="en"><![CDATA[1 comment already]]></translation>
+	  </item>
+	  <item type="message" name="EventsCommentIsAdded">
+		<translation language="nl"><![CDATA[Je reactie werd toegevoegd.]]></translation>
+		<translation language="en"><![CDATA[Your comment was added.]]></translation>
+	  </item>
+	  <item type="message" name="EventsCommentInModeration">
+		<translation language="nl"><![CDATA[Je reactie wacht op goedkeuring.]]></translation>
+		<translation language="en"><![CDATA[Your comment is awaiting moderation.]]></translation>
+	  </item>
+	  <item type="message" name="EventsCommentIsSpam">
+		<translation language="nl"><![CDATA[Je reactie werd gemarkeerd als spam.]]></translation>
+		<translation language="en"><![CDATA[Your comment was marked as spam.]]></translation>
+	  </item>
+	  <item type="message" name="EventsEmailNotificationsNewComment">
+		<translation language="nl"><![CDATA[%1$s reageerde op <a href="%2$s">%3$s</a>.]]></translation>
+		<translation language="en"><![CDATA[%1$s commented on <a href="%2$s">%3$s</a>.]]></translation>
+	  </item>
+	  <item type="message" name="EventsEmailNotificationsNewCommentToModerate">
+		<translation language="nl"><![CDATA[%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.]]></translation>
+		<translation language="en"><![CDATA[%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.]]></translation>
+	  </item>
+	  <item type="message" name="EventsNoItems">
+		<translation language="nl"><![CDATA[Er zijn nog geen evenementen.]]></translation>
+		<translation language="en"><![CDATA[There are no events yet.]]></translation>
+	  </item>
+	  <item type="message" name="EventsSubscriptionIsAdded">
+		<translation language="nl"><![CDATA[Je inschrijving werd doorgegeven.]]></translation>
+		<translation language="en"><![CDATA[Your subscription was added.]]></translation>
+	  </item>
+	  <item type="message" name="EventsSubscriptionInModeration">
+		<translation language="nl"><![CDATA[Je inschrijving wacht op goedkeuring.]]></translation>
+		<translation language="en"><![CDATA[Your subscription is awaiting moderation.]]></translation>
+	  </item>
+	  <item type="message" name="EventsSubscriptionIsSpam">
+		<translation language="nl"><![CDATA[Je inschrijving werd gemarkeerd als spam.]]></translation>
+		<translation language="en"><![CDATA[Your subscription was marked as spam.]]></translation>
+	  </item>
+	  <item type="message" name="Subscribe">
+		<translation language="nl"><![CDATA[inschrijven]]></translation>
+		<translation language="en"><![CDATA[subscribe]]></translation>
+	  </item>
+	</core>
+  </frontend>
+</locale>
