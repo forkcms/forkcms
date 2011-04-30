@@ -146,8 +146,6 @@ class BackendForm extends SpoonForm
 		// @later	get prefered mask & first day
 		$mask = 'd/m/Y';
 		$firstday = 1;
-		$startDate = null;
-		$endDate = null;
 
 		// build attributes
 		$attributes['data-mask'] = str_replace(array('d', 'm', 'Y', 'j', 'n'), array('dd', 'mm', 'yy', 'd', 'm'), $mask);
