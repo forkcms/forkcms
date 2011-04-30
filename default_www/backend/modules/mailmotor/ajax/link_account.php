@@ -44,7 +44,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			require_once 'external/campaignmonitor.php';
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 10);
+			new CampaignMonitor($url, $username, $password, 10);
 
 			// save the new data
 			BackendModel::setModuleSetting('mailmotor', 'cm_url', $url);
