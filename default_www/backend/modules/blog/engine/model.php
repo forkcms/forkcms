@@ -393,7 +393,7 @@ class BackendBlogModel
 		// we should include the count
 		if($includeCount)
 		{
-			return (array) BackendModel::getDB()->getPairs('SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
+			return (array) $db->getPairs('SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
 															FROM blog_categories AS i
 															LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.language = p.language AND p.status = ?
 															WHERE i.language = ?
@@ -402,7 +402,7 @@ class BackendBlogModel
 		}
 
 		// get records and return them
-		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.title
+		return (array) $db->getPairs('SELECT i.id, i.title
 														FROM blog_categories AS i
 														WHERE i.language = ?',
 														array(BL::getWorkingLanguage()));
@@ -514,7 +514,7 @@ class BackendBlogModel
 																array((string) $status, 'active', BL::getWorkingLanguage(), (int) $limit));
 
 		// loop entries
-		foreach($comments as $key => &$row)
+		foreach($comments as &$row)
 		{
 			// add full url
 			$row['full_url'] = BackendModel::getURLForBlock('blog', 'detail', $row['language']) . '/' . $row['url'];

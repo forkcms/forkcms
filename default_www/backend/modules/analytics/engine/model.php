@@ -618,9 +618,6 @@ class BackendAnalyticsModel
 		// init vars
 		$results = array();
 
-		// get total pageviews
-		$totalPageviews = (int) self::getAggregate('pageviews', $startTimestamp, $endTimestamp);
-
 		// build pages array
 		foreach($items as $i => $item)
 		{

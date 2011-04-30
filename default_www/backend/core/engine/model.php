@@ -692,10 +692,10 @@ class BackendModel
 		$navigation = self::getNavigation($language);
 
 		// loop types
-		foreach($navigation as $type => $level)
+		foreach($navigation as $level)
 		{
 			// loop level
-			foreach($level as $parentId => $pages)
+			foreach($level as $pages)
 			{
 				// loop pages
 				foreach($pages as $pageId => $properties)

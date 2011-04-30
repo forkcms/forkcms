@@ -946,7 +946,7 @@ class FrontendBaseWidget
 		}
 
 		// redefine
-		else $template = (string) $path;
+		else $path = (string) $path;
 
 		// set template
 		$this->setTemplatePath($path);

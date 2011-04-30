@@ -367,7 +367,7 @@ class FrontendHeader extends FrontendBaseObject
 
 		// match stuff between brackets
 		$matches = array();
-		preg_match_all('/ \{(.*)}/iUms', $content, $aMatches);
+		preg_match_all('/ \{(.*)}/iUms', $content, $matches);
 
 		// are there any matches
 		if(isset($matches[0]))

@@ -77,7 +77,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 															WHERE t.tag = ?', array($tag));
 
 			// loop items
-			foreach($items as $i => $item)
+			foreach($items as $item)
 			{
 				// loop existing items
 				foreach($this->related as $related)

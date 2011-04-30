@@ -23,20 +23,6 @@ class FrontendMailmotorWidgetSubscribe extends FrontendBaseWidget
 
 		// load template
 		$this->loadTemplate();
-
-		// parse
-		//$this->parse();
-	}
-
-
-	/**
-	 * Parse
-	 *
-	 * @return	void
-	 */
-	private function parse()
-	{
-		// parse the subscribe form link
 	}
 }
 
