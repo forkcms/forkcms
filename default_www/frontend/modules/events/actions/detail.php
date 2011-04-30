@@ -461,8 +461,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$moderationEnabled = (isset($this->settings['moderation_subscriptions']) && $this->settings['moderation_subscriptions']);
 
 				// reformat data
-				$author = $this->frmComment->getField('author')->getValue();
-				$email = $this->frmComment->getField('email')->getValue();
+				$author = $this->frmSubscription->getField('author')->getValue();
+				$email = $this->frmSubscription->getField('email')->getValue();
 
 				// build array
 				$subscription['event_id'] = $this->record['id'];

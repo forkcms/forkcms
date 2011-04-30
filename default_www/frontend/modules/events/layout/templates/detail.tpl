@@ -27,7 +27,6 @@
 						{option:!commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgEventsOneComment}</a>{/option:!commentsMultiple}
 					{/option:comments}
 
-					{option:!subscriptions}<a href="{$item.full_url}#{$actComment}">{$msgEventsNoSubscriptions}</a>{/option:!subscriptions}
 					{option:subscriptions}
 						{option:subscriptionsMultiple}<a href="{$item.full_url}#{$actSubscriptions}">{$msgEventsNumberOfSubscriptions|sprintf:{$subscriptionsCount}}</a>{/option:subscriptionsMultiple}
 						{option:!subscriptionsMultiple}<a href="{$item.full_url}#{$actSubscriptions}">{$msgEventsOneSubscription}</a>{/option:!subscriptionsMultiple}

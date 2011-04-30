@@ -212,6 +212,10 @@
 		<translation language="nl"><![CDATA[Reageer als eerste]]></translation>
 		<translation language="en"><![CDATA[Be the first to comment]]></translation>
 	  </item>
+	  <item type="message" name="EventsNoSubscriptions">
+		<translation language="nl"><![CDATA[Schrijf je als eerste in]]></translation>
+		<translation language="en"><![CDATA[Be the first to subscribe]]></translation>
+	  </item>
 	  <item type="message" name="EventsNumberOfComments">
 		<translation language="nl"><![CDATA[Al %1$s reacties]]></translation>
 		<translation language="en"><![CDATA[%1$s comments]]></translation>
@@ -239,6 +243,10 @@
 	  <item type="message" name="EventsEmailNotificationsNewCommentToModerate">
 		<translation language="nl"><![CDATA[%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.]]></translation>
 		<translation language="en"><![CDATA[%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.]]></translation>
+	  </item>
+	  <item type="message" name="EventsEmailNotificationsNewSubscription">
+		<translation language="nl"><![CDATA[%1$s schreef zich in op <a href="%2$s">%3$s</a>.]]></translation>
+		<translation language="en"><![CDATA[%1$s subscribed to <a href="%2$s">%3$s</a>.]]></translation>
 	  </item>
 	  <item type="message" name="EventsNoItems">
 		<translation language="nl"><![CDATA[Er zijn nog geen evenementen.]]></translation>
