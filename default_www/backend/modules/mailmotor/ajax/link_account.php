@@ -22,7 +22,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$url = SpoonFilter::getPostValue('url', null, '');
+		$url = ltrim(SpoonFilter::getPostValue('url', null, ''), 'http://');
 		$username = SpoonFilter::getPostValue('username', null, '');
 		$password = SpoonFilter::getPostValue('password', null, '');
 
