@@ -204,6 +204,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		// form info
 		$this->tpl->assign('name', $this->record['name']);
 		$this->tpl->assign('id', $this->record['id']);
+		$this->tpl->assignArray($this->filter);
 	}
 
 

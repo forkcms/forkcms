@@ -6,6 +6,7 @@
 
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
+		<a href="{$var|geturl:'export_data'}&id={$id}&start_date={$start_date}&end_date={$end_date}&ip={$ip}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
 	</div>
 </div>
 
