@@ -31,7 +31,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
 		// wherin we allow the query to be in the actionfile itself
-		$query = 'SELECT i.id, UNIX_TIMESTAMP(i.sent_on) AS sent_on, i.ip
+		$query = 'SELECT i.id, UNIX_TIMESTAMP(i.sent_on) AS sent_on
 					FROM forms_data AS i
 					WHERE i.form_id = ?';
 
@@ -55,13 +55,6 @@ class BackendFormBuilderExportData extends BackendBaseAction
 			// add condition
 			$query .= ' AND i.sent_on <= ?';
 			$parameters[] = BackendModel::getUTCDate(null, gmmktime(23, 59, 59, $chunks[1], $chunks[0], $chunks[2]));
-		}
-
-		// add ip
-		if($this->filter['ip'] !== null)
-		{
-			$query .= ' AND i.ip LIKE ?';
-			$parameters[] = '%' . $this->filter['ip'] . '%';
 		}
 
 		// new query
@@ -158,9 +151,6 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 		// not set
 		else $this->filter['end_date'] = '';
-
-		// ip
-		$this->filter['ip'] = $this->getParameter('ip');
 	}
 }
 

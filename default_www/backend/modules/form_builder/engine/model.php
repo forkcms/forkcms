@@ -268,7 +268,7 @@ class BackendFormBuilderModel
 	public static function getData($id)
 	{
 		// get data
-		$data = (array) BackendModel::getDB()->getRecord('SELECT fd.id, fd.form_id, fd.ip, UNIX_TIMESTAMP(fd.sent_on) AS sent_on
+		$data = (array) BackendModel::getDB()->getRecord('SELECT fd.id, fd.form_id, UNIX_TIMESTAMP(fd.sent_on) AS sent_on
 															FROM forms_data AS fd
 															WHERE fd.id = ?',
 															(int) $id);

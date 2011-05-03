@@ -5,7 +5,7 @@
 	<h2>{$lblFormBuilder|ucfirst}: {$lblFormData|sprintf:{$name}}</h2>
 
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'data'}&amp;id={$formId}&amp;start_date={$filter.start_date}&amp;end_date={$filter.end_date}&amp;ip={$filter.ip}" class="button icon iconBack"><span>{$lblBackToData|ucfirst}</span></a>
+		<a href="{$var|geturl:'data'}&amp;id={$formId}&amp;start_date={$filter.start_date}&amp;end_date={$filter.end_date}" class="button icon iconBack"><span>{$lblBackToData|ucfirst}</span></a>
 	</div>
 </div>
 
@@ -14,7 +14,6 @@
 		<h3>{$lblSenderInformation|ucfirst}</h3>
 	</div>
 	<div class="options">
-		<p><strong>{$lblIP}:</strong> {$IP}</p>
 		<p><strong>{$lblSentOn|ucfirst}:</strong> {$sentOn|formatdatetime}</p>
 	</div>
 </div>

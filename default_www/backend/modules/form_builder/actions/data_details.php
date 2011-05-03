@@ -81,7 +81,6 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 
 		// sent info
 		$this->tpl->assign('id', $this->data['id']);
-		$this->tpl->assign('IP', $this->data['ip']);
 		$this->tpl->assign('sentOn', $this->data['sent_on']);
 
 		// init
@@ -150,9 +149,6 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 
 		// not set
 		else $this->filter['end_date'] = '';
-
-		// ip
-		$this->filter['ip'] = $this->getParameter('ip');
 	}
 }
 
