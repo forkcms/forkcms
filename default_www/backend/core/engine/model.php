@@ -1168,21 +1168,55 @@ class BackendModel
 				$item['status'] = 'queued';
 
 				// add
-				$queuedItems[] = $item;
+				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
 			}
 
-			// insert items into queue
-			if(!empty($queuedItems)) self::getDB(true)->insert('hooks_queue', $queuedItems);
+			// start queue in background, we don't use curl because the timeoit is at least 1 second.
 
-			// @todo	start queue in background
+			// init var
+			$parts = parse_url(SITE_URL);
+			$errNo = '';
+			$errStr = '';
 
+			// open the socket
+			$socket = fsockopen($parts['host'], (isset($parts['port'])) ? $parts['port'] : 80, $errNo, $errStr, 1);
+
+			foreach($queuedItems as $id)
+			{
+				// build the request
+				$request = 'GET /backend/cronjob.php?module=core&action=process_queued_hooks&id='. $id .' HTTP/1.1'."\r\n";
+				$request .= 'Host: '. $parts['host']."\r\n";
+				$request .= 'Content-Length: 0'."\r\n\r\n";
+				$request .= 'Connection: Close'."\r\n\r\n";
+
+				// send the request
+				fwrite($socket, $request);
+			}
+
+			// close the socket
+			fclose($socket);
 		}
 	}
 
 
+	/**
+	 * Unsubscribe from an event
+	 *
+	 * @return	void
+	 * @param	string $eventModule		The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	string $module			The module that subsribes to the event.
+	 */
 	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
 	{
-		// @todo
+		// redefine
+		$eventModule = (string) $eventModule;
+		$eventName = (string) $eventName;
+		$module = (string) $module;
+
+		// get db
+		self::getDB(true)->delete('hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
+									array($eventModule, $eventName, $module));
 	}
 
 }
