@@ -218,7 +218,7 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 			$item['full_url'] .= $glue . http_build_query($utm, '', '&');
 
 			// format description
-			$item['text'] = mb_strlen($item['text']) > $this->length ? substr(strip_tags($item['text']), 0, $this->length) . '…' : $item['text'];
+			$item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? substr(strip_tags($item['text']), 0, $this->length) . '…' : $item['text']) : '';
 		}
 
 		// output
