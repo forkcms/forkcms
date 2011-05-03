@@ -31,8 +31,9 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
 		// wherin we allow the query to be in the actionfile itself
-		$query = 'SELECT i.id, UNIX_TIMESTAMP(i.sent_on) AS sent_on
+		$query = 'SELECT i.*, UNIX_TIMESTAMP(i.sent_on) AS sent_on, d.*
 					FROM forms_data AS i
+					INNER JOIN forms_data_fields AS d ON i.id = d.data_id
 					WHERE i.form_id = ?';
 
 		// add start date
@@ -86,6 +87,42 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 			// get the data
 			$data = BackendModel::getDB()->getRecords($query, $parameters);
+			$columnHeaders = array();
+			$rows = array();
+
+			// reformat data
+			foreach($data as $row)
+			{
+				if(!isset($rows[$row['sent_on']]))
+				{
+					$rows[$row['sent_on']]['session_id'] = $row['session_id'];
+					$rows[$row['sent_on']]['sent_on'] = SpoonDate::getDate('Y-m-d H:i:s', $row['sent_on'], BackendLanguage::getInterfaceLanguage());
+				}
+
+				// add
+				$rows[$row['sent_on']][$row['label']] = unserialize($row['value']);
+
+				// add into headers if needed
+				if(!in_array($row['label'], $columnHeaders)) $columnHeaders[] = $row['label'];
+			}
+
+			// sort, so oldest items are below
+			ksort($rows);
+
+			// we should loop all the rows to see if all columsn are available
+			foreach($rows as &$row)
+			{
+				foreach($columnHeaders as $header)
+				{
+					if(!isset($row[$header]))
+					{
+						$row[$header] = null;
+					}
+				}
+			}
+
+			// remove the keys
+			$rows = array_values($rows);
 
 			// set headers for download
 			$headers[] = 'Content-type: application/csv; charset=utf-8';
@@ -96,7 +133,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 			SpoonHTTP::setHeaders($headers);
 
 			// output
-			if(!empty($data)) echo SpoonFileCSV::arrayToString($data);
+			if(!empty($rows)) echo SpoonFileCSV::arrayToString($rows);
 
 			// exit here
 			exit;
