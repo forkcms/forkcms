@@ -106,7 +106,7 @@ class SpoonFilter
 				}
 
 				// more than 1 function given, so apply them all
-				if(is_array($callback)) $results[$key] = call_user_func_array($callback, $value);
+				if(is_array($callback)) $results[$key] = call_user_func_array($callback, array($value));
 
 				// just 1 function given
 				else $results[$key] = $callback($value);
