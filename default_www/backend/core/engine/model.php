@@ -1092,6 +1092,99 @@ class BackendModel
 		// when everything fails
 		return false;
 	}
+
+
+	/**
+	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
+	 *
+	 * @return	void
+	 * @param	string $eventModule		The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	string $module			The module that subsribes to the event.
+	 * @param	mixed $callback			The callback that should be executed when the event is triggered.
+	 */
+	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
+	{
+		// validate
+		if(!is_callable($callback)) throw new BackendException('Invalid callback!');
+
+		// build record
+		$item['event_module'] = (string) $eventModule;
+		$item['event_name'] = (string) $eventName;
+		$item['module'] = (string) $module;
+		$item['callback'] = serialize($callback);
+
+		// get db
+		$db = self::getDB(true);
+
+		// update if already existing
+		if((int) $db->getVar('SELECT COUNT(*)
+									FROM hooks_subscriptions AS i
+									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
+									array($eventModule, $eventName, $module)) > 0)
+		{
+			// update
+			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
+		}
+
+		// insert
+		else $db->insert('hooks_subscriptions', $item);
+	}
+
+
+	/**
+	 * Trigger an event
+	 *
+	 * @return	void
+	 * @param	string $module			The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	mixed[optional] $data	The data that should be send to subscribers.
+	 */
+	public static function triggerEvent($module, $eventName, $data = null)
+	{
+		// redefine
+		$module = (string) $module;
+		$eventName = (string) $eventName;
+
+		// get all items that subscribe to this event
+		$subscriptions = (array) self::getDB()->getRecords('SELECT i.module, i.callback
+															FROM hooks_subscriptions AS i
+															WHERE i.event_module = ? AND i.event_name = ?',
+															array($module, $eventName));
+
+		// any subscriptions?
+		if(!empty($subscriptions))
+		{
+			// init var
+			$queuedItems = array();
+
+			// loop items
+			foreach($subscriptions as $subscription)
+			{
+				// build record
+				$item['module'] = $subscription['module'];
+				$item['callback'] = $subscription['callback'];
+				$item['data'] = serialize($data);
+				$item['status'] = 'queued';
+
+				// add
+				$queuedItems[] = $item;
+			}
+
+			// insert items into queue
+			if(!empty($queuedItems)) self::getDB(true)->insert('hooks_queue', $queuedItems);
+
+			// @todo	start queue in background
+
+		}
+	}
+
+
+	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
+	{
+		// @todo
+	}
+
 }
 
 ?>

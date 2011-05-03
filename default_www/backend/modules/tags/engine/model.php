@@ -24,6 +24,12 @@ class BackendTagsModel
 									GROUP BY i.id';
 
 
+	public static function blaat($data)
+	{
+		Spoon::dump($data);
+	}
+
+
 	/**
 	 * Delete one or more tags.
 	 *
