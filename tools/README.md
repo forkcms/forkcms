@@ -18,6 +18,17 @@ For example
 
 ## Scripts
 
+### batch_resize
+The batch_resize-script will resize the images in the provided folder. You can specify a height and/or width.
+
+<small>Remark: The original files will be modified</small>
+
+It can be executed with the following command
+
+	./batch-resize -w 75 -h 75 ./
+	
+	
+
 ### check_code
 The check_code-script will run PHP CodeSniffer with all settings that are needed. It will check your code against the styleguide, will detect wierd/faulty code, ...
 

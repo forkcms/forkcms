@@ -106,7 +106,7 @@ class SpoonFilter
 				}
 
 				// more than 1 function given, so apply them all
-				if(is_array($callback)) $results[$key] = call_user_func_array($callback, $value);
+				if(is_array($callback)) $results[$key] = call_user_func_array($callback, array($value));
 
 				// just 1 function given
 				else $results[$key] = $callback($value);
@@ -488,12 +488,12 @@ class SpoonFilter
 	 * Checks if the value is greather than a given minimum.
 	 *
 	 * @return	bool			true if the value is greather then, false if not.
-	 * @param	int $minimum	The minimum as an integer.
-	 * @param	int $value		The value to validate.
+	 * @param	float $minimum		The minimum as a float.
+	 * @param	float $value		The value to validate.
 	 */
 	public static function isGreaterThan($minimum, $value)
 	{
-		return ((int) $value > (int) $minimum);
+		return ((float) $value > (float) $minimum);
 	}
 
 

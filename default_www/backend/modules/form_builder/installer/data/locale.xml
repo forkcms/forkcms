@@ -292,11 +292,6 @@
         <translation language="en"><![CDATA[content]]></translation>
         <translation language="fr"><![CDATA[content]]></translation>
       </item>
-      <item type="label" name="IP">
-        <translation language="nl"><![CDATA[IP]]></translation>
-        <translation language="en"><![CDATA[IP]]></translation>
-        <translation language="fr"><![CDATA[IP]]></translation>
-      </item>
       <item type="label" name="SenderInformation">
         <translation language="nl"><![CDATA[afzender informatie]]></translation>
         <translation language="en"><![CDATA[sender information]]></translation>

@@ -28,14 +28,6 @@
 class SpoonFormPassword extends SpoonFormInput
 {
 	/**
-	 * Is the content of this field html?
-	 *
-	 * @var	bool
-	 */
-	private $isHTML = false;
-
-
-	/**
 	 * Class constructor.
 	 *
 	 * @return	void
@@ -44,9 +36,8 @@ class SpoonFormPassword extends SpoonFormInput
 	 * @param	int[optional] $maxlength		The maximum-length the value can be.
 	 * @param	string[optional] $class			The CSS-class to be used.
 	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
-	 * @param	bool[optional] $HTML			Is HTML allowed?
 	 */
-	public function __construct($name, $value = null, $maxlength = null, $class = 'inputPassword', $classError = 'inputPasswordError', $HTML = false)
+	public function __construct($name, $value = null, $maxlength = null, $class = 'inputPassword', $classError = 'inputPasswordError')
 	{
 		// obligated fields
 		$this->attributes['id'] = SpoonFilter::toCamelCase($name, '_', true);
@@ -57,7 +48,6 @@ class SpoonFormPassword extends SpoonFormInput
 		if($maxlength !== null) $this->attributes['maxlength'] = (int) $maxlength;
 		$this->attributes['class'] = (string) $class;
 		$this->classError = (string) $classError;
-		$this->isHTML = (bool) $HTML;
 	}
 
 
@@ -65,20 +55,11 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
-	 * @param	bool[optional] $allowHTML	Is HTML allowed?
 	 */
-	public function getValue($allowHTML = null)
+	public function getValue()
 	{
-		// redefine html & default value
-		$allowHTML = ($allowHTML !== null) ? (bool) $allowHTML : $this->isHTML;
+		// redefine default value
 		$value = $this->value;
-
-		// contains html
-		if($this->isHTML)
-		{
-			// set value
-			$value = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($value) : SpoonFilter::htmlentities($value);
-		}
 
 		// form submitted
 		if($this->isSubmitted())
@@ -94,9 +75,6 @@ class SpoonFormPassword extends SpoonFormInput
 
 				// maximum length?
 				if(isset($this->attributes['maxlength']) && $this->attributes['maxlength'] > 0) $value = mb_substr($value, 0, (int) $this->attributes['maxlength'], SPOON_CHARSET);
-
-				// html allowed?
-				if(!$allowHTML) $value = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($value) : SpoonFilter::htmlentities($value);
 			}
 		}
 
