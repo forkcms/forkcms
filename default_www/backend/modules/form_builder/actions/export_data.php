@@ -1,18 +1,27 @@
 <?php
 
 /**
- * This action is used to export statistics by mailing ID
+ * This action is used to export submissions of a form.
  *
  * @package		backend
  * @subpackage	form_builder
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendFormBuilderExportData extends BackendBaseAction
 {
 	/**
-	 * The filter
+	 * CSV column headers.
+	 *
+	 * @var	array
+	 */
+	private $columnHeaders = array();
+
+
+	/**
+	 * The filter.
 	 *
 	 * @var	array
 	 */
@@ -20,7 +29,15 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 
 	/**
-	 * Builds the query for this datagrid
+	 * CSV rows.
+	 *
+	 * @var	array
+	 */
+	private $rows = array();
+
+
+	/**
+	 * Builds the query for this datagrid.
 	 *
 	 * @return	array		An array with two arguments containing the query and its parameters.
 	 */
@@ -64,7 +81,34 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 
 	/**
-	 * Execute the action
+	 * Create the CSV.
+	 *
+	 * @return	void
+	 */
+	private function createCsv()
+	{
+		// create csv
+		$csv = SpoonFileCSV::arrayToString($this->rows, $this->columnHeaders);
+
+		// set headers for download
+		$headers[] = 'Content-type: application/csv; charset=utf-8';
+		$headers[] = 'Content-Disposition: attachment; filename="' . date('Ymd_His') . '.csv"';
+		$headers[] = 'Content-Length: ' . strlen($csv);
+		$headers[] = 'Pragma: no-cache';
+
+		// overwrite the headers
+		SpoonHTTP::setHeaders($headers);
+
+		// output
+		echo $csv;
+
+		// exit here
+		exit;
+	}
+
+
+	/**
+	 * Execute the action.
 	 *
 	 * @return	void
 	 */
@@ -82,64 +126,14 @@ class BackendFormBuilderExportData extends BackendBaseAction
 			// set filter
 			$this->setFilter();
 
-			// fetch query and parameters
-			list($query, $parameters) = $this->buildQuery();
+			// set csv items
+			$this->setItems();
 
-			// get the data
-			$data = BackendModel::getDB()->getRecords($query, $parameters);
-			$columnHeaders = array();
-			$rows = array();
-
-			// reformat data
-			foreach($data as $row)
-			{
-				if(!isset($rows[$row['sent_on']]))
-				{
-					$rows[$row['sent_on']]['session_id'] = $row['session_id'];
-					$rows[$row['sent_on']]['sent_on'] = SpoonDate::getDate('Y-m-d H:i:s', $row['sent_on'], BackendLanguage::getInterfaceLanguage());
-				}
-
-				// add
-				$rows[$row['sent_on']][$row['label']] = unserialize($row['value']);
-
-				// add into headers if needed
-				if(!in_array($row['label'], $columnHeaders)) $columnHeaders[] = $row['label'];
-			}
-
-			// sort, so oldest items are below
-			ksort($rows);
-
-			// we should loop all the rows to see if all columsn are available
-			foreach($rows as &$row)
-			{
-				foreach($columnHeaders as $header)
-				{
-					if(!isset($row[$header]))
-					{
-						$row[$header] = null;
-					}
-				}
-			}
-
-			// remove the keys
-			$rows = array_values($rows);
-
-			// set headers for download
-			$headers[] = 'Content-type: application/csv; charset=utf-8';
-			$headers[] = 'Content-Disposition: attachment; filename="' . date('Ymd_His') . '.csv"';
-			$headers[] = 'Pragma: no-cache';
-
-			// overwrite the headers
-			SpoonHTTP::setHeaders($headers);
-
-			// output
-			if(!empty($rows)) echo SpoonFileCSV::arrayToString($rows);
-
-			// exit here
-			exit;
+			// create csv
+			$this->createCsv();
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our url
+		// no item found, redirect to index, because somebody is fucking with our url
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
@@ -188,6 +182,66 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 		// not set
 		else $this->filter['end_date'] = '';
+	}
+
+
+	/**
+	 * Fetch data for this form from the database and reformat to csv rows.
+	 *
+	 * @return	void
+	 */
+	private function setItems()
+	{
+		// init header labels
+		$lblSessionId = ucfirst(BL::lbl('SessionId'));
+		$lblSentOn = ucfirst(BL::lbl('SentOn'));
+		$this->columnHeaders = array($lblSessionId, $lblSentOn);
+
+		// fetch query and parameters
+		list($query, $parameters) = $this->buildQuery();
+
+		// get the data
+		$records = (array) BackendModel::getDB()->getRecords($query, $parameters);
+		$data = array();
+
+		// reformat data
+		foreach($records as $row)
+		{
+			// first row of a submission
+			if(!isset($data[$row['data_id']]))
+			{
+				$data[$row['data_id']][$lblSessionId] = $row['session_id'];
+				$data[$row['data_id']][$lblSentOn] = SpoonDate::getDate('Y-m-d H:i:s', $row['sent_on'], BackendLanguage::getWorkingLanguage());
+			}
+
+			// value is serialized
+			$value = unserialize($row['value']);
+
+			// flatten arrays
+			if(is_array($value)) $value = implode(', ', $value);
+
+			// group submissions
+			$data[$row['data_id']][$row['label']] = SpoonFilter::htmlentitiesDecode($value, null, ENT_QUOTES);
+
+			// add into headers if not yet added
+			if(!in_array($row['label'], $this->columnHeaders)) $this->columnHeaders[] = $row['label'];
+		}
+
+		// reorder data so they are in the correct column
+		foreach($data as $id => $row)
+		{
+			foreach($this->columnHeaders as $header)
+			{
+				// submission has this field so add it
+				if(isset($row[$header])) $this->rows[$id][] = $row[$header];
+
+				// submission does not have this field so add a placeholder
+				else $this->rows[$id][] = '';
+			}
+		}
+
+		// remove the keys
+		$this->rows = array_values($this->rows);
 	}
 }
 
