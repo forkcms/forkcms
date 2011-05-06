@@ -365,27 +365,6 @@ class FrontendHeader extends FrontendBaseObject
 		// remove spaces on end of line
 		$content = preg_replace('/ \n/i', "\n", $content);
 
-		// match stuff between brackets
-		$matches = array();
-		preg_match_all('/ \{(.*)}/iUms', $content, $matches);
-
-		// are there any matches
-		if(isset($matches[0]))
-		{
-			// loop matches
-			foreach($matches[0] as $key => $match)
-			{
-				// remove faulty newlines
-				$tempContent = preg_replace('|/r/iU', '', $matches[1][$key]);
-
-				// removes real newlines
-				$tempContent = preg_replace('/\n/iU', ' ', $tempContent);
-
-				// replace the new block in the general content
-				$content = str_replace($matches[0][$key], '{' . $tempContent . '}', $content);
-			}
-		}
-
 		// remove faulty newlines
 		$content = preg_replace('/\r/iU', '', $content);
 
