@@ -216,6 +216,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				$item['text'] = $this->frm->getField('text')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getChecked() ? 'N' : 'Y';
 				$item['status'] = 'active';
+				$item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
 				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// insert the item
