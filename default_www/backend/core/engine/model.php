@@ -1171,31 +1171,90 @@ class BackendModel
 				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
 			}
 
-			// start queue in background, we don't use curl because the timeoit is at least 1 second.
+			// start processing
+			BackendModel::startProcessingHooks();
+		}
+	}
 
-			// init var
-			$parts = parse_url(SITE_URL);
-			$errNo = '';
-			$errStr = '';
 
-			// open the socket
-			$socket = fsockopen($parts['host'], (isset($parts['port'])) ? $parts['port'] : 80, $errNo, $errStr, 1);
+	public static function startProcessingHooks()
+	{
+		// is the queue already running?
+		if(SpoonFile::exists(BACKEND_CACHE_PATH .'/hooks/pid'))
+		{
+			// get the pid
+			$pid = trim(SpoonFile::getContent(BACKEND_CACHE_PATH .'/hooks/pid'));
 
-			foreach($queuedItems as $id)
+			// running on windows?
+			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
 			{
-				// build the request
-				$request = 'GET /backend/cronjob.php?module=core&action=process_queued_hooks&id='. $id .' HTTP/1.1'."\r\n";
-				$request .= 'Host: '. $parts['host']."\r\n";
-				$request .= 'Content-Length: 0'."\r\n\r\n";
-				$request .= 'Connection: Close'."\r\n\r\n";
+				// get output
+				$output = @shell_exec('tasklist.exe /FO LIST /FI "PID eq '. $pid .'"');
 
-				// send the request
-				fwrite($socket, $request);
+				// validate output
+				if($output == '' || $output === false)
+				{
+					// delete the pid file
+					SpoonFile::delete(BACKEND_CORE_PATH .'/hooks/pid');
+				}
+
+				// already running
+				else return true;
 			}
 
-			// close the socket
-			fclose($socket);
+			// Mac
+			elseif(strtolower(substr(php_uname('s'), 0, 6)) == 'darwin')
+			{
+				// @todo
+				if(true || $output)
+				{
+					// delete the pid file
+					SpoonFile::delete(BACKEND_CORE_PATH .'/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
+
+			// UNIX
+			else
+			{
+				// check if the process is still running, by checking the proc folder
+				if(!SpoonFile::exists('/proc/'. $pid))
+				{
+					// delete the pid file
+					SpoonFile::delete(BACKEND_CORE_PATH .'/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
 		}
+
+		// init var
+		$parts = parse_url(SITE_URL);
+		$errNo = '';
+		$errStr = '';
+
+		// @todo	https?
+
+		// open the socket
+		$socket = fsockopen($parts['host'], (isset($parts['port'])) ? $parts['port'] : 80, $errNo, $errStr, 1);
+
+		// build the request
+		$request = 'GET /backend/cronjob.php?module=core&action=process_queued_hooks HTTP/1.1'."\r\n";
+		$request .= 'Host: '. $parts['host']."\r\n";
+		$request .= 'Content-Length: 0'."\r\n\r\n";
+		$request .= 'Connection: Close'."\r\n\r\n";
+
+		// send the request
+		fwrite($socket, $request);
+
+		// close the socket
+		fclose($socket);
+
+		// return
+		return true;
 	}
 
 

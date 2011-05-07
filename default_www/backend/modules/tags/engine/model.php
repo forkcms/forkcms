@@ -26,7 +26,7 @@ class BackendTagsModel
 
 	public static function blaat($data)
 	{
-		Spoon::dump($data);
+		SpoonFile::setContent(BACKEND_CACHE_PATH .'/'. microtime(true), 'blaat');
 	}
 
 

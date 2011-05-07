@@ -18,75 +18,79 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 	 */
 	public function execute()
 	{
-		// ignore user abortion, so the script will keep running
-		ignore_user_abort(true);
-
 		// no timelimit
 		set_time_limit(0);
 
 		// get database
 		$db = BackendModel::getDB(true);
 
-		$id = SpoonFilter::getGetValue('id', null, '');
+		// get process-id
+		$pid = getmypid();
 
+		// store PID
+		SpoonFile::setContent(BACKEND_CACHE_PATH .'/hooks/pid', $pid);
 
-		// any items
-		if($id != '')
+		// loop forever
+		while(true)
 		{
-			// make them busy
-			$db->update('hooks_queue', array('status' => 'busy'), 'id = ?', array($id));
-
+			// get 1 item
 			$item = $db->getRecord('SELECT *
 									FROM hooks_queue
-									WHERE id = ?',
-									array($id));
+									WHERE status = ?
+									LIMIT 1',
+									array('queued'));
 
-			// unserialize data
-			$item['callback'] = unserialize($item['callback']);
-			$item['data'] = unserialize($item['data']);
-
-			// check if the item is callable
-			if(!is_callable($item['callback']))
+			// any item?
+			if(!empty($item))
 			{
-				// in debug mode we want to know if there are errors
-				if(SPOON_DEBUG) throw new BackendException('Invalid callback.');
+				// set item as busy
+				$db->update('hooks_queue', array('status' => 'busy'), 'id = ?', array($item['id']));
 
-				// set to error state
-				$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
+				// unserialize data
+				$item['callback'] = unserialize($item['callback']);
+				$item['data'] = unserialize($item['data']);
 
-				// stop
-				exit;
-			}
+				// check if the item is callable
+				if(!is_callable($item['callback']))
+				{
+					// in debug mode we want to know if there are errors
+					if(SPOON_DEBUG) throw new BackendException('Invalid callback.');
 
-			try
-			{
-				// call the callback
-				$return = call_user_func($item['callback'], $item['data']);
+					// set to error state
+					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
+				}
 
-				// failed?
-				if($return === false)
+				try
+				{
+					// call the callback
+					$return = call_user_func($item['callback'], $item['data']);
+
+					// failed?
+					if($return === false)
+					{
+						// set to error state
+						$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
+					}
+				}
+				catch(Exception $e)
 				{
 					// set to error state
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
-
-					// stop
-					exit;
 				}
+
+				// everything went fine so delete the item
+				$db->delete('hooks_queue', 'id = ?', $item['id']);
 			}
-			catch(Exception $e)
+
+			// stop it
+			else
 			{
-				// in debug mode we want to see the errors
-				if(SPOON_DEBUG) throw $e;
+				// remove the file
+				SpoonFile::delete(BACKEND_CACHE_PATH .'/hooks/pid');
 
-				// set to error state
-				$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
-
-				// stop
+				// stop the script
 				exit;
 			}
-
-			// everything went fine so delete the item
-			$db->delete('hooks_queue', 'id = ?', $item['id']);
 		}
 	}
 }
