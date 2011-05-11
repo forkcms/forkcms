@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendContentBlocksModel
@@ -135,6 +136,31 @@ class BackendContentBlocksModel
 															WHERE i.id = ? AND i.revision_id = ?
 															LIMIT 1',
 															array((int) $id, (int) $revisionId));
+	}
+
+
+	/**
+	 * Get templates.
+	 *
+	 * @return	array
+	 */
+	public static function getTemplates()
+	{
+		// fetch templates available in core
+		$templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
+
+		// fetch current active theme
+		$theme = BackendModel::getModuleSetting('core', 'theme', 'core');
+
+		// fetch theme templates if a theme is selected
+		if($theme != 'core') $templates = array_merge($templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets'));
+
+		// no duplicates (core templates will be overridden by theme templates) and sort alphabetically
+		$templates = array_unique($templates);
+		sort($templates);
+
+		// possible templates
+		return $templates;
 	}
 
 

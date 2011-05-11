@@ -841,7 +841,11 @@ class BackendLocaleModel
 		if(substr_count($path, '/modules/') > 0)
 		{
 			// get last chunk
-			$moduleName = substr($path, strrpos($path, '/') + 1);
+			$start = strpos($path, '/modules') + 9;
+			$end = strpos($path, '/', $start + 1);
+
+			if($end === false) $moduleName = substr($path, $start);
+			else $moduleName = substr($path, $start, ($end - $start));
 
 			// don't go any deeper
 			if(!in_array($moduleName, $activeModules)) return $tree;

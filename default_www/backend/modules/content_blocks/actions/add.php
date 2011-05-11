@@ -55,18 +55,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 	 */
 	private function getTemplates()
 	{
-		// fetch templates available in core
-		$this->templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
-
-		// fetch current active theme
-		$theme = BackendModel::getModuleSetting('core', 'theme', 'core');
-
-		// fetch theme templates if a theme is selected
-		if($theme != 'core') $this->templates = array_merge($this->templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets'));
-
-		// no duplicates (core templates will be overridden by theme templates) and sort alphabetically
-		$this->templates = array_unique($this->templates);
-		sort($this->templates);
+		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 
