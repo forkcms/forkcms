@@ -376,7 +376,7 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($matches[0] as $key => $match)
 			{
 				// remove faulty newlines
-				$tempContent = preg_replace('|/r/iU', '', $matches[1][$key]);
+				$tempContent = preg_replace('/\r/iU', '', $matches[1][$key]);
 
 				// removes real newlines
 				$tempContent = preg_replace('/\n/iU', ' ', $tempContent);
