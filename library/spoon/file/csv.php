@@ -191,7 +191,7 @@ class SpoonFileCSV
 	 * @param	string[optional] $delimiter		The field delimiter of the CSV.
 	 * @param	string[optional] $enclosure		The enclosure character of the CSV.
 	 */
-	public static function fileToArray($path, array $columns = array(), array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
+	public static function fileToArray($path, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// reset variables
 		$path = (string) $path;
