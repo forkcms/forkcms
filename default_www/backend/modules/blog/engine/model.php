@@ -133,6 +133,9 @@ class BackendBlogModel
 		// delete meta
 		if(!empty($metaIds)) $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
 
+		// delete tags
+		foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'blog');
+
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 	}
