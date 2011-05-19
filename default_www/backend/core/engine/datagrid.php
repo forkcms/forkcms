@@ -367,8 +367,9 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @param	string $column						The name for the column that will hold the checkboxes.
 	 * @param	string $value						The value for the checkbox.
 	 * @param	array[optional] $excludedValues		The values that should be excluded.
+	 * @param	array[optional] $checkedValues		The values that should be checked.
 	 */
-	public function setMassActionCheckboxes($column, $value, array $excludedValues = null)
+	public function setMassActionCheckboxes($column, $value, array $excludedValues = null, array $checkedValues = null)
 	{
 		// build label and value
 		$label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>';
@@ -398,6 +399,26 @@ class BackendDataGrid extends SpoonDataGrid
 
 			// assign the stack to the datagrid template
 			$this->tpl->assign('excludedCheckboxesData', $excludedData);
+		}
+
+		// checked IDs found
+		if(!empty($checkedValues))
+		{
+			// fetch the datagrid attributes
+			$attributes = $this->getAttributes();
+
+			// set if needed
+			if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_'. time()));
+
+			// fetch the datagrid attributes
+			$attributes = $this->getAttributes();
+
+			// build array
+			$checkedData['id'] = $attributes['id'];
+			$checkedData['JSON'] = json_encode($checkedValues);
+
+			// assign the stack to the datagrid template
+			$this->tpl->assign('checkedCheckboxesData', $checkedData);
 		}
 	}
 
