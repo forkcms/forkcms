@@ -31,7 +31,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if($this->id !== null && BackendLocaleModel::exists($this->id))
+		if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod())
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -55,7 +55,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			$this->display();
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our URL
+		// no item found or the user is not god , throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
@@ -103,6 +103,8 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 
 		// parse filter
 		$this->tpl->assign($this->filter);
+		$this->tpl->assign('filterQuery', $this->filterQuery);
+
 
 		// assign id, name
 		$this->tpl->assign('name', $this->record['name']);

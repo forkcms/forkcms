@@ -387,12 +387,8 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 			// valid form
 			if($this->frm->isCorrect())
 			{
-				// fields for the email template
-				$fields = array();
-
 				// item
 				$data['form_id'] = $this->item['id'];
-				$data['ip'] = SpoonHTTP::getIp();
 				$data['session_id'] = SpoonSession::getSessionId();
 				$data['sent_on'] = FrontendModel::getUTCDate();
 				$data['data'] = serialize(array('server' => $_SERVER));
@@ -434,7 +430,6 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 				{
 					// build variables
 					$variables['sentOn'] = time();
-					$variables['IP'] = $data['ip'];
 					$variables['name'] = $this->item['name'];
 					$variables['fields'] = $emailFields;
 

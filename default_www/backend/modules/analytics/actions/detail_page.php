@@ -164,9 +164,6 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
 			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
-			// percentages relative to total
-			$pageviewsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? '0' : number_format(($results['pageviews'] / $resultsTotal['pageviews']) * 100, 2);
-
 			// parse data
 			$this->tpl->assign('pageviews', $results['pageviews']);
 			$this->tpl->assign('visits', $results['visits']);

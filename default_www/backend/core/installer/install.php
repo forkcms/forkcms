@@ -22,11 +22,19 @@ class ModuleInstaller
 
 
 	/**
-	 * The active languages
+	 * The frontend language(s)
 	 *
 	 * @var array
 	 */
 	private $languages = array();
+
+
+	/**
+	 * The backend language(s)
+	 *
+	 * @var array
+	 */
+	private $interfaceLanguages = array();
 
 
 	/**
@@ -42,15 +50,17 @@ class ModuleInstaller
 	 *
 	 * @return	void
 	 * @param	SpoonDatabase $db			The database-connection.
-	 * @param	array $languages			The selected languages.
+	 * @param	array $languages			The selected frontend languages.
+	 * @param	array $interfaceLanguages	The selected backend languages.
 	 * @param	bool[optional] $example		Should example data be installed.
 	 * @param	array[optional] $variables	The passed variables.
 	 */
-	public function __construct(SpoonDatabase $db, array $languages, $example = false, array $variables = array())
+	public function __construct(SpoonDatabase $db, array $languages, array $interfaceLanguages, $example = false, array $variables = array())
 	{
 		// set DB
 		$this->db = $db;
 		$this->languages = $languages;
+		$this->interfaceLanguages = $interfaceLanguages;
 		$this->example = (bool) $example;
 		$this->variables = $variables;
 
@@ -136,6 +146,17 @@ class ModuleInstaller
 
 
 	/**
+	 * Get the selected cms interface languages
+	 *
+	 * @return	void
+	 */
+	protected function getInterfaceLanguages()
+	{
+		return $this->interfaceLanguages;
+	}
+
+
+	/**
 	 * Get the selected languages
 	 *
 	 * @return	void
@@ -206,7 +227,7 @@ class ModuleInstaller
 				// possible values
 				$possibleApplications = array('frontend', 'backend');
 				$possibleModules = $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
-				$possibleLanguages = $this->getLanguages();
+				$possibleLanguages = array('frontend' => $this->getLanguages(), 'backend' => $this->getInterfaceLanguages());
 				$possibleTypes = array(
 					'act' => 'action',
 					'err' => 'error',
@@ -216,6 +237,10 @@ class ModuleInstaller
 
 				// current locale items (used to check for conflicts)
 				$currentLocale = $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+
+
+				// @todo: waarom geen xpath?
+
 
 				// applications
 				foreach($xml as $application => $modules)
@@ -248,7 +273,7 @@ class ModuleInstaller
 							{
 								// attributes
 								$attributes = $translation->attributes();
-								$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
+								$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages[$application], '');
 
 								// language does not exist
 								if($language == '') continue;
@@ -372,51 +397,6 @@ class ModuleInstaller
 
 
 	/**
-	 * Inserts a new locale item
-	 *
-	 * @deprecated	Deprecated since version 2.1.0. Will be removed in the next version.
-	 * @return	void
-	 * @param	string $language		The language.
-	 * @param	string $application		The application, for now possible values are: backend, frontend.
-	 * @param	string $module			The module to insert the locale for.
-	 * @param	string $type			The type of locale, possible values are: act, err, lbl, msg.
-	 * @param	string $name			The name of the locale.
-	 * @param	string $value			The value.
-	 */
-	protected function insertLocale($language, $application, $module, $type, $name, $value)
-	{
-		// redefine
-		$language = (string) $language;
-		$application = SpoonFilter::getValue($application, array('frontend', 'backend'), '');
-		$module = (string) $module;
-		$type = SpoonFilter::getValue($type, array('act', 'err', 'lbl', 'msg'), '');
-		$name = (string) $name;
-		$value = (string) $value;
-
-		// validate
-		if($application == '') throw new Exception('Invalid application. Possible values are: backend, frontend.');
-		if($type == '') throw new Exception('Invalid type. Possible values are: act, err, lbl, msg.');
-
-		// check if the label already exists
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(i.id)
-											FROM locale AS i
-											WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?',
-											array($language, $application, $module, $type, $name)))
-		{
-			// insert
-			$this->db->insert('locale', array('user_id' => $this->getDefaultUserID(),
-												'language' => $language,
-												'application' => $application,
-												'module' => $module,
-												'type' => $type,
-												'name' => $name,
-												'value' => $value,
-												'edited_on' => gmdate('Y-m-d H:i:s')));
-		}
-	}
-
-
-	/**
 	 * Insert a meta item
 	 *
 	 * @return	int
@@ -462,13 +442,16 @@ class ModuleInstaller
 		$revision = (array) $revision;
 		$meta = (array) $meta;
 
+		// deactive previous revisions
+		if(isset($revision['id']) && isset($revision['language'])) $this->getDB()->update('pages', array('status' => 'archive'), 'id = ? AND language = ?', array($revision['id'], $revision['language']));
+
 		// build revision
 		if(!isset($revision['language'])) throw new SpoonException('language is required for installing pages');
 		if(!isset($revision['title'])) throw new SpoonException('title is required for installing pages');
 		if(!isset($revision['id'])) $revision['id'] = (int) $this->getDB()->getVar('SELECT MAX(id) + 1 FROM pages WHERE language = ?', array($revision['language']));
 		if(!$revision['id']) $revision['id'] = 1;
 		if(!isset($revision['user_id'])) $revision['user_id'] = $this->getDefaultUserID();
-		if(!isset($revision['template_id'])) $revision['template_id'] = 1;
+		if(!isset($revision['template_id'])) $revision['template_id'] = $this->getDB()->getVar('SELECT id FROM pages_templates WHERE theme = ? ORDER BY path = ? DESC, id ASC', array($this->getSetting('core', 'theme'), 'core/layout/templates/default.tpl'));
 		if(!isset($revision['type'])) $revision['type'] = 'page';
 		if(!isset($revision['parent_id'])) $revision['parent_id'] = ($revision['type'] == 'page' ? 1 : 0);
 		if(!isset($revision['navigation_title'])) $revision['navigation_title'] = $revision['title'];
@@ -510,7 +493,7 @@ class ModuleInstaller
 		$revision['revision_id'] = $this->getDB()->insert('pages', $revision);
 
 		// get number of blocks to insert
-		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE active = ?', array('Y'));
+		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE theme = ? AND active = ?', array($this->getSetting('core', 'theme'), 'Y'));
 
 		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
 		$blocks = array();
@@ -712,7 +695,8 @@ class CoreInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// validate variables
-		if($this->getVariable('default_language') === null) throw new SpoonException('Default language is not provided.');
+		if($this->getVariable('default_language') === null) throw new SpoonException('Default frontend language is not provided.');
+		if($this->getVariable('default_interface_language') === null) throw new SpoonException('Default backend language is not provided.');
 		if($this->getVariable('site_domain') === null) throw new SpoonException('Site domain is not provided.');
 		if($this->getVariable('spoon_debug_email') === null) throw new SpoonException('Spoon debug email is not provided.');
 		if($this->getVariable('api_email') === null) throw new SpoonException('API email is not provided.');
@@ -762,8 +746,8 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'active_languages', $this->getLanguages(), true);
 		$this->setSetting('core', 'redirect_languages', $this->getLanguages(), true);
 		$this->setSetting('core', 'default_language', $this->getVariable('default_language'), true);
-		$this->setSetting('core', 'interface_languages', array('nl', 'en'), true);
-		$this->setSetting('core', 'default_interface_language', 'en', true);
+		$this->setSetting('core', 'interface_languages', $this->getInterfaceLanguages(), true);
+		$this->setSetting('core', 'default_interface_language', $this->getVariable('default_interface_language'), true);
 
 		// other settings
 		$this->setSetting('core', 'theme');

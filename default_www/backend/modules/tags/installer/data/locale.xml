@@ -60,6 +60,10 @@
         <translation language="nl"><![CDATA[Er waren geen tags geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No tags were selected.]]></translation>
       </item>
+      <item type="error" name="TagAlreadyExists">
+        <translation language="nl"><![CDATA[Deze tag bestaat al.]]></translation>
+        <translation language="en"><![CDATA[This tag already exists.]]></translation>
+      </item>
     </tags>
   </backend>
 </locale>

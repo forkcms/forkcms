@@ -146,8 +146,6 @@ class BackendForm extends SpoonForm
 		// @later	get prefered mask & first day
 		$mask = 'd/m/Y';
 		$firstday = 1;
-		$startDate = null;
-		$endDate = null;
 
 		// build attributes
 		$attributes['data-mask'] = str_replace(array('d', 'm', 'Y', 'j', 'n'), array('dd', 'mm', 'yy', 'd', 'm'), $mask);
@@ -249,8 +247,8 @@ class BackendForm extends SpoonForm
 		$HTML = (bool) $HTML;
 
 		// we add JS because we need TinyMCE
-		$this->header->addJavascript('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJavascript('tiny_mce/tiny_mce_config.js', 'core', true);
+		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
+		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
 
 		// create and return a textarea for TinyMCE
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);

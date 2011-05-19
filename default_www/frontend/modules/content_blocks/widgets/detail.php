@@ -8,6 +8,7 @@
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
@@ -33,8 +34,26 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 		// load data
 		$this->loadData();
 
+		// load template
+		$this->loadTemplate();
+
 		// parse
-		return $this->parse();
+		$this->parse();
+
+		// check if the given template exists
+		try
+		{
+			$template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/' . $this->item['template']);
+		}
+
+		// template does not exist; assume default.tpl
+		catch(Exception $e)
+		{
+			$template = FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/default.tpl';
+		}
+
+		// display the widget
+		return $this->tpl->getContent($template);
 	}
 
 
@@ -51,13 +70,30 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 
 
 	/**
+	 * Load the template
+	 *
+	 * @return	void
+	 * @param	string[optional] $path		The path for the template to use.
+	 */
+	protected function loadTemplate($path = null)
+	{
+		// redefine (and trick codesniffer)
+		$path = ($path !== null) ? (string) $path : null;
+
+		// overwrite the template with an empty one
+		$this->tpl = new FrontendTemplate(false);
+	}
+
+
+	/**
 	 * Parse into template
 	 *
 	 * @return	void
 	 */
 	private function parse()
 	{
-		return (!empty($this->item['text'])) ? $this->item['text'] : '';
+		// assign data
+		$this->tpl->assign('widgetContentBlocks', $this->item);
 	}
 }
 

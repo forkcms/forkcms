@@ -226,7 +226,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 				$item['groups'] = isset($_POST['groups']) ? $_POST['groups'] : array();
 
 				// loop the fields
-				foreach($this->customFields as $key => $field)
+				foreach($this->customFields as $field)
 				{
 					// shorten the field
 					$txtField = $field['formElements']['txtField'];

@@ -51,7 +51,7 @@ class InstallerStep2 extends InstallerStep
 	public static function checkRequirements(array &$variables = null)
 	{
 		// define step
-		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5', '6'))) ? (int) $_GET['step'] : 1;
+		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5', '6', '7'))) ? (int) $_GET['step'] : 1;
 
 		// define constants
 		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants($step);
@@ -293,9 +293,6 @@ class InstallerStep2 extends InstallerStep
 	 */
 	private static function guessLibraryPath($directory, array &$library = null)
 	{
-		// init var
-		$location = '';
-
 		// loop directories
 		foreach((array) glob($directory . '/*') as $filename)
 		{

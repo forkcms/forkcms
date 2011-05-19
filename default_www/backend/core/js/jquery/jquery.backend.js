@@ -121,6 +121,139 @@
 
 
 /**
+ * Password generator
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+(function($)
+{
+	$.fn.passwordGenerator = function(options) 
+	{
+		// define defaults
+		var defaults =
+		{
+			length: 6,
+			uppercase: true,
+			lowercase: true,
+			numbers: true, 
+			specialchars: false,
+			generateLabel: 'Generate'
+		};
+
+		// extend options
+		var options = $.extend(defaults, options);
+		
+		return this.each(function() 
+		{
+			var id = $(this).attr('id');
+			
+			// append the button
+			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
+			
+			$('.generatePasswordButton').live('click', generatePassword);
+			
+			function generatePassword(evt) 
+			{
+				// prevent default
+				evt.preventDefault();
+			
+				var currentElement = $('#' + $(this).data('id'));
+				
+				// check if it isn't a text-element
+				if(currentElement.attr('type') != 'text')
+				{
+					// clone the current element
+					var newElement = currentElement.clone();
+					
+					// alter the type
+					newElement.attr('type', 'text');
+					
+					// insert the new element
+					newElement.insertBefore(currentElement);
+					
+					// remove the current one
+					currentElement.remove();
+				}
+				
+				// already a text element
+				else newElement = currentElement;
+
+				// generate the password
+				var pass = generatePass(options.length, options.uppercase, options.lowercase, options.numbers, options.specialchars); 
+
+				// set the generate password, and trigger the keyup event
+				newElement.val(pass).keyup();
+			}
+			
+			function generatePass(length, uppercase, lowercase, numbers, specialchars) {
+				// the vowels
+				var v = new Array('a', 'e','u', 'ae', 'ea');
+				
+				// the consonants
+				var c = new Array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
+				
+				// the number-mapping
+				var n = new Array();
+				n['a'] = 4; n['b'] = 8; n['e'] = 3; n['g'] = 6; n['l'] = 1; n['o'] = 0; n['s'] = 5; n['t'] = 7; n['z'] = 2;
+				
+				// the special chars-mapping
+				var s = new Array();
+				s['a'] = '@'; s['i'] = '!'; s['c'] = 'ç'; s['s'] = '$'; s['g'] = '&'; s['h'] = '#'; s['l'] = '|'; s['x'] = '%';
+				
+				// init vars
+				var pass = '';
+				var tmp = '';
+				
+				// add a random consonant and vowel as longs as the length isn't reached
+				for (i = 0; i < length; i++) tmp += c[Math.floor(Math.random() * c.length)]+v[Math.floor(Math.random() * v.length)];
+				
+				// convert some chars to uppercase
+				for (i = 0; i < length; i++) 
+				{
+					if(Math.floor(Math.random()*2)) pass += tmp.substr(i,1).toUpperCase();
+					else pass += tmp.substr(i,1);
+				}	
+				
+				// numbers allowed?
+				if(numbers) 
+				{
+					tmp = '';
+					for(var i in pass) {
+						// replace with a number if the random number can be devided by 3
+						if(typeof n[pass[i].toLowerCase()] != 'undefined' && (Math.floor(Math.random()*4)%3)==1) tmp += n[pass[i].toLowerCase()];
+						else tmp += pass[i];
+					}
+					pass = tmp;
+				}
+				
+				// special chars allowed
+				if(specialchars) 
+				{
+					tmp = '';
+					for(var i in pass) 
+					{
+						// replace with a special number if the random number can be devided by 2
+						if(typeof s[pass[i].toLowerCase()] != 'undefined' && (Math.floor(Math.random()*4)%2)) tmp += s[pass[i].toLowerCase()];
+						else tmp += pass[i];
+					}
+					pass = tmp;
+				}
+				
+				// if uppercase isn't allowed we convert all to lowercase
+				if(!uppercase) pass = pass.toLowerCase();
+				
+				// if lowercase isn't allowed we convert all to uppercase
+				if(!lowercase) pass = pass.toUpperCase();
+				
+				// return
+				return pass;
+			}			
+		});
+	};
+})(jQuery);
+
+
+/**
  * Inline editing
  *
  * @author	Dave Lens <dave@netlash.com>
@@ -150,27 +283,32 @@
 		// loop all elements
 		return this.each(function()
 		{
+			// get current object
+			var $this = $(this);
+
 			// add wrapper and tooltip
-			$(this).html('<span>' + $(this).html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
+			$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
 
 			// grab element
-			var element = $($(this).find('span')[0]);
+			var span = $this.find('span');
+			var element = span.eq(0);
+			var tooltip = span.eq(1);
 
 			// bind events
 			element.bind('click focus', createElement);
 
-			$('.inlineEditTooltip').bind('click', createElement);
+			tooltip.bind('click', createElement);
 
-			$(this).hover(
+			$this.hover(
 				function()
 				{
-					$(this).addClass('inlineEditHover');
-					$($(this).find('span')[1]).show();
+					$this.addClass('inlineEditHover');
+					tooltip.show();
 				},
 				function()
 				{
-					$(this).removeClass('inlineEditHover');
-					$($(this).find('span')[1]).hide();
+					$this.removeClass('inlineEditHover');
+					tooltip.hide();
 				}
 			);
 
@@ -186,10 +324,13 @@
 				// grab current value
 				options.current.value = element.html();
 
+				// get current object
+				var $this = $(this);
+
 				// grab extra params
-				if($(this).parent().data('id') != '')
+				if($this.parent().data('id') != '')
 				{
-					options.current.extraParams = eval('(' + $(this).parent().data('id') + ')');
+					options.current.extraParams = eval('(' + $this.parent().data('id') + ')');
 				}
 
 				// add class

@@ -14,6 +14,14 @@
 class BackendContentBlocksAdd extends BackendBaseActionAdd
 {
 	/**
+	 * The available templates
+	 *
+	 * @var	array
+	 */
+	private $templates = array();
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -22,6 +30,9 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		// fetch available templates
+		$this->getTemplates();
 
 		// load the form
 		$this->loadForm();
@@ -34,6 +45,17 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 
 		// display the page
 		$this->display();
+	}
+
+
+	/**
+	 * Get available templates
+	 *
+	 * @return	void
+	 */
+	private function getTemplates()
+	{
+		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 
@@ -51,6 +73,9 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 		$this->frm->addText('title');
 		$this->frm->addEditor('text');
 		$this->frm->addCheckbox('hidden', true);
+
+		// if we have multiple templates, add a dropdown to select them
+		if(count($this->templates) > 1) $this->frm->addDropdown('template', array_combine($this->templates, $this->templates));
 	}
 
 
@@ -76,6 +101,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 				// build item
 				$item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
 				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['template'] = count($this->templates) > 1 ? $this->frm->getField('template')->getValue() : $this->templates[0];
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();

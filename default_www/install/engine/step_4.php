@@ -44,7 +44,7 @@ class InstallerStep4 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return (isset($_SESSION['db_hostname']) && isset($_SESSION['db_database']) && isset($_SESSION['db_username']) && isset($_SESSION['db_password']));
+		return (isset($_SESSION['default_language']) && isset($_SESSION['default_interface_language']) && isset($_SESSION['multiple_languages']) && isset($_SESSION['languages']) && isset($_SESSION['interface_languages']));
 	}
 
 
@@ -78,21 +78,6 @@ class InstallerStep4 extends InstallerStep
 
 		// add multi checkbox
 		$this->frm->addMultiCheckbox('modules', $modules, array_unique(array_merge($this->modules['required'], $checkedModules)));
-
-		// multiple or single language
-		$this->frm->addRadiobutton('languageType',	array(array('value' => 'multiple', 'label' => 'Multiple languages', 'variables' => array('multiple' => true)),
-													array('value' => 'single', 'label' => 'Just one language', 'variables' => array('single' => true))), (SpoonSession::exists('multiple_languages') && SpoonSession::get('multiple_languages')) ? 'multiple' : 'single');
-
-		// multiple languages
-		$this->frm->addMultiCheckbox('languages', array(array('value' => 'en', 'label' => 'English'),
-														array('value' => 'fr', 'label' => 'French'),
-														array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'nl'));
-
-		// single languages
-		$this->frm->addDropdown('language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
-
-		// single languages
-		$this->frm->addDropdown('default_language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
 
 		// example data
 		$this->frm->addCheckbox('example_data', (SpoonSession::exists('example_data') ? SpoonSession::get('example_data') : true));
@@ -132,23 +117,6 @@ class InstallerStep4 extends InstallerStep
 		// form submitted
 		if($this->frm->isSubmitted())
 		{
-			// multiple languages
-			if($this->frm->getField('languageType')->getValue() == 'multiple')
-			{
-				// list of languages
-				$languages = $this->frm->getField('languages')->getValue();
-
-				// default language
-				if(!in_array($this->frm->getField('default_language')->getValue(), $languages)) $this->frm->getField('default_language')->setError('Your default language needs to be in the list of languages you chose.');
-			}
-
-			// single language
-			else
-			{
-				// list of languages
-				$languages = (array) array($this->frm->getField('default_language')->getValue());
-			}
-
 			// all valid
 			if($this->frm->isCorrect())
 			{
@@ -161,14 +129,7 @@ class InstallerStep4 extends InstallerStep
 				// set modules
 				SpoonSession::set('modules', $modules);
 
-				// get default language
-				if($this->frm->getField('languageType')->getValue() == 'multiple') $defaultLanguage = $this->frm->getField('default_language')->getValue();
-				else $defaultLanguage = $this->frm->getField('default_language')->getValue();
-
-				// set languages
-				SpoonSession::set('default_language', $defaultLanguage);
-				SpoonSession::set('multiple_languages', ($this->frm->getField('languageType')->getValue() == 'multiple') ? true : false);
-				SpoonSession::set('languages', ($this->frm->getField('languageType')->getValue() == 'multiple') ? $this->frm->getField('languages')->getValue() : array($this->frm->getField('default_language')->getValue()));
+				// example data
 				SpoonSession::set('example_data', $this->frm->getField('example_data')->getChecked());
 
 				// redirect

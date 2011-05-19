@@ -15,6 +15,14 @@
 class BackendContentBlocksEdit extends BackendBaseActionEdit
 {
 	/**
+	 * The available templates
+	 *
+	 * @var	array
+	 */
+	private $templates = array();
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -77,6 +85,12 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			// show warning
 			$this->tpl->assign('usingRevision', true);
 		}
+
+		// check if selected template is still available
+		if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
+
+		// get templates
+		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 
@@ -94,6 +108,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
+
+		// if we have multiple templates, add a dropdown to select them
+		if(count($this->templates) > 1) $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record['template']);
 	}
 
 
@@ -170,12 +187,14 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				// build item
 				$item['id'] = $this->id;
 				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['template'] = count($this->templates) > 1 ? $this->frm->getField('template')->getValue() : $this->templates[0];
 				$item['language'] = $this->record['language'];
 				$item['extra_id'] = $this->record['extra_id'];
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getChecked() ? 'N' : 'Y';
 				$item['status'] = 'active';
+				$item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
 				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// insert the item

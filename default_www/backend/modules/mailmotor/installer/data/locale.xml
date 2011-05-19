@@ -304,6 +304,10 @@
         <translation language="en"><![CDATA[Complete step 3 first]]></translation>
         <translation language="nl"><![CDATA[Vervolledig eerst stap 3]]></translation>
       </item>
+      <item type="error" name="ContainsInvalidEmail">
+        <translation language="en"><![CDATA[This field contains an invalid emailaddress.]]></translation>
+        <translation language="nl"><![CDATA[Dit veld bevat een ongeldig emailadres.]]></translation>
+      </item>
       <item type="error" name="CSVIsRequired">
         <translation language="en"><![CDATA[Choose a .csv file to upload.]]></translation>
         <translation language="nl"><![CDATA[Kies een .csv bestand om te uploaden.]]></translation>
@@ -909,7 +913,7 @@
         <translation language="nl"><![CDATA[Een standaard-doelgroep voor een taal is de groep waar bezoekers in terechtkomen wanneer ze zich inschrijven via de inschrijfformulieren op je Fork-website. Editeer een groep en kies een taal om hem in te stellen als standaard-groep voor die taal.]]></translation>
       </item>
       <item type="message" name="NoDefaultsSetTitle">
-        <translation language="en"><![CDATA[Not all default groups were set.]]></translation>
+        <translation language="en"><![CDATA[Not all default groups are set yet.]]></translation>
         <translation language="nl"><![CDATA[niet alle standaard-doelgroepen zijn ingesteld.]]></translation>
       </item>
       <item type="message" name="NoResultsForFilter">

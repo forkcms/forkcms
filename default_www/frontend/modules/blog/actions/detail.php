@@ -198,7 +198,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->breadcrumb->addElement($this->record['title']);
 
 		// set meta
-		$this->header->setPageTitle($this->record['title']);
+		$this->header->setPageTitle($this->record['meta_title'], ($this->record['meta_title_overwrite'] == 'Y'));
 		$this->header->setMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
 		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
 
@@ -268,7 +268,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// validate optional fields
 			if($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://')
 			{
-				$var = $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
+				$this->frm->getField('website')->isURL(FL::err('InvalidURL'));
 			}
 
 			// no errors?

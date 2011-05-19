@@ -6,6 +6,7 @@
 
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
+		<a href="{$var|geturl:'export_data'}&id={$id}&amp;start_date={$start_date}&amp;end_date={$end_date}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
 	</div>
 </div>
 
@@ -34,19 +35,11 @@
 								</p>
 							</div>
 						</td>
-						<td>
-							<div class="options">
-								<p>
-									<label for="ip">{$lblIP|ucfirst}</label>
-									{$txtIp} {$txtIpError}
-								</p>
-							</div>
-						</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="99">
+						<td colspan="2">
 							<div class="options">
 								<div class="buttonHolder">
 									<input id="search" class="inputButton button mainButton" type="submit" name="search" value="{$lblUpdateFilter|ucfirst}" />

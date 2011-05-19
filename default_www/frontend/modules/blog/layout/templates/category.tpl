@@ -47,6 +47,6 @@
 				</div>
 			</article>
 		{/iteration:items}
-	</div>
+	</section>
 	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
 {/option:items}

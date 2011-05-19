@@ -30,7 +30,7 @@ class BackendLocaleDelete extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendLocaleModel::exists($this->id))
+		if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod())
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

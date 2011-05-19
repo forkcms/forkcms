@@ -12,14 +12,6 @@
 class BackendMailmotorEdit extends BackendBaseActionEdit
 {
 	/**
-	 * The full HTML content of the e-mail
-	 *
-	 * @var	string
-	 */
-	private $fullHTMLContent;
-
-
-	/**
 	 * Bool that represents if the plain-text box should be shown
 	 *
 	 * @var	bool
@@ -58,7 +50,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			parent::execute();
 
 			// load jquery tiny
-			$this->header->addJavascript('tiny_mce/jquery.tinymce.js', 'core');
+			$this->header->addJS('tiny_mce/jquery.tinymce.js', 'core');
 
 			// get all data for the item we want to edit
 			$this->getData();
@@ -565,9 +557,6 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			$txtSendOnDate->isValid(BL::err('DateIsInvalid'));
 			$txtSendOnTime->isValid(BL::err('TimeIsInvalid'));
 
-			// set form values
-			$values = $this->frm->getValues();
-
 			// no errors?
 			if($this->frm->isCorrect())
 			{
@@ -589,7 +578,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				$plainText = (!empty($this->record['content_plain'])) ? $this->record['content_plain'] : null;
 
 				// send mail
-				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true);
+				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true, $plainText);
 
 				// send the preview
 				$this->redirect($url . '&amp;report=preview-sent&amp;var=' . $txtEmail->getValue());

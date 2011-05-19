@@ -23,10 +23,10 @@ class MailmotorInstall extends ModuleInstaller
 		$this->installSettings();
 
 		// install the DB
-		$this->installDatabase();
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// install locale
-		$this->installLocale();
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// install the mailmotor module
 		$this->installModule();
@@ -37,31 +37,7 @@ class MailmotorInstall extends ModuleInstaller
 
 
 	/**
-	 * Install the database
-	 *
-	 * @return	void
-	 */
-	private function installDatabase()
-	{
-		// load install.sql and labels.sql
-		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
-	}
-
-
-	/**
-	 * Install locale
-	 *
-	 * @return	void
-	 */
-	private function installLocale()
-	{
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
-	}
-
-
-	/**
-	 * Iinstall the module and it's actions
+	 * Install the module and it's actions
 	 *
 	 * @return	void
 	 */
@@ -127,28 +103,28 @@ class MailmotorInstall extends ModuleInstaller
 		$unsubscribeFormID = $this->insertExtra('mailmotor', 'block', 'UnsubscribeForm', 'unsubscribe', null, 'N', 3002);
 		$widgetSubscribeFormID = $this->insertExtra('mailmotor', 'widget', 'SubscribeForm', 'subscribe', null, 'N', 3003);
 
-		// get the default templates
-		$templateID = (int) $this->getDB()->getVar('SELECT id FROM pages_templates WHERE label = ?', array('Triton - Default'));
+		// fetch template ids
+		$templateIds = $this->getDB()->getPairs('SELECT label, id FROM pages_templates WHERE theme = ?', array('triton'));
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
 			$parentID = (int) $this->insertPage(array('title' => 'Sent mailings',
-														'template_id' => $templateID,
+														'template_id' => $templateIds['Default'],
 														'type' => 'root',
 														'language' => $language),
 												null,
 												array('extra_id' => $sentMailingsID));
 
 			$this->insertPage(array('parent_id' => $parentID,
-									'template_id' => $templateID,
+									'template_id' => $templateIds['Default'],
 									'title' => 'Subscribe',
 									'language' => $language),
 								null,
 								array('extra_id' => $subscribeFormID));
 
 			$this->insertPage(array('parent_id' => $parentID,
-									'template_id' => $templateID,
+									'template_id' => $templateIds['Default'],
 									'title' => 'Unsubscribe',
 									'language' => $language),
 								null,

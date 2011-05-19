@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendMailer
@@ -30,8 +31,9 @@ class BackendMailer
 	 * @param	int[optional] $sendOn			When should the email be send, only used when $queue is true.
 	 * @param	bool[optional] $isRawHTML		If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
 	 * @param	string[optional] $plainText		The plain text version.
+	 * @param	array[optional] $attachments	Attachments to include.
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null, array $attachments = null)
 	{
 		// redefine
 		$subject = (string) strip_tags($subject);
@@ -110,6 +112,20 @@ class BackendMailer
 			$email['html'] = str_replace($search, $replace, $email['html']);
 		}
 
+		// attachments added
+		if(!empty($attachments))
+		{
+			// add attachments one by one
+			foreach($attachments as $attachment)
+			{
+				// only add existing files
+				if(SpoonFile::exists($attachment)) $email['attachments'][] = $attachment;
+			}
+
+			// serialize :)
+			if(!empty($email['attachments'])) $email['attachments'] = serialize($email['attachments']);
+		}
+
 		// set send date
 		if($queue)
 		{
@@ -135,7 +151,7 @@ class BackendMailer
 		// return the ids
 		return (array) BackendModel::getDB()->getColumn('SELECT e.id
 															FROM emails AS e
-															WHERE e.send_on < ?',
+															WHERE e.send_on < ? OR e.send_on IS NULL',
 															array(BackendModel::getUTCDate()));
 	}
 
@@ -233,6 +249,16 @@ class BackendMailer
 		$email->setHTMLContent($emailRecord['html']);
 		$email->setCharset(SPOON_CHARSET);
 		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
+
+		// attachments added
+		if(isset($emailRecord['attachments']) && $emailRecord['attachments'] !== null)
+		{
+			// unserialize
+			$attachments = (array) unserialize($emailRecord['attachments']);
+
+			// add attachments to email
+			foreach($attachments as $attachment) $email->addAttachment($attachment);
+		}
 
 		// send the email
 		if($email->send())

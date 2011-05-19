@@ -609,7 +609,12 @@ class BackendModel
 		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
 
 		// create array
-		return array_combine($themes, $themes);
+		$themes = array_combine($themes, $themes);
+
+		// add core templates
+		$themes = array_merge(array('core' => BL::lbl('NoTheme')), $themes);
+
+		return $themes;
 	}
 
 
@@ -687,10 +692,10 @@ class BackendModel
 		$navigation = self::getNavigation($language);
 
 		// loop types
-		foreach($navigation as $type => $level)
+		foreach($navigation as $level)
 		{
 			// loop level
-			foreach($level as $parentId => $pages)
+			foreach($level as $pages)
 			{
 				// loop pages
 				foreach($pages as $pageId => $properties)

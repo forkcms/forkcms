@@ -13,6 +13,22 @@
 class BackendPagesAddTemplate extends BackendBaseActionAdd
 {
 	/**
+	 * All available themes
+	 *
+	 * @var	array
+	 */
+	private $availableThemes;
+
+
+	/**
+	 * The theme we are adding a template for.
+	 *
+	 * @var string
+	 */
+	private $selectedTheme;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -21,6 +37,9 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		// load data
+		$this->loadData();
 
 		// load the form
 		$this->loadForm();
@@ -37,6 +56,24 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 
 
 	/**
+	 * Load necessary data.
+	 *
+	 * @return	void.
+	 */
+	private function loadData()
+	{
+		// get data
+		$this->selectedTheme = $this->getParameter('theme', 'string');
+
+		// build available themes
+		$this->availableThemes = BackendModel::getThemes();
+
+		// determine selected theme, based upon submitted form or default theme
+		$this->selectedTheme = SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('core', 'theme', 'core'));
+	}
+
+
+	/**
 	 * Load the form
 	 *
 	 * @return	void
@@ -47,9 +84,10 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// init var
-		$maximumBlocks = 20;
+		$maximumBlocks = 30;
 
 		// create elements
+		$this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme);
 		$this->frm->addText('label');
 		$this->frm->addText('file');
 		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), 3);
@@ -152,6 +190,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build array
+				$item['theme'] = $this->frm->getField('theme')->getValue();
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
@@ -173,10 +212,10 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$item['id'] = BackendPagesModel::insertTemplate($item);
 
 				// set default template
-				if($this->frm->getField('default')->getChecked()) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('templates') . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

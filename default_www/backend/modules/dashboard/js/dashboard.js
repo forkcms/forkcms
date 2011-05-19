@@ -53,10 +53,15 @@ jsBackend.dashboard =
 		// show removed items
 		$('.sortableWidget.isRemoved').show();
 		
+		$('.sortableWidget').each(function() {
+			if($(this).find('.box').length == 0) $(this).remove();
+		})
+
 		// make them sortable
 		$('.column').sortable(
 			{
 				connectWith: '.column', 
+				forceHelperSize: true,
 				forcePlaceholderSize: true,
 				placeholder: 'dragAndDropPlaceholder',
 				stop: function(event, ui) 
@@ -78,7 +83,7 @@ jsBackend.dashboard =
 					{
 						// set placeholders height
 						$('.dragAndDropPlaceholder').css('height', $(this).height().toString() + 'px');
-						
+
 						// store
 						jsBackend.dashboard.itemOnTheMove = $(this);
 					}
@@ -107,7 +112,7 @@ jsBackend.dashboard =
 		// unbind
 		$('.column').sortable('destroy');
 		$('.sortableWidget').draggable('destroy');
-		$('.sortableWidget').unbind('hover');
+		$('.sortableWidget').unbind('mouseenter mouseleave');
 		
 		// build new array
 		var newSequence = new Array();

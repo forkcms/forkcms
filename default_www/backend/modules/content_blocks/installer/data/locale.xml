@@ -6,6 +6,10 @@
         <translation language="nl"><![CDATA[inhoudsblok toevoegen]]></translation>
         <translation language="en"><![CDATA[add content block]]></translation>
       </item>
+      <item type="message" name="NoTemplate">
+        <translation language="nl"><![CDATA[Geen template]]></translation>
+        <translation language="en"><![CDATA[No template]]></translation>
+      </item>
       <item type="message" name="EditContentBlock">
         <translation language="nl"><![CDATA[bewerk inhoudsblok "%1$s"]]></translation>
         <translation language="en"><![CDATA[edit content block "%1$s"]]></translation>

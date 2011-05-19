@@ -50,7 +50,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		parent::execute();
 
 		// add highchart javascript
-		$this->header->addJavascript('highcharts.js');
+		$this->header->addJS('highcharts.js');
 
 		// get the data
 		$this->getData();

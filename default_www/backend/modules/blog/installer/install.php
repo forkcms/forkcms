@@ -98,10 +98,10 @@ class BlogInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// fetch current categoryId
-			$currentCategoryId = $this->getCategory($language);
+			$this->defaultCategoryId = $this->getCategory($language);
 
 			// no category exists
-			if($currentCategoryId == 0)
+			if($this->defaultCategoryId == 0)
 			{
 				// add category
 				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
@@ -135,19 +135,6 @@ class BlogInstall extends ModuleInstaller
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
-	}
-
-
-	/**
-	 * Does the category with this id exist within this language.
-	 *
-	 * @return	bool
-	 * @param	string $language	The langauge to use.
-	 * @param	int $id				The id to exclude.
-	 */
-	private function existsCategory($language, $id)
-	{
-		return (bool) $this->getDB()->getVar('SELECT COUNT(id) FROM blog_categories WHERE id = ? AND language = ?', array((int) $id, (string) $language));
 	}
 
 

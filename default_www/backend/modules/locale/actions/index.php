@@ -120,9 +120,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 						// add copy button
 						$datagrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '&amp;id=[translation_id]' . $this->filterQuery, array('class' => 'button icon iconCopy linkButton'));
-
-						// add delete button
-						$datagrid->addColumnAction('delete', null, BL::lbl('Delete'), BackendModel::createURLForAction('delete', null, null) . '&amp;id=[translation_id]' . $this->filterQuery, null, array('class' => 'askConfirmation button icon iconDelete linkButton', 'data-message-id' => 'confirmDelete'));
 					}
 				}
 			}

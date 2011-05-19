@@ -113,7 +113,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$navigation = self::getNavigation();
 
 		// loop depths
-		foreach($navigation as $depth => $parent)
+		foreach($navigation as $parent)
 		{
 			// no availabe, skip this element
 			if(!isset($parent[$pageId])) continue;
@@ -386,10 +386,10 @@ class FrontendNavigation extends FrontendBaseObject
 		$navigation = self::getNavigation();
 
 		// loop levels
-		foreach($navigation as $type => $level)
+		foreach($navigation as $level)
 		{
 			// loop parents
-			foreach($level as $parentId => $children)
+			foreach($level as $children)
 			{
 				// loop children
 				foreach($children as $itemId => $item)
@@ -465,10 +465,10 @@ class FrontendNavigation extends FrontendBaseObject
 		$navigation = self::getNavigation($language);
 
 		// loop types
-		foreach($navigation as $type => $level)
+		foreach($navigation as $level)
 		{
 			// loop level
-			foreach($level as $parentId => $pages)
+			foreach($level as $pages)
 			{
 				// loop pages
 				foreach($pages as $pageId => $properties)
@@ -533,13 +533,13 @@ class FrontendNavigation extends FrontendBaseObject
 		$navigation = self::getNavigation($language);
 
 		// loop types
-		foreach($navigation as $type => $level)
+		foreach($navigation as $level)
 		{
 			// loop level
-			foreach($level as $parentId => $pages)
+			foreach($level as $pages)
 			{
 				// loop pages
-				foreach($pages as $pageId => $properties)
+				foreach($pages as $properties)
 				{
 					// only process pages with extra_blocks
 					if(isset($properties['extra_blocks']))

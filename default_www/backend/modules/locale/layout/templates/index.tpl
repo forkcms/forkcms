@@ -141,15 +141,6 @@
 	{option:noItems}
 		<p>{$msgNoItemsFilter|sprintf:{$addURL}}</p>
 	{/option:noItems}
-
-
-	{option:isGod}
-		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-			<p>
-				{$msgConfirmDelete}
-			</p>
-		</div>
-	{/option:isGod}
 </div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

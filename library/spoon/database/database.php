@@ -169,7 +169,7 @@ class SpoonDatabase
 		if(!$this->handler) $this->connect();
 
 		// build query
-		$query = 'DELETE FROM ' . (string) $table;
+		$query = 'DELETE FROM ' . $this->quoteName((string) $table);
 
 		// add where class
 		$query = ($where != '') ? $query . ' WHERE ' . (string) $where : $query;
@@ -223,7 +223,7 @@ class SpoonDatabase
 	 */
 	public function drop($tables)
 	{
-		$this->execute('DROP TABLE ' . implode(', ', (array) $tables));
+		$this->execute('DROP TABLE ' . implode(', ', array_map(array($this, 'quoteName'), (array) $tables)));
 	}
 
 
@@ -364,7 +364,7 @@ class SpoonDatabase
 	public function getEnumValues($table, $field)
 	{
 		// redefine vars
-		$table = (string) $table;
+		$table = $this->quoteName((string) $table);
 		$field = (string) $field;
 
 		// build query
@@ -732,7 +732,7 @@ class SpoonDatabase
 		if(count($values) == 0) throw new SpoonDatabaseException('You need to provide values for an insert query.', 0, $this->password);
 
 		// init vars
-		$query = 'INSERT INTO ' . (string) $table . ' (';
+		$query = 'INSERT INTO ' . $this->quoteName((string) $table) . ' (';
 		$keys = array_keys($values);
 		$actualValues = array_values($values);
 		$parameters = array();
@@ -748,7 +748,7 @@ class SpoonDatabase
 			$subKeys = array_keys($actualValues[0]);
 
 			// prefix with table name
-			array_walk($subKeys, create_function('&$key', '$key = "' . $table . '.$key";'));
+			array_walk($subKeys, create_function('&$key', '$key = "' . $this->quoteName($table) . '.$key";'));
 
 			// build query
 			$query .= implode(', ', $subKeys) . ') VALUES ';
@@ -796,7 +796,7 @@ class SpoonDatabase
 			$numFields = count($actualValues);
 
 			// prefix with table name
-			array_walk($keys, create_function('&$key', '$key = "' . $table . '.$key";'));
+			array_walk($keys, create_function('&$key', '$key = "' . $this->quoteName($table) . '.$key";'));
 
 			// build query
 			$query .= implode(', ', $keys) . ') VALUES (';
@@ -861,7 +861,20 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// build & execute query
-		return $this->getRecords('OPTIMIZE TABLE ' . implode(', ', $tables));
+		return $this->getRecords('OPTIMIZE TABLE ' . implode(', ', array_map(array($this, 'quoteName'), $tables)));
+	}
+
+
+	/**
+	 * Quote the name of a table or column.
+	 * Note: for now this will only put backticks around the name (mysql).
+	 *
+	 * @return	string			The quoted name.
+	 * @param	string $name	The name of a column or table to quote.
+	 */
+	protected function quoteName($name)
+	{
+		return '`' . $name . '`';
 	}
 
 
@@ -983,7 +996,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// loop & truncate
-		foreach($tables as $table) $this->execute('TRUNCATE TABLE ' . $table);
+		foreach($tables as $table) $this->execute('TRUNCATE TABLE ' . $this->quoteName($table));
 	}
 
 
@@ -1002,7 +1015,7 @@ class SpoonDatabase
 		if(!$this->handler) $this->connect();
 
 		// init vars
-		$table = (string) $table;
+		$table = $this->quoteName((string) $table);
 		$parameters = (array) $parameters;
 		$namedParameters = false;
 
@@ -1055,9 +1068,6 @@ class SpoonDatabase
 
 		// add where clause
 		if($where != '') $query .= ' WHERE ' . (string) $where;
-
-		// finalize query
-		$query .= '';
 
 		// update parameters
 		$parameters = array_merge($aTmpParameters, $parameters);

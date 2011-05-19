@@ -172,6 +172,10 @@
         <translation language="nl"><![CDATA[verstuurd op]]></translation>
         <translation language="en"><![CDATA[sent on]]></translation>
       </item>
+      <item type="label" name="SessionId">
+        <translation language="nl"><![CDATA[sessie id]]></translation>
+        <translation language="en"><![CDATA[session id]]></translation>
+      </item>
       <item type="label" name="SubmitButton">
         <translation language="nl"><![CDATA[verzendknop]]></translation>
         <translation language="en"><![CDATA[send button]]></translation>
@@ -291,11 +295,6 @@
         <translation language="nl"><![CDATA[content]]></translation>
         <translation language="en"><![CDATA[content]]></translation>
         <translation language="fr"><![CDATA[content]]></translation>
-      </item>
-      <item type="label" name="IP">
-        <translation language="nl"><![CDATA[IP]]></translation>
-        <translation language="en"><![CDATA[IP]]></translation>
-        <translation language="fr"><![CDATA[IP]]></translation>
       </item>
       <item type="label" name="SenderInformation">
         <translation language="nl"><![CDATA[afzender informatie]]></translation>

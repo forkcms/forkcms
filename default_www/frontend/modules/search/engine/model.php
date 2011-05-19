@@ -36,7 +36,7 @@ class FrontendSearchModel
 			if(strpos($terms[$i], ' ') !== false)
 			{
 				// part of words encountered
-				$terms[$i] .= ' <(' . str_replace(' ', '* ', trim($term)) . '*)';
+				$terms[$i] .= ' <(' . implode(' ', $split) . ' ' . trim($last) . '*)';
 			}
 		}
 

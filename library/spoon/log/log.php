@@ -99,6 +99,24 @@ class SpoonLog
 
 
 	/**
+	 * Archive the current log file, but only if it exists.
+	 *
+	 * @return	SpoonLog
+	 */
+	public function rotate()
+	{
+		// file
+		$file = $this->getPath() . '/' . $this->type . '.log';
+
+		// rename file
+		if(SpoonFile::exists($file)) SpoonDirectory::move($file, $file . '.' . date('Ymdhis'));
+
+		// self
+		return $this;
+	}
+
+
+	/**
 	 * Set the log maximum filesize before rotation occurs.
 	 *
 	 * @return	SpoonLog
@@ -166,7 +184,7 @@ class SpoonLog
 		if(SpoonFile::exists($file) && (int) @filesize($file) >= ($this->maxLogSize * 1024 * 1024))
 		{
 			// start new log file
-			SpoonDirectory::move($file, $file . '.' . date('Ymdhis'));
+			$this->rotate();
 		}
 
 		// write content

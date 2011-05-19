@@ -9,6 +9,7 @@
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendTagsModel
@@ -56,6 +57,21 @@ class BackendTagsModel
 														FROM tags AS i
 														WHERE i.id = ?',
 														array((int) $id));
+	}
+
+
+	/**
+	 * Check if a tag exists
+	 *
+	 * @return	bool
+	 * @param	string $tag		The tag to check for existence.
+	 */
+	public static function existsTag($tag)
+	{
+		return (BackendModel::getDB()->getVar('SELECT i.tag
+		                                             FROM tags AS i
+		                                             WHERE i.tag = ?',
+		                                             array((string) $tag)) != '');
 	}
 
 
@@ -133,7 +149,7 @@ class BackendTagsModel
 	public static function getURL($URL, $id = null)
 	{
 		// redefine
-		$URL = SpoonFilter::urlise((string) $URL);
+		$URL = SpoonFilter::urlise(SpoonFilter::htmlentitiesDecode((string) $URL, null, ENT_QUOTES));
 		$language = BL::getWorkingLanguage();
 
 		// get db

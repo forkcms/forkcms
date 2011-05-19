@@ -153,7 +153,7 @@ class BackendUsersModel
 													array($id));
 
 		// loop settings and unserialize them
-		foreach($user['settings'] as $key => &$value) $value = unserialize($value);
+		foreach($user['settings'] as &$value) $value = unserialize($value);
 
 		// return
 		return $user;
@@ -269,7 +269,7 @@ class BackendUsersModel
 															array('nickname', 'Y', 'N'), 'id');
 
 		// loop users & unserialize
-		foreach($users as $id => &$value) $value = unserialize($value);
+		foreach($users as &$value) $value = unserialize($value);
 
 		// return
 		return $users;

@@ -35,10 +35,10 @@ jsBackend =
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
 		jsBackend.effects.init();
+		jsBackend.tabs.init();
 		jsBackend.forms.init();
 		jsBackend.layout.init();
 		jsBackend.messages.init();
-		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
 		jsBackend.tinyMCE.init();
@@ -46,6 +46,9 @@ jsBackend =
 		// IE fixes
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
+
+		// do not move, should be run as the last item.
+		jsBackend.forms.unloadWarning();
 	},
 
 
@@ -188,6 +191,7 @@ jsBackend.controls =
 		jsBackend.controls.bindFullWidthSwitch();
 		jsBackend.controls.bindMassCheckbox();
 		jsBackend.controls.bindMassAction();
+		jsBackend.controls.bindPasswordGenerator();
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
 		jsBackend.controls.bindTableCheckbox();
@@ -251,11 +255,14 @@ jsBackend.controls =
 					{
 						'{$lblOK|ucfirst}': function()
 						{
-								// close dialog
-								$(this).dialog('close');
+							// unbind the beforeunload event
+							$(window).unbind('beforeunload');
 
-								// goto link
-								window.location = url;
+							// close dialog
+							$(this).dialog('close');
+
+							// goto link
+							window.location = url;
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
@@ -521,6 +528,23 @@ jsBackend.controls =
 	},
 
 
+	bindPasswordGenerator: function() 
+	{
+		if($('.passwordGenerator').length > 0)
+		{
+			$('.passwordGenerator').passwordGenerator(
+				{
+					length: 8,
+					numbers: false,
+					lowercase: true,
+					uppercase: true,
+					generateLabel: '{$lblGenerate|ucfirst}'
+				}
+			);
+		}
+	},
+	
+	
 	// bind the password strength meter to the correct inputfield(s)
 	bindPasswordStrengthMeter: function()
 	{
@@ -542,7 +566,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).bind('keyup', function()
+				$('#'+ id).live('keyup', function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -756,6 +780,8 @@ jsBackend.effects =
  */
 jsBackend.forms =
 {
+	stringified: '',
+		
 	// init, something like a constructor
 	init: function()
 	{
@@ -942,7 +968,6 @@ jsBackend.forms =
 		}
 	},
 
-
 	// replaces buttons with <a><span>'s (to allow more flexible styling) and handle the form submission for them
 	submitWithLinks: function()
 	{
@@ -995,8 +1020,81 @@ jsBackend.forms =
 		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
 	},
+	
+	
+	// show a warning when people are leaving the 
+	unloadWarning: function() 
+	{
+		// only execute when there is a form on the page
+		if($('form:visible').length > 0)
+		{
+			// loop fields
+			$('form input, form select, form textarea').each(function() 
+			{
+				var $this = $(this);
+				
+				if(!$this.hasClass('dontCheckBeforeUnload'))
+				{
+					// store initial value
+					$(this).data('initial-value', $(this).val()).addClass('checkBeforeUnload');
+				}
+			});
 
+			// bind before unload, this will ask the user if he really wants to leave the page
+			$(window).bind('beforeunload', jsBackend.forms.unloadWarningCheck);
+			
+			// if a form is submitted we don't want to ask the user if he wants to leave, we know for sure 
+			$('form').bind('submit', function(evt) 
+			{
+				if(!evt.isDefaultPrevented()) $(window).unbind('beforeunload');
+			});
+		}
+	},
+	
+	// check if any element has been changed
+	unloadWarningCheck: function() 
+	{
+		// initialize var
+		var changed = false;
+		
+		// save editors to the textarea-fields
+		if(typeof tinyMCE != 'undefined') tinyMCE.triggerSave();
+		
+		// loop fields
+		$('.checkBeforeUnload').each(function() 
+		{
+			// initialize
+			var $this = $(this);
+			
+			// compare values
+			if($this.data('initial-value') != $this.val())
+			{
+				// reset var
+				changed = true;
+				
+				// stop looking
+				return false;
+			}
+		});
+		
+		// not changed?
+		if(!changed) {
+			// prevent default
+			/* 
+			 * I know this line triggers errors, if you remove it the unload won't work anymore.
+			 * Probably you'll fix this by passing the evt as an argument of the function, well this will break the functionality also.. 
+			 * Uhu, a "wtf" is in place.. 
+			 */
+			evt.preventDefault();
+			
+			// unbind the event
+			$(window).unbind('beforeunload');
+		}
 
+		// return if needed
+		return (changed) ? '{$msgValuesAreChanged}' : null;
+	},
+	
 	// end
 	eoo: true
 }
@@ -1179,6 +1277,7 @@ jsBackend.messages =
 /**
  * Apply tabs
  *
+ * @author	Jan Moessen <jan@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tabs =
@@ -1214,7 +1313,7 @@ jsBackend.tabs =
 				var scrolled = $(window).scrollTop();
 
 				// set location hash
-				window.location.hash = this.getAttribute('href');
+				window.location.hash = '#'+ this.getAttribute('href').split('#')[1];
 
 				// reset scroll height
 				$(window).scrollTop(scrolled);
@@ -1273,54 +1372,31 @@ jsBackend.tinyMCE =
 	// format text (after retrieving it from the editor)
 	afterSave: function(editor, object)
 	{
-		// replace target _self
-		object.content = object.content.replace(new RegExp('<a(.*)target="_self"(.*)>', 'gim'), '<a$1$2>');
+		// create dom tree
+		var $tmp = $('<div />').html(object.content);
 
-		// get items with the target _blank
-		var matches = object.content.match(new RegExp('<a(.*)target="_blank"(.*)>', 'gim'));
+		// remove target="_self"
+		$tmp.find('a[target=_self]').removeAttr('target');
 
-		// loop the matches
-		for(var i in matches)
-		{
-			// already classes defined?
-			if(matches[i].indexOf('class="') > 0)
-			{
-				// remove target and add the class
-				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1$2>')
-										.replace('class="', 'class="targetBlank ');
-			}
-			else
-			{
-				// remove target and set class
-				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1class="targetBlank"$2>')
-			}
+		// replace target="_blank" with class="targetBlank"
+		$tmp.find('a[target=_blank]').addClass('targetBlank').removeAttr('target');
 
-			// replace
-			object.content = object.content.replace(matches[i], newLink.replace(/ {2,}/g, ' '));
-		}
+		// resave
+		object.content = utils.string.xhtml($tmp.html());
 	},
 
 
 	// format text (before placing it in the editor)
 	beforeLoad: function(editor, object)
 	{
-		// get items that have the targetBlank class
-		var matches = object.content.match(new RegExp('<a(.*)class="(.*)?targetBlank(.*)>', 'gim'));
+		// create dom tree
+		var $tmp = $('<div />').html(object.content);
 
-		// loop the matches
-		for(var i in matches)
-		{
-			// build new link by removing the class and adding the target again
-			var newLink = matches[i].replace('targetBlank', '')
-									.replace('<a', '<a target="_blank"')
-									.replace('class=""', '')
-									.replace(/ {2,}/g, ' ')
-									.replace('=" ', '="')
-									.replace(' " ', '" ');
+		// replace target="_blank" with class="targetBlank"
+		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
 
-			// replace in the content
-			object.content = object.content.replace(matches[i], newLink);
-		}
+		// resave
+		object.content = utils.string.xhtml($tmp.html());
 	},
 
 

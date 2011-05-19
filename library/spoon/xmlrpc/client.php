@@ -430,15 +430,16 @@ class SpoonXMLRPCClient
 		$options[CURLOPT_TIMEOUT] = $this->getTimeout();
 		$options[CURLOPT_RETURNTRANSFER] = true;
 		$options[CURLOPT_CUSTOMREQUEST] = 'POST';
+		$options[CURLOPT_SSL_VERIFYPEER] = false;
 
 		// get headers
 		$headers = $this->getCustomHeaders();
 
-		// set correct content)type
+		// set correct content type
 		$headers[] = 'Content-type: text/xml';
 
 		// set content-length
-		$headers[] = 'Content-length: ' . mb_strlen($xml) . "\r\n";
+		$headers[] = 'Content-length: ' . strlen($xml) . "\r\n";
 
 		// add XML
 		$headers[] = $xml;
