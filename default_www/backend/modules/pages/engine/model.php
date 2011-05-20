@@ -326,7 +326,8 @@ class BackendPagesModel
 		$first = true;
 		$cachedTitles = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.navigation_title
 																FROM pages AS i
-																WHERE i.id IN(' . implode(',', array_keys($keys)) . ')');
+																WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
+																AND i.language = ?', $language);
 
 		// loop all keys
 		foreach($keys as $pageID => $URL)
