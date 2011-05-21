@@ -11,6 +11,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		P. Juchtmans <per@dubgeiser.net>
  * @since		0.1.1
  */
 
@@ -27,6 +28,35 @@
  */
 class SpoonFormImage extends SpoonFormFile
 {
+	/**
+	 * @var array Will hold properties of the image (from getimagesize())
+	 * @see http://www.php.net/getimagesize
+	 */
+	private $properties;
+
+
+	/**
+	 * Constructor.
+	 *
+	 * @return	void
+	 * @param	string $name					The name.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @see		SpoonFormFile::__construct()
+	 */
+	public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
+	{
+		// call the parent
+		parent::__construct($name, $class, $classError);
+
+		// is the form submitted and the file is uploaded?
+		if($this->isSubmitted() && is_uploaded_file($this->getTempFileName())) $this->properties = @getimagesize($this->getTempFileName());
+
+		// fallback
+		else $this->properties = false;
+	}
+
+
 	/**
 	 * Creates a thumbnail from this field
 	 *
@@ -57,14 +87,11 @@ class SpoonFormImage extends SpoonFormFile
 	{
 		if($this->isSubmitted())
 		{
-			// get image properties
-			$properties = @getimagesize($_FILES[$this->attributes['name']]['tmp_name']);
-
 			// validate properties
-			if($properties !== false)
+			if($this->properties !== false)
 			{
 				// get extension
-				$extension = image_type_to_extension($properties[2], false);
+				$extension = image_type_to_extension($this->properties[2], false);
 
 				// cleanup
 				if($extension == 'jpeg') $extension = 'jpg';
@@ -72,13 +99,40 @@ class SpoonFormImage extends SpoonFormFile
 				// return
 				return ((bool) $lowercase) ? strtolower($extension) : $extension;
 			}
-
-			// no image
-			return '';
 		}
 
 		// fallback
 		return '';
+	}
+
+
+	/**
+	 * Return the height of the image.
+	 *
+	 * @return	int
+	 */
+	public function getHeight()
+	{
+		// not submitted
+		if(!$this->isSubmitted()) throw new SpoonException('Cannot get height if image is not uploaded.');
+
+		// return
+		if($this->properties) return $this->properties[1];
+	}
+
+
+	/**
+	 * Return the width of the image.
+	 *
+	 * @return	int
+	 */
+	public function getWidth()
+	{
+		// not submitted
+		if(!$this->isSubmitted()) throw new SpoonException('Cannot get width if image is not uploaded.');
+
+		// return
+		if($this->properties) return $this->properties[0];
 	}
 
 
@@ -99,15 +153,12 @@ class SpoonFormImage extends SpoonFormFile
 		// form submitted
 		if($this->isSubmitted())
 		{
-			// get image properties
-			$properties = @getimagesize($_FILES[$this->attributes['name']]['tmp_name']);
-
 			// valid properties
-			if($properties !== false)
+			if($this->properties !== false)
 			{
 				// redefine
-				$actualWidth = (int) $properties[0];
-				$actualHeight = (int) $properties[1];
+				$actualWidth = (int) $this->properties[0];
+				$actualHeight = (int) $this->properties[1];
 
 				// validate width and height
 				if($actualWidth >= $width && $actualHeight >= $height) $hasError = false;
@@ -122,6 +173,28 @@ class SpoonFormImage extends SpoonFormFile
 		}
 
 		return true;
+	}
+
+
+	/**
+	 * Is this image square?
+	 *
+	 * @return	bool
+	 * @param	string[optional] $error		The errormessage to set.
+	 */
+	public function isSquare($error = null)
+	{
+		// no properties?
+		if(!$this->properties) return false;
+
+		// is it a square image?
+		$isSquare = (is_int($this->getHeight()) && is_int($this->getWidth()) && $this->getHeight() == $this->getWidth());
+
+		// set error if needed
+		if(!$isSquare && $error) $this->setError($error);
+
+		// return
+		return $isSquare;
 	}
 }
 
