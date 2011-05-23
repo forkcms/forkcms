@@ -315,6 +315,7 @@ class InstallerStep7 extends InstallerStep
 				{
 					$variables['email'] = SpoonSession::get('email');
 					$variables['password'] = SpoonSession::get('password');
+					$variables['default_interface_language'] = SpoonSession::get('default_interface_language');
 				}
 
 				// load file
