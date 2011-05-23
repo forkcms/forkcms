@@ -13,6 +13,8 @@ Bugfixes:
 * Bugfix: click on tab wasn't working decent in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/154. 
 * Bugfix: page-revisions were interfering with blog-revisions, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/151.
 * Bugfix: theme-css is now loaded again into TinyMCE.
+* Bugfix: only remove language from querystring when we have multiple languages.
+* Bugfix: backend interface language was not set according to our installer selection.
 
 Improvements:
 * Core: when using datefields with till, from, range set, it will be validated according the type.
