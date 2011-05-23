@@ -31,6 +31,7 @@ Improvements:
 * Core: locales analyse-tool will check only the active modules from now on.
 * Core: added a jQuery-plugin to implement a passwordGenerator.
 * Core: added the possibility to add attachments to the frontend/backend mailers.
+* Core: when calling *Form::getTemplateExample() an example that reflect the correct markup for that application will be returned.
 * Blog: creating categories can now be done without leaving the add/edit screen.
 * Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
 * Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.

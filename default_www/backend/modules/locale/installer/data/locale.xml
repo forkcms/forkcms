@@ -42,6 +42,10 @@
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
         <translation language="en"><![CDATA[The translation]]></translation>
       </item>
+      <item type="message" name="HelpDateField">
+        <translation language="nl"><![CDATA[vb. 20/06/2011]]></translation>
+        <translation language="en"><![CDATA[eg. 20/06/2011]]></translation>
+      </item>
       <item type="message" name="HelpEditName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
         <translation language="en"><![CDATA[The English reference for the translation]]></translation>
@@ -50,9 +54,17 @@
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
         <translation language="en"><![CDATA[The translation]]></translation>
       </item>
+      <item type="message" name="HelpImageField">
+        <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten.]]></translation>
+        <translation language="en"><![CDATA[Only jp(e)g, gif or png-files are allowed.]]></translation>
+      </item>
       <item type="message" name="HelpName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
         <translation language="en"><![CDATA[The english reference for this translation]]></translation>
+      </item>
+      <item type="message" name="HelpTimeField">
+        <translation language="nl"><![CDATA[vb. 14:35]]></translation>
+        <translation language="en"><![CDATA[eg. 14:35]]></translation>
       </item>
       <item type="message" name="HelpValue">
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
@@ -1908,6 +1920,18 @@
       <item type="message" name="FR">
         <translation language="nl"><![CDATA[Frans]]></translation>
         <translation language="en"><![CDATA[French]]></translation>
+      </item>
+      <item type="message" name="HelpDateField">
+        <translation language="nl"><![CDATA[vb. 20/06/2011]]></translation>
+        <translation language="en"><![CDATA[eg. 20/06/2011]]></translation>
+      </item>
+      <item type="message" name="HelpImageField">
+        <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten.]]></translation>
+        <translation language="en"><![CDATA[Only jp(e)g, gif or png-files are allowed.]]></translation>
+      </item>
+      <item type="message" name="HelpTimeField">
+        <translation language="nl"><![CDATA[vb. 14:35]]></translation>
+        <translation language="en"><![CDATA[eg. 14:35]]></translation>
       </item>
       <item type="message" name="MoreResults">
         <translation language="nl"><![CDATA[Vind meer resultaten…]]></translation>
