@@ -89,7 +89,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 		$this->tpl->assign('name', $this->record['name']);
 
 		// can the category be deleted?
-		if(!BackendFaqModel::isCategoryAllowedToBeDeleted($this->id)) $this->tpl->assign('showDelete', true);
+		if(BackendFaqModel::isCategoryAllowedToBeDeleted($this->id)) $this->tpl->assign('showDelete', true);
 	}
 
 
