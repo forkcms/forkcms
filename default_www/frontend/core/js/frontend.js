@@ -72,6 +72,86 @@ jsFrontend.forms =
 	init: function() 
 	{
 		jsFrontend.forms.placeholders();
+		jsFrontend.forms.datefields();
+	},
+
+
+	datefields: function()
+	{
+		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
+		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
+		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
+		
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker({
+			dayNames: dayNames,
+			dayNamesMin: dayNamesMin,
+			dayNamesShort: dayNamesShort,
+			hideIfNoPrevNext: true,
+			monthNames: monthNames,
+			monthNamesShort: monthNamesShort,
+			nextText: '{$lblNext}',
+			prevText: '{$lblPrevious}',
+			showAnim: 'slideDown'
+		});
+		
+		// the default, nothing special
+		$('.inputDatefieldNormal').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', { 
+				dateFormat: data.mask, firstDay: data.firstday 
+			});
+		});
+
+		// datefields that have a certain startdate
+		$('.inputDatefieldFrom').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', {
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
+			});
+		});
+
+		// datefields that have a certain enddate
+		$('.inputDatefieldTill').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
+			});
+		});
+
+		// datefields that have a certain range
+		$('.inputDatefieldRange').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
+			});
+		});
 	},
 
 
