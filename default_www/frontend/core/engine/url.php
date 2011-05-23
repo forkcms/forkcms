@@ -329,7 +329,7 @@ class FrontendURL
 		}
 
 		// remove language from querystring
-		$queryString = trim(substr($queryString, strlen($language)), '/');
+		if(SITE_MULTILANGUAGE) $queryString = trim(substr($queryString, strlen($language)), '/');
 
 		// if it's the homepage AND parameters were given (not allowed!)
 		if($URL == '' && $queryString != '')
