@@ -34,9 +34,6 @@ class BackendFaqAjaxSequence extends BackendBaseAJAXAction
 			// build item
 			$item['id'] = (int) $id;
 
-			// fetch entire record
-			$item = BackendFaqModel::getCategory($id);
-
 			// change sequence
 			$item['sequence'] = $i + 1;
 
