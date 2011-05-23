@@ -16,6 +16,7 @@ Bugfixes:
 * Bugfix: theme-css is now loaded again into TinyMCE.
 * Bugfix: only remove language from querystring when we have multiple languages.
 * Bugfix: backend interface language was not set according to our installer selection.
+* Bugfix: added the correct anchor on the blog commentform, fixes: http://forkcms.lighthouseapp.com/projects/61890/tickets/159.
 
 Improvements:
 
