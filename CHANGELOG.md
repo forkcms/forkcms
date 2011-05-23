@@ -1,6 +1,7 @@
 2.2.0 (xxxx-xx-xx)
 --
 Bugfixes:
+
 * Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
 * Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
 * Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
@@ -15,6 +16,7 @@ Bugfixes:
 * Bugfix: theme-css is now loaded again into TinyMCE.
 
 Improvements:
+
 * Core: when using datefields with till, from, range set, it will be validated according the type.
 * Core: changed theme's folder layout to match codebase folder layout - folder 'layout/' should be included in theme;.
 * Core: changed addJavascript function to addJS (consistency with addCSS + less typing.)
