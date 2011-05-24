@@ -31,7 +31,8 @@
 
 	<div id="tabs" class="tabs">
 		<ul>
-			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+			<li style="float: left;"><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+			<li style="float: left;"><a href="#tabRedirect">{$lblRedirect|ucfirst}</a></li>
 			<!-- Reverse order after content tab [floatRight] -->
 			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
@@ -90,6 +91,31 @@
 				{/iteration:blocks}
 			</div>
 		</div>
+
+		<div id="tabRedirect">
+			<div class="subtleBox">
+				<div class="options">
+					{$rbtRedirectError}
+					<ul class="inputList radiobuttonFieldCombo">
+						{iteration:redirect}
+							<li>
+								<label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
+								{option:redirect.isInternal}
+										{$ddmInternalRedirect} {$ddmInternalRedirectError}
+										<span class="helpTxt">{$msgHelpInternalRedirect}</span>
+								{/option:redirect.isInternal}
+
+								{option:redirect.isExternal}
+										{$txtExternalRedirect} {$txtExternalRedirectError}
+										<span class="helpTxt">{$msgHelpExternalRedirect}</span>
+								{/option:redirect.isExternal}
+							</li>
+						{/iteration:redirect}
+					</ul>
+				</div>
+			</div>
+		</div>
+
 		<div id="tabVersions">
 			<div class="tableHeading">
 				<div class="oneLiner">
@@ -123,6 +149,7 @@
 				<p>{$msgNoRevisions}</p>
 			{/option:!revisions}
 		</div>
+
 		<div id="tabSEO">
 			<div class="subtleBox">
 				<div class="heading">
@@ -221,6 +248,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div id="tabTemplate">
 			<div class="pageTitle">
 				{* Do not change the ID! *}
@@ -292,6 +320,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
@@ -302,6 +331,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div id="tabSettings">
 			<ul class="inputList">
 				{iteration:hidden}
