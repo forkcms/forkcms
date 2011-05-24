@@ -396,6 +396,28 @@ class FrontendURL
 				$this->setParameters(array());
 			}
 		}
+
+		// is this an internal redirect?
+		if(isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] != '')
+		{
+			// get url for item
+			$newPageURL = FrontendNavigation::getURL((int) $pageInfo['redirect_page_id']);
+			$errorURL = FrontendNavigation::getURL(404);
+
+			// not an error?
+			if($newPageURL != $errorURL)
+			{
+				// redirect
+				SpoonHTTP::redirect($newPageURL, $pageInfo['redirect_code']);
+			}
+		}
+
+		// is this an external redirect?
+		if(isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] != '')
+		{
+			// redirect
+			SpoonHTTP::redirect($pageInfo['redirect_url'], $pageInfo['redirect_code']);
+		}
 	}
 
 

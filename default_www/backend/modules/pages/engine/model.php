@@ -194,6 +194,29 @@ class BackendPagesModel
 					}
 				}
 
+				// any data?
+				if(isset($page['data']))
+				{
+					// get data
+					$data = unserialize($page['data']);
+
+					// internal alias?
+					if(isset($data['internal_redirect']['page_id']) && $data['internal_redirect']['page_id'] != '')
+					{
+						$temp['redirect_page_id'] = $data['internal_redirect']['page_id'];
+						$temp['redirect_code'] = $data['internal_redirect']['code'];
+						$treeType = 'redirect';
+					}
+
+					// external alias?
+					if(isset($data['external_redirect']['url']) && $data['external_redirect']['url'] != '')
+					{
+						$temp['redirect_url'] = $data['external_redirect']['url'];
+						$temp['redirect_code'] = $data['external_redirect']['code'];
+						$treeType = 'redirect';
+					}
+				}
+
 				// add type
 				$temp['tree_type'] = $treeType;
 
@@ -1049,7 +1072,7 @@ class BackendPagesModel
 	 *
 	 * @return	int
 	 * @param	int $parentId				The Id of the parent.
-	 * @param	int[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param	string[optional] $language	The language to use, if not provided we will use the working language.
 	 */
 	public static function getMaximumSequence($parentId, $language = null)
 	{
@@ -1062,6 +1085,51 @@ class BackendPagesModel
 													FROM pages AS i
 													WHERE i.language = ? AND i.parent_id = ?',
 													array($language, $parentId));
+	}
+
+
+	/**
+	 * Get the pages for usage in a dropdown menu
+	 *
+	 * @return	array
+	 * @param	string[optional] $language	The language to use, if not provided we will use the working language.
+	 */
+	public static function getPagesForDropdown($language = null)
+	{
+		// redefine
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+
+		// get tree
+		$levels = self::getTree(array(0), null, 1, $language);
+
+		// init var
+		$return = array();
+
+		// loop levels
+		foreach($levels as $level => $pages)
+		{
+			// loop all items on this level
+			foreach($pages as $pageID => $page)
+			{
+				// skip home
+				if($pageID == 1) continue;
+
+				// init var
+				$parentID = (int) $page['parent_id'];
+
+				// get URL for parent
+				$title = (isset($return[$parentID])) ? $return[$parentID] : '';
+
+				// home is special
+				if($pageID == 1) $page['url'] = '';
+
+				// add it
+				$return[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
+			}
+		}
+
+		// return
+		return $return;
 	}
 
 
@@ -1258,7 +1326,7 @@ class BackendPagesModel
 
 		// get data
 		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
-																		i.extra_ids,
+																		i.extra_ids, i.data,
 																		m.url
 																	FROM pages AS i
 																	INNER JOIN meta AS m ON i.meta_id = m.id

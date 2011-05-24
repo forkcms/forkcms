@@ -185,7 +185,9 @@ jsBackend.controls =
 	// init, something like a constructor
 	init: function()
 	{
+		jsBackend.controls.bindCheckboxDropdownCombo();
 		jsBackend.controls.bindCheckboxTextfieldCombo();
+		jsBackend.controls.bindRadioButtonFieldCombo();
 		jsBackend.controls.bindConfirm();
 		jsBackend.controls.bindFakeDropdown();
 		jsBackend.controls.bindFullWidthSwitch();
@@ -197,6 +199,38 @@ jsBackend.controls =
 		jsBackend.controls.bindTableCheckbox();
 		jsBackend.controls.bindTargetBlank();
 		jsBackend.controls.bindToggleDiv();
+	},
+
+
+	// bind a checkbox textfield combo
+	bindCheckboxDropdownCombo: function()
+	{
+		$('.checkboxDropdownCombo').each(function()
+		{
+			// check if needed element exists
+			if($(this).find('input:checkbox').length > 0 && $(this).find('select').length > 0)
+			{
+				var checkbox = $($(this).find('input:checkbox')[0]);
+				var dropdown = $($(this).find('select')[0]);
+
+				checkbox.bind('change', function(evt)
+				{
+					var combo = $(this).parents().filter('.checkboxDropdownCombo');
+					var field = $(combo.find('select')[0]);
+
+					if($(this).is(':checked'))
+					{
+						field.removeClass('disabled').attr('disabled', '');
+						field.focus();
+					}
+
+					else field.addClass('disabled').attr('disabled', 'disabled');
+				});
+
+				if(checkbox.is(':checked')) dropdown.removeClass('disabled').attr('disabled', '');
+				else dropdown.addClass('disabled').attr('disabled', 'disabled');
+			}
+		});
 	},
 
 
@@ -232,6 +266,40 @@ jsBackend.controls =
 	},
 
 
+	// bind a radiobutton field combo
+	bindRadioButtonFieldCombo: function()
+	{
+		$('.radiobuttonFieldCombo').each(function()
+		{
+			// check if needed element exists
+			if($(this).find('input:radio').length > 0 && $(this).find('input, select, textarea').length > 0)
+			{
+				var radiobutton = $(this).find('input:radio');
+
+				radiobutton.bind('change', function(evt)
+				{
+					// redefine
+					$this = $(this);
+					
+					// disable all
+					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').attr('disbaled', 'disabled');
+					
+					// get fields
+					var fields = $this.parents('li').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea')
+
+					// enable
+					fields.removeClass('disabled').attr('disabled', '');
+					
+					// set focus
+					$(fields[0]).focus();
+				});
+				
+				// change?
+				$(radiobutton[0]).change();
+			}
+		});
+	},
+	
 	// bind confirm message
 	bindConfirm: function()
 	{
