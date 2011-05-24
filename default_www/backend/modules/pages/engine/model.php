@@ -352,6 +352,7 @@ class BackendPagesModel
 																WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
 																AND i.language = ?', $language);
 
+
 		// loop all keys
 		foreach($keys as $pageID => $URL)
 		{
@@ -1103,6 +1104,9 @@ class BackendPagesModel
 		$levels = self::getTree(array(0), null, 1, $language);
 
 		// init var
+		$titles = array();
+		$sequences = array();
+		$keys = array();
 		$return = array();
 
 		// loop levels
@@ -1111,21 +1115,39 @@ class BackendPagesModel
 			// loop all items on this level
 			foreach($pages as $pageID => $page)
 			{
-				// skip home
-				if($pageID == 1) continue;
-
 				// init var
 				$parentID = (int) $page['parent_id'];
 
 				// get URL for parent
-				$title = (isset($return[$parentID])) ? $return[$parentID] : '';
-
-				// home is special
-				if($pageID == 1) $page['url'] = '';
+				$URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
 				// add it
-				$return[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
+				$keys[$pageID] = trim($URL . '/' . $page['url'], '/');
+
+				// add to sequences
+				if($page['type'] == 'footer') $sequences['footer'][(string) trim($URL . '/' . $page['url'], '/')] = $pageID;
+				else $sequences['pages'][(string) trim($URL . '/' . $page['url'], '/')] = $pageID;
+
+				// get URL for parent
+				$title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
+				$title = trim($title, ucfirst(BL::lbl('Home')) .' > ');
+
+				// add it
+				$titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
 			}
+		}
+
+		// sort the sequences
+		ksort($sequences['pages']);
+
+		// loop to add the titles in the correct order
+		foreach($sequences['pages'] as $URL => $id)
+		{
+			if(isset($titles[$id])) $return[$id] = $titles[$id];
+		}
+		foreach($sequences['footer'] as $URL => $id)
+		{
+			if(isset($titles[$id])) $return[$id] = $titles[$id];
 		}
 
 		// return
