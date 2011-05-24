@@ -158,7 +158,6 @@ class FrontendModel
 
 			// utf8 compliance & MySQL-timezone
 			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-			$db->setDebug(true);
 
 			// store
 			Spoon::set('database', $db);
