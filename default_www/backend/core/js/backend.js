@@ -185,7 +185,9 @@ jsBackend.controls =
 	// init, something like a constructor
 	init: function()
 	{
+		jsBackend.controls.bindCheckboxDropdownCombo();
 		jsBackend.controls.bindCheckboxTextfieldCombo();
+		jsBackend.controls.bindRadioButtonFieldCombo();
 		jsBackend.controls.bindConfirm();
 		jsBackend.controls.bindFakeDropdown();
 		jsBackend.controls.bindFullWidthSwitch();
@@ -197,6 +199,38 @@ jsBackend.controls =
 		jsBackend.controls.bindTableCheckbox();
 		jsBackend.controls.bindTargetBlank();
 		jsBackend.controls.bindToggleDiv();
+	},
+
+
+	// bind a checkbox textfield combo
+	bindCheckboxDropdownCombo: function()
+	{
+		$('.checkboxDropdownCombo').each(function()
+		{
+			// check if needed element exists
+			if($(this).find('input:checkbox').length > 0 && $(this).find('select').length > 0)
+			{
+				var checkbox = $($(this).find('input:checkbox')[0]);
+				var dropdown = $($(this).find('select')[0]);
+
+				checkbox.bind('change', function(evt)
+				{
+					var combo = $(this).parents().filter('.checkboxDropdownCombo');
+					var field = $(combo.find('select')[0]);
+
+					if($(this).is(':checked'))
+					{
+						field.removeClass('disabled').attr('disabled', '');
+						field.focus();
+					}
+
+					else field.addClass('disabled').attr('disabled', 'disabled');
+				});
+
+				if(checkbox.is(':checked')) dropdown.removeClass('disabled').attr('disabled', '');
+				else dropdown.addClass('disabled').attr('disabled', 'disabled');
+			}
+		});
 	},
 
 
@@ -232,6 +266,40 @@ jsBackend.controls =
 	},
 
 
+	// bind a radiobutton field combo
+	bindRadioButtonFieldCombo: function()
+	{
+		$('.radiobuttonFieldCombo').each(function()
+		{
+			// check if needed element exists
+			if($(this).find('input:radio').length > 0 && $(this).find('input, select, textarea').length > 0)
+			{
+				var radiobutton = $(this).find('input:radio');
+
+				radiobutton.bind('change', function(evt)
+				{
+					// redefine
+					$this = $(this);
+					
+					// disable all
+					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').attr('disbaled', 'disabled');
+					
+					// get fields
+					var fields = $this.parents('li').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea')
+
+					// enable
+					fields.removeClass('disabled').attr('disabled', '');
+					
+					// set focus
+					$(fields[0]).focus();
+				});
+				
+				// change?
+				$(radiobutton[0]).change();
+			}
+		});
+	},
+	
 	// bind confirm message
 	bindConfirm: function()
 	{
@@ -795,109 +863,80 @@ jsBackend.forms =
 
 	datefields: function()
 	{
+		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
+		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
+		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
+		
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker({
+			dayNames: dayNames,
+			dayNamesMin: dayNamesMin,
+			dayNamesShort: dayNamesShort,
+			hideIfNoPrevNext: true,
+			monthNames: monthNames,
+			monthNamesShort: monthNamesShort,
+			nextText: '{$lblNext}',
+			prevText: '{$lblPrevious}',
+			showAnim: 'slideDown'
+		});
+		
 		// the default, nothing special
-		if($('.inputDatefieldNormal').length > 0)
+		$('.inputDatefieldNormal').each(function()
 		{
-			$('.inputDatefieldNormal').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					showAnim: 'slideDown'
-				});
+			// set options
+			$(this).datepicker('option', { 
+				dateFormat: data.mask, firstDay: data.firstday 
 			});
-		}
+		});
 
 		// datefields that have a certain startdate
-		if($('.inputDatefieldFrom').length > 0)
+		$('.inputDatefieldFrom').each(function()
 		{
-			$('.inputDatefieldFrom').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10)),
-					showAnim: 'slideDown'
-				});
+			// set options
+			$(this).datepicker('option', {
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 			});
-		}
+		});
 
 		// datefields that have a certain enddate
-		if($('.inputDatefieldTill').length > 0)
+		$('.inputDatefieldTill').each(function()
 		{
-			$('.inputDatefieldTill').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10)),
-					showAnim: 'slideDown'
-				});
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
 			});
-		}
+		});
 
 		// datefields that have a certain range
-		if($('.inputDatefieldRange').length > 0)
+		$('.inputDatefieldRange').each(function()
 		{
-			$('.inputDatefieldRange').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59),
-					showAnim: 'slideDown'
-				});
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
 			});
-		}
+		});
 	},
 
 

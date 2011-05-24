@@ -194,6 +194,29 @@ class BackendPagesModel
 					}
 				}
 
+				// any data?
+				if(isset($page['data']))
+				{
+					// get data
+					$data = unserialize($page['data']);
+
+					// internal alias?
+					if(isset($data['internal_redirect']['page_id']) && $data['internal_redirect']['page_id'] != '')
+					{
+						$temp['redirect_page_id'] = $data['internal_redirect']['page_id'];
+						$temp['redirect_code'] = $data['internal_redirect']['code'];
+						$treeType = 'redirect';
+					}
+
+					// external alias?
+					if(isset($data['external_redirect']['url']) && $data['external_redirect']['url'] != '')
+					{
+						$temp['redirect_url'] = $data['external_redirect']['url'];
+						$temp['redirect_code'] = $data['external_redirect']['code'];
+						$treeType = 'redirect';
+					}
+				}
+
 				// add type
 				$temp['tree_type'] = $treeType;
 
@@ -326,7 +349,9 @@ class BackendPagesModel
 		$first = true;
 		$cachedTitles = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.navigation_title
 																FROM pages AS i
-																WHERE i.id IN(' . implode(',', array_keys($keys)) . ')');
+																WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
+																AND i.language = ?', $language);
+
 
 		// loop all keys
 		foreach($keys as $pageID => $URL)
@@ -848,6 +873,7 @@ class BackendPagesModel
 			// build name
 			$name = ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
+			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// add human readable name
 			$row['human_name'] = BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type'])) . ': ' . $name;
@@ -902,6 +928,7 @@ class BackendPagesModel
 			// build name
 			$name = ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
+			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// create modulename
 			$moduleName = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
@@ -1046,7 +1073,7 @@ class BackendPagesModel
 	 *
 	 * @return	int
 	 * @param	int $parentId				The Id of the parent.
-	 * @param	int[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param	string[optional] $language	The language to use, if not provided we will use the working language.
 	 */
 	public static function getMaximumSequence($parentId, $language = null)
 	{
@@ -1059,6 +1086,72 @@ class BackendPagesModel
 													FROM pages AS i
 													WHERE i.language = ? AND i.parent_id = ?',
 													array($language, $parentId));
+	}
+
+
+	/**
+	 * Get the pages for usage in a dropdown menu
+	 *
+	 * @return	array
+	 * @param	string[optional] $language	The language to use, if not provided we will use the working language.
+	 */
+	public static function getPagesForDropdown($language = null)
+	{
+		// redefine
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+
+		// get tree
+		$levels = self::getTree(array(0), null, 1, $language);
+
+		// init var
+		$titles = array();
+		$sequences = array();
+		$keys = array();
+		$return = array();
+
+		// loop levels
+		foreach($levels as $level => $pages)
+		{
+			// loop all items on this level
+			foreach($pages as $pageID => $page)
+			{
+				// init var
+				$parentID = (int) $page['parent_id'];
+
+				// get URL for parent
+				$URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+
+				// add it
+				$keys[$pageID] = trim($URL . '/' . $page['url'], '/');
+
+				// add to sequences
+				if($page['type'] == 'footer') $sequences['footer'][(string) trim($URL . '/' . $page['url'], '/')] = $pageID;
+				else $sequences['pages'][(string) trim($URL . '/' . $page['url'], '/')] = $pageID;
+
+				// get URL for parent
+				$title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
+				$title = trim($title, ucfirst(BL::lbl('Home')) .' > ');
+
+				// add it
+				$titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
+			}
+		}
+
+		// sort the sequences
+		ksort($sequences['pages']);
+
+		// loop to add the titles in the correct order
+		foreach($sequences['pages'] as $URL => $id)
+		{
+			if(isset($titles[$id])) $return[$id] = $titles[$id];
+		}
+		foreach($sequences['footer'] as $URL => $id)
+		{
+			if(isset($titles[$id])) $return[$id] = $titles[$id];
+		}
+
+		// return
+		return $return;
 	}
 
 
@@ -1255,7 +1348,7 @@ class BackendPagesModel
 
 		// get data
 		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
-																		i.extra_ids,
+																		i.extra_ids, i.data,
 																		m.url
 																	FROM pages AS i
 																	INNER JOIN meta AS m ON i.meta_id = m.id

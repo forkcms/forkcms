@@ -6,24 +6,24 @@ if(!jsFrontend) { var jsFrontend = new Object(); }
  *
  * @author	Tijs Verkoyen <tijs@netlash.com>
  */
-jsFrontend = 
+jsFrontend =
 {
 	// datamembers
 	debug: false,
 
 
 	// init, something like a constructor
-	init: function() 
+	init: function()
 	{
 		// init stuff
 		jsFrontend.initAjax();
 
 		// init controls
 		jsFrontend.controls.init();
-		
+
 		// init form
 		jsFrontend.forms.init();
-		
+
 		// init gravatar
 		jsFrontend.gravatar.init();
 
@@ -33,7 +33,7 @@ jsFrontend =
 
 
 	// init
-	initAjax: function() 
+	initAjax: function()
 	{
 		// set defaults for AJAX
 		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });
@@ -45,33 +45,113 @@ jsFrontend =
 }
 
 
-jsFrontend.controls = 
+jsFrontend.controls =
 {
 	// init, something like a constructor
-	init: function() 
+	init: function()
 	{
 		jsFrontend.controls.bindTargetBlank();
 	},
 
-	
+
 	// bind target blank
 	bindTargetBlank: function()
 	{
 		$('a.targetBlank').attr('target', '_blank');
 	},
 
-	
+
 	// end
 	eoo: true
 }
 
 
-jsFrontend.forms = 
+jsFrontend.forms =
 {
 	// init, something like a constructor
-	init: function() 
+	init: function()
 	{
 		jsFrontend.forms.placeholders();
+		jsFrontend.forms.datefields();
+	},
+
+
+	datefields: function()
+	{
+		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
+		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
+		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
+		
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker({
+			dayNames: dayNames,
+			dayNamesMin: dayNamesMin,
+			dayNamesShort: dayNamesShort,
+			hideIfNoPrevNext: true,
+			monthNames: monthNames,
+			monthNamesShort: monthNamesShort,
+			nextText: '{$lblNext}',
+			prevText: '{$lblPrevious}',
+			showAnim: 'slideDown'
+		});
+		
+		// the default, nothing special
+		$('.inputDatefieldNormal').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', { 
+				dateFormat: data.mask, firstDay: data.firstday 
+			});
+		});
+
+		// datefields that have a certain startdate
+		$('.inputDatefieldFrom').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', {
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
+			});
+		});
+
+		// datefields that have a certain enddate
+		$('.inputDatefieldTill').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
+			});
+		});
+
+		// datefields that have a certain range
+		$('.inputDatefieldRange').each(function()
+		{
+			// get data
+			var data = $(this).data();
+
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
+			});
+		});
 	},
 
 
@@ -80,54 +160,54 @@ jsFrontend.forms =
 	{
 		// detect if placeholder-attribute is supported
 		jQuery.support.placeholder = ('placeholder' in document.createElement('input'));
-		
+
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder]').focus(function() 
+			$('input[placeholder]').focus(function()
 			{
 				// grab element
 				var input = $(this);
-				
+
 				// only do something when the current value and the placeholder are the same
 				if(input.val() == input.attr('placeholder'))
 				{
 					// clear
 					input.val('');
-					
+
 					// remove class
 					input.removeClass('placeholder');
 				}
 			});
-			
-			$('input[placeholder]').blur(function() 
+
+			$('input[placeholder]').blur(function()
 			{
 				// grab element
 				var input = $(this);
-				
+
 				// only do something when the input is empty or the value is the same as the placeholder
 				if(input.val() == '' || input.val() == input.attr('placeholder'))
 				{
 					// set placeholder
 					input.val(input.attr('placeholder'));
-					
+
 					// add class
 					input.addClass('placeholder');
 				}
 			});
-			
+
 			// call blur to initialize
 			$('input[placeholder]').blur();
-			
+
 			// hijack the form so placeholders aren't submitted as values
-			$('input[placeholder]').parents('form').submit(function() 
+			$('input[placeholder]').parents('form').submit(function()
 			{
 				// find elements with placeholders
-				$(this).find('input[placeholder]').each(function() 
+				$(this).find('input[placeholder]').each(function()
 				{
 					// grab element
 					var input = $(this);
-					
+
 					// if the value and the placeholder are the same reset the value
 					if(input.val() == input.attr('placeholder')) input.val('');
 				});
@@ -135,40 +215,40 @@ jsFrontend.forms =
 		}
 	},
 
-	
+
 	// end
 	eoo: true
 }
 
 
-jsFrontend.gravatar = 
+jsFrontend.gravatar =
 {
 	// init, something like a constructor
-	init: function() 
+	init: function()
 	{
-		$('.replaceWithGravatar').each(function() 
+		$('.replaceWithGravatar').each(function()
 		{
 			var element = $(this);
 			var gravatarId = element.data('gravatar-id');
 			var size = element.attr('height');
-		
+
 			// valid gravatar id
-			if(gravatarId != '') 
+			if(gravatarId != '')
 			{
 				// build url
 				var url = 'http://www.gravatar.com/avatar/'+ gravatarId + '?r=g&d=404';
-				
+
 				// add size if set before
 				if(size != '') url += '&s=' + size;
-				
+
 				// create new image
 				var gravatar = new Image();
 				gravatar.src = url;
-				
+
 				// reset src
-				gravatar.onload = function() 
-				{ 
-					element.attr('src', url).addClass('gravatarLoaded'); 
+				gravatar.onload = function()
+				{
+					element.attr('src', url).addClass('gravatarLoaded');
 				}
 			}
 		});
@@ -185,10 +265,10 @@ jsFrontend.gravatar =
  *
  * @author	Matthias Mullie <matthias@netlash.com>
  */
-jsFrontend.search = 
+jsFrontend.search =
 {
 	// init, something like a constructor
-	init: function() 
+	init: function()
 	{
 		// split url to build the ajax-url
 		var chunks = document.location.pathname.split('/');
@@ -211,22 +291,22 @@ jsFrontend.search =
 		$('input.autoComplete').autocomplete(
 		{
 			minLength: 1,
-			source: function(request, response) 
+			source: function(request, response)
 			{
 				// ajax call!
 				$.ajax(
-				{ 
+				{
 					url: '/frontend/ajax.php?module=search&action=autocomplete',
 					type: 'GET',
 					data: 'term='+ request.term +'&language='+ language,
-					success: function(data, textStatus) 
+					success: function(data, textStatus)
 					{
 						// init var
 						var realData = [];
-						
+
 						// alert the user
 						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
-						
+
 						if(data.code == 200)
 						{
 							for(var i in data.data) realData.push({ label: data.data[i].term, value: data.data[i].term, url: data.data[i].url });
@@ -248,7 +328,7 @@ jsFrontend.search =
 		{
 			// ajax call!
 			$.ajax(
-			{ 
+			{
 				url: '/frontend/ajax.php?module=search&action=save',
 				type: 'GET',
 				data: 'term='+ $(this).val() +'&language='+ language
@@ -267,7 +347,7 @@ jsFrontend.search =
 		$('input.autoSuggest').autocomplete(
 		{
 			minLength: 1,
-			source: function(request, response) 
+			source: function(request, response)
 			{
 				// ajax call!
 				$.ajax(
@@ -275,14 +355,14 @@ jsFrontend.search =
 					url: '/frontend/ajax.php?module=search&action=autosuggest',
 					type: 'GET',
 					data: 'term='+ request.term +'&language='+ language +'&length='+ length,
-					success: function(data, textStatus) 
+					success: function(data, textStatus)
 					{
 						// init var
 						var realData = [];
-						
+
 						// alert the user
 						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
-						
+
 						if(data.code == 200)
 						{
 							for(var i in data.data) realData.push({ label: data.data[i].title, value: data.data[i].title, url: data.data[i].full_url, desc: data.data[i].text });
@@ -304,7 +384,7 @@ jsFrontend.search =
 		{
 			// ajax call!
 			$.ajax(
-			{ 
+			{
 				url: '/frontend/ajax.php?module=search&action=save',
 				type: 'GET',
 				data: 'term='+ $(this).val() +'&language='+ language
@@ -338,26 +418,26 @@ jsFrontend.search =
 
 				// fade out
 				$('#searchContainer').fadeTo(0, 0.5);
-				
+
 				// ajax call!
 				$.ajax(
-				{ 
+				{
 					url: '/frontend/ajax.php?module=search&action=livesuggest',
 					type: 'GET',
 					data: 'term='+ $(this).val() +'&language='+ language,
-					success: function(data, textStatus) 
+					success: function(data, textStatus)
 					{
 						// allow for new calls
 						allowCall = true;
 
 						// alert the user
 						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
-						
+
 						if(data.code == 200)
 						{
 							// replace search results
 							$('#searchContainer').html(data.data);
-	
+
 							// fade in
 							$('#searchContainer').fadeTo(0, 1);
 						}

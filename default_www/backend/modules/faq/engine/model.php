@@ -254,7 +254,7 @@ class BackendFaqModel
 	 */
 	public static function isCategoryAllowedToBeDeleted($id)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
+		return ! (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
 														FROM faq_questions AS i
 														WHERE i.category_id = ?',
 														array((int) $id));

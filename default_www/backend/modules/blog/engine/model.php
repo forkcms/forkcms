@@ -30,7 +30,7 @@ class BackendBlogModel
 											FROM blog_comments AS i
 											INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 											INNER JOIN meta AS m ON p.meta_id = m.id
-											WHERE i.status = ? AND i.language = ?
+											WHERE i.status = ? AND i.language = ? AND p.status = ?
 											GROUP BY i.id';
 	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
 										FROM blog_posts AS i
@@ -132,6 +132,9 @@ class BackendBlogModel
 
 		// delete meta
 		if(!empty($metaIds)) $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
+
+		// delete tags
+		foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'blog');
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());

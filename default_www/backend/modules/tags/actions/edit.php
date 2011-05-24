@@ -194,8 +194,8 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				$item['tag'] = $this->frm->getField('name')->getValue();
 				$item['url'] = BackendTagsModel::getURL($item['tag'], $this->id);
 
-				// upate the item
-				$item['id'] = BackendTagsModel::update($item);
+				// update the item
+				BackendTagsModel::update($item);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['tag']) . '&highlight=row-' . $item['id']);

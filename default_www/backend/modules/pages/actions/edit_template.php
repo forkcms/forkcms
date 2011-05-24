@@ -89,7 +89,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// init var
-		$maximumBlocks = 20;
+		$maximumBlocks = 30;
 		$defaultId = BackendModel::getModuleSetting('pages', 'default_template');
 
 		// create elements

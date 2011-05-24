@@ -329,7 +329,7 @@ class FrontendURL
 		}
 
 		// remove language from querystring
-		$queryString = trim(substr($queryString, strlen($language)), '/');
+		if(SITE_MULTILANGUAGE) $queryString = trim(substr($queryString, strlen($language)), '/');
 
 		// if it's the homepage AND parameters were given (not allowed!)
 		if($URL == '' && $queryString != '')
@@ -395,6 +395,28 @@ class FrontendURL
 				// reset parameters
 				$this->setParameters(array());
 			}
+		}
+
+		// is this an internal redirect?
+		if(isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] != '')
+		{
+			// get url for item
+			$newPageURL = FrontendNavigation::getURL((int) $pageInfo['redirect_page_id']);
+			$errorURL = FrontendNavigation::getURL(404);
+
+			// not an error?
+			if($newPageURL != $errorURL)
+			{
+				// redirect
+				SpoonHTTP::redirect($newPageURL, $pageInfo['redirect_code']);
+			}
+		}
+
+		// is this an external redirect?
+		if(isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] != '')
+		{
+			// redirect
+			SpoonHTTP::redirect($pageInfo['redirect_url'], $pageInfo['redirect_code']);
 		}
 	}
 

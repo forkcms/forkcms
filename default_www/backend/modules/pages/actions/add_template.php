@@ -84,7 +84,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// init var
-		$maximumBlocks = 20;
+		$maximumBlocks = 30;
 
 		// create elements
 		$this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme);
