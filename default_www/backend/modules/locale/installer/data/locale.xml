@@ -1825,6 +1825,10 @@
         <translation language="nl"><![CDATA[naam]]></translation>
         <translation language="en"><![CDATA[name]]></translation>
       </item>
+      <item type="label" name="Next">
+        <translation language="nl"><![CDATA[volgende]]></translation>
+        <translation language="en"><![CDATA[next]]></translation>
+      </item>
       <item type="label" name="NextPage">
         <translation language="nl"><![CDATA[volgende pagina]]></translation>
         <translation language="en"><![CDATA[next page]]></translation>
@@ -1836,6 +1840,10 @@
       <item type="label" name="On">
         <translation language="nl"><![CDATA[op]]></translation>
         <translation language="en"><![CDATA[on]]></translation>
+      </item>
+      <item type="label" name="Previous">
+        <translation language="nl"><![CDATA[vorige]]></translation>
+        <translation language="en"><![CDATA[previous]]></translation>
       </item>
       <item type="label" name="PreviousPage">
         <translation language="nl"><![CDATA[vorige pagina]]></translation>
