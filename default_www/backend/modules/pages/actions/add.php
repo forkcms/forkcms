@@ -130,9 +130,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// redirect
 		$redirectValues = array(
-			array('value' => 'none', 'label' => BL::lbl('None')),
-			array('value' => 'internal', 'label' => BL::lbl('InternalLink'), 'variables' => array('isInternal' => true)),
-			array('value' => 'external', 'label' => BL::lbl('ExternalLink'), 'variables' => array('isExternal' => true)),
+			array('value' => 'none', 'label' => ucfirst(BL::lbl('None'))),
+			array('value' => 'internal', 'label' => ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
+			array('value' => 'external', 'label' => ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
 		);
 		$this->frm->addRadiobutton('redirect', $redirectValues, 'none');
 		$this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown());
