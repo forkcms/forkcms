@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
  `created_on` datetime NOT NULL,
  `author` varchar(255) NOT NULL,
  `email` varchar(255) NOT NULL,
- `website` varchar(255) default NULL,
+ `website` text,
  `text` text NOT NULL,
  `type` enum('comment','trackback') NOT NULL default 'comment',
  `status` enum('published','moderation','spam') NOT NULL default 'moderation',

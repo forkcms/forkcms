@@ -77,7 +77,7 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('author', $this->record['author']);
 		$this->frm->addText('email', $this->record['email']);
-		$this->frm->addText('website', $this->record['website']);
+		$this->frm->addText('website', $this->record['website'], null);
 		$this->frm->addTextarea('text', $this->record['text']);
 
 		// assign URL

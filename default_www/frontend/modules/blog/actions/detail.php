@@ -139,7 +139,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// create elements
 		$this->frm->addText('author', $author);
 		$this->frm->addText('email', $email);
-		$this->frm->addText('website', $website);
+		$this->frm->addText('website', $website, null);
 		$this->frm->addTextarea('message');
 	}
 
