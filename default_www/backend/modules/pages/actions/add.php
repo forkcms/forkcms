@@ -128,6 +128,16 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_' . $i, '');
 		}
 
+		// redirect
+		$redirectValues = array(
+			array('value' => 'none', 'label' => ucfirst(BL::lbl('None'))),
+			array('value' => 'internal', 'label' => ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
+			array('value' => 'external', 'label' => ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
+		);
+		$this->frm->addRadiobutton('redirect', $redirectValues, 'none');
+		$this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown());
+		$this->frm->addText('external_redirect', null, null, null, null, true);
+
 		// page info
 		$this->frm->addCheckbox('navigation_title_overwrite');
 		$this->frm->addText('navigation_title');
@@ -187,6 +197,11 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			// get the status
 			$status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
+			// validate redirect
+			$redirectValue = $this->frm->getField('redirect')->getValue();
+			if($redirectValue == 'internal') $this->frm->getField('internal_redirect')->isFilled(BL::err('FieldIsRequired'));
+			if($redirectValue == 'external') $this->frm->getField('external_redirect')->isURL(BL::err('InvalidURL'));
+
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, $this->frm->getField('is_action')->getChecked()));
 
@@ -204,6 +219,12 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			{
 				// init var
 				$parentId = 0;
+				$data = null;
+
+				// build data
+				if($this->frm->getField('is_action')->isChecked()) $data['is_action'] = true;
+				if($redirectValue == 'internal') $data['internal_redirect'] = array('page_id' => $this->frm->getField('internal_redirect')->getValue(), 'code' => '301');
+				if($redirectValue == 'external') $data['external_redirect'] = array('url' => $this->frm->getField('external_redirect')->getValue(), 'code' => '301');
 
 				// build page record
 				$page['id'] = BackendPagesModel::getMaximumPageId() + 1;
@@ -227,7 +248,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['allow_delete'] = 'Y';
 				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
-				$page['data'] = ($this->frm->getField('is_action')->isChecked()) ? serialize(array('is_action' => true)) : null;
+				$page['data'] = ($data !== null) ? serialize($data) : null;
 
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];

@@ -9,6 +9,7 @@
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendTagsModel
@@ -154,7 +155,7 @@ class BackendTagsModel
 	public static function getURL($URL, $id = null)
 	{
 		// redefine
-		$URL = SpoonFilter::urlise((string) $URL);
+		$URL = SpoonFilter::urlise(SpoonFilter::htmlentitiesDecode((string) $URL, null, ENT_QUOTES));
 		$language = BL::getWorkingLanguage();
 
 		// get db

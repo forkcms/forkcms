@@ -87,7 +87,7 @@ fi
 for FILE in "$PATH"/*
 do
 	# build the command
-	CMD="$/usr/local/bin/convert -resize $SIZE $FILE $FILE"
+	CMD="/usr/local/bin/convert -resize $SIZE $FILE $FILE"
 	
 	# execute
 	$CMD

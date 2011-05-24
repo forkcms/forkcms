@@ -330,6 +330,12 @@ class FrontendNavigation extends FrontendBaseObject
 
 				// set link
 				$navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL($page['page_id']);
+
+				// is this an internal redirect?
+				if(isset($page['redirect_page_id']) && $page['redirect_page_id'] != '') $navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL((int) $page['redirect_page_id']);
+
+				// is this an external redirect?
+				if(isset($page['redirect_url']) && $page['redirect_url'] != '') $navigation[$type][$parentId][$id]['link'] = $page['redirect_url'];
 			}
 
 			// break the loop (it is only used for the special construction with home)

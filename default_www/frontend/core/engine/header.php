@@ -83,7 +83,7 @@ class FrontendHeader extends FrontendBaseObject
 		// add default javascript-files
 		$this->addJS('/frontend/core/js/jquery/jquery.js', false);
 		$this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
-		$this->addJS('/frontend/core/js/frontend.js', true);
+		$this->addJS('/frontend/core/js/frontend.js', false, true);
 		$this->addJS('/frontend/core/js/utils.js', true);
 	}
 
@@ -376,7 +376,7 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($matches[0] as $key => $match)
 			{
 				// remove faulty newlines
-				$tempContent = preg_replace('|/r/iU', '', $matches[1][$key]);
+				$tempContent = preg_replace('/\r/iU', '', $matches[1][$key]);
 
 				// removes real newlines
 				$tempContent = preg_replace('/\n/iU', ' ', $tempContent);
