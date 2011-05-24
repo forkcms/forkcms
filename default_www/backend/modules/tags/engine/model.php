@@ -25,12 +25,6 @@ class BackendTagsModel
 									GROUP BY i.id';
 
 
-	public static function blaat($data)
-	{
-		SpoonFile::setContent(BACKEND_CACHE_PATH .'/'. microtime(true), 'blaat');
-	}
-
-
 	/**
 	 * Delete one or more tags.
 	 *
