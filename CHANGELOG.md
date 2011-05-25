@@ -39,6 +39,7 @@ Improvements:
 * Core: when calling *Form::getTemplateExample() an example that reflect the correct markup for that application will be returned.
 * Core: default jQuery-theme is now Aristo (see: http://taitems.tumblr.com/post/482577430/introducing-aristo-a-jquery-ui-theme).
 * Core: made datepickerstuff available in the frontend.
+* Core: made it possible to change the amount of blocks for templates that are in use. When blocks are removed, the content will no longer be shown; when blocks are added, the defaults will be pushed to the existing pages.
 * Blog: creating categories can now be done without leaving the add/edit screen.
 * Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
 * Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.
