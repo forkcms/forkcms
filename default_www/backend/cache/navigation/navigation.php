@@ -266,8 +266,7 @@ $navigation = array(
 					'locale/add',
 					'locale/edit',
 					'locale/analyse',
-					'locale/import',
-					'locale/fast_edit'
+					'locale/import'
 				)
 			),
 			array(
