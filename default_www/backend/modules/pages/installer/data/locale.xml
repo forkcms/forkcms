@@ -28,6 +28,10 @@
         <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
         <translation language="en"><![CDATA[edit module content]]></translation>
       </item>
+      <item type="label" name="ExternalLink">
+        <translation language="nl"><![CDATA[externe link]]></translation>
+        <translation language="en"><![CDATA[external link]]></translation>
+      </item>
       <item type="label" name="ExtraTypeBlock">
         <translation language="nl"><![CDATA[module]]></translation>
         <translation language="en"><![CDATA[module]]></translation>
@@ -40,6 +44,10 @@
         <translation language="nl"><![CDATA[footer navigatie]]></translation>
         <translation language="en"><![CDATA[footer navigation]]></translation>
       </item>
+      <item type="label" name="InternalLink">
+        <translation language="nl"><![CDATA[interne link]]></translation>
+        <translation language="en"><![CDATA[internal link]]></translation>
+      </item>
       <item type="label" name="MainNavigation">
         <translation language="nl"><![CDATA[hoofdnavigatie]]></translation>
         <translation language="en"><![CDATA[main navigation]]></translation>
@@ -47,6 +55,10 @@
       <item type="label" name="Meta">
         <translation language="nl"><![CDATA[metanavigatie]]></translation>
         <translation language="en"><![CDATA[meta navigation]]></translation>
+      </item>
+      <item type="label" name="Redirect">
+        <translation language="nl"><![CDATA[redirect]]></translation>
+        <translation language="en"><![CDATA[redirect]]></translation>
       </item>
       <item type="label" name="Root">
         <translation language="nl"><![CDATA[losse pagina's]]></translation>
@@ -91,6 +103,14 @@
       <item type="message" name="HelpBlockContent">
         <translation language="nl"><![CDATA[Welk soort inhoud wil je hier tonen?]]></translation>
         <translation language="en"><![CDATA[What kind of content do you want to show here?]]></translation>
+      </item>
+      <item type="message" name="HelpExternalRedirect">
+        <translation language="nl"><![CDATA[Hiermee kan je een item in het menu laten doorverwijzen naar een externe website.]]></translation>
+        <translation language="en"><![CDATA[Use this if you need to redirect a menu-item to an external website.]]></translation>
+      </item>
+      <item type="message" name="HelpInternalRedirect">
+        <translation language="nl"><![CDATA[Hiermee kan je een item in het menu laten doorverwijzen naar een andere pagina binnen de website.]]></translation>
+        <translation language="en"><![CDATA[Use this if you need to redirect a menu-item to another page on this website.]]></translation>
       </item>
       <item type="message" name="HelpMetaNavigation">
         <translation language="nl"><![CDATA[Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.]]></translation>
