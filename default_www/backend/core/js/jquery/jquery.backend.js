@@ -339,8 +339,11 @@
 				// remove events
 				element.unbind('click').unbind('focus');
 
-				// set html (replacing quotes with htmlentity, otherwise the inputfield is 'broken')
-				element.html('<input type="text" class="' + options.inputClasses + '" value="' + utils.string.replaceAll(options.current.value, '"', '&quot;') + '" />');
+				// replacing quotes, less than and greater than with htmlentity, otherwise the inputfield is 'broken'
+				options.current.value = utils.string.replaceAll(options.current.value, '"', '&quot;');
+				
+				// set html
+				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
 
 				// store element
 				options.current.element = $(element.find('input')[0]);
@@ -374,8 +377,14 @@
 				// get parent
 				var parent = options.current.element.parent();
 
+				// get value and replace quotes, less than and greater than with their htmlentities
+				var newValue = options.current.element.val();
+				newValue = utils.string.replaceAll(newValue, '"', '&quot;');
+				newValue = utils.string.replaceAll(newValue, '<', '&lt;');
+				newValue = utils.string.replaceAll(newValue, '>', '&gt;');
+				
 				// set HTML and rebind events
-				parent.html(options.current.element.val()).bind('click focus', createElement);
+				parent.html(newValue).bind('click focus', createElement);
 
 				// add class
 				parent.removeClass('inlineEditing');

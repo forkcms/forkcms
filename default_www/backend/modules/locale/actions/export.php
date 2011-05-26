@@ -7,6 +7,7 @@
  * @subpackage	locale
  *
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleExport extends BackendBaseActionIndex
@@ -45,8 +46,11 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		// add language
 		if($this->filter['language'] !== null)
 		{
-			$query .= ' AND l.language = ?';
-			$parameters[] = $this->filter['language'];
+			// create an array for the languages, surrounded by quotes (example: 'nl')
+			$languages = array();
+			foreach($this->filter['language'] as $key => $val) $languages[$key] = '\'' . $val . '\'';
+
+			$query .= ' AND l.language IN (' . implode(',', $languages) . ')';
 		}
 
 		// add application
@@ -66,8 +70,11 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		// add type
 		if($this->filter['type'] !== null)
 		{
-			$query .= ' AND l.type = ?';
-			$parameters[] = $this->filter['type'];
+			// create an array for the types, surrounded by quotes (example: 'lbl')
+			$types = array();
+			foreach($this->filter['type'] as $key => $val) $types[$key] = '\'' . $val . '\'';
+
+			$query .= ' AND l.type IN (' . implode(',', $types) . ')';
 		}
 
 		// add name
@@ -146,12 +153,12 @@ class BackendLocaleExport extends BackendBaseActionIndex
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = (isset($_GET['language'])) ? $this->getParameter('language') : BL::getWorkingLanguage();
-		$this->filter['application'] = $this->getParameter('application');
+		$this->filter['application'] = $this->getParameter('application') == null ? 'backend' : $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
-		$this->filter['type'] = $this->getParameter('type');
-		$this->filter['name'] = $this->getParameter('name');
-		$this->filter['value'] = $this->getParameter('value');
+		$this->filter['type'] = $this->getParameter('type', 'array');
+		$this->filter['language'] = $this->getParameter('language', 'array');
+		$this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');
+		$this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
 	}
 
 
