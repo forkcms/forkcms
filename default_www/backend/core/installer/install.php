@@ -168,6 +168,29 @@ class ModuleInstaller
 
 
 	/**
+	 * Get a locale item.
+	 *
+	 * @return	mixed
+	 * @param	string $name					The name of the locale.
+	 * @param	string $module[optional]		The name of the module.
+	 * @param	string $language[optional]		The language.
+	 * @param	string $type[optional]			The type of locale.
+	 * @param	string $application[optional]	The application.
+	 */
+	protected function getLocale($name, $module = 'core', $language = 'en', $type = 'lbl', $application = 'backend')
+	{
+		// get translation
+		$translation = (string) $this->getDB()->getVar('SELECT value
+														FROM locale
+														WHERE name = ? AND module = ? AND language = ? AND type = ? AND application = ?',
+														array((string) $name, (string) $module, (string) $language, (string) $type, (string) $application));
+
+		// if no translation is found we return the name
+		return ($translation != '') ? $translation : $name;
+	}
+
+
+	/**
 	 * Get a setting
 	 *
 	 * @return	mixed
