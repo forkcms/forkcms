@@ -172,10 +172,10 @@ class ModuleInstaller
 	 *
 	 * @return	mixed
 	 * @param	string $name					The name of the locale.
-	 * @param	string $module[optional]		The name of the module.
-	 * @param	string $language[optional]		The language.
-	 * @param	string $type[optional]			The type of locale.
-	 * @param	string $application[optional]	The application.
+	 * @param	string[optional] $module		The name of the module.
+	 * @param	string[optional] $language		The language.
+	 * @param	string[optional] $type			The type of locale.
+	 * @param	string[optional] $application	The application.
 	 */
 	protected function getLocale($name, $module = 'core', $language = 'en', $type = 'lbl', $application = 'backend')
 	{

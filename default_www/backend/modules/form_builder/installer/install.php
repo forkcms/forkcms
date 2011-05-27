@@ -24,6 +24,9 @@ class FormBuilderInstall extends ModuleInstaller
 		// add as a module
 		$this->addModule('form_builder', 'The module to create and manage forms.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// module rights
 		$this->setModuleRights(1, 'form_builder');
 
@@ -39,9 +42,6 @@ class FormBuilderInstall extends ModuleInstaller
 		$this->setActionRights(1, 'form_builder', 'delete_field');
 		$this->setActionRights(1, 'form_builder', 'save_field');
 		$this->setActionRights(1, 'form_builder', 'sequence');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 

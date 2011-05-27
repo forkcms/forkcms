@@ -34,14 +34,14 @@ class PagesInstall extends ModuleInstaller
 		// add 'pages' as a module
 		$this->addModule('pages', 'The module to manage your pages and website structure.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// import data
 		$this->importData();
 
 		// set rights
 		$this->setRights();
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 
 

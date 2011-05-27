@@ -82,6 +82,9 @@ class UsersInstall extends ModuleInstaller
 		// add 'users' as a module
 		$this->addModule('users', 'User management.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('users', 'default_group', 1);
 		$this->setSetting('users', 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
@@ -95,9 +98,6 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'delete');
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// add default user
 		$this->addUser();
