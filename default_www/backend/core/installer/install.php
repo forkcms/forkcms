@@ -407,15 +407,32 @@ class ModuleInstaller
 						'hidden' => $hidden,
 						'sequence' => $sequence);
 
+		// build query
+		$query = 'SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?';
+		$parameters = array($item['module'], $item['type'], $item['label']);
+
+		// data parameter must match
+		if($data !== null)
+		{
+			$query .= ' AND data = ?';
+			$parameters[] = $data;
+		}
+
+		// we need a nullio
+		else $query .= ' AND data IS NULL';
+
+		// get id (if its already exists)
+		$extraId =  (int) $this->getDB()->getVar($query, $parameters);
+
 		// doesn't already exist
-		if($this->getDB()->getVar('SELECT COUNT(id) FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label'])) == 0)
+		if($extraId === 0)
 		{
 			// insert extra and return id
 			return (int) $this->getDB()->insert('pages_extras', $item);
 		}
 
-		// return id
-		else return (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label']));
+		// exists so return id
+		return $extraId;
 	}
 
 
