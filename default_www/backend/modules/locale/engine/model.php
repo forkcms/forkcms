@@ -946,11 +946,11 @@ class BackendLocaleModel
 		$possibleTypes = array();
 
 		// types
-		$typesShort = BackendModel::getDB()->getEnumValues('locale', 'type');
+		$typesShort = (array) BackendModel::getDB()->getEnumValues('locale', 'type');
 		foreach($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
 
 		// current locale items (used to check for conflicts)
-		$currentLocale = BackendModel::getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+		$currentLocale = (array) BackendModel::getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
 
 		// applications
 		foreach($xml as $application => $modules)

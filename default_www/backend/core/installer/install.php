@@ -226,7 +226,7 @@ class ModuleInstaller
 			{
 				// possible values
 				$possibleApplications = array('frontend', 'backend');
-				$possibleModules = $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
+				$possibleModules = (array) $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
 				$possibleLanguages = array('frontend' => $this->getLanguages(), 'backend' => $this->getInterfaceLanguages());
 				$possibleTypes = array(
 					'act' => 'action',
@@ -236,7 +236,7 @@ class ModuleInstaller
 				);
 
 				// current locale items (used to check for conflicts)
-				$currentLocale = $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+				$currentLocale = (array) $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
 
 
 				// @todo: waarom geen xpath?
