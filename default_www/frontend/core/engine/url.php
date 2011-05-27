@@ -52,11 +52,6 @@ class FrontendURL
 	 */
 	public function __construct()
 	{
-		$test = "";
-
-		foreach($test as $t) echo 'lo';
-
-
 		// add ourself to the reference so other classes can retrieve us
 		Spoon::set('url', $this);
 
