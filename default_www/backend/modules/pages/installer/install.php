@@ -107,7 +107,7 @@ class PagesInstall extends ModuleInstaller
 				// insert search page
 				$this->insertPage(array('id' => 2,
 										'template_id' => $templateIds['Default'],
-										'title' => 'Search',
+										'title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'root',
 										'language' => $language),
 										null,
@@ -125,7 +125,7 @@ class PagesInstall extends ModuleInstaller
 				// insert sitemap
 				$this->insertPage(array('id' => 3,
 										'template_id' => $templateIds['Default'],
-										'title' => 'Sitemap',
+										'title' => ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
 										'language' => $language),
 										null,
@@ -143,7 +143,7 @@ class PagesInstall extends ModuleInstaller
 				// insert disclaimer
 				$this->insertPage(array('id' => 4,
 										'template_id' => $templateIds['Default'],
-										'title' => 'Disclaimer',
+										'title' => ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
 										'language' => $language),
 										null,
@@ -332,7 +332,7 @@ class PagesInstall extends ModuleInstaller
 
 				// insert about us page
 				$aboutUsId = $this->insertPage(array('template_id' => $templateIds['Default'],
-														'title' => 'About us',
+														'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
 														'parent_id' => 1,
 														'language' => $language),
 														null,
@@ -349,7 +349,7 @@ class PagesInstall extends ModuleInstaller
 
 				// location
 				$this->insertPage(array('template_id' => $templateIds['Default'],
-										'title' => 'Location',
+										'title' => ucfirst($this->getLocale('Location', 'core', $language, 'lbl', 'frontend')),
 										'parent_id' => $aboutUsId,
 										'language' => $language),
 										null,
@@ -383,7 +383,7 @@ class PagesInstall extends ModuleInstaller
 
 				// history
 				$this->insertPage(array('template_id' => $templateIds['Default'],
-										'title' => 'History',
+										'title' => ucfirst($this->getLocale('History', 'core', $language, 'lbl', 'frontend')),
 										'parent_id' => 1,
 										'language' => $language),
 										null,

@@ -109,7 +109,7 @@ class MailmotorInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			$parentID = (int) $this->insertPage(array('title' => 'Sent mailings',
+			$parentID = (int) $this->insertPage(array('title' => ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
 														'template_id' => $templateIds['Default'],
 														'type' => 'root',
 														'language' => $language),
@@ -118,14 +118,14 @@ class MailmotorInstall extends ModuleInstaller
 
 			$this->insertPage(array('parent_id' => $parentID,
 									'template_id' => $templateIds['Default'],
-									'title' => 'Subscribe',
+									'title' => ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')),
 									'language' => $language),
 								null,
 								array('extra_id' => $subscribeFormID));
 
 			$this->insertPage(array('parent_id' => $parentID,
 									'template_id' => $templateIds['Default'],
-									'title' => 'Unsubscribe',
+									'title' => ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')),
 									'language' => $language),
 								null,
 								array('extra_id' => $unsubscribeFormID));

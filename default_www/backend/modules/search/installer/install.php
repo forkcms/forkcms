@@ -58,7 +58,7 @@ class SearchInstall extends ModuleInstaller
 												array($searchID, $language)))
 			{
 				// insert search
-				$this->insertPage(array('title' => 'Search',
+				$this->insertPage(array('title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'root',
 										'language' => $language),
 									null,

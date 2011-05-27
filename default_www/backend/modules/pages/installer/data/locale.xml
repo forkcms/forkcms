@@ -170,4 +170,20 @@
       </item>
     </pages>
   </backend>
+  <frontend>
+    <core>
+      <item type="label" name="AboutUs">
+        <translation language="nl"><![CDATA[over ons]]></translation>
+        <translation language="en"><![CDATA[about us]]></translation>
+      </item>
+      <item type="label" name="History">
+        <translation language="nl"><![CDATA[geschiedenis]]></translation>
+        <translation language="en"><![CDATA[history]]></translation>
+      </item>
+      <item type="label" name="Location">
+        <translation language="nl"><![CDATA[locatie]]></translation>
+        <translation language="en"><![CDATA[location]]></translation>
+      </item>
+    </core>
+  </frontend>
 </locale>
