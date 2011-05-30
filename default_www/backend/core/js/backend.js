@@ -886,11 +886,14 @@ jsBackend.forms =
 		{
 			// get data
 			var data = $(this).data();
-
+			var value = $(this).val();
+			
 			// set options
 			$(this).datepicker('option', { 
-				dateFormat: data.mask, firstDay: data.firstday 
-			});
+				dateFormat: data.mask, 
+				firstDate: data.firstday,
+				defaultDate: value
+			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain startdate
@@ -898,13 +901,13 @@ jsBackend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', {
-				dateFormat: data.mask,
-				firstDay: data.firstday,
+			$(this).datepicker('option', { 
+				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
-			});
+			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain enddate
@@ -919,7 +922,7 @@ jsBackend.forms =
 				dateFormat: data.mask,
 				firstDay: data.firstday,
 				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
-			});
+			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain range
@@ -935,7 +938,7 @@ jsBackend.forms =
 				firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
 				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
-			});
+			}).datepicker('setDate', value);
 		});
 	},
 
