@@ -1130,7 +1130,7 @@ class BackendPagesModel
 
 				// get URL for parent
 				$title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-				$title = trim($title, ucfirst(BL::lbl('Home')) .' > ');
+				$title = trim($title, ucfirst(BL::lbl('Home')) . ' > ');
 
 				// add it
 				$titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
@@ -2055,13 +2055,13 @@ class BackendPagesModel
 					$block['edited_on'] = $block['created_on'];
 
 					// get default extras in this language
-					if(isset($newTemplate['data']['default_extras_'. $page['language']]))
+					if(isset($newTemplate['data']['default_extras_' . $page['language']]))
 					{
 						// check if a default extra has been defined
-						if($newTemplate['data']['default_extras_'. $page['language']][$i] != 'editor')
+						if($newTemplate['data']['default_extras_' . $page['language']][$i] != 'editor')
 						{
 							$page['has_extra'] = 'Y';
-							$block['extra_id'] = $newTemplate['data']['default_extras_'. $page['language']][$i];
+							$block['extra_id'] = $newTemplate['data']['default_extras_' . $page['language']][$i];
 						}
 						// no default extra defined
 						else
