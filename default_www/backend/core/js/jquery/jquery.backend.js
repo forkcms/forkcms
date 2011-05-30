@@ -163,10 +163,7 @@
 				if(currentElement.attr('type') != 'text')
 				{
 					// clone the current element
-					var newElement = currentElement.clone();
-					
-					// alter the type
-					newElement.attr('type', 'text');
+					var newElement = $('<input value="" id="'+ currentElement.attr('id') +'" name="'+ currentElement.attr('name') +'" maxlength="'+ currentElement.attr('maxlength') +'" class="'+ currentElement.attr('class') +'" type="text">');
 					
 					// insert the new element
 					newElement.insertBefore(currentElement);
