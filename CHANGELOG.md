@@ -17,6 +17,7 @@ Bugfixes:
 * Bugfix: only remove language from querystring when we have multiple languages.
 * Bugfix: backend interface language was not set according to our installer selection.
 * Bugfix: added the correct anchor on the blog commentform, fixes: http://forkcms.lighthouseapp.com/projects/61890/tickets/159.
+* Bugfix: create category dialog in blogmodule wasn't working when there weren't no categories, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/160
 
 Improvements:
 
