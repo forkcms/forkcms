@@ -63,7 +63,7 @@
 	checkedCheckboxesData['{$checkedCheckboxesData.id}'] = {$checkedCheckboxesData.JSON};
 
 	// loop and remove elements
-	for(var i in checkedCheckboxesData['{$checkedCheckboxesData.id}']) $('#{$checkedCheckboxesData.id} input[value='+ checkedCheckboxesData['{$checkedCheckboxesData.id}'][i] +']').attr('checked', true);
+	for(var i in checkedCheckboxesData['{$checkedCheckboxesData.id}']) $('#{$checkedCheckboxesData.id} input[value='+ checkedCheckboxesData['{$checkedCheckboxesData.id}'][i] +']').prop('checked', true);
 //]]>
 </script>
 {/option:checkedCheckboxesData}

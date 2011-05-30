@@ -95,7 +95,7 @@ jsBackend.formBuilder.fields =
 			evt.preventDefault();
 			
 			// get id
-			var id = $(this).attr('rel');
+			var id = $(this).prop('rel');
 
 			// only when set
 			if(id != '')
@@ -139,7 +139,7 @@ jsBackend.formBuilder.fields =
 		$('.dialog').each(function()
 		{
 			// get id
-			var id = $(this).attr('id');
+			var id = $(this).prop('id');
 
 			// only when set
 			if(id != '')
@@ -235,7 +235,7 @@ jsBackend.formBuilder.fields =
 			evt.preventDefault();
 			
 			// get id
-			var id = $(this).attr('rel');
+			var id = $(this).prop('rel');
 			
 			// bind
 			if(id != ''){ $('#'+ id).dialog('open'); }
@@ -309,7 +309,7 @@ jsBackend.formBuilder.fields =
 			evt.preventDefault();
 			
 			// get id
-			var id = $(this).attr('rel');
+			var id = $(this).prop('rel');
 			
 			// only when set
 			if(id != '')
@@ -339,7 +339,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#textboxRequired').attr('checked', 'checked');
+										$('#textboxRequired').prop('checked', 'checked');
 										$('#textboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -367,7 +367,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#textareaRequired').attr('checked', 'checked');
+										$('#textareaRequired').prop('checked', 'checked');
 										$('#textareaRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -395,7 +395,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#dropdownRequired').attr('checked', 'checked');
+										$('#dropdownRequired').prop('checked', 'checked');
 										$('#dropdownRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -433,7 +433,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#radiobuttonRequired').attr('checked', 'checked');
+										$('#radiobuttonRequired').prop('checked', 'checked');
 										$('#radiobuttonRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -471,7 +471,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#checkboxRequired').attr('checked', 'checked');
+										$('#checkboxRequired').prop('checked', 'checked');
 										$('#checkboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -1169,7 +1169,7 @@ jsBackend.formBuilder.fields =
 		$('#'+ id +' .tabs .ui-tabs-panel').each(function()
 		{
 			// tab
-			var tabId = $(this).attr('id');
+			var tabId = $(this).prop('id');
 			
 			// loop tab errors
 			$(this).find('.formError').each(function()

@@ -212,7 +212,7 @@ jsBackend.mailmotor.linkAccount =
 						{
 							if($(this).text() == data.data.country)
 							{
-								$(this).attr('selected', true);
+								$(this).prop('selected', true);
 							}
 						});
 						
@@ -220,7 +220,7 @@ jsBackend.mailmotor.linkAccount =
 						{
 							if($(this).text() == data.data.timezone)
 							{
-								$(this).attr('selected', true);
+								$(this).prop('selected', true);
 							}
 						});
 						
@@ -596,7 +596,7 @@ jsBackend.mailmotor.templateSelection =
 			var radiobutton = $(this).find('input:radio:first');
 			
 			// set checked
-			radiobutton.attr('checked', 'checked');
+			radiobutton.prop('checked', 'checked');
 
 			// if the radiobutton is checked
 			if(radiobutton.is(':checked'))
