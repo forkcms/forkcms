@@ -110,8 +110,7 @@ jsFrontend.forms =
 			// set options
 			$(this).datepicker('option', { 
 				dateFormat: data.mask, 
-				firstDate: data.firstday,
-				defaultDate: value
+				firstDay: data.firstday,
 			}).datepicker('setDate', value);
 		});
 
