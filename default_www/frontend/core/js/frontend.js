@@ -106,8 +106,7 @@ jsFrontend.forms =
 			// set options
 			$(this).datepicker('option', { 
 				dateFormat: data.mask, 
-				firstDate: data.firstday,
-				defaultDate: value
+				firstDay: data.firstday,
 			}).datepicker('setDate', value);
 		});
 
@@ -130,6 +129,7 @@ jsFrontend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
 			$(this).datepicker('option', 
@@ -145,6 +145,7 @@ jsFrontend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
 			$(this).datepicker('option', 
