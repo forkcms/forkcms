@@ -4,12 +4,16 @@ if(!jsFrontend) { var jsFrontend = new Object(); }
 /**
  * Frontend related objects
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsFrontend =
 {
 	// datamembers
 	debug: false,
+	current:
+	{
+		language: '{$FRONTEND_LANGUAGE}'
+	},
 
 
 	// init, something like a constructor
@@ -130,6 +134,7 @@ jsFrontend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
 			$(this).datepicker('option', 
@@ -145,6 +150,7 @@ jsFrontend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
 			$(this).datepicker('option', 
@@ -239,7 +245,7 @@ jsFrontend.gravatar =
 			if(gravatarId != '')
 			{
 				// build url
-				var url = 'http://www.gravatar.com/avatar/'+ gravatarId + '?r=g&d=404';
+				var url = 'http://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=404';
 
 				// add size if set before
 				if(size != '') url += '&s=' + size;
@@ -273,22 +279,19 @@ jsFrontend.search =
 	// init, something like a constructor
 	init: function()
 	{
-		// split url to build the ajax-url
-		var chunks = document.location.pathname.split('/');
-
 		// autosuggest (search widget)
-		if($('input.autoSuggest').length > 0) jsFrontend.search.autosuggest(chunks[1], 55);
+		if($('input.autoSuggest').length > 0) jsFrontend.search.autosuggest(55);
 
 		// autocomplete (search results page: autocomplete based on known search terms)
-		if($('input.autoComplete').length > 0) jsFrontend.search.autocomplete(chunks[1]);
+		if($('input.autoComplete').length > 0) jsFrontend.search.autocomplete();
 
 		// livesuggest (search results page: live feed of matches)
-		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest(chunks[1]);
+		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
 	},
 
 
 	// autocomplete (search results page: autocomplete based on known search terms)
-	autocomplete: function(language)
+	autocomplete: function()
 	{
 		// autocomplete (based on saved search terms) on results page
 		$('input.autoComplete').autocomplete(
@@ -299,9 +302,9 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=autocomplete',
+					url: '/frontend/ajax.php?module=search&action=autocomplete&language=' + jsFrontend.current.language,
 					type: 'GET',
-					data: 'term='+ request.term +'&language='+ language,
+					data: 'term=' + request.term,
 					success: function(data, textStatus)
 					{
 						// init var
@@ -334,14 +337,14 @@ jsFrontend.search =
 			{
 				url: '/frontend/ajax.php?module=search&action=save',
 				type: 'GET',
-				data: 'term='+ $(this).val() +'&language='+ language
+				data: 'term=' + $(this).val() + '&language=' + jsFrontend.current.language
 			});
 		});
 	},
 
 
 	// autosuggest (search widget)
-	autosuggest: function(language, length)
+	autosuggest: function(length)
 	{
 		// set default values
 		if(typeof length == 'undefined') length = 100;
@@ -355,9 +358,9 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=autosuggest',
+					url: '/frontend/ajax.php?module=search&action=autosuggest&language=' + jsFrontend.current.language,
 					type: 'GET',
-					data: 'term='+ request.term +'&language='+ language +'&length='+ length,
+					data: 'term=' + request.term + '&length=' + length,
 					success: function(data, textStatus)
 					{
 						// init var
@@ -390,7 +393,7 @@ jsFrontend.search =
 			{
 				url: '/frontend/ajax.php?module=search&action=save',
 				type: 'GET',
-				data: 'term='+ $(this).val() +'&language='+ language
+				data: 'term=' + $(this).val() + '&language=' + jsFrontend.current.language
 			});
 		})
 		// and also: alter the autocomplete style: add description!
@@ -398,14 +401,14 @@ jsFrontend.search =
 		{
 			return $('<li></li>')
 			.data('item.autocomplete', item)
-			.append('<a><strong>'+ item.label +'</strong><br \>'+ item.desc +'</a>' )
+			.append('<a><strong>' + item.label + '</strong><br \>' + item.desc + '</a>' )
 			.appendTo(ul);
 		};
 	},
 
 
 	// livesuggest (search results page: live feed of matches)
-	livesuggest: function(language)
+	livesuggest: function()
 	{
 		// check if calls for live suggest are allowed
 		var allowCall = true;
@@ -425,9 +428,9 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=livesuggest',
+					url: '/frontend/ajax.php?module=search&action=livesuggest&language=' + jsFrontend.current.language,
 					type: 'GET',
-					data: 'term='+ $(this).val() +'&language='+ language,
+					data: 'term=' + $(this).val(),
 					success: function(data, textStatus)
 					{
 						// allow for new calls
