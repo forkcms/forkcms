@@ -891,7 +891,7 @@ jsBackend.forms =
 			// set options
 			$(this).datepicker('option', { 
 				dateFormat: data.mask, 
-				firstDate: data.firstday,
+				firstDate: data.firstday
 			}).datepicker('setDate', value);
 		});
 
