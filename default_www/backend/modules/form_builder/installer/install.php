@@ -42,6 +42,7 @@ class FormBuilderInstall extends ModuleInstaller
 		$this->setActionRights(1, 'form_builder', 'delete_field');
 		$this->setActionRights(1, 'form_builder', 'save_field');
 		$this->setActionRights(1, 'form_builder', 'sequence');
+		$this->setActionRights(1, 'form_builder', 'export_data');
 
 		// get search extra id
 		$searchId = (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
