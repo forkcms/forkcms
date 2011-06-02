@@ -25,6 +25,9 @@ class SearchInstall extends ModuleInstaller
 		// add 'search' as a module
 		$this->addModule('search', 'The search module.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('search', 'overview_num_items', 10);
 		$this->setSetting('search', 'validate_search', true);
@@ -55,7 +58,7 @@ class SearchInstall extends ModuleInstaller
 												array($searchID, $language)))
 			{
 				// insert search
-				$this->insertPage(array('title' => 'Search',
+				$this->insertPage(array('title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'root',
 										'language' => $language),
 									null,
@@ -68,9 +71,6 @@ class SearchInstall extends ModuleInstaller
 
 		// create module cache path
 		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/cache/search')) SpoonDirectory::create(PATH_WWW . '/frontend/cache/search');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 
 

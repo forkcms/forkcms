@@ -197,7 +197,7 @@ class FrontendModel
 		}
 
 		// if the setting doesn't exists, store it (it will be available from te cache)
-		if(!isset(self::$moduleSettings[$module][$name])) self::setModuleSetting($module, $name, $defaultValue);
+		if(!array_key_exists($module, self::$moduleSettings) || !array_key_exists($name, self::$moduleSettings[$module])) self::setModuleSetting($module, $name, $defaultValue);
 
 		// return
 		return self::$moduleSettings[$module][$name];

@@ -55,3 +55,15 @@
 //]]>
 </script>
 {/option:excludedCheckboxesData}
+
+{option:checkedCheckboxesData}
+<script type="text/javascript">
+//<![CDATA[
+	if(typeof checkedCheckboxesData != undefined) var checkedCheckboxesData = new Array();
+	checkedCheckboxesData['{$checkedCheckboxesData.id}'] = {$checkedCheckboxesData.JSON};
+
+	// loop and remove elements
+	for(var i in checkedCheckboxesData['{$checkedCheckboxesData.id}']) $('#{$checkedCheckboxesData.id} input[value='+ checkedCheckboxesData['{$checkedCheckboxesData.id}'][i] +']').attr('checked', true);
+//]]>
+</script>
+{/option:checkedCheckboxesData}

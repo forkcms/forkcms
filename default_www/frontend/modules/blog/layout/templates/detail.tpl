@@ -94,7 +94,7 @@
 		<section id="blogCommentForm" class="mod">
 			<div class="inner">
 				<header class="hd">
-					<h3>{$msgComment|ucfirst}</h3>
+					<h3 id="{$actComment}">{$msgComment|ucfirst}</h3>
 				</header>
 				<div class="bd">
 					{option:commentIsInModeration}<div class="message warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}

@@ -25,6 +25,9 @@ class TagsInstall extends ModuleInstaller
 		// add 'blog' as a module
 		$this->addModule('tags', 'The tags module.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// module rights
 		$this->setModuleRights(1, 'tags');
 
@@ -56,9 +59,6 @@ class TagsInstall extends ModuleInstaller
 									array('extra_id' => $tagsID));
 			}
 		}
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 

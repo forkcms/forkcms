@@ -38,6 +38,18 @@
         <translation language="en"><![CDATA[sent]]></translation>
         <translation language="nl"><![CDATA[verzonden]]></translation>
       </item>
+      <item type="label" name="SentMailings">
+        <translation language="en"><![CDATA[sent mailings]]></translation>
+        <translation language="nl"><![CDATA[verzonden nieuwsbrieven]]></translation>
+      </item>
+      <item type="label" name="Subscribe">
+        <translation language="en"><![CDATA[subscribe]]></translation>
+        <translation language="nl"><![CDATA[inschrijven]]></translation>
+      </item>
+      <item type="label" name="Unsubscribe">
+        <translation language="en"><![CDATA[unsubscribe]]></translation>
+        <translation language="nl"><![CDATA[uitschrijven]]></translation>
+      </item>
       <item type="message" name="NoSentMailings">
         <translation language="en"><![CDATA[So far]]></translation>
         <translation language="nl"><![CDATA[Er zijn tot dusver nog geen nieuwsbrieven verzonden.]]></translation>

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
  `template_id` int(11) NOT NULL default '0' COMMENT 'the template to use',
  `meta_id` int(11) NOT NULL COMMENT 'linked meta information',
  `language` varchar(5) NOT NULL COMMENT 'language of the content',
- `type` enum('home','root','page','meta','footer','external_alias','internal_alias') NOT NULL default 'root' COMMENT 'page, header, footer, ...',
+ `type` enum('home','root','page','meta','footer') NOT NULL default 'root' COMMENT 'page, header, footer, ...',
  `title` varchar(255) NOT NULL,
  `navigation_title` varchar(255) NOT NULL COMMENT 'title that will be used in the navigation',
  `navigation_title_overwrite` enum('N','Y') NOT NULL default 'N' COMMENT 'should we override the navigation title',

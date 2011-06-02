@@ -40,7 +40,7 @@ class UsersInstall extends ModuleInstaller
 			$settings['nickname'] = serialize('Fork CMS');
 			$settings['name'] = serialize('Fork');
 			$settings['surname'] = serialize('CMS');
-			$settings['interface_language'] = serialize('en');
+			$settings['interface_language'] = serialize($this->getVariable('default_interface_language'));
 			$settings['date_format'] = serialize('j F Y');
 			$settings['time_format'] = serialize('H:i');
 			$settings['datetime_format'] = serialize(unserialize($settings['date_format']) . ' ' . unserialize($settings['time_format']));
@@ -82,6 +82,9 @@ class UsersInstall extends ModuleInstaller
 		// add 'users' as a module
 		$this->addModule('users', 'User management.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('users', 'default_group', 1);
 		$this->setSetting('users', 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
@@ -95,9 +98,6 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'delete');
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// add default user
 		$this->addUser();

@@ -25,6 +25,9 @@ class ContentBlocksInstall extends ModuleInstaller
 		// add 'content_blocks' as a module
 		$this->addModule('content_blocks', 'The content blocks module.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('content_blocks', 'max_num_revisions', 20);
 
@@ -36,9 +39,6 @@ class ContentBlocksInstall extends ModuleInstaller
 		$this->setActionRights(1, 'content_blocks', 'delete');
 		$this->setActionRights(1, 'content_blocks', 'edit');
 		$this->setActionRights(1, 'content_blocks', 'index');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 
