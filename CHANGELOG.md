@@ -1,3 +1,14 @@
+2.3.0 (xxxx-xx-xx)
+--
+Bugfixes:
+
+
+Improvements:
+
+* Upgraded to jQuery 1.6.1
+* Upgraded to jQuery UI 1.8.13
+* Upgraded TinyMCE to 3.4.2
+
 2.2.0 (2011-06-01)
 --
 Bugfixes:
