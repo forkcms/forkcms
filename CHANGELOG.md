@@ -2,6 +2,8 @@
 --
 Bugfixes:
 
+* Core: When the metafields are disabled we don't have any values in the POST. When an error occurs in the other fields of the form the meta-fields would be cleared. As reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/164.
+
 
 Improvements:
 
