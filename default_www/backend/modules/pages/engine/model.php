@@ -732,7 +732,6 @@ class BackendPagesModel
 		$id = (int) $id;
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
-
 		// get page (active version)
 		$return = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM pages AS i
@@ -1588,7 +1587,7 @@ class BackendPagesModel
 		if($parentPageInfo['has_extra'] == 'Y' && !$isAction)
 		{
 			// set locale
-			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage());
+			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage(), true);
 
 			// get all onsite action
 			$actions = FrontendLanguage::getActions();

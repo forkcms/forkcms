@@ -145,7 +145,7 @@
 		
 		return this.each(function() 
 		{
-			var id = $(this).attr('id');
+			var id = $(this).prop('id');
 			
 			// append the button
 			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
@@ -160,13 +160,10 @@
 				var currentElement = $('#' + $(this).data('id'));
 				
 				// check if it isn't a text-element
-				if(currentElement.attr('type') != 'text')
+				if(currentElement.prop('type') != 'text')
 				{
 					// clone the current element
-					var newElement = currentElement.clone();
-					
-					// alter the type
-					newElement.attr('type', 'text');
+					var newElement = $('<input value="" id="'+ currentElement.prop('id') +'" name="'+ currentElement.prop('name') +'" maxlength="'+ currentElement.prop('maxlength') +'" class="'+ currentElement.prop('class') +'" type="text">');
 					
 					// insert the new element
 					newElement.insertBefore(currentElement);
@@ -462,13 +459,13 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).attr('id');
+			var id = $(this).prop('id');
 			var elements = get();
 			var blockSubmit = false;
 			var timer = null;
 
 			// reset label, so it points to the correct item
-			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
+			$('label[for="' + id + '"]').prop('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function(evt)
@@ -499,7 +496,7 @@
 			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '	<div id="elementList-' + id + '" class="tagList">' + '	</div>' + '</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
 
 
 			// prepend html
@@ -602,7 +599,7 @@
 				evt.stopPropagation();
 
 				// remove element
-				remove($(this).attr('rel'));
+				remove($(this).prop('rel'));
 			});
 
 			// add an element
@@ -752,13 +749,13 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).attr('id');
+			var id = $(this).prop('id');
 			var elements = get();
 			var blockSubmit = false;
 			var timer = null;
 
 			// reset label, so it points to the correct item
-			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
+			$('label[for="' + id + '"]').prop('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function(evt)
@@ -800,7 +797,7 @@
 						'</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
@@ -1049,7 +1046,7 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).attr('id');
+			var id = $(this).prop('id');
 			var possibleOptions = $(this).find('option');
 			var elements = get();
 			var blockSubmit = false;
@@ -1076,7 +1073,7 @@
 			
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
-				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
+				html +=	'				<option value="' + $(possibleOptions[i]).prop('value') + '">' + $(possibleOptions[i]).html() + '</option>';
 			}
 			
 			html +=		'			</select>' +
@@ -1094,7 +1091,7 @@
 						'</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
@@ -1187,7 +1184,7 @@
 								'	</li>';
 
 						// remove from dropdown
-						$('#addValue-' + id + ' option[value=' + elements[i] + ']').attr('disabled', 'disabled');
+						$('#addValue-' + id + ' option[value=' + elements[i] + ']').prop('disabled', 'disabled');
 					}
 
 					// end html
@@ -1199,13 +1196,13 @@
 
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
-				$('#addValue-' + id).removeClass('disabled').attr('disabled', '');
+				$('#addValue-' + id).removeClass('disabled').prop('disabled', '');
 				if($('#addValue-' + id + ' option:enabled').length == 0) 
 				{
 					$('#addButton-' + id).addClass('disabledButton');
-					$('#addValue-' + id).addClass('disabled').attr('disabled', 'disabled');
+					$('#addValue-' + id).addClass('disabled').prop('disabled', 'disabled');
 				}
-				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').attr('value'));
+				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').prop('value'));
 
 				// call callback if specified
 				if(options.afterBuild != null) { options.afterBuild(id); }
@@ -1242,7 +1239,7 @@
 				// set new value
 				$('#' + id).val(elements.join(options.splitChar));
 				
-				$('#addValue-' + id + ' option[value=' + value + ']').attr('disabled', '');
+				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', '');
 
 				// rebuild element list
 				build();
@@ -1281,7 +1278,7 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).attr('id');
+			var id = $(this).prop('id');
 			var elements = get();
 			var blockSubmit = false;
 
@@ -1305,7 +1302,7 @@
 			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
