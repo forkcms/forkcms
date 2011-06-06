@@ -75,6 +75,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
+		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addText('street', $this->record['street']);
 		$this->frm->addText('number', $this->record['number']);

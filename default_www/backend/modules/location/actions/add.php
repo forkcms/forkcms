@@ -47,6 +47,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title');
+		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
 		$this->frm->addEditor('text');
 		$this->frm->addText('street');
 		$this->frm->addText('number');

@@ -72,6 +72,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
+		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);

@@ -106,6 +106,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
+		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 
