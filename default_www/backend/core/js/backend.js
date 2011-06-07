@@ -220,15 +220,15 @@ jsBackend.controls =
 
 					if($(this).is(':checked'))
 					{
-						field.removeClass('disabled').prop('disabled', '');
+						field.removeClass('disabled').prop('disabled', false);
 						field.focus();
 					}
 
-					else field.addClass('disabled').prop('disabled', 'disabled');
+					else field.addClass('disabled').prop('disabled', true);
 				});
 
-				if(checkbox.is(':checked')) dropdown.removeClass('disabled').prop('disabled', '');
-				else dropdown.addClass('disabled').prop('disabled', 'disabled');
+				if(checkbox.is(':checked')) dropdown.removeClass('disabled').prop('disabled', false);
+				else dropdown.addClass('disabled').prop('disabled', true);
 			}
 		});
 	},
@@ -252,15 +252,15 @@ jsBackend.controls =
 
 					if($(this).is(':checked'))
 					{
-						field.removeClass('disabled').prop('disabled', '');
+						field.removeClass('disabled').prop('disabled', false);
 						field.focus();
 					}
 
-					else field.addClass('disabled').prop('disabled', 'disabled');
+					else field.addClass('disabled').prop('disabled', true);
 				});
 
-				if(checkbox.is(':checked')) textField.removeClass('disabled').prop('disabled', '');
-				else textField.addClass('disabled').prop('disabled', 'disabled');
+				if(checkbox.is(':checked')) textField.removeClass('disabled').prop('disabled', false);
+				else textField.addClass('disabled').prop('disabled', true);
 			}
 		});
 	},
@@ -282,13 +282,13 @@ jsBackend.controls =
 					$this = $(this);
 					
 					// disable all
-					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.prop('name') +']), select, textarea').addClass('disabled').prop('disbaled', 'disabled');
+					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.prop('name') +']), select, textarea').addClass('disabled').prop('disbaled', true);
 					
 					// get fields
 					var fields = $this.parents('li').find('input:not([name='+ radiobutton.prop('name') +']), select, textarea')
 
 					// enable
-					fields.removeClass('disabled').prop('disabled', '');
+					fields.removeClass('disabled').prop('disabled', false);
 					
 					// set focus
 					$(fields[0]).focus();
@@ -472,8 +472,8 @@ jsBackend.controls =
 	bindMassAction: function()
 	{
 		// set disabled
-		$('.tableOptions .massAction select').addClass('disabled').prop('disabled', 'disabled');
-		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', 'disabled');
+		$('.tableOptions .massAction select').addClass('disabled').prop('disabled', true);
+		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 
 		// hook change events
 		$('table input:checkbox').change(function(evt)
@@ -484,15 +484,15 @@ jsBackend.controls =
 			// any item checked?
 			if(table.find('input:checkbox:checked').length > 0)
 			{
-				table.find('.massAction select').removeClass('disabled').prop('disabled', '');
-				table.find('.massAction .submitButton').removeClass('disabledButton').prop('disabled', '');
+				table.find('.massAction select').removeClass('disabled').prop('disabled', false);
+				table.find('.massAction .submitButton').removeClass('disabledButton').prop('disabled', false);
 			}
 
 			// nothing checked
 			else
 			{
-				table.find('.massAction select').addClass('disabled').prop('disabled', 'disabled');
-				table.find('.massAction .submitButton').addClass('disabledButton').prop('disabled', 'disabled');
+				table.find('.massAction select').addClass('disabled').prop('disabled', true);
+				table.find('.massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 			}
 		});
 
@@ -590,11 +590,11 @@ jsBackend.controls =
 			// check mass checkbox
 			if($(this).closest('table').find('td.checkbox input:checkbox').length == $(this).closest('table').find('td.checkbox input:checkbox:checked').length)
 			{
-				$(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', 'checked');
+				$(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', true);
 			}
 
 			// uncheck mass checkbox
-			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', ''); }
+			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', false); }
 		});
 	},
 

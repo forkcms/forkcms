@@ -19,7 +19,7 @@ $(document).ready(function()
 		{
 			$('#languages').show();
 			$('#language').hide();
-			$('#defaultLanguage option').prop('disabled', 'disabled');
+			$('#defaultLanguage option').prop('disabled', true);
 			$('#languages input:checked').each(function() { $('#defaultLanguage option[value='+ $(this).val() +']').removeAttr('disabled'); });
 			if($('#defaultLanguage option[value='+ $('#defaultLanguage').val() +']').length == 0) $('#defaultLanguage').val($('#defaultLanguage option:enabled:first').val());
 		}
@@ -28,7 +28,7 @@ $(document).ready(function()
 
 	$('#languages input:checkbox').bind('change', function()
 	{
-		$('#defaultLanguage option').prop('disabled', 'disabled');
+		$('#defaultLanguage option').prop('disabled', true);
 		$('#languages input:checked').each(function() { $('#defaultLanguage option[value='+ $(this).val() +']').removeAttr('disabled'); });
 		if($('#defaultLanguage option[value='+ $('#defaultLanguage').val() +']').length == 0) $('#defaultLanguage').val($('#defaultLanguage option:enabled:first').val());
 		setInterfaceDefaultLanguage();
@@ -86,13 +86,13 @@ $(document).ready(function()
 			// just 1 language selected = only selected frontend language is available as interface language
 			if($('#languageTypeSingle').is(':checked'))
 			{
-				$('#defaultInterfaceLanguage option').prop('disabled', 'disabled');
+				$('#defaultInterfaceLanguage option').prop('disabled', true);
 				$('#defaultInterfaceLanguage option[value='+ $('#defaultLanguage').val() +']').removeAttr('disabled');
 				$('#defaultInterfaceLanguage').val($('#defaultInterfaceLanguage option:enabled:first').val());
 			}
 			else if($('#languageTypeMultiple').is(':checked'))
 			{
-				$('#defaultInterfaceLanguage option').prop('disabled', 'disabled');
+				$('#defaultInterfaceLanguage option').prop('disabled', true);
 				$('#languages input:checked').each(function() { $('#defaultInterfaceLanguage option[value='+ $(this).val() +']').removeAttr('disabled'); });
 				if($('#defaultInterfaceLanguage option[value='+ $('#defaultInterfaceLanguage').val() +']').length == 0) $('#defaultInterfaceLanguage').val($('#defaultInterfaceLanguage option:enabled:first').val());
 			}
@@ -101,7 +101,7 @@ $(document).ready(function()
 		// different languages than frontend
 		else
 		{
-			$('#defaultInterfaceLanguage option').prop('disabled', 'disabled');
+			$('#defaultInterfaceLanguage option').prop('disabled', true);
 			$('#interfaceLanguages input:checked').each(function() { $('#defaultInterfaceLanguage option[value='+ $(this).val() +']').removeAttr('disabled'); });
 			if($('#defaultInterfaceLanguage option[value='+ $('#defaultInterfaceLanguage').val() +']').length == 0) $('#defaultInterfaceLanguage').val($('#defaultInterfaceLanguage option:enabled:first').val());
 		}

@@ -74,7 +74,7 @@ jsBackend.pages.extras =
 				});
 
 				// no modules
-				if(!hasModules) $('#extraType option[value="block"]').prop('disabled', '');
+				if(!hasModules) $('#extraType option[value="block"]').prop('disabled', false);
 			}
 			
 			jsBackend.pages.extras.populateExtraModules(evt);
@@ -205,13 +205,13 @@ jsBackend.pages.extras =
 			$('#extraWarningAlreadyBlock').show();
 			
 			// disable blocks
-			$('#extraType option[value="block"]').prop('disabled', 'disabled');
+			$('#extraType option[value="block"]').prop('disabled', true);
 			
 			// get id
 			var id = $('#blockExtraId'+ blockId).val();
 			
 			// reenable
-			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').prop('disabled', '');
+			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').prop('disabled', false);
 		}
 		else
 		{
@@ -219,10 +219,10 @@ jsBackend.pages.extras =
 			$('#extraWarningAlreadyBlock').hide();
 
 			// enable blocks
-			$('#extraType option[value="block"]').prop('disabled', '');
+			$('#extraType option[value="block"]').prop('disabled', false);
 
 			// home can't have any modules linked!
-			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', 'disabled');
+			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', true);
 		}
 
 		// any extra selected before? And if so, does the extra still exists?
