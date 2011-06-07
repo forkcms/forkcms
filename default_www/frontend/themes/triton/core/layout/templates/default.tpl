@@ -235,7 +235,7 @@
 		<script src="{$javascriptFiles.file}"></script>
 	{/iteration:javascriptFiles}
 
-	{* Module specific Javascript *}
+	{* Theme specific Javascript *}
 	<script src="{$THEME_URL}/core/js/triton.js"></script>
 </body>
 </html>
