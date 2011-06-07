@@ -381,6 +381,9 @@ jsBackend.controls =
 
 			// get id
 			var id = $(this).prop('href');
+			
+			// IE8 prepends full current url before links to #
+			id = id.substring(id.indexOf('#'));
 
 			if($(id).is(':visible'))
 			{

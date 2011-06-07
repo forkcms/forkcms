@@ -59,6 +59,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title');
+		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
 		$this->frm->addEditor('text');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
