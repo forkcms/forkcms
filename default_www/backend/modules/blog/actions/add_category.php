@@ -46,8 +46,7 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addCategory');
 
 		// create elements
-		$this->frm->addText('title', null, 255);
-		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
+		$this->frm->addText('title', null, 255, 'inputText title', 'inputTextError title');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
