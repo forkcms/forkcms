@@ -182,7 +182,8 @@
 				newElement.val(pass).keyup();
 			}
 			
-			function generatePass(length, uppercase, lowercase, numbers, specialchars) {
+			function generatePass(length, uppercase, lowercase, numbers, specialchars) 
+			{
 				// the vowels
 				var v = new Array('a', 'e','u', 'ae', 'ea');
 				
@@ -476,7 +477,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);
@@ -766,7 +767,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);

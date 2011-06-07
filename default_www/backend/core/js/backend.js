@@ -153,7 +153,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeIn(500);
 
 				// set focus on first visible field
-				if($('#'+ id +' form input:visible:first').length > 0) $('#'+ id +' form input:visible:first').focus();
+				$('#'+ id +' form input:visible:first').focus();
 
 				// bind resize
 				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ id)); });
@@ -210,8 +210,8 @@ jsBackend.controls =
 			// check if needed element exists
 			if($(this).find('input:checkbox').length > 0 && $(this).find('select').length > 0)
 			{
-				var checkbox = $($(this).find('input:checkbox')[0]);
-				var dropdown = $($(this).find('select')[0]);
+				var checkbox = $(this).find('input:checkbox').eq(0);
+				var dropdown = $(this).find('select').eq(0);
 
 				checkbox.bind('change', function(evt)
 				{
@@ -242,8 +242,8 @@ jsBackend.controls =
 			// check if needed element exists
 			if($(this).find('input:checkbox').length > 0 && $(this).find('input:text').length > 0)
 			{
-				var checkbox = $($(this).find('input:checkbox')[0]);
-				var textField = $($(this).find('input:text')[0]);
+				var checkbox = $(this).find('input:checkbox').eq(0);
+				var textField = $(this).find('input:text').eq(0);
 
 				checkbox.bind('change', function(evt)
 				{
@@ -479,7 +479,7 @@ jsBackend.controls =
 		$('table input:checkbox').change(function(evt)
 		{
 			// get parent table
-			var table = $($(this).parents('table.datagrid'));
+			var table = $(this).parents('table.datagrid').eq(0);
 
 			// any item checked?
 			if(table.find('input:checkbox:checked').length > 0)
@@ -518,7 +518,7 @@ jsBackend.controls =
 							$(this).dialog('close');
 
 							// submit the form
-							$($('select:visible option[data-message-id='+ $(this).prop('id') +']').parents('form')[0]).submit();
+							$('select:visible option[data-message-id='+ $(this).prop('id') +']').parents('form').eq(0).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
@@ -560,11 +560,11 @@ jsBackend.controls =
 					}
 
 					// no confirm
-					else $($(this).parents('form')).submit();
+					else $(this).parents('form').submit();
 				}
 
 				// no confirm
-				else $($(this).parents('form')).submit();
+				else $(this).parents('form').submit();
 			}
 		});
 	},
@@ -577,11 +577,11 @@ jsBackend.controls =
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt)
 		{
 			// check or uncheck all the checkboxes in this datagrid
-			$($(this).closest('table').find('td input:checkbox')).prop('checked', $(this).is(':checked'));
+			$(this).closest('table').find('td input:checkbox').prop('checked', $(this).is(':checked'));
 
 			// set selected class
-			if($(this).is(':checked')) $($(this).parents().filter('table')[0]).find('tbody tr').addClass('selected');
-			else $($(this).parents().filter('table')[0]).find('tbody tr').removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('table').eq(0).find('tbody tr').addClass('selected');
+			else $(this).parents().filter('table').eq(0).find('tbody tr').removeClass('selected');
 		});
 
 		// single checkbox changed
@@ -726,13 +726,13 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function() { $($(this).parents().filter('tr')[0]).addClass('selected'); });
+		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
 		$('tr td input:checkbox').live('change', function(evt)
 		{
-			if($(this).is(':checked')) $($(this).parents().filter('tr')[0]).addClass('selected');
-			else $($(this).parents().filter('tr')[0]).removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
+			else $(this).parents().filter('tr').eq(0).removeClass('selected');
 		});
 	},
 
@@ -872,7 +872,8 @@ jsBackend.forms =
 		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
 		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
 		
-		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker({
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+		{
 			dayNames: dayNames,
 			dayNamesMin: dayNamesMin,
 			dayNamesShort: dayNamesShort,
@@ -1035,7 +1036,7 @@ jsBackend.forms =
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function()
 					{
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).prop('id')).replace('{class}', 'submitButton button ' + $(this).prop('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).prop('tabindex', -1);
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).prop('id')).replace('{class}', 'submitButton button ' + $(this).prop('class'))).css({ position:'absolute', top:'-9000px', left: '-9000px' }).prop('tabindex', -1);
 					});
 
 					// add onclick event for button (button can't have the name submit)
@@ -1063,8 +1064,31 @@ jsBackend.forms =
 	// add tagbox to the correct input fields
 	tagBoxes: function()
 	{
-		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
-		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
+		if($('#sidebar input.tagBox').length > 0) 
+		{ 
+			$('#sidebar input.tagBox').tagBox(
+				{ 
+					emptyMessage: '{$msgNoTags|addslashes}', 
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
+					addLabel: '{$lblAdd|ucfirst}', 
+					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' 
+				}
+			); 
+		}
+		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) 
+		{ 
+			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
+				{ 
+					emptyMessage: '{$msgNoTags|addslashes}', 
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
+					addLabel: '{$lblAdd|ucfirst}', 
+					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', 
+					showIconOnly: false 
+				}
+			);
+		}
 	},
 	
 	
@@ -1279,7 +1303,7 @@ jsBackend.messages =
 		$('#messaging .formMessage .iconClose').live('click', function(evt)
 		{
 			evt.preventDefault();
-			jsBackend.messages.hide($($(this).parents('.formMessage')));
+			jsBackend.messages.hide($(this).parents('.formMessage'));
 		});
 	},
 
@@ -1594,9 +1618,6 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						cache: false,
-						type: 'POST',
-						dataType: 'json',
 						url: url,
 						data: 'new_id_sequence=' + newIdSequence.join(','),
 						success: function(data, textStatus)
