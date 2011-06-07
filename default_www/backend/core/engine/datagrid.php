@@ -408,7 +408,7 @@ class BackendDataGrid extends SpoonDataGrid
 			$attributes = $this->getAttributes();
 
 			// set if needed
-			if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_'. time()));
+			if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
 
 			// fetch the datagrid attributes
 			$attributes = $this->getAttributes();

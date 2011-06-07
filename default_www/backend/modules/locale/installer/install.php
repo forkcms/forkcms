@@ -26,6 +26,9 @@ class LocaleInstall extends ModuleInstaller
 		// add 'locale' as a module
 		$this->addModule('locale', 'The module to manage your website/cms locale.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('locale', 'languages', array('de', 'en', 'es', 'fr', 'nl'));
 
@@ -41,9 +44,6 @@ class LocaleInstall extends ModuleInstaller
 		$this->setActionRights(1, 'locale', 'import');
 		$this->setActionRights(1, 'locale', 'index');
 		$this->setActionRights(1, 'locale', 'mass_action');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 

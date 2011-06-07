@@ -1773,6 +1773,10 @@
         <translation language="nl"><![CDATA[datum]]></translation>
         <translation language="en"><![CDATA[date]]></translation>
       </item>
+      <item type="label" name="Disclaimer">
+        <translation language="nl"><![CDATA[disclaimer]]></translation>
+        <translation language="en"><![CDATA[disclaimer]]></translation>
+      </item>
       <item type="label" name="Email">
         <translation language="nl"><![CDATA[e-mail]]></translation>
         <translation language="en"><![CDATA[e-mail]]></translation>
@@ -1872,6 +1876,10 @@
       <item type="label" name="SearchTerm">
         <translation language="nl"><![CDATA[zoekterm]]></translation>
         <translation language="en"><![CDATA[searchterm]]></translation>
+      </item>
+      <item type="label" name="Sitemap">
+        <translation language="nl"><![CDATA[sitemap]]></translation>
+        <translation language="en"><![CDATA[sitemap]]></translation>
       </item>
       <item type="label" name="SkipToContent">
         <translation language="nl"><![CDATA[ga naar de inhoud]]></translation>

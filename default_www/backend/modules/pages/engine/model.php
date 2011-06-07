@@ -732,7 +732,6 @@ class BackendPagesModel
 		$id = (int) $id;
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
-
 		// get page (active version)
 		$return = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM pages AS i
@@ -1130,7 +1129,7 @@ class BackendPagesModel
 
 				// get URL for parent
 				$title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-				$title = trim($title, ucfirst(BL::lbl('Home')) .' > ');
+				$title = trim($title, ucfirst(BL::lbl('Home')) . ' > ');
 
 				// add it
 				$titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
@@ -1588,7 +1587,7 @@ class BackendPagesModel
 		if($parentPageInfo['has_extra'] == 'Y' && !$isAction)
 		{
 			// set locale
-			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage());
+			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage(), true);
 
 			// get all onsite action
 			$actions = FrontendLanguage::getActions();
@@ -1669,8 +1668,12 @@ class BackendPagesModel
 		// update page
 		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
-		// insert blocks
-		$db->insert('pages_blocks', $blocks);
+		// loop blocks
+		foreach($blocks as $block)
+		{
+			// insert blocks
+			$db->insert('pages_blocks', $block);
+		}
 	}
 
 
@@ -1980,8 +1983,12 @@ class BackendPagesModel
 		// update old revisions
 		$db->update('pages_blocks', array('status' => 'archive'), 'revision_id = ?', array($blocks[0]['revision_id']));
 
-		// insert
-		$db->insert('pages_blocks', $blocks);
+		// loop blocks
+		foreach($blocks as $block)
+		{
+			// insert
+			$db->insert('pages_blocks', $block);
+		}
 	}
 
 
@@ -1996,20 +2003,17 @@ class BackendPagesModel
 	{
 		// fetch new template data
 		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
+		$newTemplate['data'] = @unserialize($newTemplate['data']);
 
-		// loop to update all pages
-		while(true)
+		// fetch all pages
+		$pages = BackendModel::getDB()->getRecords('SELECT *
+													FROM pages
+													WHERE template_id = ? AND status IN (?, ?)',
+													array($oldTemplateId, 'active', 'draft'));
+
+		// loop pages
+		foreach($pages as $page)
 		{
-			// fetch a page
-			$page = BackendModel::getDB()->getRecord('SELECT *
-														FROM pages
-														WHERE template_id = ? AND status IN (?, ?)
-														LIMIT 1',
-														array($oldTemplateId, 'active', 'draft'));
-
-			// none found?
-			if(!$page) break;
-
 			// fetch blocks
 			$blocksContent = BackendPagesModel::getBlocksRevision($page['id'], $page['revision_id'], $page['language']);
 
@@ -2034,18 +2038,52 @@ class BackendPagesModel
 				if(isset($blocksContent[$i]))
 				{
 					$block = $blocksContent[$i];
+					$block['created_on'] = BackendModel::getUTCDate(null, $block['created_on']);
+					$block['edited_on'] = BackendModel::getUTCDate(null, $block['edited_on']);
 					$block['revision_id'] = $page['revision_id'];
 				}
+
 				// create missing blocks as editor
 				else
 				{
 					$block['id'] = BackendPagesModel::getMaximumBlockId() + $i + 1;
 					$block['revision_id'] = $page['revision_id'];
-					$block['extra_id'] = null;
 					$block['html'] = '';
 					$block['status'] = 'active';
 					$block['created_on'] = BackendModel::getUTCDate();
 					$block['edited_on'] = $block['created_on'];
+
+					// get default extras in this language
+					if(isset($newTemplate['data']['default_extras_' . $page['language']]))
+					{
+						// check if a default extra has been defined
+						if($newTemplate['data']['default_extras_' . $page['language']][$i] != 'editor')
+						{
+							$page['has_extra'] = 'Y';
+							$block['extra_id'] = $newTemplate['data']['default_extras_' . $page['language']][$i];
+						}
+						// no default extra defined
+						else
+						{
+							$block['extra_id'] = null;
+						}
+					}
+
+					// no specific extras for this language, get global extras
+					else
+					{
+						// check if a default extra has been defined
+						if($newTemplate['data']['default_extras'][$i] != 'editor')
+						{
+							$page['has_extra'] = 'Y';
+							$block['extra_id'] = $newTemplate['data']['default_extras'][$i];
+						}
+						// no default extra defined
+						else
+						{
+							$block['extra_id'] = null;
+						}
+					}
 				}
 
 				// add block
@@ -2053,7 +2091,7 @@ class BackendPagesModel
 			}
 
 			// insert the blocks
-			BackendPagesModel::insertBlocks($blocks, ($page['has_extra'] == 'Y'));
+			BackendPagesModel::updateBlocks($blocks, ($page['has_extra'] == 'Y'));
 		}
 	}
 

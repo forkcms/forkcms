@@ -24,6 +24,9 @@ class LocationInstall extends ModuleInstaller
 		// add 'location' as a module
 		$this->addModule('location', 'The location module.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('location', 'zoom_level', 'auto');
 		$this->setSetting('location', 'width', 400);
@@ -49,9 +52,6 @@ class LocationInstall extends ModuleInstaller
 
 		// add extra's
 		$this->insertExtra('location', 'block', 'Location', null, 'a:1:{s:3:"url";s:37:"/private/nl/location/index?token=true";}', 'N');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 

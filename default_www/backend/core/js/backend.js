@@ -108,7 +108,7 @@ jsBackend.balloons =
 		$('.balloon:visible').each(function()
 		{
 			// search linked element
-			var linkedElement = $('*[data-message-id='+ $(this).attr('id') +']');
+			var linkedElement = $('*[data-message-id='+ $(this).prop('id') +']');
 
 			// linked item found?
 			if(linkedElement != null)
@@ -128,8 +128,8 @@ jsBackend.balloons =
 		var clickedElement = $(this);
 
 		// get linked balloon
-		var id = clickedElement.data('message-id');
-
+		var id = clickedElement.data('messageId');
+		
 		// rel available?
 		if(id != '')
 		{
@@ -153,7 +153,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeIn(500);
 
 				// set focus on first visible field
-				if($('#'+ id +' form input:visible:first').length > 0) $('#'+ id +' form input:visible:first').focus();
+				$('#'+ id +' form input:visible:first').focus();
 
 				// bind resize
 				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ id)); });
@@ -210,8 +210,8 @@ jsBackend.controls =
 			// check if needed element exists
 			if($(this).find('input:checkbox').length > 0 && $(this).find('select').length > 0)
 			{
-				var checkbox = $($(this).find('input:checkbox')[0]);
-				var dropdown = $($(this).find('select')[0]);
+				var checkbox = $(this).find('input:checkbox').eq(0);
+				var dropdown = $(this).find('select').eq(0);
 
 				checkbox.bind('change', function(evt)
 				{
@@ -220,15 +220,15 @@ jsBackend.controls =
 
 					if($(this).is(':checked'))
 					{
-						field.removeClass('disabled').attr('disabled', '');
+						field.removeClass('disabled').prop('disabled', false);
 						field.focus();
 					}
 
-					else field.addClass('disabled').attr('disabled', 'disabled');
+					else field.addClass('disabled').prop('disabled', true);
 				});
 
-				if(checkbox.is(':checked')) dropdown.removeClass('disabled').attr('disabled', '');
-				else dropdown.addClass('disabled').attr('disabled', 'disabled');
+				if(checkbox.is(':checked')) dropdown.removeClass('disabled').prop('disabled', false);
+				else dropdown.addClass('disabled').prop('disabled', true);
 			}
 		});
 	},
@@ -242,8 +242,8 @@ jsBackend.controls =
 			// check if needed element exists
 			if($(this).find('input:checkbox').length > 0 && $(this).find('input:text').length > 0)
 			{
-				var checkbox = $($(this).find('input:checkbox')[0]);
-				var textField = $($(this).find('input:text')[0]);
+				var checkbox = $(this).find('input:checkbox').eq(0);
+				var textField = $(this).find('input:text').eq(0);
 
 				checkbox.bind('change', function(evt)
 				{
@@ -252,15 +252,15 @@ jsBackend.controls =
 
 					if($(this).is(':checked'))
 					{
-						field.removeClass('disabled').attr('disabled', '');
+						field.removeClass('disabled').prop('disabled', false);
 						field.focus();
 					}
 
-					else field.addClass('disabled').attr('disabled', 'disabled');
+					else field.addClass('disabled').prop('disabled', true);
 				});
 
-				if(checkbox.is(':checked')) textField.removeClass('disabled').attr('disabled', '');
-				else textField.addClass('disabled').attr('disabled', 'disabled');
+				if(checkbox.is(':checked')) textField.removeClass('disabled').prop('disabled', false);
+				else textField.addClass('disabled').prop('disabled', true);
 			}
 		});
 	},
@@ -282,13 +282,13 @@ jsBackend.controls =
 					$this = $(this);
 					
 					// disable all
-					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').attr('disbaled', 'disabled');
+					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.prop('name') +']), select, textarea').addClass('disabled').prop('disbaled', true);
 					
 					// get fields
-					var fields = $this.parents('li').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea')
+					var fields = $this.parents('li').find('input:not([name='+ radiobutton.prop('name') +']), select, textarea')
 
 					// enable
-					fields.removeClass('disabled').attr('disabled', '');
+					fields.removeClass('disabled').prop('disabled', false);
 					
 					// set focus
 					$(fields[0]).focus();
@@ -307,8 +307,8 @@ jsBackend.controls =
 		$('.askConfirmation').each(function()
 		{
 			// get id
-			var id = $(this).data('message-id');
-			var url = $(this).attr('href');
+			var id = $(this).data('messageId');
+			var url = $(this).prop('href');
 
 			if(id != '' && url != '')
 			{
@@ -353,13 +353,13 @@ jsBackend.controls =
 			evt.preventDefault();
 
 			// get id
-			var id = $(this).data('message-id');
+			var id = $(this).data('messageId');
 
 			// bind
 			if(id != '')
 			{
 				// set target
-				$('#'+ id).data('message-id', $(this).attr('href'));
+				$('#'+ id).data('messageId', $(this).prop('href'));
 
 				// open dialog
 				$('#'+ id).dialog('open');
@@ -380,7 +380,10 @@ jsBackend.controls =
 			evt.stopPropagation();
 
 			// get id
-			var id = $(this).attr('href');
+			var id = $(this).prop('href');
+			
+			// IE8 prepends full current url before links to #
+			id = id.substring(id.indexOf('#'));
 
 			if($(id).is(':visible'))
 			{
@@ -469,27 +472,27 @@ jsBackend.controls =
 	bindMassAction: function()
 	{
 		// set disabled
-		$('.tableOptions .massAction select').addClass('disabled').attr('disabled', 'disabled');
-		$('.tableOptions .massAction .submitButton').addClass('disabledButton').attr('disabled', 'disabled');
+		$('.tableOptions .massAction select').addClass('disabled').prop('disabled', true);
+		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 
 		// hook change events
 		$('table input:checkbox').change(function(evt)
 		{
 			// get parent table
-			var table = $($(this).parents('table.datagrid'));
+			var table = $(this).parents('table.datagrid').eq(0);
 
 			// any item checked?
 			if(table.find('input:checkbox:checked').length > 0)
 			{
-				table.find('.massAction select').removeClass('disabled').attr('disabled', '');
-				table.find('.massAction .submitButton').removeClass('disabledButton').attr('disabled', '');
+				table.find('.massAction select').removeClass('disabled').prop('disabled', false);
+				table.find('.massAction .submitButton').removeClass('disabledButton').prop('disabled', false);
 			}
 
 			// nothing checked
 			else
 			{
-				table.find('.massAction select').addClass('disabled').attr('disabled', 'disabled');
-				table.find('.massAction .submitButton').addClass('disabledButton').attr('disabled', 'disabled');
+				table.find('.massAction select').addClass('disabled').prop('disabled', true);
+				table.find('.massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 			}
 		});
 
@@ -497,7 +500,7 @@ jsBackend.controls =
 		$('.tableOptions .massAction option').each(function()
 		{
 			// get id
-			var id = $(this).data('message-id');
+			var id = $(this).data('messageId');
 
 			if(typeof id != 'undefined')
 			{
@@ -515,7 +518,7 @@ jsBackend.controls =
 							$(this).dialog('close');
 
 							// submit the form
-							$($('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form')[0]).submit();
+							$('select:visible option[data-message-id='+ $(this).prop('id') +']').parents('form').eq(0).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
@@ -547,21 +550,21 @@ jsBackend.controls =
 					var element = $(this).parents('.massAction').find('select[name=action] option:selected');
 
 					// if the rel-attribute exists we should show the dialog
-					if(typeof element.data('message-id') != 'undefined')
+					if(typeof element.data('messageId') != 'undefined')
 					{
 						// get id
-						var id = element.data('message-id');
+						var id = element.data('messageId');
 
 						// open dialog
 						$('#'+ id).dialog('open');
 					}
 
 					// no confirm
-					else $($(this).parents('form')).submit();
+					else $(this).parents('form').submit();
 				}
 
 				// no confirm
-				else $($(this).parents('form')).submit();
+				else $(this).parents('form').submit();
 			}
 		});
 	},
@@ -574,11 +577,11 @@ jsBackend.controls =
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt)
 		{
 			// check or uncheck all the checkboxes in this datagrid
-			$($(this).closest('table').find('td input:checkbox')).attr('checked', $(this).is(':checked'));
+			$(this).closest('table').find('td input:checkbox').prop('checked', $(this).is(':checked'));
 
 			// set selected class
-			if($(this).is(':checked')) $($(this).parents().filter('table')[0]).find('tbody tr').addClass('selected');
-			else $($(this).parents().filter('table')[0]).find('tbody tr').removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('table').eq(0).find('tbody tr').addClass('selected');
+			else $(this).parents().filter('table').eq(0).find('tbody tr').removeClass('selected');
 		});
 
 		// single checkbox changed
@@ -587,11 +590,11 @@ jsBackend.controls =
 			// check mass checkbox
 			if($(this).closest('table').find('td.checkbox input:checkbox').length == $(this).closest('table').find('td.checkbox input:checkbox:checked').length)
 			{
-				$(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', 'checked');
+				$(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', true);
 			}
 
 			// uncheck mass checkbox
-			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', ''); }
+			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', false); }
 		});
 	},
 
@@ -622,7 +625,7 @@ jsBackend.controls =
 			{
 				// grab id
 				var id = $(this).data('id');
-				var wrapperId = $(this).attr('id');
+				var wrapperId = $(this).prop('id');
 
 				// hide all
 				$('#'+ wrapperId +' p.strength').hide();
@@ -707,7 +710,7 @@ jsBackend.controls =
 			evt.preventDefault();
 
 			// get id
-			var id = $(this).attr('href');
+			var id = $(this).prop('href');
 
 			// show/hide
 			$(id).toggle();
@@ -723,13 +726,13 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function() { $($(this).parents().filter('tr')[0]).addClass('selected'); });
+		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
 		$('tr td input:checkbox').live('change', function(evt)
 		{
-			if($(this).is(':checked')) $($(this).parents().filter('tr')[0]).addClass('selected');
-			else $($(this).parents().filter('tr')[0]).removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
+			else $(this).parents().filter('tr').eq(0).removeClass('selected');
 		});
 	},
 
@@ -737,7 +740,7 @@ jsBackend.controls =
 	// bind target blank
 	bindTargetBlank: function()
 	{
-		$('a.targetBlank').attr('target', '_blank');
+		$('a.targetBlank').prop('target', '_blank');
 	},
 
 
@@ -869,7 +872,8 @@ jsBackend.forms =
 		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
 		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
 		
-		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker({
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+		{
 			dayNames: dayNames,
 			dayNamesMin: dayNamesMin,
 			dayNamesShort: dayNamesShort,
@@ -886,11 +890,13 @@ jsBackend.forms =
 		{
 			// get data
 			var data = $(this).data();
-
+			var value = $(this).val();
+			
 			// set options
 			$(this).datepicker('option', { 
-				dateFormat: data.mask, firstDay: data.firstday 
-			});
+				dateFormat: data.mask, 
+				firstDate: data.firstday
+			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain startdate
@@ -898,13 +904,13 @@ jsBackend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', {
-				dateFormat: data.mask,
-				firstDay: data.firstday,
+			$(this).datepicker('option', { 
+				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
-			});
+			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain enddate
@@ -912,6 +918,7 @@ jsBackend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
 			$(this).datepicker('option', 
@@ -919,7 +926,7 @@ jsBackend.forms =
 				dateFormat: data.mask,
 				firstDay: data.firstday,
 				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
-			});
+			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain range
@@ -927,6 +934,7 @@ jsBackend.forms =
 		{
 			// get data
 			var data = $(this).data();
+			var value = $(this).val();
 
 			// set options
 			$(this).datepicker('option', 
@@ -935,7 +943,7 @@ jsBackend.forms =
 				firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
 				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
-			});
+			}).datepicker('setDate', value);
 		});
 	},
 
@@ -962,7 +970,7 @@ jsBackend.forms =
 				var input = $(this);
 
 				// only do something when the current value and the placeholder are the same
-				if(input.val() == input.attr('placeholder'))
+				if(input.val() == input.prop('placeholder'))
 				{
 					// clear
 					input.val('');
@@ -978,10 +986,10 @@ jsBackend.forms =
 				var input = $(this);
 
 				// only do something when the input is empty or the value is the same as the placeholder
-				if(input.val() == '' || input.val() == input.attr('placeholder'))
+				if(input.val() == '' || input.val() == input.prop('placeholder'))
 				{
 					// set placeholder
-					input.val(input.attr('placeholder'));
+					input.val(input.prop('placeholder'));
 
 					// add class
 					input.addClass('placeholder');
@@ -1001,7 +1009,7 @@ jsBackend.forms =
 					var input = $(this);
 
 					// if the value and the placeholder are the same reset the value
-					if(input.val() == input.attr('placeholder')) input.val('');
+					if(input.val() == input.prop('placeholder')) input.val('');
 				});
 			});
 		}
@@ -1019,7 +1027,7 @@ jsBackend.forms =
 			$('form.submitWithLink').each(function()
 			{
 				// get id
-				var formId = $(this).attr('id');
+				var formId = $(this).prop('id');
 				var dontSubmit = false;
 
 				// validate id
@@ -1028,7 +1036,7 @@ jsBackend.forms =
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function()
 					{
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).prop('id')).replace('{class}', 'submitButton button ' + $(this).prop('class'))).css({ position:'absolute', top:'-9000px', left: '-9000px' }).prop('tabindex', -1);
 					});
 
 					// add onclick event for button (button can't have the name submit)
@@ -1037,7 +1045,7 @@ jsBackend.forms =
 						evt.preventDefault();
 
 						// is the button disabled?
-						if($(this).attr('disabled') == 'disabled') return false;
+						if($(this).prop('disabled') == 'disabled') return false;
 						else $('form#'+ formId).submit();
 					});
 
@@ -1056,8 +1064,31 @@ jsBackend.forms =
 	// add tagbox to the correct input fields
 	tagBoxes: function()
 	{
-		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
-		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
+		if($('#sidebar input.tagBox').length > 0) 
+		{ 
+			$('#sidebar input.tagBox').tagBox(
+				{ 
+					emptyMessage: '{$msgNoTags|addslashes}', 
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
+					addLabel: '{$lblAdd|ucfirst}', 
+					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' 
+				}
+			); 
+		}
+		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) 
+		{ 
+			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
+				{ 
+					emptyMessage: '{$msgNoTags|addslashes}', 
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
+					addLabel: '{$lblAdd|ucfirst}', 
+					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', 
+					showIconOnly: false 
+				}
+			);
+		}
 	},
 	
 	
@@ -1272,7 +1303,7 @@ jsBackend.messages =
 		$('#messaging .formMessage .iconClose').live('click', function(evt)
 		{
 			evt.preventDefault();
-			jsBackend.messages.hide($($(this).parents('.formMessage')));
+			jsBackend.messages.hide($(this).parents('.formMessage'));
 		});
 	},
 
@@ -1331,7 +1362,7 @@ jsBackend.tabs =
 			$('.tabs .ui-tabs-panel').each(function()
 			{
 				if($(this).find('.formError:visible').length > 0) {
-					$($('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent()).addClass('ui-state-error');
+					$($('.ui-tabs-nav a[href="#'+ $(this).prop('id') +'"]').parent()).addClass('ui-state-error');
 				}
 			});
 		}
@@ -1366,7 +1397,7 @@ jsBackend.tabs =
 			{
 				// prevent default
 				evt.preventDefault();
-				$('.tabs').tabs('select', $(this).attr('href'));
+				$('.tabs').tabs('select', $(this).prop('href'));
 			});
 		}
 	},
@@ -1393,7 +1424,7 @@ jsBackend.tinyMCE =
 		$('.clickToEdit').live('click', function(evt)
 		{
 			// get id
-			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
+			var id = $(this).siblings('textarea.inputEditor:first').prop('id');
 
 			// validate id
 			if(typeof id != undefined)
@@ -1432,7 +1463,7 @@ jsBackend.tinyMCE =
 		var $tmp = $('<div />').html(object.content);
 
 		// replace target="_blank" with class="targetBlank"
-		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
+		$tmp.find('a.targetBlank').removeClass('targetBlank').prop('target', '_blank');
 
 		// resave
 		object.content = utils.string.xhtml($tmp.html());
@@ -1587,9 +1618,6 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						cache: false,
-						type: 'POST',
-						dataType: 'json',
 						url: url,
 						data: 'new_id_sequence=' + newIdSequence.join(','),
 						success: function(data, textStatus)

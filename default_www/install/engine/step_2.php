@@ -65,7 +65,7 @@ class InstallerStep2 extends InstallerStep
 		$version = (int) str_replace('.', '', PHP_VERSION);
 
 		// we require at least 5.2.x
-		self::checkRequirement('phpVersion', $version >= 520, $variables);
+		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.2.0-whatever', '>='), $variables);
 
 		/*
 		 * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
