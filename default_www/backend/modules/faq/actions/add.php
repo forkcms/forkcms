@@ -75,6 +75,7 @@ class BackendFaqAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('question')->setAttribute('id', 'title');
+		$this->frm->getField('question')->setAttribute('class', 'title ' . $this->frm->getField('question')->getAttribute('class'));
 		$this->frm->addEditor('answer');
 		$this->frm->addDropdown('categories', $this->categories);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');

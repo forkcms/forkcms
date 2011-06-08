@@ -1,3 +1,16 @@
+2.3.0 (2011-06-07)
+--
+Bugfixes:
+
+* Core: when the metafields are disabled we don't have any values in the POST. When an error occurs in the other fields of the form the meta-fields would be cleared. As reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/164.
+* Pages: moving pages for a non-active language failed, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/163.
+
+Improvements:
+
+* Core: Upgraded to jQuery 1.6.1
+* Core: Upgraded to jQuery UI 1.8.13
+* Core: Upgraded TinyMCE to 3.4.2
+
 2.2.0 (2011-06-01)
 --
 Bugfixes:

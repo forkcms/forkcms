@@ -46,19 +46,11 @@ function toggleWordWrap(elm) {
 
 function resizeInputs() {
 	var vp = tinyMCEPopup.dom.getViewPort(window), el;
-}
 
-function resizeInputs() {
-	var el = document.getElementById('htmlSource');
+	el = document.getElementById('htmlSource');
 
-	if (!tinymce.isIE) {
-		 wHeight = self.innerHeight - 65;
-		 wWidth = self.innerWidth - 16;
-	} else {
-		 wHeight = document.body.clientHeight - 70;
-		 wWidth = document.body.clientWidth - 16;
+	if (el) {
+		el.style.width = (vp.w - 20) + 'px';
+		el.style.height = (vp.h - 65) + 'px';
 	}
-
-	el.style.height = Math.abs(wHeight) + 'px';
-	el.style.width  = Math.abs(wWidth) + 'px';
 }

@@ -90,6 +90,7 @@ body {
 	max-width: 1226px; /* 2px more than #container to compensate for border */
 	margin: 0 auto;
 	position: relative;
+	z-index: 999;
 }
 
 	#headerHolder #header {

@@ -33,16 +33,16 @@ jsBackend.locale.controls =
 		if($('select#application').val() == 'frontend') 
 		{
 			// set all modules disabled
-			$('select#module option').attr('disabled', 'disabled');
+			$('select#module option').prop('disabled', true);
 			
 			// enable core
-			$('select#module option[value=core]').attr('disabled', '').attr('selected', 'selected');
+			$('select#module option[value=core]').prop('disabled', false).prop('selected', true);
 		}
 		
 		// remove the disbaled stuff
 		else 
 		{
-			$('select#module option').attr('disabled', '');
+			$('select#module option').prop('disabled', false);
 		}
 	},
 	

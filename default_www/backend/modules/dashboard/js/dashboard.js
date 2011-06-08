@@ -24,7 +24,7 @@ jsBackend.dashboard =
 		evt.preventDefault();
 
 		// get widget
-		var widget = $($(this).parents('.sortableWidget')[0]);
+		var widget = $(this).parents('.sortableWidget').eq(0);
 		
 		if(widget.hasClass('isRemoved'))
 		{
