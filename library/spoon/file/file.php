@@ -319,17 +319,26 @@ class SpoonFile
 		// something went wrong
 		if($handler === false) throw new SpoonFileException('The file "' . $filename . '" could not be created. Check if PHP has enough permissions.');
 
+		// store error reporting level
+		$level = error_reporting();
+
+		// disable errors
+		error_reporting(0);
+
 		// write to file
-		$write = @fwrite($handler, $content);
+		$write = fwrite($handler, $content);
 
 		// validate write
 		if($write === false) throw new SpoonFileException('The file "' . $filename . '" could not be written to. Check if PHP has enough permissions.');
 
 		// close the file
-		@fclose($handler);
+		fclose($handler);
 
 		// chmod file
-		@chmod($filename, $chmod);
+		chmod($filename, $chmod);
+
+		// restore error reporting level
+		error_reporting($level);
 
 		// status
 		return true;

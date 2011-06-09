@@ -8,7 +8,7 @@ function init() {
 
 	document.getElementById('backgroundimagebrowsercontainer').innerHTML = getBrowserHTML('backgroundimagebrowser','backgroundimage','image','table');
 	document.getElementById('bordercolor_pickcontainer').innerHTML = getColorPickerHTML('bordercolor_pick','bordercolor');
-	document.getElementById('bgcolor_pickcontainer').innerHTML = getColorPickerHTML('bgcolor_pick','bgcolor');
+	document.getElementById('bgcolor_pickcontainer').innerHTML = getColorPickerHTML('bgcolor_pick','bgcolor')
 
 	var inst = ed;
 	var tdElm = ed.dom.getParent(ed.selection.getStart(), "td,th");
@@ -82,8 +82,6 @@ function updateAction() {
 		tinyMCEPopup.close();
 		return;
 	}
-
-	ed.execCommand('mceBeginUndoLevel');
 
 	switch (getSelectValue(formObj, 'action')) {
 		case "cell":
@@ -166,15 +164,15 @@ function updateCell(td, skip_id) {
 	var dom = ed.dom;
 
 	if (!skip_id)
-		td.setAttribute('id', formObj.id.value);
+		dom.setAttrib(td, 'id', formObj.id.value);
 
-	td.setAttribute('align', formObj.align.value);
-	td.setAttribute('vAlign', formObj.valign.value);
-	td.setAttribute('lang', formObj.lang.value);
-	td.setAttribute('dir', getSelectValue(formObj, 'dir'));
-	td.setAttribute('style', ed.dom.serializeStyle(ed.dom.parseStyle(formObj.style.value)));
-	td.setAttribute('scope', formObj.scope.value);
-	ed.dom.setAttrib(td, 'class', getSelectValue(formObj, 'class'));
+	dom.setAttrib(td, 'align', formObj.align.value);
+	dom.setAttrib(td, 'vAlign', formObj.valign.value);
+	dom.setAttrib(td, 'lang', formObj.lang.value);
+	dom.setAttrib(td, 'dir', getSelectValue(formObj, 'dir'));
+	dom.setAttrib(td, 'style', ed.dom.serializeStyle(ed.dom.parseStyle(formObj.style.value)));
+	dom.setAttrib(td, 'scope', formObj.scope.value);
+	dom.setAttrib(td, 'class', getSelectValue(formObj, 'class'));
 
 	// Clear deprecated attributes
 	ed.dom.setAttrib(td, 'width', '');

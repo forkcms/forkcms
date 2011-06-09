@@ -385,11 +385,6 @@ class BackendInit
 		// for specific types, specific files should be loaded
 		switch($this->type)
 		{
-			case 'backend':
-				require_once BACKEND_PATH . '/modules/tags/engine/model.php';
-				require_once BACKEND_PATH . '/modules/users/engine/model.php';
-			break;
-
 			case 'backend_ajax':
 				require_once PATH_WWW . '/routing.php';
 			break;

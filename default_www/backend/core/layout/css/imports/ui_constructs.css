@@ -314,7 +314,7 @@
 		font-weight: 400;
 	}
 
-#title {
+input.title {
 	font-size: 16px;
 	font-weight: 700;
 	width: 98%;
@@ -322,17 +322,17 @@
 	height: 21px;
 }
 
-	#pageTitle p {
-		margin-top: 2px;
-		padding: 0;
-	}
+#pageTitle p {
+	margin-top: 2px;
+	padding: 0;
+}
 
-	div#pageTitle {
-		/* div prefix to prevent conflict with input named #pageTitle */
-		vertical-align: middle;
-		border: 1px solid #999;
-		padding-left: 12px;
-	}
+div#pageTitle {
+	/* div prefix to prevent conflict with input named #pageTitle */
+	vertical-align: middle;
+	border: 1px solid #999;
+	padding-left: 12px;
+}
 
 #pageUrl {
 	padding: 0 0 24px;

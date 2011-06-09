@@ -24,6 +24,9 @@ class AnalyticsInstall extends ModuleInstaller
 		// add 'analytics' as a module
 		$this->addModule('analytics', 'The analytics module.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// module rights
 		$this->setModuleRights(1, 'analytics');
 
@@ -42,9 +45,6 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'analytics', 'mass_landing_page_action');
 		$this->setActionRights(1, 'analytics', 'refresh_traffic_sources');
 		$this->setActionRights(1, 'analytics', 'settings');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 

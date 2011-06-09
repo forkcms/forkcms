@@ -168,6 +168,29 @@ class ModuleInstaller
 
 
 	/**
+	 * Get a locale item.
+	 *
+	 * @return	mixed
+	 * @param	string $name					The name of the locale.
+	 * @param	string[optional] $module		The name of the module.
+	 * @param	string[optional] $language		The language.
+	 * @param	string[optional] $type			The type of locale.
+	 * @param	string[optional] $application	The application.
+	 */
+	protected function getLocale($name, $module = 'core', $language = 'en', $type = 'lbl', $application = 'backend')
+	{
+		// get translation
+		$translation = (string) $this->getDB()->getVar('SELECT value
+														FROM locale
+														WHERE name = ? AND module = ? AND language = ? AND type = ? AND application = ?',
+														array((string) $name, (string) $module, (string) $language, (string) $type, (string) $application));
+
+		// if no translation is found we return the name
+		return ($translation != '') ? $translation : $name;
+	}
+
+
+	/**
 	 * Get a setting
 	 *
 	 * @return	mixed
@@ -226,7 +249,7 @@ class ModuleInstaller
 			{
 				// possible values
 				$possibleApplications = array('frontend', 'backend');
-				$possibleModules = $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
+				$possibleModules = (array) $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
 				$possibleLanguages = array('frontend' => $this->getLanguages(), 'backend' => $this->getInterfaceLanguages());
 				$possibleTypes = array(
 					'act' => 'action',
@@ -236,7 +259,7 @@ class ModuleInstaller
 				);
 
 				// current locale items (used to check for conflicts)
-				$currentLocale = $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+				$currentLocale = (array) $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
 
 
 				// @todo: waarom geen xpath?
@@ -384,15 +407,32 @@ class ModuleInstaller
 						'hidden' => $hidden,
 						'sequence' => $sequence);
 
+		// build query
+		$query = 'SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?';
+		$parameters = array($item['module'], $item['type'], $item['label']);
+
+		// data parameter must match
+		if($data !== null)
+		{
+			$query .= ' AND data = ?';
+			$parameters[] = $data;
+		}
+
+		// we need a nullio
+		else $query .= ' AND data IS NULL';
+
+		// get id (if its already exists)
+		$extraId =  (int) $this->getDB()->getVar($query, $parameters);
+
 		// doesn't already exist
-		if($this->getDB()->getVar('SELECT COUNT(id) FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label'])) == 0)
+		if($extraId === 0)
 		{
 			// insert extra and return id
 			return (int) $this->getDB()->insert('pages_extras', $item);
 		}
 
-		// return id
-		else return (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label']));
+		// exists so return id
+		return $extraId;
 	}
 
 
