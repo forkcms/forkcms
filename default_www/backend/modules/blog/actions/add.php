@@ -58,8 +58,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
 
 		// create elements
-		$this->frm->addText('title');
-		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');

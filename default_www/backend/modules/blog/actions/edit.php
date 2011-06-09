@@ -175,8 +175,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
 
 		// create elements
-		$this->frm->addText('title', $this->record['title']);
-		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
+		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addEditor('introduction', $this->record['introduction']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);

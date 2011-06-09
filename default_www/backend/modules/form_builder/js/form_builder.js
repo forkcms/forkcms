@@ -339,7 +339,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#textboxRequired').prop('checked', 'checked');
+										$('#textboxRequired').prop('checked', true);
 										$('#textboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -367,7 +367,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#textareaRequired').prop('checked', 'checked');
+										$('#textareaRequired').prop('checked', true);
 										$('#textareaRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -395,7 +395,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#dropdownRequired').prop('checked', 'checked');
+										$('#dropdownRequired').prop('checked', true);
 										$('#dropdownRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -433,7 +433,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#radiobuttonRequired').prop('checked', 'checked');
+										$('#radiobuttonRequired').prop('checked', true);
 										$('#radiobuttonRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -471,7 +471,7 @@ jsBackend.formBuilder.fields =
 									// required checkbox
 									if(k == 'required')
 									{
-										$('#checkboxRequired').prop('checked', 'checked');
+										$('#checkboxRequired').prop('checked', true);
 										$('#checkboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 									}
 									
@@ -1163,7 +1163,7 @@ jsBackend.formBuilder.fields =
 	toggleValidationErrors: function(id)
 	{
 		// remove highlights
-		$($('#'+ id +' .ui-tabs-nav a').parent()).removeClass('ui-state-error');
+		$('#'+ id +' .ui-tabs-nav a').parent().removeClass('ui-state-error');
 		
 		// loop tabs
 		$('#'+ id +' .tabs .ui-tabs-panel').each(function()
@@ -1175,7 +1175,7 @@ jsBackend.formBuilder.fields =
 			$(this).find('.formError').each(function()
 			{
 				// has a message so highlight tab
-				if($(this).html() != ''){ $($('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent()).addClass('ui-state-error'); }
+				if($(this).html() != ''){ $('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent().addClass('ui-state-error'); }
 			});
 		});
 		

@@ -182,7 +182,8 @@
 				newElement.val(pass).keyup();
 			}
 			
-			function generatePass(length, uppercase, lowercase, numbers, specialchars) {
+			function generatePass(length, uppercase, lowercase, numbers, specialchars) 
+			{
 				// the vowels
 				var v = new Array('a', 'e','u', 'ae', 'ea');
 				
@@ -476,7 +477,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);
@@ -766,7 +767,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);
@@ -1184,7 +1185,7 @@
 								'	</li>';
 
 						// remove from dropdown
-						$('#addValue-' + id + ' option[value=' + elements[i] + ']').prop('disabled', 'disabled');
+						$('#addValue-' + id + ' option[value=' + elements[i] + ']').prop('disabled', true);
 					}
 
 					// end html
@@ -1196,11 +1197,11 @@
 
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
-				$('#addValue-' + id).removeClass('disabled').prop('disabled', '');
+				$('#addValue-' + id).removeClass('disabled').prop('disabled', false);
 				if($('#addValue-' + id + ' option:enabled').length == 0) 
 				{
 					$('#addButton-' + id).addClass('disabledButton');
-					$('#addValue-' + id).addClass('disabled').prop('disabled', 'disabled');
+					$('#addValue-' + id).addClass('disabled').prop('disabled', true);
 				}
 				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').prop('value'));
 
@@ -1239,7 +1240,7 @@
 				// set new value
 				$('#' + id).val(elements.join(options.splitChar));
 				
-				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', '');
+				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', false);
 
 				// rebuild element list
 				build();

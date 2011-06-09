@@ -596,7 +596,7 @@ jsBackend.mailmotor.templateSelection =
 			var radiobutton = $(this).find('input:radio:first');
 			
 			// set checked
-			radiobutton.prop('checked', 'checked');
+			radiobutton.prop('checked', true);
 
 			// if the radiobutton is checked
 			if(radiobutton.is(':checked'))
