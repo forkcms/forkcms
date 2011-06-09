@@ -29,6 +29,14 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 
 
 	/**
+	 * Default position names
+	 *
+	 * @var	array
+	 */
+	private $defaultPositionNames = array('main', 'left', 'right', 'top');
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -84,13 +92,13 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// init var
-		$maximumBlocks = 30;
+		$maximumPositions = 30;
 
 		// create elements
 		$this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme);
 		$this->frm->addText('label');
 		$this->frm->addText('file');
-		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), 3);
+		$this->frm->addDropdown('num_positions', array_combine(range(1, $maximumPositions), range(1, $maximumPositions)), 3);
 		$this->frm->addTextarea('format');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('default');
@@ -121,12 +129,17 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 								ucfirst(BL::lbl('Modules')) => $blocks,
 								ucfirst(BL::lbl('Widgets')) => $widgets);
 
+		/*
+		 *  @todo
+		 *  For now, the above code for blocks & widgets is useless in the new system.
+		 *  First I'll work out the basics, after that, we can start making it possible to add default blocks inside positions, so I won't remove the above code just yet
+		 */
+
 		// add some fields
-		for($i = 1; $i <= $maximumBlocks; $i++)
+		for($i = 1; $i <= $maximumPositions; $i++)
 		{
 			$names[$i]['i'] = $i;
-			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_' . $i);
-			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $i, $defaultExtras);
+			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_' . $i ,(isset($this->defaultPositionNames[$i - 1]) ? $this->defaultPositionNames[$i - 1] : null));
 		}
 
 		// assign
@@ -153,7 +166,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
 			// loop the know fields and validate them
-			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
+			for($i = 1; $i <= $this->frm->getField('num_positions')->getValue(); $i++)
 			{
 				$this->frm->getField('name_' . $i)->isFilled(BL::err('FieldIsRequired'));
 			}
@@ -186,6 +199,9 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$first = false;
 			}
 
+			// @todo: check if all submitted position names are unique
+			// @todo: check if all submitted position names are valid (still need to determine what is valid)
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
@@ -193,16 +209,18 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$item['theme'] = $this->frm->getField('theme')->getValue();
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
-				$item['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
+
+				// @todo: check if format contains valid position names
+
 				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
 				// loop fields
-				for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
+				for($i = 1; $i <= $this->frm->getField('num_positions')->getValue(); $i++)
 				{
 					$item['data']['names'][] = $this->frm->getField('name_' . $i)->getValue();
-					$item['data']['default_extras'][] = $this->frm->getField('type_' . $i)->getValue();
-					$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()][] = $this->frm->getField('type_' . $i)->getValue();
+//					$item['data']['default_extras'][] = $this->frm->getField('type_' . $i)->getValue();
+//					$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()][] = $this->frm->getField('type_' . $i)->getValue();
 				}
 
 				// serialize the data

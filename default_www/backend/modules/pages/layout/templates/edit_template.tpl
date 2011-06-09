@@ -17,9 +17,8 @@
 				{$txtLabel} {$txtLabelError}
 			</p>
 			<p>
-				<label for="numBlocks">{$lblNumberOfBlocks|ucfirst}</label>
-				{$ddmNumBlocks} {$ddmNumBlocksError}
-				{option:inUse}<span class="helpTxt"><span class="infoMessage">{$msgTemplateInUse}</span></span>{/option:inUse}
+				<label for="numPositions">{$lblNumberOfPositions|ucfirst}</label>
+				{$ddmNumPositions} {$ddmNumPositionsError}
 			</p>
 		</div>
 		{* Don't change this ID *}
@@ -27,8 +26,7 @@
 			{iteration:names}
 				<p>
 					<label for="name{$names.i}">{$lblName|ucfirst} {$names.i}</label>
-					{$names.txtName} {$names.ddmType}
-					{$names.txtNameError} {$names.ddmTypeError}
+					{$names.txtName} {$names.txtNameError}
 				</p>
 			{/iteration:names}
 		</div>

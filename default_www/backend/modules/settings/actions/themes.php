@@ -91,6 +91,7 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 				// check if we actually switched themes
 				if($newTheme != $oldTheme)
 				{
+exit('Not yet possible, completely reworking theme stuff, rework this later'); // @todo: see exit statement
 					// fetch templates
 					$oldTemplates = BackendPagesModel::getTemplates($oldTheme);
 					$newTemplates = BackendPagesModel::getTemplates($newTheme);

@@ -492,14 +492,11 @@ class ModuleInstaller
 		// insert page
 		$revision['revision_id'] = $this->getDB()->insert('pages', $revision);
 
-		// get number of blocks to insert
-		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE theme = ? AND active = ?', array($this->getSetting('core', 'theme'), 'Y'));
-
 		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
 		$blocks = array();
 
 		// loop blocks
-		for($i = 0; $i < $numBlocks; $i++)
+		for($i = 0; $i < count(func_num_args() - 2); $i++)
 		{
 			// get block
 			$block = @func_get_arg($i + 2);
@@ -509,6 +506,7 @@ class ModuleInstaller
 			// build block
 			if(!isset($block['id'])) $block['id'] = $i;
 			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
+			if(!isset($block['position'])) $block['position'] = 'main';
 			if(!isset($block['status'])) $block['status'] = 'active';
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');

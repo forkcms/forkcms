@@ -56,6 +56,10 @@
         <translation language="nl"><![CDATA[metanavigatie]]></translation>
         <translation language="en"><![CDATA[meta navigation]]></translation>
       </item>
+      <item type="label" name="Position">
+        <translation language="nl"><![CDATA[positie]]></translation>
+        <translation language="en"><![CDATA[position]]></translation>
+      </item>
       <item type="label" name="Redirect">
         <translation language="nl"><![CDATA[redirect]]></translation>
         <translation language="en"><![CDATA[redirect]]></translation>
@@ -125,8 +129,8 @@
         <translation language="en"><![CDATA[Makes sure that this page doesn't influence the internal PageRank.]]></translation>
       </item>
       <item type="message" name="HelpTemplateFormat">
-        <translation language="nl"><![CDATA[vb. [1,2],[/,2]]]></translation>
-        <translation language="en"><![CDATA[e.g. [1,2],[/,2]]]></translation>
+        <translation language="nl"><![CDATA[vb. [left,main,right],[/,main,/]]]></translation>
+        <translation language="en"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
       </item>
       <item type="message" name="HelpTemplateLocation">
 	    <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/layout/templates</code> van je thema.]]></translation>

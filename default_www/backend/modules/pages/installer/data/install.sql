@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
 CREATE TABLE IF NOT EXISTS `pages_blocks` (
  `id` int(11) NOT NULL COMMENT 'An ID that will be the same over the revisions.\n',
  `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
+ `position` varchar(255) NOT NULL,
  `extra_id` int(11) default NULL COMMENT 'The linked extra.',
  `html` text COMMENT 'if this block is HTML this field should contain the real HTML.',
  `status` enum('active','archive','draft') NOT NULL default 'active',
@@ -59,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `pages_templates` (
  `theme` varchar(255) default NULL COMMENT 'The name of the theme.',
  `label` varchar(255) NOT NULL COMMENT 'The label for the template, will be used for displaying purposes.',
  `path` varchar(255) NOT NULL COMMENT 'Filename for the template.',
- `num_blocks` int(11) NOT NULL default '1' COMMENT 'The number of blocks used in the template.',
  `active` enum('N','Y') NOT NULL default 'Y' COMMENT 'Is this template active (as in: will it be used).',
  `data` text COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
  PRIMARY KEY (`id`)

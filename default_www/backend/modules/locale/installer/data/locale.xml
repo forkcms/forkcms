@@ -906,9 +906,9 @@
         <translation language="nl"><![CDATA[formaat getallen]]></translation>
         <translation language="en"><![CDATA[number format]]></translation>
       </item>
-      <item type="label" name="NumberOfBlocks">
-        <translation language="nl"><![CDATA[aantal blokken]]></translation>
-        <translation language="en"><![CDATA[number of blocks]]></translation>
+      <item type="label" name="NumberOfPositions">
+        <translation language="nl"><![CDATA[aantal posities]]></translation>
+        <translation language="en"><![CDATA[number of positions]]></translation>
       </item>
       <item type="label" name="Numbers">
         <translation language="nl"><![CDATA[getallen]]></translation>

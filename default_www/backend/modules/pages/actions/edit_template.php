@@ -74,7 +74,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		}
 
 		// assign
-		$this->tpl->assign('deleteAllowed', $deleteAllowed);
+		$this->tpl->assign('deleteAllowed', $deleteAllowed); // @todo: maybe it should be possible to delete a template "in use", and let users choose a replacement template
 	}
 
 
@@ -89,14 +89,14 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// init var
-		$maximumBlocks = 30;
+		$maximumPositions = 30;
 		$defaultId = BackendModel::getModuleSetting('pages', 'default_template');
 
 		// create elements
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', 'core'));
 		$this->frm->addText('label', $this->record['label']);
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
-		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), $this->record['num_blocks']);
+		$this->frm->addDropdown('num_positions', array_combine(range(1, $maximumPositions), range(1, $maximumPositions)), count($this->record['data']['names']));
 		$this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
@@ -145,17 +145,21 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 								ucfirst(BL::lbl('Modules')) => $blocks,
 								ucfirst(BL::lbl('Widgets')) => $widgets);
 
+		/*
+		 *  @todo
+		 *  For now, the above code for blocks & widgets is useless in the new system.
+		 *  First I'll work out the basics, after that, we can start making it possible to add default blocks inside positions, so I won't remove the above code just yet
+		 */
+
 		// add some fields
-		for($i = 1; $i <= $maximumBlocks; $i++)
+		for($i = 1; $i <= $maximumPositions; $i++)
 		{
 			// grab values
 			$name = isset($this->record['data']['names'][$i - 1]) ? $this->record['data']['names'][$i - 1] : null;
-			$extra = isset($this->record['data']['default_extras'][$i - 1]) ? $this->record['data']['default_extras'][$i - 1] : null;
 
 			// build array
 			$names[$i]['i'] = $i;
 			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_' . $i, $name);
-			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $i, $defaultExtras, $extra);
 		}
 
 		// assign
@@ -176,16 +180,13 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// num blocks cant be altered when the template is in use
-			$numBlocks = (int) $this->frm->getField('num_blocks')->getValue();
-
 			// required fields
 			$this->frm->getField('file')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
 			// loop the know fields and validate them
-			for($i = 1; $i <= $numBlocks; $i++)
+			for($i = 1; $i <= $this->frm->getField('num_positions')->getValue(); $i++)
 			{
 				$this->frm->getField('name_' . $i)->isFilled(BL::err('FieldIsRequired'));
 			}
@@ -218,6 +219,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$first = false;
 			}
 
+			// @todo: check if all submitted position names are unique
+			// @todo: check if all submitted position names are valid (still need to determine what is valid)
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
@@ -226,7 +230,6 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$item['theme'] = $this->frm->getField('theme')->getValue();
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
-				$item['num_blocks'] = $numBlocks;
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 
 				// if this is the default template make the template active
@@ -235,15 +238,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// if the template is in use we can't de-activate it
 				if(BackendPagesModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
 
+				// @todo: check if format contains valid position names
+
 				// init template data
 				$item['data']['format'] = $this->record['data']['format'];
 
 				// loop fields
-				for($i = 1; $i <= $item['num_blocks']; $i++)
+				for($i = 1; $i <= $this->frm->getField('num_positions')->getValue(); $i++)
 				{
 					$item['data']['names'][$i - 1] = $this->frm->getField('name_' . $i)->getValue();
-					$item['data']['default_extras'][$i - 1] = $this->frm->getField('type_' . $i)->getValue();
-					$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_' . $i)->getValue();
 				}
 
 				// blocks layout
@@ -259,7 +262,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
 
 				// update all existing pages using this template to add the newly inserted block(s)
-				if(BackendPagesModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id']);
+//				if(BackendPagesModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id']); // @todo: this will have to be changed completely (is it even neccassary?) think about this later
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);

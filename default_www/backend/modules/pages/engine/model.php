@@ -427,7 +427,6 @@ class BackendPagesModel
 		// init var
 		$rows = count($table);
 		$cells = count($table[0]);
-		$extras = self::getExtras();
 
 		// loop rows
 		for($y = 0; $y < $rows; $y++)
@@ -480,13 +479,10 @@ class BackendPagesModel
 					}
 				}
 
-				// decide selected state
-				$exists = (isset($template['data']['names'][$value - 1]));
-
-				// get title & index
-				$title = ($exists) ? $template['data']['names'][$value - 1] : '';
-				$extra = ($exists && isset($template['data']['default_extras'][$value - 1])) ? $template['data']['default_extras'][$value - 1] : '';
-				$index = ($exists) ? ($value - 1) : '';
+				// set values
+				$exists = $value != '/';
+				$title = ucfirst($value);
+				$index = $value;
 
 				$type = '';
 
@@ -1278,7 +1274,7 @@ class BackendPagesModel
 		$theme = SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
 
 		// get templates
-		$templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
+		$templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.data
 																FROM pages_templates AS i
 																WHERE i.theme = ? AND i.active = ?
 																ORDER BY i.label ASC',
@@ -1298,6 +1294,8 @@ class BackendPagesModel
 			$row['data'] = unserialize($row['data']);
 			$row['has_block'] = false;
 
+			// @todo: code below has been put to comments because we won't do default extras yet
+/*
 			// reset
 			if(isset($row['data']['default_extras_' . BL::getWorkingLanguage()])) $row['data']['default_extras'] = $row['data']['default_extras_' . BL::getWorkingLanguage()];
 
@@ -1311,7 +1309,7 @@ class BackendPagesModel
 					if(SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type'] == 'block') $row['has_block'] = true;
 				}
 			}
-
+*/
 			// build template HTML
 			$row['html'] = self::buildTemplateHTML($row);
 			$row['htmlLarge'] = self::buildTemplateHTML($row, true);
@@ -1687,13 +1685,7 @@ class BackendPagesModel
 	public static function insertTemplate(array $template)
 	{
 		// insert
-		$return = (int) BackendModel::getDB(true)->insert('pages_templates', $template);
-
-		// update setting for maximum blocks
-		self::setMaximumBlocks();
-
-		// return
-		return $return;
+		return (int) BackendModel::getDB(true)->insert('pages_templates', $template);
 	}
 
 
@@ -1849,24 +1841,6 @@ class BackendPagesModel
 
 
 	/**
-	 * Calculate the maximum number of blocks for all active templates and store into a module-settings
-	 *
-	 * @return	void
-	 */
-	public static function setMaximumBlocks()
-	{
-		// get maximum number of blocks for active templates
-		$maximumNumberOfBlocks = (int) BackendModel::getDB()->getVar('SELECT MAX(i.num_blocks) AS max_num_blocks
-																		FROM pages_templates AS i
-																		WHERE i.active = ? AND i.theme = ?',
-																		array('Y', BackendModel::getModuleSetting('core', 'theme', 'core')));
-
-		// store
-		BackendModel::setModuleSetting('pages', 'template_max_blocks', $maximumNumberOfBlocks);
-	}
-
-
-	/**
 	 * Convert the template syntax into an array to work with
 	 *
 	 * @return	array
@@ -2002,6 +1976,8 @@ class BackendPagesModel
 	 */
 	public static function updatePagesTemplates($oldTemplateId, $newTemplateId)
 	{
+// @todo: this function needs work after we've been fucking around our template-system
+return;
 		// fetch new template data
 		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
 		$newTemplate['data'] = @unserialize($newTemplate['data']);
@@ -2106,13 +2082,7 @@ class BackendPagesModel
 	public static function updateTemplate(array $item)
 	{
 		// update item
-		$updated = BackendModel::getDB(true)->update('pages_templates', $item, 'id = ?', array((int) $item['id']));
-
-		// update setting for maximum blocks
-		self::setMaximumBlocks();
-
-		// return updated
-		return $updated;
+		return BackendModel::getDB(true)->update('pages_templates', $item, 'id = ?', array((int) $item['id']));
 	}
 }
 

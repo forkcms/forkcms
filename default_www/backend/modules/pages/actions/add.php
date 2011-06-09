@@ -80,7 +80,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i,);
+		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i);
 
 		// load the form
 		$this->loadForm();

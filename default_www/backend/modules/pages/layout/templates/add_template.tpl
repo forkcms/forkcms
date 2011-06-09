@@ -17,17 +17,16 @@
 				{$txtLabel} {$txtLabelError}
 			</p>
 			<p>
-				<label for="numBlocks">{$lblNumberOfBlocks|ucfirst}</label>
-				{$ddmNumBlocks} {$ddmNumBlocksError}
+				<label for="numPositions">{$lblNumberOfPositions|ucfirst}</label>
+				{$ddmNumPositions} {$ddmNumPositionsError}
 			</p>
 		</div>
 		{* Don't change this ID *}
 		<div id="metaData" class="options">
 			{iteration:names}
 				<p>
-					<label for="name{$names.i}">{$lblName|ucfirst} {$names.i}</label>
-					{$names.txtName} {$names.ddmType}
-					{$names.txtNameError} {$names.ddmTypeError}
+					<label for="name{$names.i}">{$lblPosition|ucfirst} {$names.i}</label>
+					{$names.txtName} {$names.txtNameError}
 				</p>
 			{/iteration:names}
 		</div>
