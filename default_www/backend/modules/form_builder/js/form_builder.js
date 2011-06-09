@@ -19,10 +19,10 @@ jsBackend.formBuilder =
 	{
 		// fields handler
 		jsBackend.formBuilder.fields.init();
-		
+
 		// get form id
 		jsBackend.formBuilder.formId = $('#formId').val();
-	
+
 		// hide or show the email based on the method
 		if($('select#method').length > 0)
 		{

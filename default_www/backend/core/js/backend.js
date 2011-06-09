@@ -1027,7 +1027,7 @@ jsBackend.forms =
 			$('form.submitWithLink').each(function()
 			{
 				// get id
-				var formId = $(this).prop('id');
+				var formId = $(this).attr('id');
 				var dontSubmit = false;
 
 				// validate id
