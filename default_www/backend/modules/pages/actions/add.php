@@ -8,16 +8,17 @@
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendPagesAdd extends BackendBaseActionAdd
 {
 	/**
-	 * The blocks
+	 * The positions
 	 *
 	 * @var	array
 	 */
-	private $blocks = array();
+	private $positions = array();
 
 
 	/**
@@ -76,11 +77,11 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// get the extras
 		$this->extras = BackendPagesModel::getExtras();
 
-		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
+		// get positions in default template
+		foreach($this->templates[$defaultTemplateId]['data']['names'] as $position) $this->positions[$position] = array('name' => $position, 'blocks' => array());
 
-		// build blocks array
-		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i);
+		// add fallback position
+		$this->positions['fallback'] = array('name' => 'fallback', 'blocks' => array());
 
 		// load the form
 		$this->loadForm();
@@ -118,15 +119,14 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 		$this->frm->addCheckbox('no_follow');
 
-		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
+		// build default block
+		$block['index'] = 0;
+		$block['name'] = 'Default';
+		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . 0);
+		$block['formElements']['txtHTML'] = $this->frm->addTextarea('block_html_' . 0, ''); // @todo: editor
 
-		// build blocks array
-		for($i = 0; $i < $maxNumBlocks; $i++)
-		{
-			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $i);
-			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_' . $i, '');
-		}
+		// add default block to "fallback" position, the only one which we can rest assured to exist
+		$this->positions['fallback']['blocks'] = array($block);
 
 		// redirect
 		$redirectValues = array(
@@ -165,7 +165,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	{
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
-		$this->tpl->assign('blocks', $this->blocks);
+		$this->tpl->assign('positions', $this->positions);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
 		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));

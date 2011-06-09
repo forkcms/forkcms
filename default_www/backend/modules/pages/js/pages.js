@@ -6,6 +6,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Matthias Mullie <matthias@netlash.com>
  */
 jsBackend.pages =
 {
@@ -22,7 +23,7 @@ jsBackend.pages =
 			jsBackend.pages.template.init();
 			jsBackend.pages.extras.init();
 		}
-
+return;
 		// manage templates
 		jsBackend.pages.manageTemplates.init();
 
@@ -47,6 +48,7 @@ jsBackend.pages =
  * 
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Matthias Mullie <matthias@netlash.com>
  */
 jsBackend.pages.extras =
 {
@@ -60,7 +62,7 @@ jsBackend.pages.extras =
 			{
 				var hasModules = false;
 
-				// check if there already blocks linked
+				// check if there is a block linked already
 				$('.linkedExtra input:hidden').each(function()
 				{
 					// get id
@@ -79,6 +81,7 @@ jsBackend.pages.extras =
 			
 			jsBackend.pages.extras.populateExtraModules(evt);
 		});
+
 		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
@@ -88,8 +91,8 @@ jsBackend.pages.extras =
 		jsBackend.pages.extras.load();
 	},
 
-	
-	// load initial data, or initialize the dialogs
+
+	// load initial data, or initialize the dialog
 	load: function()
 	{
 		// set correct
@@ -97,7 +100,9 @@ jsBackend.pages.extras =
 		{
 			var value = $(this).val();
 			var id = $(this).prop('id').replace('blockExtraId', '');
-			jsBackend.pages.extras.changeExtra(value, id);
+
+			// setup extra (except for default element)
+			if(id != 0) jsBackend.pages.extras.changeExtra(value, id);
 		});
 
 		// initialize the modal for choosing an extra
@@ -131,45 +136,6 @@ jsBackend.pages.extras =
 				}
 			 });
 		}
-
-		if($('#chooseTemplate').length > 0)
-		{
-			$('#chooseTemplate').dialog(
-			{
-				autoOpen: false,
-				draggable: false,
-				resizable: false,
-				modal: true,
-				width: 940,
-				buttons:
-				{
-					'{$lblOK|ucfirst}': function()
-					{
-						if($('#templateList input:radio:checked').val() != $('#templateId').val())
-						{
-							// empty extra's (because most of the time extra's will be linked from the template)
-//							$('.block_extra_id').val('');
-
-							// clear content
-							for(var i in tinyMCE.editors) {
-								//jsBackend.pages.extras.store[i] = tinyMCE.editors[i].getContent();
-							}
-
-							// change the template for real
-							jsBackend.pages.template.changeTemplate(true);
-						}
-
-						// close dialog
-						$(this).dialog('close');
-					},
-					'{$lblCancel|ucfirst}': function()
-					{
-						// close the dialog
-						$(this).dialog('close');
-					}
-				 }
-			 });
-		}
 	},
 
 
@@ -197,19 +163,19 @@ jsBackend.pages.extras =
 			var id = $(this).val();
 			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
-		
+
 		// blocks linked?
 		if(hasModules)
 		{
 			// show warning
 			$('#extraWarningAlreadyBlock').show();
-			
+
 			// disable blocks
 			$('#extraType option[value="block"]').prop('disabled', true);
-			
+
 			// get id
 			var id = $('#blockExtraId'+ blockId).val();
-			
+
 			// reenable
 			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').prop('disabled', false);
 		}
@@ -257,7 +223,8 @@ jsBackend.pages.extras =
 		$('#chooseExtra').dialog('open');
 	},
 
-
+// @todo: go crazy
+	
 	// store the extra for real
 	changeExtra: function(selectedExtraId, selectedBlock)
 	{
@@ -453,6 +420,7 @@ jsBackend.pages.manageTemplates =
  * All methods related to the templates
  * 
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Matthias Mullie <matthias@netlash.com>
  */
 jsBackend.pages.template =
 {
@@ -464,6 +432,9 @@ jsBackend.pages.template =
 
 		// load to initialize when adding a page
 		jsBackend.pages.template.changeTemplate($('#changeTemplate').parents('form').prop('id') == 'add');
+
+		// load the dialog
+		jsBackend.pages.template.load();
 	},
 
 
@@ -477,21 +448,22 @@ jsBackend.pages.template =
 		var current = templates[selected];
 		var i = 0;
 
-		// hide unneeded blocks
-		$('.contentBlock').each(function()
+		// hide default block
+		$('#block-0').hide();
+
+		// hide fallback
+		$('#position-fallback').hide();
+
+		// loop extras in fallback
+		$('#position-fallback > div').each(function()
 		{
-			// hide if needed
-			if(i >= current.num_blocks) $(this).hide();
-
-			// show the block and set the name
-			else
+			// check if any of these extras is actually visible
+			if($(this).css('display') != 'none')
 			{
-				$(this).show();
-				$('.blockName', this).html(current.data.names[i]);
+				// show fallback again
+				$('#position-fallback').show();
+				return;
 			}
-
-			// increment
-			i++;
 		});
 
 		// set HTML for the visual representation of the template
@@ -499,27 +471,41 @@ jsBackend.pages.template =
 		$('#templateVisualLarge').html(current.htmlLarge);
 		$('#templateId').val(selected);
 		$('#templateLabel, #tabTemplateLabel').html(current.label);
-
-		// only init when specified
-		if(changeExtras === true)
+	},
+	
+	
+	// load initial data, or initialize the dialog
+	load: function()
+	{
+		if($('#chooseTemplate').length > 0)
 		{
-			// loop blocks and set extra's, to initialize the page
-			$('.contentBlock').each(function()
+			$('#chooseTemplate').dialog(
 			{
-				// init vars
-				var index = $(this).prop('id').replace('block-', '');
-				var extraId = $('#blockExtraId'+ index).val();
-				var defaultExtras = current.data['default_extras'];
-
-				// no extra specified, we should grab the default
-				if(typeof defaultExtras != 'undefined' && (typeof extraId == 'undefined' || extraId == ''))
+				autoOpen: false,
+				draggable: false,
+				resizable: false,
+				modal: true,
+				width: 940,
+				buttons:
 				{
-					if(defaultExtras[index] != 'editor') { extraId = parseInt(defaultExtras[index]); }
-				}
-				
-				// change the extra
-				jsBackend.pages.extras.changeExtra(extraId, index);
-			});
+					'{$lblOK|ucfirst}': function()
+					{
+						if($('#templateList input:radio:checked').val() != $('#templateId').val())
+						{
+							// change the template for real
+							jsBackend.pages.template.changeTemplate(true);
+						}
+
+						// close dialog
+						$(this).dialog('close');
+					},
+					'{$lblCancel|ucfirst}': function()
+					{
+						// close the dialog
+						$(this).dialog('close');
+					}
+				 }
+			 });
 		}
 	},
 
@@ -531,7 +517,7 @@ jsBackend.pages.template =
 		evt.preventDefault();
 
 		// open the modal
-		$('#chooseTemplate').dialog('open');
+		$('#chooseTemplate').dialog('open'); // @todo: fucker won't open, why is that? test again later!
 	},
 
 

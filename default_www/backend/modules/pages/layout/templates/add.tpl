@@ -32,51 +32,56 @@
 
 		<div id="tabContent">
 			<div id="editContent">
-				{iteration:blocks}
-					<div id="block-{$blocks.index}" class="box contentBlock">
-						<div class="heading">
-							<table border="0" cellpadding="0" cellspacing="0">
-								<tbody>
-									<tr>
-										<td>
-											<div class="oneLiner">
-												<h3><span class="blockName">{$blocks.name}</span></h3>
-												{* don't remove this class *}
-												<p class="linkedExtra">
-													{* this will store the selected extra *}
-													{$blocks.hidExtraId}
-												</p>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+				{iteration:positions}
+					<div id="position-{$positions.name}">
+					<h3>{$positions.name}</h3>
+						{iteration:positions.blocks}
+							<div id="block-{$positions.blocks.index}" class="box contentBlock" data-position-name="{$positions.name}">
+								<div class="heading">
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tbody>
+											<tr>
+												<td>
+													<div class="oneLiner">
+														<h3><span class="blockName">{$positions.blocks.name}</span></h3>
+														{* don't remove this class *}
+														<p class="linkedExtra">
+															{* this will store the selected extra *}
+															{$positions.blocks.hidExtraId}
+														</p>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 
-						<div id="blockContentModule-{$blocks.index}" class="options">
-							{* do not alter markup *}
-							<div class="oneLiner">
-								<span class="oneLinerElement"></span>
-								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
-								{$blocks.txtHTMLError}
+								<div id="blockContentModule-{$positions.blocks.index}" class="options">
+									{* do not alter markup *}
+									<div class="oneLiner">
+										<span class="oneLinerElement"></span>
+										<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
+										{$positions.blocks.txtHTMLError}
+									</div>
+								</div>
+								<div id="blockContentWidget-{$positions.blocks.index}" class="options">
+									{* do not alter markup *}
+									<div class="oneLiner">
+										<span class="oneLinerElement"></span>
+										<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
+										{$positions.blocks.txtHTMLError}
+									</div>
+								</div>
+								<div id="blockContentHTML-{$positions.blocks.index}" class="optionsRTE">
+									<fieldset>
+										{$positions.blocks.txtHTML}
+										{$positions.blocks.txtHTMLError}
+									</fieldset>
+								</div>
 							</div>
-						</div>
-						<div id="blockContentWidget-{$blocks.index}" class="options">
-							{* do not alter markup *}
-							<div class="oneLiner">
-								<span class="oneLinerElement"></span>
-								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
-								{$blocks.txtHTMLError}
-							</div>
-						</div>
-						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
-							<fieldset>
-								{$blocks.txtHTML}
-								{$blocks.txtHTMLError}
-							</fieldset>
-						</div>
+						{/iteration:positions.blocks}
 					</div>
-				{/iteration:blocks}
+				{/iteration:positions}
 			</div>
 		</div>
 

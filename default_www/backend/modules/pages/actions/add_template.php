@@ -201,6 +201,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 
 			// @todo: check if all submitted position names are unique
 			// @todo: check if all submitted position names are valid (still need to determine what is valid)
+			// @todo: name 'fallback' is reserved
 
 			// no errors?
 			if($this->frm->isCorrect())

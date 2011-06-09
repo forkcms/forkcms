@@ -24,6 +24,10 @@
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add page]]></translation>
       </item>
+      <item type="label" name="AddBlock">
+        <translation language="nl"><![CDATA[blok toevoegen]]></translation>
+        <translation language="en"><![CDATA[add block]]></translation>
+      </item>
       <item type="label" name="EditModuleContent">
         <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
         <translation language="en"><![CDATA[edit module content]]></translation>
@@ -161,8 +165,8 @@
         <translation language="en"><![CDATA[Editor]]></translation>
       </item>
       <item type="message" name="TemplateChangeWarning">
-        <translation language="nl"><![CDATA[<strong>Let op:</strong> de bestaande inhoud zal verloren gaan bij het wijzigen van de template.]]></translation>
-        <translation language="en"><![CDATA[<strong>Warning:</strong> Existing content will be deleted when changing the template.]]></translation>
+        <translation language="nl"><![CDATA[<strong>Let op:</strong> Het wijzigen van de template kan als gevolg hebben dat je inhoud op een andere plaats staat niet langer getoond wordt.]]></translation>
+        <translation language="en"><![CDATA[<strong>Warning:</strong> Changing the template can cause existing content to be in another place or no longer be shown.]]></translation>
       </item>
       <item type="message" name="TemplateInUse">
         <translation language="nl"><![CDATA[Deze template is in gebruik]]></translation>

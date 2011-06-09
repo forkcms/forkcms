@@ -482,7 +482,6 @@ class BackendPagesModel
 				// set values
 				$exists = $value != '/';
 				$title = ucfirst($value);
-				$index = $value;
 
 				$type = '';
 
@@ -504,19 +503,19 @@ class BackendPagesModel
 					// large visual?
 					if($large)
 					{
-						$html .= ' id="templateBlock-' . $index . '">
-									<h4 class="templateBlockTitle">' . $title . '</h4>
-									<p><span class="helpTxt templateBlockCurrentType">&nbsp;</span></p>
+						$html .= ' id="templatePosition-' . $value . '">
+									<h4 class="templatePositionTitle">' . $title . '</h4>
+									<p><span class="helpTxt templatePositionCurrentType">&nbsp;</span></p>
 									<div class="buttonHolder">
-										<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" data-block-id="' . $index . '">
-											<span>' . ucfirst(BL::lbl('Edit')) . '</span>
+										<a href="#chooseExtra" class="button icon iconAdd iconOnly chooseExtra" data-position-id="' . $value . '">
+											<span>' . ucfirst(BL::lbl('AddBlock')) . '</span>
 										</a>
 									</div>
 								</td>' . "\n";
 					}
 
 					// just regular
-					else $html .= '><a href="#block-' . $index . '" title="' . $title . '">' . $title . '</a></td>' . "\n";
+					else $html .= '><a href="#position-' . $value . '" title="' . $title . '">' . $title . '</a></td>' . "\n";
 				}
 			}
 
