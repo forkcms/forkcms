@@ -1,7 +1,7 @@
 {* Note: we can use general variables names here since this template is parsed within its own scope *}
 
 <section class="mod">
-	<div class="innner">
+	<div class="inner">
 		<div class="bd">
 			{option:successMessage}<div class="message success">{$successMessage}</div>{/option:successMessage}
 			{option:formBuilderError}<div class="message error"><p>{$formBuilderError}</p></div>{/option:formBuilderError}
