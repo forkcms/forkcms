@@ -1,3 +1,9 @@
+2.3.1 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Proper implementation of .prop()
+
 2.3.0 (2011-06-07)
 --
 Bugfixes:

@@ -63,9 +63,9 @@ jsBackend.faq =
 				stop: function(event, ui)				// on stop sorting
 				{
 					// vars we will need
-					var questionId = ui.item.prop('id');
-					var fromCategoryId = $(this).prop('id').substring(9);
-					var toCategoryId = ui.item.parents('.datagridHolder').prop('id').substring(9);
+					var questionId = ui.item.attr('id');
+					var fromCategoryId = $(this).attr('id').substring(9);
+					var toCategoryId = ui.item.parents('.datagridHolder').attr('id').substring(9);
 					var fromCategorySequence = $(this).sortable('toArray').join(',');
 					var toCategorySequence = $('#datagrid-' + toCategoryId).sortable('toArray').join(',');
 

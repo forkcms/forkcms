@@ -1,7 +1,7 @@
 {* Note: we can use general variables names here since this template is parsed within its own scope *}
 
 <section class="mod">
-	<div class="innner">
+	<div class="inner">
 		<div class="bd">
 			{option:successMessage}<div class="message success">{$successMessage}</div>{/option:successMessage}
 			{option:formBuilderError}<div class="message error"><p>{$formBuilderError}</p></div>{/option:formBuilderError}
@@ -25,7 +25,7 @@
 									{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 								</label>
 								{$fields.html}
-								{option:fields.error}<span class="formError">{$fields.error}</span>{/option:fields.error}
+								{option:fields.error}<span class="formError inlineError">{$fields.error}</span>{/option:fields.error}
 							</p>
 						{/option:fields.simple}
 
@@ -40,7 +40,7 @@
 										<li><label for="{$fields.html.id}">{$fields.html.field} {$fields.html.label}</label></li>
 									{/iteration:fields.html}
 								</ul>
-								{option:fields.error}<span class="formError">{$fields.error}</span>{/option:fields.error}
+								{option:fields.error}<span class="formError inlineError">{$fields.error}</span>{/option:fields.error}
 							</div>
 						{/option:fields.multiple}
 					{/iteration:fields}
