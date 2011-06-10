@@ -96,7 +96,7 @@ jsBackend.pages.extras =
 		$('input.block_extra_id').each(function()
 		{
 			var value = $(this).val();
-			var id = $(this).prop('id').replace('blockExtraId', '');
+			var id = $(this).attr('id').replace('blockExtraId', '');
 			jsBackend.pages.extras.changeExtra(value, id);
 		});
 
@@ -300,7 +300,7 @@ jsBackend.pages.extras =
 					if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule-'+ selectedBlock +' .oneLiner a').hide();
 					else 
 					{
-						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show().prop('href', extrasById[selectedExtraId].data.url);						
+						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show().attr('href', extrasById[selectedExtraId].data.url);						
 					}
 					$('#blockContentModule-'+ selectedBlock).show();
 				}
@@ -310,7 +310,7 @@ jsBackend.pages.extras =
 				{
 					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span.oneLinerElement').html(extrasById[selectedExtraId].message);
 					if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').hide();
-					else $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').prop('href', extrasById[selectedExtraId].data.edit_url).show();
+					else $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').attr('href', extrasById[selectedExtraId].data.edit_url).show();
 					$('#blockContentWidget-'+ selectedBlock).show();
 				}
 			}
@@ -463,7 +463,7 @@ jsBackend.pages.template =
 		$('#changeTemplate').bind('click', jsBackend.pages.template.showTemplateDialog);
 
 		// load to initialize when adding a page
-		jsBackend.pages.template.changeTemplate($('#changeTemplate').parents('form').prop('id') == 'add');
+		jsBackend.pages.template.changeTemplate($('#changeTemplate').parents('form').attr('id') == 'add');
 	},
 
 
@@ -507,7 +507,7 @@ jsBackend.pages.template =
 			$('.contentBlock').each(function()
 			{
 				// init vars
-				var index = $(this).prop('id').replace('block-', '');
+				var index = $(this).attr('id').replace('block-', '');
 				var extraId = $('#blockExtraId'+ index).val();
 				var defaultExtras = current.data['default_extras'];
 
@@ -565,7 +565,7 @@ jsBackend.pages.tree =
 			var openedIds = ['page-'+ pageID];
 
 			// add parents
-			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
+			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).attr('id'));
 		}
 
 		// add home if needed
@@ -622,9 +622,9 @@ jsBackend.pages.tree =
 	beforeMove: function(node, refNode, type, tree)
 	{
 		// get pageID that has to be moved
-		var currentPageID = $(node).prop('id').replace('page-', '');
+		var currentPageID = $(node).attr('id').replace('page-', '');
 		if(typeof refNode == 'undefined') parentPageID = 0;
-		else var parentPageID = $(refNode).prop('id').replace('page-', '')
+		else var parentPageID = $(refNode).attr('id').replace('page-', '')
 		
 		// home is a special item
 		if(parentPageID == '1')
@@ -671,7 +671,7 @@ jsBackend.pages.tree =
 	{
 		// get current and new URL
 		var currentPageURL = window.location.pathname + window.location.search;
-		var newPageURL = $(node).find('a').prop('href');
+		var newPageURL = $(node).find('a').attr('href');
 
 		// only redirect if destination isn't the current one.
 		if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
@@ -682,11 +682,11 @@ jsBackend.pages.tree =
 	onMove: function(node, refNode, type, tree, rollback)
 	{
 		// get pageID that has to be moved
-		var currentPageID = $(node).prop('id').replace('page-', '');
+		var currentPageID = $(node).attr('id').replace('page-', '');
 
 		// get pageID wheron the page has been dropped
 		if(typeof refNode == 'undefined') droppedOnPageID = 0;
-		else var droppedOnPageID = $(refNode).prop('id').replace('page-', '')
+		else var droppedOnPageID = $(refNode).attr('id').replace('page-', '')
 
 		// make the call
 		$.ajax(

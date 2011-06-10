@@ -94,7 +94,7 @@ utils.form =
 	 */
 	isChecked: function(element)
 	{
-		return ($('input[name="' + element.prop('name') + '"]:checked').length >= 1);
+		return ($('input[name="' + element.attr('name') + '"]:checked').length >= 1);
 	},
 
 
