@@ -237,5 +237,7 @@
 
 	{* Theme specific Javascript *}
 	<script src="{$THEME_URL}/core/js/triton.js"></script>
+
+	<script src="/frontend/core/js/jquery/jquery.frontend.js"></script>
 </body>
 </html>
