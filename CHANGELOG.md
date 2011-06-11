@@ -2,7 +2,8 @@
 --
 Bugfixes:
 
-* Proper implementation of .prop()
+* Proper implementation of .prop().
+* Analyse-action was using invalid arguments for SpoonFilter::toCamelCase().
 
 2.3.0 (2011-06-07)
 --

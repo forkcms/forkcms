@@ -375,7 +375,7 @@ class BackendLocaleModel
 							$matches[1][] = 'BL';
 							$matches[2][] = '';
 							$matches[3][] = $type;
-							$matches[4][] = SpoonFilter::toCamelCase($match, array('-', '_'));
+							$matches[4][] = SpoonFilter::toCamelCase(SpoonFilter::toCamelCase($match, '-'), '_');
 							$matches[5][] = '';
 						}
 					}
