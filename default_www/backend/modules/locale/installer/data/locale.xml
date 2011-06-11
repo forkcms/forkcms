@@ -6,6 +6,10 @@
         <translation language="nl"><![CDATA[Deze vertaling bestaat reeds.]]></translation>
         <translation language="en"><![CDATA[This translation already exists.]]></translation>
       </item>
+      <item type="error" name="InvalidXML">
+        <translation language="nl"><![CDATA[Het opgegeven XML-bestand bevat foute XML-data.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid XML-file.]]></translation>
+      </item>
       <item type="error" name="ModuleHasToBeCore">
         <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
         <translation language="en"><![CDATA[The module needs to be core for frontend translations.]]></translation>
