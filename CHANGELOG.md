@@ -1,7 +1,8 @@
-2.3.1 (xxxx-xx-xx)
+2.3.1 (2011-06-14)
 --
 Bugfixes:
 
+* Formbuilder: fix jquery error causing formbuilder to malfunction
 * Proper implementation of .prop().
 * Analyse-action was using invalid arguments for SpoonFilter::toCamelCase().
 
