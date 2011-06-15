@@ -175,6 +175,20 @@
 
 			// append to current element
 			$this.append(html);
+
+			// hide share list by default
+			var shareMenu = $this.find('ul.shareMenu');
+
+			shareMenu.hide();
+
+			$this.hover(function()
+			{
+				shareMenu.show();
+			},
+			function()
+			{
+				shareMenu.hide();
+			});
 		});
 	};
 })(jQuery);
