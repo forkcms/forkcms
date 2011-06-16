@@ -516,6 +516,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		// init vars
 		$modulesDenied = array();
 		$modulesGranted = array();
+		$actionsDenied = array();
+		$actionsGranted = array();
 		$checkedModules = array();
 		$uncheckedModules = array();
 
@@ -526,8 +528,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			$bits = explode('_', $permission->getName());
 
 			// convert camelcasing to underscore notation
-			$module = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[1])));
-			$action = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[2])));
+			$module = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[1])), '_');
+			$action = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[2])), '_');
 
 			// permission checked?
 			if($permission->getChecked())
@@ -557,8 +559,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			$bits = explode('_', $permission->getName());
 
 			// convert camelcasing to underscore notation
-			$module = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[1])));
-			$group = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[3])));
+			$module = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[1])), '_');
+			$group = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[3])), '_');
 
 			// create new item
 			$moduleItem = array('group_id' => $this->id, 'module' => $module);
@@ -655,7 +657,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 				if($preset->getChecked())
 				{
 					// convert camelcasing to underscore notation
-					$selected = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst(str_replace('widgets_', '', $preset->getName()))));
+					$selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
 
 					// if selected is the right widget, set visible
 					if($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
@@ -700,7 +702,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 						if($preset->getChecked())
 						{
 							// convert camelcasing to underscore notation
-							$selected = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst(str_replace('widgets_', '', $preset->getName()))));
+							$selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
 
 							// if selected is the right widget
 							if($selected == $widget['widget'])
