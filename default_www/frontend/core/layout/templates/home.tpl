@@ -43,7 +43,7 @@
 				{/option:block1}
 			{/option:block1IsHTML}
 			{option:!block1IsHTML}
-				{include:{$block1}}
+				{$block1}
 			{/option:!block1IsHTML}
 		</section>
 

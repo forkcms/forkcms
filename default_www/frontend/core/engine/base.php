@@ -280,19 +280,19 @@ class FrontendBaseBlock
 
 
 	/**
-	 * A reference to the current template
-	 *
-	 * @var	FrontendTemplate
-	 */
-	public $tpl;
-
-
-	/**
 	 * The path of the template to include, or that replaced the current one
 	 *
 	 * @var	string
 	 */
 	private $templatePath;
+
+
+	/**
+	 * A reference to the current template
+	 *
+	 * @var	FrontendTemplate
+	 */
+	public $tpl;
 
 
 	/**
@@ -314,7 +314,7 @@ class FrontendBaseBlock
 	public function __construct($module, $action, $data = null)
 	{
 		// get objects from the reference so they are accessable
-		$this->tpl = Spoon::get('template');
+		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
 		$this->URL = Spoon::get('url');
 		$this->breadcrumb = Spoon::get('breadcrumb');
@@ -425,6 +425,17 @@ class FrontendBaseBlock
 
 
 	/**
+	 * Get parsed template content.
+	 *
+	 * @return	string
+	 */
+	public function getContent()
+	{
+		return $this->tpl->getContent($this->templatePath);
+	}
+
+
+	/**
 	 * Get the module
 	 *
 	 * @return	string
@@ -447,7 +458,18 @@ class FrontendBaseBlock
 
 
 	/**
-	 * Get path for the template
+	 * Get template
+	 *
+	 * @return	string
+	 */
+	public function getTemplate()
+	{
+		return $this->tpl;
+	}
+
+
+	/**
+	 * Get template path
 	 *
 	 * @return	string
 	 */
@@ -461,30 +483,30 @@ class FrontendBaseBlock
 	 * Load the template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template		The path for the template to use.
+	 * @param	string[optional] $path			The path for the template to use.
 	 * @param	bool[optional] $overwrite		Should the template overwrite the default?
 	 */
-	protected function loadTemplate($template = null, $overwrite = false)
+	protected function loadTemplate($path = null, $overwrite = false)
 	{
 		// redefine
 		$overwrite = (bool) $overwrite;
 
-		// if no template is passed we should build the path
-		if($template === null)
+		// no template given, so we should build the path
+		if($path === null)
 		{
 			// build path to the module
 			$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 			// build template path
-			$template = $frontendModulePath . '/layout/templates/' . $this->getAction() . '.tpl';
+			$path = $frontendModulePath . '/layout/templates/' . $this->getAction() . '.tpl';
 		}
 
 		// redefine
-		else $template = (string) $template;
+		else $path = (string) $path;
 
 		// set properties
 		$this->setOverwrite($overwrite);
-		$this->setTemplatePath($template);
+		$this->setTemplatePath($path);
 	}
 
 
@@ -798,7 +820,7 @@ class FrontendBaseWidget
 	public function __construct($module, $action, $data = null)
 	{
 		// get objects from the reference so they are accessable
-		$this->tpl = Spoon::get('template');
+		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
 		$this->URL = Spoon::get('url');
 
@@ -906,6 +928,17 @@ class FrontendBaseWidget
 
 
 	/**
+	 * Get parsed template content
+	 *
+	 * @return	string
+	 */
+	public function getContent()
+	{
+		return $this->tpl->getContent($this->templatePath);
+	}
+
+
+	/**
 	 * Get the module
 	 *
 	 * @return	string
@@ -917,13 +950,13 @@ class FrontendBaseWidget
 
 
 	/**
-	 * Get path for the template
+	 * Get template
 	 *
 	 * @return	string
 	 */
-	public function getTemplatePath()
+	public function getTemplate()
 	{
-		return $this->templatePath;
+		return $this->tpl;
 	}
 
 
@@ -1003,7 +1036,7 @@ class FrontendBaseWidget
 	 * @return	void
 	 * @param	string $path	The path to the template that should be loaded.
 	 */
-	private function setTemplatePath($path)
+	protected function setTemplatePath($path)
 	{
 		$this->templatePath = (string) $path;
 	}

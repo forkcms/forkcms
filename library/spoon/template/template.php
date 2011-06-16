@@ -343,6 +343,17 @@ class SpoonTemplate
 
 
 	/**
+	 * Retrieves the already assigned variables.
+	 *
+	 * @return	array				Returns an array
+	 */
+	public function getAssignedVariables()
+	{
+		return $this->variables;
+	}
+
+
+	/**
 	 * Get the cache directory path.
 	 *
 	 * @return	string	The location of the cache directory.
