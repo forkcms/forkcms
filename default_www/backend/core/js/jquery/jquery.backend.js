@@ -145,7 +145,7 @@
 		
 		return this.each(function() 
 		{
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			
 			// append the button
 			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
@@ -160,10 +160,10 @@
 				var currentElement = $('#' + $(this).data('id'));
 				
 				// check if it isn't a text-element
-				if(currentElement.prop('type') != 'text')
+				if(currentElement.attr('type') != 'text')
 				{
 					// clone the current element
-					var newElement = $('<input value="" id="'+ currentElement.prop('id') +'" name="'+ currentElement.prop('name') +'" maxlength="'+ currentElement.prop('maxlength') +'" class="'+ currentElement.prop('class') +'" type="text">');
+					var newElement = $('<input value="" id="'+ currentElement.attr('id') +'" name="'+ currentElement.attr('name') +'" maxlength="'+ currentElement.attr('maxlength') +'" class="'+ currentElement.attr('class') +'" type="text">');
 					
 					// insert the new element
 					newElement.insertBefore(currentElement);
@@ -182,7 +182,8 @@
 				newElement.val(pass).keyup();
 			}
 			
-			function generatePass(length, uppercase, lowercase, numbers, specialchars) {
+			function generatePass(length, uppercase, lowercase, numbers, specialchars) 
+			{
 				// the vowels
 				var v = new Array('a', 'e','u', 'ae', 'ea');
 				
@@ -336,8 +337,11 @@
 				// remove events
 				element.unbind('click').unbind('focus');
 
-				// set html (replacing quotes with htmlentity, otherwise the inputfield is 'broken')
-				element.html('<input type="text" class="' + options.inputClasses + '" value="' + utils.string.replaceAll(options.current.value, '"', '&quot;') + '" />');
+				// replacing quotes, less than and greater than with htmlentity, otherwise the inputfield is 'broken'
+				options.current.value = utils.string.replaceAll(options.current.value, '"', '&quot;');
+				
+				// set html
+				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
 
 				// store element
 				options.current.element = $(element.find('input')[0]);
@@ -371,8 +375,14 @@
 				// get parent
 				var parent = options.current.element.parent();
 
+				// get value and replace quotes, less than and greater than with their htmlentities
+				var newValue = options.current.element.val();
+				newValue = utils.string.replaceAll(newValue, '"', '&quot;');
+				newValue = utils.string.replaceAll(newValue, '<', '&lt;');
+				newValue = utils.string.replaceAll(newValue, '>', '&gt;');
+				
 				// set HTML and rebind events
-				parent.html(options.current.element.val()).bind('click focus', createElement);
+				parent.html(newValue).bind('click focus', createElement);
 
 				// add class
 				parent.removeClass('inlineEditing');
@@ -459,13 +469,13 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
 			var timer = null;
 
 			// reset label, so it points to the correct item
-			$('label[for="' + id + '"]').prop('for', 'addValue-' + id);
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function(evt)
@@ -476,7 +486,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);
@@ -496,7 +506,7 @@
 			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '	<div id="elementList-' + id + '" class="tagList">' + '	</div>' + '</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 
 			// prepend html
@@ -599,7 +609,7 @@
 				evt.stopPropagation();
 
 				// remove element
-				remove($(this).prop('rel'));
+				remove($(this).attr('rel'));
 			});
 
 			// add an element
@@ -749,13 +759,13 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
 			var timer = null;
 
 			// reset label, so it points to the correct item
-			$('label[for="' + id + '"]').prop('for', 'addValue-' + id);
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function(evt)
@@ -766,7 +776,7 @@
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
-					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
 					
 					// clear other timers
 					clearTimeout(timer);
@@ -797,7 +807,7 @@
 						'</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
@@ -1046,7 +1056,7 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var possibleOptions = $(this).find('option');
 			var elements = get();
 			var blockSubmit = false;
@@ -1073,7 +1083,7 @@
 			
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
-				html +=	'				<option value="' + $(possibleOptions[i]).prop('value') + '">' + $(possibleOptions[i]).html() + '</option>';
+				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
 			}
 			
 			html +=		'			</select>' +
@@ -1091,7 +1101,7 @@
 						'</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
@@ -1184,7 +1194,7 @@
 								'	</li>';
 
 						// remove from dropdown
-						$('#addValue-' + id + ' option[value=' + elements[i] + ']').prop('disabled', 'disabled');
+						$('#addValue-' + id + ' option[value=' + elements[i] + ']').prop('disabled', true);
 					}
 
 					// end html
@@ -1196,13 +1206,13 @@
 
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
-				$('#addValue-' + id).removeClass('disabled').prop('disabled', '');
+				$('#addValue-' + id).removeClass('disabled').prop('disabled', false);
 				if($('#addValue-' + id + ' option:enabled').length == 0) 
 				{
 					$('#addButton-' + id).addClass('disabledButton');
-					$('#addValue-' + id).addClass('disabled').prop('disabled', 'disabled');
+					$('#addValue-' + id).addClass('disabled').prop('disabled', true);
 				}
-				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').prop('value'));
+				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').attr('value'));
 
 				// call callback if specified
 				if(options.afterBuild != null) { options.afterBuild(id); }
@@ -1239,7 +1249,7 @@
 				// set new value
 				$('#' + id).val(elements.join(options.splitChar));
 				
-				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', '');
+				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', false);
 
 				// rebuild element list
 				build();
@@ -1278,7 +1288,7 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
 
@@ -1302,7 +1312,7 @@
 			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);

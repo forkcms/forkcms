@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS `pages_blocks` (
  `status` enum('active','archive','draft') NOT NULL default 'active',
  `created_on` datetime NOT NULL,
  `edited_on` datetime NOT NULL,
- KEY `idx_rev_status` (`revision_id`,`status`)
+ KEY `idx_rev_status` (`revision_id`,`status`),
+ KEY `idx_id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

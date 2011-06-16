@@ -25,6 +25,16 @@ jsBackend.locale.controls =
 			// call to start
 			jsBackend.locale.controls.enableDisableModules();
 		}
+		
+		if($('.datagrid td.translationValue').length > 0)
+		{
+			// buil ajax-url
+			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=save_translation&language='+ jsBackend.current.language;
+
+			
+			// bind
+			$('.datagrid td.translationValue').inlineTextEdit( { saveUrl: url, tooltip: '{$msgClickToEdit}' });
+		}
 	},
 
 	enableDisableModules: function() 
@@ -33,16 +43,16 @@ jsBackend.locale.controls =
 		if($('select#application').val() == 'frontend') 
 		{
 			// set all modules disabled
-			$('select#module option').prop('disabled', 'disabled');
+			$('select#module option').prop('disabled', true);
 			
 			// enable core
-			$('select#module option[value=core]').prop('disabled', '').prop('selected', 'selected');
+			$('select#module option[value=core]').prop('disabled', false).prop('selected', true);
 		}
 		
 		// remove the disbaled stuff
 		else 
 		{
-			$('select#module option').prop('disabled', '');
+			$('select#module option').prop('disabled', false);
 		}
 	},
 	

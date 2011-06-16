@@ -6,6 +6,7 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -102,7 +103,6 @@ body {
 	#header td {
 		vertical-align: middle;
 	}
-	
 
 /*
 	Debug message
@@ -138,9 +138,9 @@ body {
 			border-color: #CCC #BABABA #CCC #BABABA;
 			background: #FFF;
 			/* @inc .boxShadow */
-			box-shadow: 0 2px 6px #AAA;
+			-moz-box-shadow: 0 2px 6px #AAA;
 			-webkit-box-shadow: 0 2px 6px #AAA;
-			-moz-box-shadow: #AAA 0 2px 6px;
+			box-shadow: 0 2px 6px #AAA;
 		}
 
 		#user #ddAccount li {
@@ -153,7 +153,7 @@ body {
 			padding: 0;
 			zoom: 1;
 		}
-		
+
 			#user #ddAccount li a {
 				zoom: 1;
 				display: block;
@@ -189,20 +189,18 @@ body {
 			}
 
 			#openAccountDropdown {
-				background: #F5F5F5;
 				display: block;
 				border: 1px solid #B0B0B0;
 				zoom: 1;
 				cursor: pointer;
-
-				/* @inc .rc */
-				border-radius: 4px;
-				-webkit-border-radius: 4px;
-				-moz-border-radius: 4px;
-
-				/* Gradient */
+				background: #F5F5F5;
 				background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#C5C5C5), color-stop(.0454545,#F7F7F7), color-stop(.9545455,#DDD));
 				background: -moz-linear-gradient(#FFF, #f7f7f7 4.5454545%, #DDD 95.454545%, #C5C5C5);
+
+				/* @inc .rc */
+				-moz-border-radius: 4px;
+				-webkit-border-radius: 4px;
+				border-radius: 4px;
 			}
 
 			#openAccountDropdown .nickname {
@@ -243,7 +241,7 @@ body {
 
 #headerHolder h1 {
 	margin: 0;
-	padding: 12px 0 0;
+	padding: 12px 0 0 0;
 	font-size: 14px;
 	font-weight: 700;
 }
@@ -277,11 +275,9 @@ body {
 	}
 
 	#navigation li a {
-
 		/* @inc .navButtonColors */
 		display: block;
 		border-bottom: none;
-
 		float: left;
 		margin: 10px 4px 0 0;
 		padding: 7px 17px;
@@ -289,7 +285,6 @@ body {
 		top: 1px;
 		line-height: 1;
 		font-weight: 700;
-
 		background: #EBF3F9;
 		background: -webkit-gradient(linear, left top, left bottom, from(#EBF3F9), to(#DCE9F4));
 		background: -moz-linear-gradient(top, #EBF3F9, #DCE9F4);
@@ -300,12 +295,12 @@ body {
 		font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 
 		/* @inc .rcTopOnly */
-		border-top-left-radius: 4px;
 		-webkit-border-top-left-radius: 4px;
-		-moz-border-radius-topleft: 4px;
-		border-top-right-radius: 4px;
 		-webkit-border-top-right-radius: 4px;
+		-moz-border-radius-topleft: 4px;
 		-moz-border-radius-topright: 4px;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
 	}
 
 	#navigation li a:hover,
@@ -320,16 +315,13 @@ body {
 	}
 
 	#navigation li.selected a {
-
 		/* @inc .navButtonSelected */
 		background: #F9F9F9;
 		background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#FAFAFA));
 		background: -moz-linear-gradient(top, #FFF, #FAFAFA);
 		border: 1px solid #BED7E9;
 		border-bottom-color: #FAFAFA;
-
 		color: #000;
-
 	}
 
 	#navigation a {
@@ -395,10 +387,9 @@ body {
 	padding: 3px;
 
 	/* @inc .rc */
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
 	border-radius: 4px;
-
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 #subnavigation ul ul {
@@ -491,16 +482,16 @@ body {
 	padding: 20px;
 	border: 1px solid #DDD;
 	background: #FFF;
-	
+
 	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 
 	/* @inc .boxShadow */
-	box-shadow: 0 1px 3px rgba(0,0,0,0.15);;
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 	-moz-box-shadow: rgba(0,0,0,0.15) 0 1px 3px;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+	box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 
 /*
@@ -510,7 +501,7 @@ body {
 #genericBoxTitle {
 	text-align: center;
 	border-bottom: 1px solid #DDD;
-	margin: 0 0 20px;
+	margin: 0 0 20px 0;
 }
 
 	#genericBoxTitle h2 {

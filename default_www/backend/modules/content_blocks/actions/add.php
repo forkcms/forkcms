@@ -70,8 +70,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// create elements
-		$this->frm->addText('title');
-		$this->frm->getField('title')->setAttribute('class', 'title ' . $this->frm->getField('title')->getAttribute('class'));
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text');
 		$this->frm->addCheckbox('hidden', true);
 
