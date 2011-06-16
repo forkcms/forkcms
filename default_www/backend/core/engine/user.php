@@ -158,7 +158,7 @@ class BackendUser
 	 *
 	 * @return	mixed
 	 * @param	string $key						The key for the setting to get.
-	 * @param	mixed[optional] $defaultValue	Default value, will be stored in the setting isn't set.
+	 * @param	mixed[optional] $defaultValue	Default value, will be stored if the setting isn't set.
 	 */
 	public function getSetting($key, $defaultValue = null)
 	{
@@ -248,7 +248,7 @@ class BackendUser
 		$db = BackendModel::getDB();
 
 		// get user-data
-		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.email, u.is_god,
+		$userData = (array) $db->getRecord('SELECT u.id, u.email, u.is_god,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
 											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
@@ -261,7 +261,6 @@ class BackendUser
 
 		// set properties
 		$this->setUserId($userData['id']);
-		$this->setGroupId($userData['group_id']);
 		$this->setEmail($userData['email']);
 		$this->setSessionId($userData['session_id']);
 		$this->setSecretKey($userData['secret_key']);
@@ -298,7 +297,7 @@ class BackendUser
 		$db = BackendModel::getDB();
 
 		// get user-data
-		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.email, u.is_god,
+		$userData = (array) $db->getRecord('SELECT u.id, u.email, u.is_god,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
 											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
@@ -311,7 +310,6 @@ class BackendUser
 
 		// set properties
 		$this->setUserId($userData['id']);
-		$this->setGroupId($userData['group_id']);
 		$this->setEmail($userData['email']);
 		$this->setSessionId($userData['session_id']);
 		$this->setSecretKey($userData['secret_key']);

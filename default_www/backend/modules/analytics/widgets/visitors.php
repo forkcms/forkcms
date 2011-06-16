@@ -28,6 +28,9 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		// set column
 		$this->setColumn('right');
 
+		// set position
+		$this->setPosition(0);
+
 		// add css
 		$this->header->addCSS('widgets.css', 'analytics');
 

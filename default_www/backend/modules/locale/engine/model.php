@@ -243,6 +243,7 @@ class BackendLocaleModel
 											array($name, $type, $module, $language, $application));
 	}
 
+
 	/**
 	 * Grab labels found in the backend navigation.
 	 *
@@ -298,6 +299,7 @@ class BackendLocaleModel
 
 		return $languages;
 	}
+
 
 	/**
 	 * Get the locale that is used in the backend but doesn't exists.
@@ -848,8 +850,6 @@ class BackendLocaleModel
 	}
 
 
-
-
 	/**
 	 * Get the translations
 	 *
@@ -939,6 +939,7 @@ class BackendLocaleModel
 
 		return $datagridTranslations;
 	}
+
 
 	/**
 	 * Get the filetree

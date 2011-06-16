@@ -1361,7 +1361,7 @@ jsBackend.tabs =
 
 			$('.tabs .ui-tabs-panel').each(function()
 			{
-				if($(this).find('.formError:visible').length > 0) {
+				if($(this).find('.formError').length > 0) {
 					$($('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent()).addClass('ui-state-error');
 				}
 			});

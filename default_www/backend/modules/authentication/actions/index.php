@@ -173,8 +173,17 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				SpoonSession::delete('backend_login_attempts');
 				SpoonSession::delete('backend_last_attempt');
 
+				// create filter with modules which may not be displayed
+				$filter = array('authentication', 'error', 'core');
+
+				// get all active filtered modules
+				$modules = array_diff(BackendModel::getModules(true), $filter);
+
+				// loop through modules and break on first allowed module
+				foreach($modules as $module) if(BackendAuthentication::isAllowedModule($module)) break;
+
 				// get the redirect-URL from the URL
-				$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard'));
+				$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module));
 
 				// redirect to the correct URL (URL the user was looking for or fallback)
 				$this->redirect($redirectURL);

@@ -154,7 +154,8 @@ class BackendAuthentication
 			$allowedActionsRows = (array) $db->getRecords('SELECT gra.module, gra.action, gra.level
 															FROM users_sessions AS us
 															INNER JOIN users AS u ON us.user_id = u.id
-															INNER JOIN groups_rights_actions AS gra ON u.group_id = gra.group_id
+															INNER JOIN users_groups AS ug ON u.id = ug.user_id
+															INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
 															WHERE us.session_id = ? AND us.secret_key = ?',
 															array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
@@ -187,7 +188,7 @@ class BackendAuthentication
 	public static function isAllowedModule($module)
 	{
 		// GOD's rule them all!
-		if(self::getUser()->isGod()) return true;
+		if(self::isLoggedIn() && self::getUser()->isGod()) return true;
 
 		// always allowed modules (yep, hardcoded, because, we don't want other people to fuck up)
 		$alwaysAllowed = array('error', 'authentication');
@@ -208,7 +209,8 @@ class BackendAuthentication
 			$allowedModules = $db->getColumn('SELECT grm.module
 												FROM users_sessions AS us
 												INNER JOIN users AS u ON us.user_id = u.id
-												INNER JOIN groups_rights_modules AS grm ON u.group_id = grm.group_id
+												INNER JOIN users_groups AS ug ON u.id = ug.user_id
+												INNER JOIN groups_rights_modules AS grm ON ug.group_id = grm.group_id
 												WHERE us.session_id = ? AND us.secret_key = ?',
 												array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 

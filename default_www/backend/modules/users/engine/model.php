@@ -141,7 +141,7 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// get general user data
-		$user = (array) $db->getRecord('SELECT i.id, i.email, i.active, i.group_id
+		$user = (array) $db->getRecord('SELECT i.id, i.email, i.active
 										FROM users AS i
 										WHERE i.id = ?',
 										array($id));
