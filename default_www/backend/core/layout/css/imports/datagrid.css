@@ -6,12 +6,13 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
 
 .datagridHolder {
-	margin: 0 0 24px;
+	margin: 0 0 24px 0;
 	border-bottom: 1px solid #BDBDBD;
 }
 
@@ -31,9 +32,9 @@
 	.tableHeading h3 {
 		font-size: 13px;
 		float: left;
-		padding: 0 0 4px;
+		padding: 0 0 4px 0;
 	}
-	
+
 	.tableHeading .oneLiner h3 + abbr.help {
 		top: 5px;
 	}
@@ -297,7 +298,7 @@ td.num_tags {
 	#encloser #container .datagrid tbody tr.selected td a.linkButton span {
 		color: #FFF;
 	}
-	
+
 	.datagrid tbody tr:hover td a,
 	.datagrid tbody tr.selected td a {
 		color: #F1F5FA;
@@ -394,10 +395,9 @@ td.num_tags {
 			border: 1px solid #BFBFBF;
 
 			/* @inc .rc */
-			border-radius: 4px;
-			-webkit-border-radius: 4px;
 			-moz-border-radius: 4px;
-
+			-webkit-border-radius: 4px;
+			border-radius: 4px;
 		}
 
 		.pagination li a:hover,
@@ -414,14 +414,12 @@ td.num_tags {
 		}
 
 		.pagination li.selected span {
-
 			/* @inc .navButtonSelected */
 			background: #000;
 			background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
 			background: -moz-gradient(linear, left top, left bottom, from(#666), to(#000));
 			border: 1px solid #000;
 			color: #FFF;
-
 		}
 
 			.pagination li.previousPage *,
@@ -481,9 +479,9 @@ td.num_tags {
 	background: #005292;
 
 	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 /*
@@ -494,7 +492,6 @@ tr.isDefault td.name {
 	color: #000;
 	font-weight: 700;
 }
-
 
 /*
 	Datagrid drag and drop
