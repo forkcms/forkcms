@@ -47,7 +47,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	/**
 	 * The extra object
 	 *
-	 * @var	stdClass
+	 * @var	FrontendBaseBlock
 	 */
 	private $object;
 
@@ -397,7 +397,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	/**
 	 * The extra object
 	 *
-	 * @var	stdClass
+	 * @var	FrontendBaseWidget
 	 */
 	private $object;
 

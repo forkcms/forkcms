@@ -118,6 +118,7 @@ class FrontendPage extends FrontendBaseObject
 		$this->display();
 	}
 
+
 	/**
 	 * Display the page
 	 *

@@ -343,10 +343,9 @@ class SpoonTemplate
 
 
 	/**
-	 * Retrieves the already assigned value.
+	 * Retrieves the already assigned variables.
 	 *
-	 * @return	mixed				Returns an array, string, int or null
-	 * @param	string $variable	The name of the variable that you want to retrieve the already assigned value from.
+	 * @return	array				Returns an array
 	 */
 	public function getAssignedVariables()
 	{
