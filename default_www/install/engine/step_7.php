@@ -118,6 +118,8 @@ class InstallerStep7 extends InstallerStep
 		$variables['<path-www>'] = PATH_WWW;
 		$variables['<path-library>'] = PATH_LIBRARY;
 		$variables['<site-default-language>'] = SpoonSession::get('default_language');
+		$variables['<action-group-tag>'] = '@actiongroup';
+		$variables['<action-rights-level>'] = 7;
 
 		// globals files
 		$configurationFiles = array('globals.base.php' => 'globals.php',

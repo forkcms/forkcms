@@ -129,7 +129,30 @@ $navigation = array(
 					'form_builder/data',
 					'form_builder/data_details'
 				)
-			)
+			),
+			array(
+				'url' => 'profiles/index',
+				'label' => 'Profiles',
+				'children' => array(
+					array(
+						'url' => 'profiles/index',
+						'selected_for' => array(
+							'profiles/edit',
+							'profiles/add_profile_group',
+							'profiles/edit_profile_group'
+						),
+						'label' => 'Profiles'
+					),
+					array(
+						'url' => 'profiles/groups',
+						'selected_for' => array(
+							'profiles/add_group',
+							'profiles/edit_group'
+						),
+						'label' => 'Groups'
+					)
+				)
+			),
 		)
 	),
 	array(
@@ -239,6 +262,14 @@ $navigation = array(
 				'selected_for' => array(
 					'users/add',
 					'users/edit'
+				)
+			),
+			array(
+				'url' => 'groups/index',
+				'label' => 'Groups',
+				'selected_for' => array(
+					'groups/add',
+					'groups/edit'
 				)
 			),
 			array(

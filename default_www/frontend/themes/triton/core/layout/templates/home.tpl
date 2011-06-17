@@ -36,7 +36,7 @@
 				{option:!block10IsHTML}
 					<div id="headerSearch">
 						<h4>{$lblSearch|ucfirst}</h4>
-						{include:{$block10}}
+						{$block10}
 					</div>
 				{/option:!block10IsHTML}
 
@@ -56,7 +56,7 @@
 					{/option:block9}
 				{/option:block9IsHTML}
 				{option:!block9IsHTML}
-					{include:{$block9}}
+					{$block9}
 				{/option:!block9IsHTML}
 			</div>
 
@@ -87,7 +87,7 @@
 						{/option:block1}
 					{/option:block1IsHTML}
 					{option:!block1IsHTML}
-						{include:{$block1}}
+						{$block1}
 					{/option:!block1IsHTML}
 
 					{* Block 2 (default: Editor) *}
@@ -103,7 +103,7 @@
 						{/option:block2}
 					{/option:block2IsHTML}
 					{option:!block2IsHTML}
-						{include:{$block2}}
+						{$block2}
 					{/option:!block2IsHTML}
 
 				</div>
@@ -124,7 +124,7 @@
 						{/option:block3}
 					{/option:block3IsHTML}
 					{option:!block3IsHTML}
-						{include:{$block3}}
+						{$block3}
 					{/option:!block3IsHTML}
 
 					{* Block 4 (default: Editor) *}
@@ -140,7 +140,7 @@
 						{/option:block4}
 					{/option:block4IsHTML}
 					{option:!block4IsHTML}
-						{include:{$block4}}
+						{$block4}
 					{/option:!block4IsHTML}
 
 					{* Block 5 (default: Editor) *}
@@ -156,7 +156,7 @@
 						{/option:block5}
 					{/option:block5IsHTML}
 					{option:!block5IsHTML}
-						{include:{$block5}}
+						{$block5}
 					{/option:!block5IsHTML}
 
 				</div>
@@ -177,7 +177,7 @@
 						{/option:block6}
 					{/option:block6IsHTML}
 					{option:!block6IsHTML}
-						{include:{$block6}}
+						{$block6}
 					{/option:!block6IsHTML}
 
 					{* Block 7 (default: Editor) *}
@@ -193,7 +193,7 @@
 						{/option:block7}
 					{/option:block7IsHTML}
 					{option:!block7IsHTML}
-						{include:{$block7}}
+						{$block7}
 					{/option:!block7IsHTML}
 
 					{* Block 8 (default: Editor) *}
@@ -209,7 +209,7 @@
 						{/option:block8}
 					{/option:block8IsHTML}
 					{option:!block8IsHTML}
-						{include:{$block8}}
+						{$block8}
 					{/option:!block8IsHTML}
 
 				</div>

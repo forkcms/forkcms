@@ -1,8 +1,19 @@
-2.3.1 (xxxx-xx-xx)
+2.x.x (2011-xx-xx)
+--
+Improvements:
+
+* Profiles: added profiles module to handle onsite (frontend) profiles.
+* Groups: addes groups module to handle backend user privileges.
+* Locale: added quick-edit.
+* Core: extras (blocks or widgets) now simulate their own scope concerning templates.
+
+2.3.1 (2011-06-14)
 --
 Bugfixes:
 
-* Proper implementation of .prop()
+* Formbuilder: fix jquery error causing formbuilder to malfunction
+* Proper implementation of .prop().
+* Analyse-action was using invalid arguments for SpoonFilter::toCamelCase().
 
 2.3.0 (2011-06-07)
 --

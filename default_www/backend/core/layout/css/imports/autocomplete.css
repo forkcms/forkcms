@@ -7,6 +7,7 @@
     @subpackage   core
     
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -18,9 +19,9 @@
 	overflow: hidden;
 
 	/* @inc .boxShadow */
-	box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: 0 2px 6px #AAA;
 	-webkit-box-shadow: 0 2px 6px #AAA;
-	-moz-box-shadow: #AAA 0 2px 6px;
+	box-shadow: 0 2px 6px #AAA;
 }
 
 .ac_results ul {
@@ -36,8 +37,8 @@
 	left: 0;
 	z-index: -1;
 	filter: mask();
-	width:3000px;
-	height:3000px;
+	width: 3000px;
+	height: 3000px;
 }
 
 .ac_results li {
@@ -50,7 +51,7 @@
 }
 
 .ac_loading {
-	background : #FFF url(/backend/core/layout/images/spinner.gif) right center no-repeat;
+	background: #FFF url(/backend/core/layout/images/spinner.gif) no-repeat right center;
 }
 
 .ac_over {
