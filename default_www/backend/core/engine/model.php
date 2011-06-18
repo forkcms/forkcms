@@ -1261,6 +1261,7 @@ class BackendModel
 				$item['callback'] = $subscription['callback'];
 				$item['data'] = serialize($data);
 				$item['status'] = 'queued';
+				$item['added_on'] = BackendModel::getUTCDate();
 
 				// add
 				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);

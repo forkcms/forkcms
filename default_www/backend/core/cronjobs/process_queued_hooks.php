@@ -46,6 +46,9 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 			// any item?
 			if(!empty($item))
 			{
+				// init var
+				$processedSuccesfully = true;
+
 				// set item as busy
 				$db->update('hooks_queue', array('status' => 'busy'), 'id = ?', array($item['id']));
 
@@ -61,6 +64,9 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 
 					// set to error state
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
+
+					// reset state
+					$processedSuccesfully = false;
 
 					// logging when we are in debugmode
 					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
@@ -80,6 +86,9 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 						// set to error state
 						$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
+						// reset state
+						$processedSuccesfully = false;
+
 						// logging when we are in debugmode
 						if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
 					}
@@ -89,12 +98,15 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 					// set to error state
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
+					// reset state
+					$processedSuccesfully = false;
+
 					// logging when we are in debugmode
 					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
 				}
 
 				// everything went fine so delete the item
-				$db->delete('hooks_queue', 'id = ?', $item['id']);
+				if($processedSuccesfully = true;) $db->delete('hooks_queue', 'id = ?', $item['id']);
 
 				// logging when we are in debugmode
 				if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') finished.');
@@ -104,7 +116,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 			else
 			{
 				// remove the file
-//				SpoonFile::delete(BACKEND_CACHE_PATH .'/hooks/pid');
+				SpoonFile::delete(BACKEND_CACHE_PATH .'/hooks/pid');
 
 				// stop the script
 				exit;

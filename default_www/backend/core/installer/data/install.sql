@@ -554,10 +554,11 @@ CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
 
 CREATE TABLE IF NOT EXISTS `hooks_queue` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module` varchar(255) NOT NULL,
-  `callback` text NOT NULL,
-  `data` text,
-  `status` enum('busy','error','queued') NOT NULL DEFAULT 'queued',
+  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `callback` text COLLATE utf8_unicode_ci NOT NULL,
+  `data` text COLLATE utf8_unicode_ci,
+  `status` enum('busy','error','queued') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'queued',
+  `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
