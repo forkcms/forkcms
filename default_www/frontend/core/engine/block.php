@@ -45,6 +45,21 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 
 	/**
+	 * The extra object
+	 *
+	 * @var	FrontendBaseBlock
+	 */
+	private $object;
+
+	/**
+	 * The block's output
+	 *
+	 * @var	string
+	 */
+	private $output;
+
+
+	/**
 	 * Should the template overwrite the current one
 	 *
 	 * @var	bool
@@ -104,17 +119,17 @@ class FrontendBlockExtra extends FrontendBaseObject
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
 
 		// validate if the execute-method is callable
-		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
+		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
-		$object->execute();
+		$this->object->execute();
 
 		// set some properties
-		$this->setOverwrite($object->getOverwrite());
-		if($object->getTemplatePath() !== null) $this->setTemplatePath($object->getTemplatePath());
+		$this->setOverwrite($this->object->getOverwrite());
+		if($this->object->getTemplatePath() !== null) $this->setTemplatePath($this->object->getTemplatePath());
 	}
 
 
@@ -163,6 +178,21 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 
 	/**
+	 * Get the block content
+	 *
+	 * @return	string
+	 */
+	public function getContent()
+	{
+		// set path to template if the widget didnt return any data
+		if($this->output === null) $this->output = $this->object->getContent();
+
+		// return possible output
+		return $this->output;
+	}
+
+
+	/**
 	 * Get the data
 	 *
 	 * @return	mixed
@@ -197,6 +227,17 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 
 	/**
+	 * Get the assigned template.
+	 *
+	 * @return	array
+	 */
+	public function getTemplate()
+	{
+		return $this->object->getTemplate();
+	}
+
+
+	/**
 	 * Get path for the template
 	 *
 	 * @return	string
@@ -204,6 +245,17 @@ class FrontendBlockExtra extends FrontendBaseObject
 	public function getTemplatePath()
 	{
 		return $this->templatePath;
+	}
+
+
+	/**
+	 * Get the assigned variables for this block.
+	 *
+	 * @return	array
+	 */
+	public function getVariables()
+	{
+		return (array) $this->tpl->getAssignedVariables();
 	}
 
 
@@ -335,7 +387,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 
 	/**
-	 * The current moduled
+	 * The current module
 	 *
 	 * @var	string
 	 */
@@ -343,11 +395,18 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 
 	/**
-	 * The path for the template
+	 * The extra object
+	 *
+	 * @var	FrontendBaseWidget
+	 */
+	private $object;
+
+	/**
+	 * The block's output
 	 *
 	 * @var	string
 	 */
-	protected $templatePath = '';
+	private $output;
 
 
 	/**
@@ -394,19 +453,13 @@ class FrontendBlockWidget extends FrontendBaseObject
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
 
 		// validate if the execute-method is callable
-		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
+		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
-		$output = $object->execute();
-
-		// set path to template if the widget didnt return any data
-		if($output === null) $this->setTemplatePath($object->getTemplatePath());
-
-		// return possible output
-		return $output;
+		$this->output = $this->object->execute();
 	}
 
 
@@ -423,6 +476,21 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 		// return action
 		return $this->action;
+	}
+
+
+	/**
+	 * Get the block content
+	 *
+	 * @return	string
+	 */
+	public function getContent()
+	{
+		// set path to template if the widget didnt return any data
+		if($this->output === null) $this->output = $this->object->getContent();
+
+		// return possible output
+		return $this->output;
 	}
 
 
@@ -450,13 +518,13 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 
 	/**
-	 * Get path for the template
+	 * Get the assigned template.
 	 *
-	 * @return	string
+	 * @return	array
 	 */
-	public function getTemplatePath()
+	public function getTemplate()
 	{
-		return $this->templatePath;
+		return $this->object->getTemplate();
 	}
 
 
@@ -522,18 +590,6 @@ class FrontendBlockWidget extends FrontendBaseObject
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
-	}
-
-
-	/**
-	 * Set the path for the template
-	 *
-	 * @return	void
-	 * @param	string $path		The path for the template to use.
-	 */
-	private function setTemplatePath($path)
-	{
-		$this->templatePath = FrontendTheme::getPath($path);
 	}
 }
 

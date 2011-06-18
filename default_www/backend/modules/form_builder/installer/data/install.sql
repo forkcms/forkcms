@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS `forms` (
 CREATE TABLE IF NOT EXISTS `forms_data` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `form_id` int(11) unsigned NOT NULL,
-  `ip` varchar(255) NOT NULL,
   `session_id` varchar(255) default NULL,
   `sent_on` datetime NOT NULL,
   `data` text COMMENT 'Serialized array with extra information.',

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <groups>
+      <item type="label" name="Presets">
+        <translation language="nl"><![CDATA[presets]]></translation>
+        <translation language="en"><![CDATA[presets]]></translation>
+      </item>    
+      <item type="label" name="DisplayWidgets">
+        <translation language="nl"><![CDATA[te tonen widgets]]></translation>
+        <translation language="en"><![CDATA[widgets to display]]></translation>
+      </item>   
+      <item type="label" name="SetPermissions">
+        <translation language="nl"><![CDATA[stel rechten in]]></translation>
+        <translation language="en"><![CDATA[set permissions]]></translation>
+      </item>         
+      <item type="label" name="Action">
+        <translation language="nl"><![CDATA[actie]]></translation>
+        <translation language="en"><![CDATA[action]]></translation>
+      </item> 
+      <item type="label" name="NumUsers">
+        <translation language="nl"><![CDATA[aantal gebruikers]]></translation>
+        <translation language="en"><![CDATA[number of users]]></translation>
+      </item>
+      <item type="label" name="Screenname">
+        <translation language="nl"><![CDATA[scherm naam]]></translation>
+        <translation language="en"><![CDATA[screen name]]></translation>
+      </item>
+      <item type="label" name="Checkbox">
+        <translation language="nl"><![CDATA[&nbsp;]]></translation>
+        <translation language="en"><![CDATA[&nbsp;]]></translation>
+      </item>
+      <item type="message" name="NoUsers">
+        <translation language="nl"><![CDATA[Deze groep bevat geen gebruikers.]]></translation>
+        <translation language="en"><![CDATA[This group does not contain any users.]]></translation>
+      </item> 
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA["%1$s" is toegevoegd.]]></translation>
+        <translation language="en"><![CDATA["%1$s" has been added.]]></translation>
+      </item>  
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[wijzigingen aan "%1$s" werden opgeslaan.]]></translation>
+        <translation language="en"><![CDATA[changes for "%1$s" has been saved.]]></translation>
+      </item> 
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA["%1$s" is verwijderd.]]></translation>
+        <translation language="en"><![CDATA["%1$s" has been deleted.]]></translation>
+      </item> 
+      <item type="message" name="NoWidgets">
+        <translation language="nl"><![CDATA[Er zijn geen widgets beschikbaar.]]></translation>
+        <translation language="en"><![CDATA[There are no widgets available.]]></translation>
+      </item>                               
+      <item type="error" name="GroupAlreadyExists">
+        <translation language="nl"><![CDATA[Deze groep bestaat reeds.]]></translation>
+        <translation language="en"><![CDATA[This group already exists.]]></translation>
+      </item>                               
+    </groups>
+    <core>
+      <item type="label" name="Groups">
+        <translation language="nl"><![CDATA[groepen]]></translation>
+        <translation language="en"><![CDATA[groups]]></translation>
+      </item>    
+    </core>
+  </backend>
+</locale>

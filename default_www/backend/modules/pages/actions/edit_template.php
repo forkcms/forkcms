@@ -89,7 +89,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// init var
-		$maximumBlocks = 20;
+		$maximumBlocks = 30;
 		$defaultId = BackendModel::getModuleSetting('pages', 'default_template');
 
 		// create elements
@@ -108,10 +108,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->frm->getField('default')->setAttributes(array('disabled' => 'disabled'));
 		}
 
-		// if the template is in use we cant alter the active state or the number of blocks
+		// if the template is in use we cant alter the active state
 		if(BackendPagesModel::isTemplateInUse($this->id))
 		{
-			$this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
 			$this->frm->getField('active')->setAttributes(array('disabled' => 'disabled'));
 		}
 
@@ -178,7 +177,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// num blocks cant be altered when the template is in use
-			$numBlocks = (BackendPagesModel::isTemplateInUse($this->id)) ? $this->record['num_blocks'] : (int) $this->frm->getField('num_blocks')->getValue();
+			$numBlocks = (int) $this->frm->getField('num_blocks')->getValue();
 
 			// required fields
 			$this->frm->getField('file')->isFilled(BL::err('FieldIsRequired'));
@@ -237,7 +236,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if(BackendPagesModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
 
 				// init template data
-				$item['data'] = $this->record['data'];
+				$item['data']['format'] = $this->record['data']['format'];
 
 				// loop fields
 				for($i = 1; $i <= $item['num_blocks']; $i++)
@@ -258,6 +257,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 				// set default template
 				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+
+				// update all existing pages using this template to add the newly inserted block(s)
+				if(BackendPagesModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id']);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);

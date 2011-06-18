@@ -165,7 +165,7 @@ jsBackend.forms =
 						evt.preventDefault();
 
 						// is the button disabled?
-						if($(this).attr('disabled') == 'disabled') return false;
+						if($(this).prop('disabled')) return false;
 
 						//
 						else $('form#'+ formId).submit();

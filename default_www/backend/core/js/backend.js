@@ -128,8 +128,8 @@ jsBackend.balloons =
 		var clickedElement = $(this);
 
 		// get linked balloon
-		var id = clickedElement.data('message-id');
-
+		var id = clickedElement.data('messageId');
+		
 		// rel available?
 		if(id != '')
 		{
@@ -153,7 +153,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeIn(500);
 
 				// set focus on first visible field
-				if($('#'+ id +' form input:visible:first').length > 0) $('#'+ id +' form input:visible:first').focus();
+				$('#'+ id +' form input:visible:first').focus();
 
 				// bind resize
 				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ id)); });
@@ -185,7 +185,9 @@ jsBackend.controls =
 	// init, something like a constructor
 	init: function()
 	{
+		jsBackend.controls.bindCheckboxDropdownCombo();
 		jsBackend.controls.bindCheckboxTextfieldCombo();
+		jsBackend.controls.bindRadioButtonFieldCombo();
 		jsBackend.controls.bindConfirm();
 		jsBackend.controls.bindFakeDropdown();
 		jsBackend.controls.bindFullWidthSwitch();
@@ -201,6 +203,38 @@ jsBackend.controls =
 
 
 	// bind a checkbox textfield combo
+	bindCheckboxDropdownCombo: function()
+	{
+		$('.checkboxDropdownCombo').each(function()
+		{
+			// check if needed element exists
+			if($(this).find('input:checkbox').length > 0 && $(this).find('select').length > 0)
+			{
+				var checkbox = $(this).find('input:checkbox').eq(0);
+				var dropdown = $(this).find('select').eq(0);
+
+				checkbox.bind('change', function(evt)
+				{
+					var combo = $(this).parents().filter('.checkboxDropdownCombo');
+					var field = $(combo.find('select')[0]);
+
+					if($(this).is(':checked'))
+					{
+						field.removeClass('disabled').prop('disabled', false);
+						field.focus();
+					}
+
+					else field.addClass('disabled').prop('disabled', true);
+				});
+
+				if(checkbox.is(':checked')) dropdown.removeClass('disabled').prop('disabled', false);
+				else dropdown.addClass('disabled').prop('disabled', true);
+			}
+		});
+	},
+
+
+	// bind a checkbox textfield combo
 	bindCheckboxTextfieldCombo: function()
 	{
 		$('.checkboxTextFieldCombo').each(function()
@@ -208,8 +242,8 @@ jsBackend.controls =
 			// check if needed element exists
 			if($(this).find('input:checkbox').length > 0 && $(this).find('input:text').length > 0)
 			{
-				var checkbox = $($(this).find('input:checkbox')[0]);
-				var textField = $($(this).find('input:text')[0]);
+				var checkbox = $(this).find('input:checkbox').eq(0);
+				var textField = $(this).find('input:text').eq(0);
 
 				checkbox.bind('change', function(evt)
 				{
@@ -218,20 +252,54 @@ jsBackend.controls =
 
 					if($(this).is(':checked'))
 					{
-						field.removeClass('disabled').attr('disabled', '');
+						field.removeClass('disabled').prop('disabled', false);
 						field.focus();
 					}
 
-					else field.addClass('disabled').attr('disabled', 'disabled');
+					else field.addClass('disabled').prop('disabled', true);
 				});
 
-				if(checkbox.is(':checked')) textField.removeClass('disabled').attr('disabled', '');
-				else textField.addClass('disabled').attr('disabled', 'disabled');
+				if(checkbox.is(':checked')) textField.removeClass('disabled').prop('disabled', false);
+				else textField.addClass('disabled').prop('disabled', true);
 			}
 		});
 	},
 
 
+	// bind a radiobutton field combo
+	bindRadioButtonFieldCombo: function()
+	{
+		$('.radiobuttonFieldCombo').each(function()
+		{
+			// check if needed element exists
+			if($(this).find('input:radio').length > 0 && $(this).find('input, select, textarea').length > 0)
+			{
+				var radiobutton = $(this).find('input:radio');
+
+				radiobutton.bind('change', function(evt)
+				{
+					// redefine
+					$this = $(this);
+					
+					// disable all
+					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
+					
+					// get fields
+					var fields = $this.parents('li').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea')
+
+					// enable
+					fields.removeClass('disabled').prop('disabled', false);
+					
+					// set focus
+					$(fields[0]).focus();
+				});
+				
+				// change?
+				$(radiobutton[0]).change();
+			}
+		});
+	},
+	
 	// bind confirm message
 	bindConfirm: function()
 	{
@@ -239,7 +307,7 @@ jsBackend.controls =
 		$('.askConfirmation').each(function()
 		{
 			// get id
-			var id = $(this).data('message-id');
+			var id = $(this).data('messageId');
 			var url = $(this).attr('href');
 
 			if(id != '' && url != '')
@@ -285,13 +353,13 @@ jsBackend.controls =
 			evt.preventDefault();
 
 			// get id
-			var id = $(this).data('message-id');
+			var id = $(this).data('messageId');
 
 			// bind
 			if(id != '')
 			{
 				// set target
-				$('#'+ id).data('message-id', $(this).attr('href'));
+				$('#'+ id).data('messageId', $(this).attr('href'));
 
 				// open dialog
 				$('#'+ id).dialog('open');
@@ -313,6 +381,9 @@ jsBackend.controls =
 
 			// get id
 			var id = $(this).attr('href');
+			
+			// IE8 prepends full current url before links to #
+			id = id.substring(id.indexOf('#'));
 
 			if($(id).is(':visible'))
 			{
@@ -401,27 +472,27 @@ jsBackend.controls =
 	bindMassAction: function()
 	{
 		// set disabled
-		$('.tableOptions .massAction select').addClass('disabled').attr('disabled', 'disabled');
-		$('.tableOptions .massAction .submitButton').addClass('disabledButton').attr('disabled', 'disabled');
+		$('.tableOptions .massAction select').addClass('disabled').prop('disabled', true);
+		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 
 		// hook change events
 		$('table input:checkbox').change(function(evt)
 		{
 			// get parent table
-			var table = $($(this).parents('table.datagrid'));
+			var table = $(this).parents('table.datagrid').eq(0);
 
 			// any item checked?
 			if(table.find('input:checkbox:checked').length > 0)
 			{
-				table.find('.massAction select').removeClass('disabled').attr('disabled', '');
-				table.find('.massAction .submitButton').removeClass('disabledButton').attr('disabled', '');
+				table.find('.massAction select').removeClass('disabled').prop('disabled', false);
+				table.find('.massAction .submitButton').removeClass('disabledButton').prop('disabled', false);
 			}
 
 			// nothing checked
 			else
 			{
-				table.find('.massAction select').addClass('disabled').attr('disabled', 'disabled');
-				table.find('.massAction .submitButton').addClass('disabledButton').attr('disabled', 'disabled');
+				table.find('.massAction select').addClass('disabled').prop('disabled', true);
+				table.find('.massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 			}
 		});
 
@@ -429,7 +500,7 @@ jsBackend.controls =
 		$('.tableOptions .massAction option').each(function()
 		{
 			// get id
-			var id = $(this).data('message-id');
+			var id = $(this).data('messageId');
 
 			if(typeof id != 'undefined')
 			{
@@ -447,7 +518,7 @@ jsBackend.controls =
 							$(this).dialog('close');
 
 							// submit the form
-							$($('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form')[0]).submit();
+							$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
@@ -479,21 +550,21 @@ jsBackend.controls =
 					var element = $(this).parents('.massAction').find('select[name=action] option:selected');
 
 					// if the rel-attribute exists we should show the dialog
-					if(typeof element.data('message-id') != 'undefined')
+					if(typeof element.data('messageId') != 'undefined')
 					{
 						// get id
-						var id = element.data('message-id');
+						var id = element.data('messageId');
 
 						// open dialog
 						$('#'+ id).dialog('open');
 					}
 
 					// no confirm
-					else $($(this).parents('form')).submit();
+					else $(this).parents('form').submit();
 				}
 
 				// no confirm
-				else $($(this).parents('form')).submit();
+				else $(this).parents('form').submit();
 			}
 		});
 	},
@@ -506,11 +577,11 @@ jsBackend.controls =
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt)
 		{
 			// check or uncheck all the checkboxes in this datagrid
-			$($(this).closest('table').find('td input:checkbox')).attr('checked', $(this).is(':checked'));
+			$(this).closest('table').find('td input:checkbox').prop('checked', $(this).is(':checked'));
 
 			// set selected class
-			if($(this).is(':checked')) $($(this).parents().filter('table')[0]).find('tbody tr').addClass('selected');
-			else $($(this).parents().filter('table')[0]).find('tbody tr').removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('table').eq(0).find('tbody tr').addClass('selected');
+			else $(this).parents().filter('table').eq(0).find('tbody tr').removeClass('selected');
 		});
 
 		// single checkbox changed
@@ -519,11 +590,11 @@ jsBackend.controls =
 			// check mass checkbox
 			if($(this).closest('table').find('td.checkbox input:checkbox').length == $(this).closest('table').find('td.checkbox input:checkbox:checked').length)
 			{
-				$(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', 'checked');
+				$(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', true);
 			}
 
 			// uncheck mass checkbox
-			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', ''); }
+			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', false); }
 		});
 	},
 
@@ -655,13 +726,13 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function() { $($(this).parents().filter('tr')[0]).addClass('selected'); });
+		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
 		$('tr td input:checkbox').live('change', function(evt)
 		{
-			if($(this).is(':checked')) $($(this).parents().filter('tr')[0]).addClass('selected');
-			else $($(this).parents().filter('tr')[0]).removeClass('selected');
+			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
+			else $(this).parents().filter('tr').eq(0).removeClass('selected');
 		});
 	},
 
@@ -795,109 +866,85 @@ jsBackend.forms =
 
 	datefields: function()
 	{
-		// the default, nothing special
-		if($('.inputDatefieldNormal').length > 0)
+		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
+		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
+		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
+		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
+		
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
 		{
-			$('.inputDatefieldNormal').each(function()
-			{
-				// get data
-				var data = $(this).data();
-
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					showAnim: 'slideDown'
-				});
-			});
-		}
+			dayNames: dayNames,
+			dayNamesMin: dayNamesMin,
+			dayNamesShort: dayNamesShort,
+			hideIfNoPrevNext: true,
+			monthNames: monthNames,
+			monthNamesShort: monthNamesShort,
+			nextText: '{$lblNext}',
+			prevText: '{$lblPrevious}',
+			showAnim: 'slideDown'
+		});
+		
+		// the default, nothing special
+		$('.inputDatefieldNormal').each(function()
+		{
+			// get data
+			var data = $(this).data();
+			var value = $(this).val();
+			
+			// set options
+			$(this).datepicker('option', { 
+				dateFormat: data.mask, 
+				firstDate: data.firstday
+			}).datepicker('setDate', value);
+		});
 
 		// datefields that have a certain startdate
-		if($('.inputDatefieldFrom').length > 0)
+		$('.inputDatefieldFrom').each(function()
 		{
-			$('.inputDatefieldFrom').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
+			var value = $(this).val();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10)),
-					showAnim: 'slideDown'
-				});
-			});
-		}
+			// set options
+			$(this).datepicker('option', { 
+				dateFormat: data.mask, firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
+			}).datepicker('setDate', value);
+		});
 
 		// datefields that have a certain enddate
-		if($('.inputDatefieldTill').length > 0)
+		$('.inputDatefieldTill').each(function()
 		{
-			$('.inputDatefieldTill').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
+			var value = $(this).val();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10)),
-					showAnim: 'slideDown'
-				});
-			});
-		}
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
+			}).datepicker('setDate', value);
+		});
 
 		// datefields that have a certain range
-		if($('.inputDatefieldRange').length > 0)
+		$('.inputDatefieldRange').each(function()
 		{
-			$('.inputDatefieldRange').each(function()
-			{
-				// get data
-				var data = $(this).data();
+			// get data
+			var data = $(this).data();
+			var value = $(this).val();
 
-				$(this).datepicker(
-				{
-					dateFormat: data.mask,
-					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
-					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data.firstday,
-					hideIfNoPrevNext: true,
-					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
-					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
-					nextText: '{$lblNext}',
-					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59),
-					showAnim: 'slideDown'
-				});
-			});
-		}
+			// set options
+			$(this).datepicker('option', 
+			{
+				dateFormat: data.mask,
+				firstDay: data.firstday,
+				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
+			}).datepicker('setDate', value);
+		});
 	},
 
 
@@ -989,7 +1036,7 @@ jsBackend.forms =
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function()
 					{
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({ position:'absolute', top:'-9000px', left: '-9000px' }).attr('tabindex', -1);
 					});
 
 					// add onclick event for button (button can't have the name submit)
@@ -998,7 +1045,7 @@ jsBackend.forms =
 						evt.preventDefault();
 
 						// is the button disabled?
-						if($(this).attr('disabled') == 'disabled') return false;
+						if($(this).prop('disabled')) return false;
 						else $('form#'+ formId).submit();
 					});
 
@@ -1017,8 +1064,31 @@ jsBackend.forms =
 	// add tagbox to the correct input fields
 	tagBoxes: function()
 	{
-		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
-		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
+		if($('#sidebar input.tagBox').length > 0) 
+		{ 
+			$('#sidebar input.tagBox').tagBox(
+				{ 
+					emptyMessage: '{$msgNoTags|addslashes}', 
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
+					addLabel: '{$lblAdd|ucfirst}', 
+					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' 
+				}
+			); 
+		}
+		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) 
+		{ 
+			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
+				{ 
+					emptyMessage: '{$msgNoTags|addslashes}', 
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
+					addLabel: '{$lblAdd|ucfirst}', 
+					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', 
+					showIconOnly: false 
+				}
+			);
+		}
 	},
 	
 	
@@ -1233,7 +1303,7 @@ jsBackend.messages =
 		$('#messaging .formMessage .iconClose').live('click', function(evt)
 		{
 			evt.preventDefault();
-			jsBackend.messages.hide($($(this).parents('.formMessage')));
+			jsBackend.messages.hide($(this).parents('.formMessage'));
 		});
 	},
 
@@ -1291,7 +1361,7 @@ jsBackend.tabs =
 
 			$('.tabs .ui-tabs-panel').each(function()
 			{
-				if($(this).find('.formError:visible').length > 0) {
+				if($(this).find('.formError').length > 0) {
 					$($('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent()).addClass('ui-state-error');
 				}
 			});
@@ -1548,9 +1618,6 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						cache: false,
-						type: 'POST',
-						dataType: 'json',
 						url: url,
 						data: 'new_id_sequence=' + newIdSequence.join(','),
 						success: function(data, textStatus)

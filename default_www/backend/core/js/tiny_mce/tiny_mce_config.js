@@ -28,11 +28,11 @@ tinyMCE.init(
 
 	// layout options
 	body_class: 'content',
-	content_css: '/frontend/core/layout/css/screen.css{option:THEME_HAS_CSS},/frontend/themes/{$THEME}/core/layout/css/screen.css{/option:THEME_HAS_CSS},/backend/core/layout/css/editor_content.css{option:THEME_HAS_EDITOR_CSS},/frontend/themes/{$THEME}/core/css/layout/editor_content.css{/option:THEME_HAS_EDITOR_CSS}',
+	content_css: '/frontend/core/layout/css/screen.css{option:THEME_HAS_CSS},/frontend/themes/{$THEME}/core/layout/css/screen.css{/option:THEME_HAS_CSS},/backend/core/layout/css/editor_content.css{option:THEME_HAS_EDITOR_CSS},/frontend/themes/{$THEME}/core/layout/css/editor_content.css{/option:THEME_HAS_EDITOR_CSS}',
 
 	// theme options
 	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor,|,charmap,code,|,fullscreen,|,template',
-	theme_advanced_buttons2: 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes',
+	theme_advanced_buttons2: 'table,|,image,dextrose_video|,formatselect,|,bramus_cssextras_classes',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,
 	theme_advanced_blockformats: 'p,h2,h3,h4,blockquote,code',
@@ -47,7 +47,7 @@ tinyMCE.init(
 	// image manager
 	imagemanager_handle: 'image',
 	imagemanager_contextmenu: false,
-	
+
 	// templates
 	template_templates:
 	[
@@ -76,9 +76,9 @@ tinyMCE.init(
 	paste_strip_class_attributes: 'mso',
 	paste_remove_spans: true,
 	paste_remove_styles: true,
-	
+
 	media_strict: false,
-	
+
 	onchange_callback: jsBackend.tinyMCE.checkContent,
 	setup: function(editor)
 	{

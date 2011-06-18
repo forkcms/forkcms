@@ -88,6 +88,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('question', $this->record['question'])->setAttribute('id', 'title');
+		$this->frm->getField('question')->setAttribute('class', 'title ' . $this->frm->getField('question')->getAttribute('class'));
 		$this->frm->addEditor('answer', $this->record['answer']);
 		$this->frm->addDropdown('categories', $this->categories, $this->record['category_id']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);

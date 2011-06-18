@@ -53,6 +53,9 @@ class BlogInstall extends ModuleInstaller
 		// add 'blog' as a module
 		$this->addModule('blog', 'The blog module.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('blog', 'allow_comments', true);
 		$this->setSetting('blog', 'requires_akismet', true);
@@ -132,9 +135,6 @@ class BlogInstall extends ModuleInstaller
 			// install example data if requested
 			if($this->installExample()) $this->installExampleData($language);
 		}
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 
 

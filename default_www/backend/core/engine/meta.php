@@ -243,6 +243,20 @@ class BackendMeta
 	 */
 	private function loadForm()
 	{
+		// is the form submitted?
+		if($this->frm->isSubmitted())
+		{
+			/**
+			 * If the fields are disabled we don't have any values in the post. When an error occurs in the other fields of the form the meta-fields would be cleared
+			 * therefore we alter the POST so it contains the initial values.
+			 */
+			if(!isset($_POST['page_title'])) $_POST['page_title'] = (isset($this->data['title'])) ? $this->data['title'] : null;
+			if(!isset($_POST['meta_description'])) $_POST['meta_description'] = (isset($this->data['description'])) ? $this->data['description'] : null;
+			if(!isset($_POST['meta_keywords'])) $_POST['meta_keywords'] = (isset($this->data['keywords'])) ? $this->data['keywords'] : null;
+			if(!isset($_POST['url'])) $_POST['url'] = (isset($this->data['url'])) ? $this->data['url'] : null;
+			if($this->custom && !isset($_POST['meta_custom'])) $_POST['meta_custom'] = (isset($this->data['custom'])) ? $this->data['custom'] : null;
+		}
+
 		// add page title elements into the form
 		$this->frm->addCheckbox('page_title_overwrite', (isset($this->data['title_overwrite']) && $this->data['title_overwrite'] == 'Y'));
 		$this->frm->addText('page_title', (isset($this->data['title'])) ? $this->data['title'] : null);

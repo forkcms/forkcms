@@ -36,6 +36,14 @@ class FrontendPage extends FrontendBaseObject
 
 
 	/**
+	 * Extra instances
+	 *
+	 * @var	array
+	 */
+	private $extras;
+
+
+	/**
 	 * Header instance
 	 *
 	 * @var	FrontendHeader
@@ -103,6 +111,9 @@ class FrontendPage extends FrontendBaseObject
 		// process page
 		$this->processPage();
 
+		// store statistics
+		$this->storeStatistics();
+
 		// display
 		$this->display();
 	}
@@ -115,12 +126,6 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	public function display()
 	{
-		// only overwrite when status code is 404
-		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
-
-		// store statistics
-		$this->storeStatistics();
-
 		// parse header
 		$this->header->parse();
 
@@ -135,6 +140,28 @@ class FrontendPage extends FrontendBaseObject
 
 		// assign the id so we can use it as an option
 		$this->tpl->assign('page' . $this->pageId, true);
+
+		// fetch variables from main template
+		$mainVariables = $this->tpl->getAssignedVariables();
+
+		// loop all extras
+		foreach((array) $this->extras as $templateVariable => $extra)
+		{
+			// fetch extra-specific variables
+			$extraVariables = $extra->getTemplate()->getAssignedVariables();
+
+			// assign all main variables
+			$extra->getTemplate()->assignArray($mainVariables);
+
+			// overwrite with all specific variables
+			$extra->getTemplate()->assignArray($extraVariables);
+
+			// parse extra and assign to main template
+			$this->tpl->assign($templateVariable, $extra->getContent());
+		}
+
+		// only overwrite when status code is 404
+		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
 
 		// output
 		$this->tpl->display($this->templatePath, false, true);
@@ -241,7 +268,7 @@ class FrontendPage extends FrontendBaseObject
 			}
 
 			// assign
-			$this->tpl->assign('languages', $languages);
+			if(count($languages) > 1) $this->tpl->assign('languages', $languages);
 		}
 	}
 
@@ -270,11 +297,11 @@ class FrontendPage extends FrontendBaseObject
 		// new footer instance
 		$this->footer = new FrontendFooter();
 
-		// set template path
-		$this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
-
 		// assign content
 		$this->tpl->assign('page', $this->record);
+
+		// set template path
+		$this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
 
 		// loop blocks
 		foreach($this->record['blocks'] as $index => $block)
@@ -303,31 +330,27 @@ class FrontendPage extends FrontendBaseObject
 					// overwrite the template
 					if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
 
-					// assign the templatepath so it will be included
-					else $this->tpl->assign($templateVariable, $extra->getTemplatePath());
+					// add to list of extras
+					else $this->extras[$templateVariable] = $extra;
+
+					// assign the variables from this block to the main template
+					$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 				}
 
 				// widget
 				else
 				{
 					// create new instance
-					$widget = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
+					$extra = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
 					// fetch data (if available)
-					$data = $widget->execute();
+					$extra->execute();
 
-					// widget has no template and returned data
-					if($data !== null)
-					{
-						// option (content block)
-						$this->tpl->assign($templateVariable . 'IsHTML', true);
+					// assign the variables from this widget to the main template
+					$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 
-						// assign the actual HTML
-						$this->tpl->assign($templateVariable, $data);
-					}
-
-					// regular widget, assign the templatepath so it will be included
-					else $this->tpl->assign($templateVariable, $widget->getTemplatePath());
+					// add to list of blocks
+					$this->extras[$templateVariable] = $extra;
 				}
 			}
 

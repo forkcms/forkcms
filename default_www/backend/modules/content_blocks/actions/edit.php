@@ -38,9 +38,6 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get available templates
-			$this->getTemplates();
-
 			// get all data for the item we want to edit
 			$this->getData();
 
@@ -89,30 +86,14 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			$this->tpl->assign('usingRevision', true);
 		}
 
+		// get the templates
+		$this->templates = BackendContentBlocksModel::getTemplates();
+
 		// check if selected template is still available
 		if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
-	}
 
-
-	/**
-	 * Get available templates
-	 *
-	 * @return	void
-	 */
-	private function getTemplates()
-	{
-		// fetch templates available in core
-		$this->templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
-
-		// fetch current active theme
-		$theme = BackendModel::getModuleSetting('core', 'theme', 'core');
-
-		// fetch theme templates if a theme is selected
-		if($theme != 'core') $this->templates = array_merge($this->templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets'));
-
-		// no duplicates (core templates will be overridden by theme templates) and sort alphabetically
-		$this->templates = array_unique($this->templates);
-		sort($this->templates);
+		// get templates
+		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 
@@ -127,7 +108,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// create elements
-		$this->frm->addText('title', $this->record['title']);
+		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 
@@ -216,6 +197,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				$item['text'] = $this->frm->getField('text')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getChecked() ? 'N' : 'Y';
 				$item['status'] = 'active';
+				$item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
 				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// insert the item

@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+      <item type="label" name="Activate">
+        <translation language="nl"><![CDATA[activeer]]></translation>
+        <translation language="en"><![CDATA[activate]]></translation>
+      </item>
+      <item type="label" name="Dashboard">
+        <translation language="nl"><![CDATA[dashboard]]></translation>
+        <translation language="en"><![CDATA[dashboard]]></translation>
+      </item>
+      <item type="label" name="ForgotPassword">
+        <translation language="nl"><![CDATA[wachtwoord vergeten]]></translation>
+        <translation language="en"><![CDATA[forgot password]]></translation>
+      </item>
+      <item type="label" name="Login">
+        <translation language="nl"><![CDATA[aanmelden]]></translation>
+        <translation language="en"><![CDATA[login]]></translation>
+      </item>
+      <item type="label" name="Logout">
+        <translation language="nl"><![CDATA[afmelden]]></translation>
+        <translation language="en"><![CDATA[logout]]></translation>
+      </item>
+      <item type="label" name="ProfileEmail">
+        <translation language="nl"><![CDATA[e-mail aanpassen]]></translation>
+        <translation language="en"><![CDATA[change e-mail]]></translation>
+      </item>
+      <item type="label" name="ProfilePassword">
+        <translation language="nl"><![CDATA[wachtwoord aanpassen]]></translation>
+        <translation language="en"><![CDATA[change password]]></translation>
+      </item>
+      <item type="label" name="Profiles">
+        <translation language="nl"><![CDATA[profielen]]></translation>
+        <translation language="en"><![CDATA[profiles]]></translation>
+      </item>
+      <item type="label" name="ProfileSettings">
+        <translation language="nl"><![CDATA[profiel instellingen]]></translation>
+        <translation language="en"><![CDATA[profile settings]]></translation>
+      </item>
+      <item type="label" name="Register">
+        <translation language="nl"><![CDATA[registreren]]></translation>
+        <translation language="en"><![CDATA[register]]></translation>
+      </item>
+      <item type="label" name="ResendActivation">
+        <translation language="nl"><![CDATA[activatie e-mail opnieuw versturen]]></translation>
+        <translation language="en"><![CDATA[resend activation e-mail]]></translation>
+      </item>
+      <item type="label" name="ResetPassword">
+        <translation language="nl"><![CDATA[wachtwoord opnieuw instellen]]></translation>
+        <translation language="en"><![CDATA[reset password]]></translation>
+      </item>
+    </core>
+    <profiles>
+      <item type="error" name="DisplayNameExists">
+        <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This display name is in use.]]></translation>
+      </item>
+      <item type="error" name="DisplayNameIsRequired">
+        <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Display name is a required field.]]></translation>
+      </item>
+      <item type="error" name="EmailExists">
+        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
+      </item>
+      <item type="error" name="NoGroupSelected">
+        <translation language="nl"><![CDATA[Je moet een groep selecteren om deze actie te ondergaan.]]></translation>
+        <translation language="en"><![CDATA[You must select a group to perfom this action.]]></translation>
+      </item>
+      <item type="error" name="NoProfilesSelected">
+        <translation language="nl"><![CDATA[Je moet minstens 1 profiel selecteren om deze actie te ondergaan.]]></translation>
+        <translation language="en"><![CDATA[You must select minimum 1 profile to perfom this action.]]></translation>
+      </item>
+      <item type="error" name="UnknownAction">
+        <translation language="nl"><![CDATA[Onbekende actie.]]></translation>
+        <translation language="en"><![CDATA[Unknown action.]]></translation>
+      </item>
+      <item type="label" name="Active">
+        <translation language="nl"><![CDATA[actief]]></translation>
+        <translation language="en"><![CDATA[active]]></translation>
+      </item>
+      <item type="label" name="AddGroup">
+        <translation language="nl"><![CDATA[groep toevoegen]]></translation>
+        <translation language="en"><![CDATA[add group]]></translation>
+      </item>
+      <item type="label" name="AddMembership">
+        <translation language="nl"><![CDATA[lidmaatschap toevoegen]]></translation>
+        <translation language="en"><![CDATA[add membership]]></translation>
+      </item>
+      <item type="label" name="AddToGroup">
+        <translation language="nl"><![CDATA[toevoegen aan een groep]]></translation>
+        <translation language="en"><![CDATA[add to a group]]></translation>
+      </item>
+      <item type="label" name="BirthDate">
+        <translation language="nl"><![CDATA[geboortedatum]]></translation>
+        <translation language="en"><![CDATA[birth date]]></translation>
+      </item>
+      <item type="label" name="Blocked">
+        <translation language="nl"><![CDATA[geblokkeerd]]></translation>
+        <translation language="en"><![CDATA[blocked]]></translation>
+      </item>
+       <item type="label" name="City">
+        <translation language="nl"><![CDATA[stad]]></translation>
+        <translation language="en"><![CDATA[city]]></translation>
+      </item>
+      <item type="label" name="Country">
+        <translation language="nl"><![CDATA[land]]></translation>
+        <translation language="en"><![CDATA[country]]></translation>
+      </item>
+      <item type="label" name="Deleted">
+        <translation language="nl"><![CDATA[verwijderd]]></translation>
+        <translation language="en"><![CDATA[deleted]]></translation>
+      </item>
+      <item type="label" name="DisplayName">
+        <translation language="nl"><![CDATA[weergave naam]]></translation>
+        <translation language="en"><![CDATA[display name]]></translation>
+      </item>
+      <item type="label" name="EditGroup">
+        <translation language="nl"><![CDATA[groep aanpassen]]></translation>
+        <translation language="en"><![CDATA[edit group]]></translation>
+      </item>
+      <item type="label" name="EditMembership">
+        <translation language="nl"><![CDATA[lidmaatschap aanpassen]]></translation>
+        <translation language="en"><![CDATA[edit membership]]></translation>
+      </item>
+      <item type="label" name="ExpiresOn">
+        <translation language="nl"><![CDATA[vervalt op]]></translation>
+        <translation language="en"><![CDATA[expires on]]></translation>
+      </item>
+      <item type="label" name="Female">
+        <translation language="nl"><![CDATA[vrouw]]></translation>
+        <translation language="en"><![CDATA[female]]></translation>
+      </item>
+      <item type="label" name="FirstName">
+        <translation language="nl"><![CDATA[voornaam]]></translation>
+        <translation language="en"><![CDATA[first name]]></translation>
+      </item>
+      <item type="label" name="Gender">
+        <translation language="nl"><![CDATA[geslacht]]></translation>
+        <translation language="en"><![CDATA[gender]]></translation>
+      </item>
+      <item type="label" name="GroupName">
+        <translation language="nl"><![CDATA[groep naam]]></translation>
+        <translation language="en"><![CDATA[group name]]></translation>
+      </item>
+      <item type="label" name="Groups">
+        <translation language="nl"><![CDATA[groepen]]></translation>
+        <translation language="en"><![CDATA[groups]]></translation>
+      </item>
+      <item type="label" name="Inactive">
+        <translation language="nl"><![CDATA[inactief]]></translation>
+        <translation language="en"><![CDATA[inactive]]></translation>
+      </item>
+      <item type="label" name="LastName">
+        <translation language="nl"><![CDATA[achternaam]]></translation>
+        <translation language="en"><![CDATA[last name]]></translation>
+      </item>
+      <item type="label" name="Male">
+        <translation language="nl"><![CDATA[man]]></translation>
+        <translation language="en"><![CDATA[male]]></translation>
+      </item>
+      <item type="label" name="MembersCount">
+        <translation language="nl"><![CDATA[leden aantal]]></translation>
+        <translation language="en"><![CDATA[members count]]></translation>
+      </item>
+      <item type="label" name="RegisteredOn">
+        <translation language="nl"><![CDATA[geregistreerd op]]></translation>
+        <translation language="en"><![CDATA[registered on]]></translation>
+      </item>
+      <item type="label" name="Unblock">
+        <translation language="nl"><![CDATA[activeer]]></translation>
+        <translation language="en"><![CDATA[unblock]]></translation>
+      </item>
+      <item type="label" name="Undelete">
+        <translation language="nl"><![CDATA[activeer]]></translation>
+        <translation language="en"><![CDATA[undelete]]></translation>
+      </item>
+      <item type="message" name="ConfirmBlock">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil blokkeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to block "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteGroup">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de group "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the group "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmMassAddToGroup">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze profielen aan volgende groep wil toevoegen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to add these profiles to the following group?]]></translation>
+      </item>
+      <item type="message" name="ConfirmProfileGroupDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je dit profiel uit de groep "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete this profile from the group "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmUnblock">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to unblock "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmUndelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to undelete "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="GroupAdded">
+        <translation language="nl"><![CDATA[De groep werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The group was added.]]></translation>
+      </item>
+      <item type="message" name="GroupSaved">
+        <translation language="nl"><![CDATA[De groep werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The group was saved.]]></translation>
+      </item>
+      <item type="message" name="MembershipAdded">
+        <translation language="nl"><![CDATA[Het groep lidmaatschap werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The group membership was added.]]></translation>
+      </item>
+      <item type="message" name="MembershipDeleted">
+        <translation language="nl"><![CDATA[Het groep lidmaatschap werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The group membership was deleted.]]></translation>
+      </item>
+      <item type="message" name="MembershipSaved">
+        <translation language="nl"><![CDATA[Het groep lidmaatschap werd aangepast.]]></translation>
+        <translation language="en"><![CDATA[The group membership was saved.]]></translation>
+      </item>
+      <item type="message" name="NoGroups">
+        <translation language="nl"><![CDATA[Er zijn nog geen groepen.]]></translation>
+        <translation language="en"><![CDATA[There are no groups yet.]]></translation>
+      </item>
+      <item type="message" name="ProfileAddedToGroup">
+        <translation language="nl"><![CDATA[Het profiel werd toegevoegd aan de groep.]]></translation>
+        <translation language="en"><![CDATA[The profile was added to the group.]]></translation>
+      </item>
+      <item type="message" name="ProfilesAddedToGroup">
+        <translation language="nl"><![CDATA[De profielen zijn toegevoegd aan de groep.]]></translation>
+        <translation language="en"><![CDATA[The profiles are added to the group.]]></translation>
+      </item>
+      <item type="message" name="ProfileBlocked">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd geblokkeerd.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was blocked.]]></translation>
+      </item>
+      <item type="message" name="ProfileDeleted">
+        <translation language="nl"><![CDATA[Het profiel werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The profile was deleted.]]></translation>
+      </item>
+      <item type="message" name="ProfileUnblocked">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was unblocked.]]></translation>
+      </item>
+      <item type="message" name="ProfileUndeleted">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was undeleted.]]></translation>
+      </item>
+      <item type="message" name="Saved">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was saved.]]></translation>
+      </item>
+    </profiles>
+  </backend>
+  <frontend>
+    <core>
+      <item type="error" name="DateIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldige datum.]]></translation>
+        <translation language="en"><![CDATA[Invalid date.]]></translation>
+        <translation language="fr"><![CDATA[Date invalide.]]></translation>
+      </item>
+      <item type="error" name="DisplayNameExists">
+        <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This display name is in use.]]></translation>
+        <translation language="fr"><![CDATA[Cette nom d'affichage existe déjà.]]></translation>
+      </item>
+      <item type="error" name="DisplayNameIsRequired">
+        <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Display name is a required field.]]></translation>
+        <translation language="fr"><![CDATA[Nom d'affichage est un champs obligatoire.]]></translation>
+      </item>
+      <item type="error" name="EmailExists">
+        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
+        <translation language="fr"><![CDATA[Cette adresse e-mail existe déjà.]]></translation>
+      </item>
+      <item type="error" name="EmailIsUnknown">
+        <translation language="nl"><![CDATA[Dit e-mailadres is onbekend in onze database.]]></translation>
+        <translation language="en"><![CDATA[This e-mailaddress is unknown in our database.]]></translation>
+        <translation language="fr"><![CDATA[Cette adresse e-mail est inconnue dans notre système.]]></translation>
+      </item>
+      <item type="error" name="FieldIsRequired">
+        <translation language="nl"><![CDATA[Dit veld is verplicht.]]></translation>
+        <translation language="en"><![CDATA[This field is required.]]></translation>
+        <translation language="fr"><![CDATA[Ce champ est obligatoire.]]></translation>
+      </item>
+      <item type="error" name="InvalidPassword">
+        <translation language="nl"><![CDATA[Ongeldig wachtwoord.]]></translation>
+        <translation language="en"><![CDATA[Invalid password.]]></translation>
+        <translation language="fr"><![CDATA[Mot de passe est invalide.]]></translation>
+      </item>
+      <item type="error" name="ProfilesBlockedLogin">
+        <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is geblokkeerd.]]></translation>
+        <translation language="en"><![CDATA[Login failed. This profile is blocked.]]></translation>
+        <translation language="fr"><![CDATA[Echec de la connexion. Ce profil est bloqué.]]></translation>
+      </item>
+      <item type="error" name="ProfilesDeletedLogin">
+        <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is verwijderd.]]></translation>
+        <translation language="en"><![CDATA[Login failed. This profile has been deleted.]]></translation>
+        <translation language="fr"><![CDATA[Echec de la connexion. Ce profil a été supprimé.]]></translation>
+      </item>
+      <item type="error" name="ProfilesInactiveLogin">
+        <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is nog niet geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[Login failed. This profile is not yet activated.]]></translation>
+        <translation language="fr"><![CDATA[Echec de la connexion. Ce profil n'est pas encore activée.]]></translation>
+      </item>
+      <item type="error" name="ProfilesInvalidLogin">
+        <translation language="nl"><![CDATA[Aanmelden mislukt. Controleer je e-mail en je wachtwoord.]]></translation>
+        <translation language="en"><![CDATA[Login failed. Please check your e-mail and your password.]]></translation>
+        <translation language="fr"><![CDATA[Echec de la connexion. V&eacute;rifiez votre e-mail et votre mot de passe.]]></translation>
+      </item>
+      <item type="error" name="ProfileIsActive">
+        <translation language="en"><![CDATA[This profile is already activated.]]></translation>
+        <translation language="fr"><![CDATA[Ce profil a été activé.]]></translation>
+        <translation language="nl"><![CDATA[Dit profiel is reeds geactiveerd.]]></translation>
+      </item>
+      <item type="error" name="PasswordIsRequired">
+        <translation language="nl"><![CDATA[Wachtwoord is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Password is a required field.]]></translation>
+        <translation language="fr"><![CDATA[Veuillez introduire votre mot de passe.]]></translation>
+      </item>
+      <item type="label" name="BirthDate">
+        <translation language="nl"><![CDATA[geboortedatum]]></translation>
+        <translation language="en"><![CDATA[birth date]]></translation>
+        <translation language="fr"><![CDATA[date de naissance]]></translation>
+      </item>
+      <item type="label" name="City">
+        <translation language="nl"><![CDATA[stad]]></translation>
+        <translation language="en"><![CDATA[city]]></translation>
+        <translation language="fr"><![CDATA[ville]]></translation>
+      </item>
+      <item type="label" name="Country">
+        <translation language="nl"><![CDATA[land]]></translation>
+        <translation language="en"><![CDATA[country]]></translation>
+        <translation language="fr"><![CDATA[pays]]></translation>
+      </item>
+      <item type="label" name="DisplayName">
+        <translation language="nl"><![CDATA[weergavenaam]]></translation>
+        <translation language="en"><![CDATA[display name]]></translation>
+        <translation language="fr"><![CDATA[nom d'affichage]]></translation>
+      </item>
+      <item type="label" name="Female">
+        <translation language="nl"><![CDATA[vrouw]]></translation>
+        <translation language="en"><![CDATA[female]]></translation>
+        <translation language="fr"><![CDATA[femelle]]></translation>
+      </item>
+      <item type="label" name="FirstName">
+        <translation language="nl"><![CDATA[voornaam]]></translation>
+        <translation language="en"><![CDATA[first name]]></translation>
+        <translation language="fr"><![CDATA[prénom]]></translation>
+      </item>
+      <item type="label" name="Gender">
+        <translation language="nl"><![CDATA[geslacht]]></translation>
+        <translation language="en"><![CDATA[gender]]></translation>
+        <translation language="fr"><![CDATA[sexe]]></translation>
+      </item>
+      <item type="label" name="ProfileSettings">
+        <translation language="nl"><![CDATA[instellingen]]></translation>
+        <translation language="en"><![CDATA[settings]]></translation>
+        <translation language="fr"><![CDATA[préférences]]></translation>
+      </item>
+       <item type="label" name="LastName">
+        <translation language="nl"><![CDATA[achternaam]]></translation>
+        <translation language="en"><![CDATA[last name]]></translation>
+        <translation language="fr"><![CDATA[nom de famille]]></translation>
+      </item>
+      <item type="label" name="Login">
+        <translation language="nl"><![CDATA[aanmelden]]></translation>
+        <translation language="en"><![CDATA[login]]></translation>
+        <translation language="fr"><![CDATA[connecter]]></translation>
+      </item>
+      <item type="label" name="Logout">
+        <translation language="nl"><![CDATA[afmelden]]></translation>
+        <translation language="en"><![CDATA[logout]]></translation>
+        <translation language="fr"><![CDATA[déconnecter]]></translation>
+      </item>
+      <item type="label" name="Male">
+        <translation language="nl"><![CDATA[man]]></translation>
+        <translation language="en"><![CDATA[male]]></translation>
+        <translation language="fr"><![CDATA[mâle]]></translation>
+      </item>
+      <item type="label" name="NewPassword">
+        <translation language="nl"><![CDATA[nieuw wachtwoord]]></translation>
+        <translation language="en"><![CDATA[new password]]></translation>
+        <translation language="fr"><![CDATA[nouveau mot de passe]]></translation>
+      </item>
+      <item type="label" name="OldPassword">
+        <translation language="nl"><![CDATA[oud wachtwoord]]></translation>
+        <translation language="en"><![CDATA[old password]]></translation>
+        <translation language="fr"><![CDATA[ancien mot de passe]]></translation>
+      </item>
+      <item type="label" name="Or">
+        <translation language="nl"><![CDATA[of]]></translation>
+        <translation language="en"><![CDATA[or]]></translation>
+        <translation language="fr"><![CDATA[ou]]></translation>
+      </item>
+      <item type="label" name="Password">
+        <translation language="nl"><![CDATA[wachtwoord]]></translation>
+        <translation language="en"><![CDATA[password]]></translation>
+        <translation language="fr"><![CDATA[mot de passe]]></translation>
+      </item>
+      <item type="label" name="Register">
+        <translation language="nl"><![CDATA[registreren]]></translation>
+        <translation language="en"><![CDATA[register]]></translation>
+        <translation language="fr"><![CDATA[inscrire]]></translation>
+      </item>
+      <item type="label" name="RememberMe">
+        <translation language="nl"><![CDATA[onthoud mij]]></translation>
+        <translation language="en"><![CDATA[remember me]]></translation>
+        <translation language="fr"><![CDATA[conservez mes coordonnées]]></translation>
+      </item>
+      <item type="label" name="Save">
+        <translation language="nl"><![CDATA[opslaan]]></translation>
+        <translation language="en"><![CDATA[save]]></translation>
+        <translation language="fr"><![CDATA[enregistrer]]></translation>
+      </item>
+      <item type="label" name="ShowPassword">
+        <translation language="nl"><![CDATA[toon wachtwoord]]></translation>
+        <translation language="en"><![CDATA[show password]]></translation>
+        <translation language="fr"><![CDATA[montre le mot de pass]]></translation>
+      </item>
+      <item type="label" name="YourData">
+        <translation language="nl"><![CDATA[uw gegevens]]></translation>
+        <translation language="en"><![CDATA[your data]]></translation>
+        <translation language="fr"><![CDATA[votre information]]></translation>
+      </item>
+      <item type="label" name="YourLocationData">
+        <translation language="nl"><![CDATA[uw locatie]]></translation>
+        <translation language="en"><![CDATA[your location]]></translation>
+        <translation language="fr"><![CDATA[votre localisation]]></translation>
+      </item>
+      <item type="message" name="ActivationIsSuccess">
+        <translation language="nl"><![CDATA[Je profiel werd geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[Your profile was activated.]]></translation>
+        <translation language="fr"><![CDATA[Votre profil est activé.]]></translation>
+      </item>
+      <item type="message" name="ChangeEmail">
+        <translation language="nl"><![CDATA[wijzig uw e-mail adres]]></translation>
+        <translation language="en"><![CDATA[change your e-mail address]]></translation>
+        <translation language="fr"><![CDATA[changez votre adresse e-mail]]></translation>
+      </item>
+      <item type="message" name="ForgotPassword">
+        <translation language="nl"><![CDATA[Wachtwoord vergeten?]]></translation>
+        <translation language="en"><![CDATA[Forgot your password?]]></translation>
+        <translation language="fr"><![CDATA[Mot de passe oublié?]]></translation>
+      </item>
+      <item type="message" name="ForgotPasswordBody">
+        <translation language="nl"><![CDATA[Je hebt zojuist je wachtwoord opnieuw aangevraagd op de site van <a href="%1$s">Fork CMS</a>. Om je wachtwoord opnieuw in te stellen dien je op onderstaande link te klikken.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
+        <translation language="en"><![CDATA[You just requested to reset your password on <a href="%1$s">Fork CMS</a>. Follow the link below to reset your password.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
+        <translation language="fr"><![CDATA[Vous avez juste demandé de réinitialiser votre mot de passe sur <a href="%1$s">Fork CMS</a>. Suivez le lien ci-dessous pour réinitialiser votre mot de passe.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
+      </item>
+      <item type="message" name="ForgotPasswordClosure">
+        <translation language="nl"><![CDATA[Met vriendelijke groeten,<br/><br/>Het Fork CMS team]]></translation>
+        <translation language="en"><![CDATA[With kind regards,<br/><br/>The Fork CMS team]]></translation>
+        <translation language="fr"><![CDATA[Cordialement,<br/><br/>L'équipe Fork CMS]]></translation>
+      </item>
+      <item type="message" name="ForgotPasswordIsSuccess">
+        <translation language="nl"><![CDATA[Je ontvangt binnen de tien minuten een e-mail waarmee je je wachtwoord opnieuw kan instellen.]]></translation>
+        <translation language="en"><![CDATA[In less than ten minutes you will receive an e-mail to reset your password.]]></translation>
+        <translation language="fr"><![CDATA[Vous allez recevoir, endéans les dix minutes, un e-mail pour réinitialiser votre mot de passe.]]></translation>
+      </item>
+      <item type="message" name="ForgotPasswordSalutation">
+        <translation language="nl"><![CDATA[Beste,]]></translation>
+        <translation language="en"><![CDATA[Dear,]]></translation>
+        <translation language="fr"><![CDATA[Bonjour,]]></translation>
+      </item>
+      <item type="message" name="ForgotPasswordSubject">
+        <translation language="nl"><![CDATA[Wachtwoord vergeten?]]></translation>
+        <translation language="en"><![CDATA[Forgot your password?]]></translation>
+        <translation language="fr"><![CDATA[Mot de passe oublié?]]></translation>
+      </item>
+      <item type="message" name="HelpDisplayNameChanges">
+        <translation language="nl"><![CDATA[Het aantal weergave naam aanpassingen is gelimiteerd tot %1$s. Je kan nog %2$s wijziging(en) maken.]]></translation>
+        <translation language="en"><![CDATA[The amount of display name changes is limited to %1$s. You have %2$s change(s) left.]]></translation>
+        <translation language="fr"><![CDATA[Le nombre d'ajustements pour le nom d'affichage est limité à %1$s. Vous pouvez encore faire %2$s changement(s).]]></translation>
+      </item>
+      <item type="message" name="RegisterBody">
+        <translation language="nl"><![CDATA[Je hebt je zojuist geregistreerd op de site van <a href="%1$s">Fork CMS</a>. Om je profiel te activeren dien je op onderstaande link te klikken.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
+        <translation language="en"><![CDATA[You have just registered on the <a href="%1$s">Fork CMS</a> site. To activate your profile you need to follow the link below.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
+        <translation language="fr"><![CDATA[Vous venez de vous inscrire sur le site de <a href="%1$s">Fork CMS</a>. Pour activer votre profil, cliquez sur le lien ci-dessous.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
+      </item>
+      <item type="message" name="RegisterClosure">
+        <translation language="nl"><![CDATA[Met vriendelijke groeten,<br/><br/>Het Fork CMS team]]></translation>
+        <translation language="en"><![CDATA[With kind regards,<br/><br/>The Fork CMS team]]></translation>
+        <translation language="fr"><![CDATA[Cordialement,<br/><br/>L'équipe Fork CMS]]></translation>
+      </item>
+      <item type="message" name="RegisterIsSuccess">
+        <translation language="nl"><![CDATA[Welkom! Je ontvangt binnen de tien minuten een e-mail waarmee je je profiel kan activeren. Ondertussen kan je de website al gebruiken, zij het iets gelimiteerder.]]></translation>
+        <translation language="en"><![CDATA[Welcome! In less than ten minutes you will receive an activation mail. In the mean while you can use the website in a limited form.]]></translation>
+        <translation language="fr"><![CDATA[Bienvenue! Vous allez recevoir, endéans les dix minutes, un e-mail vous permettant d'activer votre profile.]]></translation>
+      </item>
+      <item type="message" name="RegisterSalutation">
+        <translation language="nl"><![CDATA[Beste,]]></translation>
+        <translation language="en"><![CDATA[Dear,]]></translation>
+        <translation language="fr"><![CDATA[Bonjour,]]></translation>
+      </item>
+      <item type="message" name="RegisterSubject">
+        <translation language="nl"><![CDATA[Activeer je Fork CMS-profiel]]></translation>
+        <translation language="en"><![CDATA[Activate your Fork CMS-profile]]></translation>
+        <translation language="fr"><![CDATA[Activez votre Fork CMS-profil]]></translation>
+      </item>
+      <item type="message" name="ResendActivationIsSuccess">
+        <translation language="en"><![CDATA[In less than ten minutes you will receive an new activation mail. A simple click on the link and you will be able to log in.]]></translation>
+        <translation language="fr"><![CDATA[Vous allez recevoir, endéans les dix minutes, un e-mail vous permettant d'activer votre profile. Cliquez sur le lien repris dans le mail et vous pourrez vous connecter.]]></translation>
+        <translation language="nl"><![CDATA[Je ontvangt binnen de tien minuten een nieuwe e-mail waarmee je je profiel kan activeren. Klik op de link in de mail en je kan inloggen.]]></translation>
+      </item>
+      <item type="message" name="ResetPasswordIsSuccess">
+        <translation language="nl"><![CDATA[Je wachtwoord werd gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[Your password was saved.]]></translation>
+        <translation language="fr"><![CDATA[Vos modifications ont été enregistrées.]]></translation>
+      </item>
+      <item type="message" name="UpdateEmailIsSuccess">
+        <translation language="nl"><![CDATA[Je e-mail werd gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[Your e-mail was saved.]]></translation>
+        <translation language="fr"><![CDATA[Vos modifications ont été enregistrées.]]></translation>
+      </item>
+      <item type="message" name="UpdatePasswordIsSuccess">
+        <translation language="nl"><![CDATA[Je wachtwoord werd gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[Your password was saved.]]></translation>
+        <translation language="fr"><![CDATA[Vos modifications ont été enregistrées.]]></translation>
+      </item>
+      <item type="message" name="UpdateSettingsIsSuccess">
+        <translation language="nl"><![CDATA[De instellingen werden gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[The settings were saved.]]></translation>
+        <translation language="fr"><![CDATA[Vos modifications ont été enregistrées.]]></translation>
+      </item>
+      <item type="message" name="WelcomeUserX">
+        <translation language="nl"><![CDATA[Welkom, %1$s]]></translation>
+        <translation language="en"><![CDATA[Welcome, %1$s]]></translation>
+        <translation language="fr"><![CDATA[Bienvenue, %1$s]]></translation>
+      </item>
+    </core>
+  </frontend>
+</locale>

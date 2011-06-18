@@ -23,7 +23,7 @@ class BackendSettingsWidgetAnalyse extends BackendBaseWidget
 		$this->setColumn('left');
 
 		// set position
-		$this->setPosition(0);
+		$this->setPosition(1);
 
 		// parse
 		$this->parse();

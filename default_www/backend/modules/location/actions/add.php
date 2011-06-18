@@ -46,7 +46,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// create elements
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text');
 		$this->frm->addText('street');
 		$this->frm->addText('number');

@@ -20,7 +20,6 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 	{
 		// call parent
 		parent::execute();
-
 		// get parameters
 		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
 		$droppedOn = SpoonFilter::getPostValue('dropped_on', null, -1, 'int');

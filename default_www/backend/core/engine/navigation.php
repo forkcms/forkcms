@@ -138,6 +138,9 @@ class BackendNavigation
 		// loop elements
 		foreach($navigation as $key => $value)
 		{
+			// init var
+			$allowedChildren = array();
+
 			// error?
 			$allowed = true;
 
@@ -153,13 +156,6 @@ class BackendNavigation
 			// no rights for this action?
 			if(!BackendAuthentication::isAllowedAction($action, $module)) $allowed = false;
 
-			// error occured
-			if(!$allowed)
-			{
-				unset($navigation[$key]);
-				continue;
-			}
-
 			// has children
 			if(isset($value['children']) && is_array($value['children']) && !empty($value['children']))
 			{
@@ -168,6 +164,9 @@ class BackendNavigation
 				{
 					// error?
 					$allowed = true;
+
+					// init var
+					$allowedChildrenB = array();
 
 					// get rid of invalid items
 					if(!isset($valueB['url']) || !isset($valueB['label'])) $allowed = false;
@@ -180,13 +179,6 @@ class BackendNavigation
 
 					// no rights for this action?
 					if(!BackendAuthentication::isAllowedAction($action, $module)) $allowed = false;
-
-					// error occured
-					if(!$allowed)
-					{
-						unset($navigation[$key]['children'][$keyB]);
-						continue;
-					}
 
 					// has children
 					if(isset($valueB['children']) && is_array($valueB['children']) && !empty($valueB['children']))
@@ -215,8 +207,60 @@ class BackendNavigation
 								unset($navigation[$key]['children'][$keyB]['children'][$keyC]);
 								continue;
 							}
+
+							// store allowed children
+							elseif(!in_array($navigation[$key]['children'][$keyB]['children'][$keyC], $allowedChildrenB)) $allowedChildrenB[] = $navigation[$key]['children'][$keyB]['children'][$keyC];
 						}
 					}
+
+					// error occured and no allowed children on level B
+					if(!$allowed && empty($allowedChildrenB))
+					{
+						unset($navigation[$key]['children'][$keyB]);
+						continue;
+					}
+
+					// store allowed children on level B
+					elseif(!in_array($navigation[$key]['children'][$keyB], $allowedChildren)) $allowedChildren[] = $navigation[$key]['children'][$keyB];
+
+					// assign new base url for level B
+					if(!empty($allowedChildrenB)) $navigation[$key]['children'][$keyB]['url'] = $allowedChildrenB[0]['url'];
+				}
+			}
+
+			// error occured and no allowed children
+			if(!$allowed && empty($allowedChildren))
+			{
+				unset($navigation[$key]);
+				continue;
+			}
+
+			// assign new base url
+			elseif(!empty($allowedChildren))
+			{
+				// init var
+				$allowed = true;
+
+				// split up chunks
+				list($module, $action) = explode('/', $allowedChildren[0]['url']);
+
+				// no rights for this module?
+				if(!BackendAuthentication::isAllowedModule($module)) $allowed = false;
+
+				// no rights for this action?
+				if(!BackendAuthentication::isAllowedAction($action, $module)) $allowed = false;
+
+				// allowed? assign base URL
+				if($allowed) $navigation[$key]['url'] = $allowedChildren[0]['url'];
+
+				// not allowed?
+				else
+				{
+					// get first child
+					$child = reset($navigation[$key]['children']);
+
+					// assign base URL
+					$navigation[$key]['url'] = $child['url'];
 				}
 			}
 		}

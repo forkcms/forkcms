@@ -2,7 +2,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 
 /**
- * Interaction for the blog module
+ * Interaction for the dashboard module
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -24,7 +24,7 @@ jsBackend.dashboard =
 		evt.preventDefault();
 
 		// get widget
-		var widget = $($(this).parents('.sortableWidget')[0]);
+		var widget = $(this).parents('.sortableWidget').eq(0);
 		
 		if(widget.hasClass('isRemoved'))
 		{
@@ -43,6 +43,14 @@ jsBackend.dashboard =
 	{
 		// prevent default
 		evt.preventDefault();
+		
+		// bind before unload event
+		$(window).bind('beforeunload', function() {
+			return '{$msgValuesAreChanged}';
+		});		
+		
+		// hide edit text
+		$(this).hide();
 		
 		// show help text
 		$('#editDashboardMessage').slideDown();
@@ -103,6 +111,12 @@ jsBackend.dashboard =
 		// prevent default
 		evt.preventDefault();
 		
+		// unbind before unload event
+		$(window).unbind('beforeunload');
+		
+		// show edit text
+		$('#editDashboard').show();
+		
 		// hide help text
 		$('#editDashboardMessage').slideUp();
 
@@ -124,7 +138,7 @@ jsBackend.dashboard =
 			// loop widgets
 			$(this).find('.sortableWidget:visible').each(function() {
 				// add item
-				items.push({ module: $(this).data('module'), widget: $(this).data('widget'), hidden: $(this).hasClass('isRemoved') });
+				items.push({ module: $(this).data('module'), widget: $(this).data('widget'), hidden: $(this).hasClass('isRemoved'), present: true });
 			});
 			
 			// add to all
