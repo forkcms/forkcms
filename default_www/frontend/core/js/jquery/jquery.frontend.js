@@ -4,6 +4,30 @@
 
 /**
  * Share-button
+ * This plugin will convert a single item into a list with share-options.
+ * 
+ * What information will be used.
+ * - Url that will be shared: if there is a href-attribute this value will be used as url, if not the url of the current page will be used
+ * - The title of the item: 
+ * 		1. if the OpenGraph-title-tag is provided, the value of the tag is used.
+ * 		2. if the title-attribute is used this value will be used in favor of the OpenGraph-title-tag.
+ * 		3. if the data-title-attribute is set this value will be used, OpenGraph and title-attribute will be ignored.
+ * 		4. as a fallback the value of the title-tag is used.
+ * - The description (used by: delicious, linkedin, netlog, twitter)
+ * 		1. if the OpenGraph-description-tag is provided, that value will be used.
+ * 		2. if the data-description-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
+ * 		3. no description will be used.
+ * - The image (used by: netlog)
+ * 		1. if the OpenGraph-image tag is available the value of this tag will be used.
+ * 		2. if the data-image-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
+ * 		3. the default image if there is one provided.
+ * 		4. no image will be used .
+ *
+ * Possible options:
+ * - debug			if debug is enabled a warning will be logged to the console if og-parameters aren't available, possible values are: true, false.
+ * - default_image	the image that will be used by default.
+ * - sequence		an array containing the names of the share-items in the wanted sequence.
+ * - isDropdown		will the plugin be used as a dropdownmenu? If so we will hide it by default an show on click/hover.
  * 
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
