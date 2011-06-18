@@ -227,7 +227,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
 		// create elements
-		$this->frm->addText('title', $this->record['title']);
+		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addHidden('template_id', $this->record['template_id']);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
 		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));

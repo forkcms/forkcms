@@ -74,7 +74,7 @@ jsBackend.pages.extras =
 				});
 
 				// no modules
-				if(!hasModules) $('#extraType option[value="block"]').attr('disabled', '');
+				if(!hasModules) $('#extraType option[value="block"]').prop('disabled', false);
 			}
 			
 			jsBackend.pages.extras.populateExtraModules(evt);
@@ -180,7 +180,7 @@ jsBackend.pages.extras =
 		evt.preventDefault();
 
 		// get the block wherefor we will change the extra
-		var blockId = $(this).data('block-id');
+		var blockId = $(this).data('blockId');
 
 		// get selected extra id
 		var selectedExtraId = $('#blockExtraId'+ blockId).val();
@@ -205,13 +205,13 @@ jsBackend.pages.extras =
 			$('#extraWarningAlreadyBlock').show();
 			
 			// disable blocks
-			$('#extraType option[value="block"]').attr('disabled', 'disabled');
+			$('#extraType option[value="block"]').prop('disabled', true);
 			
 			// get id
 			var id = $('#blockExtraId'+ blockId).val();
 			
 			// reenable
-			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').attr('disabled', '');
+			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').prop('disabled', false);
 		}
 		else
 		{
@@ -219,10 +219,10 @@ jsBackend.pages.extras =
 			$('#extraWarningAlreadyBlock').hide();
 
 			// enable blocks
-			$('#extraType option[value="block"]').attr('disabled', '');
+			$('#extraType option[value="block"]').prop('disabled', false);
 
 			// home can't have any modules linked!
-			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').attr('disabled', 'disabled');
+			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', true);
 		}
 
 		// any extra selected before? And if so, does the extra still exists?
@@ -640,7 +640,7 @@ jsBackend.pages.tree =
 		$.ajax(
 		{
 			async: false, // important that this isn't asynchronous
-			url: '/backend/ajax.php?module=pages&action=get_info&language={$LANGUAGE}',
+			url: '/backend/ajax.php?module=pages&action=get_info&language='+ jsBackend.current.language,
 			data: 'id=' + currentPageID,
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
@@ -691,7 +691,7 @@ jsBackend.pages.tree =
 		// make the call
 		$.ajax(
 		{
-			url: '/backend/ajax.php?module=pages&action=move&language={$LANGUAGE}',
+			url: '/backend/ajax.php?module=pages&action=move&language='+ jsBackend.current.language,
 			data: 'id=' + currentPageID + '&dropped_on='+ droppedOnPageID +'&type='+ type,
 			success: function(json, textStatus)
 			{

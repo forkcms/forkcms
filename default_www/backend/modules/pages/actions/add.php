@@ -113,7 +113,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
 		// create elements
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 		$this->frm->addCheckbox('no_follow');

@@ -153,14 +153,18 @@ class BackendInit
 						$action = str_replace($module, '', $action);
 						$module = substr($module, 0, -1);
 
-						// file to be loaded
-						$pathToLoad = constant($rootPath) . '/modules/' . $module . '/engine/' . $action . '.php';
-
-						// if it exists, load it!
-						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+						// check the actions, engine & widgets directories
+						foreach(array('actions', 'engine', 'widgets') as $dir)
 						{
-							require_once $pathToLoad;
-							break;
+							// file to be loaded
+							$pathToLoad = constant($rootPath) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+
+							// if it exists, load it!
+							if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+							{
+								require_once $pathToLoad;
+								break 2;
+							}
 						}
 					}
 				}
@@ -385,11 +389,6 @@ class BackendInit
 		// for specific types, specific files should be loaded
 		switch($this->type)
 		{
-			case 'backend':
-				require_once BACKEND_PATH . '/modules/tags/engine/model.php';
-				require_once BACKEND_PATH . '/modules/users/engine/model.php';
-			break;
-
 			case 'backend_ajax':
 				require_once PATH_WWW . '/routing.php';
 			break;

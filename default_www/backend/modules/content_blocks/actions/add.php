@@ -32,7 +32,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// fetch available templates
-		$this->getTemplates();
+		$this->templates = BackendContentBlocksModel::getTemplates();
 
 		// load the form
 		$this->loadForm();
@@ -49,17 +49,6 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 
 
 	/**
-	 * Get available templates
-	 *
-	 * @return	void
-	 */
-	private function getTemplates()
-	{
-		$this->templates = BackendContentBlocksModel::getTemplates();
-	}
-
-
-	/**
 	 * Load the form
 	 *
 	 * @return	void
@@ -70,7 +59,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// create elements
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text');
 		$this->frm->addCheckbox('hidden', true);
 

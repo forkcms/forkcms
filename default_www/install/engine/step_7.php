@@ -118,6 +118,8 @@ class InstallerStep7 extends InstallerStep
 		$variables['<path-www>'] = PATH_WWW;
 		$variables['<path-library>'] = PATH_LIBRARY;
 		$variables['<site-default-language>'] = SpoonSession::get('default_language');
+		$variables['<action-group-tag>'] = '@actiongroup';
+		$variables['<action-rights-level>'] = 7;
 
 		// globals files
 		$configurationFiles = array('globals.base.php' => 'globals.php',
@@ -301,21 +303,21 @@ class InstallerStep7 extends InstallerStep
 											'smtp_username' => '',
 											'smtp_password' => ''));
 
+		// variables passed to module installers
+		$variables = array();
+		$variables['email'] = SpoonSession::get('email');
+		$variables['default_interface_language'] = SpoonSession::get('default_interface_language');
+
 		// loop required modules
 		foreach($this->modules['required'] as $module)
 		{
 			// install exists
 			if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/install.php'))
 			{
-				// init var
-				$variables = array();
-
 				// users module needs custom variables
 				if($module == 'users')
 				{
-					$variables['email'] = SpoonSession::get('email');
 					$variables['password'] = SpoonSession::get('password');
-					$variables['default_interface_language'] = SpoonSession::get('default_interface_language');
 				}
 
 				// load file
@@ -337,9 +339,6 @@ class InstallerStep7 extends InstallerStep
 				// install exists
 				if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/install.php'))
 				{
-					// init var
-					$variables = array();
-
 					// load file
 					require_once PATH_WWW . '/backend/modules/' . $module . '/installer/install.php';
 

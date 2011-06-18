@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `modules` (
  `name` varchar(255) NOT NULL COMMENT 'unique module name',
  `description` text,
  `active` enum('N','Y') NOT NULL default 'Y',
- PRIMARY KEY (`name`)
+ PRIMARY KEY (`name`),
+ KEY `idx_active_name` (`active`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

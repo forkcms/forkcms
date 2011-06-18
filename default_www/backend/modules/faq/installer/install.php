@@ -24,6 +24,9 @@ class FaqInstall extends ModuleInstaller
 		// add 'search' as a module
 		$this->addModule('faq', 'The faq module.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// module rights
 		$this->setModuleRights(1, 'faq');
 
@@ -42,9 +45,6 @@ class FaqInstall extends ModuleInstaller
 		// extras
 		$this->insertExtra('faq', 'block', 'Faq', 'index', null, 'N', 9001);
 		$this->insertExtra('faq', 'block', 'Category', 'category', null, 'N', 9002);
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 

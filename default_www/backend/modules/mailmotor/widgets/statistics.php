@@ -37,6 +37,9 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		// set column
 		$this->setColumn('right');
 
+		// set position
+		$this->setPosition(1);
+
 		// fetch the default group ID
 		$this->groupId = BackendMailmotorModel::getDefaultGroupID();
 

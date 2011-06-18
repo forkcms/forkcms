@@ -6,7 +6,8 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
-    @author       Yoni De Beule <yoni@netlash.com>
+                  Yoni De Beule <yoni@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -18,24 +19,22 @@
 textarea {
 	font-size: 12px;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
-
 	background: #FFF url(/backend/core/layout/images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
+	-webkit-transition: background-color 0.28s linear;
 
 	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-
-	-webkit-transition: background-color 0.28s linear;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 	textarea.inputEditor {
 		/* Reset border-radius for tinyMCE textareas */
-		border-radius: 0;
-		-webkit-border-radius: 0;
 		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+		border-radius: 0;
 	}
 
 /* Disabled fields */
@@ -74,7 +73,7 @@ textarea:focus {
 
 input.code,
 textarea.code {
-	font-family: Consolas, "Menlo", "Monaco", "Courier New", Courier, monospace;
+	font-family: "Consolas", "Menlo", "Monaco", "Courier New", Courier, monospace;
 	font-size: 11px;
 }
 
@@ -104,10 +103,11 @@ input[type="submit"] {
 		input[type="text"]:focus,
 		input[type="password"]:focus,
 		textarea:focus {
-			outline: 2px solid #C2DEFF;
 			-moz-outline-radius: 5px;
+			outline: 2px solid #C2DEFF;
 			border-color: #456b99;
 		}
+
 	}
 
 .helpTxt {
@@ -121,7 +121,7 @@ input[type="submit"] {
 	}
 
 .forkForms .inputList {
-	padding: 0 0 12px;
+	padding: 0 0 12px 0;
 }
 
 	.forkForms .inputList .inputList {
@@ -140,7 +140,6 @@ input[type="submit"] {
 /*
 	Horizontal forms
 */
-
 
 /* Fix alignment in Chrome/Saf */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -213,7 +212,7 @@ input[type="submit"] {
 
 .forkForms p label {
 	display: block;
-	padding: 0 0 2px;
+	padding: 0 0 2px 0;
 }
 
 .forkForms .horizontal textarea {
@@ -247,12 +246,12 @@ input[type="submit"] {
 }
 
 	/* Alternate label widths */
-	
+
 	.forkForms .labelWidthLong label,
 	.forkForms .labelWidthLong p.label {
 		width: 145px;
 	}
-	
+
 	.forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 155px; }
 	.forkForms .labelWidthLong .spacing { padding-left: 155px; }
 
@@ -309,9 +308,9 @@ input[type="submit"] {
 	.oneLiner p.label,
 	.oneLiner p label { float: left; line-height: 20px; padding: 2px 4px 2px 0;}
 
-	.oneLiner input.inputText, 
+	.oneLiner input.inputText,
 	.oneLiner input.inputPassword,
-	.oneLiner input[type="text"], 
+	.oneLiner input[type="text"],
 	.oneLiner input[type="password"],
 	.oneLiner input.inputDatefieldRange { float: left; }
 

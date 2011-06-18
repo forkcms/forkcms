@@ -1,4 +1,40 @@
-2.2.0 (xxxx-xx-xx)
+2.4.1 (2011-xx-xx)
+--
+Bugfixes:
+
+* ContentBlocks: template wasn't selected when editing the block.
+
+Improvements:
+
+* Profiles: added profiles module to handle onsite (frontend) profiles.
+* Groups: addes groups module to handle backend user privileges.
+* Locale: added quick-edit.
+* Core: extras (blocks or widgets) now simulate their own scope concerning templates.
+* Core: no more language if there is just one language enabled.
+
+
+2.3.1 (2011-06-14)
+--
+Bugfixes:
+
+* Formbuilder: fix jquery error causing formbuilder to malfunction
+* Proper implementation of .prop().
+* Analyse-action was using invalid arguments for SpoonFilter::toCamelCase().
+
+2.3.0 (2011-06-07)
+--
+Bugfixes:
+
+* Core: when the metafields are disabled we don't have any values in the POST. When an error occurs in the other fields of the form the meta-fields would be cleared. As reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/164.
+* Pages: moving pages for a non-active language failed, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/163.
+
+Improvements:
+
+* Core: Upgraded to jQuery 1.6.1
+* Core: Upgraded to jQuery UI 1.8.13
+* Core: Upgraded TinyMCE to 3.4.2
+
+2.2.0 (2011-06-01)
 --
 Bugfixes:
 
@@ -17,6 +53,8 @@ Bugfixes:
 * Bugfix: only remove language from querystring when we have multiple languages.
 * Bugfix: backend interface language was not set according to our installer selection.
 * Bugfix: added the correct anchor on the blog commentform, fixes: http://forkcms.lighthouseapp.com/projects/61890/tickets/159.
+* Bugfix: create category dialog in blogmodule wasn't working when there weren't no categories, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/160
+* Bugfix: datefields weren't populated with the date that was set, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/161.
 
 Improvements:
 
@@ -39,6 +77,7 @@ Improvements:
 * Core: when calling *Form::getTemplateExample() an example that reflect the correct markup for that application will be returned.
 * Core: default jQuery-theme is now Aristo (see: http://taitems.tumblr.com/post/482577430/introducing-aristo-a-jquery-ui-theme).
 * Core: made datepickerstuff available in the frontend.
+* Core: made it possible to change the amount of blocks for templates that are in use. When blocks are removed, the content will no longer be shown; when blocks are added, the defaults will be pushed to the existing pages.
 * Blog: creating categories can now be done without leaving the add/edit screen.
 * Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
 * Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.

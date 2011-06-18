@@ -314,14 +314,15 @@ class FrontendLanguage
 	 *
 	 * @return	void
 	 * @param	string[optional] $language	The language to load, if not provided we will load the language based on the URL.
+	 * @param	bool[optional] $force		Force the language, so don't check if the language is active.
 	 */
-	public static function setLocale($language = null)
+	public static function setLocale($language = null, $force = false)
 	{
 		// redefine
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// validate language
-		if(!in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language (' . $language . ').');
+		if(!$force && !in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language (' . $language . ').');
 
 		// validate file, generate it if needed
 		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, APPLICATION);

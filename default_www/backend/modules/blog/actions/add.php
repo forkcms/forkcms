@@ -58,13 +58,13 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
 
 		// create elements
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('blog', 'allow_comments', false));
 		$this->frm->addDropdown('category_id', $categories, SpoonFilter::getGetValue('category', null, null, 'int'));
-		if(count($categories) > 2) $this->frm->getField('category_id')->setDefaultElement('');
+		if(count($categories) != 2) $this->frm->getField('category_id')->setDefaultElement('');
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
@@ -116,6 +116,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
+			if($this->frm->getField('category_id')->getValue() == 'new_category') $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
 
 			// validate meta
 			$this->meta->validate();

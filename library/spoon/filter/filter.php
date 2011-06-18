@@ -838,29 +838,27 @@ class SpoonFilter
 	{
 		// init vars
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
-		$value = str_replace($separator, ' ', (string) $value);
 
 		// init var
 		$string = '';
 
 		// fetch words
-		$words = explode(' ', $value);
+		$words = explode((string) $separator, (string) $value);
 
 		// create new string
 		foreach($words as $i => $word)
 		{
-			// skip first word
-			if($i == 0 && $lcfirst)
-			{
-				// add as is
-				$string .= $word;
+			// skip empty words
+			if($word == '') continue;
 
-				// go on
-				continue;
-			}
+			// if it is the first word and  we should use lowercase for the first word
+			if($i == 0 && $lcfirst) $word = $word;
 
-			// regular words
-			$string .= mb_strtoupper(mb_substr($word, 0, 1, $charset), $charset) . mb_substr($word, 1, mb_strlen($word), $charset);
+			// convert first letter to uppercase
+			else $word[0] = mb_strtoupper($word[0], $charset);
+
+			// append
+			$string .= $word;
 		}
 
 		return $string;

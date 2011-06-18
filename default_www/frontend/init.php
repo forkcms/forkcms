@@ -158,14 +158,18 @@ class FrontendInit
 						$action = str_replace($module, '', $action);
 						$module = substr($module, 0, -1);
 
-						// file to be loaded
-						$pathToLoad = FRONTEND_PATH . '/modules/' . $module . '/engine/' . $action . '.php';
-
-						// if it exists, load it!
-						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+						// check the actions, engine & widgets directories
+						foreach(array('actions', 'engine', 'widgets') as $dir)
 						{
-							require_once $pathToLoad;
-							break;
+							// file to be loaded
+							$pathToLoad = FRONTEND_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+
+							// if it exists, load it!
+							if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+							{
+								require_once $pathToLoad;
+								break;
+							}
 						}
 					}
 				}

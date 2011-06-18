@@ -399,7 +399,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 																c.author, c.email, c.website
 																FROM blog_comments AS c
 																WHERE c.post_id = ? AND c.status = ? AND c.language = ?
-																ORDER BY c.created_on ASC',
+																ORDER BY c.id ASC',
 																array((int) $id, 'published', FRONTEND_LANGUAGE));
 
 		// loop comments and create gravatar id
@@ -529,7 +529,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 																INNER JOIN blog_posts AS i ON c.post_id = i.id AND c.language = i.language
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
-																ORDER BY c.created_on DESC
+																ORDER BY c.id DESC
 																LIMIT ?',
 																array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit));
 

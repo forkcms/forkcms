@@ -26,7 +26,7 @@ jsBackend.search =
 		$('#searchModules input[type=checkbox]').change(function() 
 		{
 			if($(this).is(':checked')) { $('#' + $(this).attr('id') + 'Weight').removeAttr('disabled').removeClass('disabled'); }
-			else { $('#' + $(this).attr('id') + 'Weight').attr('disabled', 'disabled').addClass('disabled'); }
+			else { $('#' + $(this).attr('id') + 'Weight').prop('disabled', true).addClass('disabled'); }
 		});
 	},
 

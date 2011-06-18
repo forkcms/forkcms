@@ -49,7 +49,6 @@ class UsersInstall extends ModuleInstaller
 			$settings['avatar'] = serialize('god.jpg');
 
 			// build user
-			$user['group_id'] = $this->getSetting('users', 'default_group');
 			$user['email'] = $this->getVariable('email');
 			$user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5($this->getVariable('password')));
 			$user['active'] = 'Y';
@@ -58,6 +57,13 @@ class UsersInstall extends ModuleInstaller
 
 			// insert user
 			$user['id'] = $this->getDB()->insert('users', $user);
+
+			// build group
+			$group['group_id'] = $this->getSetting('users', 'default_group');
+			$group['user_id'] = $user['id'];
+
+			// insert group
+			$this->getDB()->insert('users_groups', $group);
 
 			// loop settings
 			foreach($settings as $name => $value)
@@ -82,6 +88,9 @@ class UsersInstall extends ModuleInstaller
 		// add 'users' as a module
 		$this->addModule('users', 'User management.');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// general settings
 		$this->setSetting('users', 'default_group', 1);
 		$this->setSetting('users', 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
@@ -95,9 +104,7 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'delete');
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+		$this->setActionRights(1, 'users', 'undo_delete');
 
 		// add default user
 		$this->addUser();
