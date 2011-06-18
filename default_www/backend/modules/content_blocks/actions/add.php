@@ -32,7 +32,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// fetch available templates
-		$this->getTemplates();
+		$this->templates = BackendContentBlocksModel::getTemplates();
 
 		// load the form
 		$this->loadForm();
@@ -45,17 +45,6 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 
 		// display the page
 		$this->display();
-	}
-
-
-	/**
-	 * Get available templates
-	 *
-	 * @return	void
-	 */
-	private function getTemplates()
-	{
-		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 
