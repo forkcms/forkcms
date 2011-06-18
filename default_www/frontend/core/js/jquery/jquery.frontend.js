@@ -18,13 +18,15 @@
 		{
 			debug: false,
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
+			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious'], 
+			isDropdown: true,
 			
-			delicious: { show: true, label: 'Delicious' },
-			digg: { show: true, label: 'Digg' },
-			facebook: { show: true, width: 90, verb: 'like', colorScheme: 'light', font : 'arial' },
-			linkedin: { show: true, label: 'LinkedIn' },
-			netlog: { show: true, label: 'Netlog' },
-			twitter: { show: true, label: 'tweet' }
+			delicious: { name: 'delicious', show: true, label: 'Delicious'},
+			digg: { name: 'digg', show: true, label: 'Digg' },
+			facebook: { name: 'facebook', show: true, width: 90, verb: 'like', colorScheme: 'light', font : 'arial' },
+			linkedin: { name: 'linkedin', show: true, label: 'LinkedIn' },
+			netlog: { name: 'netlog', show: true, label: 'Netlog' },
+			twitter: { name: 'twitter', show: true, label: 'tweet' }
 		};
 
 		// extend options
@@ -32,8 +34,10 @@
 		
 		return this.each(function() 
 		{
+			// grab current element
 			var $this = $(this);
 			
+			// init vars
 			var link = document.location;
 			var title = $('title').html();
 			var description = '';
@@ -59,116 +63,118 @@
 			if(image == '' && options.default_image != '') image = options.default_image;
 			
 			// start HTML
-			var html = '<ul class="shareMenu">' + "\n";
-			
-			// delicious
-			if(options.delicious.show)
+			if(options.isDropdown) var html = '<ul style="display: none;" class="shareMenu">' + "\n";
+			else var html = '<ul class="shareMenu">' + "\n";
+
+			// loop items
+			for(var i in options.sequence)
 			{
-				// build url
-				var url = 'http://delicious.com/save?url=' + link;
-				if(title != '') url += '&title=' + title;
-				if(description != '') url += '&notes=' + description;
-				
-				// add html
-				html += '<li class="shareMenuDelicious"><a href="' + url + '" target="_blank">' + options.delicious.label + '</a></li>' + "\n";
-			}
-			
-			
-			// digg
-			if(options.digg.show)
-			{
-				// build url
-				var url = 'http://digg.com/submit?url=' + link;
-				if(title != '') url += '&title=' + title;
-				
-				// add html
-				html += '<li class="shareMenuDigg"><a href="' + url + '" target="_blank">' + options.digg.label + '</a></li>' + "\n";
-			}
-			
-			
-			// facebook?
-			if(options.facebook.show)
-			{
-				// check for OG-data.
-				if(options.debug && $('meta[property^="og"]').length == 0) console.log('You should provide OpenGraph data.');
-				
-				// add html
-				html += '<li class="shareMenuFacebook">';
-				
-				// check if the FB-object is available
-				if(typeof FB != 'object') 
+				// is the option enabled?
+				if(options[options.sequence[i]].show)
 				{
-					html += '<iframe src="http://www.facebook.com/plugins/like.php?href=' + link + '&amp;send=false&amp;layout=button_count&amp;width=' + options.facebook.width + '&amp;show_faces=false&amp;action=' + options.facebook.verb + '&amp;colorscheme=' + options.facebook.colorScheme + '&amp;font=' + options.facebook.font + '&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' + options.facebook.width + 'px; height:21px;" allowTransparency="true"></iframe>';
-				}
-				else
-				{
-					html += '<fb:like href="' + link + '" send="false" layout="button_count" width="' + options.facebook.width + '" show_face="false" action="' + options.facebook.verb + '" colorscheme="' + options.facebook.colorScheme + '" font="' + options.facebook.font  + '"></fb:like>' + "\n";
-				}
-
-				// end html
-				html += '</li>';
-			}
-			
-			// linkedin
-			if(options.linkedin.show)
-			{
-				// build url
-				var url = 'http://www.linkedin.com/shareArticle?mini=true&url=' + link;
-				if(title != '') url += '&title=' + title;
-				if(description != '') url += '&summary=' + description;
-
-				// add html
-				html += '<li class="shareMenuLinkedin"><a href="' + url + '" target="_blank">' + options.linkedin.label + '</a></li>' + "\n";
-			}
-			
-			
-			// netlog?
-			if(options.netlog.show)
-			{
-				// build url
-				var url = 'http://www.netlog.com/go/manage/links/view=save&origin=external&url=' + link;
-				if(title != '') url += '&title=' + title;
-				if(description != '') url += '&description=' + description;
-				if(image != '') url += '&thumb=' + image;
-				url += '&referer=' + document.location;
-				
-				// add html
-				html += '<li class="shareMenuNetlog"><a href="' + url + '" target="_blank">' + options.netlog.label + '</a></li>' + "\n";
-			}
-			
-			
-			// twitter
-			if(options.twitter.show)
-			{
-				if(!twitterLoaded) {
-					// loop all script to check if the twitter-widget is already loaded
-					$('script').each(function() 
+					// based on the type we should generate the correct markup
+					switch(options[options.sequence[i]].name)
 					{
-						if($(this).attr('src') == 'http://platform.twitter.com/widgets.js') twitterLoaded = true;
-					});
-
-					// not loaded?
-					if(!twitterLoaded)
-					{
-						// create the script tag
-						var script = document.createElement('script')
-						script.src = 'http://platform.twitter.com/widgets.js';
+						// delicious
+						case 'delicious':
+							// build url
+							var url = 'http://delicious.com/save?url=' + link;
+							if(title != '') url += '&title=' + title;
+							if(description != '') url += '&notes=' + description;
+							
+							// add html
+							html += '<li class="shareMenuDelicious"><a href="' + url + '" target="_blank"><span class="icon"><span class="textWrapper">' + options.delicious.label + '</span></a></li>' + "\n";
+						break;
 						
-						// add into head
-						$('head').after(script);
+						// digg
+						case 'digg':
+							// build url
+							var url = 'http://digg.com/submit?url=' + link;
+							if(title != '') url += '&title=' + title;
+							
+							// add html
+							html += '<li class="shareMenuDigg"><a href="' + url + '" target="_blank"><span class="icon"></span><span class="textWrapper">' + options.digg.label + '</span></a></li>' + "\n";
+						break;
+						
+						// facebook?
+						case 'facebook':
+							// check for OG-data.
+							if(options.debug && $('meta[property^="og"]').length == 0) console.log('You should provide OpenGraph data.');
+							
+							// add html
+							html += '<li class="shareMenuFacebook">';
+							
+							// check if the FB-object is available
+							if(typeof FB != 'object') 
+							{
+								html += '<iframe src="http://www.facebook.com/plugins/like.php?href=' + link + '&amp;send=false&amp;layout=button_count&amp;width=' + options.facebook.width + '&amp;show_faces=false&amp;action=' + options.facebook.verb + '&amp;colorscheme=' + options.facebook.colorScheme + '&amp;font=' + options.facebook.font + '&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:' + options.facebook.width + 'px; height:21px;" allowTransparency="true"></iframe>';
+							}
+							else
+							{
+								html += '<fb:like href="' + link + '" send="false" layout="button_count" width="' + options.facebook.width + '" show_face="false" action="' + options.facebook.verb + '" colorscheme="' + options.facebook.colorScheme + '" font="' + options.facebook.font  + '"></fb:like>' + "\n";
+							}
 
-						// reset var
-						twitterLoaded = true;
+							// end html
+							html += '</li>';
+						break;
+						
+						// linkedin
+						case 'linkedin':
+							// build url
+							var url = 'http://www.linkedin.com/shareArticle?mini=true&url=' + link;
+							if(title != '') url += '&title=' + title;
+							if(description != '') url += '&summary=' + description;
+
+							// add html
+							html += '<li class="shareMenuLinkedin"><a href="' + url + '" target="_blank"><span class="icon"></span><span class="textWrapper">' + options.linkedin.label + '</span></a></li>' + "\n";
+						break;
+						
+						// netlog?
+						case 'netlog':
+							// build url
+							var url = 'http://www.netlog.com/go/manage/links/view=save&origin=external&url=' + link;
+							if(title != '') url += '&title=' + title;
+							if(description != '') url += '&description=' + description;
+							if(image != '') url += '&thumb=' + image;
+							url += '&referer=' + document.location;
+							
+							// add html
+							html += '<li class="shareMenuNetlog"><a href="' + url + '" target="_blank"><span class="icon"></span><span class="textWrapper">' + options.netlog.label + '</span></a></li>' + "\n";
+						break;
+						
+						// twitter
+						case 'twitter':
+							if(!twitterLoaded) {
+								// loop all script to check if the twitter-widget is already loaded
+								$('script').each(function() 
+								{
+									if($(this).attr('src') == 'http://platform.twitter.com/widgets.js') twitterLoaded = true;
+								});
+
+								// not loaded?
+								if(!twitterLoaded)
+								{
+									// create the script tag
+									var script = document.createElement('script')
+									script.src = 'http://platform.twitter.com/widgets.js';
+									
+									// add into head
+									$('head').after(script);
+
+									// reset var
+									twitterLoaded = true;
+								}
+							}
+
+							// build & add html
+							html += '<li class="shareMenuTwitter">';
+							html += '<a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
+							if(description != '') html += 'data-text="' + description + '"';
+							html += 'data-count="none">' + options.twitter.label  + '</a>';
+						break					
 					}
 				}
-
-				// build & add html
-				html += '<li class="shareMenuTwitter">';
-				html += '<a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
-				if(description != '') html += 'data-text="' + description + '"';
-				html += 'data-count="none">' + options.twitter.label  + '</a>';
 			}
-			
 			
 			// end html 
 			html += '</ul>';
@@ -176,19 +182,29 @@
 			// append to current element
 			$this.append(html);
 
-			// hide share list by default
-			var shareMenu = $this.find('ul.shareMenu');
-
-			shareMenu.hide();
-
-			$this.hover(function()
+			if(options.isDropdown)
 			{
-				shareMenu.show();
-			},
-			function()
-			{
-				shareMenu.hide();
-			});
+				// bind click
+				$this.click(function(evt) 
+				{ 
+					// prevent default
+					evt.preventDefault();
+					
+					// toggle menu
+					$this.find('ul.shareMenu').toggle();
+				});
+				
+				$this.hover(
+					function() 
+					{
+						$this.find('ul.shareMenu').show();
+					},
+					function() 
+					{
+						$this.find('ul.shareMenu').hide();
+					}
+				);
+			}
 		});
 	};
 })(jQuery);
