@@ -286,7 +286,7 @@ class FrontendPage extends FrontendBaseObject
 		// set meta-data
 		$this->header->addMetaData(array('name' => 'description', 'content' => $this->record['meta_description']), ($this->record['meta_description_overwrite'] == 'Y'));
 		$this->header->addMetaData(array('name' => 'keywords', 'content' => $this->record['meta_keywords']), ($this->record['meta_keywords_overwrite'] == 'Y'));
-		// @todo fix this	$this->header->setMetaCustom($this->record['meta_custom']);
+		$this->header->setMetaCustom($this->record['meta_custom']);
 
 		// create breadcrumb instance
 		$this->breadcrumb = new FrontendBreadcrumb();

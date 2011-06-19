@@ -37,6 +37,14 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
+	 * The custom meta data
+	 *
+	 * @var	string
+	 */
+	private $metaCustom;
+
+
+	/**
 	 * Pagetitle
 	 *
 	 * @var	string
@@ -319,6 +327,17 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
+	 * Get the custom meta
+	 *
+	 * @return	string
+	 */
+	public function getMetaCustom()
+	{
+		return $this->meta;
+	}
+
+
+	/**
 	 * Get the pagetitle
 	 *
 	 * @return	string
@@ -487,6 +506,7 @@ class FrontendHeader extends FrontendBaseObject
 
 		// assign meta
 		$this->tpl->assign('meta', $meta);
+		$this->tpl->assign('metaCustom', $this->getMetaCustom());
 
 		// init var
 		$cssFiles = null;
@@ -549,6 +569,18 @@ class FrontendHeader extends FrontendBaseObject
 
 		// assign site wide html
 		$this->tpl->assign('siteHTMLHeader', (string) FrontendModel::getModuleSetting('core', 'site_html_header', null));
+	}
+
+
+	/**
+	 * Set the custom meta
+	 *
+	 * @return	void
+	 * @param	string $meta
+	 */
+	public function setMetaCustom($meta)
+	{
+		$this->metaCustom = (string) $meta;
 	}
 
 

@@ -11,6 +11,7 @@ Improvements:
 * Locale: added quick-edit.
 * Core: extras (blocks or widgets) now simulate their own scope concerning templates.
 * Core: no more language if there is just one language enabled.
+* Core: handling of meta/links tags is now down through code, therefor you can overrule existing values.
 
 
 2.3.1 (2011-06-14)
