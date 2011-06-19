@@ -96,17 +96,17 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// set headers values
 			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
 			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Views'));
 
 			// set headers
-			$datagrid->setHeaderLabels($headers);
+			$dataGrid->setHeaderLabels($headers);
 
 			// parse the datagrid
-			$this->tpl->assign('dgKeywords', $datagrid->getContent());
+			$this->tpl->assign('dgKeywords', $dataGrid->getContent());
 		}
 	}
 
@@ -125,23 +125,23 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// hide columns
-			$datagrid->setColumnsHidden(array('referral_long'));
+			$dataGrid->setColumnsHidden(array('referral_long'));
 
 			// set headers values
 			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
 			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Views'));
 
 			// set column url
-			$datagrid->setColumnURL('referral', 'http://[referral_long]', '[referral_long]');
+			$dataGrid->setColumnURL('referral', 'http://[referral_long]', '[referral_long]');
 
 			// set headers
-			$datagrid->setHeaderLabels($headers);
+			$dataGrid->setHeaderLabels($headers);
 
 			// parse the datagrid
-			$this->tpl->assign('dgReferrers', $datagrid->getContent());
+			$this->tpl->assign('dgReferrers', $dataGrid->getContent());
 		}
 	}
 

@@ -28,12 +28,12 @@ jsBackend.dashboard =
 		
 		if(widget.hasClass('isRemoved'))
 		{
-			$(widget.find('.options, .footer, .datagridHolder')).show();
+			$(widget.find('.options, .footer, .dataGridHolder')).show();
 			widget.removeClass('isRemoved');
 		}
 		else
 		{
-			$(widget.find('.options, .footer, .datagridHolder')).hide();
+			$(widget.find('.options, .footer, .dataGridHolder')).hide();
 			widget.addClass('isRemoved');
 		}
 	},

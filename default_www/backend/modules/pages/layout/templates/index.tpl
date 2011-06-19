@@ -15,7 +15,7 @@
 </div>
 
 {option:dgDrafts}
-	<div class="datagridHolder {option:!dgDrafts}datagridHolderNoDatagrid{/option:!dgDrafts}">
+	<div class="dataGridHolder {option:!dgDrafts}dataGridHolderNoDataGrid{/option:!dgDrafts}">
 		{$dgDrafts}
 	</div>
 
@@ -33,7 +33,7 @@
 {/option:dgDrafts}
 
 
-<div class="datagridHolder {option:!dgRecentlyEdited}datagridHolderNoDatagrid{/option:!dgRecentlyEdited}">
+<div class="dataGridHolder {option:!dgRecentlyEdited}dataGridHolderNoDataGrid{/option:!dgRecentlyEdited}">
 	{option:dgRecentlyEdited}{$dgRecentlyEdited}{/option:dgRecentlyEdited}
 	{option:!dgRecentlyEdited}<p>{$msgNoItems}</p>{/option:!dgRecentlyEdited}
 </div>

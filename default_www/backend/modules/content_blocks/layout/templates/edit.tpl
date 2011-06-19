@@ -28,7 +28,7 @@
 		</div>
 
 		<div id="tabRevisions">
-			<div class="datagridHolder">
+			<div class="dataGridHolder">
 				<div class="tableHeading">
 					<div class="oneLiner">
 						<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
@@ -41,7 +41,7 @@
 
 				{option:revisions}{$revisions}{/option:revisions}
 				{option:!revisions}
-					<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+					<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 						<tr>
 							<td>
 								<p>{$msgNoRevisions}</p>

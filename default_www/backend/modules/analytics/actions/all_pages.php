@@ -193,19 +193,19 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging();
+			$dataGrid->setPaging();
 
 			// hide columns
-			$datagrid->setColumnHidden('page_encoded');
+			$dataGrid->setColumnHidden('page_encoded');
 
 			// set url
-			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
+			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
 
 			// parse the datagrid
-			$this->tpl->assign('dgPages', $datagrid->getContent());
+			$this->tpl->assign('dgPages', $dataGrid->getContent());
 		}
 	}
 }

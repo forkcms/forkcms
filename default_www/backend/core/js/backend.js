@@ -479,7 +479,7 @@ jsBackend.controls =
 		$('table input:checkbox').change(function(evt)
 		{
 			// get parent table
-			var table = $(this).parents('table.datagrid').eq(0);
+			var table = $(this).parents('table.dataGrid').eq(0);
 
 			// any item checked?
 			if(table.find('input:checkbox:checked').length > 0)
@@ -1182,10 +1182,10 @@ jsBackend.layout =
 	{
 		// hovers
 		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
-		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
+		$('.dataGrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
 
 		jsBackend.layout.showBrowserWarning();
-		jsBackend.layout.datagrid();
+		jsBackend.layout.dataGrid();
 		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
 
 		// fix last childs
@@ -1217,17 +1217,17 @@ jsBackend.layout =
 
 
 	// datagrid layout
-	datagrid: function()
+	dataGrid: function()
 	{
 		if(jQuery.browser.msie)
 		{
-			$('.datagrid tr td:last-child').addClass('lastChild');
-			$('.datagrid tr td:first-child').addClass('firstChild');
+			$('.dataGrid tr td:last-child').addClass('lastChild');
+			$('.dataGrid tr td:first-child').addClass('firstChild');
 		}
 
 		// dynamic striping
-		$('.dynamicStriping.datagrid tr:nth-child(2n)').addClass('even');
-		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd');
+		$('.dynamicStriping.dataGrid tr:nth-child(2n)').addClass('even');
+		$('.dynamicStriping.dataGrid tr:nth-child(2n+1)').addClass('odd');
 	},
 
 
@@ -1600,13 +1600,13 @@ jsBackend.tableSequenceByDragAndDrop =
 				{
 					// the table
 					var table = $(this);
-					var action = (typeof $(table.parents('table.datagrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.datagrid')).data('action').toString();
+					var action = (typeof $(table.parents('table.dataGrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.dataGrid')).data('action').toString();
 
 					// buil ajax-url
 					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
 
 					// append
-					if(typeof $(table.parents('table.datagrid')).data('extra-params') != 'undefined') url += $(table.parents('table.datagrid')).data('extra-params');
+					if(typeof $(table.parents('table.dataGrid')).data('extra-params') != 'undefined') url += $(table.parents('table.dataGrid')).data('extra-params');
 
 					// init var
 					var rows = $(this).find('tr');

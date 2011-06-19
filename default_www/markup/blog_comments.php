@@ -105,9 +105,9 @@
 
 										<div id="tabPublished">
 											<form action="/private/en/blog/mass_comment_action?token=true" method="get" class="forkForms" id="commentsPublished">
-												<div class="datagridHolder">
+												<div class="dataGridHolder">
 													<input type="hidden" name="from" value="published" />
-													<table class="datagrid" cellspacing="0" cellpadding="0" border="0">
+													<table class="dataGrid" cellspacing="0" cellpadding="0" border="0">
 														<thead>
 															<tr>
 																<th class="checkbox">
@@ -280,7 +280,7 @@
 
 									<div id="confirmDeleteSpam" title="Delete?" style="display: none;">
 										<p>Are your sure you want to delete this/these item(s)?</p>
-									</div> <!-- End of browse datagrid -->
+									</div> <!-- End of browse dataGrid -->
 
 									<div class="hr" style="margin-top: 24px"><hr /></div>
 

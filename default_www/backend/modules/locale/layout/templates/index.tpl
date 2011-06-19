@@ -12,7 +12,7 @@
 	{/option:isGod}
 </div>
 
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">
 			<table cellspacing="0" cellpadding="0" border="0">
@@ -99,7 +99,7 @@
 
 
 	{option:dgLabels}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		<div class="tableHeading">
 			<h3>{$lblLabels|ucfirst}</h3>
 		</div>
@@ -108,7 +108,7 @@
 	{/option:dgLabels}
 
 	{option:dgMessages}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		<div class="tableHeading">
 			<h3>{$lblMessages|ucfirst}</h3>
 		</div>
@@ -117,7 +117,7 @@
 	{/option:dgMessages}
 
 	{option:dgErrors}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		<div class="tableHeading">
 			<h3>{$lblErrors|ucfirst}</h3>
 		</div>
@@ -126,7 +126,7 @@
 	{/option:dgErrors}
 
 	{option:dgActions}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		<div class="tableHeading oneLiner">
 			<h3>{$lblActions|ucfirst} </h3>
 				<abbr class="help">(?)</abbr>

@@ -36,7 +36,7 @@ abbr.help {
 
 	/* In datagrids */
 
-	.datagrid th .help {
+	.dataGrids th .help {
 		top: 5px;
 		margin-left: 0;
 	}

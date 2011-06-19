@@ -905,7 +905,7 @@ class BackendLocaleModel
 		}
 
 		// create an array to use in the datagrid
-		$datagridTranslations = array();
+		$dataGridTranslations = array();
 
 		// an id that is used for in the datagrid, this is not the id of the translation!
 		$id = 0;
@@ -914,7 +914,7 @@ class BackendLocaleModel
 		foreach($sortedTranslations as $type => $references)
 		{
 			// create array for each type
-			$datagridTranslations[$type] = array();
+			$dataGridTranslations[$type] = array();
 
 			foreach($references as $reference => $translation)
 			{
@@ -932,12 +932,12 @@ class BackendLocaleModel
 					}
 
 					// add the translation to the array
-					$datagridTranslations[$type][] = $trans;
+					$dataGridTranslations[$type][] = $trans;
 				}
 			}
 		}
 
-		return $datagridTranslations;
+		return $dataGridTranslations;
 	}
 
 

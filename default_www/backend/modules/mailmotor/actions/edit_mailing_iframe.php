@@ -38,7 +38,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 			// get all data for the item we want to edit
 			$this->getData();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page

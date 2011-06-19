@@ -286,7 +286,7 @@ class BackendBaseActionIndex extends BackendBaseAction
 	 *
 	 * @var	BackendDataGridDB
 	 */
-	protected $datagrid;
+	protected $dataGrid;
 
 
 	/**
@@ -357,7 +357,7 @@ class BackendBaseActionAdd extends BackendBaseAction
 class BackendBaseActionEdit extends BackendBaseAction
 {
 	/**
-	 * Datagrid with the revisions
+	 * DataGrid with the revisions
 	 *
 	 * @var	BackendDataGridDB
 	 */

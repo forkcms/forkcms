@@ -45,7 +45,7 @@ class BackendPagesTemplates extends BackendBaseActionEdit
 		$this->loadForm();
 
 		// load the datagrid
-		$this->loadDatagrid();
+		$this->loadDataGrid();
 
 		// parse the datagrid
 		$this->parse();
@@ -78,16 +78,16 @@ class BackendPagesTemplates extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_TEMPLATES, array($this->selectedTheme));
+		$this->dataGrid = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_TEMPLATES, array($this->selectedTheme));
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit_template') . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_template') . '&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_template') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_template') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
@@ -117,7 +117,7 @@ class BackendPagesTemplates extends BackendBaseActionEdit
 		parent::parse();
 
 		// assign datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// assign the selected theme, so we can propagate it to the add/edit actions.
 		$this->tpl->assign('selectedTheme', urlencode($this->selectedTheme));
