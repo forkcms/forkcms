@@ -91,8 +91,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// get data
 			$this->record = FrontendBlogModel::getRevision($this->URL->getParameter(1), $this->URL->getParameter('revision', 'int'));
 
-			// add no-index to meta-custom, so the draft won't get accidentally indexed
-			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+			// add no-index, so the draft won't get accidentally indexed
+			$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 		}
 
 		// get by URL
@@ -155,14 +155,14 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		// add RSS-feed
+		$this->header->addMetaData(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true, 'link');
 
 		// get RSS-link for the comments
 		$rssCommentsLink = FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') . '/' . $this->record['url'];
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) . '" href="' . $rssCommentsLink . '" />');
+		$this->header->addMetaData(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])), 'href' => $rssCommentsLink), true, 'link');
 
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
@@ -181,17 +181,13 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
 			}
 
-			$meta = '<!-- openGraph meta-data -->' . "\n";
-			$meta .= '<meta property="og:title" content="' . $this->record['title'] . '" />' . "\n";
-			$meta .= '<meta property="og:type" content="article" />' . "\n";
-			$meta .= '<meta property="og:image" content="' . $image . '" />' . "\n";
-			$meta .= '<meta property="og:url" content="' . SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'] . '" />' . "\n";
-			$meta .= '<meta property="og:site_name" content="' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) . '" />' . "\n";
-			$meta .= '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids') . '" />' . "\n";
-			$meta .= '<meta property="og:description" content="' . $this->record['title'] . '" />' . "\n";
-
-			// add
-			$this->header->addMetaCustom($meta);
+			// add OpenGraph data
+			$this->header->addMetaData(array('property' => 'og:title', 'content' => $this->record['title']), true, 'meta', 'property');
+			$this->header->addMetaData(array('property' => 'og:type', 'content' => 'article'), true, 'meta', 'property');
+			$this->header->addMetaData(array('property' => 'og:image', 'content' => $image), true, 'meta', 'property');
+			$this->header->addMetaData(array('property' => 'og:url', 'content' => SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url']), true, 'meta', 'property');
+			$this->header->addMetaData(array('property' => 'og:site_name', 'content' => FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)), true, 'meta', 'property');
+			$this->header->addMetaData(array('property' => 'og:description', 'content' => $this->record['title']), true, 'meta', 'property');
 		}
 
 		// add into breadcrumb
@@ -199,8 +195,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// set meta
 		$this->header->setPageTitle($this->record['meta_title'], ($this->record['meta_title_overwrite'] == 'Y'));
-		$this->header->setMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+		$this->header->addMetaData(array('name' => 'description', 'content' => $this->record['meta_description']), ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->addMetaData(array('name' => 'keywords', 'content' => $this->record['meta_keywords']), ($this->record['meta_keywords_overwrite'] == 'Y'));
 
 		// assign article
 		$this->tpl->assign('item', $this->record);

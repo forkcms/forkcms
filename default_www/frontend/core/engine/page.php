@@ -193,7 +193,7 @@ class FrontendPage extends FrontendBaseObject
 			$this->record = FrontendModel::getPageRevision($this->URL->getParameter('page_revision', 'int'));
 
 			// add no-index to meta-custom, so the draft won't get accidentally indexed
-			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+			$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 		}
 
 		// get page record
@@ -284,9 +284,9 @@ class FrontendPage extends FrontendBaseObject
 		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
 
 		// set meta-data
-		$this->header->setMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], (bool) ($this->record['meta_keywords_overwrite'] == 'Y'));
-		$this->header->setMetaCustom($this->record['meta_custom']);
+		$this->header->addMetaData(array('name' => 'description', 'content' => $this->record['meta_description']), ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->addMetaData(array('name' => 'keywords', 'content' => $this->record['meta_keywords']), ($this->record['meta_keywords_overwrite'] == 'Y'));
+		// @todo fix this	$this->header->setMetaCustom($this->record['meta_custom']);
 
 		// create breadcrumb instance
 		$this->breadcrumb = new FrontendBreadcrumb();

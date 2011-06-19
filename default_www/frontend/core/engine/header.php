@@ -29,27 +29,11 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Custom meta
+	 * Meta data
 	 *
-	 * @var	string
+	 * @var	array
 	 */
-	private $metaCustom;
-
-
-	/**
-	 * Metadescription
-	 *
-	 * @var	string
-	 */
-	private $metaDescription;
-
-
-	/**
-	 * Metakeywords
-	 *
-	 * @var	string
-	 */
-	private $metaKeywords;
+	private $meta = array();
 
 
 	/**
@@ -200,14 +184,55 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Add data into metacustom
+	 * Add meta data
 	 *
 	 * @return	void
-	 * @param	string $value	The string that should be appended to the meta-custom.
+	 * @param	array $attributes			The attributes to parse.
+	 * @param	bool[optional] $overwrite	Should we overwrite the current value?
+	 * @param	string[optional] $tag		Which tag should we use. Default is "meta".
+	 * @param	mixed[optional] $uniqueKeys	Which keys can we use to decide if an item is unique.
 	 */
-	public function addMetaCustom($value)
+	public function addMetaData(array $attributes, $overwrite = false, $tag = 'meta', $uniqueKeys = null)
 	{
-		$this->metaCustom .= (string) $value;
+		// redefine
+		$overwrite = (bool) $overwrite;
+		$tag = (string) $tag;
+		$uniqueKeys = (array) $uniqueKeys;
+
+		if($tag == 'meta' && $uniqueKeys == null) $uniqueKeys = array('name');
+		if($tag == 'link' && $uniqueKeys == null) $uniqueKeys = array('rel', 'type', 'title');
+
+		// stop if the content is empty
+		if(isset($attributes['content']) && $attributes['content'] == '') return;
+
+		// sort the keys
+		ksort($uniqueKeys);
+
+		// build key
+		$uniqueKey = '';
+		foreach($uniqueKeys as $key) if(isset($attributes[$key])) $uniqueKey .= $attributes[$key] . '|';
+
+		// is the metadata already available?
+		if(isset($this->meta[$tag][$uniqueKey]))
+		{
+			// should we overwrite the key?
+			if($overwrite) $this->meta[$tag][$uniqueKey] = $attributes;
+			else
+			{
+				if($tag == 'meta' && in_array($uniqueKey, array('description|', 'keywords|')))
+				{
+					foreach($attributes as $key => $value)
+					{
+						if(isset($this->meta[$tag][$uniqueKey][$key])) $this->meta[$tag][$uniqueKey][$key] .= ', ' . $value;
+						else $this->meta[$tag][$uniqueKey][$key] = $value;
+					}
+				}
+
+			}
+		}
+
+		// add into the array
+		else $this->meta[$tag][$uniqueKey] = $attributes;
 	}
 
 
@@ -283,35 +308,13 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Get meta-custom
+	 * Get meta
 	 *
-	 * @return	string
+	 * @return	array
 	 */
-	public function getMetaCustom()
+	public function getMeta()
 	{
-		return $this->metaCustom;
-	}
-
-
-	/**
-	 * Get the meta-description
-	 *
-	 * @return	string
-	 */
-	public function getMetaDescription()
-	{
-		return $this->metaDescription;
-	}
-
-
-	/**
-	 * Get the meta-keywords
-	 *
-	 * @return	string
-	 */
-	public function getMetaKeywords()
-	{
-		return $this->metaKeywords;
+		return $this->meta;
 	}
 
 
@@ -453,20 +456,37 @@ class FrontendHeader extends FrontendBaseObject
 		// assign page title
 		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
 
-		// assign meta
-		$this->tpl->assign('metaDescription', (string) $this->getMetaDescription());
-		$this->tpl->assign('metaKeywords', (string) $this->getMetaKeywords());
-
-		// initial value for footer HTML
-		$metaCustom = (string) $this->getMetaCustom();
-
 		// facebook admins given?
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, 'meta', array('property'));
+
+		// in debugmode we don't want our pages to be indexed.
+		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'));
+
+		// build meta
+		$meta = '';
+
+		// loop tags
+		foreach($this->meta as $tag => $items)
 		{
-			// add Facebook tag
-			$metaCustom .= "\n" . '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) . '" />' . "\n";
+			// loop items
+			foreach($items as $attributes)
+			{
+				// start html
+				$meta .= '<' . $tag . ' ';
+
+				// add attributes
+				foreach($attributes as $key => $value) $meta .= $key . '="' . $value . '" ';
+
+				// close html
+				$meta .= '/>' . "\n";
+			}
+
+			// seperate tags
+			$meta .= "\n";
 		}
-		$this->tpl->assign('metaCustom', $metaCustom);
+
+		// assign meta
+		$this->tpl->assign('meta', $meta);
 
 		// init var
 		$cssFiles = null;
@@ -529,74 +549,6 @@ class FrontendHeader extends FrontendBaseObject
 
 		// assign site wide html
 		$this->tpl->assign('siteHTMLHeader', (string) FrontendModel::getModuleSetting('core', 'site_html_header', null));
-	}
-
-
-	/**
-	 * Set meta-custom
-	 *
-	 * @return	void
-	 * @param	string $value	Overwrite the meta-custom with this value.
-	 */
-	public function setMetaCustom($value)
-	{
-		$this->metaCustom = (string) $value;
-	}
-
-
-	/**
-	 * Set meta-description
-	 *
-	 * @return	void
-	 * @param	string $value				The description to be set or to be appended.
-	 * @param	bool[optional] $overwrite	Should the existing description be overwritten?
-	 */
-	public function setMetaDescription($value, $overwrite = false)
-	{
-		// redefine vars
-		$value = trim((string) $value);
-		$overwrite = (bool) $overwrite;
-
-		// overwrite? reset the current value
-		if($overwrite) $this->metaDescription = $value;
-
-		// add to current value
-		else
-		{
-			// current value is empty?
-			if($this->metaDescription == '') $this->metaDescription = $value;
-
-			// append to current value
-			else $this->metaDescription .= ', ' . $value;
-		}
-	}
-
-
-	/**
-	 * Set meta-keywords
-	 *
-	 * @return	void
-	 * @param	string $value				The keywords to be set or to be appended.
-	 * @param	bool[optional] $overwrite	Should the existing keyword be overwritten?
-	 */
-	public function setMetaKeywords($value, $overwrite = false)
-	{
-		// redefine vars
-		$value = trim((string) $value);
-		$overwrite = (bool) $overwrite;
-
-		// overwrite? reset the current value
-		if($overwrite) $this->metaKeywords = $value;
-
-		// add to current value
-		else
-		{
-			// current value is empty
-			if($this->metaKeywords == '') $this->metaKeywords = $value;
-
-			// append to current value
-			else $this->metaKeywords .= ', ' . $value;
-		}
 	}
 
 

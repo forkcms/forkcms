@@ -261,9 +261,7 @@ class ModuleInstaller
 				// current locale items (used to check for conflicts)
 				$currentLocale = (array) $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
 
-
 				// @todo: waarom geen xpath?
-
 
 				// applications
 				foreach($xml as $application => $modules)

@@ -41,7 +41,7 @@ class FrontendBlogWidgetRecentArticlesList extends FrontendBaseWidget
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		$this->header->addMetaData(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true, 'link');
 
 		// assign comments
 		$this->tpl->assign('widgetBlogRecentArticlesList', FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_list_num_items', 5)));
