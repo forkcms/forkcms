@@ -16,8 +16,6 @@ class Fork_Sniffs_Styleguide_QueriesSniff implements PHP_CodeSniffer_Sniff
 
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
-		// @todo	no ; on end of the queries?
-
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];
