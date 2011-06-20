@@ -10,19 +10,19 @@
 	</div>
 </div>
 
-<div id="dataGridQuestionsHolder">
-	{option:dataGrids}
-		{iteration:dataGrids}
-			<div class="dataGridHolder" id="dataGrid-{$dataGrids.id}">
+<div id="datagridQuestionsHolder">
+	{option:datagrids}
+		{iteration:datagrids}
+			<div class="datagridHolder" id="datagrid-{$datagrids.id}">
 				<div class="tableHeading">
-					<h3>{$dataGrids.name}</h3>
+					<h3>{$datagrids.title}</h3>
 				</div>
-				{option:dataGrids.content}
-					{$dataGrids.content}
-				{/option:dataGrids.content}
+				{option:datagrids.content}
+					{$datagrids.content}
+				{/option:datagrids.content}
 
-				{option:!dataGrids.content}
-					<table class="dataGrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
+				{option:!datagrids.content}
+					<table class="datagrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
 						<thead>
 							<tr>
 								<th class="dragAndDropHandle">
@@ -45,15 +45,15 @@
 							</tr>
 						</tbody>
 					</table>
-				{/option:!dataGrids.content}
+				{/option:!datagrids.content}
 			</div>
-		{/iteration:dataGrids}
-	{/option:dataGrids}
+		{/iteration:datagrids}
+	{/option:datagrids}
 </div>
 
-{option:!dataGrids}
+{option:!datagrids}
 	<p>{$msgNoItems}</p>
-{/option:!dataGrids}
+{/option:!datagrids}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

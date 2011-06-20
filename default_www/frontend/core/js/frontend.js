@@ -228,10 +228,10 @@ jsFrontend.forms =
 				var textfield = $(this);
 
 				// only do something when the current value and the placeholder are the same
-				if(textfield.html() == textfield.attr('placeholder'))
+				if(textfield.val() == textfield.attr('placeholder'))
 				{
 					// clear
-					textfield.html('');
+					textfield.val('');
 
 					// remove class
 					textfield.removeClass('placeholder');
@@ -244,10 +244,10 @@ jsFrontend.forms =
 				var textfield = $(this);
 
 				// only do something when the textfield is empty or the value is the same as the placeholder
-				if(textfield.html() == '' || textfield.html() == textfield.attr('placeholder'))
+				if(textfield.val() == '' || textfield.val() == textfield.attr('placeholder'))
 				{
 					// set placeholder
-					textfield.html(textfield.attr('placeholder'));
+					textfield.val(textfield.attr('placeholder'));
 
 					// add class
 					textfield.addClass('placeholder');
@@ -267,7 +267,7 @@ jsFrontend.forms =
 					var textfield = $(this);
 
 					// if the value and the placeholder are the same reset the value
-					if(textfield.html() == textfield.attr('placeholder')) textfield.html('');
+					if(textfield.val() == textfield.attr('placeholder')) textfield.val('');
 				});
 			});
 		}
