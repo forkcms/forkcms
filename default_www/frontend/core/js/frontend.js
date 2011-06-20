@@ -215,7 +215,7 @@ jsFrontend.forms =
 				{
 					// grab element
 					var input = $(this);
-					
+
 					// if the value and the placeholder are the same reset the value
 					if(input.val() == input.attr('placeholder')) input.val('');
 				});
