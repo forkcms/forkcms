@@ -123,8 +123,8 @@
         <translation language="en"><![CDATA[The translation]]></translation>
       </item>
       <item type="message" name="Imported">
-        <translation language="nl"><![CDATA[%1$s vertalingen werden geimporteerd.]]></translation>
-        <translation language="en"><![CDATA[%1$s translations were imported.]]></translation>
+        <translation language="nl"><![CDATA[De vertalingen werden geimporteerd.]]></translation>
+        <translation language="en"><![CDATA[The translations were imported.]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen vertalingen. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
