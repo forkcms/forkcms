@@ -86,6 +86,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			$this->tpl->assign('usingRevision', true);
 		}
 
+		// get the templates
+		$this->templates = BackendContentBlocksModel::getTemplates();
+
 		// check if selected template is still available
 		if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
 

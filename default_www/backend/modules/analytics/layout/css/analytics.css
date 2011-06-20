@@ -12,7 +12,7 @@
 
 /* Hide header links */
 
-.box .box h3 a, .box .box h4 a, .datagridHolder .tableHeading h3 a {
+.box .box h3 a, .box .box h4 a, .dataGridHolder .tableHeading h3 a {
 	color: #000 !important;
 	border: 0; 
 }
@@ -95,29 +95,29 @@
 			font-size: 11px;
 		}
 
-/* Datagrid holders */
+/* DataGrid holders */
 
-#analyticsDatagridLeftCol {
+#analyticsDataGridLeftCol {
 	max-width: 504px;
 	width: 49.3%;
 	float: left;
 }
 
-#analyticsDatagridLeftCol .datagrid th a, #analyticsDatagridLeftCol .datagrid th span {
+#analyticsDataGridLeftCol .dataGrid th a, #analyticsDataGridLeftCol .dataGrid th span {
 	white-space: nowrap;
 }
 
-#analyticsDatagridRightCol {
+#analyticsDataGridRightCol {
 	max-width: 504px;
 	width: 49.3%;
 	float: right;
 }
 
-#analyticsDatagridRightCol .datagrid th a, #analyticsDatagridRightCol .datagrid th span {
+#analyticsDataGridRightCol .dataGrid th a, #analyticsDataGridRightCol .dataGrid th span {
 	white-space: nowrap;
 }
 
-.box .options .datagridHolder:last-child, .box .content .datagridHolder:last-child {
+.box .options .dataGridHolder:last-child, .box .content .dataGridHolder:last-child {
 	margin: 0;
 }
 
@@ -129,7 +129,7 @@
 
 /* Settings page */
 
-.box .box .datagrid {
+.box .box .dataGrid {
 	border-top: 0;
 }
 

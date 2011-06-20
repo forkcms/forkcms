@@ -102,8 +102,8 @@
 
 									<p>There are no items yet.</p> <!-- End of no items -->
 
-									<div class="datagridHolder">
-										<table class="datagrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
+									<div class="dataGridHolder">
+										<table class="dataGrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
 											<thead>
 												<tr>
 													<th class="dragAndDropHandle">
@@ -146,7 +146,7 @@
 												</tr>
 											</tbody>
 										</table>
-									</div> <!-- End of browse datagrid -->
+									</div> <!-- End of browse dataGrid -->
 
 									<form accept-charset="UTF-8" action="/private/en/faq/add_category?token=true" method="post" id="add_category" class="forkForms submitWithLink">
 										<input type="hidden" value="add_category" id="formAddCategory" name="form" />

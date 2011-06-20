@@ -21,8 +21,8 @@ jsBackend.analyticsDashboard =
 					if(data.code == 200)
 					{
 						// show new data
-						$('#datagridReferrers').html(data.data.referrersHtml);
-						$('#datagridKeywords').html(data.data.keywordsHtml);
+						$('#dataGridReferrers').html(data.data.referrersHtml);
+						$('#dataGridKeywords').html(data.data.keywordsHtml);
 						$('#trafficSourcesDate').html(data.data.date);
 
 						// show message

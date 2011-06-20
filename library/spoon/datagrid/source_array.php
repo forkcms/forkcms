@@ -25,7 +25,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDatagridSourceArray extends SpoonDatagridSource
+class SpoonDataGridSourceArray extends SpoonDataGridSource
 {
 	/**
 	 * Static ordering (for compare method)

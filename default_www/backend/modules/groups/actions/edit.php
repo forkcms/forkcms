@@ -41,7 +41,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	 *
 	 * @var	BackendDataGrid
 	 */
-	private $datagridUsers;
+	private $dataGridUsers;
 
 
 	/**
@@ -130,7 +130,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->getData();
 
 		// load the datagrid
-		$this->loadDatagrids();
+		$this->loadDataGrids();
 
 		// load the form
 		$this->loadForm();
@@ -347,26 +347,26 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrids()
+	private function loadDataGrids()
 	{
 		// create datagrids
-		$this->datagridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
+		$this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
 
 		// add columns
-		$this->datagridUsers->addColumn('nickname', ucfirst(BL::lbl('Screenname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->datagridUsers->addColumn('surname', ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->datagridUsers->addColumn('name', ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->addColumn('nickname', ucfirst(BL::lbl('Screenname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->addColumn('surname', ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->addColumn('name', ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
 		// add column URL
-		$this->datagridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
 		// set columns sequence
-		$this->datagridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
+		$this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
 
 		// show users's name, surname and nickname
-		$this->datagridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'surname'), 'surname', false);
-		$this->datagridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'name'), 'name', false);
-		$this->datagridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'surname'), 'surname', false);
+		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'name'), 'name', false);
+		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
 	}
 
 
@@ -473,7 +473,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			$actionGrid->setPaging(false);
 
 			// get content of datagrids
-			$permissionBoxes[$key]['actions']['datagrid'] = $actionGrid->getContent();
+			$permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
 			$permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
 
 		}
@@ -498,7 +498,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		parent::parse();
 
 		// assign items
-		$this->tpl->assign('datagridUsers', ($this->datagridUsers->getNumResults() != 0) ? $this->datagridUsers->getContent() : false);
+		$this->tpl->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('groupName', $this->record['name']);
 	}
@@ -516,6 +516,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		// init vars
 		$modulesDenied = array();
 		$modulesGranted = array();
+		$actionsDenied = array();
+		$actionsGranted = array();
 		$checkedModules = array();
 		$uncheckedModules = array();
 
@@ -526,8 +528,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			$bits = explode('_', $permission->getName());
 
 			// convert camelcasing to underscore notation
-			$module = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[1])));
-			$action = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[2])));
+			$module = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[1])), '_');
+			$action = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[2])), '_');
 
 			// permission checked?
 			if($permission->getChecked())
@@ -557,8 +559,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			$bits = explode('_', $permission->getName());
 
 			// convert camelcasing to underscore notation
-			$module = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[1])));
-			$group = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst($bits[3])));
+			$module = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[1])), '_');
+			$group = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[3])), '_');
 
 			// create new item
 			$moduleItem = array('group_id' => $this->id, 'module' => $module);
@@ -655,7 +657,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 				if($preset->getChecked())
 				{
 					// convert camelcasing to underscore notation
-					$selected = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst(str_replace('widgets_', '', $preset->getName()))));
+					$selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
 
 					// if selected is the right widget, set visible
 					if($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
@@ -700,7 +702,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 						if($preset->getChecked())
 						{
 							// convert camelcasing to underscore notation
-							$selected = strtolower(preg_replace('/([A-Z])/', '_${1}', lcfirst(str_replace('widgets_', '', $preset->getName()))));
+							$selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
 
 							// if selected is the right widget
 							if($selected == $widget['widget'])

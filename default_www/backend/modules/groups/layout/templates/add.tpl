@@ -34,7 +34,7 @@
 				</div>
 				<div class="options labelWidthLong horizontal">
 					<label for="widgetList">{$lblDisplayWidgets|ucfirst}</label>
-					<div class="datagridHolder groupHolder">
+					<div class="dataGridHolder groupHolder">
 						{option:widgets}
 							{$widgets}
 						{/option:widgets}
@@ -57,8 +57,8 @@
 						{iteration:permissions}
 							<li class="module">
 								{$permissions.chk}<a href="#" class="icon iconCollapsed container" title="open"><span><label for="modules{$permissions.label}">{$permissions.label}</label></span></a>
-								<ul class="datagridHolder hide">
-									{$permissions.actions.datagrid}
+								<ul class="dataGridHolder hide">
+									{$permissions.actions.dataGrid}
 								</ul>
 							</li>
 						{/iteration:permissions}

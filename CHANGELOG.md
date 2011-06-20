@@ -1,11 +1,18 @@
-2.x.x (2011-xx-xx)
+2.4.0 (2011-xx-xx)
 --
+Bugfixes:
+
+* ContentBlocks: template wasn't selected when editing the block.
+
 Improvements:
 
 * Profiles: added profiles module to handle onsite (frontend) profiles.
 * Groups: addes groups module to handle backend user privileges.
 * Locale: added quick-edit.
 * Core: extras (blocks or widgets) now simulate their own scope concerning templates.
+* Core: no more language if there is just one language enabled.
+* Core: removed deprecated methods.
+
 
 2.3.1 (2011-06-14)
 --

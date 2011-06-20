@@ -74,7 +74,7 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete_addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
+		$this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
 	}
 
 

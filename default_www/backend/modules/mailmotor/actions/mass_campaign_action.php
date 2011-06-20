@@ -38,7 +38,7 @@ class BackendMailmotorMassCampaignAction extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=delete_campaigns');
+		$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=delete-campaigns');
 	}
 }
 

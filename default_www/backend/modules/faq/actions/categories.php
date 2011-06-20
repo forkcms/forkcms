@@ -40,19 +40,19 @@ class BackendFaqCategories extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
+		$this->dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
 
 		// disable paging
-		$this->datagrid->setPaging(false);
+		$this->dataGrid->setPaging(false);
 
 		// enable drag and drop
-		$this->datagrid->enableSequenceByDragAndDrop();
+		$this->dataGrid->enableSequenceByDragAndDrop();
 
 		// set column URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
@@ -63,7 +63,7 @@ class BackendFaqCategories extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
 

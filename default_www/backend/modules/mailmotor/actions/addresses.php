@@ -141,47 +141,47 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// fetch query and parameters
 		list($query, $parameters) = $this->buildQuery();
 
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB($query, $parameters);
+		$this->dataGrid = new BackendDataGridDB($query, $parameters);
 
 		// overrule default URL
-		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'email' => $this->filter['email']), false));
+		$this->dataGrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'email' => $this->filter['email']), false));
 
 		// add the group to the URL if one is set
-		if(!empty($this->group)) $this->datagrid->setURL('&group_id=' . $this->group['id'], true);
+		if(!empty($this->group)) $this->dataGrid->setURL('&group_id=' . $this->group['id'], true);
 
 		// set headers values
 		$headers['created_on'] = ucfirst(BL::lbl('Created'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels($headers);
+		$this->dataGrid->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('email', 'source', 'created_on'), 'email');
+		$this->dataGrid->setSortingColumns(array('email', 'source', 'created_on'), 'email');
 
 		// add the multicheckbox column
-		$this->datagrid->addColumn('checkbox', '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="emails[]" value="[email]" class="inputCheckbox" /></span>');
-		$this->datagrid->setColumnsSequence('checkbox');
+		$this->dataGrid->addColumn('checkbox', '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="emails[]" value="[email]" class="inputCheckbox" /></span>');
+		$this->dataGrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('export' => BL::lbl('Export'), 'delete' => BL::lbl('Delete')), 'delete');
-		$this->datagrid->setMassAction($ddmMassAction);
+		$this->dataGrid->setMassAction($ddmMassAction);
 
 		// set column functions
-		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 		// add edit column
 		$editURL = BackendModel::createURLForAction('edit_address') . '&amp;email=[email]';
 		if(!empty($this->group)) $editURL .= '&amp;group_id=' . $this->group['id'];
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), $editURL, BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editURL, BL::lbl('Edit'));
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -232,12 +232,12 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		}
 
 		// parse the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// parse paging & sorting
-		$this->tpl->assign('offset', (int) $this->datagrid->getOffset());
-		$this->tpl->assign('order', (string) $this->datagrid->getOrder());
-		$this->tpl->assign('sort', (string) $this->datagrid->getSort());
+		$this->tpl->assign('offset', (int) $this->dataGrid->getOffset());
+		$this->tpl->assign('order', (string) $this->dataGrid->getOrder());
+		$this->tpl->assign('sort', (string) $this->dataGrid->getSort());
 
 		// parse filter
 		$this->tpl->assign($this->filter);

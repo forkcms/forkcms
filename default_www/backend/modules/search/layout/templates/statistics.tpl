@@ -5,16 +5,16 @@
 	<h2>{$lblSearch|ucfirst}: {$lblStatistics}</h2>
 </div>
 
-{option:datagrid}
-<div class="datagridHolder">
+{option:dataGrid}
+<div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3>{$lblStatistics|ucfirst}</h3>
 	</div>
-	{$datagrid}
+	{$dataGrid}
 </div>
-{/option:datagrid}
+{/option:dataGrid}
 
-{option:!datagrid}<p>{$msgNoStatistics}</p>{/option:!datagrid}
+{option:!dataGrid}<p>{$msgNoStatistics}</p>{/option:!dataGrid}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

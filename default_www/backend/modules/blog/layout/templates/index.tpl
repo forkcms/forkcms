@@ -24,7 +24,7 @@
 {/form:filter}
 
 {option:dgRecent}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		<div class="tableHeading">
 			<h3>{$lblRecentlyEdited|ucfirst}</h3>
 		</div>
@@ -33,7 +33,7 @@
 {/option:dgRecent}
 
 {option:dgDrafts}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		<div class="tableHeading">
 			<h3>{$lblDrafts|ucfirst}</h3>
 		</div>
@@ -42,7 +42,7 @@
 {/option:dgDrafts}
 
 {option:dgPosts}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		<div class="tableHeading">
 			<h3>{$lblPublishedArticles|ucfirst}</h3>
 		</div>

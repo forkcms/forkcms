@@ -47,29 +47,29 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// hide columns
-			$datagrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
+			$dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
 
 			// set headers values
 			$headers['page_path'] = ucfirst(BL::lbl('Page'));
 
 			// set headers
-			$datagrid->setHeaderLabels($headers);
+			$dataGrid->setHeaderLabels($headers);
 
 			// set url
-			$datagrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// add the multicheckbox column
-			$datagrid->setMassActionCheckboxes('checkbox', '[id]');
+			$dataGrid->setMassActionCheckboxes('checkbox', '[id]');
 
 			// add mass action dropdown
 			$ddmMassAction = new SpoonFormDropdown('action', array('delete_landing_page' => BL::lbl('Delete')), 'delete');
-			$datagrid->setMassAction($ddmMassAction);
+			$dataGrid->setMassAction($ddmMassAction);
 
 			// parse the datagrid
-			$this->tpl->assign('dgPages', $datagrid->getContent());
+			$this->tpl->assign('dgPages', $dataGrid->getContent());
 		}
 	}
 }

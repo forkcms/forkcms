@@ -26,14 +26,14 @@ jsBackend.locale.controls =
 			jsBackend.locale.controls.enableDisableModules();
 		}
 		
-		if($('.datagrid td.translationValue').length > 0)
+		if($('.dataGrid td.translationValue').length > 0)
 		{
 			// buil ajax-url
 			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=save_translation&language='+ jsBackend.current.language;
 
 			
 			// bind
-			$('.datagrid td.translationValue').inlineTextEdit( { saveUrl: url, tooltip: '{$msgClickToEdit}' });
+			$('.dataGrid td.translationValue').inlineTextEdit( { saveUrl: url, tooltip: '{$msgClickToEdit}' });
 		}
 	},
 

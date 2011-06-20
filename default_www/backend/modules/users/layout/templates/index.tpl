@@ -7,8 +7,8 @@
 		<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span>{$lblAdd|ucfirst}</span></a>
 	</div>
 </div>
-<div class="datagridHolder">
-	{option:datagrid}{$datagrid}{/option:datagrid}
+<div class="dataGridHolder">
+	{option:dataGrid}{$dataGrid}{/option:dataGrid}
 </div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

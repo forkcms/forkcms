@@ -268,7 +268,7 @@ class FrontendPage extends FrontendBaseObject
 			}
 
 			// assign
-			$this->tpl->assign('languages', $languages);
+			if(count($languages) > 1) $this->tpl->assign('languages', $languages);
 		}
 	}
 
