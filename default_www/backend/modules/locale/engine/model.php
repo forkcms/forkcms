@@ -1095,7 +1095,7 @@ class BackendLocaleModel
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
 		$possibleModules = BackendModel::getModules(false);
-		$possibleLanguages = array('frontend' => FL::getActiveLanguages(), 'backend' => BL::getActiveLanguages());
+		$possibleLanguages = BL::getActiveLanguages();
 		$possibleTypes = array();
 
 		// types
@@ -1136,7 +1136,7 @@ class BackendLocaleModel
 					{
 						// attributes
 						$attributes = $translation->attributes();
-						$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages[$application], '');
+						$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
 
 						// language does not exist
 						if($language == '') continue;
