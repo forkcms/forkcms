@@ -7,7 +7,6 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class BackendFaqIndex extends BackendBaseActionIndex
@@ -17,7 +16,7 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	 *
 	 * @var	array
 	 */
-	private $datagrids;
+	private $dataGrids;
 
 
 	/**
@@ -30,10 +29,10 @@ class BackendFaqIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// load datagrids
-		$this->loadDatagrids();
+		// load the datagrids
+		$this->loadDataGrids();
 
-		// parse page
+		// parse the datagrids
 		$this->parse();
 
 		// display the page
@@ -42,52 +41,52 @@ class BackendFaqIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Loads the datagrids
+	 * Load the datagrids
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrids()
+	private function loadDataGrids()
 	{
 		// load all categories
-		$categories = BackendFaqModel::getCategories(true);
+		$categories = BackendFaqModel::getCategories();
 
-		// loop categories and create a datagrid for each one
-		foreach($categories as $categoryId => $categoryTitle)
+		// run over categories and create datagrid for each one
+		foreach($categories as $category)
 		{
 			// create datagrid
-			$datagrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $categoryId));
+			$dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $category['id']));
 
 			// set attributes
-			$datagrid->setAttributes(array('class' => 'datagrid sequenceByDragAndDrop'));
+			$dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
 
 			// disable paging
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// set colum URLs
-			$datagrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+			$dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 			// set colums hidden
-			$datagrid->setColumnsHidden(array('category_id', 'sequence'));
+			$dataGrid->setColumnsHidden(array('category_id', 'sequence'));
 
 			// add edit column
-			$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+			$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 			// add a column for the handle, so users have something to hold while draging
-			$datagrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
+			$dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
 
 			// make sure the column with the handler is the first one
-			$datagrid->setColumnsSequence('dragAndDropHandle');
+			$dataGrid->setColumnsSequence('dragAndDropHandle');
 
 			// add a class on the handler column, so JS knows this is just a handler
-			$datagrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
+			$dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 
 			// our JS needs to know an id, so we can send the new order
-			$datagrid->setRowAttributes(array('id' => '[id]'));
+			$dataGrid->setRowAttributes(array('id' => '[id]'));
 
 			// add datagrid to list
-			$this->datagrids[] = array('id' => $categoryId,
-									   'title' => $categoryTitle,
-									   'content' => $datagrid->getContent());
+			$this->dataGrids[] = array('id' => $category['id'],
+									   'name' => $category['name'],
+									   'content' => $dataGrid->getContent());
 		}
 	}
 
@@ -100,7 +99,7 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse datagrids
-		if(!empty($this->datagrids)) $this->tpl->assign('datagrids', $this->datagrids);
+		if(!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
 	}
 }
 

@@ -16,7 +16,7 @@ final class FrontendFaqConfig extends FrontendBaseConfig
 	 *
 	 * @var	string
 	 */
-	protected $defaultAction = 'index';
+	protected $defaultAction = 'category';
 
 
 	/**
