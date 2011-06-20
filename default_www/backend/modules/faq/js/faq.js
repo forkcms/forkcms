@@ -5,20 +5,26 @@ if(!jsBackend) { var jsBackend = new Object(); }
  * Interaction for the faq categories
  *
  * @author	Lester Lievens <lester@netlash.com>
+ * @author	Annelies Van Extergem <annelies@netlash.com>
  */
 jsBackend.faq =
 {
-	/**
-	 * Kind of constructor
-	 */
+	// init, something like a constructor
 	init: function()
-	{	
-		// destroy default drag and drop
-		$('.sequenceByDragAndDrop tbody').sortable('destroy');
-		
-		// drag and drop
-		jsBackend.faq.bindDragAndDropCategoryFaq();
-		jsBackend.faq.checkForEmptyCategories();
+	{
+		// index stuff
+		if($('#dataGridQuestionsHolder').length > 0) 
+		{
+			// destroy default drag and drop
+			$('.sequenceByDragAndDrop tbody').sortable('destroy');
+			
+			// drag and drop
+			jsBackend.faq.bindDragAndDropCategoryFaq();
+			jsBackend.faq.checkForEmptyCategories();
+		}
+
+		// do meta
+		if($('#title').length > 0) $('#title').doMeta();
 	},
 
 
@@ -30,7 +36,7 @@ jsBackend.faq =
 		// when there are empty categories
 		if($('tr.noQuestions').length > 0)
 		{
-			// make datagrid droppable
+			// make dataGrid droppable
 			$('table.dataGrid').droppable(
 			{
 				// only accept table rows
@@ -50,7 +56,7 @@ jsBackend.faq =
 	 */
 	bindDragAndDropCategoryFaq: function()
 	{	
-		// go over every datagrid
+		// go over every dataGrid
 		$.each($('div.dataGridHolder'), function()
 		{
 			// make them sortable
