@@ -172,7 +172,7 @@ jsFrontend.forms =
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder]').focus(function()
+			$('input[placeholder], textarea[placeholder]').focus(function()
 			{
 				// grab element
 				var input = $(this);
@@ -188,7 +188,7 @@ jsFrontend.forms =
 				}
 			});
 
-			$('input[placeholder]').blur(function()
+			$('input[placeholder], textarea[placeholder]').blur(function()
 			{
 				// grab element
 				var input = $(this);
@@ -205,10 +205,10 @@ jsFrontend.forms =
 			});
 
 			// call blur to initialize
-			$('input[placeholder]').blur();
+			$('input[placeholder], textarea[placeholder]').blur();
 
 			// hijack the form so placeholders aren't submitted as values
-			$('input[placeholder]').parents('form').submit(function()
+			$('input[placeholder], textarea[placeholder]').parents('form').submit(function()
 			{
 				// find elements with placeholders
 				$(this).find('input[placeholder]').each(function()
@@ -218,56 +218,6 @@ jsFrontend.forms =
 
 					// if the value and the placeholder are the same reset the value
 					if(input.val() == input.attr('placeholder')) input.val('');
-				});
-			});
-
-			// bind focus
-			$('textarea[placeholder]').focus(function()
-			{
-				// grab element
-				var textfield = $(this);
-
-				// only do something when the current value and the placeholder are the same
-				if(textfield.html() == textfield.attr('placeholder'))
-				{
-					// clear
-					textfield.html('');
-
-					// remove class
-					textfield.removeClass('placeholder');
-				}
-			});
-
-			$('textarea[placeholder]').blur(function()
-			{
-				// grab element
-				var textfield = $(this);
-
-				// only do something when the textfield is empty or the value is the same as the placeholder
-				if(textfield.html() == '' || textfield.html() == textfield.attr('placeholder'))
-				{
-					// set placeholder
-					textfield.html(textfield.attr('placeholder'));
-
-					// add class
-					textfield.addClass('placeholder');
-				}
-			});
-
-			// call blur to initialize
-			$('textarea[placeholder]').blur();
-
-			// hijack the form so placeholders aren't submitted as values
-			$('textarea[placeholder]').parents('form').submit(function()
-			{
-				// find elements with placeholders
-				$(this).find('textarea[placeholder]').each(function()
-				{
-					// grab element
-					var textfield = $(this);
-
-					// if the value and the placeholder are the same reset the value
-					if(textfield.html() == textfield.attr('placeholder')) textfield.html('');
 				});
 			});
 		}
