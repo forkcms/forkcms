@@ -129,6 +129,76 @@ class BackendLocaleModel
 
 
 	/**
+	 * Create an XML-string that can be used for export.
+	 *
+	 * @return	string
+	 * @param	array $items	The items.
+	 */
+	public static function createXMLForExport(array $items)
+	{
+		// init XML
+		$xml = new DOMDocument('1.0', 'utf-8');
+
+		// set some properties
+		$xml->preserveWhiteSpace = false;
+		$xml->formatOutput = true;
+
+		// locale root element
+		$root = $xml->createElement('locale');
+		$xml->appendChild($root);
+
+		// loop applications
+		foreach($items as $application => $modules)
+		{
+			// create application element
+			$applicationElement = $xml->createElement($application);
+			$root->appendChild($applicationElement);
+
+			// loop modules
+			foreach($modules as $module => $types)
+			{
+				// create application element
+				$moduleElement = $xml->createElement($module);
+				$applicationElement->appendChild($moduleElement);
+
+				// loop types
+				foreach($types as $type => $items)
+				{
+					// loop items
+					foreach($items as $name => $translations)
+					{
+						// create application element
+						$itemElement = $xml->createElement('item');
+						$moduleElement->appendChild($itemElement);
+
+						// attributes
+						$itemElement->setAttribute('type', BackendLocaleModel::getTypeName($type));
+						$itemElement->setAttribute('name', $name);
+
+						// loop translations
+						foreach($translations as $translation)
+						{
+							// create translation
+							$translationElement = $xml->createElement('translation');
+							$itemElement->appendChild($translationElement);
+
+							// attributes
+							$translationElement->setAttribute('language', $translation['language']);
+
+							// set content
+							$translationElement->appendChild(new DOMCdataSection($translation['value']));
+						}
+					}
+				}
+			}
+		}
+
+		// save xml output
+		return $xml->saveXML();
+	}
+
+
+	/**
 	 * Delete (multiple) items from locale
 	 *
 	 * @return	void
@@ -1083,19 +1153,23 @@ class BackendLocaleModel
 	/**
 	 * Import a locale XML file.
 	 *
-	 * @return	void
+	 * @return	array								Import statistics.
 	 * @param	SimpleXMLElement $xml				The locale XML.
 	 * @param	bool[optional] $overwriteConflicts	Should we overwrite when there is a conflict?
 	 */
 	public static function importXML(SimpleXMLElement $xml, $overwriteConflicts = false)
 	{
-		// recast
+		// init
 		$overwriteConflicts = (bool) $overwriteConflicts;
+		$statistics = array(
+			'total' => 0,
+			'imported' => 0
+		);
 
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
 		$possibleModules = BackendModel::getModules(false);
-		$possibleLanguages = BL::getActiveLanguages();
+		$possibleLanguages = array('frontend' => array_keys(BL::getWorkingLanguages()), 'backend' => array_keys(BL::getInterfaceLanguages()));
 		$possibleTypes = array();
 
 		// types
@@ -1134,9 +1208,12 @@ class BackendLocaleModel
 					// translations
 					foreach($item->translation as $translation)
 					{
+						// statistics
+						$statistics['total']++;
+
 						// attributes
 						$attributes = $translation->attributes();
-						$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
+						$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages[$application], '');
 
 						// language does not exist
 						if($language == '') continue;
@@ -1157,6 +1234,9 @@ class BackendLocaleModel
 						// found a conflict, overwrite it with the imported translation
 						if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
 						{
+							// statistics
+							$statistics['imported']++;
+
 							// overwrite
 							BackendModel::getDB(true)->update('locale',
 																$locale,
@@ -1167,6 +1247,9 @@ class BackendLocaleModel
 						// insert translation that doesnt exists yet
 						elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
 						{
+							// statistics
+							$statistics['imported']++;
+
 							// insert
 							BackendModel::getDB(true)->insert('locale', $locale);
 						}
@@ -1180,6 +1263,9 @@ class BackendLocaleModel
 		{
 			foreach($possibleLanguages[$application] as $language) self::buildCache($language, $application);
 		}
+
+		// return statistics
+		return $statistics;
 	}
 
 

@@ -1,4 +1,11 @@
-2.4.0 (2011-xx-xx)
+2.4.1 (XXXX-XX-XX)
+--
+Bugfixes:
+
+* Blog: blogger import script now downloads the images correctly.
+
+
+2.4.0 (2011-06-21)
 --
 Bugfixes:
 

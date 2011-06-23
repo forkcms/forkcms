@@ -17,13 +17,12 @@
 
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="/favicon.ico" />
-	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
 	{* Stylesheets *}
 	{iteration:cssFiles}
-		<link rel="stylesheet" type="text/css" href="{$cssFiles.file}" />
+		<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
-	<link rel="stylesheet" type="text/css" media="print" href="{$FRONTEND_CORE_URL}/layout/css/print.css" />
 
 	{* HTML5 Javascript *}
 	<!--[if lt IE 9]> <script src="{$FRONTEND_CORE_URL}/js/html5.js"></script> <![endif]-->

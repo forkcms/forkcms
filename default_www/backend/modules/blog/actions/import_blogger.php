@@ -47,13 +47,13 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$headersImages = array('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/tiff');
 
 		// set options
-		$options['CURLOPT_URL'] = $oldURL;
-		$options['CURLOPT_HEADER'] = false;
-		if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options['CURLOPT_FOLLOWLOCATION'] = true;
-		$options['CURLOPT_SSL_VERIFYPEER'] = false;
-		$options['CURLOPT_SSL_VERIFYHOST'] = false;
-		$options['CURLOPT_TIMEOUT'] = 5;
-		$options['CURLOPT_RETURNTRANSFER'] = true;
+		$options[CURLOPT_URL] = $oldURL;
+		$options[CURLOPT_HEADER] = false;
+		if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options[CURLOPT_FOLLOWLOCATION] = true;
+		$options[CURLOPT_SSL_VERIFYPEER] = false;
+		$options[CURLOPT_SSL_VERIFYHOST] = false;
+		$options[CURLOPT_TIMEOUT] = 5;
+		$options[CURLOPT_RETURNTRANSFER] = true;
 
 		// make the first call
 		$curl = curl_init();
@@ -271,7 +271,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$item['publish_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->published));
 		$item['created_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->published));
 		$item['edited_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->updated));
-		$item['category_id'] = null;
+		$item['category_id'] = 1;
 		$item['title'] = (string) $xml->title;
 		$item['text'] = (string) $xml->content;
 
