@@ -119,11 +119,11 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 		$this->frm->addCheckbox('no_follow');
 
-		// build default block
+		// build prototype block
 		$block['index'] = 0;
-		$block['name'] = 'Default';
-		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . 0);
-		$block['formElements']['txtHTML'] = $this->frm->addTextarea('block_html_' . 0, ''); // @todo: editor
+		$block['name'] = 'Prototype';
+		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index']);
+		$block['formElements']['txtHTML'] = $this->frm->addTextarea('block_html_' . $block['index'], ''); // @todo: dit moet eigenlijk ne editor, maar die wordt wa moeilijk clonable anders; da gaan we in JS oplossen
 
 		// add default block to "fallback" position, the only one which we can rest assured to exist
 		$this->positions['fallback']['blocks'] = array($block);

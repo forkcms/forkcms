@@ -1,5 +1,15 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
+/*
+ * @todo: remove me when completed
+ * 
+ * Thoughts:
+ * The table-view of templates is built in model.php. This includes no linked blocks, no default blocks.
+ * The default extra's are parsed in add.php, added in json to the template and picked up by the JS. When setting the template, this JS will parse the default blocks to the correction positions and assigns "id's" (indexes rather) for blocks.
+ * All already assigned blocks are parsed in edit.php, set in a json-var and are picked up by this JS. This JS assigns the blocks to the correct positions and assigns "id's" (indexes rather) for blocks.
+ * When adding a block to a position, we'll need to pass along the position, so we know where to append it.
+ * Blocks can not be edited. This is not neccessary when blocks will be able to be added, deleted and reordered
+ */
 
 /**
  * Interaction for the pages module
@@ -52,6 +62,10 @@ return;
  */
 jsBackend.pages.extras =
 {
+	// when adding an extra, we'll need to temporarily save the position we're adding it to
+	extraForPosition: null,
+
+
 	// init, something like a constructor
 	init: function()
 	{
@@ -68,11 +82,8 @@ jsBackend.pages.extras =
 					// get id
 					var id = $(this).val();
 
-					// only process other blocks
-					if(id !== $('#extraForBlock').val())
-					{
-						if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
-					}
+					// check if a block is already linked
+					if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 				});
 
 				// no modules
@@ -85,7 +96,8 @@ jsBackend.pages.extras =
 		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
-		$('a.chooseExtra').live('click', jsBackend.pages.extras.showExtraDialog);
+		$('a.addBlock').live('click', jsBackend.pages.extras.showExtraDialog);
+		$('a.deleteBlock').live('click', jsBackend.pages.extras.deleteBlock);
 
 		// load initial data, or initialize the dialogs
 		jsBackend.pages.extras.load();
@@ -95,20 +107,10 @@ jsBackend.pages.extras =
 	// load initial data, or initialize the dialog
 	load: function()
 	{
-		// set correct
-		$('input.block_extra_id').each(function()
-		{
-			var value = $(this).val();
-			var id = $(this).prop('id').replace('blockExtraId', '');
-
-			// setup extra (except for default element)
-			if(id != 0) jsBackend.pages.extras.changeExtra(value, id);
-		});
-
 		// initialize the modal for choosing an extra
-		if($('#chooseExtra').length > 0)
+		if($('#addBlock').length > 0)
 		{
-			$('#chooseExtra').dialog(
+			$('#addBlock').dialog(
 			{
 				autoOpen: false,
 				draggable: false,
@@ -119,19 +121,22 @@ jsBackend.pages.extras =
 				{
 					'{$lblOK|ucfirst}': function()
 					{
-						// change the extra for real
-						jsBackend.pages.extras.changeExtra();
+						// add the extra
+						jsBackend.pages.extras.addBlock($('#extraExtraId').val(), jsBackend.pages.extras.extraForPosition);
+						
+						// clean the saved position
+						jsBackend.pages.extras.extraForPosition = null;
 
 						// close dialog
 						$(this).dialog('close');
 					},
 					'{$lblCancel|ucfirst}': function()
 					{
-						// empty the extraForBlock
-						$('#extraForBlock').val('');
-
 						// close the dialog
 						$(this).dialog('close');
+						
+						// clean the saved position
+						jsBackend.pages.extras.extraForPosition = null;
 					}
 				}
 			 });
@@ -145,15 +150,9 @@ jsBackend.pages.extras =
 		// prevent the default action
 		evt.preventDefault();
 
-		// get the block wherefor we will change the extra
-		var blockId = $(this).data('blockId');
-
-		// get selected extra id
-		var selectedExtraId = $('#blockExtraId'+ blockId).val();
-
-		// populate the hidden field, so we know for which block we are changing
-		$('#extraForBlock').val(blockId);
-
+		// get the position wherefor we will change the extra
+		var positionId = $(this).data('position');
+		
 		// init var
 		var hasModules = false;
 
@@ -172,12 +171,6 @@ jsBackend.pages.extras =
 
 			// disable blocks
 			$('#extraType option[value="block"]').prop('disabled', true);
-
-			// get id
-			var id = $('#blockExtraId'+ blockId).val();
-
-			// reenable
-			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').prop('disabled', false);
 		}
 		else
 		{
@@ -191,113 +184,140 @@ jsBackend.pages.extras =
 			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', true);
 		}
 
-		// any extra selected before? And if so, does the extra still exists?
-		if(typeof extrasById[selectedExtraId] != 'undefined')
-		{
-			// set type
-			$('#extraType').val(extrasById[selectedExtraId].type);
+		// set save position we're adding an extra to
+		jsBackend.pages.extras.extraForPosition = positionId;
 
-			// populate the modules
-			jsBackend.pages.extras.populateExtraModules();
+		// set type
+		$('#extraType').val('html');
+		$('#extraExtraId').val('');
 
-			// set module
-			$('#extraModule').val(extrasById[selectedExtraId].module);
-
-			// populate the ids
-			jsBackend.pages.extras.populateExtraIds();
-
-			// set the extra id
-			$('#extraExtraId').val(extrasById[selectedExtraId].id);
-		}
-		else
-		{
-			// set type
-			$('#extraType').val('html');
-			$('#extraExtraId').val('');
-
-			// populate the modules
-			jsBackend.pages.extras.populateExtraModules();
-		}
+		// populate the modules
+		jsBackend.pages.extras.populateExtraModules();
 
 		// open the modal
-		$('#chooseExtra').dialog('open');
+		$('#addBlock').dialog('open');
 	},
 
-// @todo: go crazy
-	
+
 	// store the extra for real
-	changeExtra: function(selectedExtraId, selectedBlock)
+	addBlock: function(selectedExtraId, selectedPosition)
 	{
-		// if their are no arguments passed we should grab them
-		if(!selectedExtraId && !selectedBlock)
+		// fetch amount of blocks already on page, it'll be the index of the newly added file
+		var index = $('.contentBlock').length;
+
+		// clone prototype block
+		var block = $('#block-0').clone();
+
+		// set block index
+		jsBackend.pages.extras.updateBlockIndex(block, 0, index);
+		
+		// block/widget
+		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
 		{
-			// init vars
-			var selectedExtraId = $('#extraExtraId').val();
-			var selectedBlock = $('#extraForBlock').val();
-		}
+			// save extra id
+			$('#blockExtraId' + index, block).val(selectedExtraId);
+			
+			// set block description
+			$('.blockName', block).html(extrasById[selectedExtraId].human_name);
 
-		// something is really fucked up
-		if(selectedBlock == '') return false;
+			// set block description in template-view
+			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append('<p class="helpTxt templatePositionCurrentType">' + extrasById[selectedExtraId].human_name + ' <a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a></p>'); // @todo: verwijder-knoppeke moet confirmation vragen
 
-		// store
-		$('#blockExtraId'+ selectedBlock).val(selectedExtraId);
+			// hide block
+			$('#blockContentModule', block).hide();
+			$('#blockContentWidget', block).hide();
+			$('#blockContentHTML', block).hide();
 
-		// empty the extraForBlock
-		$('#extraForBlock').val('');
-
-		// block exists
-		if($('#templateBlock-'+ selectedBlock).length > 0)
-		{
-			// block/widget
-			if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
+			// block
+			if(extrasById[selectedExtraId].type == 'block')
 			{
-				// set description
-				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html(extrasById[selectedExtraId].human_name);
-
-				// hide block
-				$('#blockContentModule-'+ selectedBlock).hide();
-				$('#blockContentWidget-'+ selectedBlock).hide();
-				$('#blockContentHTML-'+ selectedBlock).hide();
-
-				// block
-				if(extrasById[selectedExtraId].type == 'block')
-				{
-					$('#blockContentModule-'+ selectedBlock +' .oneLiner span.oneLinerElement').html(extrasById[selectedExtraId].message);
-
-					if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule-'+ selectedBlock +' .oneLiner a').hide();
-					else 
-					{
-						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show().attr('href', extrasById[selectedExtraId].data.url);						
-					}
-					$('#blockContentModule-'+ selectedBlock).show();
-				}
-
-				// widget
-				if(extrasById[selectedExtraId].type == 'widget')
-				{
-					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span.oneLinerElement').html(extrasById[selectedExtraId].message);
-					if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').hide();
-					else $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').attr('href', extrasById[selectedExtraId].data.edit_url).show();
-					$('#blockContentWidget-'+ selectedBlock).show();
-				}
+				$('#blockContentModule .oneLiner span.oneLinerElement', block).html(extrasById[selectedExtraId].message);
+				if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule .oneLiner a', block).hide();
+				else $('#blockContentModule .oneLiner a', block).show().attr('href', extrasById[selectedExtraId].data.url);						
+				$('#blockContentModule', block).show();
 			}
 
-			// editor
-			else
+			// widget
+			if(extrasById[selectedExtraId].type == 'widget')
 			{
-				// set description
-				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html('{$lblEditor|ucfirst}');
-
-				// remove extra id (this happens when an extra was deleted outside pages)
-				$('#blockExtraId'+ selectedBlock).val('');
-
-				// show and hide
-				$('#blockContentModule-'+ selectedBlock).hide();
-				$('#blockContentWidget-'+ selectedBlock).hide();
-				$('#blockContentHTML-'+ selectedBlock).show();
+				$('#blockContentWidget .oneLiner span.oneLinerElement', block).html(extrasById[selectedExtraId].message);
+				if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget .oneLiner a', block).hide();
+				else $('#blockContentWidget .oneLiner a', block).attr('href', extrasById[selectedExtraId].data.edit_url).show();
+				$('#blockContentWidget', block).show();
 			}
 		}
+
+		// editor
+		else
+		{
+			// save extra id
+			$('#blockExtraId' + index, block).val('');
+
+			// set block description
+			$('.blockName', block).html('{$lblEditor|ucfirst}');
+
+			// set block description in template-view
+			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append('<p class="helpTxt templatePositionCurrentType">{$lblEditor|ucfirst} <a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a></p>'); // @todo: verwijder-knoppeke moet confirmation vragen
+
+			// @todo: add tiny!
+
+			// show and hide
+			$('#blockContentModule', block).hide();
+			$('#blockContentWidget', block).hide();
+			$('#blockContentHTML', block).show();
+		}
+
+		// append to correct position
+		block.appendTo($('#position-' + selectedPosition));
+
+		// show it to the world
+		block.show();
 	},
+
+
+	deleteBlock: function(evt)
+	{
+		// prevent default action
+		evt.preventDefault();
+
+		// fetch block index
+		var index = parseInt($(this).data('blockId'));
+		
+		// remove block from template overview
+		$(this).parent().remove();
+
+		// remove block
+		$('#block-' + index).remove();
+
+		// initialise new index
+		var newIndex = index;
+
+		// reorder indexes of existing blocks:
+		// is doesn't really matter if a certain block at a certain position has a certain index; the important part
+		// is that they're all sequential without gaps and that the sequence of blocks inside a position is correct
+		$('div[id^=block-]').each(function(i)
+		{
+			// fetch block id
+			var oldIndex = parseInt($(this).attr('id').replace('block-', ''));
+
+			// if current id is larger then index, then update the id
+			if(oldIndex > index)
+			{
+				// update block index
+				jsBackend.pages.extras.updateBlockIndex($(this), oldIndex, newIndex);
+
+				// increase index by 1
+				newIndex++;
+			}
+		});
+	},
+
+
+	// @todo: some fancy code to reorder the extras; sequence
+	// @todo: do not forget to re-sequence the indexes after blocks have been moved (see deleteBlock): we'll probably be fetching all this stuff when submitted in PHP like this
+	// while(isset($_POST['extra-thingy' . $i++]))
+	// and save them like that, in the order we receive them in that loop
+	// if unclear, contact Matthias
 
 
 	// populate the dropdown with the modules
@@ -360,6 +380,20 @@ jsBackend.pages.extras =
 				$('#extraExtraIdHolder').show();
 			}
 		}
+	},
+
+
+	// update a block's index
+	updateBlockIndex: function(element, oldIndex, newIndex)
+	{
+		// @todo: this code really stinks (but does its job)
+
+		element.attr('id', element.attr('id').replace(oldIndex, newIndex));
+		var blockExtraId = $('#blockExtraId' + oldIndex, element);
+		var blockHtml = $('#blockHtml' + oldIndex, element);
+		blockExtraId.attr('id', blockExtraId.attr('id').replace(oldIndex, newIndex)).attr('name', blockExtraId.attr('name').replace(oldIndex, newIndex));
+		blockHtml.attr('id', blockHtml.attr('id').replace(oldIndex, newIndex)).attr('name', blockHtml.attr('name').replace(oldIndex, newIndex));
+		$('a[data-block-id=' + oldIndex + ']').attr('data-block-id', newIndex);
 	},
 
 
@@ -517,7 +551,7 @@ jsBackend.pages.template =
 		evt.preventDefault();
 
 		// open the modal
-		$('#chooseTemplate').dialog('open'); // @todo: fucker won't open, why is that? test again later!
+		$('#chooseTemplate').dialog('open');
 	},
 
 

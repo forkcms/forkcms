@@ -36,7 +36,7 @@
 					<div id="position-{$positions.name}">
 					<h3>{$positions.name}</h3>
 						{iteration:positions.blocks}
-							<div id="block-{$positions.blocks.index}" class="box contentBlock" data-position-name="{$positions.name}">
+							<div id="block-{$positions.blocks.index}" class="box contentBlock">
 								<div class="heading">
 									<table border="0" cellpadding="0" cellspacing="0">
 										<tbody>
@@ -56,7 +56,7 @@
 									</table>
 								</div>
 
-								<div id="blockContentModule-{$positions.blocks.index}" class="options">
+								<div id="blockContentModule" class="options">
 									{* do not alter markup *}
 									<div class="oneLiner">
 										<span class="oneLinerElement"></span>
@@ -64,7 +64,7 @@
 										{$positions.blocks.txtHTMLError}
 									</div>
 								</div>
-								<div id="blockContentWidget-{$positions.blocks.index}" class="options">
+								<div id="blockContentWidget" class="options">
 									{* do not alter markup *}
 									<div class="oneLiner">
 										<span class="oneLinerElement"></span>
@@ -72,7 +72,7 @@
 										{$positions.blocks.txtHTMLError}
 									</div>
 								</div>
-								<div id="blockContentHTML-{$positions.blocks.index}" class="optionsRTE">
+								<div id="blockContentHTML" class="optionsRTE">
 									<fieldset>
 										{$positions.blocks.txtHTML}
 										{$positions.blocks.txtHTMLError}
@@ -227,7 +227,7 @@
 				Dialog to select the content (editor, module or widget).
 				Do not change the ID!
 			 *}
-			<div id="chooseExtra" title="{$lblChooseContent|ucfirst}" style="display: none;" class="forkForms">
+			<div id="addBlock" class="forkForms" title="{$lblChooseContent|ucfirst}" style="display: none;">
 				<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
 				<div class="options horizontal">
 					<p>{$msgHelpBlockContent}</p>

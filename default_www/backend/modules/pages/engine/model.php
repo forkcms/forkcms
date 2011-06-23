@@ -479,10 +479,11 @@ class BackendPagesModel
 					}
 				}
 
-				// set values
+				// decide state
 				$exists = $value != '/';
-				$title = ucfirst($value);
 
+				// set values
+				$title = ucfirst($value);
 				$type = '';
 
 				// start cell
@@ -503,11 +504,13 @@ class BackendPagesModel
 					// large visual?
 					if($large)
 					{
+						// @todo: add reference text for already added blocks/default blocks already (see the <div class="linkedBlocks> tag)
+
 						$html .= ' id="templatePosition-' . $value . '">
 									<h4 class="templatePositionTitle">' . $title . '</h4>
-									<p><span class="helpTxt templatePositionCurrentType">&nbsp;</span></p>
+									<div class="linkedBlocks"><!-- reference to linked blocks will be added here --></div>
 									<div class="buttonHolder">
-										<a href="#chooseExtra" class="button icon iconAdd iconOnly chooseExtra" data-position-id="' . $value . '">
+										<a href="#addBlock" class="button icon iconAdd iconOnly addBlock" data-position="' . $value . '">
 											<span>' . ucfirst(BL::lbl('AddBlock')) . '</span>
 										</a>
 									</div>
