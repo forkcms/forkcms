@@ -136,12 +136,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="datagridHolder">
+				<div class="dataGridHolder">
 					{$drafts}
 				</div>
 			{/option:drafts}
 			{option:revisions}
-			<div class="datagridHolder">
+			<div class="dataGridHolder">
 				{$revisions}
 			</div>
 			{/option:revisions}

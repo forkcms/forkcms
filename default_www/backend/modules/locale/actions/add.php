@@ -7,6 +7,7 @@
  * @subpackage	locale
  *
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleAdd extends BackendBaseActionAdd
@@ -38,7 +39,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -53,16 +54,36 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	 */
 	private function loadForm()
 	{
+		// id given?
+		if($this->getParameter('id') != null)
+		{
+			// get the translation
+			$translation = BackendLocaleModel::get($this->getParameter('id', 'int'));
+
+			// if not empty, set the filter
+			if(!empty($translation))
+			{
+				// we are copying the given translation
+				$isCopy = true;
+			}
+
+			// this translation doesn't exist
+			else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing' . $this->filterQuery);
+		}
+
+		// not copying
+		else $isCopy = false;
+
 		// create form
-		$this->frm = new BackendForm('add', BackendModel::createURLForAction(null, null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])));
+		$this->frm = new BackendForm('add', BackendModel::createURLForAction() . $this->filterQuery);
 
 		// create and add elements
-		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
-		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
-		$this->frm->addText('name', $this->filter['name']);
-		$this->frm->addText('value', $this->filter['value'], null, null, null, true);
-		$this->frm->addDropdown('language', BackendLanguage::getLocaleLanguages(), $this->filter['language']);
+		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $isCopy ? $translation['application'] : $this->filter['application']);
+		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $isCopy ? $translation['module'] : $this->filter['module']);
+		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
+		$this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
+		$this->frm->addText('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
+		$this->frm->addDropdown('language', BackendLanguage::getLocaleLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
 	}
 
 
@@ -88,12 +109,16 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = ($this->getParameter('language') != '') ? $this->getParameter('language') : BL::getInterfaceLanguage();
+		// get filter values
+		$this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
-		$this->filter['type'] = $this->getParameter('type');
+		$this->filter['type'] = $this->getParameter('type', 'array');
 		$this->filter['name'] = $this->getParameter('name');
 		$this->filter['value'] = $this->getParameter('value');
+
+		// build query for filter
+		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
 	}
 
 
@@ -168,7 +193,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				$item['id'] = BackendLocaleModel::insert($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
 			}
 		}
 	}

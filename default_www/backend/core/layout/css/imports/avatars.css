@@ -83,13 +83,13 @@
 	height: 128px;
 }
 
-/* Datagrid specific */
+/* DataGrid specific */
 
-.datagridAvatar .avatar {
+.dataGridAvatar .avatar {
 	float: left;
 }
 
-.datagridAvatar p {
+.dataGridAvatar p {
 	float: left;
 	line-height: 24px;
 	padding-left: 3px;

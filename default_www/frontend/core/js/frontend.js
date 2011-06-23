@@ -61,7 +61,7 @@ jsFrontend.controls =
 	// bind target blank
 	bindTargetBlank: function()
 	{
-		$('a.targetBlank').prop('target', '_blank');
+		$('a.targetBlank').attr('target', '_blank');
 	},
 
 
@@ -172,13 +172,13 @@ jsFrontend.forms =
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder]').focus(function()
+			$('input[placeholder], textarea[placeholder]').focus(function()
 			{
 				// grab element
 				var input = $(this);
 
 				// only do something when the current value and the placeholder are the same
-				if(input.val() == input.prop('placeholder'))
+				if(input.val() == input.attr('placeholder'))
 				{
 					// clear
 					input.val('');
@@ -188,16 +188,16 @@ jsFrontend.forms =
 				}
 			});
 
-			$('input[placeholder]').blur(function()
+			$('input[placeholder], textarea[placeholder]').blur(function()
 			{
 				// grab element
 				var input = $(this);
 
 				// only do something when the input is empty or the value is the same as the placeholder
-				if(input.val() == '' || input.val() == input.prop('placeholder'))
+				if(input.val() == '' || input.val() == input.attr('placeholder'))
 				{
 					// set placeholder
-					input.val(input.prop('placeholder'));
+					input.val(input.attr('placeholder'));
 
 					// add class
 					input.addClass('placeholder');
@@ -205,10 +205,10 @@ jsFrontend.forms =
 			});
 
 			// call blur to initialize
-			$('input[placeholder]').blur();
+			$('input[placeholder], textarea[placeholder]').blur();
 
 			// hijack the form so placeholders aren't submitted as values
-			$('input[placeholder]').parents('form').submit(function()
+			$('input[placeholder], textarea[placeholder]').parents('form').submit(function()
 			{
 				// find elements with placeholders
 				$(this).find('input[placeholder]').each(function()
@@ -217,7 +217,7 @@ jsFrontend.forms =
 					var input = $(this);
 
 					// if the value and the placeholder are the same reset the value
-					if(input.val() == input.prop('placeholder')) input.val('');
+					if(input.val() == input.attr('placeholder')) input.val('');
 				});
 			});
 		}
@@ -238,7 +238,7 @@ jsFrontend.gravatar =
 		{
 			var element = $(this);
 			var gravatarId = element.data('gravatarId');
-			var size = element.prop('height');
+			var size = element.attr('height');
 
 			// valid gravatar id
 			if(gravatarId != '')
@@ -256,7 +256,7 @@ jsFrontend.gravatar =
 				// reset src
 				gravatar.onload = function()
 				{
-					element.prop('src', url).addClass('gravatarLoaded');
+					element.attr('src', url).addClass('gravatarLoaded');
 				}
 			}
 		});

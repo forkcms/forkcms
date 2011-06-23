@@ -7,6 +7,7 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -26,10 +27,8 @@ a.button:visited {
 	background-repeat: repeat-x;
 	background-position: right -132px;
 	overflow: hidden;
-	background: #EEE;
 	border: 1px solid #B0B0B0;
-	
-	/* Gradient */
+	background: #EEE;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#C5C5C5), color-stop(.0454545,#F7F7F7), color-stop(.9545455,#DDD));
 	background: -moz-linear-gradient(#FFF, #f7f7f7 4.5454545%, #DDD 95.454545%, #C5C5C5);
 
@@ -38,9 +37,9 @@ a.button:visited {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 
 	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 a.button:hover,
@@ -48,7 +47,6 @@ a.button:active,
 a.button:focus,
 a.button.focus {
 	background: #FFF;
-	/* Gradient */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C5C5C5), to(#FFF), color-stop(.0454545,#DDD), color-stop(.9545455,#F7F7F7));
 	background: -moz-linear-gradient(#C5C5C5, #DDD 4.5454545%, #f7f7f7 95.454545%, #FFF);
 }
@@ -128,6 +126,8 @@ a.icon span {
 		background-position: 0 -583px !important; }
 	a.iconApprove span {
 		background-position: 0 -607px !important; }
+	a.iconReject span {
+		background-position: 0 -628px !important; }
 
 	a.iconOnly:link,
 	a.iconOnly:visited {
@@ -165,7 +165,7 @@ a.icon span {
 		border: 1px solid transparent !important;
 		font-weight: 400;
 	}
-	
+
 		#encloser #container a.linkButton:link span,
 		#encloser #container a.linkButton:visited span {
 			color: #085DBD;
@@ -188,6 +188,11 @@ a.icon span {
 	a.disabledButton:active,
 	a.disabledButton:focus,
 	a.disabledButton.focus {
+		/* @inc .opaque */
+		-ms-filter: "alpha(opacity=50)";
+		filter: alpha(opacity=50);
+		-khtml-opacity: 0.5;
+		-moz-opacity: 0.5;
 		opacity: 0.5;
 		cursor: default;
 	}
@@ -248,4 +253,3 @@ a.icon span {
 .buttonHolderRight:after {
 	/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
 }
-

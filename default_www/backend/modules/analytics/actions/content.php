@@ -137,16 +137,16 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// hide columns
-			$datagrid->setColumnHidden('page_encoded');
+			$dataGrid->setColumnHidden('page_encoded');
 
 			// set url
-			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
-			$this->tpl->assign('dgExitPages', $datagrid->getContent());
+			$this->tpl->assign('dgExitPages', $dataGrid->getContent());
 		}
 	}
 
@@ -165,22 +165,22 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// hide columns
-			$datagrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
+			$dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
 
 			// set headers values
 			$headers['page_path'] = ucfirst(BL::lbl('Page'));
 
 			// set headers
-			$datagrid->setHeaderLabels($headers);
+			$dataGrid->setHeaderLabels($headers);
 
 			// set url
-			$datagrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
-			$this->tpl->assign('dgLandingPages', $datagrid->getContent());
+			$this->tpl->assign('dgLandingPages', $dataGrid->getContent());
 		}
 	}
 
@@ -199,22 +199,22 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// hide columns
-			$datagrid->setColumnHidden('page_encoded');
+			$dataGrid->setColumnHidden('page_encoded');
 
 			// set headers values
 			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Pageviews'));
 
 			// set headers
-			$datagrid->setHeaderLabels($headers);
+			$dataGrid->setHeaderLabels($headers);
 
 			// set url
-			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
-			$this->tpl->assign('dgContent', $datagrid->getContent());
+			$this->tpl->assign('dgContent', $dataGrid->getContent());
 		}
 	}
 

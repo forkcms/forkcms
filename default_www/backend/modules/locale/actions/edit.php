@@ -7,6 +7,7 @@
  * @subpackage	locale
  *
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleEdit extends BackendBaseActionEdit
@@ -30,7 +31,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if($this->id !== null && BackendLocaleModel::exists($this->id))
+		if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod())
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -47,14 +48,14 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page
 			$this->display();
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our URL
+		// no item found or the user is not god , throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
@@ -78,7 +79,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'], 'id' => $this->id)));
+		$this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
 
 		// create and add elements
 		$this->frm->addDropdown('application', array('backend' => 'backend', 'frontend' => 'frontend'), $this->record['application']);
@@ -102,6 +103,8 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 
 		// parse filter
 		$this->tpl->assign($this->filter);
+		$this->tpl->assign('filterQuery', $this->filterQuery);
+
 
 		// assign id, name
 		$this->tpl->assign('name', $this->record['name']);
@@ -116,12 +119,16 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = ($this->getParameter('language') != '') ? $this->getParameter('language') : BL::getInterfaceLanguage();
+		// get filter values
+		$this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
-		$this->filter['type'] = $this->getParameter('type');
+		$this->filter['type'] = $this->getParameter('type', 'array');
 		$this->filter['name'] = $this->getParameter('name');
 		$this->filter['value'] = $this->getParameter('value');
+
+		// build query for filter
+		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
 	}
 
 
@@ -197,7 +204,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 				BackendLocaleModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
 			}
 		}
 	}

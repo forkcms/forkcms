@@ -37,7 +37,7 @@ jsBackend.controls =
 			{
 				// grab id
 				var id = $(this).data('id');
-				var wrapperId = $(this).prop('id');
+				var wrapperId = $(this).attr('id');
 
 				// hide all
 				$('#'+ wrapperId +' p.strength').hide();
@@ -147,7 +147,7 @@ jsBackend.forms =
 			$('form.submitWithLink').each(function() 
 			{
 				// get id
-				var formId = $(this).prop('id');
+				var formId = $(this).attr('id');
 				var dontSubmit = false;
 
 				// validate id
@@ -156,7 +156,7 @@ jsBackend.forms =
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function() 
 					{
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'submitButton button ' + $(this).prop('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).prop('tabindex', -1);
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
 					});
 
 					// add onclick event for button (button can't have the name submit)
@@ -165,7 +165,7 @@ jsBackend.forms =
 						evt.preventDefault();
 
 						// is the button disabled?
-						if($(this).prop('disabled') == 'disabled') return false;
+						if($(this).prop('disabled')) return false;
 
 						//
 						else $('form#'+ formId).submit();
@@ -195,10 +195,10 @@ jsBackend.layout =
 	{
 		// hovers
 		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
-		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
+		$('.dataGrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
 
 		jsBackend.layout.showBrowserWarning();
-		jsBackend.layout.datagrid();
+		jsBackend.layout.dataGrid();
 
 		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
 
@@ -230,17 +230,17 @@ jsBackend.layout =
 
 
 	// datagrid layout
-	datagrid: function() 
+	dataGrid: function() 
 	{
 		if(jQuery.browser.msie) 
 		{
-			$('.datagrid tr td:last-child').addClass('lastChild');
-			$('.datagrid tr td:first-child').addClass('firstChild');
+			$('.dataGrid tr td:last-child').addClass('lastChild');
+			$('.dataGrid tr td:first-child').addClass('firstChild');
 		}
 
 		// dynamic striping
-		$('.dynamicStriping.datagrid tr:nth-child(2n)').addClass('even');
-		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd');
+		$('.dynamicStriping.dataGrid tr:nth-child(2n)').addClass('even');
+		$('.dynamicStriping.dataGrid tr:nth-child(2n+1)').addClass('odd');
 	},
 
 

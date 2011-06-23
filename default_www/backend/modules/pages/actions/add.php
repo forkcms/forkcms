@@ -343,7 +343,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				elseif($page['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=saved_as_draft&var=' . urlencode($page['title']) . '&highlight=row-' . $page['revision_id'] . '&draft=' . $page['revision_id']);
+					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode($page['title']) . '&highlight=row-' . $page['revision_id'] . '&draft=' . $page['revision_id']);
 				}
 			}
 		}

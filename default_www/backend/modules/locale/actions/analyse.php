@@ -7,12 +7,13 @@
  * @subpackage	locale
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleAnalyse extends BackendBaseActionIndex
 {
 	/**
-	 * Datagrid instances
+	 * DataGrid instances
 	 *
 	 * @var	BackendDataGridArray
 	 */
@@ -95,7 +96,18 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->dgFrontend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
 		// add columns
-		$this->dgFrontend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
+		//$this->dgFrontend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
+		$this->dgFrontend->addColumn('translation', null, null, null, BL::lbl('Add'));
+
+		// add a class for the inline edit
+		$this->dgFrontend->setColumnAttributes('translation', array('class' => 'translationValue'));
+
+		// add attributes, so the inline editing has all the needed data
+		$this->dgFrontend->setColumnAttributes('translation', array('data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}'));
+		$this->dgFrontend->setColumnAttributes('translation', array('style' => 'width: 150px'));
+
+		// disable paging
+		$this->dgFrontend->setPaging(false);
 
 		/*
 		 * Backend datagrid
@@ -116,7 +128,18 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->dgBackend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
 		// add columns
-		$this->dgBackend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
+		//$this->dgBackend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
+		$this->dgBackend->addColumn('translation', null, null, null, BL::lbl('Add'));
+
+		// add a class for the inline edit
+		$this->dgBackend->setColumnAttributes('translation', array('class' => 'translationValue'));
+
+		// add attributes, so the inline editing has all the needed data
+		$this->dgBackend->setColumnAttributes('translation', array('data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}'));
+		$this->dgBackend->setColumnAttributes('translation', array('style' => 'width: 150px'));
+
+		// disable paging
+		$this->dgBackend->setPaging(false);
 	}
 
 

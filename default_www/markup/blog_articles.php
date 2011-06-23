@@ -101,12 +101,12 @@
 
 									<p>There are no items yet.</p> <!-- End of no items -->
 
-									<div class="datagridHolder">
+									<div class="dataGridHolder">
 										<div class="tableHeading">
 											<h3>Published articles</h3>
 										</div>
 
-										<table class="datagrid" cellspacing="0" cellpadding="0" border="0">
+										<table class="dataGrid" cellspacing="0" cellpadding="0" border="0">
 											<thead>
 												<tr>
 													<th class="title">
@@ -143,7 +143,7 @@
 														16 March 2011 14:11
 													</td>
 													<td class="user_id">
-														<div class="datagridAvatar">
+														<div class="dataGridAvatar">
 															<div class="avatar av24">
 																<a href="/private/en/users/edit?token=true&amp;id=1">
 																	<img src="/frontend/files/backend_users/avatars/32x32/god.jpg" width="24" height="24" alt="Fork CMS" />
@@ -171,7 +171,7 @@
 														16 March 2011 14:10
 													</td>
 													<td class="user_id">
-														<div class="datagridAvatar">
+														<div class="dataGridAvatar">
 															<div class="avatar av24">
 																<a href="/private/en/users/edit?token=true&amp;id=1">
 																	<img src="/frontend/files/backend_users/avatars/32x32/god.jpg" width="24" height="24" alt="Fork CMS" />
@@ -193,7 +193,7 @@
 												</tr>
 											</tbody>
 										</table>
-									</div> <!-- End of browse datagrid -->
+									</div> <!-- End of browse dataGrid -->
 
 									<div class="pageTitle">
 										<h2>Blog: add article</h2>
@@ -566,8 +566,8 @@
 													</div>
 												</div>
 
-												<div class="datagridHolder">
-													<table class="datagrid" cellspacing="0" cellpadding="0" border="0">
+												<div class="dataGridHolder">
+													<table class="dataGrid" cellspacing="0" cellpadding="0" border="0">
 														<thead>
 															<tr>
 																<th class="title">
@@ -592,7 +592,7 @@
 																	<abbr title="16 March 2011 14:11">19 hours ago</abbr>
 																</td>
 																<td class="user_id">
-																	<div class="datagridAvatar">
+																	<div class="dataGridAvatar">
 																		<div class="avatar av24">
 																			<a href="/private/en/users/edit?token=true&amp;id=1">
 																				<img src="/frontend/files/backend_users/avatars/32x32/god.jpg" width="24" height="24" alt="Fork CMS" />

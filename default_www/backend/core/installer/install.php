@@ -769,6 +769,7 @@ class CoreInstall extends ModuleInstaller
 
 		// action rights
 		$this->setActionRights(1, 'dashboard', 'index');
+		$this->setActionRights(1, 'dashboard', 'alter_sequence');
 	}
 
 

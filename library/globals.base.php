@@ -26,7 +26,7 @@ define('SPOON_CHARSET', 'utf-8');
  * Fork configuration
  */
 // version of Fork
-define('FORK_VERSION', '2.1.0');
+define('FORK_VERSION', '2.4.0');
 
 
 /**
@@ -57,6 +57,10 @@ define('SITE_DEFAULT_TITLE', '<site-default-title>');
 define('SITE_URL', 'http://' . SITE_DOMAIN);
 // is the site multilanguage?
 define('SITE_MULTILANGUAGE', '<site-multilanguage>');
+// default action group tag
+define('ACTION_GROUP_TAG', '<action-group-tag>');
+// default action rights level
+define('ACTION_RIGHTS_LEVEL', '<action-rights-level>');
 
 
 /**

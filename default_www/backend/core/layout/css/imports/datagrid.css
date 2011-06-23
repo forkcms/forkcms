@@ -1,44 +1,45 @@
 /*
 
-    Datagrid
+    DataGrid
 
     @package      backend
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
 
-.datagridHolder {
-	margin: 0 0 24px;
+.dataGridHolder {
+	margin: 0 0 24px 0;
 	border-bottom: 1px solid #BDBDBD;
 }
 
-	.datagridInHorizontalForm {
+	.dataGridInHorizontalForm {
 		width: 80%;
 		float: left;
 	}
 
-	.box .options > *:last-child .datagridInHorizontalForm {
+	.box .options > *:last-child .dataGridInHorizontalForm {
 		margin: 0;
 	}
 
-.datagridHolderNoDatagrid {
+.dataGridHolderNoDataGrid {
 	border: none;
 }
 
 	.tableHeading h3 {
 		font-size: 13px;
 		float: left;
-		padding: 0 0 4px;
+		padding: 0 0 4px 0;
 	}
-	
+
 	.tableHeading .oneLiner h3 + abbr.help {
 		top: 5px;
 	}
 
-	.datagridHolder .tableHeading .buttonHolderRight {
+	.dataGridHolder .tableHeading .buttonHolderRight {
 		float: right;
 	}
 
@@ -49,11 +50,11 @@
 			bottom: 4px;
 		}
 
-		.datagridHolder .tableHeading {
+		.dataGridHolder .tableHeading {
 			zoom: 1;
 		}
 
-		.datagridHolder .tableHeading:after {
+		.dataGridHolder .tableHeading:after {
 			/* @inc .clearfix */
 			content: ".";
 			display: block;
@@ -62,13 +63,13 @@
 			visibility: hidden;
 		}
 
-.datagrid {
+.dataGrid {
 	width: 100%;
 	border-collapse: separate;
 	border-top: 1px solid #BDBDBD;
 }
 
-	.datagrid a {
+	.dataGrid a {
 		border: none;
 	}
 
@@ -117,7 +118,7 @@ td.num_tags {
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 
-	#tabs .datagridHolder:after {
+	#tabs .dataGridHolder:after {
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
@@ -126,7 +127,7 @@ td.num_tags {
 		visibility: hidden;
 	}
 
-	#tabs .datagrid {
+	#tabs .dataGrid {
 		max-width: 100%;
 		float: left;
 	}
@@ -137,37 +138,37 @@ td.num_tags {
 
 /* <td> and <th> */
 
-.datagrid td,
-.datagrid th {
+.dataGrid td,
+.dataGrid th {
 	padding: 4px 6px;
 	vertical-align: middle;
 }
 
 	/* <td> */
 
-	.datagrid tr td.firstChild,
-	.datagrid tr td:first-child {
+	.dataGrid tr td.firstChild,
+	.dataGrid tr td:first-child {
 		border-left: 1px solid #DDD;
 	}
 
-	.datagrid tr td:last-child,
-	.datagrid tr td.lastChild {
+	.dataGrid tr td:last-child,
+	.dataGrid tr td.lastChild {
 		border-right: 1px solid #DDD;
 	}
 
 	/* <th> */
 
-	.datagrid th {
+	.dataGrid th {
 		font-weight: 700;
 	}
 
-	.datagrid tr th:first-child,
-	.datagrid tr th.firstChild {
+	.dataGrid tr th:first-child,
+	.dataGrid tr th.firstChild {
 		border-left: 1px solid #BDBDBD;
 	}
 
-	.datagrid tr th.lastChild,
-	.datagrid tr th:last-child {
+	.dataGrid tr th.lastChild,
+	.dataGrid tr th:last-child {
 		border-right: 1px solid #BDBDBD;
 	}
 
@@ -176,28 +177,28 @@ td.num_tags {
 */
 
 	/* Price */
-	.datagrid td.price {
+	.dataGrid td.price {
 		text-align: right;
 		font-family: "Menlo", "Monaco", "Courier New", monospace;
 	}
 
 	/* Title */
-	.datagrid td.title a,
-	.datagrid td.title {
+	.dataGrid td.title a,
+	.dataGrid td.title {
 		font-size: 11px;
 		font-weight: 700;
 	}
 
 	/* Goto */
-	.datagrid td.goto {
+	.dataGrid td.goto {
 		padding: 1px 5px;
 	}
 
-	.datagrid p {
+	.dataGrid p {
 		padding: 0;
 	}
 
-	.datagrid .content p {
+	.dataGrid .content p {
 		padding: 0 0 12px;
 	}
 
@@ -217,7 +218,7 @@ td.num_tags {
 	237-xxx sorted descending icon
 */
 
-.datagrid th {
+.dataGrid th {
 	font-size: 11px;
 	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 0;
 	border-bottom: 1px solid #B4B4B4;
@@ -227,39 +228,39 @@ td.num_tags {
 	font-weight: 400;
 }
 
-.datagrid td {
+.dataGrid td {
 	font-size: 11px;
 }
 
-.datagrid th a.sortedAsc,
-.datagrid th a.sortedDesc {
+.dataGrid th a.sortedAsc,
+.dataGrid th a.sortedDesc {
 	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 -48px;
 }
 
-.datagrid th a.sortable:hover {
+.dataGrid th a.sortable:hover {
 	color: #000;
 }
 
-.datagrid th a,
-.datagrid th span {
+.dataGrid th a,
+.dataGrid th span {
 	padding: 0 18px 0 6px;
 	display: block;
 }
 
-.datagrid th a.sortable {
+.dataGrid th a.sortable {
 	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -193px;
 }
 
-.datagrid th a.sortedAsc {
+.dataGrid th a.sortedAsc {
 	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -215px;
 }
 
-.datagrid th a.sortedDesc {
+.dataGrid th a.sortedDesc {
 	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -237px;
 }
 
-.datagrid th.checkbox,
-.datagrid td.checkbox {
+.dataGrid th.checkbox,
+.dataGrid td.checkbox {
 	text-align: center;
 	height: 24px;
 	padding: 0;
@@ -267,11 +268,11 @@ td.num_tags {
 	width: 32px;
 }
 
-	.datagrid th.checkbox span {
+	.dataGrid th.checkbox span {
 		padding: 0;
 	}
 
-.datagrid td.rowMover a {
+.dataGrid td.rowMover a {
 	background: url(/backend/core/layout/images/move_handle.gif) no-repeat 0 0;
 	width: 6px;
 	height: 14px;
@@ -281,42 +282,42 @@ td.num_tags {
 }
 
 
-.datagrid tbody tr:hover td,
-.datagrid tbody tr.selected td {
+.dataGrid tbody tr:hover td,
+.dataGrid tbody tr.selected td {
 	background: #1A57AD;
 	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
 	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
 }
 
-	.datagrid tr:hover td,
-	.datagrid tr.selected td,
-	.datagrid tr.isDefault:hover td,
-	.datagrid tr.selected td label,
-	.datagrid tr:hover td label,
-	#encloser #container .datagrid tbody tr:hover td a.linkButton span,
-	#encloser #container .datagrid tbody tr.selected td a.linkButton span {
+	.dataGrid tr:hover td,
+	.dataGrid tr.selected td,
+	.dataGrid tr.isDefault:hover td,
+	.dataGrid tr.selected td label,
+	.dataGrid tr:hover td label,
+	#encloser #container .dataGrid tbody tr:hover td a.linkButton span,
+	#encloser #container .dataGrid tbody tr.selected td a.linkButton span {
 		color: #FFF;
 	}
-	
-	.datagrid tbody tr:hover td a,
-	.datagrid tbody tr.selected td a {
+
+	.dataGrid tbody tr:hover td a,
+	.dataGrid tbody tr.selected td a {
 		color: #F1F5FA;
 	}
 
-.datagrid tr.odd td {
+.dataGrid tr.odd td {
 	background: #FFF;
 }
 
-.datagrid tr.even td {
+.dataGrid tr.even td {
 	background: #F1F5FA;
 }
 
-.datagrid tr:last-child td,
-.datagrid tr.lastChild td {
+.dataGrid tr:last-child td,
+.dataGrid tr.lastChild td {
 	border-bottom: none;
 }
 
-.datagridHolder .datagrid tfoot tr td {
+.dataGridHolder .dataGrid tfoot tr td {
 	padding: 0;
 	background: #DDD;
 	border: 1px solid #BDBDBD;
@@ -394,10 +395,9 @@ td.num_tags {
 			border: 1px solid #BFBFBF;
 
 			/* @inc .rc */
-			border-radius: 4px;
-			-webkit-border-radius: 4px;
 			-moz-border-radius: 4px;
-
+			-webkit-border-radius: 4px;
+			border-radius: 4px;
 		}
 
 		.pagination li a:hover,
@@ -414,14 +414,12 @@ td.num_tags {
 		}
 
 		.pagination li.selected span {
-
 			/* @inc .navButtonSelected */
 			background: #000;
 			background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
 			background: -moz-gradient(linear, left top, left bottom, from(#666), to(#000));
 			border: 1px solid #000;
 			color: #FFF;
-
 		}
 
 			.pagination li.previousPage *,
@@ -481,9 +479,9 @@ td.num_tags {
 	background: #005292;
 
 	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 /*
@@ -495,9 +493,8 @@ tr.isDefault td.name {
 	font-weight: 700;
 }
 
-
 /*
-	Datagrid drag and drop
+	DataGrid drag and drop
 */
 
 .sequenceByDragAndDrop thead th.dragAndDropHandle,

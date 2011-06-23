@@ -104,12 +104,12 @@
 
 									<p>There are no items yet.</p> <!-- End of no items -->
 
-									<div id="datagridQuestionsHolder">
-										<div class="datagridHolder" id="datagrid-1">
+									<div id="dataGridQuestionsHolder">
+										<div class="dataGridHolder" id="dataGrid-1">
 											<div class="tableHeading">
 												<h3>Testcategorie</h3>
 											</div>
-											<table class="datagrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
+											<table class="dataGrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
 												<thead>
 													<tr>
 														<th class="dragAndDropHandle">
@@ -163,12 +163,12 @@
 											</table>
 										</div>
 
-										<div class="datagridHolder" id="datagrid-2">
+										<div class="dataGridHolder" id="dataGrid-2">
 											<div class="tableHeading">
 												<h3>Volgende categorie</h3>
 											</div>
 
-											<table class="datagrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
+											<table class="dataGrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
 												<thead>
 													<tr>
 														<th class="dragAndDropHandle">
@@ -192,7 +192,7 @@
 												</tbody>
 											</table>
 										</div>
-									</div> <!-- End of browse datagrid -->
+									</div> <!-- End of browse dataGrid -->
 
 									<div class="pageTitle">
 										<h2>FAQ: add</h2>

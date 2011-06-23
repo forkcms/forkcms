@@ -6,6 +6,14 @@
         <translation language="nl"><![CDATA[Deze vertaling bestaat reeds.]]></translation>
         <translation language="en"><![CDATA[This translation already exists.]]></translation>
       </item>
+      <item type="error" name="InvalidXML">
+        <translation language="nl"><![CDATA[Het opgegeven XML-bestand bevat foute XML-data.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid XML-file.]]></translation>
+      </item>
+      <item type="error" name="InvalidActionValue">
+        <translation language="nl"><![CDATA[Enkel alfanumerieke karakters (geen hoofdletters), - en _ zijn toegestaan.]]></translation>
+        <translation language="en"><![CDATA[Only alphanumeric characters, - and _ are allowed.]]></translation>
+      </item>
       <item type="error" name="ModuleHasToBeCore">
         <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
         <translation language="en"><![CDATA[The module needs to be core for frontend translations.]]></translation>
@@ -14,17 +22,57 @@
         <translation language="nl"><![CDATA[Er waren geen vertalingen geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No translations were selected.]]></translation>
       </item>
+      <item type="label" name="Actions">
+        <translation language="nl"><![CDATA[acties]]></translation>
+        <translation language="en"><![CDATA[actions]]></translation>
+      </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[vertaling toevoegen]]></translation>
         <translation language="en"><![CDATA[add translation]]></translation>
+      </item>
+      <item type="label" name="Copy">
+        <translation language="nl"><![CDATA[kopieer]]></translation>
+        <translation language="en"><![CDATA[copy]]></translation>
+      </item>
+      <item type="label" name="Errors">
+        <translation language="nl"><![CDATA[foutberichten]]></translation>
+        <translation language="en"><![CDATA[errors]]></translation>
+      </item>
+      <item type="label" name="EN">
+        <translation language="nl"><![CDATA[engels]]></translation>
+        <translation language="en"><![CDATA[english]]></translation>
+      </item>
+      <item type="label" name="FR">
+        <translation language="nl"><![CDATA[frans]]></translation>
+        <translation language="en"><![CDATA[french]]></translation>
+      </item>
+      <item type="label" name="Labels">
+        <translation language="nl"><![CDATA[labels]]></translation>
+        <translation language="en"><![CDATA[labels]]></translation>
+      </item>
+      <item type="label" name="Messages">
+        <translation language="nl"><![CDATA[berichten]]></translation>
+        <translation language="en"><![CDATA[messages]]></translation>
+      </item>
+      <item type="label" name="NL">
+        <translation language="nl"><![CDATA[nederlands]]></translation>
+        <translation language="en"><![CDATA[dutch]]></translation>
+      </item>
+      <item type="label" name="Types">
+        <translation language="nl"><![CDATA[types]]></translation>
+        <translation language="en"><![CDATA[types]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The translation "%1$s" was added.]]></translation>
       </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze vertaling wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete this translation?]]></translation>
+      </item>
       <item type="message" name="Deleted">
-        <translation language="nl"><![CDATA[De geselecteerde vertaling(en) werd(en) verwijderd.]]></translation>
-        <translation language="en"><![CDATA[The selected translations were deleted.]]></translation>
+        <translation language="nl"><![CDATA[De vertaling "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The translation "%1$s" was deleted.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd opgeslagen.]]></translation>
@@ -33,6 +81,10 @@
       <item type="message" name="EditTranslation">
         <translation language="nl"><![CDATA[bewerk vertaling "%1$s"]]></translation>
         <translation language="en"><![CDATA[edit translation "%1$s"]]></translation>
+      </item>
+      <item type="message" name="HelpActionValue">
+        <translation language="nl"><![CDATA[Gebruik enkel alfanumerieke karakters (geen hoofdletters), - en _ bij deze vertalingen, ze zullen namelijk gebruikt worden in URL's.]]></translation>
+        <translation language="en"><![CDATA[Only use alphanumeric characters (no capitals), - and _ for these translations, because they will be used in URLs.]]></translation>
       </item>
       <item type="message" name="HelpAddName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>

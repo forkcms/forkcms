@@ -19,10 +19,10 @@ jsBackend.formBuilder =
 	{
 		// fields handler
 		jsBackend.formBuilder.fields.init();
-		
+
 		// get form id
 		jsBackend.formBuilder.formId = $('#formId').val();
-	
+
 		// hide or show the email based on the method
 		if($('select#method').length > 0)
 		{
@@ -95,7 +95,7 @@ jsBackend.formBuilder.fields =
 			evt.preventDefault();
 			
 			// get id
-			var id = $(this).prop('rel');
+			var id = $(this).attr('rel');
 
 			// only when set
 			if(id != '')
@@ -139,7 +139,7 @@ jsBackend.formBuilder.fields =
 		$('.dialog').each(function()
 		{
 			// get id
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 
 			// only when set
 			if(id != '')
@@ -235,7 +235,7 @@ jsBackend.formBuilder.fields =
 			evt.preventDefault();
 			
 			// get id
-			var id = $(this).prop('rel');
+			var id = $(this).attr('rel');
 			
 			// bind
 			if(id != ''){ $('#'+ id).dialog('open'); }
@@ -309,7 +309,7 @@ jsBackend.formBuilder.fields =
 			evt.preventDefault();
 			
 			// get id
-			var id = $(this).prop('rel');
+			var id = $(this).attr('rel');
 			
 			// only when set
 			if(id != '')
@@ -1169,7 +1169,7 @@ jsBackend.formBuilder.fields =
 		$('#'+ id +' .tabs .ui-tabs-panel').each(function()
 		{
 			// tab
-			var tabId = $(this).prop('id');
+			var tabId = $(this).attr('id');
 			
 			// loop tab errors
 			$(this).find('.formError').each(function()

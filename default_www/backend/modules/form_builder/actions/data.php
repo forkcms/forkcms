@@ -96,7 +96,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 			$this->getData();
 
 			// load the datagrid
-			$this->loadDatagrid();
+			$this->loadDataGrid();
 
 			// parse the datagrid
 			$this->parse();
@@ -126,38 +126,38 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// fetch query and parameters
 		list($query, $parameters) = $this->buildQuery();
 
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB($query, $parameters);
+		$this->dataGrid = new BackendDataGridDB($query, $parameters);
 
 		// overrule default URL
-		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=' . $this->id);
+		$this->dataGrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=' . $this->id);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('sent_on'), 'sent_on');
-		$this->datagrid->setSortParameter('desc');
+		$this->dataGrid->setSortingColumns(array('sent_on'), 'sent_on');
+		$this->dataGrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('sent_on', BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('sent_on', BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('details', null, BL::getLabel('Details'), BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date'])) . '&amp;id=[id]', BL::getLabel('Details'));
+		$this->dataGrid->addColumn('details', null, BL::getLabel('Details'), BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date'])) . '&amp;id=[id]', BL::getLabel('Details'));
 
 		// date
-		$this->datagrid->setColumnFunction(array('BackendFormBuilderModel', 'calculateTimeAgo'), '[sent_on]', 'sent_on', false);
-		$this->datagrid->setColumnFunction('ucfirst', '[sent_on]', 'sent_on', false);
+		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'calculateTimeAgo'), '[sent_on]', 'sent_on', false);
+		$this->dataGrid->setColumnFunction('ucfirst', '[sent_on]', 'sent_on', false);
 
 		// add the multicheckbox column
-		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]');
+		$this->dataGrid->setMassActionCheckboxes('checkbox', '[id]');
 
 		// mass action
 		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
-		$this->datagrid->setMassAction($ddmMassAction);
+		$this->dataGrid->setMassAction($ddmMassAction);
 	}
 
 
@@ -188,7 +188,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	private function parse()
 	{
 		// datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// form info
 		$this->tpl->assign('name', $this->record['name']);

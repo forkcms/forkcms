@@ -80,34 +80,34 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridArray($this->group['custom_fields']);
+		$this->dataGrid = new BackendDataGridArray($this->group['custom_fields']);
 
 		// set headers values
 		$headers['name'] = ucfirst(BL::lbl('Title'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels($headers);
+		$this->dataGrid->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name'), 'name');
-		$this->datagrid->setSortParameter('asc');
+		$this->dataGrid->setSortingColumns(array('name'), 'name');
+		$this->dataGrid->setSortParameter('asc');
 
 		// add the multicheckbox column
-		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>');
-		$this->datagrid->setColumnsSequence('checkbox');
+		$this->dataGrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>');
+		$this->dataGrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
-		$this->datagrid->setMassAction($ddmMassAction);
+		$this->dataGrid->setMassAction($ddmMassAction);
 
 		// add styles
-		$this->datagrid->setColumnAttributes('name', array('class' => 'title'));
+		$this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -119,7 +119,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// parse group record in template
 		$this->tpl->assign('group', $this->group);

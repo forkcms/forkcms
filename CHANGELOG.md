@@ -1,3 +1,34 @@
+2.4.1 (XXXX-XX-XX)
+--
+Bugfixes:
+
+* Blog: blogger import script now downloads the images correctly.
+
+
+2.4.0 (2011-06-21)
+--
+Bugfixes:
+
+* ContentBlocks: template wasn't selected when editing the block.
+
+Improvements:
+
+* Profiles: added profiles module to handle onsite (frontend) profiles.
+* Groups: addes groups module to handle backend user privileges.
+* Locale: added quick-edit.
+* Core: extras (blocks or widgets) now simulate their own scope concerning templates.
+* Core: no more language if there is just one language enabled.
+* Core: removed deprecated methods.
+
+
+2.3.1 (2011-06-14)
+--
+Bugfixes:
+
+* Formbuilder: fix jquery error causing formbuilder to malfunction
+* Proper implementation of .prop().
+* Analyse-action was using invalid arguments for SpoonFilter::toCamelCase().
+
 2.3.0 (2011-06-07)
 --
 Bugfixes:

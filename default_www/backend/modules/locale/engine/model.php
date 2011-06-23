@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleModel
@@ -92,6 +93,42 @@ class BackendLocaleModel
 
 
 	/**
+	 * Build a query for the URL based on the filter
+	 *
+	 * @return	array
+	 * @param	array $filter	The filter.
+	 */
+	public static function buildURLQueryByFilter($filter)
+	{
+		$query = '';
+
+		// loop filter items
+		foreach($filter as $key => $value)
+		{
+			// is it an array?
+			if(is_array($value))
+			{
+				// loop the array
+				foreach($value as $v)
+				{
+					// add to the query
+					$query .= '&' . $key . '[]=' . $v;
+				}
+			}
+
+			// not an array
+			else
+			{
+				// add to the query
+				$query .= '&' . $key . '=' . $value;
+			}
+		}
+
+		return $query;
+	}
+
+
+	/**
 	 * Create an XML-string that can be used for export.
 	 *
 	 * @return	string
@@ -169,8 +206,14 @@ class BackendLocaleModel
 	 */
 	public static function delete(array $ids)
 	{
+		// loop and cast to integers
+		foreach($ids as &$id) $id = (int) $id;
+
+		// create an array with an equal amount of questionmarks as ids provided
+		$idPlaceHolders = array_fill(0, count($ids), '?');
+
 		// delete records
-		BackendModel::getDB(true)->delete('locale', 'id IN (' . implode(',', $ids) . ')');
+		BackendModel::getDB(true)->delete('locale', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
 		// rebuild cache
 		self::buildCache(BL::getWorkingLanguage(), 'backend');
@@ -243,6 +286,35 @@ class BackendLocaleModel
 
 
 	/**
+	 * Get a locale by its name
+	 *
+	 * @return	bool
+	 * @param	string $name			The name of the locale.
+	 * @param	string $type			The type of the locale.
+	 * @param	string $module			The module wherin will be searched.
+	 * @param	string $language		The language to use.
+	 * @param	string $application		The application wherin will be searched.
+	 */
+	public static function getByName($name, $type, $module, $language, $application)
+	{
+		// redefine
+		$name = (string) $name;
+		$type = (string) $type;
+		$module = (string) $module;
+		$language = (string) $language;
+		$application = (string) $application;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		return BackendModel::getDB()->getVar('SELECT l.id
+											FROM locale AS l
+											WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
+											array($name, $type, $module, $language, $application));
+	}
+
+
+	/**
 	 * Grab labels found in the backend navigation.
 	 *
 	 * @return	array
@@ -267,6 +339,35 @@ class BackendLocaleModel
 
 		// return
 		return $labels;
+	}
+
+
+	/**
+	 * Get the languages for a multicheckbox.
+	 *
+	 * @return	array
+	 * @param	bool[optional] $includeInterfaceLanguages		Should we also get the interfacelanguages?
+	 */
+	public static function getLanguagesForMultiCheckbox($includeInterfaceLanguages = false)
+	{
+		// get working languages
+		$aLanguages = BL::getWorkingLanguages();
+
+		// add the interface languages if needed
+		if($includeInterfaceLanguages) $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
+
+		// create a new array to redefine the langauges for the multicheckbox
+		$languages = array();
+
+		// loop the languages
+		foreach($aLanguages as $key => $lang)
+		{
+			// add to array
+			$languages[$key]['value'] = $key;
+			$languages[$key]['label'] = $lang;
+		}
+
+		return $languages;
 	}
 
 
@@ -375,7 +476,7 @@ class BackendLocaleModel
 							$matches[1][] = 'BL';
 							$matches[2][] = '';
 							$matches[3][] = $type;
-							$matches[4][] = SpoonFilter::toCamelCase($match, array('-', '_'));
+							$matches[4][] = SpoonFilter::toCamelCase(SpoonFilter::toCamelCase($match, '-'), '_');
 							$matches[5][] = '';
 						}
 					}
@@ -820,6 +921,97 @@ class BackendLocaleModel
 
 
 	/**
+	 * Get the translations
+	 *
+	 * @return	array
+	 * @param	string $application			The application.
+	 * @param	string $module				The module.
+	 * @param	array $types				The types of the translations to get.
+	 * @param	array $languages			The languages of the translations to get.
+	 * @param	string $name				The name.
+	 * @param	string $value				The value.
+	 */
+	public static function getTranslations($application, $module, $types, $languages, $name, $value)
+	{
+		// redefine languages
+		$languages = (array) $languages;
+
+		// create an array for the languages, surrounded by quotes (example: 'nl')
+		$aLanguages = array();
+		foreach($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
+
+		// surround the types with quotes
+		foreach($types as $key => $val) $types[$key] = '\'' . $val . '\'';
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// build  the query
+		$query = 'SELECT l.id, l.module, l.type, l.name, l.value, l.language
+					FROM locale AS l
+					WHERE l.language IN (' . implode(',', $aLanguages) . ') AND l.application = ? AND l.name LIKE ? AND l.value LIKE ? AND l.type IN (' . implode(',', $types) . ')';
+
+		// add the paremeters
+		$parameters = array($application, '%' . $name . '%', '%' . $value . '%');
+
+		// add module to the query if needed
+		if($module != null)
+		{
+			$query .= ' AND l.module = ?';
+			$parameters[] = $module;
+		}
+
+		// get the translations
+		$translations = (array) $db->getRecords($query, $parameters);
+
+		// create an array for the sorted translations
+		$sortedTranslations = array();
+
+		// loop translations
+		foreach($translations as $translation)
+		{
+			// add to the sorted array
+			$sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array('id' => $translation['id'], 'value' => $translation['value']);
+		}
+
+		// create an array to use in the datagrid
+		$dataGridTranslations = array();
+
+		// an id that is used for in the datagrid, this is not the id of the translation!
+		$id = 0;
+
+		// loop the sorted translations
+		foreach($sortedTranslations as $type => $references)
+		{
+			// create array for each type
+			$dataGridTranslations[$type] = array();
+
+			foreach($references as $reference => $translation)
+			{
+				// loop modules
+				foreach($translation as $module => $t)
+				{
+					// create translation (and increase id)
+					$trans = array('module' => $module, 'name' => $reference, 'id' => $id++);
+
+					// is there a translation? else empty string
+					foreach($languages as $lang)
+					{
+						if(count($languages) == 1) $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+						$trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
+					}
+
+					// add the translation to the array
+					$dataGridTranslations[$type][] = $trans;
+				}
+			}
+		}
+
+		return $dataGridTranslations;
+	}
+
+
+	/**
 	 * Get the filetree
 	 *
 	 * @return	array
@@ -920,6 +1112,41 @@ class BackendLocaleModel
 
 		// build array
 		return array_combine($types, $labels);
+	}
+
+
+	/**
+	 * Get all locale types for a multicheckbox.
+	 *
+	 * @return	array
+	 */
+	public static function getTypesForMultiCheckbox()
+	{
+		// fetch types
+		$aTypes = BackendModel::getDB()->getEnumValues('locale', 'type');
+
+		// init
+		$labels = $aTypes;
+
+		// loop and build labels
+		foreach($labels as &$row) $row = ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+
+		// build array
+		$aTypes = array_combine($aTypes, $labels);
+
+		// create a new array to redefine the types for the multicheckbox
+		$types = array();
+
+		// loop the languages
+		foreach($aTypes as $key => $type)
+		{
+			// add to array
+			$types[$key]['value'] = $key;
+			$types[$key]['label'] = $type;
+		}
+
+		// return the redefined array
+		return $types;
 	}
 
 

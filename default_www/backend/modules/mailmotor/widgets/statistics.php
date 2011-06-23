@@ -37,6 +37,9 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		// set column
 		$this->setColumn('right');
 
+		// set position
+		$this->setPosition(1);
+
 		// fetch the default group ID
 		$this->groupId = BackendMailmotorModel::getDefaultGroupID();
 
@@ -87,13 +90,13 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// parse the datagrid
-			$this->tpl->assign('dgMailmotorStatistics', $datagrid->getContent());
+			$this->tpl->assign('dgMailmotorStatistics', $dataGrid->getContent());
 		}
 	}
 
@@ -112,19 +115,19 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// set edit link
-			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
+			$dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
 
 			// set column functions
-			$datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 			// parse the datagrid
-			$this->tpl->assign('dgMailmotorSubscriptions', $datagrid->getContent());
+			$this->tpl->assign('dgMailmotorSubscriptions', $dataGrid->getContent());
 		}
 	}
 
@@ -143,19 +146,19 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// set edit link
-			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
+			$dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
 
 			// set column functions
-			$datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 			// parse the datagrid
-			$this->tpl->assign('dgMailmotorUnsubscriptions', $datagrid->getContent());
+			$this->tpl->assign('dgMailmotorUnsubscriptions', $dataGrid->getContent());
 		}
 	}
 

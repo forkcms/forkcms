@@ -28,7 +28,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -46,10 +46,6 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		// create form
 		$this->frm = new BackendForm('add');
 
-		$groups = BackendUsersModel::getGroups();
-		$groupIds = array_keys($groups);
-		$defaultGroupId = BackendModel::getModuleSetting('users', 'default_group', $groupIds[0]);
-
 		// create elements
 		$this->frm->addText('email', null, 255);
 		$this->frm->addPassword('password', null, 75, 'inputText inputPassword passwordGenerator', 'inputTextError inputPasswordError passwordGenerator');
@@ -64,7 +60,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
-		$this->frm->addDropdown('group', $groups, $defaultGroupId);
+		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll());
 
 		// disable autocomplete
 		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));
@@ -111,6 +107,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			$this->frm->getField('date_format')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('groups')->isFilled(BL::err('FieldIsRequired'));
 			if($this->frm->getField('password')->isFilled())
 			{
 				if($this->frm->getField('password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::err('ValuesDontMatch'));
@@ -143,10 +140,36 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['avatar'] = 'no-avatar.gif';
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
+				// get selected groups
+				$groups = $this->frm->getField('groups')->getChecked();
+
+				// init var
+				$newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
+
+				// loop through groups and collect all dashboard widget sequences
+				foreach($groups as $group) $sequences[] = BackendGroupsModel::getSetting($group, 'dashboard_sequence');
+
+				// loop through sequences
+				foreach($sequences as $sequence)
+				{
+					// loop through modules inside a sequence
+					foreach($sequence as $moduleKey => $module)
+					{
+						// loop through widgets inside a module
+						foreach($module as $widgetKey => $widget)
+						{
+							// if widget present set true
+							if($widget['present']) $newSequence[$moduleKey][$widgetKey]['present'] = true;
+						}
+					}
+				}
+
+				// add new sequence to settings
+				$settings['dashboard_sequence'] = $newSequence;
+
 				// build user-array
 				$user['email'] = $this->frm->getField('email')->getValue();
 				$user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $settings['password_key']);
-				$user['group_id'] = $this->frm->getField('group')->getValue();
 
 				// save changes
 				$user['id'] = (int) BackendUsersModel::insert($user, $settings);
@@ -172,6 +195,9 @@ class BackendUsersAdd extends BackendBaseActionAdd
 
 				// update settings (in this case the avatar)
 				BackendUsersModel::update($user, $settings);
+
+				// save groups
+				BackendGroupsModel::insertMultipleGroups($user['id'], $groups);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);

@@ -6,6 +6,7 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -31,7 +32,7 @@
 		background: #B0B0B0;
 		background: rgba(0,0,0,0.2);
 	}
-	
+
 	/*
 		Better alignment of tooltips in dataFilter
 	*/

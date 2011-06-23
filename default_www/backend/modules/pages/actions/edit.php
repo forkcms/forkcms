@@ -22,9 +22,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Datagrid for the drafts
+	 * DataGrid for the drafts
 	 *
-	 * @var	BackendDatagrid
+	 * @var	BackendDataGrid
 	 */
 	private $dgDrafts;
 

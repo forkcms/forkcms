@@ -25,6 +25,16 @@ jsBackend.locale.controls =
 			// call to start
 			jsBackend.locale.controls.enableDisableModules();
 		}
+		
+		if($('.dataGrid td.translationValue').length > 0)
+		{
+			// buil ajax-url
+			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=save_translation&language='+ jsBackend.current.language;
+
+			
+			// bind
+			$('.dataGrid td.translationValue').inlineTextEdit( { saveUrl: url, tooltip: '{$msgClickToEdit}' });
+		}
 	},
 
 	enableDisableModules: function() 

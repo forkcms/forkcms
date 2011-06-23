@@ -44,7 +44,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page
@@ -69,6 +69,12 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// create form
 		$this->frm = new BackendForm('edit');
 
+		// get active groups
+		$groups = BackendGroupsModel::getGroupsByUser($this->id);
+
+		// loop through groups and set checked
+		foreach($groups as $group) $checkedGroups[] = $group['id'];
+
 		// create elements
 		$this->frm->addText('email', $this->record['email'], 255);
 		if($this->user->isGod()) $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
@@ -84,7 +90,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addDropdown('group', BackendUsersModel::getGroups(), $this->record['group_id']);
+		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
 
 		// disable autocomplete
 		$this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));
@@ -163,6 +169,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->frm->getField('date_format')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('groups')->isFilled(BL::err('FieldIsRequired'));
 			if($this->frm->getField('new_password')->isFilled())
 			{
 				if($this->frm->getField('new_password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::err('ValuesDontMatch'));
@@ -185,7 +192,6 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			{
 				// build user-array
 				$user['id'] = $this->id;
-				$user['group_id'] = $this->frm->getField('group')->getValue();
 				if(!$this->user->isGod()) $user['email'] = $this->frm->getField('email')->getValue(true);
 				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $user['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
 
@@ -202,6 +208,33 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
 				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
+
+				// get selected groups
+				$groups = $this->frm->getField('groups')->getChecked();
+
+				// init var
+				$newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
+
+				// loop through groups and collect all dashboard widget sequences
+				foreach($groups as $group) $sequences[] = BackendGroupsModel::getSetting($group, 'dashboard_sequence');
+
+				// loop through sequences
+				foreach($sequences as $sequence)
+				{
+					// loop through modules inside a sequence
+					foreach($sequence as $moduleKey => $module)
+					{
+						// loop through widgets inside a module
+						foreach($module as $widgetKey => $widget)
+						{
+							// if widget present set true
+							if($widget['present']) $newSequence[$moduleKey][$widgetKey]['present'] = true;
+						}
+					}
+				}
+
+				// add new sequence to settings
+				$settings['dashboard_sequence'] = $newSequence;
 
 				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
@@ -233,6 +266,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 				// save changes
 				BackendUsersModel::update($user, $settings);
+
+				// save groups
+				BackendGroupsModel::insertMultipleGroups($this->id, $groups);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);

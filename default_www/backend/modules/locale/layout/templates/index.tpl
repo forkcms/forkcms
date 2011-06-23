@@ -3,14 +3,16 @@
 
 <div class="pageTitle">
 	<h2>{$lblTranslations|ucfirst}</h2>
-	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-		<a href="{$var|geturl:'export'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
-		<a href="{$var|geturl:'import'}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
-	</div>
+	{option:isGod}
+		<div class="buttonHolderRight">
+			<a href="{$var|geturl:'add'}{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
+			<a href="{$var|geturl:'export'}{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+			<a href="{$var|geturl:'import'}{$filter}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
+		</div>
+	{/option:isGod}
 </div>
 
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">
 			<table cellspacing="0" cellpadding="0" border="0">
@@ -19,25 +21,33 @@
 						<td>
 							<div class="options">
 								<p>
-									<label for="language">{$lblLanguage|ucfirst}</label>
-									{$ddmLanguage} {$ddmLanguageError}
-								</p>
-								<p>
 									<label for="application">{$lblApplication|ucfirst}</label>
 									{$ddmApplication} {$ddmApplicationError}
+								</p>
+								<p>
+									<label for="module">{$lblModule|ucfirst}</label>
+									{$ddmModule} {$ddmModuleError}
 								</p>
 							</div>
 						</td>
 						<td>
 							<div class="options">
-								<p>
-									<label for="module">{$lblModule|ucfirst}</label>
-									{$ddmModule} {$ddmModuleError}
-								</p>
-								<p>
-									<label for="type">{$lblType|ucfirst}</label>
-									{$ddmType} {$ddmTypeError}
-								</p>
+								<label for="type">{$lblTypes|ucfirst}</label>
+								{option:type}
+									<ul>
+										{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
+									</ul>
+								{/option:type}
+							</div>
+						</td>
+						<td>
+							<div class="options">
+								<label for="language">{$lblLanguages|ucfirst}</label>
+								{option:language}
+									<ul>
+										{iteration:language}<li>{$language.chkLanguage} <label for="{$language.id}">{$language.label|ucfirst}</label></li>{/iteration:language}
+									</ul>
+								{/option:language}
 							</div>
 						</td>
 						<td>
@@ -87,34 +97,51 @@
 		</div>
 	{/form:filter}
 
-	{option:datagrid}
-		<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="massLocaleAction">
-			<div>
-				<input type="hidden" name="offset" value="{$offset}" />
-				<input type="hidden" name="order" value="{$order}" />
-				<input type="hidden" name="sort" value="{$sort}" />
-				<input type="hidden" name="language" value="{$language}" />
-				<input type="hidden" name="application" value="{$application}" />
-				<input type="hidden" name="module" value="{$module}" />
-				<input type="hidden" name="type" value="{$type}" />
-				<input type="hidden" name="name" value="{$name}" />
-				<input type="hidden" name="value" value="{$value}" />
-			</div>
-			{$datagrid}
-		</form>
-	{/option:datagrid}
-</div>
 
-{option:!datagrid}
-	<div class="tableHeading">
-		<h3>{$lblTranslations|ucfirst}</h3>
-		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
+	{option:dgLabels}
+	<div class="dataGridHolder">
+		<div class="tableHeading">
+			<h3>{$lblLabels|ucfirst}</h3>
 		</div>
+		{$dgLabels}
 	</div>
-	{option:filter}<p>{$msgNoItemsFilter|sprintf:{$addUrl}}</p>{/option:filter}
-	{option:!filter}<p>{$msgNoItems|sprintf:{$addUrl}}</p>{/option:!filter}
-{/option:!datagrid}
+	{/option:dgLabels}
+
+	{option:dgMessages}
+	<div class="dataGridHolder">
+		<div class="tableHeading">
+			<h3>{$lblMessages|ucfirst}</h3>
+		</div>
+		{$dgMessages}
+	</div>
+	{/option:dgMessages}
+
+	{option:dgErrors}
+	<div class="dataGridHolder">
+		<div class="tableHeading">
+			<h3>{$lblErrors|ucfirst}</h3>
+		</div>
+		{$dgErrors}
+	</div>
+	{/option:dgErrors}
+
+	{option:dgActions}
+	<div class="dataGridHolder">
+		<div class="tableHeading oneLiner">
+			<h3>{$lblActions|ucfirst} </h3>
+				<abbr class="help">(?)</abbr>
+				<span class="tooltip" style="display: none;">
+					{$msgHelpActionValue}
+				</span>
+		</div>
+		{$dgActions}
+	</div>
+	{/option:dgActions}
+
+	{option:noItems}
+		<p>{$msgNoItemsFilter|sprintf:{$addURL}}</p>
+	{/option:noItems}
+</div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

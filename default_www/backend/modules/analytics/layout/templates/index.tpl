@@ -114,7 +114,7 @@
 		</div>
 	</div>
 
-	<div class="datagridHolder" id="analyticsDatagridLeftCol">
+	<div class="dataGridHolder" id="analyticsDataGridLeftCol">
 		<div class="tableHeading">
 			<h3><a href="{$googleTopReferrersURL}">{$lblTopReferrers|ucfirst}</a></h3>
 			<div class="buttonHolderRight">
@@ -127,7 +127,7 @@
 			{$dgReferrers}
 		{/option:dgReferrers}
 		{option:!dgReferrers}
-			<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+			<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 				<tr>
 					<td>{$msgNoReferrers}</td>
 				</tr>
@@ -135,7 +135,7 @@
 		{/option:!dgReferrers}
 	</div>
 
-	<div class="datagridHolder" id="analyticsDatagridRightCol">
+	<div class="dataGridHolder" id="analyticsDataGridRightCol">
 		<div class="tableHeading">
 			<h3><a href="{$googleTopKeywordsURL}">{$lblTopKeywords|ucfirst}</a></h3>
 			<div class="buttonHolderRight">
@@ -148,7 +148,7 @@
 			{$dgKeywords}
 		{/option:dgKeywords}
 		{option:!dgKeywords}
-			<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+			<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 				<tr>
 					<td>{$msgNoKeywords}</td>
 				</tr>
