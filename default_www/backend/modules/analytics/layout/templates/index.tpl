@@ -27,7 +27,7 @@
 		{include:{$BACKEND_MODULE_PATH}/layout/templates/period.tpl}
 
 		<div class="options content">
-			<div class="analyticsColWrapper">
+			<div class="analyticsColWrapper clearfix">
 				<div class="analyticsCol">
 					<p><strong>{$pageviews} </strong><a href="{$googlePageviewsURL}">{$lblPageviews|ucfirst}</a></p>
 					<p><strong>{$visitors} </strong><a href="{$googleVisitorsURL}">{$lblVisitors|ucfirst}</a></p>
