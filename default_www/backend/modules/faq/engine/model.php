@@ -13,7 +13,7 @@
  */
 class BackendFaqModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
+	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.category_id, i.question, i.num_views, i.num_usefull_yes, i.num_usefull_no, i.hidden, i.sequence
 									FROM faq_questions AS i
 									WHERE i.language = ? AND i.category_id = ?
 									ORDER BY i.sequence ASC';

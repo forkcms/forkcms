@@ -30,7 +30,7 @@
 		</div>
 		<div class="options">
 			<ul class="inputList">
-				<li><label for="allowFeeback">{$chkAllowFeedback} {$lblAllowFeedback|ucfirst}</label></li>
+				<li><label for="allowFeedback">{$chkAllowFeedback} {$lblAllowFeedback|ucfirst}</label></li>
 				<li><label for="allowOwnQuestion">{$chkAllowOwnQuestion} {$lblAllowOwnQuestion|ucfirst}</label></li>
 				<li>
 					<label for="spamfilter">{$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}</label>

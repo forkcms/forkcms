@@ -102,10 +102,10 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		// get settings
 		$this->settings = FrontendModel::getModuleSettings('faq');
 
-		// reset allow comments
-		if(!$this->settings['allow_feedback']) $this->record['allow_feedback'] = false;
+		// make sure all settings used are set
+		$this->settings['related_num_items'] = (isset($this->settings['related_num_items']) ? $this->settings['related_num_items'] : 3);
 
-		// ge status
+		// get status
 		$this->status = $this->URL->getParameter(2);
 		if($this->status == FL::getAction('Success')) $this->status = 'success';
 		if($this->status == FL::getAction('Spam')) $this->status = 'spam';

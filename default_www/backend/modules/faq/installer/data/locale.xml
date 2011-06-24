@@ -38,6 +38,18 @@
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
       </item>
+      <item type="label" name="NumUsefullNo">
+        <translation language="nl"><![CDATA[# keer niet nuttig]]></translation>
+        <translation language="en"><![CDATA[# not usefull]]></translation>
+      </item>
+      <item type="label" name="NumUsefullYes">
+        <translation language="nl"><![CDATA[# keer nuttig]]></translation>
+        <translation language="en"><![CDATA[# usefull]]></translation>
+      </item>
+      <item type="label" name="NumViews">
+        <translation language="nl"><![CDATA[# keer bekeken]]></translation>
+        <translation language="en"><![CDATA[# views]]></translation>
+      </item>
       <item type="label" name="ItemsPerCategory">
         <translation language="nl"><![CDATA[items per categorie]]></translation>
         <translation language="en"><![CDATA[items per category]]></translation>
