@@ -17,14 +17,14 @@
 </div>
 {/option:noDefaultsSet}
 
-{option:datagrid}
+{option:dataGrid}
 <form action="{$var|geturl:'mass_group_action'}" method="get" class="forkForms submitWithLink" id="groups">
-	<div class="datagridHolder">
-		{$datagrid}
+	<div class="dataGridHolder">
+		{$dataGrid}
 	</div>
 </form>
-{/option:datagrid}
-{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
+{/option:dataGrid}
+{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

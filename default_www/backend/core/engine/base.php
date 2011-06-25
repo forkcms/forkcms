@@ -164,7 +164,7 @@ class BackendBaseAction
 			$this->tpl->assign('report', true);
 
 			// camelcase the string
-			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), array('-', '_'));
+			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), '-');
 
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
@@ -178,7 +178,7 @@ class BackendBaseAction
 		if($this->getParameter('error') !== null)
 		{
 			// camelcase the string
-			$errorName = SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'));
+			$errorName = SpoonFilter::toCamelCase($this->getParameter('error'), '-');
 
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
@@ -286,7 +286,7 @@ class BackendBaseActionIndex extends BackendBaseAction
 	 *
 	 * @var	BackendDataGridDB
 	 */
-	protected $datagrid;
+	protected $dataGrid;
 
 
 	/**
@@ -357,7 +357,7 @@ class BackendBaseActionAdd extends BackendBaseAction
 class BackendBaseActionEdit extends BackendBaseAction
 {
 	/**
-	 * Datagrid with the revisions
+	 * DataGrid with the revisions
 	 *
 	 * @var	BackendDataGridDB
 	 */

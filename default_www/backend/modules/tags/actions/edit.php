@@ -13,7 +13,7 @@
 class BackendTagsEdit extends BackendBaseActionEdit
 {
 	/**
-	 * Datagrid with the articles linked to the current tag
+	 * DataGrid with the articles linked to the current tag
 	 *
 	 * @var	BackendDataGridArray
 	 */
@@ -40,7 +40,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 			$this->getData();
 
 			// load the datagrid
-			$this->loadDatagrid();
+			$this->loadDataGrid();
 
 			// load the form
 			$this->loadForm();
@@ -76,7 +76,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// init var
 		$items = array();

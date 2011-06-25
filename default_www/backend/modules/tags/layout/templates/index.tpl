@@ -5,14 +5,14 @@
 	<h2>{$lblTags|ucfirst}</h2>
 </div>
 
-{option:datagrid}
+{option:dataGrid}
 	<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="tagsForm">
-		<div class="datagridHolder">
-			{$datagrid}
+		<div class="dataGridHolder">
+			{$dataGrid}
 		</div>
 	</form>
-{/option:datagrid}
-{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
+{/option:dataGrid}
+{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
 
 <div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 	<p>{$msgConfirmMassDelete}</p>

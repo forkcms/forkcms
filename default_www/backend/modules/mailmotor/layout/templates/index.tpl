@@ -11,7 +11,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		{$dgUnsentMailings}
 	</div>
 	{/option:dgUnsentMailings}
@@ -32,7 +32,7 @@
 	<div class="pageTitle">
 		<h2>{$lblQueuedMailings|ucfirst}{option:name} {$lblIn} {$lblCampaign} &ldquo;{$name}&rdquo;{/option:name}</h2>
 	</div>
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		{$dgQueuedMailings}
 	</div>
 	{/option:dgQueuedMailings}
@@ -41,7 +41,7 @@
 	<div class="pageTitle">
 		<h2>{$lblSentMailings|ucfirst}{option:name} {$lblIn} {$lblCampaign} &ldquo;{$name}&rdquo;{/option:name}</h2>
 	</div>
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		{$dgSentMailings}
 	</div>
 	{/option:dgSentMailings}

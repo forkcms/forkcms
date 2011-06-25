@@ -17,9 +17,9 @@
 
 			<div id="tabMailmotorSubscriptions">
 				{* All the subscriptions *}
-				<div id="datagridSubscriptions">
+				<div id="dataGridSubscriptions">
 					{option:dgMailmotorSubscriptions}
-					<div class="datagridHolder">
+					<div class="dataGridHolder">
 						{$dgMailmotorSubscriptions}
 					</div>
 					{/option:dgMailmotorSubscriptions}
@@ -33,9 +33,9 @@
 
 			<div id="tabMailmotorUnsubscriptions">
 				{* All the unsubscriptions *}
-				<div id="datagridUnsubscriptions">
+				<div id="dataGridUnsubscriptions">
 					{option:dgMailmotorUnsubscriptions}
-					<div class="datagridHolder" >
+					<div class="dataGridHolder" >
 						{$dgMailmotorUnsubscriptions}
 					</div>
 					{/option:dgMailmotorUnsubscriptions}
@@ -49,9 +49,9 @@
 
 			<div id="tabMailmotorStatistics">
 				{* The stats *}
-				<div id="datagridStatistics">
+				<div id="dataGridStatistics">
 					{option:dgMailmotorStatistics}
-					<div class="datagridHolder">
+					<div class="dataGridHolder">
 						{$dgMailmotorStatistics}
 					</div>
 					{/option:dgMailmotorStatistics}

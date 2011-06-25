@@ -90,8 +90,8 @@
 									<p>There are no items yet.</p> <!-- End of no items -->
 
 									<form action="/private/en/tags/mass_action?token=true" method="get" class="forkForms submitWithLink" id="tagsForm">
-										<div class="datagridHolder">
-											<table class="datagrid" cellspacing="0" cellpadding="0" border="0">
+										<div class="dataGridHolder">
+											<table class="dataGrid" cellspacing="0" cellpadding="0" border="0">
 												<thead>
 													<tr>
 														<th class="checkbox">

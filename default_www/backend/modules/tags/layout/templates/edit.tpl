@@ -17,7 +17,7 @@
 				<label>{$lblUsedIn|ucfirst}</label>
 
 				{option:usage}
-					<div class="datagridHolder datagridInHorizontalForm">
+					<div class="dataGridHolder dataGridInHorizontalForm">
 						{$usage}
 					</div>
 				{/option:usage}

@@ -30,7 +30,7 @@ class BackendLocaleImport extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -112,7 +112,7 @@ class BackendLocaleImport extends BackendBaseActionAdd
 				$statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 
 				// everything is imported, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=imported' . $this->filterQuery);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
 			}
 		}
 	}

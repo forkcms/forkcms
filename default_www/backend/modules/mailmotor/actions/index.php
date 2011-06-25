@@ -26,7 +26,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Datagrids
+	 * DataGrids
 	 *
 	 * @var	BackendDataGrid
 	 */
@@ -50,7 +50,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->getCampaign();
 
 		// load datagrid
-		$this->loadDatagrids();
+		$this->loadDataGrids();
 
 		// parse page
 		$this->parse();
@@ -80,7 +80,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridQueuedMailings()
+	private function loadDataGridQueuedMailings()
 	{
 		// set query & parameters
 		$query = BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT;
@@ -141,16 +141,16 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrids()
+	private function loadDataGrids()
 	{
 		// load sent mailings
-		$this->loadDatagridQueuedMailings();
+		$this->loadDataGridQueuedMailings();
 
 		// load unsent mailings
-		$this->loadDatagridUnsentMailings();
+		$this->loadDataGridUnsentMailings();
 
 		// load sent mailings
-		$this->loadDatagridSentMailings();
+		$this->loadDataGridSentMailings();
 	}
 
 
@@ -159,7 +159,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridSentMailings()
+	private function loadDataGridSentMailings()
 	{
 		// set query & parameters
 		$query = BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT;
@@ -194,7 +194,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// set column functions
 		$this->dgSentMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
-		$this->dgSentMailings->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
+		$this->dgSentMailings->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
 
 		// add delete column
 		$this->dgSentMailings->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('copy') . '&amp;id=[id]', BL::lbl('Copy'), array('class' => 'button icon iconMailAdd linkButton'));
@@ -214,7 +214,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridUnsentMailings()
+	private function loadDataGridUnsentMailings()
 	{
 		// set query & parameters
 		$query = BackendMailmotorModel::QRY_DATAGRID_BROWSE_UNSENT;
@@ -252,7 +252,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// set column functions
 		$this->dgUnsentMailings->setColumnFunction(array('BackendMailmotorIndex', 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
-		$this->dgUnsentMailings->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+		$this->dgUnsentMailings->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 		// add delete column
 		$this->dgUnsentMailings->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));

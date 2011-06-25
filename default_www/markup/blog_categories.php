@@ -99,8 +99,8 @@
 
 									<p>There are no items yet.</p> <!-- End of no items -->
 
-									<div class="datagridHolder">
-										<table class="datagrid" cellspacing="0" cellpadding="0" border="0">
+									<div class="dataGridHolder">
+										<table class="dataGrid" cellspacing="0" cellpadding="0" border="0">
 											<thead>
 												<tr>
 													<th class="title">
@@ -126,7 +126,7 @@
 												</tr>
 											</tbody>
 										</table>
-									</div> <!-- End of browse datagrid -->
+									</div> <!-- End of browse dataGrid -->
 
 									<div class="pageTitle">
 										<h2>Blog: add category</h2>

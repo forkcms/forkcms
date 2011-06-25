@@ -11,7 +11,7 @@
 
 /* Hide header links */
 
-.box .box h3 a, .box .box h4 a, .datagridHolder .tableHeading h3 a {
+.box .box h3 a, .box .box h4 a, .dataGridHolder .tableHeading h3 a {
 	color: #000 !important;
 	border: 0; 
 }
@@ -22,9 +22,9 @@
 	width: 320px;
 }
 
-/* Datagrids */
+/* DataGrids */
 
-.box .options .datagridHolder:last-child, .box .content .datagridHolder:last-child {
+.box .options .dataGridHolder:last-child, .box .content .dataGridHolder:last-child {
 	margin: 0;
 }
 

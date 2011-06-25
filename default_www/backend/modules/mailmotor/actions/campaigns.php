@@ -41,49 +41,49 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_CAMPAIGNS);
+		$this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_CAMPAIGNS);
 
 		// set headers values
 		$headers['name'] = ucfirst(BL::lbl('Title'));
 		$headers['created_on'] = ucfirst(BL::lbl('Created'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels($headers);
+		$this->dataGrid->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name', 'created_on'), 'name');
-		$this->datagrid->setSortParameter('desc');
+		$this->dataGrid->setSortingColumns(array('name', 'created_on'), 'name');
+		$this->dataGrid->setSortParameter('desc');
 
 		// set column URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
+		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
 
 		// add the multicheckbox column
-		$this->datagrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
-		$this->datagrid->setColumnsSequence('checkbox');
+		$this->dataGrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
+		$this->dataGrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
-		$this->datagrid->setMassAction($ddmMassAction);
+		$this->dataGrid->setMassAction($ddmMassAction);
 
 		// set column functions
-		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 		// add statistics column
-		$this->datagrid->addColumn('statistics');
-		$this->datagrid->setColumnAttributes('statistics', array('class' => 'action actionStatistics', 'width' => '10%'));
-		$this->datagrid->setColumnFunction(array(__CLASS__, 'setStatisticsLink'), array('[id]'), 'statistics', true);
+		$this->dataGrid->addColumn('statistics');
+		$this->dataGrid->setColumnAttributes('statistics', array('class' => 'action actionStatistics', 'width' => '10%'));
+		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setStatisticsLink'), array('[id]'), 'statistics', true);
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_campaign') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_campaign') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// add styles
-		$this->datagrid->setColumnAttributes('name', array('class' => 'title'));
+		$this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -95,7 +95,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
 

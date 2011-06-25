@@ -15,13 +15,13 @@
 
 	<div class="options content">
 		<form action="{$var|geturl:'mass_landing_page_action'}" method="get" class="forkForms submitWithLink" id="landing_pages">
-			<div class="datagridHolder">
+			<div class="dataGridHolder">
 				{option:dgPages}
 					{$dgPages}
 				{/option:dgPages}
 
 				{option:!dgPages}
-					<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+					<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 						<tr>
 							<td>{$msgNoLandingPages}</td>
 						</tr>
