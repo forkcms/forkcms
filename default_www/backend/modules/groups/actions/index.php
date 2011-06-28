@@ -23,7 +23,7 @@ class BackendGroupsIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// load the datagrid
-		$this->loadDatagrid();
+		$this->loadDataGrid();
 
 		// parse the datagrid
 		$this->parse();
@@ -38,17 +38,17 @@ class BackendGroupsIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	public function loadDatagrid()
+	public function loadDataGrid()
 	{
 		// create datagrid with overview of groups
-		$this->datagrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
+		$this->dataGrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
 
 		// set collumn URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-		$this->datagrid->setColumnURL('num_users', BackendModel::createURLForAction('edit') . '&amp;id=[id]#tabUsers');
+		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('num_users', BackendModel::createURLForAction('edit') . '&amp;id=[id]#tabUsers');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 	}
 
 
@@ -60,7 +60,7 @@ class BackendGroupsIndex extends BackendBaseActionIndex
 	public function parse()
 	{
 		// assign the datagrid
-		$this->tpl->assign('datagrid', $this->datagrid->getContent());
+		$this->tpl->assign('dataGrid', $this->dataGrid->getContent());
 	}
 }
 

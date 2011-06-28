@@ -70,7 +70,7 @@
 </div>
 
 {* Exit pages *}
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3>{$lblExitPages|ucfirst}</h3>
 		<div class="buttonHolderRight">
@@ -83,7 +83,7 @@
 	{/option:dgPages}
 
 	{option:!dgPages}
-		<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 			<tr>
 				<td>{$msgNoPages}</td>
 			</tr>

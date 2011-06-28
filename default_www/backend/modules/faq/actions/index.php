@@ -16,7 +16,7 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	 *
 	 * @var	array
 	 */
-	private $datagrids;
+	private $dataGrids;
 
 
 	/**
@@ -30,7 +30,7 @@ class BackendFaqIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// load the datagrids
-		$this->loadDatagrids();
+		$this->loadDataGrids();
 
 		// parse the datagrids
 		$this->parse();
@@ -45,7 +45,7 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrids()
+	private function loadDataGrids()
 	{
 		// load all categories
 		$categories = BackendFaqModel::getCategories();
@@ -54,39 +54,39 @@ class BackendFaqIndex extends BackendBaseActionIndex
 		foreach($categories as $category)
 		{
 			// create datagrid
-			$datagrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $category['id']));
+			$dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $category['id']));
 
 			// set attributes
-			$datagrid->setAttributes(array('class' => 'datagrid sequenceByDragAndDrop'));
+			$dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
 
 			// disable paging
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// set colum URLs
-			$datagrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+			$dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 			// set colums hidden
-			$datagrid->setColumnsHidden(array('category_id', 'sequence'));
+			$dataGrid->setColumnsHidden(array('category_id', 'sequence'));
 
 			// add edit column
-			$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+			$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 			// add a column for the handle, so users have something to hold while draging
-			$datagrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
+			$dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
 
 			// make sure the column with the handler is the first one
-			$datagrid->setColumnsSequence('dragAndDropHandle');
+			$dataGrid->setColumnsSequence('dragAndDropHandle');
 
 			// add a class on the handler column, so JS knows this is just a handler
-			$datagrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
+			$dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 
 			// our JS needs to know an id, so we can send the new order
-			$datagrid->setRowAttributes(array('id' => '[id]'));
+			$dataGrid->setRowAttributes(array('id' => '[id]'));
 
 			// add datagrid to list
-			$this->datagrids[] = array('id' => $category['id'],
+			$this->dataGrids[] = array('id' => $category['id'],
 									   'name' => $category['name'],
-									   'content' => $datagrid->getContent());
+									   'content' => $dataGrid->getContent());
 		}
 	}
 
@@ -99,7 +99,7 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse datagrids
-		if(!empty($this->datagrids)) $this->tpl->assign('datagrids', $this->datagrids);
+		if(!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
 	}
 }
 

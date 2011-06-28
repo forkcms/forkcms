@@ -17,7 +17,7 @@
 	<section id="blogArchive" class="mod">
 		<div class="inner">
 			<div class="bd content">
-				<table class="datagrid" width="100%">
+				<table class="dataGrid" width="100%">
 					<thead>
 						<tr>
 							<th class="date">{$lblDate|ucfirst}</th>

@@ -13,12 +13,12 @@
 <form action="{$var|geturl:'mass_custom_field_action'}" method="get" class="forkForms submitWithLink" id="massCustomFieldAction">
 	<fieldset>
 		<input type="hidden" name="group_id" value="{$group.id}" />
-		{option:datagrid}
-			<div class="datagridHolder">
-				{$datagrid}
+		{option:dataGrid}
+			<div class="dataGridHolder">
+				{$dataGrid}
 			</div>
-		{/option:datagrid}
-		{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
+		{/option:dataGrid}
+		{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
 	</fieldset>
 </form>
 

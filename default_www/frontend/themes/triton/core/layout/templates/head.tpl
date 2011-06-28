@@ -14,7 +14,7 @@
 
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />
-	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png">
+	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
 
 	{* Stylesheets *}
 	{iteration:cssFiles}

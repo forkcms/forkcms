@@ -1,13 +1,13 @@
 <section id="mailmotorIndex" class="mod">
 	<div class="inner">
 		<div class="bd">
-			{option:datagrid}
-				{$datagrid}
-			{/option:datagrid}
+			{option:dataGrid}
+				{$dataGrid}
+			{/option:dataGrid}
 
-			{option:!datagrid}
+			{option:!dataGrid}
 				<p>{$msgNoSentMailings}</p>
-			{/option:!datagrid}
+			{/option:!dataGrid}
 		</div>
 	</div>
 </section>

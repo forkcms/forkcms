@@ -274,10 +274,10 @@
 			Table cell widths
 		*/
 
-		#pages.pagesIndex .datagrid .user_id { width: 25%; }
-		#pages.pagesIndex .datagrid .date { width: 25%; }
-		#pages.pagesIndex .datagrid .title { width: 35%; }
-		#pages.pagesIndex .datagrid .action { width: 15%; }
+		#pages.pagesIndex .dataGrid .user_id { width: 25%; }
+		#pages.pagesIndex .dataGrid .date { width: 25%; }
+		#pages.pagesIndex .dataGrid .title { width: 35%; }
+		#pages.pagesIndex .dataGrid .action { width: 15%; }
 
 	/*
 		Add/edit
@@ -318,10 +318,10 @@
 
 /* Table widths */
 
-#tabVersions .datagrid .title { width: 35%; }
-#tabVersions .datagrid .date { width: 20%; }
-#tabVersions .datagrid .user_id { width: 20%; }
-#tabVersions .datagrid .action { width: 25%; }
+#tabVersions .dataGrid .title { width: 35%; }
+#tabVersions .dataGrid .date { width: 20%; }
+#tabVersions .dataGrid .user_id { width: 20%; }
+#tabVersions .dataGrid .action { width: 25%; }
 
 
 /*
@@ -332,7 +332,7 @@
 		Categories
 	*/
 
-	#blog.categories .datagrid td.name a {
+	#blog.categories .dataGrid td.name a {
 		font-size: 11px;
 		font-weight: 700;
 	}
@@ -341,7 +341,7 @@
 		Comments
 	*/
 
-	#blog.comments .datagrid tbody .button {
+	#blog.comments .dataGrid tbody .button {
 		margin-bottom: 8px;
 		clear: left;
 	}
@@ -462,7 +462,7 @@
 		Index
 	*/
 
-	#tags.tagsIndex .datagrid td.tag a {
+	#tags.tagsIndex .dataGrid td.tag a {
 		font-size: 11px;
 		font-weight: 700;
 	}

@@ -156,7 +156,7 @@
 												}
 
 												// loop items and add to map
-																		addMarker(51.0798, 3.72814, 'Testlocatie', '<p>Dit is mijn locatie</p>');					    	
+																		addMarker(51.0798, 3.72814, 'Testlocatie', '<p>Dit is mijn locatie</p>');
 												// set center to the middle of our boundaries
 												map.setCenter(latlngBounds.getCenter());
 
@@ -166,8 +166,8 @@
 										</div>
 									</div>
 
-									<div class="datagridHolder">
-										<table class="datagrid" cellspacing="0" cellpadding="0" border="0">
+									<div class="dataGridHolder">
+										<table class="dataGrid" cellspacing="0" cellpadding="0" border="0">
 											<thead>
 												<tr>
 													<th class="title">
@@ -197,7 +197,7 @@
 												</tr>
 											</tbody>
 										</table>
-									</div> <!-- End of browse datagrid -->
+									</div> <!-- End of browse dataGrid -->
 
 									<div class="pageTitle">
 										<h2>Location: add</h2>

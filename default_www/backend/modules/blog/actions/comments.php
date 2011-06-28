@@ -13,7 +13,7 @@
 class BackendBlogComments extends BackendBaseActionIndex
 {
 	/**
-	 * Datagrids
+	 * DataGrids
 	 *
 	 * @var	BackendDataGridDB
 	 */
@@ -68,7 +68,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 	private function loadDataGrids()
 	{
 		/*
-		 * Datagrid for the published comments.
+		 * DataGrid for the published comments.
 		 */
 		$this->dgPublished = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('published', BL::getWorkingLanguage(), 'active'));
 
@@ -146,7 +146,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		/*
-		 * Datagrid for the comments that are marked as spam
+		 * DataGrid for the comments that are marked as spam
 		 */
 		$this->dgSpam = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('spam', BL::getWorkingLanguage(), 'active'));
 

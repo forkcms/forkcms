@@ -195,10 +195,10 @@ jsBackend.layout =
 	{
 		// hovers
 		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
-		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
+		$('.dataGrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
 
 		jsBackend.layout.showBrowserWarning();
-		jsBackend.layout.datagrid();
+		jsBackend.layout.dataGrid();
 
 		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
 
@@ -230,17 +230,17 @@ jsBackend.layout =
 
 
 	// datagrid layout
-	datagrid: function() 
+	dataGrid: function() 
 	{
 		if(jQuery.browser.msie) 
 		{
-			$('.datagrid tr td:last-child').addClass('lastChild');
-			$('.datagrid tr td:first-child').addClass('firstChild');
+			$('.dataGrid tr td:last-child').addClass('lastChild');
+			$('.dataGrid tr td:first-child').addClass('firstChild');
 		}
 
 		// dynamic striping
-		$('.dynamicStriping.datagrid tr:nth-child(2n)').addClass('even');
-		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd');
+		$('.dynamicStriping.dataGrid tr:nth-child(2n)').addClass('even');
+		$('.dynamicStriping.dataGrid tr:nth-child(2n+1)').addClass('odd');
 	},
 
 

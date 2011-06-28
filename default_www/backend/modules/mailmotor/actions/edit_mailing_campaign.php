@@ -44,7 +44,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse the
 			$this->parse();
 
 			// display the page

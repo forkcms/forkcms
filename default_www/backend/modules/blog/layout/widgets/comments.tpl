@@ -15,8 +15,8 @@
 	{/option:blogNumCommentsToModerate}
 
 	{option:blogComments}
-	<div class="datagridHolder">
-		<table cellspacing="0" class="datagrid">
+	<div class="dataGridHolder">
+		<table cellspacing="0" class="dataGrid">
 			<tbody>
 				{iteration:blogComments}
 				<tr class="{cycle:'odd':'even'}">

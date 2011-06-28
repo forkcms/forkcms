@@ -11,12 +11,12 @@
 </div>
 
 <form action="{$var|geturl:'mass_campaign_action'}" method="get" class="forkForms submitWithLink" id="campaigns">
-	{option:datagrid}
-		<div class="datagridHolder">
-			{$datagrid}
+	{option:dataGrid}
+		<div class="dataGridHolder">
+			{$dataGrid}
 		</div>
-	{/option:datagrid}
-	{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
+	{/option:dataGrid}
+	{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
 </form>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

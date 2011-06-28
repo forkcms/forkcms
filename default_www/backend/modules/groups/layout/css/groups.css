@@ -19,12 +19,12 @@ div.groupHolder {
 	margin-left: 155px;
 }
 
-ul.datagridHolder {
+ul.dataGridHolder {
 	margin: 5px 0;
 	clear: left;
 }
 
-ul.datagridHolder .inputCheckbox { 
+ul.dataGridHolder .inputCheckbox { 
 	position: relative !important;
 }
 
