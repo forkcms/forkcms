@@ -116,7 +116,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 			else
 			{
 				// remove the file
-				SpoonFile::delete(BACKEND_CACHE_PATH .'/hooks/pid');
+				SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
 
 				// stop the script
 				exit;
