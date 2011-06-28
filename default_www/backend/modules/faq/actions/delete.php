@@ -33,6 +33,9 @@ class BackendFaqDelete extends BackendBaseActionDelete
 			// delete item
 			BackendFaqModel::deleteQuestion($this->id);
 
+			// trigger event
+			BackendModel::triggerEvent('faq', 'deleted_item', array('id' => $this->id));
+
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['question']));
 		}

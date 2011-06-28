@@ -37,6 +37,9 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			// delete item
 			BackendUsersModel::delete($this->id);
 
+			// trigger event
+			BackendModel::triggerEvent('users', 'deleted_item', array('id' => $this->id));
+
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . $user->getSetting('nickname'));
 		}

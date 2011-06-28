@@ -143,6 +143,9 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
 				if(BackendModel::getModuleSetting('core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
 
+				// trigger event
+				BackendModel::triggerEvent('blog', 'saved_settings', array('item' => $item));
+
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}

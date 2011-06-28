@@ -33,6 +33,9 @@ class BackendFaqDeleteCategory extends BackendBaseActionDelete
 			// delete item
 			BackendFaqModel::deleteCategory($this->id);
 
+			// trigger event
+			BackendModel::triggerEvent('faq', 'deleted_category', array('id' => $this->id));
+
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted&var=' . urlencode($this->record['name']));
 		}

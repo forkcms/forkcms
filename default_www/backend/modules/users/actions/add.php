@@ -199,6 +199,9 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// save groups
 				BackendGroupsModel::insertMultipleGroups($user['id'], $groups);
 
+				// trigger event
+				BackendModel::triggerEvent('users', 'added_item', array('item' => $user));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
 			}

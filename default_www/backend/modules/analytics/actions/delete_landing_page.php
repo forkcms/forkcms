@@ -33,6 +33,9 @@ class BackendAnalyticsDeleteLandingPage extends BackendBaseActionDelete
 			// delete item
 			BackendAnalyticsModel::deleteLandingPage($this->id);
 
+			// trigger event
+			BackendModel::triggerEvent('analytics', 'deleted_landing_page', array('id' => $this->id));
+
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['page_path']));
 		}

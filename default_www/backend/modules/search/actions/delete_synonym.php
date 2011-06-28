@@ -33,6 +33,10 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 			// delete item
 			BackendSearchModel::deleteSynonym($this->id);
 
+			// trigger event
+			BackendModel::triggerEvent('search', 'deleted_synonym', array('id' => $this->id));
+
+
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=deleted-synonym&var=' . urlencode($this->record['term']));
 		}

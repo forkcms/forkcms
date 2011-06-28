@@ -131,6 +131,9 @@ class BackendFaqAdd extends BackendBaseActionAdd
 				// insert the item
 				$item['id'] = BackendFaqModel::insertQuestion($item);
 
+				// trigger event
+				BackendModel::triggerEvent('faq', 'added_item', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
 			}

@@ -67,6 +67,9 @@ class BackendPagesSettings extends BackendBaseActionEdit
 				// set our settings
 				BackendModel::setModuleSetting('pages', 'meta_navigation', (bool) $this->frm->getField('meta_navigation')->getValue());
 
+				// trigger event
+				BackendModel::triggerEvent('pages', 'changed_settings');
+
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}

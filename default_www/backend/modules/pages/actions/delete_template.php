@@ -39,6 +39,9 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 				// delete the page
 				$success = BackendPagesModel::deleteTemplate($this->id);
 
+				// trigger event
+				BackendModel::triggerEvent('pages', 'deleted_template', array('id' => $this->id));
+
 				// build cache
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 			}

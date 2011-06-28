@@ -253,6 +253,9 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 				// insert the item
 				$id = (int) BackendFormBuilderModel::update($this->id, $values);
 
+				// trigger event
+				BackendModel::triggerEvent('form_builder', 'edited_item', array('item' => $values));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($values['name']) . '&highlight=row-' . $id);
 			}

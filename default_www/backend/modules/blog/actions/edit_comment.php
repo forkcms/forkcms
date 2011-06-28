@@ -119,6 +119,9 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 				// insert the item
 				BackendBlogModel::updateComment($item);
 
+				// trigger event
+				BackendModel::triggerEvent('blog', 'edited_comment', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . SpoonFilter::toCamelCase($item['status']));
 			}
