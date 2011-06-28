@@ -104,6 +104,9 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 					// subscribe the user to our default group
 					FrontendMailmotorCMHelper::subscribe($email->getValue());
 
+					// trigger event
+					FrontendModel::triggerEvent('mailmotor', 'subscription', array('email' => $email->getValue()));
+
 					// redirect
 					$this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') . '?sent=true#subscribeForm');
 				}

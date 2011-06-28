@@ -62,6 +62,9 @@ class Frontend
 
 			// store in reference
 			Spoon::set('facebook', $facebook);
+
+			// trigger event
+			FrontendModel::triggerEvent('core', 'initialized_facebook');
 		}
 	}
 }

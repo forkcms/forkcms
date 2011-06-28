@@ -253,6 +253,9 @@ class FrontendProfilesProfileSettings extends FrontendBaseBlock
 				$this->profile->setSetting('gender', $ddmGender->getValue());
 				$this->profile->setSetting('birth_date', $birthDate);
 
+				// trigger event
+				FrontendModel::triggerEvent('profiles', 'saved_settings', array('id' => $this->profile->getId());
+
 				// redirect
 				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'profile_settings') . '?saved=true');
 			}
