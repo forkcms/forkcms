@@ -84,22 +84,22 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// create a new source-object
 		$source = new SpoonDataGridSourceArray($this->bounces);
 
 		// call the parent, as in create a new datagrid with the created source
-		$this->datagrid = new BackendDataGrid($source);
+		$this->dataGrid = new BackendDataGrid($source);
 
 		// hide the following columns
-		$this->datagrid->setColumnHidden('list_id');
+		$this->dataGrid->setColumnHidden('list_id');
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('email', 'bounce_type'), 'email');
+		$this->dataGrid->setSortingColumns(array('email', 'bounce_type'), 'email');
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -111,7 +111,7 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// parse mailing record
 		$this->tpl->assign('mailing', $this->mailing);

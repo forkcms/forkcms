@@ -61,7 +61,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			// load the appropriate step
 			$this->{'loadStep' . $this->stepId}();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page

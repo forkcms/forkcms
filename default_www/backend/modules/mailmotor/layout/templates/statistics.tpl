@@ -54,14 +54,14 @@
 	</div>
 </div>
 
-{option:datagrid}
-<div class="datagridHolder">
+{option:dataGrid}
+<div class="dataGridHolder">
 	<div class="tableHeading" id="clicks">
 		<h3>{$msgMailingLinks|ucfirst}</h3>
 	</div>
-	{$datagrid}
+	{$dataGrid}
 </div>
-{/option:datagrid}
+{/option:dataGrid}
 
 <div class="buttonHolder">
 	<a href="{$var|geturl:'index'}" class="button" title="{$lblNewsletters|ucfirst}">

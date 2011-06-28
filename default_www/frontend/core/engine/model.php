@@ -299,7 +299,7 @@ class FrontendModel
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
-												t.path AS template_path, t.data as template_data
+												t.path AS template_path, t.data AS template_data
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											INNER JOIN pages_templates AS t ON p.template_id = t.id
@@ -362,7 +362,7 @@ class FrontendModel
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
-												t.path AS template_path, t.data as template_data
+												t.path AS template_path, t.data AS template_data
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											INNER JOIN pages_templates AS t ON p.template_id = t.id

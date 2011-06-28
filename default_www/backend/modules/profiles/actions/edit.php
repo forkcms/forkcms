@@ -23,7 +23,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 	/**
 	 * Groups data grid.
 	 *
-	 * @var	BackendDatagrid
+	 * @var	BackendDataGrid
 	 */
 	private $dgGroups;
 
@@ -157,7 +157,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		$this->dgGroups->setColumnURL('group_name', BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id);
 
 		// set column function
-		$this->dgGroups->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[expires_on]'), 'expires_on', true);
+		$this->dgGroups->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[expires_on]'), 'expires_on', true);
 
 		// edit column
 		$this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id, BL::getLabel('Edit'));

@@ -34,8 +34,8 @@
 		<div class="options" id="searchModules">
 
 			<p>{$msgHelpWeightGeneral}</p>
-			<div class="datagridHolder">
-				<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+			<div class="dataGridHolder">
+				<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 					<tr>
 						<th style="width: 30%;"><span>{$msgIncludeInSearch}</span></th>
 						<th><span>{$lblModule|ucfirst}</span></th>

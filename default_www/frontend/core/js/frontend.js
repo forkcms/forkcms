@@ -172,7 +172,7 @@ jsFrontend.forms =
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder]').focus(function()
+			$('input[placeholder], textarea[placeholder]').focus(function()
 			{
 				// grab element
 				var input = $(this);
@@ -188,7 +188,7 @@ jsFrontend.forms =
 				}
 			});
 
-			$('input[placeholder]').blur(function()
+			$('input[placeholder], textarea[placeholder]').blur(function()
 			{
 				// grab element
 				var input = $(this);
@@ -205,10 +205,10 @@ jsFrontend.forms =
 			});
 
 			// call blur to initialize
-			$('input[placeholder]').blur();
+			$('input[placeholder], textarea[placeholder]').blur();
 
 			// hijack the form so placeholders aren't submitted as values
-			$('input[placeholder]').parents('form').submit(function()
+			$('input[placeholder], textarea[placeholder]').parents('form').submit(function()
 			{
 				// find elements with placeholders
 				$(this).find('input[placeholder]').each(function()

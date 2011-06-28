@@ -512,7 +512,7 @@ class BackendBlogModel
 																INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 																INNER JOIN meta AS m ON p.meta_id = m.id
 																WHERE i.status = ? AND p.status = ? AND i.language = ?
-																ORDER BY i.id DESC
+																ORDER BY i.created_on DESC
 																LIMIT ?',
 																array((string) $status, 'active', BL::getWorkingLanguage(), (int) $limit));
 

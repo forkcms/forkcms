@@ -31,7 +31,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Datagrids
+	 * DataGrids
 	 *
 	 * @var	SpoonDataGrid
 	 */
@@ -83,7 +83,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridAllPosts()
+	private function loadDataGridAllPosts()
 	{
 		// filter on category?
 		if($this->categoryId != null)
@@ -115,8 +115,8 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
 
 		// set column functions
-		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[publish_on]'), 'publish_on', true);
-		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
+		$this->dgPosts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[publish_on]'), 'publish_on', true);
+		$this->dgPosts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
 		$this->dgPosts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
@@ -131,7 +131,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridDrafts()
+	private function loadDataGridDrafts()
 	{
 		// filter on category?
 		if($this->categoryId != null)
@@ -163,8 +163,8 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' . $this->categoryId);
 
 		// set column functions
-		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
-		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
 		$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
@@ -179,7 +179,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridRecentPosts()
+	private function loadDataGridRecentPosts()
 	{
 		// filter on category?
 		if($this->categoryId != null)
@@ -210,8 +210,8 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
 
 		// set column functions
-		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
-		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
+		$this->dgRecent->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
+		$this->dgRecent->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
 		$this->dgRecent->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
@@ -229,13 +229,13 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	private function loadDataGrids()
 	{
 		// all blogposts
-		$this->loadDatagridAllPosts();
+		$this->loadDataGridAllPosts();
 
 		// drafts
-		$this->loadDatagridDrafts();
+		$this->loadDataGridDrafts();
 
 		// the most recent blogposts, only shown when we have more than 1 page in total
-		if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDatagridRecentPosts();
+		if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDataGridRecentPosts();
 	}
 
 

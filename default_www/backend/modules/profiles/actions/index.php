@@ -131,7 +131,7 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		$this->dgProfiles->setColumnURL('email', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// set column function
-		$this->dgProfiles->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[registered_on]'), 'registered_on', true);
+		$this->dgProfiles->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[registered_on]'), 'registered_on', true);
 
 		// add columns
 		$this->dgProfiles->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[id]', BL::getLabel('Edit'));

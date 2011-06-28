@@ -14,9 +14,9 @@ jsBackend.groups =
 			$('.hide').each(jsBackend.groups.hide);
 			$('.container').click(jsBackend.groups.clickHandler);
 			$('.container span label').each(jsBackend.groups.mouseHandler);
-			$('.module .datagridHolder .datagrid tbody').each(jsBackend.groups.selectionPermissions);
-			$('.groupHolder .datagrid tbody').each(jsBackend.groups.selectionWidgets)
-			$('.datagrid tbody tr td').click(jsBackend.groups.selectHandler);
+			$('.module .dataGridHolder .dataGrid tbody').each(jsBackend.groups.selectionPermissions);
+			$('.groupHolder .dataGrid tbody').each(jsBackend.groups.selectionWidgets)
+			$('.dataGrid tbody tr td').click(jsBackend.groups.selectHandler);
 			$('.selectAll').click(jsBackend.groups.selectAll);
 		},
 
@@ -40,7 +40,7 @@ jsBackend.groups =
 			if($this.hasClass('iconCollapsed'))
 			{
 				// slidedown
-				$this.next('.datagridHolder').show();
+				$this.next('.dataGridHolder').show();
 
 				// change title
 				$this.attr('title', 'close');
@@ -54,7 +54,7 @@ jsBackend.groups =
 			else
 			{
 				// close this thing
-				$this.next('.datagridHolder').hide();
+				$this.next('.dataGridHolder').hide();
 
 				// change title
 				$this.attr('title', 'open');				
@@ -92,7 +92,7 @@ jsBackend.groups =
 			}
 
 			// editing permissions? check permissions
-			if($this.parent('tr').parent('tbody').parent('.datagrid').parent('.datagridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);	
+			if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.dataGridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);	
 
 			// editing widgets? check widgets
 			else $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionWidgets);

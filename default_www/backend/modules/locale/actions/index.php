@@ -77,37 +77,37 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->dgActions = new BackendDataGridArray(isset($translations['act']) ? $translations['act'] : array());
 
 		// put the datagrids (references) in an array so we can loop them
-		$datagrids = array('lbl' => &$this->dgLabels, 'msg' => &$this->dgMessages, 'err' => &$this->dgErrors, 'act' => &$this->dgActions);
+		$dataGrids = array('lbl' => &$this->dgLabels, 'msg' => &$this->dgMessages, 'err' => &$this->dgErrors, 'act' => &$this->dgActions);
 
 		// loop the datagrids (as references)
-		foreach($datagrids as $type => &$datagrid)
+		foreach($dataGrids as $type => &$dataGrid)
 		{
 			// set sorting
-			$datagrid->setSortingColumns(array('module', 'name'), 'name');
+			$dataGrid->setSortingColumns(array('module', 'name'), 'name');
 
 			// disable paging
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// set column attributes for each language
 			foreach($this->filter['language'] as $lang)
 			{
 				// add a class for the inline edit
-				$datagrid->setColumnAttributes($lang, array('class' => 'translationValue'));
+				$dataGrid->setColumnAttributes($lang, array('class' => 'translationValue'));
 
 				// add attributes, so the inline editing has all the needed data
-				$datagrid->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'' . $type . '\'}'));
+				$dataGrid->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'' . $type . '\'}'));
 
 				// escape the double quotes
-				$datagrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
+				$dataGrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
 
 				// set header labels
-				$datagrid->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
+				$dataGrid->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
 
 				// set column attributes
-				$datagrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
+				$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
 
 				// hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
-				if(count($this->filter['language']) == 1) $datagrid->setColumnHidden('translation_id');
+				if(count($this->filter['language']) == 1) $dataGrid->setColumnHidden('translation_id');
 
 				// only 1 language selected?
 				if(count($this->filter['language']) == 1)
@@ -116,10 +116,10 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 					if($this->isGod)
 					{
 						//  add edit button
-						$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[translation_id]' . $this->filterQuery);
+						$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[translation_id]' . $this->filterQuery);
 
 						// add copy button
-						$datagrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '&amp;id=[translation_id]' . $this->filterQuery, array('class' => 'button icon iconCopy linkButton'));
+						$dataGrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '&amp;id=[translation_id]' . $this->filterQuery, array('class' => 'button icon iconCopy linkButton'));
 					}
 				}
 			}

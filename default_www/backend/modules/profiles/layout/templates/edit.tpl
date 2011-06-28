@@ -63,7 +63,7 @@
 		</div>
 
 		<div id="tabGroups">
-			<div class="datagridHolder">
+			<div class="dataGridHolder">
 				<div class="tableHeading">
 					<div class="oneLiner">
 						<h3 class="floater">{$lblGroups|ucfirst}</h3>

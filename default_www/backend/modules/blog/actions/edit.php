@@ -23,9 +23,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Datagrid for the drafts
+	 * DataGrid for the drafts
 	 *
-	 * @var	BackendDatagrid
+	 * @var	BackendDataGrid
 	 */
 	private $dgDrafts;
 
@@ -327,7 +327,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				elseif($item['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$redirectUrl = BackendModel::createURLForAction('edit') . '&report=saved_as_draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id'];
+					$redirectUrl = BackendModel::createURLForAction('edit') . '&report=saved-as-draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id'];
 				}
 
 				// append to redirect URL

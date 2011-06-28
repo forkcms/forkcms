@@ -9,12 +9,12 @@
 		</a>
 	</div>
 </div>
-{option:datagrid}
-<div class="datagridHolder">
-	{$datagrid}
+{option:dataGrid}
+<div class="dataGridHolder">
+	{$dataGrid}
 </div>
-{/option:datagrid}
-{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
+{/option:dataGrid}
+{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

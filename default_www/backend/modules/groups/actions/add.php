@@ -558,7 +558,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			$actionGrid->setPaging(false);
 
 			// get content of datagrids
-			$permissionBoxes[$key]['actions']['datagrid'] = $actionGrid->getContent();
+			$permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
 			$permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
 		}
 

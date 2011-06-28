@@ -40,19 +40,19 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS, BL::getWorkingLanguage());
+		$this->dataGrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS, BL::getWorkingLanguage());
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('term'), 'term');
+		$this->dataGrid->setSortingColumns(array('term'), 'term');
 
 		// column function
-		$this->datagrid->setColumnFunction('str_replace', array(',', ', ', '[synonym]'), 'synonym', true);
+		$this->dataGrid->setColumnFunction('str_replace', array(',', ', ', '[synonym]'), 'synonym', true);
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]');
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
@@ -64,7 +64,7 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 	private function parse()
 	{
 		// assign the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
 

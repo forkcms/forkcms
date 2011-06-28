@@ -59,43 +59,43 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_GROUPS);
-		$this->datagrid->setColumnsHidden(array('language', 'is_default'));
+		$this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_GROUPS);
+		$this->dataGrid->setColumnsHidden(array('language', 'is_default'));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name', 'created_on'), 'created_on');
-		$this->datagrid->setSortParameter('desc');
+		$this->dataGrid->setSortingColumns(array('name', 'created_on'), 'created_on');
+		$this->dataGrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
+		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
 
 		// set the datagrid ID so we don't run into trouble with multiple datagrids that use mass actions
-		$this->datagrid->setAttributes(array('id' => 'dgGroups'));
+		$this->dataGrid->setAttributes(array('id' => 'dgGroups'));
 
 		// add the multicheckbox column
-		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]', BackendMailmotorModel::getDefaultGroupIds());
-		$this->datagrid->setColumnsSequence('checkbox', 'name', 'created_on', 'language');
+		$this->dataGrid->setMassActionCheckboxes('checkbox', '[id]', BackendMailmotorModel::getDefaultGroupIds());
+		$this->dataGrid->setColumnsSequence('checkbox', 'name', 'created_on', 'language');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
-		$this->datagrid->setMassAction($ddmMassAction);
+		$this->dataGrid->setMassAction($ddmMassAction);
 
 		// set column functions
-		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 		// add delete column
-		$this->datagrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
-		$this->datagrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
+		$this->dataGrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// add styles
-		$this->datagrid->setColumnAttributes('name', array('class' => 'title'));
+		$this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -107,7 +107,7 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
 

@@ -12,7 +12,7 @@
 class BackendPagesIndex extends BackendBaseActionIndex
 {
 	/**
-	 * Datagrids
+	 * DataGrids
 	 *
 	 * @var	BackendDataGridDB
 	 */
@@ -42,7 +42,7 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		if(!SpoonFile::exists(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 		// load the dgRecentlyEdited
-		$this->loadDatagrids();
+		$this->loadDataGrids();
 
 		// parse
 		$this->parse();
@@ -57,7 +57,7 @@ class BackendPagesIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridDrafts()
+	private function loadDataGridDrafts()
 	{
 		// create datagrid
 		$this->dgDrafts = new BackendDataGridDB(BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
@@ -72,7 +72,7 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
 
 		// set column functions
-		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on');
 
 		// add edit column
@@ -88,7 +88,7 @@ class BackendPagesIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagridRecentlyEdited()
+	private function loadDataGridRecentlyEdited()
 	{
 		// create dgRecentlyEdited
 		$this->dgRecentlyEdited = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_RECENT, array('active', BL::getWorkingLanguage(), 7));
@@ -119,13 +119,13 @@ class BackendPagesIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrids()
+	private function loadDataGrids()
 	{
 		// load the datagrid with the recently edited items
-		$this->loadDatagridRecentlyEdited();
+		$this->loadDataGridRecentlyEdited();
 
 		// load the dategird with the drafts
-		$this->loadDatagridDrafts();
+		$this->loadDataGridDrafts();
 	}
 
 
