@@ -140,7 +140,7 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
 		// add RSS-feed
-		$this->header->addMetaData(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true, 'link');
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true);
 
 		// add into breadcrumb
 		$this->breadcrumb->addElement(ucfirst(FL::lbl('Archive')));
