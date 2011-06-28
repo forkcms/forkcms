@@ -1,4 +1,11 @@
-2.4.1 (2011-xx-xx)
+2.4.1 (2011-06-28)
+--
+Bugfixes:
+
+* Blog: blogger import script now downloads the images correctly.
+
+
+2.4.0 (2011-06-21)
 --
 Bugfixes:
 
@@ -11,6 +18,7 @@ Improvements:
 * Locale: added quick-edit.
 * Core: extras (blocks or widgets) now simulate their own scope concerning templates.
 * Core: no more language if there is just one language enabled.
+* Core: removed deprecated methods.
 
 
 2.3.1 (2011-06-14)

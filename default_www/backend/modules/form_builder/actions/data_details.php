@@ -41,7 +41,7 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 			// get data
 			$this->getData();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page

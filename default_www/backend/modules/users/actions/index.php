@@ -23,7 +23,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// load the datagrid
-		$this->loadDatagrid();
+		$this->loadDataGrid();
 
 		// parse the datagrid
 		$this->parse();
@@ -38,19 +38,19 @@ class BackendUsersIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// create datagrid with an overview of all active and undeleted users
-		$this->datagrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
+		$this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
 
 		// add column
-		$this->datagrid->addColumn('nickname', ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('nickname', ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// show the user's nickname
-		$this->datagrid->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+		$this->dataGrid->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 	}
 
 
@@ -61,7 +61,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
 

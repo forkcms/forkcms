@@ -10,7 +10,7 @@
 	</div>
 </div>
 
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">
 
@@ -52,15 +52,15 @@
 		</div>
 	{/form:filter}
 
-	{option:datagrid}
+	{option:dataGrid}
 		<form action="{$var|geturl:'mass_data_action'}" method="get" class="forkForms">
-			<div class="datagridHolder">
+			<div class="dataGridHolder">
 				<input type="hidden" name="form_id" value="{$id}" />
-				{$datagrid}
+				{$dataGrid}
 			</div>
 		</form>
-	{/option:datagrid}
-	{option:!datagrid}<p>{$msgNoData}</p>{/option:!datagrid}
+	{/option:dataGrid}
+	{option:!dataGrid}<p>{$msgNoData}</p>{/option:!dataGrid}
 </div>
 
 <div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">

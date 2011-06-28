@@ -11,9 +11,9 @@
 		</div>
 	</div>
 
-	<div class="datagridHolder">
-		{option:datagrid}{$datagrid}{/option:datagrid}
-		{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
+	<div class="dataGridHolder">
+		{option:dataGrid}{$dataGrid}{/option:dataGrid}
+		{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
 	</div>
 {/form:themes}
 

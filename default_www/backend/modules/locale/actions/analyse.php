@@ -13,7 +13,7 @@
 class BackendLocaleAnalyse extends BackendBaseActionIndex
 {
 	/**
-	 * Datagrid instances
+	 * DataGrid instances
 	 *
 	 * @var	BackendDataGridArray
 	 */

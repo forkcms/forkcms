@@ -19,13 +19,13 @@
 
 			<div id="tabAnalyticsReferrers">
 				{* Top referrers *}
-				<div class="datagridHolder" id="datagridReferrers">
+				<div class="dataGridHolder" id="dataGridReferrers">
 					{option:dgAnalyticsReferrers}
 						{$dgAnalyticsReferrers}
 					{/option:dgAnalyticsReferrers}
 
 					{option:!dgAnalyticsReferrers}
-						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+						<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 							<tr>
 								<td>{$msgNoReferrers}</td>
 							</tr>
@@ -36,13 +36,13 @@
 
 			<div id="tabAnalyticsKeywords">
 				{* Top keywords *}
-				<div class="datagridHolder" id="datagridKeywords">
+				<div class="dataGridHolder" id="dataGridKeywords">
 					{option:dgAnalyticsKeywords}
 						{$dgAnalyticsKeywords}
 					{/option:dgAnalyticsKeywords}
 
 					{option:!dgAnalyticsKeywords}
-						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+						<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 							<tr>
 								<td>{$msgAnalyticsNoKeywords}</td>
 							</tr>

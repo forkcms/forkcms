@@ -17,7 +17,7 @@
 </div>
 {/option:csvURL}
 
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	{form:filter}
 		{$hidGroupId}
 		<div class="dataFilter">
@@ -49,7 +49,7 @@
 		</div>
 	{/form:filter}
 
-	{option:datagrid}
+	{option:dataGrid}
 	<form action="{$var|geturl:'mass_address_action'}" method="get" class="forkForms submitWithLink" id="massAddressAction">
 		<fieldset>
 			<input type="hidden" name="offset" value="{$offset}" />
@@ -57,16 +57,16 @@
 			<input type="hidden" name="sort" value="{$sort}" />
 			<input type="hidden" name="email" value="{$email}" />
 			{option:group}<input type="hidden" name="group_id" value="{$group.id}" />{/option:group}
-			{$datagrid}
+			{$dataGrid}
 		</fieldset>
 	</form>
-	{/option:datagrid}
+	{/option:dataGrid}
 </div>
 
-{option:!datagrid}
+{option:!dataGrid}
 	{option:oPost}<p>{$msgNoResultsForFilter|sprintf:{$email}}</p>{/option:oPost}
 	{option:!oPost}<p>{$msgNoSubscriptions}</p>{/option:!oPost}
-{/option:!datagrid}
+{/option:!dataGrid}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

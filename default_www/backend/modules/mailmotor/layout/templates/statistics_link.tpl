@@ -35,11 +35,11 @@
 	</div>
 {/form:add}
 
-{option:datagrid}
-<div class="datagridHolder">
-	{$datagrid}
+{option:dataGrid}
+<div class="dataGridHolder">
+	{$dataGrid}
 </div>
-{/option:datagrid}
+{/option:dataGrid}
 
 <div class="buttonHolderLeft">
 	<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="button" title="{$lblAddGroup|ucfirst}">

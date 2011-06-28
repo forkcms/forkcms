@@ -41,28 +41,28 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, array('active', BL::getWorkingLanguage()));
+		$this->dataGrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, array('active', BL::getWorkingLanguage()));
 
 		// set headers
-		$this->datagrid->setHeaderLabels(array('num_items' => ucfirst(BL::lbl('Amount'))));
+		$this->dataGrid->setHeaderLabels(array('num_items' => ucfirst(BL::lbl('Amount'))));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('title', 'num_items'), 'title');
+		$this->dataGrid->setSortingColumns(array('title', 'num_items'), 'title');
 
 		// set column URLs
-		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
 
 		// convert the count into a readable and clickable one
-		$this->datagrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
+		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// disable paging
-		$this->datagrid->setPaging(false);
+		$this->dataGrid->setPaging(false);
 
 		// add attributes, so the inline editing has all the needed data
-		$this->datagrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
+		$this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	}
 
 
@@ -73,7 +73,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
 

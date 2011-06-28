@@ -39,10 +39,10 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 		$this->loadTemplate();
 
 		// load the datagrid
-		$this->loadDatagrid();
+		$this->loadDataGrid();
 
 		// parse datagrid
-		$this->parseDatagrid();
+		$this->parseDataGrid();
 
 	}
 
@@ -52,40 +52,40 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// create a new source-object
 		$source = new SpoonDataGridSourceDB(FrontendModel::getDB(), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
 
 		// create datagrid
-		$this->datagrid = new SpoonDataGrid($source);
-		$this->datagrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
+		$this->dataGrid = new SpoonDataGrid($source);
+		$this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
 
 		// set hidden columns
-		$this->datagrid->setColumnsHidden(array('id', 'status'));
+		$this->dataGrid->setColumnsHidden(array('id', 'status'));
 
 		// set headers values
 		$headers['name'] = ucfirst(FL::lbl('Name'));
 		$headers['send_on'] = ucfirst(FL::lbl('Sent'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels($headers);
+		$this->dataGrid->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name', 'send_on'), 'name');
-		$this->datagrid->setSortParameter('desc');
+		$this->dataGrid->setSortingColumns(array('name', 'send_on'), 'name');
+		$this->dataGrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
+		$this->dataGrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
 
 		// set column functions
-		$this->datagrid->setColumnFunction(array('SpoonDate', 'getTimeAgo'), array('[send_on]'), 'send_on', true);
+		$this->dataGrid->setColumnFunction(array('SpoonDate', 'getTimeAgo'), array('[send_on]'), 'send_on', true);
 
 		// add styles
-		$this->datagrid->setColumnAttributes('name', array('class' => 'title'));
+		$this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::MAILINGS_PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::MAILINGS_PAGING_LIMIT);
 	}
 
 
@@ -94,10 +94,10 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	 *
 	 * @return	void
 	 */
-	private function parseDatagrid()
+	private function parseDataGrid()
 	{
 		// parse the datagrid in the template
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
 
