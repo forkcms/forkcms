@@ -558,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `hooks_queue` (
   `callback` text COLLATE utf8_unicode_ci NOT NULL,
   `data` text COLLATE utf8_unicode_ci,
   `status` enum('busy','error','queued') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'queued',
-  `added_on` datetime NOT NULL,
+  `created_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -568,5 +568,6 @@ CREATE TABLE IF NOT EXISTS `hooks_subscriptions` (
   `event_name` varchar(255) NOT NULL,
   `module` varchar(255) NOT NULL,
   `callback` text NOT NULL,
+  `created_on` datetime NOT NULL,
   UNIQUE KEY `event_module` (`event_module`(100),`event_name`(100),`module`(100))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

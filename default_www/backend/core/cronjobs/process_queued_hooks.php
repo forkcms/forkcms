@@ -106,7 +106,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 				}
 
 				// everything went fine so delete the item
-				if($processedSuccesfully = true;) $db->delete('hooks_queue', 'id = ?', $item['id']);
+				if($processedSuccesfully) $db->delete('hooks_queue', 'id = ?', $item['id']);
 
 				// logging when we are in debugmode
 				if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') finished.');

@@ -29,10 +29,6 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		// parse page
 		$this->parse();
 
-
-		BackendModel::subscribeToEvent('pages', 'saved_page', 'tags', array('BackendTagsModel', 'blaat'));
-
-
 		// display the page
 		$this->display();
 	}

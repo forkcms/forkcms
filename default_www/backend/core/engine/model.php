@@ -1013,7 +1013,7 @@ class BackendModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CORE_PATH . '/hooks/pid');
+					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1030,7 +1030,7 @@ class BackendModel
 				if($output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CORE_PATH . '/hooks/pid');
+					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1044,7 +1044,7 @@ class BackendModel
 				if(!SpoonFile::exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CORE_PATH . '/hooks/pid');
+					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1202,6 +1202,7 @@ class BackendModel
 		$item['event_name'] = (string) $eventName;
 		$item['module'] = (string) $module;
 		$item['callback'] = serialize($callback);
+		$item['created_on'] = BackendModel::getUTCDate();
 
 		// get db
 		$db = self::getDB(true);
@@ -1261,7 +1262,7 @@ class BackendModel
 				$item['callback'] = $subscription['callback'];
 				$item['data'] = serialize($data);
 				$item['status'] = 'queued';
-				$item['added_on'] = BackendModel::getUTCDate();
+				$item['created_on'] = BackendModel::getUTCDate();
 
 				// add
 				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
@@ -1271,7 +1272,7 @@ class BackendModel
 			}
 
 			// start processing
-			BackendModel::startProcessingHooks();
+			self::startProcessingHooks();
 		}
 	}
 
@@ -1295,7 +1296,6 @@ class BackendModel
 		self::getDB(true)->delete('hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
 									array($eventModule, $eventName, $module));
 	}
-
 }
 
 ?>
