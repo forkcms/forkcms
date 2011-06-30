@@ -36,7 +36,10 @@ class FrontendFooter extends FrontendBaseObject
 			$siteHTMLFooter .= '<script>' . "\n";
 			if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 			{
-				$siteHTMLFooter .= '	window.fbAsyncInit = function() { FB.init({appId: \'' . FrontendModel::getModuleSetting('core', 'facebook_app_id', null) . '\', status: true, cookie: true, xfbml: true}); };' . "\n";
+				$siteHTMLFooter .= '	window.fbAsyncInit = function() {' . "\n";
+				$siteHTMLFooter .= '		FB.init({ appId: \'' . FrontendModel::getModuleSetting('core', 'facebook_app_id', null) . '\', status: true, cookie: true, xfbml: true });' . "\n";
+				$siteHTMLFooter .= '		jsFrontend.facebook.afterInit();' . "\n";
+				$siteHTMLFooter .= '	};' . "\n";
 			}
 			$siteHTMLFooter .= '	(function() {' . "\n";
 			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE) . '/all.js#xfbml=1";' . "\n";

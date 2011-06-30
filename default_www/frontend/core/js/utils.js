@@ -279,9 +279,28 @@ utils.string =
  * Functions related to the current url
  *
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.url =
 {
+	extractParamFromUri: function (uri, paramName) 
+	{
+		if(!uri) return;
+		var uri = uri.split('#')[0];
+		var parts = uri.split('?');
+		if (parts.length == 1) return;
+		
+		var query = decodeURI(parts[1]);
+
+		paramName += '=';
+		var params = query.split('&');
+		for(var i=0, param; param = params[i]; ++i) 
+		{
+			if(param.indexOf(paramName) === 0) return unescape(param.split('=')[1]);
+		}
+	},	
+
+
 	/**
 	 * Get a GET parameter
 	 *

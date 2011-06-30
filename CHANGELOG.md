@@ -5,7 +5,7 @@ Improvements:
 
 * Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.
 * Core: siteHTMLFooter should be append after the JS-files.
-
+* Core: implemented social-tracking for GA, will only be executed if Google Analytics is used, and facebook or twitter are integrated.
 
 
 2.4.1 (2011-06-28)
