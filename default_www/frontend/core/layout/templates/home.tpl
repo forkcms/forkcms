@@ -52,13 +52,12 @@
 		</footer>
 	</div>
 
-	{* Site wide HTML *}
-	{$siteHTMLFooter}
-
 	{* General Javascript *}
 	{iteration:javascriptFiles}
 		<script src="{$javascriptFiles.file}"></script>
 	{/iteration:javascriptFiles}
 
+	{* Site wide HTML *}
+	{$siteHTMLFooter}
 </body>
 </html>

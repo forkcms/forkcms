@@ -4,6 +4,7 @@
 Improvements:
 
 * Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.
+* Core: siteHTMLFooter should be append after the JS-files.
 
 
 
