@@ -1,4 +1,4 @@
-if(!jsFrontend) { var jsFrontend = new Object(); }
+if(!jsFrontend) { var jsFrontend }
 
 
 /**
@@ -33,10 +33,9 @@ jsFrontend =
 
 		// init search
 		jsFrontend.search.init();
-		
+
 		// init twitter
 		jsFrontend.twitter.init();
-		
 	},
 
 
@@ -50,7 +49,7 @@ jsFrontend =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -76,15 +75,15 @@ jsFrontend.controls =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
- * Facebook related 
+ * Facebook related
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend.facebook = 
+jsFrontend.facebook =
 {
 	// will be called after Facebook is initialized
 	afterInit: function()
@@ -94,19 +93,19 @@ jsFrontend.facebook =
 		{
 			// subscribe and track like
 			FB.Event.subscribe('edge.create', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'like', targetUrl]); });
-			
+
 			// subscribe and track unlike
 			FB.Event.subscribe('edge.remove', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'unlike', targetUrl]); });
-			
+
 			// subscribe and track message
 			FB.Event.subscribe('message.send', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'send', targetUrl]); });
 		}
 	},
 
-	
+
 	// end
 	eoo: true
-}
+},
 
 /**
  * Form related javascript
@@ -122,7 +121,7 @@ jsFrontend.forms =
 		jsFrontend.forms.datefields();
 	},
 
-	
+
 	// initialize the datefields
 	datefields: function()
 	{
@@ -131,8 +130,14 @@ jsFrontend.forms =
 		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
 		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
 		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
-		
-		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker({
+
+		var $inputDatefields = $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange')
+		var $inputDatefieldNormal = $('.inputDatefieldNormal');
+		var $inputDatefieldFrom = $('.inputDatefieldFrom');
+		var $inputDatefieldTill = $('.inputDatefieldTill');
+		var $inputDatefieldRange = $('.inputDatefieldRange');
+
+		$inputDatefields.datepicker({
 			dayNames: dayNames,
 			dayNamesMin: dayNamesMin,
 			dayNamesShort: dayNamesShort,
@@ -143,44 +148,44 @@ jsFrontend.forms =
 			prevText: '{$lblPrevious}',
 			showAnim: 'slideDown'
 		});
-		
+
 		// the default, nothing special
-		$('.inputDatefieldNormal').each(function()
+		$inputDatefieldNormal.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
-			
+
 			// set options
-			$(this).datepicker('option', { 
-				dateFormat: data.mask, 
+			$(this).datepicker('option', {
+				dateFormat: data.mask,
 				firstDay: data.firstday
 			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain startdate
-		$('.inputDatefieldFrom').each(function()
+		$inputDatefieldFrom.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', { 
+			$(this).datepicker('option', {
 				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain enddate
-		$('.inputDatefieldTill').each(function()
+		$inputDatefieldTill.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', 
+			$(this).datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -189,14 +194,14 @@ jsFrontend.forms =
 		});
 
 		// datefields that have a certain range
-		$('.inputDatefieldRange').each(function()
+		$inputDatefieldRange.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', 
+			$(this).datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -216,7 +221,7 @@ jsFrontend.forms =
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder], textarea[placeholder]').focus(function()
+			$('input[placeholder], textarea[placeholder]').bind('focus', function()
 			{
 				// grab element
 				var input = $(this);
@@ -232,7 +237,7 @@ jsFrontend.forms =
 				}
 			});
 
-			$('input[placeholder], textarea[placeholder]').blur(function()
+			$('input[placeholder], textarea[placeholder]').bind('blur', function()
 			{
 				// grab element
 				var input = $(this);
@@ -270,7 +275,7 @@ jsFrontend.forms =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -314,7 +319,7 @@ jsFrontend.gravatar =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -341,8 +346,11 @@ jsFrontend.search =
 	// autocomplete (search results page: autocomplete based on known search terms)
 	autocomplete: function()
 	{
+		// grab element
+		var $input = $('input.autoComplete');
+
 		// autocomplete (based on saved search terms) on results page
-		$('input.autoComplete').autocomplete(
+		$input.autocomplete(
 		{
 			minLength: 1,
 			source: function(request, response)
@@ -397,8 +405,11 @@ jsFrontend.search =
 		// set default values
 		if(typeof length == 'undefined') length = 100;
 
+		// grab element
+		var $input = $('input.autoSuggest');
+
 		// search widget suggestions
-		$('input.autoSuggest').autocomplete(
+		$input.autocomplete(
 		{
 			minLength: 1,
 			source: function(request, response)
@@ -434,7 +445,7 @@ jsFrontend.search =
 		})
 		// ok, so, when we have been typing in the search textfield and we blur out of it,
 		// I suppose we have entered our full search query and we're ready to save it
-		.blur(function()
+		.bind('blur', function()
 		{
 			// ajax call!
 			$.ajax(
@@ -461,9 +472,14 @@ jsFrontend.search =
 		// check if calls for live suggest are allowed
 		var allowCall = true;
 
+		// grab element
+		var $input = $('input.liveSuggest');
+
 		// change in input = do the dance: live search results completion
-		$('input.liveSuggest').keyup(function()
+		$input.bind('keyup', function()
 		{
+			var $searchContainer = $('#searchContainer');
+
 			// make sure we're allowed to do the call (= previous call is no longer processing)
 			if(allowCall)
 			{
@@ -471,7 +487,7 @@ jsFrontend.search =
 				allowCall = false;
 
 				// fade out
-				$('#searchContainer').fadeTo(0, 0.5);
+				$searchContainer.fadeTo(0, 0.5);
 
 				// ajax call!
 				$.ajax(
@@ -490,10 +506,10 @@ jsFrontend.search =
 						if(data.code == 200)
 						{
 							// replace search results
-							$('#searchContainer').html(data.data);
+							$searchContainer.html(data.data);
 
 							// fade in
-							$('#searchContainer').fadeTo(0, 1);
+							$searchContainer.fadeTo(0, 1);
 						}
 					},
 					error: function()
@@ -502,10 +518,10 @@ jsFrontend.search =
 						allowCall = true;
 
 						// replace search results
-						$('#searchContainer').html('');
+						$searchContainer.html('');
 
 						// fade in
-						$('#searchContainer').fadeTo(0, 1);
+						$searchContainer.fadeTo(0, 1);
 					}
 				});
 			}
@@ -515,7 +531,7 @@ jsFrontend.search =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -541,7 +557,7 @@ jsFrontend.twitter =
 
 					// get url
 					if(event.target && event.target.nodeName == 'IFRAME') targetUrl = utils.url.extractParamFromUri(event.target.src, 'url');
-					
+
 					// push to GA
 					_gaq.push(['_trackSocial', 'twitter', 'tweet', targetUrl]);
 				}
@@ -555,5 +571,4 @@ jsFrontend.twitter =
 }
 
 
-
-$(document).ready(jsFrontend.init);
+$(jsFrontend.init);

@@ -1,4 +1,4 @@
-if(!utils) var utils = new Object();
+if(!utils) { var utils }
 
 
 /**
@@ -11,7 +11,7 @@ utils =
 	// datamembers
 	debug: false,
 	eoo: true
-}
+},
 
 
 /**
@@ -41,7 +41,7 @@ utils.array =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -76,7 +76,7 @@ utils.cookies =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -150,7 +150,7 @@ utils.form =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -272,7 +272,7 @@ utils.string =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
