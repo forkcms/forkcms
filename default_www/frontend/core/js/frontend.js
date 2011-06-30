@@ -33,6 +33,10 @@ jsFrontend =
 
 		// init search
 		jsFrontend.search.init();
+		
+		// init twitter
+		jsFrontend.twitter.init();
+		
 	},
 
 
@@ -49,6 +53,11 @@ jsFrontend =
 }
 
 
+/**
+ * Controls related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsFrontend.controls =
 {
 	// init, something like a constructor
@@ -70,6 +79,40 @@ jsFrontend.controls =
 }
 
 
+/**
+ * Facebook related 
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.facebook = 
+{
+	// will be called after Facebook is initialized
+	afterInit: function()
+	{
+		// is GA available?
+		if(typeof _gaq == 'object')
+		{
+			// subscribe and track like
+			FB.Event.subscribe('edge.create', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'like', targetUrl]); });
+			
+			// subscribe and track unlike
+			FB.Event.subscribe('edge.remove', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'unlike', targetUrl]); });
+			
+			// subscribe and track message
+			FB.Event.subscribe('message.send', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'send', targetUrl]); });
+		}
+	},
+
+	
+	// end
+	eoo: true
+}
+
+/**
+ * Form related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsFrontend.forms =
 {
 	// init, something like a constructor
@@ -79,7 +122,8 @@ jsFrontend.forms =
 		jsFrontend.forms.datefields();
 	},
 
-
+	
+	// initialize the datefields
 	datefields: function()
 	{
 		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
@@ -229,6 +273,11 @@ jsFrontend.forms =
 }
 
 
+/**
+ * Gravatar related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsFrontend.gravatar =
 {
 	// init, something like a constructor
@@ -467,6 +516,44 @@ jsFrontend.search =
 	// end
 	eoo: true
 }
+
+
+/**
+ * Twitter related stuff
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.twitter =
+{
+	init: function()
+	{
+		// if GA is integrated and a tweetbutton is used
+		if(typeof _gaq == 'object' && typeof twttr == 'object')
+		{
+			// bind event, so we can track the tweets
+			twttr.events.bind('tweet', function(event)
+			{
+				// valid event?
+				if(event)
+				{
+					// init var
+					var targetUrl = null;
+
+					// get url
+					if(event.target && event.target.nodeName == 'IFRAME') targetUrl = utils.url.extractParamFromUri(event.target.src, 'url');
+					
+					// push to GA
+					_gaq.push(['_trackSocial', 'twitter', 'tweet', targetUrl]);
+				}
+			});
+		}
+	},
+
+
+	// end
+	eoo: true
+}
+
 
 
 $(document).ready(jsFrontend.init);
