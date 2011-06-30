@@ -1,3 +1,12 @@
+2.4.2 (xxxx-xx-xx)
+--
+
+Improvements:
+
+* Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.
+
+
+
 2.4.1 (2011-06-28)
 --
 Bugfixes:

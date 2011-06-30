@@ -281,7 +281,6 @@ class FrontendTemplate extends SpoonTemplate
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->assign('FACEBOOK_ADMIN_IDS', FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null));
 		if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) $this->assign('FACEBOOK_APP_ID', FrontendModel::getModuleSetting('core', 'facebook_app_id', null));
 		if(FrontendModel::getModuleSetting('core', 'facebook_app_secret', null) !== null) $this->assign('FACEBOOK_APP_SECRET', FrontendModel::getModuleSetting('core', 'facebook_app_secret', null));
-		if(FrontendModel::getModuleSetting('core', 'facebook_api_key', null) !== null) $this->assign('FACEBOOK_API_KEY', FrontendModel::getModuleSetting('core', 'facebook_api_key', null));
 
 		// theme
 		if(FrontendModel::getModuleSetting('core', 'theme') !== null)
