@@ -168,11 +168,6 @@
 				<span class="helpTxt">{$msgHelpFacebookApplicationId}</span>
 			</p>
 			<p>
-				<label for="facebookApiKey">{$lblAPIKey|ucfirst}</label>
-				{$txtFacebookApiKey} {$txtFacebookApiKeyError}
-				<span class="helpTxt">{$msgHelpFacebookApiKey}</span>
-			</p>
-			<p>
 				<label for="facebookAppId">{$lblApplicationSecret|ucfirst}</label>
 				{$txtFacebookApplicationSecret} {$txtFacebookApplicationSecretError}
 				<span class="helpTxt">{$msgHelpFacebookApplicationSecret}</span>

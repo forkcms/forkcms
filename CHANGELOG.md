@@ -1,4 +1,15 @@
-2.4.1 (XXXX-XX-XX)
+2.4.2 (xxxx-xx-xx)
+--
+
+Improvements:
+
+* Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.
+* Core: siteHTMLFooter should be append after the JS-files.
+* Core: implemented social-tracking for GA, will only be executed if Google Analytics is used, and facebook or twitter are integrated.
+* Core: upgraded jQuery to 1.6.2 and jQueryUI to 1.8.14.
+
+
+2.4.1 (2011-06-28)
 --
 Bugfixes:
 
