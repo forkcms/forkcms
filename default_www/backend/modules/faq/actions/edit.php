@@ -142,7 +142,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 			{
 				// build item
 				$item['id'] = $this->id;
-				$item['meta_id'] = $this->meta->save();
+				$item['meta_id'] = $this->meta->save(true);
 				$item['category_id'] = $this->frm->getField('category_id')->getValue();
 				$item['language'] = $this->record['language'];
 				$item['question'] = $this->frm->getField('title')->getValue();

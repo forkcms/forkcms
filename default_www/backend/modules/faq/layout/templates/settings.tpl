@@ -15,11 +15,11 @@
 			{$ddmOverviewNumberOfItemsPerCategory} {$ddmOverviewNumberOfItemsPerCategoryError}
 		</div>
 		<div class="options">
-			<label for="mostReadNumberOfItems">{$msgNumMostReadItems}</label>
+			<label for="mostReadNumberOfItems">{$msgNumMostReadItems|ucfirst}</label>
 			{$ddmMostReadNumberOfItems} {$ddmMostReadNumberOfItemsError}
 		</div>
 		<div class="options">
-			<label for="relatedNumberOfItems">{$msgNumRelatedItems}</label>
+			<label for="relatedNumberOfItems">{$msgNumRelatedItems|ucfirst}</label>
 			{$ddmRelatedNumberOfItems} {$ddmRelatedNumberOfItemsError}
 		</div>
 	</div>
