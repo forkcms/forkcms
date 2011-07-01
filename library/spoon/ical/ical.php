@@ -7,153 +7,79 @@
  * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
- * @subpackage	ical
+ * @subpackage	http
+ *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @since		1.3.0
+ * @since		1.3.2
  */
 
 
 /**
- * This base class provides all the methods used by iCal-files
+ * This class is used to handle iCal-feeds
  *
  * @package		spoon
- * @subpackage	feed
+ * @subpackage	ical
+ *
+ * @todo	x-prop, iana-prop
  *
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
- * @since		1.1.0
+ * @since		1.3.2
  */
-class SpoonIcal
+class SpoonICal
 {
-	/**
-	 * iCal header
-	 *
-	 * @var	string
-	 */
-	const HEADER = "Content-Type: text/calendar; charset=";
-
-
-	/**
-	 * The calendar scale
-	 *
-	 * @var	string
-	 */
 	private $calendarScale = 'GREGORIAN';
 
-
 	/**
-	 * The charset
-	 *
-	 * @var	string
-	 */
-	private $charset = 'utf-8';
-
-
-	/**
-	 * Items
+	 * An array of the events
 	 *
 	 * @var	array
 	 */
-	private $items = array();
+	private $events;
 
 
-	/**
-	 * The method
-	 *
-	 * @var	string
-	 */
+	private $fileName = 'ical.ics';
 	private $method;
-
-
-	/**
-	 * The product identifier
-	 *
-	 * @var	string
-	 */
-	private $productIdentifier;
-
-
-	/**
-	 * The version
-	 *
-	 * @var	string
-	 */
+	private $productIdentifier = '-//Spoon Ical//';
 	private $version = '2.0';
-
-
-	/**
-	 * The properties
-	 *
-	 * @var array
-	 */
-	private $xProperties;
 
 
 	/**
 	 * Add an event
 	 *
-	 * @return	void
-	 * @param	SpoonIcalItem $item		The item to add.
+	 * @param	SpoonIcalEvent $event	The event object
 	 */
-	public function addItem(SpoonIcalItem $item)
+	public function addEvent(SpoonIcalItem $event)
 	{
-		$this->items[] = $item;
+		$this->events[] = $event;
 	}
 
 
-	/**
-	 * Build the ical
-	 *
-	 * @return	string	A string that represents the fully build iCal.
-	 */
-	protected function buildICal()
+	private function build()
 	{
-		// init var
-		$string = '';
+		// start
+		$string = 'BEGIN:VCALENDAR' . "\n";
 
-		// start string
-		$string .= 'BEGIN:VCALENDAR' . "\n";
+		// product identifier
+		$string .= 'PRODID:' . $this->productIdentifier . "\n";
 
-		// set version
-		$string .= 'VERSION:' . $this->getVersion() . "\n";
+		// version
+		$string .= 'VERSION:' . $this->version . "\n";
 
-		// set product identifier
-		$string .= 'PRODID:' . $this->getProductIdentifier() . "\n";
-		$string .= 'CALSCALE:' . $this->getCalendarScale() . "\n";
-		if($this->getMethod() != '') $string .= 'METHOD:' . $this->getMethod() . "\n";
+		// calscale	optional single
+		if($this->calendarScale !== null) $string .= 'CALSCALE:' . $this->calendarScale . "\n";
 
-		// get extensions
-		$xProperties = $this->getXProperties();
+		// method	optional single
+		if($this->method !== null) $string .= 'METHOD:' . $this->method . "\n";
 
-		// any extensions?
-		if(!empty($xProperties))
+
+		foreach($this->events as $item)
 		{
-			// loop
-			foreach($xProperties as $key => $value) $string .= $key . ':' . $value . "\n";
+			$string .= $item->build();
 		}
 
-		// loop all events
-		foreach($this->getItems() as $item) $string .= $item->parse() . "\n";
-
-		// end string
-		$string .= 'END:VCALENDAR';
-
-		// explode into lines
-		$lines = explode("\n",$string);
-
-		// loop lines
-		foreach($lines as &$line)
-		{
-			// longer the 75 chars?
-			if(mb_strlen($line) > 75)
-			{
-				// split line
-				$line = trim(chunk_split($line, 75, "\n "));
-			}
-		}
-
-		// recreate
-		$string = implode("\n", $lines);
+		// end
+		$string .= 'END:VCALENDAR' . "\n";
 
 		// return
 		return $string;
@@ -161,93 +87,36 @@ class SpoonIcal
 
 
 	/**
-	 * Format as a valid iCal-string
-	 *
-	 * @return	string
-	 * @param	string $string	The string that should be converted.
-	 */
-	public static function formatAsString($string)
-	{
-		// redefine
-		$string = (string) $string;
-
-		// remove newlines
-		$string = str_replace(array("\r", "\n"), array('', '\n'), $string);
-
-		// return
-		return $string;
-	}
-
-
-	/**
-	 * Get the calendar scale
-	 *
-	 * @return	string
-	 */
-	public function getCalendarScale()
-	{
-		return $this->calendarScale;
-	}
-
-
-	/**
-	 * Get the charset.
-	 *
-	 * @return	string
-	 */
-	public function getCharset()
-	{
-		return $this->charset;
-	}
-
-
-	/**
-	 * Get all event-objects
+	 * Get all events
 	 *
 	 * @return	array
 	 */
-	public function getItems()
+	public function getEvents()
 	{
-		return (array) $this->items;
+		return (array) $this->events;
 	}
 
 
-	public function getMethod()
+	public function getFilename()
 	{
-		return $this->method;
+		return (string) $this->fileName;
 	}
 
 
-	/**
-	 * Get product indentifier
-	 *
-	 * @return	string
-	 */
 	public function getProductIdentifier()
 	{
-		return '-//Spoon v' . SPOON_VERSION . '//' . $this->productIdentifier;
+		return $this->productIdentifier;
 	}
 
 
-	/**
-	 * Get version
-	 *
-	 * @return	string
-	 */
 	public function getVersion()
 	{
 		return $this->version;
 	}
 
 
-	public function getXProperties()
-	{
-		return $this->xProperties;
-	}
-
-
 	/**
-	 * Parse the ical and output into the browser.
+	 * Parse the feed and output the feed into the browser.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging).
@@ -255,10 +124,14 @@ class SpoonIcal
 	public function parse($headers = true)
 	{
 		// set headers
-		if((bool) $headers) SpoonHTTP::setHeaders(self::HEADER . $this->getCharset());
+		if((bool) $headers)
+		{
+			SpoonHTTP::setHeaders('Content-Type: text/Calendar');
+			SpoonHTTP::setHeaders('Content-Disposition: inline; filename='. $this->getfilename());
+		}
 
-		// return
-		echo $this->buildIcal();
+		// output
+		echo $this->build();
 
 		// stop here
 		exit;
@@ -266,92 +139,310 @@ class SpoonIcal
 
 
 	/**
-	 * Write the ical into a file
+	 * Write the feed into a file
 	 *
 	 * @return	void
-	 * @param	string $path	The path (and filename) where the ical should be written.
+	 * @param	string $path	The path (and filename) where the feed should be written.
 	 */
 	public function parseToFile($path)
 	{
 		// get xml
-		$ical = $this->buildICal();
+		$data = $this->build();
 
 		// write content
-		SpoonFile::setContent((string) $path, $ical, false, true);
+		SpoonFile::setContent((string) $path, $data, false, true);
 	}
 
 
 	/**
-	 * Set the scale.
+	 * Set the filename.
 	 *
 	 * @return	void
-	 * @param	string $scale	The scale.
+	 * @param	string $name	The name of the file.
 	 */
-	public function setCalendarScale($scale)
+	public function setFilename($name)
 	{
-		$this->scale = (string) $scale;
+		$this->fileName = (string) $name;
 	}
 
 
 	/**
-	 * Set the charset.
+	 * Set the product identifier
 	 *
 	 * @return	void
-	 * @param	string[optional] $charset	The charset that should be used. Possible charsets can be found in spoon.php.
-	 */
-	public function setCharset($charset = 'utf-8')
-	{
-		$this->charset = SpoonFilter::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET);
-	}
-
-
-	/**
-	 * The method
-	 *
-	 * @return	void
-	 * @param	string $method		The method of the calendar.
-	 */
-	public function setMethod($method)
-	{
-		$this->method = (string) $method;
-	}
-
-
-	/**
-	 * Set product identifier
-	 *
-	 * @return	void
-	 * @param	string $value		The product identifier, our will be prepended.
+	 * @param	string $value	The product identifier.
 	 */
 	public function setProductIdentifier($value)
 	{
 		$this->productIdentifier = (string) $value;
 	}
+}
+
+
+/*
+ * @todo	find a way to set those params
+ */
+class SpoonICalItem
+{
+	protected $class;
+	protected $created;
+	protected $description;
+	protected $dtStamp;
+	protected $dtStart;
+	protected $duration;
+	protected $geo;
+	protected $lastModified;
+	protected $location;
+	protected $summary;
+	protected $uid;
 
 
 	/**
-	 * Set version
+	 * This property defines the access classification for a calendar component.
 	 *
 	 * @return	void
-	 * @param	string[optional] $value		The version.
+	 * @param	 $value		The access classification, eg: PUBLIC, PRIVATE, CONFIDENTIAL, ...
 	 */
-	public function setVersion($value = '2.0')
+	public function setClass($value)
 	{
-		$this->version = (string) $value;
+		$this->class = (string) $value;
 	}
 
 
 	/**
-	 * Set the X-properties
+	 * This property specifies the date and time that the calendar information was created by the calendar user agent in the calendar store.
 	 *
 	 * @return	void
-	 * @param 	array $properties	The properties as a key-value-pairs.
+	 * @param	int $value	The timestamp.
 	 */
-	public function setXProperties(array $properties)
+	public function setCreated($value)
 	{
-		foreach($properties as $key => $value) $this->xProperties[(string) $key] = $value;
+		$this->created = (int) $value;
+	}
+
+
+	/**
+	 * This property provides a more complete description of the calendar component than that provided by the "SUMMARY" property.
+	 *
+	 * @return	void
+	 * @param	string $value	The description
+	 */
+	public function setDescription($value)
+	{
+		$this->description = (string) $value;
+	}
+
+
+	/**
+	 * In the case of an iCalendar object that specifies a "METHOD" property, this property specifies the date and time that the instance of the iCalendar object was created.
+	 * In the case of an iCalendar object that doesn't specify a "METHOD" property, this property specifies the date and time that the information associated with the calendar component was last revised in the calendar store.
+	 *
+	 * @return	void
+	 * @param	int $value	The timestamp.
+	 */
+	public function setDTStamp($value)
+	{
+		$this->dtStamp = (int) $value;
+	}
+
+
+	/**
+	 * This property specifies when the calendar component begins.
+	 *
+	 * @return	void
+	 * @param	int $value	The timestamp.
+	 */
+	public function setDTStart($value)
+	{
+		$this->dtStart = (int) $value;
+	}
+
+
+	/**
+	 * This property specifies a positive duration of time.
+	 *
+	 * @return	void
+	 * @param unknown_type $value
+	 */
+	public function setDuration($value)
+	{
+		$this->duration = (string) $duration;
+	}
+
+
+	/**
+	 * This property specifies information related to the global position for the activity specified by a calendar component.
+	 *
+	 * @return	void
+	 * @param	float $lat
+	 * @param	float $lon
+	 */
+	public function setGeo($lat, $lon)
+	{
+		$this->geo['lat'] = (float) $lat;
+		$this->geo['lon'] = (float) $lon;
+	}
+
+
+	/**
+	 * This property specifies the date and time that the information associated with the calendar component was last revised in the calendar store.
+	 *
+	 * @return	void
+	 * @param	int $value	The timestamp.
+	 */
+	public function setLastModified($value)
+	{
+		$this->lastModified = (int) $value;
+	}
+
+
+	/**
+	 * This property defines the intended venue for the activity defined by a calendar component.
+	 *
+	 * @return	void
+	 * @param	string $value
+	 */
+	public function setLocation($value)
+	{
+		$this->location = (string) $value;
+	}
+
+
+	/**
+	 * This property defines a short summary or subject for the calendar component.
+	 *
+	 * @return	void
+	 * @param	string $value	The summary.
+	 */
+	public function setSummary($value)
+	{
+		$this->summary = (string) $value;
+	}
+
+
+	public function setUID($value)
+	{
+		$this->uid = (string) $value;
 	}
 
 }
+
+
+/**
+ * This class is used to handle iCal-items
+ *
+ * @package		spoon
+ * @subpackage	ical
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @since		1.3.2
+ */
+class SpoonICalEvent extends SpoonICalItem
+{
+	public function build()
+	{
+		// start
+		$string = 'BEGIN:VEVENT' . "\n";
+
+	// required
+		// dtstrart
+		if($this->dtStamp == null) $this->dtStamp = time();
+		$string .= 'DTSTAMP;TZID=' . date_default_timezone_get() . ':' .  date('Ymd\THis', $this->dtStamp) . "\n";
+
+		// uid
+		if($this->uid == '') throw new SpoonIcalException('No UID set.');
+		$string .= 'UID:' . $this->uid . "\n";
+
+	// if method is not set this is required
+		// dtstart
+		if($this->dtStart !== null) $string .= 'DTSTART;TZID=' . date_default_timezone_get() . ':' .  date('Ymd\THis', $this->dtStart) . "\n";
+
+	// optional (single)
+		// class
+		if($this->class !== null) $string .= 'CLASS:' . $this->class . "\n";
+
+		// created
+		if($this->created !== null) $string .= 'CREATED;TZID=' . date_default_timezone_get() . ':' .  date('Ymd\THis', $this->created) . "\n";
+
+		// description
+		if($this->description !== '')
+		{
+			$value = trim($this->description);
+			$value = str_replace(array("\n"), array('\n'), $value);
+			$value = str_replace(array("\n", "\r"), '', $value);
+
+			$string .= 'DESCRIPTION:' . $value . "\n";
+		}
+
+		// geo
+		if(isset($this->geo['lat']) && isset($this->geo['lon'])) $string .= 'GEO:' . $this->geo['lat'] . ';' . $this->geo['lon'] . "\n";
+
+        // last-mod
+        if($this->lastModified !== null) $string .= 'LAST-MODIFIED;TZID=' . date_default_timezone_get() . ':' .  date('Ymd\THis', $this->dtStart) . "\n";
+
+        // location
+        if($this->location !== null)
+        {
+			$value = trim($this->location);
+			$value = str_replace(array("\n"), array('\n'), $value);
+			$value = str_replace(array("\n", "\r"), '', $value);
+
+        	$string .= 'LOCATION:' . $value . "\n";
+        }
+
+        // organizer
+        // priority
+        // seq
+        // status
+        // summary
+        if($this->summary !== null) $string .= 'SUMMARY:' . $this->summary . "\n";
+
+        // transp
+        // url
+        // recurid
+
+	// single optional
+		// dtend
+
+		// duration
+
+	// multiple optional
+		// rrule
+
+	// multiple optional
+		// attach
+		// attendee
+		// categories
+		// comment
+		// contact
+		// exdate
+		// rstatus
+		// related
+		// resources
+		// rdate
+		// x-prop
+		// iana-prop
+
+		// end
+		$string .= 'END:VEVENT' . "\n\n";
+
+		// return
+		return $string;
+	}
+}
+
+
+/**
+ * This exception is used to handle iCal related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	ical
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @since		1.3.2
+ */
+class SpoonIcalException extends SpoonException {}
 
 ?>
