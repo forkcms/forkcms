@@ -107,6 +107,7 @@ jsFrontend.facebook =
 	eoo: true
 },
 
+
 /**
  * Form related javascript
  *
