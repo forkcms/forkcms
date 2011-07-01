@@ -156,12 +156,14 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
 		// create elements
-		$this->frm->addText('title', $this->record['title']);
+		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addDate('starts_on_date', $this->record['starts_on']);
 		$this->frm->addTime('starts_on_time', date('H:i', $this->record['starts_on']));
 		$this->frm->addDate('ends_on_date', ($this->record['ends_on'] != null) ? $this->record['ends_on'] : '');
 		$this->frm->addTime('ends_on_time', ($this->record['ends_on'] != null) ? date('H:i', $this->record['ends_on']) : '');
 		$this->frm->addEditor('text', $this->record['text']);
+		$this->frm->addImage('image');
+		$this->frm->addHidden('remove_image');
 		$this->frm->addEditor('introduction', $this->record['introduction']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addCheckbox('allow_subscriptions', ($this->record['allow_subscriptions'] === 'Y'));
@@ -172,6 +174,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['revision_id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
+		$this->frm->addCheckbox('in_the_picture', ($this->record['in_the_picture'] == 'Y'));
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);

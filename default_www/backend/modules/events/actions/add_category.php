@@ -46,7 +46,7 @@ class BackendEventsAddCategory extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addCategory');
 
 		// create elements
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);

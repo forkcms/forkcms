@@ -54,12 +54,13 @@ class BackendEventsAdd extends BackendBaseActionAdd
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
 		// create elements
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addDate('starts_on_date', null);
 		$this->frm->addTime('starts_on_time', null);
 		$this->frm->addDate('ends_on_date', '');
 		$this->frm->addTime('ends_on_time', '');
 		$this->frm->addEditor('text');
+		$this->frm->addImage('image');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addCheckbox('allow_subscriptions', false);
@@ -70,6 +71,7 @@ class BackendEventsAdd extends BackendBaseActionAdd
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
+		$this->frm->addCheckbox('in_the_picture');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
