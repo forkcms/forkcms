@@ -265,7 +265,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if($this->URL->getParameter('subscription', 'string') == 'spam') $this->tpl->assign('subscriptionIsSpam', true);
 		if($this->URL->getParameter('subscription', 'string') == 'true') $this->tpl->assign('subscriptionIsAdded', true);
 
-		if($this->record['num_subscriptions'] >= $this->record['max_subscriptions']) $this->tpl->assign('subscriptionsComplete', true);
+		if($this->record['max_subscriptions'] != null && $this->record['num_subscriptions'] >= $this->record['max_subscriptions']) $this->tpl->assign('subscriptionsComplete', true);
 
 		// assign settings
 		$this->tpl->assign('settings', $this->settings);

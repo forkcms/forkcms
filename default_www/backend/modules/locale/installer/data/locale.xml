@@ -1614,6 +1614,10 @@
         <translation language="nl"><![CDATA[De data werd geïmporteerd.]]></translation>
         <translation language="en"><![CDATA[The data was imported.]]></translation>
       </item>
+      <item type="message" name="InThePicture">
+        <translation language="nl"><![CDATA[In de kijker]]></translation>
+        <translation language="en"><![CDATA[In the picture]]></translation>
+      </item>
       <item type="message" name="LBL">
         <translation language="nl"><![CDATA[label]]></translation>
         <translation language="en"><![CDATA[label]]></translation>

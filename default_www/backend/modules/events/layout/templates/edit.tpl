@@ -76,6 +76,18 @@
 							</div>
 						</div>
 
+						<div class="box">
+							<div class="heading">
+								<h3>{$lblImage|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<label for="image">{$lblImage|ucfirst}</label>
+								<img src="{$item.image_url}" width="128" /><br />
+								{$fileImage} {$fileImageError} <span class=""><a href="#">{$lblDelete|ucfirst}</a></span>
+								{$hidRemoveImage}
+							</div>
+						</div>
+
 						{* Summary *}
 						<div class="box">
 							<div class="heading">
@@ -132,6 +144,14 @@
 										{$txtPublishOnTime} {$txtPublishOnTimeError}
 									</p>
 								</div>
+							</div>
+
+							<div class="options">
+								<ul class="inputList">
+									<li>
+										<label for="inThePicture">{$chkInThePicture} {$msgInThePicture}</label>
+									</li>
+								</ul>
 							</div>
 						</div>
 

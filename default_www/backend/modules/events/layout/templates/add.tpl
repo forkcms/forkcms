@@ -70,6 +70,16 @@
 							</div>
 						</div>
 
+						<div class="box">
+							<div class="heading">
+								<h3>{$lblImage|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<label for="image">{$lblImage|ucfirst}</label>
+								{$fileImage} {$fileImageError}
+							</div>
+						</div>
+
 						{* Summary *}
 						<div class="box">
 							<div class="heading">
@@ -118,6 +128,14 @@
 										{$txtPublishOnTime} {$txtPublishOnTimeError}
 									</p>
 								</div>
+							</div>
+
+							<div class="options">
+								<ul class="inputList">
+									<li>
+										<label for="inThePicture">{$chkInThePicture} {$msgInThePicture}</label>
+									</li>
+								</ul>
 							</div>
 						</div>
 
