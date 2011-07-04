@@ -35,10 +35,10 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
 		if($existingId !== 0 && $id !== $existingId) $this->output(self::ERROR, array('id' => $existingId, 'error' => true), BL::err('CampaignExists', $this->getModule()));
 
 		// build array
-		item = array();
-		item['id'] = $id;
-		item['name'] = $name;
-		item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+		$item = array();
+		$item['id'] = $id;
+		$item['name'] = $name;
+		$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 		// get page
 		$rows = BackendMailmotorModel::updateCampaign(item);

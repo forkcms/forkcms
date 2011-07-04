@@ -136,7 +136,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 				FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
 
 				// trigger event
-				FrontendModel::triggerEvent('profiles', 'after_logged_in', array('id' => $profileId);
+				FrontendModel::triggerEvent('profiles', 'after_logged_in', array('id' => $profileId));
 
 				// querystring
 				$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
