@@ -402,7 +402,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		}
 
 		// any tags?
-		if(!empty($tags)) BackendTagsModel::saveTags($item['id'], implode(',', $tags), 'blog');
+		if(!empty($tags)) BackendTagsModel::saveTags($item['id'], implode(',', $tags), $this->getModule());
 
 		// return
 		return true;

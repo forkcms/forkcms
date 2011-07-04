@@ -48,7 +48,7 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			BackendBlogModel::delete($this->id);
 
 			// delete search indexes
-			if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex('blog', $this->id);
+			if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
 			// build redirect URL
 			$redirectUrl = BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']);

@@ -23,7 +23,7 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 	private function checkForDefaultGroups()
 	{
 		// groups are already set
-		if(BackendModel::getModuleSetting('mailmotor', 'cm_groups_defaults_set')) return true;
+		if(BackendModel::getModuleSetting($this->getModule(), 'cm_groups_defaults_set')) return true;
 
 		// show the message
 		$this->tpl->assign('noDefaultsSet', true);
