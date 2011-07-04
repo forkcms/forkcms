@@ -64,6 +64,9 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			$this->output(self::ERROR, array('field' => 'url'), sprintf(BL::err('CampaignMonitorError', 'mailmotor'), $e->getMessage()));
 		}
 
+		// trigger event
+		BackendModel::triggerEvent($this->getModule(), 'after_account_linked');
+
 		// CM was successfully initialized
 		$this->output(self::OK, array('message' => 'account-linked'), BL::msg('AccountLinked', 'mailmotor'));
 	}

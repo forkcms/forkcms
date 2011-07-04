@@ -166,7 +166,14 @@ class BackendLocationEdit extends BackendBaseActionEdit
 //				if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
-				if($item['lat'] && $item['lng']) $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
+				if($item['lat'] && $item['lng'])
+				{
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
+
+					// redirect
+					$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
+				}
 
 				// could not geocode, redirect to edit
 				else $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id']);

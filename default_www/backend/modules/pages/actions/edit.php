@@ -535,7 +535,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
 				// trigger an event
-				BackendModel::triggerEvent($this->getModule(), 'edited_item', array('item' => $page));
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $page));
 
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());

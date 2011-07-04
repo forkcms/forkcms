@@ -94,6 +94,9 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		// update the mailing record
 		BackendMailmotorModel::updateMailing($item);
 
+		// trigger event
+		BackendModel::triggerEvent($this->getModule(), 'after_mailing_status_' . $item['status'], array('item' => $item));
+
 		// we made it \o/
 		$this->output(self::OK, array('mailing_id' => $item['id']), BL::msg('MailingSent', 'mailmotor'));
 	}

@@ -135,10 +135,10 @@ class BackendMailer
 
 		// insert the email into the database
 		$id = BackendModel::getDB(true)->insert('emails', $email);
-		
+
 		// trigger event
-		BackendModel::triggerEvent('core', 'mail_added_to_queue', array('id' => $id));
-		
+		BackendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
+
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
 	}
@@ -270,7 +270,7 @@ class BackendMailer
 			$db->delete('emails', 'id = ?', array($id));
 
 			// trigger event
-			BackendModel::triggerEvent('core', 'mail_sent', array('id' => $id));
+			BackendModel::triggerEvent('core', 'after_email_sent', array('id' => $id));
 		}
 	}
 }

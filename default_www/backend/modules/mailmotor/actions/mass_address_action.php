@@ -73,6 +73,9 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 			else BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
 		}
 
+		// trigger event
+		BackendModel::triggerEvent($this->getModule(), 'after_delete_addresses', array('ids' => $ids));
+
 		// redirect
 		$this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
 	}

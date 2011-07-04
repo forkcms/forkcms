@@ -271,7 +271,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				BackendGroupsModel::insertMultipleGroups($this->id, $groups);
 
 				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'edited_item', array('item' => $user));
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $user));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);

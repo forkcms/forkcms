@@ -154,7 +154,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 					FrontendProfilesModel::update($profileId, array('url' => FrontendProfilesModel::getUrl($profileId)));
 
 					// trigger event
-					FrontendModel::triggerEvent('profiles', 'new_registration', array('id' => $profileId));
+					FrontendModel::triggerEvent('profiles', 'after_register', array('id' => $profileId));
 
 					// generate activation key
 					$activationKey = FrontendProfilesModel::getEncryptedString($profileId . microtime(), $salt);

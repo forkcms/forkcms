@@ -301,7 +301,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 				BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
 				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'edited_profile', array('item' => $values));
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($values['email']) . '&highlight=row-' . $this->id);

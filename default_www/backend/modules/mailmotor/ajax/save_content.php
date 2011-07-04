@@ -113,6 +113,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		// update mailing
 		BackendMailmotorModel::updateMailing($item);
 
+		// trigger event
+		BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step3', array('item' => $item));
+
 		// output
 		$this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', 'mailmotor'));
 	}

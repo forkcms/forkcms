@@ -305,7 +305,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['revision_id'] = BackendBlogModel::update($item);
 
 				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'edited_item', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// recalculate comment count so the new revision has the correct count
 				BackendBlogModel::reCalculateCommentCount(array($this->id));

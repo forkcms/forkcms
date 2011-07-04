@@ -404,7 +404,7 @@ class BackendPagesModel
 		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js', $tinyMCELinkListString);
 
 		// trigger an event
-		BackendModel::triggerEvent($this->getModule(), 'recreated_cache');
+		BackendModel::triggerEvent('pages', 'after_recreated_cache');
 	}
 
 

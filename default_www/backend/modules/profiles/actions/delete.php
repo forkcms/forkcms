@@ -37,7 +37,7 @@ class BackendProfilesDelete extends BackendBaseActionDelete
 				BackendProfilesModel::update($this->id, array('status' => 'active'));
 
 				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'reactived_profile', array('id' => $this->id));
+				BackendModel::triggerEvent($this->getModule(), 'after_reactivate', array('id' => $this->id));
 
 				// report
 				$report = 'undeleted';
@@ -50,7 +50,7 @@ class BackendProfilesDelete extends BackendBaseActionDelete
 				BackendProfilesModel::delete($this->id);
 
 				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'deleted_profile', array('id' => $this->id));
+				BackendModel::triggerEvent($this->getModule(), 'after_delete_profile', array('id' => $this->id));
 
 				// report
 				$report = 'deleted';

@@ -156,7 +156,7 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 				FrontendProfilesModel::update($this->profile->getId(), array('email' => $txtEmail->getValue()));
 
 				// trigger event
-				FrontendModel::triggerEvent('profiles', 'changed_email', array('id' => $this->profile->getId());
+				FrontendModel::triggerEvent('profiles', 'after_profile_email', array('id' => $this->profile->getId());
 
 				// redirect
 				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'profile_email') . '?saved=true');

@@ -438,7 +438,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 				}
 
 				// trigger event
-				FrontendModel::triggerEvent('form_builder', 'new_submission', array('form_id' => $this->item['id'], 'data_id' => $dataId, 'data' => $data));
+				FrontendModel::triggerEvent('form_builder', 'after_submission', array('form_id' => $this->item['id'], 'data_id' => $dataId, 'data' => $data));
 
 				// store timestamp in session so we can block excesive usage
 				SpoonSession::set('formbuilder_' . $this->item['id'], time());

@@ -160,7 +160,7 @@ class FrontendMailer
 		$id = FrontendModel::getDB(true)->insert('emails', $email);
 
 		// trigger event
-		FrontendModel::triggerEvent('core', 'mail_added_to_queue', array('id' => $id));
+		FrontendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
 
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
@@ -293,7 +293,7 @@ class FrontendMailer
 			$db->delete('emails', 'id = ?', array($id));
 
 			// trigger event
-			FrontendModel::triggerEvent('core', 'mail_sent', array('id' => $id));
+			FrontendModel::triggerEvent('core', 'after_email_sent', array('id' => $id));
 		}
 	}
 }

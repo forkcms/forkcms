@@ -64,7 +64,7 @@ class Frontend
 			Spoon::set('facebook', $facebook);
 
 			// trigger event
-			FrontendModel::triggerEvent('core', 'initialized_facebook');
+			FrontendModel::triggerEvent('core', 'after_facebook_initialization');
 		}
 	}
 }

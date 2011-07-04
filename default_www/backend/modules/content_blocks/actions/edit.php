@@ -204,7 +204,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				$item['revision_id'] = BackendContentBlocksModel::update($item);
 
 				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'edited_item', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
