@@ -58,7 +58,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->templates = BackendPagesModel::getTemplates();
 
 		// init var
-		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', false);
+		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', false);
 
 		// fallback
 		if($defaultTemplateId === false)
@@ -77,7 +77,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->extras = BackendPagesModel::getExtras();
 
 		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getModuleSetting($this->getModule(), 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i,);
@@ -104,7 +104,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('add');
@@ -119,7 +119,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addCheckbox('no_follow');
 
 		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getModuleSetting($this->getModule(), 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maxNumBlocks; $i++)
@@ -171,7 +171,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
 
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
@@ -335,7 +335,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 						foreach($blocks as $block) $text .= ' ' . $block['html'];
 
 						// add
-						BackendSearchModel::addIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
+						BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 					}
 
 					// everything is saved, so redirect to the overview

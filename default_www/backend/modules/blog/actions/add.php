@@ -62,7 +62,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('text');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
-		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('blog', 'allow_comments', false));
+		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting($this->getModule(), 'allow_comments', false));
 		$this->frm->addDropdown('category_id', $categories, SpoonFilter::getGetValue('category', null, null, 'int'));
 		if(count($categories) != 2) $this->frm->getField('category_id')->setDefaultElement('');
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
@@ -154,10 +154,10 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				if($item['status'] == 'active')
 				{
 					// add search index
-					if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex('blog', $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+					if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
-					if(BackendModel::getModuleSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->meta->getURL());
+					if(BackendModel::getModuleSetting($this->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->meta->getURL());
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['revision_id']);

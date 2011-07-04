@@ -46,16 +46,16 @@ class BackendLocationSettings extends BackendBaseActionEdit
 		$this->frm = new BackendForm('settings');
 
 		// add map info (overview map)
-		$this->frm->addDropdown('zoom_level', array_combine(array_merge(array('auto'), range(3, 18)), array_merge(array(BL::lbl('Auto', 'location')), range(3, 18))), BackendModel::getModuleSetting($this->URL->getModule(), 'zoom_level', 'auto'));
+		$this->frm->addDropdown('zoom_level', array_combine(array_merge(array('auto'), range(3, 18)), array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))), BackendModel::getModuleSetting($this->URL->getModule(), 'zoom_level', 'auto'));
 		$this->frm->addText('width', BackendModel::getModuleSetting($this->URL->getModule(), 'width'));
 		$this->frm->addText('height', BackendModel::getModuleSetting($this->URL->getModule(), 'height'));
-		$this->frm->addDropdown('map_type', array('ROADMAP' => BL::lbl('Roadmap', 'location'), 'SATELLITE' => BL::lbl('Satellite', 'location'), 'HYBRID' => BL::lbl('Hybrid', 'location'), 'TERRAIN' => BL::lbl('Terrain', 'location')), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
+		$this->frm->addDropdown('map_type', array('ROADMAP' => BL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => BL::lbl('Satellite', $this->getModule()), 'HYBRID' => BL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => BL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
 
 		// add map info (widgets)
-		$this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(array('auto'), range(3, 18)), array_merge(array(BL::lbl('Auto', 'location')), range(3, 18))), BackendModel::getModuleSetting($this->URL->getModule(), 'zoom_level_widget', 13));
+		$this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(array('auto'), range(3, 18)), array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))), BackendModel::getModuleSetting($this->URL->getModule(), 'zoom_level_widget', 13));
 		$this->frm->addText('width_widget', BackendModel::getModuleSetting($this->URL->getModule(), 'width_widget'));
 		$this->frm->addText('height_widget', BackendModel::getModuleSetting($this->URL->getModule(), 'height_widget'));
-		$this->frm->addDropdown('map_type_widget', array('ROADMAP' => BL::lbl('Roadmap', 'location'), 'SATELLITE' => BL::lbl('Satellite', 'location'), 'HYBRID' => BL::lbl('Hybrid', 'location'), 'TERRAIN' => BL::lbl('Terrain', 'location')), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type_widget', 'roadmap'));
+		$this->frm->addDropdown('map_type_widget', array('ROADMAP' => BL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => BL::lbl('Satellite', $this->getModule()), 'HYBRID' => BL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => BL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type_widget', 'roadmap'));
 	}
 
 

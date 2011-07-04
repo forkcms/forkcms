@@ -43,16 +43,15 @@ class Frontend
 		// get settings
 		$facebookApplicationId = FrontendModel::getModuleSetting('core', 'facebook_app_id');
 		$facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
-		$facebookApiKey = FrontendModel::getModuleSetting('core', 'facebook_api_key');
 
 		// needed data available?
-		if($facebookApplicationId != '' && $facebookApplicationSecret != '' && $facebookApiKey != '')
+		if($facebookApplicationId != '' && $facebookApplicationSecret != '')
 		{
 			// require
 			require_once 'external/facebook.php';
 
 			// create instance
-			$facebook = new Facebook($facebookApiKey, $facebookApplicationSecret, $facebookApplicationId);
+			$facebook = new Facebook($facebookApplicationSecret, $facebookApplicationId);
 
 			// get the cookie
 			$data = $facebook->getCookie();

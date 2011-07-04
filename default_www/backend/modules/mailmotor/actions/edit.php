@@ -114,7 +114,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		if(!empty($campaign))
 		{
 			// set data
-			$stats['message'] = BL::msg('RecipientStatisticsCampaign', 'mailmotor');
+			$stats['message'] = BL::msg('RecipientStatisticsCampaign', $this->getModule());
 			$stats['campaign'] = $campaign['name'];
 
 			// assign the recipient statistics variable
@@ -125,7 +125,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		else
 		{
 			// set data
-			$stats['message'] = BL::msg('RecipientStatisticsNoCampaign', 'mailmotor');
+			$stats['message'] = BL::msg('RecipientStatisticsNoCampaign', $this->getModule());
 
 			// assign the recipient statistics variable
 			$this->tpl->assign('recipientStatistics', sprintf($stats['message'], $stats['mailing'], $stats['recipients'], $stats['label_persons']));
@@ -152,7 +152,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('templateLanguage', ucfirst(BL::lbl(strtoupper($template['language']))));
 
 		// get the price setting
-		$price = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
+		$price = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');
 
 		// parse the price total
 		$this->tpl->assign('price', $stats['recipients'] * $price);
@@ -248,7 +248,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=2&amp;error=complete-step-2');
 
 		// check if we should show the plain text box
-		$this->showPlainTextBox = BackendModel::getModuleSetting('mailmotor', 'plain_text_editable');
+		$this->showPlainTextBox = BackendModel::getModuleSetting($this->getModule(), 'plain_text_editable');
 
 		// create form
 		$this->frm = new BackendForm('step3');
@@ -281,7 +281,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
 
 		// check if the mailmotor is linked
-		if(BackendModel::getURLForBlock('mailmotor', 'detail') == BackendModel::getURL(404)) $previewURL = false;
+		if(BackendModel::getURLForBlock($this->getModule(), 'detail') == BackendModel::getURL(404)) $previewURL = false;
 
 		// parse the preview URL
 		$this->tpl->assign('previewURL', $previewURL);
@@ -573,9 +573,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				*/
 
 				// set from email
-				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting('mailmotor', 'from_email') : $this->record['from_email'];
-				$fromName = empty($this->record['from_name']) ? BackendModel::getModuleSetting('mailmotor', 'from_name') : $this->record['from_name'];
-				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting('mailmotor', 'reply_to_email') : $this->record['reply_to_email'];
+				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting($this->getModule(), 'from_email') : $this->record['from_email'];
+				$fromName = empty($this->record['from_name']) ? BackendModel::getModuleSetting($this->getModule(), 'from_name') : $this->record['from_name'];
+				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting($this->getModule(), 'reply_to_email') : $this->record['reply_to_email'];
 
 				// build URL
 				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';

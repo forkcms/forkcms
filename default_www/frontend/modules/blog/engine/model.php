@@ -475,8 +475,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// get date for current item
 		$date = (string) $db->getVar('SELECT i.publish_on
 										FROM blog_posts AS i
-										WHERE i.id = ?',
-										array($id));
+										WHERE i.id = ? AND i.status = ?',
+										array($id, 'active'));
 
 		// validate
 		if($date == '') return array();
