@@ -1678,7 +1678,7 @@ class CampaignMonitor
 		$clientId = empty($clientId) ? $this->getClientId() : $clientId;
 
 		// make the call
-		$records = (array) $this->doCall('clients/'. $clientId .'/templates', $parameters);
+		$records = (array) $this->doCall('clients/'. $clientId .'/templates');
 
 		// stop here if no records were set
 		if(empty($records)) return array();
