@@ -145,7 +145,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['revision_id'] = BackendBlogModel::insert($item);
 
 				// trigger event
-				BackendModel::triggerEvent('blog', 'added_item', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'added_item', array('item' => $item));
 
 				// save the tags
 				BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());

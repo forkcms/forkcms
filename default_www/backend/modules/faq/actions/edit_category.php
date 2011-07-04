@@ -122,7 +122,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 				BackendFaqModel::updateCategory($item);
 
 				// trigger event
-				BackendModel::triggerEvent('faq', 'edited_category', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'edited_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);

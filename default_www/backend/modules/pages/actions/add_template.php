@@ -212,7 +212,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$item['id'] = BackendPagesModel::insertTemplate($item);
 
 				// trigger event
-				BackendModel::triggerEvent('pages', 'added_template', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'added_template', array('item' => $item));
 
 				// set default template
 				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);

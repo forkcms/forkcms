@@ -34,7 +34,7 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 			BackendSearchModel::deleteSynonym($this->id);
 
 			// trigger event
-			BackendModel::triggerEvent('search', 'deleted_synonym', array('id' => $this->id));
+			BackendModel::triggerEvent($this->getModule(), 'deleted_synonym', array('id' => $this->id));
 
 
 			// item was deleted, so redirect

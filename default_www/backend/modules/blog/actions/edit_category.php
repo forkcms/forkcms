@@ -130,7 +130,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 				BackendBlogModel::updateCategory($item);
 
 				// trigger event
-				BackendModel::triggerEvent('blog', 'edited_category', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'edited_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);

@@ -256,7 +256,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				BackendPagesModel::updateTemplate($item);
 
 				// trigger event
-				BackendModel::triggerEvent('pages', 'edited_template', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'edited_template', array('item' => $item));
 
 				// set default template
 				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);

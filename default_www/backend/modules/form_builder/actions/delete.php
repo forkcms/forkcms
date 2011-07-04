@@ -34,7 +34,7 @@ class BackendFormBuilderDelete extends BackendBaseActionDelete
 			BackendFormBuilderModel::delete($this->id);
 
 			// trigger event
-			BackendModel::triggerEvent('form_builder', 'deleted_item', array('id' => $this->id));
+			BackendModel::triggerEvent($this->getModule(), 'deleted_item', array('id' => $this->id));
 
 			// user was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name']));

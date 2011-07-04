@@ -154,7 +154,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 				}
 
 				// trigger event
-				BackendModel::triggerEvent('search', 'changed_settings');
+				BackendModel::triggerEvent($this->getModule(), 'changed_settings');
 
 
 				// redirect to the settings page

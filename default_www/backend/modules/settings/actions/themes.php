@@ -156,7 +156,7 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 					}
 
 					// trigger event
-					BackendModel::triggerEvent('settings', 'changed_theme');
+					BackendModel::triggerEvent($this->getModule(), 'changed_theme');
 				}
 
 				// assign report

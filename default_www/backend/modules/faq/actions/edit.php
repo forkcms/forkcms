@@ -146,7 +146,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 				BackendFaqModel::updateQuestion($item);
 
 				// trigger event
-				BackendModel::triggerEvent('faq', 'edited_item', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'edited_item', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
