@@ -1,3 +1,11 @@
+2.4.3 (xxxx-xx-xx)
+--
+
+Improvements
+
+* Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
+
+
 2.4.2 (2011-07-05)
 --
 
