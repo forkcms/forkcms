@@ -1,3 +1,11 @@
+2.4.3 (XXXX-XX-XX)
+--
+
+Bugfixes:
+
+* Pages: Don't show hidden extras in the widgets en blocks dropdowns.
+
+
 2.4.2 (2011-07-05)
 --
 
