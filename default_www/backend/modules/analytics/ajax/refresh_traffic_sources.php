@@ -25,10 +25,10 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		if(BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED')
 		{
 			// remove all parameters from the module settings
-			BackendModel::setModuleSetting('analytics', 'session_token', null);
-			BackendModel::setModuleSetting('analytics', 'account_name', null);
-			BackendModel::setModuleSetting('analytics', 'table_id', null);
-			BackendModel::setModuleSetting('analytics', 'profile_title', null);
+			BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
+			BackendModel::setModuleSetting($this->getModule(), 'account_name', null);
+			BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
+			BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
 
 			// remove cache files
 			BackendAnalyticsModel::removeCacheFiles();

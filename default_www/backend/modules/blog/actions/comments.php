@@ -32,7 +32,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 	public static function addPostData($text, $title, $URL, $id)
 	{
 		// reset URL
-		$URL = BackendModel::getURLForBlock('blog', 'detail') . '/' . $URL . '#comment-' . $id;
+		$URL = BackendModel::getURLForBlock($this->getModule(), 'detail') . '/' . $URL . '#comment-' . $id;
 
 		// build HTML
 		return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $URL, $title) . '</em></p>' . "\n" . (string) $text;

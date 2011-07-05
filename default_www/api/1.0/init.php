@@ -189,10 +189,6 @@ class APIInit
 	 */
 	private function defineURLs()
 	{
-//		define('BACKEND_CORE_URL', '/backend/core');
-//		define('BACKEND_CACHE_URL', '/backend/cache');
-
-//		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 
 
