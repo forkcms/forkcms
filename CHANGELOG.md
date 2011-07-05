@@ -1,5 +1,8 @@
 2.4.3 (xxxx-xx-xx)
 --
+Bugfixes:
+
+* Pages: Don't show hidden extras in the widgets en blocks dropdowns.
 
 Improvements
 
@@ -8,7 +11,6 @@ Improvements
 
 2.4.2 (2011-07-05)
 --
-
 Improvements:
 
 * Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.

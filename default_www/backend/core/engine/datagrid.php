@@ -234,7 +234,7 @@ class BackendDataGrid extends SpoonDataGrid
 		// redefine
 		$column = (string) $column;
 		$message = (string) $message;
-		$custom = $custom;
+		$custom = (string) $custom;
 		$title = ($title !== null) ? (string) $title : null;
 		$uniqueId = (string) $uniqueId;
 
