@@ -231,7 +231,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$item['id'] = BackendPagesModel::insertTemplate($item);
 
 				// set default template
-				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);

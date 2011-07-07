@@ -37,7 +37,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so stop here
-				$this->output(self::BAD_REQUEST, null, BL::err('ClassDoesNotExist', 'mailmotor'));
+				$this->output(self::BAD_REQUEST, null, BL::err('ClassDoesNotExist', $this->getModule()));
 			}
 
 			// require CampaignMonitor class
@@ -47,25 +47,25 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			new CampaignMonitor($url, $username, $password, 10);
 
 			// save the new data
-			BackendModel::setModuleSetting('mailmotor', 'cm_url', $url);
-			BackendModel::setModuleSetting('mailmotor', 'cm_username', $username);
-			BackendModel::setModuleSetting('mailmotor', 'cm_password', $password);
+			BackendModel::setModuleSetting($this->getModule(), 'cm_url', $url);
+			BackendModel::setModuleSetting($this->getModule(), 'cm_username', $username);
+			BackendModel::setModuleSetting($this->getModule(), 'cm_password', $password);
 
 			// account was linked
-			BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
+			BackendModel::setModuleSetting($this->getModule(), 'cm_account', true);
 		}
 
 		catch(Exception $e)
 		{
 			// timeout occured
-			if($e->getMessage() == 'Error Fetching http headers') $this->output(self::BAD_REQUEST, null, BL::err('CmTimeout', 'mailmotor'));
+			if($e->getMessage() == 'Error Fetching http headers') $this->output(self::BAD_REQUEST, null, BL::err('CmTimeout', $this->getModule()));
 
 			// other error
-			$this->output(self::ERROR, array('field' => 'url'), sprintf(BL::err('CampaignMonitorError', 'mailmotor'), $e->getMessage()));
+			$this->output(self::ERROR, array('field' => 'url'), sprintf(BL::err('CampaignMonitorError', $this->getModule()), $e->getMessage()));
 		}
 
 		// CM was successfully initialized
-		$this->output(self::OK, array('message' => 'account-linked'), BL::msg('AccountLinked', 'mailmotor'));
+		$this->output(self::OK, array('message' => 'account-linked'), BL::msg('AccountLinked', $this->getModule()));
 	}
 }
 

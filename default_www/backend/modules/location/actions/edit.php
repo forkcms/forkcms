@@ -163,7 +163,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				$id = BackendLocationModel::update($item);
 
 				// edit search index
-//				if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+//				if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng']) $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);

@@ -50,7 +50,7 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 		BackendMailmotorModel::updateMailing($item);
 
 		// output
-		$this->output(self::OK, array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp), sprintf(BL::msg('SendOn', 'mailmotor'), $messageDate, $sendOnTime));
+		$this->output(self::OK, array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp), sprintf(BL::msg('SendOn', $this->getModule()), $messageDate, $sendOnTime));
 	}
 }
 

@@ -1,4 +1,25 @@
-2.4.1 (XXXX-XX-XX)
+2.4.3 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Pages: Don't show hidden extras in the widgets en blocks dropdowns.
+
+Improvements
+
+* Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
+
+
+2.4.2 (2011-07-05)
+--
+Improvements:
+
+* Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.
+* Core: siteHTMLFooter should be append after the JS-files.
+* Core: implemented social-tracking for GA, will only be executed if Google Analytics is used, and facebook or twitter are integrated.
+* Core: upgraded jQuery to 1.6.2 and jQueryUI to 1.8.14.
+
+
+2.4.1 (2011-06-28)
 --
 Bugfixes:
 
