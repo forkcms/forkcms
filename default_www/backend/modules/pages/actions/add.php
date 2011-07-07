@@ -123,6 +123,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$block['index'] = 0;
 		$block['name'] = 'Prototype';
 		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index']);
+		$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index']);
 		$block['formElements']['txtHTML'] = $this->frm->addTextarea('block_html_' . $block['index'], ''); // @todo: dit moet eigenlijk ne editor, maar die wordt wa moeilijk clonable anders; da gaan we in JS oplossen
 
 		// add default block to "fallback" position, the only one which we can rest assured to exist

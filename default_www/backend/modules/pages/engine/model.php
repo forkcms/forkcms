@@ -508,7 +508,9 @@ class BackendPagesModel
 
 						$html .= ' id="templatePosition-' . $value . '">
 									<h4 class="templatePositionTitle">' . $title . '</h4>
-									<div class="linkedBlocks"><!-- reference to linked blocks will be added here --></div>
+									<div class="linkedBlocks">
+										<!-- reference to linked blocks will be added here -->
+									</div>
 									<div class="buttonHolder">
 										<a href="#addBlock" class="button icon iconAdd iconOnly addBlock" data-position="' . $value . '">
 											<span>' . ucfirst(BL::lbl('AddBlock')) . '</span>

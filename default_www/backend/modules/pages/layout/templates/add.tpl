@@ -26,61 +26,51 @@
 			<!-- Reverse order after content tab [floatRight] -->
 			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
-			<li><a href="#tabTemplate">{$lblTemplate|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
+			<div id="editTemplate">
+				<div class="pageTitle">
+					{* Do not change the ID! *}
+					<h2>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h2>
+					<div class="buttonHolderRight">
+						<a id="changeTemplate" href="#" class="button icon iconEdit">
+							<span>{$lblEditTemplate|ucfirst}</span>
+						</a>
+					</div>
+				</div>
+
+				<div id="templateVisualLarge">
+					&nbsp;
+				</div>
+			</div>
+
+			{* This is the HTML content, hidden *}
 			<div id="editContent">
 				{iteration:positions}
-					<div id="position-{$positions.name}">
-					<h3>{$positions.name}</h3>
-						{iteration:positions.blocks}
-							<div id="block-{$positions.blocks.index}" class="box contentBlock">
-								<div class="heading">
-									<table border="0" cellpadding="0" cellspacing="0">
-										<tbody>
-											<tr>
-												<td>
-													<div class="oneLiner">
-														<h3><span class="blockName">{$positions.blocks.name}</span></h3>
-														{* don't remove this class *}
-														<p class="linkedExtra">
-															{* this will store the selected extra *}
-															{$positions.blocks.hidExtraId}
-														</p>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-
-								<div id="blockContentModule" class="options">
-									{* do not alter markup *}
-									<div class="oneLiner">
-										<span class="oneLinerElement"></span>
-										<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
-										{$positions.blocks.txtHTMLError}
-									</div>
-								</div>
-								<div id="blockContentWidget" class="options">
-									{* do not alter markup *}
-									<div class="oneLiner">
-										<span class="oneLinerElement"></span>
-										<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
-										{$positions.blocks.txtHTMLError}
-									</div>
-								</div>
-								<div id="blockContentHTML" class="optionsRTE">
-									<fieldset>
-										{$positions.blocks.txtHTML}
-										{$positions.blocks.txtHTMLError}
-									</fieldset>
-								</div>
+					{iteration:positions.blocks}
+						<div id="block-{$positions.blocks.index}" class="box contentBlock" style="display: none;">
+							<div class="pageTitle">
+								<h2>{$positions.blocks.name}</h2>
 							</div>
-						{/iteration:positions.blocks}
-					</div>
+
+							<div class="blockContentHTML optionsRTE">
+								<fieldset>
+									{$positions.blocks.txtHTML}
+									{$positions.blocks.txtHTMLError}
+								</fieldset>
+							</div>
+
+							<p class="linkedExtra" style="display: none;">
+								{* this will store the selected extra *}
+								{$positions.blocks.hidExtraId}
+							</p>
+							<p class="linkedPosition" style="display: none;">
+								{$positions.blocks.hidPosition}
+							</p>
+						</div>
+					{/iteration:positions.blocks}
 				{/iteration:positions}
 			</div>
 		</div>
@@ -208,78 +198,6 @@
 			</div>
 		</div>
 
-		<div id="tabTemplate">
-			<div class="pageTitle">
-				{* Do not change the ID! *}
-				<h2>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h2>
-				<div class="buttonHolderRight">
-					<a id="changeTemplate" href="#" class="button icon iconEdit">
-						<span>{$lblEditTemplate|ucfirst}</span>
-					</a>
-				</div>
-			</div>
-
-			<div id="templateVisualLarge">
-				&nbsp;
-			</div>
-
-			{*
-				Dialog to select the content (editor, module or widget).
-				Do not change the ID!
-			 *}
-			<div id="addBlock" class="forkForms" title="{$lblChooseContent|ucfirst}" style="display: none;">
-				<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
-				<div class="options horizontal">
-					<p>{$msgHelpBlockContent}</p>
-					<p id="extraWarningAlreadyBlock">
-						<span class="infoMessage">{$msgModuleBlockAlreadyLinked}</span>
-					</p>
-					<p>
-						<label for="extraType">{$lblType|ucfirst}</label>
-						{$ddmExtraType}
-					</p>
-					<p id="extraModuleHolder" style="display: none;">
-						<label for="extraModule">{$lblWhichModule|ucfirst}</label>
-						<select id="extraModule">
-							<option value="-1">-</option>
-						</select>
-					</p>
-					<p id="extraExtraIdHolder" style="display: none;">
-						<label for="extraExtraId">{$lblWhichWidget|ucfirst}</label>
-						<select id="extraExtraId">
-							<option value="-1">-</option>
-						</select>
-					</p>
-				</div>
-			</div>
-
-			{*
-				Dialog to select another template.
-				Do not change the ID!
-			 *}
-			<div id="chooseTemplate" class="forkForms" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
-				<div class="generalMessage singleMessage infoMessage">
-					<p>{$msgTemplateChangeWarning}</p>
-				</div>
-				<div id="templateList">
-					<ul>
-						{iteration:templates}
-					{option:templates.break}
-					</ul>
-					<ul class="lastChild">
-					{/option:templates.break}
-							<li{option:templates.disabled} class="disabled"{/option:templates.disabled}>
-								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}</label>
-								<div class="templateVisual current">
-									{$templates.html}
-								</div>
-							</li>
-						{/iteration:templates}
-					</ul>
-				</div>
-			</div>
-		</div>
-
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
@@ -304,10 +222,75 @@
 			</p>
 		</div>
 	</div>
-	<div class="fullwidthOptions">
+
+	{*
+		Dialog to select the content (editor, module or widget).
+		Do not change the ID!
+	 *}
+	<div id="addBlock" class="forkForms" title="{$lblChooseContent|ucfirst}" style="display: none;">
+		<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
+		<div class="options horizontal">
+			<p>{$msgHelpBlockContent}</p>
+			<p id="extraWarningAlreadyBlock">
+				<span class="infoMessage">{$msgModuleBlockAlreadyLinked}</span>
+			</p>
+			<p>
+				<label for="extraType">{$lblType|ucfirst}</label>
+				{$ddmExtraType}
+			</p>
+			<p id="extraModuleHolder" style="display: none;">
+				<label for="extraModule">{$lblWhichModule|ucfirst}</label>
+				<select id="extraModule">
+					<option value="-1">-</option>
+				</select>
+			</p>
+			<p id="extraExtraIdHolder" style="display: none;">
+				<label for="extraExtraId">{$lblWhichWidget|ucfirst}</label>
+				<select id="extraExtraId">
+					<option value="-1">-</option>
+				</select>
+			</p>
+		</div>
+	</div>
+
+	{*
+		Dialog to select another template.
+		Do not change the ID!
+	 *}
+	<div id="chooseTemplate" class="forkForms" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
+		<div class="generalMessage singleMessage infoMessage">
+			<p>{$msgTemplateChangeWarning}</p>
+		</div>
+		<div id="templateList">
+			<ul>
+				{iteration:templates}
+			{option:templates.break}
+			</ul>
+			<ul class="lastChild">
+			{/option:templates.break}
+					<li{option:templates.disabled} class="disabled"{/option:templates.disabled}>
+						<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}</label>
+						<div class="templateVisual current">
+							{$templates.html}
+						</div>
+					</li>
+				{/iteration:templates}
+			</ul>
+		</div>
+	</div>
+
+	{* Buttons to save page *}
+	<div id="pageButtons" class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="addButton" class="button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
 			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
+		</div>
+	</div>
+
+	{* Button to indicate writing content is done *}
+	<div id="editorButton" class="fullwidthOptions" style="display: none">
+		<div class="buttonHolderRight">
+			<a href="#" id="okButton" class="button mainButton"><span>{$lblOK|ucfirst}</span></a>
 		</div>
 	</div>
 {/form:add}

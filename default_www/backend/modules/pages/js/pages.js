@@ -98,6 +98,13 @@ jsBackend.pages.extras =
 		// bind buttons
 		$('a.addBlock').live('click', jsBackend.pages.extras.showExtraDialog);
 		$('a.deleteBlock').live('click', jsBackend.pages.extras.deleteBlock);
+		$('.showEditor').live('click', function(e)
+		{
+			e.preventDefault();
+			var index = $(this).attr('href').substr(1)
+			jsBackend.pages.extras.editContent(index);
+		});
+		$('#okButton').click(jsBackend.pages.extras.editTemplate);
 
 		// load initial data, or initialize the dialogs
 		jsBackend.pages.extras.load();
@@ -210,41 +217,35 @@ jsBackend.pages.extras =
 
 		// set block index
 		jsBackend.pages.extras.updateBlockIndex(block, 0, index);
-		
+
 		// block/widget
 		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
 		{
 			// save extra id
 			$('#blockExtraId' + index, block).val(selectedExtraId);
-			
+
 			// set block description
-			$('.blockName', block).html(extrasById[selectedExtraId].human_name);
+			$('.pageTitle h2', block).html(extrasById[selectedExtraId].human_name);
+
+			// link to edit this block/widget
+			var editLink = '';
+			if(extrasById[selectedExtraId].type == 'block' && extrasById[selectedExtraId].data.url) editLink = extrasById[selectedExtraId].data.url;
+			if(extrasById[selectedExtraId].type == 'widget' && typeof extrasById[selectedExtraId].data.edit_url != 'undefined' && extrasById[selectedExtraId].data.edit_url) editLink = extrasById[selectedExtraId].data.edit_url;
+
+			// create html to be appended in template-view
+			var blockHTML = '<div class="templatePositionCurrentType">' +
+								'<div class="oneLiner">' +
+									'<span class="oneLinerElement">' + extrasById[selectedExtraId].human_name + '</span>' +
+									(editLink ? '<a href="' + editLink + '" class="button targetBlank">{$lblEdit|ucfirst}</a>' : '') +
+								'</div>' +
+								'<a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a>' +
+							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
 
 			// set block description in template-view
-			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append('<p class="helpTxt templatePositionCurrentType">' + extrasById[selectedExtraId].human_name + ' <a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a></p>'); // @todo: verwijder-knoppeke moet confirmation vragen
+			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append(blockHTML);
 
-			// hide block
-			$('#blockContentModule', block).hide();
-			$('#blockContentWidget', block).hide();
-			$('#blockContentHTML', block).hide();
-
-			// block
-			if(extrasById[selectedExtraId].type == 'block')
-			{
-				$('#blockContentModule .oneLiner span.oneLinerElement', block).html(extrasById[selectedExtraId].message);
-				if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule .oneLiner a', block).hide();
-				else $('#blockContentModule .oneLiner a', block).show().attr('href', extrasById[selectedExtraId].data.url);						
-				$('#blockContentModule', block).show();
-			}
-
-			// widget
-			if(extrasById[selectedExtraId].type == 'widget')
-			{
-				$('#blockContentWidget .oneLiner span.oneLinerElement', block).html(extrasById[selectedExtraId].message);
-				if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget .oneLiner a', block).hide();
-				else $('#blockContentWidget .oneLiner a', block).attr('href', extrasById[selectedExtraId].data.edit_url).show();
-				$('#blockContentWidget', block).show();
-			}
+			// hide editor
+			$('.blockContentHTML', block).hide();
 		}
 
 		// editor
@@ -254,27 +255,35 @@ jsBackend.pages.extras =
 			$('#blockExtraId' + index, block).val('');
 
 			// set block description
-			$('.blockName', block).html('{$lblEditor|ucfirst}');
+			$('.pageTitle h2', block).html('{$lblEditor|ucfirst}');
+
+			// create html to be appended in template-view
+			var blockHTML = '<div class="templatePositionCurrentType">' +
+								'<div class="oneLiner">' +
+									'<span class="oneLinerElement">{$lblEditor|ucfirst}</span>' +
+									'<a href="#' + index + '" class="button targetBlank showEditor">{$lblEdit|ucfirst}</a>' +
+								'</div>' +
+								'<a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a>' +
+							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
 
 			// set block description in template-view
-			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append('<p class="helpTxt templatePositionCurrentType">{$lblEditor|ucfirst} <a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a></p>'); // @todo: verwijder-knoppeke moet confirmation vragen
+			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append(blockHTML);
 
 			// @todo: add tiny!
 
-			// show and hide
-			$('#blockContentModule', block).hide();
-			$('#blockContentWidget', block).hide();
-			$('#blockContentHTML', block).show();
+			// show editor
+			$('.blockContentHTML', block).show();
 		}
 
-		// append to correct position
-		block.appendTo($('#position-' + selectedPosition));
+		// save position
+		$('#blockPosition' + index, block).val(selectedPosition);
 
-		// show it to the world
-		block.show();
+		// add block to dom
+		block.appendTo($('#editContent'));
 	},
 
 
+	// delete a linked block
 	deleteBlock: function(evt)
 	{
 		// prevent default action
@@ -284,7 +293,7 @@ jsBackend.pages.extras =
 		var index = parseInt($(this).data('blockId'));
 		
 		// remove block from template overview
-		$(this).parent().remove();
+		$(this).parent('.templatePositionCurrentType').remove();
 
 		// remove block
 		$('#block-' + index).remove();
@@ -295,6 +304,7 @@ jsBackend.pages.extras =
 		// reorder indexes of existing blocks:
 		// is doesn't really matter if a certain block at a certain position has a certain index; the important part
 		// is that they're all sequential without gaps and that the sequence of blocks inside a position is correct
+		// @todo: this is quite nasty
 		$('div[id^=block-]').each(function(i)
 		{
 			// fetch block id
@@ -310,6 +320,35 @@ jsBackend.pages.extras =
 				newIndex++;
 			}
 		});
+	},
+	
+	
+	// edit content
+	editContent: function(index)
+	{
+		// update buttons
+		$('#editorButton').show();
+		$('#pageButtons').hide();
+		
+		// show editor, hide template
+		$('#block-' + index).show();
+		$('#editTemplate').hide();
+	},
+
+
+	// edit template
+	editTemplate: function(e)
+	{
+		// prevent default action
+		e.preventDefault();
+
+		// update buttons
+		$('#editorButton').hide();
+		$('#pageButtons').show();
+		
+		// show editor, hide template
+		$('div[id^=block-]').hide();
+		$('#editTemplate').show();
 	},
 
 
