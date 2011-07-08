@@ -48,6 +48,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
+		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
+		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
 		$this->header->addJS('jstree/jquery.tree.js');
 		$this->header->addJS('jstree/lib/jquery.cookie.js');
 		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
@@ -124,7 +126,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$block['name'] = 'Prototype';
 		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index']);
 		$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index']);
-		$block['formElements']['txtHTML'] = $this->frm->addTextarea('block_html_' . $block['index'], ''); // @todo: dit moet eigenlijk ne editor, maar die wordt wa moeilijk clonable anders; da gaan we in JS oplossen
+		$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index'], ''); // this is no editor; we'll add the editor in JS
 
 		// add default block to "fallback" position, the only one which we can rest assured to exist
 		$this->positions['fallback']['blocks'] = array($block);

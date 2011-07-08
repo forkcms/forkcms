@@ -51,7 +51,7 @@
 				{iteration:positions}
 					{iteration:positions.blocks}
 						<div id="block-{$positions.blocks.index}" class="box contentBlock" style="display: none;">
-							<div class="pageTitle">
+							<div class="pageTitle" style="margin-bottom: 0;">
 								<h2>{$positions.blocks.name}</h2>
 							</div>
 
@@ -288,9 +288,10 @@
 	</div>
 
 	{* Button to indicate writing content is done *}
-	<div id="editorButton" class="fullwidthOptions" style="display: none">
+	<div id="editorButtons" class="fullwidthOptions" style="display: none">
 		<div class="buttonHolderRight">
 			<a href="#" id="okButton" class="button mainButton"><span>{$lblOK|ucfirst}</span></a>
+			<a href="#" id="cancelButton" class="inputButton button"><span>{$lblCancel|ucfirst}</span></a>
 		</div>
 	</div>
 {/form:add}

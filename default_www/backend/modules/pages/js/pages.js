@@ -7,7 +7,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
  * The table-view of templates is built in model.php. This includes no linked blocks, no default blocks.
  * The default extra's are parsed in add.php, added in json to the template and picked up by the JS. When setting the template, this JS will parse the default blocks to the correction positions and assigns "id's" (indexes rather) for blocks.
  * All already assigned blocks are parsed in edit.php, set in a json-var and are picked up by this JS. This JS assigns the blocks to the correct positions and assigns "id's" (indexes rather) for blocks.
- * When adding a block to a position, we'll need to pass along the position, so we know where to append it.
+ * A block's position will be saved in a hidden input.
  * Blocks can not be edited. This is not neccessary when blocks will be able to be added, deleted and reordered
  */
 
@@ -15,8 +15,8 @@ if(!jsBackend) { var jsBackend = new Object(); }
  * Interaction for the pages module
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
  * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend.pages =
 {
@@ -33,7 +33,7 @@ jsBackend.pages =
 			jsBackend.pages.template.init();
 			jsBackend.pages.extras.init();
 		}
-return;
+
 		// manage templates
 		jsBackend.pages.manageTemplates.init();
 
@@ -64,6 +64,10 @@ jsBackend.pages.extras =
 {
 	// when adding an extra, we'll need to temporarily save the position we're adding it to
 	extraForPosition: null,
+
+
+	// this variable will store the HTML content of the editor we'll be editing; to allow cancelling the edit
+	htmlContent: '',
 
 
 	// init, something like a constructor
@@ -98,13 +102,9 @@ jsBackend.pages.extras =
 		// bind buttons
 		$('a.addBlock').live('click', jsBackend.pages.extras.showExtraDialog);
 		$('a.deleteBlock').live('click', jsBackend.pages.extras.deleteBlock);
-		$('.showEditor').live('click', function(e)
-		{
-			e.preventDefault();
-			var index = $(this).attr('href').substr(1)
-			jsBackend.pages.extras.editContent(index);
-		});
-		$('#okButton').click(jsBackend.pages.extras.editTemplate);
+		$('.showEditor').live('click', function(e) { e.preventDefault(); jsBackend.pages.extras.editContent($(this).attr('href').substr(1)); });
+		$('#okButton').click(function(e) { e.preventDefault(); jsBackend.pages.extras.editTemplate(true); });
+		$('#cancelButton').click(function(e) { e.preventDefault(); jsBackend.pages.extras.editTemplate(false); });
 
 		// load initial data, or initialize the dialogs
 		jsBackend.pages.extras.load();
@@ -214,7 +214,7 @@ jsBackend.pages.extras =
 
 		// clone prototype block
 		var block = $('#block-0').clone();
-
+		
 		// set block index
 		jsBackend.pages.extras.updateBlockIndex(block, 0, index);
 
@@ -236,7 +236,7 @@ jsBackend.pages.extras =
 			var blockHTML = '<div class="templatePositionCurrentType">' +
 								'<div class="oneLiner">' +
 									'<span class="oneLinerElement">' + extrasById[selectedExtraId].human_name + '</span>' +
-									(editLink ? '<a href="' + editLink + '" class="button targetBlank">{$lblEdit|ucfirst}</a>' : '') +
+									(editLink ? '<a href="' + editLink + '" class="button" target="_blank">{$lblEdit|ucfirst}</a>' : '') +
 								'</div>' +
 								'<a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a>' +
 							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
@@ -244,8 +244,11 @@ jsBackend.pages.extras =
 			// set block description in template-view
 			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append(blockHTML);
 
-			// hide editor
+			// don't show editor
 			$('.blockContentHTML', block).hide();
+
+			// add block to dom
+			block.appendTo($('#editContent'));
 		}
 
 		// editor
@@ -261,7 +264,7 @@ jsBackend.pages.extras =
 			var blockHTML = '<div class="templatePositionCurrentType">' +
 								'<div class="oneLiner">' +
 									'<span class="oneLinerElement">{$lblEditor|ucfirst}</span>' +
-									'<a href="#' + index + '" class="button targetBlank showEditor">{$lblEdit|ucfirst}</a>' +
+									'<a href="#' + index + '" class="button showEditor">{$lblEdit|ucfirst}</a>' +
 								'</div>' +
 								'<a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a>' +
 							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
@@ -269,17 +272,18 @@ jsBackend.pages.extras =
 			// set block description in template-view
 			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append(blockHTML);
 
-			// @todo: add tiny!
-
 			// show editor
 			$('.blockContentHTML', block).show();
+
+			// add block to dom
+			block.appendTo($('#editContent'));
+
+			// add tinymce to this element
+			tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
 		}
 
 		// save position
 		$('#blockPosition' + index, block).val(selectedPosition);
-
-		// add block to dom
-		block.appendTo($('#editContent'));
 	},
 
 
@@ -294,6 +298,9 @@ jsBackend.pages.extras =
 		
 		// remove block from template overview
 		$(this).parent('.templatePositionCurrentType').remove();
+
+		// remove tiny from this block (if editor instance)
+		if($('#blockExtraId' + index).val() == '') tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 
 		// remove block
 		$('#block-' + index).remove();
@@ -326,29 +333,46 @@ jsBackend.pages.extras =
 	// edit content
 	editContent: function(index)
 	{
+		// save content to allow for cancelling the edited text
+		jsBackend.pages.extras.htmlContent = tinyMCE.get('blockHtml' + index).getContent();
+
 		// update buttons
-		$('#editorButton').show();
-		$('#pageButtons').hide();
-		
+		$('#pageButtons').hide('fast');
+		$('#editorButtons').show('fast');
+
 		// show editor, hide template
-		$('#block-' + index).show();
-		$('#editTemplate').hide();
+		$('#editTemplate').hide('fast');
+		$('#block-' + index).show('fast');
 	},
 
 
 	// edit template
-	editTemplate: function(e)
+	editTemplate: function(saveContent)
 	{
-		// prevent default action
-		e.preventDefault();
+		// content does not need to be saved
+		if(!saveContent)
+		{
+			// loop all blocks
+			$('div[id^=block-]').each(function()
+			{
+				// find the one currently being edited
+				if($(this).is(':visible'))
+				{
+					var index = $(this).attr('id').replace('block-', '');
+
+					// reset to previous content
+					tinyMCE.get('blockHtml' + index).setContent(jsBackend.pages.extras.htmlContent);
+				}
+			});
+		}
 
 		// update buttons
-		$('#editorButton').hide();
-		$('#pageButtons').show();
-		
+		$('#editorButtons').hide('fast');
+		$('#pageButtons').show('fast');
+
 		// show editor, hide template
-		$('div[id^=block-]').hide();
-		$('#editTemplate').show();
+		$('div[id^=block-]').hide('fast');
+		$('#editTemplate').show('fast');
 	},
 
 
