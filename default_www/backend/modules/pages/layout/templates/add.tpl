@@ -50,7 +50,7 @@
 			<div id="editContent">
 				{iteration:positions}
 					{iteration:positions.blocks}
-						<div id="block-{$positions.blocks.index}" class="box contentBlock" style="display: none;">
+						<div class="box contentBlock" style="display: none;">
 							<div class="pageTitle" style="margin-bottom: 0;">
 								<h2>{$positions.blocks.name}</h2>
 							</div>
@@ -62,13 +62,11 @@
 								</fieldset>
 							</div>
 
-							<p class="linkedExtra" style="display: none;">
-								{* this will store the selected extra *}
-								{$positions.blocks.hidExtraId}
-							</p>
-							<p class="linkedPosition" style="display: none;">
-								{$positions.blocks.hidPosition}
-							</p>
+							{* this will store the selected extra *}
+							{$positions.blocks.hidExtraId}
+
+							{* this will store the selected position *}
+							{$positions.blocks.hidPosition}
 						</div>
 					{/iteration:positions.blocks}
 				{/iteration:positions}

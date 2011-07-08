@@ -504,15 +504,15 @@ class BackendPagesModel
 					// large visual?
 					if($large)
 					{
-						// @todo: add reference text for already added blocks/default blocks already (see the <div class="linkedBlocks> tag)
+						// @todo: add already linked blocks (see the <div class="linkedBlocks> tag)
 
-						$html .= ' id="templatePosition-' . $value . '">
+						$html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '">
 									<h4 class="templatePositionTitle">' . $title . '</h4>
-									<div class="linkedBlocks">
-										<!-- reference to linked blocks will be added here -->
+									<div class="linkedBlocks" style="border: 1px solid red; height: 100px;">
+										<!-- linked blocks will be added here -->
 									</div>
 									<div class="buttonHolder">
-										<a href="#addBlock" class="button icon iconAdd iconOnly addBlock" data-position="' . $value . '">
+										<a href="#addBlock" class="button icon iconAdd iconOnly addBlock">
 											<span>' . ucfirst(BL::lbl('AddBlock')) . '</span>
 										</a>
 									</div>

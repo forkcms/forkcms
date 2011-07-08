@@ -108,6 +108,9 @@ jsBackend.pages.extras =
 
 		// load initial data, or initialize the dialogs
 		jsBackend.pages.extras.load();
+
+		// make the blocks sortable
+		jsBackend.pages.extras.sortable();
 	},
 
 
@@ -157,8 +160,8 @@ jsBackend.pages.extras =
 		// prevent the default action
 		evt.preventDefault();
 
-		// get the position wherefor we will change the extra
-		var positionId = $(this).data('position');
+		// save the position wherefor we will change the extra
+		jsBackend.pages.extras.extraForPosition = $(this).parent().parent().data('position');
 		
 		// init var
 		var hasModules = false;
@@ -191,9 +194,6 @@ jsBackend.pages.extras =
 			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', true);
 		}
 
-		// set save position we're adding an extra to
-		jsBackend.pages.extras.extraForPosition = positionId;
-
 		// set type
 		$('#extraType').val('html');
 		$('#extraExtraId').val('');
@@ -209,20 +209,32 @@ jsBackend.pages.extras =
 	// store the extra for real
 	addBlock: function(selectedExtraId, selectedPosition)
 	{
-		// fetch amount of blocks already on page, it'll be the index of the newly added file
+		// clone prototype block
+		var block = $('.contentBlock:first').clone();
+
+		// fetch amount of blocks already on page, it'll be the index of the newly added block
 		var index = $('.contentBlock').length;
 
-		// clone prototype block
-		var block = $('#block-0').clone();
+		// update index occurences in the hidden data
+		var blockHtml = $('textarea[id^=blockHtml]', block);
+		var blockExtraId = $('input[id^=blockExtraId]', block);
+		var blockPosition = $('input[id^=blockPosition]', block);
+
+		blockHtml.attr('id', blockHtml.attr('id').replace(0, index)).attr('name', blockHtml.attr('name').replace(0, index));
+		blockExtraId.attr('id', blockExtraId.attr('id').replace(0, index)).attr('name', blockExtraId.attr('name').replace(0, index));
+		blockPosition.attr('id', blockPosition.attr('id').replace(0, index)).attr('name', blockPosition.attr('name').replace(0, index));
 		
-		// set block index
-		jsBackend.pages.extras.updateBlockIndex(block, 0, index);
+		// save position
+		blockPosition.val(selectedPosition);
+
+		// add block to dom
+		block.appendTo($('#editContent'));
 
 		// block/widget
 		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
 		{
 			// save extra id
-			$('#blockExtraId' + index, block).val(selectedExtraId);
+			$('input[id^=blockExtraId]', block).val(selectedExtraId);
 
 			// set block description
 			$('.pageTitle h2', block).html(extrasById[selectedExtraId].human_name);
@@ -233,12 +245,12 @@ jsBackend.pages.extras =
 			if(extrasById[selectedExtraId].type == 'widget' && typeof extrasById[selectedExtraId].data.edit_url != 'undefined' && extrasById[selectedExtraId].data.edit_url) editLink = extrasById[selectedExtraId].data.edit_url;
 
 			// create html to be appended in template-view
-			var blockHTML = '<div class="templatePositionCurrentType">' +
+			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' +
 								'<div class="oneLiner">' +
 									'<span class="oneLinerElement">' + extrasById[selectedExtraId].human_name + '</span>' +
 									(editLink ? '<a href="' + editLink + '" class="button" target="_blank">{$lblEdit|ucfirst}</a>' : '') +
 								'</div>' +
-								'<a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a>' +
+								'<a href="#" class="deleteBlock icon iconOnly iconDelete"><span>Delete</span></a>' +
 							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
 
 			// set block description in template-view
@@ -246,27 +258,24 @@ jsBackend.pages.extras =
 
 			// don't show editor
 			$('.blockContentHTML', block).hide();
-
-			// add block to dom
-			block.appendTo($('#editContent'));
 		}
 
 		// editor
 		else
 		{
 			// save extra id
-			$('#blockExtraId' + index, block).val('');
+			$('input[id^=blockExtraId]', block).val('');
 
 			// set block description
 			$('.pageTitle h2', block).html('{$lblEditor|ucfirst}');
 
 			// create html to be appended in template-view
-			var blockHTML = '<div class="templatePositionCurrentType">' +
+			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' +
 								'<div class="oneLiner">' +
 									'<span class="oneLinerElement">{$lblEditor|ucfirst}</span>' +
 									'<a href="#' + index + '" class="button showEditor">{$lblEdit|ucfirst}</a>' +
 								'</div>' +
-								'<a href="#" class="deleteBlock icon iconOnly iconDelete" data-block-id="' + index + '"><span>Delete</span></a>' +
+								'<a href="#" class="deleteBlock icon iconOnly iconDelete"><span>Delete</span></a>' +
 							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
 
 			// set block description in template-view
@@ -275,15 +284,12 @@ jsBackend.pages.extras =
 			// show editor
 			$('.blockContentHTML', block).show();
 
-			// add block to dom
-			block.appendTo($('#editContent'));
-
 			// add tinymce to this element
 			tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
 		}
 
-		// save position
-		$('#blockPosition' + index, block).val(selectedPosition);
+		// reset block indexes
+//		jsBackend.pages.extras.resetIndexes();
 	},
 
 
@@ -294,8 +300,8 @@ jsBackend.pages.extras =
 		evt.preventDefault();
 
 		// fetch block index
-		var index = parseInt($(this).data('blockId'));
-		
+		var index = $(this).parent().data('blockId');
+
 		// remove block from template overview
 		$(this).parent('.templatePositionCurrentType').remove();
 
@@ -303,30 +309,13 @@ jsBackend.pages.extras =
 		if($('#blockExtraId' + index).val() == '') tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 
 		// remove block
-		$('#block-' + index).remove();
+		$('#blockExtraId' + index).parent().remove();
 
 		// initialise new index
 		var newIndex = index;
 
-		// reorder indexes of existing blocks:
-		// is doesn't really matter if a certain block at a certain position has a certain index; the important part
-		// is that they're all sequential without gaps and that the sequence of blocks inside a position is correct
-		// @todo: this is quite nasty
-		$('div[id^=block-]').each(function(i)
-		{
-			// fetch block id
-			var oldIndex = parseInt($(this).attr('id').replace('block-', ''));
-
-			// if current id is larger then index, then update the id
-			if(oldIndex > index)
-			{
-				// update block index
-				jsBackend.pages.extras.updateBlockIndex($(this), oldIndex, newIndex);
-
-				// increase index by 1
-				newIndex++;
-			}
-		});
+		// reset indexes (sequence)
+		jsBackend.pages.extras.resetIndexes();
 	},
 	
 	
@@ -353,6 +342,7 @@ jsBackend.pages.extras =
 		if(!saveContent)
 		{
 			// loop all blocks
+			// @todo: update this
 			$('div[id^=block-]').each(function()
 			{
 				// find the one currently being edited
@@ -376,11 +366,24 @@ jsBackend.pages.extras =
 	},
 
 
-	// @todo: some fancy code to reorder the extras; sequence
-	// @todo: do not forget to re-sequence the indexes after blocks have been moved (see deleteBlock): we'll probably be fetching all this stuff when submitted in PHP like this
-	// while(isset($_POST['extra-thingy' . $i++]))
-	// and save them like that, in the order we receive them in that loop
-	// if unclear, contact Matthias
+	// re-order blocks
+	sortable: function()
+	{
+		// @todo: check if this is re-bound when template is switched and has other positions
+		$('div.linkedBlocks').sortable(
+		{
+			items: '.templatePositionCurrentType',
+			placeholder: 'dragAndDropPlaceholder',
+			tolerance: 'pointer',
+			forcePlaceholderSize: true,
+			connectWith: 'div.linkedBlocks',
+			stop: function(event, ui)
+			{
+				// reorder indexes of existing blocks:
+				jsBackend.pages.extras.resetIndexes();
+			}
+		});
+	},
 
 
 	// populate the dropdown with the modules
@@ -446,17 +449,37 @@ jsBackend.pages.extras =
 	},
 
 
-	// update a block's index
-	updateBlockIndex: function(element, oldIndex, newIndex)
+	// reset all indexes to keep all items in proper order
+	resetIndexes: function()
 	{
-		// @todo: this code really stinks (but does its job)
+		// reorder indexes of existing blocks:
+		// is doesn't really matter if a certain block at a certain position has a certain index; the important part
+		// is that they're all sequential without gaps and that the sequence of blocks inside a position is correct
+		$('.templatePositionCurrentType').each(function(i)
+		{
+			// fetch block id
+			var oldIndex = $(this).data('blockId');
+			var newIndex = i + 1;
 
-		element.attr('id', element.attr('id').replace(oldIndex, newIndex));
-		var blockExtraId = $('#blockExtraId' + oldIndex, element);
-		var blockHtml = $('#blockHtml' + oldIndex, element);
-		blockExtraId.attr('id', blockExtraId.attr('id').replace(oldIndex, newIndex)).attr('name', blockExtraId.attr('name').replace(oldIndex, newIndex));
-		blockHtml.attr('id', blockHtml.attr('id').replace(oldIndex, newIndex)).attr('name', blockHtml.attr('name').replace(oldIndex, newIndex));
-		$('a[data-block-id=' + oldIndex + ']').attr('data-block-id', newIndex);
+			// @todo: unlink tiny (if linked)
+
+			// update index of entry in template-view
+			$(this).data('blockId', newIndex);
+
+			// update index occurences in the hidden data
+			var blockHtml = $('#blockHtml' + oldIndex + ':first');
+			var blockExtraId = $('#blockExtraId' + oldIndex + ':first');
+			var blockPosition = $('#blockPosition' + oldIndex + ':first');
+
+			blockHtml.attr('id', blockHtml.attr('id').replace(oldIndex, newIndex)).attr('name', blockHtml.attr('name').replace(oldIndex, newIndex));
+			blockExtraId.attr('id', blockExtraId.attr('id').replace(oldIndex, newIndex)).attr('name', blockExtraId.attr('name').replace(oldIndex, newIndex));
+			blockPosition.attr('id', blockPosition.attr('id').replace(oldIndex, newIndex)).attr('name', blockPosition.attr('name').replace(oldIndex, newIndex));
+
+			// @todo: relink tiny (if linked)
+
+			// while we're at it, make sure the position is also correct
+			blockPosition.val($(this).parent().parent().data('position'));
+		});
 	},
 
 
