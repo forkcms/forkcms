@@ -102,7 +102,7 @@ jsBackend.pages.extras =
 		// bind buttons
 		$('a.addBlock').live('click', jsBackend.pages.extras.showExtraDialog);
 		$('a.deleteBlock').live('click', jsBackend.pages.extras.deleteBlock);
-		$('.showEditor').live('click', function(e) { e.preventDefault(); jsBackend.pages.extras.editContent($(this).attr('href').substr(1)); });
+		$('.showEditor').live('click', function(e) { e.preventDefault(); jsBackend.pages.extras.editContent($(this).parent().parent().data('blockId')); });
 		$('#okButton').click(function(e) { e.preventDefault(); jsBackend.pages.extras.editTemplate(true); });
 		$('#cancelButton').click(function(e) { e.preventDefault(); jsBackend.pages.extras.editTemplate(false); });
 
@@ -331,7 +331,7 @@ jsBackend.pages.extras =
 
 		// show editor, hide template
 		$('#editTemplate').hide('fast');
-		$('#block-' + index).show('fast');
+		$('#blockHtml' + index).parent().parent().parent().show('fast');
 	},
 
 
@@ -343,15 +343,13 @@ jsBackend.pages.extras =
 		{
 			// loop all blocks
 			// @todo: update this
-			$('div[id^=block-]').each(function()
+			$('.contentBlock').each(function()
 			{
 				// find the one currently being edited
 				if($(this).is(':visible'))
 				{
-					var index = $(this).attr('id').replace('block-', '');
-
 					// reset to previous content
-					tinyMCE.get('blockHtml' + index).setContent(jsBackend.pages.extras.htmlContent);
+					tinyMCE.get($('textarea[id^=blockHtml]', this).attr('id')).setContent(jsBackend.pages.extras.htmlContent);
 				}
 			});
 		}
@@ -361,7 +359,7 @@ jsBackend.pages.extras =
 		$('#pageButtons').show('fast');
 
 		// show editor, hide template
-		$('div[id^=block-]').hide('fast');
+		$('.contentBlock').hide('fast');
 		$('#editTemplate').show('fast');
 	},
 

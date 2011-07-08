@@ -508,7 +508,7 @@ class BackendPagesModel
 
 						$html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '">
 									<h4 class="templatePositionTitle">' . $title . '</h4>
-									<div class="linkedBlocks" style="border: 1px solid red; height: 100px;">
+									<div class="linkedBlocks" style="border: 1px solid red; min-height: 100px;">
 										<!-- linked blocks will be added here -->
 									</div>
 									<div class="buttonHolder">
