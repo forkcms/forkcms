@@ -8,6 +8,7 @@ Improvements
 
 * Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
 * Core: upgraded TinyMCE to 3.4.2.2
+* Pages: New system to link subpages as blocks to a page
 
 
 2.4.2 (2011-07-05)
