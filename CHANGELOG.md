@@ -4,6 +4,7 @@ Bugfixes:
 
 * Pages: Don't show hidden extras in the widget- and block-dropdowns.
 * Pages: hidden pages_extras don't get shown in the template anymore.
+* Pages: when editing a page with a external redirect there was an error because of the disabled field, fixed the JS, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/169.
 
 Improvements
 
