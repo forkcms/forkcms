@@ -80,7 +80,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$maxNumBlocks = BackendModel::getModuleSetting($this->getModule(), 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i,);
+		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i);
 
 		// load the form
 		$this->loadForm();
@@ -127,6 +127,12 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $i);
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_' . $i, '');
 		}
+
+		// widget content
+		$this->frm->addCheckbox('show_on_parent');
+		$this->frm->addText('widget_title');
+		$this->frm->addImage('widget_image');
+		$this->frm->addEditor('widget_text');
 
 		// redirect
 		$redirectValues = array(
@@ -176,6 +182,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// assign template
 		$this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
 
+		// are children blocks activated?
+		$this->tpl->assign('allowChildrenBlocks', BackendModel::getModuleSetting('pages', 'children_blocks', false));
+
 		// parse the form
 		$this->frm->parse($this->tpl);
 
@@ -210,6 +219,18 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			if($this->frm->getField('show_on_parent')->isChecked()) $this->frm->getField('widget_title')->isFilled(BL::err('TitleIsRequired'));
+
+			// validate widget image
+			if($this->frm->getField('widget_image')->isFilled())
+			{
+				// correct extension
+				if($this->frm->getField('widget_image')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
+				{
+					// correct mimetype?
+					$this->frm->getField('widget_image')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
+				}
+			}
 
 			// validate meta
 			$this->meta->validate();
@@ -248,10 +269,45 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['allow_delete'] = 'Y';
 				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
+				$page['show_on_parent'] = ($this->frm->getField('show_on_parent')->isChecked()) ? 'Y' : 'N';
+				$page['widget_title'] = $this->frm->getField('widget_title')->getValue();
+				$page['widget_image'] = null;
+				$page['widget_text'] = $this->frm->getField('widget_text')->getValue();
 				$page['data'] = ($data !== null) ? serialize($data) : null;
 
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
+
+				// upload image
+				if($this->frm->getField('widget_image')->isFilled())
+				{
+					// init vars
+					$page['widget_image'] = rand(0,3) . '_' . $page['id'] . '.' . $this->frm->getField('widget_image')->getExtension();
+					$path = FRONTEND_FILES_PATH . '/pages/widget_images';
+
+					// get a list of folders to resize to
+					$sizes = SpoonDirectory::getList($path, false, array('source'));
+
+					// loop sizes
+					foreach($sizes as $size)
+					{
+						// get the width and height
+						@list($width, $height) = explode('x', $size);
+
+						// invalid width or height
+						if(!empty($width) && !SpoonFilter::isNumeric($width)) continue;
+						if(!empty($height) && !SpoonFilter::isNumeric($height)) continue;
+						if(empty($width) && empty($height)) continue;
+
+						// resize - empty width or height means no width or height
+						if($width == '') $this->frm->getField('widget_image')->createThumbnail($path . '/' . $size . '/' . $page['widget_image'], null, $height, true);
+						elseif($height == '') $this->frm->getField('widget_image')->createThumbnail($path . '/' . $size . '/' . $page['widget_image'], $width, null, true);
+						else $this->frm->getField('widget_image')->createThumbnail($path . '/' . $size . '/' . $page['widget_image'], $width, $height, true, false, 100);
+					}
+
+					// move the source
+					$this->frm->getField('widget_image')->moveFile($path . '/source/' . $page['widget_image']);
+				}
 
 				// insert page, store the id, we need it when building the blocks
 				$page['revision_id'] = BackendPagesModel::insert($page);

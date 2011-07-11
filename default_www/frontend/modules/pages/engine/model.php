@@ -13,6 +13,34 @@
 class FrontendPagesModel implements FrontendTagsInterface
 {
 	/**
+	 * Fetch a list of items for block children of the page with given id
+	 *
+	 * @return	array
+	 * @param	int $ids		The id of the item to grab the block children for.
+	 */
+	public static function getChildrenForBlocks($id)
+	{
+		// fetch items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title AS page_title, i.widget_title, i.widget_image, i.widget_text
+															FROM pages AS i
+															INNER JOIN meta AS m ON m.id = i.meta_id
+															WHERE i.parent_id = ? AND i.show_on_parent = ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ?
+															ORDER BY i.sequence ASC',
+															array((int) $id, 'Y', 'active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00'));
+
+		// has items
+		if(!empty($items))
+		{
+			// reset url
+			foreach($items as &$row) $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+		}
+
+		// return
+		return $items;
+	}
+
+
+	/**
 	 * Fetch a list of items for a list of ids
 	 *
 	 * @return	array

@@ -288,10 +288,6 @@
 		#pages.pagesAddEdit .ui-tabs-nav li { float: right; }
 		#pages.pagesAddEdit .ui-tabs-nav li:first-child { float: left; }
 
-		#pages.pagesAddEdit .ui-tabs-nav li:nth-child(2) {
-			margin-right: 0;
-		}
-
 	/*
 		editTemplate
 	*/

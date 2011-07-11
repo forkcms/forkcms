@@ -22,7 +22,8 @@
 	<div id="tabs" class="tabs">
 		<ul>
 			<li style="float: left;"><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li style="float: left;"><a href="#tabRedirect">{$lblRedirect|ucfirst}</a></li>
+			{option:allowChildrenBlocks}<li style="float: left;"><a href="#tabWidgetContent">{$lblWidgetContent|ucfirst}</a></li>{/option:allowChildrenBlocks}
+			<li style="float: left; margin-right: 0;"><a href="#tabRedirect">{$lblRedirect|ucfirst}</a></li>
 			<!-- Reverse order after content tab [floatRight] -->
 			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
@@ -79,6 +80,30 @@
 				{/iteration:blocks}
 			</div>
 		</div>
+
+		{option:allowChildrenBlocks}
+			<div id="tabWidgetContent">
+				<div class="subtleBox">
+					<div class="options">
+						<p>
+							<label for="showOnParent">{$chkShowOnParent} {$msgShowOnParent}</label>
+						</p>
+						<p>
+							<label for="widgetTitle">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtWidgetTitle} {$txtWidgetTitleError}
+						</p>
+						<p>
+							<label for="widgetImage">{$lblImage|ucfirst}</label>
+							{$fileWidgetImage} {$fileWidgetImageError}
+						</p>
+						<p>
+							<label for="widgetText">{$lblText|ucfirst}</label>
+							{$txtWidgetText} {$txtWidgetTextError}
+						</p>
+					</div>
+				</div>
+			</div>
+		{/option:allowChildrenBlocks}
 
 		<div id="tabRedirect">
 			<div class="subtleBox">
@@ -196,7 +221,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
-							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}</span>{$txtUrl} {$txtUrlError}
+							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
 				</div>

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
+    <core>
+      <item type="label" name="ChildrenBlocks">
+        <translation language="nl"><![CDATA[subpagina blokken]]></translation>
+        <translation language="en"><![CDATA[children blocks]]></translation>
+      </item>
+    </core>
     <pages>
       <item type="error" name="CantBeMoved">
         <translation language="nl"><![CDATA[Pagina kan niet verplaatst worden.]]></translation>
@@ -64,6 +70,10 @@
         <translation language="nl"><![CDATA[losse pagina's]]></translation>
         <translation language="en"><![CDATA[single pages]]></translation>
       </item>
+      <item type="label" name="WidgetContent">
+        <translation language="nl"><![CDATA[widget inhoud]]></translation>
+        <translation language="en"><![CDATA[widget content]]></translation>
+      </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The page "%1$s" was added.]]></translation>
@@ -75,6 +85,10 @@
       <item type="message" name="BlockAttached">
         <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
         <translation language="en"><![CDATA[The module <strong>%1$s</strong> is attached to this section.]]></translation>
+      </item>
+      <item type="message" name="ChildrenBlocks">
+        <translation language="nl"><![CDATA[Mogelijkheid om subpagina's te tonen als blokken op een pagina inschakelen.]]></translation>
+        <translation language="en"><![CDATA[Activate possibility to show subpages as blocks on a page.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je de pagina "%1$s" wil verwijderen?]]></translation>
@@ -155,6 +169,10 @@
       <item type="message" name="RichText">
         <translation language="nl"><![CDATA[Editor]]></translation>
         <translation language="en"><![CDATA[Editor]]></translation>
+      </item>
+      <item type="message" name="ShowOnParent">
+        <translation language="nl"><![CDATA[Toon deze pagina als blok op de bovenliggende pagina (indien de juiste widget gekoppeld is).]]></translation>
+        <translation language="en"><![CDATA[Show this page as block on the parent page (if the right widget is linked).]]></translation>
       </item>
       <item type="message" name="TemplateChangeWarning">
         <translation language="nl"><![CDATA[<strong>Let op:</strong> de bestaande inhoud zal verloren gaan bij het wijzigen van de template.]]></translation>

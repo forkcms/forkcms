@@ -257,6 +257,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			$this->frm->getField('block_extra_id_' . $i)->setAttribute('class', 'block_extra_id');
 		}
 
+		// widget content
+		$this->frm->addCheckbox('show_on_parent', $this->record['show_on_parent'] == 'Y');
+		$this->frm->addText('widget_title', $this->record['widget_title']);
+		$this->frm->addImage('widget_image');
+		$this->frm->addCheckbox('widget_image_delete');
+		$this->frm->addEditor('widget_text', $this->record['widget_text']);
+
 		// redirect
 		$redirectValue = 'none';
 		if(isset($this->record['data']['internal_redirect']['page_id'])) $redirectValue = 'internal';
@@ -352,6 +359,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// assign template
 		$this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
 
+		// are children blocks activated?
+		$this->tpl->assign('allowChildrenBlocks', BackendModel::getModuleSetting('pages', 'children_blocks', false));
+
 		// parse the form
 		$this->frm->parse($this->tpl);
 
@@ -415,6 +425,18 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			if($this->frm->getField('show_on_parent')->isChecked()) $this->frm->getField('widget_title')->isFilled(BL::err('TitleIsRequired'));
+
+			// validate widget image
+			if($this->frm->getField('widget_image')->isFilled())
+			{
+				// correct extension
+				if($this->frm->getField('widget_image')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
+				{
+					// correct mimetype?
+					$this->frm->getField('widget_image')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
+				}
+			}
 
 			// validate meta
 			$this->meta->validate();
@@ -452,10 +474,63 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['allow_delete'] = $this->record['allow_delete'];
 				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = $this->record['sequence'];
+				$page['show_on_parent'] = ($this->frm->getField('show_on_parent')->isChecked()) ? 'Y' : 'N';
+				$page['widget_title'] = $this->frm->getField('widget_title')->getValue();
+				$page['widget_image'] = $this->record['widget_image'];
+				$page['widget_text'] = $this->frm->getField('widget_text')->getValue();
 				$page['data'] = ($data !== null) ? serialize($data) : null;
 
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
+
+				// delete image
+				if($this->frm->getField('widget_image_delete')->getChecked() || $this->frm->getField('widget_image')->isFilled())
+				{
+					// there is an old image
+					if(!empty($this->record['widget_image']))
+					{
+						// init vars
+						$page['widget_image'] = null;
+						$path = FRONTEND_FILES_PATH . '/pages/widget_images';
+
+						// delete old files
+						SpoonFile::delete($path . '/source/' . $this->record['widget_image']);
+
+						// loop folders and delete image
+						foreach(SpoonDirectory::getList($path) as $folder) SpoonFile::delete($path . '/' . $folder . '/' . $this->record['widget_image']);
+					}
+				}
+
+				// upload image
+				if($this->frm->getField('widget_image')->isFilled())
+				{
+					// init vars
+					$page['widget_image'] = rand(0,3) . '_' . $page['id'] . '.' . $this->frm->getField('widget_image')->getExtension();
+					$path = FRONTEND_FILES_PATH . '/pages/widget_images';
+
+					// get a list of folders to resize to
+					$sizes = SpoonDirectory::getList($path, false, array('source'));
+
+					// loop sizes
+					foreach($sizes as $size)
+					{
+						// get the width and height
+						@list($width, $height) = explode('x', $size);
+
+						// invalid width or height
+						if(!empty($width) && !SpoonFilter::isNumeric($width)) continue;
+						if(!empty($height) && !SpoonFilter::isNumeric($height)) continue;
+						if(empty($width) && empty($height)) continue;
+
+						// resize - empty width or height means no width or height
+						if($width == '') $this->frm->getField('widget_image')->createThumbnail($path . '/' . $size . '/' . $page['widget_image'], null, $height, true);
+						elseif($height == '') $this->frm->getField('widget_image')->createThumbnail($path . '/' . $size . '/' . $page['widget_image'], $width, null, true);
+						else $this->frm->getField('widget_image')->createThumbnail($path . '/' . $size . '/' . $page['widget_image'], $width, $height, true, false, 100);
+					}
+
+					// move the source
+					$this->frm->getField('widget_image')->moveFile($path . '/source/' . $page['widget_image']);
+				}
 
 				// insert page, store the id, we need it when building the blocks
 				$page['revision_id'] = BackendPagesModel::update($page);

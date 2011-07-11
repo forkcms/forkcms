@@ -538,6 +538,29 @@ class BackendPagesModel
 
 
 	/**
+	 * Change the hidden state of an extra.
+	 *
+	 * @return	void
+	 * @param	string $module			The module of the extra(s).
+	 * @param	string $action			The action of the extra(s).
+	 * @param	bool $hidden			The hidden state of the extra.
+	 */
+	public static function changeExtraVisibility($module, $type = 'widget', $action = null, $hidden = true)
+	{
+		// init where string
+		$where = 'module = ? AND type = ?';
+		if(isset($action)) $where .= ' AND action = ?';
+
+		// build parameters array
+		$parameters = array($module, $type);
+		if(isset($action)) $parameters[] = $action;
+
+		// execute the update
+		return BackendModel::getDB(true)->update('pages_extras', array('hidden' => ($hidden ? 'Y' : 'N')), $where, $parameters);
+	}
+
+
+	/**
 	 * Creates the html for the menu
 	 *
 	 * @return	string

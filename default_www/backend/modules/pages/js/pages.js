@@ -33,7 +33,21 @@ jsBackend.pages =
 		});
 		
 		// do meta
-		if($('#title').length > 0) $('#title').doMeta();
+		if($('#title').length > 0)
+		{
+			$('#title').doMeta();
+		}
+
+		// no widget title has been filled in yet
+		if($('#title').length > 0 && $('#widgetTitle').length > 0 && $('#widgetTitle').val() == '')
+		{
+			// change widget title on change page title
+			$('#title').bind('change', function()
+			{
+				$('#widgetTitle').val($('#title').val());
+			});
+		}
+		
 	},
 
 

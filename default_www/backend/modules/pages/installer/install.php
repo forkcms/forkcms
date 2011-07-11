@@ -42,6 +42,17 @@ class PagesInstall extends ModuleInstaller
 
 		// set rights
 		$this->setRights();
+
+		// general settings
+		$this->setSetting('pages', 'meta_navigation', false);
+		$this->setSetting('pages', 'allow_children_blocks', false);
+
+		// create files folders
+		$path = PATH_WWW . '/frontend/files/pages/widget_images';
+		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+		if(!SpoonDirectory::exists($path . '/400x400')) SpoonDirectory::create($path . '/400x400');
+		if(!SpoonDirectory::exists($path . '/256x256')) SpoonDirectory::create($path . '/256x256');
+		if(!SpoonDirectory::exists($path . '/64x64')) SpoonDirectory::create($path . '/64x64');
 	}
 
 
@@ -74,6 +85,7 @@ class PagesInstall extends ModuleInstaller
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
+		$extras['children_widget'] = $this->insertExtra('pages', 'widget', 'ChildrenBlocks', 'children', serialize(array('template' => 'children_default.tpl')), 'Y', 2);
 
 		// fetch template ids
 		$templateIds = $this->getDB()->getPairs('SELECT label, id FROM pages_templates WHERE theme = ?', array($this->defaultTheme));
