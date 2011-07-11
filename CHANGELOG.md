@@ -1,3 +1,11 @@
+2.4.3 (XXXX-XX-XX)
+--
+
+Bugfixes:
+
+* Pages: hidden pages_extras don't get shown in the template anymore
+
+
 2.4.2 (2011-07-05)
 --
 
