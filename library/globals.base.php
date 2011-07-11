@@ -26,7 +26,7 @@ define('SPOON_CHARSET', 'utf-8');
  * Fork configuration
  */
 // version of Fork
-define('FORK_VERSION', '2.4.1');
+define('FORK_VERSION', '2.4.2');
 
 
 /**

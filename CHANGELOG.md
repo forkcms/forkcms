@@ -1,6 +1,17 @@
-2.4.2 (xxxx-xx-xx)
+2.4.3 (xxxx-xx-xx)
 --
+Bugfixes:
 
+* Pages: Don't show hidden extras in the widget- and block-dropdowns.
+
+Improvements
+
+* Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
+* Core: upgraded TinyMCE to 3.4.2.2
+
+
+2.4.2 (2011-07-05)
+--
 Improvements:
 
 * Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.
