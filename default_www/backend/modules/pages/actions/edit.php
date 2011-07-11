@@ -8,6 +8,7 @@
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendPagesEdit extends BackendBaseActionEdit

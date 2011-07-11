@@ -9,6 +9,7 @@
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendPagesModel

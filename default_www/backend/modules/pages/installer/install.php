@@ -9,6 +9,7 @@
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class PagesInstall extends ModuleInstaller

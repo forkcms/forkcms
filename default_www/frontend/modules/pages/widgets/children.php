@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	pages
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendPagesWidgetChildren extends FrontendBaseWidget

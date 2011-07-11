@@ -6,6 +6,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Annelies Van Extergem <annelies@netlash.com>
  */
 jsBackend.pages =
 {
