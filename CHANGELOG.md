@@ -8,7 +8,7 @@ Bugfixes:
 Improvements
 
 * Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
-* Core: upgraded TinyMCE to 3.4.2.2
+* Core: upgraded TinyMCE to 3.4.3.2
 * Core: Pub/sub-system, see: http://www.fork-cms.com/blog/detail/pubsub-in-fork
 
 
