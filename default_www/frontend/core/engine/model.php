@@ -274,13 +274,13 @@ class FrontendModel
 		$numBlocks = count($record['template_data']['names']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
+		$record['blocks'] = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html,
 														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 														FROM pages_blocks AS pb
-														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
+														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
 														WHERE pb.revision_id = ? AND pb.status = ?
 														ORDER BY pb.id',
-														array($record['revision_id'], 'active'));
+														array('N', $record['revision_id'], 'active'));
 
 		// remove redundant blocks
 		$record['blocks'] = array_splice($record['blocks'], 0, $numBlocks);
@@ -334,13 +334,13 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
+		$record['blocks'] = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html,
 														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 														FROM pages_blocks AS pb
-														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
+														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
 														WHERE pb.revision_id = ? AND pb.status = ?
 														ORDER BY pb.id',
-														array($record['revision_id'], 'active'));
+														array('N', $record['revision_id'], 'active'));
 
 		// loop blocks
 		foreach($record['blocks'] as $index => $row)

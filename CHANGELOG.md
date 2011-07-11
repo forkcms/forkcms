@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Pages: Don't show hidden extras in the widget- and block-dropdowns.
+* Pages: hidden pages_extras don't get shown in the template anymore.
 
 Improvements
 
