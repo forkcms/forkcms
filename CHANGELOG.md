@@ -1,6 +1,20 @@
+2.5.0 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Pages: Don't show hidden extras in the widget- and block-dropdowns.
+* Pages: hidden pages_extras don't get shown in the template anymore.
+* Pages: when editing a page with a external redirect there was an error because of the disabled field, fixed the JS, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/169.
+
+Improvements
+
+* Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
+* Core: upgraded TinyMCE to 3.4.3.2
+* Core: Pub/sub-system, see: http://www.fork-cms.com/blog/detail/pubsub-in-fork
+
+
 2.4.2 (2011-07-05)
 --
-
 Improvements:
 
 * Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.

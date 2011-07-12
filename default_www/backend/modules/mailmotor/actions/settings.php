@@ -297,6 +297,9 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->getModule(), 'cm_password', null);
 				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
+
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
 			}
@@ -344,6 +347,9 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
+
 					// redirect to a custom success message
 					$this->redirect(BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue());
 				}
@@ -366,6 +372,9 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 					// update the client ID in settings
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $this->clientID);
+
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
 
 					// redirect to the settings page
 					$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient');
@@ -404,6 +413,9 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 				// set price per email
 				if(BackendAuthentication::getUser()->isGod()) BackendModel::setModuleSetting($this->getModule(), 'price_per_email', $this->frmGeneral->getField('price_per_email')->getValue());
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_general_settings');
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabGeneral');

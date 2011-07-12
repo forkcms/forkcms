@@ -484,6 +484,10 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				// update groups for this mailing
 				BackendMailmotorModel::updateGroupsForMailing($this->id, $values['groups']);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step1', array('item' => $item));
+
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=2');
 			}
@@ -523,6 +527,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 
 				// update the concept
 				BackendMailmotorModel::updateMailing($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step2', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=3');

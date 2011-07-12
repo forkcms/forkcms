@@ -122,6 +122,9 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
 				// activation URL
 				$mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') . '/' . $profile->getSetting('activation_key');
 
+				// trigger event
+				FrontendModel::triggerEvent('profiles', 'after_resend_activation', array('id' => $profileId));
+
 				// send email
 				FrontendMailer::addEmail(FL::getMessage('RegisterSubject'), FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl', $mailValues, $profile->getEmail(), $profile->getEmail());
 

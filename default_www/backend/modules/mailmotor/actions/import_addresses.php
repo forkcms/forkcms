@@ -282,6 +282,9 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 				// no failed subscribers found
 				if(empty($failedSubscribers))
 				{
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_import_address');
+
 					// redirect to success message
 					$this->redirect(BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']));
 				}
@@ -291,6 +294,9 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 					// write a CSV file to the cache
 					$csvFile = 'import-report-' . SpoonFilter::urlise(BackendModel::getUTCDate()) . '.csv';
 					SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers, null, null, ';', '"');
+
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_import_address_with_failed_items', array('failed' => $failedSubscribers));
 
 					// redirect to failed message with an additional parameter to display a download link to the report-csv form cache.
 					$this->redirect(BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' . count($failedSubscribers) . '&csv=' . $csvFile);

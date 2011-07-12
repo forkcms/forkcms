@@ -197,6 +197,9 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				// update the item
 				BackendTagsModel::update($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['tag']) . '&highlight=row-' . $item['id']);
 			}

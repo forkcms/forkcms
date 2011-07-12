@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>profiles</name>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>Profiles</name>
+		<description><![CDATA[This module will be used to manage the profiles.']]></description>
+	</info>
+	<events>
+		<event application="backend" name="after_unblock"><![CDATA[Triggered when a profile is unblocked.]]></event>
+		<event application="backend" name="after_block"><![CDATA[Triggered when a profile is blocked.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a profile is edited.]]></event>
+		<event application="backend" name="after_reactivate"><![CDATA[Triggered when a profile is reactivated.]]></event>
+		<event application="backend" name="after_profile_add_to_group"><![CDATA[Triggered when a profile is added to a group.]]></event>
+		<event application="backend" name="after_profile_delete_from_group"><![CDATA[Triggered when a profile is deleted from a group.]]></event>
+		<event application="backend" name="after_profile_edit_groups"><![CDATA[Triggered when teh groups for a profile are saved.]]></event>
+		<event application="backend" name="after_delete_profile"><![CDATA[Triggered when a profile is deleted.]]></event>
+		<event application="backend" name="after_add_group"><![CDATA[Triggered when a group is added.]]></event>
+		<event application="backend" name="after_delete_group"><![CDATA[Triggered when a group is deleted.]]></event>
+		<event application="backend" name="after_edit_group"><![CDATA[Triggered when a group is edited.]]></event>
+		<event application="frontend" name="after_activate"><![CDATA[Triggered when a profile is activated.]]></event>
+		<event application="frontend" name="after_forgot_password"><![CDATA[Triggered when someone submitted the forgot password form.]]></event>
+		<event application="frontend" name="after_logged_in"><![CDATA[Triggered when a profile logged in.]]></event>
+		<event application="frontend" name="after_logout"><![CDATA[Triggered when a profile signed off.]]></event>
+		<event application="frontend" name="after_profile_email"><![CDATA[Triggered when a profile alters his emailaddress]]></event>
+		<event application="frontend" name="after_profile_password"><![CDATA[Triggered when a profile changes his password.]]></event>
+		<event application="frontend" name="after_saved_settings"><![CDATA[Triggered when a profile changes the settings.]]></event>
+		<event application="frontend" name="after_register"><![CDATA[Triggered when someone registers.]]></event>
+		<event application="frontend" name="after_resend_activation"><![CDATA[Triggered when someone submitted the form to resend the activation code.]]></event>
+		<event application="frontend" name="after_reset_password"><![CDATA[Triggered when someone resets his password.]]></event>
+	</events>
+</module>

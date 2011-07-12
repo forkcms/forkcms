@@ -88,6 +88,9 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 				// insert the item
 				$item['id'] = BackendFaqModel::insertCategory($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}

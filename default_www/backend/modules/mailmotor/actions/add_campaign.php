@@ -79,6 +79,9 @@ class BackendMailmotorAddCampaign extends BackendBaseActionAdd
 				// insert the item
 				$item['id'] = BackendMailmotorModel::insertCampaign($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_campaign', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}

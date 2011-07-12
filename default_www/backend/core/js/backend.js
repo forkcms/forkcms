@@ -283,9 +283,9 @@ jsBackend.controls =
 					
 					// disable all
 					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
-					
-					// get fields
-					var fields = $this.parents('li').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea')
+
+					// get fields that should be enabled
+					var fields = $('input[name=' + radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + radiobutton.attr('name') + ']), select, textarea')
 
 					// enable
 					fields.removeClass('disabled').prop('disabled', false);

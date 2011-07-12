@@ -78,9 +78,6 @@ class BackendInit
 
 		// disable magic quotes
 		SpoonFilter::disableMagicQuotes();
-
-		// start session
-		$this->initSession();
 	}
 
 
@@ -365,17 +362,6 @@ class BackendInit
 
 		// stop script execution
 		exit;
-	}
-
-
-	/**
-	 * Start session
-	 *
-	 * @return	void
-	 */
-	private function initSession()
-	{
-		SpoonSession::start();
 	}
 
 
