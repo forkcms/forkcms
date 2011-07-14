@@ -380,8 +380,18 @@ class InstallerStep2 extends InstallerStep
 		// redefine argument
 		$path = rtrim((string) $path, '/');
 
+		// create random file
+		$file = uniqid() .'.tmp';
+
+		$return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
+
+		if($return === false) return false;
+
+		// unlink the random file
+		@unlink($path . '/' . $file);
+
 		// return
-		return @is_writable($path);
+		return true;
 	}
 }
 
