@@ -50,7 +50,7 @@
 			<div id="editContent">
 				{iteration:positions}
 					{iteration:positions.blocks}
-						<div class="box contentBlock" style="display: none;">
+						<div class="box contentBlock" style="display: none; z-index: 1001; position: fixed; top: 0; left: 0; width: 100%; text-align: center;">
 							<div class="pageTitle" style="margin-bottom: 0;">
 								<h2>{$positions.blocks.name}</h2>
 							</div>
@@ -286,7 +286,8 @@
 	</div>
 
 	{* Button to indicate writing content is done *}
-	<div id="editorButtons" class="fullwidthOptions" style="display: none">
+	<div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; opacity: 0.5">&nbsp;</div>
+	<div id="editorButtons" class="fullwidthOptions" style="display: none; z-index: 1001; position: fixed; top: 0; right: 0;">
 		<div class="buttonHolderRight">
 			<a href="#" id="okButton" class="button mainButton"><span>{$lblOK|ucfirst}</span></a>
 			<a href="#" id="cancelButton" class="inputButton button"><span>{$lblCancel|ucfirst}</span></a>

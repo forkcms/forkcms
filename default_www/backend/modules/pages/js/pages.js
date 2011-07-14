@@ -325,13 +325,17 @@ jsBackend.pages.extras =
 		// save content to allow for cancelling the edited text
 		jsBackend.pages.extras.htmlContent = tinyMCE.get('blockHtml' + index).getContent();
 
-		// update buttons
-		$('#pageButtons').hide('fast');
-		$('#editorButtons').show('fast');
+		// sohw overlay
+		$('#overlay').fadeIn('fast');
 
-		// show editor, hide template
-		$('#editTemplate').hide('fast');
-		$('#blockHtml' + index).parent().parent().parent().show('fast');
+		// update buttons
+		$('#editorButtons').show();
+
+		// show editor
+		$('#blockHtml' + index).parent().parent().parent().show();
+
+		// disable scrolling
+		$('body').css('overflow', 'hidden');
 	},
 
 
@@ -354,13 +358,17 @@ jsBackend.pages.extras =
 			});
 		}
 
-		// update buttons
-		$('#editorButtons').hide('fast');
-		$('#pageButtons').show('fast');
+		// hide overlay
+		$('#overlay').fadeOut('fast');
 
-		// show editor, hide template
-		$('.contentBlock').hide('fast');
-		$('#editTemplate').show('fast');
+		// update buttons
+		$('#editorButtons').hide();
+
+		// hide editor
+		$('.contentBlock').hide();
+
+		// enable scrolling
+		$('body').css('overflow', 'auto');
 	},
 
 
@@ -450,10 +458,6 @@ jsBackend.pages.extras =
 	// reset all indexes to keep all items in proper order
 	resetIndexes: function()
 	{
-// @todo: this number-thingy is bit of a mess
-// imagine block 2 switches to 3, then at a certain point we'll	have 2 3's (in hidden content stuff) and we won't know which one's which
-// also: tiny can't be linked at this point cuz it'd link to the wrong one
-
 		// mark content to be reset
 		$('.contentBlock').addClass('reset');
 
@@ -491,6 +495,9 @@ jsBackend.pages.extras =
 			// while we're at it, make sure the position is also correct
 			blockPosition.val($(this).parent().parent().data('position'));
 		});
+
+		// mark all as having been reset
+		$('.contentBlock').removeClass('reset');
 
 		// loop blocks again, now that all indexes have been reset and each has his own unique index again
 		$('.templatePositionCurrentType').each(function(i)
