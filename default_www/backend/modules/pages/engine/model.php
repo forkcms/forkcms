@@ -1278,10 +1278,10 @@ class BackendPagesModel
 
 		// get templates
 		$templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.data
-																FROM pages_templates AS i
-																WHERE i.theme = ? AND i.active = ?
-																ORDER BY i.label ASC',
-																array($theme, 'Y'), 'id');
+												FROM pages_templates AS i
+												WHERE i.theme = ? AND i.active = ?
+												ORDER BY i.label ASC',
+												array($theme, 'Y'), 'id');
 
 		// get extras
 		$extras = (array) self::getExtras();

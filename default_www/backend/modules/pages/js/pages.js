@@ -450,6 +450,13 @@ jsBackend.pages.extras =
 	// reset all indexes to keep all items in proper order
 	resetIndexes: function()
 	{
+// @todo: this number-thingy is bit of a mess
+// imagine block 2 switches to 3, then at a certain point we'll	have 2 3's (in hidden content stuff) and we won't know which one's which
+// also: tiny can't be linked at this point cuz it'd link to the wrong one
+
+		// mark content to be reset
+		$('.contentBlock').addClass('reset');
+
 		// reorder indexes of existing blocks:
 		// is doesn't really matter if a certain block at a certain position has a certain index; the important part
 		// is that they're all sequential without gaps and that the sequence of blocks inside a position is correct
@@ -459,24 +466,44 @@ jsBackend.pages.extras =
 			var oldIndex = $(this).data('blockId');
 			var newIndex = i + 1;
 
-			// @todo: unlink tiny (if linked)
+			// check if editor instance: editor needs to be removed
+			if($('#blockExtraId' + oldIndex).val() == '')
+			{
+				// remove editor from this block
+				tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + oldIndex);
+			}
 
 			// update index of entry in template-view
 			$(this).data('blockId', newIndex);
 
 			// update index occurences in the hidden data
-			var blockHtml = $('#blockHtml' + oldIndex + ':first');
-			var blockExtraId = $('#blockExtraId' + oldIndex + ':first');
-			var blockPosition = $('#blockPosition' + oldIndex + ':first');
+			var blockHtml = $('.reset #blockHtml' + oldIndex);
+			var blockExtraId = $('.reset #blockExtraId' + oldIndex);
+			var blockPosition = $('.reset #blockPosition' + oldIndex);
 
 			blockHtml.attr('id', blockHtml.attr('id').replace(oldIndex, newIndex)).attr('name', blockHtml.attr('name').replace(oldIndex, newIndex));
 			blockExtraId.attr('id', blockExtraId.attr('id').replace(oldIndex, newIndex)).attr('name', blockExtraId.attr('name').replace(oldIndex, newIndex));
 			blockPosition.attr('id', blockPosition.attr('id').replace(oldIndex, newIndex)).attr('name', blockPosition.attr('name').replace(oldIndex, newIndex));
-
-			// @todo: relink tiny (if linked)
+			
+			// no longer mark as needing to be reset
+			blockExtraId.parent().removeClass('reset');
 
 			// while we're at it, make sure the position is also correct
 			blockPosition.val($(this).parent().parent().data('position'));
+		});
+
+		// loop blocks again, now that all indexes have been reset and each has his own unique index again
+		$('.templatePositionCurrentType').each(function(i)
+		{
+			// fetch block id
+			var newIndex = $(this).data('blockId');
+
+			// check if editor instance: editor needs to be relinked
+			if($('#blockExtraId' + newIndex).val() == '')
+			{
+				// add editor to this element
+				tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + newIndex);
+			}
 		});
 	},
 
