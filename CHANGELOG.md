@@ -1,3 +1,10 @@
+2.5.1 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Installer: Installer now uses `is_writable` to check if a folder is writable. Thx to Mattias Geniar (http://forkcms.lighthouseapp.com/projects/61890/tickets/172).
+
+
 2.5.0 (2011-07-12)
 --
 Bugfixes:

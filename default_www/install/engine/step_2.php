@@ -380,21 +380,8 @@ class InstallerStep2 extends InstallerStep
 		// redefine argument
 		$path = rtrim((string) $path, '/');
 
-		// create temporary file
-		$file = tempnam($path, 'isWritable');
-
-		// file has been created
-		if($file !== false)
-		{
-			// remove temporary file
-			@unlink($file);
-
-			// file could not be created = writable
-			return true;
-		}
-
-		// file could not be created = not writable
-		return false;
+		// return
+		return @is_writable($path);
 	}
 }
 
