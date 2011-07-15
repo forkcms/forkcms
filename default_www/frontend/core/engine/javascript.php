@@ -55,15 +55,18 @@ class FrontendJavascript
 		// set the language
 		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
-		// create a new template instance (this will handle all stuff for us)
-		$tpl = new FrontendTemplate();
+		// build the path
+		if($this->module == 'core') $path = FRONTEND_CORE_PATH . '/js/' . $this->getFile();
+		else $path = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
 
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
-		// output the template
-		if($this->module == 'core') $tpl->display(FRONTEND_CORE_PATH . '/js/' . $this->getFile(), true);
-		else $tpl->display(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile(), true);
+		// create a new template instance (this will handle all stuff for us)
+		$tpl = new FrontendTemplate();
+
+		// display
+		$tpl->display(realpath($path), true);
 	}
 
 
@@ -111,38 +114,67 @@ class FrontendJavascript
 		// set property
 		$this->filename = (string) $value;
 
+		// validate
+		if(substr_count($this->filename, '../') > 0)
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(400);
+
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('Invalid file.');
+
+			// when debug is of show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
+		}
+
+		// init var
+		$valid = true;
+
 		// core is a special module
 		if($this->module == 'core')
 		{
-			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(FRONTEND_CORE_PATH . '/js/' . $this->filename))
-			{
-				// set correct headers
-				SpoonHTTP::setHeadersByCode(404);
+			// build path
+			$path = realpath(FRONTEND_CORE_PATH . '/js/' . $this->filename);
 
-				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new FrontendException('File not present.');
-
-				// when debug is of show a descent message
-				else exit(SPOON_DEBUG_MESSAGE);
-			}
+			// validate if path is allowed
+			if(substr($path, 0, strlen(FRONTEND_CORE_PATH . '/js/')) != FRONTEND_CORE_PATH . '/js/') $valid = false;
 		}
 
 		// not core
 		else
 		{
-			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename))
-			{
-				// set correct headers
-				SpoonHTTP::setHeadersByCode(404);
+			// build path
+			$path = realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename);
 
-				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new FrontendException('File not present.');
+			// validate if path is allowed
+			if(substr($path, 0, strlen(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/')) != FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/') $valid = false;
+		}
 
-				// when debug is of show a descent message
-				else exit(SPOON_DEBUG_MESSAGE);
-			}
+		// invalid file?
+		if(!$valid)
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(400);
+
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('Invalid file.');
+
+			// when debug is of show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
+		}
+
+
+		// check if the path exists, if not whe should given an error
+		if(!SpoonFile::exists($path))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(404);
+
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('File not present.');
+
+			// when debug is of show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
 		}
 	}
 

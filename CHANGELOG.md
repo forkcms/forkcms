@@ -4,6 +4,7 @@ Bugfixes:
 
 * Installer: Installer now uses `is_writable` to check if a folder is writable. Thx to Mattias Geniar (http://forkcms.lighthouseapp.com/projects/61890/tickets/172).
 * Spoon: On rare occasions iconv would trow an error that it can't convert strings.
+* Core: js.php could be misused.
 
 
 2.5.0 (2011-07-12)
