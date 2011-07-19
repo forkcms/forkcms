@@ -1,3 +1,10 @@
+2.5.2 (2011-07-19)
+--
+Bugfixes:
+
+* Core: Event logging now uses absolute paths to prevent usage of undefined constants.
+
+
 2.5.1 (2011-07-19)
 --
 Bugfixes:

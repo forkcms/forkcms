@@ -1237,7 +1237,7 @@ class BackendModel
 		$eventName = (string) $eventName;
 
 		// create log instance
-		$log = new SpoonLog('custom', BACKEND_CACHE_PATH . '/logs/events');
+		$log = new SpoonLog('custom', PATH_WWW . '/backend/cache/logs/events');
 
 		// logging when we are in debugmode
 		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
