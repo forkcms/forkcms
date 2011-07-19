@@ -107,7 +107,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags
-		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['revision_id']);
+		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
 
 		// get comments
 		$this->comments = FrontendBlogModel::getComments($this->record['id']);

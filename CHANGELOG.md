@@ -1,3 +1,10 @@
+x.x.x (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Blog: Tags are now correctly fetched and displayed.
+
+
 2.5.2 (2011-07-19)
 --
 Bugfixes:

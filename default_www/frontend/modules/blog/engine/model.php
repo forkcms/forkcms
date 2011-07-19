@@ -11,6 +11,7 @@
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Annelies Van Extergem <annelies@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class FrontendBlogModel implements FrontendTagsInterface
@@ -62,22 +63,18 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 																ORDER BY i.publish_on DESC, i.id DESC
 																LIMIT ?, ?',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (int) $offset, (int) $limit), 'revision_id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (int) $offset, (int) $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
 
 		// init var
-		$revisionIds = array();
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// ids
-			$revisionIds[] = (int) $row['revision_id'];
-
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
@@ -88,7 +85,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		}
 
 		// get all tags
-		$tags = FrontendTagsModel::getForMultipleItems('blog', $revisionIds);
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
 		foreach($tags as $postId => $tags)
@@ -176,22 +173,18 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
 																ORDER BY i.publish_on DESC
 																LIMIT ?, ?',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryURL, (int) $offset, (int) $limit), 'revision_id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryURL, (int) $offset, (int) $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
 
 		// init var
-		$revisionIds = array();
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// ids
-			$revisionIds[] = (int) $row['revision_id'];
-
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
@@ -202,7 +195,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		}
 
 		// get all tags
-		$tags = FrontendTagsModel::getForMultipleItems('blog', $revisionIds);
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
 		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
@@ -258,21 +251,17 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
 																ORDER BY i.publish_on DESC
 																LIMIT ?, ?',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'revision_id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
 
 		// init var
-		$revisionIds = array();
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// ids
-			$revisionIds[] = (int) $row['revision_id'];
-
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 
@@ -282,7 +271,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		}
 
 		// get all tags
-		$tags = FrontendTagsModel::getForMultipleItems('blog', $revisionIds);
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
 		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
@@ -422,7 +411,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.title, m.url
 																FROM blog_posts AS i
 																INNER JOIN meta AS m ON m.id = i.meta_id
-																WHERE i.status = ? AND i.hidden = ? AND i.revision_id IN (' . implode(',', $ids) . ')
+																WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
 																ORDER BY i.publish_on DESC',
 																array('active', 'N'));
 
