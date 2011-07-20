@@ -47,6 +47,9 @@ jsBackend =
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
 
+		// add touch class when touch enabled
+		if(!!window.TouchEvent){ $('body').addClass('touch-enabled'); }
+
 		// do not move, should be run as the last item.
 		jsBackend.forms.unloadWarning();
 	},
