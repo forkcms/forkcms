@@ -29,14 +29,14 @@
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		</ul>
 
-		<div id="tabContent">
+		<div id="tabContent" class="editTemplateTab">
 			<div id="editTemplate">
 				<div class="pageTitle">
 					{* Do not change the ID! *}
 					<h2>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h2>
 					<div class="buttonHolderRight">
 						<a id="changeTemplate" href="#" class="button icon iconEdit">
-							<span>{$lblEditTemplate|ucfirst}</span>
+							<span>{$lblChangeTemplate|ucfirst}</span>
 						</a>
 					</div>
 				</div>
@@ -286,7 +286,7 @@
 	</div>
 
 	{* Button to indicate writing content is done *}
-	<div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; opacity: 0.5">&nbsp;</div>
+	<div id="overlay" class="ui-widget-overlay" style="display: none;">&nbsp;</div>
 	<div id="editorButtons" class="fullwidthOptions" style="display: none; z-index: 1001; position: fixed; top: 0; right: 0;">
 		<div class="buttonHolderRight">
 			<a href="#" id="okButton" class="button mainButton"><span>{$lblOK|ucfirst}</span></a>

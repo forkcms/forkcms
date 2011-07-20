@@ -245,12 +245,14 @@ jsBackend.pages.extras =
 			if(extrasById[selectedExtraId].type == 'widget' && typeof extrasById[selectedExtraId].data.edit_url != 'undefined' && extrasById[selectedExtraId].data.edit_url) editLink = extrasById[selectedExtraId].data.edit_url;
 
 			// create html to be appended in template-view
-			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' +
-								'<div class="oneLiner">' +
-									'<span class="oneLinerElement">' + extrasById[selectedExtraId].human_name + '</span>' +
-									(editLink ? '<a href="' + editLink + '" class="button" target="_blank">{$lblEdit|ucfirst}</a>' : '') +
+			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
+								'<span class="templateTitle">' + extrasById[selectedExtraId].human_name + '</span>' + // @todo: add ucfirst
+								'<span class="templateDescription">&lt;img&gt; &lt;img&gt; Lees meer over onze fantastische shizzle enzo want Fork CMS id de max en da’s niet om </span>' +
+								'<div class="buttonHolder">' +
+									'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
+									'<a href="' + editLink + '" class="showEditor button icon iconOnly iconEdit' + (editLink ? '' : ' disabledButton') + '" target="_blank"><span>{$lblEdit|ucfirst}</span></a>' +
+									'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
 								'</div>' +
-								'<a href="#" class="deleteBlock icon iconOnly iconDelete"><span>Delete</span></a>' +
 							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
 
 			// set block description in template-view
@@ -270,12 +272,14 @@ jsBackend.pages.extras =
 			$('.pageTitle h2', block).html('{$lblEditor|ucfirst}');
 
 			// create html to be appended in template-view
-			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' +
-								'<div class="oneLiner">' +
-									'<span class="oneLinerElement">{$lblEditor|ucfirst}</span>' +
-									'<a href="#' + index + '" class="button showEditor">{$lblEdit|ucfirst}</a>' +
+			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
+								'<span class="templateTitle">{$lblEditor|ucfirst}</span>' +
+								'<span class="templateDescription">&lt;img&gt; &lt;img&gt; Lees meer over onze fantastische shizzle enzo want Fork CMS id de max en da’s niet om </span>' +
+								'<div class="buttonHolder">' +
+									'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
+									'<a href="#' + index + '" class="showEditor button icon iconOnly iconEdit"><span>{$lblEdit|ucfirst}</span></a>' +
+									'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
 								'</div>' +
-								'<a href="#" class="deleteBlock icon iconOnly iconDelete"><span>Delete</span></a>' +
 							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
 
 			// set block description in template-view
@@ -303,13 +307,13 @@ jsBackend.pages.extras =
 		var index = $(this).parent().data('blockId');
 
 		// remove block from template overview
-		$(this).parent('.templatePositionCurrentType').remove();
+		$(this).parent().parent('.templatePositionCurrentType').remove();
 
 		// remove tiny from this block (if editor instance)
 		if($('#blockExtraId' + index).val() == '') tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 
 		// remove block
-		$('#blockExtraId' + index).parent().remove();
+		$('#blockExtraId' + index).parent().parent().remove();
 
 		// initialise new index
 		var newIndex = index;

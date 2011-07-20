@@ -174,14 +174,12 @@
 */
 
 .templateVisual td:empty,
-.templateVisual td.empty,
-#templateVisualLarge td.empty {
+.templateVisual td.empty {
 	background: #EEE url(/backend/core/layout/images/na.png) repeat;
 	border: 1px solid #CCC;
 }
 
-.templateVisual td,
-#templateVisualLarge td {
+.templateVisual td {
 	text-align: center;
 	border: 1px dotted #666;
 	background: #FFF;
@@ -227,40 +225,137 @@
 	Template visual large
 */
 
-#templateVisualLarge table {
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 10px; /* If you change the value "10" change it in model.php of pages module too; for IE7 */
-	table-layout: fixed;
-	border: 1px dotted #CCC;
-	background: #FCFCFC;
-}
+	/* Dirty padding fix */
 
-	#templateVisualLarge td {
-		text-align: center;
-		border: 1px dotted #666;
-		background: #FFF;
-		vertical-align: middle;
-		padding: 12px;
-
-		/* Min-height fast hack */
-		min-height: 86px;
-		height: auto !important;
-		height: 86px;
+	#tabContent.editTemplateTab {
+		padding: 10px 0 0 0;
 	}
 
-	/* Add button */
-	#templateVisualLarge .buttonHolder {
-		width: 24px;
-		margin: 0 auto;
+	#tabContent.editTemplateTab .pageTitle {
+		margin: 0 10px;
 	}
 
-	/* Block name */
-	#templateVisualLarge h4,
-	#templateVisualLarge p {
-		margin: 0;
-		padding: 0 0 4px;
+	/* General table layout */
+
+	#templateVisualLarge table {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 10px; /* If you change the value "10" change it in model.php of pages module too; for IE7 */
+		table-layout: fixed;
 	}
+
+		#templateVisualLarge td {
+			text-align: center;
+			box-shadow: 0 0 0 1px #ddd inset;
+			background: #F4F4F4;
+		}
+
+		#templateVisualLarge td.empty {
+			background: #EEE url(/backend/core/layout/images/na.png) repeat;
+			box-shadow: 0 0 0 1px #ddd inset;
+			padding: 10px;
+		}
+
+		/* Title */
+
+		#templateVisualLarge .templatePositionTitle {
+			font-size: 11px;
+			text-align: left;
+			color: #000;
+			background: #FFF;
+			border: 1px solid #BDBDBD;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
+			padding: 6px 12px;
+			box-shadow: 0 -1px 0 1px #FFF;
+		}
+
+		/* Blocks spacer */
+
+		#templateVisualLarge .linkedBlocks {
+			padding-bottom: 15px;
+		}
+
+		/* Button holder */
+
+		#templateVisualLarge .buttonAddHolder {
+			padding: 0 10px 15px 10px;
+			width: 90px;
+			margin: auto auto;
+		}
+
+		/* Block */
+
+		#templateVisualLarge .templatePositionCurrentType {
+			border: 1px solid #DDD;
+			border-top: 0;
+			background: #FFF;
+			padding: 12px;
+			text-align: left;
+			position: relative;
+			cursor: pointer;
+			cursor: hand;
+			height: 30px;
+			overflow: hidden;
+		}
+
+		#templateVisualLarge .templatePositionCurrentType:hover,
+		#templateVisualLarge .templatePositionCurrentType:active {
+			background: #FFF;
+			background: -moz-linear-gradient(top, #FFF 0%, #F4F4F4 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#F4F4F4));
+			background: -webkit-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+			background: -o-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+			background: -ms-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+			background: linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+		}
+
+			#templateVisualLarge .templatePositionCurrentType .templateTitle {
+				display: block;
+				color: #4a4a4a;
+				font-size: 11px;
+				font-weight: 700;
+				white-space: nowrap;
+			}
+
+			#templateVisualLarge .templateDisabled .templateTitle {
+				color: #aaa;
+			}
+
+			#templateVisualLarge .templatePositionCurrentType .templateDescription {
+				display: block;
+				color: #808080;
+				font-size: 11px;
+				white-space: nowrap;
+			}
+
+			#templateVisualLarge .templateDisabled .templateDescription {
+				color: #bbb;
+			}
+
+			#templateVisualLarge .templatePositionCurrentType .buttonHolder {
+				display: none;
+			}
+
+			body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder {
+				display: block !important;
+			}
+
+			#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder {
+				display: block;
+				height: 24px;
+				padding: 15px 6px;
+				position: absolute;
+				right: 0;
+				top: 0;
+				background: #FFF;
+				background: -moz-linear-gradient(top, #FFF 0%, #F4F4F4 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#F4F4F4));
+				background: -webkit-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+				background: -o-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+				background: -ms-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+				background: linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+			}
 
 /*
 	Pages
