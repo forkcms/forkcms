@@ -247,7 +247,7 @@ jsBackend.pages.extras =
 			// create html to be appended in template-view
 			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
 								'<span class="templateTitle">' + extrasById[selectedExtraId].human_name + '</span>' + // @todo: add ucfirst
-								'<span class="templateDescription">&lt;img&gt; &lt;img&gt; Lees meer over onze fantastische shizzle enzo want Fork CMS id de max en da’s niet om </span>' +
+								'<span class="templateDescription">Widget &rsaquo; Blog &rsaquo; Archive</span>' +
 								'<div class="buttonHolder">' +
 									'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
 									'<a href="' + editLink + '" class="showEditor button icon iconOnly iconEdit' + (editLink ? '' : ' disabledButton') + '" target="_blank"><span>{$lblEdit|ucfirst}</span></a>' +
@@ -274,7 +274,7 @@ jsBackend.pages.extras =
 			// create html to be appended in template-view
 			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
 								'<span class="templateTitle">{$lblEditor|ucfirst}</span>' +
-								'<span class="templateDescription">&lt;img&gt; &lt;img&gt; Lees meer over onze fantastische shizzle enzo want Fork CMS id de max en da’s niet om </span>' +
+								'<span class="templateDescription">&lt;img&gt; &lt;img&gt; Lees meer over onze fantastische shizzle enzo want Fork CMS d de max en da’s niet om lorem dolor sit amet</span>' +
 								'<div class="buttonHolder">' +
 									'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
 									'<a href="#' + index + '" class="showEditor button icon iconOnly iconEdit"><span>{$lblEdit|ucfirst}</span></a>' +

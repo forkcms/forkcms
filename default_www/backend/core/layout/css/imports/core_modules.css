@@ -260,7 +260,6 @@
 
 		#templateVisualLarge .templatePositionTitle {
 			font-size: 11px;
-			text-align: left;
 			color: #000;
 			background: #FFF;
 			border: 1px solid #BDBDBD;
@@ -293,21 +292,10 @@
 			padding: 12px;
 			text-align: left;
 			position: relative;
-			cursor: pointer;
-			cursor: hand;
+			cursor: move;
 			height: 30px;
 			overflow: hidden;
-		}
-
-		#templateVisualLarge .templatePositionCurrentType:hover,
-		#templateVisualLarge .templatePositionCurrentType:active {
-			background: #FFF;
-			background: -moz-linear-gradient(top, #FFF 0%, #F4F4F4 100%);
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#F4F4F4));
-			background: -webkit-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
-			background: -o-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
-			background: -ms-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
-			background: linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+			overflow: ellipsis;
 		}
 
 			#templateVisualLarge .templatePositionCurrentType .templateTitle {
@@ -315,7 +303,17 @@
 				color: #4a4a4a;
 				font-size: 11px;
 				font-weight: 700;
+				height: 15px;
+				overflow: hidden;
 				white-space: nowrap;
+				-webkit-transition: color 0.3s ease-in-out;
+				-moz-transition: color 0.3s ease-in-out;
+				-o-transition: color 0.3s ease-in-out;
+				transition: color 0.3s ease-in-out;
+			}
+
+			#templateVisualLarge .templatePositionCurrentType:hover .templateTitle {
+				color: #000;
 			}
 
 			#templateVisualLarge .templateDisabled .templateTitle {
@@ -326,7 +324,17 @@
 				display: block;
 				color: #808080;
 				font-size: 11px;
+				height: 15px;
+				overflow: hidden;
 				white-space: nowrap;
+				-webkit-transition: color 0.3s ease-in-out;
+				-moz-transition: color 0.3s ease-in-out;
+				-o-transition: color 0.3s ease-in-out;
+				transition: color 0.3s ease-in-out;
+			}
+
+			#templateVisualLarge .templatePositionCurrentType:hover .templateDescription {
+				color: #222;
 			}
 
 			#templateVisualLarge .templateDisabled .templateDescription {
@@ -334,27 +342,47 @@
 			}
 
 			#templateVisualLarge .templatePositionCurrentType .buttonHolder {
-				display: none;
-			}
-
-			body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder {
-				display: block !important;
-			}
-
-			#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder {
-				display: block;
+				opacity: 0;
 				height: 24px;
 				padding: 15px 6px;
 				position: absolute;
 				right: 0;
 				top: 0;
-				background: #FFF;
-				background: -moz-linear-gradient(top, #FFF 0%, #F4F4F4 100%);
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#F4F4F4));
-				background: -webkit-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
-				background: -o-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
-				background: -ms-linear-gradient(top, #FFF 0%,#F4F4F4 100%);
-				background: linear-gradient(top, #FFF 0%,#F4F4F4 100%);
+				-webkit-transition: opacity 0.3s ease-in-out;
+				-moz-transition: opacity 0.3s ease-in-out;
+				-o-transition: opacity 0.3s ease-in-out;
+				transition: opacity 0.3s ease-in-out;
+				z-index: 80;
+			}
+
+			#templateVisualLarge .templatePositionCurrentType:after {
+				content: ".";
+				height: 54px;
+				width: 0;
+				display: block;
+				position: absolute;
+				top: 0;
+				right: 0;
+				text-indent: -9999px;
+				background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 100%);
+				background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(20%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1)));
+				background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+				background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+				background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+				background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
+				-webkit-transition: width 0.3s ease-in-out;
+				-moz-transition: width 0.3s ease-in-out;
+				-o-transition: width 0.3s ease-in-out;
+				transition: width 0.3s ease-in-out;
+			}
+
+			#templateVisualLarge .templatePositionCurrentType:hover:after {
+				width: 110px;
+			}
+
+			body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder,
+			#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder {
+				opacity: 1;
 			}
 
 /*

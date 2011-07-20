@@ -185,6 +185,9 @@
 
 		<div id="tabRedirect">
 			<div class="subtleBox">
+				<div class="heading">
+					<h3>Redirect</h3>
+				</div>
 				<div class="options">
 					{$rbtRedirectError}
 					<ul class="inputList radiobuttonFieldCombo">
@@ -208,16 +211,23 @@
 		</div>
 
 		<div id="tabSettings">
-			<ul class="inputList">
-				{iteration:hidden}
-				<li>
-					{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label>
-				</li>
-				{/iteration:hidden}
-			</ul>
-			<p>
-				<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
-			</p>
+			<div class="subtleBox">
+				<div class="heading">
+					<h3>Settings</h3>
+				</div>
+				<div class="options">
+					<ul class="inputList">
+						{iteration:hidden}
+						<li>
+							{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label>
+						</li>
+						{/iteration:hidden}
+					</ul>
+					<p>
+						<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
