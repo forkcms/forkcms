@@ -222,7 +222,7 @@ class GoogleAnalytics
 	 * @param	mixed $metrics					The metrics as string or as array.
 	 * @param	int $startTimestamp				The start date from where data must be collected.
 	 * @param	int $endTimestamp				The end date to where data must be collected.
-	 * @param	mixed[optional] $dimensions		The optional diminsions as string or as array.
+	 * @param	mixed[optional] $dimensions		The optional dimensions as string or as array.
 	 * @param	array[optional] $parameters		The extra parameters for google.
 	 */
 	public function getAnalyticsResults($metrics, $startTimestamp, $endTimestamp, $dimensions = array(), array $parameters = array())
