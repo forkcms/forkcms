@@ -129,7 +129,7 @@ jsBackend.balloons =
 
 		// get linked balloon
 		var id = clickedElement.data('messageId');
-		
+
 		// rel available?
 		if(id != '')
 		{
@@ -153,7 +153,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeIn(500);
 
 				// set focus on first visible field
-				$('#'+ id +' form input:visible:first').focus();
+				if($('#'+ id +' form input:visible:first').length > 0) $('#'+ id +' form input:visible:first').focus();
 
 				// bind resize
 				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ id)); });
