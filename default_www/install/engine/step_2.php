@@ -202,7 +202,11 @@ class InstallerStep2 extends InstallerStep
 			$count = count($pathLibrary);
 
 			// just one found? add it into the session
-			if($count == 1) $_SESSION['path_library'] = $pathLibrary[0];
+			if($count == 1)
+			{
+				$_SESSION['path_library'] = $pathLibrary[0];
+				$pathLibrary = $pathLibrary[0];
+			}
 
 			// none found means there is no Spoon
 			elseif($count == 0) return false;

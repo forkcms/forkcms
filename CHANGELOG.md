@@ -3,6 +3,7 @@ x.x.x (xxxx-xx-xx)
 Bugfixes:
 
 * Blog: Tags are now correctly fetched and displayed.
+* Installer: Setting the librarypath was using an array instead of the first item in that array.
 
 
 2.5.2 (2011-07-19)
