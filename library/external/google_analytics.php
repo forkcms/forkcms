@@ -248,7 +248,7 @@ class GoogleAnalytics
 		if(count($parameters) > 0)
 		{
 			// loop them and combine key and urlencoded value (but don't encode the colons)
-			foreach($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace('%3A', ':', urlencode($value));
+			foreach($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace(array('%3A', '%3D%3D'), array(':', '=='), urlencode($value));
 
 			// append to array
 			$URL .= '&'. implode('&', $parameters);
