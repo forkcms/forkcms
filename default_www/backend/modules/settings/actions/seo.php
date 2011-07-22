@@ -55,6 +55,7 @@ class BackendSettingsSeo extends BackendBaseActionIndex
 
 		$this->frm->addCheckbox('seo_noodp', BackendModel::getModuleSetting('core', 'seo_noodp', false));
 		$this->frm->addCheckbox('seo_noydir', BackendModel::getModuleSetting('core', 'seo_noydir', false));
+		$this->frm->addCheckbox('seo_nofollow_in_comments', BackendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false));
 	}
 
 
@@ -86,6 +87,7 @@ class BackendSettingsSeo extends BackendBaseActionIndex
 				// smtp settings
 				BackendModel::setModuleSetting('core', 'seo_noodp', $this->frm->getField('seo_noodp')->getValue());
 				BackendModel::setModuleSetting('core', 'seo_noydir', $this->frm->getField('seo_noydir')->getValue());
+				BackendModel::setModuleSetting('core', 'seo_nofollow_in_comments', $this->frm->getField('seo_nofollow_in_comments')->getValue());
 
 				// assign report
 				$this->tpl->assign('report', true);

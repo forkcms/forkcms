@@ -20,6 +20,9 @@
 					<label for="seoNoydir">{$chkSeoNoydir} NOYDIR</label>
 					<span class="helpTxt">{$msgHelpSEONoydir}</span>
 				</li>
+				<li>
+					<label for="seoNofollowInComments">{$chkSeoNofollowInComments} {$msgSEONoFollowInComments}</label>
+				</li>
 			</ul>
 		</div>
 	</div>

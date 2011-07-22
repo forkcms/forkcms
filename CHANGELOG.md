@@ -12,6 +12,7 @@ Improvements
 * Core: Better handling of meta-information. Each item will be unique, Some new methods are introduced (addLink, addMetaData, addMetaDescription, addMetaKeywords, addOpenGraphData), they replace: setMeta*.
 * Core: Added an SEO-item in the advanced-settings-section. For now only noodp and noydir are implemented.
 * Core: Added advanced SEO-settings in the SEO-tab (index,follow).
+* Core: Added a setting to use no-follow on links inside user-comments.
 
 
 2.5.2 (2011-07-19)

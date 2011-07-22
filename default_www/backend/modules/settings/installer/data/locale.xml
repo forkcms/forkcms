@@ -122,6 +122,10 @@
         <translation language="nl"><![CDATA[verstuur testmail]]></translation>
         <translation language="en"><![CDATA[send test email]]></translation>
       </item>
+      <item type="message" name="SEONoFollowInComments">
+        <translation language="nl"><![CDATA[<code>rel="nofollow"</code> voor links in reacties]]></translation>
+        <translation language="en"><![CDATA[add <code>rel="nofollow"</code> on links inside a comment]]></translation>
+      </item>
       <item type="message" name="TestMessage">
         <translation language="nl"><![CDATA[dit is een test]]></translation>
         <translation language="en"><![CDATA[this is just a test]]></translation>
