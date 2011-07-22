@@ -1,4 +1,57 @@
-2.4.1 (XXXX-XX-XX)
+x.x.x (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Blog: Tags are now correctly fetched and displayed.
+* Installer: Setting the librarypath was using an array instead of the first item in that array.
+
+Improvements
+
+* Core: items marked as direct action won't show up in page-title, breadcrumb, meta, ...
+
+
+2.5.2 (2011-07-19)
+--
+Bugfixes:
+
+* Core: Event logging now uses absolute paths to prevent usage of undefined constants.
+
+
+2.5.1 (2011-07-19)
+--
+Bugfixes:
+
+* Installer: Installer now uses `is_writable` to check if a folder is writable. Thx to Mattias Geniar (http://forkcms.lighthouseapp.com/projects/61890/tickets/172).
+* Spoon: On rare occasions iconv would trow an error that it can't convert strings.
+* Core: js.php could be misused.
+
+
+2.5.0 (2011-07-12)
+--
+Bugfixes:
+
+* Pages: Don't show hidden extras in the widget- and block-dropdowns.
+* Pages: hidden pages_extras don't get shown in the template anymore.
+* Pages: when editing a page with a external redirect there was an error because of the disabled field, fixed the JS, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/169.
+
+Improvements
+
+* Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
+* Core: upgraded TinyMCE to 3.4.3.2
+* Core: Pub/sub-system, see: http://www.fork-cms.com/blog/detail/pubsub-in-fork
+
+
+2.4.2 (2011-07-05)
+--
+Improvements:
+
+* Core: Facebook doesn't provide an API-key anymore, so code is altered to reflect this.
+* Core: siteHTMLFooter should be append after the JS-files.
+* Core: implemented social-tracking for GA, will only be executed if Google Analytics is used, and facebook or twitter are integrated.
+* Core: upgraded jQuery to 1.6.2 and jQueryUI to 1.8.14.
+
+
+2.4.1 (2011-06-28)
 --
 Bugfixes:
 

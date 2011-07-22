@@ -66,11 +66,11 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		if(count($campaigns) > 1) $this->frm->addDropdown('campaign', $campaigns);
 
 		// sender
-		$this->frm->addText('from_name', BackendModel::getModuleSetting('mailmotor', 'from_name'));
-		$this->frm->addText('from_email', BackendModel::getModuleSetting('mailmotor', 'from_email'));
+		$this->frm->addText('from_name', BackendModel::getModuleSetting($this->getModule(), 'from_name'));
+		$this->frm->addText('from_email', BackendModel::getModuleSetting($this->getModule(), 'from_email'));
 
 		// reply-to address
-		$this->frm->addText('reply_to_email', BackendModel::getModuleSetting('mailmotor', 'reply_to_email'));
+		$this->frm->addText('reply_to_email', BackendModel::getModuleSetting($this->getModule(), 'reply_to_email'));
 
 		// groups - if there is only 1 group present, we select it by default
 		$this->frm->addMultiCheckbox('groups', $groups, ((count($groups) == 1 && isset($groups[0])) ? $groups[0]['value'] : false));
@@ -146,6 +146,9 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 
 				// update the groups for this mailing
 				BackendMailmotorModel::updateGroupsForMailing($item['id'], $values['groups']);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_mailing_step1', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&step=2');

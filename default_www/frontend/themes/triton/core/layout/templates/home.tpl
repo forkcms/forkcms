@@ -226,9 +226,6 @@
 		{include:core/layout/templates/footer.tpl}
 	</div>
 
-	{* Site wide HTML *}
-	{$siteHTMLFooter}
-
 	{* General Javascript *}
 	{iteration:javascriptFiles}
 		<script src="{$javascriptFiles.file}"></script>
@@ -236,5 +233,8 @@
 
 	{* Theme specific Javascript *}
 	<script src="{$THEME_URL}/core/js/triton.js"></script>
+
+	{* Site wide HTML *}
+	{$siteHTMLFooter}
 </body>
 </html>

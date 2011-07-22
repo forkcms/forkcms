@@ -52,9 +52,9 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	private function createClient($record)
 	{
 		// get the account settings
-		$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
-		$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
-		$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
+		$url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
+		$username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
+		$password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
 
 		// create a client
 		try
@@ -69,7 +69,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$clientID = $cm->createClient($record['company_name'], $record['contact_name'], $record['contact_email'], $record['country'], $timezones[$record['timezone']]);
 
 			// store ID in a setting
-			if(!empty($clientID)) BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $clientID);
+			if(!empty($clientID)) BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $clientID);
 		}
 		catch(Exception $e)
 		{
@@ -253,9 +253,9 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	private function updateClient($record)
 	{
 		// get the account settings
-		$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
-		$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
-		$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
+		$url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
+		$username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
+		$password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
 
 		// try and update the client info
 		try
@@ -291,11 +291,14 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			if($this->frmAccount->isCorrect())
 			{
 				// unlink the account and client ID
-				BackendModel::setModuleSetting('mailmotor', 'cm_account', false);
-				BackendModel::setModuleSetting('mailmotor', 'cm_url', null);
-				BackendModel::setModuleSetting('mailmotor', 'cm_username', null);
-				BackendModel::setModuleSetting('mailmotor', 'cm_password', null);
-				BackendModel::setModuleSetting('mailmotor', 'cm_client_id', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_url', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_username', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_password', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
@@ -338,11 +341,14 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					$this->createClient($client);
 
 					// store the client info in our database
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_contact_name', $client['contact_name']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_contact_email', $client['contact_email']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_country', $client['country']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_timezone', $client['timezone']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_name', $client['contact_name']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_email', $client['contact_email']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
+
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
 
 					// redirect to a custom success message
 					$this->redirect(BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue());
@@ -358,14 +364,17 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					$this->updateClient($client);
 
 					// store the client info in our database
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_contact_name', $client['contact_name']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_contact_email', $client['contact_email']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_country', $client['country']);
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_timezone', $client['timezone']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_name', $client['contact_name']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_email', $client['contact_email']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
 					// update the client ID in settings
-					BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $this->clientID);
+					BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $this->clientID);
+
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
 
 					// redirect to the settings page
 					$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient');
@@ -397,13 +406,16 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			if($this->frmGeneral->isCorrect())
 			{
 				// set sender info
-				BackendModel::setModuleSetting('mailmotor', 'from_name', $this->frmGeneral->getField('from_name')->getValue());
-				BackendModel::setModuleSetting('mailmotor', 'from_email', $this->frmGeneral->getField('from_email')->getValue());
-				BackendModel::setModuleSetting('mailmotor', 'reply_to_email', $this->frmGeneral->getField('reply_to_email')->getValue());
-				BackendModel::setModuleSetting('mailmotor', 'plain_text_editable', $this->frmGeneral->getField('plain_text_editable')->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'from_name', $this->frmGeneral->getField('from_name')->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'from_email', $this->frmGeneral->getField('from_email')->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'reply_to_email', $this->frmGeneral->getField('reply_to_email')->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'plain_text_editable', $this->frmGeneral->getField('plain_text_editable')->getValue());
 
 				// set price per email
-				if(BackendAuthentication::getUser()->isGod()) BackendModel::setModuleSetting('mailmotor', 'price_per_email', $this->frmGeneral->getField('price_per_email')->getValue());
+				if(BackendAuthentication::getUser()->isGod()) BackendModel::setModuleSetting($this->getModule(), 'price_per_email', $this->frmGeneral->getField('price_per_email')->getValue());
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_general_settings');
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabGeneral');

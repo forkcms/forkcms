@@ -107,7 +107,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags
-		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['revision_id']);
+		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
 
 		// get comments
 		$this->comments = FrontendBlogModel::getComments($this->record['id']);
@@ -312,6 +312,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 				// insert comment
 				$comment['id'] = FrontendBlogModel::insertComment($comment);
+
+				// trigger event
+				FrontendModel::triggerEvent('blog', 'after_add_comment', array('comment' => $comment));
 
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)

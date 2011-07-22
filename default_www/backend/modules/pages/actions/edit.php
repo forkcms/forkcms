@@ -82,7 +82,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->extras = BackendPagesModel::getExtras();
 
 		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getModuleSetting($this->getModule(), 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i);
@@ -218,7 +218,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -233,7 +233,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));
 
 		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getModuleSetting($this->getModule(), 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maxNumBlocks; $i++)
@@ -534,6 +534,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// update the blocks
 				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
+				// trigger an event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $page));
+
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
@@ -553,7 +556,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 						foreach($blocks as $block) $text .= ' ' . $block['html'];
 
 						// add
-						BackendSearchModel::editIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
+						BackendSearchModel::editIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 					}
 
 					// build URL

@@ -37,6 +37,9 @@ class BackendProfilesBlock extends BackendBaseActionDelete
 				// set profile status to active
 				BackendProfilesModel::update($this->id, array('status' => 'active'));
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_unblock', array('id' => $this->id));
+
 				// report
 				$report = 'unblocked';
 			}
@@ -49,6 +52,9 @@ class BackendProfilesBlock extends BackendBaseActionDelete
 
 				// set profile status to blocked
 				BackendProfilesModel::update($this->id, array('status' => 'blocked'));
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_block', array('id' => $this->id));
 
 				// report
 				$report = 'blocked';

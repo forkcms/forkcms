@@ -222,7 +222,7 @@ class GoogleAnalytics
 	 * @param	mixed $metrics					The metrics as string or as array.
 	 * @param	int $startTimestamp				The start date from where data must be collected.
 	 * @param	int $endTimestamp				The end date to where data must be collected.
-	 * @param	mixed[optional] $dimensions		The optional diminsions as string or as array.
+	 * @param	mixed[optional] $dimensions		The optional dimensions as string or as array.
 	 * @param	array[optional] $parameters		The extra parameters for google.
 	 */
 	public function getAnalyticsResults($metrics, $startTimestamp, $endTimestamp, $dimensions = array(), array $parameters = array())
@@ -248,7 +248,7 @@ class GoogleAnalytics
 		if(count($parameters) > 0)
 		{
 			// loop them and combine key and urlencoded value (but don't encode the colons)
-			foreach($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace('%3A', ':', urlencode($value));
+			foreach($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace(array('%3A', '%3D%3D'), array(':', '=='), urlencode($value));
 
 			// append to array
 			$URL .= '&'. implode('&', $parameters);

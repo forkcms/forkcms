@@ -437,6 +437,9 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $this->item['email'], $this->item['name']);
 				}
 
+				// trigger event
+				FrontendModel::triggerEvent('form_builder', 'after_submission', array('form_id' => $this->item['id'], 'data_id' => $dataId, 'data' => $data));
+
 				// store timestamp in session so we can block excesive usage
 				SpoonSession::set('formbuilder_' . $this->item['id'], time());
 

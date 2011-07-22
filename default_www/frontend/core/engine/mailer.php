@@ -159,6 +159,9 @@ class FrontendMailer
 		// insert the email into the database
 		$id = FrontendModel::getDB(true)->insert('emails', $email);
 
+		// trigger event
+		FrontendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
+
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
 	}
@@ -288,6 +291,9 @@ class FrontendMailer
 		{
 			// remove the email
 			$db->delete('emails', 'id = ?', array($id));
+
+			// trigger event
+			FrontendModel::triggerEvent('core', 'after_email_sent', array('id' => $id));
 		}
 	}
 }

@@ -23,6 +23,7 @@ rm -f `find ../default_www/backend/cache/cronjobs/ ! -name ".gitignore" -type f`
 rm -f `find ../default_www/backend/cache/locale/ ! -name ".gitignore" -type f`
 rm -f `find ../default_www/backend/cache/mailmotor/ ! -name ".gitignore" -type f`
 rm -f `find ../default_www/backend/cache/compiled_templates/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/backend/cache/logs/ ! -name ".gitignore" -type f`
 
 rm -f ../library/globals.php
 rm -f ../library/globals.frontend.php

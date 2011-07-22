@@ -64,7 +64,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 		// determine if deleting is allowed
 		$deleteAllowed = true;
-		if($this->record['id'] == BackendModel::getModuleSetting('pages', 'default_template')) $deleteAllowed = false;
+		if($this->record['id'] == BackendModel::getModuleSetting($this->getModule(), 'default_template')) $deleteAllowed = false;
 		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
 		elseif(BackendPagesModel::isTemplateInUse($this->id))
 		{
@@ -90,7 +90,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 		// init var
 		$maximumBlocks = 30;
-		$defaultId = BackendModel::getModuleSetting('pages', 'default_template');
+		$defaultId = BackendModel::getModuleSetting($this->getModule(), 'default_template');
 
 		// create elements
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', 'core'));
@@ -230,7 +230,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 
 				// if this is the default template make the template active
-				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $item['active'] = 'Y';
+				if(BackendModel::getModuleSetting($this->getModule(), 'default_template') == $this->record['id']) $item['active'] = 'Y';
 
 				// if the template is in use we can't de-activate it
 				if(BackendPagesModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
@@ -255,8 +255,11 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// insert the item
 				BackendPagesModel::updateTemplate($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_template', array('item' => $item));
+
 				// set default template
-				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
 
 				// update all existing pages using this template to add the newly inserted block(s)
 				if(BackendPagesModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id']);

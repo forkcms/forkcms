@@ -274,13 +274,13 @@ class FrontendModel
 		$numBlocks = count($record['template_data']['names']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
+		$record['blocks'] = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html,
 														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 														FROM pages_blocks AS pb
-														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
+														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
 														WHERE pb.revision_id = ? AND pb.status = ?
 														ORDER BY pb.id',
-														array($record['revision_id'], 'active'));
+														array('N', $record['revision_id'], 'active'));
 
 		// remove redundant blocks
 		$record['blocks'] = array_splice($record['blocks'], 0, $numBlocks);
@@ -334,13 +334,13 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
+		$record['blocks'] = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html,
 														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 														FROM pages_blocks AS pb
-														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
+														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
 														WHERE pb.revision_id = ? AND pb.status = ?
 														ORDER BY pb.id',
-														array($record['revision_id'], 'active'));
+														array('N', $record['revision_id'], 'active'));
 
 		// loop blocks
 		foreach($record['blocks'] as $index => $row)
@@ -550,6 +550,210 @@ class FrontendModel
 
 		// store in cache
 		self::$moduleSettings[$module][$name] = unserialize($value);
+	}
+
+
+	/**
+	 * Start processing the hooks
+	 *
+	 * @return	void
+	 */
+	public static function startProcessingHooks()
+	{
+		// is the queue already running?
+		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
+		{
+			// get the pid
+			$pid = trim(SpoonFile::getContent(FRONTEND_CACHE_PATH . '/hooks/pid'));
+
+			// running on windows?
+			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
+			{
+				// get output
+				$output = @shell_exec('tasklist.exe /FO LIST /FI "PID eq ' . $pid . '"');
+
+				// validate output
+				if($output == '' || $output === false)
+				{
+					// delete the pid file
+					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
+
+			// Mac
+			elseif(strtolower(substr(php_uname('s'), 0, 6)) == 'darwin')
+			{
+				// get output
+				$output = @posix_getsid($pid);
+
+				// validate output
+				if($output === false)
+				{
+					// delete the pid file
+					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
+
+			// UNIX
+			else
+			{
+				// check if the process is still running, by checking the proc folder
+				if(!SpoonFile::exists('/proc/' . $pid))
+				{
+					// delete the pid file
+					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
+		}
+
+		// init var
+		$parts = parse_url(SITE_URL);
+		$errNo = '';
+		$errStr = '';
+		$defaultPort = 80;
+		if($parts['scheme'] == 'https') $defaultPort = 433;
+
+		// open the socket
+		$socket = fsockopen($parts['host'], (isset($parts['port'])) ? $parts['port'] : $defaultPort, $errNo, $errStr, 1);
+
+		// build the request
+		$request = 'GET /backend/cronjob.php?module=core&action=process_queued_hooks HTTP/1.1' . "\r\n";
+		$request .= 'Host: ' . $parts['host'] . "\r\n";
+		$request .= 'Content-Length: 0' . "\r\n\r\n";
+		$request .= 'Connection: Close' . "\r\n\r\n";
+
+		// send the request
+		fwrite($socket, $request);
+
+		// close the socket
+		fclose($socket);
+
+		// return
+		return true;
+	}
+
+
+	/**
+	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
+	 *
+	 * @return	void
+	 * @param	string $eventModule		The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	string $module			The module that subsribes to the event.
+	 * @param	mixed $callback			The callback that should be executed when the event is triggered.
+	 */
+	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
+	{
+		// validate
+		if(!is_callable($callback)) throw new FrontendException('Invalid callback!');
+
+		// build record
+		$item['event_module'] = (string) $eventModule;
+		$item['event_name'] = (string) $eventName;
+		$item['module'] = (string) $module;
+		$item['callback'] = serialize($callback);
+		$item['created_on'] = FrontendModel::getUTCDate();
+
+		// get db
+		$db = self::getDB(true);
+
+		// update if already existing
+		if((int) $db->getVar('SELECT COUNT(*)
+									FROM hooks_subscriptions AS i
+									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
+									array($eventModule, $eventName, $module)) > 0)
+		{
+			// update
+			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
+		}
+
+		// insert
+		else $db->insert('hooks_subscriptions', $item);
+	}
+
+
+	/**
+	 * Trigger an event
+	 *
+	 * @return	void
+	 * @param	string $module			The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	mixed[optional] $data	The data that should be send to subscribers.
+	 */
+	public static function triggerEvent($module, $eventName, $data = null)
+	{
+		// redefine
+		$module = (string) $module;
+		$eventName = (string) $eventName;
+
+		// create log instance
+		$log = new SpoonLog('custom', PATH_WWW . '/frontend/cache/logs/events');
+
+		// logging when we are in debugmode
+		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
+
+		// get all items that subscribe to this event
+		$subscriptions = (array) self::getDB()->getRecords('SELECT i.module, i.callback
+															FROM hooks_subscriptions AS i
+															WHERE i.event_module = ? AND i.event_name = ?',
+															array($module, $eventName));
+
+		// any subscriptions?
+		if(!empty($subscriptions))
+		{
+			// init var
+			$queuedItems = array();
+
+			// loop items
+			foreach($subscriptions as $subscription)
+			{
+				// build record
+				$item['module'] = $subscription['module'];
+				$item['callback'] = $subscription['callback'];
+				$item['data'] = serialize($data);
+				$item['status'] = 'queued';
+				$item['created_on'] = FrontendModel::getUTCDate();
+
+				// add
+				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
+
+				// logging when we are in debugmode
+				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subcribed to event (' . $module . '/' . $eventName . ').');
+			}
+
+			// start processing
+			self::startProcessingHooks();
+		}
+	}
+
+
+	/**
+	 * Unsubscribe from an event
+	 *
+	 * @return	void
+	 * @param	string $eventModule		The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	string $module			The module that subsribes to the event.
+	 */
+	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
+	{
+		// redefine
+		$eventModule = (string) $eventModule;
+		$eventName = (string) $eventName;
+		$module = (string) $module;
+
+		// get db
+		self::getDB(true)->delete('hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
+									array($eventModule, $eventName, $module));
 	}
 }
 

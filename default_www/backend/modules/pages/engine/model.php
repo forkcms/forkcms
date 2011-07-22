@@ -91,14 +91,14 @@ class BackendPagesModel
 		// get extras
 		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
 																FROM pages_extras AS i
-																WHERE i.type = ?',
-																array('block'), 'id');
+																WHERE i.type = ? AND i.hidden = ?',
+																array('block', 'N'), 'id');
 
 		// get widgets
 		$widgets = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
 																FROM pages_extras AS i
-																WHERE i.type = ?',
-																array('widget'), 'id');
+																WHERE i.type = ? AND i.hidden = ?',
+																array('widget', 'N'), 'id');
 
 		// search sitemap
 		$sitemapID = null;
@@ -214,6 +214,12 @@ class BackendPagesModel
 						$temp['redirect_url'] = $data['external_redirect']['url'];
 						$temp['redirect_code'] = $data['external_redirect']['code'];
 						$treeType = 'redirect';
+					}
+
+					// direct action?
+					if(isset($data['is_action']) && $data['is_action'])
+					{
+						$treeType = 'direct_action';
 					}
 				}
 
@@ -402,6 +408,9 @@ class BackendPagesModel
 
 		// write the file
 		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js', $tinyMCELinkListString);
+
+		// trigger an event
+		BackendModel::triggerEvent('pages', 'after_recreated_cache');
 	}
 
 
@@ -850,9 +859,9 @@ class BackendPagesModel
 		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
 																FROM pages_extras AS i
 																INNER JOIN modules AS m ON i.module = m.name
-																WHERE m.active = ?
+																WHERE m.active = ? AND i.hidden = ?
 																ORDER BY i.module, i.sequence',
-																array('Y'), 'id');
+																array('Y', 'N'), 'id');
 
 		// init var
 		$itemsToRemove = array();
@@ -902,9 +911,9 @@ class BackendPagesModel
 		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
 																FROM pages_extras AS i
 																INNER JOIN modules AS m ON i.module = m.name
-																WHERE m.active = ?
+																WHERE m.active = ? AND i.hidden = ?
 																ORDER BY i.module, i.sequence',
-																array('Y'));
+																array('Y', 'N'));
 
 		// build array
 		$values = array();
