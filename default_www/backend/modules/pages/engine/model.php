@@ -215,6 +215,12 @@ class BackendPagesModel
 						$temp['redirect_code'] = $data['external_redirect']['code'];
 						$treeType = 'redirect';
 					}
+
+					// direct action?
+					if(isset($data['is_action']) && $data['is_action'])
+					{
+						$treeType = 'direct_action';
+					}
 				}
 
 				// add type
