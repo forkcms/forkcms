@@ -385,7 +385,7 @@ class InstallerStep2 extends InstallerStep
 		$path = rtrim((string) $path, '/');
 
 		// create random file
-		$file = uniqid() .'.tmp';
+		$file = uniqid() . '.tmp';
 
 		$return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
 
