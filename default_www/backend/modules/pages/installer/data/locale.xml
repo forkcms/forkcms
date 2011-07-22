@@ -120,10 +120,6 @@
         <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
         <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
       </item>
-      <item type="message" name="HelpNoFollow">
-        <translation language="nl"><![CDATA[Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.]]></translation>
-        <translation language="en"><![CDATA[Makes sure that this page doesn't influence the internal PageRank.]]></translation>
-      </item>
       <item type="message" name="HelpTemplateFormat">
         <translation language="nl"><![CDATA[vb. [1,2],[/,2]]]></translation>
         <translation language="en"><![CDATA[e.g. [1,2],[/,2]]]></translation>

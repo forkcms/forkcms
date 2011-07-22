@@ -255,6 +255,7 @@ class FrontendModel
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
+												m.data AS meta_data,
 												t.path AS template_path, t.data AS template_data
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
@@ -268,6 +269,7 @@ class FrontendModel
 
 		// unserialize page data and template data
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
+		if(isset($record['meta_data']) && $record['meta_data'] != '') $record['meta_data'] = unserialize($record['meta_data']);
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// determine amount of blocks needed

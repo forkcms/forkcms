@@ -295,6 +295,10 @@ class FrontendPage extends FrontendBaseObject
 			$this->header->setMetaCustom($this->record['meta_custom']);
 		}
 
+		// advanced SEO-attributes
+		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
+		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
+
 		// create breadcrumb instance
 		$this->breadcrumb = new FrontendBreadcrumb();
 

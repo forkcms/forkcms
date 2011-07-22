@@ -24,21 +24,27 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 */
 	public static function get($URL)
 	{
-		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-															c.title AS category_title, m2.url AS category_url,
-															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-															i.allow_comments,
-															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-															m.url
-															FROM blog_posts AS i
-															INNER JOIN blog_categories AS c ON i.category_id = c.id
-															INNER JOIN meta AS m ON i.meta_id = m.id
-															INNER JOIN meta AS m2 ON c.meta_id = m2.id
-															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
-															LIMIT 1',
-															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
+		$return = (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+																c.title AS category_title, m2.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+																i.allow_comments,
+																m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+																m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+																m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+																m.url,
+																m.data AS meta_data
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
+																LIMIT 1',
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
+		// unserialize
+		if(isset($return['meta_data'])) $return['meta_data'] = @unserialize($return['meta_data']);
+
+		// return
+		return $return;
 	}
 
 
@@ -105,13 +111,22 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 */
 	public static function getAllCategories()
 	{
-		return (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total
-															FROM blog_categories AS c
-															INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
-															INNER JOIN meta AS m ON c.meta_id = m.id
-															WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
-															GROUP BY c.id',
-															array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
+		$return = (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data
+																FROM blog_categories AS c
+																INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
+																INNER JOIN meta AS m ON c.meta_id = m.id
+																WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
+																GROUP BY c.id',
+																array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
+
+		// loop items and unserialize
+		foreach($return as &$row)
+		{
+			if(isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
+		}
+
+		// return
+		return $return;
 	}
 
 
@@ -593,21 +608,28 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 */
 	public static function getRevision($URL, $revision)
 	{
-		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-															c.title AS category_title, m2.url AS category_url,
-															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-															i.allow_comments,
-															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-															m.url
-															FROM blog_posts AS i
-															INNER JOIN blog_categories AS c ON i.category_id = c.id
-															INNER JOIN meta AS m ON i.meta_id = m.id
-															INNER JOIN meta AS m2 ON c.meta_id = m2.id
-															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
-															LIMIT 1',
-															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
+		$return = (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+																c.title AS category_title, m2.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+																i.allow_comments,
+																m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+																m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+																m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+																m.url,
+																m.data AS meta_data
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
+																WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
+																LIMIT 1',
+																array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
+
+		// unserialize
+		if(isset($return['meta_data'])) $return['meta_data'] = @unserialize($return['meta_data']);
+
+		// return
+		return $return;
 	}
 
 

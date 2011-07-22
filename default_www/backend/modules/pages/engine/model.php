@@ -134,6 +134,9 @@ class BackendPagesModel
 				// add it
 				$keys[$pageID] = trim($URL . '/' . $page['url'], '/');
 
+				// unserialize
+				if(isset($page['meta_data'])) $page['meta_data'] = @unserialize($page['meta_data']);
+
 				// build navigation array
 				$temp = array();
 				$temp['page_id'] = (int) $pageID;
@@ -142,7 +145,7 @@ class BackendPagesModel
 				$temp['title'] = addslashes($page['title']);
 				$temp['navigation_title'] = addslashes($page['navigation_title']);
 				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
-				$temp['no_follow'] = (bool) ($page['no_follow'] == 'Y');
+				$temp['no_follow'] = (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow');
 				$temp['hidden'] = (bool) ($page['hidden'] == 'Y');
 				$temp['extra_blocks'] = null;
 
@@ -1355,9 +1358,9 @@ class BackendPagesModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// get data
-		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
+		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra,
 																		i.extra_ids, i.data,
-																		m.url
+																		m.url, m.data AS meta_data
 																	FROM pages AS i
 																	INNER JOIN meta AS m ON i.meta_id = m.id
 																	WHERE i.parent_id IN (' . implode(', ', $ids) . ')

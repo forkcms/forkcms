@@ -572,9 +572,10 @@ class FrontendHeader extends FrontendBaseObject
 		// facebook admins given?
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
 
-		// in debugmode we don't want our pages to be indexed.
-		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+		// @todo	in debugmode we don't want our pages to be indexed.
+//		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 
+		// noodp, noydir
 		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
 		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
 

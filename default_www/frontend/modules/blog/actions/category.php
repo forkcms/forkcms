@@ -124,6 +124,10 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->header->setPageTitle(ucfirst(FL::lbl('Category')));
 		$this->header->setPageTitle($this->category['label']);
 
+		// advanced SEO-attributes
+		if(isset($this->category['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->category['meta_data']['seo_index']));
+		if(isset($this->category['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->category['meta_data']['seo_follow']));
+
 		// assign category
 		$this->tpl->assign('category', $this->category);
 

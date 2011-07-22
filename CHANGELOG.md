@@ -10,6 +10,7 @@ Improvements
 * Core: Items marked as direct action won't show up in page-title, breadcrumb, meta, ...
 * Core: Better handling of meta-information. Each item will be unique, Some new methods are introduced (addLink, addMetaData, addMetaDescription, addMetaKeywords, addOpenGraphData), they replace: setMeta*.
 * Core: Added an SEO-item in the advanced-settings-section. For now only noodp and noydir are implemented.
+* Core: Added advanced SEO-settings in the SEO-tab (index,follow).
 
 
 2.5.2 (2011-07-19)

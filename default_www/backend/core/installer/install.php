@@ -504,7 +504,6 @@ class ModuleInstaller
 		if(!isset($revision['allow_children'])) $revision['allow_children'] = 'Y';
 		if(!isset($revision['allow_edit'])) $revision['allow_edit'] = 'Y';
 		if(!isset($revision['allow_delete'])) $revision['allow_delete'] = 'Y';
-		if(!isset($revision['no_follow'])) $revision['no_follow'] = 'N';
 		if(!isset($revision['sequence'])) $revision['sequence'] = (int) $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?', array($revision['language'], $revision['parent_id'], $revision['type']));
 		if(!isset($revision['extra_ids'])) $revision['extra_ids'] = null;
 		if(!isset($revision['has_extra'])) $revision['has_extra'] = $revision['extra_ids'] ? 'Y' : 'N';
