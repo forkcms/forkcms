@@ -447,6 +447,7 @@ class ModuleInstaller
 	 * @param	bool[optional] $titleOverwrite			Should the pagetitle be overwritten?
 	 * @param	bool[optional] $urlOverwrite			Should the URL be overwritten?
 	 * @param	string[optional] $custom				Any custom meta-data.
+	 * @param	array[optional] $data					Any custom meta-data.
 	 */
 	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
 	{
