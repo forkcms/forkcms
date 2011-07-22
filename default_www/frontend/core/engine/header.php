@@ -252,7 +252,8 @@ class FrontendHeader extends FrontendBaseObject
 			if($overwrite) $this->meta[$uniqueKey] = $attributes;
 			else
 			{
-				if(in_array($uniqueKey, array('description|', 'keywords|')))
+				// some keys should be appended instead of ignored.
+				if(in_array($uniqueKey, array('description|', 'keywords|', 'robots|')))
 				{
 					foreach($attributes as $key => $value)
 					{
@@ -572,7 +573,10 @@ class FrontendHeader extends FrontendBaseObject
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
 
 		// in debugmode we don't want our pages to be indexed.
-		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'));
+		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+
+		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
+		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
 
 		// build meta
 		$meta = '';
