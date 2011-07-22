@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Blog: Tags are now correctly fetched and displayed.
+* Blog: Comments-action was broken due an invalid call on $this in a static method.
 * Installer: Setting the librarypath was using an array instead of the first item in that array.
 
 Improvements
