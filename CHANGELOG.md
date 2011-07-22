@@ -5,6 +5,10 @@ Bugfixes:
 * Blog: Tags are now correctly fetched and displayed.
 * Installer: Setting the librarypath was using an array instead of the first item in that array.
 
+Improvements
+
+* Core: items marked as direct action won't show up in page-title, breadcrumb, meta, ...
+
 
 2.5.2 (2011-07-19)
 --
