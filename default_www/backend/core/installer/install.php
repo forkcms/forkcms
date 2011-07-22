@@ -448,7 +448,7 @@ class ModuleInstaller
 	 * @param	bool[optional] $urlOverwrite			Should the URL be overwritten?
 	 * @param	string[optional] $custom				Any custom meta-data.
 	 */
-	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null)
+	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
 	{
 		// build item
 		$item = array('keywords' => (string) $keywords,
@@ -459,7 +459,8 @@ class ModuleInstaller
 						'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
 						'url' => (string) $url,
 						'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
-						'custom' => (!is_null($custom) ? (string) $custom : null));
+						'custom' => (!is_null($custom) ? (string) $custom : null),
+						'data' => (!is_null($data)) ? serialize($data) : null);
 
 		// insert meta and return id
 		return (int) $this->getDB()->insert('meta', $item);
@@ -521,9 +522,10 @@ class ModuleInstaller
 			if(!isset($meta['url'])) $meta['url'] = SpoonFilter::urlise($revision['title']);
 			if(!isset($meta['url_overwrite'])) $meta['url_overwrite'] = false;
 			if(!isset($meta['custom'])) $meta['custom'] = null;
+			if(!isset($meta['data'])) $meta['data'] = null;
 
 			// insert meta
-			$revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom']);
+			$revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom'], $meta['data']);
 		}
 
 		// insert page
