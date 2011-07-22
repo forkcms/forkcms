@@ -280,13 +280,20 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private function processPage()
 	{
-		// set pageTitle
-		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
+		// is this an action?
+		$isAction = (isset($this->record['data']['is_action']) && $this->record['data']['is_action']);
 
-		// set meta-data
-		$this->header->setMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], (bool) ($this->record['meta_keywords_overwrite'] == 'Y'));
-		$this->header->setMetaCustom($this->record['meta_custom']);
+		// only set title and meta-stuff if this isn't an action
+		if(!$isAction)
+		{
+			// set pageTitle
+			$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
+
+			// set meta-data
+			$this->header->setMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
+			$this->header->setMetaKeywords($this->record['meta_keywords'], (bool) ($this->record['meta_keywords_overwrite'] == 'Y'));
+			$this->header->setMetaCustom($this->record['meta_custom']);
+		}
 
 		// create breadcrumb instance
 		$this->breadcrumb = new FrontendBreadcrumb();
