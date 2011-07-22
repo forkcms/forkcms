@@ -1,4 +1,4 @@
-x.x.x (xxxx-xx-xx)
+2.6.0 (xxxx-xx-xx)
 --
 Bugfixes:
 
@@ -7,7 +7,8 @@ Bugfixes:
 
 Improvements
 
-* Core: items marked as direct action won't show up in page-title, breadcrumb, meta, ...
+* Core: Items marked as direct action won't show up in page-title, breadcrumb, meta, ...
+* Core: Better handling of meta-information. Each item will be unique, Some new methods are introduced (addLink, addMetaData, addMetaDescription, addMetaKeywords, addOpenGraphData), they replace: setMeta*.
 
 
 2.5.2 (2011-07-19)
