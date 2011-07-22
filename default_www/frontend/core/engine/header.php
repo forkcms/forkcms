@@ -233,7 +233,6 @@ class FrontendHeader extends FrontendBaseObject
 		// redefine
 		$overwrite = (bool) $overwrite;
 		$uniqueKeys = (array) $uniqueKeys;
-
 		if($uniqueKeys == null) $uniqueKeys = array('name');
 
 		// stop if the content is empty
@@ -305,7 +304,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function addOpenGraphData($key, $value, $overwrite = false)
 	{
-		$this->addMetaData(array('property' => 'og:' . $key, 'content' => $value), $overwrite, 'meta', 'property');
+		$this->addMetaData(array('property' => 'og:' . $key, 'content' => $value), $overwrite, 'property');
 	}
 
 
