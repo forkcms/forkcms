@@ -1255,10 +1255,10 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 						{
 							// reset
 							options.current.element.val(options.current.value);
-							
+
 							// destroy the element
 							destroyElement();
-							
+
 							// show message
 							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
@@ -1316,19 +1316,19 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
-				
+
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
-					
+
 					// clear other timers
 					clearTimeout(timer);
-					
+
 					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
-				
+
 				return !blockSubmit;
 			});
 
@@ -1400,13 +1400,13 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
-				
+
 				// enter of splitchar should add an element
 				if(code == 13 || String.fromCharCode(code) == options.splitChar)
 				{
 					// hide before..
 					$('#errorMessage-'+ id).remove();
-					
+
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
@@ -1457,7 +1457,7 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 
 				// a value should contain the split char
 				if(value.split(options.secondSplitChar).length == 1) value = '';
-				
+
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
@@ -1511,7 +1511,7 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 					for(var i in elements)
 					{
 						var humanValue = elements[i].split(options.secondSplitChar)[1];
-						
+	
 						html += '	<li><span><strong>' + humanValue + '</strong>' + '		<a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '	</li>';
 					}
 
@@ -1606,38 +1606,38 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
-				
+
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
-					
+
 					// clear other timers
 					clearTimeout(timer);
-					
+
 					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
-				
+
 				return !blockSubmit;
 			});
 
 			// build replace html
-			var html = 	'<div class="tagsWrapper">' + 
-						'	<div class="oneLiner">' + 
-						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + 
-						'		<div class="buttonHolder">' + 
+			var html = 	'<div class="tagsWrapper">' +
+						'	<div class="oneLiner">' +
+						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' +
+						'		<div class="buttonHolder">' +
 						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
-			html += 	'">' + 
-						'				<span>' + options.addLabel + '</span>' + 
-						'			</a>' + 
-						'		</div>' + 
-						'	</div>' + 
-						'	<div id="elementList-' + id + '" class="tagList">' + 
-						'	</div>' + 
+			html += 	'">' +
+						'				<span>' + options.addLabel + '</span>' +
+						'			</a>' +
+						'		</div>' +
+						'	</div>' +
+						'	<div id="elementList-' + id + '" class="tagList">' +
+						'	</div>' +
 						'</div>';
 
 			// hide current element
@@ -1704,13 +1704,13 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
-				
+
 				// enter of splitchar should add an element
 				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{
 					// hide before..
 					$('#errorMessage-'+ id).remove();
-					
+
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
@@ -1811,8 +1811,8 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li><span><strong>' + elements[i] + '</strong>' + 
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + 
+						html += '	<li><span><strong>' + elements[i] + '</strong>' +
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' +
 								'	</li>';
 					}
 
@@ -1894,7 +1894,7 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 			var possibleOptions = $(this).find('option');
 			var elements = get();
 			var blockSubmit = false;
-			
+
 			// bind submit
 			$(this.form).submit(function()
 			{
@@ -1908,30 +1908,30 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 			}
 
 			// build replace html
-			var html =	'<div class="multipleSelectWrapper">' + 
-						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' + 
-						'	<div class="oneLiner">' + 
+			var html =	'<div class="multipleSelectWrapper">' +
+						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' +
+						'	<div class="oneLiner">' +
 						'		<p>' +
 						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
-			
-			
+
+
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
 				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
 			}
-			
+
 			html +=		'			</select>' +
-						'		</p>' + 
-						'		<div class="buttonHolder">' + 
+						'		</p>' +
+						'		<div class="buttonHolder">' +
 						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
-			html += 	'">' + 
-						'				<span>' + options.addLabel + '</span>' + 
-						'			</a>' + 
-						'		</div>' + 
-						'	</div>' + 
+			html += 	'">' +
+						'				<span>' + options.addLabel + '</span>' +
+						'			</a>' +
+						'		</div>' +
+						'	</div>' +
 						'</div>';
 
 			// hide current element
@@ -2020,11 +2020,11 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' + 
-								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' + 
-								'		<div class="buttonHolder">' + 
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
-								'		</div>' + 
+						html += '	<li class="oneLiner">' +
+								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
+								'		<div class="buttonHolder">' +
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+								'		</div>' +
 								'	</li>';
 
 						// remove from dropdown
@@ -2231,7 +2231,7 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 
 			// unblock the submit event when we lose focus
 			$('#addValue-' + id).bind('blur', function(evt) { blockSubmit = false; });
-			
+
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(evt)
 			{
@@ -2337,11 +2337,11 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' + 
-								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' + 
-								'		<div class="buttonHolder">' + 
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
-								'		</div>' + 
+						html += '	<li class="oneLiner">' +
+								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' +
+								'		<div class="buttonHolder">' +
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+								'		</div>' +
 								'	</li>';
 					}
 
@@ -2351,7 +2351,7 @@ a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f
 
 				// set html
 				$('#elementList-' + id).html(html);
-				
+
 				// call callback if specified
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
