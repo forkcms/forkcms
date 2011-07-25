@@ -14,6 +14,7 @@ Improvements
 * Core: Added advanced SEO-settings in the SEO-tab (index,follow).
 * Core: Added a setting to use no-follow on links inside user-comments.
 * Core: If Google Analytics is available, all outgoing links will be tracked by eventtracking.
+* Core: When Google Analytics is linked, and the tracking-code isn't found in the header/footer-HTML it will be added.
 
 
 2.5.2 (2011-07-19)

@@ -172,11 +172,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 						$this->tableId = $tableId;
 						$this->accountName = $profiles[$this->tableId]['accountName'];
 						$this->profileTitle = $profiles[$this->tableId]['title'];
+						$webPropertyId = $profiles[$this->tableId]['webPropertyId'];
 
 						// store the table id and account title in the settings
 						BackendModel::setModuleSetting($this->getModule(), 'account_name', $this->accountName);
 						BackendModel::setModuleSetting($this->getModule(), 'table_id', $this->tableId);
 						BackendModel::setModuleSetting($this->getModule(), 'profile_title', $this->profileTitle);
+						BackendModel::setModuleSetting($this->getModule(), 'web_property_id', $webPropertyId);
 					}
 				}
 			}

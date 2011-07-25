@@ -680,8 +680,35 @@ class FrontendHeader extends FrontendBaseObject
 		// assign site title
 		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 
+		// get the data
+		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
+		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
+		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
+
+		// search for the webpropertyId, if not found we should build the GA-code
+		if(strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
+		{
+			// build GA-tracking code
+			$trackingCode = '<script type="text/javascript">
+								var _gaq = _gaq || [];
+								_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
+								_gaq.push([\'_setDomainName\', \'none\']);
+								_gaq.push([\'_trackPageview\']);
+								_gaq.push([\'_trackPageLoadTime\']);
+
+								(function() {
+									var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+									ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+									var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+								})();
+							</script>';
+
+			// add to the header
+			$siteHTMLHeader .= "\n" . $trackingCode;
+		}
+
 		// assign site wide html
-		$this->tpl->assign('siteHTMLHeader', (string) FrontendModel::getModuleSetting('core', 'site_html_header', null));
+		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
 	}
 
 
