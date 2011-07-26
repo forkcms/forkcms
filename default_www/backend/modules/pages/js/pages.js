@@ -352,6 +352,9 @@ jsBackend.pages.extras =
 
 		// add editor
 		tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
+
+		// disable scrolling
+		$('body').css('overflow', 'hidden');
 	},
 
 
@@ -367,6 +370,9 @@ jsBackend.pages.extras =
 
 		// remove editor
 		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
+
+		// enable scrolling
+		$('body').css('overflow', 'auto');
 	},
 
 
