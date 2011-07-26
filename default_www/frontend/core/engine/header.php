@@ -686,7 +686,7 @@ class FrontendHeader extends FrontendBaseObject
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
 
 		// search for the webpropertyId, if not found we should build the GA-code
-		if(strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
+		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
 		{
 			// build GA-tracking code
 			$trackingCode = '<script type="text/javascript">
