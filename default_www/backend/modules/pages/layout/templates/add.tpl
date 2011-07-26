@@ -50,9 +50,15 @@
 			<div id="editContent" style="display: none;">
 				{iteration:positions}
 					{iteration:positions.blocks}
-						<div class="box contentBlock">
+						<div class="box contentBlock" style="margin: 0;">
 							<div class="blockContentHTML optionsRTE">
 								<fieldset>
+									<div class="generalMessage singleMessage infoMessage">
+										<p><strong>Important:</strong> This content will not be updated until the page has been saved.</p>
+									</div>
+									<div class="heading">
+										<h3>Editor</h3>
+									</div>
 									{$positions.blocks.txtHTML}
 									{$positions.blocks.txtHTMLError}
 								</fieldset>
