@@ -103,8 +103,6 @@ jsBackend.pages.extras =
 		$('a.addBlock').live('click', jsBackend.pages.extras.showExtraDialog);
 		$('a.deleteBlock').live('click', jsBackend.pages.extras.deleteBlock);
 		$('.showEditor').live('click', function(e) { e.preventDefault(); jsBackend.pages.extras.editContent($(this).parent().parent().data('blockId')); });
-		$('#okButton').click(function(e) { e.preventDefault(); jsBackend.pages.extras.editTemplate(true); });
-		$('#cancelButton').click(function(e) { e.preventDefault(); jsBackend.pages.extras.editTemplate(false); });
 
 		// load initial data, or initialize the dialogs
 		jsBackend.pages.extras.load();
@@ -287,9 +285,6 @@ jsBackend.pages.extras =
 
 			// show editor
 			$('.blockContentHTML', block).show();
-
-			// add tinymce to this element
-			tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
 		}
 
 		// reset block indexes
@@ -309,9 +304,6 @@ jsBackend.pages.extras =
 		// remove block from template overview
 		$(this).parent().parent('.templatePositionCurrentType').remove();
 
-		// remove tiny from this block (if editor instance)
-		if($('#blockExtraId' + index).val() == '') tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
-
 		// remove block
 		$('#blockExtraId' + index).parent().parent().remove();
 
@@ -321,58 +313,60 @@ jsBackend.pages.extras =
 		// reset indexes (sequence)
 		jsBackend.pages.extras.resetIndexes();
 	},
-	
-	
+
+
 	// edit content
 	editContent: function(index)
 	{
 		// save content to allow for cancelling the edited text
-		jsBackend.pages.extras.htmlContent = tinyMCE.get('blockHtml' + index).getContent();
-
-		// sohw overlay
-		$('#overlay').fadeIn('fast');
-
-		// update buttons
-		$('#editorButtons').show();
+		jsBackend.pages.extras.htmlContent = $('#blockHtml' + index).val();
 
 		// show editor
-		$('#blockHtml' + index).parent().parent().parent().show();
+		$('#blockHtml' + index).parent().parent().parent().dialog(
+		{
+			closeOnEscape: false,
+			draggable: false,
+			resizable: false,
+			modal: true,
+			width: 940,
+			buttons:
+			{
+				'{$lblOK|ucfirst}': function()
+				{
+					// save content
+					jsBackend.pages.extras.setContent(index, true);
+					
+					// close dialog
+					$(this).dialog('close');
+				},
+				'{$lblCancel|ucfirst}': function()
+				{
+					// reset content
+					jsBackend.pages.extras.setContent(index, false);
+					
+					// close the dialog
+					$(this).dialog('close');
+				}
+			 }
+		});
 
-		// disable scrolling
-		$('body').css('overflow', 'hidden');
+		// add editor
+		tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
 	},
 
 
-	// edit template
-	editTemplate: function(saveContent)
+	// save/reset the content
+	setContent: function(index, saveContent)
 	{
 		// content does not need to be saved
 		if(!saveContent)
 		{
-			// loop all blocks
-			// @todo: update this
-			$('.contentBlock').each(function()
-			{
-				// find the one currently being edited
-				if($(this).is(':visible'))
-				{
-					// reset to previous content
-					tinyMCE.get($('textarea[id^=blockHtml]', this).attr('id')).setContent(jsBackend.pages.extras.htmlContent);
-				}
-			});
+			// reset to previous content
+			tinyMCE.get('blockHtml' + index).setContent(jsBackend.pages.extras.htmlContent);
 		}
 
-		// hide overlay
-		$('#overlay').fadeOut('fast');
-
-		// update buttons
-		$('#editorButtons').hide();
-
-		// hide editor
-		$('.contentBlock').hide();
-
-		// enable scrolling
-		$('body').css('overflow', 'auto');
+		// remove editor
+		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 	},
 
 
@@ -474,13 +468,6 @@ jsBackend.pages.extras =
 			var oldIndex = $(this).data('blockId');
 			var newIndex = i + 1;
 
-			// check if editor instance: editor needs to be removed
-			if($('#blockExtraId' + oldIndex).val() == '')
-			{
-				// remove editor from this block
-				tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + oldIndex);
-			}
-
 			// update index of entry in template-view
 			$(this).data('blockId', newIndex);
 
@@ -502,20 +489,6 @@ jsBackend.pages.extras =
 
 		// mark all as having been reset
 		$('.contentBlock').removeClass('reset');
-
-		// loop blocks again, now that all indexes have been reset and each has his own unique index again
-		$('.templatePositionCurrentType').each(function(i)
-		{
-			// fetch block id
-			var newIndex = $(this).data('blockId');
-
-			// check if editor instance: editor needs to be relinked
-			if($('#blockExtraId' + newIndex).val() == '')
-			{
-				// add editor to this element
-				tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + newIndex);
-			}
-		});
 	},
 
 
