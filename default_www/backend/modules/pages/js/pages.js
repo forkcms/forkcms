@@ -234,9 +234,6 @@ jsBackend.pages.extras =
 			// save extra id
 			$('input[id^=blockExtraId]', block).val(selectedExtraId);
 
-			// set block description
-			$('.pageTitle h2', block).html(extrasById[selectedExtraId].human_name);
-
 			// link to edit this block/widget
 			var editLink = '';
 			if(extrasById[selectedExtraId].type == 'block' && extrasById[selectedExtraId].data.url) editLink = extrasById[selectedExtraId].data.url;
@@ -265,9 +262,6 @@ jsBackend.pages.extras =
 		{
 			// save extra id
 			$('input[id^=blockExtraId]', block).val('');
-
-			// set block description
-			$('.pageTitle h2', block).html('{$lblEditor|ucfirst}');
 
 			// create html to be appended in template-view
 			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
@@ -329,6 +323,7 @@ jsBackend.pages.extras =
 			resizable: false,
 			modal: true,
 			width: 940,
+			title: '{$lblEditor|ucfirst}',
 			buttons:
 			{
 				'{$lblOK|ucfirst}': function()

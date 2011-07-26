@@ -51,10 +51,6 @@
 				{iteration:positions}
 					{iteration:positions.blocks}
 						<div class="box contentBlock">
-							<div class="pageTitle" style="margin-bottom: 0;">
-								<h2>{$positions.blocks.name}</h2>
-							</div>
-
 							<div class="blockContentHTML optionsRTE">
 								<fieldset>
 									{$positions.blocks.txtHTML}
