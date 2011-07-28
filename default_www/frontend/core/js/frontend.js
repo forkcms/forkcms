@@ -49,7 +49,7 @@ var jsFrontend =
 
 	// end
 	eoo: true
-},
+}
 
 
 /**

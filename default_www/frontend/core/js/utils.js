@@ -8,7 +8,7 @@ var utils =
 	// datamembers
 	debug: false,
 	eoo: true
-},
+}
 
 
 /**
