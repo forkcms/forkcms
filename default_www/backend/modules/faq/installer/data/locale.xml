@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
+   <faq>
+      <item type="error" name="AnswerIsRequired">
+        <translation language="nl"><![CDATA[Het antwoord is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The answer is required.]]></translation>
+      </item>
+      <item type="error" name="CategoryIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een categorie te selecteren.]]></translation>
+        <translation language="en"><![CDATA[Please select a category.]]></translation>
+      </item>
+      <item type="error" name="DeleteCategoryNotAllowed">
+        <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
+        <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>
+      </item>
+      <item type="error" name="QuestionIsRequired">
+        <translation language="nl"><![CDATA[De vraag is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The question is required.]]></translation>
+      </item>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
+        <translation language="en"><![CDATA[add question]]></translation>
+      </item>
+      <item type="label" name="AllowFeedback">
+        <translation language="nl"><![CDATA[feedback toelaten]]></translation>
+        <translation language="en"><![CDATA[allow feedback]]></translation>
+      </item>
+      <item type="label" name="AllowOwnQuestion">
+        <translation language="nl"><![CDATA[gebruikersvragen toelaten]]></translation>
+        <translation language="en"><![CDATA[allow user questions]]></translation>
+      </item>
+      <item type="label" name="Answer">
+        <translation language="nl"><![CDATA[antwoord]]></translation>
+        <translation language="en"><![CDATA[answer]]></translation>
+      </item>
+      <item type="label" name="Feedback">
+        <translation language="nl"><![CDATA[feedback]]></translation>
+        <translation language="en"><![CDATA[feedback]]></translation>
+      </item>
+      <item type="label" name="NumUsefullNo">
+        <translation language="nl"><![CDATA[# keer niet nuttig]]></translation>
+        <translation language="en"><![CDATA[# not usefull]]></translation>
+      </item>
+      <item type="label" name="NumUsefullYes">
+        <translation language="nl"><![CDATA[# keer nuttig]]></translation>
+        <translation language="en"><![CDATA[# usefull]]></translation>
+      </item>
+      <item type="label" name="NumViews">
+        <translation language="nl"><![CDATA[# keer bekeken]]></translation>
+        <translation language="en"><![CDATA[# views]]></translation>
+      </item>
+      <item type="label" name="ItemsPerCategory">
+        <translation language="nl"><![CDATA[items per categorie]]></translation>
+        <translation language="en"><![CDATA[items per category]]></translation>
+      </item>
+      <item type="label" name="Question">
+        <translation language="nl"><![CDATA[vraag]]></translation>
+        <translation language="en"><![CDATA[question]]></translation>
+      </item>
+      <item type="label" name="Questions">
+        <translation language="nl"><![CDATA[vragen]]></translation>
+        <translation language="en"><![CDATA[questions]]></translation>
+      </item>
+      <item type="message" name="EditCategory">
+        <translation language="nl"><![CDATA[Bewerk categorie "%1$s"]]></translation>
+        <translation language="en"><![CDATA[Edit category "%1$s"]]></translation>
+      </item>
+      <item type="message" name="EditQuestion">
+        <translation language="nl"><![CDATA[Bewerk vraag "%1$s"]]></translation>
+        <translation language="en"><![CDATA[Edit question "%1$s"]]></translation>
+      </item>
+      <item type="message" name="HelpSpamFilter">
+        <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in feedback en gebruikersvragen te vermijden.]]></translation>
+        <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam in feedback and user questions.]]></translation>
+      </item>
+      <item type="message" name="NoQuestionInCategory">
+        <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
+        <translation language="en"><![CDATA[There are no questions in this category.]]></translation>
+      </item>
+      <item type="message" name="NoCategories">
+        <translation language="nl"><![CDATA[Er zijn nog geen categorieën.]]></translation>
+        <translation language="en"><![CDATA[There are no categories yet.]]></translation>
+      </item>
+      <item type="message" name="NumMostReadItems">
+        <translation language="nl"><![CDATA[Aantal meest gelezen items]]></translation>
+        <translation language="en"><![CDATA[Number of most read items]]></translation>
+      </item>
+      <item type="message" name="NumRelatedItems">
+        <translation language="nl"><![CDATA[Aantal gerelateerde items]]></translation>
+        <translation language="en"><![CDATA[Number of related items]]></translation>
+      </item>
+    </faq>
     <core>
       <item type="label" name="Faq">
         <translation language="nl"><![CDATA[FAQ]]></translation>
@@ -11,50 +101,116 @@
         <translation language="en"><![CDATA[questions]]></translation>
       </item>
     </core>
-    <faq>
-      <item type="label" name="AddQuestion">
-        <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
-        <translation language="en"><![CDATA[add question]]></translation>
+  </backend>
+  <frontend>
+    <core>
+      <item type="action" name="OwnQuestion">
+        <translation language="nl"><![CDATA[stel-jouw-vraag]]></translation>
+        <translation language="en"><![CDATA[ask-your-question]]></translation>
       </item>
-      <item type="label" name="Answer">
-        <translation language="nl"><![CDATA[antwoord]]></translation>
-        <translation language="en"><![CDATA[answer]]></translation>
+      <item type="action" name="Spam">
+        <translation language="nl"><![CDATA[spam]]></translation>
+        <translation language="en"><![CDATA[spam]]></translation>
+      </item>
+      <item type="action" name="Success">
+        <translation language="nl"><![CDATA[succes]]></translation>
+        <translation language="en"><![CDATA[success]]></translation>
+      </item>
+      <item type="error" name="FeedbackIsRequired">
+        <translation language="nl"><![CDATA[Gelieve feedback te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide feedback.]]></translation>
+      </item>
+      <item type="error" name="FeedbackSpam">
+        <translation language="nl"><![CDATA[Jouw feedback werd als spam gemarkeerd.]]></translation>
+        <translation language="en"><![CDATA[Your feedback was marked as spam.]]></translation>
+      </item>
+      <item type="error" name="OwnQuestionSpam">
+        <translation language="nl"><![CDATA[Jouw vraag werd als spam gemarkeerd.]]></translation>
+        <translation language="en"><![CDATA[Your question was marked as spam.]]></translation>
+      </item>
+      <item type="error" name="QuestionIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een vraag te formuleren.]]></translation>
+        <translation language="en"><![CDATA[Please provide a question.]]></translation>
+      </item>
+      <item type="label" name="MostReadQuestions">
+        <translation language="nl"><![CDATA[Meest bekeken vragen]]></translation>
+        <translation language="en"><![CDATA[Most read questions]]></translation>
+      </item>
+      <item type="label" name="Faq">
+        <translation language="nl"><![CDATA[FAQ]]></translation>
+        <translation language="en"><![CDATA[FAQ]]></translation>
+      </item>
+      <item type="label" name="No">
+        <translation language="nl"><![CDATA[nee]]></translation>
+        <translation language="en"><![CDATA[no]]></translation>
       </item>
       <item type="label" name="Question">
         <translation language="nl"><![CDATA[vraag]]></translation>
         <translation language="en"><![CDATA[question]]></translation>
       </item>
-      <item type="error" name="AnswerIsRequired">
-        <translation language="nl"><![CDATA[Het antwoord is verplicht.]]></translation>
-        <translation language="en"><![CDATA[The answer is required.]]></translation>
+      <item type="label" name="Questions">
+        <translation language="nl"><![CDATA[vragen]]></translation>
+        <translation language="en"><![CDATA[questions]]></translation>
       </item>
-      <item type="error" name="CategoryIsRequired">
-        <translation language="nl"><![CDATA[Gelieve een categorie te selecteren.]]></translation>
-        <translation language="en"><![CDATA[Please select a category.]]></translation>
+      <item type="label" name="ToFaqOverview">
+        <translation language="nl"><![CDATA[naar het FAQ overzicht]]></translation>
+        <translation language="en"><![CDATA[to the FAQ overview]]></translation>
       </item>
-      <item type="error" name="QuestionIsRequired">
-        <translation language="nl"><![CDATA[De vraag is verplicht.]]></translation>
-        <translation language="en"><![CDATA[The question is required.]]></translation>
+      <item type="label" name="Yes">
+        <translation language="nl"><![CDATA[ja]]></translation>
+        <translation language="en"><![CDATA[yes]]></translation>
       </item>
-      <item type="message" name="EditQuestion">
-        <translation language="nl"><![CDATA[Bewerk vraag "%1$s]]></translation>
-        <translation language="en"><![CDATA[Edit question "%1$s]]></translation>
+      <item type="label" name="YourEmail">
+        <translation language="nl"><![CDATA[jouw e-mailadres]]></translation>
+        <translation language="en"><![CDATA[your e-mail address]]></translation>
       </item>
-      <item type="message" name="NoQuestionInCategory">
-        <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
-        <translation language="en"><![CDATA[There are no questions in this category.]]></translation>
+      <item type="label" name="YourName">
+        <translation language="nl"><![CDATA[jouw naam]]></translation>
+        <translation language="en"><![CDATA[your name]]></translation>
       </item>
-      <item type="message" name="NoCategories">
-        <translation language="nl"><![CDATA[Er zijn nog geen categorieën]]></translation>
-        <translation language="en"><![CDATA[There are no categories yet]]></translation>
+      <item type="label" name="YourQuestion">
+        <translation language="nl"><![CDATA[jouw vraag]]></translation>
+        <translation language="en"><![CDATA[your question]]></translation>
       </item>
-    </faq>
-  </backend>
-  <frontend>
-    <core>
+      <item type="message" name="AlsoInteresting">
+        <translation language="nl"><![CDATA[Ook interessant voor jou]]></translation>
+        <translation language="en"><![CDATA[Also interesting for you]]></translation>
+      </item>
+      <item type="message" name="AskOwnQuestion">
+        <translation language="nl"><![CDATA[Antwoord niet gevonden? Stel zelf een vraag!]]></translation>
+        <translation language="en"><![CDATA[Didn't find what you were looking for? Ask your own question!]]></translation>
+      </item>
+      <item type="message" name="FaqNoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen vragen.]]></translation>
+        <translation language="en"><![CDATA[There are no questions yet.]]></translation>
+      </item>
+      <item type="message" name="Feedback">
+        <translation language="nl"><![CDATA[Ben je geholpen met dit antwoord?]]></translation>
+        <translation language="en"><![CDATA[Was this answer helpfull?]]></translation>
+      </item>
+      <item type="message" name="FeedbackSuccess">
+        <translation language="nl"><![CDATA[Je feedback werd verstuurd.]]></translation>
+        <translation language="en"><![CDATA[Your feedback has been sent.]]></translation>
+      </item>
+      <item type="message" name="HowToImprove">
+        <translation language="nl"><![CDATA[Hoe kunnen we dit antwoord verbeteren?]]></translation>
+        <translation language="en"><![CDATA[How can we improve this answer?]]></translation>
+      </item>
       <item type="message" name="NoQuestionsInCategory">
         <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
         <translation language="en"><![CDATA[There are no questions in this category.]]></translation>
+      </item>
+      <item type="message" name="OwnQuestionSuccess">
+        <translation language="nl"><![CDATA[Je vraag werd verzonden. We geven je zo snel mogelijk een antwoord.]]></translation>
+        <translation language="en"><![CDATA[Your question has been sent. We'll give you an answer as soon as possible.]]></translation>
+      </item>
+      <item type="message" name="QuestionsInSameCategory">
+        <translation language="nl"><![CDATA[Andere vragen in deze categorie]]></translation>
+        <translation language="en"><![CDATA[Other questions in this category]]></translation>
+      </item>
+      <item type="message" name="RelatedQuestions">
+        <translation language="nl"><![CDATA[Lees ook]]></translation>
+        <translation language="en"><![CDATA[Also read]]></translation>
       </item>
     </core>
   </frontend>

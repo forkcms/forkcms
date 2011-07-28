@@ -331,6 +331,10 @@ $navigation = array(
 					array(
 						'url' => 'location/settings',
 						'label' => 'Location'
+					),
+					array(
+						'url' => 'faq/settings',
+						'label' => 'Faq'
 					)
 				)
 			)

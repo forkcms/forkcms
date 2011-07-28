@@ -7,6 +7,7 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class FrontendFaqIndex extends FrontendBaseBlock
@@ -16,7 +17,7 @@ class FrontendFaqIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $items;
+	private $items = array();
 
 
 	/**
@@ -47,14 +48,23 @@ class FrontendFaqIndex extends FrontendBaseBlock
 	 */
 	private function getData()
 	{
-		// get questions
-		$this->items = FrontendFaqModel::getCategories();
+		// get categories
+		$categories = FrontendFaqModel::getCategories();
 
-		// go over categories
-		foreach($this->items as &$item)
+		// get limit per category
+		$limit = FrontendModel::getModuleSetting('faq', 'overview_num_items_per_category', 10);
+
+		// loop categories
+		foreach($categories as $item)
 		{
-			// add questions info to array
-			$item['questions'] = FrontendFaqModel::getQuestions($item['id']);
+			// get the questions
+			$item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
+
+			// no questions? next!
+			if(empty($item['questions'])) continue;
+
+			// add the category item including the questions
+			$this->items[] = $item;
 		}
 	}
 
