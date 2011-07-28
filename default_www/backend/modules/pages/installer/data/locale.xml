@@ -158,7 +158,7 @@
       </item>
       <item type="message" name="TemplateInUse">
         <translation language="nl"><![CDATA[Deze template is in gebruik]]></translation>
-        <translation language="en"><![CDATA[This template is in use. You can't change the number of blocks.]]></translation>
+        <translation language="en"><![CDATA[This template is in use.]]></translation>
       </item>
       <item type="message" name="WidgetAttached">
         <translation language="nl"><![CDATA[De widget <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
