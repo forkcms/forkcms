@@ -396,7 +396,6 @@ class API
 		// stop script execution
 		exit;
 	}
-
 }
 
 ?>

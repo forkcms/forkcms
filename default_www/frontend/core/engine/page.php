@@ -193,7 +193,7 @@ class FrontendPage extends FrontendBaseObject
 			$this->record = FrontendModel::getPageRevision($this->URL->getParameter('page_revision', 'int'));
 
 			// add no-index to meta-custom, so the draft won't get accidentally indexed
-			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+			$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 		}
 
 		// get page record
@@ -280,13 +280,24 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private function processPage()
 	{
-		// set pageTitle
-		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
+		// is this an action?
+		$isAction = (isset($this->record['data']['is_action']) && $this->record['data']['is_action']);
 
-		// set meta-data
-		$this->header->setMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], (bool) ($this->record['meta_keywords_overwrite'] == 'Y'));
-		$this->header->setMetaCustom($this->record['meta_custom']);
+		// only set title and meta-stuff if this isn't an action
+		if(!$isAction)
+		{
+			// set pageTitle
+			$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
+
+			// set meta-data
+			$this->header->addMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
+			$this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+			$this->header->setMetaCustom($this->record['meta_custom']);
+		}
+
+		// advanced SEO-attributes
+		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
+		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
 		// create breadcrumb instance
 		$this->breadcrumb = new FrontendBreadcrumb();

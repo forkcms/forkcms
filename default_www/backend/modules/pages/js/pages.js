@@ -598,7 +598,8 @@ jsBackend.pages.tree =
 				'pages': { icon: { position: false } },
 				'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
 				'sitemap': { max_children: 0, icon: { position: '0 -176px' } },
-				'redirect': { max_children: 0, icon: { position: '0 -264px' } }
+				'redirect': { max_children: 0, icon: { position: '0 -264px' } },
+				'direct_action': { max_children: 0, icon: { position: '0 -280px' } }
 			},
 			plugins:
 			{

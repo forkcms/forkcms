@@ -192,6 +192,9 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				// update item
 				$item['id'] = BackendLocaleModel::insert($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
 			}

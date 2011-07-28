@@ -126,6 +126,9 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 				// update the item
 				BackendMailmotorModel::updateCampaign($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_campaign', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}

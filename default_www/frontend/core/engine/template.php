@@ -409,7 +409,7 @@ class FrontendTemplateModifiers
 		$var = (string) $var;
 
 		// detect links
-		$var = SpoonFilter::replaceURLsWithAnchors($var);
+		$var = SpoonFilter::replaceURLsWithAnchors($var, FrontendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false));
 
 		// replace newlines
 		$var = str_replace("\r", '', $var);

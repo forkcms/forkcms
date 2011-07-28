@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>blog</name>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>Blog</name>
+		<description><![CDATA[The blog module enables you to inform your visitores through articles. They will be able to comment on your articles (if enabled). By default RSS-feeds are generated.]]></description>
+	</info>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when an article is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when an article is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when an item is edited.]]></event>
+		<event application="backend" name="after_add_category"><![CDATA[Triggered when a category is added.]]></event>
+		<event application="backend" name="after_delete_category"><![CDATA[Triggered when a category is deleted.]]></event>
+		<event application="backend" name="after_edit_category"><![CDATA[Triggered when a category is edited.]]></event>
+		<event application="backend" name="after_edit_comment"><![CDATA[Triggered when a comment is edited.]]></event>
+		<event application="backend" name="after_saved_settings"><![CDATA[Triggered when the settings are saved.]]></event>
+
+		<event application="frontend" name="after_add_comment"><![CDATA[Triggered when a comment is added.]]></event>
+	</events>
+</module>

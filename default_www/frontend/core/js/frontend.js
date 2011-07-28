@@ -1,12 +1,9 @@
-if(!jsFrontend) { var jsFrontend }
-
-
 /**
  * Frontend related objects
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend =
+var jsFrontend =
 {
 	// datamembers
 	debug: false,
@@ -33,6 +30,9 @@ jsFrontend =
 
 		// init search
 		jsFrontend.search.init();
+
+		// init statistics 		
+		jsFrontend.statistics.init();
 
 		// init twitter
 		jsFrontend.twitter.init();
@@ -530,6 +530,51 @@ jsFrontend.search =
 	},
 
 
+	// end
+	eoo: true
+},
+
+
+/**
+ * Gravatar related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.statistics = 
+{
+	// init, something like a constructor
+	init: function()
+	{
+		jsFrontend.statistics.trackOutboundLinks();
+	},
+	
+	
+	// track all outbound links
+	trackOutboundLinks: function() 
+	{
+		// check if Google Analytics is available
+		if(typeof _gaq == 'object')
+		{
+			// create a new selector
+			$.expr[':'].external = function(obj) {
+				return (typeof obj.href != 'undefined' && !obj.href.match(/^mailto\:/) && (obj.hostname != location.hostname)); 
+			};		
+
+			// bind on all links that don't have the class noTracking
+			$('a:external:not(.noTracking)').live('click', function(evt) 
+			{
+				var $this = $(this);
+				var link = $this.attr('href');
+				var title = $this.attr('title');
+				if(typeof title == 'undefined' || title == '') title = $this.html();
+				
+				// track in Google Analytics
+				_gaq.push(['_trackEvent', 'Outbound Links', link, title]);
+			});
+		}
+	},
+	
+	
 	// end
 	eoo: true
 },

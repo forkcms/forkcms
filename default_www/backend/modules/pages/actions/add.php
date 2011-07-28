@@ -116,7 +116,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
-		$this->frm->addCheckbox('no_follow');
 
 		// get maximum number of blocks
 		$maxNumBlocks = BackendModel::getModuleSetting($this->getModule(), 'template_max_blocks', 5);
@@ -246,7 +245,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['allow_children'] = 'Y';
 				$page['allow_edit'] = 'Y';
 				$page['allow_delete'] = 'Y';
-				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
 				$page['data'] = ($data !== null) ? serialize($data) : null;
 
@@ -312,6 +310,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 				// insert the blocks
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
+
+				// trigger an event
+				BackendModel::triggerEvent($this->getModule(), 'after_add', $page);
 
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());

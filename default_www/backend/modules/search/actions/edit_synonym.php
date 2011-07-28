@@ -121,6 +121,9 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 				// upate the item
 				BackendSearchModel::updateSynonym($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_synonym', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=edited-synonym&var=' . urlencode($item['term']) . '&highlight=row-' . $item['id']);
 			}

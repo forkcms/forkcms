@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `pages` (
  `allow_children` enum('N','Y') NOT NULL default 'Y',
  `allow_edit` enum('N','Y') NOT NULL default 'Y',
  `allow_delete` enum('N','Y') NOT NULL default 'Y',
- `no_follow` enum('N','Y') NOT NULL default 'N',
  `sequence` int(11) NOT NULL,
  `has_extra` enum('N','Y') NOT NULL,
  `extra_ids` varchar(255) default NULL,

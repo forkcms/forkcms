@@ -57,14 +57,18 @@ class FrontendBreadcrumb extends FrontendBaseObject
 			// do we know something about the page
 			if($pageInfo !== false && isset($pageInfo['navigation_title']))
 			{
-				// get URL
-				$pageURL = FrontendNavigation::getUrl($menuId);
+				// only add pages that aren't direct actions
+				if($pageInfo['tree_type'] != 'direct_action')
+				{
+					// get URL
+					$pageURL = FrontendNavigation::getUrl($menuId);
 
-				// if this is the error-page, so we won't show an URL.
-				if($pageURL == $errorURL) $pageURL = null;
+					// if this is the error-page, so we won't show an URL.
+					if($pageURL == $errorURL) $pageURL = null;
 
-				// add to the items
-				$items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageURL);
+					// add to the items
+					$items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageURL);
+				}
 			}
 
 			// remove element

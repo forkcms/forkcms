@@ -253,6 +253,10 @@ $navigation = array(
 					array(
 						'url' => 'settings/email',
 						'label' => 'Email'
+					),
+					array(
+						'url' => 'settings/seo',
+						'label' => 'SEO'
 					)
 				)
 			),
