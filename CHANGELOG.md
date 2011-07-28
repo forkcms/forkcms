@@ -1,4 +1,11 @@
-2.6.0 (xxxx-xx-xx)
+2.x.x (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Search: search page was installed twice.
+
+
+2.6.0 (2011-07-26)
 --
 Bugfixes:
 

@@ -83,8 +83,8 @@
         <translation language="en"><![CDATA[You can send emails in 2 ways. By using PHP's built-in mail method or via SMTP. We advice you to use SMTP]]></translation>
       </item>
       <item type="message" name="HelpScriptsFoot">
-        <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden. (bvb. Google Analytics)]]></translation>
-        <translation language="en"><![CDATA[Paste code that needs to be loaded at the end of the <code>&lt;body&gt;</code> tag here (e.g. Google Analytics).]]></translation>
+        <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
+        <translation language="en"><![CDATA[Paste code that needs to be loaded at the end of the <code>&lt;body&gt;</code> tag here.]]></translation>
       </item>
       <item type="message" name="HelpScriptsFootLabel">
         <translation language="nl"><![CDATA[Einde van <code>&lt;body&gt;</code> script(s)]]></translation>

@@ -62,18 +62,17 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// assign
 		$this->tpl->assign('template', $this->record);
 
+		// is the template being used
+		$inUse = BackendPagesModel::isTemplateInUse($this->id);
+
 		// determine if deleting is allowed
 		$deleteAllowed = true;
 		if($this->record['id'] == BackendModel::getModuleSetting($this->getModule(), 'default_template')) $deleteAllowed = false;
 		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
-		elseif(BackendPagesModel::isTemplateInUse($this->id))
-		{
-			// show that the template is used
-			$this->tpl->assign('inUse', true);
-			$deleteAllowed = false;
-		}
+		elseif($inUse) $deleteAllowed = false;
 
 		// assign
+		$this->tpl->assign('inUse', $inUse);
 		$this->tpl->assign('deleteAllowed', $deleteAllowed);
 	}
 
