@@ -90,7 +90,7 @@ utils.form =
 	 * Is a checkbox checked?
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isChecked: function(element)
 	{
@@ -102,7 +102,7 @@ utils.form =
 	 * Is the value inside the element a valid emailaddress
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isEmail: function(element)
 	{
@@ -115,7 +115,7 @@ utils.form =
 	 * Is the element filled
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isFilled: function(element)
 	{
@@ -127,7 +127,7 @@ utils.form =
 	 * Is the value inside the element a valid number
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isNumber: function(element)
 	{
@@ -139,7 +139,7 @@ utils.form =
 	 * Is the value inside the element a valid URL
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isURL: function(element)
 	{
@@ -165,7 +165,7 @@ utils.string =
 	 * Encode the string as HTML
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	htmlEncode: function(value)
 	{
@@ -177,7 +177,7 @@ utils.string =
 	 * Decode the string as HTML
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	htmlDecode: function(value)
 	{
@@ -189,9 +189,9 @@ utils.string =
 	 * Replace all occurences of one string into a string
 	 *
 	 * @return	string
-	 * @param string value
-	 * @param string needle
-	 * @param string replacement
+	 * @param	string value
+	 * @param	string needle
+	 * @param	string replacement
 	 */
 	replaceAll: function(value, needle, replacement)
 	{
@@ -204,7 +204,7 @@ utils.string =
 	 * Strip whitespace from the beginning and end of a string
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	trim: function(value)
 	{
@@ -217,7 +217,7 @@ utils.string =
 	 * Urlise a string (cfr. SpoonFilter)
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	urlise: function(value)
 	{
@@ -269,7 +269,36 @@ utils.string =
 		return url;
 	},
 
-
+	
+	/**
+	 * Convert a HTML string to a XHTML string.
+	 * 
+	 * @return	string
+	 * @param	string value
+	 */
+	xhtml: function(value)
+	{
+		// break tags should end with a slash
+		value = value.replace(/<br>/g,'<br />');
+		value = value.replace(/<br ?\/?>$/g,'');
+		value = value.replace(/^<br ?\/?>/g,'');
+		
+		// image tags should end with a slash
+		value = value.replace(/(<img [^>]+[^\/])>/gi,'$1 />');
+		
+		// input tags should end with a slash
+		value = value.replace(/(<input [^>]+[^\/])>/gi,'$1 />');
+		
+		// big no-no to <b|i|u>
+		value = value.replace(/<b\b[^>]*>(.*?)<\/b[^>]*>/g,'<strong>$1</strong>');
+		value = value.replace(/<i\b[^>]*>(.*?)<\/i[^>]*>/g,'<em>$1</em>');
+		value = value.replace(/<u\b[^>]*>(.*?)<\/u[^>]*>/g,'<span style="text-decoration:underline">$1</span>');
+		
+		// XHTML
+		return value;
+	},
+	
+	
 	// end
 	eoo: true
 },

@@ -1,4 +1,4 @@
-if(!utils) var utils = new Object();
+if(!utils) { var utils }
 
 
 /**
@@ -11,7 +11,7 @@ utils =
 	// datamembers
 	debug: false,
 	eoo: true
-}
+},
 
 
 /**
@@ -24,7 +24,7 @@ utils.array =
 	/**
 	 * Is the given value present in the array
 	 *
-	 * @return bool
+	 * @return	bool
 	 */
 	inArray: function(needle, array)
 	{
@@ -41,7 +41,7 @@ utils.array =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -54,7 +54,7 @@ utils.cookies =
 	/**
 	 * Are cookies enabled?
 	 *
-	 * @return bool
+	 * @return	bool
 	 */
 	isEnabled: function()
 	{
@@ -76,7 +76,7 @@ utils.cookies =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -89,8 +89,8 @@ utils.form =
 	/**
 	 * Is a checkbox checked?
 	 *
-	 * @return bool
-	 * @param object element
+	 * @return	bool
+	 * @param	object element
 	 */
 	isChecked: function(element)
 	{
@@ -101,8 +101,8 @@ utils.form =
 	/**
 	 * Is the value inside the element a valid emailaddress
 	 *
-	 * @return bool
-	 * @param object element
+	 * @return	bool
+	 * @param	object element
 	 */
 	isEmail: function(element)
 	{
@@ -114,8 +114,8 @@ utils.form =
 	/**
 	 * Is the element filled
 	 *
-	 * @return bool
-	 * @param object element
+	 * @return	bool
+	 * @param	object element
 	 */
 	isFilled: function(element)
 	{
@@ -126,8 +126,8 @@ utils.form =
 	/**
 	 * Is the value inside the element a valid number
 	 *
-	 * @return bool
-	 * @param object element
+	 * @return	bool
+	 * @param	object element
 	 */
 	isNumber: function(element)
 	{
@@ -138,8 +138,8 @@ utils.form =
 	/**
 	 * Is the value inside the element a valid URL
 	 *
-	 * @return bool
-	 * @param object element
+	 * @return	bool
+	 * @param	object element
 	 */
 	isURL: function(element)
 	{
@@ -150,7 +150,7 @@ utils.form =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -164,8 +164,8 @@ utils.string =
 	/**
 	 * Encode the string as HTML
 	 *
-	 * @return string
-	 * @param string value
+	 * @return	string
+	 * @param	string value
 	 */
 	htmlEncode: function(value)
 	{
@@ -176,8 +176,8 @@ utils.string =
 	/**
 	 * Decode the string as HTML
 	 *
-	 * @return string
-	 * @param string value
+	 * @return	string
+	 * @param	string value
 	 */
 	htmlDecode: function(value)
 	{
@@ -188,10 +188,10 @@ utils.string =
 	/**
 	 * Replace all occurences of one string into a string
 	 *
-	 * @return string
-	 * @param string value
-	 * @param string needle
-	 * @param string replacement
+	 * @return	string
+	 * @param	string value
+	 * @param	string needle
+	 * @param	string replacement
 	 */
 	replaceAll: function(value, needle, replacement)
 	{
@@ -203,8 +203,8 @@ utils.string =
 	/**
 	 * Strip whitespace from the beginning and end of a string
 	 *
-	 * @return string
-	 * @param string value
+	 * @return	string
+	 * @param	string value
 	 */
 	trim: function(value)
 	{
@@ -216,8 +216,8 @@ utils.string =
 	/**
 	 * Urlise a string (cfr. SpoonFilter)
 	 *
-	 * @return string
-	 * @param string value
+	 * @return	string
+	 * @param	string value
 	 */
 	urlise: function(value)
 	{
@@ -301,16 +301,35 @@ utils.string =
 	
 	// end
 	eoo: true
-}
+},
 
 
 /**
  * Functions related to the current url
  *
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.url =
 {
+	extractParamFromUri: function (uri, paramName) 
+	{
+		if(!uri) return;
+		var uri = uri.split('#')[0];
+		var parts = uri.split('?');
+		if (parts.length == 1) return;
+		
+		var query = decodeURI(parts[1]);
+
+		paramName += '=';
+		var params = query.split('&');
+		for(var i=0, param; param = params[i]; ++i) 
+		{
+			if(param.indexOf(paramName) === 0) return unescape(param.split('=')[1]);
+		}
+	},	
+
+
 	/**
 	 * Get a GET parameter
 	 *
