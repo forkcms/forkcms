@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Search: search page was installed twice.
+* Pages: When moving a page the correct page is now checked for allow_children
 
 
 2.6.0 (2011-07-26)
