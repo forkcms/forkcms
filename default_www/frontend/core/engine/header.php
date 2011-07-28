@@ -83,8 +83,8 @@ class FrontendHeader extends FrontendBaseObject
 		// add default javascript-files
 		$this->addJS('/frontend/core/js/jquery/jquery.js', false);
 		$this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
-		$this->addJS('/frontend/core/js/frontend.js', false, true);
 		$this->addJS('/frontend/core/js/utils.js', true);
+		$this->addJS('/frontend/core/js/frontend.js', false, true);
 	}
 
 

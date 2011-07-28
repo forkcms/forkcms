@@ -510,7 +510,7 @@ jsFrontend.search =
 						if(data.code == 200)
 						{
 							// replace search results
-							$searchContainer.html(data.data);
+							$searchContainer.html(innerShiv(data.data));
 
 							// fade in
 							$searchContainer.fadeTo(0, 1);
