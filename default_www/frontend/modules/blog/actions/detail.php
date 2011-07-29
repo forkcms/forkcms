@@ -101,19 +101,20 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// anything found?
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 
-		// overwrite URLs
-		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url'];
-		$this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
-		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
+		// get comments
+		$this->comments = FrontendBlogModel::getComments($this->record['id']);
 
 		// get tags
 		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
 
-		// get comments
-		$this->comments = FrontendBlogModel::getComments($this->record['id']);
-
 		// get settings
 		$this->settings = FrontendModel::getModuleSettings('blog');
+
+		// overwrite URLs
+		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url'];
+		$this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
+		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
+		$this->record['comments_count'] = count($this->comments);
 
 		// reset allow comments
 		if(!$this->settings['allow_comments']) $this->record['allow_comments'] = false;

@@ -104,26 +104,8 @@ class PagesInstall extends ModuleInstaller
 										array('html' => ''),
 										array('extra_id' => $extras['search_form']));
 
-				// insert search page
-				$this->insertPage(array('id' => 2,
-										'template_id' => $templateIds['Default'],
-										'title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
-										'type' => 'root',
-										'language' => $language),
-										null,
-										array('html' => ''),
-										array('extra_id' => $extras['search']),
-										array('html' => ''),
-										array('html' => ''),
-										array('html' => ''),
-										array('html' => ''),
-										array('html' => ''),
-										array('html' => ''),
-										array('html' => ''),
-										array('extra_id' => $extras['search_form']));
-
 				// insert sitemap
-				$this->insertPage(array('id' => 3,
+				$this->insertPage(array('id' => 2,
 										'template_id' => $templateIds['Default'],
 										'title' => ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
@@ -141,7 +123,7 @@ class PagesInstall extends ModuleInstaller
 										array('extra_id' => $extras['search_form']));
 
 				// insert disclaimer
-				$this->insertPage(array('id' => 4,
+				$this->insertPage(array('id' => 3,
 										'template_id' => $templateIds['Default'],
 										'title' => ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
