@@ -38,7 +38,7 @@ utils.array =
 
 	// end
 	eoo: true
-},
+}
 
 
 /**

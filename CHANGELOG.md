@@ -5,6 +5,7 @@ Bugfixes:
 * Search: search page was installed twice.
 * Core: when in debugmode the confirmation for leaving the page is disabled.
 * Core: the check that decided to show the confirmation-message wan't handling empty strings very well.
+* Core: fixed some JS-errors (thx to Frederik Heyninck) 
 
 
 2.6.0 (2011-07-26)

@@ -75,7 +75,7 @@ jsFrontend.controls =
 
 	// end
 	eoo: true
-},
+}
 
 
 /**

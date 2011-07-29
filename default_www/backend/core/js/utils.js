@@ -1,12 +1,9 @@
-if(!utils) { var utils }
-
-
 /**
  * Utilities; usefull scripts
  *
  * @author	Tijs Verkoyen <tijs@netlash.com>
  */
-utils =
+var utils =
 {
 	// datamembers
 	debug: false,
@@ -41,7 +38,7 @@ utils.array =
 
 	// end
 	eoo: true
-},
+}
 
 
 /**
