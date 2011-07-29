@@ -5,7 +5,11 @@ Bugfixes:
 * Search: search page was installed twice.
 * Core: when in debugmode the confirmation for leaving the page is disabled.
 * Core: the check that decided to show the confirmation-message wan't handling empty strings very well.
-* Core: fixed some JS-errors (thx to Frederik Heyninck) 
+* Core: fixed some JS-errors (thx to Frederik Heyninck)
+
+Improvements:
+
+* Core: added utils.string.html5(), when you pass a HTML5-chunk it will be converted so IE will render it correctly (based on innerShiv).
 
 
 2.6.0 (2011-07-26)
@@ -16,7 +20,7 @@ Bugfixes:
 * Blog: Comments-action was broken due an invalid call on $this in a static method.
 * Installer: Setting the librarypath was using an array instead of the first item in that array.
 
-Improvements
+Improvements:
 
 * Core: Items marked as direct action won't show up in page-title, breadcrumb, meta, ...
 * Core: Better handling of meta-information. Each item will be unique, Some new methods are introduced (addLink, addMetaData, addMetaDescription, addMetaKeywords, addOpenGraphData), they replace: setMeta*.
