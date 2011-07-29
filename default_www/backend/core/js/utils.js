@@ -153,11 +153,63 @@ utils.form =
 /**
  * Functions related to strings
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 utils.string =
 {
+	// data member
+	div: false,
+
+
+	/**
+	 * Fix a HTML5-chunk, so IE can render it
+	 *
+	 * @return	string
+	 * @param	string html
+	 */
+	html5: function(html)
+	{
+		var html5 = 'abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.split(' ');
+		
+		// create div if needed
+		if(utils.string.div === false)
+		{
+			utils.string.div = document.createElement('div');
+			
+			utils.string.div.innerHTML = '<nav></nav>';
+			
+			if(utils.string.div.childNodes.length !== 1)
+			{
+				var fragment = document.createDocumentFragment();
+				var i = html5.length;
+				while(i--) fragment.createElement(html5[i]);
+
+				fragment.appendChild(utils.string.div);
+			}
+		}
+		
+		html = html.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+					.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
+		// fix for when in a table
+		var inTable = html.match(/^<(tbody|tr|td|th|col|colgroup|thead|tfoot)[\s\/>]/i);
+
+		if(inTable) utils.string.div.innerHTML = '<table>' + html + '</table>';
+		else utils.string.div.innerHTML = html;
+
+		var scope;
+		if(inTable) scope = utils.string.div.getElementsByTagName(inTable[1])[0].parentNode;
+		else scope = utils.string.div;
+
+		var returnedFragment = document.createDocumentFragment();
+		var i = scope.childNodes.length;
+		while(i--) returnedFragment.appendChild(scope.firstChild);
+
+		return returnedFragment;
+	},
+
+
 	/**
 	 * Encode the string as HTML
 	 *

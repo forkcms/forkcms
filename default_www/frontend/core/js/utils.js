@@ -158,6 +158,58 @@ utils.form =
  */
 utils.string =
 {
+	// data member
+	div: false,
+
+
+	/**
+	 * Fix a HTML5-chunk, so IE can render it
+	 *
+	 * @return	string
+	 * @param	string html
+	 */
+	html5: function(html)
+	{
+		var html5 = 'abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.split(' ');
+		
+		// create div if needed
+		if(utils.string.div === false)
+		{
+			utils.string.div = document.createElement('div');
+			
+			utils.string.div.innerHTML = '<nav></nav>';
+			
+			if(utils.string.div.childNodes.length !== 1)
+			{
+				var fragment = document.createDocumentFragment();
+				var i = html5.length;
+				while(i--) fragment.createElement(html5[i]);
+
+				fragment.appendChild(utils.string.div);
+			}
+		}
+		
+		html = html.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+					.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
+		// fix for when in a table
+		var inTable = html.match(/^<(tbody|tr|td|th|col|colgroup|thead|tfoot)[\s\/>]/i);
+
+		if(inTable) utils.string.div.innerHTML = '<table>' + html + '</table>';
+		else utils.string.div.innerHTML = html;
+
+		var scope;
+		if(inTable) scope = utils.string.div.getElementsByTagName(inTable[1])[0].parentNode;
+		else scope = utils.string.div;
+
+		var returnedFragment = document.createDocumentFragment();
+		var i = scope.childNodes.length;
+		while(i--) returnedFragment.appendChild(scope.firstChild);
+
+		return returnedFragment;
+	},
+
+
 	/**
 	 * Encode the string as HTML
 	 *
@@ -368,7 +420,3 @@ utils.url =
 	 */
 	eoo: true
 }
-
-
-//http://bit.ly/ishiv | WTFPL License
-window.innerShiv=function(){function h(c,e,b){return/^(?:area|br|col|embed|hr|img|input|link|meta|param)$/i.test(b)?c:e+"></"+b+">"}var c,e=document,j,g="abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video".split(" ");return function(d,i){if(!c&&(c=e.createElement("div"),c.innerHTML="<nav></nav>",j=c.childNodes.length!==1)){for(var b=e.createDocumentFragment(),f=g.length;f--;)b.createElement(g[f]);b.appendChild(c)}d=d.replace(/^\s\s*/,"").replace(/\s\s*$/,"").replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,"").replace(/(<([\w:]+)[^>]*?)\/>/g,h);c.innerHTML=(b=d.match(/^<(tbody|tr|td|col|colgroup|thead|tfoot)/i))?"<table>"+d+"</table>":d;b=b?c.getElementsByTagName(b[1])[0].parentNode:c;if(i===!1)return b.childNodes;for(var f=e.createDocumentFragment(),k=b.childNodes.length;k--;)f.appendChild(b.firstChild);return f}}();
