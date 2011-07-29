@@ -8,7 +8,7 @@ var utils =
 	// datamembers
 	debug: false,
 	eoo: true
-},
+}
 
 
 /**
@@ -38,7 +38,7 @@ utils.array =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -266,10 +266,10 @@ utils.string =
 		return url;
 	},
 
-	
+
 	/**
 	 * Convert a HTML string to a XHTML string.
-	 * 
+	 *
 	 * @return	string
 	 * @param	string value
 	 */
@@ -279,23 +279,23 @@ utils.string =
 		value = value.replace(/<br>/g,'<br />');
 		value = value.replace(/<br ?\/?>$/g,'');
 		value = value.replace(/^<br ?\/?>/g,'');
-		
+
 		// image tags should end with a slash
 		value = value.replace(/(<img [^>]+[^\/])>/gi,'$1 />');
-		
+
 		// input tags should end with a slash
 		value = value.replace(/(<input [^>]+[^\/])>/gi,'$1 />');
-		
+
 		// big no-no to <b|i|u>
 		value = value.replace(/<b\b[^>]*>(.*?)<\/b[^>]*>/g,'<strong>$1</strong>');
 		value = value.replace(/<i\b[^>]*>(.*?)<\/i[^>]*>/g,'<em>$1</em>');
 		value = value.replace(/<u\b[^>]*>(.*?)<\/u[^>]*>/g,'<span style="text-decoration:underline">$1</span>');
-		
+
 		// XHTML
 		return value;
 	},
-	
-	
+
+
 	// end
 	eoo: true
 },
@@ -309,22 +309,22 @@ utils.string =
  */
 utils.url =
 {
-	extractParamFromUri: function (uri, paramName) 
+	extractParamFromUri: function (uri, paramName)
 	{
 		if(!uri) return;
 		var uri = uri.split('#')[0];
 		var parts = uri.split('?');
 		if (parts.length == 1) return;
-		
+
 		var query = decodeURI(parts[1]);
 
 		paramName += '=';
 		var params = query.split('&');
-		for(var i=0, param; param = params[i]; ++i) 
+		for(var i=0, param; param = params[i]; ++i)
 		{
 			if(param.indexOf(paramName) === 0) return unescape(param.split('=')[1]);
 		}
-	},	
+	},
 
 
 	/**
@@ -337,7 +337,7 @@ utils.url =
 	{
 		// init return value
 		var getValue = '';
-		
+
 		// get GET chunks from url
 	    var hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
 
