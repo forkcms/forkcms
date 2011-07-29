@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Search: search page was installed twice.
+* Core: when in debugmode the confirmation for leaving the page is disabled.
 
 
 2.6.0 (2011-07-26)

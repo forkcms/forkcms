@@ -48,7 +48,7 @@ jsBackend =
 		jsBackend.focusfix.init();
 
 		// do not move, should be run as the last item.
-		jsBackend.forms.unloadWarning();
+		{option:!SPOON_DEBUG}jsBackend.forms.unloadWarning();{/option:!SPOON_DEBUG}
 	},
 
 
