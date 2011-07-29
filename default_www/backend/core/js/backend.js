@@ -1139,11 +1139,15 @@ jsBackend.forms =
 			// compare values
 			if($this.data('initial-value') != $this.val())
 			{
-				// reset var
-				changed = true;
-				
-				// stop looking
-				return false;
+				if(typeof $this.data('initial-value') == 'undefined' && $this.val() == '') {}
+				else
+				{
+					// reset var
+					changed = true;
+
+					// stop looking
+					return false;
+				}
 			}
 		});
 
