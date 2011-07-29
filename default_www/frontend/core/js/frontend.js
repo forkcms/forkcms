@@ -1,12 +1,9 @@
-if(!jsFrontend) { var jsFrontend }
-
-
 /**
  * Frontend related objects
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend =
+var jsFrontend =
 {
 	// datamembers
 	debug: false,
