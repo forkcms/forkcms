@@ -550,3 +550,14 @@ CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
  PRIMARY KEY (`id`),
  KEY `idx_group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+CREATE  TABLE IF NOT EXISTS `backend_navigation` (
+  `id` INT(11) UNSIGNED NOT NULL auto_increment,
+  `parent_id` INT(11) NOT NULL ,
+  `label` VARCHAR(255) NOT NULL ,
+  `url` VARCHAR(255) NULL ,
+  `selected_for` TEXT NULL ,
+  `sequence` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

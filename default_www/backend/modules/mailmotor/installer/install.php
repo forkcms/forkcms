@@ -33,6 +33,9 @@ class MailmotorInstall extends ModuleInstaller
 
 		// install the pages for the module
 		$this->installPages();
+
+		// set navigation
+		$this->setNavigation(null, 'Mailmotor', 'mailmotor/index', null, 5);
 	}
 
 

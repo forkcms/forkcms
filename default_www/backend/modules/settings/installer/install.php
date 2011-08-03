@@ -33,6 +33,9 @@ class SettingsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'settings', 'themes');
 		$this->setActionRights(1, 'settings', 'email');
 		$this->setActionRights(1, 'settings', 'test_email_connection');
+
+		// set navigation
+		$this->setNavigation(null, 'Settings', 'settings/index', null, 6);
 	}
 }
 

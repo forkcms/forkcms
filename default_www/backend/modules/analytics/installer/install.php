@@ -45,6 +45,9 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'analytics', 'mass_landing_page_action');
 		$this->setActionRights(1, 'analytics', 'refresh_traffic_sources');
 		$this->setActionRights(1, 'analytics', 'settings');
+
+		// set navigation
+		$this->setNavigation(null, 'Marketing', 'analytics/index', null, 4);
 	}
 }
 
