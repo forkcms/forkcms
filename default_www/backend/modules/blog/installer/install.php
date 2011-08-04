@@ -104,6 +104,11 @@ class BlogInstall extends ModuleInstaller
 		$this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', array('blog/edit_comment'));
 		$this->setNavigation($navigationBlogId, 'Categories', 'blog/categories', array('blog/add_category',	'blog/edit_category'));
 
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
+
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{

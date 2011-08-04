@@ -50,6 +50,15 @@ class LocationInstall extends ModuleInstaller
 		$this->setActionRights(1, 'location', 'delete');
 		$this->setActionRights(1, 'location', 'settings');
 
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Location', 'location/index', array('location/add', 'location/edit'));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Location', 'location/settings');
+
 		// add extra's
 		$this->insertExtra('location', 'block', 'Location', null, 'a:1:{s:3:"url";s:37:"/private/nl/location/index?token=true";}', 'N');
 	}

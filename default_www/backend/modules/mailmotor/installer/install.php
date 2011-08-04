@@ -35,7 +35,39 @@ class MailmotorInstall extends ModuleInstaller
 		$this->installPages();
 
 		// set navigation
-		$this->setNavigation(null, 'Mailmotor', 'mailmotor/index', null, 5);
+		$navigationMailmotorId = $this->setNavigation(null, 'Mailmotor', null, null, 5);
+		$this->setNavigation($navigationMailmotorId, 'Newsletters', 'mailmotor/index', array(
+			'mailmotor/add',
+			'mailmotor/edit',
+			'mailmotor/edit_mailing_campaign',
+			'mailmotor/statistics',
+			'mailmotor/statistics_link',
+			'mailmotor/statistics_bounces',
+			'mailmotor/statistics_campaign',
+			'mailmotor/statistics_opens'
+		));
+		$this->setNavigation($navigationMailmotorId, 'Campaigns', 'mailmotor/campaigns', array(
+			'mailmotor/add_campaign',
+			'mailmotor/edit_campaign',
+			'mailmotor/statistics_campaigns'
+		));
+		$this->setNavigation($navigationMailmotorId, 'MailmotorGroups', 'mailmotor/groups', array(
+			'mailmotor/add_group',
+			'mailmotor/edit_group',
+			'mailmotor/custom_fields',
+			'mailmotor/add_custom_field',
+			'mailmotor/import_groups'
+		));
+		$this->setNavigation($navigationMailmotorId, 'Addresses', 'mailmotor/addresses', array(
+			'mailmotor/add_address',
+			'mailmotor/edit_address',
+			'mailmotor/import_addresses'
+		));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Mailmotor', 'mailmotor/settings');
 	}
 
 

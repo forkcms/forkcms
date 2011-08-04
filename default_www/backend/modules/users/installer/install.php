@@ -99,6 +99,13 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
 
+		// set navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$this->setNavigation($navigationSettingsId, 'Users', 'users/index', array(
+			'users/add',
+			'users/edit'
+		));
+
 		// add default user
 		$this->addUser();
 	}
