@@ -770,7 +770,6 @@ class ModuleInstaller
 
 
 /**
- * CoreInstall
  * Installer for the core
  *
  * @package		backend
@@ -778,6 +777,7 @@ class ModuleInstaller
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class CoreInstall extends ModuleInstaller

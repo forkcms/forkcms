@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class InstallerStep7 extends InstallerStep
@@ -125,6 +126,9 @@ class InstallerStep7 extends InstallerStep
 			// check if this item has children, later used
 			$hasChildren = (bool) $item['num_children'];
 			$hasSelectedFor = $item['selected_for'] !== null;
+
+			// no url set, fetch the url of the first child
+			if($item['url'] == '') $item['url'] = $this->getNavigationUrl($item['id']);
 
 			// general
 			$output .= $prefix . "array(\n";
@@ -378,6 +382,39 @@ class InstallerStep7 extends InstallerStep
 
 		// show output
 		$this->tpl->display('layout/templates/7.tpl');
+	}
+
+
+	/**
+	 * Get the url of a navigation item.
+	 * If the item doesnt have an id, it will search recursively until it finds one.
+	 *
+	 * @return	string
+	 * @param	int $id
+	 */
+	private function getNavigationUrl($id)
+	{
+		// recast
+		$id = (int) $id;
+
+		// get url
+		$item = (array) $this->db->getRecord('SELECT id, url FROM backend_navigation WHERE id = ?',	array($id));
+
+		// item doesnt exist
+		if(empty($item)) return '';
+
+		// yay, has a url
+		elseif($item['url'] != '') return $item['url'];
+
+		// lets get it from a child
+		else
+		{
+			// get the first child
+			$childId = (int) $this->db->getVar('SELECT id FROM backend_navigation WHERE parent_id = ? ORDER BY sequence ASC LIMIT 1', array($id));
+
+			// get its url
+			return $this->getNavigationUrl($childId);
+		}
 	}
 
 

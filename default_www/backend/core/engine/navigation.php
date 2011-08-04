@@ -9,6 +9,7 @@
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendNavigation
@@ -81,10 +82,7 @@ class BackendNavigation
 			// init some vars
 			$selected = (isset($selectedKeys[$currentDepth]) && $selectedKeys[$currentDepth] == $key);
 			$label = ucfirst(BL::lbl($value['label']));
-			$URL = $value['url'];
-
-			// append extra parameters if needed
-			if(isset($value['data']['parameters']) && !empty($value['data']['parameters'])) $URL .='?' . http_build_query($value['data']['parameters']);
+			$url = $value['url'];
 
 			// start HTML
 			$HTML = '';
@@ -95,7 +93,7 @@ class BackendNavigation
 				// start li
 				if($selected) $HTML .= '<li class="selected">' . "\n";
 				else $HTML .= '<li>' . "\n";
-				$HTML .= '	<a href="/' . NAMED_APPLICATION . '/' . BackendLanguage::getWorkingLanguage() . '/' . $URL . '">' . $label . '</a>' . "\n";
+				$HTML .= '	<a href="/' . NAMED_APPLICATION . '/' . BackendLanguage::getWorkingLanguage() . '/' . $url . '">' . $label . '</a>' . "\n";
 			}
 
 			// children?
