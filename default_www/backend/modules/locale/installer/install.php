@@ -48,13 +48,13 @@ class LocaleInstall extends ModuleInstaller
 		$this->setActionRights(1, 'locale', 'delete');
 
 		// set navigation
-		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationSettingsId = $this->setNavigation(null, 'Settings', null, null, 999);
 		$this->setNavigation($navigationSettingsId, 'Translations', 'locale/index', array(
 			'locale/add',
 			'locale/edit',
 			'locale/import',
 			'locale/analyse'
-		));
+		), 4);
 	}
 }
 

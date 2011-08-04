@@ -39,12 +39,12 @@ class SettingsInstall extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings', null, null, 999);
 
 		// general navigation
-		$this->setNavigation($navigationSettingsId, 'General', 'settings/index');
-		$navigationAdvancedId = $this->setNavigation($navigationSettingsId, 'Advanced');
+		$this->setNavigation($navigationSettingsId, 'General', 'settings/index', null, 1);
+		$navigationAdvancedId = $this->setNavigation($navigationSettingsId, 'Advanced', null, null, 2);
 		$this->setNavigation($navigationAdvancedId, 'Email', 'settings/email');
 
 		// theme navigation
-		$navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
+		$navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes', null, null, 3);
 		$this->setNavigation($navigationThemesId, 'ThemesSelection', 'settings/themes');
 		$this->setNavigation($navigationThemesId, 'Templates', 'pages/templates', array(
 			'pages/add_template',
@@ -52,7 +52,7 @@ class SettingsInstall extends ModuleInstaller
 		));
 
 		// modules settings navigation
-		$this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationSettingsId, 'Modules', null, null, 6);
 	}
 }
 
