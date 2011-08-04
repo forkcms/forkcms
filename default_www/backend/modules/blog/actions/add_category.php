@@ -27,7 +27,7 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -85,6 +85,9 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 
 				// insert the item
 				$item['id'] = BackendBlogModel::insertCategory($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);

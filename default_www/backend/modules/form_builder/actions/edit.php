@@ -36,7 +36,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page
@@ -252,6 +252,9 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 
 				// insert the item
 				$id = (int) BackendFormBuilderModel::update($this->id, $values);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($values['name']) . '&highlight=row-' . $id);

@@ -48,7 +48,7 @@ class BackendDashboardAjaxAlterSequence extends BackendBaseAJAXAction
 			foreach($widgets as $sequence => $widget)
 			{
 				// store position
-				$userSequence[$widget['module']][$widget['widget']] = array('column' => $columnValue, 'position' => $sequence, 'hidden' => $widget['hidden']);
+				$userSequence[$widget['module']][$widget['widget']] = array('column' => $columnValue, 'position' => $sequence, 'hidden' => $widget['hidden'], 'present' => $widget['present']);
 
 				// add to array
 				if($widget['hidden']) $hiddenItems[] = $widget['module'] . '_' . $widget['widget'];

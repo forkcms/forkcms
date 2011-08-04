@@ -6,6 +6,7 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -79,9 +80,9 @@
 		font-weight: 700;
 
 		/* @inc .rc */
-		border-radius: 4px;
-		-webkit-border-radius: 4px;
 		-moz-border-radius: 4px
+		-webkit-border-radius: 4px;
+		border-radius: 4px;
 	}
 
 /*

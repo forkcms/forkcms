@@ -44,14 +44,6 @@ class Facebook
 
 
 	/**
-	 * The API-key
-	 *
-	 * @var	string
-	 */
-	private $apiKey;
-
-
-	/**
 	 * The Application secret
 	 *
 	 * @var	string
@@ -107,14 +99,12 @@ class Facebook
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $apiKey				The API-key that has to be used for authentication (see http://facebook.com/developers).
-	 * @param	string $applicationSecret	The API-key that has to be used for authentication (see http://facebook.com/developers).
-	 * @param	string $applicationId		The API-key that has to be used for authentication (see http://facebook.com/developers).
+	 * @param	string $applicationSecret	The API-secret that has to be used for authentication (see http://facebook.com/developers).
+	 * @param	string $applicationId		The Application ID that has to be used for authentication (see http://facebook.com/developers).
 	 */
-	public function __construct($apiKey, $applicationSecret, $applicationId)
+	public function __construct($applicationSecret, $applicationId)
 	{
 		// set some properties
-		$this->setApiKey($apiKey);
 		$this->setApplicationSecret($applicationSecret);
 		$this->setApplicationId($applicationId);
 	}
@@ -376,17 +366,6 @@ class Facebook
 
 
 	/**
-	 * Get the API key
-	 *
-	 * @return	string
-	 */
-	private function getApiKey()
-	{
-		return $this->apiKey;
-	}
-
-
-	/**
 	 * Get the application id
 	 *
 	 * @return	string
@@ -480,18 +459,6 @@ class Facebook
 	public function setToken($token)
 	{
 		$this->token = (string) $token;
-	}
-
-
-	/**
-	 * Set the API-key
-	 *
-	 * @return	void
-	 * @param	string $apiKey
-	 */
-	private function setApiKey($apiKey)
-	{
-		$this->apiKey = (string) $apiKey;
 	}
 
 

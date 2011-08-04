@@ -71,7 +71,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page
@@ -271,6 +271,9 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 						BackendMailmotorCMHelper::subscribe($this->email, $group, $customFields);
 					}
 				}
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_address', array('item' => $this->record));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']);

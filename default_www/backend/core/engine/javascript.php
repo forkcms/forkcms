@@ -55,15 +55,18 @@ class BackendJavascript
 		// set the language
 		$this->setLanguage(SpoonFilter::getGetValue('language', BackendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
-		// create a new template instance (this will handle all stuff for us)
-		$tpl = new BackendTemplate();
+		// build the path
+		if($this->module == 'core') $path = BACKEND_CORE_PATH . '/js/' . $this->getFile();
+		else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
 
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
-		// output the template
-		if($this->module == 'core') $tpl->display(BACKEND_CORE_PATH . '/js/' . $this->getFile(), true);
-		else $tpl->display(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile(), true);
+		// create a new template instance (this will handle all stuff for us)
+		$tpl = new BackendTemplate();
+
+		// display
+		$tpl->display($path, true);
 	}
 
 
@@ -104,45 +107,74 @@ class BackendJavascript
 	 * Set file
 	 *
 	 * @return	void
-	 * @param	string $value		The file to load.
+	 * @param	string $value	The file to load.
 	 */
-	public function setFile($value)
+	private function setFile($value)
 	{
 		// set property
 		$this->filename = (string) $value;
 
+		// validate
+		if(substr_count($this->filename, '../') > 0)
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(400);
+
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('Invalid file.');
+
+			// when debug is of show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
+		}
+
+		// init var
+		$valid = true;
+
 		// core is a special module
 		if($this->module == 'core')
 		{
-			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(BACKEND_CORE_PATH . '/js/' . $this->filename))
-			{
-				// set correct headers
-				SpoonHTTP::setHeadersByCode(404);
+			// build path
+			$path = realpath(BACKEND_CORE_PATH . '/js/' . $this->filename);
 
-				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new BackendException('File not present.');
-
-				// when debug is of show a descent message
-				else exit(SPOON_DEBUG_MESSAGE);
-			}
+			// validate if path is allowed
+			if(substr($path, 0, strlen(realpath(BACKEND_CORE_PATH) . '/js/')) != realpath(BACKEND_CORE_PATH) . '/js/') $valid = false;
 		}
 
 		// not core
 		else
 		{
-			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename))
-			{
-				// set correct headers
-				SpoonHTTP::setHeadersByCode(404);
+			// build path
+			$path = realpath(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename);
 
-				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new BackendException('File not present.');
+			// validate if path is allowed
+			if(substr($path, 0, strlen(realpath(BACKEND_MODULES_PATH) . '/' . $this->getModule() . '/js/')) != realpath(BACKEND_MODULES_PATH) . '/' . $this->getModule() . '/js/') $valid = false;
+		}
 
-				// when debug is of show a descent message
-				else exit(SPOON_DEBUG_MESSAGE);
-			}
+		// invalid file?
+		if(!$valid)
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(400);
+
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('Invalid file.');
+
+			// when debug is of show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
+		}
+
+
+		// check if the path exists, if not whe should given an error
+		if(!SpoonFile::exists($path))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(404);
+
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('File not present.');
+
+			// when debug is of show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
 		}
 	}
 
@@ -153,7 +185,7 @@ class BackendJavascript
 	 * @return	void
 	 * @param	string $value	The language to load.
 	 */
-	public function setLanguage($value)
+	private function setLanguage($value)
 	{
 		// set property
 		$this->language = (string) $value;
@@ -178,7 +210,7 @@ class BackendJavascript
 	 * @return	void
 	 * @param	string $value	The module to use.
 	 */
-	public function setModule($value)
+	private function setModule($value)
 	{
 		// set property
 		$this->module = (string) $value;

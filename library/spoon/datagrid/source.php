@@ -25,7 +25,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDatagridSource
+class SpoonDataGridSource
 {
 	/**
 	 * Final data

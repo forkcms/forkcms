@@ -86,6 +86,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			$this->tpl->assign('usingRevision', true);
 		}
 
+		// get the templates
+		$this->templates = BackendContentBlocksModel::getTemplates();
+
 		// check if selected template is still available
 		if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
 
@@ -199,6 +202,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 				// insert the item
 				$item['revision_id'] = BackendContentBlocksModel::update($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);

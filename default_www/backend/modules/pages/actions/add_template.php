@@ -47,7 +47,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -211,8 +211,11 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				// insert the item
 				$item['id'] = BackendPagesModel::insertTemplate($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_template', array('item' => $item));
+
 				// set default template
-				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);

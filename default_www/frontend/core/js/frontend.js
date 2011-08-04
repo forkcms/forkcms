@@ -1,12 +1,9 @@
-if(!jsFrontend) { var jsFrontend = new Object(); }
-
-
 /**
  * Frontend related objects
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend =
+var jsFrontend =
 {
 	// datamembers
 	debug: false,
@@ -33,6 +30,12 @@ jsFrontend =
 
 		// init search
 		jsFrontend.search.init();
+
+		// init statistics
+		jsFrontend.statistics.init();
+
+		// init twitter
+		jsFrontend.twitter.init();
 	},
 
 
@@ -49,6 +52,11 @@ jsFrontend =
 }
 
 
+/**
+ * Controls related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsFrontend.controls =
 {
 	// init, something like a constructor
@@ -61,7 +69,7 @@ jsFrontend.controls =
 	// bind target blank
 	bindTargetBlank: function()
 	{
-		$('a.targetBlank').prop('target', '_blank');
+		$('a.targetBlank').attr('target', '_blank');
 	},
 
 
@@ -70,6 +78,41 @@ jsFrontend.controls =
 }
 
 
+/**
+ * Facebook related
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.facebook =
+{
+	// will be called after Facebook is initialized
+	afterInit: function()
+	{
+		// is GA available?
+		if(typeof _gaq == 'object')
+		{
+			// subscribe and track like
+			FB.Event.subscribe('edge.create', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'like', targetUrl]); });
+
+			// subscribe and track unlike
+			FB.Event.subscribe('edge.remove', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'unlike', targetUrl]); });
+
+			// subscribe and track message
+			FB.Event.subscribe('message.send', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'send', targetUrl]); });
+		}
+	},
+
+
+	// end
+	eoo: true
+},
+
+
+/**
+ * Form related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsFrontend.forms =
 {
 	// init, something like a constructor
@@ -80,6 +123,7 @@ jsFrontend.forms =
 	},
 
 
+	// initialize the datefields
 	datefields: function()
 	{
 		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
@@ -87,8 +131,14 @@ jsFrontend.forms =
 		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
 		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
 		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
-		
-		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker({
+
+		var $inputDatefields = $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange')
+		var $inputDatefieldNormal = $('.inputDatefieldNormal');
+		var $inputDatefieldFrom = $('.inputDatefieldFrom');
+		var $inputDatefieldTill = $('.inputDatefieldTill');
+		var $inputDatefieldRange = $('.inputDatefieldRange');
+
+		$inputDatefields.datepicker({
 			dayNames: dayNames,
 			dayNamesMin: dayNamesMin,
 			dayNamesShort: dayNamesShort,
@@ -99,44 +149,44 @@ jsFrontend.forms =
 			prevText: '{$lblPrevious}',
 			showAnim: 'slideDown'
 		});
-		
+
 		// the default, nothing special
-		$('.inputDatefieldNormal').each(function()
+		$inputDatefieldNormal.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
-			
+
 			// set options
-			$(this).datepicker('option', { 
-				dateFormat: data.mask, 
+			$(this).datepicker('option', {
+				dateFormat: data.mask,
 				firstDay: data.firstday
 			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain startdate
-		$('.inputDatefieldFrom').each(function()
+		$inputDatefieldFrom.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', { 
+			$(this).datepicker('option', {
 				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain enddate
-		$('.inputDatefieldTill').each(function()
+		$inputDatefieldTill.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', 
+			$(this).datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -145,14 +195,14 @@ jsFrontend.forms =
 		});
 
 		// datefields that have a certain range
-		$('.inputDatefieldRange').each(function()
+		$inputDatefieldRange.each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', 
+			$(this).datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -172,13 +222,13 @@ jsFrontend.forms =
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder]').focus(function()
+			$('input[placeholder], textarea[placeholder]').bind('focus', function()
 			{
 				// grab element
 				var input = $(this);
 
 				// only do something when the current value and the placeholder are the same
-				if(input.val() == input.prop('placeholder'))
+				if(input.val() == input.attr('placeholder'))
 				{
 					// clear
 					input.val('');
@@ -188,16 +238,16 @@ jsFrontend.forms =
 				}
 			});
 
-			$('input[placeholder]').blur(function()
+			$('input[placeholder], textarea[placeholder]').bind('blur', function()
 			{
 				// grab element
 				var input = $(this);
 
 				// only do something when the input is empty or the value is the same as the placeholder
-				if(input.val() == '' || input.val() == input.prop('placeholder'))
+				if(input.val() == '' || input.val() == input.attr('placeholder'))
 				{
 					// set placeholder
-					input.val(input.prop('placeholder'));
+					input.val(input.attr('placeholder'));
 
 					// add class
 					input.addClass('placeholder');
@@ -205,10 +255,10 @@ jsFrontend.forms =
 			});
 
 			// call blur to initialize
-			$('input[placeholder]').blur();
+			$('input[placeholder], textarea[placeholder]').blur();
 
 			// hijack the form so placeholders aren't submitted as values
-			$('input[placeholder]').parents('form').submit(function()
+			$('input[placeholder], textarea[placeholder]').parents('form').submit(function()
 			{
 				// find elements with placeholders
 				$(this).find('input[placeholder]').each(function()
@@ -217,7 +267,7 @@ jsFrontend.forms =
 					var input = $(this);
 
 					// if the value and the placeholder are the same reset the value
-					if(input.val() == input.prop('placeholder')) input.val('');
+					if(input.val() == input.attr('placeholder')) input.val('');
 				});
 			});
 		}
@@ -226,9 +276,14 @@ jsFrontend.forms =
 
 	// end
 	eoo: true
-}
+},
 
 
+/**
+ * Gravatar related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsFrontend.gravatar =
 {
 	// init, something like a constructor
@@ -238,7 +293,7 @@ jsFrontend.gravatar =
 		{
 			var element = $(this);
 			var gravatarId = element.data('gravatarId');
-			var size = element.prop('height');
+			var size = element.attr('height');
 
 			// valid gravatar id
 			if(gravatarId != '')
@@ -256,7 +311,7 @@ jsFrontend.gravatar =
 				// reset src
 				gravatar.onload = function()
 				{
-					element.prop('src', url).addClass('gravatarLoaded');
+					element.attr('src', url).addClass('gravatarLoaded');
 				}
 			}
 		});
@@ -265,7 +320,7 @@ jsFrontend.gravatar =
 
 	// end
 	eoo: true
-}
+},
 
 
 /**
@@ -292,8 +347,11 @@ jsFrontend.search =
 	// autocomplete (search results page: autocomplete based on known search terms)
 	autocomplete: function()
 	{
+		// grab element
+		var $input = $('input.autoComplete');
+
 		// autocomplete (based on saved search terms) on results page
-		$('input.autoComplete').autocomplete(
+		$input.autocomplete(
 		{
 			minLength: 1,
 			source: function(request, response)
@@ -348,8 +406,11 @@ jsFrontend.search =
 		// set default values
 		if(typeof length == 'undefined') length = 100;
 
+		// grab element
+		var $input = $('input.autoSuggest');
+
 		// search widget suggestions
-		$('input.autoSuggest').autocomplete(
+		$input.autocomplete(
 		{
 			minLength: 1,
 			source: function(request, response)
@@ -385,7 +446,7 @@ jsFrontend.search =
 		})
 		// ok, so, when we have been typing in the search textfield and we blur out of it,
 		// I suppose we have entered our full search query and we're ready to save it
-		.blur(function()
+		.bind('blur', function()
 		{
 			// ajax call!
 			$.ajax(
@@ -412,9 +473,14 @@ jsFrontend.search =
 		// check if calls for live suggest are allowed
 		var allowCall = true;
 
+		// grab element
+		var $input = $('input.liveSuggest');
+
 		// change in input = do the dance: live search results completion
-		$('input.liveSuggest').keyup(function()
+		$input.bind('keyup', function()
 		{
+			var $searchContainer = $('#searchContainer');
+
 			// make sure we're allowed to do the call (= previous call is no longer processing)
 			if(allowCall)
 			{
@@ -422,7 +488,7 @@ jsFrontend.search =
 				allowCall = false;
 
 				// fade out
-				$('#searchContainer').fadeTo(0, 0.5);
+				$searchContainer.fadeTo(0, 0.5);
 
 				// ajax call!
 				$.ajax(
@@ -441,10 +507,10 @@ jsFrontend.search =
 						if(data.code == 200)
 						{
 							// replace search results
-							$('#searchContainer').html(data.data);
+							$searchContainer.html(utils.string.html5(data.data));
 
 							// fade in
-							$('#searchContainer').fadeTo(0, 1);
+							$searchContainer.fadeTo(0, 1);
 						}
 					},
 					error: function()
@@ -453,10 +519,10 @@ jsFrontend.search =
 						allowCall = true;
 
 						// replace search results
-						$('#searchContainer').html('');
+						$searchContainer.html('');
 
 						// fade in
-						$('#searchContainer').fadeTo(0, 1);
+						$searchContainer.fadeTo(0, 1);
 					}
 				});
 			}
@@ -466,7 +532,89 @@ jsFrontend.search =
 
 	// end
 	eoo: true
+},
+
+
+/**
+ * Gravatar related javascript
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.statistics =
+{
+	// init, something like a constructor
+	init: function()
+	{
+		jsFrontend.statistics.trackOutboundLinks();
+	},
+
+
+	// track all outbound links
+	trackOutboundLinks: function()
+	{
+		// check if Google Analytics is available
+		if(typeof _gaq == 'object')
+		{
+			// create a new selector
+			$.expr[':'].external = function(obj) {
+				return (typeof obj.href != 'undefined' && !obj.href.match(/^mailto\:/) && (obj.hostname != location.hostname));
+			};
+
+			// bind on all links that don't have the class noTracking
+			$('a:external:not(.noTracking)').live('click', function(evt)
+			{
+				var $this = $(this);
+				var link = $this.attr('href');
+				var title = $this.attr('title');
+				if(typeof title == 'undefined' || title == '') title = $this.html();
+
+				// track in Google Analytics
+				_gaq.push(['_trackEvent', 'Outbound Links', link, title]);
+			});
+		}
+	},
+
+
+	// end
+	eoo: true
+},
+
+
+/**
+ * Twitter related stuff
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.twitter =
+{
+	init: function()
+	{
+		// if GA is integrated and a tweetbutton is used
+		if(typeof _gaq == 'object' && typeof twttr == 'object')
+		{
+			// bind event, so we can track the tweets
+			twttr.events.bind('tweet', function(event)
+			{
+				// valid event?
+				if(event)
+				{
+					// init var
+					var targetUrl = null;
+
+					// get url
+					if(event.target && event.target.nodeName == 'IFRAME') targetUrl = utils.url.extractParamFromUri(event.target.src, 'url');
+
+					// push to GA
+					_gaq.push(['_trackSocial', 'twitter', 'tweet', targetUrl]);
+				}
+			});
+		}
+	},
+
+
+	// end
+	eoo: true
 }
 
 
-$(document).ready(jsFrontend.init);
+$(jsFrontend.init);

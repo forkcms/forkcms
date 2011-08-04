@@ -45,7 +45,6 @@ class BackendInit
 		ini_set('pcre.recursion_limit', 999999999);
 		ini_set('memory_limit', '64M');
 
-
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
@@ -78,9 +77,6 @@ class BackendInit
 
 		// disable magic quotes
 		SpoonFilter::disableMagicQuotes();
-
-		// start session
-		$this->initSession();
 	}
 
 
@@ -153,14 +149,18 @@ class BackendInit
 						$action = str_replace($module, '', $action);
 						$module = substr($module, 0, -1);
 
-						// file to be loaded
-						$pathToLoad = constant($rootPath) . '/modules/' . $module . '/engine/' . $action . '.php';
-
-						// if it exists, load it!
-						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+						// check the actions, engine & widgets directories
+						foreach(array('actions', 'engine', 'widgets') as $dir)
 						{
-							require_once $pathToLoad;
-							break;
+							// file to be loaded
+							$pathToLoad = constant($rootPath) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+
+							// if it exists, load it!
+							if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+							{
+								require_once $pathToLoad;
+								break 2;
+							}
 						}
 					}
 				}
@@ -361,17 +361,6 @@ class BackendInit
 
 		// stop script execution
 		exit;
-	}
-
-
-	/**
-	 * Start session
-	 *
-	 * @return	void
-	 */
-	private function initSession()
-	{
-		SpoonSession::start();
 	}
 
 

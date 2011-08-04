@@ -145,7 +145,7 @@
 		
 		return this.each(function() 
 		{
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			
 			// append the button
 			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
@@ -160,10 +160,10 @@
 				var currentElement = $('#' + $(this).data('id'));
 				
 				// check if it isn't a text-element
-				if(currentElement.prop('type') != 'text')
+				if(currentElement.attr('type') != 'text')
 				{
 					// clone the current element
-					var newElement = $('<input value="" id="'+ currentElement.prop('id') +'" name="'+ currentElement.prop('name') +'" maxlength="'+ currentElement.prop('maxlength') +'" class="'+ currentElement.prop('class') +'" type="text">');
+					var newElement = $('<input value="" id="'+ currentElement.attr('id') +'" name="'+ currentElement.attr('name') +'" maxlength="'+ currentElement.attr('maxlength') +'" class="'+ currentElement.attr('class') +'" type="text">');
 					
 					// insert the new element
 					newElement.insertBefore(currentElement);
@@ -337,8 +337,11 @@
 				// remove events
 				element.unbind('click').unbind('focus');
 
-				// set html (replacing quotes with htmlentity, otherwise the inputfield is 'broken')
-				element.html('<input type="text" class="' + options.inputClasses + '" value="' + utils.string.replaceAll(options.current.value, '"', '&quot;') + '" />');
+				// replacing quotes, less than and greater than with htmlentity, otherwise the inputfield is 'broken'
+				options.current.value = utils.string.replaceAll(options.current.value, '"', '&quot;');
+				
+				// set html
+				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
 
 				// store element
 				options.current.element = $(element.find('input')[0]);
@@ -372,8 +375,14 @@
 				// get parent
 				var parent = options.current.element.parent();
 
+				// get value and replace quotes, less than and greater than with their htmlentities
+				var newValue = options.current.element.val();
+				newValue = utils.string.replaceAll(newValue, '"', '&quot;');
+				newValue = utils.string.replaceAll(newValue, '<', '&lt;');
+				newValue = utils.string.replaceAll(newValue, '>', '&gt;');
+				
 				// set HTML and rebind events
-				parent.html(options.current.element.val()).bind('click focus', createElement);
+				parent.html(newValue).bind('click focus', createElement);
 
 				// add class
 				parent.removeClass('inlineEditing');
@@ -412,10 +421,10 @@
 						{
 							// reset
 							options.current.element.val(options.current.value);
-							
+
 							// destroy the element
 							destroyElement();
-							
+
 							// show message
 							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
@@ -460,32 +469,32 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
 			var timer = null;
 
 			// reset label, so it points to the correct item
-			$('label[for="' + id + '"]').prop('for', 'addValue-' + id);
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function(evt)
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
-				
+
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
-					
+
 					// clear other timers
 					clearTimeout(timer);
-					
+
 					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
-				
+
 				return !blockSubmit;
 			});
 
@@ -497,7 +506,7 @@
 			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '	<div id="elementList-' + id + '" class="tagList">' + '	</div>' + '</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 
 			// prepend html
@@ -557,13 +566,13 @@
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
-				
+
 				// enter of splitchar should add an element
 				if(code == 13 || String.fromCharCode(code) == options.splitChar)
 				{
 					// hide before..
 					$('#errorMessage-'+ id).remove();
-					
+
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
@@ -600,7 +609,7 @@
 				evt.stopPropagation();
 
 				// remove element
-				remove($(this).prop('rel'));
+				remove($(this).attr('rel'));
 			});
 
 			// add an element
@@ -614,7 +623,7 @@
 
 				// a value should contain the split char
 				if(value.split(options.secondSplitChar).length == 1) value = '';
-				
+
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
@@ -668,7 +677,7 @@
 					for(var i in elements)
 					{
 						var humanValue = elements[i].split(options.secondSplitChar)[1];
-						
+	
 						html += '	<li><span><strong>' + humanValue + '</strong>' + '		<a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '	</li>';
 					}
 
@@ -750,55 +759,55 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
 			var timer = null;
 
 			// reset label, so it points to the correct item
-			$('label[for="' + id + '"]').prop('for', 'addValue-' + id);
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
 			$(this.form).submit(function(evt)
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
-				
+
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
-					
+
 					// clear other timers
 					clearTimeout(timer);
-					
+
 					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
-				
+
 				return !blockSubmit;
 			});
 
 			// build replace html
-			var html = 	'<div class="tagsWrapper">' + 
-						'	<div class="oneLiner">' + 
-						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + 
-						'		<div class="buttonHolder">' + 
+			var html = 	'<div class="tagsWrapper">' +
+						'	<div class="oneLiner">' +
+						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' +
+						'		<div class="buttonHolder">' +
 						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
-			html += 	'">' + 
-						'				<span>' + options.addLabel + '</span>' + 
-						'			</a>' + 
-						'		</div>' + 
-						'	</div>' + 
-						'	<div id="elementList-' + id + '" class="tagList">' + 
-						'	</div>' + 
+			html += 	'">' +
+						'				<span>' + options.addLabel + '</span>' +
+						'			</a>' +
+						'		</div>' +
+						'	</div>' +
+						'	<div id="elementList-' + id + '" class="tagList">' +
+						'	</div>' +
 						'</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
@@ -861,13 +870,13 @@
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
-				
+
 				// enter of splitchar should add an element
 				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{
 					// hide before..
 					$('#errorMessage-'+ id).remove();
-					
+
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
@@ -968,8 +977,8 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li><span><strong>' + elements[i] + '</strong>' + 
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + 
+						html += '	<li><span><strong>' + elements[i] + '</strong>' +
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' +
 								'	</li>';
 					}
 
@@ -1047,11 +1056,11 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var possibleOptions = $(this).find('option');
 			var elements = get();
 			var blockSubmit = false;
-			
+
 			// bind submit
 			$(this.form).submit(function()
 			{
@@ -1065,34 +1074,34 @@
 			}
 
 			// build replace html
-			var html =	'<div class="multipleSelectWrapper">' + 
-						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' + 
-						'	<div class="oneLiner">' + 
+			var html =	'<div class="multipleSelectWrapper">' +
+						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' +
+						'	<div class="oneLiner">' +
 						'		<p>' +
 						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
-			
-			
+
+
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
-				html +=	'				<option value="' + $(possibleOptions[i]).prop('value') + '">' + $(possibleOptions[i]).html() + '</option>';
+				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
 			}
-			
+
 			html +=		'			</select>' +
-						'		</p>' + 
-						'		<div class="buttonHolder">' + 
+						'		</p>' +
+						'		<div class="buttonHolder">' +
 						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
-			html += 	'">' + 
-						'				<span>' + options.addLabel + '</span>' + 
-						'			</a>' + 
-						'		</div>' + 
-						'	</div>' + 
+			html += 	'">' +
+						'				<span>' + options.addLabel + '</span>' +
+						'			</a>' +
+						'		</div>' +
+						'	</div>' +
 						'</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
@@ -1177,11 +1186,11 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' + 
-								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' + 
-								'		<div class="buttonHolder">' + 
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
-								'		</div>' + 
+						html += '	<li class="oneLiner">' +
+								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
+								'		<div class="buttonHolder">' +
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+								'		</div>' +
 								'	</li>';
 
 						// remove from dropdown
@@ -1203,7 +1212,7 @@
 					$('#addButton-' + id).addClass('disabledButton');
 					$('#addValue-' + id).addClass('disabled').prop('disabled', true);
 				}
-				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').prop('value'));
+				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').attr('value'));
 
 				// call callback if specified
 				if(options.afterBuild != null) { options.afterBuild(id); }
@@ -1279,7 +1288,7 @@
 		return this.each(function()
 		{
 			// define some vars
-			var id = $(this).prop('id');
+			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
 
@@ -1303,7 +1312,7 @@
 			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '</div>';
 
 			// hide current element
-			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').prop('tabindex', '-1');
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
 			// prepend html
 			$(this).before(html);
@@ -1388,7 +1397,7 @@
 
 			// unblock the submit event when we lose focus
 			$('#addValue-' + id).bind('blur', function(evt) { blockSubmit = false; });
-			
+
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(evt)
 			{
@@ -1494,11 +1503,11 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' + 
-								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' + 
-								'		<div class="buttonHolder">' + 
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
-								'		</div>' + 
+						html += '	<li class="oneLiner">' +
+								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' +
+								'		<div class="buttonHolder">' +
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+								'		</div>' +
 								'	</li>';
 					}
 
@@ -1508,7 +1517,7 @@
 
 				// set html
 				$('#elementList-' + id).html(html);
-				
+
 				// call callback if specified
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}

@@ -94,8 +94,8 @@
 
 									<p>There are no items yet.</p> <!-- End of no items -->
 
-									<div class="datagridHolder">
-										<table class="datagrid" cellspacing="0" cellpadding="0" border="0">
+									<div class="dataGridHolder">
+										<table class="dataGrid" cellspacing="0" cellpadding="0" border="0">
 											<thead>
 												<tr>
 													<th class="title">
@@ -131,7 +131,7 @@
 												</tr>
 											</tbody>
 										</table>
-									</div> <!-- End of browse datagrid -->
+									</div> <!-- End of browse dataGrid -->
 
 									<div class="pageTitle">
 										<h2>Content blocks: add content block</h2>
@@ -207,7 +207,7 @@
 											</div>
 
 											<div id="tabRevisions">
-												<div class="datagridHolder">
+												<div class="dataGridHolder">
 													<div class="tableHeading">
 														<div class="oneLiner">
 															<h3 class="floater">Previous versions</h3>
@@ -218,7 +218,7 @@
 														</div>
 													</div>
 
-													<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+													<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 														<tr>
 															<td>
 																<p>There are no previous versions yet.</p>

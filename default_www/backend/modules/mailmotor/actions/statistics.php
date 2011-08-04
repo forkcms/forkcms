@@ -95,7 +95,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// no statistics found
 		if(empty($this->statistics['clicked_links'])) return false;
@@ -107,27 +107,27 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$source = new SpoonDataGridSourceArray($this->statistics['clicked_links']);
 
 		// call the parent, as in create a new datagrid with the created source
-		$this->datagrid = new BackendDataGrid($source);
+		$this->dataGrid = new BackendDataGrid($source);
 
 		// set headers values
 		$headers['link'] = strtoupper(BL::lbl('URL'));
 		$headers['clicks'] = ucfirst(BL::msg('ClicksAmount'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels($headers);
+		$this->dataGrid->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('link', 'clicks'), 'link');
+		$this->dataGrid->setSortingColumns(array('link', 'clicks'), 'link');
 
 		// set colunn functions
-		$this->datagrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
-		$this->datagrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
+		$this->dataGrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
+		$this->dataGrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 
 		// add edit column
-		$this->datagrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id, BL::lbl('Who'));
+		$this->dataGrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id, BL::lbl('Who'));
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -139,7 +139,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid
-		if(!empty($this->statistics['clicked_links'])) $this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		if(!empty($this->statistics['clicked_links'])) $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// parse the mailing record
 		$this->tpl->assign('mailing', $this->mailing);

@@ -23,9 +23,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Datagrid for the drafts
+	 * DataGrid for the drafts
 	 *
-	 * @var	BackendDatagrid
+	 * @var	BackendDataGrid
 	 */
 	private $dgDrafts;
 
@@ -304,6 +304,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				// update the item
 				$item['revision_id'] = BackendBlogModel::update($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
+
 				// recalculate comment count so the new revision has the correct count
 				BackendBlogModel::reCalculateCommentCount(array($this->id));
 
@@ -314,7 +317,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				if($item['status'] == 'active')
 				{
 					// edit search index
-					if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex('blog', $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+					if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
 					if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') . '/' . $this->meta->getURL());
@@ -327,7 +330,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				elseif($item['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$redirectUrl = BackendModel::createURLForAction('edit') . '&report=saved_as_draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id'];
+					$redirectUrl = BackendModel::createURLForAction('edit') . '&report=saved-as-draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id'];
 				}
 
 				// append to redirect URL

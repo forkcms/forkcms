@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>settings</name>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>Settings</name>
+		<description><![CDATA[This module manages the core-settings.]]></description>
+	</info>
+	<events>
+		<event application="backend" name="after_changed_theme"><![CDATA[Triggered when the theme is changed.]]></event>
+	</events>
+</module>

@@ -95,29 +95,29 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// call the parent, as in create a new datagrid with the created source
-		$this->datagrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $this->id));
-		$this->datagrid->setColumnsHidden(array('campaign_id', 'campaign_name', 'status'));
+		$this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $this->id));
+		$this->dataGrid->setColumnsHidden(array('campaign_id', 'campaign_name', 'status'));
 
 		// set headers values
 		$headers['sent'] = ucfirst(BL::lbl('Sent'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels($headers);
+		$this->dataGrid->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name', 'sent'), 'name');
+		$this->dataGrid->setSortingColumns(array('name', 'sent'), 'name');
 
 		// set url for mailing name
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
 
 		// set column functions
-		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
+		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -129,7 +129,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// parse the campaign record
 		$this->tpl->assign('campaign', $this->campaign);

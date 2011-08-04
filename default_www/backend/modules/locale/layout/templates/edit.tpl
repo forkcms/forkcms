@@ -38,10 +38,19 @@
 		</div>
 
 		<div class="fullwidthOptions">
+			<a href="{$var|geturl:'delete'}&amp;id={$id}{$filterQuery}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+				<span>{$lblDelete|ucfirst}</span>
+			</a>
 			<div class="buttonHolderRight">
 				<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 			</div>
 		</div>
+	</div>
+
+	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+		<p>
+			{$msgConfirmDelete}
+		</p>
 	</div>
 {/form:edit}
 

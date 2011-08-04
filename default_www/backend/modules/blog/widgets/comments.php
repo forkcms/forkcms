@@ -38,6 +38,9 @@ class BackendBlogWidgetComments extends BackendBaseWidget
 		// set column
 		$this->setColumn('middle');
 
+		// set position
+		$this->setPosition(0);
+
 		// load the data
 		$this->loadData();
 

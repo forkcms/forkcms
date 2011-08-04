@@ -32,6 +32,7 @@ class SettingsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'settings', 'index');
 		$this->setActionRights(1, 'settings', 'themes');
 		$this->setActionRights(1, 'settings', 'email');
+		$this->setActionRights(1, 'settings', 'seo');
 		$this->setActionRights(1, 'settings', 'test_email_connection');
 
 		// set navigation (settings should be last tab)

@@ -28,6 +28,9 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		// set column
 		$this->setColumn('left');
 
+		// set position
+		$this->setPosition(0);
+
 		// add highchart javascript
 		$this->header->addJS('dashboard.js', 'analytics');
 
@@ -105,16 +108,16 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// hide columns
-			$datagrid->setColumnsHidden('id', 'date');
+			$dataGrid->setColumnsHidden('id', 'date');
 
 			// parse the datagrid
-			$this->tpl->assign('dgAnalyticsKeywords', $datagrid->getContent());
+			$this->tpl->assign('dgAnalyticsKeywords', $dataGrid->getContent());
 		}
 
 		// get date
@@ -140,19 +143,19 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging(false);
+			$dataGrid->setPaging(false);
 
 			// hide columns
-			$datagrid->setColumnsHidden('id', 'date');
+			$dataGrid->setColumnsHidden('id', 'date');
 
 			// set url
-			$datagrid->setColumnURL('referrer', 'http://[referrer]');
+			$dataGrid->setColumnURL('referrer', 'http://[referrer]');
 
 			// parse the datagrid
-			$this->tpl->assign('dgAnalyticsReferrers', $datagrid->getContent());
+			$this->tpl->assign('dgAnalyticsReferrers', $dataGrid->getContent());
 		}
 	}
 }

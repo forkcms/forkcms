@@ -262,9 +262,7 @@ class ModuleInstaller
 				// current locale items (used to check for conflicts)
 				$currentLocale = (array) $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
 
-
 				// @todo: waarom geen xpath?
-
 
 				// applications
 				foreach($xml as $application => $modules)
@@ -450,8 +448,9 @@ class ModuleInstaller
 	 * @param	bool[optional] $titleOverwrite			Should the pagetitle be overwritten?
 	 * @param	bool[optional] $urlOverwrite			Should the URL be overwritten?
 	 * @param	string[optional] $custom				Any custom meta-data.
+	 * @param	array[optional] $data					Any custom meta-data.
 	 */
-	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null)
+	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
 	{
 		// build item
 		$item = array('keywords' => (string) $keywords,
@@ -462,7 +461,8 @@ class ModuleInstaller
 						'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
 						'url' => (string) $url,
 						'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
-						'custom' => (!is_null($custom) ? (string) $custom : null));
+						'custom' => (!is_null($custom) ? (string) $custom : null),
+						'data' => (!is_null($data)) ? serialize($data) : null);
 
 		// insert meta and return id
 		return (int) $this->getDB()->insert('meta', $item);
@@ -507,7 +507,6 @@ class ModuleInstaller
 		if(!isset($revision['allow_children'])) $revision['allow_children'] = 'Y';
 		if(!isset($revision['allow_edit'])) $revision['allow_edit'] = 'Y';
 		if(!isset($revision['allow_delete'])) $revision['allow_delete'] = 'Y';
-		if(!isset($revision['no_follow'])) $revision['no_follow'] = 'N';
 		if(!isset($revision['sequence'])) $revision['sequence'] = (int) $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?', array($revision['language'], $revision['parent_id'], $revision['type']));
 		if(!isset($revision['extra_ids'])) $revision['extra_ids'] = null;
 		if(!isset($revision['has_extra'])) $revision['has_extra'] = $revision['extra_ids'] ? 'Y' : 'N';
@@ -525,9 +524,10 @@ class ModuleInstaller
 			if(!isset($meta['url'])) $meta['url'] = SpoonFilter::urlise($revision['title']);
 			if(!isset($meta['url_overwrite'])) $meta['url_overwrite'] = false;
 			if(!isset($meta['custom'])) $meta['custom'] = null;
+			if(!isset($meta['data'])) $meta['data'] = null;
 
 			// insert meta
-			$revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom']);
+			$revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom'], $meta['data']);
 		}
 
 		// insert page
@@ -830,6 +830,7 @@ class CoreInstall extends ModuleInstaller
 
 		// action rights
 		$this->setActionRights(1, 'dashboard', 'index');
+		$this->setActionRights(1, 'dashboard', 'alter_sequence');
 	}
 
 

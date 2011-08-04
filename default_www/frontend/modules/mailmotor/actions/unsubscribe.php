@@ -149,6 +149,9 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 					// unsubscribe the user from our default group
 					FrontendMailmotorCMHelper::unsubscribe($email->getValue(), $this->group);
 
+					// trigger event
+					FrontendModel::triggerEvent('mailmotor', 'after_unsubscribe', array('email' => $email->getValue()));
+
 					// redirect
 					$this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'unsubscribe') . '?sent=true#unsubscribeForm');
 				}

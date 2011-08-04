@@ -36,7 +36,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page
@@ -140,6 +140,9 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 
 				// check if all default groups were set
 				BackendMailmotorModel::checkDefaultGroups();
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_group', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);

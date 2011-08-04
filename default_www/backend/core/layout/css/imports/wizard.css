@@ -6,6 +6,7 @@
     @subpackage   core
 
     @author       Yoni De Beule <yoni@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -20,11 +21,11 @@
 		height: 32px;
 		background: url(/backend/core/layout/images/sprites/wizard.png) repeat-x 0 -1px;
 		border: 1px solid #ddd;
-	
+
 		/* @inc .rc */
-		border-radius: 4px;
-		-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
+		-webkit-border-radius: 4px;
+		border-radius: 4px;
 	}
 
 		.wizard li {
@@ -93,9 +94,9 @@
 	cursor: pointer;
 
 	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 .selectThumbList li:hover,
@@ -160,7 +161,7 @@
 			height: 129px;
 			cursor: pointer;
 		}
-    	
+
 		.selectThumbList li input {
 			visibility: hidden;
 			position: absolute;

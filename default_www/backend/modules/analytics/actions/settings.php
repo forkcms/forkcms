@@ -90,13 +90,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			if($remove == 'session_token')
 			{
 				// remove all parameters from the module settings
-				BackendModel::setModuleSetting('analytics', 'session_token', null);
+				BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
 			}
 
 			// remove all profile parameters from the module settings
-			BackendModel::setModuleSetting('analytics', 'account_name', null);
-			BackendModel::setModuleSetting('analytics', 'table_id', null);
-			BackendModel::setModuleSetting('analytics', 'profile_title', null);
+			BackendModel::setModuleSetting($this->getModule(), 'account_name', null);
+			BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
+			BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
 
 			// remove cache files
 			BackendAnalyticsModel::removeCacheFiles();
@@ -106,10 +106,10 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		}
 
 		// get session token, account name, the profile's table id, the profile's title
-		$this->sessionToken = BackendModel::getModuleSetting('analytics', 'session_token', null);
-		$this->accountName = BackendModel::getModuleSetting('analytics', 'account_name', null);
-		$this->tableId = BackendModel::getModuleSetting('analytics', 'table_id', null);
-		$this->profileTitle = BackendModel::getModuleSetting('analytics', 'profile_title', null);
+		$this->sessionToken = BackendModel::getModuleSetting($this->getModule(), 'session_token', null);
+		$this->accountName = BackendModel::getModuleSetting($this->getModule(), 'account_name', null);
+		$this->tableId = BackendModel::getModuleSetting($this->getModule(), 'table_id', null);
+		$this->profileTitle = BackendModel::getModuleSetting($this->getModule(), 'profile_title', null);
 
 		// no session token
 		if(!isset($this->sessionToken))
@@ -127,7 +127,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 				$this->sessionToken = $ga->getSessionToken($token);
 
 				// store the session token in the settings
-				BackendModel::setModuleSetting('analytics', 'session_token', $this->sessionToken);
+				BackendModel::setModuleSetting($this->getModule(), 'session_token', $this->sessionToken);
 			}
 		}
 
@@ -144,7 +144,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			if($this->profiles == 'UNAUTHORIZED')
 			{
 				// remove invalid session token
-				BackendModel::setModuleSetting('analytics', 'session_token', null);
+				BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
 
 				// redirect to the settings page without parameters
 				$this->redirect(BackendModel::createURLForAction('settings'));
@@ -172,11 +172,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 						$this->tableId = $tableId;
 						$this->accountName = $profiles[$this->tableId]['accountName'];
 						$this->profileTitle = $profiles[$this->tableId]['title'];
+						$webPropertyId = $profiles[$this->tableId]['webPropertyId'];
 
 						// store the table id and account title in the settings
-						BackendModel::setModuleSetting('analytics', 'account_name', $this->accountName);
-						BackendModel::setModuleSetting('analytics', 'table_id', $this->tableId);
-						BackendModel::setModuleSetting('analytics', 'profile_title', $this->profileTitle);
+						BackendModel::setModuleSetting($this->getModule(), 'account_name', $this->accountName);
+						BackendModel::setModuleSetting($this->getModule(), 'table_id', $this->tableId);
+						BackendModel::setModuleSetting($this->getModule(), 'profile_title', $this->profileTitle);
+						BackendModel::setModuleSetting($this->getModule(), 'web_property_id', $webPropertyId);
 					}
 				}
 			}

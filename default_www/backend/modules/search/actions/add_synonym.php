@@ -28,7 +28,7 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -81,6 +81,9 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
 
 				// insert the item
 				$id = BackendSearchModel::insertSynonym($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_synonym', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=added-synonym&var=' . urlencode($item['term']) . '&highlight=row-' . $id);

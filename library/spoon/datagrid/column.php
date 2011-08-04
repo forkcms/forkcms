@@ -26,7 +26,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDatagridColumn
+class SpoonDataGridColumn
 {
 	/**
 	 * Main cell attributes

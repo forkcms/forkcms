@@ -40,26 +40,26 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS, BL::getWorkingLanguage());
+		$this->dataGrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS, BL::getWorkingLanguage());
 
 		// hide column
-		$this->datagrid->setColumnsHidden('data');
+		$this->dataGrid->setColumnsHidden('data');
 
 		// create column
-		$this->datagrid->addColumn('ip', BL::lbl('IP'));
-		$this->datagrid->addColumn('referrer', BL::lbl('Referrer'));
+		$this->dataGrid->addColumn('ip', BL::lbl('IP'));
+		$this->dataGrid->addColumn('referrer', BL::lbl('Referrer'));
 
 		// header labels
-		$this->datagrid->setHeaderLabels(array('time' => ucfirst(BL::lbl('SearchedOn'))));
+		$this->dataGrid->setHeaderLabels(array('time' => ucfirst(BL::lbl('SearchedOn'))));
 
 		// set column function
-		$this->datagrid->setColumnFunction(array(__CLASS__, 'setIp'), '[data]', 'ip');
-		$this->datagrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
-		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[time]'), 'time', true);
+		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setIp'), '[data]', 'ip');
+		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
+		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[time]'), 'time', true);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('time', 'term'), 'time');
-		$this->datagrid->setSortParameter('desc');
+		$this->dataGrid->setSortingColumns(array('time', 'term'), 'time');
+		$this->dataGrid->setSortParameter('desc');
 	}
 
 
@@ -71,7 +71,7 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	private function parse()
 	{
 		// assign the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
 

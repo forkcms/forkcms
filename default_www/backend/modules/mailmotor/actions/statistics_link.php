@@ -100,7 +100,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDataGrid()
 	{
 		// no statistics found
 		if(empty($this->statistics['clicked_links_by'][$this->linkURL])) return false;
@@ -109,17 +109,17 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$source = new SpoonDataGridSourceArray($this->statistics['clicked_links_by'][$this->linkURL]);
 
 		// call the parent, as in create a new datagrid with the created source
-		$this->datagrid = new BackendDataGrid($source);
-		$this->datagrid->setColumnsHidden(array('list_id', 'url'));
+		$this->dataGrid = new BackendDataGrid($source);
+		$this->dataGrid->setColumnsHidden(array('list_id', 'url'));
 
 		// set header labels
-		$this->datagrid->setHeaderLabels(array('ip' => BL::lbl('IpAddress')));
+		$this->dataGrid->setHeaderLabels(array('ip' => BL::lbl('IpAddress')));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('email'), 'email');
+		$this->dataGrid->setSortingColumns(array('email'), 'email');
 
 		// set paging limit
-		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
 
@@ -149,7 +149,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$this->frm->parse($this->tpl);
 
 		// parse the datagrid
-		if(!empty($this->statistics['clicked_links_by'][$this->linkURL])) $this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		if(!empty($this->statistics['clicked_links_by'][$this->linkURL])) $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// parse the mailing ID and url
 		$this->tpl->assign('url', $this->linkURL);

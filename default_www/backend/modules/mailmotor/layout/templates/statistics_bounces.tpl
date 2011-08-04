@@ -10,13 +10,13 @@
 	</div>
 </div>
 
-{option:datagrid}
+{option:dataGrid}
 <form action="{$var|geturl:'mass_bounces_action'}" method="get" class="forkForms submitWithLink" id="bounces">
-	<div class="datagridHolder">
-		{$datagrid}
+	<div class="dataGridHolder">
+		{$dataGrid}
 	</div>
 </form>
-{/option:datagrid}
+{/option:dataGrid}
 
 <div class="buttonHolderLeft">
 	<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="button" title="{$lblStatistics|ucfirst}">

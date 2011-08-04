@@ -25,7 +25,7 @@ class BackendAuthenticationLogout extends BackendBaseAction
 		BackendAuthentication::logout();
 
 		// redirect to login-screen
-		$this->redirect(BackendModel::createUrlForAction('index', 'authentication'));
+		$this->redirect(BackendModel::createUrlForAction('index', $this->getModule()));
 	}
 }
 

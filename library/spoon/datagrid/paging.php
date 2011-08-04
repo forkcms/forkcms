@@ -25,7 +25,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-interface iSpoonDatagridPaging
+interface iSpoonDataGridPaging
 {
 	/**
 	 * Builds & returns the pagination.
@@ -54,7 +54,7 @@ interface iSpoonDatagridPaging
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDatagridPaging implements iSpoonDatagridPaging
+class SpoonDataGridPaging implements iSpoonDataGridPaging
 {
 	/**
 	 * Next label

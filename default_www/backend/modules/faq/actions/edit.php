@@ -45,7 +45,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page
@@ -144,6 +144,9 @@ class BackendFaqEdit extends BackendBaseActionEdit
 
 				// update question values in database
 				BackendFaqModel::updateQuestion($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>locale</name>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>Locale</name>
+		<description><![CDATA[Locale can be managed through this module.]]></description>
+	</info>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a locale is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a locale is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a locale is edited.]]></event>
+		<event application="backend" name="after_import"><![CDATA[Triggered when locale is imported.]]></event>
+	</events>
+</module>

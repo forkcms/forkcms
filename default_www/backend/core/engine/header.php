@@ -101,27 +101,6 @@ class BackendHeader
 	 * If you set parseThroughPHP to true, the JS will be parsed by PHP (labels and vars will be assignes)
 	 * If you set overwritePath to true we expect a full path (It has to start with a /)
 	 *
-	 * @deprecated	Deprecated since version 2.2.0. Will be removed in the next version.
-	 *
-	 * @return	void
-	 * @param	string $fileName					The file to load.
-	 * @param	string[optional] $module			The module wherin the file is located.
-	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed by PHP?
-	 * @param	bool[optional] $overwritePath		Should we overwrite the full path?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
-	 */
-	public function addJavascript($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
-	{
-		$this->addJS($fileName, $module, $parseThroughPHP, $overwritePath, $addTimestamp);
-	}
-
-
-	/**
-	 * Add a JS-file.
-	 * If you don't specify a module, the current one will be used
-	 * If you set parseThroughPHP to true, the JS will be parsed by PHP (labels and vars will be assignes)
-	 * If you set overwritePath to true we expect a full path (It has to start with a /)
-	 *
 	 * @return	void
 	 * @param	string $fileName					The file to load.
 	 * @param	string[optional] $module			The module wherin the file is located.

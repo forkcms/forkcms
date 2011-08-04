@@ -25,7 +25,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDatagridSourceDB extends SpoonDatagridSource
+class SpoonDataGridSourceDB extends SpoonDataGridSource
 {
 	/**
 	 * SpoonDatabase instance
