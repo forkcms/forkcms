@@ -1,3 +1,10 @@
+x.x.x (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Core: template custom was not being parsed inside blocks.
+
+
 2.6.1 (2011-08-02)
 --
 Bugfixes:
