@@ -8,7 +8,7 @@ Improvements:
 
 * Core: upgraded jQueryUI to 1.8.15.
 * Core: added a way to read a cookie through JS.
-
+* Core: Upgraded TinyMCE to 3.4.4
 
 
 2.6.1 (2011-08-02)
