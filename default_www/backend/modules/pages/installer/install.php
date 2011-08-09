@@ -96,18 +96,8 @@ class PagesInstall extends ModuleInstaller
 										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
 										array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
-				// insert search page
-				$this->insertPage(array('id' => 2,
-										'template_id' => $templateIds['Default'],
-										'title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
-										'type' => 'root',
-										'language' => $language),
-										null,
-										array('extra_id' => $extras['search']),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
-
 				// insert sitemap
-				$this->insertPage(array('id' => 3,
+				$this->insertPage(array('id' => 2,
 										'template_id' => $templateIds['Default'],
 										'title' => ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
@@ -118,12 +108,12 @@ class PagesInstall extends ModuleInstaller
 										array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// insert disclaimer
-				$this->insertPage(array('id' => 4,
+				$this->insertPage(array('id' => 3,
 										'template_id' => $templateIds['Default'],
 										'title' => ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
 										'language' => $language),
-										null,
+										array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
 										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/disclaimer.txt'),
 										array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
@@ -327,9 +317,8 @@ class PagesInstall extends ModuleInstaller
 										'title' => 'Lorem ipsum',
 										'type' => 'root',
 										'language' => $language,
-										'hidden' => 'Y',
-										'no_follow' => 'Y'),
-										null,
+										'hidden' => 'Y'),
+										array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
 										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/lorem_ipsum.txt'),
 										array('extra_id' => $extras['search_form'], 'position' => 'top'));
 			}

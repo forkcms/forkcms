@@ -35,6 +35,9 @@ class BackendContentBlocksDelete extends BackendBaseActionDelete
 			// delete item
 			BackendContentBlocksModel::delete($this->id);
 
+			// trigger event
+			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
+
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
 		}

@@ -128,10 +128,6 @@
         <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
         <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
       </item>
-      <item type="message" name="HelpNoFollow">
-        <translation language="nl"><![CDATA[Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.]]></translation>
-        <translation language="en"><![CDATA[Makes sure that this page doesn't influence the internal PageRank.]]></translation>
-      </item>
       <item type="message" name="HelpTemplateFormat">
         <translation language="nl"><![CDATA[vb. [left,main,right],[/,main,/]]]></translation>
         <translation language="en"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
@@ -170,7 +166,7 @@
       </item>
       <item type="message" name="TemplateInUse">
         <translation language="nl"><![CDATA[Deze template is in gebruik]]></translation>
-        <translation language="en"><![CDATA[This template is in use. You can't change the number of blocks.]]></translation>
+        <translation language="en"><![CDATA[This template is in use.]]></translation>
       </item>
       <item type="message" name="WidgetAttached">
         <translation language="nl"><![CDATA[De widget <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>

@@ -31,7 +31,7 @@ class BackendMailer
 	 * @param	int[optional] $sendOn			When should the email be send, only used when $queue is true.
 	 * @param	bool[optional] $isRawHTML		If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
 	 * @param	string[optional] $plainText		The plain text version.
-	 * @param	array[optional] $attachments	Attachments to include.
+	 * @param	array[optional] $attachments	Paths to attachments to include.
 	 */
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null, array $attachments = null)
 	{
@@ -135,6 +135,9 @@ class BackendMailer
 
 		// insert the email into the database
 		$id = BackendModel::getDB(true)->insert('emails', $email);
+
+		// trigger event
+		BackendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
 
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
@@ -265,6 +268,9 @@ class BackendMailer
 		{
 			// remove the email
 			$db->delete('emails', 'id = ?', array($id));
+
+			// trigger event
+			BackendModel::triggerEvent('core', 'after_email_sent', array('id' => $id));
 		}
 	}
 }

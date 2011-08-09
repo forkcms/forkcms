@@ -224,6 +224,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('formatnumber', array('FrontendTemplateModifiers', 'formatNumber'));
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
+		$this->mapModifier('camelcase', array('SpoonFilter', 'toCamelCase'));
 
 		// dates
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
@@ -409,7 +410,7 @@ class FrontendTemplateModifiers
 		$var = (string) $var;
 
 		// detect links
-		$var = SpoonFilter::replaceURLsWithAnchors($var);
+		$var = SpoonFilter::replaceURLsWithAnchors($var, FrontendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false));
 
 		// replace newlines
 		$var = str_replace("\r", '', $var);

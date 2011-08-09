@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>dashboard</name>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>Dashboard</name>
+		<description><![CDATA[The dashboard is the first page a user will see when he/she logs in. Widgets can be added by other modules. The dashboars is intended to be a quick and easy overview of the actions that happened on the site, or notifications from modules.]]></description>
+	</info>
+</module>

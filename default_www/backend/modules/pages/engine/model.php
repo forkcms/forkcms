@@ -134,6 +134,9 @@ class BackendPagesModel
 				// add it
 				$keys[$pageID] = trim($URL . '/' . $page['url'], '/');
 
+				// unserialize
+				if(isset($page['meta_data'])) $page['meta_data'] = @unserialize($page['meta_data']);
+
 				// build navigation array
 				$temp = array();
 				$temp['page_id'] = (int) $pageID;
@@ -142,7 +145,7 @@ class BackendPagesModel
 				$temp['title'] = addslashes($page['title']);
 				$temp['navigation_title'] = addslashes($page['navigation_title']);
 				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
-				$temp['no_follow'] = (bool) ($page['no_follow'] == 'Y');
+				$temp['no_follow'] = (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow');
 				$temp['hidden'] = (bool) ($page['hidden'] == 'Y');
 				$temp['extra_blocks'] = null;
 
@@ -214,6 +217,12 @@ class BackendPagesModel
 						$temp['redirect_url'] = $data['external_redirect']['url'];
 						$temp['redirect_code'] = $data['external_redirect']['code'];
 						$treeType = 'redirect';
+					}
+
+					// direct action?
+					if(isset($data['is_action']) && $data['is_action'])
+					{
+						$treeType = 'direct_action';
 					}
 				}
 
@@ -402,6 +411,9 @@ class BackendPagesModel
 
 		// write the file
 		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js', $tinyMCELinkListString);
+
+		// trigger an event
+		BackendModel::triggerEvent('pages', 'after_recreated_cache');
 	}
 
 
@@ -1348,9 +1360,9 @@ class BackendPagesModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// get data
-		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
+		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra,
 																		i.extra_ids, i.data,
-																		m.url
+																		m.url, m.data AS meta_data
 																	FROM pages AS i
 																	INNER JOIN meta AS m ON i.meta_id = m.id
 																	WHERE i.parent_id IN (' . implode(', ', $ids) . ')
@@ -2032,7 +2044,14 @@ return;
 					$block['status'] = 'active';
 					$block['created_on'] = BackendModel::getUTCDate();
 					$block['edited_on'] = $block['created_on'];
+					$block['html'] = '';
+					$block['extra_id'] = null;
+					$block['has_extra'] = 'N';
+				}
 
+				// verify that there is no existing content and that we actually have new default content
+				if(!isset($blocksContent[$i]) || (!$blocksContent[$i]['html'] && !$blocksContent[$i]['extra_id']) && $i < $newTemplate['num_blocks'])
+				{
 					// get default extras in this language
 					if(isset($newTemplate['data']['default_extras_' . $page['language']]))
 					{

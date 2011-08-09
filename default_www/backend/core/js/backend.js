@@ -51,7 +51,7 @@ jsBackend =
 		if(!!window.TouchEvent){ $('body').addClass('touch-enabled'); }
 
 		// do not move, should be run as the last item.
-		jsBackend.forms.unloadWarning();
+		{option:!SPOON_DEBUG}jsBackend.forms.unloadWarning();{/option:!SPOON_DEBUG}
 	},
 
 
@@ -132,7 +132,7 @@ jsBackend.balloons =
 
 		// get linked balloon
 		var id = clickedElement.data('messageId');
-		
+
 		// rel available?
 		if(id != '')
 		{
@@ -156,7 +156,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeIn(500);
 
 				// set focus on first visible field
-				$('#'+ id +' form input:visible:first').focus();
+				if($('#'+ id +' form input:visible:first').length > 0) $('#'+ id +' form input:visible:first').focus();
 
 				// bind resize
 				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ id)); });
@@ -283,26 +283,26 @@ jsBackend.controls =
 				{
 					// redefine
 					$this = $(this);
-					
+
 					// disable all
 					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
-					
-					// get fields
-					var fields = $this.parents('li').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea')
+
+					// get fields that should be enabled
+					var fields = $('input[name=' + radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + radiobutton.attr('name') + ']), select, textarea')
 
 					// enable
 					fields.removeClass('disabled').prop('disabled', false);
-					
+
 					// set focus
 					$(fields[0]).focus();
 				});
-				
+
 				// change?
 				$(radiobutton[0]).change();
 			}
 		});
 	},
-	
+
 	// bind confirm message
 	bindConfirm: function()
 	{
@@ -384,7 +384,7 @@ jsBackend.controls =
 
 			// get id
 			var id = $(this).attr('href');
-			
+
 			// IE8 prepends full current url before links to #
 			id = id.substring(id.indexOf('#'));
 
@@ -602,7 +602,7 @@ jsBackend.controls =
 	},
 
 
-	bindPasswordGenerator: function() 
+	bindPasswordGenerator: function()
 	{
 		if($('.passwordGenerator').length > 0)
 		{
@@ -617,8 +617,8 @@ jsBackend.controls =
 			);
 		}
 	},
-	
-	
+
+
 	// bind the password strength meter to the correct inputfield(s)
 	bindPasswordStrengthMeter: function()
 	{
@@ -855,7 +855,7 @@ jsBackend.effects =
 jsBackend.forms =
 {
 	stringified: '',
-		
+
 	// init, something like a constructor
 	init: function()
 	{
@@ -874,7 +874,7 @@ jsBackend.forms =
 		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
 		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
 		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
-		
+
 		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
 		{
 			dayNames: dayNames,
@@ -887,17 +887,17 @@ jsBackend.forms =
 			prevText: '{$lblPrevious}',
 			showAnim: 'slideDown'
 		});
-		
+
 		// the default, nothing special
 		$('.inputDatefieldNormal').each(function()
 		{
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
-			
+
 			// set options
-			$(this).datepicker('option', { 
-				dateFormat: data.mask, 
+			$(this).datepicker('option', {
+				dateFormat: data.mask,
 				firstDate: data.firstday
 			}).datepicker('setDate', value);
 		});
@@ -910,7 +910,7 @@ jsBackend.forms =
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', { 
+			$(this).datepicker('option', {
 				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 			}).datepicker('setDate', value);
@@ -924,7 +924,7 @@ jsBackend.forms =
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', 
+			$(this).datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -940,7 +940,7 @@ jsBackend.forms =
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', 
+			$(this).datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -1067,45 +1067,45 @@ jsBackend.forms =
 	// add tagbox to the correct input fields
 	tagBoxes: function()
 	{
-		if($('#sidebar input.tagBox').length > 0) 
-		{ 
+		if($('#sidebar input.tagBox').length > 0)
+		{
 			$('#sidebar input.tagBox').tagBox(
-				{ 
-					emptyMessage: '{$msgNoTags|addslashes}', 
-					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
-					addLabel: '{$lblAdd|ucfirst}', 
-					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
-					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' 
+				{
+					emptyMessage: '{$msgNoTags|addslashes}',
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+					addLabel: '{$lblAdd|ucfirst}',
+					removeLabel: '{$lblDeleteThisTag|ucfirst}',
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}'
 				}
-			); 
+			);
 		}
-		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) 
-		{ 
+		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
+		{
 			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
-				{ 
-					emptyMessage: '{$msgNoTags|addslashes}', 
-					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', 
-					addLabel: '{$lblAdd|ucfirst}', 
-					removeLabel: '{$lblDeleteThisTag|ucfirst}', 
-					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', 
-					showIconOnly: false 
+				{
+					emptyMessage: '{$msgNoTags|addslashes}',
+					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+					addLabel: '{$lblAdd|ucfirst}',
+					removeLabel: '{$lblDeleteThisTag|ucfirst}',
+					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}',
+					showIconOnly: false
 				}
 			);
 		}
 	},
-	
-	
-	// show a warning when people are leaving the 
-	unloadWarning: function() 
+
+
+	// show a warning when people are leaving the
+	unloadWarning: function()
 	{
 		// only execute when there is a form on the page
 		if($('form:visible').length > 0)
 		{
 			// loop fields
-			$('form input, form select, form textarea').each(function() 
+			$('form input, form select, form textarea').each(function()
 			{
 				var $this = $(this);
-				
+
 				if(!$this.hasClass('dontCheckBeforeUnload'))
 				{
 					// store initial value
@@ -1115,51 +1115,55 @@ jsBackend.forms =
 
 			// bind before unload, this will ask the user if he really wants to leave the page
 			$(window).bind('beforeunload', jsBackend.forms.unloadWarningCheck);
-			
-			// if a form is submitted we don't want to ask the user if he wants to leave, we know for sure 
-			$('form').bind('submit', function(evt) 
+
+			// if a form is submitted we don't want to ask the user if he wants to leave, we know for sure
+			$('form').bind('submit', function(evt)
 			{
 				if(!evt.isDefaultPrevented()) $(window).unbind('beforeunload');
 			});
 		}
 	},
-	
+
 	// check if any element has been changed
-	unloadWarningCheck: function() 
+	unloadWarningCheck: function()
 	{
 		// initialize var
 		var changed = false;
-		
+
 		// save editors to the textarea-fields
 		if(typeof tinyMCE != 'undefined') tinyMCE.triggerSave();
-		
+
 		// loop fields
-		$('.checkBeforeUnload').each(function() 
+		$('.checkBeforeUnload').each(function()
 		{
 			// initialize
 			var $this = $(this);
-			
+
 			// compare values
 			if($this.data('initial-value') != $this.val())
 			{
-				// reset var
-				changed = true;
-				
-				// stop looking
-				return false;
+				if(typeof $this.data('initial-value') == 'undefined' && $this.val() == '') {}
+				else
+				{
+					// reset var
+					changed = true;
+
+					// stop looking
+					return false;
+				}
 			}
 		});
-		
+
 		// not changed?
 		if(!changed) {
 			// prevent default
-			/* 
+			/*
 			 * I know this line triggers errors, if you remove it the unload won't work anymore.
-			 * Probably you'll fix this by passing the evt as an argument of the function, well this will break the functionality also.. 
-			 * Uhu, a "wtf" is in place.. 
+			 * Probably you'll fix this by passing the evt as an argument of the function, well this will break the functionality also..
+			 * Uhu, a "wtf" is in place..
 			 */
 			evt.preventDefault();
-			
+
 			// unbind the event
 			$(window).unbind('beforeunload');
 		}
@@ -1167,7 +1171,7 @@ jsBackend.forms =
 		// return if needed
 		return (changed) ? '{$msgValuesAreChanged}' : null;
 	},
-	
+
 	// end
 	eoo: true
 }

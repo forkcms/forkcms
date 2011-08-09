@@ -11,6 +11,7 @@
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Annelies Van Extergem <annelies@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class FrontendBlogModel implements FrontendTagsInterface
@@ -23,21 +24,27 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 */
 	public static function get($URL)
 	{
-		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-															c.title AS category_title, m2.url AS category_url,
-															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-															i.allow_comments,
-															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-															m.url
-															FROM blog_posts AS i
-															INNER JOIN blog_categories AS c ON i.category_id = c.id
-															INNER JOIN meta AS m ON i.meta_id = m.id
-															INNER JOIN meta AS m2 ON c.meta_id = m2.id
-															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
-															LIMIT 1',
-															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
+		$return = (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+																c.title AS category_title, m2.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+																i.allow_comments,
+																m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+																m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+																m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+																m.url,
+																m.data AS meta_data
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
+																LIMIT 1',
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
+		// unserialize
+		if(isset($return['meta_data'])) $return['meta_data'] = @unserialize($return['meta_data']);
+
+		// return
+		return $return;
 	}
 
 
@@ -62,22 +69,18 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 																ORDER BY i.publish_on DESC, i.id DESC
 																LIMIT ?, ?',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (int) $offset, (int) $limit), 'revision_id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (int) $offset, (int) $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
 
 		// init var
-		$revisionIds = array();
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// ids
-			$revisionIds[] = (int) $row['revision_id'];
-
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
@@ -88,7 +91,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		}
 
 		// get all tags
-		$tags = FrontendTagsModel::getForMultipleItems('blog', $revisionIds);
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
 		foreach($tags as $postId => $tags)
@@ -108,13 +111,22 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 */
 	public static function getAllCategories()
 	{
-		return (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total
-															FROM blog_categories AS c
-															INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
-															INNER JOIN meta AS m ON c.meta_id = m.id
-															WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
-															GROUP BY c.id',
-															array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
+		$return = (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data
+																FROM blog_categories AS c
+																INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
+																INNER JOIN meta AS m ON c.meta_id = m.id
+																WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
+																GROUP BY c.id',
+																array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
+
+		// loop items and unserialize
+		foreach($return as &$row)
+		{
+			if(isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
+		}
+
+		// return
+		return $return;
 	}
 
 
@@ -176,22 +188,18 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
 																ORDER BY i.publish_on DESC
 																LIMIT ?, ?',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryURL, (int) $offset, (int) $limit), 'revision_id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryURL, (int) $offset, (int) $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
 
 		// init var
-		$revisionIds = array();
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// ids
-			$revisionIds[] = (int) $row['revision_id'];
-
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
@@ -202,7 +210,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		}
 
 		// get all tags
-		$tags = FrontendTagsModel::getForMultipleItems('blog', $revisionIds);
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
 		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
@@ -258,21 +266,17 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
 																ORDER BY i.publish_on DESC
 																LIMIT ?, ?',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'revision_id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
 
 		// init var
-		$revisionIds = array();
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// ids
-			$revisionIds[] = (int) $row['revision_id'];
-
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 
@@ -282,7 +286,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		}
 
 		// get all tags
-		$tags = FrontendTagsModel::getForMultipleItems('blog', $revisionIds);
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
 		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
@@ -422,7 +426,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.title, m.url
 																FROM blog_posts AS i
 																INNER JOIN meta AS m ON m.id = i.meta_id
-																WHERE i.status = ? AND i.hidden = ? AND i.revision_id IN (' . implode(',', $ids) . ')
+																WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
 																ORDER BY i.publish_on DESC',
 																array('active', 'N'));
 
@@ -604,21 +608,28 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 */
 	public static function getRevision($URL, $revision)
 	{
-		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-															c.title AS category_title, m2.url AS category_url,
-															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-															i.allow_comments,
-															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-															m.url
-															FROM blog_posts AS i
-															INNER JOIN blog_categories AS c ON i.category_id = c.id
-															INNER JOIN meta AS m ON i.meta_id = m.id
-															INNER JOIN meta AS m2 ON c.meta_id = m2.id
-															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
-															LIMIT 1',
-															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
+		$return = (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+																c.title AS category_title, m2.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+																i.allow_comments,
+																m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+																m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+																m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+																m.url,
+																m.data AS meta_data
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
+																WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
+																LIMIT 1',
+																array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
+
+		// unserialize
+		if(isset($return['meta_data'])) $return['meta_data'] = @unserialize($return['meta_data']);
+
+		// return
+		return $return;
 	}
 
 

@@ -155,6 +155,9 @@ exit('Not yet possible, completely reworking theme stuff, rework this later'); /
 						// getting here meant we found no matching template for the new theme; pick first theme's template as default
 						BackendPagesModel::updatePagesTemplates($oldTemplateId, $newDefaultTemplateId);
 					}
+
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_changed_theme');
 				}
 
 				// assign report

@@ -59,7 +59,7 @@
 						<p>{$msgHelpForgotPassword}</p>
 						{form:forgotPassword}
 							<div class="oneLiner">
-								<p><label for="backendEmail">{$lblEmail|ucfirst}</label></p>
+								<p><label for="backendEmailForgot">{$lblEmail|ucfirst}</label></p>
 								<p>{$txtBackendEmailForgot}</p>
 								<p>
 									<input id="send" type="submit" name="send" value="{$lblSend|ucfirst}" />
