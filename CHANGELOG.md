@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Api: when the response isn't an array notices where thrown.
+* Locale: analyse now correctly handles dynamic translations.
 
 Improvements:
 
