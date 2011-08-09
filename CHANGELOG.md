@@ -7,6 +7,7 @@ Bugfixes:
 Improvements:
 
 * Core: upgraded jQueryUI to 1.8.15.
+* Core: added a way to read a cookie through JS.
 
 
 
