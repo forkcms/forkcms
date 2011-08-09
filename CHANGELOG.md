@@ -1,8 +1,13 @@
-x.x.x (xxxx-xx-xx)
+2.6.2 (xxxx-xx-xx)
 --
 Bugfixes:
 
 * Core: template custom was not being parsed inside blocks.
+
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.15.
+
 
 
 2.6.1 (2011-08-02)
