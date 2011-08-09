@@ -1,3 +1,10 @@
+2.6.3 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Api: when the response isn't an array notices where thrown.
+
+
 2.6.2 (2011-08-09)
 --
 Bugfixes:
