@@ -413,7 +413,7 @@ class FrontendBaseBlock
 	 */
 	public function getContent()
 	{
-		return $this->tpl->getContent($this->templatePath);
+		return $this->tpl->getContent($this->templatePath, false, true);
 	}
 
 
@@ -899,7 +899,7 @@ class FrontendBaseWidget
 	 */
 	public function getContent()
 	{
-		return $this->tpl->getContent($this->templatePath);
+		return $this->tpl->getContent($this->templatePath, false, true);
 	}
 
 

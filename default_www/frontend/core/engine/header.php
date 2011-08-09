@@ -146,7 +146,7 @@ class FrontendHeader extends FrontendBaseObject
 		$minify = (bool) $minify;
 
 		// get file path
-		$file = FrontendTheme::getPath($file);
+		if(substr($file, 0, 4) != 'http') $file = FrontendTheme::getPath($file);
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;

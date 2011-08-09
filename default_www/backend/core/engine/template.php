@@ -115,6 +115,7 @@ class BackendTemplate extends SpoonTemplate
 		// string
 		$this->mapModifier('formatfloat', array('BackendTemplateModifiers', 'formatFloat'));
 		$this->mapModifier('truncate', array('BackendTemplateModifiers', 'truncate'));
+		$this->mapModifier('camelcase', array('SpoonFilter', 'toCamelCase'));
 
 		// debug stuff
 		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));

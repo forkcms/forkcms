@@ -224,6 +224,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('formatnumber', array('FrontendTemplateModifiers', 'formatNumber'));
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
+		$this->mapModifier('camelcase', array('SpoonFilter', 'toCamelCase'));
 
 		// dates
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));

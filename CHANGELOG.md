@@ -1,3 +1,27 @@
+2.6.3 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Api: when the response isn't an array notices where thrown.
+
+Improvements:
+
+* Core: added a modifier to camelcase strings.
+
+
+2.6.2 (2011-08-09)
+--
+Bugfixes:
+
+* Core: template custom was not being parsed inside blocks.
+
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.15.
+* Core: added a way to read a cookie through JS.
+* Core: Upgraded TinyMCE to 3.4.4
+
+
 2.6.1 (2011-08-02)
 --
 Bugfixes:
