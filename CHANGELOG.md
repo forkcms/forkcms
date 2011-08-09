@@ -4,6 +4,10 @@ Bugfixes:
 
 * Api: when the response isn't an array notices where thrown.
 
+Improvements:
+
+* Core: added a modifier to camelcase strings.
+
 
 2.6.2 (2011-08-09)
 --
