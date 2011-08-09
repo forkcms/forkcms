@@ -137,7 +137,7 @@ class FrontendJavascript
 			$path = realpath(FRONTEND_CORE_PATH . '/js/' . $this->filename);
 
 			// validate if path is allowed
-			if(substr($path, 0, strlen(realpath(FRONTEND_CORE_PATH) . '/js/')) != realpath(FRONTEND_CORE_PATH) . '/js/') $valid = false;
+			if(substr($path, 0, strlen(realpath(FRONTEND_CORE_PATH . '/js/'))) != realpath(FRONTEND_CORE_PATH . '/js/')) $valid = false;
 		}
 
 		// not core
@@ -147,7 +147,7 @@ class FrontendJavascript
 			$path = realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename);
 
 			// validate if path is allowed
-			if(substr($path, 0, strlen(realpath(FRONTEND_MODULES_PATH) . '/' . $this->getModule() . '/js/')) != realpath(FRONTEND_MODULES_PATH) . '/' . $this->getModule() . '/js/') $valid = false;
+			if(substr($path, 0, strlen(realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/'))) != realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/')) $valid = false;
 		}
 
 		// invalid file?
