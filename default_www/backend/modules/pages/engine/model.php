@@ -283,7 +283,7 @@ class BackendPagesModel
 					foreach($properties as $key => $value)
 					{
 						// page_id should be an integer
-						if(is_int($value)) $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageID . '][\'' . $key . '\'] = ' . (int) $value . ';' . "\n";
+						if(is_int($value)) $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageID . '][\'' . $key . '\'] = ' . $value . ';' . "\n";
 
 						// booleans
 						elseif(is_bool($value))
@@ -745,10 +745,15 @@ class BackendPagesModel
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get page (active version)
-		$return = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+		$return = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
+																IF(COUNT(e.id) > 0, "Y", "N") AS has_extra
+																GROUP_CONCAT(extra_ids) AS extra_ids
 															FROM pages AS i
-															WHERE i.id = ? AND i.language = ? AND i.status = ?',
-															array($id, $language, 'active'));
+															LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
+															LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
+															WHERE i.id = ? AND i.language = ? AND i.status = ?
+															GROUP BY i.revision_id',
+															array('block', $id, $language, 'active'));
 
 		// no page?
 		if(empty($return)) return false;
@@ -1360,15 +1365,19 @@ class BackendPagesModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// get data
-		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra,
-																		i.extra_ids, i.data,
-																		m.url, m.data AS meta_data
+		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
+																		m.url, m.data AS meta_data,
+																		IF(COUNT(e.id) > 0, "Y", "N") AS has_extra
+																		GROUP_CONCAT(extra_ids) AS extra_ids
 																	FROM pages AS i
 																	INNER JOIN meta AS m ON i.meta_id = m.id
+																	LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
+																	LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
 																	WHERE i.parent_id IN (' . implode(', ', $ids) . ')
-																	AND i.status = ? AND i.language = ?
+																		AND i.status = ? AND i.language = ?
+																	GROUP BY i.revision_id
 																	ORDER BY i.sequence ASC',
-																	array('active', $language), 'id');
+																	array('block', 'active', $language), 'id');
 
 		// get the childIDs
 		$childIds = array_keys($data[$level]);
@@ -1597,7 +1606,7 @@ class BackendPagesModel
 		// get info about parent page
 		$parentPageInfo = self::get($parentId);
 
-		// does the parent has extra's?
+		// does the parent have extra's?
 		if($parentPageInfo['has_extra'] == 'Y' && !$isAction)
 		{
 			// set locale
@@ -1659,28 +1668,11 @@ class BackendPagesModel
 	 *
 	 * @return	void
 	 * @param	array $blocks				The blocks to insert.
-	 * @param	bool[optional] $hasBlock	The blocks to insert.
 	 */
-	public static function insertBlocks(array $blocks, $hasBlock = false)
+	public static function insertBlocks(array $blocks)
 	{
 		// get db
 		$db = BackendModel::getDB(true);
-
-		// rebuild value for has_extra
-		$hasExtra = ($hasBlock) ? 'Y' : 'N';
-
-		// init var
-		$extraIds = array();
-
-		// loop blocks to add extraIds
-		foreach($blocks as $block) if($block['extra_id'] !== null) $extraIds[] = $block['extra_id'];
-
-		// init var
-		$extraIdsValue = null;
-		if(!empty($extraIds)) $extraIdsValue = implode(',', $extraIds);
-
-		// update page
-		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// loop blocks
 		foreach($blocks as $block)
@@ -1947,28 +1939,11 @@ class BackendPagesModel
 	 *
 	 * @return	void
 	 * @param	array $blocks				The blocks to update.
-	 * @param	bool[optional] $hasBlock	Is there a real block inside the blocks.
 	 */
-	public static function updateBlocks(array $blocks, $hasBlock = false)
+	public static function updateBlocks(array $blocks)
 	{
 		// get db
 		$db = BackendModel::getDB(true);
-
-		// rebuild value for has_extra
-		$hasExtra = ($hasBlock) ? 'Y' : 'N';
-
-		// init var
-		$extraIds = array();
-
-		// loop blocks to add extraIds
-		foreach($blocks as $block) if($block['extra_id'] !== null) $extraIds[] = $block['extra_id'];
-
-		// init var
-		$extraIdsValue = null;
-		if(!empty($extraIds)) $extraIdsValue = implode(',', $extraIds);
-
-		// update page
-		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// update old revisions
 		$db->update('pages_blocks', array('status' => 'archive'), 'revision_id = ?', array($blocks[0]['revision_id']));
@@ -2046,7 +2021,6 @@ return;
 					$block['edited_on'] = $block['created_on'];
 					$block['html'] = '';
 					$block['extra_id'] = null;
-					$block['has_extra'] = 'N';
 				}
 
 				// verify that there is no existing content and that we actually have new default content
@@ -2058,7 +2032,6 @@ return;
 						// check if a default extra has been defined
 						if($newTemplate['data']['default_extras_' . $page['language']][$i] != 'editor')
 						{
-							$page['has_extra'] = 'Y';
 							$block['extra_id'] = $newTemplate['data']['default_extras_' . $page['language']][$i];
 						}
 						// no default extra defined
@@ -2074,7 +2047,6 @@ return;
 						// check if a default extra has been defined
 						if($newTemplate['data']['default_extras'][$i] != 'editor')
 						{
-							$page['has_extra'] = 'Y';
 							$block['extra_id'] = $newTemplate['data']['default_extras'][$i];
 						}
 						// no default extra defined
@@ -2090,7 +2062,7 @@ return;
 			}
 
 			// insert the blocks
-			BackendPagesModel::updateBlocks($blocks, ($page['has_extra'] == 'Y'));
+			BackendPagesModel::updateBlocks($blocks);
 		}
 	}
 

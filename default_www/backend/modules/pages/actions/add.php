@@ -312,7 +312,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				}
 
 				// insert the blocks
-				BackendPagesModel::insertBlocks($blocks, $hasBlock);
+				BackendPagesModel::insertBlocks($blocks);
 
 				// trigger an event
 				BackendModel::triggerEvent($this->getModule(), 'after_add', $page);

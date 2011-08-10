@@ -21,15 +21,12 @@ CREATE TABLE IF NOT EXISTS `pages` (
  `allow_edit` enum('N','Y') NOT NULL default 'Y',
  `allow_delete` enum('N','Y') NOT NULL default 'Y',
  `sequence` int(11) NOT NULL,
- `has_extra` enum('N','Y') NOT NULL,
- `extra_ids` varchar(255) default NULL,
  PRIMARY KEY (`revision_id`),
  KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `pages_blocks` (
- `id` int(11) NOT NULL COMMENT 'An ID that will be the same over the revisions.\n',
  `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
  `position` varchar(255) NOT NULL,
  `extra_id` int(11) default NULL COMMENT 'The linked extra.',
@@ -37,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `pages_blocks` (
  `status` enum('active','archive','draft') NOT NULL default 'active',
  `created_on` datetime NOT NULL,
  `edited_on` datetime NOT NULL,
+ `sequence` int(11) NOT NULL,
  KEY `idx_rev_status` (`revision_id`,`status`),
  KEY `idx_id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -531,7 +531,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				}
 
 				// update the blocks
-				BackendPagesModel::updateBlocks($blocks, $hasBlock);
+				BackendPagesModel::updateBlocks($blocks);
 
 				// trigger an event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $page));

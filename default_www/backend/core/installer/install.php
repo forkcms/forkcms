@@ -507,8 +507,6 @@ class ModuleInstaller
 		if(!isset($revision['allow_edit'])) $revision['allow_edit'] = 'Y';
 		if(!isset($revision['allow_delete'])) $revision['allow_delete'] = 'Y';
 		if(!isset($revision['sequence'])) $revision['sequence'] = (int) $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?', array($revision['language'], $revision['parent_id'], $revision['type']));
-		if(!isset($revision['extra_ids'])) $revision['extra_ids'] = null;
-		if(!isset($revision['has_extra'])) $revision['has_extra'] = $revision['extra_ids'] ? 'Y' : 'N';
 
 		// meta needs to be inserted
 		if(!isset($revision['meta_id']))
@@ -551,20 +549,11 @@ class ModuleInstaller
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['extra_id'])) $block['extra_id'] = null;
-			else $revision['extra_ids'] = trim($revision['extra_ids'] . ',' . $block['extra_id'], ',');
 			if(!isset($block['html'])) $block['html'] = '';
 			elseif(SpoonFile::exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
 
 			// insert block
 			$this->getDB()->insert('pages_blocks', $block);
-		}
-
-		// blocks added
-		if($revision['extra_ids'] && $revision['has_extra'] == 'N')
-		{
-			// update page
-			$revision['has_extra'] = 'Y';
-			$this->getDB()->update('pages', $revision, 'revision_id = ?', array($revision['revision_id']));
 		}
 
 		// return page id

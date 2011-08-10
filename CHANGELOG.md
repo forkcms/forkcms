@@ -1,3 +1,10 @@
+3.0.0 (xxxx-xx-xx)
+--
+Improvements:
+* Core: Completely re-invented the blocks system; it's now position-driven.
+* Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
+
+
 2.6.3 (xxxx-xx-xx)
 --
 Bugfixes:
