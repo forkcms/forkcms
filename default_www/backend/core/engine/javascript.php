@@ -137,7 +137,7 @@ class BackendJavascript
 			$path = realpath(BACKEND_CORE_PATH . '/js/' . $this->filename);
 
 			// validate if path is allowed
-			if(substr($path, 0, strlen(realpath(BACKEND_CORE_PATH) . '/js/')) != realpath(BACKEND_CORE_PATH) . '/js/') $valid = false;
+			if(str_replace('/', '\\', substr($path, 0, strlen(realpath(BACKEND_CORE_PATH) . '/js/'))) != str_replace('/', '\\', realpath(BACKEND_CORE_PATH) . '/js/')) $valid = false;
 		}
 
 		// not core
@@ -147,7 +147,7 @@ class BackendJavascript
 			$path = realpath(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename);
 
 			// validate if path is allowed
-			if(substr($path, 0, strlen(realpath(BACKEND_MODULES_PATH) . '/' . $this->getModule() . '/js/')) != realpath(BACKEND_MODULES_PATH) . '/' . $this->getModule() . '/js/') $valid = false;
+			if(str_replace('/', '\\', substr($path, 0, strlen(realpath(BACKEND_MODULES_PATH) . '/' . $this->getModule() . '/js/'))) != str_replace('/', '\\', realpath(BACKEND_MODULES_PATH) . '/' . $this->getModule() . '/js/')) $valid = false;
 		}
 
 		// invalid file?
