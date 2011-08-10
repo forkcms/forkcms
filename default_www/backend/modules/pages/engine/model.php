@@ -892,8 +892,9 @@ class BackendPagesModel
 			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// add human readable name
-			$row['human_name'] = BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type'])) . ': ' . $name;
-			$row['message'] = sprintf(BL::msg(SpoonFilter::toCamelCase($row['type'] . '_attached'), 'pages'), $name);
+			$module = ucfirst(BL::lbl(ucfirst($row['module'])));
+			$row['human_name'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ': ' . $name;
+			$row['path'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
 		}
 
 		// any items to remove?
@@ -1945,9 +1946,6 @@ class BackendPagesModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// update old revisions
-		$db->update('pages_blocks', array('status' => 'archive'), 'revision_id = ?', array($blocks[0]['revision_id']));
-
 		// loop blocks
 		foreach($blocks as $block)
 		{
@@ -2016,7 +2014,6 @@ return;
 					$block['id'] = BackendPagesModel::getMaximumBlockId() + $i + 1;
 					$block['revision_id'] = $page['revision_id'];
 					$block['html'] = '';
-					$block['status'] = 'active';
 					$block['created_on'] = BackendModel::getUTCDate();
 					$block['edited_on'] = $block['created_on'];
 					$block['html'] = '';

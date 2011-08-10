@@ -36,14 +36,6 @@ class FrontendPage extends FrontendBaseObject
 
 
 	/**
-	 * Extra instances
-	 *
-	 * @var	array
-	 */
-	private $extras;
-
-
-	/**
 	 * Header instance
 	 *
 	 * @var	FrontendHeader
@@ -144,21 +136,36 @@ class FrontendPage extends FrontendBaseObject
 		// fetch variables from main template
 		$mainVariables = $this->tpl->getAssignedVariables();
 
-		// loop all extras
-		foreach((array) $this->extras as $templateVariable => $extra)
+		// loop all positions
+		foreach($this->record['positions'] as $position => &$blocks)
 		{
-			// fetch extra-specific variables
-			$extraVariables = $extra->getTemplate()->getAssignedVariables();
+			// loop all blocks in this position
+			foreach($blocks as &$block)
+			{
+				// check for extra's that need to be reparsed
+				if(isset($block['extra']))
+				{
+					// fetch extra-specific variables
+					$extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
 
-			// assign all main variables
-			$extra->getTemplate()->assignArray($mainVariables);
+					// assign all main variables
+					$block['extra']->getTemplate()->assignArray($mainVariables);
 
-			// overwrite with all specific variables
-			$extra->getTemplate()->assignArray($extraVariables);
+					// overwrite with all specific variables
+					$block['extra']->getTemplate()->assignArray($extraVariables);
 
-			// parse extra and assign to main template
-			$this->tpl->assign($templateVariable, $extra->getContent());
+					// parse extra
+					$block = array('content' => $block['extra']->getContent());
+				}
+			}
+
+			// assign position to template
+			$this->tpl->assign($position, $blocks);
 		}
+
+		// assign empty positions
+		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
+		foreach($unusedPositions as $position) $this->tpl->assign($position, array());
 
 		// only overwrite when status code is 404
 		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
@@ -200,22 +207,26 @@ class FrontendPage extends FrontendBaseObject
 		else $this->record = (array) FrontendModel::getPage($this->pageId);
 
 		// empty record (pageId doesn't exists, hope this line is never used)
-		if((empty($this->record) && $this->pageId != 404) || (!isset($this->record['blocks']))) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
+		if((empty($this->record) && $this->pageId != 404) || (!isset($this->record['positions']))) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
 
 		// init var
 		$redirect = true;
 
 		// loop blocks, if all are empty we should redirect to the first child
-		foreach($this->record['blocks'] as $block)
+		foreach($this->record['positions'] as $position => $blocks)
 		{
-			// HTML provided?
-			if($block['html'] != '') $redirect = false;
+			// loop blocks in position
+			foreach($blocks as $block)
+			{
+				// HTML provided?
+				if($block['html'] != '') $redirect = false;
 
-			// an decent extra provided?
-			if($block['extra_type'] == 'block') $redirect = false;
+				// an decent extra provided?
+				if($block['extra_type'] == 'block') $redirect = false;
 
-			// a widget provided
-			if($block['extra_type'] == 'widget') $redirect = false;
+				// a widget provided
+				if($block['extra_type'] == 'widget') $redirect = false;
+			}
 		}
 
 		// should we redirect?
@@ -315,64 +326,62 @@ class FrontendPage extends FrontendBaseObject
 		$this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
 
 		// loop blocks
-		foreach($this->record['blocks'] as $index => $block)
+		foreach($this->record['positions'] as $position => &$blocks)
 		{
-			// get blockName
-			$blockName = (isset($this->record['template_data']['names'][$index])) ? $this->record['template_data']['names'][$index] : null;
+			// position not known in template = skip it
+			if(!in_array($position, $this->record['template_data']['names'])) continue;
 
-			// unknown blockname? skip it
-			if($blockName === null) continue;
-
-			// build templateVariable
-			$templateVariable = 'block' . ($index + 1);
-
-			// an extra
-			if($block['extra_id'] !== null)
+			// loop blocks in position
+			foreach($blocks as $index => &$block)
 			{
-				// block
-				if($block['extra_type'] == 'block')
+				// build templateVariable
+				$templateVariable = 'block' . ($index + 1);
+
+				// an extra
+				if($block['extra_id'] !== null)
 				{
-					// create new instance
-					$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
+					// block
+					if($block['extra_type'] == 'block')
+					{
+						// create new instance
+						$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
-					// execute
-					$extra->execute();
+						// execute
+						$extra->execute();
 
-					// overwrite the template
-					if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
+						// overwrite the template
+						if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
 
-					// add to list of extras
-					else $this->extras[$templateVariable] = $extra;
+						// add to list of extras
+						else $block = array('extra' => $extra);
 
-					// assign the variables from this block to the main template
-					$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
+						// assign the variables from this block to the main template
+						$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
+					}
+
+					// widget
+					else
+					{
+						// create new instance
+						$extra = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
+
+						// fetch data (if available)
+						$extra->execute();
+
+						// add to list of blocks
+						$block = array('extra' => $extra);
+
+						// assign the variables from this widget to the main template
+						$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
+					}
 				}
 
-				// widget
+				// the block only contains HTML
 				else
 				{
-					// create new instance
-					$extra = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
-
-					// fetch data (if available)
-					$extra->execute();
-
-					// assign the variables from this widget to the main template
-					$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
-
-					// add to list of blocks
-					$this->extras[$templateVariable] = $extra;
+					$block = array('isHTML' => true,
+									'content' => $block['html']);
 				}
-			}
-
-			// the block only contains HTML
-			else
-			{
-				// assign option
-				$this->tpl->assign($templateVariable . 'IsHTML', true);
-
-				// assign HTML
-				$this->tpl->assign($templateVariable, $block['html']);
 			}
 		}
 	}

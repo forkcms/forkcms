@@ -83,8 +83,8 @@ class FrontendPagesModel implements FrontendTagsInterface
 		{
 			$item['text'] = implode(' ', (array) $db->getColumn('SELECT pb.html
 																	FROM pages_blocks AS pb
-																	WHERE pb.revision_id = ? AND pb.status = ?',
-																	array($item['text'], 'active')));
+																	WHERE pb.revision_id = ?',
+																	array($item['text'])));
 
 			$item['full_url'] = FrontendNavigation::getURL($item['id']);
 		}

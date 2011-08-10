@@ -276,22 +276,23 @@ class FrontendModel
 		$numBlocks = count($record['template_data']['names']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html,
-														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-														FROM pages_blocks AS pb
-														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-														WHERE pb.revision_id = ? AND pb.status = ?
-														ORDER BY pb.sequence',
-														array('N', $record['revision_id'], 'active'));
-
-		// remove redundant blocks
-		$record['blocks'] = array_splice($record['blocks'], 0, $numBlocks);
+		$blocks = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html, pb.position,
+											pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
+											FROM pages_blocks AS pb
+											INNER JOIN pages AS p ON p.revision_id = pb.revision_id
+											LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
+											WHERE pb.revision_id = ? AND p.status = ? AND pb.visible = ?
+											ORDER BY pb.position, pb.sequence',
+											array('N', $record['revision_id'], 'active', 'Y'));
 
 		// loop blocks
-		foreach($record['blocks'] as $index => $row)
+		foreach($blocks as $block)
 		{
 			// unserialize data if it is available
-			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
+			if(isset($block['data'])) $block['data'] = unserialize($block['data']);
+
+			// save to position
+			$record['positions'][$block['position']][] = $block;
 		}
 
 		// return page record
@@ -339,8 +340,9 @@ class FrontendModel
 		$record['blocks'] = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html,
 														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 														FROM pages_blocks AS pb
+														INNER JOIN pages AS p ON p.revision_id = pb.revision_id
 														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-														WHERE pb.revision_id = ? AND pb.status = ?
+														WHERE pb.revision_id = ? AND p.status = ?
 														ORDER BY pb.id',
 														array('N', $record['revision_id'], 'active'));
 

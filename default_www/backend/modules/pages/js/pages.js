@@ -81,7 +81,7 @@ jsBackend.pages.extras =
 				var hasModules = false;
 
 				// check if there is a block linked already
-				$('.linkedExtra input:hidden').each(function()
+				$('input[id^=blockExtraId]').each(function()
 				{
 					// get id
 					var id = $(this).val();
@@ -165,7 +165,7 @@ jsBackend.pages.extras =
 		var hasModules = false;
 
 		// check if there already blocks linked
-		$('.linkedExtra input:hidden').each(function()
+		$('input[id^=blockExtraId]').each(function()
 		{
 			var id = $(this).val();
 			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
@@ -241,11 +241,11 @@ jsBackend.pages.extras =
 
 			// create html to be appended in template-view
 			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
-								'<span class="templateTitle">' + extrasById[selectedExtraId].human_name + '</span>' + // @todo: add ucfirst
-								'<span class="templateDescription">Widget &rsaquo; Blog &rsaquo; Archive</span>' +
+								'<span class="templateTitle">' + extrasById[selectedExtraId].human_name + '</span>' +
+								'<span class="templateDescription">' + extrasById[selectedExtraId].path + '</span>' +
 								'<div class="buttonHolder">' +
 									'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
-									'<a href="' + editLink + '" class="showEditor button icon iconOnly iconEdit' + (editLink ? '' : ' disabledButton') + '" target="_blank"><span>{$lblEdit|ucfirst}</span></a>' +
+									'<a href="' + (editLink ? editLink : '#') + '" class="button icon iconOnly iconEdit' + (editLink ? '' : ' disabledButton') + '"' + (editLink ? ' target="_blank"' : ' onclick="return false;"') + '><span>{$lblEdit|ucfirst}</span></a>' +
 									'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
 								'</div>' +
 							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
@@ -293,13 +293,13 @@ jsBackend.pages.extras =
 		evt.preventDefault();
 
 		// fetch block index
-		var index = $(this).parent().data('blockId');
+		var index = $(this).parent().parent('.templatePositionCurrentType').data('blockId');
 
 		// remove block from template overview
 		$(this).parent().parent('.templatePositionCurrentType').remove();
 
 		// remove block
-		$('#blockExtraId' + index).parent().parent().remove();
+		$('#blockExtraId' + index).parent().remove();
 
 		// initialise new index
 		var newIndex = index;
@@ -315,6 +315,9 @@ jsBackend.pages.extras =
 		// save content to allow for cancelling the edited text
 		jsBackend.pages.extras.htmlContent = $('#blockHtml' + index).val();
 
+		// placeholder for block node that will be moved by the jQuery dialog
+		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
+		
 		// show editor
 		$('#blockHtml' + index).parent().parent().parent().dialog(
 		{
@@ -342,7 +345,19 @@ jsBackend.pages.extras =
 					// close the dialog
 					$(this).dialog('close');
 				}
-			 }
+			},
+			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
+			close: function(e, ui)
+			{
+				// find block placeholder
+				var blockPlaceholder = $('#blockPlaceholder');
+
+				// move node back to the original position
+				$(this).insertBefore(blockPlaceholder);
+
+				// remove placeholder
+				blockPlaceholder.remove();
+			}
 		});
 
 		// add editor

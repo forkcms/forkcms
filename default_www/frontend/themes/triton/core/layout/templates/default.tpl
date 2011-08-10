@@ -27,18 +27,17 @@
 					{include:core/layout/templates/languages.tpl}
 				</nav>
 
-				{* Block 10 (default: Search) *}
-				{option:block10IsHTML}
-					{option:block10}
-						{$block10}
-					{/option:block10}
-				{/option:block10IsHTML}
-				{option:!block10IsHTML}
-					<div id="headerSearch">
-						<h4>{$lblSearch|ucfirst}</h4>
-						{$block10}
-					</div>
-				{/option:!block10IsHTML}
+				{* Top position *}
+				{iteration:top}
+					{option:top.isHTML}
+						<div id="headerSearch">
+							{$top.content}
+						</div>
+					{/option:top.isHTML}
+					{option:!top.isHTML}
+						{$top.content}
+					{/option:!top.isHTML}
+				{/iteration:top}
 
 				{* Breadcrumb *}
 				<div id="breadcrumb">
@@ -46,18 +45,17 @@
 					{include:core/layout/templates/breadcrumb.tpl}
 				</div>
 
-				{* Block 9 (default: Editor) *}
-				{option:block9IsHTML}
-					{option:block9}
+				{* Advertisement position *}
+				{iteration:advertisement}
+					{option:advertisement.isHTML}
 						<div id="headerAd">
-							<h4>{$lblAdvertisement|ucfirst}</h4>
-							{$block9}
+							{$advertisement.content}
 						</div>
-					{/option:block9}
-				{/option:block9IsHTML}
-				{option:!block9IsHTML}
-					{$block9}
-				{/option:!block9IsHTML}
+					{/option:advertisement.isHTML}
+					{option:!advertisement.isHTML}
+						{$advertisement.content}
+					{/option:!advertisement.isHTML}
+				{/iteration:advertisement}
 			</div>
 
 		</header>
@@ -73,73 +71,25 @@
 						{$var|getsubnavigation:'page':{$page.id}:2}
 					</nav>
 
-					{* Block 5 (default: Editor) *}
-					{option:block5IsHTML}
-						{option:block5}
-							<section class="mod widget">
+					{* Left position *}
+					{iteration:left}
+						{option:left.isHTML}
+							<section class="mod">
 								<div class="inner">
 									<div class="bd content">
-										{$block5}
+										{$left.content}
 									</div>
 								</div>
 							</section>
-						{/option:block5}
-					{/option:block5IsHTML}
-					{option:!block5IsHTML}
-						{$block5}
-					{/option:!block5IsHTML}
-
-					{* Block 6 (default: Editor) *}
-					{option:block6IsHTML}
-						{option:block6}
-							<section class="mod widget">
-								<div class="inner">
-									<div class="bd content">
-										{$block6}
-									</div>
-								</div>
-							</section>
-						{/option:block6}
-					{/option:block6IsHTML}
-					{option:!block6IsHTML}
-						{$block6}
-					{/option:!block6IsHTML}
-
-					{* Block 7 (default: Editor) *}
-					{option:block7IsHTML}
-						{option:block7}
-							<section class="mod widget">
-								<div class="inner">
-									<div class="bd content">
-										{$block7}
-									</div>
-								</div>
-							</section>
-						{/option:block7}
-					{/option:block7IsHTML}
-					{option:!block7IsHTML}
-						{$block7}
-					{/option:!block7IsHTML}
-
-					{* Block 8 (default: Editor) *}
-					{option:block8IsHTML}
-						{option:block8}
-							<section class="mod widget">
-								<div class="inner">
-									<div class="bd content">
-										{$block8}
-									</div>
-								</div>
-							</section>
-						{/option:block8}
-					{/option:block8IsHTML}
-					{option:!block8IsHTML}
-						{$block8}
-					{/option:!block8IsHTML}
+						{/option:left.isHTML}
+						{option:!left.isHTML}
+							{$left.content}
+						{/option:!left.isHTML}
+					{/iteration:left}
 
 				</div>
 
-				{* Right column *}
+				{* Main column *}
 				<div class="col col-9 lastCol">
 
 					{* Page title *}
@@ -149,69 +99,21 @@
 						</header>
 					{/option:!hideContentTitle}
 
-					{* Block 1 (default: Editor) *}
-					{option:block1IsHTML}
-						{option:block1}
+					{* Main position *}
+					{iteration:main}
+						{option:main.isHTML}
 							<section class="mod">
 								<div class="inner">
 									<div class="bd content">
-										{$block1}
+										{$main.content}
 									</div>
 								</div>
 							</section>
-						{/option:block1}
-					{/option:block1IsHTML}
-					{option:!block1IsHTML}
-						{$block1}
-					{/option:!block1IsHTML}
-
-					{* Block 2 (default: Editor) *}
-					{option:block2IsHTML}
-						{option:block2}
-							<section class="mod">
-								<div class="inner">
-									<div class="bd content">
-										{$block2}
-									</div>
-								</div>
-							</section>
-						{/option:block2}
-					{/option:block2IsHTML}
-					{option:!block2IsHTML}
-						{$block2}
-					{/option:!block2IsHTML}
-
-					{* Block 3 (default: Editor) *}
-					{option:block3IsHTML}
-						{option:block3}
-							<section class="mod">
-								<div class="inner">
-									<div class="bd content">
-										{$block3}
-									</div>
-								</div>
-							</section>
-						{/option:block3}
-					{/option:block3IsHTML}
-					{option:!block3IsHTML}
-						{$block3}
-					{/option:!block3IsHTML}
-
-					{* Block 4 (default: Editor) *}
-					{option:block4IsHTML}
-						{option:block4}
-							<section class="mod">
-								<div class="inner">
-									<div class="bd content">
-										{$block4}
-									</div>
-								</div>
-							</section>
-						{/option:block4}
-					{/option:block4IsHTML}
-					{option:!block4IsHTML}
-						{$block4}
-					{/option:!block4IsHTML}
+						{/option:main.isHTML}
+						{option:!main.isHTML}
+							{$main.content}
+						{/option:!main.isHTML}
+					{/iteration:main}
 
 				</div>
 			</div>

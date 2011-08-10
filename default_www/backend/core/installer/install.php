@@ -551,7 +551,7 @@ class ModuleInstaller
 		$positions = array();
 
 		// loop blocks: get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
-		for($i = 0; $i < count(func_num_args() - 2); $i++)
+		for($i = 0; $i < func_num_args() - 2; $i++)
 		{
 			// get block
 			$block = @func_get_arg($i + 2);
@@ -566,10 +566,10 @@ class ModuleInstaller
 			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
 			if(!isset($block['html'])) $block['html'] = '';
 			elseif(SpoonFile::exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
-			if(!isset($block['status'])) $block['status'] = 'active';
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['extra_id'])) $block['extra_id'] = null;
+			if(!isset($block['visible'])) $block['visible'] = 'Y';
 			if(!isset($block['sequence'])) $block['sequence'] = count($positions[$block['position']]) - 1;
 
 			// insert block

@@ -30,21 +30,21 @@
 				</header>
 			{/option:!hideContentTitle}
 
-			{* Block 1 (default: Editor) *}
-			{option:block1IsHTML}
-				{option:block1}
+			{* Main position *}
+			{iteration:main}
+				{option:main.isHTML}
 					<section class="mod">
 						<div class="inner">
 							<div class="bd content">
-								{$block1}
+								{$main.content}
 							</div>
 						</div>
 					</section>
-				{/option:block1}
-			{/option:block1IsHTML}
-			{option:!block1IsHTML}
-				{$block1}
-			{/option:!block1IsHTML}
+				{/option:main.isHTML}
+				{option:!main.isHTML}
+					{$main.content}
+				{/option:!main.isHTML}
+			{/iteration:main}
 		</section>
 
 		<footer>

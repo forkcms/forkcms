@@ -144,16 +144,16 @@ class PagesInstall extends ModuleInstaller
 												'label' => 'Default',
 												'path' => 'core/layout/templates/default.tpl',
 												'active' => 'Y',
-												'data' => serialize(array('format' => '[main,right]',
-																			'names' => array('main', 'right'))));
+												'data' => serialize(array('format' => '[main]',
+																			'names' => array('main'))));
 												// @todo: default extras
 
 		$templates['core']['home'] = array('theme' => 'core',
 											'label' => 'Home',
 											'path' => 'core/layout/templates/home.tpl',
 											'active' => 'Y',
-											'data' => serialize(array('format' => '[main,right]',
-																		'names' => array('main', 'right'))));
+											'data' => serialize(array('format' => '[main]',
+																		'names' => array('main'))));
 											// @todo: default extras
 
 		// insert templates
@@ -173,16 +173,16 @@ class PagesInstall extends ModuleInstaller
 												'label' => 'Default',
 												'path' => 'core/layout/templates/default.tpl',
 												'active' => 'Y',
-												'data' => serialize(array('format' => '[/,/,top,top],[/,/,/,/],[left,main,main,main]',
-																			'names' => array('main', 'left', 'top'))));
+												'data' => serialize(array('format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
+																			'names' => array('main', 'left', 'top', 'advertisement'))));
 												// @todo: default extras
 
 		$templates['triton']['home'] = array('theme' => 'triton',
 												'label' => 'Home',
 												'path' => 'core/layout/templates/home.tpl',
 												'active' => 'Y',
-												'data' => serialize(array('format' => '[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
-																			'names' => array('main', 'left', 'right', 'top'))));
+												'data' => serialize(array('format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
+																			'names' => array('main', 'left', 'right', 'top', 'advertisement'))));
 												// @todo: default extras
 
 		// insert templates
