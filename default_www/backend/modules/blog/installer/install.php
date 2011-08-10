@@ -97,6 +97,9 @@ class BlogInstall extends ModuleInstaller
 		$this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
 
+		// get search extra id
+		$searchId = (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
@@ -129,7 +132,8 @@ class BlogInstall extends ModuleInstaller
 				$this->insertPage(array('title' => 'Blog',
 										'language' => $language),
 									null,
-									array('extra_id' => $blogID));
+									array('extra_id' => $blogID, 'position' => 'main'),
+									array('extra_id' => $searchId, 'position' => 'top'));
 			}
 
 			// install example data if requested

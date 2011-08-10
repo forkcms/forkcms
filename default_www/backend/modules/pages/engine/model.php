@@ -746,8 +746,8 @@ class BackendPagesModel
 
 		// get page (active version)
 		$return = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-																IF(COUNT(e.id) > 0, "Y", "N") AS has_extra
-																GROUP_CONCAT(extra_ids) AS extra_ids
+																IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
+																GROUP_CONCAT(b.extra_id) AS extra_ids
 															FROM pages AS i
 															LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
 															LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
@@ -799,7 +799,7 @@ class BackendPagesModel
 															FROM pages_blocks AS b
 															INNER JOIN pages AS i ON b.revision_id = i.revision_id
 															WHERE i.id = ? AND i.language = ? AND i.status = ?
-															ORDER BY b.id ASC',
+															ORDER BY b.sequence ASC',
 															array($id, $language, 'active'));
 	}
 
@@ -1367,8 +1367,8 @@ class BackendPagesModel
 		// get data
 		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
 																		m.url, m.data AS meta_data,
-																		IF(COUNT(e.id) > 0, "Y", "N") AS has_extra
-																		GROUP_CONCAT(extra_ids) AS extra_ids
+																		IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
+																		GROUP_CONCAT(b.extra_id) AS extra_ids
 																	FROM pages AS i
 																	INNER JOIN meta AS m ON i.meta_id = m.id
 																	LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL

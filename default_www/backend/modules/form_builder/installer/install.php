@@ -112,17 +112,11 @@ class FormBuilderInstall extends ModuleInstaller
 			$this->insertPage(array('title' => ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend')),
 									'parent_id' => 1,
 									'language' => $language),
-									null,
-									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/contact.txt'),
-									array('extra_id' => $extraId),
-									array('html' => ''),
-									array('html' => ''),
-									array('html' => ''),
-									array('html' => ''),
-									array('html' => ''),
-									array('html' => ''),
-									array('html' => ''),
-									array('extra_id' => $searchId));
+								null,
+								array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/contact.txt'),
+								array('extra_id' => $extraId, 'position' => 'main'),
+								array('extra_id' => $searchId, 'position' => 'top'));
+
 		}
 	}
 }

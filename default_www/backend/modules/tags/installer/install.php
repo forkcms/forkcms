@@ -42,6 +42,9 @@ class TagsInstall extends ModuleInstaller
 		$this->insertExtra('tags', 'widget', 'TagCloud', 'tagcloud', null, 'N', 31);
 		$this->insertExtra('tags', 'widget', 'Related', 'related', null, 'N', 32);
 
+		// get search extra id
+		$searchId = (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
@@ -56,7 +59,8 @@ class TagsInstall extends ModuleInstaller
 										'type' => 'root',
 										'language' => $language),
 									null,
-									array('extra_id' => $tagsID));
+									array('extra_id' => $tagsID, 'position' => 'main'),
+									array('extra_id' => $searchId, 'position' => 'top'));
 			}
 		}
 	}

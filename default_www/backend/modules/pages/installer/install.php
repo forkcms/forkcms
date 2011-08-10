@@ -75,9 +75,6 @@ class PagesInstall extends ModuleInstaller
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 
-		// fetch template ids
-		$templateIds = $this->getDB()->getPairs('SELECT label, id FROM pages_templates WHERE theme = ?', array($this->defaultTheme));
-
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
@@ -87,48 +84,45 @@ class PagesInstall extends ModuleInstaller
 				// insert homepage
 				$this->insertPage(array('id' => 1,
 										'parent_id' => 0,
-										'template_id' => $templateIds['Home'],
+										'template_id' => $this->getTemplateId('home'),
 										'title' => 'Home',
 										'language' => $language,
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// insert sitemap
 				$this->insertPage(array('id' => 2,
-										'template_id' => $templateIds['Default'],
 										'title' => ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
 										'language' => $language),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sitemap.txt'),
-										array('extra_id' => $extras['sitemap_widget_sitemap']),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sitemap.txt'),
+									array('extra_id' => $extras['sitemap_widget_sitemap']),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// insert disclaimer
 				$this->insertPage(array('id' => 3,
-										'template_id' => $templateIds['Default'],
 										'title' => ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'footer',
 										'language' => $language),
-										array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/disclaimer.txt'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/disclaimer.txt'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// insert 404
 				$this->insertPage(array('id' => 404,
-										'template_id' => $templateIds['Default'],
 										'title' => '404',
 										'type' => 'root',
 										'language' => $language,
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/404.txt'),
-										array('extra_id' => $extras['sitemap_widget_sitemap']),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/404.txt'),
+									array('extra_id' => $extras['sitemap_widget_sitemap']),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 			}
 		}
 	}
@@ -146,7 +140,7 @@ class PagesInstall extends ModuleInstaller
 		 */
 
 		// build templates
-		$templates['core']['Default'] = array('theme' => 'core',
+		$templates['core']['default'] = array('theme' => 'core',
 												'label' => 'Default',
 												'path' => 'core/layout/templates/default.tpl',
 												'active' => 'Y',
@@ -154,7 +148,7 @@ class PagesInstall extends ModuleInstaller
 																			'names' => array('main', 'right'))));
 												// @todo: default extras
 
-		$templates['core']['Home'] = array('theme' => 'core',
+		$templates['core']['home'] = array('theme' => 'core',
 											'label' => 'Home',
 											'path' => 'core/layout/templates/home.tpl',
 											'active' => 'Y',
@@ -163,8 +157,8 @@ class PagesInstall extends ModuleInstaller
 											// @todo: default extras
 
 		// insert templates
-		$templateIds['core']['Default'] = $this->getDB()->insert('pages_templates', $templates['core']['Default']);
-		$templateIds['core']['Home'] = $this->getDB()->insert('pages_templates', $templates['core']['Home']);
+		$this->getDB()->insert('pages_templates', $templates['core']['default']);
+		$this->getDB()->insert('pages_templates', $templates['core']['home']);
 
 
 		/*
@@ -175,7 +169,7 @@ class PagesInstall extends ModuleInstaller
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
 		// build templates
-		$templates['triton']['Default'] = array('theme' => 'triton',
+		$templates['triton']['default'] = array('theme' => 'triton',
 												'label' => 'Default',
 												'path' => 'core/layout/templates/default.tpl',
 												'active' => 'Y',
@@ -183,7 +177,7 @@ class PagesInstall extends ModuleInstaller
 																			'names' => array('main', 'left', 'top'))));
 												// @todo: default extras
 
-		$templates['triton']['Home'] = array('theme' => 'triton',
+		$templates['triton']['home'] = array('theme' => 'triton',
 												'label' => 'Home',
 												'path' => 'core/layout/templates/home.tpl',
 												'active' => 'Y',
@@ -192,8 +186,8 @@ class PagesInstall extends ModuleInstaller
 												// @todo: default extras
 
 		// insert templates
-		$templateIds['triton']['Default'] = $this->getDB()->insert('pages_templates', $templates['triton']['Default']);
-		$templateIds['triton']['Home'] = $this->getDB()->insert('pages_templates', $templates['triton']['Home']);
+		$this->getDB()->insert('pages_templates', $templates['triton']['default']);
+		$this->getDB()->insert('pages_templates', $templates['triton']['home']);
 
 		/*
 		 * General theme settings
@@ -203,7 +197,7 @@ class PagesInstall extends ModuleInstaller
 		$this->setSetting('core', 'theme', $this->defaultTheme, true);
 
 		// set default template
-		$this->setSetting('pages', 'default_template', $templateIds[$this->defaultTheme]['Default']);
+		$this->setSetting('pages', 'default_template', $this->getTemplateId('default'));
 
 		// disable meta navigation
 		$this->setSetting('pages', 'meta_navigation', false);
@@ -229,9 +223,6 @@ class PagesInstall extends ModuleInstaller
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 
-		// fetch template ids
-		$templateIds = $this->getDB()->getPairs('SELECT label, id FROM pages_templates WHERE theme = ?', array($this->defaultTheme));
-
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
@@ -241,86 +232,70 @@ class PagesInstall extends ModuleInstaller
 				// re-insert homepage
 				$this->insertPage(array('id' => 1,
 										'parent_id' => 0,
-										'template_id' => $templateIds['Home'],
+										'template_id' => $this->getTemplateId('home'),
 										'title' => 'Home',
 										'language' => $language,
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
-										array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
-										array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+									array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
+									array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// insert blog
 				$this->insertPage(array('title' => 'Blog',
-										'template_id' => $templateIds['Default'],
 										'language' => $language),
-										null,
-										array('extra_id' => $extras['blog_block']),
-										array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'left'),
-										array('extra_id' => $extras['blog_widget_categories'], 'position' => 'left'),
-										array('extra_id' => $extras['blog_widget_archive'], 'position' => 'left'),
-										array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('extra_id' => $extras['blog_block']),
+									array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'left'),
+									array('extra_id' => $extras['blog_widget_categories'], 'position' => 'left'),
+									array('extra_id' => $extras['blog_widget_archive'], 'position' => 'left'),
+									array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// insert about us page
-				$aboutUsId = $this->insertPage(array('template_id' => $templateIds['Default'],
-														'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
+				$aboutUsId = $this->insertPage(array('title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
 														'parent_id' => 1,
 														'language' => $language),
 														null,
 														array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// location
-				$this->insertPage(array('template_id' => $templateIds['Default'],
-										'title' => ucfirst($this->getLocale('Location', 'core', $language, 'lbl', 'frontend')),
+				$this->insertPage(array('title' => ucfirst($this->getLocale('Location', 'core', $language, 'lbl', 'frontend')),
 										'parent_id' => $aboutUsId,
 										'language' => $language),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// team
-				$this->insertPage(array('template_id' => $templateIds['Default'],
-										'title' => 'Team',
+				$this->insertPage(array('title' => 'Team',
 										'parent_id' => $aboutUsId,
 										'language' => $language),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// history
-				$this->insertPage(array('template_id' => $templateIds['Default'],
-										'title' => ucfirst($this->getLocale('History', 'core', $language, 'lbl', 'frontend')),
+				$this->insertPage(array('title' => ucfirst($this->getLocale('History', 'core', $language, 'lbl', 'frontend')),
 										'parent_id' => 1,
 										'language' => $language),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
-
-				// insert contact page
-				$this->insertPage(array('template_id' => $templateIds['Default'],
-										'title' => 'Contact',
-										'parent_id' => 1,
-										'language' => $language),
-										null,
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/contact.txt'),
-										array('extra_id' => $extras['contact_block']),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									null,
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 
 				// insert lorem ipsum test page
-				$this->insertPage(array('template_id' => $templateIds['Default'],
-										'title' => 'Lorem ipsum',
+				$this->insertPage(array('title' => 'Lorem ipsum',
 										'type' => 'root',
 										'language' => $language,
 										'hidden' => 'Y'),
-										array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
-										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/lorem_ipsum.txt'),
-										array('extra_id' => $extras['search_form'], 'position' => 'top'));
+									array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/lorem_ipsum.txt'),
+									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 			}
 		}
 	}

@@ -281,7 +281,7 @@ class FrontendModel
 														FROM pages_blocks AS pb
 														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
 														WHERE pb.revision_id = ? AND pb.status = ?
-														ORDER BY pb.id',
+														ORDER BY pb.sequence',
 														array('N', $record['revision_id'], 'active'));
 
 		// remove redundant blocks

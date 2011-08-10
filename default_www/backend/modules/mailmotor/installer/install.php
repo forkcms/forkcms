@@ -103,32 +103,32 @@ class MailmotorInstall extends ModuleInstaller
 		$unsubscribeFormID = $this->insertExtra('mailmotor', 'block', 'UnsubscribeForm', 'unsubscribe', null, 'N', 3002);
 		$widgetSubscribeFormID = $this->insertExtra('mailmotor', 'widget', 'SubscribeForm', 'subscribe', null, 'N', 3003);
 
-		// fetch template ids
-		$templateIds = $this->getDB()->getPairs('SELECT label, id FROM pages_templates WHERE theme = ?', array('triton'));
+		// get search extra id
+		$searchId = (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			$parentID = (int) $this->insertPage(array('title' => ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
-														'template_id' => $templateIds['Default'],
-														'type' => 'root',
-														'language' => $language),
-												null,
-												array('extra_id' => $sentMailingsID));
+			$parentID = $this->insertPage(array('title' => ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
+												'type' => 'root',
+												'language' => $language),
+											null,
+											array('extra_id' => $sentMailingsID, 'position' => 'main'),
+											array('extra_id' => $searchId, 'position' => 'top'));
 
 			$this->insertPage(array('parent_id' => $parentID,
-									'template_id' => $templateIds['Default'],
 									'title' => ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')),
 									'language' => $language),
 								null,
-								array('extra_id' => $subscribeFormID));
+								array('extra_id' => $subscribeFormID, 'position' => 'main'),
+								array('extra_id' => $searchId, 'position' => 'top'));
 
 			$this->insertPage(array('parent_id' => $parentID,
-									'template_id' => $templateIds['Default'],
 									'title' => ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')),
 									'language' => $language),
 								null,
-								array('extra_id' => $unsubscribeFormID));
+								array('extra_id' => $unsubscribeFormID, 'position' => 'main'),
+								array('extra_id' => $searchId, 'position' => 'top'));
 		}
 	}
 

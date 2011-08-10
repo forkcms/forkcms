@@ -44,7 +44,7 @@ class SearchInstall extends ModuleInstaller
 		$this->setActionRights(1, 'search', 'synonyms');
 
 		// add extra's
-		$searchID = $this->insertExtra('search', 'block', 'Search', null, 'a:1:{s:3:"url";s:40:"/private/nl/search/statistics?token=true";}', 'N', 2000);
+		$searchId = $this->insertExtra('search', 'block', 'Search', null, 'a:1:{s:3:"url";s:40:"/private/nl/search/statistics?token=true";}', 'N', 2000);
 		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
 		// loop languages
@@ -55,14 +55,14 @@ class SearchInstall extends ModuleInstaller
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
 												WHERE b.extra_id = ? AND p.language = ?',
-												array($searchID, $language)))
+												array($searchId, $language)))
 			{
 				// insert search
 				$this->insertPage(array('title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
 										'type' => 'root',
 										'language' => $language),
 									null,
-									array('extra_id' => $searchID));
+									array('extra_id' => $searchId, 'position' => 'main'));
 			}
 		}
 

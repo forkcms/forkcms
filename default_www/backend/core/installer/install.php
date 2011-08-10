@@ -191,6 +191,23 @@ class ModuleInstaller
 
 
 	/**
+	 * Get the id of the requested template of the active theme.
+	 *
+	 * @return	int
+	 * @param	string $template
+	 * @param	string[optional] $theme
+	 */
+	protected function getTemplateId($template, $theme = null)
+	{
+		// no theme set = default theme
+		if($theme === null) $theme = $this->getSetting('core', 'theme');
+
+		// return best matching template id
+		return (int) $this->getDB()->getVar('SELECT id FROM pages_templates WHERE theme = ? ORDER BY path LIKE ? DESC, id ASC LIMIT 1', array((string) $theme, '%' . (string) $template . '%'));
+	}
+
+
+	/**
 	 * Get a setting
 	 *
 	 * @return	mixed
@@ -491,7 +508,7 @@ class ModuleInstaller
 		if(!isset($revision['id'])) $revision['id'] = (int) $this->getDB()->getVar('SELECT MAX(id) + 1 FROM pages WHERE language = ?', array($revision['language']));
 		if(!$revision['id']) $revision['id'] = 1;
 		if(!isset($revision['user_id'])) $revision['user_id'] = $this->getDefaultUserID();
-		if(!isset($revision['template_id'])) $revision['template_id'] = $this->getDB()->getVar('SELECT id FROM pages_templates WHERE theme = ? ORDER BY path = ? DESC, id ASC', array($this->getSetting('core', 'theme'), 'core/layout/templates/default.tpl'));
+		if(!isset($revision['template_id'])) $revision['template_id'] = $this->getTemplateId('default');
 		if(!isset($revision['type'])) $revision['type'] = 'page';
 		if(!isset($revision['parent_id'])) $revision['parent_id'] = ($revision['type'] == 'page' ? 1 : 0);
 		if(!isset($revision['navigation_title'])) $revision['navigation_title'] = $revision['title'];
@@ -530,10 +547,10 @@ class ModuleInstaller
 		// insert page
 		$revision['revision_id'] = $this->getDB()->insert('pages', $revision);
 
-		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
-		$blocks = array();
+		// array of positions and linked blocks (will be used to automatically set block sequence)
+		$positions = array();
 
-		// loop blocks
+		// loop blocks: get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
 		for($i = 0; $i < count(func_num_args() - 2); $i++)
 		{
 			// get block
@@ -541,16 +558,19 @@ class ModuleInstaller
 			if($block === false) $block = array();
 			else $block = (array) $block;
 
-			// build block
-			if(!isset($block['id'])) $block['id'] = $i;
-			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
+			// save block position
 			if(!isset($block['position'])) $block['position'] = 'main';
+			$positions[$block['position']][] = $block;
+
+			// build block
+			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
+			if(!isset($block['html'])) $block['html'] = '';
+			elseif(SpoonFile::exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
 			if(!isset($block['status'])) $block['status'] = 'active';
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['extra_id'])) $block['extra_id'] = null;
-			if(!isset($block['html'])) $block['html'] = '';
-			elseif(SpoonFile::exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
+			if(!isset($block['sequence'])) $block['sequence'] = count($positions[$block['position']]) - 1;
 
 			// insert block
 			$this->getDB()->insert('pages_blocks', $block);
