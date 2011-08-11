@@ -49,7 +49,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	string
 	 */
-	private $metaCustom;
+	private $metaCustom = '';
 
 
 	/**
