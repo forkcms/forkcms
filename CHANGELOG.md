@@ -4,6 +4,8 @@ Bugfixes:
 
 * Api: when the response isn't an array notices where thrown.
 * Locale: analyse now correctly handles dynamic translations.
+* Core: local file inclusion check was not MS Windows-proof, fixed now (thx to iarwain01)
+* Core: the metaCustom was never parsed.
 
 Improvements:
 
