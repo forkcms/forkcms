@@ -409,7 +409,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getMetaCustom()
 	{
-		return $this->meta;
+		return $this->metaCustom;
 	}
 
 
