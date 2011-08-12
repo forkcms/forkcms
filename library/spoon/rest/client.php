@@ -210,7 +210,6 @@ class SpoonRESTClient
 	/**
 	 * Add custom headers that will be sent with each request.
 	 *
-	 * @return	void
 	 * @param	array $headers		The header, passed as key-value pairs.
 	 */
 	public function setCustomHeader(array $headers)
@@ -222,7 +221,6 @@ class SpoonRESTClient
 	/**
 	 * Set the port for the REST-server, default is 80.
 	 *
-	 * @return	void
 	 * @param	int $port	The port to connect on.
 	 */
 	public function setPort($port)
@@ -234,7 +232,6 @@ class SpoonRESTClient
 	/**
 	 * Set timeout.
 	 *
-	 * @return	void
 	 * @param	int $seconds	The maximum number of seconds that the operation can last.
 	 */
 	public function setTimeout($seconds)
@@ -246,7 +243,6 @@ class SpoonRESTClient
 	/**
 	 * Set a custom user-agent.
 	 *
-	 * @return	void
 	 * @param	string $userAgent	The UserAgent that will be used. It will look like "Spoon <Spoon version>/<your useragent>".
 	 */
 	public function setUserAgent($userAgent)
@@ -267,5 +263,3 @@ class SpoonRESTClient
  * @since		1.1.1
  */
 class SpoonRESTException extends SpoonException {}
-
-?>

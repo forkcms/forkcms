@@ -25,7 +25,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDataGridSource
+class SpoonDatagridSource
 {
 	/**
 	 * Final data
@@ -53,5 +53,3 @@ class SpoonDataGridSource
 		return $this->numResults;
 	}
 }
-
-?>

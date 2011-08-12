@@ -25,7 +25,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-interface iSpoonDataGridPaging
+interface iSpoonDatagridPaging
 {
 	/**
 	 * Builds & returns the pagination.
@@ -54,7 +54,7 @@ interface iSpoonDataGridPaging
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDataGridPaging implements iSpoonDataGridPaging
+class SpoonDatagridPaging implements iSpoonDatagridPaging
 {
 	/**
 	 * Next label
@@ -243,5 +243,3 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 		return ob_get_clean();
 	}
 }
-
-?>

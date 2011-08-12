@@ -54,7 +54,6 @@ class SpoonFormFile extends SpoonFormAttributes
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	string[optional] $class			The CSS-class to be used.
 	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
@@ -74,7 +73,6 @@ class SpoonFormFile extends SpoonFormAttributes
 	/**
 	 * Adds an error to the error stack.
 	 *
-	 * @return	void
 	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
@@ -409,25 +407,25 @@ class SpoonFormFile extends SpoonFormAttributes
 	/**
 	 * Set the class on error.
 	 *
-	 * @return	void
+	 * @return	SpoonFormFile
 	 * @param	string $class	The CSS-class.
 	 */
 	public function setClassOnError($class)
 	{
 		$this->classError = (string) $class;
+		return $this;
 	}
 
 
 	/**
 	 * Overwrites the error stack.
 	 *
-	 * @return	void
+	 * @return	SpoonFormFile
 	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{
 		$this->errors = (string) $error;
+		return $this;
 	}
 }
-
-?>
