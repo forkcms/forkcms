@@ -379,7 +379,7 @@ class FrontendModel
 	/**
 	 * General method to check if something is spam
 	 *
-	 * @return	bool
+	 * @return	bool|string					Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
 	 * @param	string $content				The content that was submitted.
 	 * @param	string $permaLink			The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $author	Commenters name.
@@ -417,6 +417,9 @@ class FrontendModel
 		{
 			// in debug mode we want to see exceptions, otherwise the fallback will be triggered
 			if(SPOON_DEBUG) throw $e;
+
+			// return unknown status
+			return 'unknown';
 		}
 
 		// when everything fails
