@@ -13,6 +13,7 @@ Improvements:
 
 * Core: added a modifier to camelcase strings.
 * Core: when adding new default blocks to an existing template, update all corresponding pages that have no content in those blocks to the new default.
+* Pages: Internal redirect can have children from now on, thx to Annelyze.
 
 
 2.6.2 (2011-08-09)
