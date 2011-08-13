@@ -153,6 +153,17 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Retrives the already assigned variables.
+	 *
+	 * @return	array
+	 */
+	public function getAssignedVariables()
+	{
+		return $this->variables;
+	}
+
+
+	/**
 	 * Fetch the parsed content from this template.
 	 *
 	 * @return	string							The actual parsed content after executing this template.
