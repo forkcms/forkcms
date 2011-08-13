@@ -6,6 +6,7 @@ Bugfixes:
 * Locale: analyse now correctly handles dynamic translations.
 * Core: local file inclusion check was not MS Windows-proof, fixed now (thx to iarwain01)
 * Core: the metaCustom was never parsed.
+* Pages: when there are no footer-pages an notice was triggered (as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/176).
 
 Improvements:
 

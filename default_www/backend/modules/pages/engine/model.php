@@ -1151,14 +1151,21 @@ class BackendPagesModel
 		// sort the sequences
 		ksort($sequences['pages']);
 
-		// loop to add the titles in the correct order
-		foreach($sequences['pages'] as $URL => $id)
+		if(isset($sequences['pages']))
 		{
-			if(isset($titles[$id])) $return[$id] = $titles[$id];
+			// loop to add the titles in the correct order
+			foreach($sequences['pages'] as $URL => $id)
+			{
+				if(isset($titles[$id])) $return[$id] = $titles[$id];
+			}
 		}
-		foreach($sequences['footer'] as $URL => $id)
+
+		if(isset($sequences['footer']))
 		{
-			if(isset($titles[$id])) $return[$id] = $titles[$id];
+			foreach($sequences['footer'] as $URL => $id)
+			{
+				if(isset($titles[$id])) $return[$id] = $titles[$id];
+			}
 		}
 
 		// return
