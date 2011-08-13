@@ -1769,7 +1769,7 @@ class BackendPagesModel
 		elseif($typeOfDrop == 'inside')
 		{
 			// check if item allows children
-			if($page['allow_children'] != 'Y') return false;
+			if($droppedOnPage['allow_children'] != 'Y') return false;
 
 			// set new parent to the dropped on page.
 			$newParent = $droppedOnPage['id'];

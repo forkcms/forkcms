@@ -7,6 +7,7 @@ Bugfixes:
 * Core: local file inclusion check was not MS Windows-proof, fixed now (thx to iarwain01)
 * Core: the metaCustom was never parsed.
 * Pages: when there are no footer-pages an notice was triggered (as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/176).
+* Pages: When moving a page the correct page is now checked for allow_children
 
 Improvements:
 
