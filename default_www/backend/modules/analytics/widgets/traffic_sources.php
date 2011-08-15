@@ -149,10 +149,10 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 			$dataGrid->setPaging(false);
 
 			// hide columns
-			$datagrid->setColumnsHidden('id', 'date', 'url');
+			$dataGrid->setColumnsHidden('id', 'date', 'url');
 
 			// set url
-			$datagrid->setColumnURL('referrer', '[url]');
+			$dataGrid->setColumnURL('referrer', '[url]');
 
 			// parse the datagrid
 			$this->tpl->assign('dgAnalyticsReferrers', $dataGrid->getContent());
