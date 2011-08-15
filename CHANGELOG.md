@@ -14,6 +14,7 @@ Improvements:
 * Core: added a modifier to camelcase strings.
 * Core: when adding new default blocks to an existing template, update all corresponding pages that have no content in those blocks to the new default.
 * Core: when Akismet can't tell us if a comment is spam, we mark it as an item in moderation.
+* Core: added functionality to set a callback after an item is saved with inline editing.
 * Pages: internal redirect can have children from now on, thx to Annelyze.
 * Pages: added an experimental copy-action.
 
