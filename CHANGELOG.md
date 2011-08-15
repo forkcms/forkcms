@@ -17,6 +17,7 @@ Improvements:
 * Core: added functionality to set a callback after an item is saved with inline editing.
 * Pages: internal redirect can have children from now on, thx to Annelyze.
 * Pages: added an experimental copy-action.
+* Locale: highlight empty items in the overview.
 
 
 2.6.2 (2011-08-09)

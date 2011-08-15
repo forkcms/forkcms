@@ -189,6 +189,12 @@ td.num_tags {
 		font-weight: 700;
 	}
 
+	/* highlighted */
+	.dataGrid td.highlighted {
+		background-color: #FFF0A5 !important;
+		border: 1px solid #FED22F;
+	}
+	
 	/* Goto */
 	.dataGrid td.goto {
 		padding: 1px 5px;
