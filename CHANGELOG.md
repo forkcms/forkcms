@@ -1,3 +1,10 @@
+x.x.x (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Location: it is now possible to use multiline content inside the marker.
+
+
 2.6.3 (2011-08-16)
 --
 Bugfixes:
