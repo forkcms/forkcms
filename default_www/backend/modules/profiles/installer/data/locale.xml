@@ -22,6 +22,10 @@
         <translation language="nl"><![CDATA[afmelden]]></translation>
         <translation language="en"><![CDATA[logout]]></translation>
       </item>
+      <item type="label" name="Profile">
+        <translation language="nl"><![CDATA[profiel]]></translation>
+        <translation language="en"><![CDATA[profile]]></translation>
+      </item>
       <item type="label" name="ProfileEmail">
         <translation language="nl"><![CDATA[e-mail aanpassen]]></translation>
         <translation language="en"><![CDATA[change e-mail]]></translation>
@@ -59,6 +63,14 @@
       <item type="error" name="DisplayNameIsRequired">
         <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[Display name is a required field.]]></translation>
+      </item>
+      <item type="error" name="GroupIsRequired">
+        <translation language="nl"><![CDATA[Groep is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Group is a required field.]]></translation>
+      </item>
+      <item type="error" name="GroupNameExists">
+        <translation language="nl"><![CDATA[Deze groep naam is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This group name is in use.]]></translation>
       </item>
       <item type="error" name="EmailExists">
         <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
@@ -306,9 +318,9 @@
         <translation language="fr"><![CDATA[Echec de la connexion. Ce profil a été supprimé.]]></translation>
       </item>
       <item type="error" name="ProfilesInactiveLogin">
-        <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is nog niet geactiveerd.]]></translation>
-        <translation language="en"><![CDATA[Login failed. This profile is not yet activated.]]></translation>
-        <translation language="fr"><![CDATA[Echec de la connexion. Ce profil n'est pas encore activée.]]></translation>
+        <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is nog niet geactiveerd. <a href="%1$s">Verstuur activatie e-mail opnieuw</a>.]]></translation>
+        <translation language="en"><![CDATA[Login failed. This profile is not yet activated. <a href="%1$s">Resend activation e-mail</a>.]]></translation>
+        <translation language="fr"><![CDATA[Echec de la connexion. Ce profil n'est pas encore activée. <a href="%1$s">Renvoyer le-mail d'activation</a>.]]></translation>
       </item>
       <item type="error" name="ProfilesInvalidLogin">
         <translation language="nl"><![CDATA[Aanmelden mislukt. Controleer je e-mail en je wachtwoord.]]></translation>
