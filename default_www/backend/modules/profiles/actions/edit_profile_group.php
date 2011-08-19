@@ -135,8 +135,8 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 
 			// fields filled?
 			$ddmGroup->isFilled(BL::getError('GroupIsRequired'));
-			if($txtExpirationDate->isFilled()) $txtExpirationDate->isValid(BL::getError('InvalidDate'));
-			if($txtExpirationTime->isFilled()) $txtExpirationTime->isValid(BL::getError('InvalidTime'));
+			if($txtExpirationDate->isFilled()) $txtExpirationDate->isValid(BL::getError('DateIsInvalid'));
+			if($txtExpirationTime->isFilled()) $txtExpirationTime->isValid(BL::getError('TimeIsInvalid'));
 
 			// no errors?
 			if($this->frm->isCorrect())

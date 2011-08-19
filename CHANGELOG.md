@@ -1,8 +1,13 @@
 2.6.4 (xxxx-xx-xx)
 --
+Bugfixes:
+
+* Location: it is now possible to use multiline content inside the marker.
+
 Improvements:
 
 * Core: upgraded jQueryUI to 1.8.16.
+
 
 2.6.3 (2011-08-16)
 --
