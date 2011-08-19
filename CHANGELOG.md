@@ -3,6 +3,7 @@ x.x.x (xxxx-xx-xx)
 Bugfixes:
 
 * Location: it is now possible to use multiline content inside the marker.
+* Blog: deleting a draft no longer triggers an error.
 
 
 2.6.3 (2011-08-16)
