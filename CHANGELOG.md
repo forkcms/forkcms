@@ -1,3 +1,9 @@
+2.6.4 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.16.
+
 2.6.3 (2011-08-16)
 --
 Bugfixes:
