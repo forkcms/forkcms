@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Location: it is now possible to use multiline content inside the marker.
+* Blog: deleting a draft no longer triggers an error.
 
 Improvements:
 
