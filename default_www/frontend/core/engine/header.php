@@ -161,13 +161,17 @@ class FrontendHeader extends FrontendBaseObject
 			$chunks = explode('/', str_replace(array('/frontend/modules/', '/frontend/core'), '', $file));
 
 			// validate
-			if(!isset($chunks[2])) throw new FrontendException('Invalid file (' . $file . ').');
+			if(!isset($chunks[count($chunks) - 3])) throw new FrontendException('Invalid file (' . $file . ').');
+
+			// fetch values
+			$module = $chunks[count($chunks) - 3];
+			$file = $chunks[count($chunks) - 1];
 
 			// reset module for core
-			if($chunks[0] == '') $chunks[0] = 'core';
+			if($module == '') $module = 'core';
 
 			// alter the file
-			$file = '/frontend/js.php?module=' . $chunks[0] . '&amp;file=' . $chunks[2] . '&amp;language=' . FRONTEND_LANGUAGE;
+			$file = '/frontend/js.php?module=' . $module . '&amp;file=' . $file . '&amp;language=' . FRONTEND_LANGUAGE;
 		}
 
 		// try to minify
