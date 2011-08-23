@@ -49,7 +49,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	string
 	 */
-	private $metaCustom;
+	private $metaCustom = '';
 
 
 	/**
@@ -409,7 +409,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getMetaCustom()
 	{
-		return $this->meta;
+		return $this->metaCustom;
 	}
 
 

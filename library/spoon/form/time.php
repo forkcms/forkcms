@@ -30,7 +30,6 @@ class SpoonFormTime extends SpoonFormInput
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	string[optional] $value			The initial value.
 	 * @param	string[optional] $class			The CSS-class to be used.
@@ -230,13 +229,12 @@ class SpoonFormTime extends SpoonFormInput
 	/**
 	 * Set the value attribute for this time field.
 	 *
-	 * @return	void
+	 * @return	SpoonFormTime
 	 * @param	string $value	The new value for the element.
 	 */
 	public function setValue($value)
 	{
 		$this->value = (string) $value;
+		return $this;
 	}
 }
-
-?>

@@ -30,7 +30,6 @@ class SpoonFormPassword extends SpoonFormInput
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	string[optional] $value			The initial value.
 	 * @param	int[optional] $maxlength		The maximum-length the value can be.
@@ -288,7 +287,6 @@ class SpoonFormPassword extends SpoonFormInput
 	/**
 	 * Set the initial value.
 	 *
-	 * @return	void
 	 * @param	string $value	The new value.
 	 */
 	private function setValue($value)
@@ -296,5 +294,3 @@ class SpoonFormPassword extends SpoonFormInput
 		$this->value = (string) $value;
 	}
 }
-
-?>

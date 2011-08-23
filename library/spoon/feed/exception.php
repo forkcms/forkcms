@@ -25,5 +25,3 @@
  * @since		1.1.0
  */
 class SpoonFeedException extends SpoonException {}
-
-?>

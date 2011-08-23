@@ -135,5 +135,3 @@ class SpoonDate
  * @since		0.1.1
  */
 class SpoonDateException extends SpoonException {}
-
-?>

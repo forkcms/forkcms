@@ -23,51 +23,74 @@ define('SPOON_VERSION', '1.3.0');
  * This setting will intervene when an exception occures. If enabled the exception will be
  * shown in all its glory. If disabled 'SPOON_DEBUG_MESSAGE' will be displayed instead.
  */
-if(!defined('SPOON_DEBUG')) define('SPOON_DEBUG', true);
+if(!defined('SPOON_DEBUG'))
+{
+	define('SPOON_DEBUG', true);
+}
 
 /*
  * If 'SPOON_DEBUG' is enabled and an exception occures, this message will be
  * displayed.
  */
-if(!defined('SPOON_DEBUG_MESSAGE')) define('SPOON_DEBUG_MESSAGE', 'There seems to be an issue with this page. The administrator has been notified.');
+if(!defined('SPOON_DEBUG_MESSAGE'))
+{
+	define('SPOON_DEBUG_MESSAGE', 'There seems to be an issue with this page.');
+}
 
 /*
  * If 'SPOON_DEBUG' is enabled and an exception occures, an email with the contents of this
  * exception will be emailed to 'SPOON_DEBUG_EMAIL' if it contains a valid email address.
  */
-if(!defined('SPOON_DEBUG_EMAIL')) define('SPOON_DEBUG_EMAIL', '');
+if(!defined('SPOON_DEBUG_EMAIL'))
+{
+	define('SPOON_DEBUG_EMAIL', '');
+}
 
 /*
  * If an exception occures, you can hook into the process that handles this exception
  * and add your own logic. The callback may be a function or static method. If you wish
  * to use a static method define this constant in this way: 'MyClass::myMethod'
  */
-if(!defined('SPOON_EXCEPTION_CALLBACK')) define('SPOON_EXCEPTION_CALLBACK', '');
+if(!defined('SPOON_EXCEPTION_CALLBACK'))
+{
+	define('SPOON_EXCEPTION_CALLBACK', '');
+}
 
 /*
  * Default charset that will be used when a charset needs to be provided to use for
  * certain functions/methods.
  */
-if(!defined('SPOON_CHARSET')) define('SPOON_CHARSET', 'iso-8859-1');
+if(!defined('SPOON_CHARSET'))
+{
+	define('SPOON_CHARSET', 'iso-8859-1');
+}
 
 /*
  * Should we use the Spoon autoloader to ensure the dependancies are automatically
  * loaded?
  */
-if(!defined('SPOON_AUTOLOADER')) define('SPOON_AUTOLOADER', true);
+if(!defined('SPOON_AUTOLOADER'))
+{
+	define('SPOON_AUTOLOADER', true);
+}
 
 /* SpoonException class */
 require_once 'spoon/exception/exception.php';
 
 // check mbstring extension
-if(!extension_loaded('mbstring')) throw new SpoonException('You need to make sure the mbstring extension is loaded.');
+if(!extension_loaded('mbstring'))
+{
+	throw new SpoonException('You need to make sure the mbstring extension is loaded.');
+}
 
 // attach autoloader
-if(SPOON_AUTOLOADER) spl_autoload_register(array('Spoon', 'autoLoader'));
-
+if(SPOON_AUTOLOADER)
+{
+	spl_autoload_register(array('Spoon', 'autoLoader'));
+}
 
 /**
- * This class holds objects in a name based registry to make them easily
+ * This class holds objects/data in a name based registry to make them easily
  * available throughout your application.
  *
  * @package		spoon
@@ -79,7 +102,7 @@ if(SPOON_AUTOLOADER) spl_autoload_register(array('Spoon', 'autoLoader'));
 class Spoon
 {
 	/**
-	 * Registry of objects
+	 * Registry of variables
 	 *
 	 * @var	array
 	 */
@@ -89,7 +112,6 @@ class Spoon
 	/**
 	 * Spoon autoloader
 	 *
-	 * @return	void
 	 * @param	string $class	The class that should be loaded.
 	 */
 	public static function autoLoader($class)
@@ -150,31 +172,33 @@ class Spoon
 		$path = dirname(realpath(__FILE__));
 
 		// does this file exist?
-		if(isset($classes[$class]) && file_exists($path . '/' . $classes[$class])) require_once $path . '/' . $classes[$class];
+		if(isset($classes[$class]) && file_exists($path . '/' . $classes[$class]))
+		{
+			require_once $path . '/' . $classes[$class];
+		}
 	}
 
 
 	/**
 	 * Dumps the output of a variable in a more readable manner.
 	 *
-	 * @return	void
 	 * @param	mixed $var				The variable to dump.
 	 * @param	bool[optional] $exit	Should the code stop here?
 	 */
 	public static function dump($var, $exit = true)
 	{
-		// fetch var
 		ob_start();
 		var_dump($var);
 		$output = ob_get_clean();
 
-		// cleanup the output
-		$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
+		// no xdebug installed
+		if(!extension_loaded('xdebug'))
+		{
+			$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
+			$output = '<pre>' . htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) . '</pre>';
+		}
 
-		// print
-		echo '<pre>' . htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) . '</pre>';
-
-		// stop script
+		echo $output;
 		if($exit) exit;
 	}
 
@@ -199,13 +223,13 @@ class Spoon
 	 */
 	public static function get($name)
 	{
-		// redefine
 		$name = (string) $name;
 
-		// item doesn't exist
-		if(!isset(self::$registry[$name])) throw new SpoonException('An item with reference name "' . $name . '" doesn\'t exist in the registry.');
+		if(!isset(self::$registry[$name]))
+		{
+			throw new SpoonException('No item "' . $name . '" exists in the registry.');
+		}
 
-		// item exists
 		return self::$registry[$name];
 	}
 
@@ -222,9 +246,19 @@ class Spoon
 
 
 	/**
+	 * Are we running in the command line?
+	 *
+	 * @return	bool
+	 */
+	public static function inCli()
+	{
+		return (PHP_SAPI == 'cli');
+	}
+
+
+	/**
 	 * Registers a given value under a given name.
 	 *
-	 * @return	void
 	 * @param	string $name			The name of the value to store.
 	 * @param	mixed[optional] $value	The value that needs to be stored.
 	 */
@@ -233,19 +267,17 @@ class Spoon
 		// redefine name
 		$name = (string) $name;
 
-		// delete
-		if($value === null) unset(self::$registry[$name]);
+		// delete item
+		if($value === null)
+		{
+			unset(self::$registry[$name]);
+		}
 
-		// add & return value
+		// add & return its value
 		else
 		{
-			// add value
 			self::$registry[$name] = $value;
-
-			// fetch value
 			return self::get($name);
 		}
 	}
 }
-
-?>

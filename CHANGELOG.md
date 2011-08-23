@@ -6,17 +6,38 @@ Improvements:
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 
 
-2.6.3 (xxxx-xx-xx)
+2.6.4 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Location: it is now possible to use multiline content inside the marker.
+* Core: overwriting javascript-files in a theme now works fine.
+
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.16.
+
+
+2.6.3 (2011-08-16)
 --
 Bugfixes:
 
 * Api: when the response isn't an array notices where thrown.
 * Locale: analyse now correctly handles dynamic translations.
+* Core: local file inclusion check was not MS Windows-proof, fixed now (thx to iarwain01)
+* Core: the metaCustom was never parsed.
+* Pages: when there are no footer-pages an notice was triggered (as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/176).
+* Pages: When moving a page the correct page is now checked for allow_children
 
 Improvements:
 
 * Core: added a modifier to camelcase strings.
 * Core: when adding new default blocks to an existing template, update all corresponding pages that have no content in those blocks to the new default.
+* Core: when Akismet can't tell us if a comment is spam, we mark it as an item in moderation.
+* Core: added functionality to set a callback after an item is saved with inline editing.
+* Pages: internal redirect can have children from now on, thx to Annelyze.
+* Pages: added an experimental copy-action.
+* Locale: highlight empty items in the overview.
 
 
 2.6.2 (2011-08-09)
@@ -286,7 +307,7 @@ Improvements:
 * Core: added a modifier to format a string as currency (frontend)
 * Core: added a modifier to format a string as a float (backend)
 * Blog: when the rss_image.png exists in your theme, it will automatically be used in your rss feed.
-	* moved the code for default RSS-image into FrontendRSS
+    * moved the code for default RSS-image into FrontendRSS
 * Pages: added sorting for extras in dropdowns
 * Bugfix: extra's weren't populated when the template was changed
 * Bugfix: URL was changed when moved if the page was an direct subaction as reported in http://forkcms.lighthouseapp.com/projects/61890/tickets/29-url-gets-changed-when-dragging-a-page-with-isaction-checked

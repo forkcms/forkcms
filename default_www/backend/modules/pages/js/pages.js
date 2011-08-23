@@ -42,7 +42,7 @@ jsBackend.pages =
 			$('form').append('<input type="hidden" name="status" value="draft" />');
 			$('form').submit();
 		});
-		
+
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
 	},
@@ -55,7 +55,7 @@ jsBackend.pages =
 
 /**
  * All methods related to the controls (buttons, ...)
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  * @author	Matthias Mullie <matthias@netlash.com>
@@ -76,7 +76,7 @@ jsBackend.pages.extras =
 		// bind events
 		$('#extraType').change(function(evt)
 		{
-			if($(this).val() != 'block') 
+			if($(this).val() != 'block')
 			{
 				var hasModules = false;
 
@@ -93,7 +93,7 @@ jsBackend.pages.extras =
 				// no modules
 				if(!hasModules) $('#extraType option[value="block"]').prop('disabled', false);
 			}
-			
+
 			jsBackend.pages.extras.populateExtraModules(evt);
 		});
 
@@ -515,7 +515,7 @@ jsBackend.pages.extras =
 
 /**
  * All methods related to managing the templates
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.pages.manageTemplates =
@@ -563,7 +563,7 @@ jsBackend.pages.manageTemplates =
 
 /**
  * All methods related to the templates
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Matthias Mullie <matthias@netlash.com>
  */
@@ -673,7 +673,7 @@ jsBackend.pages.template =
 
 /**
  * All methods related to the tree
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.pages.tree =
@@ -729,7 +729,7 @@ jsBackend.pages.tree =
 				'pages': { icon: { position: false } },
 				'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
 				'sitemap': { max_children: 0, icon: { position: '0 -176px' } },
-				'redirect': { max_children: 0, icon: { position: '0 -264px' } },
+				'redirect': { icon: { position: '0 -264px' } },
 				'direct_action': { max_children: 0, icon: { position: '0 -280px' } }
 			},
 			plugins:
@@ -757,7 +757,7 @@ jsBackend.pages.tree =
 		var currentPageID = $(node).attr('id').replace('page-', '');
 		if(typeof refNode == 'undefined') parentPageID = 0;
 		else var parentPageID = $(refNode).attr('id').replace('page-', '')
-		
+
 		// home is a special item
 		if(parentPageID == '1')
 		{

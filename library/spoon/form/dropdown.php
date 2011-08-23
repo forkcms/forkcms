@@ -103,7 +103,6 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name						The name.
 	 * @param	array[optional] $values				The possible values. Each value should have a label and value-key.
 	 * @param	mixed[optional] $selected			The selected value.
@@ -133,7 +132,6 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	/**
 	 * Adds an error to the error stack.
 	 *
-	 * @return	void
 	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
@@ -591,61 +589,65 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	/**
 	 * Should we allow external data to be added.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	bool[optional] $on	Is external data allowed?
 	 */
 	public function setAllowExternalData($on = true)
 	{
 		$this->allowExternalData = (bool) $on;
+		return $this;
 	}
 
 
 	/**
 	 * Sets the default element (top of the dropdown).
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $label				The label.
 	 * @param	string[optional] $value		The value to use.
 	 */
 	public function setDefaultElement($label, $value = null)
 	{
 		$this->defaultElement = array((string) $label, (string) $value);
+		return $this;
 	}
 
 
 	/**
 	 * Overwrites the error stack.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{
 		$this->errors = (string) $error;
+		return $this;
 	}
 
 
 	/**
 	 * Sets custom option attributes for a specific value.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $value		The value wherefor the attributes will be set.
 	 * @param	array $attributes	The attributes to set.
 	 */
 	public function setOptionAttributes($value, array $attributes)
 	{
-		// set each attribute
 		foreach($attributes as $attrKey => $attrValue)
 		{
 			$this->optionAttributes[(string) $value][(string) $attrKey] = (string) $attrValue;
 		}
+
+		return $this;
 	}
 
 
 	/**
 	 * Set the default selected item(s).
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	mixed $selected		Set the selected value.
 	 */
 	public function setSelected($selected)
@@ -669,25 +671,27 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			// multiple selections
 			else $this->selected[] = (string) $selected;
 		}
+
+		return $this;
 	}
 
 
 	/**
 	 * Whether you can select one or more items.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	bool[optional] $single	Only selecting one element is allowed?
 	 */
 	public function setSingle($single = true)
 	{
 		$this->single = (bool) $single;
+		return $this;
 	}
 
 
 	/**
 	 * Sets the values for this dropdown menu.
 	 *
-	 * @return	void
 	 * @param	array[optional] $values		The possible values. Each value should have a label and value-key.
 	 */
 	private function setValues(array $values = null)
@@ -728,5 +732,3 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		}
 	}
 }
-
-?>

@@ -48,6 +48,51 @@ class SpoonLocale
 
 
 	/**
+	 * Fetch the name of a conjunction based on the code.
+	 *
+	 * @return	string
+	 * @param	string $name					The name of the conjunction to fetch.
+	 * @param	string[optional] $language		The language to use, possible values can be found by calling SpoonLocale::getAvailableLanguages().
+	 */
+	public static function getConjunction($name, $language = 'en')
+	{
+		// init vars
+		$name = (string) $name;
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/' . $language . '.php';
+
+		// doesn't exist
+		if(!isset($locale['conjunctions'][$name])) throw new SpoonLocaleException('There is no conjunction named: ' . $name);
+
+		// all seems fine
+		return $locale['conjunctions'][$name];
+	}
+
+
+	/**
+	 * Retrieve a list of conjunctions.
+	 *
+	 * @return	array						An array with all known conjunctions in the requested language.
+	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
+	 */
+	public static function getConjunctions($language = 'en')
+	{
+		// init vars
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/' . $language . '.php';
+
+		// fetch countries
+		return $locale['conjunctions'];
+	}
+
+
+	/**
 	 * Retrieve the list of countries.
 	 *
 	 * @return	array						An array with all known countries in the requested language.
@@ -264,5 +309,3 @@ class SpoonLocale
  * @since		1.1.0
  */
 class SpoonLocaleException extends SpoonException {}
-
-?>
