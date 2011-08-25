@@ -1,3 +1,10 @@
+x.x.x (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
+
+
 2.6.4 (2011-08-23)
 --
 Bugfixes:
