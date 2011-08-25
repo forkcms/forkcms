@@ -339,4 +339,5 @@ $locale['time']['MonthsAgo'] = '%s maanden geleden';
 $locale['time']['YearAgo'] = '1 jaar geleden';
 $locale['time']['YearsAgo'] = '%s jaar geleden';
 
-?>
+// linguistic options
+$locale['conjunctions']['And'] = 'en';

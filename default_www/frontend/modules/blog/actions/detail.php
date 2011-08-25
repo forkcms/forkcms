@@ -311,8 +311,14 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// should we check if the item is spam
 				if($spamFilterEnabled)
 				{
+					// check for spam
+					$result = FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website);
+
 					// if the comment is spam alter the comment status so it will appear in the spam queue
-					if(FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website)) $comment['status'] = 'spam';
+					if($result) $comment['status'] = 'spam';
+
+					// if the status is unknown then we should moderate it manually
+					elseif($result == 'unknown') $comment['status'] = 'moderation';
 				}
 
 				// insert comment

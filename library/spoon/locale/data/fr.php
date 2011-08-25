@@ -339,4 +339,5 @@ $locale['time']['MonthsAgo'] = 'il y a %s mois';
 $locale['time']['YearAgo'] = 'il y a un an';
 $locale['time']['YearsAgo'] = 'il y a %s ans';
 
-?>
+// linguistic options
+$locale['conjunctions']['And'] = 'et';

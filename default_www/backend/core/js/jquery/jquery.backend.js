@@ -122,12 +122,12 @@
 
 /**
  * Password generator
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
-	$.fn.passwordGenerator = function(options) 
+	$.fn.passwordGenerator = function(options)
 	{
 		// define defaults
 		var defaults =
@@ -135,85 +135,85 @@
 			length: 6,
 			uppercase: true,
 			lowercase: true,
-			numbers: true, 
+			numbers: true,
 			specialchars: false,
 			generateLabel: 'Generate'
 		};
 
 		// extend options
 		var options = $.extend(defaults, options);
-		
-		return this.each(function() 
+
+		return this.each(function()
 		{
 			var id = $(this).attr('id');
-			
+
 			// append the button
 			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
-			
+
 			$('.generatePasswordButton').live('click', generatePassword);
-			
-			function generatePassword(evt) 
+
+			function generatePassword(evt)
 			{
 				// prevent default
 				evt.preventDefault();
-			
+
 				var currentElement = $('#' + $(this).data('id'));
-				
+
 				// check if it isn't a text-element
 				if(currentElement.attr('type') != 'text')
 				{
 					// clone the current element
 					var newElement = $('<input value="" id="'+ currentElement.attr('id') +'" name="'+ currentElement.attr('name') +'" maxlength="'+ currentElement.attr('maxlength') +'" class="'+ currentElement.attr('class') +'" type="text">');
-					
+
 					// insert the new element
 					newElement.insertBefore(currentElement);
-					
+
 					// remove the current one
 					currentElement.remove();
 				}
-				
+
 				// already a text element
 				else newElement = currentElement;
 
 				// generate the password
-				var pass = generatePass(options.length, options.uppercase, options.lowercase, options.numbers, options.specialchars); 
+				var pass = generatePass(options.length, options.uppercase, options.lowercase, options.numbers, options.specialchars);
 
 				// set the generate password, and trigger the keyup event
 				newElement.val(pass).keyup();
 			}
-			
-			function generatePass(length, uppercase, lowercase, numbers, specialchars) 
+
+			function generatePass(length, uppercase, lowercase, numbers, specialchars)
 			{
 				// the vowels
 				var v = new Array('a', 'e','u', 'ae', 'ea');
-				
+
 				// the consonants
 				var c = new Array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
-				
+
 				// the number-mapping
 				var n = new Array();
 				n['a'] = 4; n['b'] = 8; n['e'] = 3; n['g'] = 6; n['l'] = 1; n['o'] = 0; n['s'] = 5; n['t'] = 7; n['z'] = 2;
-				
+
 				// the special chars-mapping
 				var s = new Array();
 				s['a'] = '@'; s['i'] = '!'; s['c'] = 'ç'; s['s'] = '$'; s['g'] = '&'; s['h'] = '#'; s['l'] = '|'; s['x'] = '%';
-				
+
 				// init vars
 				var pass = '';
 				var tmp = '';
-				
+
 				// add a random consonant and vowel as longs as the length isn't reached
 				for (i = 0; i < length; i++) tmp += c[Math.floor(Math.random() * c.length)]+v[Math.floor(Math.random() * v.length)];
-				
+
 				// convert some chars to uppercase
-				for (i = 0; i < length; i++) 
+				for (i = 0; i < length; i++)
 				{
 					if(Math.floor(Math.random()*2)) pass += tmp.substr(i,1).toUpperCase();
 					else pass += tmp.substr(i,1);
-				}	
-				
+				}
+
 				// numbers allowed?
-				if(numbers) 
+				if(numbers)
 				{
 					tmp = '';
 					for(var i in pass) {
@@ -223,12 +223,12 @@
 					}
 					pass = tmp;
 				}
-				
+
 				// special chars allowed
-				if(specialchars) 
+				if(specialchars)
 				{
 					tmp = '';
-					for(var i in pass) 
+					for(var i in pass)
 					{
 						// replace with a special number if the random number can be devided by 2
 						if(typeof s[pass[i].toLowerCase()] != 'undefined' && (Math.floor(Math.random()*4)%2)) tmp += s[pass[i].toLowerCase()];
@@ -236,16 +236,16 @@
 					}
 					pass = tmp;
 				}
-				
+
 				// if uppercase isn't allowed we convert all to lowercase
 				if(!uppercase) pass = pass.toLowerCase();
-				
+
 				// if lowercase isn't allowed we convert all to uppercase
 				if(!lowercase) pass = pass.toUpperCase();
-				
+
 				// return
 				return pass;
-			}			
+			}
 		});
 	};
 })(jQuery);
@@ -269,7 +269,8 @@
 			extraParams: {},
 			inputClasses: 'inputText',
 			allowEmpty: false,
-			tooltip: 'click to edit'
+			tooltip: 'click to edit',
+			after_save: null
 		};
 
 		// extend options
@@ -339,7 +340,7 @@
 
 				// replacing quotes, less than and greater than with htmlentity, otherwise the inputfield is 'broken'
 				options.current.value = utils.string.replaceAll(options.current.value, '"', '&quot;');
-				
+
 				// set html
 				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
 
@@ -380,7 +381,7 @@
 				newValue = utils.string.replaceAll(newValue, '"', '&quot;');
 				newValue = utils.string.replaceAll(newValue, '<', '&lt;');
 				newValue = utils.string.replaceAll(newValue, '>', '&gt;');
-				
+
 				// set HTML and rebind events
 				parent.html(newValue).bind('click focus', createElement);
 
@@ -414,6 +415,9 @@
 						data: options.current.extraParams,
 						success: function(data, textStatus)
 						{
+							// call callback if it is a valid callback
+							if(typeof options.after_save == 'function') eval(options.after_save)($this);
+
 							// destroy the element
 							destroyElement();
 						},
@@ -677,7 +681,7 @@
 					for(var i in elements)
 					{
 						var humanValue = elements[i].split(options.secondSplitChar)[1];
-	
+
 						html += '	<li><span><strong>' + humanValue + '</strong>' + '		<a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '	</li>';
 					}
 
@@ -1207,7 +1211,7 @@
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
 				$('#addValue-' + id).removeClass('disabled').prop('disabled', false);
-				if($('#addValue-' + id + ' option:enabled').length == 0) 
+				if($('#addValue-' + id + ' option:enabled').length == 0)
 				{
 					$('#addButton-' + id).addClass('disabledButton');
 					$('#addValue-' + id).addClass('disabled').prop('disabled', true);
@@ -1248,7 +1252,7 @@
 
 				// set new value
 				$('#' + id).val(elements.join(options.splitChar));
-				
+
 				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', false);
 
 				// rebuild element list

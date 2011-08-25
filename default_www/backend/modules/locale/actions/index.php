@@ -101,7 +101,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 				$dataGrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
 
 				// set header labels
-				$dataGrid->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
+				$dataGrid->setHeaderLabels(array($lang => ucfirst(BL::getMessage(strtoupper($lang)))));
 
 				// set column attributes
 				$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));

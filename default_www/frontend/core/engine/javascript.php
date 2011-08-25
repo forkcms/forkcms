@@ -55,18 +55,18 @@ class FrontendJavascript
 		// set the language
 		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
-		// build the path
-		if($this->module == 'core') $path = FRONTEND_CORE_PATH . '/js/' . $this->getFile();
-		else $path = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
+		// create a new template instance (this will handle all stuff for us)
+		$tpl = new FrontendTemplate();
 
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
-		// create a new template instance (this will handle all stuff for us)
-		$tpl = new FrontendTemplate();
+		// fetch the template path
+		if($this->module == 'core') $file = FRONTEND_CORE_PATH . '/js/' . $this->getFile();
+		else $file = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
 
-		// display
-		$tpl->display($path, true);
+		// output the template
+		$tpl->display(FrontendTheme::getPath($file), true);
 	}
 
 
@@ -137,7 +137,7 @@ class FrontendJavascript
 			$path = realpath(FRONTEND_CORE_PATH . '/js/' . $this->filename);
 
 			// validate if path is allowed
-			if(substr($path, 0, strlen(realpath(FRONTEND_CORE_PATH) . '/js/')) != realpath(FRONTEND_CORE_PATH) . '/js/') $valid = false;
+			if(substr($path, 0, strlen(realpath(FRONTEND_CORE_PATH . '/js/'))) != realpath(FRONTEND_CORE_PATH . '/js/')) $valid = false;
 		}
 
 		// not core
@@ -147,7 +147,7 @@ class FrontendJavascript
 			$path = realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename);
 
 			// validate if path is allowed
-			if(substr($path, 0, strlen(realpath(FRONTEND_MODULES_PATH) . '/' . $this->getModule() . '/js/')) != realpath(FRONTEND_MODULES_PATH) . '/' . $this->getModule() . '/js/') $valid = false;
+			if(substr($path, 0, strlen(realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/'))) != realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/')) $valid = false;
 		}
 
 		// invalid file?

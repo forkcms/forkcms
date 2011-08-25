@@ -38,7 +38,6 @@ class SpoonFormTextarea extends SpoonFormInput
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	string[optional] $value			The initial value.
 	 * @param	string[optional] $class			The CSS-class to be used.
@@ -318,7 +317,6 @@ class SpoonFormTextarea extends SpoonFormInput
 	/**
 	 * Set the initial value.
 	 *
-	 * @return	void
 	 * @param	string $value	The new value.
 	 */
 	private function setValue($value)
@@ -326,5 +324,3 @@ class SpoonFormTextarea extends SpoonFormInput
 		$this->value = (string) $value;
 	}
 }
-
-?>

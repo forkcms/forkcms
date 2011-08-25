@@ -46,7 +46,6 @@ class SpoonFormButton extends SpoonFormAttributes
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name				The name of the button.
 	 * @param	string $value				The text that should appear on the button.
 	 * @param	string[optional] $type		The type of button.
@@ -122,13 +121,12 @@ class SpoonFormButton extends SpoonFormAttributes
 	/**
 	 * Set the button type (button, reset or submit).
 	 *
-	 * @return	void
+	 * @return	SpoonFormButton
 	 * @param	string[optional] $type		The type of the button.
 	 */
 	public function setType($type = 'submit')
 	{
 		$this->type = SpoonFilter::getValue($type, array('button', 'reset', 'submit'), 'submit');
+		return $this;
 	}
 }
-
-?>

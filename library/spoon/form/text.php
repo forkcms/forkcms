@@ -46,7 +46,6 @@ class SpoonFormText extends SpoonFormInput
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	string[optional] $value			The initial value.
 	 * @param	int[optional] $maxlength		The maximum-length the value can be.
@@ -754,5 +753,3 @@ class SpoonFormText extends SpoonFormInput
 		return $output;
 	}
 }
-
-?>

@@ -112,7 +112,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 					if($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE)
 					{
 						// get the error string to use
-						$errorString = FL::getError('Profiles' . SpoonFilter::toCamelCase($loginStatus) . 'Login');
+						$errorString = sprintf(FL::getError('Profiles' . SpoonFilter::toCamelCase($loginStatus) . 'Login'), FrontendNavigation::getURLForBlock('profiles', 'resend_activation'));
 
 						// add the error to stack
 						$this->frm->addError($errorString);

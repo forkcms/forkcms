@@ -7,6 +7,11 @@
 {option:locationItems}
 	<div id="map" style="height: {$locationSettings.height}px; width: {$locationSettings.width}px;"></div>
 
+	{* Store item text in a div because JS goes bananas with multiline HTML *}
+	{iteration:locationItems}
+		<div id="markerText{$locationItems.id}" style="display:none;">{$locationItems.text}</div>
+	{/iteration:locationItems}
+
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript">
 		// create boundaries
@@ -64,7 +69,7 @@
 
 		// loop items and add to map
 		{iteration:locationItems}
-			{option:locationItems.lat}{option:locationItems.lng}addMarker({$locationItems.lat}, {$locationItems.lng}, '{$locationItems.title}', '{$locationItems.text}');{/option:locationItems.lat}{/option:locationItems.lng}
+			{option:locationItems.lat}{option:locationItems.lng}addMarker({$locationItems.lat}, {$locationItems.lng}, '{$locationItems.title}', $('#markerText' + {$items.id}).html());{/option:locationItems.lat}{/option:locationItems.lng}
 		{/iteration:locationItems}
 
 		// set center to the middle of our boundaries
