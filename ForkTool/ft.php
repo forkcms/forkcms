@@ -47,13 +47,17 @@ class FT
 
 		// get command and command name
 		$command = $argv[1];
-		$name = $argv[2];
+		$svar = $argv[2];
+		$tvar = $argv[3];
 
 		// check what to do
 		switch($command)
 		{
 			case 'module':
-				$ft->createModule($name);
+				$ft->createModule($svar);
+			break;
+			case 'widget':
+				$ft->createWidget($svar, $tvar);
 			break;
 		}
 	}
@@ -66,6 +70,56 @@ class FT
 	 */
 	private function execute()
 	{
+	}
+
+
+	/**
+	 * Create Widget
+	 */
+	private function createWidget($module, $name)
+	{
+		// check if the widget doesn't exists to continue
+		if(!is_dir($this->frontendPath . 'modules/' . $module . '/widgets/' . $name))
+		{
+			// @todo fix _ to uppercase name
+
+			// check if widget php dir is available
+			if(!is_dir($this->frontendPath . 'modules/' . $module . '/widgets')) mkdir($this->frontendPath . 'modules/' . $module . '/widgets');
+
+			// widget template
+			$modTemplate = $this->cliPath . 'widget/widget.php';
+			$fhModTemplate = fopen($modTemplate, "r");
+			$tdModTemplate = fread($fhModTemplate, filesize($modTemplate));
+			$tdModTemplate = str_replace('tempnameuc', ucfirst($module), $tdModTemplate);
+			$tdModTemplate = str_replace('tempname', $module, $tdModTemplate);
+			$tdModTemplate = str_replace('wname', ucfirst($name), $tdModTemplate);
+
+			// create widget
+			$modFile = fopen($this->frontendPath . 'modules/' . $module . '/widgets/' . $name . '.php', 'w');
+			fwrite($modFile, $tdModTemplate);
+			fclose($modFile);
+
+			// check if the widget dir is available
+			if(!is_dir($this->frontendPath . 'modules/' . $module . '/layout/widgets')) mkdir($this->frontendPath . 'modules/' . $module . '/layout/widgets');
+
+			// widget template
+			$modTemplate = $this->cliPath . 'widget/widget.tpl';
+			$fhModTemplate = fopen($modTemplate, "r");
+			$tdModTemplate = fread($fhModTemplate, filesize($modTemplate));
+			$tdModTemplate = str_replace('tempnameuc', ucfirst($module), $tdModTemplate);
+			$tdModTemplate = str_replace('tempname', $module, $tdModTemplate);
+			$tdModTemplate = str_replace('wname', ucfirst($name), $tdModTemplate);
+
+			// make new widget template
+			$widTemplate = fopen($this->frontendPath . 'modules/' . $module . '/layout/widgets/' . $name . '.tpl', 'w');
+			fwrite($widTemplate, $tdModTemplate);
+			fclose($widTemplate);
+
+			// widget created
+			echo "The widget '$name' is created.\n";
+		}
+		// widget exists
+		else echo "The widget already exists.\n";
 	}
 
 
