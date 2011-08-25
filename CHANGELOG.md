@@ -1,3 +1,9 @@
+2.6.5 (xxxx-xx-xx)
+--
+Improvements
+
+* Core: return id of inserted mail.
+
 2.6.4 (2011-08-23)
 --
 Bugfixes:
