@@ -175,9 +175,9 @@ class BackendNavigation
 	 * Build navigation tree for a parent id.
 	 *
 	 * @return	void
-	 * @param	int $parentId
-	 * @param	string $output
-	 * @param	string[optional] $depth
+	 * @param	int $parentId				The id of the parent.
+	 * @param	string $output				The output, will all output.
+	 * @param	string[optional] $depth		The current depth.
 	 */
 	private function buildNavigation($parentId, &$output, $depth = 1)
 	{
@@ -482,7 +482,7 @@ class BackendNavigation
 	 * If the item doesnt have an id, it will search recursively until it finds one.
 	 *
 	 * @return	string
-	 * @param	int $id
+	 * @param	int $id		The id to search for.
 	 */
 	private function getNavigationUrl($id)
 	{
