@@ -168,7 +168,7 @@
 				<span class="helpTxt">{$msgHelpFacebookApplicationId}</span>
 			</p>
 			<p>
-				<label for="facebookAppId">{$lblApplicationSecret|ucfirst}</label>
+				<label for="facebookApplicationSecret">{$lblApplicationSecret|ucfirst}</label>
 				{$txtFacebookApplicationSecret} {$txtFacebookApplicationSecretError}
 				<span class="helpTxt">{$msgHelpFacebookApplicationSecret}</span>
 			</p>
