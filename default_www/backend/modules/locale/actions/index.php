@@ -199,12 +199,12 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		if($this->getParameter('type', 'array') == null)
 		{
 			$_GET['type'] = array('lbl');
-			$this->parameters['type'] = array('lbl');
+			$this->parameters['type'] = array('lbl', 'act', 'err', 'msg');
 		}
 
 		// set filter
-		$this->filter['application'] = $this->getParameter('application') == null ? 'backend' : $this->getParameter('application');
-		$this->filter['module'] = $this->getParameter('module');
+		$this->filter['application'] = $this->getParameter('application') == null ? 'frontend' : $this->getParameter('application');
+		$this->filter['module'] = $this->getParameter('module', 'string', 'core');
 		$this->filter['type'] = $this->getParameter('type', 'array');
 		$this->filter['language'] = $this->getParameter('language', 'array');
 		$this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');
