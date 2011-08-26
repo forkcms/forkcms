@@ -165,7 +165,7 @@ class FrontendMailer
 
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
-		
+
 		// return
 		return $id;
 	}
