@@ -1,9 +1,10 @@
-x.x.x (xxxx-xx-xx)
+2.6.5 (xxxx-xx-xx)
 --
 Improvements:
 
 * Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
 * Core: improved default-filtering in locale. From now on frontend and all types are default. 
+* Core: return id of inserted mail.
 
 
 2.6.4 (2011-08-23)
