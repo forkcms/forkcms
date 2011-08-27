@@ -248,11 +248,10 @@ class SpoonDataGrid
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
-	 * @param	SpoonDataGridSource $source		The data-source, which needs to extend from SpoonDataGridSource.
+	 * @param	SpoonDatagridSource $source		The data-source, which needs to extend from SpoonDatagridSource.
 	 * @param	string[optional] $template		The template that will be used to parse the datagrid.
 	 */
-	public function __construct(SpoonDataGridSource $source, $template = null)
+	public function __construct(SpoonDatagridSource $source, $template = null)
 	{
 		// set source
 		$this->setSource($source);
@@ -271,7 +270,6 @@ class SpoonDataGrid
 	/**
 	 * Adds a new column with a couple of options such as title, URL, image, ...
 	 *
-	 * @return	void
 	 * @param	string $name				The name for this column, later used to refer to this column.
 	 * @param	string[optional] $label		The label that will be displayed in the header cell.
 	 * @param	string[optional] $value		The value you wish to display.
@@ -286,13 +284,13 @@ class SpoonDataGrid
 		$name = (string) $name;
 
 		// column already exists
-		if(isset($this->columns[$name])) throw new SpoonDataGridException('A column with the name "' . $name . '" already exists.');
+		if(isset($this->columns[$name])) throw new SpoonDatagridException('A column with the name "' . $name . '" already exists.');
 
 		// redefine sequence
 		if($sequence === null) $sequence = count($this->columns) + 1;
 
 		// new column
-		$this->columns[$name] = new SpoonDataGridColumn($name, $label, $value, $URL, $title, $image, $sequence);
+		$this->columns[$name] = new SpoonDatagridColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
 		// add the class as an attribute to this column
 		$this->columns[$name]->setAttributes(array('class' => $name));
@@ -315,8 +313,6 @@ class SpoonDataGrid
 
 	/**
 	 * Clears the attributes.
-	 *
-	 * @return	void
 	 */
 	public function clearAttributes()
 	{
@@ -327,7 +323,6 @@ class SpoonDataGrid
 	/**
 	 * Clears the attributes for a specific column.
 	 *
-	 * @return	void
 	 * @param	string $column		The name of the column you want to clear the column attributes from.
 	 */
 	public function clearColumnAttributes($column)
@@ -336,7 +331,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "' . (string) $column . '" doesn\'t exist and therefor no attributes can be removed.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor no attributes can be removed.');
 
 			// exists
 			$this->columns[(string) $column]->clearAttributes();
@@ -346,8 +341,6 @@ class SpoonDataGrid
 
 	/**
 	 * Clears the even row attributes.
-	 *
-	 * @return	void
 	 */
 	public function clearEvenRowAttributes()
 	{
@@ -357,8 +350,6 @@ class SpoonDataGrid
 
 	/**
 	 * clears the odd row attributes.
-	 *
-	 * @return	void
 	 */
 	public function clearOddRowAttributes()
 	{
@@ -368,8 +359,6 @@ class SpoonDataGrid
 
 	/**
 	 * Clears the row attributes.
-	 *
-	 * @return	void
 	 */
 	public function clearRowAttributes()
 	{
@@ -379,8 +368,6 @@ class SpoonDataGrid
 
 	/**
 	 * Creates the default columns, based on the initially provided source.
-	 *
-	 * @return	void
 	 */
 	private function createColumns()
 	{
@@ -405,8 +392,6 @@ class SpoonDataGrid
 
 	/**
 	 * Shows the output & stops script execution.
-	 *
-	 * @return	void
 	 */
 	public function display()
 	{
@@ -417,8 +402,6 @@ class SpoonDataGrid
 
 	/**
 	 * Generates the array with the order columns.
-	 *
-	 * @return	void
 	 */
 	private function generateOrder()
 	{
@@ -462,7 +445,7 @@ class SpoonDataGrid
 	/**
 	 * Fetch the column object for a specific column.
 	 *
-	 * @return	SpoonDataGridColumn
+	 * @return	SpoonDatagridColumn
 	 * @param	string $column			The name of the column.
 	 */
 	public function getColumn($column)
@@ -471,14 +454,14 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "' . $column . '" doesn\'t exist.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist.');
 
 			// exists
 			return $this->columns[$column];
 		}
 
 		// fallback
-		return new SpoonDataGridColumn($column);
+		return new SpoonDatagridColumn($column);
 	}
 
 
@@ -707,7 +690,7 @@ class SpoonDataGrid
 	/**
 	 * Retrieve the datagrid source object.
 	 *
-	 * @return	SpoonDataGridSource
+	 * @return	SpoonDatagridSource
 	 */
 	public function getSource()
 	{
@@ -750,8 +733,6 @@ class SpoonDataGrid
 
 	/**
 	 * Parse the datagrid.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -803,8 +784,6 @@ class SpoonDataGrid
 
 	/**
 	 * Parses the datagrid attributes.
-	 *
-	 * @return	void
 	 */
 	private function parseAttributes()
 	{
@@ -815,7 +794,6 @@ class SpoonDataGrid
 	/**
 	 * Parses the body.
 	 *
-	 * @return	void
 	 * @param	array $records	The rows.
 	 */
 	private function parseBody(array $records)
@@ -980,8 +958,6 @@ class SpoonDataGrid
 
 	/**
 	 * Parses the caption tag.
-	 *
-	 * @return	void
 	 */
 	private function parseCaption()
 	{
@@ -1076,8 +1052,6 @@ class SpoonDataGrid
 
 	/**
 	 * Parses the footer.
-	 *
-	 * @return	void
 	 */
 	private function parseFooter()
 	{
@@ -1091,8 +1065,6 @@ class SpoonDataGrid
 
 	/**
 	 * Parses the header row.
-	 *
-	 * @return	void
 	 */
 	private function parseHeader()
 	{
@@ -1240,8 +1212,6 @@ class SpoonDataGrid
 
 	/**
 	 * Parses the paging.
-	 *
-	 * @return	void
 	 */
 	private function parsePaging()
 	{
@@ -1326,7 +1296,6 @@ class SpoonDataGrid
 	/**
 	 * Parses the column functions.
 	 *
-	 * @return	void
 	 * @param	array $record					The row-data.
 	 * @param	array[optional] $rowAttributes	The attributes on the row.
 	 */
@@ -1385,8 +1354,6 @@ class SpoonDataGrid
 
 	/**
 	 * Parses the summary.
-	 *
-	 * @return	void
 	 */
 	private function parseSummary()
 	{
@@ -1397,7 +1364,6 @@ class SpoonDataGrid
 	/**
 	 * Set main datagrid attributes.
 	 *
-	 * @return	void
 	 * @param	array $attributes	The attributes to set on the datagrid.
 	 */
 	public function setAttributes(array $attributes)
@@ -1409,7 +1375,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the table caption or main description.
 	 *
-	 * @return	void
 	 * @param	string $value	The value for the caption-element.
 	 */
 	public function setCaption($value)
@@ -1421,7 +1386,6 @@ class SpoonDataGrid
 	/**
 	 * Set one or more attributes for a specific column.
 	 *
-	 * @return	void
 	 * @param	string $column		The column to apply the attributes on.
 	 * @param	array $attributes	The attributes for a column.
 	 */
@@ -1431,7 +1395,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefor no attributes can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no attributes can be added.');
 
 			// exists
 			else $this->columns[$column]->setAttributes($attributes);
@@ -1442,7 +1406,6 @@ class SpoonDataGrid
 	/**
 	 * Set a custom column confirm message.
 	 *
-	 * @return	void
 	 * @param	string $column				The column to apply the confirmation on.
 	 * @param	string $message				The message to use.
 	 * @param	string[optional] $custom	Custom code you wish to use to confirm.
@@ -1453,7 +1416,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefor no confirm message/script can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no confirm message/script can be added.');
 
 			// exists
 			else $this->columns[$column]->setConfirm($message, $custom);
@@ -1464,7 +1427,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the column function to be executed for every row.
 	 *
-	 * @return	void
 	 * @param	mixed $function					The function to apply.
 	 * @param	mixed[optional] $arguments		The arguments for the function.
 	 * @param	mixed $columns					The columns wherein the result will appear.
@@ -1479,17 +1441,17 @@ class SpoonDataGrid
 			if(!is_array($function))
 			{
 				// function checks
-				if(!function_exists((string) $function)) throw new SpoonDataGridException('The function "' . (string) $function . '" doesn\'t exist.');
+				if(!function_exists((string) $function)) throw new SpoonDatagridException('The function "' . (string) $function . '" doesn\'t exist.');
 			}
 
 			// class method
 			else
 			{
 				// method checks
-				if(count($function) != 2) throw new SpoonDataGridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
+				if(count($function) != 2) throw new SpoonDatagridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
 
 				// method doesn't exist
-				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDataGridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
+				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
 			}
 
 			// add to function stack
@@ -1501,7 +1463,6 @@ class SpoonDataGrid
 	/**
 	 * Set one or more attributes for a columns' header.
 	 *
-	 * @return	void
 	 * @param	string $column		The column whereon the atrributes will be set.
 	 * @param	array $attributes	The attributes for a column.
 	 */
@@ -1511,7 +1472,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefor no attributes can be added to its header.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no attributes can be added to its header.');
 
 			// exists
 			else $this->columns[$column]->setHeaderAttributes($attributes);
@@ -1522,7 +1483,6 @@ class SpoonDataGrid
 	/**
 	 * Sets a single column hidden.
 	 *
-	 * @return	void
 	 * @param	string $column		The column to hide/show.
 	 * @param	bool[optional] $on	Should the column be hidden?
 	 */
@@ -1532,7 +1492,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "' . (string) $column . '" doesn\'t exist and therefor can\'t be set hidden.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor can\'t be set hidden.');
 
 			// exists
 			$this->columns[(string) $column]->setHidden($on);
@@ -1543,7 +1503,6 @@ class SpoonDataGrid
 	/**
 	 * Sets one or more columns hidden.
 	 *
-	 * @return	void
 	 * @param	array $columns		An array with the columns to hide.
 	 */
 	public function setColumnsHidden($columns)
@@ -1567,7 +1526,6 @@ class SpoonDataGrid
 	/**
 	 * Set the default sorting method for a column.
 	 *
-	 * @return	void
 	 * @param	string $column				The column to set the method for.
 	 * @param	string[optional] $sort		The sorting method, possible values are: asc, desc.
 	 */
@@ -1577,7 +1535,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "' . (string) $column . '" doesn\'t exist and therefor no default sorting method can be applied to it.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor no default sorting method can be applied to it.');
 
 			// exists
 			$this->columns[(string) $column]->setSortingMethod($sort);
@@ -1588,7 +1546,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the columns sequence.
 	 *
-	 * @return	void
 	 * @param	array $columns		The columns in the correct sequence.
 	 */
 	public function setColumnsSequence($columns)
@@ -1618,7 +1575,7 @@ class SpoonDataGrid
 				foreach($columns as $column)
 				{
 					// column exists
-					if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "' . (string) $column . '" doesn\'t exist. Therefor its sequence can\'t be altered.');
+					if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist. Therefor its sequence can\'t be altered.');
 
 					// update sequence
 					$this->columns[(string) $column]->setSequence($i);
@@ -1651,7 +1608,6 @@ class SpoonDataGrid
 	/**
 	 * Set the URL for a column.
 	 *
-	 * @return	void
 	 * @param	string $column				The column wheron the URL will be applied.
 	 * @param	string $URL					The URL.
 	 * @param	string[optional] $title		The title for the URL.
@@ -1662,7 +1618,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "' . (string) $column . '" doesn\'t exist and therefor no URL can be applied.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor no URL can be applied.');
 
 			// exists
 			$this->columns[(string) $column]->setURL($URL, $title);
@@ -1673,7 +1629,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the compile directory.
 	 *
-	 * @return	void
 	 * @param	string $path	The path to the compile directory.
 	 */
 	public function setCompileDirectory($path)
@@ -1685,7 +1640,6 @@ class SpoonDataGrid
 	/**
 	 * Adjust the debug setting.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should we enable debug-mode.
 	 */
 	public function setDebug($on = true)
@@ -1697,7 +1651,6 @@ class SpoonDataGrid
 	/**
 	 * Set the even row attributes.
 	 *
-	 * @return	void
 	 * @param	array $attributes	The attributes for an even row.
 	 */
 	public function setEvenRowAttributes(array $attributes)
@@ -1714,7 +1667,6 @@ class SpoonDataGrid
 	/**
 	 * Set the header labels.
 	 *
-	 * @return	void
 	 * @param	array $labels	An array whith the labels where the key is the name of the column.
 	 */
 	public function setHeaderLabels(array $labels)
@@ -1726,7 +1678,7 @@ class SpoonDataGrid
 			foreach($labels as $column => $label)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefor no label can be assigned to it.');
+				if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no label can be assigned to it.');
 
 				// exists
 				else $this->columns[$column]->setLabel($label);
@@ -1738,7 +1690,6 @@ class SpoonDataGrid
 	/**
 	 * Set the odd row attributes.
 	 *
-	 * @return	void
 	 * @param	array $attributes	The attributes for an odd-row.
 	 */
 	public function setOddRowAttributes(array $attributes)
@@ -1755,7 +1706,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the value for offset. eg from the URL.
 	 *
-	 * @return	void
 	 * @param	int[optional] $value	The value from the offset-parameter.
 	 */
 	public function setOffsetParameter($value = null)
@@ -1767,7 +1717,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the value for the order. eg from the URL.
 	 *
-	 * @return	void
 	 * @param	string[optional] $value		The value from the order-parameter.
 	 */
 	public function setOrderParameter($value = null)
@@ -1779,7 +1728,6 @@ class SpoonDataGrid
 	/**
 	 * Allow/disallow showing the results on multiple pages.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Is paging enabled?
 	 */
 	public function setPaging($on = false)
@@ -1791,19 +1739,18 @@ class SpoonDataGrid
 	/**
 	 * Sets an alternative paging class.
 	 *
-	 * @return	void
 	 * @param	string $class	The class that should be used for paging.
 	 */
 	public function setPagingClass($class)
 	{
 		// class cant be found
-		if(!class_exists((string) $class)) throw new SpoonDataGridException('The class "' . (string) $class . '" you provided for the alternative paging can not be found.');
+		if(!class_exists((string) $class)) throw new SpoonDatagridException('The class "' . (string) $class . '" you provided for the alternative paging can not be found.');
 
 		// class exists
 		else
 		{
 			// does not impmlement the interface
-			if(!in_array('iSpoonDataGridPaging', class_implements($class))) throw new SpoonDataGridException('The paging class you provided does not implement the "iSpoonDataGridPaging" interface');
+			if(!in_array('iSpoonDatagridPaging', class_implements($class))) throw new SpoonDatagridException('The paging class you provided does not implement the "iSpoonDatagridPaging" interface');
 
 			// all is fine
 			else $this->pagingClass = $class;
@@ -1814,7 +1761,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the number of results per page.
 	 *
-	 * @return	void
 	 * @param	int[optional] $limit	The maximum number of rows when paging is enabled.
 	 */
 	public function setPagingLimit($limit = 30)
@@ -1826,7 +1772,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the row attributes.
 	 *
-	 * @return	void
 	 * @param	array $attributes	The attributes for a row.
 	 */
 	public function setRowAttributes(array $attributes)
@@ -1838,7 +1783,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the row function to be executed for every row.
 	 *
-	 * @return	void
 	 * @param	mixed $function					The function to apply.
 	 * @param	mixed[optional] $arguments		The arguments to pass to the function.
 	 * @param	bool[optional] $overwrite		Should the result overwrite the current value?
@@ -1852,17 +1796,17 @@ class SpoonDataGrid
 			if(!is_array($function))
 			{
 				// function checks
-				if(!function_exists((string) $function)) throw new SpoonDataGridException('The function "' . (string) $function . '" doesn\'t exist.');
+				if(!function_exists((string) $function)) throw new SpoonDatagridException('The function "' . (string) $function . '" doesn\'t exist.');
 			}
 
 			// class method
 			else
 			{
 				// method checks
-				if(count($function) != 2) throw new SpoonDataGridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
+				if(count($function) != 2) throw new SpoonDatagridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
 
 				// method doesn't exist
-				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDataGridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
+				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
 			}
 
 			// add to function stack
@@ -1874,7 +1818,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the columns that may be sorted on.
 	 *
-	 * @return	void
 	 * @param	array $columns				The columns whereon sorting is enabled.
 	 * @param	string[optional] $default	The column whereon will be sorted by default.
 	 */
@@ -1887,13 +1830,13 @@ class SpoonDataGrid
 			foreach($columns as $column)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "' . (string) $column . '" doesn\'t exist and therefor can\'t be sorted on.');
+				if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor can\'t be sorted on.');
 
 				// column exists
 				else
 				{
 					// not sortable
-					if(!in_array((string) $column, $this->allowedSortingColumns)) throw new SpoonDataGridException('The column "' . (string) $column . '" can\'t be sorted on.');
+					if(!in_array((string) $column, $this->allowedSortingColumns)) throw new SpoonDatagridException('The column "' . (string) $column . '" can\'t be sorted on.');
 
 					// sortable
 					else
@@ -1911,7 +1854,7 @@ class SpoonDataGrid
 			if($default !== null && in_array($defaultColumn, $columns)) $defaultColumn = (string) $default;
 
 			// default column is not good
-			if(!in_array($defaultColumn, $this->allowedSortingColumns)) throw new SpoonDataGridException('The column "' . $defaultColumn . '" can\'t be set as the default sorting column, because it doesn\'t exist or may not be sorted on.');
+			if(!in_array($defaultColumn, $this->allowedSortingColumns)) throw new SpoonDatagridException('The column "' . $defaultColumn . '" can\'t be set as the default sorting column, because it doesn\'t exist or may not be sorted on.');
 
 			// set default column
 			$this->sortingColumn = $defaultColumn;
@@ -1922,7 +1865,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the sorting icons.
 	 *
-	 * @return	void
 	 * @param	string[optional] $asc				The icon for ascending.
 	 * @param	string[optional] $ascSelected		The icon when ascending sort is applied.
 	 * @param	string[optional] $desc				The icon for descending.
@@ -1940,7 +1882,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the sorting labels.
 	 *
-	 * @return	void
 	 * @param	string[optional] $asc				The value for ascending.
 	 * @param	string[optional] $ascSelected		The value when ascending sort is applied.
 	 * @param	string[optional] $desc				The value for descending.
@@ -1958,7 +1899,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the value to sort.
 	 *
-	 * @return	void
 	 * @param	string[optional] $value		The sorting-method.
 	 */
 	public function setSortParameter($value = 'desc')
@@ -1970,10 +1910,9 @@ class SpoonDataGrid
 	/**
 	 * Sets the source for this datagrid.
 	 *
-	 * @return	void
-	 * @param	SpoonDataGridSource $source		The source for the datagrid, it should implement SpoonDataGridSource.
+	 * @param	SpoonDatagridSource $source		The source for the datagrid, it should implement SpoonDatagridSource.
 	 */
-	private function setSource(SpoonDataGridSource $source)
+	private function setSource(SpoonDatagridSource $source)
 	{
 		$this->source = $source;
 	}
@@ -1982,7 +1921,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the table summary.
 	 *
-	 * @return	void
 	 * @param	string $value	The summary value.
 	 */
 	public function setSummary($value)
@@ -1994,7 +1932,6 @@ class SpoonDataGrid
 	/**
 	 * Sets the path to the template file.
 	 *
-	 * @return	void
 	 * @param	string $template	The path to the template.
 	 */
 	public function setTemplate($template)
@@ -2006,7 +1943,6 @@ class SpoonDataGrid
 	/**
 	 * Defines the default URL.
 	 *
-	 * @return	void
 	 * @param	string $URL		The URL to use.
 	 */
 	public function setURL($URL)
@@ -2026,6 +1962,4 @@ class SpoonDataGrid
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		0.1.1
  */
-class SpoonDataGridException extends SpoonException {}
-
-?>
+class SpoonDatagridException extends SpoonException {}

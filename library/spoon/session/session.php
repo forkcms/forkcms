@@ -31,8 +31,6 @@ class SpoonSession
 {
 	/**
 	 * Deletes one or more session variables.
-	 *
-	 * @return	void
 	 */
 	public static function delete()
 	{
@@ -62,12 +60,15 @@ class SpoonSession
 
 	/**
 	 * Destroys the session.
-	 *
-	 * @return	void
 	 */
 	public static function destroy()
 	{
-		if(session_id()) session_destroy();
+		if(session_id())
+		{
+			session_unset();
+			session_destroy();
+			$_SESSION = array();
+		}
 	}
 
 
@@ -144,7 +145,6 @@ class SpoonSession
 	/**
 	 * Stores a variable in the session.
 	 *
-	 * @return	void
 	 * @param	string $key		The key for the variable.
 	 * @param	mixed $value	The value to store.
 	 */
@@ -160,8 +160,6 @@ class SpoonSession
 
 	/**
 	 * Starts the session.
-	 *
-	 * @return	void
 	 */
 	public static function start()
 	{
@@ -189,5 +187,3 @@ class SpoonSession
  * @since		0.1.1
  */
 class SpoonSessionException extends SpoonException {}
-
-?>

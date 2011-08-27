@@ -37,6 +37,10 @@ class TagsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'tags', 'index');
 		$this->setActionRights(1, 'tags', 'mass_action');
 
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Tags', 'tags/index', array('tags/edit'));
+
 		// add extra
 		$tagsID = $this->insertExtra('tags', 'block', 'Tags', null, null, 'N', 30);
 		$this->insertExtra('tags', 'widget', 'TagCloud', 'tagcloud', null, 'N', 31);

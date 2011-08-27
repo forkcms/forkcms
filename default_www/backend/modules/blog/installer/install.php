@@ -90,12 +90,24 @@ class BlogInstall extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'settings');
 
 		// add extra's
-		$blogID = $this->insertExtra('blog', 'block', 'Blog', null, null, 'N', 1000);
+		$blogId = $this->insertExtra('blog', 'block', 'Blog', null, null, 'N', 1000);
 		$this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
 		$this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
 		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
+
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
+		$this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add',	'blog/edit', 'blog/import_blogger'));
+		$this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', array('blog/edit_comment'));
+		$this->setNavigation($navigationBlogId, 'Categories', 'blog/categories', array('blog/add_category',	'blog/edit_category'));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
@@ -123,13 +135,13 @@ class BlogInstall extends ModuleInstaller
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
 												WHERE b.extra_id = ? AND p.language = ?',
-												array($blogID, $language)))
+												array($blogId, $language)))
 			{
 				// insert page
 				$this->insertPage(array('title' => 'Blog',
 										'language' => $language),
 									null,
-									array('extra_id' => $blogID));
+									array('extra_id' => $blogId));
 			}
 
 			// install example data if requested

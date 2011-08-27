@@ -41,7 +41,7 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
 		$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 		// get page
-		$rows = BackendMailmotorModel::updateCampaign(item);
+		$rows = BackendMailmotorModel::updateCampaign($item);
 
 		// trigger event
 		BackendModel::triggerEvent($this->getModule(), 'edited_campaign', array('item' => $item));

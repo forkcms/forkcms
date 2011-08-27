@@ -255,6 +255,8 @@ class BackendMeta
 			if(!isset($_POST['meta_keywords'])) $_POST['meta_keywords'] = (isset($this->data['keywords'])) ? $this->data['keywords'] : null;
 			if(!isset($_POST['url'])) $_POST['url'] = (isset($this->data['url'])) ? $this->data['url'] : null;
 			if($this->custom && !isset($_POST['meta_custom'])) $_POST['meta_custom'] = (isset($this->data['custom'])) ? $this->data['custom'] : null;
+			if(!isset($_POST['seo_index'])) $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none';
+			if(!isset($_POST['seo_follow'])) $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none';
 		}
 
 		// add page title elements into the form
@@ -272,6 +274,20 @@ class BackendMeta
 		// add URL elements into the form
 		$this->frm->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
 		$this->frm->addText('url', (isset($this->data['url'])) ? $this->data['url'] : null);
+
+		// advanced SEO
+		$indexValues = array(
+			array('value' => 'none', 'label' => BL::getLabel('None')),
+			array('value' => 'index', 'label' => 'index'),
+			array('value' => 'noindex', 'label' => 'noindex')
+		);
+		$this->frm->addRadiobutton('seo_index', $indexValues, (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none');
+		$followValues = array(
+			array('value' => 'none', 'label' => BL::getLabel('None')),
+			array('value' => 'follow', 'label' => 'follow'),
+			array('value' => 'nofollow', 'label' => 'nofollow')
+		);
+		$this->frm->addRadiobutton('seo_follow', $followValues, (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none');
 
 		// should we add the meta-custom field
 		if($this->custom)
@@ -301,6 +317,9 @@ class BackendMeta
 
 		// validate meta-record
 		if(empty($this->data)) throw new BackendException('Meta-record doesn\'t exist.');
+
+		// unserialize data
+		if(isset($this->data['data'])) $this->data['data'] = @unserialize($this->data['data']);
 	}
 
 
@@ -367,6 +386,10 @@ class BackendMeta
 		$meta['url'] = $URL;
 		$meta['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 		$meta['custom'] = $custom;
+		$meta['data'] = null;
+		if($this->frm->getField('seo_index')->getValue() != 'none') $meta['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
+		if($this->frm->getField('seo_follow')->getValue() != 'none') $meta['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
+		if(isset($meta['data'])) $meta['data'] = serialize($meta['data']);
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -538,6 +561,10 @@ class BackendMeta
 			$this->data['url'] = $URL;
 			$this->data['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['custom'] = $custom;
+			if($this->frm->getField('seo_index')->getValue() == 'none') unset($this->data['data']['seo_index']);
+			else $this->data['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
+			if($this->frm->getField('seo_follow')->getValue() == 'none') unset($this->data['data']['seo_follow']);
+			else $this->data['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
 		}
 
 	}

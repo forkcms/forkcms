@@ -62,3 +62,25 @@
 		</ul>
 	</div>
 </div>
+
+<div class="subtleBox">
+	<div class="heading">
+		<h3>{$lblSEO|uppercase}</h3>
+	</div>
+	<div class="options">
+		<p class="label">{$lblIndex}</p>
+		{$rbtSeoIndexError}
+		<ul class="inputList inputListHorizontal">
+			{iteration:seo_index}
+				<li><label for="{$seo_index.id}">{$seo_index.rbtSeoIndex} {$seo_index.label}</label></li>
+			{/iteration:seo_index}
+		</ul>
+		<p class="label">{$lblFollow}</p>
+		{$rbtSeoFollowError}
+		<ul class="inputList inputListHorizontal">
+			{iteration:seo_follow}
+				<li><label for="{$seo_follow.id}">{$seo_follow.rbtSeoFollow} {$seo_follow.label}</label></li>
+			{/iteration:seo_follow}
+		</ul>
+	</div>
+</div>

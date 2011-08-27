@@ -113,7 +113,6 @@ class SpoonHTTP
 	/**
 	 * Redirect the browser with an optional delay and stop script execution.
 	 *
-	 * @return	void
 	 * @param	string $URL				The URL or page to redirect to.
 	 * @param	int[optional] $code		The redirect code. Only 301 (moved permanently) and 302 (found) are allowed.
 	 * @param	int[optional] $delay	A delay, expressed in seconds.
@@ -141,7 +140,6 @@ class SpoonHTTP
 	/**
 	 * Set one or multiple headers.
 	 *
-	 * @return	void
 	 * @param	mixed $headers		A string or array with headers to send.
 	 */
 	public static function setHeaders($headers)
@@ -161,7 +159,6 @@ class SpoonHTTP
 	/**
 	 * Parse headers for a given status code.
 	 *
-	 * @return	void
 	 * @param	int[optional] $code		The code to use, possible values are: 200, 301, 302, 304, 307, 400, 401, 403, 404, 410, 500, 501.
 	 */
 	public static function setHeadersByCode($code = 200)
@@ -201,5 +198,3 @@ class SpoonHTTP
  * @since		0.1.1
  */
 class SpoonHTTPException extends SpoonException {}
-
-?>

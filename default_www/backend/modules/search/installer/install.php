@@ -43,6 +43,17 @@ class SearchInstall extends ModuleInstaller
 		$this->setActionRights(1, 'search', 'statistics');
 		$this->setActionRights(1, 'search', 'synonyms');
 
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationSearchId = $this->setNavigation($navigationModulesId, 'Search');
+		$this->setNavigation($navigationSearchId, 'Statistics', 'search/statistics');
+		$this->setNavigation($navigationSearchId, 'Synonyms', 'search/synonyms', array('search/add_synonym', 'search/edit_synonym'));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Search', 'search/settings');
+
 		// add extra's
 		$searchID = $this->insertExtra('search', 'block', 'Search', null, 'a:1:{s:3:"url";s:40:"/private/nl/search/statistics?token=true";}', 'N', 2000);
 		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);

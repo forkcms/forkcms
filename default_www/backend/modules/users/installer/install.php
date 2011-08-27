@@ -106,6 +106,13 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'index');
 		$this->setActionRights(1, 'users', 'undo_delete');
 
+		// set navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$this->setNavigation($navigationSettingsId, 'Users', 'users/index', array(
+			'users/add',
+			'users/edit'
+		), 4);
+
 		// add default user
 		$this->addUser();
 	}

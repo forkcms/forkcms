@@ -230,7 +230,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addHidden('template_id', $this->record['template_id']);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
-		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));
 
 		// get maximum number of blocks
 		$maxNumBlocks = BackendModel::getModuleSetting($this->getModule(), 'template_max_blocks', 5);
@@ -450,7 +449,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['allow_children'] = $this->record['allow_children'];
 				$page['allow_edit'] = $this->record['allow_edit'];
 				$page['allow_delete'] = $this->record['allow_delete'];
-				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = $this->record['sequence'];
 				$page['data'] = ($data !== null) ? serialize($data) : null;
 
@@ -567,7 +565,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				elseif($page['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$redirectUrl = BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=saved_as_draft&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id'] . '&draft=' . $page['revision_id'];
+					$redirectUrl = BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id'] . '&draft=' . $page['revision_id'];
 				}
 
 				// everything is saved, so redirect to the overview

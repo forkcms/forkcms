@@ -314,6 +314,43 @@ class BackendModel
 
 
 	/**
+	 * Generate a random string
+	 *
+	 * @return	string
+	 * @param	int[optional] $length			Length of random string.
+	 * @param	bool[optional] $numeric			Use numeric characters.
+	 * @param	bool[optional] $lowercase		Use alphanumeric lowercase characters.
+	 * @param	bool[optional] $uppercase		Use alphanumeric uppercase characters.
+	 * @param	bool[optional] $special			Use special characters.
+	 */
+	public static function generateRandomString($length = 15, $numeric = true, $lowercase = true, $uppercase = true, $special = true)
+	{
+		// init
+		$characters = '';
+		$string = '';
+
+		// possible characters
+		if($numeric) $characters .= '1234567890';
+		if($lowercase) $characters .= 'abcdefghijklmnopqrstuvwxyz';
+		if($uppercase) $characters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		if($special) $characters .= '-_.:;,?!@#&=)([]{}*+%$';
+
+		// get random characters
+		for($i = 0; $i < $length; $i++)
+		{
+			// random index
+			$index = mt_rand(0, strlen($characters));
+
+			// add character to salt
+			$string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
+		}
+
+		// cough up
+		return $string;
+	}
+
+
+	/**
 	 * Fetch the list of long date formats including examples of these formats.
 	 *
 	 * @return	array
@@ -803,6 +840,70 @@ class BackendModel
 
 
 	/**
+	 * Image Delete
+	 *
+	 * @return	void
+	 * @param	string $module					Module name.
+	 * @param	string $filename				Filename.
+	 * @param	string[optional] $subDirectory	Subdirectory.
+	 * @param	array[optional] $fileSizes		Possible file sizes.
+	 */
+	public static function imageDelete($module, $filename, $subDirectory = '', $fileSizes = null)
+	{
+		// get fileSizes var from model
+		if(empty($fileSizes))
+		{
+			$model = get_class_vars('Backend' . SpoonFilter::toCamelCase($module) . 'Model');
+			$fileSizes = $model['fileSizes'];
+		}
+
+		// loop all directories
+		foreach(array_keys($fileSizes) as $sizeDir) SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
+
+		// delete original
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+	}
+
+
+	/**
+	 * Image Save
+	 *
+	 * @return	void
+	 * @param	SpoonFormImage $imageFile		ImageFile.
+	 * @param	string $module					Module name.
+	 * @param	string $filename				Filename.
+	 * @param	string[optional] $subDirectory	Subdirectory.
+	 * @param	array[optional] $fileSizes		Possible file sizes.
+	 */
+	public static function imageSave($imageFile, $module, $filename, $subDirectory = '', $fileSizes = null)
+	{
+		// get fileSizes var from model
+		if(empty($fileSizes))
+		{
+			$model = get_class_vars('Backend' . SpoonFilter::toCamelCase($module) . 'Model');
+			$fileSizes = $model['fileSizes'];
+		}
+
+		// loop all directories and create
+		foreach($fileSizes as $sizeDir => $size)
+		{
+			// set parameters
+			$filepath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+			$width = $size['width'];
+			$height = $size['height'];
+			$allowEnlargement = (empty($size['allowEnlargement']) ? null : $size['allowEnlargement']);
+			$forceOriginalAspectRatio = (empty($size['forceOriginalAspectRatio']) ? null : $size['forceOriginalAspectRatio']);
+
+			// create
+			$imageFile->createThumbnail($filepath, $width, $height, $allowEnlargement, $forceOriginalAspectRatio);
+		}
+
+		// save original
+		$imageFile->moveFile(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+	}
+
+
+	/**
 	 * Invalidate cache
 	 *
 	 * @return	void
@@ -1237,7 +1338,7 @@ class BackendModel
 		$eventName = (string) $eventName;
 
 		// create log instance
-		$log = new SpoonLog('custom', BACKEND_CACHE_PATH . '/logs/events');
+		$log = new SpoonLog('custom', PATH_WWW . '/backend/cache/logs/events');
 
 		// logging when we are in debugmode
 		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');

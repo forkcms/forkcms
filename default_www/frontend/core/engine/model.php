@@ -255,6 +255,7 @@ class FrontendModel
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
+												m.data AS meta_data,
 												t.path AS template_path, t.data AS template_data
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
@@ -268,6 +269,7 @@ class FrontendModel
 
 		// unserialize page data and template data
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
+		if(isset($record['meta_data']) && $record['meta_data'] != '') $record['meta_data'] = unserialize($record['meta_data']);
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// determine amount of blocks needed
@@ -377,7 +379,7 @@ class FrontendModel
 	/**
 	 * General method to check if something is spam
 	 *
-	 * @return	bool
+	 * @return	bool|string					Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
 	 * @param	string $content				The content that was submitted.
 	 * @param	string $permaLink			The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $author	Commenters name.
@@ -401,7 +403,7 @@ class FrontendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.1');
+		$akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
 		// try it to decide if the item is spam
 		try
@@ -415,6 +417,9 @@ class FrontendModel
 		{
 			// in debug mode we want to see exceptions, otherwise the fallback will be triggered
 			if(SPOON_DEBUG) throw $e;
+
+			// return unknown status
+			return 'unknown';
 		}
 
 		// when everything fails
@@ -696,7 +701,7 @@ class FrontendModel
 		$eventName = (string) $eventName;
 
 		// create log instance
-		$log = new SpoonLog('custom', FRONTEND_CACHE_PATH . '/logs/events');
+		$log = new SpoonLog('custom', PATH_WWW . '/frontend/cache/logs/events');
 
 		// logging when we are in debugmode
 		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');

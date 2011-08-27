@@ -94,7 +94,6 @@ class SpoonEmailSMTP
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $host					The host to connect to.
 	 * @param	int $port						The port to connect on.
 	 * @param	int $timeout					The timeout to use.
@@ -130,7 +129,6 @@ class SpoonEmailSMTP
 	/**
 	 * Attempts to authenticate with the smtp host. This ignores any errors before the username was sent because SMTP pretends the auth didn't happen and continues.
 	 *
-	 * @return	void
 	 * @param	string $username	The username to use.
 	 * @param	string $password	The password to use.
 	 */
@@ -226,7 +224,6 @@ class SpoonEmailSMTP
 	/**
 	 * HELO cmd, our identification to the host we're connecting to.
 	 *
-	 * @return	void
 	 * @param	string[optional] $host	The host that is sent along with the HELO command. In reality this can be anything, but we use the host as an ID.
 	 */
 	private function helo($host = null)
@@ -274,8 +271,6 @@ class SpoonEmailSMTP
 
 	/**
 	 * QUIT command, closes connection with the host properly. returns true on success.
-	 *
-	 * @return	void
 	 */
 	public function quit()
 	{
@@ -309,7 +304,6 @@ class SpoonEmailSMTP
 	/**
 	 * Stores a reply whenever a function is called.
 	 *
-	 * @return	void
 	 * @param	string[optional] $reply	The host's reply from the last sent request.
 	 */
 	private function saveReply($reply = null)
@@ -370,7 +364,6 @@ class SpoonEmailSMTP
 	/**
 	 * Sets the security layer
 	 *
-	 * @return	void
 	 * @param	string $layer	The layer of security.
 	 */
 	public function setSecurity($layer)
@@ -403,5 +396,3 @@ class SpoonEmailSMTP
 		return ($this->repliedCode === 220) ? true : false;
 	}
 }
-
-?>

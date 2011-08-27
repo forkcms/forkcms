@@ -30,8 +30,6 @@ class SpoonCookie
 {
 	/**
 	 * Deletes one or more cookies.
-	 *
-	 * @return	void
 	 */
 	public static function delete()
 	{
@@ -170,5 +168,3 @@ class SpoonCookie
  * @since		0.1.1
  */
 class SpoonCookieException extends SpoonException {}
-
-?>
