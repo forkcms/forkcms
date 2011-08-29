@@ -36,6 +36,13 @@ class GroupsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'groups', 'edit');
 		$this->setActionRights(1, 'groups', 'delete');
 
+		// set navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
+			'groups/add',
+			'groups/edit'
+		), 5);
+
 		// insert admins dashboard sequence
 		$this->insertDashboardSequence();
 	}

@@ -1,7 +1,7 @@
 <section id="sitemapIndex" class="mod">
 	<div class="inner">
 		<div class="bd content">
-			{$var|getnavigation}
+			{$widgetPagesNavigation}
 		</div>
 	</div>
 </section>

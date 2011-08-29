@@ -8,6 +8,7 @@
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Sam Tubbax <sam@sumocoders.be>
  * @since		2.0
  */
 class FrontendMailer
@@ -15,7 +16,7 @@ class FrontendMailer
 	/**
 	 * Adds an email to the queue.
 	 *
-	 * @return	void
+	 * @return	int								The id of the inserted mail.
 	 * @param	string $subject					The subject for the email.
 	 * @param	string $template				The template to use.
 	 * @param	array[optional] $variables		Variables that should be assigned in the email.
@@ -164,6 +165,9 @@ class FrontendMailer
 
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
+
+		// return
+		return $id;
 	}
 
 

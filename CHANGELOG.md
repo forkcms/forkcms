@@ -6,7 +6,17 @@ Improvements:
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 
 
-2.6.4 (xxxx-xx-xx)
+2.6.5 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
+* Core: improved default-filtering in locale. From now on frontend and all types are default. 
+* Core: return id of inserted mail.
+* Pages: sitemap page will now also display child pages.
+
+
+2.6.4 (2011-08-23)
 --
 Bugfixes:
 
@@ -307,7 +317,7 @@ Improvements:
 * Core: added a modifier to format a string as currency (frontend)
 * Core: added a modifier to format a string as a float (backend)
 * Blog: when the rss_image.png exists in your theme, it will automatically be used in your rss feed.
-    * moved the code for default RSS-image into FrontendRSS
+	* moved the code for default RSS-image into FrontendRSS
 * Pages: added sorting for extras in dropdowns
 * Bugfix: extra's weren't populated when the template was changed
 * Bugfix: URL was changed when moved if the page was an direct subaction as reported in http://forkcms.lighthouseapp.com/projects/61890/tickets/29-url-gets-changed-when-dragging-a-page-with-isaction-checked

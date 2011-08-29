@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class ModuleInstaller
@@ -278,7 +279,7 @@ class ModuleInstaller
 				// current locale items (used to check for conflicts)
 				$currentLocale = (array) $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
 
-				// @todo: waarom geen xpath?
+				// @todo: why no xpath?
 
 				// applications
 				foreach($xml as $application => $modules)
@@ -678,6 +679,60 @@ class ModuleInstaller
 
 
 	/**
+	 * Set a new navigation item.
+	 *
+	 * @return	int								New navigation id.
+	 * @param	int $parentId					Id of the navigation item under we should add this.
+	 * @param	string $label					Label for the item.
+	 * @param	string[optional] $url			Url for the item. If ommitted the first child is used.
+	 * @param	array[optional] $selectedFor	Set selected when these actions are active.
+	 * @param	int[optional] $sequence			Sequence to use for this item.
+	 */
+	protected function setNavigation($parentId, $label, $url = '', array $selectedFor = null, $sequence = null)
+	{
+		// recast
+		$parentId = (int) $parentId;
+		$label = (string) $label;
+		$url = (string) $url;
+		$selectedFor = ($selectedFor !== null && is_array($selectedFor)) ? serialize($selectedFor) : null;
+
+		// no custom sequence
+		if($sequence === null)
+		{
+			// get maximum sequence for this parent
+			$maxSequence = (int) $this->getDB()->getVar('SELECT MAX(sequence) FROM backend_navigation WHERE parent_id = ?', $parentId);
+
+			// add at the end
+			$sequence = $maxSequence + 1;
+		}
+
+		// a custom sequence was set
+		else $sequence = (int) $sequence;
+
+		// get the id for this url
+		$id = (int) $this->getDB()->getVar('SELECT id
+											FROM backend_navigation
+											WHERE parent_id = ? AND label = ? AND url = ?',
+											array($parentId, $label, $url));
+
+		// doesnt exist yet, add it
+		if($id === 0)
+		{
+			return $this->getDB()->insert('backend_navigation', array(
+				'parent_id' => $parentId,
+				'label' => $label,
+				'url' => $url,
+				'selected_for' => $selectedFor,
+				'sequence' => $sequence)
+			);
+		}
+
+		// already exists so return current id
+		return $id;
+	}
+
+
+	/**
 	 * Stores a module specific setting in the database.
 	 *
 	 * @return	void
@@ -722,7 +777,6 @@ class ModuleInstaller
 
 
 /**
- * CoreInstall
  * Installer for the core
  *
  * @package		backend
@@ -730,12 +784,13 @@ class ModuleInstaller
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class CoreInstall extends ModuleInstaller
 {
 	/**
-	 * Installe the module
+	 * Install the module
 	 *
 	 * @return	void
 	 */
@@ -763,6 +818,10 @@ class CoreInstall extends ModuleInstaller
 
 		// set settings
 		$this->setSettings();
+
+		// add core navigation
+		$this->setNavigation(null, 'Dashboard', 'dashboard/index', null, 1);
+		$this->setNavigation(null, 'Modules', null, null, 3);
 	}
 
 

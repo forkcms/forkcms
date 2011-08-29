@@ -41,6 +41,19 @@ class ProfilesInstall extends ModuleInstaller
 		$this->setActionRights(1, 'profiles', 'index');
 		$this->setActionRights(1, 'profiles', 'mass_action');
 
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationProfilesId = $this->setNavigation($navigationModulesId, 'Profiles');
+		$this->setNavigation($navigationProfilesId, 'Overview', 'profiles/index', array(
+			'profiles/edit',
+			'profiles/add_profile_group',
+			'profiles/edit_profile_group'
+		));
+		$this->setNavigation($navigationProfilesId, 'Groups', 'profiles/groups', array(
+			'profiles/add_group',
+			'profiles/edit_group'
+		));
+
 		// add extra
 		$activateId = $this->insertExtra('profiles', 'block', 'Activate', 'activate', null, 'N', 5000);
 		$forgotPasswordId = $this->insertExtra('profiles', 'block', 'ForgotPassword', 'forgot_password', null, 'N', 5001);
