@@ -43,6 +43,9 @@ class FrontendProfilesActivate extends FrontendBaseBlock
 				// login profile
 				FrontendProfilesAuthentication::login($profileId);
 
+				// trigger event
+				FrontendModel::triggerEvent('profiles', 'after_activate', array('id' => $profileId));
+
 				// show success message
 				$this->tpl->assign('activationSuccess', true);
 			}

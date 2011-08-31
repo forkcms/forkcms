@@ -31,10 +31,16 @@ class BackendMailmotorMassMailingAction extends BackendBaseAction
 		else
 		{
 			// redefine id's
-			$aIds = (array) $_GET['id'];
+			$ids = (array) $_GET['id'];
 
 			// delete comment(s)
-			if($action == 'delete') BackendMailmotorCMHelper::deleteMailings($aIds);
+			if($action == 'delete')
+			{
+				BackendMailmotorCMHelper::deleteMailings($ids);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_delete_mailings', array('ids' => $ids));
+			}
 		}
 
 		// redirect

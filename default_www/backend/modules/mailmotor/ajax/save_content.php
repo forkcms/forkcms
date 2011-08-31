@@ -88,10 +88,10 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$this->mailing = BackendMailmotorModel::getMailing($mailingId);
 
 		// record is empty
-		if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', 'mailmotor'));
+		if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', $this->getModule()));
 
 		// validate other fields
-		if($subject == '') $this->output(900, array('element' => 'subject', 'element_error' => BL::err('NoSubject', 'mailmotor')), BL::err('FormError'));
+		if($subject == '') $this->output(900, array('element' => 'subject', 'element_error' => BL::err('NoSubject', $this->getModule())), BL::err('FormError'));
 
 		// set full HTML
 		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
@@ -113,8 +113,11 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		// update mailing
 		BackendMailmotorModel::updateMailing($item);
 
+		// trigger event
+		BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step3', array('item' => $item));
+
 		// output
-		$this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', 'mailmotor'));
+		$this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', $this->getModule()));
 	}
 
 
@@ -135,7 +138,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$template = BackendMailmotorModel::getTemplate($this->mailing['language'], $template);
 
 		// template content is empty
-		if(!isset($template['content'])) $this->output(self::ERROR, array('mailing_id' => $this->mailing['id'], 'error' => true), BL::err('TemplateDoesNotExist', 'mailmotor'));
+		if(!isset($template['content'])) $this->output(self::ERROR, array('mailing_id' => $this->mailing['id'], 'error' => true), BL::err('TemplateDoesNotExist', $this->getModule()));
 
 		// remove TinyMCE
 		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);

@@ -183,7 +183,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			// module should be 'core' for any other application than backend
 			if($this->frm->getField('application')->getValue() != 'backend' && $this->frm->getField('module')->getValue() != 'core')
 			{
-				$this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', 'locale'));
+				$this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
 			}
 
 			// no errors?
@@ -202,6 +202,9 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 
 				// update item
 				BackendLocaleModel::update($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);

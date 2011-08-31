@@ -8,6 +8,7 @@
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Sam Tubbax <sam@sumocoders.be>
  * @since		2.0
  */
 class FrontendMailer
@@ -15,7 +16,7 @@ class FrontendMailer
 	/**
 	 * Adds an email to the queue.
 	 *
-	 * @return	void
+	 * @return	int								The id of the inserted mail.
 	 * @param	string $subject					The subject for the email.
 	 * @param	string $template				The template to use.
 	 * @param	array[optional] $variables		Variables that should be assigned in the email.
@@ -159,8 +160,14 @@ class FrontendMailer
 		// insert the email into the database
 		$id = FrontendModel::getDB(true)->insert('emails', $email);
 
+		// trigger event
+		FrontendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
+
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
+		
+		// return
+		return $id;
 	}
 
 
@@ -288,6 +295,9 @@ class FrontendMailer
 		{
 			// remove the email
 			$db->delete('emails', 'id = ?', array($id));
+
+			// trigger event
+			FrontendModel::triggerEvent('core', 'after_email_sent', array('id' => $id));
 		}
 	}
 }

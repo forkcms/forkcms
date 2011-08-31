@@ -503,7 +503,7 @@ class BackendLocaleModel
 								if($specificModule != 'core')
 								{
 									// dynamic module
-									if($specificModule == '$this->URL->getModule(')
+									if($specificModule == '$this->URL->getModule(' || $specificModule == '$this->getModule(')
 									{
 										// init var
 										$count = 0;

@@ -821,6 +821,9 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 				// update permissions
 				$this->updatePermissions($actionPermissions, $bundledActionPermissions);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
 			}

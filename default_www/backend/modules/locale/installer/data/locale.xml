@@ -734,6 +734,10 @@
         <translation language="nl"><![CDATA[frontend]]></translation>
         <translation language="en"><![CDATA[frontend]]></translation>
       </item>
+      <item type="label" name="Follow">
+        <translation language="nl"><![CDATA[follow]]></translation>
+        <translation language="en"><![CDATA[follow]]></translation>
+      </item>
       <item type="label" name="General">
         <translation language="nl"><![CDATA[algemeen]]></translation>
         <translation language="en"><![CDATA[general]]></translation>
@@ -773,6 +777,10 @@
       <item type="label" name="Import">
         <translation language="nl"><![CDATA[importeer]]></translation>
         <translation language="en"><![CDATA[import]]></translation>
+      </item>
+      <item type="label" name="Index">
+        <translation language="nl"><![CDATA[index]]></translation>
+        <translation language="en"><![CDATA[index]]></translation>
       </item>
       <item type="label" name="Interface">
         <translation language="nl"><![CDATA[interface]]></translation>
@@ -1409,10 +1417,6 @@
       <item type="message" name="ACT">
         <translation language="nl"><![CDATA[actie]]></translation>
         <translation language="en"><![CDATA[action]]></translation>
-      </item>
-      <item type="message" name="ActivateNoFollow">
-        <translation language="nl"><![CDATA[Activeer <code>rel="nofollow"</code>]]></translation>
-        <translation language="en"><![CDATA[Activate <code>rel="nofollow"</code>]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het item werd toegevoegd.]]></translation>

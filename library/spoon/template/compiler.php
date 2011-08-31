@@ -131,7 +131,6 @@ class SpoonTemplateCompiler
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $template	The name of the template to compile.
 	 * @param	array $variables	The list of possible variables.
 	 */
@@ -168,8 +167,6 @@ class SpoonTemplateCompiler
 
 	/**
 	 * Parse the template.
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -681,8 +678,6 @@ class SpoonTemplateCompiler
 
 	/**
 	 * Parse the template to a file.
-	 *
-	 * @return	void
 	 */
 	public function parseToFile()
 	{
@@ -974,7 +969,6 @@ class SpoonTemplateCompiler
 	/**
 	 * Set the cache directory.
 	 *
-	 * @return	void
 	 * @param	string $path	The location of the cache directory to store cached template blocks.
 	 */
 	public function setCacheDirectory($path)
@@ -986,7 +980,6 @@ class SpoonTemplateCompiler
 	/**
 	 * Set the compile directory.
 	 *
-	 * @return	void
 	 * @param	string $path	The location of the compile directory to store compiled templates in.
 	 */
 	public function setCompileDirectory($path)
@@ -998,7 +991,6 @@ class SpoonTemplateCompiler
 	/**
 	 * If enabled, recompiles a template even if it has already been compiled.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should this template be recompiled every time it's loaded.
 	 */
 	public function setForceCompile($on = true)
@@ -1010,7 +1002,6 @@ class SpoonTemplateCompiler
 	/**
 	 * Sets the forms.
 	 *
-	 * @return	void
 	 * @param	array $forms	An array of forms that need to be included in this template.
 	 */
 	public function setForms(array $forms)
@@ -1050,5 +1041,3 @@ class SpoonTemplateCompiler
 		return $content;
 	}
 }
-
-?>

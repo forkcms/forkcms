@@ -222,7 +222,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		if(!empty($csv))
 		{
 			// assign the CSV URL to the template
-			$this->tpl->assign('csvURL', BackendModel::createURLForAction('addresses', 'mailmotor') . '&csv=' . $csv . '&download=1');
+			$this->tpl->assign('csvURL', BackendModel::createURLForAction('addresses') . '&csv=' . $csv . '&download=1');
 
 			// we should download the file
 			if($download)

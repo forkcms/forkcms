@@ -112,7 +112,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 					if($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE)
 					{
 						// get the error string to use
-						$errorString = FL::getError('Profiles' . SpoonFilter::toCamelCase($loginStatus) . 'Login');
+						$errorString = sprintf(FL::getError('Profiles' . SpoonFilter::toCamelCase($loginStatus) . 'Login'), FrontendNavigation::getURLForBlock('profiles', 'resend_activation'));
 
 						// add the error to stack
 						$this->frm->addError($errorString);
@@ -134,6 +134,9 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 
 				// update salt and password for Dieter's security features
 				FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
+
+				// trigger event
+				FrontendModel::triggerEvent('profiles', 'after_logged_in', array('id' => $profileId));
 
 				// querystring
 				$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));

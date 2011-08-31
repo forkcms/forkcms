@@ -7,6 +7,8 @@
 {option:widgetLocationItems}
 <div id="mapWidget" style="height: {$widgetLocationSettings.height_widget}px; width: {$widgetLocationSettings.width_widget}px;"></div>
 
+<div id="widgetLocationItemText" style="display: none;">{$widgetLocationItems.text}</div>
+
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
 	//create position
@@ -52,7 +54,7 @@
 	google.maps.event.addListener(marker, 'click', function()
 	{
 		// create infowindow
-		new google.maps.InfoWindow({ content: '<h1>{$widgetLocationItems.title}</h1>{$widgetLocationItems.text}' }).open(map, marker);
+		new google.maps.InfoWindow({ content: '<h1>{$widgetLocationItems.title}</h1>' + $('#widgetLocationItemText').html() }).open(mapWidget, marker);
 	});
 </script>
 {/option:widgetLocationItems}

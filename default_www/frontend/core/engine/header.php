@@ -29,27 +29,27 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Custom meta
+	 * The links
 	 *
-	 * @var	string
+	 * @var	array
 	 */
-	private $metaCustom;
+	private $links = array();
 
 
 	/**
-	 * Metadescription
+	 * Meta data
 	 *
-	 * @var	string
+	 * @var	array
 	 */
-	private $metaDescription;
+	private $meta = array();
 
 
 	/**
-	 * Metakeywords
+	 * The custom meta data
 	 *
 	 * @var	string
 	 */
-	private $metaKeywords;
+	private $metaCustom = '';
 
 
 	/**
@@ -83,8 +83,8 @@ class FrontendHeader extends FrontendBaseObject
 		// add default javascript-files
 		$this->addJS('/frontend/core/js/jquery/jquery.js', false);
 		$this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
-		$this->addJS('/frontend/core/js/frontend.js', false, true);
 		$this->addJS('/frontend/core/js/utils.js', true);
+		$this->addJS('/frontend/core/js/frontend.js', false, true);
 	}
 
 
@@ -146,7 +146,7 @@ class FrontendHeader extends FrontendBaseObject
 		$minify = (bool) $minify;
 
 		// get file path
-		$file = FrontendTheme::getPath($file);
+		if(substr($file, 0, 4) != 'http') $file = FrontendTheme::getPath($file);
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
@@ -161,13 +161,17 @@ class FrontendHeader extends FrontendBaseObject
 			$chunks = explode('/', str_replace(array('/frontend/modules/', '/frontend/core'), '', $file));
 
 			// validate
-			if(!isset($chunks[2])) throw new FrontendException('Invalid file (' . $file . ').');
+			if(!isset($chunks[count($chunks) - 3])) throw new FrontendException('Invalid file (' . $file . ').');
+
+			// fetch values
+			$module = $chunks[count($chunks) - 3];
+			$file = $chunks[count($chunks) - 1];
 
 			// reset module for core
-			if($chunks[0] == '') $chunks[0] = 'core';
+			if($module == '') $module = 'core';
 
 			// alter the file
-			$file = '/frontend/js.php?module=' . $chunks[0] . '&amp;file=' . $chunks[2] . '&amp;language=' . FRONTEND_LANGUAGE;
+			$file = '/frontend/js.php?module=' . $module . '&amp;file=' . $file . '&amp;language=' . FRONTEND_LANGUAGE;
 		}
 
 		// try to minify
@@ -183,14 +187,129 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Add data into metacustom
+	 * Add link
 	 *
 	 * @return	void
-	 * @param	string $value	The string that should be appended to the meta-custom.
+	 * @param	array $attributes			The attributes to parse.
+	 * @param	bool[optional] $overwrite	Should we overwrite the current value?
+	 * @param	mixed[optional] $uniqueKeys	Which keys can we use to decide if an item is unique.
 	 */
-	public function addMetaCustom($value)
+	public function addLink(array $attributes, $overwrite = false, $uniqueKeys = null)
 	{
-		$this->metaCustom .= (string) $value;
+		// redefine
+		$overwrite = (bool) $overwrite;
+		$uniqueKeys = (array) $uniqueKeys;
+
+		if($uniqueKeys == null) $uniqueKeys = array('rel', 'type', 'title');
+
+		// stop if the content is empty
+		if(isset($attributes['href']) && $attributes['href'] == '') return;
+
+		// sort the keys
+		ksort($uniqueKeys);
+
+		// build key
+		$uniqueKey = '';
+		foreach($uniqueKeys as $key) if(isset($attributes[$key])) $uniqueKey .= $attributes[$key] . '|';
+
+		// is the metadata already available?
+		if(isset($this->links[$uniqueKey]))
+		{
+			// should we overwrite the key?
+			if($overwrite) $this->links[$uniqueKey] = $attributes;
+		}
+
+		// add into the array
+		else $this->links[$uniqueKey] = $attributes;
+	}
+
+
+	/**
+	 * Add meta data
+	 *
+	 * @return	void
+	 * @param	array $attributes			The attributes to parse.
+	 * @param	bool[optional] $overwrite	Should we overwrite the current value?
+	 * @param	mixed[optional] $uniqueKeys	Which keys can we use to decide if an item is unique.
+	 */
+	public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null)
+	{
+		// redefine
+		$overwrite = (bool) $overwrite;
+		$uniqueKeys = (array) $uniqueKeys;
+		if($uniqueKeys == null) $uniqueKeys = array('name');
+
+		// stop if the content is empty
+		if(isset($attributes['content']) && $attributes['content'] == '') return;
+
+		// sort the keys
+		ksort($uniqueKeys);
+
+		// build key
+		$uniqueKey = '';
+		foreach($uniqueKeys as $key) if(isset($attributes[$key])) $uniqueKey .= $attributes[$key] . '|';
+
+		// is the metadata already available?
+		if(isset($this->meta[$uniqueKey]))
+		{
+			// should we overwrite the key?
+			if($overwrite) $this->meta[$uniqueKey] = $attributes;
+			else
+			{
+				// some keys should be appended instead of ignored.
+				if(in_array($uniqueKey, array('description|', 'keywords|', 'robots|')))
+				{
+					foreach($attributes as $key => $value)
+					{
+						if(isset($this->meta[$uniqueKey][$key]) && $key == 'content') $this->meta[$uniqueKey][$key] .= ', ' . $value;
+						else $this->meta[$uniqueKey][$key] = $value;
+					}
+				}
+			}
+		}
+
+		// add into the array
+		else $this->meta[$uniqueKey] = $attributes;
+	}
+
+
+	/**
+	 * Add meta-description, somewhat a shortcut for the addMetaData-method
+	 *
+	 * @return	void
+	 * @param	string $value				The description.
+	 * @param	bool[optional] $overwrite	Should we overwrite the previous value?
+	 */
+	public function addMetaDescription($value, $overwrite = false)
+	{
+		$this->addMetaData(array('name' => 'description', 'content' => $value), $overwrite);
+	}
+
+
+	/**
+	 * Add meta-keywords, somewhat a shortcut for the addMetaData-method
+	 *
+	 * @return	void
+	 * @param	string $value				The description.
+	 * @param	bool[optional] $overwrite	Should we overwrite the previous value?
+	 */
+	public function addMetaKeywords($value, $overwrite = false)
+	{
+		$this->addMetaData(array('name' => 'keywords', 'content' => $value), $overwrite);
+	}
+
+
+	/**
+	 * Add Open Graph data
+	 *
+	 * @return	void
+	 * @param	string $key					The key (without og:).
+	 * @param	string $value				The value.
+	 * @param	bool[optional] $overwrite	Should we overwrite the previous value?
+	 */
+	public function addOpenGraphData($key, $value, $overwrite = false)
+	{
+		$this->addMetaData(array('property' => 'og:' . $key, 'content' => $value), $overwrite, 'property');
 	}
 
 
@@ -266,7 +385,29 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Get meta-custom
+	 * Get all links
+	 *
+	 * @return	array
+	 */
+	public function getLinks()
+	{
+		return $this->links;
+	}
+
+
+	/**
+	 * Get meta
+	 *
+	 * @return	array
+	 */
+	public function getMeta()
+	{
+		return $this->meta;
+	}
+
+
+	/**
+	 * Get the custom meta
 	 *
 	 * @return	string
 	 */
@@ -277,24 +418,20 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Get the meta-description
+	 * Get all attributes for meta tag specified by the attribute and the value for that attribute.
 	 *
-	 * @return	string
+	 * @return	array
+	 * @param	string $attribute			The attribute to match on.
+	 * @param	string $attributeValue		The value for the unique attribute.
 	 */
-	public function getMetaDescription()
+	public function getMetaValue($attribute, $attributeValue)
 	{
-		return $this->metaDescription;
-	}
-
-
-	/**
-	 * Get the meta-keywords
-	 *
-	 * @return	string
-	 */
-	public function getMetaKeywords()
-	{
-		return $this->metaKeywords;
+		// loop all meta data
+		foreach($this->meta as $item)
+		{
+			// if the key and the value match we return the item
+			if(isset($item[$attribute]) && $item[$attribute] == $attributeValue) return $item;
+		}
 	}
 
 
@@ -436,20 +573,57 @@ class FrontendHeader extends FrontendBaseObject
 		// assign page title
 		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
 
-		// assign meta
-		$this->tpl->assign('metaDescription', (string) $this->getMetaDescription());
-		$this->tpl->assign('metaKeywords', (string) $this->getMetaKeywords());
-
-		// initial value for footer HTML
-		$metaCustom = (string) $this->getMetaCustom();
-
 		// facebook admins given?
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
+
+		// in debugmode we don't want our pages to be indexed.
+		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+
+		// noodp, noydir
+		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
+		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
+
+		// build meta
+		$meta = '';
+
+		// loop meta
+		foreach($this->meta as $attributes)
 		{
-			// add Facebook tag
-			$metaCustom .= "\n" . '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) . '" />' . "\n";
+			// start html
+			$meta .= '<meta ';
+
+			// add attributes
+			foreach($attributes as $key => $value) $meta .= $key . '="' . $value . '" ';
+
+			// remove last space
+			$meta = trim($meta);
+
+			// close html
+			$meta .= '>' . "\n";
 		}
-		$this->tpl->assign('metaCustom', $metaCustom);
+
+		// build link
+		$link = '';
+
+		// loop links
+		foreach($this->links as $attributes)
+		{
+			// start html
+			$link .= '<link ';
+
+			// add attributes
+			foreach($attributes as $key => $value) $link .= $key . '="' . $value . '" ';
+
+			// remove last space
+			$link = trim($link);
+
+			// close html
+			$link .= '>' . "\n";
+		}
+
+		// assign meta
+		$this->tpl->assign('meta', $meta . "\n" . $link);
+		$this->tpl->assign('metaCustom', $this->getMetaCustom());
 
 		// init var
 		$cssFiles = null;
@@ -510,76 +684,47 @@ class FrontendHeader extends FrontendBaseObject
 		// assign site title
 		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 
+		// get the data
+		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
+		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
+		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
+
+		// search for the webpropertyId, if not found we should build the GA-code
+		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
+		{
+			// build GA-tracking code
+			$trackingCode = '<script type="text/javascript">
+								var _gaq = _gaq || [];
+								_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
+								_gaq.push([\'_setDomainName\', \'none\']);
+								_gaq.push([\'_trackPageview\']);
+								_gaq.push([\'_trackPageLoadTime\']);
+
+								(function() {
+									var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+									ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+									var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+								})();
+							</script>';
+
+			// add to the header
+			$siteHTMLHeader .= "\n" . $trackingCode;
+		}
+
 		// assign site wide html
-		$this->tpl->assign('siteHTMLHeader', (string) FrontendModel::getModuleSetting('core', 'site_html_header', null));
+		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
 	}
 
 
 	/**
-	 * Set meta-custom
+	 * Set the custom meta
 	 *
 	 * @return	void
-	 * @param	string $value	Overwrite the meta-custom with this value.
+	 * @param	string $meta	The meta data to set.
 	 */
-	public function setMetaCustom($value)
+	public function setMetaCustom($meta)
 	{
-		$this->metaCustom = (string) $value;
-	}
-
-
-	/**
-	 * Set meta-description
-	 *
-	 * @return	void
-	 * @param	string $value				The description to be set or to be appended.
-	 * @param	bool[optional] $overwrite	Should the existing description be overwritten?
-	 */
-	public function setMetaDescription($value, $overwrite = false)
-	{
-		// redefine vars
-		$value = trim((string) $value);
-		$overwrite = (bool) $overwrite;
-
-		// overwrite? reset the current value
-		if($overwrite) $this->metaDescription = $value;
-
-		// add to current value
-		else
-		{
-			// current value is empty?
-			if($this->metaDescription == '') $this->metaDescription = $value;
-
-			// append to current value
-			else $this->metaDescription .= ', ' . $value;
-		}
-	}
-
-
-	/**
-	 * Set meta-keywords
-	 *
-	 * @return	void
-	 * @param	string $value				The keywords to be set or to be appended.
-	 * @param	bool[optional] $overwrite	Should the existing keyword be overwritten?
-	 */
-	public function setMetaKeywords($value, $overwrite = false)
-	{
-		// redefine vars
-		$value = trim((string) $value);
-		$overwrite = (bool) $overwrite;
-
-		// overwrite? reset the current value
-		if($overwrite) $this->metaKeywords = $value;
-
-		// add to current value
-		else
-		{
-			// current value is empty
-			if($this->metaKeywords == '') $this->metaKeywords = $value;
-
-			// append to current value
-			else $this->metaKeywords .= ', ' . $value;
-		}
+		$this->metaCustom = (string) $meta;
 	}
 
 

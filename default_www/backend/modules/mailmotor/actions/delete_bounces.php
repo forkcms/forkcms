@@ -48,6 +48,9 @@ class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
 				}
 			}
 
+			// trigger event
+			BackendModel::triggerEvent($this->getModule(), 'after_delete_bounces');
+
 			// user was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('statistics') . '&id=' . $mailing['id'] . '&report=deleted-bounces');
 		}

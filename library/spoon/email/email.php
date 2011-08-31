@@ -182,7 +182,6 @@ class SpoonEmail
 	/**
 	 * Adds an attachment to the headers.
 	 *
-	 * @return	void
 	 * @param	string $filename				The path to (including the filename for) the attachment.
 	 * @param	string[optional] $newName		The new name of the attachment.
 	 * @param	string[optional] $disposition	The disposition of the attachment. Can be 'attachment' or 'inline'.
@@ -224,7 +223,6 @@ class SpoonEmail
 	/**
 	 * Adds a blind carbon copy recipient to the BCC stack.
 	 *
-	 * @return	void
 	 * @param	string $email			The BCC e-mail address.
 	 * @param	string[optional] $name	The BCC name.
 	 */
@@ -241,7 +239,6 @@ class SpoonEmail
 	/**
 	 * Adds a carbon copy recipient to the CC stack.
 	 *
-	 * @return	void
 	 * @param	string $email				The CC e-mail address.
 	 * @param	string[optional] $name		The CC name.
 	 */
@@ -258,7 +255,6 @@ class SpoonEmail
 	/**
 	 * Adds a single-line header to the email headers.
 	 *
-	 * @return	void
 	 * @param	string $header		The full content for the header.
 	 */
 	public function addHeader($header)
@@ -270,7 +266,6 @@ class SpoonEmail
 	/**
 	 * Adds a regular recipient to the recipients stack.
 	 *
-	 * @return	void
 	 * @param	string $email				The recipient e-mail address.
 	 * @param	string[optional] $name		The name of the recipient.
 	 */
@@ -287,7 +282,6 @@ class SpoonEmail
 	/**
 	 * Adds an array of recipients to the recipients stack.
 	 *
-	 * @return	void
 	 * @param	array $recipients		A multidimensional array with recipients. Will read the first 2 items in each subsequent array.
 	 */
 	public function addRecipientArray(array $recipients)
@@ -310,8 +304,6 @@ class SpoonEmail
 
 	/**
 	 * Closes the current SMTP connection.
-	 *
-	 * @return	void
 	 */
 	public function closeConnection()
 	{
@@ -430,8 +422,6 @@ class SpoonEmail
 
 	/**
 	 * Builds the e-mail headers.
-	 *
-	 * @return	void
 	 */
 	private function getHeaders()
 	{
@@ -582,7 +572,6 @@ class SpoonEmail
 	/**
 	 * Function to store the actual content for either HTML or plain text.
 	 *
-	 * @return	void
 	 * @param	string $content			The body of the e-mail you wish to send.
 	 * @param	array $variables		The variables to parse into the content.
 	 * @param	string[optional] $type	The e-mail type. Either 'html' or 'plain'.
@@ -712,7 +701,6 @@ class SpoonEmail
 	/**
 	 * Changes the charset from standard utf-8 to your preferred value.
 	 *
-	 * @return	void
 	 * @param	string[optional] $charset	The charset to use, default is utf-8.
 	 */
 	public function setCharset($charset = 'utf-8')
@@ -724,7 +712,6 @@ class SpoonEmail
 	/**
 	 * Sets the debug mode on/off.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should we enable debug-mode?
 	 */
 	public function setDebug($on = true)
@@ -736,7 +723,6 @@ class SpoonEmail
 	/**
 	 * Adds the sender information.
 	 *
-	 * @return	void
 	 * @param	string $email			The sender's e-mail address.
 	 * @param	string[optional] $name	The sender's name.
 	 */
@@ -754,7 +740,6 @@ class SpoonEmail
 	/**
 	 * Sets the HTML content, which can be a template or just a string.
 	 *
-	 * @return	void
 	 * @param	string $content				The HTML content for the e-mail.
 	 * @param	array[optional] $variables	The variables to parse into the content.
 	 */
@@ -771,7 +756,6 @@ class SpoonEmail
 	/**
 	 * Sets the plain text content, which can be a template or just a string.
 	 *
-	 * @return	void
 	 * @param	string $content				The plain text content for the e-mail.
 	 * @param	array[optional] $variables	The variables to parse into the content.
 	 */
@@ -788,7 +772,6 @@ class SpoonEmail
 	/**
 	 * Sets the email priority level.
 	 *
-	 * @return	void
 	 * @param	int[optional] $level	The e-mail's priority level (1-5, where 1 is not urgent).
 	 */
 	public function setPriority($level = 3)
@@ -804,7 +787,6 @@ class SpoonEmail
 	/**
 	 * Sets the Reply-To header.
 	 *
-	 * @return	void
 	 * @param	string $email			The e-mail address used in the reply-to header.
 	 * @param	string[optional] $name	The name used in the reply-to header.
 	 */
@@ -821,7 +803,6 @@ class SpoonEmail
 	/**
 	 * Sets authentication info for the current SMTP connection.
 	 *
-	 * @return	void
 	 * @param	string $username	The username to use.
 	 * @param	string $password	The password to use.
 	 */
@@ -838,7 +819,6 @@ class SpoonEmail
 	/**
 	 * Sets the SMTP connection.
 	 *
-	 * @return	void
 	 * @param	string[optional] $host	The SMTP host we're connecting to.
 	 * @param	int[optional] $port		The port we're connecting to.
 	 * @param	int[optional] $timeout	The allowed timeout amount.
@@ -879,7 +859,6 @@ class SpoonEmail
 	/**
 	 * Sets the SMTP security layer (either SSL or TLS)
 	 *
-	 * @return	void
 	 * @param	string $layer	The security layer to use with SMTP (either SSL or TLS).
 	 */
 	public function setSMTPSecurity($layer)
@@ -898,7 +877,6 @@ class SpoonEmail
 	/**
 	 * Sets the email's subject header.
 	 *
-	 * @return	void
 	 * @param	string $value	The subject for the e-mail.
 	 */
 	public function setSubject($value)
@@ -910,7 +888,6 @@ class SpoonEmail
 	/**
 	 * Sets the email body template compile folder.
 	 *
-	 * @return	void
 	 * @param	string $path	The directory specified here will be used to write compiled files in.
 	 */
 	public function setTemplateCompileDirectory($path)
@@ -923,7 +900,6 @@ class SpoonEmail
 	 * Sets the initial To: header to your liking, and thus masks a list of multiple recipients.
 	 * This will have no effect if you don't use SMTP (the mail() function does not accept it).
 	 *
-	 * @return	void
 	 * @param	string $name			The name used in the To: header.
 	 * @param	string[optional] $email	The e-mail used in the To: header.
 	 */
@@ -950,5 +926,3 @@ class SpoonEmail
  * @since		1.0.0
  */
 class SpoonEmailException extends SpoonException {}
-
-?>

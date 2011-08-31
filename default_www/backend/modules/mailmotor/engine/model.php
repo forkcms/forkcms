@@ -347,7 +347,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $emails, array(BL::lbl('Email'), BL::lbl('Created')), null, ',', null, true);
+		SpoonFileCSV::arrayToFile($path, $emails, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
 	}
 
 
@@ -399,7 +399,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $records, array(BL::lbl('Email'), BL::lbl('Created')), null, ',', null, true);
+		SpoonFileCSV::arrayToFile($path, $records, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
 	}
 
 

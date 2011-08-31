@@ -160,9 +160,6 @@ class FrontendNavigation extends FrontendBaseObject
 			$temp['navigation_title'] = $data['navigation_title'];
 			$temp['selected'] = (bool) in_array($id, self::$selectedPageIds);
 
-			// add rel
-			if($data['no_follow']) $temp['rel'] = 'nofollow';
-
 			// add
 			$return[] = $temp;
 		}

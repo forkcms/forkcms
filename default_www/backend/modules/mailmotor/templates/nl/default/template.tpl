@@ -12,7 +12,7 @@
 						<table id="box" border="0" cellpadding="0" cellspacing="0" width="580">
 							<tr>
 								<td colspan="3">
-									<a href="#" border="0">
+									<a href="{$siteURL}" border="0">
 										<img src="{$siteURL}/backend/modules/mailmotor/templates/nl/default/images/newsletter_header.gif" width="580" height="108" alt="" border="0" />
 									</a>
 								</td>

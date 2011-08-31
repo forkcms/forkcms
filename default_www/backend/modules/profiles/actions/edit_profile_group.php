@@ -135,8 +135,8 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 
 			// fields filled?
 			$ddmGroup->isFilled(BL::getError('GroupIsRequired'));
-			if($txtExpirationDate->isFilled()) $txtExpirationDate->isValid(BL::getError('InvalidDate'));
-			if($txtExpirationTime->isFilled()) $txtExpirationTime->isValid(BL::getError('InvalidTime'));
+			if($txtExpirationDate->isFilled()) $txtExpirationDate->isValid(BL::getError('DateIsInvalid'));
+			if($txtExpirationTime->isFilled()) $txtExpirationTime->isValid(BL::getError('TimeIsInvalid'));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -156,6 +156,9 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 
 				// update values
 				$id = BackendProfilesModel::updateProfileGroup($this->id, $values);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_profile_edit_groups', array('id' => $this->id));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');

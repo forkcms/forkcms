@@ -385,5 +385,3 @@ class SpoonFileCSV
 		return $array;
 	}
 }
-
-?>
