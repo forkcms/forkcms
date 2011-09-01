@@ -1,5 +1,9 @@
 2.6.5 (xxxx-xx-xx)
 --
+Bugfixes:
+
+* Facebook-class: fixed oAuth-calls.
+
 Improvements:
 
 * Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
