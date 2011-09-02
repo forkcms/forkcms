@@ -1,4 +1,4 @@
-2.6.5 (2011-08-30)
+2.6.6 (xxxx-xx-xx)
 --
 Bugfixes:
 
@@ -6,10 +6,16 @@ Bugfixes:
 
 Improvements:
 
+* Core: upgraded jQuery to 1.6.3
+
+
+2.6.5 (2011-08-30)
+--
+Improvements:
+
 * Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
 * Core: improved default-filtering in locale. From now on frontend and all types are default. 
 * Core: return id of inserted mail.
-* Core: upgraded jQuery to 1.6.3
 * Pages: sitemap page will now also display child pages.
 
 
