@@ -6,7 +6,8 @@ Bugfixes:
 
 Improvements:
 
-* Core: upgraded jQuery to 1.6.3
+* Core: upgraded jQuery to 1.6.3.
+* Core: added two method (getDate & getTime) as BackendDatagrid-functions, as requested by Frederik (see: http://forum.fork-cms.com/discussions/general/48-shortdate-for-formatting-dat-in-datagrid).
 
 
 2.6.5 (2011-08-30)
