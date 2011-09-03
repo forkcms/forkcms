@@ -42,6 +42,14 @@ class PagesInstall extends ModuleInstaller
 
 		// set rights
 		$this->setRights();
+
+		// set navigation
+		$this->setNavigation(null, 'Pages', 'pages/index', array('pages/add', 'pages/edit'), 2);
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Pages', 'pages/settings');
 	}
 
 

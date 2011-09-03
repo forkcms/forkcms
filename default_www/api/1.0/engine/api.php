@@ -229,7 +229,7 @@ class API
 				// handle the value as an element
 				foreach($input as $value)
 				{
-					array_walk($value, array('API', 'arrayToXML'), $element);
+					if(is_array($value)) array_walk($value, array('API', 'arrayToXML'), $element);
 				}
 			}
 		}

@@ -1,8 +1,83 @@
-2.x.x (xxxx-xx-xx)
+2.6.6 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Facebook-class: fixed oAuth-calls.
+
+Improvements:
+
+* Core: upgraded jQuery to 1.6.3
+
+
+2.6.5 (2011-08-30)
+--
+Improvements:
+
+* Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
+* Core: improved default-filtering in locale. From now on frontend and all types are default. 
+* Core: return id of inserted mail.
+* Pages: sitemap page will now also display child pages.
+
+
+2.6.4 (2011-08-23)
+--
+Bugfixes:
+
+* Location: it is now possible to use multiline content inside the marker.
+* Core: overwriting javascript-files in a theme now works fine.
+
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.16.
+
+
+2.6.3 (2011-08-16)
+--
+Bugfixes:
+
+* Api: when the response isn't an array notices where thrown.
+* Locale: analyse now correctly handles dynamic translations.
+* Core: local file inclusion check was not MS Windows-proof, fixed now (thx to iarwain01)
+* Core: the metaCustom was never parsed.
+* Pages: when there are no footer-pages an notice was triggered (as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/176).
+* Pages: When moving a page the correct page is now checked for allow_children
+
+Improvements:
+
+* Core: added a modifier to camelcase strings.
+* Core: when adding new default blocks to an existing template, update all corresponding pages that have no content in those blocks to the new default.
+* Core: when Akismet can't tell us if a comment is spam, we mark it as an item in moderation.
+* Core: added functionality to set a callback after an item is saved with inline editing.
+* Pages: internal redirect can have children from now on, thx to Annelyze.
+* Pages: added an experimental copy-action.
+* Locale: highlight empty items in the overview.
+
+
+2.6.2 (2011-08-09)
+--
+Bugfixes:
+
+* Core: template custom was not being parsed inside blocks.
+
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.15.
+* Core: added a way to read a cookie through JS.
+* Core: Upgraded TinyMCE to 3.4.4
+
+
+2.6.1 (2011-08-02)
 --
 Bugfixes:
 
 * Search: search page was installed twice.
+* Core: when in debugmode the confirmation for leaving the page is disabled.
+* Core: the check that decided to show the confirmation-message wan't handling empty strings very well.
+* Core: fixed some JS-errors (thx to Frederik Heyninck)
+
+Improvements:
+
+* Core: added utils.string.html5(), when you pass a HTML5-chunk it will be converted so IE will render it correctly (based on innerShiv).
 
 
 2.6.0 (2011-07-26)
@@ -13,7 +88,7 @@ Bugfixes:
 * Blog: Comments-action was broken due an invalid call on $this in a static method.
 * Installer: Setting the librarypath was using an array instead of the first item in that array.
 
-Improvements
+Improvements:
 
 * Core: Items marked as direct action won't show up in page-title, breadcrumb, meta, ...
 * Core: Better handling of meta-information. Each item will be unique, Some new methods are introduced (addLink, addMetaData, addMetaDescription, addMetaKeywords, addOpenGraphData), they replace: setMeta*.

@@ -71,6 +71,29 @@ utils.cookies =
 	},
 
 
+	/**
+	 * Read a cookie
+	 *
+	 * @return	mixed
+	 */
+	readCookie: function(name)
+	{
+		// get cookies
+		var cookies = document.cookie.split(';');
+		name = name + '=';
+
+		for(var i = 0; i < cookies.length; i++)
+		{
+			var cookie = cookies[i];
+			while(cookie.charAt(0) == ' ') cookie = cookie.substring(1, cookie.length);
+			if(cookie.indexOf(name) == 0) return cookie.substring(name.lenght, cookie.length);
+		}
+
+		// fallback
+		return null;
+	},
+
+
 	// end
 	eoo: true
 },
@@ -87,7 +110,7 @@ utils.form =
 	 * Is a checkbox checked?
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isChecked: function(element)
 	{
@@ -99,7 +122,7 @@ utils.form =
 	 * Is the value inside the element a valid emailaddress
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isEmail: function(element)
 	{
@@ -112,7 +135,7 @@ utils.form =
 	 * Is the element filled
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isFilled: function(element)
 	{
@@ -124,7 +147,7 @@ utils.form =
 	 * Is the value inside the element a valid number
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isNumber: function(element)
 	{
@@ -136,7 +159,7 @@ utils.form =
 	 * Is the value inside the element a valid URL
 	 *
 	 * @return	bool
-	 * @param object element
+	 * @param	object element
 	 */
 	isURL: function(element)
 	{
@@ -153,16 +176,68 @@ utils.form =
 /**
  * Functions related to strings
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 utils.string =
 {
+	// data member
+	div: false,
+
+
+	/**
+	 * Fix a HTML5-chunk, so IE can render it
+	 *
+	 * @return	string
+	 * @param	string html
+	 */
+	html5: function(html)
+	{
+		var html5 = 'abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.split(' ');
+		
+		// create div if needed
+		if(utils.string.div === false)
+		{
+			utils.string.div = document.createElement('div');
+			
+			utils.string.div.innerHTML = '<nav></nav>';
+			
+			if(utils.string.div.childNodes.length !== 1)
+			{
+				var fragment = document.createDocumentFragment();
+				var i = html5.length;
+				while(i--) fragment.createElement(html5[i]);
+
+				fragment.appendChild(utils.string.div);
+			}
+		}
+		
+		html = html.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+					.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
+		// fix for when in a table
+		var inTable = html.match(/^<(tbody|tr|td|th|col|colgroup|thead|tfoot)[\s\/>]/i);
+
+		if(inTable) utils.string.div.innerHTML = '<table>' + html + '</table>';
+		else utils.string.div.innerHTML = html;
+
+		var scope;
+		if(inTable) scope = utils.string.div.getElementsByTagName(inTable[1])[0].parentNode;
+		else scope = utils.string.div;
+
+		var returnedFragment = document.createDocumentFragment();
+		var i = scope.childNodes.length;
+		while(i--) returnedFragment.appendChild(scope.firstChild);
+
+		return returnedFragment;
+	},
+
+
 	/**
 	 * Encode the string as HTML
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	htmlEncode: function(value)
 	{
@@ -174,7 +249,7 @@ utils.string =
 	 * Decode the string as HTML
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	htmlDecode: function(value)
 	{
@@ -186,9 +261,9 @@ utils.string =
 	 * Replace all occurences of one string into a string
 	 *
 	 * @return	string
-	 * @param string value
-	 * @param string needle
-	 * @param string replacement
+	 * @param	string value
+	 * @param	string needle
+	 * @param	string replacement
 	 */
 	replaceAll: function(value, needle, replacement)
 	{
@@ -201,7 +276,7 @@ utils.string =
 	 * Strip whitespace from the beginning and end of a string
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	trim: function(value)
 	{
@@ -214,7 +289,7 @@ utils.string =
 	 * Urlise a string (cfr. SpoonFilter)
 	 *
 	 * @return	string
-	 * @param string value
+	 * @param	string value
 	 */
 	urlise: function(value)
 	{
@@ -267,6 +342,35 @@ utils.string =
 	},
 
 
+	/**
+	 * Convert a HTML string to a XHTML string.
+	 *
+	 * @return	string
+	 * @param	string value
+	 */
+	xhtml: function(value)
+	{
+		// break tags should end with a slash
+		value = value.replace(/<br>/g,'<br />');
+		value = value.replace(/<br ?\/?>$/g,'');
+		value = value.replace(/^<br ?\/?>/g,'');
+
+		// image tags should end with a slash
+		value = value.replace(/(<img [^>]+[^\/])>/gi,'$1 />');
+
+		// input tags should end with a slash
+		value = value.replace(/(<input [^>]+[^\/])>/gi,'$1 />');
+
+		// big no-no to <b|i|u>
+		value = value.replace(/<b\b[^>]*>(.*?)<\/b[^>]*>/g,'<strong>$1</strong>');
+		value = value.replace(/<i\b[^>]*>(.*?)<\/i[^>]*>/g,'<em>$1</em>');
+		value = value.replace(/<u\b[^>]*>(.*?)<\/u[^>]*>/g,'<span style="text-decoration:underline">$1</span>');
+
+		// XHTML
+		return value;
+	},
+
+
 	// end
 	eoo: true
 },
@@ -280,22 +384,22 @@ utils.string =
  */
 utils.url =
 {
-	extractParamFromUri: function (uri, paramName) 
+	extractParamFromUri: function (uri, paramName)
 	{
 		if(!uri) return;
 		var uri = uri.split('#')[0];
 		var parts = uri.split('?');
 		if (parts.length == 1) return;
-		
+
 		var query = decodeURI(parts[1]);
 
 		paramName += '=';
 		var params = query.split('&');
-		for(var i=0, param; param = params[i]; ++i) 
+		for(var i=0, param; param = params[i]; ++i)
 		{
 			if(param.indexOf(paramName) === 0) return unescape(param.split('=')[1]);
 		}
-	},	
+	},
 
 
 	/**
@@ -308,7 +412,7 @@ utils.url =
 	{
 		// init return value
 		var getValue = '';
-		
+
 		// get GET chunks from url
 	    var hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
 

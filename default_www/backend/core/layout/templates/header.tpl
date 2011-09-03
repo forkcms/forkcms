@@ -16,7 +16,7 @@
 					{option:SITE_MULTILANGUAGE}
 					{option:workingLanguages}
 						<li>
-							{$msgNowEditing}:
+							<label for="workingLanguage">{$msgNowEditing}:</label>
 							<select id="workingLanguage">
 								{iteration:workingLanguages}
 									<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label|ucfirst}</option>

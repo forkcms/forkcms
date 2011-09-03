@@ -103,7 +103,6 @@ class SpoonThumbnail
 	/**
 	 * Default constructor.
 	 *
-	 * @return	void
 	 * @param	string $filename		The path to the source-image.
 	 * @param	int[optional] $width	The required width, if not provided it will be calculated based on the height.
 	 * @param	int[optional] $height	The required height, if not provided it will be calculated based on the width.
@@ -167,7 +166,6 @@ class SpoonThumbnail
 	/**
 	 * Outputs the image as png to the browser.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $headers		Should the headers be send? This is a usefull when you're debugging.
 	 */
 	public function parse($headers = true)
@@ -218,9 +216,12 @@ class SpoonThumbnail
 		//
 		if(@is_writable(dirname($filename)) !== true)
 		{
-			// strict?
-			if($this->strict) throw new SpoonThumbnailException('The destination-path should be writable.');
-			return false;
+			// does the folder exist? if not, try to create
+			if(!SpoonDirectory::create(dirname($filename)))
+			{
+				if($this->strict) throw new SpoonThumbnailException('The destination-path should be writable.');
+				return false;
+			}
 		}
 
 		// get extension
@@ -301,7 +302,6 @@ class SpoonThumbnail
 	/**
 	 * This internal function will resize/crop the image.
 	 *
-	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
 	 * @param	int $currentType		Current type of image.
@@ -320,7 +320,6 @@ class SpoonThumbnail
 	/**
 	 * Resize the image with Force Aspect Ratio.
 	 *
-	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
 	 * @param	int $currentType		Current type of image.
@@ -517,7 +516,6 @@ class SpoonThumbnail
 	/**
 	 * Resize the image without Force Aspect Ratio.
 	 *
-	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
 	 * @param	int $currentType		Current type of image.
@@ -700,7 +698,6 @@ class SpoonThumbnail
 	/**
 	 * set the allowEnlargement, default is false.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	May the original image be enlarged.
 	 */
 	public function setAllowEnlargement($on = false)
@@ -745,7 +742,6 @@ class SpoonThumbnail
 	/**
 	 * Enables the Force aspect ratio.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should the original aspect ratio be respected?
 	 */
 	public function setForceOriginalAspectRatio($on = true)
@@ -757,7 +753,6 @@ class SpoonThumbnail
 	/**
 	 * Set the strict option.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should strict-mode be enabled?
 	 */
 	public function setStrict($on = true)
@@ -778,5 +773,3 @@ class SpoonThumbnail
  * @since		1.0.0
  */
 class SpoonThumbnailException extends SpoonException {}
-
-?>

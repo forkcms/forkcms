@@ -126,10 +126,10 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 			$dataGrid->setPaging();
 
 			// hide columns
-			$dataGrid->setColumnsHidden('id', 'date');
+			$dataGrid->setColumnsHidden('id', 'date', 'url');
 
 			// set url
-			$dataGrid->setColumnURL('referrer', 'http://[referrer]');
+			$dataGrid->setColumnURL('referrer', '[url]');
 		}
 
 		// parse the datagrid

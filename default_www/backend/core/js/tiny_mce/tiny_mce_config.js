@@ -32,7 +32,7 @@ tinyMCE.init(
 
 	// theme options
 	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor,|,charmap,code,|,fullscreen,|,template',
-	theme_advanced_buttons2: 'table,|,image,dextrose_video|,formatselect,|,bramus_cssextras_classes',
+	theme_advanced_buttons2: 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,
 	theme_advanced_blockformats: 'p,h2,h3,h4,blockquote,code',

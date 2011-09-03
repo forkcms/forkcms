@@ -63,6 +63,8 @@
 		</div>
 	</div>
 
+	<div id="itemText" style="display: none;">{$item.text}</div>
+
 	{option:item.lat}
 	{option:item.lng}
 		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -107,7 +109,7 @@
 			google.maps.event.addListener(marker, 'click', function()
 			{
 				// create infowindow
-				new google.maps.InfoWindow({ content: '<h1>{$item.title}</h1>{$item.text}' }).open(map, marker);
+				new google.maps.InfoWindow({ content: '<h1>{$item.title}</h1>' + $('#itemText').html() }).open(map, marker);
 			});
 		</script>
 	{/option:item.lng}

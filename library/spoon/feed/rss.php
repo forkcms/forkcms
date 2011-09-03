@@ -212,7 +212,6 @@ class SpoonFeedRSS
 	/**
 	 * The default constructor
 	 *
-	 * @return	void
 	 * @param	string $title			The title off the feed.
 	 * @param	string $link			The link of the feed.
 	 * @param	string $description		The description of the feed.
@@ -233,7 +232,6 @@ class SpoonFeedRSS
 	/**
 	 * Adds a category for the feed.
 	 *
-	 * @return	void
 	 * @param	string $category			The name of the category.
 	 * @param	string[optional] $domain	A domain that idenitifies a categorization taxonomy.
 	 */
@@ -256,7 +254,6 @@ class SpoonFeedRSS
 	/**
 	 * Add an item to the feed.
 	 *
-	 * @return	void
 	 * @param	SpoonFeedRSSItem $item		A SpoonFeedRSSItem that represents a single article in the feed.
 	 */
 	public function addItem(SpoonFeedRSSItem $item)
@@ -268,7 +265,6 @@ class SpoonFeedRSS
 	/**
 	 * Add a day to skip. The default value is sunday.
 	 *
-	 * @return	void
 	 * @param	string $day		Add a day where aggregators should skip updating the feed.
 	 */
 	public function addSkipDay($day)
@@ -290,7 +286,6 @@ class SpoonFeedRSS
 	/**
 	 * Add a hour to skip, default is 0.
 	 *
-	 * @return	void
 	 * @param 	int $hour	Add an hour where aggregators should skip updating the feed.
 	 */
 	public function addSkipHour($hour)
@@ -806,7 +801,6 @@ class SpoonFeedRSS
 	/**
 	 * Parse the feed and output the feed into the browser.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging).
 	 */
 	public function parse($headers = true)
@@ -825,7 +819,6 @@ class SpoonFeedRSS
 	/**
 	 * Write the feed into a file
 	 *
-	 * @return	void
 	 * @param	string $path	The path (and filename) where the feed should be written.
 	 */
 	public function parseToFile($path)
@@ -1066,7 +1059,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the charset.
 	 *
-	 * @return	void
 	 * @param	string[optional] $charset	The charset that should be used. Possible charsets can be found in spoon.php.
 	 */
 	public function setCharset($charset = 'utf-8')
@@ -1078,7 +1070,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the cloud for the feed.
 	 *
-	 * @return	void
 	 * @param	string $domain				The domain.
 	 * @param	int $port					The port.
 	 * @param	string $path				The path.
@@ -1098,7 +1089,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the copyright.
 	 *
-	 * @return	void
 	 * @param	string $copyright	The copyright statement.
 	 */
 	public function setCopyright($copyright)
@@ -1110,7 +1100,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the description for the feed.
 	 *
-	 * @return	void
 	 * @param	string $description		The description.
 	 */
 	public function setDescription($description)
@@ -1122,7 +1111,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the doc for the feed.
 	 *
-	 * @return	void
 	 * @param	string $docs	The documentation statement.
 	 */
 	public function setDocs($docs)
@@ -1134,7 +1122,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the generator for the feed.
 	 *
-	 * @return	void
 	 * @param	string[optional] $generator		The generator of the feed, if not given "Spoon/<SpoonVersion>" will be used.
 	 */
 	public function setGenerator($generator = null)
@@ -1146,7 +1133,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the image for the feed.
 	 *
-	 * @return	void
 	 * @param	string $URL						URL of the image.
 	 * @param	string $title					Title of the image.
 	 * @param	string $link					Link of the image.
@@ -1177,7 +1163,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the language for the feed.
 	 *
-	 * @return	void
 	 * @param	string $language	The language to set.
 	 */
 	public function setLanguage($language)
@@ -1189,7 +1174,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the last build date for the feed.
 	 *
-	 * @return	void
 	 * @param	int[optional] $lastBuildDate	A UNIX timestamp that represents the last build date.
 	 */
 	public function setLastBuildDate($lastBuildDate = null)
@@ -1201,7 +1185,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the link for the feed.
 	 *
-	 * @return	void
 	 * @param	string $link	The link of the feed.
 	 */
 	public function setLink($link)
@@ -1220,7 +1203,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the managing editor for the feed.
 	 *
-	 * @return	void
 	 * @param	string $managingEditor	The managing editor value.
 	 */
 	public function setManagingEditor($managingEditor)
@@ -1232,7 +1214,6 @@ class SpoonFeedRSS
 	/**
 	 * Sets the publication date for the feed.
 	 *
-	 * @return	void
 	 * @param	int[optional] $publicationDate		A UNIX timestamp that represents the publication date.
 	 */
 	public function setPublicationDate($publicationDate = null)
@@ -1245,7 +1226,6 @@ class SpoonFeedRSS
 	/**
 	 * Sets the rating.
 	 *
-	 * @return	void
 	 * @param	string $rating		The rating for the feed.
 	 */
 	public function setRating($rating)
@@ -1257,7 +1237,6 @@ class SpoonFeedRSS
 	/**
 	 * Set sorting status.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on		Should the post be sorted?
 	 */
 	public function setSorting($on = true)
@@ -1269,7 +1248,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the sorting method.
 	 *
-	 * @return	void
 	 * @param	string[optional] $sortingMethod		Set the sorting method that should be used, possible values are: desc, asc.
 	 */
 	public function setSortingMethod($sortingMethod = 'desc')
@@ -1284,7 +1262,6 @@ class SpoonFeedRSS
 	/**
 	 * Set the title for the feed.
 	 *
-	 * @return	void
 	 * @param	string $title	The title of the feed.
 	 */
 	public function setTitle($title)
@@ -1296,7 +1273,6 @@ class SpoonFeedRSS
 	/**
 	 * Set time to live for the feed.
 	 *
-	 * @return	void
 	 * @param	int $ttl	The time to live in seconds.
 	 */
 	public function setTTL($ttl)
@@ -1308,7 +1284,6 @@ class SpoonFeedRSS
 	/**
 	 * Sets the webmaster for the feed.
 	 *
-	 * @return	void
 	 * @param	string $webmaster	The webmaster of the feed.
 	 */
 	public function setWebmaster($webmaster)
@@ -1320,7 +1295,6 @@ class SpoonFeedRSS
 	/**
 	 * Sort the item on publication date.
 	 *
-	 * @return	void
 	 */
 	private function sort()
 	{
@@ -1334,5 +1308,3 @@ class SpoonFeedRSS
 		$this->items = $items;
 	}
 }
-
-?>

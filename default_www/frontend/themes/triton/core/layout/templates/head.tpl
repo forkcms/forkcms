@@ -11,6 +11,7 @@
 	<meta charset="utf-8" />
 	<meta name="generator" content="Fork CMS" />
 	{$meta}
+	{$metaCustom}
 
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />

@@ -657,9 +657,22 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentReferrers()
 	{
-		return (array) BackendModel::getDB()->getRecords('SELECT *
+		// get items
+		$items = (array) BackendModel::getDB()->getRecords('SELECT *
 															FROM analytics_referrers
 															ORDER BY entrances DESC, id');
+
+		// loop items
+		foreach($items as $key => $item)
+		{
+			// assign URL
+			$items[$key]['url'] = 'http://' . $item['referrer'];
+
+			// wordwrap referrer
+			$items[$key]['referrer'] = wordwrap($item['referrer'], 50, ' ', true);
+		}
+
+		return $items;
 	}
 
 
