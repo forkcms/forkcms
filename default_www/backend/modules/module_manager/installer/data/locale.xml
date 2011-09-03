@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<backend>
+		<core>
+			<item type="label" name="ModuleManager">
+				<translation language="nl"><![CDATA[module manager]]></translation>
+				<translation language="en"><![CDATA[module manager]]></translation>
+			</item>
+		</core>
+		<module_manager>
+			<item type="label" name="Action">
+				<translation language="nl"><![CDATA[actie]]></translation>
+				<translation language="en"><![CDATA[action]]></translation>
+			</item>
+			<item type="label" name="MissingActions">
+				<translation language="nl"><![CDATA[ontbreekt acties]]></translation>
+				<translation language="en"><![CDATA[missing actions?]]></translation>
+			</item>
+			<item type="label" name="Path">
+				<translation language="nl"><![CDATA[pad]]></translation>
+				<translation language="en"><![CDATA[path]]></translation>
+			</item>
+			<item type="label" name="Yes">
+				<translation language="nl"><![CDATA[ja]]></translation>
+				<translation language="en"><![CDATA[yes]]></translation>
+			</item>
+			<item type="label" name="No">
+				<translation language="nl"><![CDATA[nee]]></translation>
+				<translation language="en"><![CDATA[no]]></translation>
+			</item>
+			<item type="label" name="Actions">
+				<translation language="nl"><![CDATA[acties]]></translation>
+				<translation language="en"><![CDATA[actions]]></translation>
+			</item>
+			<item type="label" name="ActionsForModule">
+				<translation language="nl"><![CDATA[acties voor module "%1$s"]]></translation>
+				<translation language="en"><![CDATA[actions for module "%1$s"]]></translation>
+			</item>
+			<item type="label" name="AddAction">
+				<translation language="nl"><![CDATA[voeg actie toe]]></translation>
+				<translation language="en"><![CDATA[add action]]></translation>
+			</item>
+			<item type="label" name="ChooseAGroup">
+				<translation language="nl"><![CDATA[kies een groep]]></translation>
+				<translation language="en"><![CDATA[choose a group]]></translation>
+			</item>
+			<item type="label" name="ChooseALevel">
+				<translation language="nl"><![CDATA[kies een  level]]></translation>
+				<translation language="en"><![CDATA[choose a level]]></translation>
+			</item>
+			<item type="label" name="GroupName">
+				<translation language="nl"><![CDATA[groep]]></translation>
+				<translation language="en"><![CDATA[group]]></translation>
+			</item>
+			<item type="label" name="Install">
+				<translation language="nl"><![CDATA[installeer]]></translation>
+				<translation language="en"><![CDATA[install]]></translation>
+			</item>
+			<item type="label" name="InstalledActive">
+				<translation language="nl"><![CDATA[geinstalleerde modules]]></translation>
+				<translation language="en"><![CDATA[installed modules]]></translation>
+			</item>
+			<item type="label" name="InstalledNonActive">
+				<translation language="nl"><![CDATA[geinstalleerde niet actieve modules]]></translation>
+				<translation language="en"><![CDATA[installed non active modules]]></translation>
+			</item>
+			<item type="label" name="Level">
+				<translation language="nl"><![CDATA[level]]></translation>
+				<translation language="en"><![CDATA[level]]></translation>
+			</item>
+			<item type="label" name="ModuleManager">
+				<translation language="nl"><![CDATA[module beheer]]></translation>
+				<translation language="en"><![CDATA[module manager]]></translation>
+			</item>
+			<item type="label" name="NoInstaller">
+				<translation language="nl"><![CDATA[geen installer]]></translation>
+				<translation language="en"><![CDATA[no installer]]></translation>
+			</item>
+			<item type="label" name="NonInstalledModules">
+				<translation language="nl"><![CDATA[niet geinstalleerde modules]]></translation>
+				<translation language="en"><![CDATA[non installed modules]]></translation>
+			</item>
+			<item type="label" name="Reinstall">
+				<translation language="nl"><![CDATA[herinstalleer]]></translation>
+				<translation language="en"><![CDATA[reinstall]]></translation>
+			</item>
+			<item type="message" name="Installed">
+				<translation language="nl"><![CDATA[Geïnstalleerd]]></translation>
+				<translation language="en"><![CDATA[Installed]]></translation>
+			</item>
+		</module_manager>
+	</backend>
+</locale>
