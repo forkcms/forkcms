@@ -19,7 +19,7 @@ class ModuleManagerInstall extends ModuleInstaller
 	 */
 	protected function execute()
 	{
-		// add 'blog' as a module
+		// add 'module_manager' as a module
 		$this->addModule('module_manager', 'The module manager.');
 
 		// module rights
