@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Facebook-class: fixed oAuth-calls.
+* Autoloader was replacing to much, when using the module name inside an action (eg: mass_files_action in the module files), thx to freshface.
 
 Improvements:
 
