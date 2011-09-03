@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>module_manager</name>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>ModuleManager</name>
+		<description><![CDATA[The module manger module allows you to install, re-install modules after you installed fork. You can also analyze your actions if they exists in the database.]]></description>
+	</info>
+	<events>
+	
+	</events>
+</module>
