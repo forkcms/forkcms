@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendModulemanagerEditAction
  * This is the edit-action-action
@@ -6,7 +7,7 @@
  * @package		backend
  * @subpackage	module_manager
  *
- * @author 		Frederik Heyninck <frederik@figure8.be>
+ * @author		Frederik Heyninck <frederik@figure8.be>
  * @since		2.0
  */
 class BackendModulemanagerEditAction extends BackendBaseActionEdit
@@ -37,9 +38,8 @@ class BackendModulemanagerEditAction extends BackendBaseActionEdit
 		// display the page
 		$this->display();
 	}
-	
-	
-	
+
+
 	/**
 	 * Load the record
 	 *
@@ -51,11 +51,12 @@ class BackendModulemanagerEditAction extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// validate id
-		if($this->id === null || !BackendModulemanagerModel::actionExists($this->id)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		if($this->id === null || !BackendModulemanagerModel::actionExists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
 		// get the record
 		$this->record = BackendModulemanagerModel::getAction($this->id);
 	}
+
 
 	/**
 	 * Load the form
@@ -115,15 +116,18 @@ class BackendModulemanagerEditAction extends BackendBaseActionEdit
 			$item['group_id'] = $this->frm->getField('group_id')->getValue();
 			$item['module'] = $this->frm->getField('modules_list')->getValue();
 			$item['level'] = $this->frm->getField('levels')->getValue();
-
+			$item['id'] = $this->id;
+			
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				BackendModulemanagerModel::updateAction($item, $this->id);
-				$this->redirect(BackendModel::createURLForAction('actions').'&report=saved&module='.$this->record['module'].'&highlight=row-'.$this->id);
+				BackendModulemanagerModel::updateAction($item);
+				$this->redirect(BackendModel::createURLForAction('actions') . '&report=saved&module=' . $this->record['module'] . '&highlight=row-' . $this->id);
 			}
 		}
 	}
+
+
 }
 
 ?>

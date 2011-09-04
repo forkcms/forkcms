@@ -7,7 +7,7 @@
  * @package		installer
  * @subpackage	module_manager
  *
- * @author 		Frederik Heyninck <frederik@figure8.be>
+ * @author	Frederik Heyninck <frederik@figure8.be>
  * @since		2.0
  */
 class ModuleManagerInstall extends ModuleInstaller
@@ -47,6 +47,8 @@ class ModuleManagerInstall extends ModuleInstaller
 			'module_manager/actions',
 		));
 	}
+
+
 }
 
 ?>

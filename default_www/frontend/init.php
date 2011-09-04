@@ -152,7 +152,7 @@ class FrontendInit
 						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
-						$action = substr($action , strlen($module));
+						$action = substr($action, strlen($module));
 						$module = substr($module, 0, -1);
 
 						// check the actions, engine & widgets directories
