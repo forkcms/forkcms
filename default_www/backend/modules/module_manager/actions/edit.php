@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendModulemanagerEdit
  * This is the edit-action
@@ -6,7 +7,7 @@
  * @package		backend
  * @subpackage	module_manager
  *
- * @author 		Frederik Heyninck <frederik@figure8.be>
+ * @author		Frederik Heyninck <frederik@figure8.be>
  * @since		2.0
  */
 class BackendModulemanagerEdit extends BackendBaseActionEdit
@@ -37,8 +38,8 @@ class BackendModulemanagerEdit extends BackendBaseActionEdit
 		// display the page
 		$this->display();
 	}
-	
-	
+
+
 	/**
 	 * Load the record
 	 *
@@ -50,11 +51,12 @@ class BackendModulemanagerEdit extends BackendBaseActionEdit
 		$this->module = $this->getParameter('module', 'string');
 
 		// validate id
-		if($this->module === null || !BackendModulemanagerModel::exists($this->module)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		if($this->module === null || !BackendModulemanagerModel::exists($this->module)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
 		// get the record
 		$this->record = BackendModulemanagerModel::get($this->module);
 	}
+
 
 	/**
 	 * Load the form
@@ -69,7 +71,7 @@ class BackendModulemanagerEdit extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('name',$this->record['name']);
 		$this->frm->addTextarea('description',$this->record['description']);
-		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));	
+		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 	}
 
 
@@ -109,11 +111,12 @@ class BackendModulemanagerEdit extends BackendBaseActionEdit
 				$item['description'] = $this->frm->getField('description')->getValue();
 				$item['active'] = $this->frm->getField('active')->isChecked();
 				
-				BackendModulemanagerModel::update($item,$this->record['name']);
-				$this->redirect(BackendModel::createURLForAction('index').'&report=saved');
+				BackendModulemanagerModel::update($item);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=saved');
 			}
 		}
 	}
+		
 }
 
 ?>

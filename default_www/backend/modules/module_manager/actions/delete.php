@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendModulemanagerDelete
  * This is the delete-action
@@ -6,7 +7,7 @@
  * @package		backend
  * @subpackage	module_manager
  *
- * @author 		Frederik Heyninck <frederik@figure8.be>
+ * @author		Frederik Heyninck <frederik@figure8.be>
  * @since		2.0
  */
 class BackendModulemanagerDelete extends BackendBaseActionDelete
@@ -30,12 +31,14 @@ class BackendModulemanagerDelete extends BackendBaseActionDelete
 			BackendModulemanagerModel::delete($this->module);
 		
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->module));
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->module));
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
+
+
 }
 
 ?>

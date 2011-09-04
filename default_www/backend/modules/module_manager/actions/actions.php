@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendModulemanagerActions
  * This is the actions-action (default), it will display the actions of a module
@@ -6,7 +7,7 @@
  * @package		backend
  * @subpackage	module_manager
  *
- * @author 		Frederik Heyninck <frederik@figure8.be>
+ * @author		Frederik Heyninck <frederik@figure8.be>
  * @since		2.0
  */
 class BackendModulemanagerActions extends BackendBaseActionIndex
@@ -34,8 +35,8 @@ class BackendModulemanagerActions extends BackendBaseActionIndex
 		// display the page
 		$this->display();
 	}
-	
-	
+
+
 	/**
 	 * Load the record
 	 *
@@ -47,13 +48,13 @@ class BackendModulemanagerActions extends BackendBaseActionIndex
 		$this->module = $this->getParameter('module', 'string');
 
 		// validate id
-		if($this->module === null || !BackendModulemanagerModel::exists($this->module)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		if($this->module === null || !BackendModulemanagerModel::exists($this->module)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
 		// get the record
 		$this->record = BackendModulemanagerModel::get($this->module);
 	}
-	
-	
+
+
 	/**
 	 * Load the datagrids
 	 *
@@ -65,7 +66,7 @@ class BackendModulemanagerActions extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGridDB(BackendModulemanagerModel::QRY_DATAGRID_BROWSE_ACTIONS, $this->module);
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_action') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_action') . '&amp;id=[id]', BL::getLabel('Edit'));
 
 		// disable paging
 		$this->datagrid->setPaging(false);
@@ -78,7 +79,7 @@ class BackendModulemanagerActions extends BackendBaseActionIndex
 		$this->datagridMissingActions = new BackendDataGridArray($missing_actions);
 
 		// add column
-		$this->datagridMissingActions->addColumn('add', null, BL::getLabel('Add'), BackendModel::createURLForAction('add_action') .'&amp;action=[action]&amp;module='.$this->module, BL::getLabel('Add'));
+		$this->datagridMissingActions->addColumn('add', null, BL::getLabel('Add'), BackendModel::createURLForAction('add_action') . '&amp;action=[action]&amp;module=' . $this->module, BL::getLabel('Add'));
 		$this->datagridMissingActions->setColumnHidden('file');
 		$this->datagridMissingActions->setColumnsSequence(array('action','path','add'));
 		// disable paging

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendModulemanagerAddAction
  * This is the add-action
@@ -6,7 +7,7 @@
  * @package		backend
  * @subpackage	module_manager
  *
- * @author 		Frederik Heyninck <frederik@figure8.be>
+ * @author		Frederik Heyninck <frederik@figure8.be>
  * @since		2.0
  */
 class BackendModulemanagerAddAction extends BackendBaseActionAdd
@@ -107,10 +108,12 @@ class BackendModulemanagerAddAction extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				BackendModulemanagerModel::insertAction($item);
-				$this->redirect(BackendModel::createURLForAction('index').'&report=added');
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=added');
 			}
 		}
 	}
+
+
 }
 
 ?>

@@ -7,7 +7,7 @@
  * @package		installer
  * @subpackage	module_manager
  *
- * @author 		Frederik Heyninck <frederik@figure8.be>
+ * @author	Frederik Heyninck <frederik@figure8.be>
  * @since		2.0
  */
 class ModuleManagerInstall extends ModuleInstaller
@@ -38,6 +38,7 @@ class ModuleManagerInstall extends ModuleInstaller
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 		
+		/*
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$this->setNavigation($navigationModulesId, 'ModuleManager', 'module_manager/index', array(
@@ -46,6 +47,7 @@ class ModuleManagerInstall extends ModuleInstaller
 			'module_manager/edit',
 			'module_manager/actions',
 		));
+		*/
 	}
 }
 
