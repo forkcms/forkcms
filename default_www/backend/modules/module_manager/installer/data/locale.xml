@@ -12,6 +12,10 @@
 				<translation language="nl"><![CDATA[actie]]></translation>
 				<translation language="en"><![CDATA[action]]></translation>
 			</item>
+			<item type="label" name="EditAction">
+				<translation language="nl"><![CDATA[wijzig actie]]></translation>
+				<translation language="en"><![CDATA[edit action]]></translation>
+			</item>
 			<item type="label" name="MissingActions">
 				<translation language="nl"><![CDATA[ontbreekt acties]]></translation>
 				<translation language="en"><![CDATA[missing actions?]]></translation>
