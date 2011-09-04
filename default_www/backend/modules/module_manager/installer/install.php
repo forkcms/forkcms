@@ -38,7 +38,6 @@ class ModuleManagerInstall extends ModuleInstaller
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 		
-		/*
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$this->setNavigation($navigationModulesId, 'ModuleManager', 'module_manager/index', array(
@@ -47,8 +46,9 @@ class ModuleManagerInstall extends ModuleInstaller
 			'module_manager/edit',
 			'module_manager/actions',
 		));
-		*/
 	}
+
+
 }
 
 ?>

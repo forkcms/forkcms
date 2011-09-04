@@ -75,6 +75,10 @@ class BackendModulemanagerInstall extends BackendBaseActionEdit
 			// execute installer
 			$install = new $class($this->db, BackendLanguage::getActiveLanguages(),BackendLanguage::getActiveLanguages(), false, $variables);
 			
+			// Rebuild backend navigation cache
+			$navigation = new BackendNavigation();
+			$navigation->buildCache();
+			
 			// Rebuild local after install
 			BackendModulemanagerModel::buildLocale();
 			

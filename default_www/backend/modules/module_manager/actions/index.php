@@ -132,7 +132,7 @@ class BackendModulemanagerIndex extends BackendBaseActionIndex
 	
 		$this->moduleFolders = SpoonDirectory::getList(PATH_WWW . '/backend/modules', false, $exclude, '/^[a-z0-9_]+$/i');
 		$this->activeModules = BackendModulemanagerModel::getActiveModules($exclude, 'Y');
-		$this->nonActiveModules = BackendModulemanagerModel::getActiveModules($excluden, 'N');
+		$this->nonActiveModules = BackendModulemanagerModel::getActiveModules($exclude, 'N');
 		$this->installedModules = BackendModulemanagerModel::getInstalledModules($exclude);
 	}
 
