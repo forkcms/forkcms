@@ -6,8 +6,8 @@
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
 			{option:isGod}
-			<a href="{$var|geturl:'export'}{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
-			<a href="{$var|geturl:'import'}{$filter}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
+				<a href="{$var|geturl:'export'}{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+				<a href="{$var|geturl:'import'}{$filter}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
 			{/option:isGod}
 		</div>
 </div>
