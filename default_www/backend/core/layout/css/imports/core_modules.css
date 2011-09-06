@@ -237,20 +237,23 @@
 
 	/* General table layout */
 
-	#templateVisualLarge table {
+	#templateVisualLarge table,
+	#templateVisualFallback table {
 		width: 100%;
 		border-collapse: separate;
 		border-spacing: 10px; /* If you change the value "10" change it in model.php of pages module too; for IE7 */
 		table-layout: fixed;
 	}
 
-		#templateVisualLarge td {
+		#templateVisualLarge td,
+		#templateVisualFallback td {
 			text-align: center;
 			box-shadow: 0 0 0 1px #ddd inset;
 			background: #F4F4F4;
 		}
 
-		#templateVisualLarge td.empty {
+		#templateVisualLarge td.empty,
+		#templateVisualFallback td.empty {
 			background: #EEE url(/backend/core/layout/images/na.png) repeat;
 			box-shadow: 0 0 0 1px #ddd inset;
 			padding: 10px;
@@ -258,7 +261,8 @@
 
 		/* Title */
 
-		#templateVisualLarge .templatePositionTitle {
+		#templateVisualLarge .templatePositionTitle,
+		#templateVisualFallback .templatePositionTitle {
 			font-size: 11px;
 			color: #000;
 			background: #FFF;
@@ -271,13 +275,15 @@
 
 		/* Blocks spacer */
 
-		#templateVisualLarge .linkedBlocks {
+		#templateVisualLarge .linkedBlocks,
+		#templateVisualFallback .linkedBlocks {
 			padding-bottom: 15px;
 		}
 
 		/* Button holder */
 
-		#templateVisualLarge .buttonAddHolder {
+		#templateVisualLarge .buttonAddHolder,
+		#templateVisualFallback .buttonAddHolder {
 			padding: 0 10px 15px 10px;
 			width: 90px;
 			margin: auto auto;
@@ -285,7 +291,8 @@
 
 		/* Block */
 
-		#templateVisualLarge .templatePositionCurrentType {
+		#templateVisualLarge .templatePositionCurrentType,
+		#templateVisualFallback .templatePositionCurrentType {
 			border: 1px solid #DDD;
 			border-top: 0;
 			background: #FFF;
@@ -298,7 +305,8 @@
 			overflow: ellipsis;
 		}
 
-			#templateVisualLarge .templatePositionCurrentType .templateTitle {
+			#templateVisualLarge .templatePositionCurrentType .templateTitle,
+			#templateVisualFallback .templatePositionCurrentType .templateTitle {
 				display: block;
 				color: #4a4a4a;
 				font-size: 11px;
@@ -312,15 +320,18 @@
 				transition: color 0.3s ease-in-out;
 			}
 
-			#templateVisualLarge .templatePositionCurrentType:hover .templateTitle {
+			#templateVisualLarge .templatePositionCurrentType:hover .templateTitle,
+			#templateVisualFallback .templatePositionCurrentType:hover .templateTitle {
 				color: #000;
 			}
 
-			#templateVisualLarge .templateDisabled .templateTitle {
+			#templateVisualLarge .templateDisabled .templateTitle,
+			#templateVisualFallback .templateDisabled .templateTitle {
 				color: #aaa;
 			}
 
-			#templateVisualLarge .templatePositionCurrentType .templateDescription {
+			#templateVisualLarge .templatePositionCurrentType .templateDescription,
+			#templateVisualFallback .templatePositionCurrentType .templateDescription {
 				display: block;
 				color: #808080;
 				font-size: 11px;
@@ -333,15 +344,18 @@
 				transition: color 0.3s ease-in-out;
 			}
 
-			#templateVisualLarge .templatePositionCurrentType:hover .templateDescription {
+			#templateVisualLarge .templatePositionCurrentType:hover .templateDescription,
+			#templateVisualFallback .templatePositionCurrentType:hover .templateDescription {
 				color: #222;
 			}
 
-			#templateVisualLarge .templateDisabled .templateDescription {
+			#templateVisualLarge .templateDisabled .templateDescription,
+			#templateVisualFallback .templateDisabled .templateDescription {
 				color: #bbb;
 			}
 
-			#templateVisualLarge .templatePositionCurrentType .buttonHolder {
+			#templateVisualLarge .templatePositionCurrentType .buttonHolder,
+			#templateVisualFallback .templatePositionCurrentType .buttonHolder {
 				opacity: 0;
 				height: 24px;
 				padding: 15px 6px;
@@ -355,7 +369,8 @@
 				z-index: 80;
 			}
 
-			#templateVisualLarge .templatePositionCurrentType:after {
+			#templateVisualLarge .templatePositionCurrentType:after,
+			#templateVisualFallback .templatePositionCurrentType:after {
 				content: ".";
 				height: 54px;
 				width: 0;
@@ -376,12 +391,15 @@
 				transition: width 0.3s ease-in-out;
 			}
 
-			#templateVisualLarge .templatePositionCurrentType:hover:after {
+			#templateVisualLarge .templatePositionCurrentType:hover:after,
+			#templateVisualFallback .templatePositionCurrentType:hover:after {
 				width: 110px;
 			}
 
 			body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder,
-			#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder {
+			body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder,
+			#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder,
+			#templateVisualFallback .templatePositionCurrentType:hover .buttonHolder {
 				opacity: 1;
 			}
 

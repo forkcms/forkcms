@@ -262,8 +262,6 @@ jsBackend.pages.extras =
 	// add block visual on template
 	addBlockVisual: function(position, index, extraId)
 	{
-		// @todo: fallback positioning should go here
-
 		// block
 		if(extraId)
 		{
@@ -273,8 +271,8 @@ jsBackend.pages.extras =
 			if(extrasById[extraId].type == 'widget' && typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
 
 			// title & description
-			var title = extrasById[selectedExtraId].human_name;
-			var description = extrasById[selectedExtraId].path;
+			var title = extrasById[extraId].human_name;
+			var description = extrasById[extraId].path;
 		}
 
 		// editor
@@ -333,6 +331,9 @@ jsBackend.pages.extras =
 		// save content to allow for cancelling the edited text
 		jsBackend.pages.extras.htmlContent = $('#blockHtml' + index).val();
 
+		// disable scrolling
+		$('body').css('overflow', 'hidden');
+
 		// placeholder for block node that will be moved by the jQuery dialog
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
@@ -383,9 +384,6 @@ jsBackend.pages.extras =
 
 		// add editor
 		tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
-
-		// disable scrolling
-		$('body').css('overflow', 'hidden');
 	},
 
 
@@ -399,11 +397,11 @@ jsBackend.pages.extras =
 			tinyMCE.get('blockHtml' + index).setContent(jsBackend.pages.extras.htmlContent);
 		}
 
-		// remove editor
-		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
-
 		// re-enable scrolling
 		$('body').css('overflow', 'auto');
+
+		// remove editor
+		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 
 		// add short description to visual representation of block
 		var description = $('#blockHtml' + index).val().substr(0, 200);
@@ -415,7 +413,9 @@ jsBackend.pages.extras =
 	// re-order blocks
 	sortable: function()
 	{
-		// @todo: check if this is re-bound when template is switched and has other positions
+		// @todo: containment is WIP
+
+		// make blocks sortable
 		$('div.linkedBlocks').sortable(
 		{
 			items: '.templatePositionCurrentType',
@@ -423,6 +423,7 @@ jsBackend.pages.extras =
 			tolerance: 'pointer',
 			forcePlaceholderSize: true,
 			connectWith: 'div.linkedBlocks',
+			containment: '#testtest',
 			stop: function(event, ui)
 			{
 				// reorder indexes of existing blocks:
@@ -619,29 +620,18 @@ jsBackend.pages.template =
 		var current = templates[selected];
 		var i = 0;
 
-		// hide default block
+		// hide default (base) block
 		$('#block-0').hide();
-
-		// hide fallback
-		$('#position-fallback').hide();
-
-		// loop extras in fallback
-		$('#position-fallback > div').each(function()
-		{
-			// check if any of these extras is actually visible
-			if($(this).css('display') != 'none')
-			{
-				// show fallback again
-				$('#position-fallback').show();
-				return;
-			}
-		});
 
 		// set HTML for the visual representation of the template
 		$('#templateVisual').html(current.html);
 		$('#templateVisualLarge').html(current.htmlLarge);
+		$('#templateVisualFallback .linkedBlocks').html('');
 		$('#templateId').val(selected);
 		$('#templateLabel, #tabTemplateLabel').html(current.label);
+
+		// hide fallback by default
+		$('#templateVisualFallback').hide();
 
 		// loop blocks
 		$('#editContent .contentBlock').each(function(i)
@@ -651,9 +641,25 @@ jsBackend.pages.template =
 			var extraId = $('input[id^=blockExtraId]', this).val();
 			var position = $('input[id^=blockPosition]', this).val();
 
+			// skip default (base) block
+			if(index == 0) return;
+
+			// check if this position exists
+			if($.inArray(position, current.data.names) < 0)
+			{
+				// blocks in positions that do no longer exist should go to fallback
+				position = 'fallback';
+
+				// show fallback
+				$('#templateVisualFallback').show();
+			}
+
 			// add visual representation of block to template visualisation
 			jsBackend.pages.extras.addBlockVisual(position, index, extraId);
 		});
+
+		// make the blocks sortable (again)
+		jsBackend.pages.extras.sortable();
 	},
 
 

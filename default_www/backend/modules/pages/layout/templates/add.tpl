@@ -41,8 +41,26 @@
 					</div>
 				</div>
 
-				<div id="templateVisualLarge">
-					&nbsp;
+				<div id="templateVisualFallback" style="display: none">
+					<table cellspacing="10" cellpadding="0" border="0">
+						<tbody>
+							<tr>
+								<td data-position="fallback" id="templatePosition-fallback" colspan="1">
+									<h4 class="templatePositionTitle">{$lblFallback|ucfirst}</h4>
+									<div class="linkedBlocks">
+										<!-- linked blocks will be added here -->
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				{* @todo: this is WIP *}
+				<div id="testtest" style="width: 200%;">
+					<div id="templateVisualLarge" style="width: 50%;">
+						&nbsp;
+					</div>
 				</div>
 			</div>
 
