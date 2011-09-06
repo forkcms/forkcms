@@ -1,9 +1,9 @@
-2.6.6 (xxxx-xx-xx)
+2.6.6 (2011-09-06)
 --
 Bugfixes:
 
 * Facebook-class: fixed oAuth-calls.
-* Autoloader was replacing to much, when using the module name inside an action (eg: mass_files_action in the module files), thx to freshface.
+* Autoloader was replacing too much, when using the module name inside an action (eg: mass_files_action in the module files), thx to freshface.
 
 Improvements:
 
