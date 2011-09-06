@@ -570,7 +570,7 @@ class Facebook
 		$parameters['client_secret'] = $this->getApplicationSecret();
 
 		// make the call
-		$response = $this->doCall('oauth/access_token', $parameters, 'GET', true);
+		$response = $this->doCall('oauth/access_token', $parameters, 'GET', null, true);
 
 		// explode
 		$chunks = explode('access_token=', $response);

@@ -757,6 +757,28 @@ class BackendDataGridFunctions
 
 
 	/**
+	 * Format a date according the users' settings
+	 *
+	 * @return	string
+	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable date.
+	 */
+	public static function getDate($timestamp)
+	{
+		// redefine
+		$timestamp = (int) $timestamp;
+
+		// if invalid timestamp return an empty string
+		if($timestamp <= 0) return '';
+
+		// get user setting for long dates
+		$format = BackendAuthentication::getUser()->getSetting('date_format');
+
+		// format the date according the user his settings
+		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
+	}
+
+
+	/**
 	 * Format a date as a long representation according the users' settings
 	 *
 	 * @return	string
@@ -772,6 +794,28 @@ class BackendDataGridFunctions
 
 		// get user setting for long dates
 		$format = BackendAuthentication::getUser()->getSetting('datetime_format');
+
+		// format the date according the user his settings
+		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
+	}
+
+
+	/**
+	 * Format a time according the users' settings
+	 *
+	 * @return	string
+	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable time.
+	 */
+	public static function getTime($timestamp)
+	{
+		// redefine
+		$timestamp = (int) $timestamp;
+
+		// if invalid timestamp return an empty string
+		if($timestamp <= 0) return '';
+
+		// get user setting for long dates
+		$format = BackendAuthentication::getUser()->getSetting('time_format');
 
 		// format the date according the user his settings
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());

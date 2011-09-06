@@ -141,7 +141,7 @@ class APIInit
 						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
-						$action = str_replace($module, '', $action);
+						$action = substr($action, strlen($module));
 						$module = substr($module, 0, -1);
 
 						// file to be loaded

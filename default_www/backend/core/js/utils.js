@@ -178,6 +178,7 @@ utils.form =
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Matthias Mullie <matthias@netlash.com>
  */
 utils.string =
 {
@@ -269,6 +270,17 @@ utils.string =
 	{
 		if(value == undefined) return '';
 		return value.replace(new RegExp(needle, 'g'), replacement);
+	},
+
+
+	/**
+	 * Strip HTML tags
+	 * 
+	 * @return	string
+	 */
+	stripTags: function(value)
+	{
+		return value.replace(/(<([^>]+)>)/ig, '');
 	},
 
 

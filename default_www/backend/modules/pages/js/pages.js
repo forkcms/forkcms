@@ -2,7 +2,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 /*
  * @todo: remove me when completed
- * 
+ *
  * Thoughts:
  * The table-view of templates is built in model.php. This includes no linked blocks, no default blocks.
  * The default extra's are parsed in add.php, added in json to the template and picked up by the JS. When setting the template, this JS will parse the default blocks to the correction positions and assigns "id's" (indexes rather) for blocks.
@@ -56,9 +56,9 @@ jsBackend.pages =
 /**
  * All methods related to the controls (buttons, ...)
  *
+ * @author	Matthias Mullie <matthias@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
- * @author	Matthias Mullie <matthias@netlash.com>
  */
 jsBackend.pages.extras =
 {
@@ -131,7 +131,7 @@ jsBackend.pages.extras =
 					{
 						// add the extra
 						jsBackend.pages.extras.addBlock($('#extraExtraId').val(), jsBackend.pages.extras.extraForPosition);
-						
+
 						// clean the saved position
 						jsBackend.pages.extras.extraForPosition = null;
 
@@ -142,7 +142,7 @@ jsBackend.pages.extras =
 					{
 						// close the dialog
 						$(this).dialog('close');
-						
+
 						// clean the saved position
 						jsBackend.pages.extras.extraForPosition = null;
 					}
@@ -160,7 +160,7 @@ jsBackend.pages.extras =
 
 		// save the position wherefor we will change the extra
 		jsBackend.pages.extras.extraForPosition = $(this).parent().parent().data('position');
-		
+
 		// init var
 		var hasModules = false;
 
@@ -221,7 +221,7 @@ jsBackend.pages.extras =
 		blockHtml.attr('id', blockHtml.attr('id').replace(0, index)).attr('name', blockHtml.attr('name').replace(0, index));
 		blockExtraId.attr('id', blockExtraId.attr('id').replace(0, index)).attr('name', blockExtraId.attr('name').replace(0, index));
 		blockPosition.attr('id', blockPosition.attr('id').replace(0, index)).attr('name', blockPosition.attr('name').replace(0, index));
-		
+
 		// save position
 		blockPosition.val(selectedPosition);
 
@@ -234,24 +234,8 @@ jsBackend.pages.extras =
 			// save extra id
 			$('input[id^=blockExtraId]', block).val(selectedExtraId);
 
-			// link to edit this block/widget
-			var editLink = '';
-			if(extrasById[selectedExtraId].type == 'block' && extrasById[selectedExtraId].data.url) editLink = extrasById[selectedExtraId].data.url;
-			if(extrasById[selectedExtraId].type == 'widget' && typeof extrasById[selectedExtraId].data.edit_url != 'undefined' && extrasById[selectedExtraId].data.edit_url) editLink = extrasById[selectedExtraId].data.edit_url;
-
-			// create html to be appended in template-view
-			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
-								'<span class="templateTitle">' + extrasById[selectedExtraId].human_name + '</span>' +
-								'<span class="templateDescription">' + extrasById[selectedExtraId].path + '</span>' +
-								'<div class="buttonHolder">' +
-									'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
-									'<a href="' + (editLink ? editLink : '#') + '" class="button icon iconOnly iconEdit' + (editLink ? '' : ' disabledButton') + '"' + (editLink ? ' target="_blank"' : ' onclick="return false;"') + '><span>{$lblEdit|ucfirst}</span></a>' +
-									'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
-								'</div>' +
-							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
-
-			// set block description in template-view
-			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append(blockHTML);
+			// add visual representation of block to template visualisation
+			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId);
 
 			// don't show editor
 			$('.blockContentHTML', block).hide();
@@ -263,19 +247,8 @@ jsBackend.pages.extras =
 			// save extra id
 			$('input[id^=blockExtraId]', block).val('');
 
-			// create html to be appended in template-view
-			var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
-								'<span class="templateTitle">{$lblEditor|ucfirst}</span>' +
-								'<span class="templateDescription">&lt;img&gt; &lt;img&gt; Lees meer over onze fantastische shizzle enzo want Fork CMS d de max en da’s niet om lorem dolor sit amet</span>' +
-								'<div class="buttonHolder">' +
-									'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
-									'<a href="#' + index + '" class="showEditor button icon iconOnly iconEdit"><span>{$lblEdit|ucfirst}</span></a>' +
-									'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
-								'</div>' +
-							'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
-
-			// set block description in template-view
-			$('#templatePosition-' + selectedPosition + ' .linkedBlocks').append(blockHTML);
+			// add visual representation of block to template visualisation
+			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, null);
 
 			// show editor
 			$('.blockContentHTML', block).show();
@@ -283,6 +256,51 @@ jsBackend.pages.extras =
 
 		// reset block indexes
 //		jsBackend.pages.extras.resetIndexes();
+	},
+
+
+	// add block visual on template
+	addBlockVisual: function(position, index, extraId)
+	{
+		// @todo: fallback positioning should go here
+
+		// block
+		if(extraId)
+		{
+			// link to edit this block/widget
+			var editLink = '';
+			if(extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
+			if(extrasById[extraId].type == 'widget' && typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
+
+			// title & description
+			var title = extrasById[selectedExtraId].human_name;
+			var description = extrasById[selectedExtraId].path;
+		}
+
+		// editor
+		else
+		{
+			// link to edit this content, title & description
+			var editLink = '';
+
+			var title = '{$lblEditor|ucfirst}';
+			var description = $('#blockHtml' + index).val().substr(0, 200);
+			description = utils.string.stripTags(description);
+		}
+
+		// create html to be appended in template-view
+		var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
+							'<span class="templateTitle">' + title + '</span>' +
+							'<span class="templateDescription">' + description + '</span>' +
+							'<div class="buttonHolder">' +
+								'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId ? '' : 'showEditor ') + (extraId && !editLink ? 'disabledButton ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId && editLink ? ' target="_blank"' : '') + (extraId && editLink ? '' : ' onclick="return false;"') + '><span>{$lblEdit|ucfirst}</span></a>' +
+								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
+							'</div>' +
+						'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
+
+		// set block description in template-view
+		$('#templatePosition-' + position + ' .linkedBlocks').append(blockHTML);
 	},
 
 
@@ -317,8 +335,8 @@ jsBackend.pages.extras =
 
 		// placeholder for block node that will be moved by the jQuery dialog
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
-		
-		// show editor
+
+		// show dialog
 		$('#blockHtml' + index).parent().parent().parent().dialog(
 		{
 			closeOnEscape: false,
@@ -333,7 +351,7 @@ jsBackend.pages.extras =
 				{
 					// save content
 					jsBackend.pages.extras.setContent(index, true);
-					
+
 					// close dialog
 					$(this).dialog('close');
 				},
@@ -341,7 +359,7 @@ jsBackend.pages.extras =
 				{
 					// reset content
 					jsBackend.pages.extras.setContent(index, false);
-					
+
 					// close the dialog
 					$(this).dialog('close');
 				}
@@ -349,6 +367,9 @@ jsBackend.pages.extras =
 			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
 			close: function(e, ui)
 			{
+				// destroy dialog (to get rid of html order problems)
+				$(this).dialog('destroy');
+
 				// find block placeholder
 				var blockPlaceholder = $('#blockPlaceholder');
 
@@ -381,8 +402,13 @@ jsBackend.pages.extras =
 		// remove editor
 		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 
-		// enable scrolling
+		// re-enable scrolling
 		$('body').css('overflow', 'auto');
+
+		// add short description to visual representation of block
+		var description = $('#blockHtml' + index).val().substr(0, 200);
+		description = utils.string.stripTags(description);
+		$('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
 	},
 
 
@@ -495,7 +521,7 @@ jsBackend.pages.extras =
 			blockHtml.attr('id', blockHtml.attr('id').replace(oldIndex, newIndex)).attr('name', blockHtml.attr('name').replace(oldIndex, newIndex));
 			blockExtraId.attr('id', blockExtraId.attr('id').replace(oldIndex, newIndex)).attr('name', blockExtraId.attr('name').replace(oldIndex, newIndex));
 			blockPosition.attr('id', blockPosition.attr('id').replace(oldIndex, newIndex)).attr('name', blockPosition.attr('name').replace(oldIndex, newIndex));
-			
+
 			// no longer mark as needing to be reset
 			blockExtraId.parent().removeClass('reset');
 
@@ -616,9 +642,21 @@ jsBackend.pages.template =
 		$('#templateVisualLarge').html(current.htmlLarge);
 		$('#templateId').val(selected);
 		$('#templateLabel, #tabTemplateLabel').html(current.label);
+
+		// loop blocks
+		$('#editContent .contentBlock').each(function(i)
+		{
+			// fetch variables
+			var index = $('input[id^=blockExtraId]', this).attr('id').replace('blockExtraId', '');
+			var extraId = $('input[id^=blockExtraId]', this).val();
+			var position = $('input[id^=blockPosition]', this).val();
+
+			// add visual representation of block to template visualisation
+			jsBackend.pages.extras.addBlockVisual(position, index, extraId);
+		});
 	},
-	
-	
+
+
 	// load initial data, or initialize the dialog
 	load: function()
 	{
