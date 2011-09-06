@@ -75,10 +75,10 @@
 							<div class="blockContentHTML optionsRTE">
 								<fieldset>
 									<div class="generalMessage singleMessage infoMessage">
-										<p><strong>Important:</strong> This content will not be updated until the page has been saved.</p>
+										{$msgContentSaveWarning}
 									</div>
 									<div class="heading">
-										<h3>Editor</h3>
+										<h3>{$lblEditor|ucfirst}</h3>
 									</div>
 									{$positions.blocks.txtHTML}
 									{$positions.blocks.txtHTMLError}

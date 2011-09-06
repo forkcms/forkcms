@@ -1943,26 +1943,6 @@ class BackendPagesModel
 
 
 	/**
-	 * Update the blocks
-	 *
-	 * @return	void
-	 * @param	array $blocks				The blocks to update.
-	 */
-	public static function updateBlocks(array $blocks)
-	{
-		// get db
-		$db = BackendModel::getDB(true);
-
-		// loop blocks
-		foreach($blocks as $block)
-		{
-			// insert
-			$db->insert('pages_blocks', $block);
-		}
-	}
-
-
-	/**
 	 * Switch templates for all existing pages
 	 *
 	 * @return	void

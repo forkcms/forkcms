@@ -6,6 +6,10 @@
         <translation language="nl"><![CDATA[Pagina kan niet verplaatst worden.]]></translation>
         <translation language="en"><![CDATA[Page can't be moved.]]></translation>
       </item>
+      <item type="error" name="CantAdd2Blocks">
+        <translation language="nl"><![CDATA[Het is onmogelijk om 2 (of meer) modules aan dezelfde pagina te koppelen.]]></translation>
+        <translation language="en"><![CDATA[It isn't possible to link 2 (or more) modules to the same page.]]></translation>
+      </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
       </item>
@@ -96,6 +100,10 @@
       <item type="message" name="ConfirmDeleteTemplate">
         <translation language="nl"><![CDATA[Ben je zeker dat je de template "%1$s" wil verwijderen?]]></translation>
         <translation language="en"><![CDATA[Are your sure you want to delete the template "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ContentSaveWarning">
+        <translation language="nl"><![CDATA[<p><strong>Belangrijk:</strong> De inhoud wordt pas aangepast nadat de pagina wordt opgeslagen.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Important:</strong> This content will not be updated until the page has been saved.</p>]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd verwijderd.]]></translation>

@@ -79,12 +79,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// get the extras
 		$this->extras = BackendPagesModel::getExtras();
 
-		// get positions in default template
-		foreach($this->templates[$defaultTemplateId]['data']['names'] as $position) $this->positions[$position] = array('name' => $position, 'blocks' => array());
-
-		// add fallback position
-		$this->positions['fallback'] = array('name' => 'fallback', 'blocks' => array());
-
 		// load the form
 		$this->loadForm();
 
@@ -122,13 +116,13 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// build prototype block
 		$block['index'] = 0;
-		$block['name'] = 'Prototype';
+		$block['formElements']['hidVisible'] = $this->frm->addHidden('block_visible_' . $block['index'], 'Y');
 		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index']);
 		$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index']);
-		$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index'], ''); // this is no editor; we'll add the editor in JS
+		$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index']); // this is no editor; we'll add the editor in JS
 
 		// add default block to "fallback" position, the only one which we can rest assured to exist
-		$this->positions['fallback']['blocks'] = array($block);
+		$this->positions['fallback']['blocks'][] = $block;
 
 		// redirect
 		$redirectValues = array(
@@ -246,7 +240,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					if(isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] == 'block')
 					{
 						// set error
-						if($hasBlock) $this->frm->addError('Can\'t add 2 blocks');
+						if($hasBlock) $this->frm->addError('CantAdd2Blocks'); // @todo: check if this works
 
 						// reset var
 						$hasBlock = true;
