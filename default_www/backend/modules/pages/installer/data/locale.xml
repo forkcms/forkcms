@@ -17,9 +17,6 @@
         <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
         <translation language="en"><![CDATA[Invalid syntax.]]></translation>
       </item>
-      <item type="error" name="DeletedTemplate">
-        <translation language="en"><![CDATA[You can't delete this template.]]></translation>
-      </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add page]]></translation>
@@ -27,6 +24,10 @@
       <item type="label" name="AddBlock">
         <translation language="nl"><![CDATA[blok toevoegen]]></translation>
         <translation language="en"><![CDATA[add block]]></translation>
+      </item>
+      <item type="label" name="ChangeTemplate">
+        <translation language="nl"><![CDATA[Wijzig template]]></translation>
+        <translation language="en"><![CDATA[Change template]]></translation>
       </item>
       <item type="label" name="EditModuleContent">
         <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
@@ -43,6 +44,10 @@
       <item type="label" name="ExtraTypeWidget">
         <translation language="nl"><![CDATA[widget]]></translation>
         <translation language="en"><![CDATA[widget]]></translation>
+      </item>
+      <item type="label" name="Fallback">
+        <translation language="nl"><![CDATA[Niet-toegewezen blokken]]></translation>
+        <translation language="en"><![CDATA[Unassigned blocks]]></translation>
       </item>
       <item type="label" name="Footer">
         <translation language="nl"><![CDATA[footer navigatie]]></translation>
@@ -107,6 +112,10 @@
       <item type="message" name="EditedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
         <translation language="en"><![CDATA[The template "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="FallbackInfo">
+        <translation language="nl"><![CDATA[<p><strong>Niet elk blok kon automatisch worden toegewezen aan een positie.</strong></p><p>Blokken die toegevoegd werden op posities die in deze template niet beschikbaar zijn worden hier weergegeven.<br />Je kan deze eenvoudig verslepen naar de gewenste positie.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Not every block could automatically be assigned to a position.</strong></p><p>Blocks that were added to positions that are not available in this template, are shown here.<br />You can easily drag them to the desired position.</p>]]></translation>
       </item>
       <item type="message" name="HelpBlockContent">
         <translation language="nl"><![CDATA[Welk soort inhoud wil je hier tonen?]]></translation>

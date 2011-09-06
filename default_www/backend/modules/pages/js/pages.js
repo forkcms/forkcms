@@ -299,6 +299,9 @@ jsBackend.pages.extras =
 
 		// set block description in template-view
 		$('#templatePosition-' + position + ' .linkedBlocks').append(blockHTML);
+
+		// mark as updated
+		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
 	},
 
 
@@ -407,14 +410,15 @@ jsBackend.pages.extras =
 		var description = $('#blockHtml' + index).val().substr(0, 200);
 		description = utils.string.stripTags(description);
 		$('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
+
+		// mark as updated
+		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
 	},
 
 
 	// re-order blocks
 	sortable: function()
 	{
-		// @todo: containment is WIP
-
 		// make blocks sortable
 		$('div.linkedBlocks').sortable(
 		{
@@ -423,11 +427,34 @@ jsBackend.pages.extras =
 			tolerance: 'pointer',
 			forcePlaceholderSize: true,
 			connectWith: 'div.linkedBlocks',
-			containment: '#testtest',
+			opacity: 0.7,
 			stop: function(event, ui)
 			{
 				// reorder indexes of existing blocks:
 				jsBackend.pages.extras.resetIndexes();
+
+				// mark as updated
+				jsBackend.pages.extras.updatedBlock(ui.item);
+
+				// after removing all from fallback; hide fallback
+				if($('#templateVisualFallback .templatePositionCurrentType').length == 0) $('#templateVisualFallback').hide();
+			},
+			start: function(event, ui)
+			{
+				// check if we're moving from template
+				if($(this).parents('#templateVisualLarge').length > 0)
+				{
+					// disable dropping to fallback
+					$('div.linkedBlocks').sortable('option', 'connectWith', '#templateVisualLarge div.linkedBlocks');
+				}
+				else
+				{
+					// enable dropping on fallback
+					$('div.linkedBlocks').sortable('option', 'connectWith', 'div.linkedBlocks');
+				}
+
+				// refresh sortable to reflect altered dropping
+				$('div.linkedBlocks').sortable('refresh');
 			}
 		});
 	},
@@ -535,6 +562,13 @@ jsBackend.pages.extras =
 	},
 
 
+	// display an effect on updated items
+	updatedBlock: function(element)
+	{
+		element.effect('highlight');
+	},
+
+
 	// end
 	eoo: true
 }
@@ -613,6 +647,9 @@ jsBackend.pages.template =
 	// method to change a template
 	changeTemplate: function(changeExtras)
 	{
+		// destroy sortable blocks
+		$('div.linkedBlocks').sortable('destroy');
+
 		// get checked
 		var selected = $('#templateList input:radio:checked').val();
 

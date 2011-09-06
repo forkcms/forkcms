@@ -130,6 +130,7 @@
 
 #editContent {
 	margin: 0 0 24px 0;
+	display: none;
 }
 
 /*
@@ -237,12 +238,36 @@
 
 	/* General table layout */
 
+	#templateVisualFallback {
+		display: none;
+		margin: 10px;
+	}
+
+	#templateVisualLarge {
+		clear: both;
+	}
+
+	#templateVisualFallback div#fallback {
+		float: right;
+		width: 100%;
+	}
+
+	#templateVisualFallback div#fallbackInfo {
+		float: left;
+		width: 50%;
+	}
+
 	#templateVisualLarge table,
 	#templateVisualFallback table {
 		width: 100%;
 		border-collapse: separate;
 		border-spacing: 10px; /* If you change the value "10" change it in model.php of pages module too; for IE7 */
 		table-layout: fixed;
+	}
+
+	#templateVisualFallback table {
+		width: 50%;
+		float: right;
 	}
 
 		#templateVisualLarge td,
