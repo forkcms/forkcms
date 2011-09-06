@@ -1,3 +1,10 @@
+2.6.7
+--
+Improvements
+
+* Core: Upgraded TinyMCE to 3.4.5
+
+
 2.6.6 (2011-09-06)
 --
 Bugfixes:
