@@ -52,6 +52,8 @@
 					</div>
 				</div>
 
+				{option:formErrors}<span class="formError">{$formErrors}</span>{/option:formErrors}
+
 				<div id="templateVisualFallback" style="display: none">
 					<div id="fallback" class="generalMessage singleMessage infoMessage">
 						<div id="fallbackInfo">

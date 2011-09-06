@@ -124,6 +124,84 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// add default block to "fallback" position, the only one which we can rest assured to exist
 		$this->positions['fallback']['blocks'][] = $block;
 
+		// content has been submitted: re-create submitted content rather than the db-fetched content
+		if(isset($_POST['block_html_0']))
+		{
+			// init vars
+			$this->blocksContent = array();
+			$hasBlock = false;
+			$i = 1;
+
+			// loop submitted blocks
+			while(isset($_POST['block_position_' . $i]))
+			{
+				// init var
+				$block = array();
+
+				// save block position
+				$block['position'] = $_POST['block_position_' . $i];
+				$positions[$block['position']][] = $block;
+
+				// set linked extra
+				$block['extra_id'] = $_POST['block_extra_id_' . $i];
+
+				// reset some stuff
+				if($block['extra_id'] <= 0) $block['extra_id'] = null;
+
+				// init html
+				$block['html'] = null;
+
+				// extra-type is HTML
+				if($block['extra_id'] === null)
+				{
+					// reset vars
+					$block['extra_id'] = null;
+					$block['html'] = $_POST['block_html_' . $i];
+				}
+
+				// not HTML
+				else
+				{
+					// type of block
+					if(isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] == 'block')
+					{
+						// set error
+						if($hasBlock) $this->frm->addError(BL::err('CantAdd2Blocks'));
+
+						// home can't have blocks
+						if($this->record['id'] == 1) $this->frm->addError(BL::err('HomeCantHaveBlocks'));
+
+						// reset var
+						$hasBlock = true;
+					}
+				}
+
+				// set data
+				$block['created_on'] = BackendModel::getUTCDate();
+				$block['edited_on'] = $block['created_on'];
+				$block['visible'] = 'Y'; // @todo: change this after visibility interaction has been added
+				$block['sequence'] = count($positions[$block['position']]) - 1;
+
+				// add to blocks
+				$this->blocksContent[] = $block;
+
+				// increment counter; go fetch next block
+				$i++;
+			}
+		}
+
+		// build blocks array
+		foreach($this->blocksContent as $i => $block)
+		{
+			$block['index'] = $i + 1;
+			$block['formElements']['hidVisible'] = $this->frm->addHidden('block_visible_' . $block['index'], $block['visible']);
+			$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], $block['extra_id']);
+			$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], $block['position']);
+			$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index'], $block['html']); // this is no editor; we'll add the editor in JS
+
+			$this->positions[$block['position']]['blocks'][] = $block;
+		}
+
 		// redirect
 		$redirectValues = array(
 			array('value' => 'none', 'label' => ucfirst(BL::lbl('None'))),
@@ -165,6 +243,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
 		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
+		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
 		// get default template id
 		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
@@ -200,65 +279,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, $this->frm->getField('is_action')->getChecked()));
-
-			// init vars
-			$blocks = array();
-			$i = 1;
-
-			// loop submitted blocks
-			while(isset($_POST['block_position_' . $i]))
-			{
-				// init var
-				$block = array();
-				$hasBlock = false;
-
-				// save block position
-				$block['position'] = $_POST['block_position_' . $i];
-				$positions[$block['position']][] = $block;
-
-				// set linked extra
-				$block['extra_id'] = $_POST['block_extra_id_' . $i];
-
-				// reset some stuff
-				if($block['extra_id'] <= 0) $block['extra_id'] = null;
-
-				// init html
-				$block['html'] = null;
-
-				// extra-type is HTML
-				if($block['extra_id'] === null)
-				{
-					// reset vars
-					$block['extra_id'] = null;
-					$block['html'] = $_POST['block_html_' . $i];
-				}
-
-				// not HTML
-				else
-				{
-					// type of block
-					if(isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] == 'block')
-					{
-						// set error
-						if($hasBlock) $this->frm->addError('CantAdd2Blocks'); // @todo: check if this works
-
-						// reset var
-						$hasBlock = true;
-					}
-				}
-
-				// set data
-				$block['created_on'] = BackendModel::getUTCDate();
-				$block['edited_on'] = $block['created_on'];
-				$block['visible'] = 'Y'; // @todo: change this after visibility interaction has been added
-				$block['sequence'] = count($positions[$block['position']]) - 1;
-
-				// add to blocks
-				$blocks[] = $block;
-
-				// increment counter; go fetch next block
-				$i++;
-			}
 
 			// @todo: blocks should be re-added if an error has occured (e.g. when title was not filled out, we don't want to lose all content)
 

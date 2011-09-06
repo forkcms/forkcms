@@ -74,29 +74,7 @@ jsBackend.pages.extras =
 	init: function()
 	{
 		// bind events
-		$('#extraType').change(function(evt)
-		{
-			if($(this).val() != 'block')
-			{
-				var hasModules = false;
-
-				// check if there is a block linked already
-				$('input[id^=blockExtraId]').each(function()
-				{
-					// get id
-					var id = $(this).val();
-
-					// check if a block is already linked
-					if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
-				});
-
-				// no modules
-				if(!hasModules) $('#extraType option[value="block"]').prop('disabled', false);
-			}
-
-			jsBackend.pages.extras.populateExtraModules(evt);
-		});
-
+		$('#extraType').change(jsBackend.pages.extras.populateExtraModules);
 		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
@@ -167,10 +145,13 @@ jsBackend.pages.extras =
 		// check if there already blocks linked
 		$('input[id^=blockExtraId]').each(function()
 		{
+			// get id
 			var id = $(this).val();
+
+			// check if a block is already linked
 			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
-
+		
 		// blocks linked?
 		if(hasModules)
 		{
@@ -287,7 +268,7 @@ jsBackend.pages.extras =
 		}
 
 		// create html to be appended in template-view
-		var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled
+		var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled (when hidden)
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
@@ -625,8 +606,8 @@ jsBackend.pages.manageTemplates =
 /**
  * All methods related to the templates
  *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.pages.template =
 {
