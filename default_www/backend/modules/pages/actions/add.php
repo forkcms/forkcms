@@ -6,13 +6,21 @@
  * @package		backend
  * @subpackage	pages
  *
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendPagesAdd extends BackendBaseActionAdd
 {
+	/**
+	 * The blocks linked to this page
+	 *
+	 * @var	array
+	 */
+	private $blocksContent = array();
+
+
 	/**
 	 * The positions
 	 *
@@ -280,8 +288,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, $this->frm->getField('is_action')->getChecked()));
 
-			// @todo: blocks should be re-added if an error has occured (e.g. when title was not filled out, we don't want to lose all content)
-
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -333,10 +339,10 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['revision_id'] = BackendPagesModel::insert($page);
 
 				// add page revision id to blocks
-				foreach($blocks as &$block) $block['revision_id'] = $page['revision_id'];
+				foreach($this->blocksContent as &$block) $block['revision_id'] = $page['revision_id'];
 
 				// insert the blocks
-				BackendPagesModel::insertBlocks($blocks);
+				BackendPagesModel::insertBlocks($this->blocksContent);
 
 				// trigger an event
 				BackendModel::triggerEvent($this->getModule(), 'after_add', $page);
@@ -357,7 +363,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 						$text = '';
 
 						// build search-text
-						foreach($blocks as $block) $text .= ' ' . $block['html'];
+						foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
 						// add
 						BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));

@@ -6,9 +6,9 @@
  * @package		backend
  * @subpackage	pages
  *
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendPagesEdit extends BackendBaseActionEdit
@@ -455,8 +455,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()));
-
-			// @todo: blocks should be re-added if an error has occured (e.g. when title was not filled out, we don't want to lose all content)
 
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
