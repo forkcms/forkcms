@@ -2,7 +2,7 @@
 --
 Improvements
 
-* Core: Upgraded TinyMCE to 3.4.5
+* Core: Upgraded TinyMCE to 3.4.5 - fixed Opera issues with editor
 
 
 2.6.6 (2011-09-06)
