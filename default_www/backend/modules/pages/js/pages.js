@@ -1,15 +1,5 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-/*
- * @todo: remove me when completed
- *
- * Thoughts:
- * The table-view of templates is built in model.php. This includes no linked blocks, no default blocks.
- * The default extra's are parsed in add.php, added in json to the template and picked up by the JS. When setting the template, this JS will parse the default blocks to the correction positions and assigns "id's" (indexes rather) for blocks.
- * All already assigned blocks are parsed in edit.php, set in a json-var and are picked up by this JS. This JS assigns the blocks to the correct positions and assigns "id's" (indexes rather) for blocks.
- * A block's position will be saved in a hidden input.
- * Blocks can not be edited. This is not neccessary when blocks will be able to be added, deleted and reordered
- */
 
 /**
  * Interaction for the pages module
@@ -281,7 +271,7 @@ jsBackend.pages.extras =
 								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId ? '' : 'showEditor ') + 'button icon iconOnly iconEdit' + '"' + (extraId && editLink ? ' target="_blank"' : '') + (extraId && editLink ? '' : ' onclick="return false;"') + (extraId && !editLink ? 'style="display: none;" ' : '') + '><span>{$lblEdit|ucfirst}</span></a>' +
 								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
 							'</div>' +
-						'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
+						'</div>';
 
 		// set block description in template-view
 		$('#templatePosition-' + position + ' .linkedBlocks').append(blockHTML);
@@ -297,20 +287,44 @@ jsBackend.pages.extras =
 		// prevent default action
 		evt.preventDefault();
 
-		// fetch block index
-		var index = $(this).parent().parent('.templatePositionCurrentType').data('blockId');
+		// save element to variable
+		var element = $(this);
 
-		// remove block from template overview
-		$(this).parent().parent('.templatePositionCurrentType').remove();
+		$('#confirmDeleteBlock').dialog(
+		{
+			draggable: false,
+			resizable: false,
+			modal: true,
+			width: 940,
+			buttons:
+			{
+				'{$lblOK|ucfirst}': function()
+				{
+					// fetch block index
+					var index = element.parent().parent('.templatePositionCurrentType').data('blockId');
 
-		// remove block
-		$('#blockExtraId' + index).parent().remove();
+					// remove block from template overview
+					element.parent().parent('.templatePositionCurrentType').remove();
 
-		// after removing all from fallback; hide fallback
-		jsBackend.pages.extras.hideFallback();
+					// remove block
+					$('#blockExtraId' + index).parent().remove();
 
-		// reset indexes (sequence)
-		jsBackend.pages.extras.resetIndexes();
+					// after removing all from fallback; hide fallback
+					jsBackend.pages.extras.hideFallback();
+
+					// reset indexes (sequence)
+					jsBackend.pages.extras.resetIndexes();
+
+					// close dialog
+					$(this).dialog('close');
+				},
+				'{$lblCancel|ucfirst}': function()
+				{
+					// close the dialog
+					$(this).dialog('close');
+				}
+			 }
+		 });
 	},
 
 
@@ -740,36 +754,33 @@ jsBackend.pages.template =
 	// load initial data, or initialize the dialog
 	load: function()
 	{
-		if($('#chooseTemplate').length > 0)
+		$('#chooseTemplate').dialog(
 		{
-			$('#chooseTemplate').dialog(
+			autoOpen: false,
+			draggable: false,
+			resizable: false,
+			modal: true,
+			width: 940,
+			buttons:
 			{
-				autoOpen: false,
-				draggable: false,
-				resizable: false,
-				modal: true,
-				width: 940,
-				buttons:
+				'{$lblOK|ucfirst}': function()
 				{
-					'{$lblOK|ucfirst}': function()
+					if($('#templateList input:radio:checked').val() != $('#templateId').val())
 					{
-						if($('#templateList input:radio:checked').val() != $('#templateId').val())
-						{
-							// change the template for real
-							jsBackend.pages.template.changeTemplate(true);
-						}
-
-						// close dialog
-						$(this).dialog('close');
-					},
-					'{$lblCancel|ucfirst}': function()
-					{
-						// close the dialog
-						$(this).dialog('close');
+						// change the template for real
+						jsBackend.pages.template.changeTemplate(true);
 					}
-				 }
-			 });
-		}
+
+					// close dialog
+					$(this).dialog('close');
+				},
+				'{$lblCancel|ucfirst}': function()
+				{
+					// close the dialog
+					$(this).dialog('close');
+				}
+			 }
+		 });
 	},
 
 

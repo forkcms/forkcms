@@ -33,6 +33,10 @@
         <translation language="nl"><![CDATA[Wijzig template]]></translation>
         <translation language="en"><![CDATA[Change template]]></translation>
       </item>
+      <item type="label" name="DeleteBlock">
+        <translation language="nl"><![CDATA[blok verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete block]]></translation>
+      </item>
       <item type="label" name="EditModuleContent">
         <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
         <translation language="en"><![CDATA[edit module content]]></translation>
@@ -96,6 +100,10 @@
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je de pagina "%1$s" wil verwijderen?]]></translation>
         <translation language="en"><![CDATA[Are your sure you want to delete the page "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteBlock">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze block wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete this block?]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteTemplate">
         <translation language="nl"><![CDATA[Ben je zeker dat je de template "%1$s" wil verwijderen?]]></translation>

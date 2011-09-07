@@ -53,7 +53,7 @@
 							<tbody>
 								<tr>
 									<td data-position="fallback" id="templatePosition-fallback" colspan="1" class="box">
-										<div class="heading linkedBlocksTitle"><h3 class="templatePositionTitle">{$lblFallback|ucfirst}</h3></div>
+										<div class="heading linkedBlocksTitle"><h3>{$lblFallback|ucfirst}</h3></div>
 										<div class="linkedBlocks"><!-- linked blocks will be added here --></div>
 									</td>
 								</tr>
@@ -317,6 +317,14 @@
 				{/iteration:templates}
 			</ul>
 		</div>
+	</div>
+
+	{*
+		Dialog to confirm block removal.
+		Do not change the ID!
+	 *}
+	<div id="confirmDeleteBlock" class="forkForms" title="{$lblDeleteBlock|ucfirst}" style="display: none;">
+		<p>{$msgConfirmDeleteBlock}</p>
 	</div>
 
 	{* Buttons to save page *}
