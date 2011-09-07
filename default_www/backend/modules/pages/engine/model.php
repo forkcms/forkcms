@@ -1141,7 +1141,7 @@ class BackendPagesModel
 
 				// get URL for parent
 				$title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-				$title = trim($title, ucfirst(BL::lbl('Home')) . ' > ');
+				$title = trim(ltrim($title, ucfirst(BL::lbl('Home')) . ' > '));
 
 				// add it
 				$titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
