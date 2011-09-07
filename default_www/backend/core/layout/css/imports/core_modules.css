@@ -298,18 +298,25 @@
 			box-shadow: 0 -1px 0 1px #FFF;
 		}
 
-		/* Blocks spacer */
+		/* Blocks container */
 
 		#templateVisualLarge .linkedBlocks,
 		#templateVisualFallback .linkedBlocks {
-			padding-bottom: 15px;
+			margin: 12px;
+			border-top: 1px solid #DDD;
+		}
+
+		#templateVisualLarge .linkedBlocks:empty {
+			margin: 0;
+			padding-top: 12px;
+			border-top: 0;
 		}
 
 		/* Button holder */
 
 		#templateVisualLarge .buttonAddHolder,
 		#templateVisualFallback .buttonAddHolder {
-			padding: 0 10px 15px 10px;
+			padding: 0 10px 10px;
 			width: 90px;
 			margin: auto auto;
 		}
@@ -321,13 +328,17 @@
 			border: 1px solid #DDD;
 			border-top: 0;
 			background: #FFF;
-			padding: 12px;
 			text-align: left;
 			position: relative;
 			cursor: move;
-			height: 30px;
+			height: 54px;
 			overflow: hidden;
 			overflow: ellipsis;
+		}
+
+		#templateVisualLarge .templatePositionCurrentType.ui-sortable-helper,
+		#templateVisualFallback .templatePositionCurrentType.ui-sortable-helper {
+			border-top: 1px solid #DDD;
 		}
 
 			#templateVisualLarge .templatePositionCurrentType .templateTitle,
@@ -343,6 +354,7 @@
 				-moz-transition: color 0.3s ease-in-out;
 				-o-transition: color 0.3s ease-in-out;
 				transition: color 0.3s ease-in-out;
+				margin: 12px 12px 0;
 			}
 
 			#templateVisualLarge .templatePositionCurrentType:hover .templateTitle,
@@ -357,6 +369,7 @@
 
 			#templateVisualLarge .templatePositionCurrentType .templateDescription,
 			#templateVisualFallback .templatePositionCurrentType .templateDescription {
+				margin: 0 12px 12px;
 				display: block;
 				color: #808080;
 				font-size: 11px;

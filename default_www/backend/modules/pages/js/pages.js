@@ -80,7 +80,8 @@ jsBackend.pages.extras =
 		// bind buttons
 		$('a.addBlock').live('click', jsBackend.pages.extras.showExtraDialog);
 		$('a.deleteBlock').live('click', jsBackend.pages.extras.deleteBlock);
-		$('.showEditor').live('click', function(e) { e.preventDefault(); jsBackend.pages.extras.editContent($(this).parent().parent().data('blockId')); });
+		$('.showEditor').live('click', jsBackend.pages.extras.editContent);
+		$('.toggleVisibility').live('click', jsBackend.pages.extras.toggleVisibility);
 
 		// load initial data, or initialize the dialogs
 		jsBackend.pages.extras.load();
@@ -151,7 +152,7 @@ jsBackend.pages.extras =
 			// check if a block is already linked
 			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
-		
+
 		// blocks linked?
 		if(hasModules)
 		{
@@ -198,16 +199,21 @@ jsBackend.pages.extras =
 		var blockHtml = $('textarea[id^=blockHtml]', block);
 		var blockExtraId = $('input[id^=blockExtraId]', block);
 		var blockPosition = $('input[id^=blockPosition]', block);
+		var blockVisibility = $('input[id^=blockVisible]', block);
 
 		blockHtml.attr('id', blockHtml.attr('id').replace(0, index)).attr('name', blockHtml.attr('name').replace(0, index));
 		blockExtraId.attr('id', blockExtraId.attr('id').replace(0, index)).attr('name', blockExtraId.attr('name').replace(0, index));
 		blockPosition.attr('id', blockPosition.attr('id').replace(0, index)).attr('name', blockPosition.attr('name').replace(0, index));
+		blockVisibility.attr('id', blockVisibility.attr('id').replace(0, index)).attr('name', blockVisibility.attr('name').replace(0, index));
 
 		// save position
 		blockPosition.val(selectedPosition);
 
 		// add block to dom
 		block.appendTo($('#editContent'));
+
+		// get block visibility
+		var visible = blockVisibility.prop('checked');
 
 		// block/widget
 		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
@@ -216,7 +222,7 @@ jsBackend.pages.extras =
 			$('input[id^=blockExtraId]', block).val(selectedExtraId);
 
 			// add visual representation of block to template visualisation
-			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId);
+			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
 
 			// don't show editor
 			$('.blockContentHTML', block).hide();
@@ -229,7 +235,7 @@ jsBackend.pages.extras =
 			$('input[id^=blockExtraId]', block).val('');
 
 			// add visual representation of block to template visualisation
-			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, null);
+			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, null, visible);
 
 			// show editor
 			$('.blockContentHTML', block).show();
@@ -241,7 +247,7 @@ jsBackend.pages.extras =
 
 
 	// add block visual on template
-	addBlockVisual: function(position, index, extraId)
+	addBlockVisual: function(position, index, extraId, visible)
 	{
 		// block
 		if(extraId)
@@ -251,7 +257,7 @@ jsBackend.pages.extras =
 			if(extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
 			if(extrasById[extraId].type == 'widget' && typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
 
-			// title & description
+			// title, description & visibility
 			var title = extrasById[extraId].human_name;
 			var description = extrasById[extraId].path;
 		}
@@ -259,21 +265,20 @@ jsBackend.pages.extras =
 		// editor
 		else
 		{
-			// link to edit this content, title & description
+			// link to edit this content, title, description & visibility
 			var editLink = '';
-
 			var title = '{$lblEditor|ucfirst}';
 			var description = $('#blockHtml' + index).val().substr(0, 200);
 			description = utils.string.stripTags(description);
 		}
 
 		// create html to be appended in template-view
-		var blockHTML = '<div class="templatePositionCurrentType" data-block-id="' + index + '">' + // @todo: add class templateDisabled (when hidden)
+		var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
-								'<a href="#" class="button linkButton icon iconOnly iconApprove"><span>&nbsp;</span></a>' + // @todo: toggle class iconApprove and iconReject
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId ? '' : 'showEditor ') + (extraId && !editLink ? 'disabledButton ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId && editLink ? ' target="_blank"' : '') + (extraId && editLink ? '' : ' onclick="return false;"') + '><span>{$lblEdit|ucfirst}</span></a>' +
+								'<a href="#" class="button linkButton icon iconOnly ' + (visible ? 'iconApprove ' : 'iconReject ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId ? '' : 'showEditor ') + 'button icon iconOnly iconEdit' + '"' + (extraId && editLink ? ' target="_blank"' : '') + (extraId && editLink ? '' : ' onclick="return false;"') + (extraId && !editLink ? 'style="display: none;" ' : '') + '><span>{$lblEdit|ucfirst}</span></a>' +
 								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
 							'</div>' +
 						'</div>'; // @todo: verwijder-knoppeke moet confirmation vragen
@@ -301,8 +306,8 @@ jsBackend.pages.extras =
 		// remove block
 		$('#blockExtraId' + index).parent().remove();
 
-		// initialise new index
-		var newIndex = index;
+		// after removing all from fallback; hide fallback
+		jsBackend.pages.extras.hideFallback();
 
 		// reset indexes (sequence)
 		jsBackend.pages.extras.resetIndexes();
@@ -310,8 +315,14 @@ jsBackend.pages.extras =
 
 
 	// edit content
-	editContent: function(index)
+	editContent: function(e)
 	{
+		// prevent default event action
+		e.preventDefault();
+
+		// fetch block index
+		var index = $(this).parent().parent().data('blockId');
+
 		// save content to allow for cancelling the edited text
 		jsBackend.pages.extras.htmlContent = $('#blockHtml' + index).val();
 
@@ -371,73 +382,11 @@ jsBackend.pages.extras =
 	},
 
 
-	// save/reset the content
-	setContent: function(index, saveContent)
+	// hide fallback
+	hideFallback: function()
 	{
-		// content does not need to be saved
-		if(!saveContent)
-		{
-			// reset to previous content
-			tinyMCE.get('blockHtml' + index).setContent(jsBackend.pages.extras.htmlContent);
-		}
-
-		// re-enable scrolling
-		$('body').css('overflow', 'auto');
-
-		// remove editor
-		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
-
-		// add short description to visual representation of block
-		var description = $('#blockHtml' + index).val().substr(0, 200);
-		description = utils.string.stripTags(description);
-		$('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
-
-		// mark as updated
-		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
-	},
-
-
-	// re-order blocks
-	sortable: function()
-	{
-		// make blocks sortable
-		$('div.linkedBlocks').sortable(
-		{
-			items: '.templatePositionCurrentType',
-			placeholder: 'dragAndDropPlaceholder',
-			tolerance: 'pointer',
-			forcePlaceholderSize: true,
-			connectWith: 'div.linkedBlocks',
-			opacity: 0.7,
-			stop: function(event, ui)
-			{
-				// reorder indexes of existing blocks:
-				jsBackend.pages.extras.resetIndexes();
-				
-				// mark as updated
-				jsBackend.pages.extras.updatedBlock(ui.item);
-
-				// after removing all from fallback; hide fallback
-				if($('#templateVisualFallback .templatePositionCurrentType').length == 0) $('#templateVisualFallback').hide();
-			},
-			start: function(event, ui)
-			{
-				// check if we're moving from template
-				if($(this).parents('#templateVisualLarge').length > 0)
-				{
-					// disable dropping to fallback
-					$('div.linkedBlocks').sortable('option', 'connectWith', '#templateVisualLarge div.linkedBlocks');
-				}
-				else
-				{
-					// enable dropping on fallback
-					$('div.linkedBlocks').sortable('option', 'connectWith', 'div.linkedBlocks');
-				}
-
-				// refresh sortable to reflect altered dropping
-				$('div.linkedBlocks').sortable('refresh');
-			}
-		});
+		// after removing all from fallback; hide fallback
+		if($('#templateVisualFallback .templatePositionCurrentType').length == 0) $('#templateVisualFallback').hide();
 	},
 
 
@@ -541,6 +490,111 @@ jsBackend.pages.extras =
 
 		// mark all as having been reset
 		$('.contentBlock').removeClass('reset');
+	},
+
+
+	// save/reset the content
+	setContent: function(index, saveContent)
+	{
+		// content does not need to be saved
+		if(!saveContent)
+		{
+			// reset to previous content
+			tinyMCE.get('blockHtml' + index).setContent(jsBackend.pages.extras.htmlContent);
+		}
+
+		// re-enable scrolling
+		$('body').css('overflow', 'auto');
+
+		// remove editor
+		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
+
+		// add short description to visual representation of block
+		var description = $('#blockHtml' + index).val().substr(0, 200);
+		description = utils.string.stripTags(description);
+		$('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
+
+		// mark as updated
+		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
+	},
+
+
+	// re-order blocks
+	sortable: function()
+	{
+		// make blocks sortable
+		$('div.linkedBlocks').sortable(
+		{
+			items: '.templatePositionCurrentType',
+			tolerance: 'pointer',
+			placeholder: 'dragAndDropPlaceholder',
+			forcePlaceholderSize: true,
+			connectWith: 'div.linkedBlocks',
+			opacity: 0.7,
+			stop: function(event, ui)
+			{
+				// reorder indexes of existing blocks:
+				jsBackend.pages.extras.resetIndexes();
+
+				// mark as updated
+				jsBackend.pages.extras.updatedBlock(ui.item);
+
+				// after removing all from fallback; hide fallback
+				jsBackend.pages.extras.hideFallback();
+			},
+			start: function(event, ui)
+			{
+				// check if we're moving from template
+				if($(this).parents('#templateVisualLarge').length > 0)
+				{
+					// disable dropping to fallback
+					$('div.linkedBlocks').sortable('option', 'connectWith', '#templateVisualLarge div.linkedBlocks');
+				}
+				else
+				{
+					// enable dropping on fallback
+					$('div.linkedBlocks').sortable('option', 'connectWith', 'div.linkedBlocks');
+				}
+
+				// refresh sortable to reflect altered dropping
+				$('div.linkedBlocks').sortable('refresh');
+			}
+		});
+	},
+
+
+	// toggle block visibility
+	toggleVisibility: function(e)
+	{
+		// prevent default event action
+		e.preventDefault();
+
+		// get index of block
+		var index = $(this).parent().parent().data('blockId');
+
+		// get visibility checbox
+		var checkbox = $('#blockVisible' + index);
+
+		// get current visibility state
+		var visible = checkbox.prop('checked');
+
+		// invert visibility
+		visible = !visible;
+
+		// change visibility state
+		checkbox.prop('checked', visible);
+
+		// remove current visibility indicators
+		$(this).removeClass('iconApprove').removeClass('iconReject');
+		$(this).parent().parent().removeClass('templateDisabled');
+
+		// toggle visibility indicators
+		if(visible) $(this).addClass('iconApprove');
+		else
+		{
+			$(this).addClass('iconReject');
+			$(this).parent().parent().addClass('templateDisabled');
+		}
 	},
 
 
@@ -659,6 +713,7 @@ jsBackend.pages.template =
 			var index = $('input[id^=blockExtraId]', this).attr('id').replace('blockExtraId', '');
 			var extraId = $('input[id^=blockExtraId]', this).val();
 			var position = $('input[id^=blockPosition]', this).val();
+			var visible = $('input[id^=blockVisible]', this).prop('checked');
 
 			// skip default (base) block
 			if(index == 0) return;
@@ -674,7 +729,7 @@ jsBackend.pages.template =
 			}
 
 			// add visual representation of block to template visualisation
-			jsBackend.pages.extras.addBlockVisual(position, index, extraId);
+			jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
 		});
 
 		// make the blocks sortable (again)

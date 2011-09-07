@@ -516,13 +516,9 @@ class BackendPagesModel
 					// large visual?
 					if($large)
 					{
-						// @todo: add already linked blocks (see the <div class="linkedBlocks> tag)
-
-						$html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '">
-									<h4 class="templatePositionTitle">' . $title . '</h4>
-									<div class="linkedBlocks">
-										<!-- linked blocks will be added here -->
-									</div>
+						$html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '" class="box">
+									<div class="heading linkedBlocksTitle"><h3>' . $title . '</h3></div>
+									<div class="linkedBlocks"><!-- linked blocks will be added here --></div>
 									<div class="buttonHolder buttonAddHolder">
 										<a href="#addBlock" class="button icon iconAdd addBlock">
 											<span>' . ucfirst(BL::lbl('AddBlock')) . '</span>

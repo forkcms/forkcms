@@ -63,11 +63,9 @@
 						<table cellspacing="10" cellpadding="0" border="0">
 							<tbody>
 								<tr>
-									<td data-position="fallback" id="templatePosition-fallback" colspan="1">
-										<h4 class="templatePositionTitle">{$lblFallback|ucfirst}</h4>
-										<div class="linkedBlocks">
-											<!-- linked blocks will be added here -->
-										</div>
+									<td data-position="fallback" id="templatePosition-fallback" colspan="1" class="box">
+										<div class="heading linkedBlocksTitle"><h3 class="templatePositionTitle">{$lblFallback|ucfirst}</h3></div>
+										<div class="linkedBlocks"><!-- linked blocks will be added here --></div>
 									</td>
 								</tr>
 							</tbody>
@@ -103,6 +101,9 @@
 
 							{* this will store the selected position *}
 							{$positions.blocks.hidPosition}
+
+							{* this will store the visible/hidden state *}
+							<div style="display: none">{$positions.blocks.chkVisible}</div>
 						</div>
 					{/iteration:positions.blocks}
 				{/iteration:positions}

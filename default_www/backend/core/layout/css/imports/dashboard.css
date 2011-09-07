@@ -107,7 +107,7 @@
  	Drag'n drop for widgets
  */
 .dragAndDropPlaceholder {
-	margin: 12px;
+	margin: 0;
 	border: 1px dotted #999;
 }
 

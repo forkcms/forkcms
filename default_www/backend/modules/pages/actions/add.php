@@ -124,7 +124,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// build prototype block
 		$block['index'] = 0;
-		$block['formElements']['hidVisible'] = $this->frm->addHidden('block_visible_' . $block['index'], 'Y');
+		$block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
 		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index']);
 		$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index']);
 		$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index']); // this is no editor; we'll add the editor in JS
@@ -187,7 +187,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// set data
 				$block['created_on'] = BackendModel::getUTCDate();
 				$block['edited_on'] = $block['created_on'];
-				$block['visible'] = 'Y'; // @todo: change this after visibility interaction has been added
+				$block['visible'] = isset($_POST['block_visible_' . $i]) && $_POST['block_visible_' . $i] == 'Y' ? 'Y' : 'N';
 				$block['sequence'] = count($positions[$block['position']]) - 1;
 
 				// add to blocks
@@ -202,7 +202,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		foreach($this->blocksContent as $i => $block)
 		{
 			$block['index'] = $i + 1;
-			$block['formElements']['hidVisible'] = $this->frm->addHidden('block_visible_' . $block['index'], $block['visible']);
+			$block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], $block['visible'] == 'Y');
 			$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], $block['extra_id']);
 			$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], $block['position']);
 			$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index'], $block['html']); // this is no editor; we'll add the editor in JS
