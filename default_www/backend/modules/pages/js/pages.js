@@ -413,7 +413,7 @@ jsBackend.pages.extras =
 			{
 				// reorder indexes of existing blocks:
 				jsBackend.pages.extras.resetIndexes();
-
+				
 				// mark as updated
 				jsBackend.pages.extras.updatedBlock(ui.item);
 
@@ -521,6 +521,7 @@ jsBackend.pages.extras =
 
 			// update index of entry in template-view
 			$(this).data('blockId', newIndex);
+			$(this).attr('data-block-id', newIndex);
 
 			// update index occurences in the hidden data
 			var blockHtml = $('.reset #blockHtml' + oldIndex);
