@@ -6,6 +6,7 @@
 		<div class="heading">
 			<h3>{$lblTemplates|ucfirst}: {$lblEditTemplate}</h3>
 		</div>
+
 		<div class="options">
 			<p>
 				<label for="file">{$msgPathToTemplate|ucfirst}</label>
@@ -16,20 +17,48 @@
 				<label for="label">{$lblLabel|ucfirst}</label>
 				{$txtLabel} {$txtLabelError}
 			</p>
-			<p>
-				<label for="numPositions">{$lblNumberOfPositions|ucfirst}</label>
-				{$ddmNumPositions} {$ddmNumPositionsError}
-			</p>
 		</div>
+
 		{* Don't change this ID *}
-		<div id="metaData" class="options">
-			{iteration:names}
-				<p>
-					<label for="name{$names.i}">{$lblName|ucfirst} {$names.i}</label>
-					{$names.txtName} {$names.txtNameError}
-				</p>
-			{/iteration:names}
+		<div id="positionsList" class="options">
+			{iteration:positions}
+				<div class="position clearfix" style="display: none">
+					<label for="position{$positions.i}">{$lblPosition|ucfirst}</label>
+
+					{* Position name *}
+					{$positions.txtPosition}
+
+					{* Button to delete this position *}
+					<a href="#" class="deletePosition button icon iconOnly iconDelete"><span>{$lblDeletePosition|ucfirst}</span></a>
+
+					{$positions.txtPositionError}
+
+					<div class="defaultBlocks">
+						{* Default blocks for this position *}
+						{iteration:positions.blocks}
+							<div class="defaultBlock">
+								{$positions.blocks.ddmType}
+								{$positions.blocks.ddmTypeError}
+
+								{* @todo: button to remove block from this position *}
+								<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>
+							</div>
+						{/iteration:positions.blocks}
+
+						{* Button to add new default block to this position *}
+						<a href="#" class="addBlock button icon iconOnly iconAdd"><span>{$lblAddBlock|ucfirst}</span></a>
+					</div>
+				</div>
+			{/iteration:positions}
+
+			{* Button to add new position *}
+			<p>
+				<a href="#" id="addPosition" class="button icon iconAdd"><span>{$lblAddPosition|ucfirst}</span></a>
+			</p>
+
+			{option:formErrors}<span class="formError">{$formErrors}</span>{/option:formErrors}
 		</div>
+
 		<div class="options">
 			<p>
 				<label for="format">{$lblLayout|ucfirst}</label>
@@ -37,6 +66,7 @@
 				<span class="helpTxt">{$msgHelpTemplateFormat}</span>
 			</p>
 		</div>
+
 		<div class="options">
 			<div class="spacing">
 				<ul class="inputList pb0">

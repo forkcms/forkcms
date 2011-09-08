@@ -687,3 +687,44 @@
 	#locale.localeAnalyse td.used_in li code {
 		font-size: 11px;
 	}
+
+
+
+
+
+
+
+.positionName,
+.positionBlock {
+	float: left;
+	margin-right: 10px;
+}
+
+.addBlock {
+	float: left;
+}
+
+#addPosition {
+	clear: left;
+	margin-top: 10px;
+}
+
+.defaultBlocks {
+	clear: left;
+	margin-left: 115px;
+	padding-top: 5px;
+}
+
+.position {
+	padding: 10px 0;
+	clear: left;
+}
+
+.defaultBlock {
+	clear: left;
+	padding-top: 5px;
+}
+
+.deleteBlock {
+	margin-right: 10px;
+}

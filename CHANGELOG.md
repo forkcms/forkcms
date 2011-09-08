@@ -15,7 +15,7 @@ Improvements:
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 
 
-2.6.7
+2.6.7 (xxxx-xx-xx)
 --
 Improvements
 

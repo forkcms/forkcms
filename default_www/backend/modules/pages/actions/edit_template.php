@@ -14,6 +14,22 @@
 class BackendPagesEditTemplate extends BackendBaseActionEdit
 {
 	/**
+	 * The position's default extras.
+	 *
+	 * @var	array
+	 */
+	private $extras = array();
+
+
+	/**
+	 * The position's names.
+	 *
+	 * @var	array
+	 */
+	private $names = array();
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -22,6 +38,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		// load additional js
+		$this->header->addJS('templates.js');
 
 		// load record
 		$this->loadData();
@@ -58,6 +77,12 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 		// unserialize
 		$this->record['data'] = unserialize($this->record['data']);
+		$this->names = $this->record['data']['names'];
+		if(isset($this->record['data']['default_extras_' . BL::getWorkingLanguage()])) $this->extras = $this->record['data']['default_extras_' . BL::getWorkingLanguage()];
+		else $this->extras = $this->record['data']['default_extras'];
+
+		// assign
+		$this->tpl->assign('positions', $positions);
 
 		// assign
 		$this->tpl->assign('template', $this->record);
@@ -88,14 +113,12 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// init var
-		$maximumPositions = 30;
 		$defaultId = BackendModel::getModuleSetting($this->getModule(), 'default_template');
 
 		// create elements
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', 'core'));
 		$this->frm->addText('label', $this->record['label']);
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
-		$this->frm->addDropdown('num_positions', array_combine(range(1, $maximumPositions), range(1, $maximumPositions)), count($this->record['data']['names']));
 		$this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
@@ -114,7 +137,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		}
 
 		// init vars
-		$names = array();
+		$positions = array();
 		$blocks = array();
 		$widgets = array();
 		$extras = BackendPagesModel::getExtras();
@@ -144,25 +167,87 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 								ucfirst(BL::lbl('Modules')) => $blocks,
 								ucfirst(BL::lbl('Widgets')) => $widgets);
 
-		/*
-		 *  @todo
-		 *  For now, the above code for blocks & widgets is useless in the new system.
-		 *  First I'll work out the basics, after that, we can start making it possible to add default blocks inside positions, so I won't remove the above code just yet
-		 */
+		// create default position field
+		$position = array();
+		$position['i'] = 0;
+		$position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'inputText positionName', 'inputTextError positionName');
+		$position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'positionBlock', 'positionBlockError');
+		$positions[] = $position;
 
-		// add some fields
-		for($i = 1; $i <= $maximumPositions; $i++)
+		// content has been submitted: re-create submitted content rather than the db-fetched content
+		if(isset($_POST['position_0']))
 		{
-			// grab values
-			$name = isset($this->record['data']['names'][$i - 1]) ? $this->record['data']['names'][$i - 1] : null;
+			// init vars
+			$this->names = array();
+			$this->extras = array();
+			$i = 1;
 
-			// build array
-			$names[$i]['i'] = $i;
-			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_' . $i, $name);
+			// loop submitted positions
+			while(isset($_POST['position_' . $i]))
+			{
+				// init vars
+				$j = 1;
+				$extras = array();
+
+				// gather position names
+				$name = $_POST['position_' . $i];
+
+				// loop submitted blocks
+				while(isset($_POST['type_' . $i . '_' . $j]))
+				{
+					// gather blocks id
+					$extras[] = $_POST['type_' . $i . '_' . $j];
+
+					// increment counter; go fetch next block
+					$j++;
+				}
+
+				// increment counter; go fetch next position
+				$i++;
+
+				// position already exists -> error
+				if(in_array($name, $this->names)) $this->frm->addError(sprintf(BL::getError('DuplicatePositionName'), $name));
+
+				// position name == fallback -> error
+				if($name == 'fallback') $this->frm->addError(sprintf(BL::getError('ReservedPositionName'), $name));
+
+				// not alphanumeric -> error
+				if(!SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $this->frm->addError(sprintf(BL::getError('NoAlphaNumPositionName'), $name));
+
+				// save positions
+				$this->names[] = $name;
+				$this->extras[$name] = $extras;
+			}
+		}
+
+		// build blocks array
+		foreach($this->names as $i => $name)
+		{
+			// create default position field
+			$position = array();
+			$position['i'] = $i + 1;
+			$position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'inputText positionName', 'inputTextError positionName');
+			foreach($this->extras[$name] as $extra) $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+			$positions[] = $position;
 		}
 
 		// assign
-		$this->tpl->assign('names', $names);
+		$this->tpl->assign('positions', $positions);
+	}
+
+
+	/**
+	 * Parse the form
+	 *
+	 * @return	void
+	 */
+	protected function parse()
+	{
+		// call parent
+		parent::parse();
+
+		// assign form errors
+		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 	}
 
 
@@ -183,12 +268,6 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->frm->getField('file')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
-
-			// loop the know fields and validate them
-			for($i = 1; $i <= $this->frm->getField('num_positions')->getValue(); $i++)
-			{
-				$this->frm->getField('name_' . $i)->isFilled(BL::err('FieldIsRequired'));
-			}
 
 			// validate syntax
 			$syntax = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
@@ -214,13 +293,16 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 					break;
 				}
 
+				// doublecheck position names
+				foreach($row as $cell)
+				{
+					// not alphanumeric -> error
+					if($cell != '/' && !in_array($cell, $this->names)) $this->frm->getField('format')->addError(sprintf(BL::getError('NonExistingPositionName'), $cell));
+				}
+
 				// reset
 				$first = false;
 			}
-
-			// @todo: check if all submitted position names are unique
-			// @todo: check if all submitted position names are valid (still need to determine what is valid)
-			// @todo: name 'fallback' is reserved
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -231,29 +313,19 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
+				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
+				$item['data']['names'] = $this->names;
+				$item['data']['default_extras'] = $this->extras;
+				$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()] = $this->extras;
+
+				// serialize
+				$item['data'] = serialize($item['data']);
 
 				// if this is the default template make the template active
 				if(BackendModel::getModuleSetting($this->getModule(), 'default_template') == $this->record['id']) $item['active'] = 'Y';
 
 				// if the template is in use we can't de-activate it
 				if(BackendPagesModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
-
-				// @todo: check if format contains valid position names
-
-				// init template data
-				$item['data']['format'] = $this->record['data']['format'];
-
-				// loop fields
-				for($i = 1; $i <= $this->frm->getField('num_positions')->getValue(); $i++)
-				{
-					$item['data']['names'][$i - 1] = $this->frm->getField('name_' . $i)->getValue();
-				}
-
-				// blocks layout
-				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
-
-				// serialize
-				$item['data'] = serialize($item['data']);
 
 				// insert the item
 				BackendPagesModel::updateTemplate($item);

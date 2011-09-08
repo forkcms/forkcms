@@ -191,10 +191,10 @@ jsBackend.pages.extras =
 		var blockPosition = $('input[id^=blockPosition]', block);
 		var blockVisibility = $('input[id^=blockVisible]', block);
 
-		blockHtml.attr('id', blockHtml.attr('id').replace(0, index)).attr('name', blockHtml.attr('name').replace(0, index));
-		blockExtraId.attr('id', blockExtraId.attr('id').replace(0, index)).attr('name', blockExtraId.attr('name').replace(0, index));
-		blockPosition.attr('id', blockPosition.attr('id').replace(0, index)).attr('name', blockPosition.attr('name').replace(0, index));
-		blockVisibility.attr('id', blockVisibility.attr('id').replace(0, index)).attr('name', blockVisibility.attr('name').replace(0, index));
+		blockHtml.attr('id', blockHtml.attr('id').replace('0', index)).attr('name', blockHtml.attr('name').replace('0', index));
+		blockExtraId.attr('id', blockExtraId.attr('id').replace('0', index)).attr('name', blockExtraId.attr('name').replace('0', index));
+		blockPosition.attr('id', blockPosition.attr('id').replace('0', index)).attr('name', blockPosition.attr('name').replace('0', index));
+		blockVisibility.attr('id', blockVisibility.attr('id').replace('0', index)).attr('name', blockVisibility.attr('name').replace('0', index));
 
 		// save position
 		blockPosition.val(selectedPosition);
@@ -269,7 +269,7 @@ jsBackend.pages.extras =
 							'<div class="buttonHolder">' +
 								'<a href="#" class="button linkButton icon iconOnly ' + (visible ? 'iconApprove ' : 'iconReject ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
 								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId ? '' : 'showEditor ') + 'button icon iconOnly iconEdit' + '"' + (extraId && editLink ? ' target="_blank"' : '') + (extraId && editLink ? '' : ' onclick="return false;"') + (extraId && !editLink ? 'style="display: none;" ' : '') + '><span>{$lblEdit|ucfirst}</span></a>' +
-								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>Delete</span></a>' +
+								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>' +
 							'</div>' +
 						'</div>';
 

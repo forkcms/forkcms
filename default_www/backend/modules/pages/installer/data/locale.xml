@@ -12,6 +12,7 @@
       </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
+        <translation language="en"><![CDATA[You can't delete this template.]]></translation>
       </item>
       <item type="error" name="HomeCantHaveBlocks">
         <translation language="nl"><![CDATA[Je kan geen modules aan de homepage koppelen.]]></translation>
@@ -21,6 +22,22 @@
         <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
         <translation language="en"><![CDATA[Invalid syntax.]]></translation>
       </item>
+      <item type="error" name="DuplicatePositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is gedupliceerd.]]></translation>
+        <translation language="en"><![CDATA[Position %s is duplicated.]]></translation>
+      </item>
+      <item type="error" name="NoAlphaNumPositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is niet alfanumeriek.]]></translation>
+        <translation language="en"><![CDATA[Position %s is not alphanumerical.]]></translation>
+      </item>
+      <item type="error" name="NonExistingPositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is niet gedefiniëerd.]]></translation>
+        <translation language="en"><![CDATA[Position %s is not defined.]]></translation>
+      </item>
+      <item type="error" name="ReservedPositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>
+        <translation language="en"><![CDATA[Position %s is reserved.]]></translation>
+      </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add page]]></translation>
@@ -29,6 +46,10 @@
         <translation language="nl"><![CDATA[blok toevoegen]]></translation>
         <translation language="en"><![CDATA[add block]]></translation>
       </item>
+      <item type="label" name="AddPosition">
+        <translation language="nl"><![CDATA[positie toevoegen]]></translation>
+        <translation language="en"><![CDATA[add position]]></translation>
+      </item>
       <item type="label" name="ChangeTemplate">
         <translation language="nl"><![CDATA[Wijzig template]]></translation>
         <translation language="en"><![CDATA[Change template]]></translation>
@@ -36,6 +57,10 @@
       <item type="label" name="DeleteBlock">
         <translation language="nl"><![CDATA[blok verwijderen]]></translation>
         <translation language="en"><![CDATA[delete block]]></translation>
+      </item>
+      <item type="label" name="DeletePosition">
+        <translation language="nl"><![CDATA[positie verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete position]]></translation>
       </item>
       <item type="label" name="EditModuleContent">
         <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
