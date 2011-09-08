@@ -331,7 +331,8 @@ utils.string =
 		for(i in value)
 		{
 			// replace special characters
-			if(value.charAt(i) == '@') url += 'at';
+			if(value.charAt(i) == '.') url += ' ';
+			else if(value.charAt(i) == '@') url += 'at';
 			else if(value.charAt(i) == '©')	url += 'copyright';
 			else if(value.charAt(i) == '€') url += 'euro';
 			else if(value.charAt(i) == '™') url += 'tm';
