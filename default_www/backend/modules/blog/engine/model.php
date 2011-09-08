@@ -169,7 +169,16 @@ class BackendBlogModel
 
 			// update category for the posts that might be in this category
 			$db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
-
+			
+			// build extra
+			$extra = array('id' => $item['extra_id'],
+							'module' => 'blog',
+							'type' => 'widget',
+							'action' => 'category');
+	
+			// delete extra
+			$db->delete('pages_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+			
 			// invalidate the cache for blog
 			BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 		}
@@ -713,10 +722,34 @@ class BackendBlogModel
 
 		// meta given?
 		if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
+				
+		// build extra
+		$extra = array('module' => 'blog',
+						'type' => 'widget',
+						'label' => 'Category',
+						'action' => 'category',
+						'data' => null,
+						'hidden' => 'N',
+						'sequence' => $db->getVar('SELECT MAX(i.sequence) + 1
+													FROM pages_extras AS i
+													WHERE i.module = ?', array('blog')));
+		if(is_null($extra['sequence'])) $extra['sequence'] = $db->getVar('SELECT CEILING(MAX(i.sequence) / 1000) * 1000
+																			FROM pages_extras AS i');
 
-		// create category
-		$item['id'] = $db->insert('blog_categories', $item);
+		// insert extra
+		$extra['id'] = $db->insert('pages_extras', $extra);
+		$item['extra_id'] = $extra['id'];
 
+		// create category and return the new id
+		$item['id'] = $db->insert('blog_categories', $item);	
+		
+		// update extra (item id is now known)
+		$extra['data'] = serialize(array('id' => $item['id'],
+											'extra_label' => ucfirst(BL::lbl('Category', 'core')) . ': ' . $item['title'],
+											'language' => $item['language'],
+											'edit_url' => BackendModel::createURLForAction('edit_category') . '&id=' . $item['id']));
+		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));	
+		
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 
