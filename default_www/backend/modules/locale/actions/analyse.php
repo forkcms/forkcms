@@ -96,7 +96,6 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->dgFrontend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
 		// add columns
-		//$this->dgFrontend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
 		$this->dgFrontend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
 		// add a class for the inline edit
@@ -128,7 +127,6 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->dgBackend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
 		// add columns
-		//$this->dgBackend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
 		$this->dgBackend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
 		// add a class for the inline edit
