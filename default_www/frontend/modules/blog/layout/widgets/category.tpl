@@ -1,6 +1,6 @@
 {*
 	variables that are available:
-	- {$widgetBlogCategories}:
+	- {$widgetBlogArticlesByCategory}:
 *}
 {option:widgetBlogArticlesByCategory}
 	<section id="blogRecentArticlesListWidget" class="mod">
