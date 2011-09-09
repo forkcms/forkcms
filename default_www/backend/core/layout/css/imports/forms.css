@@ -120,6 +120,17 @@ input[type="submit"] {
 		font-weight: 700;
 	}
 
+.longHelpTxt {
+	color: #808080;
+	font-size: 11px;
+}
+
+	.longHelpTxt ol,
+	.longHelpTxt ul {
+		list-style: disc;
+		margin-left: 15px;
+	}
+	
 .forkForms .inputList {
 	padding: 0 0 12px 0;
 }

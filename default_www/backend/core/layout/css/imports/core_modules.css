@@ -106,15 +106,6 @@
 		margin: 6px 6px 12px 6px;
 	}
 
-	#pages.pagesAddTemplate #format,
-	#pages.pagesEditTemplate #format {
-		width: 200px;
-		height: 200px;
-		font-size: 13px;
-		padding: 4px;
-		font-family: "Menlo", "Monaco", "Courier New", Courier, monospace;
-	}
-
 /*
 	General
 */
@@ -632,6 +623,78 @@
 		width: 320px;
 	}
 
+	/*
+		Pages templates (add/edit)
+	*/
+	
+	#positionsList {
+		padding: 12px 0;
+	}
+
+	#positionsList .positionName,
+	#positionsList .positionBlock {
+		float: left;
+	}
+	
+	#positionsList .addBlock {
+		float: left;
+		clear: left;
+		margin-top: 5px;
+	}
+	
+	#positionsList #addPosition {
+		clear: left;
+		margin: 10px 0 0 10px;
+	}
+	
+	#positionsList .defaultBlocks {
+		clear: left;
+		margin-left: 115px;
+		padding-top: 5px;
+	}
+	
+	#positionsList .position {
+		padding: 10px;
+		clear: left;
+	}
+	
+	#positionsList .defaultBlock {
+		clear: left;
+		padding-top: 5px;
+	}
+	
+	#positionsList .position:nth-child(2n + 1) {
+		background: #F1F5FA;
+	}
+
+	#positionsList .positionLabel {
+		float: left;
+	}
+
+	#positionsList .iconDelete {
+		margin-left: 10px;
+	}
+	
+	#templateLayout > * {
+		float: left;
+	}
+
+	#templateLayout > div {
+		margin-left: 10px;
+		width: 350px;
+	}
+
+	#templateLayout .helpTxt {
+		padding-left: 0;
+	}
+
+	#templateLayout #format {
+		width: 320px;
+		height: 200px;
+		font-size: 12px;
+		padding: 4px;
+		font-family: "Menlo", "Monaco", "Courier New", Courier, monospace;
+	}
 
 /*
 	Tags
@@ -687,44 +750,3 @@
 	#locale.localeAnalyse td.used_in li code {
 		font-size: 11px;
 	}
-
-
-
-
-
-
-
-.positionName,
-.positionBlock {
-	float: left;
-	margin-right: 10px;
-}
-
-.addBlock {
-	float: left;
-}
-
-#addPosition {
-	clear: left;
-	margin-top: 10px;
-}
-
-.defaultBlocks {
-	clear: left;
-	margin-left: 115px;
-	padding-top: 5px;
-}
-
-.position {
-	padding: 10px 0;
-	clear: left;
-}
-
-.defaultBlock {
-	clear: left;
-	padding-top: 5px;
-}
-
-.deleteBlock {
-	margin-right: 10px;
-}

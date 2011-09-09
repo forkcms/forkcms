@@ -19,35 +19,47 @@
 			</p>
 		</div>
 
+	</div>
+
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblPositions|ucfirst}</h3>
+		</div>
+
 		{* Don't change this ID *}
 		<div id="positionsList" class="options">
+
 			{iteration:positions}
-				<div class="position clearfix" style="display: none">
-					<label for="position{$positions.i}">{$lblPosition|ucfirst}</label>
+				<div class="position clearfix"{option:!positions.i} style="display: none"{/option:!positions.i}>
+
+					{* Title & button to delete this position *}
+					<label for="position{$positions.i}"><span class="positionLabel">{$lblPosition|ucfirst}</span> <a href="#" class="deletePosition button icon iconOnly iconDelete"><span>{$lblDeletePosition|ucfirst}</span></a></label>
 
 					{* Position name *}
 					{$positions.txtPosition}
 
-					{* Button to delete this position *}
-					<a href="#" class="deletePosition button icon iconOnly iconDelete"><span>{$lblDeletePosition|ucfirst}</span></a>
-
 					{$positions.txtPositionError}
 
 					<div class="defaultBlocks">
-						{* Default blocks for this position *}
-						{iteration:positions.blocks}
-							<div class="defaultBlock">
-								{$positions.blocks.ddmType}
-								{$positions.blocks.ddmTypeError}
 
-								{* @todo: button to remove block from this position *}
-								<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>
-							</div>
-						{/iteration:positions.blocks}
+						{* Default blocks for this position *}
+						{option:positions.blocks}
+							{iteration:positions.blocks}
+								<div class="defaultBlock">
+									{$positions.blocks.ddmType}
+									{$positions.blocks.ddmTypeError}
+
+									{* Button to remove block from this position *}
+									<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>
+								</div>
+							{/iteration:positions.blocks}
+						{/option:positions.blocks}
 
 						{* Button to add new default block to this position *}
-						<a href="#" class="addBlock button icon iconOnly iconAdd"><span>{$lblAddBlock|ucfirst}</span></a>
+						<a href="#" class="addBlock button icon iconAdd"><span>{$lblAddBlock|ucfirst}</span></a>
+
 					</div>
+
 				</div>
 			{/iteration:positions}
 
@@ -58,13 +70,28 @@
 
 			{option:formErrors}<span class="formError">{$formErrors}</span>{/option:formErrors}
 		</div>
+	</div>
 
-		<div class="options">
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblLayout|ucfirst}</h3>
+		</div>
+
+		<div id="templateLayout" class="options clearfix">
 			<p>
-				<label for="format">{$lblLayout|ucfirst}</label>
 				{$txtFormat} {$txtFormatError}
 				<span class="helpTxt">{$msgHelpTemplateFormat}</span>
 			</p>
+
+			<div class="longHelpTxt">
+				{$msgHelpPositionsLayout}
+			</div>
+		</div>
+	</div>
+
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblStatus|ucfirst}</h3>
 		</div>
 
 		<div class="options">

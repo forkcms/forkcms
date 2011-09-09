@@ -63,8 +63,8 @@
         <translation language="en"><![CDATA[Follow all comments in a RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
       </item>
       <item type="message" name="HelpMeta">
-        <translation language="nl"><![CDATA[Toon de meta informatie van deze blogpost in de RSS feed (categorie]]></translation>
-        <translation language="en"><![CDATA[Show the meta information for this blogpost in the RSS feed (category]]></translation>
+        <translation language="nl"><![CDATA[Toon de meta informatie van deze blogpost in de RSS feed (categorie)]]></translation>
+        <translation language="en"><![CDATA[Show the meta information for this blogpost in the RSS feed (category)]]></translation>
       </item>
       <item type="message" name="HelpPingServices">
         <translation language="nl"><![CDATA[Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst.]]></translation>

@@ -82,9 +82,6 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		else $this->extras = $this->record['data']['default_extras'];
 
 		// assign
-		$this->tpl->assign('positions', $positions);
-
-		// assign
 		$this->tpl->assign('template', $this->record);
 
 		// is the template being used
@@ -186,7 +183,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			while(isset($_POST['position_' . $i]))
 			{
 				// init vars
-				$j = 1;
+				$j = 0;
 				$extras = array();
 
 				// gather position names
@@ -227,7 +224,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$position = array();
 			$position['i'] = $i + 1;
 			$position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'inputText positionName', 'inputTextError positionName');
-			foreach($this->extras[$name] as $extra) $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+
+			if(isset($this->extras[$name]))
+			{
+				foreach($this->extras[$name] as $extra)
+				{
+					$position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+				}
+			}
+
 			$positions[] = $position;
 		}
 
@@ -270,7 +275,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
 			// validate syntax
-			$syntax = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
+			$syntax = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
 
 			// init var
 			$table = BackendPagesModel::templateSyntaxToArray($syntax);
@@ -313,7 +318,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
+				$item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
 				$item['data']['names'] = $this->names;
 				$item['data']['default_extras'] = $this->extras;
 				$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()] = $this->extras;

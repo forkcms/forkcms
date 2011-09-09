@@ -163,7 +163,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			while(isset($_POST['position_' . $i]))
 			{
 				// init vars
-				$j = 1;
+				$j = 0;
 				$extras = array();
 
 				// gather position names
@@ -247,7 +247,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
 			// validate syntax
-			$syntax = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
+			$syntax = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
 
 			// init var
 			$table = BackendPagesModel::templateSyntaxToArray($syntax);
@@ -289,7 +289,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
+				$item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
 				$item['data']['names'] = $this->names;
 				$item['data']['default_extras'] = $this->extras;
 				$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()] = $this->extras;

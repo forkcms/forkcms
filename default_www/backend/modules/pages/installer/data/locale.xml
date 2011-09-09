@@ -102,6 +102,10 @@
         <translation language="nl"><![CDATA[positie]]></translation>
         <translation language="en"><![CDATA[position]]></translation>
       </item>
+      <item type="label" name="Positions">
+        <translation language="nl"><![CDATA[posities]]></translation>
+        <translation language="en"><![CDATA[positions]]></translation>
+      </item>
       <item type="label" name="Redirect">
         <translation language="nl"><![CDATA[redirect]]></translation>
         <translation language="en"><![CDATA[redirect]]></translation>
@@ -177,6 +181,10 @@
       <item type="message" name="HelpNavigationTitle">
         <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
         <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
+      </item>
+      <item type="message" name="HelpPositionsLayout">
+        <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rijs toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="en"><![CDATA[<strong>A visual representation to be used in the pages-module.</strong><ul><li>Add a row: use <strong>[]</strong></li><li>Reflect a position: use <strong>position name</strong></li><li>Reflect a non-editable area: use <strong>/</strong></li></ul><p>If you want a position to display wider or higher in it's graphical representation, repeat the position multiple times (both horizontal and vertical, but the shape should form a rectangle)</p><strong>A template could look like the chart below:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
       </item>
       <item type="message" name="HelpTemplateFormat">
         <translation language="nl"><![CDATA[vb. [left,main,right],[/,main,/]]]></translation>

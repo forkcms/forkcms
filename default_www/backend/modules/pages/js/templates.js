@@ -23,6 +23,9 @@ jsBackend.templates =
 		// add first default position
 		if($('#position1').length == 0) jsBackend.templates.addPosition();
 
+		// first position can't be removed
+		$('#position1').parent().find('.deletePosition').remove();
+
 		// add handlers
 		$('#addPosition').live('click', jsBackend.templates.addPosition);
 		$('.addBlock').live('click', jsBackend.templates.addBlock);
@@ -78,9 +81,8 @@ jsBackend.templates =
 		// update default name
 		$('#position' + index, positionContainer).val(jsBackend.templates.defaultPositions[index]);
 
-		// show "delete"-button
+		// show position
 		positionContainer.show();
-		if(index == 1) $('.deletePosition', positionContainer).hide();
 
 		// add to dom
 		positionContainer.insertAfter($('#positionsList .position:last'));
@@ -120,7 +122,7 @@ jsBackend.templates =
 		{
 			// fetch position & block index
 			var positionIndex = $(this).parent().prevAll('input[id^=position]').attr('id').replace('position', '');
-			var blockIndex = $(this).prevAll('div.defaultBlock').length + 1;
+			var blockIndex = $(this).prevAll('div.defaultBlock').length;
 
 			// update for id & name
 			$('select[id^=type]', this).attr('id', 'type' + positionIndex + blockIndex).attr('name', 'type_' + positionIndex + '_' + blockIndex);
@@ -137,10 +139,10 @@ jsBackend.templates =
 		e.preventDefault();
 
 		// get positions container
-		var positionsContainer = $(this).parent().parent();
+		var positionsContainer = $(this).parent().parent().parent();
 
 		// delete container
-		$(this).parent().remove();
+		$(this).parent().parent().remove();
 
 		// loop all remaining positions
 		$('.position', positionsContainer).each(function(i)
