@@ -93,7 +93,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 		// set headers for download
 		$headers[] = 'Content-type: application/csv; charset=utf-8';
 		$headers[] = 'Content-Disposition: attachment; filename="' . date('Ymd_His') . '.csv"';
-		$headers[] = 'Content-Length: ' . mb_strlen($csv);
+		$headers[] = 'Content-Length: ' . strlen($csv);
 		$headers[] = 'Pragma: no-cache';
 
 		// overwrite the headers
