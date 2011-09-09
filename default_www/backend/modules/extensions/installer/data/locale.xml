@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+      <item type="label" name="Details">
+        <translation language="nl"><![CDATA[details]]></translation>
+        <translation language="en"><![CDATA[details]]></translation>
+      </item>
+      <item type="label" name="Extensions">
+        <translation language="nl"><![CDATA[extensions]]></translation>
+        <translation language="en"><![CDATA[extensions]]></translation>
+      </item>
+    </core>
+  </backend>
+</locale>
