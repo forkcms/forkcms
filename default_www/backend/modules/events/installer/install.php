@@ -67,7 +67,6 @@ class EventsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'events', 'add_category');
 		$this->setActionRights(1, 'events', 'edit_category');
 		$this->setActionRights(1, 'events', 'delete_category');
-		$this->setActionRights(1, 'events', 'add_category');
 		$this->setActionRights(1, 'events', 'index');
 		$this->setActionRights(1, 'events', 'add');
 		$this->setActionRights(1, 'events', 'edit');
