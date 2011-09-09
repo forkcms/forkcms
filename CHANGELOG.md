@@ -1,5 +1,9 @@
 2.6.8 (xxxx-xx-xx)
 --
+Bugfixes:
+
+* Core: when setting the Content-Length-header mb_strlen should be used.
+
 Improvements:
 
 * Core: TinyMCE link-list is now sorted according the pages-tree, as requested by Frederik (http://forum.fork-cms.com/discussions/feature-requests/11-tinymce-linklist-sort).
