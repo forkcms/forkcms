@@ -1,9 +1,14 @@
-2.6.7
+2.6.7 (2011-09-09)
 --
+Bugfixes:
+
+* Install triggered an error "Headers already sent".
+
 Improvements
 
 * Core: Upgraded TinyMCE to 3.4.5 - fixed Opera issues with editor.
 * Core: Updated JS utils.urlise to better reflect the SpoonFilter::urlise (. should also convert to dash)
+* Core: Shorter GA-tracking code (thx to Jeroe Desloovere)
 
 
 2.6.6 (2011-09-06)
