@@ -7,7 +7,7 @@
 		<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span>{$lblAdd|ucfirst}</span></a>
 	</div>
 </div>
-<div class="dataGridHolder">
+<div class="datagridHolder">
 	{option:dataGrid}{$dataGrid}{/option:dataGrid}
 </div>
 
