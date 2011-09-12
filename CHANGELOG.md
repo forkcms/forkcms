@@ -9,7 +9,7 @@ Improvements:
 Bugfixes:
 
 * Blog: deleting a draft no longer triggers an error.
-* Blog: fix deletion of categorie: check for blogposts in categorie did not check blog status.
+* Blog: fix deletion of category: check for blogposts in category did not check blog status.
 
 
 2.6.7 (2011-09-09)
