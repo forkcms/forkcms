@@ -1,4 +1,4 @@
-if(!jsBackend) { var jsBackend = new Object(); }
+if(!jsBackend) { var jsBackend }
 
 
 /**
@@ -6,15 +6,15 @@ if(!jsBackend) { var jsBackend = new Object(); }
  *
  * @author	Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
-jsBackend.groups = 
+jsBackend.groups =
 {
 		// init, constructor-alike
 		init: function()
-		{	
+		{
 			$('.hide').each(jsBackend.groups.hide);
 			$('.container').click(jsBackend.groups.clickHandler);
 			$('.container span label').each(jsBackend.groups.mouseHandler);
-			$('.module .dataGridHolder .dataGrid tbody').each(jsBackend.groups.selectionPermissions);
+			$('.module .datagridHolder .dataGrid tbody').each(jsBackend.groups.selectionPermissions);
 			$('.groupHolder .dataGrid tbody').each(jsBackend.groups.selectionWidgets)
 			$('.dataGrid tbody tr td').click(jsBackend.groups.selectHandler);
 			$('.selectAll').click(jsBackend.groups.selectAll);
@@ -28,7 +28,7 @@ jsBackend.groups =
 		},
 
 		// clickhandler
-		clickHandler: function(event) 
+		clickHandler: function(event)
 		{
 			// prevent default
 			event.preventDefault();
@@ -40,7 +40,7 @@ jsBackend.groups =
 			if($this.hasClass('iconCollapsed'))
 			{
 				// slidedown
-				$this.next('.dataGridHolder').show();
+				$this.next('.datagridHolder').show();
 
 				// change title
 				$this.attr('title', 'close');
@@ -54,19 +54,19 @@ jsBackend.groups =
 			else
 			{
 				// close this thing
-				$this.next('.dataGridHolder').hide();
+				$this.next('.datagridHolder').hide();
 
 				// change title
-				$this.attr('title', 'open');				
+				$this.attr('title', 'open');
 
 				// change css
 				$this.addClass('iconCollapsed');
 				$this.removeClass('iconExpanded');
-			}	
+			}
 		},
 
 		// selectHandler
-		selectHandler: function() 
+		selectHandler: function()
 		{
 			// init vars
 			var $this = $(this);
@@ -83,7 +83,7 @@ jsBackend.groups =
 				}
 
 				// not yet checked?
-				else 
+				else
 				{
 					// add checkstates
 					$this.parent('tr').children('td').children('input').attr('checked', 'checked');
@@ -92,7 +92,7 @@ jsBackend.groups =
 			}
 
 			// editing permissions? check permissions
-			if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.dataGridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);	
+			if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.datagridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);
 
 			// editing widgets? check widgets
 			else $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionWidgets);
@@ -107,7 +107,7 @@ jsBackend.groups =
 			var $this = $(this);
 
 			// loop all actions and check if they're checked
-			$this.find('tr td input').each(function() 
+			$this.find('tr td input').each(function()
 			{
 				// if not checked set false
 				if(!$(this).attr('checked')) allChecked = false;
@@ -149,7 +149,7 @@ jsBackend.groups =
 			var $this = $(this);
 
 			// loop all actions and check if they're checked
-			$this.find('tr td input').each(function() 
+			$this.find('tr td input').each(function()
 			{
 				// if not checked set false
 				if(!$(this).attr('checked')) allChecked = false;
@@ -163,7 +163,7 @@ jsBackend.groups =
 		},
 
 		// mousehandler
-		mouseHandler: function() 
+		mouseHandler: function()
 		{
 			// assign mouseovers
 			$(this).mouseover(function()
@@ -209,5 +209,4 @@ jsBackend.groups =
 		eoo: true
 }
 
-// ready or not?
-$(document).ready(jsBackend.groups.init);
+$(jsBackend.groups.init);

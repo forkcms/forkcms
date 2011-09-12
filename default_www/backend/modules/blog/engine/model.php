@@ -310,8 +310,8 @@ class BackendBlogModel
 															m.url
 															FROM blog_posts AS i
 															INNER JOIN meta AS m ON m.id = i.meta_id
-															WHERE i.id = ? AND i.status = ? AND i.language = ?',
-															array((int) $id, 'active', BL::getWorkingLanguage()));
+															WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?',
+															array((int) $id, 'active', 'draft', BL::getWorkingLanguage()));
 	}
 
 
