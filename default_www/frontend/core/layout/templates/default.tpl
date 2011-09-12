@@ -32,18 +32,18 @@
 
 			{* Main position *}
 			{iteration:main}
-				{option:main.isHTML}
+				{option:main.blockIsHTML}
 					<section class="mod">
 						<div class="inner">
 							<div class="bd content">
-								{$main.content}
+								{$main.blockContent}
 							</div>
 						</div>
 					</section>
-				{/option:main.isHTML}
-				{option:!main.isHTML}
-					{$main.content}
-				{/option:!main.isHTML}
+				{/option:main.blockIsHTML}
+				{option:!main.blockIsHTML}
+					{$main.blockContent}
+				{/option:!main.blockIsHTML}
 			{/iteration:main}
 		</section>
 

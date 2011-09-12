@@ -155,7 +155,8 @@ class FrontendPage extends FrontendBaseObject
 					$block['extra']->getTemplate()->assignArray($extraVariables);
 
 					// parse extra
-					$block = array('content' => $block['extra']->getContent());
+					$block = array('blockIsHTML' => false,
+									'blockContent' => $block['extra']->getContent());
 				}
 			}
 
@@ -379,8 +380,8 @@ class FrontendPage extends FrontendBaseObject
 				// the block only contains HTML
 				else
 				{
-					$block = array('isHTML' => true,
-									'content' => $block['html']);
+					$block = array('blockIsHTML' => true,
+									'blockContent' => $block['html']);
 				}
 			}
 		}
