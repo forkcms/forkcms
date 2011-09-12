@@ -59,7 +59,7 @@ utils.cookies =
 		var cookiesEnabled = (navigator.cookieEnabled) ? true : false;
 
 		// unknown property?
-		if(typeof navigator.cookieEanbled == 'undefined' && !cookiesEnabled)
+		if(typeof navigator.cookieEnabled == 'undefined' && !cookiesEnabled)
 		{
 			// try to set a cookie
 			document.cookie = 'testcookie';
