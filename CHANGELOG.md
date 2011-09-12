@@ -15,12 +15,31 @@ Improvements:
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 
 
-2.6.7 (xxxx-xx-xx)
+2.6.8 (xxxx-xx-xx)
 --
-Improvements
+Improvements:
+
+* Core: TinyMCE link-list is now sorted according the pages-tree, as requested by Frederik (http://forum.fork-cms.com/discussions/feature-requests/11-tinymce-linklist-sort).
+* Core: Mails from formbuild will contain the sitetitle instead of Fork CMS, thx to Frederik.
+* Core: Updated the schema.
+
+Bugfixes:
+
+* Blog: deleting a draft no longer triggers an error.
+* Blog: fix deletion of categorie: check for blogposts in categorie did not check blog status.
+
+
+2.6.7 (2011-09-09)
+--
+Bugfixes:
+
+* Install triggered an error "Headers already sent".
+
+Improvements:
 
 * Core: Upgraded TinyMCE to 3.4.5 - fixed Opera issues with editor.
 * Core: Updated JS utils.urlise to better reflect the SpoonFilter::urlise (. should also convert to dash)
+* Core: Shorter GA-tracking code (thx to Jeroen Desloovere)
 
 
 2.6.6 (2011-09-06)

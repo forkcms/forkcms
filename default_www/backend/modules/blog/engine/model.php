@@ -184,10 +184,10 @@ class BackendBlogModel
 	 */
 	public static function deleteCategoryAllowed($id)
 	{
-		return (BackendModel::getDB()->getVar('SELECT COUNT(id)
-												FROM blog_posts AS i
-												WHERE i.category_id = ? AND i.language = ?',
-												array((int) $id, BL::getWorkingLanguage())) == 0);
+		return !(bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM blog_posts AS i
+														WHERE i.category_id = ? AND i.language = ? AND i.status = ?',
+														array((int) $id, BL::getWorkingLanguage(), 'active'));
 	}
 
 
@@ -310,8 +310,8 @@ class BackendBlogModel
 															m.url
 															FROM blog_posts AS i
 															INNER JOIN meta AS m ON m.id = i.meta_id
-															WHERE i.id = ? AND i.status = ? AND i.language = ?',
-															array((int) $id, 'active', BL::getWorkingLanguage()));
+															WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?',
+															array((int) $id, 'active', 'draft', BL::getWorkingLanguage()));
 	}
 
 
