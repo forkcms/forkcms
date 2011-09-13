@@ -4,6 +4,11 @@ Improvements:
 
 * Core: upgraded jQuery to 1.6.4.
 
+Bugfixes:
+
+* Blog: Fixed a bug in the blog module where it called an unexisting FrontendTag-function, thx to jelmersnoeck.
+
+
 
 2.6.8 (2011-09-13)
 --
