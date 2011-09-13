@@ -1,3 +1,10 @@
+2.6.9 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: upgraded jQuery to 1.6.4.
+
+
 2.6.8 (2011-09-13)
 --
 Improvements:
