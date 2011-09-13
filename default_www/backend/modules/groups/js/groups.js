@@ -5,6 +5,7 @@ if(!jsBackend) { var jsBackend }
  * Interaction for the groups module
  *
  * @author	Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend.groups =
 {
@@ -110,7 +111,7 @@ jsBackend.groups =
 			$this.find('tr td input').each(function()
 			{
 				// if not checked set false
-				if(!$(this).attr('checked')) allChecked = false;
+				if(!$(this).prop('checked')) allChecked = false;
 
 				// is checked?
 				else noneChecked = false;
@@ -120,24 +121,24 @@ jsBackend.groups =
 			if(!allChecked && !noneChecked)
 			{
 				// unset checked and set indeterminate
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).checked = false;
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).indeterminate = true;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).checked = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = true;
 			}
 
 			// if all actions are checked, check massaction checkbox
 			if(allChecked)
 			{
 				// unset indeterminate and set checked
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).indeterminate = false;
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).checked = true;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).checked = true;
 			}
 
 			// nothing is checked?
 			if(noneChecked)
 			{
 				// unset indeterminate and checked
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).indeterminate = false;
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).checked = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).checked = false;
 			}
 		},
 
@@ -181,14 +182,15 @@ jsBackend.groups =
 			var $this = $(this);
 
 			// check all?
-			if($this.attr('checked'))
+			if($this.prop('checked'))
 			{
 				// loop through rows
-				$this.next('a').next('ul').find('table tbody tr td input').each(function()
+				$this.next('a').next('div').find('table tbody tr td input').each(function()
 				{
+					console.log($(this));
 					// check boxes
 					$(this).attr('checked', 'checked');
-					$(this).parent('td').parent('tr').addClass('selected');
+					$(this).parent('span').parent('td').parent('tr').addClass('selected');
 				});
 			}
 
@@ -196,11 +198,11 @@ jsBackend.groups =
 			else
 			{
 				// loop through rows
-				$this.next('a').next('ul').find('table tbody tr td input').each(function()
+				$this.next('a').next('div').find('table tbody tr td input').each(function()
 				{
 					// uncheck boxes
 					$(this).removeAttr('checked');
-					$(this).parent('td').parent('tr').removeClass('selected');
+					$(this).parent('span').parent('td').parent('tr').removeClass('selected');
 				});
 			}
 		},
