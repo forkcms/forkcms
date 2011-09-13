@@ -72,26 +72,6 @@ jsBackend.groups =
 			// init vars
 			var $this = $(this);
 
-			// no checkbox involved?
-			if(!$this.hasClass('checkbox'))
-			{
-				// already checked?
-				if($this.parent().children('td').children('input').attr('checked'))
-				{
-					// remove checkstates
-					$this.parent('tr').children('td').children('input').removeAttr('checked');
-					$this.parent('tr').removeClass('selected');
-				}
-
-				// not yet checked?
-				else
-				{
-					// add checkstates
-					$this.parent('tr').children('td').children('input').attr('checked', 'checked');
-					$this.parent('tr').addClass('selected');
-				}
-			}
-
 			// editing permissions? check permissions
 			if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.datagridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);
 
@@ -187,7 +167,6 @@ jsBackend.groups =
 				// loop through rows
 				$this.next('a').next('div').find('table tbody tr td input').each(function()
 				{
-					console.log($(this));
 					// check boxes
 					$(this).attr('checked', 'checked');
 					$(this).parent('span').parent('td').parent('tr').addClass('selected');
