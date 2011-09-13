@@ -1,9 +1,9 @@
-2.6.8 (xxxx-xx-xx)
+2.6.8 (2011-09-13)
 --
 Improvements:
 
 * Core: TinyMCE link-list is now sorted according the pages-tree, as requested by Frederik (http://forum.fork-cms.com/discussions/feature-requests/11-tinymce-linklist-sort).
-* Core: Mails from formbuild will contain the sitetitle instead of Fork CMS, thx to Frederik.
+* Core: Mails from formbuilder will contain the sitetitle instead of Fork CMS, thx to Frederik.
 * Core: Updated the schema.
 
 Bugfixes:
