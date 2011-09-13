@@ -2,12 +2,12 @@
 --
 Improvements:
 
-* Core: upgraded jQuery to 1.6.4.
+* Core: Upgraded jQuery to 1.6.4.
+* Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, thx to Martijn Dierckx, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
 
 Bugfixes:
 
 * Blog: Fixed a bug in the blog module where it called an unexisting FrontendTag-function, thx to jelmersnoeck.
-
 
 
 2.6.8 (2011-09-13)
