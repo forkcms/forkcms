@@ -38,8 +38,15 @@ class BackendDataGrid extends SpoonDataGrid
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'dataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
-		// hide the id by default
-		if(in_array('id', $this->getColumns())) $this->setColumnsHidden('id');
+		// id gets special treatment
+		if(in_array('id', $this->getColumns()))
+		{
+			// hide the id by defaults
+			$this->setColumnsHidden('id');
+
+			// our JS needs to know an id, so we can highlight it
+			$this->setRowAttributes(array('id' => 'row-[id]'));
+		}
 
 		// set default sorting options
 		$this->setSortingOptions();
@@ -56,9 +63,6 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// set paging class
 		$this->setPagingClass('BackendDataGridPaging');
-
-		// our JS needs to know an id, so we can highlight it
-		$this->setRowAttributes(array('id' => 'row-[id]'));
 
 		// set default template
 		$this->setTemplate(BACKEND_CORE_PATH . '/layout/templates/datagrid.tpl');
