@@ -10,6 +10,7 @@ Bugfixes:
 
 * Blog: deleting a draft no longer triggers an error.
 * Blog: fix deletion of category: check for blogposts in category did not check blog status.
+* Groups: permission management now works correctly in Chrome.
 
 
 2.6.7 (2011-09-09)
