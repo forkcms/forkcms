@@ -160,7 +160,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		asort($widgets, SORT_STRING);
 
 		// create array
-		$defaultExtras = array('' => array('editor' => BL::lbl('Editor')),
+		$defaultExtras = array('' => array('' => ucfirst(BL::lbl('Editor'))),
 								ucfirst(BL::lbl('Modules')) => $blocks,
 								ucfirst(BL::lbl('Widgets')) => $widgets);
 

@@ -834,7 +834,7 @@ class BackendPagesModel
 															FROM pages_blocks AS b
 															INNER JOIN pages AS i ON b.revision_id = i.revision_id
 															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
-															ORDER BY b.id ASC',
+															ORDER BY b.sequence ASC',
 															array($id, $revisionId, $language));
 	}
 
@@ -1240,11 +1240,16 @@ class BackendPagesModel
 		$revisionId = (int) $revisionId;
 		$language = BackendLanguage::getWorkingLanguage();
 
-		// get page (active version)
-		$revision = (array) BackendModel::getDB()->getRecord('SELECT *, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+		// get page (revision)
+		$revision = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
+																	IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
+																	GROUP_CONCAT(b.extra_id) AS extra_ids
 																FROM pages AS i
-																WHERE i.id = ? AND i.revision_id = ? AND i.language = ?',
-																array($id, $revisionId, $language));
+																LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
+																LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
+																WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
+																GROUP BY i.revision_id',
+																array('block', $id, $revisionId, $language));
 
 		// anything found
 		if(empty($revision)) return array();
@@ -1263,6 +1268,9 @@ class BackendPagesModel
 		$revision['children_allowed'] = (bool) ($revision['allow_children'] == 'Y');
 		$revision['edit_allowed'] = (bool) ($revision['allow_edit'] == 'Y');
 		$revision['delete_allowed'] = (bool) ($revision['allow_delete'] == 'Y');
+
+		// unserialize data
+		if($revision['data'] !== null) $revision['data'] = unserialize($revision['data']);
 
 		// return
 		return $revision;
@@ -1369,8 +1377,6 @@ class BackendPagesModel
 			$row['data'] = unserialize($row['data']);
 			$row['has_block'] = false;
 
-			// @todo: code below has been put to comments because we won't do default extras yet
-/*
 			// reset
 			if(isset($row['data']['default_extras_' . BL::getWorkingLanguage()])) $row['data']['default_extras'] = $row['data']['default_extras_' . BL::getWorkingLanguage()];
 
@@ -1384,7 +1390,7 @@ class BackendPagesModel
 					if(SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type'] == 'block') $row['has_block'] = true;
 				}
 			}
-*/
+
 			// build template HTML
 			$row['html'] = self::buildTemplateHTML($row);
 			$row['htmlLarge'] = self::buildTemplateHTML($row, true);

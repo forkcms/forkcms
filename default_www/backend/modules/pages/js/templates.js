@@ -47,7 +47,7 @@ jsBackend.templates =
 
 		// fetch position & block index
 		var positionIndex = $(this).parent().prevAll('input[id^=position]').attr('id').replace('position', '');
-		var blockIndex = $(this).prevAll('div.defaultBlock').length + 1;
+		var blockIndex = $(this).prevAll('div.defaultBlock').length;
 
 		// update for id & name
 		$('#type00', blockContainer).attr('id', 'type' + positionIndex + blockIndex).attr('name', 'type_' + positionIndex + '_' + blockIndex);

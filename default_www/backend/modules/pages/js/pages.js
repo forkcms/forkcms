@@ -24,9 +24,7 @@ jsBackend.pages =
 			jsBackend.pages.extras.init();
 		}
 
-		// manage templates
-		jsBackend.pages.manageTemplates.init();
-
+		// button to save to draft
 		$('#saveAsDraft').click(function(evt)
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />');
@@ -52,14 +50,6 @@ jsBackend.pages =
  */
 jsBackend.pages.extras =
 {
-	// when adding an extra, we'll need to temporarily save the position we're adding it to
-	extraForPosition: null,
-
-
-	// this variable will store the HTML content of the editor we'll be editing; to allow cancelling the edit
-	htmlContent: '',
-
-
 	// init, something like a constructor
 	init: function()
 	{
@@ -68,111 +58,13 @@ jsBackend.pages.extras =
 		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
-		$('a.addBlock').live('click', jsBackend.pages.extras.showExtraDialog);
-		$('a.deleteBlock').live('click', jsBackend.pages.extras.deleteBlock);
+		$('a.addBlock').live('click', jsBackend.pages.extras.showAddDialog);
+		$('a.deleteBlock').live('click', jsBackend.pages.extras.showDeleteDialog);
 		$('.showEditor').live('click', jsBackend.pages.extras.editContent);
 		$('.toggleVisibility').live('click', jsBackend.pages.extras.toggleVisibility);
 
-		// load initial data, or initialize the dialogs
-		jsBackend.pages.extras.load();
-
 		// make the blocks sortable
 		jsBackend.pages.extras.sortable();
-	},
-
-
-	// load initial data, or initialize the dialog
-	load: function()
-	{
-		// initialize the modal for choosing an extra
-		if($('#addBlock').length > 0)
-		{
-			$('#addBlock').dialog(
-			{
-				autoOpen: false,
-				draggable: false,
-				resizable: false,
-				modal: true,
-				width: 500,
-				buttons:
-				{
-					'{$lblOK|ucfirst}': function()
-					{
-						// add the extra
-						jsBackend.pages.extras.addBlock($('#extraExtraId').val(), jsBackend.pages.extras.extraForPosition);
-
-						// clean the saved position
-						jsBackend.pages.extras.extraForPosition = null;
-
-						// close dialog
-						$(this).dialog('close');
-					},
-					'{$lblCancel|ucfirst}': function()
-					{
-						// close the dialog
-						$(this).dialog('close');
-
-						// clean the saved position
-						jsBackend.pages.extras.extraForPosition = null;
-					}
-				}
-			 });
-		}
-	},
-
-
-	// change the extra for a block
-	showExtraDialog: function(evt)
-	{
-		// prevent the default action
-		evt.preventDefault();
-
-		// save the position wherefor we will change the extra
-		jsBackend.pages.extras.extraForPosition = $(this).parent().parent().data('position');
-
-		// init var
-		var hasModules = false;
-
-		// check if there already blocks linked
-		$('input[id^=blockExtraId]').each(function()
-		{
-			// get id
-			var id = $(this).val();
-
-			// check if a block is already linked
-			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
-		});
-
-		// blocks linked?
-		if(hasModules)
-		{
-			// show warning
-			$('#extraWarningAlreadyBlock').show();
-
-			// disable blocks
-			$('#extraType option[value="block"]').prop('disabled', true);
-		}
-		else
-		{
-			// hide warning
-			$('#extraWarningAlreadyBlock').hide();
-
-			// enable blocks
-			$('#extraType option[value="block"]').prop('disabled', false);
-
-			// home can't have any modules linked!
-			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', true);
-		}
-
-		// set type
-		$('#extraType').val('html');
-		$('#extraExtraId').val('');
-
-		// populate the modules
-		jsBackend.pages.extras.populateExtraModules();
-
-		// open the modal
-		$('#addBlock').dialog('open');
 	},
 
 
@@ -282,49 +174,19 @@ jsBackend.pages.extras =
 
 
 	// delete a linked block
-	deleteBlock: function(evt)
+	deleteBlock: function(index)
 	{
-		// prevent default action
-		evt.preventDefault();
+		// remove block from template overview
+		$('.templatePositionCurrentType[data-block-id=' + index + ']').remove();
 
-		// save element to variable
-		var element = $(this);
+		// remove block
+		$('#blockExtraId' + index).parent().remove();
 
-		$('#confirmDeleteBlock').dialog(
-		{
-			draggable: false,
-			resizable: false,
-			modal: true,
-			width: 940,
-			buttons:
-			{
-				'{$lblOK|ucfirst}': function()
-				{
-					// fetch block index
-					var index = element.parent().parent('.templatePositionCurrentType').data('blockId');
+		// after removing all from fallback; hide fallback
+		jsBackend.pages.extras.hideFallback();
 
-					// remove block from template overview
-					element.parent().parent('.templatePositionCurrentType').remove();
-
-					// remove block
-					$('#blockExtraId' + index).parent().remove();
-
-					// after removing all from fallback; hide fallback
-					jsBackend.pages.extras.hideFallback();
-
-					// reset indexes (sequence)
-					jsBackend.pages.extras.resetIndexes();
-
-					// close dialog
-					$(this).dialog('close');
-				},
-				'{$lblCancel|ucfirst}': function()
-				{
-					// close the dialog
-					$(this).dialog('close');
-				}
-			 }
-		 });
+		// reset indexes (sequence)
+		jsBackend.pages.extras.resetIndexes();
 	},
 
 
@@ -337,8 +199,8 @@ jsBackend.pages.extras =
 		// fetch block index
 		var index = $(this).parent().parent().data('blockId');
 
-		// save content to allow for cancelling the edited text
-		jsBackend.pages.extras.htmlContent = $('#blockHtml' + index).val();
+		// save unaltered content
+		var previousContent = $('#blockHtml' + index).val();
 
 		// disable scrolling
 		$('body').css('overflow', 'hidden');
@@ -360,7 +222,7 @@ jsBackend.pages.extras =
 				'{$lblOK|ucfirst}': function()
 				{
 					// save content
-					jsBackend.pages.extras.setContent(index, true);
+					jsBackend.pages.extras.setContent(index, null);
 
 					// close dialog
 					$(this).dialog('close');
@@ -368,7 +230,7 @@ jsBackend.pages.extras =
 				'{$lblCancel|ucfirst}': function()
 				{
 					// reset content
-					jsBackend.pages.extras.setContent(index, false);
+					jsBackend.pages.extras.setContent(index, previousContent);
 
 					// close the dialog
 					$(this).dialog('close');
@@ -508,13 +370,13 @@ jsBackend.pages.extras =
 
 
 	// save/reset the content
-	setContent: function(index, saveContent)
+	setContent: function(index, previousContent)
 	{
 		// content does not need to be saved
-		if(!saveContent)
+		if(previousContent != null)
 		{
 			// reset to previous content
-			tinyMCE.get('blockHtml' + index).setContent(jsBackend.pages.extras.htmlContent);
+			tinyMCE.get('blockHtml' + index).setContent(previousContent);
 		}
 
 		// re-enable scrolling
@@ -530,6 +392,125 @@ jsBackend.pages.extras =
 
 		// mark as updated
 		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
+	},
+
+
+	// add a block
+	showAddDialog: function(evt)
+	{
+		// prevent the default action
+		evt.preventDefault();
+
+		// save the position wherefor we will change the extra
+		position = $(this).parent().parent().data('position');
+
+		// init var
+		var hasModules = false;
+
+		// check if there already blocks linked
+		$('input[id^=blockExtraId]').each(function()
+		{
+			// get id
+			var id = $(this).val();
+
+			// check if a block is already linked
+			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
+		});
+
+		// blocks linked?
+		if(hasModules)
+		{
+			// show warning
+			$('#extraWarningAlreadyBlock').show();
+
+			// disable blocks
+			$('#extraType option[value="block"]').prop('disabled', true);
+		}
+		else
+		{
+			// hide warning
+			$('#extraWarningAlreadyBlock').hide();
+
+			// enable blocks
+			$('#extraType option[value="block"]').prop('disabled', false);
+
+			// home can't have any modules linked!
+			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', true);
+		}
+
+		// set type
+		$('#extraType').val('html');
+		$('#extraExtraId').val('');
+
+		// populate the modules
+		jsBackend.pages.extras.populateExtraModules();
+
+		// initialize the modal for choosing an extra
+		if($('#addBlock').length > 0)
+		{
+			$('#addBlock').dialog(
+			{
+				draggable: false,
+				resizable: false,
+				modal: true,
+				width: 500,
+				buttons:
+				{
+					'{$lblOK|ucfirst}': function()
+					{
+						// add the extra
+						jsBackend.pages.extras.addBlock($('#extraExtraId').val(), position);
+
+						// close dialog
+						$(this).dialog('close');
+					},
+					'{$lblCancel|ucfirst}': function()
+					{
+						// close the dialog
+						$(this).dialog('close');
+					}
+				}
+			 });
+		}
+	},
+	
+	
+	// delete a block
+	showDeleteDialog: function(evt)
+	{
+		// prevent the default action
+		evt.preventDefault();
+
+		// save element to variable
+		var element = $(this);
+
+		// initialize the modal for deleting a block
+		if($('#confirmDeleteBlock').length > 0)
+		{
+			$('#confirmDeleteBlock').dialog(
+			{
+				draggable: false,
+				resizable: false,
+				modal: true,
+				width: 940,
+				buttons:
+				{
+					'{$lblOK|ucfirst}': function()
+					{
+						// delete this block
+						jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').data('blockId'));
+	
+						// close dialog
+						$(this).dialog('close');
+					},
+					'{$lblCancel|ucfirst}': function()
+					{
+						// close the dialog
+						$(this).dialog('close');
+					}
+				 }
+			 });
+		}
 	},
 
 
@@ -625,54 +606,6 @@ jsBackend.pages.extras =
 
 
 /**
- * All methods related to managing the templates
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- */
-jsBackend.pages.manageTemplates =
-{
-	// init, something like a constructor
-	init: function()
-	{
-		// check if we need to do something
-		if($('#numBlocks').length > 0)
-		{
-			// bind event
-			$('#numBlocks').change(jsBackend.pages.manageTemplates.showMetaData);
-
-			// execute, to initialize
-			jsBackend.pages.manageTemplates.showMetaData();
-		}
-	},
-
-
-	// method to show the metadata about a specific block in a template
-	showMetaData: function()
-	{
-		var itemsToShow = $('#numBlocks').val();
-		var i = 0;
-
-		// loop elements
-		$('#metaData p').each(function()
-		{
-			// hide if needed
-			if(i >= itemsToShow) $(this).hide();
-
-			// show otherwise
-			else $(this).show();
-
-			// increment
-			i++;
-		});
-	},
-
-
-	// end
-	eoo: true
-}
-
-
-/**
  * All methods related to the templates
  *
  * @author	Matthias Mullie <matthias@netlash.com>
@@ -687,15 +620,12 @@ jsBackend.pages.template =
 		$('#changeTemplate').bind('click', jsBackend.pages.template.showTemplateDialog);
 
 		// load to initialize when adding a page
-		jsBackend.pages.template.changeTemplate($('#changeTemplate').parents('form').prop('id') == 'add');
-
-		// load the dialog
-		jsBackend.pages.template.load();
+		jsBackend.pages.template.changeTemplate();
 	},
 
 
 	// method to change a template
-	changeTemplate: function(changeExtras)
+	changeTemplate: function()
 	{
 		// destroy sortable blocks
 		$('div.linkedBlocks').sortable('destroy');
@@ -703,7 +633,8 @@ jsBackend.pages.template =
 		// get checked
 		var selected = $('#templateList input:radio:checked').val();
 
-		// get current template
+		// get current & old template
+		var old = templates[$('#templateId').val()];
 		var current = templates[selected];
 		var i = 0;
 
@@ -720,7 +651,16 @@ jsBackend.pages.template =
 		// hide fallback by default
 		$('#templateVisualFallback').hide();
 
-		// loop blocks
+		// remove previous fallback blocks
+		$('input[id^=blockPosition][value=fallback]').parent().remove();
+
+		// check if we have already committed changes (if not, we can just ignore existing blocks and remove all of them)
+		if(false) $('input[id^=blockPosition]').parent().remove(); // @todo
+
+		// reset block indexes
+		jsBackend.pages.extras.resetIndexes(); // @todo: this is useless since it depends on visual; do alternatively
+
+		// loop existing blocks
 		$('#editContent .contentBlock').each(function(i)
 		{
 			// fetch variables
@@ -732,11 +672,17 @@ jsBackend.pages.template =
 			// skip default (base) block
 			if(index == 0) return;
 
+			// check if this block is a default of the old template, in which case it'll go to the fallback position
+			if(current != old && $.inArray(String(extraId), old.data.default_extras[position]) >= 0) position = 'fallback';
+
 			// check if this position exists
 			if($.inArray(position, current.data.names) < 0)
 			{
 				// blocks in positions that do no longer exist should go to fallback
 				position = 'fallback';
+
+				// save position as fallback
+				$('input[id^=blockPosition]', this).val(position);
 
 				// show fallback
 				$('#templateVisualFallback').show();
@@ -746,17 +692,51 @@ jsBackend.pages.template =
 			jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
 		});
 
+		// loop positions in new template
+		for(var position in current.data.default_extras)
+		{
+			// loop default extra's on positions
+			for(var block in current.data.default_extras[position])
+			{
+				// grab extraId
+				extraId = current.data.default_extras[position][block];
+
+				// add the block
+				jsBackend.pages.extras.addBlock(extraId, position);
+
+				// check if this default block has been changed
+				if(current != old)
+				{
+					// loop current fallback
+					$('#templatePosition-fallback .templatePositionCurrentType').each(function(i)
+					{
+						// fetch block index
+						var index = $(this).data('blockId');
+
+						// check for blocks currently in fallback position that are now being re-assigned
+						if(extraId == $('#blockExtraId' + index).val() && $('#blockHtml' + index).val() == '')
+						{
+							// remove block from fallback
+							jsBackend.pages.extras.deleteBlock(index);
+						}
+					});
+				}
+			}
+		}
+
 		// make the blocks sortable (again)
 		jsBackend.pages.extras.sortable();
 	},
 
 
-	// load initial data, or initialize the dialog
-	load: function()
+	// show the dialog to alter the selected template
+	showTemplateDialog: function(evt)
 	{
+		// prevent the default action
+		evt.preventDefault();
+
 		$('#chooseTemplate').dialog(
 		{
-			autoOpen: false,
 			draggable: false,
 			resizable: false,
 			modal: true,
@@ -768,7 +748,7 @@ jsBackend.pages.template =
 					if($('#templateList input:radio:checked').val() != $('#templateId').val())
 					{
 						// change the template for real
-						jsBackend.pages.template.changeTemplate(true);
+						jsBackend.pages.template.changeTemplate();
 					}
 
 					// close dialog
@@ -781,17 +761,6 @@ jsBackend.pages.template =
 				}
 			 }
 		 });
-	},
-
-
-	// show the dialog to alter the selected template
-	showTemplateDialog: function(evt)
-	{
-		// prevent the default action
-		evt.preventDefault();
-
-		// open the modal
-		$('#chooseTemplate').dialog('open');
 	},
 
 

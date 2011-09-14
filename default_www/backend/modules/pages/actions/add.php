@@ -176,9 +176,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 						// set error
 						if($hasBlock) $this->frm->addError(BL::err('CantAdd2Blocks'));
 
-						// home can't have blocks
-						if($this->record['id'] == 1) $this->frm->addError(BL::err('HomeCantHaveBlocks'));
-
 						// reset var
 						$hasBlock = true;
 					}
@@ -338,8 +335,15 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// insert page, store the id, we need it when building the blocks
 				$page['revision_id'] = BackendPagesModel::insert($page);
 
-				// add page revision id to blocks
-				foreach($this->blocksContent as &$block) $block['revision_id'] = $page['revision_id'];
+				// loop blocks
+				foreach($this->blocksContent as $i => &$block)
+				{
+					// add page revision id to blocks
+					$block['revision_id'] = $page['revision_id'];
+
+					// validate blocks, only save blocks for valid positions
+					if(!in_array($block['position'], $this->templates[$this->frm->getField('template_id')->getValue()]['data']['names'])) unset($this->blocksContent[$i]);
+				}
 
 				// insert the blocks
 				BackendPagesModel::insertBlocks($this->blocksContent);
