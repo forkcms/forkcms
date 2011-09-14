@@ -82,6 +82,14 @@ class SpoonEmail
 	 * @var array
 	 */
 	private $content = array('html' => '', 'plain' => '');
+	
+	
+	/**
+	 * Content transfer encoding value for the html and plaintext content.
+	 *
+	 * @var	string
+	 */
+	private $contentTransferEncoding = '8bit';
 
 
 	/**
@@ -90,14 +98,6 @@ class SpoonEmail
 	 * @var	string
 	 */
 	private $contentType = 'multipart/alternative';
-
-
-	/**
-	 * Content transfer encoding value for the html and plaintext content.
-	 *
-	 * @var	string
-	 */
-	private $contentTransferEncoding = '8bit';
 
 
 	/**
@@ -336,11 +336,10 @@ class SpoonEmail
 		switch($this->contentTransferEncoding)
 		{
 			case 'base64':
-				$content = chunk_split(base64_encode($content)) ;
+				$content = chunk_split(base64_encode($content));
 			break;
 		}
 
-		// encoded content
 		return $content;
 	}
 
@@ -747,7 +746,6 @@ class SpoonEmail
 	 * Set content transfer encoding.
 	 * This is used for encoding the HTML and plaintext content.
 	 *
-	 * @return	void
 	 * @param	string $encoding 	Encoding type. Possible values: 7bit, 8bit, base64, binary.
 	 */
 	public function setContentTransferEncoding($encoding)
