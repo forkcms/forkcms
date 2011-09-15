@@ -435,16 +435,13 @@ class BackendPagesModel
 	 * Build HTML for a template (visual representation)
 	 *
 	 * @return	string
-	 * @param	array $template			The template data.
+	 * @param	array $template			The template format.
 	 * @param	bool[optional] $large	Will the HTML be used in a large version?
 	 */
-	private static function buildTemplateHTML($template, $large = false)
+	public static function buildTemplateHTML($format, $large = false)
 	{
-		// validate
-		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
-
 		// cleanup
-		$table = self::templateSyntaxToArray($template['data']['format']);
+		$table = self::templateSyntaxToArray($format);
 
 		// add start html
 		$html = '<table border="0" cellpadding="0" cellspacing="10">' . "\n";
@@ -748,10 +745,14 @@ class BackendPagesModel
 	 * @param	int $id						The Id of the page to fetch.
 	 * @param	string[optional] $language	The language to use while fetching the page.
 	 */
-	public static function get($id, $language = null)
+	public static function get($id, $revisionId = null, $language = null)
 	{
+		// fetch revision if not specified
+		if($revisionId === null) $revisionId = self::getLatestRevision($id, $language);
+
 		// redefine
 		$id = (int) $id;
+		$revisionId = (int) $revisionId;
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get page (active version)
@@ -761,9 +762,9 @@ class BackendPagesModel
 															FROM pages AS i
 															LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
 															LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
-															WHERE i.id = ? AND i.language = ? AND i.status = ?
+															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
 															GROUP BY i.revision_id',
-															array('block', $id, $language, 'active'));
+															array('block', $id, $revisionId, $language));
 
 		// no page?
 		if(empty($return)) return false;
@@ -792,38 +793,18 @@ class BackendPagesModel
 
 
 	/**
-	 * Get the blocks in a certain page
+	 * Get blocks for a certain page/revision
 	 *
 	 * @return	array
-	 * @param	int $id						The Id of the page to get the blocks for.
+	 * @param 	int $id						The id of the page.
+	 * @param	int[optional] $revisionId	The revision to grab.
 	 * @param	string[optional] $language	The language to use.
 	 */
-	public static function getBlocks($id, $language = null)
+	public static function getBlocks($id, $revisionId = null, $language = null)
 	{
-		// redefine
-		$id = (int) $id;
-		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+		// fetch revision if not specified
+		if($revisionId === null) $revisionId = self::getLatestRevision($id, $language);
 
-		// get page (active version)
-		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
-															FROM pages_blocks AS b
-															INNER JOIN pages AS i ON b.revision_id = i.revision_id
-															WHERE i.id = ? AND i.language = ? AND i.status = ?
-															ORDER BY b.sequence ASC',
-															array($id, $language, 'active'));
-	}
-
-
-	/**
-	 * Get revisioned blocks for a certain page
-	 *
-	 * @return	array
-	 * @param 	int $id						The Id of the page.
-	 * @param	int $revisionId				The revision to grab.
-	 * @param	string[optional] $language	The language to use.
-	 */
-	public static function getBlocksRevision($id, $revisionId, $language = null)
-	{
 		// redefine
 		$id = (int) $id;
 		$revisionId = (int) $revisionId;
@@ -902,7 +883,7 @@ class BackendPagesModel
 			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// add human readable name
-			$module = ucfirst(BL::lbl(ucfirst($row['module'])));
+			$module = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
 			$row['human_name'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ': ' . $name;
 			$row['path'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
 		}
@@ -1053,6 +1034,26 @@ class BackendPagesModel
 
 		// return the unique URL!
 		return $URL;
+	}
+
+
+	/**
+	 * Get latest revision id for a page.
+	 *
+	 * @return	int
+	 * @param	int $id						The id of the page.
+	 * @param	string[optional] $language	The language to use.
+	 */
+	public static function getLatestRevision($id, $language = null)
+	{
+		// redefine
+		$id = (int) $id;
+		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+
+		return (int) BackendModel::getDB()->getVar('SELECT revision_id
+													FROM pages AS i
+													WHERE i.id = ? AND i.language = ? AND i.status = ?',
+													array($id, $language, 'active'));
 	}
 
 
@@ -1227,57 +1228,6 @@ class BackendPagesModel
 
 
 	/**
-	 * Get the revisioned data for a record
-	 *
-	 * @return	array
-	 * @param	int $id				The Id of the page.
-	 * @param	int $revisionId		The revision to grab.
-	 */
-	public static function getRevision($id, $revisionId)
-	{
-		// redefine
-		$id = (int) $id;
-		$revisionId = (int) $revisionId;
-		$language = BackendLanguage::getWorkingLanguage();
-
-		// get page (revision)
-		$revision = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-																	IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
-																	GROUP_CONCAT(b.extra_id) AS extra_ids
-																FROM pages AS i
-																LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
-																LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
-																WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
-																GROUP BY i.revision_id',
-																array('block', $id, $revisionId, $language));
-
-		// anything found
-		if(empty($revision)) return array();
-
-		// can't be deleted
-		if(in_array($revision['id'], array(1, 404))) $revision['allow_delete'] = 'N';
-
-		// can't be moved
-		if(in_array($revision['id'], array(1, 404))) $revision['allow_move'] = 'N';
-
-		// can't have children
-		if(in_array($revision['id'], array(404))) $revision['allow_move'] = 'N';
-
-		// convert into bools for use in template engine
-		$revision['move_allowed'] = (bool) ($revision['allow_move'] == 'Y');
-		$revision['children_allowed'] = (bool) ($revision['allow_children'] == 'Y');
-		$revision['edit_allowed'] = (bool) ($revision['allow_edit'] == 'Y');
-		$revision['delete_allowed'] = (bool) ($revision['allow_delete'] == 'Y');
-
-		// unserialize data
-		if($revision['data'] !== null) $revision['data'] = unserialize($revision['data']);
-
-		// return
-		return $revision;
-	}
-
-
-	/**
 	 * Get the subtree for a root element
 	 *
 	 * @return	string
@@ -1391,9 +1341,12 @@ class BackendPagesModel
 				}
 			}
 
+			// validate
+			if(!isset($row['data']['format'])) throw new BackendException('Invalid template-format.');
+
 			// build template HTML
-			$row['html'] = self::buildTemplateHTML($row);
-			$row['htmlLarge'] = self::buildTemplateHTML($row, true);
+			$row['html'] = self::buildTemplateHTML($row['data']['format']);
+			$row['htmlLarge'] = self::buildTemplateHTML($row['data']['format'], true);
 
 			// add all data as json
 			$row['json'] = json_encode($row);
@@ -2001,26 +1954,30 @@ class BackendPagesModel
 	 * @return	void
 	 * @param	int $oldTemplateId			The id of the new template to replace.
 	 * @param	int $newTemplateId			The id of the new template to use.
+	 * @param	bool[optional] $overwrite	Overwrite all pages with default blocks.
 	 */
-	public static function updatePagesTemplates($oldTemplateId, $newTemplateId)
+	public static function updatePagesTemplates($oldTemplateId, $newTemplateId, $overwrite = false)
 	{
-// @todo: this function needs work after we've been fucking around our template-system
-return;
+		// redefine vars
+		$newTemplateId = (int) $newTemplateId;
+		$oldTemplateId = (int) $oldTemplateId;
+		$overwrite = (bool) $overwrite;
+
 		// fetch new template data
 		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
 		$newTemplate['data'] = @unserialize($newTemplate['data']);
 
 		// fetch all pages
-		$pages = BackendModel::getDB()->getRecords('SELECT *
-													FROM pages
-													WHERE template_id = ? AND status IN (?, ?)',
-													array($oldTemplateId, 'active', 'draft'));
+		$pages = (array) BackendModel::getDB()->getRecords('SELECT *
+															FROM pages
+															WHERE template_id = ? AND status IN (?, ?)',
+															array($oldTemplateId, 'active', 'draft'));
 
 		// loop pages
 		foreach($pages as $page)
 		{
 			// fetch blocks
-			$blocksContent = BackendPagesModel::getBlocksRevision($page['id'], $page['revision_id'], $page['language']);
+			$blocksContent = BackendPagesModel::getBlocks($page['id'], $page['revision_id'], $page['language']);
 
 			// unset revision id
 			unset($page['revision_id']);
@@ -2028,78 +1985,53 @@ return;
 			// change template
 			$page['template_id'] = $newTemplateId;
 
+
 			// save new page revision
 			$page['revision_id'] = BackendPagesModel::update($page);
 
-			// init blocks array
-			$blocks = array();
-
-			// loop missing blocks
-			for($i = 0; $i < max(count($blocksContent), (int) $newTemplate['num_blocks']); $i++)
+			// overwrite all blocks with current defaults
+			if($overwrite)
 			{
-				$block = array();
+				// init var
+				$blocksContent = array();
 
-				// block already exists
-				if(isset($blocksContent[$i]))
-				{
-					$block = $blocksContent[$i];
-					$block['created_on'] = BackendModel::getUTCDate(null, $block['created_on']);
-					$block['edited_on'] = BackendModel::getUTCDate(null, $block['edited_on']);
-					$block['revision_id'] = $page['revision_id'];
-				}
+				// fetch default blocks for this page
+				$defaultBlocks = array();
+				if(isset($newTemplate['data']['default_extras_' . $page['language']])) $defaultBlocks = $newTemplate['data']['default_extras_' . $page['language']];
+				elseif(isset($newTemplate['data']['default_extras'])) $defaultBlocks = $newTemplate['data']['default_extras'];
 
-				// create missing blocks as editor
-				else
+				// loop positions
+				foreach($defaultBlocks as $position => $blocks)
 				{
-					$block['id'] = BackendPagesModel::getMaximumBlockId() + $i + 1;
-					$block['revision_id'] = $page['revision_id'];
-					$block['html'] = '';
-					$block['created_on'] = BackendModel::getUTCDate();
-					$block['edited_on'] = $block['created_on'];
-					$block['html'] = '';
-					$block['extra_id'] = null;
-				}
-
-				// verify that there is no existing content and that we actually have new default content
-				if(!isset($blocksContent[$i]) || (!$blocksContent[$i]['html'] && !$blocksContent[$i]['extra_id']) && $i < $newTemplate['num_blocks'])
-				{
-					// get default extras in this language
-					if(isset($newTemplate['data']['default_extras_' . $page['language']]))
+					// loop blocks
+					foreach($blocks as $extraId)
 					{
-						// check if a default extra has been defined
-						if($newTemplate['data']['default_extras_' . $page['language']][$i] != 'editor')
-						{
-							$block['extra_id'] = $newTemplate['data']['default_extras_' . $page['language']][$i];
-						}
-						// no default extra defined
-						else
-						{
-							$block['extra_id'] = null;
-						}
-					}
+						// build block
+						$block = array();
+						$block['revision_id'] = $page['revision_id'];
+						$block['position'] = $position;
+						$block['extra_id'] = $extraId;
+						$block['html'] = '';
+						$block['created_on'] = BackendModel::getUTCDate();
+						$block['edited_on'] = $block['created_on'];
+						$block['visible'] = 'Y';
+						$block['sequence'] = count($defaultBlocks[$position]) - 1;
 
-					// no specific extras for this language, get global extras
-					else
-					{
-						// check if a default extra has been defined
-						if($newTemplate['data']['default_extras'][$i] != 'editor')
-						{
-							$block['extra_id'] = $newTemplate['data']['default_extras'][$i];
-						}
-						// no default extra defined
-						else
-						{
-							$block['extra_id'] = null;
-						}
+						// add to the list
+						$blocksContent[] = $block;
 					}
 				}
+			}
 
-				// add block
-				$blocks[] = $block;
+			// don't overwrite blocks, just re-use existing
+			else
+			{
+				// set new page revision id
+				foreach($blocksContent as &$block) $block['revision_id'] = $page['revision_id'];
 			}
 
 			// insert the blocks
-			BackendPagesModel::updateBlocks($blocks);
+			BackendPagesModel::insertBlocks($blocksContent);
 		}
 	}
 

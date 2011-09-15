@@ -119,6 +119,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
+		$this->frm->addCheckbox('overwrite', false);
 
 		// if this is the default template we can't alter the active/default state
 		if(($this->record['id'] == $defaultId))
@@ -160,8 +161,8 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		asort($widgets, SORT_STRING);
 
 		// create array
-		$defaultExtras = array('' => array('' => ucfirst(BL::lbl('Editor'))),
-								ucfirst(BL::lbl('Modules')) => $blocks,
+		$defaultExtras = array('' => array(0 => ucfirst(BL::lbl('Editor'))),
+//								ucfirst(BL::lbl('Modules')) => $blocks,
 								ucfirst(BL::lbl('Widgets')) => $widgets);
 
 		// create default position field
@@ -178,6 +179,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->names = array();
 			$this->extras = array();
 			$i = 1;
+			$errors = array();
 
 			// loop submitted positions
 			while(isset($_POST['position_' . $i]))
@@ -193,7 +195,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				while(isset($_POST['type_' . $i . '_' . $j]))
 				{
 					// gather blocks id
-					$extras[] = $_POST['type_' . $i . '_' . $j];
+					$extras[] = (int) $_POST['type_' . $i . '_' . $j];
 
 					// increment counter; go fetch next block
 					$j++;
@@ -203,18 +205,21 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$i++;
 
 				// position already exists -> error
-				if(in_array($name, $this->names)) $this->frm->addError(sprintf(BL::getError('DuplicatePositionName'), $name));
+				if(in_array($name, $this->names)) $errors[] = sprintf(BL::getError('DuplicatePositionName'), $name);
 
 				// position name == fallback -> error
-				if($name == 'fallback') $this->frm->addError(sprintf(BL::getError('ReservedPositionName'), $name));
+				if($name == 'fallback') $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
 
 				// not alphanumeric -> error
-				if(!SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $this->frm->addError(sprintf(BL::getError('NoAlphaNumPositionName'), $name));
+				if(!SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
 
 				// save positions
 				$this->names[] = $name;
 				$this->extras[$name] = $extras;
 			}
+
+			// add errors
+			if($errors) $this->frm->addError(implode('<br />', array_unique($errors)));
 		}
 
 		// build blocks array
@@ -279,8 +284,10 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 			// init var
 			$table = BackendPagesModel::templateSyntaxToArray($syntax);
+			$html = BackendPagesModel::buildTemplateHTML($syntax);
 			$cellCount = 0;
 			$first = true;
+			$errors = array();
 
 			// loop rows
 			foreach($table as $row)
@@ -292,7 +299,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if(count($row) != $cellCount)
 				{
 					// add error
-					$this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+					$errors[] = BL::err('InvalidTemplateSyntax');
 
 					// stop
 					break;
@@ -301,13 +308,23 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// doublecheck position names
 				foreach($row as $cell)
 				{
-					// not alphanumeric -> error
-					if($cell != '/' && !in_array($cell, $this->names)) $this->frm->getField('format')->addError(sprintf(BL::getError('NonExistingPositionName'), $cell));
+					// ignore unavailable space
+					if($cell != '/')
+					{
+						// not alphanumeric -> error
+						if(!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+
+						// can't build proper html -> error
+						elseif(substr_count($html, '#position-' . $cell) != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+					}
 				}
 
 				// reset
 				$first = false;
 			}
+
+			// add errors
+			if($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -317,7 +334,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$item['theme'] = $this->frm->getField('theme')->getValue();
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
-				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
+				$item['active'] = $this->frm->getField('active')->getChecked() ? 'Y' : 'N';
 				$item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
 				$item['data']['names'] = $this->names;
 				$item['data']['default_extras'] = $this->extras;
@@ -342,7 +359,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
 
 				// update all existing pages using this template to add the newly inserted block(s)
-//				if(BackendPagesModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id']); // @todo: this will have to be changed completely (is it even neccassary?) think about this later
+				if(BackendPagesModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->frm->getField('overwrite')->getChecked());
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);

@@ -83,6 +83,7 @@ jsBackend.pages.extras =
 		var blockPosition = $('input[id^=blockPosition]', block);
 		var blockVisibility = $('input[id^=blockVisible]', block);
 
+		// update id & name to new index
 		blockHtml.attr('id', blockHtml.attr('id').replace('0', index)).attr('name', blockHtml.attr('name').replace('0', index));
 		blockExtraId.attr('id', blockExtraId.attr('id').replace('0', index)).attr('name', blockExtraId.attr('name').replace('0', index));
 		blockPosition.attr('id', blockPosition.attr('id').replace('0', index)).attr('name', blockPosition.attr('name').replace('0', index));
@@ -90,6 +91,9 @@ jsBackend.pages.extras =
 
 		// save position
 		blockPosition.val(selectedPosition);
+		
+		// save extra id
+		blockExtraId.val(selectedExtraId);
 
 		// add block to dom
 		block.appendTo($('#editContent'));
@@ -97,31 +101,14 @@ jsBackend.pages.extras =
 		// get block visibility
 		var visible = blockVisibility.prop('checked');
 
-		// block/widget
-		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
-		{
-			// save extra id
-			$('input[id^=blockExtraId]', block).val(selectedExtraId);
+		// add visual representation of block to template visualisation
+		jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
 
-			// add visual representation of block to template visualisation
-			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
-
-			// don't show editor
-			$('.blockContentHTML', block).hide();
-		}
+		// block/widget = don't show editor
+		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') $('.blockContentHTML', block).hide();
 
 		// editor
-		else
-		{
-			// save extra id
-			$('input[id^=blockExtraId]', block).val('');
-
-			// add visual representation of block to template visualisation
-			jsBackend.pages.extras.addBlockVisual(selectedPosition, index, null, visible);
-
-			// show editor
-			$('.blockContentHTML', block).show();
-		}
+		else $('.blockContentHTML', block).show();
 
 		// reset block indexes
 //		jsBackend.pages.extras.resetIndexes();
@@ -132,7 +119,7 @@ jsBackend.pages.extras =
 	addBlockVisual: function(position, index, extraId, visible)
 	{
 		// block
-		if(extraId)
+		if(extraId != 0)
 		{
 			// link to edit this block/widget
 			var editLink = '';
@@ -159,8 +146,8 @@ jsBackend.pages.extras =
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>{$lblEdit|ucfirst}</span></a>' +
 								'<a href="#" class="button icon iconOnly ' + (visible ? 'iconVisible ' : 'iconInvisible ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId ? '' : 'showEditor ') + 'button icon iconOnly iconEdit' + '"' + (extraId && editLink ? ' target="_blank"' : '') + (extraId && editLink ? '' : ' onclick="return false;"') + (extraId && !editLink ? 'style="display: none;" ' : '') + '><span>{$lblEdit|ucfirst}</span></a>' +
 								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>' +
 							'</div>' +
 						'</div>';
@@ -201,9 +188,6 @@ jsBackend.pages.extras =
 
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
-
-		// disable scrolling
-		$('body').css('overflow', 'hidden');
 
 		// placeholder for block node that will be moved by the jQuery dialog
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
@@ -278,8 +262,8 @@ jsBackend.pages.extras =
 		// hide
 		$('#extraModuleHolder').hide();
 		$('#extraExtraIdHolder').hide();
-		$('#extraModule').html('<option value="-1">-</option>');
-		$('#extraExtraId').html('<option value="-1">-</option>');
+		$('#extraModule').html('<option value="0">-</option>');
+		$('#extraExtraId').html('<option value="0">-</option>');
 
 		// only widgets and block need the module dropdown
 		if(selectedType == 'widget' || selectedType == 'block')
@@ -382,9 +366,6 @@ jsBackend.pages.extras =
 			tinyMCE.get('blockHtml' + index).setContent(previousContent);
 		}
 
-		// re-enable scrolling
-		$('body').css('overflow', 'auto');
-
 		// remove editor
 		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 
@@ -443,7 +424,7 @@ jsBackend.pages.extras =
 
 		// set type
 		$('#extraType').val('html');
-		$('#extraExtraId').val('');
+		$('#extraExtraId').val(0);
 
 		// populate the modules
 		jsBackend.pages.extras.populateExtraModules();
@@ -660,7 +641,7 @@ jsBackend.pages.template =
 		// hide default (base) block
 		$('#block-0').hide();
 
-		// set HTML for the visual representation of the template
+		// reset HTML for the visual representation of the template
 		$('#templateVisual').html(current.html);
 		$('#templateVisualLarge').html(current.htmlLarge);
 		$('#templateVisualFallback .linkedBlocks').html('');
@@ -674,25 +655,68 @@ jsBackend.pages.template =
 		$('input[id^=blockPosition][value=fallback][id!=blockPosition0]').parent().remove();
 
 		// check if we have already committed changes (if not, we can just ignore existing blocks and remove all of them)
-		if(jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove(); // @todo: don't delete fallback
+		if(current != old && jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove();
 
 		// loop existing blocks
 		$('#editContent .contentBlock').each(function(i)
 		{
 			// fetch variables
 			var index = $('input[id^=blockExtraId]', this).attr('id').replace('blockExtraId', '');
-			var extraId = $('input[id^=blockExtraId]', this).val();
+			var extraId = parseInt($('input[id^=blockExtraId]', this).val());
 			var position = $('input[id^=blockPosition]', this).val();
-			var visible = $('input[id^=blockVisible]', this).prop('checked');
+			var html = $('textarea[id^=blockHtml]', this).val();
 
-			// skip default (base) block
-			if(index == 0) return;
+			// skip default (base) block (= continue)
+			if(index == 0) return true;
 
-			// blocks were present already = template was nog original
+			// blocks were present already = template was not original
 			jsBackend.pages.template.original = false;
 
 			// check if this block is a default of the old template, in which case it'll go to the fallback position
-			if(current != old && $.inArray(String(extraId), old.data.default_extras[position]) >= 0) position = 'fallback';
+			if(current != old && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html == '') $('input[id=blockPosition' + index + ']', this).val('fallback');
+		});
+
+		// init var
+		newDefaults = new Array();
+
+		// check if this default block has been changed
+		if(current != old)
+		{
+			// loop positions in new template
+			for(var position in current.data.default_extras)
+			{
+				// loop default extra's on positions
+				for(var block in current.data.default_extras[position])
+				{
+					// grab extraId
+					extraId = current.data.default_extras[position][block];
+
+					// init var
+					var existingBlock = null;
+
+					// find existing block sent to default
+					var existingBlock = $('input[id^=blockPosition][value=fallback]').parent().find('input[id^=blockExtraId][value=' + extraId + ']').parent();
+
+					// if this block did net yet exist, add it
+					if(existingBlock.length == 0) newDefaults.push(new Array(extraId, position));
+
+					// if this block already existed, reset it to correct (new) position
+					else $('input[id^=blockPosition]', existingBlock).val(position);
+				}
+			}
+		}
+
+		// loop existing blocks
+		$('#editContent .contentBlock').each(function(i)
+		{
+			// fetch variables
+			var index = $('input[id^=blockExtraId]', this).attr('id').replace('blockExtraId', '');
+			var extraId = parseInt($('input[id^=blockExtraId]', this).val());
+			var position = $('input[id^=blockPosition]', this).val();
+			var visible = $('input[id^=blockVisible]', this).prop('checked');
+
+			// skip default (base) block (= continue)
+			if(index == 0) return true;
 
 			// check if this position exists
 			if($.inArray(position, current.data.names) < 0)
@@ -701,7 +725,7 @@ jsBackend.pages.template =
 				position = 'fallback';
 
 				// save position as fallback
-				$('input[id^=blockPosition]', this).val(position);
+				$('input[id=blockPosition' + index + ']', this).val(position);
 
 				// show fallback
 				$('#templateVisualFallback').show();
@@ -714,37 +738,8 @@ jsBackend.pages.template =
 		// reset block indexes
 		jsBackend.pages.extras.resetIndexes();
 
-		// loop positions in new template
-		for(var position in current.data.default_extras)
-		{
-			// loop default extra's on positions
-			for(var block in current.data.default_extras[position])
-			{
-				// grab extraId
-				extraId = current.data.default_extras[position][block];
-
-				// add the block
-				jsBackend.pages.extras.addBlock(extraId, position);
-
-				// check if this default block has been changed
-				if(current != old)
-				{
-					// loop current fallback
-					$('#templatePosition-fallback .templatePositionCurrentType').each(function(i)
-					{
-						// fetch block index
-						var index = $(this).data('blockId');
-
-						// check for blocks currently in fallback position that are now being re-assigned
-						if(extraId == $('#blockExtraId' + index).val() && $('#blockHtml' + index).val() == '')
-						{
-							// remove block from fallback
-							jsBackend.pages.extras.deleteBlock(index);
-						}
-					});
-				}
-			}
-		}
+		// add new defaults at last
+		for(var i in newDefaults) jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1]);
 
 		// make the blocks sortable (again)
 		jsBackend.pages.extras.sortable();

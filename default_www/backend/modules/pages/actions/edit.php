@@ -129,7 +129,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->record = BackendPagesModel::get($this->id);
 
 		// load blocks
-		$this->blocksContent = BackendPagesModel::getBlocks($this->id);
+		$this->blocksContent = BackendPagesModel::getBlocks($this->id, $this->record['revision_id']);
 
 		// is there a revision specified?
 		$revisionToLoad = $this->getParameter('revision', 'int');
@@ -137,17 +137,11 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// if this is a valid revision
 		if($revisionToLoad !== null)
 		{
-			// save current template
-			$templateId = $this->record['template_id'];
-
 			// overwrite the current record
-			$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
-
-			// template is not part of revision; only data
-			$this->record['template_id'] = $templateId;
+			$this->record = (array) BackendPagesModel::get($this->id, $revisionToLoad);
 
 			// load blocks
-			$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
+			$this->blocksContent = BackendPagesModel::getBlocks($this->id, $revisionToLoad);
 
 			// show warning
 			$this->tpl->assign('appendRevision', true);
@@ -159,17 +153,11 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// if this is a valid revision
 		if($draftToLoad !== null)
 		{
-			// save current template
-			$templateId = $this->record['template_id'];
-
 			// overwrite the current record
-			$this->record = (array) BackendPagesModel::getRevision($this->id, $draftToLoad);
-
-			// template is not part of draft; only data
-			$this->record['template_id'] = $templateId;
+			$this->record = (array) BackendPagesModel::get($this->id, $draftToLoad);
 
 			// load blocks
-			$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $draftToLoad);
+			$this->blocksContent = BackendPagesModel::getBlocks($this->id, $draftToLoad);
 
 			// show warning
 			$this->tpl->assign('appendRevision', true);
@@ -239,7 +227,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// build prototype block
 		$block['index'] = 0;
 		$block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
-		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index']);
+		$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], 0);
 		$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], 'fallback');
 		$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index'], ''); // this is no editor; we'll add the editor in JS
 
@@ -317,7 +305,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		{
 			$block['index'] = $i + 1;
 			$block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], $block['visible'] == 'Y');
-			$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], $block['extra_id']);
+			$block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], (int) $block['extra_id']);
 			$block['formElements']['hidPosition'] = $this->frm->addHidden('block_position_' . $block['index'], $block['position']);
 			$block['formElements']['txtHTML'] = $this->frm->addTextArea('block_html_' . $block['index'], $block['html']); // this is no editor; we'll add the editor in JS
 

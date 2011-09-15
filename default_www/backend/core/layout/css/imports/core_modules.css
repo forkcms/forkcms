@@ -688,6 +688,10 @@
 		padding-left: 0;
 	}
 
+	#templateLayout .formError {
+		padding-left: 0;
+	}
+
 	#templateLayout #format {
 		width: 320px;
 		height: 200px;

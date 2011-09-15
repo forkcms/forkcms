@@ -18,7 +18,6 @@
 				{$txtLabel} {$txtLabelError}
 			</p>
 		</div>
-
 	</div>
 
 	<div class="box horizontal">
@@ -95,11 +94,24 @@
 		</div>
 
 		<div class="options">
-			<div class="spacing">
-				<ul class="inputList pb0">
-					<li><label for="active">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}</li>
-					<li><label for="default">{$chkDefault} {$lblDefault|ucfirst}</label> {$chkDefaultError}</li>
-				</ul>
+			<ul class="inputList pb0">
+				<li><label for="active">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}</li>
+				<li><label for="default">{$chkDefault} {$lblDefault|ucfirst}</label> {$chkDefaultError}</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblOverwrite|ucfirst}</h3>
+		</div>
+
+		<div class="options">
+			<ul class="inputList pb0">
+				<li><label for="overwrite">{$chkOverwrite} {$lblOverwrite|ucfirst}</label> {$chkOverwriteError}</li>
+			</ul>
+			<div class="longHelpTxt">
+				{$msgHelpOverwrite}
 			</div>
 		</div>
 	</div>

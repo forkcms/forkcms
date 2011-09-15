@@ -11,6 +11,7 @@ Improvements:
 	* Updated installer.
 	* Updated template creation in backend.
 	* Updated theme Triton to be position-based.
+	* Added the possibikity to either completely overwrite of re-use existing blocks when updating a template.
 * Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 

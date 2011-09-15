@@ -94,12 +94,10 @@
 		</div>
 
 		<div class="options">
-			<div class="spacing">
-				<ul class="inputList pb0">
-					<li><label for="active">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}</li>
-					<li><label for="default">{$chkDefault} {$lblDefault|ucfirst}</label> {$chkDefaultError}</li>
-				</ul>
-			</div>
+			<ul class="inputList pb0">
+				<li><label for="active">{$chkActive} {$lblActive|ucfirst}</label> {$chkActiveError}</li>
+				<li><label for="default">{$chkDefault} {$lblDefault|ucfirst}</label> {$chkDefaultError}</li>
+			</ul>
 		</div>
 	</div>
 
