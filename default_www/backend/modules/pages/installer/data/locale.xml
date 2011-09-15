@@ -159,8 +159,8 @@
         <translation language="en"><![CDATA[The template "%1$s" was saved.]]></translation>
       </item>
       <item type="message" name="FallbackInfo">
-        <translation language="nl"><![CDATA[<p><strong>Niet elk blok kon automatisch worden toegewezen aan een positie.</strong></p><p>Blokken die toegevoegd werden op posities die in deze template niet beschikbaar zijn worden hier weergegeven.<br />Je kan deze eenvoudig verslepen naar de gewenste positie.</p><p>Deze blokken zullen vervallen bij het opslaan van de pagina.</p>]]></translation>
-        <translation language="en"><![CDATA[<p><strong>Not every block could automatically be assigned to a position.</strong></p><p>Blocks that were added to positions that are not available in this template, are shown here.<br />You can easily drag them to the desired position.</p><p>These blocks will disappear after saving the page.</p>]]></translation>
+        <translation language="nl"><![CDATA[<p><strong>Niet elk blok kon automatisch worden toegewezen aan een positie.</strong></p><p>Blokken die toegevoegd werden op posities die in deze template niet beschikbaar zijn worden hier weergegeven. Standaard-blokken uit de vorige template die niet voorkomen in de huidige template worden ook hier getoond.<br />Je kan deze eenvoudig verslepen naar de gewenste positie.</p><p>Deze blokken zullen vervallen bij het opslaan van de pagina of het kiezen van een andere template.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Not every block could automatically be assigned to a position.</strong></p><p>Blocks that were added to positions that are not available in this template, are shown here. Default blocks from the previous template that are not present in the current template are also displayed here.<br />You can easily drag them to the desired position.</p><p>These blocks will disappear after saving the page or selecting another template.</p>]]></translation>
       </item>
       <item type="message" name="HelpBlockContent">
         <translation language="nl"><![CDATA[Welk soort inhoud wil je hier tonen?]]></translation>

@@ -224,6 +224,9 @@ jsBackend.pages.extras =
 					// save content
 					jsBackend.pages.extras.setContent(index, null);
 
+					// edit content = template is no longer original
+					jsBackend.pages.template.original = false;
+
 					// close dialog
 					$(this).dialog('close');
 				},
@@ -461,6 +464,9 @@ jsBackend.pages.extras =
 						// add the extra
 						jsBackend.pages.extras.addBlock($('#extraExtraId').val(), position);
 
+						// add a block = template is no longer original
+						jsBackend.pages.template.original = false;
+
 						// close dialog
 						$(this).dialog('close');
 					},
@@ -473,8 +479,8 @@ jsBackend.pages.extras =
 			 });
 		}
 	},
-	
-	
+
+
 	// delete a block
 	showDeleteDialog: function(evt)
 	{
@@ -499,7 +505,10 @@ jsBackend.pages.extras =
 					{
 						// delete this block
 						jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').data('blockId'));
-	
+
+						// delete a block = template is no longer original
+						jsBackend.pages.template.original = false;
+
 						// close dialog
 						$(this).dialog('close');
 					},
@@ -536,6 +545,9 @@ jsBackend.pages.extras =
 
 				// after removing all from fallback; hide fallback
 				jsBackend.pages.extras.hideFallback();
+
+				// reorder blocks = template is no longer original
+				jsBackend.pages.template.original = false;
 			},
 			start: function(event, ui)
 			{
@@ -563,6 +575,9 @@ jsBackend.pages.extras =
 	{
 		// prevent default event action
 		e.preventDefault();
+
+		// toggle visibility = template is no longer original
+		jsBackend.pages.template.original = false;
 
 		// get index of block
 		var index = $(this).parent().parent().data('blockId');
@@ -613,6 +628,10 @@ jsBackend.pages.extras =
  */
 jsBackend.pages.template =
 {
+	// indicates whether or not the page content is original or has been altered already
+	original: true,
+
+
 	// init, something like a constructor
 	init: function()
 	{
@@ -652,10 +671,10 @@ jsBackend.pages.template =
 		$('#templateVisualFallback').hide();
 
 		// remove previous fallback blocks
-		$('input[id^=blockPosition][value=fallback]').parent().remove();
+		$('input[id^=blockPosition][value=fallback][id!=blockPosition0]').parent().remove();
 
 		// check if we have already committed changes (if not, we can just ignore existing blocks and remove all of them)
-		if(false) $('input[id^=blockPosition]').parent().remove(); // @todo
+		if(jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove(); // @todo: don't delete fallback
 
 		// loop existing blocks
 		$('#editContent .contentBlock').each(function(i)
@@ -668,6 +687,9 @@ jsBackend.pages.template =
 
 			// skip default (base) block
 			if(index == 0) return;
+
+			// blocks were present already = template was nog original
+			jsBackend.pages.template.original = false;
 
 			// check if this block is a default of the old template, in which case it'll go to the fallback position
 			if(current != old && $.inArray(String(extraId), old.data.default_extras[position]) >= 0) position = 'fallback';
