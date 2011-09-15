@@ -7,6 +7,7 @@
  * @subpackage	events
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Sam Tubbax <sam@sumocoders.be>
  * @since		2.0
  */
 class EventsInstall extends ModuleInstaller
@@ -61,6 +62,25 @@ class EventsInstall extends ModuleInstaller
 
 		// module rights
 		$this->setModuleRights(1, 'events');
+
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationEventsId = $this->setNavigation($navigationModulesId, 'Events');
+
+		$this->setNavigation($navigationEventsId, 'Events', 'events/index', array(
+			'events/edit',
+			'events/add'
+		));
+		$this->setNavigation($navigationEventsId, 'Comments', 'events/comments', array(
+			'events/edit_comment'
+		));
+		$this->setNavigation($navigationEventsId, 'Subscriptions', 'events/subscriptions', array(
+			'events/edit_subscription'
+		));
+		$this->setNavigation($navigationEventsId, 'Categories', 'events/categories', array(
+			'events/add_category',
+			'events/edit_category'
+		));
 
 		// action rights
 		$this->setActionRights(1, 'events', 'categories');

@@ -7,6 +7,7 @@
  * @subpackage	events
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Sam Tubbax <sam@sumocoders.be>
  * @since		2.0
  */
 class FrontendEventsDetail extends FrontendBaseBlock
@@ -98,7 +99,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 			$this->record = FrontendEventsModel::getDraft($this->URL->getParameter(1), $this->URL->getParameter('draft', 'int'));
 
 			// add no-index to meta-custom, so the draft won't get accidentally indexed
-			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+			$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex'));
 		}
 
 		// load revision
@@ -183,13 +184,19 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('events', 'rss');
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		$this->header->addLink(array('rel' => 'alternate',
+								 'type' => 'application/rss+xml',
+								 'title' => FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE),
+								'href' => $rssLink));
 
 		// get RSS-link for the comments
 		$rssCommentsLink = FrontendNavigation::getURLForBlock('events', 'article_comments_rss') . '/' . $this->record['url'];
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) . '" href="' . $rssCommentsLink . '" />');
+		$this->header->addLink(array('rel' => 'alternate',
+									 'type' => 'application/rss+xml',
+									'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])),
+									'href' =>  $rssCommentsLink));
 
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
@@ -226,8 +233,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 		// set meta
 		$this->header->setPageTitle($this->record['title']);
-		$this->header->setMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+		$this->header->addMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
 
 		// assign article
 		$this->tpl->assign('item', $this->record);

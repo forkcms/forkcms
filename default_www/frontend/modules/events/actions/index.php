@@ -7,6 +7,7 @@
  * @subpackage	events
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Sam Tubbax <sam@sumocoders.be>
  * @since		2.0
  */
 class FrontendEventsIndex extends FrontendBaseBlock
@@ -77,6 +78,8 @@ class FrontendEventsIndex extends FrontendBaseBlock
 		$this->pagination['requested_page'] = $requestedPage;
 		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
+		//Spoon::dump(FrontendModel::getDB()->getRecords('SELECT * FROM events'));
+
 		// get articles
 		$this->items = FrontendEventsModel::getAll($this->pagination['limit'], $this->pagination['offset']);
 	}
@@ -94,7 +97,9 @@ class FrontendEventsIndex extends FrontendBaseBlock
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('events', 'rss');
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml',
+									 'title' => FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE),
+									'href' => $rssLink));
 
 		// assign articles
 		$this->tpl->assign('items', $this->items);
