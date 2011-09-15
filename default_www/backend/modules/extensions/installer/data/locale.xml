@@ -11,5 +11,23 @@
         <translation language="en"><![CDATA[extensions]]></translation>
       </item>
     </core>
+    <extensions>
+      <item type="label" name="Authors">
+        <translation language="nl"><![CDATA[auteurs]]></translation>
+        <translation language="en"><![CDATA[authors]]></translation>
+      </item>
+      <item type="label" name="Events">
+        <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
+        <translation language="en"><![CDATA[events (hooks)]]></translation>
+      </item>
+      <item type="label" name="Version">
+        <translation language="nl"><![CDATA[versie]]></translation>
+        <translation language="en"><![CDATA[version]]></translation>
+      </item>
+      <item type="message" name="Module">
+        <translation language="nl"><![CDATA[module "%1$s"]]></translation>
+        <translation language="en"><![CDATA[module "%1$s"]]></translation>
+      </item>
+    </extensions>
   </backend>
 </locale>

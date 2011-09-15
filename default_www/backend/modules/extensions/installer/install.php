@@ -33,7 +33,7 @@ class ExtensionsInstall extends ModuleInstaller
 		// set navigation
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationExtensionsId = $this->setNavigation($navigationSettingsId, 'Extensions');
-		$this->setNavigation($navigationExtensionsId, 'Modules', 'extensions/modules');
+		$this->setNavigation($navigationExtensionsId, 'Modules', 'extensions/modules', array('extensions/module_detail'));
 	}
 }
 

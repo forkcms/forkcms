@@ -26,8 +26,6 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 	 */
 	public function execute()
 	{
-		// ignore modules
-
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
