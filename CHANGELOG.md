@@ -16,18 +16,32 @@ Improvements:
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 
 
-2.6.8 (xxxx-xx-xx)
+2.6.9 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded jQuery to 1.6.4.
+* Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, thx to Martijn Dierckx, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
+* Core: Emails are now send base64 encoded. This to prevent that linebreaks, which are added when the max text line length is reached, corrupt the content.
+
+Bugfixes:
+
+* Blog: Fixed a bug in the blog module where it called an unexisting FrontendTag-function, thx to jelmersnoeck.
+
+
+2.6.8 (2011-09-13)
 --
 Improvements:
 
 * Core: TinyMCE link-list is now sorted according the pages-tree, as requested by Frederik (http://forum.fork-cms.com/discussions/feature-requests/11-tinymce-linklist-sort).
-* Core: Mails from formbuild will contain the sitetitle instead of Fork CMS, thx to Frederik.
+* Core: Mails from formbuilder will contain the sitetitle instead of Fork CMS, thx to Frederik.
 * Core: Updated the schema.
 
 Bugfixes:
 
 * Blog: deleting a draft no longer triggers an error.
-* Blog: fix deletion of categorie: check for blogposts in categorie did not check blog status.
+* Blog: fix deletion of category: check for blogposts in category did not check blog status.
+* Groups: permission management now works correctly in Chrome.
 
 
 2.6.7 (2011-09-09)

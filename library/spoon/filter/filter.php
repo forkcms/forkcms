@@ -901,7 +901,7 @@ class SpoonFilter
 		$value = str_replace(array_keys($replace), array_values($replace), $value);
 
 		// reform non ascii characters
-		$value = iconv($charset, 'ASCII//IGNORE//TRANSLIT', $value);
+		$value = iconv($charset, 'ASCII//TRANSLIT//IGNORE', $value);
 
 		// remove spaces at the beginning and the end
 		$value = trim($value);

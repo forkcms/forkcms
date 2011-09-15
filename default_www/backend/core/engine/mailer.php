@@ -142,7 +142,7 @@ class BackendMailer
 
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
-		
+
 		// return
 		return $id;
 	}
@@ -255,6 +255,7 @@ class BackendMailer
 		$email->setSubject($emailRecord['subject']);
 		$email->setHTMLContent($emailRecord['html']);
 		$email->setCharset(SPOON_CHARSET);
+		$email->setContentTransferEncoding('base64');
 		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
 
 		// attachments added

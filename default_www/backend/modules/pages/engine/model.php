@@ -1121,7 +1121,7 @@ class BackendPagesModel
 	 * Get the order
 	 *
 	 * @return	array
-	 * @param	array $navigation			The navigation array
+	 * @param	array $navigation			The navigation array.
 	 * @param	string[optional] $type		The type of navigation.
 	 * @param	int[optional] $parentId		The Id to start from.
 	 * @param	array[optional] $order		The array to hold the order.

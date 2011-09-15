@@ -175,7 +175,7 @@ class SpoonLog
 		$milliseconds = round($milliseconds * 1000, 0);
 
 		// redefine var
-		$message = date('Y-m-d H:i:s') . ' ' . $milliseconds . 'ms | ' . $message . "\n";
+		$message = date('Y-m-d H:i:s') . ' ' . $milliseconds . 'ms | ' . $message . PHP_EOL;
 
 		// file
 		$file = $this->getPath() . '/' . $this->type . '.log';

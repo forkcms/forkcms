@@ -79,6 +79,7 @@ a.icon span {
 	display: block;
 	background-image: url(/backend/core/layout/images/sprites/fork_icons.png);
 	background-repeat: no-repeat;
+	overflow: hidden;
 }
 
 	a.iconAdd span {
