@@ -128,6 +128,10 @@ a.icon span {
 		background-position: 0 -607px !important; }
 	a.iconReject span {
 		background-position: 0 -628px !important; }
+	a.iconVisible span {
+		background-position: 0 -668px !important; }
+	a.iconInvisible span {
+		background-position: 0 -688px !important; }
 
 	a.iconOnly:link,
 	a.iconOnly:visited {

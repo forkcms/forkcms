@@ -159,7 +159,7 @@ jsBackend.pages.extras =
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
-								'<a href="#" class="button linkButton icon iconOnly ' + (visible ? 'iconApprove ' : 'iconReject ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
+								'<a href="#" class="button icon iconOnly ' + (visible ? 'iconVisible ' : 'iconInvisible ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
 								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId ? '' : 'showEditor ') + 'button icon iconOnly iconEdit' + '"' + (extraId && editLink ? ' target="_blank"' : '') + (extraId && editLink ? '' : ' onclick="return false;"') + (extraId && !editLink ? 'style="display: none;" ' : '') + '><span>{$lblEdit|ucfirst}</span></a>' +
 								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>' +
 							'</div>' +
@@ -580,14 +580,14 @@ jsBackend.pages.extras =
 		checkbox.prop('checked', visible);
 
 		// remove current visibility indicators
-		$(this).removeClass('iconApprove').removeClass('iconReject');
+		$(this).removeClass('iconVisible').removeClass('iconInvisible');
 		$(this).parent().parent().removeClass('templateDisabled');
 
 		// toggle visibility indicators
-		if(visible) $(this).addClass('iconApprove');
+		if(visible) $(this).addClass('iconVisible');
 		else
 		{
-			$(this).addClass('iconReject');
+			$(this).addClass('iconInvisible');
 			$(this).parent().parent().addClass('templateDisabled');
 		}
 	},
@@ -657,9 +657,6 @@ jsBackend.pages.template =
 		// check if we have already committed changes (if not, we can just ignore existing blocks and remove all of them)
 		if(false) $('input[id^=blockPosition]').parent().remove(); // @todo
 
-		// reset block indexes
-		jsBackend.pages.extras.resetIndexes(); // @todo: this is useless since it depends on visual; do alternatively
-
 		// loop existing blocks
 		$('#editContent .contentBlock').each(function(i)
 		{
@@ -691,6 +688,9 @@ jsBackend.pages.template =
 			// add visual representation of block to template visualisation
 			jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
 		});
+
+		// reset block indexes
+		jsBackend.pages.extras.resetIndexes();
 
 		// loop positions in new template
 		for(var position in current.data.default_extras)
