@@ -102,6 +102,10 @@
         <translation language="nl"><![CDATA[overschrijf]]></translation>
         <translation language="en"><![CDATA[overwrite]]></translation>
       </item>
+      <item type="label" name="Position">
+        <translation language="nl"><![CDATA[positie]]></translation>
+        <translation language="en"><![CDATA[position]]></translation>
+      </item>
       <item type="label" name="Positions">
         <translation language="nl"><![CDATA[posities]]></translation>
         <translation language="en"><![CDATA[positions]]></translation>
