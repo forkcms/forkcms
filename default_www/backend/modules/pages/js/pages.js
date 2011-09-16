@@ -84,14 +84,14 @@ jsBackend.pages.extras =
 		var blockVisibility = $('input[id^=blockVisible]', block);
 
 		// update id & name to new index
-		blockHtml.attr('id', blockHtml.attr('id').replace('0', index)).attr('name', blockHtml.attr('name').replace('0', index));
-		blockExtraId.attr('id', blockExtraId.attr('id').replace('0', index)).attr('name', blockExtraId.attr('name').replace('0', index));
-		blockPosition.attr('id', blockPosition.attr('id').replace('0', index)).attr('name', blockPosition.attr('name').replace('0', index));
-		blockVisibility.attr('id', blockVisibility.attr('id').replace('0', index)).attr('name', blockVisibility.attr('name').replace('0', index));
+		blockHtml.prop('id', blockHtml.prop('id').replace('0', index)).prop('name', blockHtml.prop('name').replace('0', index));
+		blockExtraId.prop('id', blockExtraId.prop('id').replace('0', index)).prop('name', blockExtraId.prop('name').replace('0', index));
+		blockPosition.prop('id', blockPosition.prop('id').replace('0', index)).prop('name', blockPosition.prop('name').replace('0', index));
+		blockVisibility.prop('id', blockVisibility.prop('id').replace('0', index)).prop('name', blockVisibility.prop('name').replace('0', index));
 
 		// save position
 		blockPosition.val(selectedPosition);
-		
+
 		// save extra id
 		blockExtraId.val(selectedExtraId);
 
@@ -99,7 +99,7 @@ jsBackend.pages.extras =
 		block.appendTo($('#editContent'));
 
 		// get block visibility
-		var visible = blockVisibility.prop('checked');
+		var visible = blockVisibility.attr('checked');
 
 		// add visual representation of block to template visualisation
 		jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
@@ -333,16 +333,16 @@ jsBackend.pages.extras =
 
 			// update index of entry in template-view
 			$(this).data('blockId', newIndex);
-			$(this).attr('data-block-id', newIndex);
+			$(this).prop('data-block-id', newIndex);
 
 			// update index occurences in the hidden data
 			var blockHtml = $('.reset #blockHtml' + oldIndex);
 			var blockExtraId = $('.reset #blockExtraId' + oldIndex);
 			var blockPosition = $('.reset #blockPosition' + oldIndex);
 
-			blockHtml.attr('id', blockHtml.attr('id').replace(oldIndex, newIndex)).attr('name', blockHtml.attr('name').replace(oldIndex, newIndex));
-			blockExtraId.attr('id', blockExtraId.attr('id').replace(oldIndex, newIndex)).attr('name', blockExtraId.attr('name').replace(oldIndex, newIndex));
-			blockPosition.attr('id', blockPosition.attr('id').replace(oldIndex, newIndex)).attr('name', blockPosition.attr('name').replace(oldIndex, newIndex));
+			blockHtml.prop('id', blockHtml.prop('id').replace(oldIndex, newIndex)).prop('name', blockHtml.prop('name').replace(oldIndex, newIndex));
+			blockExtraId.prop('id', blockExtraId.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraId.prop('name').replace(oldIndex, newIndex));
+			blockPosition.prop('id', blockPosition.prop('id').replace(oldIndex, newIndex)).prop('name', blockPosition.prop('name').replace(oldIndex, newIndex));
 
 			// no longer mark as needing to be reset
 			blockExtraId.parent().removeClass('reset');
@@ -401,38 +401,35 @@ jsBackend.pages.extras =
 			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
 
+		// hide warnings
+		$('#extraWarningAlreadyBlock').hide();
+		$('#extraWarningHomeNoBlock').hide();
+
+		// init var
+		var enabled = true;
+
 		// blocks linked?
 		if(hasModules)
 		{
+			// disable module selection
+			enabled = false;
+
 			// show warning
 			$('#extraWarningAlreadyBlock').show();
-
-			// disable blocks
-			$('#extraType option[value="block"]').prop('disabled', true);
 		}
-		else
+
+		// home can't have any modules linked!
+		if(typeof pageID != 'undefined' && pageID == 1)
 		{
-			// hide warning
-			$('#extraWarningAlreadyBlock').hide();
+			// disable module selection
+			enabled = false;
 
-			// enable blocks
-			$('#extraType option[value="block"]').prop('disabled', false);
-
-			// home can't have any modules linked!
-			if(typeof pageID != 'undefined' && pageID == 1)
-			{
-				// show warning
-				$('#extraWarningHomeNoBlock').show();
-
-				// disable blocks
-				$('#extraType option[value="block"]').prop('disabled', true);
-			}
-			else
-			{
-				// hide warning
-				$('#extraWarningHomeNoBlock').hide();
-			}
+			// show warning
+			$('#extraWarningHomeNoBlock').show();
 		}
+
+		// enable/disable blocks
+		$('#extraType option[value=block]').attr('disabled', !enabled);
 
 		// set type
 		$('#extraType').val('html');
@@ -579,13 +576,13 @@ jsBackend.pages.extras =
 		var checkbox = $('#blockVisible' + index);
 
 		// get current visibility state
-		var visible = checkbox.prop('checked');
+		var visible = checkbox.attr('checked');
 
 		// invert visibility
 		visible = !visible;
 
 		// change visibility state
-		checkbox.prop('checked', visible);
+		checkbox.attr('checked', visible);
 
 		// remove current visibility indicators
 		$(this).removeClass('iconVisible').removeClass('iconInvisible');
@@ -673,7 +670,7 @@ jsBackend.pages.template =
 		$('#editContent .contentBlock').each(function(i)
 		{
 			// fetch variables
-			var index = $('input[id^=blockExtraId]', this).attr('id').replace('blockExtraId', '');
+			var index = $('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', '');
 			var extraId = parseInt($('input[id^=blockExtraId]', this).val());
 			var position = $('input[id^=blockPosition]', this).val();
 			var html = $('textarea[id^=blockHtml]', this).val();
@@ -722,10 +719,10 @@ jsBackend.pages.template =
 		$('#editContent .contentBlock').each(function(i)
 		{
 			// fetch variables
-			var index = $('input[id^=blockExtraId]', this).attr('id').replace('blockExtraId', '');
+			var index = $('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', '');
 			var extraId = parseInt($('input[id^=blockExtraId]', this).val());
 			var position = $('input[id^=blockPosition]', this).val();
-			var visible = $('input[id^=blockVisible]', this).prop('checked');
+			var visible = $('input[id^=blockVisible]', this).attr('checked');
 
 			// skip default (base) block (= continue)
 			if(index == 0) return true;
@@ -823,7 +820,7 @@ jsBackend.pages.tree =
 			var openedIds = ['page-'+ pageID];
 
 			// add parents
-			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).attr('id'));
+			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
 		}
 
 		// add home if needed
@@ -881,9 +878,9 @@ jsBackend.pages.tree =
 	beforeMove: function(node, refNode, type, tree)
 	{
 		// get pageID that has to be moved
-		var currentPageID = $(node).attr('id').replace('page-', '');
+		var currentPageID = $(node).prop('id').replace('page-', '');
 		if(typeof refNode == 'undefined') parentPageID = 0;
-		else var parentPageID = $(refNode).attr('id').replace('page-', '')
+		else var parentPageID = $(refNode).prop('id').replace('page-', '')
 
 		// home is a special item
 		if(parentPageID == '1')
@@ -930,7 +927,7 @@ jsBackend.pages.tree =
 	{
 		// get current and new URL
 		var currentPageURL = window.location.pathname + window.location.search;
-		var newPageURL = $(node).find('a').attr('href');
+		var newPageURL = $(node).find('a').prop('href');
 
 		// only redirect if destination isn't the current one.
 		if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
@@ -941,11 +938,11 @@ jsBackend.pages.tree =
 	onMove: function(node, refNode, type, tree, rollback)
 	{
 		// get pageID that has to be moved
-		var currentPageID = $(node).attr('id').replace('page-', '');
+		var currentPageID = $(node).prop('id').replace('page-', '');
 
 		// get pageID wheron the page has been dropped
 		if(typeof refNode == 'undefined') droppedOnPageID = 0;
-		else var droppedOnPageID = $(refNode).attr('id').replace('page-', '')
+		else var droppedOnPageID = $(refNode).prop('id').replace('page-', '')
 
 		// make the call
 		$.ajax(

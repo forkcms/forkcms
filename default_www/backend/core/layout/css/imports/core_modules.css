@@ -9,6 +9,7 @@
 
     @author       Johan Ronsse <johan@netlash.com>
                   Thomas Deceuninck <thomasdeceuninck@netlash.com>
+                  Matthias Mullie <matthias@netlash.com>
     @since        2.0
 
 */
@@ -297,9 +298,10 @@
 			border-top: 1px solid #DDD;
 		}
 
-		#templateVisualLarge .linkedBlocks:empty {
-			margin: 0;
+		#templateVisualLarge .linkedBlocks:empty,
+		#templateVisualFallback .linkedBlocks:empty {
 			padding-top: 12px;
+			margin: 0 12px;
 			border-top: 0;
 		}
 
