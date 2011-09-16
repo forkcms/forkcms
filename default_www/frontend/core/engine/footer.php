@@ -30,7 +30,6 @@ class FrontendFooter extends FrontendBaseObject
 		// facebook admins given?
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
 		{
-
 			// build correct locale
 			switch(FRONTEND_LANGUAGE)
 			{

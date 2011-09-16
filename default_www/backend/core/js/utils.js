@@ -280,7 +280,7 @@ utils.string =
 	 */
 	stripTags: function(value)
 	{
-		return value.replace(/(<([^>]+)>)/ig, '');
+		return value.replace(/<[^>]*>/ig, '');
 	},
 
 

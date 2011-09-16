@@ -137,8 +137,7 @@ jsBackend.pages.extras =
 			// link to edit this content, title, description & visibility
 			var editLink = '';
 			var title = '{$lblEditor|ucfirst}';
-			var description = $('#blockHtml' + index).val().substr(0, 200);
-			description = utils.string.stripTags(description);
+			var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
 		}
 
 		// create html to be appended in template-view
@@ -339,10 +338,12 @@ jsBackend.pages.extras =
 			var blockHtml = $('.reset [name=block_html_' + oldIndex + ']');
 			var blockExtraId = $('.reset [name=block_extra_id_' + oldIndex + ']');
 			var blockPosition = $('.reset [name=block_position_' + oldIndex + ']');
+			var blockVisible = $('.reset [name=block_visible_' + oldIndex + ']');
 
 			blockHtml.prop('id', blockHtml.prop('id').replace(oldIndex, newIndex)).prop('name', blockHtml.prop('name').replace(oldIndex, newIndex));
 			blockExtraId.prop('id', blockExtraId.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraId.prop('name').replace(oldIndex, newIndex));
 			blockPosition.prop('id', blockPosition.prop('id').replace(oldIndex, newIndex)).prop('name', blockPosition.prop('name').replace(oldIndex, newIndex));
+			blockVisible.prop('id', blockVisible.prop('id').replace(oldIndex, newIndex)).prop('name', blockVisible.prop('name').replace(oldIndex, newIndex));
 
 			// no longer mark as needing to be reset
 			blockExtraId.parent('.contentBlock').removeClass('reset');
@@ -370,8 +371,7 @@ jsBackend.pages.extras =
 		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
 
 		// add short description to visual representation of block
-		var description = $('#blockHtml' + index).val().substr(0, 200);
-		description = utils.string.stripTags(description);
+		var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
 		$('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
 
 		// mark as updated
