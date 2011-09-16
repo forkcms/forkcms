@@ -336,16 +336,16 @@ jsBackend.pages.extras =
 			$(this).prop('data-block-id', newIndex);
 
 			// update index occurences in the hidden data
-			var blockHtml = $('.reset #blockHtml' + oldIndex);
-			var blockExtraId = $('.reset #blockExtraId' + oldIndex);
-			var blockPosition = $('.reset #blockPosition' + oldIndex);
+			var blockHtml = $('.reset [name=block_html_' + oldIndex + ']');
+			var blockExtraId = $('.reset [name=block_extra_id_' + oldIndex + ']');
+			var blockPosition = $('.reset [name=block_position_' + oldIndex + ']');
 
 			blockHtml.prop('id', blockHtml.prop('id').replace(oldIndex, newIndex)).prop('name', blockHtml.prop('name').replace(oldIndex, newIndex));
 			blockExtraId.prop('id', blockExtraId.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraId.prop('name').replace(oldIndex, newIndex));
 			blockPosition.prop('id', blockPosition.prop('id').replace(oldIndex, newIndex)).prop('name', blockPosition.prop('name').replace(oldIndex, newIndex));
 
 			// no longer mark as needing to be reset
-			blockExtraId.parent().removeClass('reset');
+			blockExtraId.parent('.contentBlock').removeClass('reset');
 
 			// while we're at it, make sure the position is also correct
 			blockPosition.val($(this).parent().parent().data('position'));
@@ -576,7 +576,7 @@ jsBackend.pages.extras =
 		var checkbox = $('#blockVisible' + index);
 
 		// get current visibility state
-		var visible = checkbox.attr('checked');
+		var visible = checkbox.is(':checked');
 
 		// invert visibility
 		visible = !visible;
