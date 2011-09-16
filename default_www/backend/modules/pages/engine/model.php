@@ -618,7 +618,7 @@ class BackendPagesModel
 		$db = BackendModel::getDB(true);
 
 		// get record
-		$page = self::get($id, $language);
+		$page = self::get($id, null, $language);
 
 		// validate
 		if(empty($page)) return false;
@@ -1618,7 +1618,7 @@ class BackendPagesModel
 		$fullURL = self::getFullUrl($parentId) . '/' . $URL;
 
 		// get info about parent page
-		$parentPageInfo = self::get($parentId);
+		$parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
 
 		// does the parent have extra's?
 		if($parentPageInfo['has_extra'] == 'Y' && !$isAction)
@@ -1750,11 +1750,11 @@ class BackendPagesModel
 		if($droppedOn == 0) $typeOfDrop = 'inside';
 
 		// get data for pages
-		$page = self::get($id, $language);
-		$droppedOnPage = self::get($droppedOn, $language);
+		$page = self::get($id, null, $language);
+		$droppedOnPage = self::get($droppedOn, null, $language);
 
 		// reset if the drop was on 0 (new meta)
-		if($droppedOn == 0) $droppedOnPage = self::get(1, $language);
+		if($droppedOn == 0) $droppedOnPage = self::get(1, null, $language);
 
 		// validate
 		if(empty($page) || empty($droppedOnPage)) return false;
