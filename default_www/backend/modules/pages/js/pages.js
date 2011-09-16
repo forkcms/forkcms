@@ -419,7 +419,19 @@ jsBackend.pages.extras =
 			$('#extraType option[value="block"]').prop('disabled', false);
 
 			// home can't have any modules linked!
-			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').prop('disabled', true);
+			if(typeof pageID != 'undefined' && pageID == 1)
+			{
+				// show warning
+				$('#extraWarningHomeNoBlock').show();
+
+				// disable blocks
+				$('#extraType option[value="block"]').prop('disabled', true);
+			}
+			else
+			{
+				// hide warning
+				$('#extraWarningHomeNoBlock').hide();
+			}
 		}
 
 		// set type
@@ -479,7 +491,6 @@ jsBackend.pages.extras =
 				draggable: false,
 				resizable: false,
 				modal: true,
-				width: 940,
 				buttons:
 				{
 					'{$lblOK|ucfirst}': function()
@@ -516,6 +527,7 @@ jsBackend.pages.extras =
 			forcePlaceholderSize: true,
 			connectWith: 'div.linkedBlocks',
 			opacity: 0.7,
+			delay: 300,
 			stop: function(event, ui)
 			{
 				// reorder indexes of existing blocks:

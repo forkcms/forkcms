@@ -274,6 +274,9 @@
 			<p id="extraWarningAlreadyBlock">
 				<span class="infoMessage">{$msgModuleBlockAlreadyLinked}</span>
 			</p>
+			<p id="extraWarningHomeNoBlock">
+				<span class="infoMessage">{$msgHomeNoBlock}</span>
+			</p>
 			<p>
 				<label for="extraType">{$lblType|ucfirst}</label>
 				{$ddmExtraType}

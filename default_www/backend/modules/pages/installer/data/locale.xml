@@ -187,8 +187,8 @@
         <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
       </item>
       <item type="message" name="HelpOverwrite">
-        <translation language="nl"><![CDATA[<strong>Opgelet!</strong><p>Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!</p>]]></translation>
-        <translation language="en"><![CDATA[<strong>Attention!</strong><p>Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.</p>]]></translation>
+        <translation language="nl"><![CDATA[<strong>Opgelet!</strong>Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!]]></translation>
+        <translation language="en"><![CDATA[<strong>Attention!</strong> Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.]]></translation>
       </item>
       <item type="message" name="HelpPositionsLayout">
         <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rijs toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
@@ -201,6 +201,10 @@
       <item type="message" name="HelpTemplateLocation">
 	    <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/layout/templates</code> van je thema.]]></translation>
 		<translation language="en"><![CDATA[Put your templates in the <code>core/layout/templates</code> folder of your theme.]]></translation>
+      </item>
+      <item type="message" name="HomeNoBlock">
+        <translation language="nl"><![CDATA[Er kan geen module gekoppeld worden aan de home-pagina.]]></translation>
+        <translation language="en"><![CDATA[A module can't be linked to the homepage.]]></translation>
       </item>
       <item type="message" name="IsAction">
         <translation language="nl"><![CDATA[Gebruik deze pagina als module-actie.]]></translation>

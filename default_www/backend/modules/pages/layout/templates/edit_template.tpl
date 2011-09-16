@@ -111,7 +111,7 @@
 				<li><label for="overwrite">{$chkOverwrite} {$lblOverwrite|ucfirst}</label> {$chkOverwriteError}</li>
 			</ul>
 			<div class="longHelpTxt">
-				{$msgHelpOverwrite}
+				<span class="infoMessage">{$msgHelpOverwrite}</span>
 			</div>
 		</div>
 	</div>
