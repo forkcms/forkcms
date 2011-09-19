@@ -31,20 +31,20 @@
 			{/option:!hideContentTitle}
 
 			{* Main position *}
-			{iteration:main}
-				{option:main.blockIsHTML}
+			{iteration:positionMain}
+				{option:positionMain.blockIsHTML}
 					<section class="mod">
 						<div class="inner">
 							<div class="bd content">
-								{$main.blockContent}
+								{$positionMain.blockContent}
 							</div>
 						</div>
 					</section>
-				{/option:main.blockIsHTML}
-				{option:!main.blockIsHTML}
-					{$main.blockContent}
-				{/option:!main.blockIsHTML}
-			{/iteration:main}
+				{/option:positionMain.blockIsHTML}
+				{option:!positionMain.blockIsHTML}
+					{$positionMain.blockContent}
+				{/option:!positionMain.blockIsHTML}
+			{/iteration:positionMain}
 		</section>
 
 		<footer>

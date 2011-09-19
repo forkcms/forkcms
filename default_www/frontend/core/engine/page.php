@@ -161,12 +161,12 @@ class FrontendPage extends FrontendBaseObject
 			}
 
 			// assign position to template
-			$this->tpl->assign($position, $blocks);
+			$this->tpl->assign('position' . ucfirst($position), $blocks);
 		}
 
 		// assign empty positions
 		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
-		foreach($unusedPositions as $position) $this->tpl->assign($position, array());
+		foreach($unusedPositions as $position) $this->tpl->assign('position' . ucfirst($position), array());
 
 		// only overwrite when status code is 404
 		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);

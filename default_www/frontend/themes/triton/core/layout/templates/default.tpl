@@ -28,16 +28,16 @@
 				</nav>
 
 				{* Top position *}
-				{iteration:top}
-					{option:top.blockIsHTML}
+				{iteration:positionTop}
+					{option:positionTop.blockIsHTML}
 						<div id="headerSearch">
-							{$top.blockContent}
+							{$positionTop.blockContent}
 						</div>
-					{/option:top.blockIsHTML}
+					{/option:positionTop.blockIsHTML}
 					{option:!top.blockIsHTML}
-						{$top.blockContent}
+						{$positionTop.blockContent}
 					{/option:!top.blockIsHTML}
-				{/iteration:top}
+				{/iteration:positionTop}
 
 				{* Breadcrumb *}
 				<div id="breadcrumb">
@@ -46,16 +46,16 @@
 				</div>
 
 				{* Advertisement position *}
-				{iteration:advertisement}
-					{option:advertisement.blockIsHTML}
+				{iteration:positionAdvertisement}
+					{option:positionAdvertisement.blockIsHTML}
 						<div id="headerAd">
-							{$advertisement.blockContent}
+							{$positionAdvertisement.blockContent}
 						</div>
-					{/option:advertisement.blockIsHTML}
+					{/option:positionAdvertisement.blockIsHTML}
 					{option:!advertisement.blockIsHTML}
-						{$advertisement.blockContent}
+						{$positionAdvertisement.blockContent}
 					{/option:!advertisement.blockIsHTML}
-				{/iteration:advertisement}
+				{/iteration:positionAdvertisement}
 			</div>
 
 		</header>
@@ -72,20 +72,20 @@
 					</nav>
 
 					{* Left position *}
-					{iteration:left}
-						{option:left.blockIsHTML}
+					{iteration:positionLeft}
+						{option:positionLeft.blockIsHTML}
 							<section class="mod">
 								<div class="inner">
 									<div class="bd content">
-										{$left.blockContent}
+										{$positionLeft.blockContent}
 									</div>
 								</div>
 							</section>
-						{/option:left.blockIsHTML}
+						{/option:positionLeft.blockIsHTML}
 						{option:!left.blockIsHTML}
-							{$left.blockContent}
+							{$positionLeft.blockContent}
 						{/option:!left.blockIsHTML}
-					{/iteration:left}
+					{/iteration:positionLeft}
 
 				</div>
 
@@ -100,20 +100,20 @@
 					{/option:!hideContentTitle}
 
 					{* Main position *}
-					{iteration:main}
-						{option:main.blockIsHTML}
+					{iteration:positionMain}
+						{option:positionMain.blockIsHTML}
 							<section class="mod">
 								<div class="inner">
 									<div class="bd content">
-										{$main.blockContent}
+										{$positionMain.blockContent}
 									</div>
 								</div>
 							</section>
-						{/option:main.blockIsHTML}
+						{/option:positionMain.blockIsHTML}
 						{option:!main.blockIsHTML}
-							{$main.blockContent}
+							{$positionMain.blockContent}
 						{/option:!main.blockIsHTML}
-					{/iteration:main}
+					{/iteration:positionMain}
 
 				</div>
 			</div>
