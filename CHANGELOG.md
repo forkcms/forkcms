@@ -4,6 +4,7 @@ Improvements:
 
 * Core: Upgraded jQuery to 1.6.4.
 * Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, thx to Martijn Dierckx, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
+* Core: Added a method to remove an apple-device token.
 
 Bugfixes:
 
