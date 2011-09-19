@@ -78,8 +78,6 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('email', $this->record['email'], 255);
 		if($this->user->isGod()) $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
-		$this->frm->addPassword('new_password', null, 75);
-		$this->frm->addPassword('confirm_password', null, 75);
 		$this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
@@ -92,9 +90,17 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
 
-		// disable autocomplete
-		$this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));
-		$this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
+		// check if we're god or same user
+		if(BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod())
+		{
+			// allow to set new password
+			$this->frm->addPassword('new_password', null, 75);
+			$this->frm->addPassword('confirm_password', null, 75);
+
+			// disable autocomplete
+			$this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));
+			$this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
+		}
 
 		// disable active field for current users
 		if(BackendAuthentication::getUser()->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
@@ -120,6 +126,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// assign
 		$this->tpl->assign('record', $this->record);
 		$this->tpl->assign('id', $this->id);
+
+		// assign that we're god or the same user
+		$this->tpl->assign('allowPasswordEdit', (BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod()));
 	}
 
 
