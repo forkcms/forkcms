@@ -37,7 +37,7 @@
 	<div id="tabs" class="tabs">
 		<ul>
 			<li><a href="#tabProfile">{$lblProfile|ucfirst}</a></li>
-			<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>
+			{option:allowPasswordEdit}<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>{/option:allowPasswordEdit}
 			<li><a href="#tabInterface">{$lblInterface|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 		</ul>
@@ -100,6 +100,7 @@
 			</div>
 		</div>
 
+		{option:allowPasswordEdit}
 		<div id="tabPassword">
 			<div class="subtleBox">
 				<div class="heading">
@@ -130,6 +131,7 @@
 				</div>
 			</div>
 		</div>
+		{/option:allowPasswordEdit}
 
 		<div id="tabPermissions">
 			<div class="subtleBox">
