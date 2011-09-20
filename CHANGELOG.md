@@ -4,7 +4,10 @@ Improvements:
 
 * Core: Upgraded jQuery to 1.6.4.
 * Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, thx to Martijn Dierckx, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
+* Core: Added an api-method to remove an apple-device token.
 * Core: Emails are now send base64 encoded. This to prevent that linebreaks, which are added when the max text line length is reached, corrupt the content.
+* Blog: Added an api-method to grab a single comment.
+* Blog: When calling blog.comments.UpdateStatus you can pass multiple ids by seperating them with a ,.
 * Tags: Overview is now sorted alphabetically.
 
 Bugfixes:

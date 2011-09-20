@@ -76,6 +76,58 @@ class BackendBlogAPI
 
 
 	/**
+	 * Get a single comment
+	 *
+	 * @return	array	   An array with the comment.
+	 * @param	int $id	 The id of the comment.
+	 */
+	public static function commentsGetById($id)
+	{
+		// authorize
+		if(API::authorize())
+		{
+			// get comment
+			$comment = (array) BackendBlogModel::getComment($id);
+
+			// init var
+			$return = array('comments' => null);
+
+			// any comment found?
+			if(empty($comment)) return $return;
+
+			// create array
+			$item['comment'] = array();
+
+			// article meta data
+			$item['comment']['article']['@attributes']['id'] = $comment['post_id'];
+			$item['comment']['article']['@attributes']['lang'] = $comment['language'];
+			$item['comment']['article']['title'] = $comment['post_title'];
+			$item['comment']['article']['url'] = SITE_URL . BackendModel::getURLForBlock('blog', 'detail', $comment['language']) . '/' . $comment['post_url'];
+
+			// set attributes
+			$item['comment']['@attributes']['id'] = $comment['id'];
+			$item['comment']['@attributes']['created_on'] = date('c', $comment['created_on']);
+			$item['comment']['@attributes']['status'] = $comment['status'];
+
+			// set content
+			$item['comment']['text'] = $comment['text'];
+			$item['comment']['url'] = $item['comment']['article']['url'] . '#comment-' . $comment['id'];
+
+			// author data
+			$item['comment']['author']['@attributes']['email'] = $comment['email'];
+			$item['comment']['author']['name'] = $comment['author'];
+			$item['comment']['author']['website'] = $comment['website'];
+
+			// add
+			$return['comments'][] = $item;
+
+			// return
+			return $return;
+		}
+	}
+
+
+	/**
 	 * Update a comment
 	 *
 	 * @return	void
@@ -133,7 +185,7 @@ class BackendBlogAPI
 		if(API::authorize())
 		{
 			// redefine
-			if(!is_array($id)) $id = array($id);
+			if(!is_array($id)) $id = (array) explode(',', $ids);
 			$status = (string) $status;
 
 			// update statuses
