@@ -1,3 +1,10 @@
+2.6.10 (xxxx-xx-xx)
+--
+Improvements:
+
+* Search: IP address is no longer shown in statistics.
+
+
 2.6.9 (2011-09-20)
 --
 Improvements:

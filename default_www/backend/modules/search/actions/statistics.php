@@ -46,14 +46,12 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 		$this->dataGrid->setColumnsHidden('data');
 
 		// create column
-		$this->dataGrid->addColumn('ip', BL::lbl('IP'));
 		$this->dataGrid->addColumn('referrer', BL::lbl('Referrer'));
 
 		// header labels
 		$this->dataGrid->setHeaderLabels(array('time' => ucfirst(BL::lbl('SearchedOn'))));
 
 		// set column function
-		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setIp'), '[data]', 'ip');
 		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
 		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[time]'), 'time', true);
 
@@ -72,22 +70,6 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	{
 		// assign the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
-	}
-
-
-	/**
-	 * Set column ip
-	 *
-	 * @return	string
-	 * @param	string $data	The source data.
-	 */
-	public static function setIp($data)
-	{
-		// unserialize
-		$data = unserialize($data);
-
-		// return correct data
-		return (isset($data['server']['HTTP_X_FORWARDED_FOR'])) ? $data['server']['HTTP_X_FORWARDED_FOR'] : $data['server']['REMOTE_ADDR'];
 	}
 
 
