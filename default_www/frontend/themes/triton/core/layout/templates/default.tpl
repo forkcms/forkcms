@@ -34,9 +34,9 @@
 							{$positionTop.blockContent}
 						</div>
 					{/option:positionTop.blockIsHTML}
-					{option:!top.blockIsHTML}
+					{option:!positionTop.blockIsHTML}
 						{$positionTop.blockContent}
-					{/option:!top.blockIsHTML}
+					{/option:!positionTop.blockIsHTML}
 				{/iteration:positionTop}
 
 				{* Breadcrumb *}
@@ -52,9 +52,9 @@
 							{$positionAdvertisement.blockContent}
 						</div>
 					{/option:positionAdvertisement.blockIsHTML}
-					{option:!advertisement.blockIsHTML}
+					{option:!positionAdvertisement.blockIsHTML}
 						{$positionAdvertisement.blockContent}
-					{/option:!advertisement.blockIsHTML}
+					{/option:!positionAdvertisement.blockIsHTML}
 				{/iteration:positionAdvertisement}
 			</div>
 
@@ -82,9 +82,9 @@
 								</div>
 							</section>
 						{/option:positionLeft.blockIsHTML}
-						{option:!left.blockIsHTML}
+						{option:!positionLeft.blockIsHTML}
 							{$positionLeft.blockContent}
-						{/option:!left.blockIsHTML}
+						{/option:!positionLeft.blockIsHTML}
 					{/iteration:positionLeft}
 
 				</div>
@@ -110,9 +110,9 @@
 								</div>
 							</section>
 						{/option:positionMain.blockIsHTML}
-						{option:!main.blockIsHTML}
+						{option:!positionMain.blockIsHTML}
 							{$positionMain.blockContent}
-						{/option:!main.blockIsHTML}
+						{/option:!positionMain.blockIsHTML}
 					{/iteration:positionMain}
 
 				</div>
