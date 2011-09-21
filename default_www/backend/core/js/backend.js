@@ -1458,13 +1458,13 @@ jsBackend.tinyMCE =
 		// replace target="_blank" with class="targetBlank"
 		$tmp.find('a[target=_blank]').addClass('targetBlank').removeAttr('target');
 
-		// resave
-		object.content = utils.string.xhtml($tmp.html());
+		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
+		editor.setContent(utils.string.xhtml($tmp.html()));
 	},
 
 
 	// format text (before placing it in the editor)
-	beforeLoad: function(editor, object)
+	loadContent: function(editor, object)
 	{
 		// create dom tree
 		var $tmp = $('<div />').html(object.content);
@@ -1472,8 +1472,11 @@ jsBackend.tinyMCE =
 		// replace target="_blank" with class="targetBlank"
 		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
 
-		// resave
-		object.content = utils.string.xhtml($tmp.html());
+		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
+		editor.setContent(utils.string.xhtml($tmp.html()));
+
+		// check content
+		jsBackend.tinyMCE.checkContent(editor);
 	},
 
 

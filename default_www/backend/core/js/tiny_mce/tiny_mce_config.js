@@ -84,10 +84,9 @@ tinyMCE.init(
 	{
 		// catch some events
 		editor.onSaveContent.add(jsBackend.tinyMCE.afterSave);
-		editor.onBeforeSetContent.add(jsBackend.tinyMCE.beforeLoad);
 
 		// set content
-		editor.onLoadContent.add(jsBackend.tinyMCE.checkContent);
+		editor.onLoadContent.add(jsBackend.tinyMCE.loadContent);
 
 		// add event
 		editor.onKeyUp.add(function(editor, event)

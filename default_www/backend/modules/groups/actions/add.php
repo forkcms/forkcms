@@ -593,6 +593,9 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// init
+			$bundledActionPermissions = array();
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
