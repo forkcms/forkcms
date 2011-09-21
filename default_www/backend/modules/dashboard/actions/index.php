@@ -130,8 +130,8 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// build item
 						$item = array('template' => $templatePath, 'module' => $module, 'widget' => $widgetName, 'title' => $title, 'hidden' => $hidden);
 
-						// add on new position
-						if($position === null) $this->widgets[$column][] = $item;
+						// add on new position if no position is set or if the position is already used
+						if($position === null || isset($this->widgets[$column][$position])) $this->widgets[$column][] = $item;
 
 						// add on requested position
 						else $this->widgets[$column][$position] = $item;
