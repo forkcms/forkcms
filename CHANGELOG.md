@@ -5,6 +5,11 @@ Improvements:
 * Search: IP address is no longer shown in statistics.
 * Core: Improved config to let TinyMCE cleanup Internet Explorer HTML.
 
+Bugfixes:
+
+* Groups: when no bundled actions were available a PHP notice was thrown.
+* Dashboard: validate if a position is already taken.
+
 
 2.6.9 (2011-09-20)
 --
