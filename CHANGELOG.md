@@ -3,6 +3,7 @@
 Improvements:
 
 * Search: IP address is no longer shown in statistics.
+* Core: Improved config to let TinyMCE cleanup Internet Explorer HTML.
 
 
 2.6.9 (2011-09-20)
