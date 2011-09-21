@@ -4,6 +4,10 @@ Improvements:
 
 * Search: IP address is no longer shown in statistics.
 
+Bugfixes:
+
+* Groups: when no bundled actions were available a PHP notice was thrown.
+
 
 2.6.9 (2011-09-20)
 --
