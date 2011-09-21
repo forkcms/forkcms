@@ -8,6 +8,7 @@ Bugfixes:
 
 * Groups: when no bundled actions were available a PHP notice was thrown.
 * Dashboard: validate if a position is already taken.
+* Pages: sort sequences after checking its existence.
 
 
 2.6.9 (2011-09-20)
