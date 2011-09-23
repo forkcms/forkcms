@@ -102,20 +102,23 @@ class FrontendModel
 	 * @param	string $module				The module to create the URL for.
 	 * @param	array $data					The records to convert the URL for.
 	 * @param	string[optional] $page		The page to link to.
+	 * @param	string[optional] $fullURL	The full url to refer to.
+	 * @param	string[optional] $fetchURL	The url to fetch the data from
 	 */
-	public static function buildURL($module, $data, $action = 'detail')
+	public static function buildActionURL($data, $module, $action = 'detail', $fullURL = 'full_url', $fetchURL = 'url')
 	{
 		// no entries
 		if(empty($data)) return array();
 
-		// is the provided data an array?
-		if(isset($data[0]) && is_array($data[0]))
-		{
-			// loop the data to add the link
-			foreach($data as &$item) $item = self::buildURL($module, $item, $action);
-		}
-		// no array
-		else $data['full_url'] = FrontendNavigation::getURLForBlock($module, $action) . '/' . $data['url'];
+		// get the last array element without screwing up the initial array
+		$tempArray = $data;
+		$lastElement = array_pop($tempArray);
+
+		// if the provided last element is an array, recursivly build the url
+		if(is_array($lastElement) && !isset($data[$fetchURL])) foreach($data as &$item) $item = self::buildActionURL($item, $module, $action, $fullURL, $fetchURL);
+
+		// this is not a multidimensional array, set the full url if the fetch url is given
+		elseif(isset($data[$fetchURL])) $data[$fullURL] = FrontendNavigation::getURLForBlock($module, $action) . '/' . $data[$fetchURL];
 
 		// return
 		return $data;

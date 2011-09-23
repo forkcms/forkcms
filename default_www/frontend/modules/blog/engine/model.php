@@ -74,17 +74,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// no results?
 		if(empty($items)) return array();
 
-		// init var
-		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
-		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+		// urls
+		$items = FrontendModel::buildActionURL($items, 'blog');
+		$items = FrontendModel::buildActionURL($items, 'blog', 'category', 'category_full_url', 'category_url');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// URLs
-			$items[$key]['full_url'] = $link . '/' . $row['url'];
-			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
-
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
@@ -193,17 +189,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// no results?
 		if(empty($items)) return array();
 
-		// init var
-		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
-		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+		// urls
+		$items = FrontendModel::buildActionURL($items, 'blog');
+		$items = FrontendModel::buildActionURL($items, 'blog', 'category', 'category_full_url', 'category_url');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// URLs
-			$items[$key]['full_url'] = $link . '/' . $row['url'];
-			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
-
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
@@ -271,15 +263,11 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// no results?
 		if(empty($items)) return array();
 
-		// init var
-		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
+		$items = FrontendModel::buildActionURL($items, 'blog');
 
 		// loop
 		foreach($items as $key => $row)
 		{
-			// URLs
-			$items[$key]['full_url'] = $link . '/' . $row['url'];
-
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
@@ -431,14 +419,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 																array('active', 'N'));
 
 		// has items
-		if(!empty($items))
-		{
-			// init var
-			$link = FrontendNavigation::getURLForBlock('blog', 'detail');
-
-			// reset url
-			foreach($items as &$row) $row['full_url'] = $link . '/' . $row['url'];
-		}
+		if(!empty($items)) $items = FrontendModel::buildActionURL($items, 'blog');
 
 		// return
 		return $items;
@@ -588,11 +569,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 																LIMIT ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit), 'id');
 
-		// loop items
-		foreach($items as &$row)
-		{
-			$row['full_url'] = $link . '/' . $row['url'];
-		}
+		// urls
+		$items = FrontendModel::buildActionURL($items, 'blog');
 
 		// return
 		return $items;
@@ -775,11 +753,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' . implode(',', $ids) . ')',
 																array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') . ':00'), 'id');
 
-		// prepare items for search
-		foreach($items as &$item)
-		{
-			$item['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $item['url'];
-		}
+		// urls
+		$items = FrontendModel::buildActionURL($items, 'blog');
 
 		// return
 		return $items;

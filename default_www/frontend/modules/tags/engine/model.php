@@ -100,17 +100,10 @@ class FrontendTagsModel
 		if(empty($linkedTags)) return $return;
 
 		// create link
-		$tagLink = FrontendNavigation::getURLForBlock('tags', 'detail');
+		$linkedTags = FrontendModel::buildActionURL($linkedTags, 'tags');
 
 		// loop tags
-		foreach($linkedTags as $row)
-		{
-			// add full URL
-			$row['full_url'] = $tagLink . '/' . $row['url'];
-
-			// add
-			$return[] = $row;
-		}
+		foreach($linkedTags as $row) $return[] = $row;
 
 		// return
 		return $return;
@@ -146,17 +139,10 @@ class FrontendTagsModel
 		if(empty($linkedTags)) return $return;
 
 		// create link
-		$tagLink = FrontendNavigation::getURLForBlock('tags', 'detail');
+		$linkedTags = FrontendModel::buildActionURL($linkedTags, 'tags');
 
 		// loop tags
-		foreach($linkedTags as $row)
-		{
-			// add full URL
-			$row['full_url'] = $tagLink . '/' . $row['url'];
-
-			// add
-			$return[$row['other_id']][] = $row;
-		}
+		foreach($linkedTags as $row) $return[$row['other_id']][] = $row;
 
 		// return
 		return $return;
