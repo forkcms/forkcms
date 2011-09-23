@@ -324,7 +324,6 @@ class SpoonICalItem
 	{
 		$this->uid = (string) $value;
 	}
-
 }
 
 

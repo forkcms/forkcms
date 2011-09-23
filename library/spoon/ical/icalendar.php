@@ -18,9 +18,6 @@
 /** Spoon class */
 require_once 'spoon/spoon.php';
 
-/** Spoon ICalendar execption class */
-require_once 'spoon/webservices/icalendar/exception.php';
-
 
 /**
  * This base class provides all the methods used by iCalendars
@@ -171,7 +168,7 @@ class SpoonICalendar
 	{
 		$this->version = (string) $value;
 	}
-	
+
 }
 
 ?>
