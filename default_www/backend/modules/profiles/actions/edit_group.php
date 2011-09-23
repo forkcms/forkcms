@@ -118,7 +118,7 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 			// name filled in?
 			if($txtName->isFilled(BL::getError('NameIsRequired')))
 			{
-				//name already exists?
+				// name already exists?
 				if(BackendProfilesModel::existsGroupName($txtName->getValue(), $this->id))
 				{
 					// set error
