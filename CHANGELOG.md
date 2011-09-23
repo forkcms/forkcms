@@ -4,6 +4,7 @@ Improvements:
 
 * Search: IP address is no longer shown in statistics.
 * Core: Improved config to let TinyMCE cleanup Internet Explorer HTML.
+* Search: Search won't show the 404 page anymore, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/186-268-search-finds-404-page.
 
 Bugfixes:
 
