@@ -96,6 +96,30 @@ class FrontendModel
 
 
 	/**
+	 * Builds a detail url
+	 *
+	 * @return	void
+	 * @param	string $module				The module to create the URL for.
+	 * @param	array $data					The records to convert the URL for.
+	 * @param	string[optional] $page		The page to link to.
+	 */
+	public static function buildURL($module, $data, $page = 'detail')
+	{
+		// is the provided data an array?
+		if(isset($data[0]) && is_array($data[0]))
+		{
+			// loop the data to add the link
+			foreach($data as &$item) $item = self::buildURL($item, $page);
+		}
+		// no array
+		else $data['full_url'] = FrontendNavigation::getURLForBlock($module, $page) . '/' . $data['url'];
+
+		// return
+		return $data;
+	}
+
+
+	/**
 	 * Generate a totally random but readable/speakable password
 	 *
 	 * @return	string
