@@ -12,14 +12,6 @@
 class BackendExtensionsModules extends BackendBaseActionIndex
 {
 	/**
-	 * Modules
-	 *
-	 * @var	array
-	 */
-	private $modules;
-
-
-	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -50,13 +42,20 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// create datagrid
 		$this->dataGrid = new BackendDataGridArray(BackendExtensionsModel::getModules());
 
+		// header labels
+		$this->dataGrid->setHeaderLabels(array('active' => ''));
+
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('name'));
 
-		// @todo add version number (problem => stored in the info.xml)
+		// order of columns
+		$this->dataGrid->setColumnsSequence(array('name', 'description', 'version', 'active'));
 
 		// set colum URLs
 		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('module_detail') . '&amp;module=[name]');
+
+		// clean status message
+		$this->dataGrid->setColumnFunction(array(__CLASS__, 'parseModuleStatus'), '[active]', 'active');
 
 		// add edit column
 		$this->dataGrid->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('module_detail') . '&amp;module=[name]', BL::lbl('Details'));
@@ -72,6 +71,19 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 	{
 		// parse data grid
 		$this->tpl->assign('dataGrid', $this->dataGrid->getContent());
+	}
+
+
+	/**
+	 * Parse the status of a module in the datagrid.
+	 *
+	 * @return	string
+	 * @param	string $status
+	 */
+	public static function parseModuleStatus($status)
+	{
+		if($status == 'Y') return BL::getLabel('Active');
+		else return BL::getLabel('InActive');
 	}
 }
 

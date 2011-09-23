@@ -48,12 +48,34 @@ class BackendExtensionsModel
 	public static function getModules()
 	{
 		// get installed modules
-		$modules = (array) BackendModel::getDB()->getRecords('SELECT name, description, active FROM modules ORDER BY name ASC');
+		$modules = (array) BackendModel::getDB()->getRecords('SELECT name, active FROM modules ORDER BY name ASC');
 
-		// remove ignore modules
-		foreach($modules as $i => $module)
+		// get more information for each module
+		foreach($modules as $i => &$module)
 		{
+			// skip ignored modules
 			if(in_array($module['name'], self::$ignoredModules)) unset($modules[$i]);
+
+			// translate module name
+			$module['name'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($module['name'])));
+
+			// init fields (we fill the data later)
+			$module['description'] = '';
+			$module['version'] = '';
+
+			// get extra info from the info.xml
+			$infoXml = @simplexml_load_file(BACKEND_MODULES_PATH . '/' . $module['name'] . '/info.xml', null, LIBXML_NOCDATA);
+
+			// we need a validate XML
+			if($infoXml !== false)
+			{
+				// process XML to a clean array
+				$info = self::processInformationXml($infoXml);
+
+				// set fields if they were found in the XML
+				if(isset($info['description'])) $module['description'] = BackendDataGridFunctions::truncate($info['description'], 50);
+				if(isset($info['version'])) $module['version'] = $info['version'];
+			}
 		}
 
 		//  managable modules
