@@ -105,11 +105,14 @@ class FrontendModel
 	 */
 	public static function buildURL($module, $data, $page = 'detail')
 	{
+		// no entries
+		if(empty($data)) return array();
+
 		// is the provided data an array?
 		if(isset($data[0]) && is_array($data[0]))
 		{
 			// loop the data to add the link
-			foreach($data as &$item) $item = self::buildURL($item, $page);
+			foreach($data as &$item) $item = self::buildURL($module, $item, $page);
 		}
 		// no array
 		else $data['full_url'] = FrontendNavigation::getURLForBlock($module, $page) . '/' . $data['url'];
