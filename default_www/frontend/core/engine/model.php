@@ -112,10 +112,10 @@ class FrontendModel
 
 		// get the last array element without screwing up the initial array
 		$tempArray = $data;
-		$lastElement = array_pop($tempArray);
+		array_multisort($tempArray);
 
 		// if the provided last element is an array, recursivly build the url
-		if(is_array($lastElement) && !isset($data[$fetchURL]))
+		if(isset($tempArray[0]) && is_array($tempArray[0]))
 			foreach($data as &$item) $item = self::buildActionURL($item, $module, $action, $fullURL, $fetchURL);
 
 		// this is not a multidimensional array, set the full url if the fetch url is given
