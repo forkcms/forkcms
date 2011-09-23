@@ -1199,11 +1199,11 @@ class BackendPagesModel
 			}
 		}
 
-		// sort the sequences
-		ksort($sequences['pages']);
-
 		if(isset($sequences['pages']))
 		{
+			// sort the sequences
+			ksort($sequences['pages']);
+
 			// loop to add the titles in the correct order
 			foreach($sequences['pages'] as $URL => $id)
 			{
