@@ -103,7 +103,7 @@ class FrontendModel
 	 * @param	array $data					The records to convert the URL for.
 	 * @param	string[optional] $page		The page to link to.
 	 */
-	public static function buildURL($module, $data, $page = 'detail')
+	public static function buildURL($module, $data, $action = 'detail')
 	{
 		// no entries
 		if(empty($data)) return array();
@@ -112,10 +112,10 @@ class FrontendModel
 		if(isset($data[0]) && is_array($data[0]))
 		{
 			// loop the data to add the link
-			foreach($data as &$item) $item = self::buildURL($module, $item, $page);
+			foreach($data as &$item) $item = self::buildURL($module, $item, $action);
 		}
 		// no array
-		else $data['full_url'] = FrontendNavigation::getURLForBlock($module, $page) . '/' . $data['url'];
+		else $data['full_url'] = FrontendNavigation::getURLForBlock($module, $action) . '/' . $data['url'];
 
 		// return
 		return $data;
