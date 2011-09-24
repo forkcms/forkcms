@@ -112,7 +112,9 @@ class FrontendModel
 
 		// if the provided last element is an array, recursivly build the url
 		if(is_array(current($data)))
+		{
 			foreach($data as &$item) $item = self::buildActionURL($item, $module, $action, $fullURL, $fetchURL);
+		}
 
 		// this is not a multidimensional array, set the full url if the fetch url is given
 		elseif(isset($data[$fetchURL])) $data[$fullURL] = FrontendNavigation::getURLForBlock($module, $action) . '/' . $data[$fetchURL];
