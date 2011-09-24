@@ -2081,6 +2081,9 @@ class BackendPagesModel
 													WHERE template_id = ? AND status IN (?, ?)',
 													array($oldTemplateId, 'active', 'draft'));
 
+		// there is no active/draft page with the old template id
+		if(empty($pages)) return;
+
 		// loop pages
 		foreach($pages as $page)
 		{
