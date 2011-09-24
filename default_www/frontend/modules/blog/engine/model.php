@@ -569,11 +569,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 																LIMIT ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit), 'id');
 
-		// urls
-		$items = FrontendModel::buildActionURL($items, 'blog');
-
-		// return
-		return $items;
+		// return with urls
+		return FrontendModel::buildActionURL($items, 'blog');
 	}
 
 
@@ -753,11 +750,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' . implode(',', $ids) . ')',
 																array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') . ':00'), 'id');
 
-		// urls
-		$items = FrontendModel::buildActionURL($items, 'blog');
-
-		// return
-		return $items;
+		// return with urls
+		return FrontendModel::buildActionURL($items, 'blog');
 	}
 }
 

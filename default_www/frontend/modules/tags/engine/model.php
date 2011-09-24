@@ -86,9 +86,6 @@ class FrontendTagsModel
 		$module = (string) $module;
 		$otherId = (int) $otherId;
 
-		// init var
-		$return = array();
-
 		// get tags
 		$linkedTags = (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url
 																	FROM modules_tags AS mt
@@ -97,16 +94,10 @@ class FrontendTagsModel
 																	array($module, $otherId));
 
 		// return
-		if(empty($linkedTags)) return $return;
+		if(empty($linkedTags)) return array();
 
-		// create link
-		$linkedTags = FrontendModel::buildActionURL($linkedTags, 'tags');
-
-		// loop tags
-		foreach($linkedTags as $row) $return[] = $row;
-
-		// return
-		return $return;
+		// create link and return
+		return FrontendModel::buildActionURL($linkedTags, 'tags');
 	}
 
 
