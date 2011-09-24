@@ -1,6 +1,8 @@
 .project
-.cache
+./cache
 .buildpath
 .settings
 .*.swp
 Capfile
+default_www/backend/cache/*
+
