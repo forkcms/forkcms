@@ -418,11 +418,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 																ORDER BY i.publish_on DESC',
 																array('active', 'N'));
 
-		// has items
-		if(!empty($items)) $items = FrontendModel::buildActionURL($items, 'blog');
-
-		// return
-		return $items;
+		// build url
+		return FrontendModel::buildActionURL($items, 'blog');
 	}
 
 

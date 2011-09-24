@@ -93,9 +93,6 @@ class FrontendTagsModel
 																	WHERE mt.module = ? AND mt.other_id = ?',
 																	array($module, $otherId));
 
-		// return
-		if(empty($linkedTags)) return array();
-
 		// create link and return
 		return FrontendModel::buildActionURL($linkedTags, 'tags');
 	}
