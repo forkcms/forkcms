@@ -96,12 +96,12 @@ class FrontendModel
 
 
 	/**
-	 * Builds a detail url
+	 * Builds an action URL for multiple records.
 	 *
 	 * @return	void
-	 * @param	string $module				The module to create the URL for.
 	 * @param	array $data					The records to convert the URL for.
-	 * @param	string[optional] $page		The page to link to.
+	 * @param	string $module				The module to create the URL for.
+	 * @param	string[optional] $action	The action to link to.
 	 * @param	string[optional] $fullURL	The full url to refer to.
 	 * @param	string[optional] $fetchURL	The url to fetch the data from
 	 */
