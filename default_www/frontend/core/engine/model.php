@@ -98,7 +98,7 @@ class FrontendModel
 	/**
 	 * Builds an action URL for multiple records.
 	 *
-	 * @return	void
+	 * @return	array
 	 * @param	array $data					The records to convert the URL for.
 	 * @param	string $module				The module to create the URL for.
 	 * @param	string[optional] $action	The action to link to.
