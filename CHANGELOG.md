@@ -1,3 +1,10 @@
+2.6.11 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Made the parent_id available in the template.
+
+
 2.6.10 (2011-09-27)
 --
 Improvements:
