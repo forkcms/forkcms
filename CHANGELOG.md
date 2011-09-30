@@ -4,6 +4,7 @@ Improvements:
 
 * Core: Made the parent_id available in the template.
 * Core: Upgraded TinyMCE to 3.4.6
+* Core: Made the Facebook integration work with the signed requests.
 
 Bugfixes:
 
