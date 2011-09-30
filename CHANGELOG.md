@@ -5,6 +5,9 @@ Improvements:
 * Core: Made the parent_id available in the template.
 * Core: Upgraded TinyMCE to 3.4.6
 
+Bugfixes:
+
+* Core: re-added some missing locale into the imagemanager, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/185-268-moxicode-unassigned-literals.
 
 
 2.6.10 (2011-09-27)
