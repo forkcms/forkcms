@@ -3,6 +3,8 @@
 Improvements:
 
 * Core: Made the parent_id available in the template.
+* Core: Upgraded TinyMCE to 3.4.6
+
 
 
 2.6.10 (2011-09-27)
