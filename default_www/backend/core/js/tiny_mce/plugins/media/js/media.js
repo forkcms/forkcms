@@ -8,6 +8,33 @@
 		return document.getElementById(id);
 	}
 
+	function clone(obj) {
+		var i, len, copy, attr;
+
+		if (null == obj || "object" != typeof obj)
+			return obj;
+
+		// Handle Array
+		if ('length' in obj) {
+			copy = [];
+
+			for (i = 0, len = obj.length; i < len; ++i) {
+				copy[i] = clone(obj[i]);
+			}
+
+			return copy;
+		}
+
+		// Handle Object
+		copy = {};
+		for (attr in obj) {
+			if (obj.hasOwnProperty(attr))
+				copy[attr] = clone(obj[attr]);
+		}
+
+		return copy;
+	}
+
 	function getVal(id) {
 		var elm = get(id);
 
@@ -77,9 +104,13 @@
 			if (isVisible('filebrowser_poster'))
 				get('video_poster').style.width = '220px';
 
-			this.data = tinyMCEPopup.getWindowArg('data');
+			editor.dom.setOuterHTML(get('media_type'), this.getMediaTypeHTML(editor));
+
+			this.data = clone(tinyMCEPopup.getWindowArg('data'));
 			this.dataToForm();
 			this.preview();
+
+			updateColor('bgcolor_pick', 'bgcolor');
 		},
 
 		insert : function() {
@@ -97,7 +128,7 @@
 		},
 
 		moveStates : function(to_form, field) {
-			var data = this.data, editor = this.editor, data = this.data,
+			var data = this.data, editor = this.editor,
 				mediaPlugin = editor.plugins.media, ext, src, typeInfo, defaultStates, src;
 
 			defaultStates = {
@@ -209,6 +240,7 @@
 			get('shockwave_options').style.display = 'none';
 			get('windowsmedia_options').style.display = 'none';
 			get('realmedia_options').style.display = 'none';
+			get('embeddedaudio_options').style.display = 'none';
 
 			if (get(data.type + '_options'))
 				get(data.type + '_options').style.display = 'block';
@@ -222,6 +254,7 @@
 			setOptions('realmedia', 'autostart,loop,autogotourl,center,imagestatus,maintainaspect,nojava,prefetch,shuffle,console,controls,numloop,scriptcallbacks');
 			setOptions('video', 'poster,autoplay,loop,muted,preload,controls');
 			setOptions('audio', 'autoplay,loop,preload,controls');
+			setOptions('embeddedaudio', 'autoplay,loop,controls');
 			setOptions('global', 'id,name,vspace,hspace,bgcolor,align,width,height');
 
 			if (to_form) {
@@ -252,7 +285,7 @@
 					if (data.type == 'flash') {
 						tinymce.each(editor.getParam('flash_video_player_flashvars', {url : '$url', poster : '$poster'}), function(value, name) {
 							if (value == '$url')
-								data.params.src = parseQueryParams(data.params.flashvars)[name] || data.params.src;
+								data.params.src = parseQueryParams(data.params.flashvars)[name] || data.params.src || '';
 						});
 					}
 
@@ -260,7 +293,18 @@
 				}
 			} else {
 				src = getVal("src");
-	
+
+				// YouTube *NEW*
+				if (src.match(/youtu.be\/[a-z1-9.-_]+/)) {
+					data.width = 425;
+					data.height = 350;
+					data.params.frameborder = '0';
+					data.type = 'iframe';
+					src = 'http://www.youtube.com/embed/' + src.match(/youtu.be\/([a-z1-9.-_]+)/)[1];
+					setVal('src', src);
+					setVal('media_type', data.type);
+				}
+
 				// YouTube
 				if (src.match(/youtube.com(.+)v=([^&]+)/)) {
 					data.width = 425;
@@ -331,7 +375,7 @@
 				this.panel = 'source';
 			} else {
 				if (this.panel == 'source') {
-					this.data = this.editor.plugins.media.htmlToData(getVal('source'));
+					this.data = clone(this.editor.plugins.media.htmlToData(getVal('source')));
 					this.dataToForm();
 					this.panel = '';
 				}
@@ -379,6 +423,26 @@
 			}
 
 			return "";
+		},
+
+		getMediaTypeHTML : function(editor) {
+			var html = "";
+			html += '<select id="media_type" name="media_type" onchange="Media.formToData(\'type\');">';
+			html += '<option value="video">HTML5 Video</option>';
+			html += '<option value="audio">HTML5 Audio</option>';
+			html += '<option value="flash">Flash</option>';
+			html += '<option value="quicktime">QuickTime</option>';
+			html += '<option value="shockwave">Shockwave</option>';
+			html += '<option value="windowsmedia">Windows Media</option>';
+			html += '<option value="realmedia">Real Media</option>';
+			html += '<option value="iframe">Iframe</option>';
+
+			if (editor.getParam('media_embedded_audio', false)) {
+				html += '<option value="embeddedaudio">Embedded Audio</option>';
+			}
+			
+			html += '</select>';
+			return html;
 		}
 	};
 

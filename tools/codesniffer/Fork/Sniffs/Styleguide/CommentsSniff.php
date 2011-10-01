@@ -10,7 +10,7 @@ class Fork_Sniffs_Styleguide_CommentsSniff implements PHP_CodeSniffer_Sniff
 {
 	public function register()
 	{
-		// register on open en clsong PHP-tag
+		// register on comments
 		return array(T_COMMENT);
 	}
 
