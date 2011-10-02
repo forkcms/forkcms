@@ -396,7 +396,7 @@ class BackendBlogModel
 		// we should include the count
 		if($includeCount)
 		{
-			return (array) $db->getPairs('SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
+			return (array) $db->getPairs('SELECT i.id, CONCAT(i.title, " (", COUNT(p.category_id) ,")") AS title
 															FROM blog_categories AS i
 															LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.language = p.language AND p.status = ?
 															WHERE i.language = ?
@@ -895,7 +895,7 @@ class BackendBlogModel
 		{
 			// get the ids
 			$itemIds = array_keys($items);
-			
+
 			// get the unique languages
 			$languages = array_unique(array_values($items));
 

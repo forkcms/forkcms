@@ -484,7 +484,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('manage_users', array('Deny', 'Allow'));
 		$this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
 		$this->tpl->assign('permissions', $permissionBoxes);
-		$this->tpl->assign('widgets', isset($widgets) ?  $widgets : false);
+		$this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
 	}
 
 
@@ -645,11 +645,13 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 
 			// create dashboard sequence
 			$this->dashboardSequence[$widget['module']] += array(
-			                                                   $widget['widget'] => array(
-			                                                                            'column' => $instance->getColumn(),
-			                                                                            'position' => (int) $instance->getPosition(),
-			                                                                            'hidden' => false,
-			                                                                            'present' => false));
+																$widget['widget'] => array(
+																						'column' => $instance->getColumn(),
+																						'position' => (int) $instance->getPosition(),
+																						'hidden' => false,
+																						'present' => false
+																					)
+															);
 
 			// loop through selected widgets
 			foreach($widgetPresets as $preset)
@@ -726,11 +728,13 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 
 								 	// add widget
 								 	$userSequences[$user['id']][$widget['module']] += array(
-						                                                     $widget['widget'] => array(
-						                                                                              'column' => $instance->getColumn(),
-						                                                                              'position' => (int) $instance->getPosition(),
-						                                                                              'hidden' => false,
-						                                                                              'present' => true));
+																							$widget['widget'] => array(
+																													'column' => $instance->getColumn(),
+																													'position' => (int) $instance->getPosition(),
+																													'hidden' => false,
+																													'present' => true
+																												)
+																						);
 								}
 							}
 						}

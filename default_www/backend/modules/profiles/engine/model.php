@@ -351,9 +351,9 @@ class BackendProfilesModel
 	public static function getSetting($id, $name)
 	{
 		return unserialize((string) BackendModel::getDB()->getVar('SELECT ps.value
-		                                                           FROM profiles_settings AS ps
-		                                                           WHERE ps.profile_id = ? AND ps.name = ?',
-		                                                          array((int) $id, (string) $name)));
+																	FROM profiles_settings AS ps
+																	WHERE ps.profile_id = ? AND ps.name = ?',
+																	array((int) $id, (string) $name)));
 	}
 
 

@@ -632,18 +632,18 @@ class Facebook
 		{
 			list($encodedSignature, $payload) = explode('.', $_COOKIE[$cookieNameSignedRequest], 2);
 
-		    // decode the data
-		    $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+			// decode the data
+			$data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
 
-		    try
-		    {
+			try
+			{
 				$accessToken = $this->getAccessToken($data['code'], '');
 				$this->setToken($accessToken);
-		    }
-		    catch(FacebookException $e)
-		    {
-		    	if(substr_count($e->getMessage(), 'Code was invalid or expired.')) return $data;
-		    }
+			}
+			catch(FacebookException $e)
+			{
+				if(substr_count($e->getMessage(), 'Code was invalid or expired.')) return $data;
+			}
 		}
 
 		// non signed cookie

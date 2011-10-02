@@ -93,8 +93,10 @@ class FrontendProfilesAuthentication
 		$encryptedPassword = FrontendProfilesModel::getEncryptedString($password, FrontendProfilesModel::getSetting($profileId, 'salt'));
 
 		// get the status
-		$loginStatus = FrontendModel::getDB()->getVar('SELECT p.status FROM profiles AS p WHERE p.email = ? AND p.password = ?',
-		                                              array($email, $encryptedPassword));
+		$loginStatus = FrontendModel::getDB()->getVar('SELECT p.status
+														FROM profiles AS p
+														WHERE p.email = ? AND p.password = ?',
+														array($email, $encryptedPassword));
 
 		// return
 		return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;

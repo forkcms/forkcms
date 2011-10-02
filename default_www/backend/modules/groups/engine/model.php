@@ -17,10 +17,10 @@ class BackendGroupsModel
 	 * @var	string
 	 */
 	const QRY_BROWSE = 'SELECT g.id, g.name, COUNT(u.id) AS num_users
-	                    FROM groups AS g
-	                    LEFT OUTER JOIN users_groups AS ug ON g.id = ug.group_id
-	                    LEFT OUTER JOIN users AS u ON u.id = ug.user_id
-	                    GROUP BY g.id';
+						FROM groups AS g
+						LEFT OUTER JOIN users_groups AS ug ON g.id = ug.group_id
+						LEFT OUTER JOIN users AS u ON u.id = ug.user_id
+						GROUP BY g.id';
 
 
 	/**
@@ -29,9 +29,9 @@ class BackendGroupsModel
 	 * @var string
 	 */
 	const QRY_ACTIVE_USERS = 'SELECT u.id, u.email
-	                          FROM users AS u
-	                          INNER JOIN users_groups AS ug ON u.id = ug.user_id
-	                          WHERE ug.group_id = ? AND u.deleted = ?';
+								FROM users AS u
+								INNER JOIN users_groups AS ug ON u.id = ug.user_id
+								WHERE ug.group_id = ? AND u.deleted = ?';
 
 
 	/**
@@ -87,9 +87,9 @@ class BackendGroupsModel
 
 		// check if group exists
 		return (bool) BackendModel::getDB()->getVar('SELECT i.*
-		                                             FROM groups AS i
-		                                             WHERE i.name = ?',
-		                                             array($name));
+														FROM groups AS i
+														WHERE i.name = ?',
+														array($name));
 	}
 
 
@@ -175,9 +175,9 @@ class BackendGroupsModel
 
 		// check if group exists
 		return (bool) BackendModel::getDB()->getVar('SELECT i.*
-		                                             FROM groups AS i
-		                                             WHERE i.id = ?',
-		                                             array($id));
+														FROM groups AS i
+														WHERE i.id = ?',
+														array($id));
 	}
 
 
@@ -191,9 +191,9 @@ class BackendGroupsModel
 	{
 		// check if permission exists
 		return (bool) BackendModel::getDB()->getVar('SELECT i.*
-		                                             FROM groups_rights_actions AS i
-		                                             WHERE i.module = ? AND i.group_id = ? AND i.action = ?',
-		                                             array($permission['module'], $permission['group_id'], $permission['action']));
+														FROM groups_rights_actions AS i
+														WHERE i.module = ? AND i.group_id = ? AND i.action = ?',
+														array($permission['module'], $permission['group_id'], $permission['action']));
 	}
 
 
@@ -207,9 +207,9 @@ class BackendGroupsModel
 	{
 		// check if permission exists
 		return (bool) BackendModel::getDB()->getVar('SELECT i.*
-		                                             FROM groups_rights_modules AS i
-		                                             WHERE i.module = ? AND i.group_id = ?',
-		                                             array($permission['module'], $permission['group_id']));
+													FROM groups_rights_modules AS i
+													WHERE i.module = ? AND i.group_id = ?',
+													array($permission['module'], $permission['group_id']));
 	}
 
 
@@ -226,9 +226,9 @@ class BackendGroupsModel
 
 		// get and return record
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*
-		                                                 FROM groups AS i
-		                                                 WHERE i.id = ?',
-		                                                 array($id));
+														FROM groups AS i
+														WHERE i.id = ?',
+														array($id));
 	}
 
 
@@ -245,9 +245,9 @@ class BackendGroupsModel
 
 		// get and return records
 		return (array) BackendModel::getDB()->getRecords('SELECT i.module, i.action
-		                                                  FROM groups_rights_actions AS i
-		                                                  WHERE i.group_id = ?',
-		                                                  array($id));
+															FROM groups_rights_actions AS i
+															WHERE i.group_id = ?',
+															array($id));
 	}
 
 
@@ -260,7 +260,7 @@ class BackendGroupsModel
 	{
 		// get and return all groups
 		return (array) BackendModel::getDB()->getRecords('SELECT i.id AS value, i.name AS label
-		                                                  FROM groups AS i');
+															FROM groups AS i');
 	}
 
 
@@ -274,10 +274,10 @@ class BackendGroupsModel
 	{
 		// get and return groups
 		return (array) BackendModel::getDB()->getRecords('SELECT i.id, i.name
-		                                                  FROM groups AS i
-		                                                  INNER JOIN users_groups AS ug ON i.id = ug.group_id
-		                                                  WHERE ug.user_id = ?',
-		                                                  array($id));
+															FROM groups AS i
+															INNER JOIN users_groups AS ug ON i.id = ug.group_id
+															WHERE ug.user_id = ?',
+															array($id));
 	}
 
 
@@ -294,9 +294,9 @@ class BackendGroupsModel
 
 		// get and return records
 		return (array) BackendModel::getDB()->getRecords('SELECT i.*
-		                                                  FROM groups_rights_modules AS i
-		                                                  WHERE i.group_id = ?',
-		                                                  array($id));
+															FROM groups_rights_modules AS i
+															WHERE i.group_id = ?',
+															array($id));
 	}
 
 
@@ -315,9 +315,9 @@ class BackendGroupsModel
 
 		// get setting
 		$setting = (array) BackendModel::getDB()->getRecord('SELECT i.*
-		                                                     FROM groups_settings AS i
-		                                                     WHERE i.group_id = ? AND i.name = ?',
-		                                                     array($groupId, $name));
+															FROM groups_settings AS i
+															WHERE i.group_id = ? AND i.name = ?',
+															array($groupId, $name));
 
 		// unserialize value and return
 		if(isset($setting['value'])) return unserialize($setting['value']);
@@ -337,10 +337,10 @@ class BackendGroupsModel
 
 		// get and return all users
 		return (array) BackendModel::getDB()->getRecords('SELECT i.*
-		                                                  FROM users AS i
-		                                                  INNER JOIN users_groups AS ug ON i.id = ug.user_id
-		                                                  WHERE ug.group_id = ? AND i.deleted = ? AND i.active = ?',
-		                                                  array($groupId, 'N', 'Y'));
+															FROM users AS i
+															INNER JOIN users_groups AS ug ON i.id = ug.user_id
+															WHERE ug.group_id = ? AND i.deleted = ? AND i.active = ?',
+															array($groupId, 'N', 'Y'));
 	}
 
 

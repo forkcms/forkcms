@@ -85,8 +85,8 @@ class BackendBlogAPI
 	/**
 	 * Get a single comment
 	 *
-	 * @return	array	   An array with the comment.
-	 * @param	int $id	 The id of the comment.
+	 * @return	array		An array with the comment.
+	 * @param	int $id		The id of the comment.
 	 */
 	public static function commentsGetById($id)
 	{

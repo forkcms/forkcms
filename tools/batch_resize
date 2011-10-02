@@ -31,7 +31,7 @@ done
 shift $(( OPTIND -1 ))
 
 # needed options provided
-if [[ -z "$WIDTH"  && -z "$HEIGHT" ]] ; then
+if [[ -z "$WIDTH" && -z "$HEIGHT" ]] ; then
 	# output usage
 	echo "Usage: batch_resize [-hw] <directory>" 
 	echo "-h	height, the new height for the images"
