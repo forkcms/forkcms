@@ -2127,7 +2127,6 @@ class BackendPagesModel
 					$block['edited_on'] = $block['created_on'];
 					$block['html'] = '';
 					$block['extra_id'] = null;
-					$block['has_extra'] = 'N';
 				}
 
 				// verify that there is no existing content and that we actually have new default content
