@@ -183,7 +183,7 @@ class FrontendProfilesAuthentication
 													'secret_key = ?', $secret);
 
 				// set new cookie
-				SpoonCookie::set('frontend_profile_secret_key', $profileSecret, 60*60*24*31);
+				SpoonCookie::set('frontend_profile_secret_key', $profileSecret, (60 * 60 * 24 * 31));
 
 				// set is_logged_in to true
 				SpoonSession::set('frontend_profile_logged_in', true);
