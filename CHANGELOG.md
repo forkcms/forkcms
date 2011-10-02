@@ -9,6 +9,7 @@ Improvements:
 Bugfixes:
 
 * Core: re-added some missing locale into the imagemanager, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/185-268-moxicode-unassigned-literals.
+* Core: fixed some errors in the api-methods for blog.
 
 
 2.6.10 (2011-09-27)
