@@ -885,22 +885,32 @@ class BackendBlogModel
 		// create an array with an equal amount of questionmarks as ids provided
 		$idPlaceHolders = array_fill(0, count($ids), '?');
 
-		// get ids
-		$itemIds = (array) BackendModel::getDB()->getColumn('SELECT i.post_id
+		// get the items and their languages
+		$items = (array) BackendModel::getDB()->getPairs('SELECT i.post_id, i.language
 																FROM blog_comments AS i
-																WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
+																WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')', $ids, 'post_id');
 
-		// update record
-		BackendModel::getDB(true)->execute('UPDATE blog_comments
-											SET status = ?
-											WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
-											array_merge(array((string) $status), $ids));
+		// only proceed if there are items
+		if(!empty($items))
+		{
+			// get the ids
+			$itemIds = array_keys($items);
+			
+			// get the unique languages
+			$languages = array_unique(array_values($items));
 
-		// recalculate the comment count
-		if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
+			// update records
+			BackendModel::getDB(true)->execute('UPDATE blog_comments
+												SET status = ?
+												WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
+												array_merge(array((string) $status), $ids));
 
-		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+			// recalculate the comment count
+			self::reCalculateCommentCount($itemIds);
+
+			// invalidate the cache for blog
+			foreach($languages as $language) BackendModel::invalidateFrontendCache('blog', $language);
+		}
 	}
 }
 
