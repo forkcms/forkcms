@@ -192,7 +192,7 @@ class BackendBlogAPI
 		if(API::authorize())
 		{
 			// redefine
-			if(!is_array($id)) $id = (array) explode(',', $ids);
+			if(!is_array($id)) $id = (array) explode(',', $id);
 			$status = (string) $status;
 
 			// update statuses
