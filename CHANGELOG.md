@@ -1,3 +1,10 @@
+2.6.12 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: removed empty method.
+
+
 2.6.11 (2011-10-04)
 --
 Improvements:
