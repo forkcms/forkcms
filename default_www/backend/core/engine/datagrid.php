@@ -38,8 +38,15 @@ class BackendDataGrid extends SpoonDataGrid
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'dataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
-		// hide the id by default
-		if(in_array('id', $this->getColumns())) $this->setColumnsHidden('id');
+		// id gets special treatment
+		if(in_array('id', $this->getColumns()))
+		{
+			// hide the id by defaults
+			$this->setColumnsHidden('id');
+
+			// our JS needs to know an id, so we can highlight it
+			$this->setRowAttributes(array('id' => 'row-[id]'));
+		}
 
 		// set default sorting options
 		$this->setSortingOptions();
@@ -56,9 +63,6 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// set paging class
 		$this->setPagingClass('BackendDataGridPaging');
-
-		// our JS needs to know an id, so we can highlight it
-		$this->setRowAttributes(array('id' => 'row-[id]'));
 
 		// set default template
 		$this->setTemplate(BACKEND_CORE_PATH . '/layout/templates/datagrid.tpl');
@@ -861,15 +865,16 @@ class BackendDataGridFunctions
 		// get settings
 		$avatar = $user->getSetting('avatar', 'no-avatar.gif');
 		$nickname = $user->getSetting('nickname');
+		$allowed = BackendAuthentication::isAllowedAction('edit','users');
 
 		// build html
 		$html = '<div class="dataGridAvatar">' . "\n";
 		$html .= '	<div class="avatar av24">' . "\n";
-		$html .= '		<a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . "\n";
+		if($allowed) $html .= '		<a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . "\n";
 		$html .= '			<img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
-		$html .= '		</a>' . "\n";
+		if($allowed) $html .= '		</a>' . "\n";
 		$html .= '	</div>';
-		$html .= '	<p><a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
+		$html .= '	<p><a href="' . (($allowed) ? (BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id) : '#') . '">' . $nickname . '</a></p>' . "\n";
 		$html .= '</div>';
 
 		// return
