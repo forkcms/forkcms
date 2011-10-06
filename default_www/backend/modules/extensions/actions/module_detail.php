@@ -7,7 +7,7 @@
  * @subpackage	extensions
  *
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		3.0
+ * @since		3.0.0
  */
 class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 {
@@ -151,7 +151,7 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 		$this->tpl->assign('isInstallable', !BackendExtensionsModel::isInstalled($this->currentModule));
 
 		// data grids
-		$this->tpl->assign('dgEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
+		$this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
 	}
 }
 

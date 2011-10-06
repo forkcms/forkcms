@@ -12,6 +12,9 @@
 
 {option:dataGridInstalledModules}
 <div class="dataGridHolder">
+	<div class="tableHeading">
+		<h3>{$lblInstalledModules|ucfirst}</h3>
+	</div>
 	{$dataGridInstalledModules}
 </div>
 {/option:dataGridInstalledModules}
@@ -20,7 +23,7 @@
 {option:dataGridInstallableModules}
 	<div class="dataGridHolder">
 		<div class="tableHeading">
-			<h3>{$lblModulesToBeInstalled|ucfirst}</h3>
+			<h3>{$lblInstallableModules|ucfirst}</h3>
 		</div>
 		{$dataGridInstallableModules}
 	</div>

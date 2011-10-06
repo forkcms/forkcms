@@ -7,7 +7,7 @@
  * @subpackage	extensions
  *
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		3.0
+ * @since		3.0.0
  */
 class BackendExtensionsModules extends BackendBaseActionIndex
 {
@@ -99,6 +99,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 
 		// add install column
 		$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('module_install') . '&amp;module=[raw_name]', BL::lbl('Install'));
+		$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'));
 	}
 
 

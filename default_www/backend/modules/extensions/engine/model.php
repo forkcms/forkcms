@@ -7,7 +7,7 @@
  * @subpackage	extensions
  *
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.6.6
+ * @since		3.0.0
  */
 class BackendExtensionsModel
 {
@@ -66,6 +66,7 @@ class BackendExtensionsModel
 
 			// init module information
 			$module = array();
+			$module['id'] = 'module_' . $moduleName;
 			$module['raw_name'] = $moduleName;
 			$module['name'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($moduleName)));
 			$module['description'] = '';

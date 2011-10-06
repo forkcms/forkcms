@@ -7,7 +7,7 @@
  * @subpackage	extensions
  *
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.6.6
+ * @since		3.0.0
  */
 final class BackendExtensionsConfig extends BackendBaseConfig
 {

@@ -30,16 +30,16 @@
 						</div>
 					</div>
 				{/option:information.description}
-				{option:dgEvents}
+				{option:dataGridEvents}
 					<div class="box">
 						<div class="heading">
 							<h3>{$lblEvents|ucfirst}</h3>
 						</div>
 						<div class="dataGridHolder">
-							{$dgEvents}
+							{$dataGridEvents}
 						</div>
 					</div>
-				{/option:dgEvents}
+				{/option:dataGridEvents}
 				<div class="box">
 					<div class="heading">
 						<h3>{$lblUsed|ucfirst}</h3>
@@ -110,7 +110,7 @@
 
 <div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
 	<p>
-		{$msgConfirmInstall|sprintf:{$name}}
+		{$msgConfirmModuleInstall|sprintf:{$name}}
 	</p>
 </div>
 
