@@ -120,7 +120,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstalledModules->setSortingColumns(array('name'));
 
 		// hide some columns
-		$this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name'));
+		$this->dataGridInstalledModules->setColumnsHidden(array('active', 'installed', 'raw_name'));
 
 		// set colum URLs
 		$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]');
