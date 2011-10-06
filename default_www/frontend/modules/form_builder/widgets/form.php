@@ -211,6 +211,16 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					// get content
 					$item['html'] = $chk->parse();
 				}
+				
+				// file
+				elseif($field['type'] == 'file')
+				{
+					// create element
+					$file = $this->frm->addFile($item['name']);
+
+					// get content
+					$item['html'] = $file->parse();
+				}
 
 				// textbox
 				elseif($field['type'] == 'textbox')
@@ -278,6 +288,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		// form name
 		$this->tpl->assign('formName', 'form' . $this->item['id']);
 		$this->tpl->assign('formAction', $this->createAction());
+		$this->tpl->assign('formParameters', $this->frm->getParameters());
 
 		// got fields
 		if(!empty($this->fieldsHTML))
@@ -381,6 +392,26 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 
 					// numeric
 					elseif($rule == 'numeric') $this->frm->getField($fieldName)->isNumeric($settings['error_message']);
+		
+					// file extension
+					elseif($rule == 'extension')
+					{
+						// validate extension against these
+						if($this->frm->getField($fieldName)->isAllowedExtension(array('gif', 'jpg', 'jpeg', 'png', 'tiff', 'doc', 'docx', 'xsl', 'xslx', 'ppt', 'pptx', 'txt', 'rtf', 'pdf'), $settings['error_message']))
+						{
+						/*
+							// correct mimetype?
+							$this->frm->getField($fieldName)->isAllowedMimeType(array('image/gif', 
+								'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/tiff', 
+								'text/plain', 'appl/text', 
+								'application/download', 'application/msword', 'application/word', 'application/vnd.msword', 'application/winword', 'application/x-msw6', 'application/x-msword',
+								'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/octet-stream', 
+								'application/excel', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
+								'application/powerpoint', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 
+								'application/pdf', 'application/x-pdf', 'application/x-download'), $settings['error_message']);
+						*/
+						}
+					}
 				}
 			}
 
@@ -405,14 +436,32 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					// field data
 					$fieldData['data_id'] = $dataId;
 					$fieldData['label'] = $field['settings']['label'];
-					$fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
+					
+					// field file
+					if($field['type'] == 'file')
+					{
+						// create new filename
+						$filename = SpoonFilter::urlise($this->frm->getField('field' . $field['id'])->getFileName(false));
+						
+						// field value
+						$fieldData['value'] = rand(0,10) . '_' . 'f' . $field['id'] . '_'.$filename.'.' . $this->frm->getField('field' . $field['id'])->getExtension();
+						
+						// move the file
+						$this->frm->getField('field' . $field['id'])->moveFile(FRONTEND_FILES_PATH . '/form_builder/'.$fieldData['value']);
+						
+						// get url for file
+						if($field['type']=='file') $fieldData['value'] = '<a href="'.FRONTEND_FILES_URL.'/form_builder/'.$fieldData['value'].'">'.$fieldData['value'].'</a>';
+					}
+					
+					// other fields value
+					else $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
 
 					// prepare fields for email
 					if($this->item['method'] == 'database_email')
 					{
 						// add field for email
 						$emailFields[] = array('label' => $field['settings']['label'],
-												'value' => (is_array($fieldData['value']) ? implode(',', $fieldData['value']) : nl2br($fieldData['value'])));
+											'value' => (is_array($fieldData['value'])) ? implode(',', $fieldData['value']) : nl2br($fieldData['value']));
 					}
 
 					// clean up

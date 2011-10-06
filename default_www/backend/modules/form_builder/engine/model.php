@@ -615,6 +615,17 @@ class FormBuilderHelper
 				// get content
 				$fieldHTML = $txt->parse();
 			}
+			
+			// file
+			elseif($field['type'] == 'file')
+			{
+				// create element
+				$file = $frm->addFile($fieldName);
+				$file->setAttribute('disabled', 'disabled');
+
+				// get content
+				$fieldHTML = $file->parse();
+			}
 
 			// heading
 			elseif($field['type'] == 'heading') $fieldHTML = '<h3>' . $values . '</h3>';

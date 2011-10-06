@@ -95,6 +95,15 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addText('textarea_validation_parameter');
 		$this->frm->addText('textarea_error_message');
 
+		// file dialog
+		$this->frm->addText('file_label');
+		$this->frm->addText('file_value');
+		$this->frm->addCheckbox('file_required');
+		$this->frm->addText('file_required_error_message');
+		$this->frm->addDropdown('file_validation', array('' => '', 'extension' => BL::getLabel('FileExtension')));
+		$this->frm->addText('file_validation_parameter');
+		$this->frm->addText('file_error_message');
+
 		// dropdown dialog
 		$this->frm->addText('dropdown_label');
 		$this->frm->addText('dropdown_values');

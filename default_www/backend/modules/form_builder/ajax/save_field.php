@@ -24,13 +24,13 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 		// get parameters
 		$formId = SpoonFilter::getPostValue('form_id', null, '', 'int');
 		$fieldId = SpoonFilter::getPostValue('field_id', null, '', 'int');
-		$type = SpoonFilter::getPostValue('type', array('checkbox', 'dropdown', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'), '', 'string');
+		$type = SpoonFilter::getPostValue('type', array('checkbox', 'dropdown', 'file', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'), '', 'string');
 		$label = trim(SpoonFilter::getPostValue('label', null, '', 'string'));
 		$values = trim(SpoonFilter::getPostValue('values', null, '', 'string'));
 		$defaultValues = trim(SpoonFilter::getPostValue('default_values', null, '', 'string'));
 		$required = SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
 		$requiredErrorMessage = trim(SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
-		$validation = SpoonFilter::getPostValue('validation', array('email', 'numeric'), '', 'string');
+		$validation = SpoonFilter::getPostValue('validation', array('email', 'numeric', 'extension'), '', 'string');
 		$validationParameter = trim(SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
 		$errorMessage = trim(SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
@@ -56,6 +56,14 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 
 		// validate textarea
 		elseif($type == 'textarea')
+		{
+			if($label == '') $errors['label'] = BL::getError('LabelIsRequired');
+			if($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+			if($validation != '' && $errorMessage == '') $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+		}
+		
+		// validate file
+		elseif($type == 'file')
 		{
 			if($label == '') $errors['label'] = BL::getError('LabelIsRequired');
 			if($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');

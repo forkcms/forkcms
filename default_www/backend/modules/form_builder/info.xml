@@ -9,9 +9,9 @@
 		<description><![CDATA[This module enables you to build custom forms.']]></description>
 	</info>
 	<events>
-		<event application="backend" name="after_add"><![CDATA[Triggered when a faq is added.]]></event>
-		<event application="backend" name="after_delete"><![CDATA[Triggered when a faq is deleted.]]></event>
-		<event application="backend" name="after_edit"><![CDATA[Triggered when a faq is edited.]]></event>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a form is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a form is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a form is edited.]]></event>
 		<event application="frontend" name="after_submission"><![CDATA[Triggered when a form is submitted.]]></event>
 	</events>
 </module>

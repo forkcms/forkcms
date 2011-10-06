@@ -100,6 +100,7 @@
 								<li id="dropdownSelector"><a href="#dropdown" rel="dropdownDialog" class="openFieldDialog">{$lblDropdown|ucfirst}</a></li>
 								<li id="checkboxSelector"><a href="#checkbox" rel="checkboxDialog" class="openFieldDialog">{$lblCheckbox|ucfirst}</a></li>
 								<li id="radiobuttonSelector"><a href="#radiobutton" rel="radiobuttonDialog" class="openFieldDialog">{$lblRadiobutton|ucfirst}</a></li>
+								<li id="fileSelector"><a href="#file" rel="fileDialog" class="openFieldDialog">{$lblFile|ucfirst}</a></li>
 							</ul>
 						</div>
 						<div class="options">
@@ -415,6 +416,67 @@
 						</p>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+    
+    {* Dialog for a file *}
+	<div id="fileDialog" title="{$lblFile|ucfirst}" class="dialog" style="display: none;">
+		<input type="hidden" name="file_id" id="fileId" value="" />
+
+		<div class="tabs forkForms">
+			<ul>
+				<li><a href="#tabFileBasic">{$lblBasic|ucfirst}</a></li>
+				<li><a href="#tabFileProperties">{$lblProperties|ucfirst}</a></li>
+			</ul>
+
+			<div id="tabFileBasic" class="box">
+				<div class="horizontal">
+					<div class="options">
+						<p>
+							<label for="fileLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtFileLabel}
+							<span id="fileLabelError" class="formError" style="display: none;"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div id="tabFileProperties" class="box">
+				<div class="horizontal">
+					<div class="options">
+						<p>
+							<label for="fileValue">{$lblDefaultValue|ucfirst}</label>
+							{$txtFileValue}
+						</p>
+					</div>
+					<div class="validation options">
+						<p class="p0">
+							<label for="fileRequired">{$lblRequiredField|ucfirst}</label>
+							{$chkFileRequired}
+						</p>
+						<p class="validationRequiredErrorMessage hidden">
+							<label for="fileRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtFileRequiredErrorMessage}
+							<span id="fileRequiredErrorMessageError" class="formError" style="display: none;"></span>
+						</p>
+					</div>
+					<div class="validation options">
+						<p class="p0">
+							<label for="fileValidation">{$lblValidation|ucfirst}</label>
+							{$ddmFileValidation}
+						</p>
+						<p class="validationParameter" style="display: none;">
+							<label for="fileValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtFileValidationParameter}
+						</p>
+						<p class="validationErrorMessage" style="display: none;">
+							<label for="fileErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtFileErrorMessage}
+							<span id="fileErrorMessageError" class="formError" style="display: none;"></span>
+						</p>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
