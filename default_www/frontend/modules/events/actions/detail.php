@@ -121,6 +121,9 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 		$this->record['allow_subscriptions'] = ($this->record['allow_subscriptions'] == 'Y');
 
+		// get full url for image
+		if($this->record['image'] != null) $this->record['imageURL'] = FRONTEND_FILES_URL . '/userfiles/images/events/' . $this->record['image'];
+
 		// get tags
 		$this->record['tags'] = FrontendTagsModel::getForItem('events', $this->record['revision_id']);
 

@@ -38,6 +38,9 @@
 				</p>
 			</div>
 			<div class="bd content">
+				{option:item.imageURL}
+					<img src="{$item.imageURL}" alt="{$item.title}" width="300" class="eventImage"/>
+				{/option:item.imageURL}
 				{$item.text}
 			</div>
 			<div class="ft">
