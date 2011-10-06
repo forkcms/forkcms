@@ -698,14 +698,13 @@ class FrontendHeader extends FrontendBaseObject
 											[\'_setDomainName\', \'none\'],
 											[\'_trackPageview\'],
 											[\'_trackPageLoadTime\']];
-											
-							     (function(d, t) {
-							      var g = d.createElement(t),
-							          s = d.getElementsByTagName(t)[0];
-							      g.async = true;
-							      g.src = \'//www.google-analytics.com/ga.js\';
-							      s.parentNode.insertBefore(g, s);
-							     }(document, \'script\'));
+
+								(function(d, t) {
+									var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+									g.async = true;
+									g.src = \'//www.google-analytics.com/ga.js\';
+									s.parentNode.insertBefore(g, s);
+								}(document, \'script\'));
 							</script>';
 
 			// add to the header

@@ -815,27 +815,27 @@ jsBackend.effects =
 	bindHighlight: function()
 	{
 		// get hightlight from url
-	    var highlightId = utils.url.getGetValue('highlight');
+		var highlightId = utils.url.getGetValue('highlight');
 
-	    // id is set
-	    if(highlightId != '')
-	    {
-	    	// init selector of the element we want to highlight
-	    	var selector = '#'+ highlightId;
+		// id is set
+		if(highlightId != '')
+		{
+			// init selector of the element we want to highlight
+			var selector = '#'+ highlightId;
 
-	    	// item exists
-	    	if($(selector).length > 0)
-	    	{
-		    	// if its a table row we need to highlight all cells in that row
-		    	if($(selector)[0].tagName.toLowerCase() == 'tr'){ selector += ' td'; }
+			// item exists
+			if($(selector).length > 0)
+			{
+				// if its a table row we need to highlight all cells in that row
+				if($(selector)[0].tagName.toLowerCase() == 'tr'){ selector += ' td'; }
 
-		    	// when we hover over the item we stop the effect, otherwise we will mess up background hover styles
-	    		$(selector).bind('mouseover', function(){ $(selector).stop(true, true); });
+				// when we hover over the item we stop the effect, otherwise we will mess up background hover styles
+				$(selector).bind('mouseover', function(){ $(selector).stop(true, true); });
 
-		    	// highlight!
-		    	$(selector).effect("highlight", {}, 5000);
-	    	}
-	    }
+				// highlight!
+				$(selector).effect("highlight", {}, 5000);
+			}
+		}
 	},
 
 
@@ -1455,13 +1455,13 @@ jsBackend.tinyMCE =
 		// replace target="_blank" with class="targetBlank"
 		$tmp.find('a[target=_blank]').addClass('targetBlank').removeAttr('target');
 
-		// resave
-		object.content = utils.string.xhtml($tmp.html());
+		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
+		editor.setContent(utils.string.xhtml($tmp.html()));
 	},
 
 
 	// format text (before placing it in the editor)
-	beforeLoad: function(editor, object)
+	loadContent: function(editor, object)
 	{
 		// create dom tree
 		var $tmp = $('<div />').html(object.content);
@@ -1469,8 +1469,11 @@ jsBackend.tinyMCE =
 		// replace target="_blank" with class="targetBlank"
 		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
 
-		// resave
-		object.content = utils.string.xhtml($tmp.html());
+		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
+		editor.setContent(utils.string.xhtml($tmp.html()));
+
+		// check content
+		jsBackend.tinyMCE.checkContent(editor);
 	},
 
 

@@ -1570,6 +1570,14 @@
         <translation language="nl"><![CDATA[Vul hieronder je e-mail adres in. Je krijgt een e-mail met instructies hoe je een nieuw wachtwoord instelt.]]></translation>
         <translation language="en"><![CDATA[Below enter your e-mail. You will receive an e-mail containing instructions on how to get a new password.]]></translation>
       </item>
+      <item type="message" name="HelpImageFieldWithMaxFileSize">
+        <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten, maximum toegelaten bestandsgrootte: %1$s.]]></translation>
+        <translation language="en"><![CDATA[Only jp(e)g, gif or png-files are allowed, maximum filesize: %1$s.]]></translation>
+      </item>
+      <item type="message" name="HelpMaxFileSize">
+        <translation language="nl"><![CDATA[(maximum bestandsgrootte: %1$s)]]></translation>
+        <translation language="en"><![CDATA[(maximum filesize: %1$s)]]></translation>
+      </item>
       <item type="message" name="HelpMetaCustom">
         <translation language="nl"><![CDATA[Deze extra metatags worden in de <code>&lt;head&gt;</code> sectie van de pagina gezet.]]></translation>
         <translation language="en"><![CDATA[These custom metatags will be placed in the <code>&lt;head&gt;</code> section of the page.]]></translation>

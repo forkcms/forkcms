@@ -249,7 +249,7 @@ class FrontendModel
 		$db = self::getDB();
 
 		// get data
-		$record = (array) $db->getRecord('SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
+		$record = (array) $db->getRecord('SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
 												m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 												m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,

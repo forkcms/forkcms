@@ -1,9 +1,77 @@
-2.6.7
+2.6.11 (2011-10-04)
 --
-Improvements
+Improvements:
+
+* Core: Made the parent_id available in the template.
+* Core: Upgraded TinyMCE to 3.4.6
+* Core: Made the Facebook integration work with the signed requests.
+
+Bugfixes:
+
+* Core: re-added some missing locale into the imagemanager, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/185-268-moxicode-unassigned-literals.
+* Core: fixed some errors in the api-methods for blog.
+* Core: fixed a bug where updating a page template tried to input data in a non-existing database column.
+* Core: fixed a typo in the dutch disclaimer, thx to Bart Deslagmulder, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/190.
+
+
+2.6.10 (2011-09-27)
+--
+Improvements:
+
+* Search: IP address is no longer shown in statistics.
+* Core: Improved config to let TinyMCE cleanup Internet Explorer HTML.
+* Search: Search won't show the 404 page anymore, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/186-268-search-finds-404-page.
+
+Bugfixes:
+
+* Groups: when no bundled actions were available a PHP notice was thrown.
+* Dashboard: validate if a position is already taken.
+* Pages: sort sequences after checking its existence.
+
+
+2.6.9 (2011-09-20)
+--
+Improvements:
+
+* Core: Upgraded jQuery to 1.6.4.
+* Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, thx to Martijn Dierckx, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
+* Core: Added an api-method to remove an apple-device token.
+* Core: Emails are now send base64 encoded. This to prevent that linebreaks, which are added when the max text line length is reached, corrupt the content.
+* Blog: Added an api-method to grab a single comment.
+* Blog: When calling blog.comments.UpdateStatus you can pass multiple ids by seperating them with a ,.
+* Tags: Overview is now sorted alphabetically.
+
+Bugfixes:
+
+* Blog: Fixed a bug in the blog module where it called an unexisting FrontendTag-function, thx to jelmersnoeck.
+
+
+2.6.8 (2011-09-13)
+--
+Improvements:
+
+* Core: TinyMCE link-list is now sorted according the pages-tree, as requested by Frederik (http://forum.fork-cms.com/discussions/feature-requests/11-tinymce-linklist-sort).
+* Core: Mails from formbuilder will contain the sitetitle instead of Fork CMS, thx to Frederik.
+* Core: Updated the schema.
+
+Bugfixes:
+
+* Blog: deleting a draft no longer triggers an error.
+* Blog: fix deletion of category: check for blogposts in category did not check blog status.
+* Groups: permission management now works correctly in Chrome.
+
+
+2.6.7 (2011-09-09)
+--
+Bugfixes:
+
+* Install triggered an error "Headers already sent".
+
+Improvements:
 
 * Core: Upgraded TinyMCE to 3.4.5 - fixed Opera issues with editor.
 * Core: Updated JS utils.urlise to better reflect the SpoonFilter::urlise (. should also convert to dash)
+* Core: Shorter GA-tracking code (thx to Jeroen Desloovere)
 
 
 2.6.6 (2011-09-06)

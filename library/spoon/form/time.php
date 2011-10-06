@@ -163,24 +163,28 @@ class SpoonFormTime extends SpoonFormInput
 			// new time
 			$time = '';
 
-			// allowed characters
-			$aCharacters = array(':', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-
-			// replace every character if it's not in the list!
-			for($i = 0; $i < strlen($data[$this->attributes['name']]); $i++)
+			// must be exactly 5 characters
+			if(strlen($data[$this->attributes['name']]) == 5)
 			{
-				if(in_array(substr($data[$this->attributes['name']], $i, 1), $aCharacters)) $time .= substr($data[$this->attributes['name']], $i, 1);
-			}
+				// allowed characters
+				$aCharacters = array(':', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 
-			// maxlength checks out (needs to be equal)
-			if(strlen($time) == 5 && strpos($time, ':') !== false)
-			{
-				// define hour & minutes
-				$hour = (int) substr($time, 0, 2);
-				$minutes = (int) substr($time, 3, 2);
+				// replace every character if it's not in the list!
+				for($i = 0; $i < strlen($data[$this->attributes['name']]); $i++)
+				{
+					if(in_array(substr($data[$this->attributes['name']], $i, 1), $aCharacters)) $time .= substr($data[$this->attributes['name']], $i, 1);
+				}
 
-				// validates
-				if($hour >= 0 && $hour <= 23 && $minutes >= 0 && $minutes <= 59) return true;
+				// maxlength checks out (needs to be equal)
+				if(strlen($time) == 5 && strpos($time, ':') !== false)
+				{
+					// define hour & minutes
+					$hour = (int) substr($time, 0, 2);
+					$minutes = (int) substr($time, 3, 2);
+
+					// validates
+					if($hour >= 0 && $hour <= 23 && $minutes >= 0 && $minutes <= 59) return true;
+				}
 			}
 		}
 

@@ -71,6 +71,62 @@ class BackendCoreAPI
 
 
 	/**
+	 * Remove a device from a user.
+	 *
+	 * @return	void
+	 * @param	string $token	The token of the device.
+	 * @param	string $email	The emailaddress for the user to link the device to.
+	 */
+	public static function appleRemovedevice($token, $email)
+	{
+		// authorized?
+		if(API::authorize())
+		{
+			// redefine
+			$token = str_replace(' ', '', (string) $token);
+
+			// validate
+			if($token == '') API::output(API::BAD_REQUEST, array('message' => 'No token-parameter provided.'));
+			if($email == '') API::output(API::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+
+			// we should tell the ForkAPI that we registered a device
+			$publicKey = BackendModel::getModuleSetting('core', 'fork_api_public_key', '');
+			$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+
+			// validate keys
+			if($publicKey == '' || $privateKey == '') API::output(API::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configer them in the backend.'));
+
+			try
+			{
+				// load user
+				$user = new BackendUser(null, $email);
+
+				// get current tokens
+				$tokens = (array) $user->getSetting('apple_device_token');
+
+				// not already in array?
+				$index = array_search($token, $tokens);
+
+				if($index !== false)
+				{
+					// remove from array
+					unset($tokens[$index]);
+
+					// save it
+					$user->setSetting('apple_device_token', $tokens);
+				}
+			}
+
+			// catch exceptions
+			catch(Exception $e)
+			{
+				API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+			}
+		}
+	}
+
+
+	/**
 	 * Get the API-key for a user.
 	 *
 	 * @return	array

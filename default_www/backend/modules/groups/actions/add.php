@@ -443,11 +443,13 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 
 			// create dashboard sequence
 			$this->dashboardSequence[$widget['module']] += array(
- 			                                                  $widget['widget'] => array(
-			                                                                           'column' => $instance->getColumn(),
-			                                                                           'position' => (int) $instance->getPosition(),
-			                                                                           'hidden' => false,
- 			                                                                           'present' => false));
+																$widget['widget'] => array(
+																						'column' => $instance->getColumn(),
+																						'position' => (int) $instance->getPosition(),
+																						'hidden' => false,
+																						'present' => false
+																					)
+															);
 
 			// loop through presets
 			foreach($widgetPresets as $preset)
@@ -496,7 +498,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			foreach($this->widgets as $j => $widget)
 			{
 				// add widget checkboxes
-				$widgetBoxes[$j]['checkbox'] = $this->frm->addCheckbox('widgets_' . $widget['label'])->parse();
+				$widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'])->parse() . '</span>';
 				$widgetBoxes[$j]['widget'] = $widget['label'];
 				$widgetBoxes[$j]['description'] = $widget['description'];
 			}
@@ -521,7 +523,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 					if(!in_array($action['group'], $addedBundles))
 					{
 						// assign bundled action boxes
-						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']))->parse();
+						$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']))->parse() . '</span>';
 						$actionBoxes[$key]['actions'][$i]['action'] = ucfirst($action['group']);
 						$actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
@@ -534,7 +536,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				else
 				{
 					// assign action boxes
-					$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
+					$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse() . '</span>';
 					$actionBoxes[$key]['actions'][$i]['action'] = $action['label'];
 					$actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
 				}
@@ -567,7 +569,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('manage_users', array('Deny', 'Allow'));
 		$this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
 		$this->tpl->assign('permissions', $permissionBoxes);
-		$this->tpl->assign('widgets', isset($widgets) ?  $widgets : false);
+		$this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
 	}
 
 
@@ -593,6 +595,9 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// init
+			$bundledActionPermissions = array();
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
