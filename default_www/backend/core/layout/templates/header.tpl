@@ -37,7 +37,7 @@
 						<ul class="hidden" id="ddAccount">
 							<li><a href="{$authenticatedUserEditUrl}">{$lblEditProfile|ucfirst}</a></li>
 							{* <li><a rel="external" href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li> *}
-							<li><a rel="external" href="/docs">{$lblDeveloper|ucfirst}</a></li>
+							{*<li><a rel="external" href="/docs">{$lblDeveloper|ucfirst}</a></li>*}
 							<li class="lastChild"><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a></li>
 						</ul>
 					</li>

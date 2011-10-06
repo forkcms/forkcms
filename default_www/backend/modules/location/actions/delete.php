@@ -34,7 +34,7 @@ class BackendLocationDelete extends BackendBaseActionDelete
 			BackendLocationModel::delete($this->id);
 
 			// delete search indexes
-//			if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex($this->getModule(), $this->id);
+			// if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));

@@ -1202,11 +1202,11 @@ class BackendPagesModel
 			}
 		}
 
-		// sort the sequences
-		ksort($sequences['pages']);
-
 		if(isset($sequences['pages']))
 		{
+			// sort the sequences
+			ksort($sequences['pages']);
+
 			// loop to add the titles in the correct order
 			foreach($sequences['pages'] as $URL => $id)
 			{
@@ -1972,6 +1972,9 @@ class BackendPagesModel
 															FROM pages
 															WHERE template_id = ? AND status IN (?, ?)',
 															array($oldTemplateId, 'active', 'draft'));
+
+		// there is no active/draft page with the old template id
+		if(empty($pages)) return;
 
 		// loop pages
 		foreach($pages as $page)

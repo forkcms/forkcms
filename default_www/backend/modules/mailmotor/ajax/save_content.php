@@ -141,7 +141,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		if(!isset($template['content'])) $this->output(self::ERROR, array('mailing_id' => $this->mailing['id'], 'error' => true), BL::err('TemplateDoesNotExist', $this->getModule()));
 
 		// remove TinyMCE
-		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);
+		$fullContentHTML = preg_replace('/<!-- tinymce -->.*?<!-- \/tinymce -->/is', $contentHTML, $fullContentHTML);
 
 		// replace bracketed entities with their proper counterpart
 		$fullContentHTML = preg_replace('/\[ent=(.*?)]/', '&${1};', $fullContentHTML);

@@ -52,7 +52,7 @@ class FrontendFooter extends FrontendBaseObject
 			if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 			{
 				$siteHTMLFooter .= '	window.fbAsyncInit = function() {' . "\n";
-				$siteHTMLFooter .= '		FB.init({ appId: \'' . FrontendModel::getModuleSetting('core', 'facebook_app_id', null) . '\', status: true, cookie: true, xfbml: true });' . "\n";
+				$siteHTMLFooter .= '		FB.init({ appId: \'' . FrontendModel::getModuleSetting('core', 'facebook_app_id', null) . '\', status: true, cookie: true, xfbml: true, oauth: true });' . "\n";
 				$siteHTMLFooter .= '		jsFrontend.facebook.afterInit();' . "\n";
 				$siteHTMLFooter .= '	};' . "\n";
 			}

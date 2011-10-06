@@ -93,8 +93,10 @@ class FrontendProfilesAuthentication
 		$encryptedPassword = FrontendProfilesModel::getEncryptedString($password, FrontendProfilesModel::getSetting($profileId, 'salt'));
 
 		// get the status
-		$loginStatus = FrontendModel::getDB()->getVar('SELECT p.status FROM profiles AS p WHERE p.email = ? AND p.password = ?',
-		                                              array($email, $encryptedPassword));
+		$loginStatus = FrontendModel::getDB()->getVar('SELECT p.status
+														FROM profiles AS p
+														WHERE p.email = ? AND p.password = ?',
+														array($email, $encryptedPassword));
 
 		// return
 		return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;
@@ -181,7 +183,7 @@ class FrontendProfilesAuthentication
 													'secret_key = ?', $secret);
 
 				// set new cookie
-				SpoonCookie::set('frontend_profile_secret_key', $profileSecret, 60*60*24*31);
+				SpoonCookie::set('frontend_profile_secret_key', $profileSecret, (60 * 60 * 24 * 31));
 
 				// set is_logged_in to true
 				SpoonSession::set('frontend_profile_logged_in', true);

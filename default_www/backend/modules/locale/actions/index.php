@@ -115,7 +115,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 					// user is God?
 					if($this->isGod)
 					{
-						//  add edit button
+						// add edit button
 						$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[translation_id]' . $this->filterQuery);
 
 						// add copy button

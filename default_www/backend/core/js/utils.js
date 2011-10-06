@@ -195,14 +195,14 @@ utils.string =
 	html5: function(html)
 	{
 		var html5 = 'abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.split(' ');
-		
+
 		// create div if needed
 		if(utils.string.div === false)
 		{
 			utils.string.div = document.createElement('div');
-			
+
 			utils.string.div.innerHTML = '<nav></nav>';
-			
+
 			if(utils.string.div.childNodes.length !== 1)
 			{
 				var fragment = document.createDocumentFragment();
@@ -212,7 +212,7 @@ utils.string =
 				fragment.appendChild(utils.string.div);
 			}
 		}
-		
+
 		html = html.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 					.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 
@@ -427,27 +427,27 @@ utils.url =
 		var getValue = '';
 
 		// get GET chunks from url
-	    var hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
+		var hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
 
-	    // find requested parameter
-	    $.each(hashes, function(index, value)
-	    {
-	    	// split name/value up
-	    	var chunks = value.split('=');
+		// find requested parameter
+		$.each(hashes, function(index, value)
+		{
+			// split name/value up
+			var chunks = value.split('=');
 
-	    	// found the requested parameter
-	    	if(chunks[0] == name)
-	    	{
-	    		// set for return
-	    		getValue = chunks[1];
+			// found the requested parameter
+			if(chunks[0] == name)
+			{
+				// set for return
+				getValue = chunks[1];
 
-	    		// break loop
-	    		return false;
-	    	}
-	    });
+				// break loop
+				return false;
+			}
+		});
 
-	    // cough up value
-	    return getValue;
+		// cough up value
+		return getValue;
 	},
 
 

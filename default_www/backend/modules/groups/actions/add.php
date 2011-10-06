@@ -443,11 +443,13 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 
 			// create dashboard sequence
 			$this->dashboardSequence[$widget['module']] += array(
- 			                                                  $widget['widget'] => array(
-			                                                                           'column' => $instance->getColumn(),
-			                                                                           'position' => (int) $instance->getPosition(),
-			                                                                           'hidden' => false,
- 			                                                                           'present' => false));
+																$widget['widget'] => array(
+																						'column' => $instance->getColumn(),
+																						'position' => (int) $instance->getPosition(),
+																						'hidden' => false,
+																						'present' => false
+																					)
+															);
 
 			// loop through presets
 			foreach($widgetPresets as $preset)
@@ -567,7 +569,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('manage_users', array('Deny', 'Allow'));
 		$this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
 		$this->tpl->assign('permissions', $permissionBoxes);
-		$this->tpl->assign('widgets', isset($widgets) ?  $widgets : false);
+		$this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
 	}
 
 

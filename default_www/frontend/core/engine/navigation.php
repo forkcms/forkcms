@@ -393,7 +393,7 @@ class FrontendNavigation extends FrontendBaseObject
 		foreach($navigation as $level)
 		{
 			// loop parents
-			foreach($level as $children)
+			foreach($level as $parentId => $children)
 			{
 				// loop children
 				foreach($children as $itemId => $item)
@@ -404,6 +404,7 @@ class FrontendNavigation extends FrontendBaseObject
 						// set return
 						$return = $item;
 						$return['page_id'] = $itemId;
+						$return['parent_id'] = $parentId;
 
 						// return
 						return $return;;

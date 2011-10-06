@@ -928,7 +928,7 @@ class BackendLocaleModel
 		// get db
 		$db = BackendModel::getDB();
 
-		// build  the query
+		// build the query
 		$query = 'SELECT l.id, l.module, l.type, l.name, l.value, l.language
 					FROM locale AS l
 					WHERE l.language IN (' . implode(',', $aLanguages) . ') AND l.application = ? AND l.name LIKE ? AND l.value LIKE ? AND l.type IN (' . implode(',', $types) . ')';

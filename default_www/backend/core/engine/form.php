@@ -760,7 +760,7 @@ class BackendFormImage extends SpoonFormImage
 		if(SpoonFilter::isInteger($uploadMaxFilesize)) $uploadMaxFilesize = $uploadMaxFilesize / 1024 . 'MB';
 
 		// reformat if specified in kB
-		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') $uploadMaxFilesize =  substr($uploadMaxFilesize, 0, -1) . 'kB';
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
 
 		// reformat if specified in MB
 		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') $uploadMaxFilesize .= 'B';
@@ -817,7 +817,7 @@ class BackendFormFile extends SpoonFormFile
 		if(SpoonFilter::isInteger($uploadMaxFilesize)) $uploadMaxFilesize = $uploadMaxFilesize / 1024 . 'MB';
 
 		// reformat if specified in kB
-		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') $uploadMaxFilesize =  substr($uploadMaxFilesize, 0, -1) . 'kB';
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
 
 		// reformat if specified in MB
 		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') $uploadMaxFilesize .= 'B';

@@ -16,17 +16,35 @@ Improvements:
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 
 
-2.6.10 (xxxx-xx-xx)
+2.6.11 (2011-10-04)
+--
+Improvements:
+
+* Core: Made the parent_id available in the template.
+* Core: Upgraded TinyMCE to 3.4.6
+* Core: Made the Facebook integration work with the signed requests.
+
+Bugfixes:
+
+* Core: re-added some missing locale into the imagemanager, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/185-268-moxicode-unassigned-literals.
+* Core: fixed some errors in the api-methods for blog.
+* Core: fixed a bug where updating a page template tried to input data in a non-existing database column.
+* Core: fixed a typo in the dutch disclaimer, thx to Bart Deslagmulder, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/190.
+
+
+2.6.10 (2011-09-27)
 --
 Improvements:
 
 * Search: IP address is no longer shown in statistics.
 * Core: Improved config to let TinyMCE cleanup Internet Explorer HTML.
+* Search: Search won't show the 404 page anymore, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/186-268-search-finds-404-page.
 
 Bugfixes:
 
 * Groups: when no bundled actions were available a PHP notice was thrown.
 * Dashboard: validate if a position is already taken.
+* Pages: sort sequences after checking its existence.
 
 
 2.6.9 (2011-09-20)

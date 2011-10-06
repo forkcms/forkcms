@@ -84,9 +84,11 @@ class BackendFaqIndex extends BackendBaseActionIndex
 			$dataGrid->setRowAttributes(array('id' => '[id]'));
 
 			// add datagrid to list
-			$this->dataGrids[] = array('id' => $category['id'],
-									   'name' => $category['name'],
-									   'content' => $dataGrid->getContent());
+			$this->dataGrids[] = array(
+									'id' => $category['id'],
+									'name' => $category['name'],
+									'content' => $dataGrid->getContent()
+								);
 		}
 	}
 
