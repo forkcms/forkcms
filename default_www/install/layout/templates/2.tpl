@@ -77,6 +77,13 @@
 					different image formats. More information can be found on: <a href="http://php.net/gd">http://php.net/gd</a>.
 				</p>
 
+				<h3>mod_rewrite</h3>
+				<h4>{$PATH_WWW}.htaccess exists <span class="{$modRewriteHtaccessExists}">{$modRewriteHtaccessExistsStatus}</span></h4>
+				<p>Make sure you uploaded the .htaccess-file. The file starts with a dot, so it may be hidden on your filesystem.</p>
+
+				<h4>mod_rewrite is enabled <span class="{$modRewriteVariable}">{$modRewriteVariableStatus}</span></h4>
+				<p>Make sure mod_rewrite is enabled in your webserver-configuration.</p>
+
 				<!-- <h3>PHP ini-settings</h3>
 				<h4>Safe Mode: <span class="{$settingsSafeMode}">{$settingsSafeModeStatus}</span></h4>
 				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>

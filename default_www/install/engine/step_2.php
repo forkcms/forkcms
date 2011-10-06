@@ -136,11 +136,25 @@ class InstallerStep2 extends InstallerStep
 		// check for open basedir
 		// self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', $variables);
 
+
+		/*
+		 * Try to check if mod_rewrite is enabled
+		 */
+		// check if the .htaccess file exists
+		self::checkRequirement('modRewriteHtaccessExists', (defined('PATH_WWW') && file_exists(PATH_WWW . '/.htaccess')) , $variables);
+
+		// only check for mod_rewrite if we know it is Apache, this will fail on some exotic setups
+		if(isset($_SERVER['SERVER_SOFTWARE']) && substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache') > 0)
+		{
+			// check if the mod_rewrite_enabled-variable is available in the $_SERVER-array, it will be set in the .htaccess-file
+			self::checkRequirement('modRewriteVariable', (isset($_SERVER['mod_rewrite_enabled']) && $_SERVER['mod_rewrite_enabled'] == 'true') , $variables);
+		}
+
+
 		/*
 		 * Make sure the filesystem is prepared for the installation and everything can be read/
 		 * written correctly.
 		 */
-
 		// check if the backend-cache-directory is writable
 		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/')), $variables);
 

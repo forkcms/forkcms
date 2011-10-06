@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: removed empty method.
+* Core: detect if .htaccess is available and mod_rewrite enabled in the installer.
 
 
 2.6.11 (2011-10-04)
