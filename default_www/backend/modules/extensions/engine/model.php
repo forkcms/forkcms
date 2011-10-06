@@ -17,9 +17,8 @@ class BackendExtensionsModel
 	 * @var	array
 	 */
 	private static $ignoredModules = array(
-		'authentication', 'content_blocks', 'core', 'dashboard',
-		'error', 'extensions', 'groups', 'locale', 'pages',
-		'search', 'settings', 'tags','users'
+		'authentication', 'dashboard',
+		'error', 'extensions', 'settings'
 	);
 
 
@@ -82,7 +81,7 @@ class BackendExtensionsModel
 			}
 
 			// get extra info from the info.xml
-			$infoXml = @simplexml_load_file(BACKEND_MODULES_PATH . '/' . $module['name'] . '/info.xml', null, LIBXML_NOCDATA);
+			$infoXml = @simplexml_load_file(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', null, LIBXML_NOCDATA);
 
 			// we need a valid XML
 			if($infoXml !== false)

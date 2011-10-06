@@ -20,6 +20,44 @@ class BackendExtensionsModuleInstall extends BackendBaseActionIndex
 
 
 	/**
+	 * Clear all applications cache.
+	 *
+	 * Note: we do not need to rebuild anything, the core will do this when noticing the cache files are missing.
+	 *
+	 * @return	void
+	 */
+	private function clearCache()
+	{
+		// list of cache files to be deleted
+		$filesToDelete = array();
+
+		// backend navigation
+		$filesToDelete[] = BACKEND_CACHE_PATH . '/navigation/navigation.php';
+
+		// backend locale
+		foreach(SpoonFile::getList(BACKEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
+		{
+			$filesToDelete[] = BACKEND_CACHE_PATH . '/locale/' . $file;
+		}
+
+		// frontend navigation
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/navigation', '/\.(php|js)$/') as $file)
+		{
+			$filesToDelete[] = FRONTEND_CACHE_PATH . '/navigation/' . $file;
+		}
+
+		// frontend locale
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
+		{
+			$filesToDelete[] = FRONTEND_CACHE_PATH . '/locale/' . $file;
+		}
+
+		// delete the files
+		foreach($filesToDelete as $file) SpoonFile::delete($file);
+	}
+
+
+	/**
 	 * Execute the action.
 	 *
 	 * @return	void
@@ -47,44 +85,6 @@ class BackendExtensionsModuleInstall extends BackendBaseActionIndex
 
 		// no item found, redirect to index, because somebody is fucking with our url
 		else $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
-	}
-
-
-	/**
-	 * Clear all applications cache.
-	 *
-	 * Note: we do not need to rebuild anything, the core will do this when noticing the cache files are missing.
-	 *
-	 * @return	void
-	 */
-	private function clearCache()
-	{
-		//
-		$filesToDelete = array();
-
-		// backend navigation
-		$filesToDelete[] = BACKEND_CACHE_PATH . '/navigation/navigation.php';
-
-		// backend locale
-		foreach(SpoonFile::getList(BACKEND_CACHE_PATH .'/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = BACKEND_CACHE_PATH .'/locale/' . $file;
-		}
-
-		// frontend navigation
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH .'/navigation', '/\.(php|js)$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH .'/navigation/' . $file;
-		}
-
-		// frontend locale
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH .'/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH .'/locale/' . $file;
-		}
-
-		// delete the files
-		foreach($filesToDelete as $file) SpoonFile::delete($file);
 	}
 
 
