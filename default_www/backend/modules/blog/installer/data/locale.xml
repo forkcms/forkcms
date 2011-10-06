@@ -112,6 +112,10 @@
         <translation language="nl"><![CDATA[blog]]></translation>
         <translation language="en"><![CDATA[blog]]></translation>
       </item>
+      <item type="message" name="HelpFileFieldWithMaxFileSize">
+        <translation language="nl"><![CDATA[Enkel bestanden met de extensie %1$s zijn toegelaten, maximum toegelaten bestandsgrootte: %2$s.]]></translation>
+        <translation language="en"><![CDATA[Only files with the extension %1$s are allowed, maximim file size: %2$s.]]></translation>
+      </item>
     </core>
   </backend>
   <frontend>

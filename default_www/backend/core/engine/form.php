@@ -833,7 +833,8 @@ class BackendFormFile extends SpoonFormFile
 
 		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
-		$output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpMaxFileSize'), $uploadMaxFilesize) . '</span>';
+		if(isset($this->attributes['extension'])) $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpFileFieldWithMaxFileSize', 'core'), $this->attributes['extension'], $uploadMaxFilesize) . '</span>';
+		else $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpMaxFileSize'), $uploadMaxFilesize) . '</span>';
 
 		// parse to template
 		if($template !== null)
