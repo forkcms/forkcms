@@ -48,7 +48,7 @@
 									<td width="24">
 									</td>
 									<td width="532">
-										<h2>Fork CMS: {$msgFormBuilderSubject|sprintf:{$name}}</h2>
+										<h2>{$SITE_TITLE}: {$msgFormBuilderSubject|sprintf:{$name}}</h2>
 										<h3>{$lblSenderInformation|ucfirst}</h3>
 										<p><strong>{$lblSentOn|ucfirst}:</strong><br /> {$sentOn|date:{$dateFormatLong}:{$LANGUAGE}}</p>
 
