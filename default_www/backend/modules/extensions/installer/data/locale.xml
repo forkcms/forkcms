@@ -20,9 +20,33 @@
         <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
         <translation language="en"><![CDATA[events (hooks)]]></translation>
       </item>
+      <item type="label" name="Install">
+        <translation language="nl"><![CDATA[installeer]]></translation>
+        <translation language="en"><![CDATA[install]]></translation>
+      </item>
+      <item type="label" name="ModulesToBeInstalled">
+        <translation language="nl"><![CDATA[te installeren modules]]></translation>
+        <translation language="en"><![CDATA[modules to be installed]]></translation>
+      </item>
       <item type="label" name="Version">
         <translation language="nl"><![CDATA[versie]]></translation>
         <translation language="en"><![CDATA[version]]></translation>
+      </item>
+      <item type="message" name="InformationFileCouldNotBeLoaded">
+        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
+        <translation language="en"><![CDATA[A info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
+      </item>
+      <item type="message" name="InformationFileIsEmpty">
+        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
+        <translation language="en"><![CDATA[A info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
+      </item>
+      <item type="message" name="InformationFileIsMissing">
+        <translation language="nl"><![CDATA[Er is geen informatie over deze module beschikbaar.]]></translation>
+        <translation language="en"><![CDATA[There is no information available for this module.]]></translation>
+      </item>
+      <item type="message" name="InformationModuleIsNotInstalled">
+        <translation language="nl"><![CDATA[Deze module is nog niet geinstalleerd.]]></translation>
+        <translation language="en"><![CDATA[This module is not yet installed.]]></translation>
       </item>
       <item type="message" name="Module">
         <translation language="nl"><![CDATA[module "%1$s"]]></translation>

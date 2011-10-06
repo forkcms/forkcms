@@ -22,9 +22,9 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 	/**
 	 * Datagrids.
 	 *
-	 * @var	BackendDataGridArray
+	 * @var	BackendDataGrid
 	 */
-	private $dgEvents;
+	private $dataGridEvents;
 
 
 	/**
@@ -32,7 +32,7 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 	 *
 	 * @var	array
 	 */
-	private $information;
+	private $information = array();
 
 
 	/**
@@ -59,8 +59,8 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get data
-			$this->getData();
+			// load data
+			$this->loadData();
 
 			// load datagrid
 			$this->loadDataGridEvents();
@@ -78,12 +78,19 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 
 
 	/**
-	 * Get the data.
+	 * Load the data.
+	 * This will also set some warnings if needed.
 	 *
 	 * @return	void
 	 */
-	private function getData()
+	private function loadData()
 	{
+		// inform that the module is not installed yet
+		if(!BackendExtensionsModel::isInstalled($this->currentModule))
+		{
+			$this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
+		}
+
 		// path to information file
 		$pathInfoXml = BACKEND_MODULES_PATH . '/' . $this->currentModule . '/info.xml';
 
@@ -100,7 +107,7 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 				$this->information = BackendExtensionsModel::processInformationXml($infoXml);
 
 				// empty data (nothing useful)
-				if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileEmpty'));
+				if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileIsEmpty'));
 			}
 
 			// warning that the information file is corrupt
@@ -123,10 +130,10 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 		if(!isset($this->information['events'])) return;
 
 		// create data grid
-		$this->dgEvents = new BackendDataGridArray($this->information['events']);
+		$this->dataGridEvents = new BackendDataGridArray($this->information['events']);
 
 		// no paging
-		$this->dgEvents->setPaging(false);
+		$this->dataGridEvents->setPaging(false);
 	}
 
 
@@ -141,9 +148,10 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 		$this->tpl->assign('name', $this->currentModule);
 		$this->tpl->assign('warnings', $this->warnings);
 		$this->tpl->assign('information', $this->information);
+		$this->tpl->assign('isInstallable', !BackendExtensionsModel::isInstalled($this->currentModule));
 
 		// data grids
-		$this->tpl->assign('dgEvents', (isset($this->dgEvents) && $this->dgEvents->getNumResults() > 0) ? $this->dgEvents->getContent() : null);
+		$this->tpl->assign('dgEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
 	}
 }
 

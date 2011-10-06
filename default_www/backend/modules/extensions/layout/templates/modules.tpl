@@ -9,12 +9,22 @@
 		</a>
 	</div>
 </div>
-{option:dataGrid}
+
+{option:dataGridInstalledModules}
 <div class="dataGridHolder">
-	{$dataGrid}
+	{$dataGridInstalledModules}
 </div>
-{/option:dataGrid}
-{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
+{/option:dataGridInstalledModules}
+{option:!dataGridInstalledModules}<p>{$msgNoModulesInstalled}</p>{/option:!dataGridInstalledModules}
+
+{option:dataGridInstallableModules}
+	<div class="dataGridHolder">
+		<div class="tableHeading">
+			<h3>{$lblModulesToBeInstalled|ucfirst}</h3>
+		</div>
+		{$dataGridInstallableModules}
+	</div>
+{/option:dataGridInstallableModules}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

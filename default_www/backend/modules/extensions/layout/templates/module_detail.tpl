@@ -101,13 +101,17 @@
 {/option:information}
 
 <div class="fullwidthOptions">
-	<a href="{$var|geturl:'mass_data_action'}&amp;action=delete&amp;form_id={$formId}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-		<span>{$lblDelete|ucfirst}</span>
-	</a>
+	{option:isInstallable}
+		<a href="{$var|geturl:'module_install'}&amp;module={$name}" data-message-id="confirmInstall" class="askConfirmation button linkButton icon">
+			<span>{$lblInstall|ucfirst}</span>
+		</a>
+	{/option:isInstallable}
 </div>
 
-<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-	<p>{$msgConfirmDeleteData}</p>
+<div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
+	<p>
+		{$msgConfirmInstall|sprintf:{$name}}
+	</p>
 </div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
