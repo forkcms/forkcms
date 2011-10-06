@@ -734,6 +734,10 @@
         <translation language="nl"><![CDATA[frontend]]></translation>
         <translation language="en"><![CDATA[frontend]]></translation>
       </item>
+      <item type="label" name="Follow">
+        <translation language="nl"><![CDATA[follow]]></translation>
+        <translation language="en"><![CDATA[follow]]></translation>
+      </item>
       <item type="label" name="General">
         <translation language="nl"><![CDATA[algemeen]]></translation>
         <translation language="en"><![CDATA[general]]></translation>
@@ -773,6 +777,10 @@
       <item type="label" name="Import">
         <translation language="nl"><![CDATA[importeer]]></translation>
         <translation language="en"><![CDATA[import]]></translation>
+      </item>
+      <item type="label" name="Index">
+        <translation language="nl"><![CDATA[index]]></translation>
+        <translation language="en"><![CDATA[index]]></translation>
       </item>
       <item type="label" name="Interface">
         <translation language="nl"><![CDATA[interface]]></translation>
@@ -1410,10 +1418,6 @@
         <translation language="nl"><![CDATA[actie]]></translation>
         <translation language="en"><![CDATA[action]]></translation>
       </item>
-      <item type="message" name="ActivateNoFollow">
-        <translation language="nl"><![CDATA[Activeer <code>rel="nofollow"</code>]]></translation>
-        <translation language="en"><![CDATA[Activate <code>rel="nofollow"</code>]]></translation>
-      </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het item werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The item was added.]]></translation>
@@ -1566,6 +1570,14 @@
         <translation language="nl"><![CDATA[Vul hieronder je e-mail adres in. Je krijgt een e-mail met instructies hoe je een nieuw wachtwoord instelt.]]></translation>
         <translation language="en"><![CDATA[Below enter your e-mail. You will receive an e-mail containing instructions on how to get a new password.]]></translation>
       </item>
+      <item type="message" name="HelpImageFieldWithMaxFileSize">
+        <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten, maximum toegelaten bestandsgrootte: %1$s.]]></translation>
+        <translation language="en"><![CDATA[Only jp(e)g, gif or png-files are allowed, maximum filesize: %1$s.]]></translation>
+      </item>
+      <item type="message" name="HelpMaxFileSize">
+        <translation language="nl"><![CDATA[(maximum bestandsgrootte: %1$s)]]></translation>
+        <translation language="en"><![CDATA[(maximum filesize: %1$s)]]></translation>
+      </item>
       <item type="message" name="HelpMetaCustom">
         <translation language="nl"><![CDATA[Deze extra metatags worden in de <code>&lt;head&gt;</code> sectie van de pagina gezet.]]></translation>
         <translation language="en"><![CDATA[These custom metatags will be placed in the <code>&lt;head&gt;</code> section of the page.]]></translation>
@@ -1613,10 +1625,6 @@
       <item type="message" name="Imported">
         <translation language="nl"><![CDATA[De data werd geïmporteerd.]]></translation>
         <translation language="en"><![CDATA[The data was imported.]]></translation>
-      </item>
-      <item type="message" name="InThePicture">
-        <translation language="nl"><![CDATA[In de kijker]]></translation>
-        <translation language="en"><![CDATA[In the picture]]></translation>
       </item>
       <item type="message" name="LBL">
         <translation language="nl"><![CDATA[label]]></translation>

@@ -45,7 +45,6 @@ class BackendInit
 		ini_set('pcre.recursion_limit', 999999999);
 		ini_set('memory_limit', '64M');
 
-
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
@@ -78,9 +77,6 @@ class BackendInit
 
 		// disable magic quotes
 		SpoonFilter::disableMagicQuotes();
-
-		// start session
-		$this->initSession();
 	}
 
 
@@ -150,7 +146,7 @@ class BackendInit
 						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
-						$action = str_replace($module, '', $action);
+						$action = substr($action, strlen($module));
 						$module = substr($module, 0, -1);
 
 						// check the actions, engine & widgets directories
@@ -365,17 +361,6 @@ class BackendInit
 
 		// stop script execution
 		exit;
-	}
-
-
-	/**
-	 * Start session
-	 *
-	 * @return	void
-	 */
-	private function initSession()
-	{
-		SpoonSession::start();
 	}
 
 

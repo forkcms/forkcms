@@ -38,8 +38,15 @@ class BackendDataGrid extends SpoonDataGrid
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'dataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
-		// hide the id by default
-		if(in_array('id', $this->getColumns())) $this->setColumnsHidden('id');
+		// id gets special treatment
+		if(in_array('id', $this->getColumns()))
+		{
+			// hide the id by defaults
+			$this->setColumnsHidden('id');
+
+			// our JS needs to know an id, so we can highlight it
+			$this->setRowAttributes(array('id' => 'row-[id]'));
+		}
 
 		// set default sorting options
 		$this->setSortingOptions();
@@ -56,9 +63,6 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// set paging class
 		$this->setPagingClass('BackendDataGridPaging');
-
-		// our JS needs to know an id, so we can highlight it
-		$this->setRowAttributes(array('id' => 'row-[id]'));
 
 		// set default template
 		$this->setTemplate(BACKEND_CORE_PATH . '/layout/templates/datagrid.tpl');
@@ -234,7 +238,7 @@ class BackendDataGrid extends SpoonDataGrid
 		// redefine
 		$column = (string) $column;
 		$message = (string) $message;
-		$custom = $custom;
+		$custom = (string) $custom;
 		$title = ($title !== null) ? (string) $title : null;
 		$uniqueId = (string) $uniqueId;
 
@@ -757,6 +761,28 @@ class BackendDataGridFunctions
 
 
 	/**
+	 * Format a date according the users' settings
+	 *
+	 * @return	string
+	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable date.
+	 */
+	public static function getDate($timestamp)
+	{
+		// redefine
+		$timestamp = (int) $timestamp;
+
+		// if invalid timestamp return an empty string
+		if($timestamp <= 0) return '';
+
+		// get user setting for long dates
+		$format = BackendAuthentication::getUser()->getSetting('date_format');
+
+		// format the date according the user his settings
+		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
+	}
+
+
+	/**
 	 * Format a date as a long representation according the users' settings
 	 *
 	 * @return	string
@@ -772,6 +798,28 @@ class BackendDataGridFunctions
 
 		// get user setting for long dates
 		$format = BackendAuthentication::getUser()->getSetting('datetime_format');
+
+		// format the date according the user his settings
+		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
+	}
+
+
+	/**
+	 * Format a time according the users' settings
+	 *
+	 * @return	string
+	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable time.
+	 */
+	public static function getTime($timestamp)
+	{
+		// redefine
+		$timestamp = (int) $timestamp;
+
+		// if invalid timestamp return an empty string
+		if($timestamp <= 0) return '';
+
+		// get user setting for long dates
+		$format = BackendAuthentication::getUser()->getSetting('time_format');
 
 		// format the date according the user his settings
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());

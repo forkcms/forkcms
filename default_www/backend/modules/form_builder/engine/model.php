@@ -557,7 +557,7 @@ class FormBuilderHelper
 				$defaultIndex = array_search($defaultValues, $values, true);
 				if($defaultIndex === false) $defaultIndex = null;
 
-				/// create element
+				// create element
 				$ddm = $frm->addDropdown($fieldName, $values, $defaultIndex);
 
 				// empty default element
@@ -573,7 +573,7 @@ class FormBuilderHelper
 				// rebuild values
 				foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
 
-				/// create element
+				// create element
 				$rbt = $frm->addRadiobutton($fieldName, $newValues, $defaultValues);
 
 				// get content
@@ -586,7 +586,7 @@ class FormBuilderHelper
 				// rebuild values
 				foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
 
-				/// create element
+				// create element
 				$chk = $frm->addMultiCheckbox($fieldName, $newValues, $defaultValues);
 
 				// get content

@@ -32,7 +32,8 @@
 						{option:!subscriptionsMultiple}<a href="{$item.full_url}#{$actSubscriptions}">{$msgEventsOneSubscription}</a>{/option:!subscriptionsMultiple}
 					{/option:subscriptions}
 					{option:!item.in_past}
-						<a href="{$item.ical_url}">{$msgEventsDownloadIcal}</a>
+						{* @todo : implement iCal *}
+						{* <a href="#">{$msgEventsDownloadIcal}</a> *}
 					{/option:!item.in_past}
 				</p>
 			</div>

@@ -19,7 +19,7 @@
 require_once 'spoon/spoon.php';
 
 /** Spoon ICalendar execption class */
-require_once 'spoon/webservices/icalendar/exception.php';
+require_once 'spoon/ical/ical.php';
 
 /** Spoon HTTP class */
 require_once 'spoon/http/http.php';
@@ -66,8 +66,8 @@ class SpoonICalendarEvent
 	 * @var	string
 	 */
 	private $location;
-	
-	
+
+
 	/**
 	 * Start date
 	 *
@@ -164,7 +164,7 @@ class SpoonICalendarEvent
 		return	$this->endDate;
 	}
 
-	
+
 	/**
 	 * Get location
 	 *
@@ -257,7 +257,7 @@ class SpoonICalendarEvent
 
 		// add location if needed
 		if($this->getLocation() !== null) $string .= 'LOCATION:' . $this->getLocation() ."\n";
-		
+
 		// end
 		$string .= 'END:VEVENT'."\n";
 
@@ -302,7 +302,7 @@ class SpoonICalendarEvent
 		$this->endDate = (int) $value;
 	}
 
-	
+
 	/**
 	 * Set a location
 	 *
@@ -313,7 +313,7 @@ class SpoonICalendarEvent
 	{
 		$this->location = (string) $value;
 	}
-	
+
 
 	/**
 	 * Set start date

@@ -39,6 +39,10 @@ class ContentBlocksInstall extends ModuleInstaller
 		$this->setActionRights(1, 'content_blocks', 'delete');
 		$this->setActionRights(1, 'content_blocks', 'edit');
 		$this->setActionRights(1, 'content_blocks', 'index');
+
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$this->setNavigation($navigationModulesId, 'ContentBlocks', 'content_blocks/index', array('content_blocks/add', 'content_blocks/edit'));
 	}
 }
 

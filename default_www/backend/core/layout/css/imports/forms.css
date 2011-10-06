@@ -137,6 +137,12 @@ input[type="submit"] {
 		padding-bottom: 0;
 	}
 
+.forkForms .inputListHorizontal li { 
+	float: left;
+	margin-right: 12px;
+}
+	
+	
 /*
 	Horizontal forms
 */

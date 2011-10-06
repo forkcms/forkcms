@@ -14,7 +14,7 @@
 					{iteration:widgetBlogCategories}
 						<li>
 							<a href="{$widgetBlogCategories.url}">
-								{$widgetBlogCategories.label} ({$widgetBlogCategories.total})
+								{$widgetBlogCategories.label}&nbsp;({$widgetBlogCategories.total})
 							</a>
 						</li>
 					{/iteration:widgetBlogCategories}

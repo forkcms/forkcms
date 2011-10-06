@@ -10,9 +10,7 @@
 	{* Meta *}
 	<meta charset="utf-8" />
 	<meta name="generator" content="Fork CMS" />
-	<meta name="description" content="{$metaDescription}" />
-	<meta name="keywords" content="{$metaKeywords}" />
-	{option:debug}<meta name="robots" content="noindex, nofollow" />{/option:debug}
+	{$meta}
 	{$metaCustom}
 
 	{* Favicon and Apple touch icon *}

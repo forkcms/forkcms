@@ -26,9 +26,11 @@
 			<li><a href="#core_getapikey">core.getAPIKey</a></li>
 			<li><a href="#core_getinfo">core.getInfo</a></li>
 			<li><a href="#core_apple_adddevice">core.apple.addDevice</a></li>
+			<li><a href="#core_apple_adddevice">core.apple.removeDevice</a></li>
 		</ul>
 		<ul>
 			<li><a href="#blog_comments_get">blog.comments.get</a></li>
+			<li><a href="#blog_comments_get_by_id">blog.comments.getById</a></li>
 			<li><a href="#blog_comments_update">blog.comments.update</a></li>
 			<li><a href="#blog_comments_update_status">blog.comments.updateStatus</a></li>
 		</ul>
@@ -60,6 +62,14 @@
 		</dl>
 
 
+		<h3 id="core_apple_removedevice">core.apple.removeDevice</h3>
+		<p>Remove a device from a user.</p>
+		<h4>Parameters</h4>
+		<dl>
+			<dt>token <small>string</small></dt><dd>The token of the device.</dd>
+		</dl>
+
+
 		<h2>Blog</h2>
 		<h3 id="blog_comments_get">blog.comments.get</h3>
 		<p>Get the comments.</p>
@@ -71,6 +81,16 @@
 		</dl>
 		<h4>Return</h4>
 		<p>An array with the comments</p>
+
+
+		<h3 id="blog_comments_get_by_id">blog.comments.getById</h3>
+		<p>Get a single comment.</p>
+		<h4>Parameters</h4>
+		<dl>
+			<dt>id <small>int</small></dt><dd>The id of the comment.</dd>
+		</dl>
+		<h4>Return</h4>
+		<p>An array with the comment</p>
 
 
 		<h3 id="blog_comments_update">blog.comments.update</h3>

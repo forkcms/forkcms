@@ -1,20 +1,21 @@
-if(!jsBackend) { var jsBackend = new Object(); }
+if(!jsBackend) { var jsBackend }
 
 
 /**
  * Interaction for the groups module
  *
  * @author	Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
-jsBackend.groups = 
+jsBackend.groups =
 {
 		// init, constructor-alike
 		init: function()
-		{	
+		{
 			$('.hide').each(jsBackend.groups.hide);
 			$('.container').click(jsBackend.groups.clickHandler);
 			$('.container span label').each(jsBackend.groups.mouseHandler);
-			$('.module .dataGridHolder .dataGrid tbody').each(jsBackend.groups.selectionPermissions);
+			$('.module .datagridHolder .dataGrid tbody').each(jsBackend.groups.selectionPermissions);
 			$('.groupHolder .dataGrid tbody').each(jsBackend.groups.selectionWidgets)
 			$('.dataGrid tbody tr td').click(jsBackend.groups.selectHandler);
 			$('.selectAll').click(jsBackend.groups.selectAll);
@@ -28,7 +29,7 @@ jsBackend.groups =
 		},
 
 		// clickhandler
-		clickHandler: function(event) 
+		clickHandler: function(event)
 		{
 			// prevent default
 			event.preventDefault();
@@ -40,7 +41,7 @@ jsBackend.groups =
 			if($this.hasClass('iconCollapsed'))
 			{
 				// slidedown
-				$this.next('.dataGridHolder').show();
+				$this.next('.datagridHolder').show();
 
 				// change title
 				$this.attr('title', 'close');
@@ -54,45 +55,25 @@ jsBackend.groups =
 			else
 			{
 				// close this thing
-				$this.next('.dataGridHolder').hide();
+				$this.next('.datagridHolder').hide();
 
 				// change title
-				$this.attr('title', 'open');				
+				$this.attr('title', 'open');
 
 				// change css
 				$this.addClass('iconCollapsed');
 				$this.removeClass('iconExpanded');
-			}	
+			}
 		},
 
 		// selectHandler
-		selectHandler: function() 
+		selectHandler: function()
 		{
 			// init vars
 			var $this = $(this);
 
-			// no checkbox involved?
-			if(!$this.hasClass('checkbox'))
-			{
-				// already checked?
-				if($this.parent().children('td').children('input').attr('checked'))
-				{
-					// remove checkstates
-					$this.parent('tr').children('td').children('input').removeAttr('checked');
-					$this.parent('tr').removeClass('selected');
-				}
-
-				// not yet checked?
-				else 
-				{
-					// add checkstates
-					$this.parent('tr').children('td').children('input').attr('checked', 'checked');
-					$this.parent('tr').addClass('selected');
-				}
-			}
-
 			// editing permissions? check permissions
-			if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.dataGridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);	
+			if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.datagridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);
 
 			// editing widgets? check widgets
 			else $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionWidgets);
@@ -107,10 +88,10 @@ jsBackend.groups =
 			var $this = $(this);
 
 			// loop all actions and check if they're checked
-			$this.find('tr td input').each(function() 
+			$this.find('tr td input').each(function()
 			{
 				// if not checked set false
-				if(!$(this).attr('checked')) allChecked = false;
+				if(!$(this).prop('checked')) allChecked = false;
 
 				// is checked?
 				else noneChecked = false;
@@ -120,24 +101,24 @@ jsBackend.groups =
 			if(!allChecked && !noneChecked)
 			{
 				// unset checked and set indeterminate
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).checked = false;
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).indeterminate = true;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).checked = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = true;
 			}
 
 			// if all actions are checked, check massaction checkbox
 			if(allChecked)
 			{
 				// unset indeterminate and set checked
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).indeterminate = false;
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).checked = true;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).checked = true;
 			}
 
 			// nothing is checked?
 			if(noneChecked)
 			{
 				// unset indeterminate and checked
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).indeterminate = false;
-				$this.parent('table').parent('ul').parent('li').find('input').get(0).checked = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = false;
+				$this.parent('table').parent('div').parent('li').find('input').get(0).checked = false;
 			}
 		},
 
@@ -149,7 +130,7 @@ jsBackend.groups =
 			var $this = $(this);
 
 			// loop all actions and check if they're checked
-			$this.find('tr td input').each(function() 
+			$this.find('tr td input').each(function()
 			{
 				// if not checked set false
 				if(!$(this).attr('checked')) allChecked = false;
@@ -163,7 +144,7 @@ jsBackend.groups =
 		},
 
 		// mousehandler
-		mouseHandler: function() 
+		mouseHandler: function()
 		{
 			// assign mouseovers
 			$(this).mouseover(function()
@@ -181,14 +162,14 @@ jsBackend.groups =
 			var $this = $(this);
 
 			// check all?
-			if($this.attr('checked'))
+			if($this.prop('checked'))
 			{
 				// loop through rows
-				$this.next('a').next('ul').find('table tbody tr td input').each(function()
+				$this.next('a').next('div').find('table tbody tr td input').each(function()
 				{
 					// check boxes
 					$(this).attr('checked', 'checked');
-					$(this).parent('td').parent('tr').addClass('selected');
+					$(this).parent('span').parent('td').parent('tr').addClass('selected');
 				});
 			}
 
@@ -196,11 +177,11 @@ jsBackend.groups =
 			else
 			{
 				// loop through rows
-				$this.next('a').next('ul').find('table tbody tr td input').each(function()
+				$this.next('a').next('div').find('table tbody tr td input').each(function()
 				{
 					// uncheck boxes
 					$(this).removeAttr('checked');
-					$(this).parent('td').parent('tr').removeClass('selected');
+					$(this).parent('span').parent('td').parent('tr').removeClass('selected');
 				});
 			}
 		},
@@ -209,5 +190,4 @@ jsBackend.groups =
 		eoo: true
 }
 
-// ready or not?
-$(document).ready(jsBackend.groups.init);
+$(jsBackend.groups.init);

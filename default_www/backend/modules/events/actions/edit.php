@@ -73,6 +73,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		// get the record
 		$this->record = (array) BackendEventsModel::get($this->id);
 
+		$this->record['image_url'] = FRONTEND_FILES_URL . '/userfiles/images/events/' . $this->record['image'];
+
 		// is there a revision specified?
 		$revisionToLoad = $this->getParameter('revision', 'int');
 
@@ -272,6 +274,16 @@ class BackendEventsEdit extends BackendBaseActionEdit
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 			if($this->frm->getField('max_subscriptions')->isFilled()) $this->frm->getField('max_subscriptions')->isInteger(BL::err('IntegerIsInvalid'));
 
+			$image = $this->frm->getField('image');
+			if($image->isFilled())
+			{
+				if($image->isAllowedExtension(array('jpg', 'png', 'gif'), sprintf(BL::err('ExtensionNotAllowed'), 'jpg, png, gif')))
+				{
+					$filename = time() . '.' . $image->getExtension();
+					$image->moveFile(FRONTEND_FILES_PATH . '/userfiles/images/events/' . $filename);
+				}
+			}
+
 			// validate meta
 			$this->meta->validate();
 
@@ -297,6 +309,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 				$item['allow_subscriptions'] = $this->frm->getField('allow_subscriptions')->getChecked() ? 'Y' : 'N';
 				$item['max_subscriptions'] = ($item['allow_subscriptions'] == 'Y' && $this->frm->getField('max_subscriptions')->isFilled()) ? (int) $this->frm->getField('max_subscriptions')->getValue() : null;
 				$item['status'] = $status;
+				$item['image'] = $image->isFilled()? $filename : $this->record['image'];
 
 				// update the item
 				$item['revision_id'] = BackendEventsModel::update($item);

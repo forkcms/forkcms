@@ -183,13 +183,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('events', 'rss');
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml',  'title' => FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE),  'href' => $rssLink), true);
+
 
 		// get RSS-link for the comments
 		$rssCommentsLink = FrontendNavigation::getURLForBlock('events', 'article_comments_rss') . '/' . $this->record['url'];
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) . '" href="' . $rssCommentsLink . '" />');
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml',  'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])),  'href' => $rssCommentsLink), true);
 
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
@@ -208,17 +209,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
 			}
 
-			$meta = '<!-- openGraph meta-data -->' . "\n";
-			$meta .= '<meta property="og:title" content="' . $this->record['title'] . '" />' . "\n";
-			$meta .= '<meta property="og:type" content="article" />' . "\n";
-			$meta .= '<meta property="og:image" content="' . $image . '" />' . "\n";
-			$meta .= '<meta property="og:url" content="' . SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url'] . '" />' . "\n";
-			$meta .= '<meta property="og:site_name" content="' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) . '" />' . "\n";
-			$meta .= '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids') . '" />' . "\n";
-			$meta .= '<meta property="og:description" content="' . $this->record['title'] . '" />' . "\n";
-
 			// add
-			$this->header->addMetaCustom($meta);
+			$this->header->addMetaData(array('property' => 'og:title', 'content' => $this->record['title']));
+			$this->header->addMetaData(array('property' => 'og:type', 'content' => 'article'));
+			$this->header->addMetaData(array('property' => 'og:image', 'content' => $this->record['title']));
+			$this->header->addMetaData(array('property' => 'og:description', 'content' => $image));
+			$this->header->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids')));
+			$this->header->addMetaData(array('property' => 'og:site_name', 'content' => FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)));
+			$this->header->addMetaData(array('property' => 'og:url', 'content' => SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url']));
 		}
 
 		// add into breadcrumb
@@ -226,8 +224,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 		// set meta
 		$this->header->setPageTitle($this->record['title']);
-		$this->header->setMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+		$this->header->addMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
 
 		// assign article
 		$this->tpl->assign('item', $this->record);

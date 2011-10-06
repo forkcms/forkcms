@@ -14,7 +14,7 @@
 					{iteration:widgetTagsTagCloud}
 						<li>
 							<a href="{$widgetTagsTagCloud.url}">
-								{$widgetTagsTagCloud.name} ({$widgetTagsTagCloud.number})
+								{$widgetTagsTagCloud.name}&nbsp;({$widgetTagsTagCloud.number})
 							</a>
 						</li>
 					{/iteration:widgetTagsTagCloud}

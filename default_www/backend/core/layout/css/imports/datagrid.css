@@ -189,6 +189,12 @@ td.num_tags {
 		font-weight: 700;
 	}
 
+	/* highlighted */
+	.dataGrid td.highlighted {
+		background-color: #FFF0A5 !important;
+		border: 1px solid #FED22F;
+	}
+
 	/* Goto */
 	.dataGrid td.goto {
 		padding: 1px 5px;
@@ -201,6 +207,21 @@ td.num_tags {
 	.dataGrid .content p {
 		padding: 0 0 12px;
 	}
+
+	/* Checkbox */
+	.dataGrid td.checkbox span {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+		.dataGrid td.checkbox span .inputCheckbox {
+			position: absolute;
+			top: 5px;
+			left: 10px;
+			margin: 0;
+		}
 
 /*
 	Sprite config: th.gif

@@ -132,6 +132,10 @@
 		<translation language="nl"><![CDATA[start op]]></translation>
 		<translation language="en"><![CDATA[starts on]]></translation>
 	  </item>
+	   <item type="label" name="Subscriptions">
+		<translation language="nl"><![CDATA[inschrijvingen]]></translation>
+		<translation language="en"><![CDATA[subscriptions]]></translation>
+	  </item>	 
 	</core>
   </backend>
   <frontend>

@@ -86,7 +86,7 @@ class SpoonFormAttributes extends SpoonFormElement
 	/**
 	 * Set a custom attribute and its value.
 	 *
-	 * @return	void
+	 * @return	SpoonFormAttributes
 	 * @param	string $key					The name of the attribute.
 	 * @param	string[optional] $value		The value for the attribute.
 	 */
@@ -97,23 +97,30 @@ class SpoonFormAttributes extends SpoonFormElement
 		$value = ($value !== null) ? (string) $value : null;
 
 		// key is NOT allowed
-		if(in_array(strtolower($key), $this->reservedAttributes)) throw new SpoonFormException('The key "' . $key . '" is a reserved attribute and can NOT be overwritten.');
+		if(in_array(strtolower($key), $this->reservedAttributes))
+		{
+			throw new SpoonFormException('The key "' . $key . '" is a reserved attribute and can NOT be overwritten.');
+		}
 
 		// set attribute
 		$this->attributes[strtolower($key)] = $value;
+		return $this;
 	}
 
 
 	/**
 	 * Set multiple custom attributes at once.
 	 *
-	 * @return	void
+	 * @return	SpoonFormAttributes
 	 * @param	array $attributes	The attributes as key/value-pairs.
 	 */
 	public function setAttributes(array $attributes)
 	{
-		foreach($attributes as $key => $value) $this->setAttribute($key, $value);
+		foreach($attributes as $key => $value)
+		{
+			$this->setAttribute($key, $value);
+		}
+
+		return $this;
 	}
 }
-
-?>

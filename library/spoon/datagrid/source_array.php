@@ -25,7 +25,7 @@
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
-class SpoonDataGridSourceArray extends SpoonDataGridSource
+class SpoonDatagridSourceArray extends SpoonDatagridSource
 {
 	/**
 	 * Static ordering (for compare method)
@@ -38,7 +38,6 @@ class SpoonDataGridSourceArray extends SpoonDataGridSource
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	array $array	The data.
 	 */
 	public function __construct(array $array)
@@ -120,13 +119,9 @@ class SpoonDataGridSourceArray extends SpoonDataGridSource
 
 	/**
 	 * Sets the number of results.
-	 *
-	 * @return	void
 	 */
 	private function setNumResults()
 	{
 		$this->numResults = (int) count($this->data);
 	}
 }
-
-?>

@@ -318,27 +318,10 @@ class BackendLocaleModel
 	 * Grab labels found in the backend navigation.
 	 *
 	 * @return	array
-	 * @param	array $items				The items to get the labels from.
-	 * @param	array[optional] $labels		An array that will hold the labels.
 	 */
-	private static function getLabelsFromBackendNavigation(array $items, $labels = array())
+	private static function getLabelsFromBackendNavigation()
 	{
-		// loop items
-		foreach($items as $item)
-		{
-			// add the label
-			$labels[] = $item['label'];
-
-			// any children?
-			if(isset($item['children']) && is_array($item['children']))
-			{
-				// get the labels from the children
-				$labels = self::getLabelsFromBackendNavigation($item['children'], $labels);
-			}
-		}
-
-		// return
-		return $labels;
+		return (array) BackendModel::getDB()->getColumn('SELECT label FROM backend_navigation');
 	}
 
 
@@ -390,10 +373,9 @@ class BackendLocaleModel
 		if($key !== false) unset($modules[$key]);
 
 		$used = array();
-		$navigation = Spoon::get('navigation');
 
 		// get labels from navigation
-		$lbl = self::getLabelsFromBackendNavigation($navigation->navigation);
+		$lbl = self::getLabelsFromBackendNavigation();
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
 
 		// get labels from table
@@ -503,7 +485,7 @@ class BackendLocaleModel
 								if($specificModule != 'core')
 								{
 									// dynamic module
-									if($specificModule == '$this->URL->getModule(')
+									if($specificModule == '$this->URL->getModule(' || $specificModule == '$this->getModule(')
 									{
 										// init var
 										$count = 0;

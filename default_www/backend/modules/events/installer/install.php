@@ -7,6 +7,7 @@
  * @subpackage	events
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Sam Tubbax <sam@sumocoders.be>
  * @since		2.0
  */
 class EventsInstall extends ModuleInstaller
@@ -82,6 +83,19 @@ class EventsInstall extends ModuleInstaller
 		$this->insertExtra('events', 'widget', 'RecentComments', 'recent_comments', null, 'N', 5001);
 		$this->insertExtra('events', 'widget', 'Categories', 'categories', null, 'N', 5002);
 		$this->insertExtra('events', 'widget', 'Archive', 'archive', null, 'N', 5003);
+
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationEventId = $this->setNavigation($navigationModulesId, 'Events');
+		$this->setNavigation($navigationEventId, 'Events', 'events/index', array('events/add',	'events/edit'));
+		$this->setNavigation($navigationEventId, 'Comments', 'events/comments', array('events/edit_comment'));
+		$this->setNavigation($navigationEventId, 'Subscriptions', 'events/subscriptions', array('events/subscriptions', 'events/edit_subscription'));
+		$this->setNavigation($navigationEventId, 'Categories', 'events/categories', array('events/add_category',	'events/edit_category'));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Events', 'events/settings');
 
 		// loop languages
 		foreach($this->getLanguages() as $language)

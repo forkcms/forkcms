@@ -87,9 +87,6 @@ class FrontendInit
 
 		// disable magic quotes
 		SpoonFilter::disableMagicQuotes();
-
-		// start session
-		$this->initSession();
 	}
 
 
@@ -155,7 +152,7 @@ class FrontendInit
 						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
-						$action = str_replace($module, '', $action);
+						$action = substr($action, strlen($module));
 						$module = substr($module, 0, -1);
 
 						// check the actions, engine & widgets directories
@@ -330,17 +327,6 @@ class FrontendInit
 
 		// stop script execution
 		exit;
-	}
-
-
-	/**
-	 * Start session
-	 *
-	 * @return	void
-	 */
-	private function initSession()
-	{
-		SpoonSession::start();
 	}
 
 

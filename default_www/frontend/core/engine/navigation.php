@@ -160,9 +160,6 @@ class FrontendNavigation extends FrontendBaseObject
 			$temp['navigation_title'] = $data['navigation_title'];
 			$temp['selected'] = (bool) in_array($id, self::$selectedPageIds);
 
-			// add rel
-			if($data['no_follow']) $temp['rel'] = 'nofollow';
-
 			// add
 			$return[] = $temp;
 		}
@@ -396,7 +393,7 @@ class FrontendNavigation extends FrontendBaseObject
 		foreach($navigation as $level)
 		{
 			// loop parents
-			foreach($level as $children)
+			foreach($level as $parentId => $children)
 			{
 				// loop children
 				foreach($children as $itemId => $item)
@@ -407,6 +404,7 @@ class FrontendNavigation extends FrontendBaseObject
 						// set return
 						$return = $item;
 						$return['page_id'] = $itemId;
+						$return['parent_id'] = $parentId;
 
 						// return
 						return $return;;

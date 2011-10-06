@@ -56,10 +56,13 @@
 	</div>
 	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
 
+	{* @todo : implement iCal *}
+	{*
 	<p>
 		<a href="{$var|geturlforblock:'events':'ical_all'}">
 			{$msgEventsAllIcal}
 		</a>
 	</p>
+	 *}
 
 {/option:items}

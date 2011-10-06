@@ -33,7 +33,7 @@ class FrontendIcal extends SpoonIcal
 		$description = (string) $description;
 
 		// convert to plain text
-		$description = FrontendModel::convertToPlainText($description);
+		$description = self::convertToPlainText($description);
 
 		// set some basic stuf
 		$this->setProductIdentifier('Fork v' . FORK_VERSION);
@@ -46,8 +46,50 @@ class FrontendIcal extends SpoonIcal
 		// set the title
 		$this->setTitle($title);
 
-		// set properties
-		$this->setXProperties($properties);
+	}
+
+
+	/**
+	 * Gets plain text for a given text
+	 *
+	 * @return	string
+	 * @param	string $text	The text to convert.
+	 */
+	public static function convertToPlainText($text)
+	{
+		// replace break rules with a new line and make sure a paragraph also ends with a new line
+		$text = str_replace('<br />', PHP_EOL, $text);
+		$text = str_replace('</p>', '</p>' . PHP_EOL, $text);
+
+		// remove tabs
+		$text = str_replace("\t", '', $text);
+
+		// remove the head- and style-tags and all their contents
+		$text = preg_replace('|\<head.*\>(.*\n*)\</head\>|isU', '', $text);
+		$text = preg_replace('|\<style.*\>(.*\n*)\</style\>|isU', '', $text);
+
+		// replace links with the inner html of the link with the url between ()
+		// eg.: <a href="http://site.domain.com">My site</a> => My site (http://site.domain.com)
+		$text = preg_replace('|<a.*href="(.*)".*>(.*)</a>|isU', '$2 ($1)', $text);
+
+		// replace images with their alternative content
+		// eg. <img src="path/to/the/image.jpg" alt="My image" /> => My image
+		$text = preg_replace('|\<img[^>]*alt="(.*)".*/\>|isU', '[image: $1]', $text);
+
+		// strip tags
+		$text = strip_tags($text);
+
+		// replace 'line feed' characters with a 'line feed carriage return'-pair
+		$text = str_replace("\n", "\n\r", $text);
+
+		// replace double, triple, ... line feeds to one new line
+		$text = preg_replace('/(\n\r)+/', PHP_EOL, $text);
+
+		// decode html entities
+		$text = SpoonFilter::htmlentitiesDecode($text);
+
+		// return the plain text
+		return $text;
 	}
 
 
@@ -124,7 +166,7 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		$this->utm['utm_campaign'] = SpoonFilter::urlise($title);
 
 		// convert to plain text
-		$description = FrontendModel::convertToPlainText($description);
+		$description = FrontendIcal::convertToPlainText($description);
 
 		// set title
 		$this->setSummary($title);
@@ -150,8 +192,6 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		$properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = SpoonIcal::formatAsString($this->getUrl());
 		$properties['X-GOOGLE-CALENDAR-CONTENT-TYPE'] = 'text/html';
 
-		// set properties
-		$this->setXProperties($properties);
 	}
 
 

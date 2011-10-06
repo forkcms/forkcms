@@ -122,6 +122,9 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 					}
 				}
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_address', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added');
 			}

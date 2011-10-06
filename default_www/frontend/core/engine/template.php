@@ -153,6 +153,17 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Retrives the already assigned variables.
+	 *
+	 * @return	array
+	 */
+	public function getAssignedVariables()
+	{
+		return $this->variables;
+	}
+
+
+	/**
 	 * Fetch the parsed content from this template.
 	 *
 	 * @return	string							The actual parsed content after executing this template.
@@ -224,6 +235,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('formatnumber', array('FrontendTemplateModifiers', 'formatNumber'));
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
+		$this->mapModifier('camelcase', array('SpoonFilter', 'toCamelCase'));
 
 		// dates
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
@@ -409,7 +421,7 @@ class FrontendTemplateModifiers
 		$var = (string) $var;
 
 		// detect links
-		$var = SpoonFilter::replaceURLsWithAnchors($var);
+		$var = SpoonFilter::replaceURLsWithAnchors($var, FrontendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false));
 
 		// replace newlines
 		$var = str_replace("\r", '', $var);
@@ -586,7 +598,9 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the subnavigation html
-	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:<excludeIds-splitted-by-dash>]}
+	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:'<excludeIds-splitted-by-dash>']}
+	 *
+	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *
 	 * @return	string
 	 * @param	string[optional] $var			The variable.

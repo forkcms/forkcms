@@ -53,14 +53,14 @@ class Frontend
 			// create instance
 			$facebook = new Facebook($facebookApplicationSecret, $facebookApplicationId);
 
-			// get the cookie
-			$data = $facebook->getCookie();
-
-			// set the token if available
-			if(isset($data['access_token'])) $facebook->setToken($data['access_token']);
+			// get the cookie, this will set the access token.
+			$facebook->getCookie();
 
 			// store in reference
 			Spoon::set('facebook', $facebook);
+
+			// trigger event
+			FrontendModel::triggerEvent('core', 'after_facebook_initialization');
 		}
 	}
 }

@@ -81,7 +81,7 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 		$this->frm->addTextarea('text', $this->record['text']);
 
 		// assign URL
-		$this->tpl->assign('itemURL', BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->record['post_url'] . '#comment-' . $this->record['post_id']);
+		$this->tpl->assign('itemURL', BackendModel::getURLForBlock($this->getModule(), 'detail') . '/' . $this->record['post_url'] . '#comment-' . $this->record['post_id']);
 		$this->tpl->assign('itemTitle', $this->record['post_title']);
 	}
 
@@ -118,6 +118,9 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 
 				// insert the item
 				BackendBlogModel::updateComment($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_comment', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . SpoonFilter::toCamelCase($item['status']));

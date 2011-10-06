@@ -45,6 +45,23 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'analytics', 'mass_landing_page_action');
 		$this->setActionRights(1, 'analytics', 'refresh_traffic_sources');
 		$this->setActionRights(1, 'analytics', 'settings');
+
+		// set navigation
+		$navigationMarketingId = $this->setNavigation(null, 'Marketing', 'analytics/index', null, 4);
+		$navigationAnalyticsId = $this->setNavigation($navigationMarketingId, 'Analytics', 'analytics/index', array('analytics/loading'));
+		$this->setNavigation($navigationAnalyticsId, 'Content', 'analytics/content');
+		$this->setNavigation($navigationAnalyticsId, 'AllPages', 'analytics/all_pages');
+		$this->setNavigation($navigationAnalyticsId, 'ExitPages', 'analytics/exit_pages');
+		$this->setNavigation($navigationAnalyticsId, 'LandingPages', 'analytics/landing_pages', array(
+			'analytics/add_landing_page',
+			'analytics/edit_landing_page',
+			'analytics/detail_page'
+		));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Analytics', 'analytics/settings');
 	}
 }
 

@@ -144,6 +144,9 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 				// update password
 				FrontendProfilesAuthentication::updatePassword($this->profile->getId(), $txtNewPassword->getValue());
 
+				// trigger event
+				FrontendModel::triggerEvent('profiles', 'after_profile_password', array('id' => $this->profile->getId()));
+
 				// redirect
 				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'profile_password') . '?saved=true');
 			}

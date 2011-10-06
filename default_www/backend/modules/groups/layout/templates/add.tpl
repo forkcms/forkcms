@@ -57,9 +57,9 @@
 						{iteration:permissions}
 							<li class="module">
 								{$permissions.chk}<a href="#" class="icon iconCollapsed container" title="open"><span><label for="modules{$permissions.label}">{$permissions.label}</label></span></a>
-								<ul class="dataGridHolder hide">
+								<div class="datagridHolder hide clearfix">
 									{$permissions.actions.dataGrid}
-								</ul>
+								</div>
 							</li>
 						{/iteration:permissions}
 					</ul>

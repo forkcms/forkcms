@@ -126,6 +126,16 @@ class BackendEventsAdd extends BackendBaseActionAdd
 			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 
+			$image = $this->frm->getField('image');
+			if($image->isFilled())
+			{
+				if($image->isAllowedExtension(array('jpg', 'png', 'gif'), sprintf(BL::err('ExtensionNotAllowed'), 'jpg, png, gif')))
+				{
+					$filename = time() . '.' . $image->getExtension();
+					$image->moveFile(FRONTEND_FILES_PATH . '/userfiles/images/events/' . $filename);
+				}
+			}
+
 			// validate meta
 			$this->meta->validate();
 
@@ -152,6 +162,7 @@ class BackendEventsAdd extends BackendBaseActionAdd
 				$item['max_subscriptions'] = ($item['allow_subscriptions'] == 'Y' && $this->frm->getField('max_subscriptions')->isFilled()) ? (int) $this->frm->getField('max_subscriptions')->getValue() : null;
 				$item['num_comments'] = 0;
 				$item['status'] = $status;
+				$item['image'] = $image->isFilled()? $filename : null;
 
 				// insert the item
 				$item['revision_id'] = BackendEventsModel::insert($item);
