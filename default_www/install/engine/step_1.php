@@ -88,7 +88,7 @@ class InstallerStep1 extends InstallerStep
 		}
 
 		// template contents
-		$tpl = file_get_contents('layout/templates/1.tpl');
+		$tpl = file_get_contents('layout/templates/step_1.tpl');
 
 		// build the search & replace array
 		$search = array_keys($variables);

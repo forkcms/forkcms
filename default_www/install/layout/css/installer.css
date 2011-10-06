@@ -37,13 +37,22 @@ span.ok {
 	background: #d6efb8;
 }
 
-span.nok {
+span.warning {
+	color: #FFF;
+	padding: 3px;
+	font-weight: 700;
+	background: #FF6600;
+	background: -webkit-gradient(linear, left top, left bottom, from(#FF6600), to(#FF2626));
+	background: -moz-linear-gradient(top, #FF6600, #FF2626);
+}
+
+span.error {
 	color: #FFF;
 	padding: 3px;
 	font-weight: 700;
 	background: #DE3636;
-	background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#FF2626));
-	background: -moz-linear-gradient(top, #DE3636, #FF2626);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FF6600), to(#FF2626));
+	background: -moz-linear-gradient(top, #FF6600, #FF2626);
 }
 
 /*

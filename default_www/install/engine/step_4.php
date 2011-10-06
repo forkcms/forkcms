@@ -33,7 +33,7 @@ class InstallerStep4 extends InstallerStep
 		$this->parseForm();
 
 		// show output
-		$this->tpl->display('layout/templates/4.tpl');
+		$this->tpl->display('layout/templates/step_4.tpl');
 	}
 
 

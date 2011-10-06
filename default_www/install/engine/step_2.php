@@ -14,29 +14,29 @@
  */
 class InstallerStep2 extends InstallerStep
 {
+	public static $variables = array();
+
+
 	/**
 	 * Check if a specific requirement is satisfied
 	 *
 	 * @return	boolean
 	 * @param	string $variable				The "name" of the check.
 	 * @param	bool $requirement				The result of the check.
-	 * @param	array[optional] $variables		An array that holds all the variables.
 	 */
-	public static function checkRequirement($variable, $requirement, array &$variables = null)
+	public static function checkRequirement($variable, $requirement)
 	{
 		// requirement satisfied
 		if($requirement)
 		{
-			$variables[$variable] = 'ok';
-			$variables[$variable . 'Status'] = 'ok';
+			self::$variables[$variable] = 'ok';
 			return true;
 		}
 
 		// requirement not satisfied
 		else
 		{
-			$variables[$variable] = 'nok';
-			$variables[$variable . 'Status'] = 'not ok';
+			self::$variables[$variable] = 'error';
 			return false;
 		}
 	}
@@ -46,9 +46,8 @@ class InstallerStep2 extends InstallerStep
 	 * Checks the requirements
 	 *
 	 * @return	bool
-	 * @param	array[optional] $variables		An array that holds all the variables.
 	 */
-	public static function checkRequirements(array &$variables = null)
+	public static function checkRequirements()
 	{
 		// define step
 		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5', '6', '7'))) ? (int) $_GET['step'] : 1;
@@ -65,7 +64,7 @@ class InstallerStep2 extends InstallerStep
 		$version = (int) str_replace('.', '', PHP_VERSION);
 
 		// we require at least 5.2.x
-		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.2.0-whatever', '>='), $variables);
+		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.2.0-whatever', '>='));
 
 		/*
 		 * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
@@ -73,56 +72,52 @@ class InstallerStep2 extends InstallerStep
 		 */
 
 		// check for cURL extension
-		self::checkRequirement('extensionCURL', extension_loaded('curl'), $variables);
+		self::checkRequirement('extensionCURL', extension_loaded('curl'));
 
 		// check for libxml extension
-		self::checkRequirement('extensionLibXML', extension_loaded('libxml'), $variables);
+		self::checkRequirement('extensionLibXML', extension_loaded('libxml'));
 
 		// check for DOM extension
-		self::checkRequirement('extensionDOM', extension_loaded('dom'), $variables);
+		self::checkRequirement('extensionDOM', extension_loaded('dom'));
 
 		// check for SimpleXML extension
-		self::checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'), $variables);
+		self::checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'));
 
 		// check for SPL extension
-		self::checkRequirement('extensionSPL', extension_loaded('SPL'), $variables);
+		self::checkRequirement('extensionSPL', extension_loaded('SPL'));
 
 		// check for mbstring extension
-		self::checkRequirement('extensionMBString', extension_loaded('mbstring'), $variables);
+		self::checkRequirement('extensionMBString', extension_loaded('mbstring'));
 
 		// check for iconv extension
-		self::checkRequirement('extensionIconv', extension_loaded('iconv'), $variables);
+		self::checkRequirement('extensionIconv', extension_loaded('iconv'));
 
 		// check for gd extension and correct version
-		self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'), $variables);
+		self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'));
 
 		// check for PDO extension
 		if(extension_loaded('PDO'))
 		{
 			// general PDO
-			$variables['extensionPDO'] = 'ok';
-			$variables['extensionPDOStatus'] = 'ok';
+			self::$variables['extensionPDO'] = 'ok';
 
 			// check for mysql driver
 			if(in_array('mysql', PDO::getAvailableDrivers()))
 			{
-				$variables['extensionPDOMySQL'] = 'ok';
-				$variables['extensionPDOMySQLStatus'] = 'ok';
+				self::$variables['extensionPDOMySQL'] = 'ok';
 			}
 
 			// mysql driver not found
 			else
 			{
-				$variables['extensionPDOMySQL'] = 'nok';
-				$variables['extensionPDOMySQLStatus'] = 'nok';
+				self::$variables['extensionPDOMySQL'] = 'error';
 			}
 		}
 
 		// PDO extension not found
 		else
 		{
-			$variables['extensionPDO'] = 'nok';
-			$variables['extensionPDOStatus'] = 'not ok';
+			self::$variables['extensionPDO'] = 'error';
 		}
 
 		/*
@@ -131,10 +126,10 @@ class InstallerStep2 extends InstallerStep
 		 */
 
 		// check for safe mode
-		// self::checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', $variables);
+		// self::checkRequirement('settingsSafeMode', ini_get('safe_mode') == '');
 
 		// check for open basedir
-		// self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', $variables);
+		// self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '');
 
 		/*
 		 * Make sure the filesystem is prepared for the installation and everything can be read/
@@ -142,40 +137,46 @@ class InstallerStep2 extends InstallerStep
 		 */
 
 		// check if the backend-cache-directory is writable
-		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/')), $variables);
+		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/')));
 
 		// check if the frontend-cache-directory is writable
-		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/')), $variables);
+		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/')));
 
 		// check if the frontend-files-directory is writable
-		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/')), $variables);
+		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/')));
 
 		// check if the library-directory is writable
-		self::checkRequirement('fileSystemLibrary', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY)), $variables);
+		self::checkRequirement('fileSystemLibrary', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY)));
 
 		// check if the library/external-directory is writable
-		self::checkRequirement('fileSystemLibraryExternal', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external')), $variables);
+		self::checkRequirement('fileSystemLibraryExternal', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external')));
 
 		// check if the installer-directory is writable
-		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache')), $variables);
+		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache')));
 
 		// does the config.base.php file exist
-		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/config.base.php') && is_readable(PATH_LIBRARY . '/config.base.php')), $variables);
+		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/config.base.php') && is_readable(PATH_LIBRARY . '/config.base.php')));
 
 		// does the globals.base.php file exist
-		self::checkRequirement('fileSystemGlobals', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals.base.php') && is_readable(PATH_LIBRARY . '/globals.base.php')), $variables);
+		self::checkRequirement('fileSystemGlobals', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals.base.php') && is_readable(PATH_LIBRARY . '/globals.base.php')));
 
 		// does the globals_backend.base.php file exist
-		self::checkRequirement('fileSystemGlobalsBackend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_backend.base.php') && is_readable(PATH_LIBRARY . '/globals_backend.base.php')), $variables);
+		self::checkRequirement('fileSystemGlobalsBackend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_backend.base.php') && is_readable(PATH_LIBRARY . '/globals_backend.base.php')));
 
 		// does the globals_frontend.base.php file exist
-		self::checkRequirement('fileSystemGlobalsFrontend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_frontend.base.php') && is_readable(PATH_LIBRARY . '/globals_frontend.base.php')), $variables);
+		self::checkRequirement('fileSystemGlobalsFrontend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_frontend.base.php') && is_readable(PATH_LIBRARY . '/globals_frontend.base.php')));
 
 		// library path exists
-		self::checkRequirement('fileSystemPathLibrary', (defined('PATH_LIBRARY') && PATH_LIBRARY != ''), $variables);
+		self::checkRequirement('fileSystemPathLibrary', (defined('PATH_LIBRARY') && PATH_LIBRARY != ''));
+
+		/*
+		 * Ensure that Apache .htaccess file is written and mod_rewrite does its job
+		 */
+		self::checkRequirement('modRewrite', (bool) getenv('URL_REWRITE'));
+		// @todo: this should not be an error, only a warning
 
 		// error status
-		return !in_array('nok', $variables);
+		return !in_array('error', self::$variables);
 	}
 
 
@@ -238,22 +239,22 @@ class InstallerStep2 extends InstallerStep
 	public function execute()
 	{
 		// init vars
-		$variables = array();
+		self::$variables = array();
 
 		// head
-		$variables['head'] = file_get_contents('layout/templates/head.tpl');
-		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
+		self::$variables['head'] = file_get_contents('layout/templates/head.tpl');
+		self::$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
 
 		// check requirements
-		$validated = self::checkRequirements($variables);
+		$validated = self::checkRequirements();
 
 		// has errors
 		if(!$validated)
 		{
 			// assign the variable
-			$variables['nextButton'] = '&nbsp;';
-			$variables['requirementsStatusError'] = '';
-			$variables['requirementsStatusOK'] = 'hidden';
+			self::$variables['nextButton'] = '&nbsp;';
+			self::$variables['requirementsStatusError'] = '';
+			self::$variables['requirementsStatusOK'] = 'hidden';
 		}
 
 		// no errors detected
@@ -264,15 +265,15 @@ class InstallerStep2 extends InstallerStep
 		}
 
 		// set paths for template
-		$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
-		$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
+		self::$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
+		self::$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
 
 		// template contents
-		$tpl = file_get_contents('layout/templates/2.tpl');
+		$tpl = file_get_contents('layout/templates/step_2.tpl');
 
 		// build the search & replace array
-		$search = array_keys($variables);
-		$replace = array_values($variables);
+		$search = array_keys(self::$variables);
+		$replace = array_values(self::$variables);
 
 		// loop search values
 		foreach($search as $key => $value) $search[$key] = '{$' . $value . '}';
