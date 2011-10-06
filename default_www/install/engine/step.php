@@ -27,7 +27,7 @@ class InstallerStep
 	 *
 	 * @var array
 	 */
-	protected $modules = array('required' => array('locale', 'settings', 'users', 'groups', 'pages', 'search', 'content_blocks', 'tags'),
+	protected $modules = array('required' => array('locale', 'settings', 'users', 'groups', 'pages', 'search', 'content_blocks', 'tags', 'extensions'),
 								'hidden' => array('authentication', 'dashboard', 'error'),
 								'optional' => array());
 
