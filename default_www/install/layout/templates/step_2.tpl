@@ -4,11 +4,22 @@
 	<div>
 		<input type="hidden" name="step" value="2" />
 		<div class="horizontal">
+			{option:error}
 			<div>
 				<div class="formMessage errorMessage">
 					<p>Your server doesn't meet the minimum requirements to run Fork CMS.</p>
 				</div>
 			</div>
+			{/option:error}
+			{option:!error}
+			{option:warning}
+			<div>
+				<div class="formMessage warningMessage">
+					<p>Your server might not run Fork CMS properly.</p>
+				</div>
+			</div>
+			{/option:warning}
+			{/option:!error}
 			<div id="requirementsInformation">
 				<h3>PHP version <span class="{$phpVersion}">{$phpVersion}</span></h3>
 				<p>We require at least PHP 5.2</p>
@@ -77,12 +88,12 @@
 					different image formats. More information can be found on: <a href="http://php.net/gd">http://php.net/gd</a>.
 				</p>
 
-				<!-- <h3>PHP ini-settings</h3>
+				<h3>PHP ini-settings</h3>
 				<h4>Safe Mode: <span class="{$settingsSafeMode}">{$settingsSafeMode}</span></h4>
 				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>
 
 				<h4>Open Basedir: <span class="{$settingsOpenBasedir}">{$settingsOpenBasedir}</span></h4>
-				<p>For forward compability we highly recommend you not to use open_basedir.</p> -->
+				<p>For forward compability we highly recommend you not to use open_basedir.</p>
 
 				<h3>Webserver</h3>
 				<h4>mod_rewrite: <span class="{$modRewrite}">{$modRewrite}</span></h4>
@@ -90,7 +101,7 @@
 					Fork CMS will not be able to run if mod_rewrite can not be applied. Please make sure that .htaccess is being read (AllowOverride
 					directive) and the mod_rewrite module is enabled in Apache. If you are installing Fork CMS on another webserver, make sure you have manually
 					configured your webserver to properly rewrite urls. More information can be found in our
-					<a href="http://www.fork-cms.com/knowledge-base/detail/fork-cms-and-webservers" title="Fork CMS and webservers">knowledge base</a>
+					<a href="http://www.fork-cms.com/knowledge-base/detail/fork-cms-and-webservers" title="Fork CMS and webservers">knowledge base</a>.
 				</p>
 
 				<h3>Required permissions and/or files</h3>
@@ -105,10 +116,10 @@
 
 				<h4>{$PATH_LIBRARY} <span class="{$fileSystemLibrary}">{$fileSystemLibrary}</span></h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
-
+{*
 				<h4>{$PATH_LIBRARY}/external <span class="{$fileSystemLibraryExternal}">{$fileSystemLibraryExternal}</span></h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
-
+*}
 				<h4>{$PATH_WWW}/install <span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span></h4>
 				<p>This location must be writable for the installer.</p>
 
@@ -128,6 +139,16 @@
 				<p>This directory is used to store your configuration files. The installer tries to find this directory automatically.</p>
 			</div>
 		</div>
+
+		{option:!error}
+		{option:warning}
+		<div class="fullwidthOptions">
+			<div class="buttonHolder">
+				<a href="{$step3}" id="installerButton" class="inputButton button mainButton" name="installer">Install anyway</a>
+			</div>
+		</div>
+		{/option:warning}
+		{/option:!error}
 	</div>
 </form>
 

@@ -42,8 +42,8 @@ span.warning {
 	padding: 3px;
 	font-weight: 700;
 	background: #FF6600;
-	background: -webkit-gradient(linear, left top, left bottom, from(#FF6600), to(#FF2626));
-	background: -moz-linear-gradient(top, #FF6600, #FF2626);
+	background: -webkit-gradient(linear, left top, left bottom, from(#FF6600), to(#FFA500));
+	background: -moz-linear-gradient(top, #FF6600, #FFA500);
 }
 
 span.error {
@@ -53,6 +53,15 @@ span.error {
 	background: #DE3636;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FF6600), to(#FF2626));
 	background: -moz-linear-gradient(top, #FF6600, #FF2626);
+}
+
+.warningMessage {
+	color: #FFF;
+	font-weight: 700;
+	background: #FF6600;
+	background: -webkit-gradient(linear, left top, left bottom, from(#FF6600), to(#FF2626));
+	background: -moz-linear-gradient(top, #FF6600, #FFA500);
+	border: 1px solid #FF9955;
 }
 
 /*
