@@ -2,16 +2,16 @@
 --
 Improvements:
 * Core: Completely re-invented the blocks system; it's now position-driven.
-	* Introduce the concept of positions that can contain an arbitrary number of blocks.
-	* Merged tabs "Content" & "Template" to present a more straightforward UI.
-	* Added ability to order blocks.
-	* Created fallback-system for blocks that were assigned to no-longer-existing positions.
-	* Added the posibility to show/hide a block.
-	* Edit HTML content in TinyMCE in a dialog.
-	* Updated installer.
-	* Updated template creation in backend.
-	* Updated theme Triton to be position-based.
-	* Added the possibility to either completely overwrite of re-use existing blocks when updating a template.
+* Introduce the concept of positions that can contain an arbitrary number of blocks.
+* Merged tabs "Content" & "Template" to present a more straightforward UI.
+* Added ability to order blocks.
+* Created fallback-system for blocks that were assigned to no-longer-existing positions.
+* Added the posibility to show/hide a block.
+* Edit HTML content in TinyMCE in a dialog.
+* Updated installer.
+* Updated template creation in backend.
+* Updated theme Triton to be position-based.
+* Added the possibility to either completely overwrite of re-use existing blocks when updating a template.
 * Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 * Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
