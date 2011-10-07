@@ -15,7 +15,7 @@ Improvements:
 * Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 * Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
-* Installer: added test for mod_rewrite (will produce warning if nog enabled)
+* Installer: added test for mod_rewrite (will produce warning if not enabled)
 
 
 2.6.11 (2011-10-04)
