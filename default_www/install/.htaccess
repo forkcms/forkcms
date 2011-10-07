@@ -1,3 +1,5 @@
 ## set environment variable to let PHP know that urls are being rewritten
-RewriteEngine On
-RewriteRule .* - [E=MOD_REWRITE:1]
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule .* - [E=MOD_REWRITE:1]
+</IfModule>

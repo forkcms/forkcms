@@ -122,7 +122,6 @@ class InstallerStep2 extends InstallerStep
 		 * Make sure the filesystem is prepared for the installation and everything can be read/
 		 * written correctly.
 		 */
-
 		// check if the backend-cache-directory is writable
 		self::checkRequirement('fileSystemBackendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/'), self::STATUS_ERROR);
 
