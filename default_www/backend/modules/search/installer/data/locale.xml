@@ -98,6 +98,10 @@
         <translation language="nl"><![CDATA[zoeken]]></translation>
         <translation language="en"><![CDATA[search]]></translation>
       </item>
+      <item type="label" name="DidYouMean">
+        <translation language="nl"><![CDATA[bedoelde u]]></translation>
+        <translation language="en"><![CDATA[did you mean]]></translation>
+      </item>
     </core>
   </frontend>
 </locale>
