@@ -4,6 +4,7 @@ Improvements:
 
 * Core: removed empty method.
 * Core: detect if .htaccess is available and mod_rewrite enabled in the installer.
+* Core: when adding a filefield it is now possible to easily show a label with the available extensions.
 
 2.6.11 (2011-10-04)
 --
