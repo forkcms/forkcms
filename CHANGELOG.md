@@ -4,7 +4,7 @@ Improvements:
 
 * Core: removed empty method.
 * Core: detect if .htaccess is available and mod_rewrite enabled in the installer.
-
+* Search: added google spelling correction
 
 2.6.11 (2011-10-04)
 --
