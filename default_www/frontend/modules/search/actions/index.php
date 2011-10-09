@@ -173,20 +173,16 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->items = FrontendSearchModel::search($this->term, $this->pagination['limit'], $this->pagination['offset']);
 
 		// set the google corrections
-		$this->corrections = FrontendSearchModel::getGoogleCorrections();
+		$corrections = FrontendSearchModel::getGoogleCorrections();
 
 		// format the url
-		foreach($this->corrections as &$correction)
+		foreach($corrections as $term)
 		{
-			// the search term
-			$term = $correction;
-
-			// make the item an array
-			$correction = array();
-
-			// assign the data
-			$correction['label'] = $term;
-			$correction['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . urlencode($term);
+			// store the data
+			$this->corrections[] = array(
+				'label' => $term,
+				'url' => FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . urlencode($term)
+			);
 		}
 
 		// populate count fields in pagination
