@@ -350,7 +350,6 @@ class FrontendSearchModel
 	 * @param	mixed $term						The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @param	int[optional] $limit			The number of articles to get.
 	 * @param	int[optional] $offset			The offset.
-	 * @param	bool[optional] $googleSearch	Searching via google words.
 	 */
 	public static function search($term, $limit = 20, $offset = 0)
 	{
