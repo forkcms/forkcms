@@ -319,12 +319,21 @@ class FrontendSearchModel
 	 */
 	public static function googleCorrection($term)
 	{
-		// start google suggest
-		$googleCorrect = new GoogleCorrect(FRONTEND_LANGUAGE, $term);
-		$googleCorrect->doCall();
+		// try to connect with google
+		try
+		{
+			// start google suggest
+			$googleCorrect = new GoogleCorrect(FRONTEND_LANGUAGE, $term);
+			$googleCorrect->doCall();
 
-		// the corrections
-		self::$googleCorrections = $googleCorrect->getResponse();
+			// the corrections
+			self::$googleCorrections = $googleCorrect->getResponse();
+		}
+		// something went wrong
+		catch(Exception $e)
+		{
+			if(SPOON_DEBUG) throw $e;
+		}
 	}
 
 	/**
