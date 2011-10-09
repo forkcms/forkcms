@@ -18,6 +18,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $cacheFile;
 
+	/**
+	 * The corrections
+	 *
+	 * @var	array
+	 */
+	private $corrections;
 
 	/**
 	 * The items
@@ -26,7 +32,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * Limit of data to fetch
 	 *
@@ -34,14 +39,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $limit;
 
-
 	/**
 	 * Offset of data to fetch
 	 *
 	 * @var	int
 	 */
 	private $offset;
-
 
 	/**
 	 * The pagination array
@@ -51,14 +54,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	protected $pagination = array('limit' => 20, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * The requested page
 	 *
 	 * @var	int
 	 */
 	private $requestedPage;
-
 
 	/**
 	 * The search term
@@ -67,7 +68,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $term = '';
 
-
 	/**
 	 * Search statistics
 	 *
@@ -75,11 +75,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $statistics;
 
-
 	/**
 	 * Display
-	 *
-	 * @return	void
 	 */
 	private function display()
 	{
@@ -100,11 +97,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -126,7 +120,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		// save statistics
 		$this->saveStatistics();
 	}
-
 
 	/**
 	 * Load the cached data
@@ -160,11 +153,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		return true;
 	}
 
-
 	/**
 	 * Load the data
-	 *
-	 * @return	void
 	 */
 	private function getRealData()
 	{
@@ -181,6 +171,19 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 		// get items
 		$this->items = FrontendSearchModel::search($this->term, $this->pagination['limit'], $this->pagination['offset']);
+
+		// set the google corrections
+		$corrections = FrontendSearchModel::getGoogleCorrections();
+
+		// format the url
+		foreach($corrections as $term)
+		{
+			// store the data
+			$this->corrections[] = array(
+				'label' => $term,
+				'url' => FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . urlencode($term)
+			);
+		}
 
 		// populate count fields in pagination
 		// this is done after actual search because some items might be activated/deactivated (getTotal only does rough checking)
@@ -201,11 +204,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		}
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -219,11 +219,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -258,13 +255,13 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 		// parse the pagination
 		$this->parsePagination();
-	}
 
+		// assign the corrections
+		$this->tpl->assign('googleCorrections', $this->corrections);
+	}
 
 	/**
 	 * Save statistics
-	 *
-	 * @return	void
 	 */
 	private function saveStatistics()
 	{
@@ -294,11 +291,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		SpoonSession::set('searchTerm', $this->term);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{

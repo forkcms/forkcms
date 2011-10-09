@@ -9,8 +9,19 @@
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
+
+// get the google suggest api
+require_once 'external/google_correct.php';
+
 class FrontendSearchModel
 {
+	/**
+	 * The corrections from Google
+	 *
+	 * @var	array
+	 */
+	private static $googleCorrections;
+
 	/**
 	 * Build the search term
 	 *
@@ -42,7 +53,6 @@ class FrontendSearchModel
 
 		return $terms;
 	}
-
 
 	/**
 	 * Execute actual search
@@ -128,7 +138,6 @@ class FrontendSearchModel
 		return (array) FrontendModel::getDB()->getRecords($query, $params);
 	}
 
-
 	/**
 	 * Get preview searches that start with ...
 	 *
@@ -174,7 +183,6 @@ class FrontendSearchModel
 		}
 	}
 
-
 	/**
 	 * Get synonyms
 	 *
@@ -195,7 +203,6 @@ class FrontendSearchModel
 		// only original term
 		return array($term);
 	}
-
 
 	/**
 	 * Get total results
@@ -277,11 +284,9 @@ class FrontendSearchModel
 		return (int) FrontendModel::getDB()->getVar($query, $params);
 	}
 
-
 	/**
 	 * Save a search
 	 *
-	 * @return	void
 	 * @param	array $item					The data to store.
 	 */
 	public static function save($item)
@@ -289,6 +294,47 @@ class FrontendSearchModel
 		FrontendModel::getDB(true)->insert('search_statistics', $item);
 	}
 
+	/**
+	 * Fetches the Google corrections
+	 *
+	 * @return	array
+	 * @param	int $corrections		The number of corrections you want.
+	 */
+	public static function getGoogleCorrections($corrections = 1)
+	{
+		// do we have corrections?
+		if(empty(self::$googleCorrections)) return array();
+
+		// check if the number of wanted items doesn't exceed the present corrections
+		if(count(self::$googleCorrections) < $corrections) $corrections = count(self::$googleCorrections);
+
+		// return the corrections
+		return array_slice(self::$googleCorrections, 0, $corrections);
+	}
+
+	/**
+	 * Saves suggestions from googles spell checker
+	 *
+	 * @param	string $term	The search term.
+	 */
+	public static function googleCorrection($term)
+	{
+		// try to connect with google
+		try
+		{
+			// start google suggest
+			$googleCorrect = new GoogleCorrect(FRONTEND_LANGUAGE, $term);
+			$googleCorrect->doCall();
+
+			// the corrections
+			self::$googleCorrections = $googleCorrect->getResponse();
+		}
+		// something went wrong
+		catch(Exception $e)
+		{
+			if(SPOON_DEBUG) throw $e;
+		}
+	}
 
 	/**
 	 * Search
@@ -301,9 +347,9 @@ class FrontendSearchModel
 	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
 	 *
 	 * @return	array
-	 * @param	mixed $term					The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
-	 * @param	int[optional] $limit		The number of articles to get.
-	 * @param	int[optional] $offset		The offset.
+	 * @param	mixed $term				The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
+	 * @param	int[optional] $limit	The number of articles to get.
+	 * @param	int[optional] $offset	The offset.
 	 */
 	public static function search($term, $limit = 20, $offset = 0)
 	{
@@ -315,6 +361,9 @@ class FrontendSearchModel
 
 		// get the total amount of results (we'll get back to this later ;) )
 		$total = count($searchResults);
+
+		// google corrections
+		if($total == 0) self::googleCorrection($term);
 
 		// none found? return empty :(
 		if(!$searchResults) return array();
@@ -365,11 +414,9 @@ class FrontendSearchModel
 		return $searchResults;
 	}
 
-
 	/**
 	 * Deactivate an index (no longer has to be searched)
 	 *
-	 * @return	void
 	 * @param	string $module				The module we're deleting an item from.
 	 * @param	array $otherIds				An array of other_id's for this module.
 	 * @param	bool[optional] $active		Set the index to active?
@@ -383,11 +430,8 @@ class FrontendSearchModel
 		if($otherIds) FrontendModel::getDB(true)->update('search_index', array('active' => $active), 'module = ? AND other_id IN (' . implode(',', $otherIds) . ')', array((string) $module));
 	}
 
-
 	/**
 	 * Validate searches: check everything that has been marked as 'inactive', if should still be inactive
-	 *
-	 * @return	void
 	 */
 	public static function validateSearch()
 	{
@@ -434,5 +478,3 @@ class FrontendSearchModel
 		}
 	}
 }
-
-?>
