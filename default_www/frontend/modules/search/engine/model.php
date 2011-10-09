@@ -347,9 +347,9 @@ class FrontendSearchModel
 	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
 	 *
 	 * @return	array
-	 * @param	mixed $term						The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
-	 * @param	int[optional] $limit			The number of articles to get.
-	 * @param	int[optional] $offset			The offset.
+	 * @param	mixed $term					The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
+	 * @param	int[optional] $limit		The number of articles to get.
+	 * @param	int[optional] $offset		The offset.
 	 */
 	public static function search($term, $limit = 20, $offset = 0)
 	{
