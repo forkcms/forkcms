@@ -217,7 +217,7 @@ class BackendMeta
 		if(!isset($this->data['url'])) return null;
 
 		// return value
-		return $this->data['url'];
+		return urldecode($this->data['url']);
 	}
 
 
@@ -273,7 +273,7 @@ class BackendMeta
 
 		// add URL elements into the form
 		$this->frm->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
-		$this->frm->addText('url', (isset($this->data['url'])) ? $this->data['url'] : null);
+		$this->frm->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
 
 		// advanced SEO
 		$indexValues = array(

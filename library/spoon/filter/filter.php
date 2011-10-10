@@ -877,7 +877,7 @@ class SpoonFilter
 		// define charset
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
-		// redefine value
+		// to lowercase
 		$value = mb_strtolower($value, $charset);
 
 		// reserved characters (RFC 3986)
@@ -888,29 +888,22 @@ class SpoonFilter
 		);
 
 		// remove reserved characters
-		$value = str_replace($reservedCharacters, '', $value);
+		$value = str_replace($reservedCharacters, ' ', $value);
 
-		// remove spaces at the beginning and the end
-		$value = trim($value);
-
-		// try and convert using ASCII (ignore all non ascii chars)
-		$newValue = iconv($charset, 'ASCII//TRANSLIT//IGNORE', $value);
-
-		// no result after ASCII conversion, we probably have other chars then ASCII so urlencode
-		if($newValue == '') $newValue = urlencode($value);
+		// replace double quote, since this one might cause problems in html (e.g. <a href="double"quote">)
+		$value = str_replace('"', ' ', $value);
 
 		// replace spaces by dashes
-		$newValue = str_replace(' ', '-', $newValue);
+		$value = str_replace(' ', '-', $value);
 
-		// there IS a value
-		if(strlen($newValue) != 0)
-		{
-			// convert "--" to "-"
-			$newValue = preg_replace('/\-+/', '-', $newValue);
-		}
+		// urlencode
+		$value = urlencode($value);
+
+		// convert "--" to "-"
+		$value = preg_replace('/\-+/', '-', $value);
 
 		// trim - signs
-		return trim($newValue, '-');
+		return trim($value, '-');
 	}
 }
 
