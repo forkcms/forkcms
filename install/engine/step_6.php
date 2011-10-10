@@ -41,7 +41,11 @@ class InstallerStep6 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return (isset($_SESSION['db_hostname']) && isset($_SESSION['db_database']) && isset($_SESSION['db_username']) && isset($_SESSION['db_password']));
+		return InstallerStep5::isAllowed() &&
+				isset($_SESSION['db_hostname']) &&
+				isset($_SESSION['db_database']) &&
+				isset($_SESSION['db_username']) &&
+				isset($_SESSION['db_password']);
 	}
 
 

@@ -41,7 +41,8 @@ class InstallerStep3 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep2::checkRequirements();
+		return InstallerStep2::isAllowed() &&
+				InstallerStep2::checkRequirements();
 	}
 
 

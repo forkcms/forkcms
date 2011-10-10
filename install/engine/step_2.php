@@ -173,42 +173,9 @@ class InstallerStep2 extends InstallerStep
 	 */
 	private static function defineConstants($step)
 	{
-		// init library path
-		$pathLibrary = null;
-
-		// define step
-		if($step != 1) $pathLibrary = (isset($_SESSION['path_library'])) ? $_SESSION['path_library'] : null;
-
-		// guess the path to the library
-		if($pathLibrary == null)
-		{
-			// guess the path
-			self::guessLibraryPath(dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME']))), $pathLibrary);
-
-			$count = count($pathLibrary);
-
-			// just one found? add it into the session
-			if($count == 1)
-			{
-				$_SESSION['path_library'] = $pathLibrary[0];
-				$pathLibrary = $pathLibrary[0];
-			}
-
-			// none found means there is no Spoon
-			elseif($count == 0) return false;
-
-			// multiple
-			else
-			{
-				// redirect
-				header('Location: index.php?step=1');
-				exit;
-			}
-		}
-
 		// define constants
 		if(!defined('PATH_WWW')) define('PATH_WWW', dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME']))));
-		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', (string) $pathLibrary);
+		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', (string) $_SESSION['path_library']);
 
 		// update session
 		if(!isset($_SESSION['path_library'])) $_SESSION['path_library'] = PATH_LIBRARY;
@@ -287,52 +254,14 @@ class InstallerStep2 extends InstallerStep
 
 
 	/**
-	 * Try to guess the location of the library based on spoon library
-	 *
-	 * @return	void
-	 * @param	string $directory			The directory to start from.
-	 * @param	array[optional] $library	An array to hold the paths that were guesed.
-	 */
-	private static function guessLibraryPath($directory, array &$library = null)
-	{
-		// loop directories
-		foreach((array) glob($directory . '/*') as $filename)
-		{
-			// not a directory and equals 'spoon.php'
-			if(!is_dir($filename) && substr($filename, -9) == 'spoon.php')
-			{
-				// get real path
-				$path = dirname(dirname($filename));
-
-				// only unique values should be added
-				if(is_array($library))
-				{
-					// add
-					if(!in_array($path, $library)) $library[] = $path;
-				}
-
-				// not an array
-				else $library = array($path);
-			}
-
-			// directory
-			elseif(is_dir($filename) && substr($filename, -4) != '.svn')
-			{
-				// new location
-				self::guessLibraryPath($filename, $library);
-			}
-		}
-	}
-
-
-	/**
-	 * This step is always allowed.
+	 * This step is only allowed if the library path is known.
 	 *
 	 * @return	bool
 	 */
 	public static function isAllowed()
 	{
-		return true;
+		return InstallerStep1::isAllowed() &&
+				isset($_SESSION['path_library']);
 	}
 
 

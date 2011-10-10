@@ -41,7 +41,9 @@ class InstallerStep5 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return (isset($_SESSION['modules']) && isset($_SESSION['example_data']));
+		return InstallerStep4::isAllowed() &&
+				isset($_SESSION['modules']) &&
+				isset($_SESSION['example_data']);
 	}
 
 

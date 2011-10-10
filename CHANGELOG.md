@@ -15,8 +15,10 @@ Improvements:
 * Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 * Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
-* Installer: added improved test for mod_rewrite (will produce warning if not enabled)
-
+* Installer: added improved test for mod_rewrite (will produce warning if not enabled.)
+* Installer: refactored code: every step now doublechecks all previous steps and redirects back on error.
+* Core: updated folder structure to prevent installation issues with folders needing to be outside the document root.
+* Core: removed "markup" folder, this is now available at http://www.fork-cms.com/markup.
 
 2.6.12 (xxxx-xx-xx)
 --

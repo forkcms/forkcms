@@ -44,7 +44,12 @@ class InstallerStep4 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return (isset($_SESSION['default_language']) && isset($_SESSION['default_interface_language']) && isset($_SESSION['multiple_languages']) && isset($_SESSION['languages']) && isset($_SESSION['interface_languages']));
+		return InstallerStep3::isAllowed() &&
+				isset($_SESSION['default_language']) &&
+				isset($_SESSION['default_interface_language']) &&
+				isset($_SESSION['multiple_languages']) &&
+				isset($_SESSION['languages']) &&
+				isset($_SESSION['interface_languages']);
 	}
 
 

@@ -74,12 +74,6 @@ class Installer
 		// fetch step
 		$step = (isset($_GET['step'])) ? (int) $_GET['step'] : 1;
 
-		if($step !== 1)
-		{
-			// invalid requirements, so force step 2
-			if(!InstallerStep2::checkRequirements()) $step = 2;
-		}
-
 		// installer step class exists
 		if(class_exists('InstallerStep' . $step))
 		{
@@ -98,8 +92,9 @@ class Installer
 			}
 		}
 
-		// fallback
-		$this->step = 1;
+		// step not ok? redirect to previous step!
+		header('Location: index.php?step=' . ($step - 1));
+		exit;
 	}
 }
 

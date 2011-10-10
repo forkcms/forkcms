@@ -29,7 +29,7 @@ class InstallerStep1 extends InstallerStep
 		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
 
 		// get the possible library paths
-		self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $possiblePaths);
+		self::guessLibraryPath(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME']))), $possiblePaths);
 
 		// was the form submitted?
 		if(isset($_GET['spoon_location']) && in_array($_GET['spoon_location'], $possiblePaths))
@@ -72,7 +72,7 @@ class InstallerStep1 extends InstallerStep
 			}
 
 
-			$variables['content'] .= 	'</select>
+			$variables['content'] .= '</select>
 										</p>
 										<p class="buttonHolder">
 											<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" />
@@ -105,6 +105,17 @@ class InstallerStep1 extends InstallerStep
 
 		// stop the script
 		exit;
+	}
+
+
+	/**
+	 * This step is always allowed.
+	 *
+	 * @return	bool
+	 */
+	public static function isAllowed()
+	{
+		return true;
 	}
 
 
