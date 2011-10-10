@@ -880,33 +880,37 @@ class SpoonFilter
 		// redefine value
 		$value = mb_strtolower($value, $charset);
 
-		// replace special characters
-		$replace = array();
-		$replace['.'] = ' ';
-		$replace['@'] = ' at ';
-		$replace['©'] = ' copyright ';
-		$replace['€'] = ' euro ';
-		$replace['™'] = ' tm ';
-		$replace['&'] = ' and ';
+		// reserved characters (RFC 3986)
+		$reservedCharacters = array(
+			'/', '?', ':', '@', '#', '[', ']',
+			'!', '$', '&', '\'', '(', ')', '*',
+			'+', ',', ';', '='
+		);
 
-		// replace special characters
-		$value = str_replace(array_keys($replace), array_values($replace), $value);
+		// remove reserved characters
+		$value = str_replace($reservedCharacters, '', $value);
 
 		// remove spaces at the beginning and the end
 		$value = trim($value);
 
+		// try and convert using ASCII (ignore all non ascii chars)
+		$newValue = iconv($charset, 'ASCII//TRANSLIT//IGNORE', $value);
+
+		// no result after ASCII conversion, we probably have other chars then ASCII so urlencode
+		if($newValue == '') $newValue = urlencode($value);
+
 		// replace spaces by dashes
-		$value = str_replace(' ', '-', $value);
+		$newValue = str_replace(' ', '-', $newValue);
 
 		// there IS a value
-		if(strlen($value) != 0)
+		if(strlen($newValue) != 0)
 		{
 			// convert "--" to "-"
-			$value = preg_replace('/\-+/', '-', $value);
+			$newValue = preg_replace('/\-+/', '-', $newValue);
 		}
 
 		// trim - signs
-		return trim($value, '-');
+		return trim($newValue, '-');
 	}
 }
 
