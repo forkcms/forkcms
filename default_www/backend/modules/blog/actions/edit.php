@@ -240,6 +240,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// parse additional variables
 		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 
+		// fetch proper slug
+		$this->record['url'] = $this->meta->getURL();
+
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('status', BL::lbl(ucfirst($this->record['status'])));

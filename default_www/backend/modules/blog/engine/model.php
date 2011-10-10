@@ -566,7 +566,7 @@ class BackendBlogModel
 	public static function getURL($URL, $id = null)
 	{
 		// redefine URL
-		$URL = SpoonFilter::urlise((string) $URL);
+		$URL = (string) $URL;
 
 		// get db
 		$db = BackendModel::getDB();
@@ -628,7 +628,7 @@ class BackendBlogModel
 	public static function getURLForCategory($URL, $id = null)
 	{
 		// redefine URL
-		$URL = SpoonFilter::urlise((string) $URL);
+		$URL = (string) $URL;
 
 		// get db
 		$db = BackendModel::getDB();
