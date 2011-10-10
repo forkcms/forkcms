@@ -465,7 +465,7 @@ class FrontendURL
 	 */
 	private function setQueryString($queryString)
 	{
-		$this->queryString = trim((string) $queryString, '/');
+		$this->queryString = urldecode(trim((string) $queryString, '/'));
 	}
 }
 
