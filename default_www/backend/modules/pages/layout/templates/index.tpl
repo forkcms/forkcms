@@ -7,11 +7,13 @@
 		{option:dgDrafts}{$lblDrafts|ucfirst}{/option:dgDrafts}
 		{option:!dgDrafts}{$lblRecentlyEdited|ucfirst}{/option:!dgDrafts}
 	</h2>
+    {option:actionAddAllowed}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
+    {/option:actionAddAllowed}
 </div>
 
 {option:dgDrafts}
@@ -23,11 +25,13 @@
 		<h2>
 			{$lblRecentlyEdited|ucfirst}
 		</h2>
+    	{option:actionAddAllowed}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 				<span>{$lblAdd|ucfirst}</span>
 			</a>
 		</div>
+    	{/option:actionAddAllowed}
 	</div>
 
 {/option:dgDrafts}
