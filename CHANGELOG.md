@@ -1,3 +1,9 @@
+Improvements:
+
+* Core: allow for non-standard characters to be used in urls.
+* Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
+
+
 2.6.12 (xxxx-xx-xx)
 --
 Improvements:
