@@ -877,9 +877,6 @@ class SpoonFilter
 		// define charset
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
-		// to lowercase
-		$value = mb_strtolower($value, $charset);
-
 		// reserved characters (RFC 3986)
 		$reservedCharacters = array(
 			'/', '?', ':', '@', '#', '[', ']',
@@ -896,8 +893,15 @@ class SpoonFilter
 		// replace spaces by dashes
 		$value = str_replace(' ', '-', $value);
 
-		// urlencode
-		$value = urlencode($value);
+		// only urlencode if not yet urlencoded
+		if(urldecode($value) == $value)
+		{
+			// to lowercase
+			$value = mb_strtolower($value, $charset);
+
+			// urlencode
+			$value = urlencode($value);
+		}
 
 		// convert "--" to "-"
 		$value = preg_replace('/\-+/', '-', $value);

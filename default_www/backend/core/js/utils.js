@@ -324,9 +324,6 @@ utils.string =
 	 */
 	urlise: function(value)
 	{
-		// to lowercase
-		value = value.toLowerCase();
-
 		// reserved characters (RFC 3986)
 		reservedCharacters = new Array(
 			'/', '?', ':', '@', '#', '[', ']',
@@ -343,8 +340,15 @@ utils.string =
 		// replace spaces by dashes
 		value = utils.string.replaceAll(value, ' ', '-');
 
-		// urlencode
-		value = utils.string.urlEncode(value);
+		// only urlencode if not yet urlencoded
+		if(utils.string.urlDecode(value) == value)
+		{
+			// to lowercase
+			value = value.toLowerCase();
+
+			// urlencode
+			value = utils.string.urlEncode(value);
+		}
 
 		// convert "--" to "-"
 		value = value.replace(/-+/, '-');
