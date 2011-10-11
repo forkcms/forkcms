@@ -68,16 +68,20 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		// disable paging
 		$this->dgDrafts->setPaging(false);
 
-		// set colum URLs
-		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
-
 		// set column functions
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on');
 
-		// add edit column
-		$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('Edit'));
-
+		// check if allowed to edit
+		if(BackendAuthentication::isAllowedAction('edit','pages'))
+		{
+			// set colum URLs
+			$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
+		
+			// add edit column
+			$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('Edit'));
+		}
+		
 		// set headers
 		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEdited'))));
 	}
@@ -103,11 +107,15 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->dgRecentlyEdited->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgRecentlyEdited->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// set column URL
-		$this->dgRecentlyEdited->setColumnUrl('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		// check if allowed to edit
+		if(BackendAuthentication::isAllowedAction('edit','pages'))
+		{
+			// set column URL
+			$this->dgRecentlyEdited->setColumnUrl('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
-		// add column
-		$this->dgRecentlyEdited->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+			// add column
+			$this->dgRecentlyEdited->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 
 		// set headers
 		$this->dgRecentlyEdited->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEdited'))));
@@ -142,6 +150,9 @@ class BackendPagesIndex extends BackendBaseActionIndex
 
 		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+		
+		// check if allowed to add
+		if(BackendAuthentication::isAllowedAction('add','pages')) $this->tpl->assign('actionAddAllowed', true);
 
 		// open the tree on a specific page
 		if($this->getParameter('id', 'int') !== null) $this->tpl->assign('openedPageId', $this->getParameter('id', 'int'));
