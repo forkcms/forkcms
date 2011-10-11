@@ -50,6 +50,9 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+
+		// set callback for generating an unique URL
+		$this->meta->setURLCallback('BackendBlogModel', 'getURLForCategory');
 	}
 
 
@@ -63,9 +66,6 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique URL
-			$this->meta->setURLCallback('BackendBlogModel', 'getURLForCategory');
-
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 

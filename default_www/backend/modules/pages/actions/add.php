@@ -147,6 +147,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 
+		// set callback for generating an unique URL
+		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
+
 		// a specific action
 		$this->frm->addCheckbox('is_action', false);
 

@@ -285,6 +285,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+		// set callback for generating an unique URL
+		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $isAction));
 	}
 
 
