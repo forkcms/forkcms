@@ -1,4 +1,4 @@
-2.6.12 (xxxx-xx-xx)
+2.6.12 (2011-10-11)
 --
 Improvements:
 
