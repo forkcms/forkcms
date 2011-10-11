@@ -277,69 +277,83 @@ utils.string =
 	 *
 	 * @return	string
 	 * @param	string value
+	 * @param	string[optional] charlist
 	 */
-	trim: function(value)
+	trim: function(value, charlist)
 	{
 		if(value == undefined) return '';
-		return value.replace(/^\s+|\s+$/g, '');
+		if(charlist == undefined) charlist = ' ';
+
+		var pattern = new RegExp('^[' + charlist + ']*|[' + charlist + ']*$', 'g');
+		return value.replace(pattern, '');
 	},
 
 
 	/**
-	 * Urlise a string (cfr. SpoonFilter)
+	 * PHP-like urlencode
+	 *
+	 * @see		https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
+	 * @return	string
+	 * @param	string value
+	 */
+	urlEncode: function(value)
+	{
+		return encodeURIComponent(value).replace(/\%20/g, '+').replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/\~/g, '%7E');
+	},
+
+
+	/**
+	 * PHP-like urlencode
+	 *
+	 * @see		https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
+	 * @return	string
+	 * @param	string value
+	 */
+	urlDecode: function(value)
+	{
+		return decodeURIComponent(value.replace(/\+/g, '%20').replace(/\%21/g, '!').replace(/\%27/g, "'").replace(/\%28/g, '(').replace(/\%29/g, ')').replace(/\%2A/g, '*').replace(/\%7E/g, '~'));
+	},
+
+
+	/**
+	 * Urlise a string (cfr. SpoonFilter::urlise)
 	 *
 	 * @return	string
 	 * @param	string value
 	 */
 	urlise: function(value)
 	{
-		// allowed chars
-		var allowedChars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', ' '];
+		// reserved characters (RFC 3986)
+		reservedCharacters = new Array(
+			'/', '?', ':', '@', '#', '[', ']',
+			'!', '$', '&', '\'', '(', ')', '*',
+			'+', ',', ';', '='
+		);
 
-		// to lowercase
-		value = value.toLowerCase();
+		// remove reserved characters
+		for(i in reservedCharacters) value = value.replace(reservedCharacters[i], ' ');
 
-		// replace accents
-		value = value.replace(/[\u00E0\u00E1\u00E2\u00E3\u00E4\u00E5]/g, 'a');
-		value = value.replace(/[\u00E7]/g, 'c');
-		value = value.replace(/[\u00E8\u00E9\u00EA\u00EB]/g, 'e');
-		value = value.replace(/[\u00EC\u00ED\u00EE\u00EF]/g, 'i');
-		value = value.replace(/[\u00F2\u00F3\u00F4\u00F5\u00F6\u00F8]/g, 'o');
-		value = value.replace(/[\u00F9\u00FA\u00FB\u00FC]/g, 'u');
-		value = value.replace(/[\u00FD\u00FF]/g, 'y');
-		value = value.replace(/[\u00F1]/g, 'n');
-		value = value.replace(/[\u0153]/g, 'oe');
-		value = value.replace(/[\u00E6]/g, 'ae');
-		value = value.replace(/[\u00DF]/g, 'ss');
+		// replace double quote, since this one might cause problems in html (e.g. <a href="double"quote">)
+		value = utils.string.replaceAll(value, '"', ' ');
 
-		// init var
-		var url = '';
+		// replace spaces by dashes
+		value = utils.string.replaceAll(value, ' ', '-');
 
-		// loop characters
-		for(i in value)
+		// only urlencode if not yet urlencoded
+		if(utils.string.urlDecode(value) == value)
 		{
-			// replace special characters
-			if(value.charAt(i) == '.') url += ' ';
-			else if(value.charAt(i) == '@') url += 'at';
-			else if(value.charAt(i) == '©')	url += 'copyright';
-			else if(value.charAt(i) == '€') url += 'euro';
-			else if(value.charAt(i) == '™') url += 'tm';
-			else if(value.charAt(i) == '-') url += ' ';
-			// only append chars that are allowed
-			else if($.inArray(value.charAt(i), allowedChars) != -1) url += value.charAt(i);
+			// to lowercase
+			value = value.toLowerCase();
+
+			// urlencode
+			value = utils.string.urlEncode(value);
 		}
 
-		// trim
-		url = utils.string.trim(url);
+		// convert "--" to "-"
+		value = value.replace(/-+/, '-');
 
-		// replace double dashes
-		url = url.replace(/\s+/g, ' ');
-
-		// replace spaces with dashes
-		url = utils.string.replaceAll(url, ' ', '-');
-
-		// trim
-		return url;
+		// trim - signs
+		return utils.string.trim(value, '-');
 	},
 
 

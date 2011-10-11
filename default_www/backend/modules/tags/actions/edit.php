@@ -192,7 +192,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				// build tag
 				$item['id'] = $this->id;
 				$item['tag'] = $this->frm->getField('name')->getValue();
-				$item['url'] = BackendTagsModel::getURL($item['tag'], $this->id);
+				$item['url'] = BackendTagsModel::getURL(SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $this->id);
 
 				// update the item
 				BackendTagsModel::update($item);

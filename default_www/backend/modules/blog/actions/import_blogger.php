@@ -290,7 +290,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$meta['description_overwrite'] = 'N';
 		$meta['title'] = $item['title'];
 		$meta['title_overwrite'] = 'N';
-		$meta['url'] = BackendBlogModel::getURL(SpoonFilter::urlise($item['title']));
+		$meta['url'] = BackendBlogModel::getURL($item['title']);
 		$meta['url_overwrite'] = 'N';
 
 		// replace fucked up links

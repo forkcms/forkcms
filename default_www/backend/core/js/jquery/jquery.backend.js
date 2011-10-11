@@ -70,8 +70,8 @@
 			{
 				if(!$(this).is(':checked'))
 				{
-					$('#url').val(utils.string.urlise(element.val()));
-					$('#generatedUrl').html(utils.string.urlise(element.val()));
+					$('#url').val(utils.string.urlDecode(utils.string.urlise(element.val())));
+					$('#generatedUrl').html(utils.string.urlDecode(utils.string.urlise(element.val())));
 				}
 			});
 
@@ -110,8 +110,8 @@
 				{
 					if(typeof pageID == 'undefined' || pageID != 1)
 					{
-						$('#url').val(utils.string.urlise(title));
-						$('#generatedUrl').html(utils.string.urlise(title));
+						$('#url').val(utils.string.urlDecode(utils.string.urlise(title)));
+						$('#generatedUrl').html(utils.string.urlDecode(utils.string.urlise(title)));
 					}
 				}
 			}
