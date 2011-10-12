@@ -703,7 +703,7 @@ class BackendModel
 		else $URL .= $keys[$pageId];
 
 		// return the unique URL!
-		return $URL;
+		return urldecode($URL);
 	}
 
 
@@ -772,7 +772,7 @@ class BackendModel
 			FrontendLanguage::setLocale($language);
 
 			// append action
-			$URL .= '/' . FL::act(SpoonFilter::toCamelCase($action));
+			$URL .= '/' . urldecode(FL::act(SpoonFilter::toCamelCase($action)));
 
 			// return the unique URL!
 			return $URL;
