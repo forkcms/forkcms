@@ -44,7 +44,7 @@ class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 		$this->meta->setUrlCallback($className, $methodName, $parameters);
 
 		// fetch generated meta url
-		$URL = $this->meta->generateURL($URL);
+		$URL = urldecode($this->meta->generateURL($URL));
 
 		// output
 		$this->output(self::OK, $URL);
