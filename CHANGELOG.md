@@ -1,4 +1,10 @@
-2.6.12 (xxxx-xx-xx)
+2.6.13 (xxxx-xx-xx)
+Improvements:
+
+* Locale: make it possible to browse translations for all modules at once.
+
+
+2.6.12 (2011-10-11)
 --
 Improvements:
 
