@@ -289,7 +289,7 @@ class FrontendAJAXAction
 	public function loadConfig()
 	{
 		// build path for core
-		if($this->module == 'core') $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
+		if($this->getModule() == 'core') $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
 
 		// build path to the module and define it. This is a constant because we can use this in templates.
 		else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
