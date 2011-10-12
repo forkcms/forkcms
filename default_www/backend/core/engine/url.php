@@ -159,10 +159,10 @@ class BackendURL
 			if(!defined('BACKEND_MODULE_PATH'))
 			{
 				// build path for core
-				if($this->module == 'core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
+				if($this->module == 'core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
 
 				// build path to the module and define it. This is a constant because we can use this in templates.
-				else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
+				else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
 			}
 
 			// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
