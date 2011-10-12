@@ -4,6 +4,10 @@ Improvements:
 * Locale: make it possible to browse translations for all modules at once.
 * Mailmotor: email address can't be edited; change code to reflect this.
 
+Bugfixes:
+
+* Content Blocks: some backend functions didn't take into account the current working language.
+
 
 2.6.12 (2011-10-11)
 --
