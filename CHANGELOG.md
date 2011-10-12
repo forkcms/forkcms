@@ -1,4 +1,28 @@
+3.0.0 (xxxx-xx-xx)
+--
+Improvements:
+* Core: Completely re-invented the blocks system; it's now position-driven.
+* Introduce the concept of positions that can contain an arbitrary number of blocks.
+* Merged tabs "Content" & "Template" to present a more straightforward UI.
+* Added ability to order blocks.
+* Created fallback-system for blocks that were assigned to no-longer-existing positions.
+* Added the posibility to show/hide a block.
+* Edit HTML content in TinyMCE in a dialog.
+* Updated installer.
+* Updated template creation in backend.
+* Updated theme Triton to be position-based.
+* Added the possibility to either completely overwrite of re-use existing blocks when updating a template.
+* Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
+* Installer: added 'getTemplateId' function to easily fetch a template id.
+* Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
+* Installer: added improved test for mod_rewrite (will produce warning if not enabled.)
+* Installer: refactored code: every step now doublechecks all previous steps and redirects back on error.
+* Core: updated folder structure to prevent installation issues with folders needing to be outside the document root.
+* Core: removed "markup" folder, this is now available at http://www.fork-cms.com/markup.
+
+
 2.6.13 (xxxx-xx-xx)
+--
 Improvements:
 
 * Locale: make it possible to browse translations for all modules at once.

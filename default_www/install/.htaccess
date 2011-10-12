@@ -1,3 +1,0 @@
-<IfModule mod_rewrite.c>
-	SetEnv mod_rewrite_enabled true
-</IfModule>
