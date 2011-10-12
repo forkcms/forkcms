@@ -159,7 +159,7 @@ class BackendURL
 			if(!defined('BACKEND_MODULE_PATH'))
 			{
 				// build path for core
-				if($this->module == 'core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
+				if($module == 'core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
 
 				// build path to the module and define it. This is a constant because we can use this in templates.
 				else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
