@@ -16,7 +16,7 @@ class BackendMeta
 	 *
 	 * @var	string
 	 */
-	private $baseFieldName;
+	protected $baseFieldName;
 
 
 	/**
@@ -24,7 +24,7 @@ class BackendMeta
 	 *
 	 * @var	array
 	 */
-	private $callback = array();
+	protected $callback = array();
 
 
 	/**
@@ -32,7 +32,7 @@ class BackendMeta
 	 *
 	 * @var	bool
 	 */
-	private $custom;
+	protected $custom;
 
 
 	/**
@@ -40,7 +40,7 @@ class BackendMeta
 	 *
 	 * @var	array
 	 */
-	private $data;
+	protected $data;
 
 
 	/**
@@ -48,7 +48,7 @@ class BackendMeta
 	 *
 	 * @var	BackendForm
 	 */
-	private $frm;
+	protected $frm;
 
 
 	/**
@@ -56,7 +56,7 @@ class BackendMeta
 	 *
 	 * @var	int
 	 */
-	private $id;
+	protected $id;
 
 
 	/**
@@ -64,7 +64,7 @@ class BackendMeta
 	 *
 	 * @var	BackendURL
 	 */
-	private $URL;
+	protected $URL;
 
 
 	/**
@@ -96,8 +96,36 @@ class BackendMeta
 		// metaId was specified, so we should load the item
 		if($metaId !== null) $this->loadMeta($metaId);
 
+		// set default callback
+		$this->setUrlCallback('Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model', 'getURL');
+
 		// load the form
 		$this->loadForm();
+	}
+
+
+	/**
+	 * Generate an url, using the predefined callback.
+	 *
+	 * @return	string
+	 * @param	string $URL		The base-url to start from.
+	 */
+	public function generateURL($URL)
+	{
+		// validate (check if the function exists)
+		if(!is_callable(array($this->callback['class'], $this->callback['method']))) throw new BackendException('The callback-method doesn\'t exist.');
+
+		// build parameters for use in the callback
+		$parameters[] = SpoonFilter::urlise($URL);
+
+		// add parameters set by user
+		if(!empty($this->callback['parameters']))
+		{
+			foreach($this->callback['parameters'] as $parameter) $parameters[] = $parameter;
+		}
+
+		// get the real url
+		return call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 	}
 
 
@@ -217,7 +245,7 @@ class BackendMeta
 		if(!isset($this->data['url'])) return null;
 
 		// return value
-		return $this->data['url'];
+		return urldecode($this->data['url']);
 	}
 
 
@@ -241,7 +269,7 @@ class BackendMeta
 	 *
 	 * @return	void
 	 */
-	private function loadForm()
+	protected function loadForm()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())
@@ -273,7 +301,7 @@ class BackendMeta
 
 		// add URL elements into the form
 		$this->frm->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
-		$this->frm->addText('url', (isset($this->data['url'])) ? $this->data['url'] : null);
+		$this->frm->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
 
 		// advanced SEO
 		$indexValues = array(
@@ -295,6 +323,13 @@ class BackendMeta
 			// add meta custom element into the form
 			$this->frm->addTextarea('meta_custom', (isset($this->data['custom'])) ? $this->data['custom'] : null);
 		}
+
+		$this->frm->addHidden('meta_id', $this->id);
+		$this->frm->addHidden('base_field_name', $this->baseFieldName);
+		$this->frm->addHidden('custom', $this->custom);
+		$this->frm->addHidden('class_name', $this->callback['class']);
+		$this->frm->addHidden('method_name', $this->callback['method']);
+		$this->frm->addHidden('parameters', SpoonFilter::htmlspecialchars(serialize($this->callback['parameters'])));
 	}
 
 
@@ -304,7 +339,7 @@ class BackendMeta
 	 * @return	void
 	 * @param	int $id		The id of the record to load.
 	 */
-	private function loadMeta($id)
+	protected function loadMeta($id)
 	{
 		// redefine
 		$this->id = (int) $id;
@@ -334,16 +369,6 @@ class BackendMeta
 		// redefine
 		$update = (bool) $update;
 
-		// no callback set by user?
-		if(empty($this->callback))
-		{
-			// build class- & method-name
-			$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
-			$methodName = 'getURL';
-
-			// set
-			$this->setUrlCallback($className, $methodName);
-		}
 		// get meta keywords
 		if($this->frm->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->frm->getField('meta_keywords')->getValue();
 		else $keywords = $this->frm->getField($this->baseFieldName)->getValue();
@@ -357,20 +382,11 @@ class BackendMeta
 		else $title = $this->frm->getField($this->baseFieldName)->getValue();
 
 		// get URL
-		if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue()));
-		else $URL = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue()));
-
-		// build parameters for use in the callback
-		$parameters[] = $URL;
-
-		// add parameters set by user
-		if(!empty($this->callback['parameters']))
-		{
-			foreach($this->callback['parameters'] as $parameter) $parameters[] = $parameter;
-		}
+		if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
+		else $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
 
 		// get the real URL
-		$URL = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
+		$URL = $this->generateURL($URL);
 
 		// get meta custom
 		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue(true);
@@ -436,11 +452,11 @@ class BackendMeta
 		$methodName = (string) $methodName;
 		$parameters = (array) $parameters;
 
-		// validate (check if the function exists)
-		if(!is_callable(array($className, $methodName))) throw new BackendException('The callback-method doesn\'t exist.');
-
 		// store in property
 		$this->callback = array('class' => $className, 'method' => $methodName, 'parameters' => $parameters);
+
+		// re-load the form
+		$this->loadForm();
 	}
 
 
@@ -452,17 +468,6 @@ class BackendMeta
 	 */
 	public function validate()
 	{
-		// no callback set by user?
-		if(empty($this->callback))
-		{
-			// build class- & method-name
-			$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
-			$methodName = 'getURL';
-
-			// set
-			$this->setUrlCallback($className, $methodName);
-		}
-
 		// page title overwrite is checked
 		if($this->frm->getField('page_title_overwrite')->isChecked())
 		{
@@ -488,19 +493,10 @@ class BackendMeta
 			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 
 			// fetch url
-			$URL = SpoonFilter::urlise($this->frm->getField('url')->getValue());
-
-			// build parameters for use in the callback
-			$parameters[] = $URL;
-
-			// add parameters set by user
-			if(!empty($this->callback['parameters']))
-			{
-				foreach($this->callback['parameters'] as $parameter) $parameters[] = $parameter;
-			}
+			$URL = $this->frm->getField('url')->getValue();
 
 			// get the real url
-			$generatedUrl = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
+			$generatedUrl = $this->generateURL($URL);
 
 			// check if urls are different
 			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
@@ -509,16 +505,6 @@ class BackendMeta
 		// if the form was submitted correctly the data array should be populated
 		if($this->frm->isCorrect())
 		{
-			// no callback set by user?
-			if(empty($this->callback))
-			{
-				// build class- & method-name
-				$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
-				$methodName = 'getURL';
-
-				// set
-				$this->setUrlCallback($className, $methodName);
-			}
 			// get meta keywords
 			if($this->frm->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->frm->getField('meta_keywords')->getValue();
 			else $keywords = $this->frm->getField($this->baseFieldName)->getValue();
@@ -532,20 +518,11 @@ class BackendMeta
 			else $title = $this->frm->getField($this->baseFieldName)->getValue();
 
 			// get URL
-			if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue()));
-			else $URL = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue()));
-
-			// build parameters for use in the callback
-			$parameters[] = $URL;
-
-			// add parameters set by user
-			if(!empty($this->callback['parameters']))
-			{
-				foreach($this->callback['parameters'] as $parameter) $parameters[] = $parameter;
-			}
+			if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
+			else $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
 
 			// get the real URL
-			$URL = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
+			$URL = $this->generateURL($URL);
 
 			// get meta custom
 			if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue();
@@ -566,7 +543,6 @@ class BackendMeta
 			if($this->frm->getField('seo_follow')->getValue() == 'none') unset($this->data['data']['seo_follow']);
 			else $this->data['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
 		}
-
 	}
 }
 

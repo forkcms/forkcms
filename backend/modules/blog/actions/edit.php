@@ -189,6 +189,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+		// set callback for generating a unique URL
+		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
 	}
 
 
@@ -240,6 +243,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// parse additional variables
 		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 
+		// fetch proper slug
+		$this->record['url'] = $this->meta->getURL();
+
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('status', BL::lbl(ucfirst($this->record['status'])));
@@ -263,9 +269,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique URL
-			$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
-
 			// get the status
 			$status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 

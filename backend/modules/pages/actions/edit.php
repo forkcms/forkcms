@@ -332,15 +332,18 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// tags
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputText tagBox', 'inputTextError tagBox');
 
-		// meta
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-
 		// a specific action
 		$isAction = (isset($this->record['data']['is_action']) && $this->record['data']['is_action'] == true) ? true : false;
 		$this->frm->addCheckbox('is_action', $isAction);
 
 		// extra
 		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+		// set callback for generating an unique URL
+		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $isAction));
 	}
 
 

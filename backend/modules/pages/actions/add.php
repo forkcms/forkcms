@@ -224,14 +224,17 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// tags
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 
-		// meta
-		$this->meta = new BackendMeta($this->frm, null, 'title', true);
-
 		// a specific action
 		$this->frm->addCheckbox('is_action', false);
 
 		// extra
 		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+
+		// set callback for generating an unique URL
+		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
 	}
 
 

@@ -155,8 +155,15 @@ class BackendURL
 		// no action passed through URL
 		elseif(!$isJS && !$isAJAX)
 		{
-			// build path to the module and define it. This is a constant because we can use this in templates.
-			if(!defined('BACKEND_MODULE_PATH')) define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
+			// check if module path is not yet defined
+			if(!defined('BACKEND_MODULE_PATH'))
+			{
+				// build path for core
+				if($module == 'core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
+
+				// build path to the module and define it. This is a constant because we can use this in templates.
+				else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
+			}
 
 			// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
 			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');

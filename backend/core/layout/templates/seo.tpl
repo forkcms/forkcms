@@ -84,3 +84,11 @@
 		</ul>
 	</div>
 </div>
+
+{* Hidden settings, used for the Ajax-call to verify the url *}
+{$hidMetaId}
+{$hidBaseFieldName}
+{$hidCustom}
+{$hidClassName}
+{$hidMethodName}
+{$hidParameters}

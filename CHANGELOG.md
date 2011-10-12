@@ -19,6 +19,8 @@ Improvements:
 * Installer: refactored code: every step now doublechecks all previous steps and redirects back on error.
 * Core: updated folder structure to prevent installation issues with folders needing to be outside the document root.
 * Core: removed "markup" folder, this is now available at http://www.fork-cms.com/markup.
+* Core: allow for non-standard characters to be used in urls.
+* Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
 
 
 2.6.13 (xxxx-xx-xx)

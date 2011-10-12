@@ -70,11 +70,38 @@
 			{
 				if(!$(this).is(':checked'))
 				{
-					$('#url').val(utils.string.urlise(element.val()));
-					$('#generatedUrl').html(utils.string.urlise(element.val()));
+					generateUrl(element.val());
 				}
 			});
 
+			function generateUrl(url)
+			{
+				// make the call
+				$.ajax(
+				{
+					url: '/backend/ajax.php?module=core&action=generate_url&language=' + jsBackend.current.language,
+					data: 'url=' + url +
+							'&metaId=' + $('#metaId').val() +
+							'&baseFieldName=' + $('#baseFieldName').val() +
+							'&custom=' + $('#custom').val() +
+							'&className=' + $('#className').val() +
+							'&methodName=' + $('#methodName').val() +
+							'&parameters=' + $('#parameters').val(),
+					type: 'POST',
+					success: function(data, textStatus)
+					{
+						url = data.data;
+						$('#url').val(url);
+						$('#generatedUrl').html(url);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown)
+					{
+						url = utils.string.urlDecode(utils.string.urlise(url));
+						$('#url').val(url);
+						$('#generatedUrl').html(url);
+					}
+				});
+			}
 			// calculate meta
 			function calculateMeta(evt, element)
 			{
@@ -110,8 +137,7 @@
 				{
 					if(typeof pageID == 'undefined' || pageID != 1)
 					{
-						$('#url').val(utils.string.urlise(title));
-						$('#generatedUrl').html(utils.string.urlise(title));
+						generateUrl(title);
 					}
 				}
 			}
