@@ -629,51 +629,6 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Parse the JS-files
-	 *
-	 * @return	void
-	 */
-	private function parseJavascript()
-	{
-		// init var
-		$javascriptFiles = null;
-		$existingJavascriptFiles = $this->getJavascriptFiles();
-
-		// if there aren't any JS-files added we don't need to do something
-		if(!empty($existingJavascriptFiles))
-		{
-			// some files should be cached, even if we don't want cached (mostly libraries)
-			$ignoreCache = array('/frontend/core/js/jquery/jquery.js',
-									'/frontend/core/js/jquery/jquery.ui.js');
-
-			// loop the JS-files
-			foreach($existingJavascriptFiles as $file)
-			{
-				// some files shouldn't be uncachable
-				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => $file['file']);
-
-				// make the file uncachable
-				else
-				{
-					// if the file is processed by PHP we don't want any caching
-					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] . '&amp;m=' . time());
-
-					// add lastmodified time
-					else
-					{
-						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
-						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
-					}
-				}
-			}
-		}
-
-		// js-files
-		$this->tpl->assign('javascriptFiles', $javascriptFiles);
-	}
-
-
-	/**
 	 * Parse Google Analytics
 	 *
 	 * @return	void
@@ -731,7 +686,7 @@ class FrontendHeader extends FrontendBaseObject
 		// if no facebook admin is given but an app is configured we use the application as an admin
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) == '' && FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
-			$this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_app_id', null)), true, array('property'));
+			$this->addMetaData(array('property' => 'fb:app_id', 'content' => FrontendModel::getModuleSetting('core', 'facebook_app_id', null)), true, array('property'));
 			$parseFacebook = true;
 		}
 
@@ -756,6 +711,51 @@ class FrontendHeader extends FrontendBaseObject
 			// add the locale property
 			$this->addOpenGraphData('locale', $locale);
 		}
+	}
+
+
+	/**
+	 * Parse the JS-files
+	 *
+	 * @return	void
+	 */
+	private function parseJavascript()
+	{
+		// init var
+		$javascriptFiles = null;
+		$existingJavascriptFiles = $this->getJavascriptFiles();
+
+		// if there aren't any JS-files added we don't need to do something
+		if(!empty($existingJavascriptFiles))
+		{
+			// some files should be cached, even if we don't want cached (mostly libraries)
+			$ignoreCache = array('/frontend/core/js/jquery/jquery.js',
+									'/frontend/core/js/jquery/jquery.ui.js');
+
+			// loop the JS-files
+			foreach($existingJavascriptFiles as $file)
+			{
+				// some files shouldn't be uncachable
+				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => $file['file']);
+
+				// make the file uncachable
+				else
+				{
+					// if the file is processed by PHP we don't want any caching
+					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] . '&amp;m=' . time());
+
+					// add lastmodified time
+					else
+					{
+						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
+					}
+				}
+			}
+		}
+
+		// js-files
+		$this->tpl->assign('javascriptFiles', $javascriptFiles);
 	}
 
 
