@@ -85,13 +85,13 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		foreach($ids as $id)
 		{
 			// get data
-			$sourceData = BackendPagesModel::get($id, $from);
+			$sourceData = BackendPagesModel::get($id, null, $from);
 
 			// get and build meta
 			$meta = $db->getRecord('SELECT *
 									FROM meta
 									WHERE id = ?',
-									$sourceData['meta_id']);
+									array($sourceData['meta_id']));
 
 			// remove id
 			unset($meta['id']);
@@ -129,18 +129,14 @@ class BackendPagesCopy extends BackendBaseActionDelete
 			$hasBlock = ($sourceData['has_extra'] == 'Y');
 
 			// get the blocks
-			$sourceBlocks = BackendPagesModel::getBlocks($id, $from);
+			$sourceBlocks = BackendPagesModel::getBlocks($id, null, $from);
 
 			// loop blocks
 			foreach($sourceBlocks as $sourceBlock)
 			{
 				// build block
-				$block = array();
-				$block['id'] = $sourceBlock['id'];
+				$block = $sourceBlock;
 				$block['revision_id'] = $revisionId;
-				$block['extra_id'] = $sourceBlock['extra_id'];
-				$block['html'] = $sourceBlock['html'];
-				$block['status'] = 'active';
 				$block['created_on'] = BackendModel::getUTCDate();
 				$block['edited_on'] = BackendModel::getUTCDate();
 
@@ -165,7 +161,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 			}
 
 			// get tags
-			$tags = BackendTagsModel::getTags('pages',$id, 'string', $from);
+			$tags = BackendTagsModel::getTags('pages', $id, 'string', $from);
 
 			// save tags
 			if($tags != '') BackendTagsModel::saveTags($page['id'], $tags, 'pages');
