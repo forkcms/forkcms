@@ -170,6 +170,34 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Get all items in a category (at least a chunk)
 	 *
 	 * @return	array
+	 * @param	string $categoryURL		The ID of the category to retrieve the posts for.
+	 * @param	int[optional] $limit	The number of items to get.
+	 * @param	int[optional] $offset	The offset.
+	 */
+	public static function getAllForCategoryById($categoryId, $limit = 10, $offset = 0)
+	{
+		// get the items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
+																c.title AS category_title, m2.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+																m.url
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.category_id = ?
+																ORDER BY i.publish_on DESC
+																LIMIT ?, ?',
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryId, (int) $offset, (int) $limit), 'id');
+
+		return self::returnAllForCategory($items, $limit, $offset);
+	}
+	
+	
+	/**
+	 * Get all items in a category (at least a chunk)
+	 *
+	 * @return	array
 	 * @param	string $categoryURL		The URL of the category to retrieve the posts for.
 	 * @param	int[optional] $limit	The number of items to get.
 	 * @param	int[optional] $offset	The offset.
@@ -190,6 +218,19 @@ class FrontendBlogModel implements FrontendTagsInterface
 																LIMIT ?, ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryURL, (int) $offset, (int) $limit), 'id');
 
+		return self::returnAllForCategory($items, $limit, $offset);
+	}
+	
+	/**
+	 * Return all for category
+	 *
+	 * @return	array
+	 * @param	string $items
+	 * @param	string $limit
+	 * @param	string $offset
+	 */
+	private static function returnAllForCategory($items, $limit, $offset)
+	{
 		// no results?
 		if(empty($items)) return array();
 

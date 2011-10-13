@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `blog_categories` (
  `id` int(11) NOT NULL auto_increment,
  `meta_id` int(11) NOT NULL,
+ `extra_id` int(11) NOT NULL,
  `language` varchar(5) NOT NULL,
  `title` varchar(255) NOT NULL,
  PRIMARY KEY (`id`)
