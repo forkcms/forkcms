@@ -570,67 +570,42 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function parse()
 	{
-		// assign page title
-		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
-
 		// parse Facebook
 		$this->parseFacebook();
 
-
-
-
-
-
+		// parse SEO
+		$this->parseSeo();
 
 		// in debugmode we don't want our pages to be indexed.
 		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 
-		// noodp, noydir
-		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
-		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
+		// parse meta tags
+		$this->parseMetaAndLinks();
 
-		// build meta
-		$meta = '';
+		// parse CSS
+		$this->parseCss();
 
-		// loop meta
-		foreach($this->meta as $attributes)
-		{
-			// start html
-			$meta .= '<meta ';
+		// parse JS
+		$this->parseJavascript();
 
-			// add attributes
-			foreach($attributes as $key => $value) $meta .= $key . '="' . $value . '" ';
+		// parse custom header HTML and Google Analytics
+		$this->parseCustomHeaderHTMLAndGoogleAnalytics();
 
-			// remove last space
-			$meta = trim($meta);
+		// assign page title
+		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
 
-			// close html
-			$meta .= '>' . "\n";
-		}
+		// assign site title
+		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+	}
 
-		// build link
-		$link = '';
 
-		// loop links
-		foreach($this->links as $attributes)
-		{
-			// start html
-			$link .= '<link ';
-
-			// add attributes
-			foreach($attributes as $key => $value) $link .= $key . '="' . $value . '" ';
-
-			// remove last space
-			$link = trim($link);
-
-			// close html
-			$link .= '>' . "\n";
-		}
-
-		// assign meta
-		$this->tpl->assign('meta', $meta . "\n" . $link);
-		$this->tpl->assign('metaCustom', $this->getMetaCustom());
-
+	/**
+	 * Parse the CSS-files
+	 *
+	 * @return	void
+	 */
+	private function parseCss()
+	{
 		// init var
 		$cssFiles = null;
 		$existingCSSFiles = $this->getCSSFiles();
@@ -650,7 +625,16 @@ class FrontendHeader extends FrontendBaseObject
 
 		// css-files
 		$this->tpl->assign('cssFiles', $cssFiles);
+	}
 
+
+	/**
+	 * Parse the JS-files
+	 *
+	 * @return	void
+	 */
+	private function parseJavascript()
+	{
 		// init var
 		$javascriptFiles = null;
 		$existingJavascriptFiles = $this->getJavascriptFiles();
@@ -686,16 +670,22 @@ class FrontendHeader extends FrontendBaseObject
 
 		// js-files
 		$this->tpl->assign('javascriptFiles', $javascriptFiles);
+	}
 
-		// assign site title
-		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 
+	/**
+	 * Parse Google Analytics
+	 *
+	 * @return	void
+	 */
+	private function parseCustomHeaderHTMLAndGoogleAnalytics()
+	{
 		// get the data
 		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
 
-		// search for the webpropertyId, if not found we should build the GA-code
+		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
 		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
 		{
 			// build GA-tracking code
@@ -766,6 +756,70 @@ class FrontendHeader extends FrontendBaseObject
 			// add the locale property
 			$this->addOpenGraphData('locale', $locale);
 		}
+	}
+
+
+	/**
+	 * Parse the meta and link-tags
+	 *
+	 * @return	void
+	 */
+	private function parseMetaAndLinks()
+	{
+		// build meta
+		$meta = '';
+
+		// loop meta
+		foreach($this->meta as $attributes)
+		{
+			// start html
+			$meta .= '<meta ';
+
+			// add attributes
+			foreach($attributes as $key => $value) $meta .= $key . '="' . $value . '" ';
+
+			// remove last space
+			$meta = trim($meta);
+
+			// close html
+			$meta .= '>' . "\n";
+		}
+
+		// build link
+		$link = '';
+
+		// loop links
+		foreach($this->links as $attributes)
+		{
+			// start html
+			$link .= '<link ';
+
+			// add attributes
+			foreach($attributes as $key => $value) $link .= $key . '="' . $value . '" ';
+
+			// remove last space
+			$link = trim($link);
+
+			// close html
+			$link .= '>' . "\n";
+		}
+
+		// assign meta
+		$this->tpl->assign('meta', $meta . "\n" . $link);
+		$this->tpl->assign('metaCustom', $this->getMetaCustom());
+	}
+
+
+	/**
+	 * Parse SEO specific data
+	 *
+	 * @return	void
+	 */
+	private function parseSeo()
+	{
+		// noodp, noydir
+		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
+		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
 	}
 
 
