@@ -1,4 +1,5 @@
 2.6.13 (xxxx-xx-xx)
+--
 Improvements:
 
 * Locale: make it possible to browse translations for all modules at once.
