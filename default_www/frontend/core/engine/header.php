@@ -573,8 +573,14 @@ class FrontendHeader extends FrontendBaseObject
 		// assign page title
 		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
 
-		// facebook admins given?
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
+		// parse Facebook
+		$this->parseFacebook();
+
+
+
+
+
+
 
 		// in debugmode we don't want our pages to be indexed.
 		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
@@ -713,6 +719,53 @@ class FrontendHeader extends FrontendBaseObject
 
 		// assign site wide html
 		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
+	}
+
+
+	/**
+	 * Parse Facebook related header-data
+	 *
+	 * @return	void
+	 */
+	private function parseFacebook()
+	{
+		$parseFacebook = false;
+
+		// facebook admins given?
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			$this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
+			$parseFacebook = true;
+		}
+
+		// if no facebook admin is given but an app is configured we use the application as an admin
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) == '' && FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
+		{
+			$this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_app_id', null)), true, array('property'));
+			$parseFacebook = true;
+		}
+
+		// should we add extra open-graph data?
+		if($parseFacebook)
+		{
+			// build correct locale
+			switch(FRONTEND_LANGUAGE)
+			{
+				case 'en':
+					$locale = 'en_US';
+				break;
+
+				case 'nl':
+					$locale = 'nl_BE';
+				break;
+
+				default:
+					$locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+			}
+
+			// add the locale property
+			$this->addOpenGraphData('locale', $locale);
+		}
 	}
 
 
