@@ -29,6 +29,7 @@ Improvements:
 
 * Locale: make it possible to browse translations for all modules at once.
 * Mailmotor: email address can't be edited; change code to reflect this.
+* Core: Facebook open Graph-tags will now be parsed when an app OR admin-id is configured.
 
 Bugfixes:
 

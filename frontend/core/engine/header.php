@@ -570,19 +570,202 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function parse()
 	{
-		// assign page title
-		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
+		// parse Facebook
+		$this->parseFacebook();
 
-		// facebook admins given?
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
+		// parse SEO
+		$this->parseSeo();
 
 		// in debugmode we don't want our pages to be indexed.
 		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 
-		// noodp, noydir
-		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
-		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
+		// parse meta tags
+		$this->parseMetaAndLinks();
 
+		// parse CSS
+		$this->parseCss();
+
+		// parse JS
+		$this->parseJavascript();
+
+		// parse custom header HTML and Google Analytics
+		$this->parseCustomHeaderHTMLAndGoogleAnalytics();
+
+		// assign page title
+		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
+
+		// assign site title
+		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+	}
+
+
+	/**
+	 * Parse the CSS-files
+	 *
+	 * @return	void
+	 */
+	private function parseCss()
+	{
+		// init var
+		$cssFiles = null;
+		$existingCSSFiles = $this->getCSSFiles();
+
+		// if there aren't any JS-files added we don't need to do something
+		if(!empty($existingCSSFiles))
+		{
+			foreach($existingCSSFiles as $file)
+			{
+				// add lastmodified time
+				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+
+				// add
+				$cssFiles[] = $file;
+			}
+		}
+
+		// css-files
+		$this->tpl->assign('cssFiles', $cssFiles);
+	}
+
+
+	/**
+	 * Parse Google Analytics
+	 *
+	 * @return	void
+	 */
+	private function parseCustomHeaderHTMLAndGoogleAnalytics()
+	{
+		// get the data
+		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
+		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
+		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
+
+		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
+		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
+		{
+			// build GA-tracking code
+			$trackingCode = '<script type="text/javascript">
+								var _gaq = [[\'_setAccount\', \'' . $webPropertyId . '\'],
+											[\'_setDomainName\', \'none\'],
+											[\'_trackPageview\'],
+											[\'_trackPageLoadTime\']];
+
+								(function(d, t) {
+									var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+									g.async = true;
+									g.src = \'//www.google-analytics.com/ga.js\';
+									s.parentNode.insertBefore(g, s);
+								}(document, \'script\'));
+							</script>';
+
+			// add to the header
+			$siteHTMLHeader .= "\n" . $trackingCode;
+		}
+
+		// assign site wide html
+		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
+	}
+
+
+	/**
+	 * Parse Facebook related header-data
+	 *
+	 * @return	void
+	 */
+	private function parseFacebook()
+	{
+		$parseFacebook = false;
+
+		// facebook admins given?
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			$this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
+			$parseFacebook = true;
+		}
+
+		// if no facebook admin is given but an app is configured we use the application as an admin
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) == '' && FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
+		{
+			$this->addMetaData(array('property' => 'fb:app_id', 'content' => FrontendModel::getModuleSetting('core', 'facebook_app_id', null)), true, array('property'));
+			$parseFacebook = true;
+		}
+
+		// should we add extra open-graph data?
+		if($parseFacebook)
+		{
+			// build correct locale
+			switch(FRONTEND_LANGUAGE)
+			{
+				case 'en':
+					$locale = 'en_US';
+				break;
+
+				case 'nl':
+					$locale = 'nl_BE';
+				break;
+
+				default:
+					$locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+			}
+
+			// add the locale property
+			$this->addOpenGraphData('locale', $locale);
+		}
+	}
+
+
+	/**
+	 * Parse the JS-files
+	 *
+	 * @return	void
+	 */
+	private function parseJavascript()
+	{
+		// init var
+		$javascriptFiles = null;
+		$existingJavascriptFiles = $this->getJavascriptFiles();
+
+		// if there aren't any JS-files added we don't need to do something
+		if(!empty($existingJavascriptFiles))
+		{
+			// some files should be cached, even if we don't want cached (mostly libraries)
+			$ignoreCache = array('/frontend/core/js/jquery/jquery.js',
+									'/frontend/core/js/jquery/jquery.ui.js');
+
+			// loop the JS-files
+			foreach($existingJavascriptFiles as $file)
+			{
+				// some files shouldn't be uncachable
+				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => $file['file']);
+
+				// make the file uncachable
+				else
+				{
+					// if the file is processed by PHP we don't want any caching
+					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] . '&amp;m=' . time());
+
+					// add lastmodified time
+					else
+					{
+						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
+					}
+				}
+			}
+		}
+
+		// js-files
+		$this->tpl->assign('javascriptFiles', $javascriptFiles);
+	}
+
+
+	/**
+	 * Parse the meta and link-tags
+	 *
+	 * @return	void
+	 */
+	private function parseMetaAndLinks()
+	{
 		// build meta
 		$meta = '';
 
@@ -624,95 +807,19 @@ class FrontendHeader extends FrontendBaseObject
 		// assign meta
 		$this->tpl->assign('meta', $meta . "\n" . $link);
 		$this->tpl->assign('metaCustom', $this->getMetaCustom());
+	}
 
-		// init var
-		$cssFiles = null;
-		$existingCSSFiles = $this->getCSSFiles();
 
-		// if there aren't any JS-files added we don't need to do something
-		if(!empty($existingCSSFiles))
-		{
-			foreach($existingCSSFiles as $file)
-			{
-				// add lastmodified time
-				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
-
-				// add
-				$cssFiles[] = $file;
-			}
-		}
-
-		// css-files
-		$this->tpl->assign('cssFiles', $cssFiles);
-
-		// init var
-		$javascriptFiles = null;
-		$existingJavascriptFiles = $this->getJavascriptFiles();
-
-		// if there aren't any JS-files added we don't need to do something
-		if(!empty($existingJavascriptFiles))
-		{
-			// some files should be cached, even if we don't want cached (mostly libraries)
-			$ignoreCache = array('/frontend/core/js/jquery/jquery.js',
-									'/frontend/core/js/jquery/jquery.ui.js');
-
-			// loop the JS-files
-			foreach($existingJavascriptFiles as $file)
-			{
-				// some files shouldn't be uncachable
-				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => $file['file']);
-
-				// make the file uncachable
-				else
-				{
-					// if the file is processed by PHP we don't want any caching
-					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] . '&amp;m=' . time());
-
-					// add lastmodified time
-					else
-					{
-						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
-						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
-					}
-				}
-			}
-		}
-
-		// js-files
-		$this->tpl->assign('javascriptFiles', $javascriptFiles);
-
-		// assign site title
-		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
-
-		// get the data
-		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
-		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
-		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
-
-		// search for the webpropertyId, if not found we should build the GA-code
-		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
-		{
-			// build GA-tracking code
-			$trackingCode = '<script type="text/javascript">
-								var _gaq = [[\'_setAccount\', \'' . $webPropertyId . '\'],
-											[\'_setDomainName\', \'none\'],
-											[\'_trackPageview\'],
-											[\'_trackPageLoadTime\']];
-
-								(function(d, t) {
-									var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-									g.async = true;
-									g.src = \'//www.google-analytics.com/ga.js\';
-									s.parentNode.insertBefore(g, s);
-								}(document, \'script\'));
-							</script>';
-
-			// add to the header
-			$siteHTMLHeader .= "\n" . $trackingCode;
-		}
-
-		// assign site wide html
-		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
+	/**
+	 * Parse SEO specific data
+	 *
+	 * @return	void
+	 */
+	private function parseSeo()
+	{
+		// noodp, noydir
+		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
+		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
 	}
 
 
