@@ -1,10 +1,10 @@
-# follow symlinks & disallow directory listing 
+# follow symlinks & disallow directory listing
+# note: your hosting company might not allow these directives to be set. In that case,
+# you should either find another hosting company (advised) or remove the line below.
 Options +FollowSymlinks -Indexes
 
-# file etags (used when comparing local cached file to server file
+# file etags (used when comparing local cached file to server file)
 FileETag MTime Size
-# use setting below when using a cluster of servers for your files
-# FileETag None
 
 <IfModule mod_rewrite.c>
 	# nice urls
