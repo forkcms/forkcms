@@ -99,6 +99,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 				// escape the double quotes
 				$dataGrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
+				if($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
 
 				// set header labels
 				$dataGrid->setHeaderLabels(array($lang => ucfirst(BL::getMessage(strtoupper($lang)))));

@@ -11,8 +11,8 @@
         <translation language="en"><![CDATA[This is an invalid XML-file.]]></translation>
       </item>
       <item type="error" name="InvalidActionValue">
-        <translation language="nl"><![CDATA[Enkel alfanumerieke karakters (geen hoofdletters), - en _ zijn toegestaan.]]></translation>
-        <translation language="en"><![CDATA[Only alphanumeric characters, - and _ are allowed.]]></translation>
+        <translation language="nl"><![CDATA[De actienaam bevat ongeldige karakters.]]></translation>
+        <translation language="en"><![CDATA[The action name contains invalid characters.]]></translation>
       </item>
       <item type="error" name="ModuleHasToBeCore">
         <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
