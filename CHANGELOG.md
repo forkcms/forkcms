@@ -34,6 +34,7 @@ Improvements:
 Bugfixes:
 
 * Content Blocks: some backend functions didn't take into account the current working language.
+* Content Blocks: exclude invalid templates.
 
 
 2.6.12 (2011-10-11)
