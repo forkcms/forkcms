@@ -308,7 +308,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		if($this->isSubmitted() && isset($data[$this->attributes['name']]))
 		{
 			// option groups
-			if($this->optionGroups) $values = $data[$this->attributes['name']];
+			if(isset($this->optionGroups[$this->selected])) $values = $data[$this->attributes['name']];
 
 			// no option groups
 			else
@@ -485,39 +485,40 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			$output .= '>' . $this->defaultElement[0] . "</option>\r\n";
 		}
 
-		// has option groups
-		if($this->optionGroups)
+		// loop all values
+		foreach($this->values as $label => $value)
 		{
-			foreach($this->values as $groupName => $group)
+			// value is an optgroup?
+			if($this->optionGroups[$label])
 			{
 				// create optgroup
-				$output .= "\t" . '<optgroup label="' . $groupName . '">' . "\n";
+				$output .= "\t" . '<optgroup label="' . $label . '">' . "\n";
 
-				// loop valuesgoo
-				foreach($group as $value => $label)
+				// loop value
+				foreach($value as $key => $option)
 				{
 					// create option
-					$output .= "\t\t" . '<option value="' . $value . '"';
+					$output .= "\t\t" . '<option value="' . $key . '"';
 
 					// multiple
 					if(!$this->single)
 					{
 						// if the value is within the selected items array
-						if(is_array($selected) && count($selected) != 0 && in_array($value, $selected)) $output .= ' selected="selected"';
+						if(is_array($selected) && count($selected) != 0 && in_array($key, $selected)) $output .= ' selected="selected"';
 					}
 
 					// single
 					else
 					{
 						// if the current value is equal to the submitted value
-						if($value == $selected) $output .= ' selected="selected"';
+						if($key == $selected) $output .= ' selected="selected"';
 					}
 
 					// add custom attributes
-					if(isset($this->optionAttributes[(string) $value]))
+					if(isset($this->optionAttributes[(string) $key]))
 					{
 						// loop each attribute
-						foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
+						foreach($this->optionAttributes[(string) $key] as $attrKey => $attrValue)
 						{
 							// add to the output
 							$output .= ' ' . $attrKey . '="' . $attrValue . '"';
@@ -525,42 +526,38 @@ class SpoonFormDropdown extends SpoonFormAttributes
 					}
 
 					// end option
-					$output .= ">$label</option>\r\n";
+					$output .= ">$option</option>\r\n";
 				}
 
 				// end optgroup
 				$output .= "\t" . '</optgroup>' . "\n";
 			}
-		}
 
-		// regular dropdown
-		else
-		{
-			// loop values
-			foreach($this->values as $value => $label)
+			// no optgroup?
+			else
 			{
 				// create option
-				$output .= "\t" . '<option value="' . $value . '"';
+				$output .= "\t" . '<option value="' . $label . '"';
 
 				// multiple
 				if(!$this->single)
 				{
 					// if the value is within the selected items array
-					if(is_array($selected) && count($selected) != 0 && in_array($value, $selected)) $output .= ' selected="selected"';
+					if(is_array($selected) && count($selected) != 0 && in_array($label, $selected)) $output .= ' selected="selected"';
 				}
 
 				// single
 				else
 				{
 					// if the current value is equal to the submitted value
-					if($this->getSelected() !== null && $value == $selected) $output .= ' selected="selected"';
+					if($this->getSelected() !== null && $label == $selected) $output .= ' selected="selected"';
 				}
 
 				// add custom attributes
-				if(isset($this->optionAttributes[(string) $value]))
+				if(isset($this->optionAttributes[(string) $label]))
 				{
 					// loop each attribute
-					foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
+					foreach($this->optionAttributes[(string) $label] as $attrKey => $attrValue)
 					{
 						// add to the output
 						$output .= ' ' . $attrKey . '="' . $attrValue . '"';
@@ -568,7 +565,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 				}
 
 				// end option
-				$output .= ">$label</option>\r\n";
+				$output .= ">$value</option>\r\n";
 			}
 		}
 
@@ -696,38 +693,31 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 */
 	private function setValues(array $values = null)
 	{
-		// has not items
+		// has no items
 		if(count($values) == 0) $this->setDefaultElement('');
 
 		// at least 1 item
 		else
 		{
-			// check the first element
-			foreach($values as $value)
+			// check all elements
+			foreach($values as $label => $value)
 			{
 				// dropdownfield with optgroups?
-				$this->optionGroups = (is_array($value)) ? true : false;
+				$this->optionGroups[$label] = (is_array($value)) ? true : false;
 
-				// break the loop
-				break;
-			}
-
-			// has option groups
-			if($this->optionGroups)
-			{
-				// loop each group
-				foreach($values as $groupName => $options)
+				// is option group
+				if($this->optionGroups[$label])
 				{
-					// loop each option
-					foreach($options as $key => $value) $this->values[$groupName][$key] = $value;
+					// loop value and assign its option
+					foreach($value as $key => $option) $this->values[$label][$key] = $option;
 				}
-			}
 
-			// no option groups
-			else
-			{
-				// has items
-				foreach($values as $label => $value) $this->values[$label] = $value;
+				// no option group
+				else
+				{
+					// assign its value
+					$this->values[$label] = $value;
+				}
 			}
 		}
 	}
