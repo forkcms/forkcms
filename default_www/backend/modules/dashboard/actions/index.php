@@ -53,6 +53,16 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		// get user sequence
 		$userSequence = BackendAuthentication::getUser()->getSetting('dashboard_sequence');
 
+		// user sequence does not exist?
+		if(!isset($userSequence))
+		{
+			// get group ID of user
+			$groupId = BackendAuthentication::getUser()->getGroupId();
+
+			// get group preset
+			$userSequence = BackendGroupsModel::getSetting($groupId, 'dashboard_sequence');
+		}
+
 		// loop all modules
 		foreach($modules as $module)
 		{
@@ -90,6 +100,12 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 							require_once $pathName . '/engine/model.php';
 						}
 
+						// present?
+						$present = (isset($userSequence[$module][$widgetName]['present'])) ? $userSequence[$module][$widgetName]['present'] : false;
+
+						// if not present, continue
+						if(!$present) continue;
+
 						// create instance
 						$instance = new $className();
 
@@ -114,8 +130,8 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// build item
 						$item = array('template' => $templatePath, 'module' => $module, 'widget' => $widgetName, 'title' => $title, 'hidden' => $hidden);
 
-						// add on new position
-						if($position === null) $this->widgets[$column][] = $item;
+						// add on new position if no position is set or if the position is already used
+						if($position === null || isset($this->widgets[$column][$position])) $this->widgets[$column][] = $item;
 
 						// add on requested position
 						else $this->widgets[$column][$position] = $item;

@@ -28,7 +28,7 @@
 
 /* Hide header links */
 
-#widgetAnalyticsTrafficSources .box .box h3 a, #widgetAnalyticsTrafficSources .box .box h4 a, #widgetAnalyticsTrafficSources .datagridHolder .tableHeading h3 a {
+#widgetAnalyticsTrafficSources .box .box h3 a, #widgetAnalyticsTrafficSources .box .box h4 a, #widgetAnalyticsTrafficSources .dataGridHolder .tableHeading h3 a {
 	color: #000 !important;
 	border: 0; 
 }
@@ -57,7 +57,7 @@
 	padding: 12px 0 6px 0;
 }
 
-#tabAnalyticsReferrers .datagridHolder, #tabAnalyticsReferrers .datagrid tr td, #tabAnalyticsKeywords .datagridHolder, #tabAnalyticsKeywords .datagrid tr td {
+#tabAnalyticsReferrers .dataGridHolder, #tabAnalyticsReferrers .dataGrid tr td, #tabAnalyticsKeywords .dataGridHolder, #tabAnalyticsKeywords .dataGrid tr td {
 	border: 0;
 }
 

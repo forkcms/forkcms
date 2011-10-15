@@ -1036,6 +1036,14 @@ a.linkedImage {
 .colOverflow { overflow: hidden; }
 
 /*
+	jQuery UI
+*/
+
+.ui-autocomplete {
+	z-index: 999 !important;
+}
+
+/*
 	Forms
 */
 

@@ -65,7 +65,7 @@ class BackendContentBlocksModel
 		$db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', array($item['extra_id']));
 
 		// delete all records
-		$db->delete('content_blocks', 'id = ?', $id);
+		$db->delete('content_blocks', 'id = ? AND i.language = ?', array($id, BL::getWorkingLanguage()));
 	}
 
 
@@ -84,14 +84,14 @@ class BackendContentBlocksModel
 		// if the item should also be active, there should be at least one row to return true
 		if((bool) $activeOnly) return (bool) $db->getVar('SELECT COUNT(i.id)
 															FROM content_blocks AS i
-															WHERE i.id = ? AND i.status = ?',
-															array((int) $id, 'active'));
+															WHERE i.id = ? AND i.status = ? AND i.language = ?',
+															array((int) $id, 'active', BL::getWorkingLanguage()));
 
 		// fallback, this doesn't take the active status in account
 		return (bool) $db->getVar('SELECT COUNT(i.id)
 									FROM content_blocks AS i
-									WHERE i.revision_id = ?',
-									array((int) $id));
+									WHERE i.revision_id = ? AND i.language = ?',
+									array((int) $id, BL::getWorkingLanguage()));
 	}
 
 
@@ -105,9 +105,9 @@ class BackendContentBlocksModel
 	{
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM content_blocks AS i
-															WHERE i.id = ? AND i.status = ?
+															WHERE i.id = ? AND i.status = ? AND i.language = ?
 															LIMIT 1',
-															array((int) $id, 'active'));
+															array((int) $id, 'active', BL::getWorkingLanguage()));
 	}
 
 
@@ -118,7 +118,7 @@ class BackendContentBlocksModel
 	 */
 	public static function getMaximumId()
 	{
-		return (int) BackendModel::getDB()->getVar('SELECT MAX(i.id) FROM content_blocks AS i LIMIT 1');
+		return (int) BackendModel::getDB()->getVar('SELECT MAX(i.id) FROM content_blocks AS i WHERE i.language = ? LIMIT 1', array(BL::getWorkingLanguage()));
 	}
 
 
@@ -133,9 +133,9 @@ class BackendContentBlocksModel
 	{
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM content_blocks AS i
-															WHERE i.id = ? AND i.revision_id = ?
+															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
 															LIMIT 1',
-															array((int) $id, (int) $revisionId));
+															array((int) $id, (int) $revisionId, BL::getWorkingLanguage()));
 	}
 
 
@@ -147,13 +147,13 @@ class BackendContentBlocksModel
 	public static function getTemplates()
 	{
 		// fetch templates available in core
-		$templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
+		$templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets', '/.*?\.tpl/');
 
 		// fetch current active theme
 		$theme = BackendModel::getModuleSetting('core', 'theme', 'core');
 
 		// fetch theme templates if a theme is selected
-		if($theme != 'core') $templates = array_merge($templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets'));
+		if($theme != 'core') $templates = array_merge($templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets', '/.*?\.tpl/'));
 
 		// no duplicates (core templates will be overridden by theme templates) and sort alphabetically
 		$templates = array_unique($templates);

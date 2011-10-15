@@ -32,7 +32,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// fetch available templates
-		$this->getTemplates();
+		$this->templates = BackendContentBlocksModel::getTemplates();
 
 		// load the form
 		$this->loadForm();
@@ -40,22 +40,11 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
 		$this->display();
-	}
-
-
-	/**
-	 * Get available templates
-	 *
-	 * @return	void
-	 */
-	private function getTemplates()
-	{
-		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 
@@ -112,6 +101,9 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 
 				// insert the item
 				$item['revision_id'] = BackendContentBlocksModel::insert($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);

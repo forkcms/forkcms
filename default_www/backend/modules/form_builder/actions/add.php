@@ -27,7 +27,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -105,6 +105,9 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 
 				// insert the item
 				$id = BackendFormBuilderModel::insert($values);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
 
 				// set frontend locale
 				FL::setLocale(BL::getWorkingLanguage());

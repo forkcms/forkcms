@@ -243,5 +243,3 @@ class SpoonDatagridPaging implements iSpoonDatagridPaging
 		return ob_get_clean();
 	}
 }
-
-?>

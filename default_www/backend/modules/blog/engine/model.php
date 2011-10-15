@@ -184,10 +184,10 @@ class BackendBlogModel
 	 */
 	public static function deleteCategoryAllowed($id)
 	{
-		return (BackendModel::getDB()->getVar('SELECT COUNT(id)
-												FROM blog_posts AS i
-												WHERE i.category_id = ? AND i.language = ?',
-												array((int) $id, BL::getWorkingLanguage())) == 0);
+		return !(bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM blog_posts AS i
+														WHERE i.category_id = ? AND i.language = ? AND i.status = ?',
+														array((int) $id, BL::getWorkingLanguage(), 'active'));
 	}
 
 
@@ -310,8 +310,8 @@ class BackendBlogModel
 															m.url
 															FROM blog_posts AS i
 															INNER JOIN meta AS m ON m.id = i.meta_id
-															WHERE i.id = ? AND i.status = ? AND i.language = ?',
-															array((int) $id, 'active', BL::getWorkingLanguage()));
+															WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?',
+															array((int) $id, 'active', 'draft', BL::getWorkingLanguage()));
 	}
 
 
@@ -396,7 +396,7 @@ class BackendBlogModel
 		// we should include the count
 		if($includeCount)
 		{
-			return (array) $db->getPairs('SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
+			return (array) $db->getPairs('SELECT i.id, CONCAT(i.title, " (", COUNT(p.category_id) ,")") AS title
 															FROM blog_categories AS i
 															LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.language = p.language AND p.status = ?
 															WHERE i.language = ?
@@ -512,7 +512,7 @@ class BackendBlogModel
 																INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 																INNER JOIN meta AS m ON p.meta_id = m.id
 																WHERE i.status = ? AND p.status = ? AND i.language = ?
-																ORDER BY i.id DESC
+																ORDER BY i.created_on DESC
 																LIMIT ?',
 																array((string) $status, 'active', BL::getWorkingLanguage(), (int) $limit));
 
@@ -885,22 +885,32 @@ class BackendBlogModel
 		// create an array with an equal amount of questionmarks as ids provided
 		$idPlaceHolders = array_fill(0, count($ids), '?');
 
-		// get ids
-		$itemIds = (array) BackendModel::getDB()->getColumn('SELECT i.post_id
+		// get the items and their languages
+		$items = (array) BackendModel::getDB()->getPairs('SELECT i.post_id, i.language
 																FROM blog_comments AS i
-																WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
+																WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')', $ids, 'post_id');
 
-		// update record
-		BackendModel::getDB(true)->execute('UPDATE blog_comments
-											SET status = ?
-											WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
-											array_merge(array((string) $status), $ids));
+		// only proceed if there are items
+		if(!empty($items))
+		{
+			// get the ids
+			$itemIds = array_keys($items);
 
-		// recalculate the comment count
-		if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
+			// get the unique languages
+			$languages = array_unique(array_values($items));
 
-		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+			// update records
+			BackendModel::getDB(true)->execute('UPDATE blog_comments
+												SET status = ?
+												WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
+												array_merge(array((string) $status), $ids));
+
+			// recalculate the comment count
+			self::reCalculateCommentCount($itemIds);
+
+			// invalidate the cache for blog
+			foreach($languages as $language) BackendModel::invalidateFrontendCache('blog', $language);
+		}
 	}
 }
 

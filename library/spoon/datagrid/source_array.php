@@ -38,7 +38,6 @@ class SpoonDatagridSourceArray extends SpoonDatagridSource
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	array $array	The data.
 	 */
 	public function __construct(array $array)
@@ -120,13 +119,9 @@ class SpoonDatagridSourceArray extends SpoonDatagridSource
 
 	/**
 	 * Sets the number of results.
-	 *
-	 * @return	void
 	 */
 	private function setNumResults()
 	{
 		$this->numResults = (int) count($this->data);
 	}
 }
-
-?>

@@ -40,17 +40,17 @@ class BackendLocationIndex extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendLocationModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage()));
+		$this->dataGrid = new BackendDataGridDB(BackendLocationModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage()));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('address', 'title'), 'address');
-		$this->datagrid->setSortParameter('ASC');
+		$this->dataGrid->setSortingColumns(array('address', 'title'), 'address');
+		$this->dataGrid->setSortParameter('ASC');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
@@ -62,7 +62,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
 		// get settings
 		$settings = BackendModel::getModuleSettings();

@@ -53,5 +53,3 @@ class SpoonDatagridSource
 		return $this->numResults;
 	}
 }
-
-?>

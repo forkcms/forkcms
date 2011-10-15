@@ -29,21 +29,21 @@
 			color: #000;
 		}
 
-		.datagrid {
+		.dataGrid {
 			margin: 0 0 12px;
 			border-collapse: collapse;
 			width: 100%;
 		}
 
-			.datagrid td,
-			.datagrid th {
+			.dataGrid td,
+			.dataGrid th {
 				padding: 6px;
 				border: 1px solid #C2C2C2;
 				text-align: left;
 				font-size: 11px;
 			}
 
-			.datagrid .code {
+			.dataGrid .code {
 				font-family: Menlo, Monaco, "Courier New", Courier, monospace;
 			}
 

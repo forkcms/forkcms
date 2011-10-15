@@ -109,10 +109,13 @@
 						<li>{$chkActive} <label for="active">{$msgHelpActive}</label> {$chkActiveError}</li>
 						<li>{$chkApiAccess} <label for="api_access">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
 					</ul>
-					<p>
-						<label for="group">{$lblGroup|ucfirst}</label>
-						{$ddmGroup} {$ddmGroupError}
-					</p>
+					<p>{$lblGroups|ucfirst}</p>
+					<ul id="groupList" class="inputList">
+						{iteration:groups}
+							<li>{$groups.chkGroups} <label for="{$groups.id}">{$groups.label}</label></li>
+						{/iteration:groups}
+						{$chkGroupsError}
+					</ul>
 				</div>
 			</div>
 		</div>

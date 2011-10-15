@@ -45,6 +45,12 @@ class FaqInstall extends ModuleInstaller
 		// extras
 		$this->insertExtra('faq', 'block', 'Faq', 'index', null, 'N', 9001);
 		$this->insertExtra('faq', 'block', 'Category', 'category', null, 'N', 9002);
+
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
+		$this->setNavigation($navigationFaqId, 'Questions', 'faq/index', array('faq/add', 'faq/edit'));
+		$this->setNavigation($navigationFaqId, 'Categories', 'faq/categories', array('faq/add_category', 'faq/edit_category'));
 	}
 }
 

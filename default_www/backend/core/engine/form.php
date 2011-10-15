@@ -270,8 +270,11 @@ class BackendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputFile';
 		$classError = ($classError !== null) ? (string) $classError : 'inputFileError';
 
-		// create and return a filefield
-		return parent::addFile($name, $class, $classError);
+		// add element
+		$this->add(new BackendFormFile($name, $class, $classError));
+
+		// return element
+		return $this->getField($name);
 	}
 
 
@@ -290,8 +293,11 @@ class BackendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputFile inputImage';
 		$classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
 
-		// create and return an imagefield
-		return parent::addImage($name, $class, $classError);
+		// add element
+		$this->add(new BackendFormImage($name, $class, $classError));
+
+		// return element
+		return $this->getField($name);
 	}
 
 
@@ -519,7 +525,7 @@ class BackendForm extends SpoonForm
 				{
 					$value .= "\t" . '<p>' . "\n";
 					$value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' . SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
-					$value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) . '} <span class="helpTxt">{$msgHelpImageField}</span> {$file' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+					$value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) . '} {$file' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
 					$value .= "\t" . '</p>' . "\n\n";
 				}
 
@@ -723,6 +729,121 @@ class BackendFormDate extends SpoonFormDate
 		 * and truth will out!
 		 */
 		return true;
+	}
+}
+
+
+/**
+ * This is our extended version of SpoonFormFile
+ *
+ * @package		backend
+ * @subpackage	core
+ *
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @since		2.6
+ */
+class BackendFormImage extends SpoonFormImage
+{
+	/**
+	 * Parses the html for this filefield.
+	 *
+	 * @return	string
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
+	 */
+	public function parse(SpoonTemplate $template = null)
+	{
+		// get upload_max_filesize
+		$uploadMaxFilesize = ini_get('upload_max_filesize');
+		if($uploadMaxFilesize === false) $uploadMaxFilesize = 0;
+
+		// reformat if defined as an integer
+		if(SpoonFilter::isInteger($uploadMaxFilesize)) $uploadMaxFilesize = $uploadMaxFilesize / 1024 . 'MB';
+
+		// reformat if specified in kB
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
+
+		// reformat if specified in MB
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') $uploadMaxFilesize .= 'B';
+
+		// reformat if specified in GB
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'G') $uploadMaxFilesize .= 'B';
+
+		// name is required
+		if($this->attributes['name'] == '') throw new SpoonFormException('A name is required for a file field. Please provide a name.');
+
+		// start html generation
+		$output = '<input type="file"';
+
+		// add attributes
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
+		$output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpImageFieldWithMaxFileSize', 'core'), $uploadMaxFilesize) . '</span>';
+
+		// parse to template
+		if($template !== null)
+		{
+			$template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
+			$template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
+		}
+
+		return $output;
+	}
+}
+
+
+/**
+ * This is our extended version of SpoonFormFile
+ *
+ * @package		backend
+ * @subpackage	core
+ *
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @since		2.6
+ */
+class BackendFormFile extends SpoonFormFile
+{
+	/**
+	 * Parses the html for this filefield.
+	 *
+	 * @return	string
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
+	 */
+	public function parse(SpoonTemplate $template = null)
+	{
+		// get upload_max_filesize
+		$uploadMaxFilesize = ini_get('upload_max_filesize');
+		if($uploadMaxFilesize === false) $uploadMaxFilesize = 0;
+
+		// reformat if defined as an integer
+		if(SpoonFilter::isInteger($uploadMaxFilesize)) $uploadMaxFilesize = $uploadMaxFilesize / 1024 . 'MB';
+
+		// reformat if specified in kB
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'K') $uploadMaxFilesize = substr($uploadMaxFilesize, 0, -1) . 'kB';
+
+		// reformat if specified in MB
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'M') $uploadMaxFilesize .= 'B';
+
+		// reformat if specified in GB
+		if(strtoupper(substr($uploadMaxFilesize, -1, 1)) == 'G') $uploadMaxFilesize .= 'B';
+
+		// name is required
+		if($this->attributes['name'] == '') throw new SpoonFormException('A name is required for a file field. Please provide a name.');
+
+		// start html generation
+		$output = '<input type="file"';
+
+		// add attributes
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
+		if(isset($this->attributes['extension'])) $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpFileFieldWithMaxFileSize', 'core'), $this->attributes['extension'], $uploadMaxFilesize) . '</span>';
+		else $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpMaxFileSize'), $uploadMaxFilesize) . '</span>';
+
+		// parse to template
+		if($template !== null)
+		{
+			$template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
+			$template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
+		}
+
+		return $output;
 	}
 }
 

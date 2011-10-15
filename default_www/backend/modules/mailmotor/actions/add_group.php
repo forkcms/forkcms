@@ -99,6 +99,9 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 				// check if all default groups were set
 				BackendMailmotorModel::checkDefaultGroups();
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add_group', array('item' => $item));
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}

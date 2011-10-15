@@ -170,7 +170,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$defaultIndex = array_search($defaultValues, $values, true);
 					if($defaultIndex === false) $defaultIndex = null;
 
-					/// create element
+					// create element
 					$ddm = $this->frm->addDropdown($item['name'], $values, $defaultIndex);
 
 					// empty default element
@@ -189,7 +189,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					// rebuild values
 					foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
 
-					/// create element
+					// create element
 					$rbt = $this->frm->addRadiobutton($item['name'], $newValues, $defaultValues);
 
 					// get content
@@ -205,7 +205,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					// rebuild values
 					foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
 
-					/// create element
+					// create element
 					$chk = $this->frm->addMultiCheckbox($item['name'], $newValues, $defaultValues);
 
 					// get content
@@ -436,6 +436,9 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					// add email
 					FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $this->item['email'], $this->item['name']);
 				}
+
+				// trigger event
+				FrontendModel::triggerEvent('form_builder', 'after_submission', array('form_id' => $this->item['id'], 'data_id' => $dataId, 'data' => $data));
 
 				// store timestamp in session so we can block excesive usage
 				SpoonSession::set('formbuilder_' . $this->item['id'], time());

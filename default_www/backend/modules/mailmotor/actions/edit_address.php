@@ -71,7 +71,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse
 			$this->parse();
 
 			// display the page
@@ -162,6 +162,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('email', $this->email);
+		$this->frm->getField('email')->setAttribute('disabled', 'disabled');
 
 		// fetch groups for checkbox format
 		$checkboxGroups = BackendMailmotorModel::getGroupsForCheckboxes();
@@ -208,15 +209,8 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// shorten fields
-			$txtEmail = $this->frm->getField('email');
+			// get subscriptions
 			if(!empty($this->subscriptions)) $ddmGroups = $this->frm->getField('subscriptions');
-
-			// validate fields
-			if($txtEmail->isFilled(BL::err('EmailIsRequired')))
-			{
-				$txtEmail->isEmail(BL::err('EmailIsInvalid'));
-			}
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -271,6 +265,9 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 						BackendMailmotorCMHelper::subscribe($this->email, $group, $customFields);
 					}
 				}
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_address', array('item' => $this->record));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']);

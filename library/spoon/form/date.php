@@ -47,7 +47,6 @@ class SpoonFormDate extends SpoonFormInput
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	mixed[optional] $value			The initial value.
 	 * @param	string[optional] $mask			The mask to use.
@@ -385,7 +384,7 @@ class SpoonFormDate extends SpoonFormInput
 	/**
 	 * Set the input mask.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDate
 	 * @param	string[optional] $mask	The date-mask.
 	 */
 	public function setMask($mask = null)
@@ -417,13 +416,13 @@ class SpoonFormDate extends SpoonFormInput
 
 		// update value
 		if($this->defaultValue !== null) $this->setValue($this->defaultValue);
+		return $this;
 	}
 
 
 	/**
 	 * Set the value attribute for this date field.
 	 *
-	 * @return	void
 	 * @param	mixed $value		The new value.
 	 */
 	private function setValue($value)
@@ -431,5 +430,3 @@ class SpoonFormDate extends SpoonFormInput
 		$this->value = ($value === '' ? '' : date($this->mask, (int) $value));
 	}
 }
-
-?>

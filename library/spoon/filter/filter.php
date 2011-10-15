@@ -851,7 +851,7 @@ class SpoonFilter
 			// skip empty words
 			if($word == '') continue;
 
-			// if it is the first word and  we should use lowercase for the first word
+			// if it is the first word and we should use lowercase for the first word
 			if($i == 0 && $lcfirst) $word = $word;
 
 			// convert first letter to uppercase

@@ -18,7 +18,7 @@
 	padding: 12px 0 6px 0;
 }
 
-#tabMailmotorSubscriptions .datagridHolder, #tabMailmotorSubscriptions .datagrid tr td, #tabMailmotorUnsubscriptions .datagridHolder, #tabMailmotorUnsubscriptions .datagrid tr td, #tabMailmotorStatistics .datagridHolder, #tabMailmotorStatistics .datagrid tr td {
+#tabMailmotorSubscriptions .dataGridHolder, #tabMailmotorSubscriptions .dataGrid tr td, #tabMailmotorUnsubscriptions .dataGridHolder, #tabMailmotorUnsubscriptions .dataGrid tr td, #tabMailmotorStatistics .dataGridHolder, #tabMailmotorStatistics .dataGrid tr td {
 	border: 0;
 }
 

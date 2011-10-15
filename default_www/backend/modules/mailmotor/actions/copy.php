@@ -49,6 +49,9 @@ class BackendMailmotorCopy extends BackendBaseAction
 
 			// update groups for this mailing
 			BackendMailmotorModel::updateGroupsForMailing($newId, $groups);
+
+			// trigger event
+			BackendModel::triggerEvent($this->getModule(), 'after_copy_mailing', array('item' => $mailing));
 		}
 
 		// redirect

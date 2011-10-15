@@ -314,6 +314,43 @@ class BackendModel
 
 
 	/**
+	 * Generate a random string
+	 *
+	 * @return	string
+	 * @param	int[optional] $length			Length of random string.
+	 * @param	bool[optional] $numeric			Use numeric characters.
+	 * @param	bool[optional] $lowercase		Use alphanumeric lowercase characters.
+	 * @param	bool[optional] $uppercase		Use alphanumeric uppercase characters.
+	 * @param	bool[optional] $special			Use special characters.
+	 */
+	public static function generateRandomString($length = 15, $numeric = true, $lowercase = true, $uppercase = true, $special = true)
+	{
+		// init
+		$characters = '';
+		$string = '';
+
+		// possible characters
+		if($numeric) $characters .= '1234567890';
+		if($lowercase) $characters .= 'abcdefghijklmnopqrstuvwxyz';
+		if($uppercase) $characters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		if($special) $characters .= '-_.:;,?!@#&=)([]{}*+%$';
+
+		// get random characters
+		for($i = 0; $i < $length; $i++)
+		{
+			// random index
+			$index = mt_rand(0, strlen($characters));
+
+			// add character to salt
+			$string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
+		}
+
+		// cough up
+		return $string;
+	}
+
+
+	/**
 	 * Fetch the list of long date formats including examples of these formats.
 	 *
 	 * @return	array
@@ -803,6 +840,70 @@ class BackendModel
 
 
 	/**
+	 * Image Delete
+	 *
+	 * @return	void
+	 * @param	string $module					Module name.
+	 * @param	string $filename				Filename.
+	 * @param	string[optional] $subDirectory	Subdirectory.
+	 * @param	array[optional] $fileSizes		Possible file sizes.
+	 */
+	public static function imageDelete($module, $filename, $subDirectory = '', $fileSizes = null)
+	{
+		// get fileSizes var from model
+		if(empty($fileSizes))
+		{
+			$model = get_class_vars('Backend' . SpoonFilter::toCamelCase($module) . 'Model');
+			$fileSizes = $model['fileSizes'];
+		}
+
+		// loop all directories
+		foreach(array_keys($fileSizes) as $sizeDir) SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
+
+		// delete original
+		SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+	}
+
+
+	/**
+	 * Image Save
+	 *
+	 * @return	void
+	 * @param	SpoonFormImage $imageFile		ImageFile.
+	 * @param	string $module					Module name.
+	 * @param	string $filename				Filename.
+	 * @param	string[optional] $subDirectory	Subdirectory.
+	 * @param	array[optional] $fileSizes		Possible file sizes.
+	 */
+	public static function imageSave($imageFile, $module, $filename, $subDirectory = '', $fileSizes = null)
+	{
+		// get fileSizes var from model
+		if(empty($fileSizes))
+		{
+			$model = get_class_vars('Backend' . SpoonFilter::toCamelCase($module) . 'Model');
+			$fileSizes = $model['fileSizes'];
+		}
+
+		// loop all directories and create
+		foreach($fileSizes as $sizeDir => $size)
+		{
+			// set parameters
+			$filepath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+			$width = $size['width'];
+			$height = $size['height'];
+			$allowEnlargement = (empty($size['allowEnlargement']) ? null : $size['allowEnlargement']);
+			$forceOriginalAspectRatio = (empty($size['forceOriginalAspectRatio']) ? null : $size['forceOriginalAspectRatio']);
+
+			// create
+			$imageFile->createThumbnail($filepath, $width, $height, $allowEnlargement, $forceOriginalAspectRatio);
+		}
+
+		// save original
+		$imageFile->moveFile(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+	}
+
+
+	/**
 	 * Invalidate cache
 	 *
 	 * @return	void
@@ -991,6 +1092,95 @@ class BackendModel
 
 
 	/**
+	 * Start processing the hooks
+	 *
+	 * @return	void
+	 */
+	public static function startProcessingHooks()
+	{
+		// is the queue already running?
+		if(SpoonFile::exists(BACKEND_CACHE_PATH . '/hooks/pid'))
+		{
+			// get the pid
+			$pid = trim(SpoonFile::getContent(BACKEND_CACHE_PATH . '/hooks/pid'));
+
+			// running on windows?
+			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
+			{
+				// get output
+				$output = @shell_exec('tasklist.exe /FO LIST /FI "PID eq ' . $pid . '"');
+
+				// validate output
+				if($output == '' || $output === false)
+				{
+					// delete the pid file
+					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
+
+			// Mac
+			elseif(strtolower(substr(php_uname('s'), 0, 6)) == 'darwin')
+			{
+				// get output
+				$output = @posix_getsid($pid);
+
+				// validate output
+				if($output === false)
+				{
+					// delete the pid file
+					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
+
+			// UNIX
+			else
+			{
+				// check if the process is still running, by checking the proc folder
+				if(!SpoonFile::exists('/proc/' . $pid))
+				{
+					// delete the pid file
+					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+				}
+
+				// already running
+				else return true;
+			}
+		}
+
+		// init var
+		$parts = parse_url(SITE_URL);
+		$errNo = '';
+		$errStr = '';
+		$defaultPort = 80;
+		if($parts['scheme'] == 'https') $defaultPort = 433;
+
+		// open the socket
+		$socket = fsockopen($parts['host'], (isset($parts['port'])) ? $parts['port'] : $defaultPort, $errNo, $errStr, 1);
+
+		// build the request
+		$request = 'GET /backend/cronjob.php?module=core&action=process_queued_hooks HTTP/1.1' . "\r\n";
+		$request .= 'Host: ' . $parts['host'] . "\r\n";
+		$request .= 'Content-Length: 0' . "\r\n\r\n";
+		$request .= 'Connection: Close' . "\r\n\r\n";
+
+		// send the request
+		fwrite($socket, $request);
+
+		// close the socket
+		fclose($socket);
+
+		// return
+		return true;
+	}
+
+
+	/**
 	 * Submit ham, this call is intended for the marking of false positives, things that were incorrectly marked as spam.
 	 *
 	 * @return	bool						If everything went fine true will be returned, otherwise an exception will be triggered.
@@ -1091,6 +1281,121 @@ class BackendModel
 
 		// when everything fails
 		return false;
+	}
+
+
+	/**
+	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
+	 *
+	 * @return	void
+	 * @param	string $eventModule		The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	string $module			The module that subsribes to the event.
+	 * @param	mixed $callback			The callback that should be executed when the event is triggered.
+	 */
+	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
+	{
+		// validate
+		if(!is_callable($callback)) throw new BackendException('Invalid callback!');
+
+		// build record
+		$item['event_module'] = (string) $eventModule;
+		$item['event_name'] = (string) $eventName;
+		$item['module'] = (string) $module;
+		$item['callback'] = serialize($callback);
+		$item['created_on'] = BackendModel::getUTCDate();
+
+		// get db
+		$db = self::getDB(true);
+
+		// update if already existing
+		if((int) $db->getVar('SELECT COUNT(*)
+									FROM hooks_subscriptions AS i
+									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
+									array($eventModule, $eventName, $module)) > 0)
+		{
+			// update
+			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
+		}
+
+		// insert
+		else $db->insert('hooks_subscriptions', $item);
+	}
+
+
+	/**
+	 * Trigger an event
+	 *
+	 * @return	void
+	 * @param	string $module			The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	mixed[optional] $data	The data that should be send to subscribers.
+	 */
+	public static function triggerEvent($module, $eventName, $data = null)
+	{
+		// redefine
+		$module = (string) $module;
+		$eventName = (string) $eventName;
+
+		// create log instance
+		$log = new SpoonLog('custom', PATH_WWW . '/backend/cache/logs/events');
+
+		// logging when we are in debugmode
+		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
+
+		// get all items that subscribe to this event
+		$subscriptions = (array) self::getDB()->getRecords('SELECT i.module, i.callback
+															FROM hooks_subscriptions AS i
+															WHERE i.event_module = ? AND i.event_name = ?',
+															array($module, $eventName));
+
+		// any subscriptions?
+		if(!empty($subscriptions))
+		{
+			// init var
+			$queuedItems = array();
+
+			// loop items
+			foreach($subscriptions as $subscription)
+			{
+				// build record
+				$item['module'] = $subscription['module'];
+				$item['callback'] = $subscription['callback'];
+				$item['data'] = serialize($data);
+				$item['status'] = 'queued';
+				$item['created_on'] = BackendModel::getUTCDate();
+
+				// add
+				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
+
+				// logging when we are in debugmode
+				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subcribed to event (' . $module . '/' . $eventName . ').');
+			}
+
+			// start processing
+			self::startProcessingHooks();
+		}
+	}
+
+
+	/**
+	 * Unsubscribe from an event
+	 *
+	 * @return	void
+	 * @param	string $eventModule		The module that triggers the event.
+	 * @param	string $eventName		The name of the event.
+	 * @param	string $module			The module that subsribes to the event.
+	 */
+	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
+	{
+		// redefine
+		$eventModule = (string) $eventModule;
+		$eventName = (string) $eventName;
+		$module = (string) $module;
+
+		// get db
+		self::getDB(true)->delete('hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
+									array($eventModule, $eventName, $module));
 	}
 }
 

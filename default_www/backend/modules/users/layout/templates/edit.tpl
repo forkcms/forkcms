@@ -37,7 +37,7 @@
 	<div id="tabs" class="tabs">
 		<ul>
 			<li><a href="#tabProfile">{$lblProfile|ucfirst}</a></li>
-			<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>
+			{option:allowPasswordEdit}<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>{/option:allowPasswordEdit}
 			<li><a href="#tabInterface">{$lblInterface|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 		</ul>
@@ -100,6 +100,7 @@
 			</div>
 		</div>
 
+		{option:allowPasswordEdit}
 		<div id="tabPassword">
 			<div class="subtleBox">
 				<div class="heading">
@@ -130,6 +131,7 @@
 				</div>
 			</div>
 		</div>
+		{/option:allowPasswordEdit}
 
 		<div id="tabPermissions">
 			<div class="subtleBox">
@@ -142,10 +144,13 @@
 						<li>{$chkActive} <label for="active">{$msgHelpActive}</label> {$chkActiveError}</li>
 						<li>{$chkApiAccess} <label for="apiAccess">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
 					</ul>
-					<p>
-						<label for="group">{$lblGroup|ucfirst}</label>
-						{$ddmGroup} {$ddmGroupError}
-					</p>
+					<p>{$lblGroups|ucfirst}</p>
+					<ul id="groupList" class="inputList">
+						{iteration:groups}
+							<li>{$groups.chkGroups} <label for="{$groups.id}">{$groups.label}</label></li>
+						{/iteration:groups}
+						{$chkGroupsError}
+					</ul>
 				</div>
 			</div>
 		</div>

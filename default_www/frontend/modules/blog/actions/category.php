@@ -113,8 +113,8 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		// add RSS-feed
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true);
 
 		// add into breadcrumb
 		$this->breadcrumb->addElement(ucfirst(FL::lbl('Category')));
@@ -123,6 +123,10 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		// set pageTitle
 		$this->header->setPageTitle(ucfirst(FL::lbl('Category')));
 		$this->header->setPageTitle($this->category['label']);
+
+		// advanced SEO-attributes
+		if(isset($this->category['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->category['meta_data']['seo_index']));
+		if(isset($this->category['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->category['meta_data']['seo_follow']));
 
 		// assign category
 		$this->tpl->assign('category', $this->category);

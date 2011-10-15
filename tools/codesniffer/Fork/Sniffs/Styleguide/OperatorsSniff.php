@@ -10,8 +10,16 @@ class Fork_Sniffs_Styleguide_OperatorsSniff implements PHP_CodeSniffer_Sniff
 {
 	public function register()
 	{
-		// register on (array), (bool), ...
-		return array(T_BOOLEAN_AND, T_BOOLEAN_OR, T_INSTANCEOF, T_IS_EQUAL, T_IS_GREATER_OR_EQUAL, T_IS_IDENTICAL, T_IS_NOT_EQUAL, T_IS_NOT_IDENTICAL, T_IS_SMALLER_OR_EQUAL, T_LOGICAL_AND, T_LOGICAL_OR, T_LOGICAL_XOR, T_DEC, T_INC);
+		// register on operators
+		return array(
+			T_LOGICAL_OR, T_LOGICAL_XOR,
+			T_BOOLEAN_AND, T_BOOLEAN_OR,
+			T_INSTANCEOF,
+			T_IS_EQUAL, T_IS_GREATER_OR_EQUAL, T_IS_IDENTICAL, T_IS_NOT_EQUAL, T_IS_NOT_IDENTICAL, T_IS_SMALLER_OR_EQUAL, T_OR_EQUAL, T_AND_EQUAL, T_PLUS_EQUAL, T_SL_EQUAL, T_SR_EQUAL, T_XOR_EQUAL, T_DIV_EQUAL, T_MINUS_EQUAL, T_MOD_EQUAL, T_MUL_EQUAL,
+			T_SL, T_SR,
+			T_DEC, T_INC,
+			T_PLUS, T_MINUS, T_MULTIPLY, T_DIVIDE, T_MODULUS
+		);
 	}
 
 
@@ -63,6 +71,18 @@ class Fork_Sniffs_Styleguide_OperatorsSniff implements PHP_CodeSniffer_Sniff
 			// for increments we don't care
 			case T_DEC:
 			case T_INC:
+			break;
+
+			case T_MINUS:
+			case T_PLUS:
+				if($previous['content'] != ' ') $phpcsFile->addError('Before an operator(+, -, *, /, %) we expect exactly one space.', $stackPtr);
+				if($next['content'] != ' ' && !is_numeric($next['content'])) $phpcsFile->addError('After an operator(+, -, *, /, %) we expect exactly one space.', $stackPtr);
+			break;
+			case T_MULTIPLY:
+			case T_DIVIDE:
+			case T_MODULUS:
+				if($previous['content'] != ' ') $phpcsFile->addError('Before an operator(+, -, *, /, %) we expect exactly one space.', $stackPtr);
+				if($next['content'] != ' ') $phpcsFile->addError('After an operator(+, -, *, /, %) we expect exactly one space.', $stackPtr);
 			break;
 		}
 

@@ -122,12 +122,12 @@
 
 /**
  * Password generator
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
-	$.fn.passwordGenerator = function(options) 
+	$.fn.passwordGenerator = function(options)
 	{
 		// define defaults
 		var defaults =
@@ -135,85 +135,85 @@
 			length: 6,
 			uppercase: true,
 			lowercase: true,
-			numbers: true, 
+			numbers: true,
 			specialchars: false,
 			generateLabel: 'Generate'
 		};
 
 		// extend options
 		var options = $.extend(defaults, options);
-		
-		return this.each(function() 
+
+		return this.each(function()
 		{
 			var id = $(this).attr('id');
-			
+
 			// append the button
 			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
-			
+
 			$('.generatePasswordButton').live('click', generatePassword);
-			
-			function generatePassword(evt) 
+
+			function generatePassword(evt)
 			{
 				// prevent default
 				evt.preventDefault();
-			
+
 				var currentElement = $('#' + $(this).data('id'));
-				
+
 				// check if it isn't a text-element
 				if(currentElement.attr('type') != 'text')
 				{
 					// clone the current element
 					var newElement = $('<input value="" id="'+ currentElement.attr('id') +'" name="'+ currentElement.attr('name') +'" maxlength="'+ currentElement.attr('maxlength') +'" class="'+ currentElement.attr('class') +'" type="text">');
-					
+
 					// insert the new element
 					newElement.insertBefore(currentElement);
-					
+
 					// remove the current one
 					currentElement.remove();
 				}
-				
+
 				// already a text element
 				else newElement = currentElement;
 
 				// generate the password
-				var pass = generatePass(options.length, options.uppercase, options.lowercase, options.numbers, options.specialchars); 
+				var pass = generatePass(options.length, options.uppercase, options.lowercase, options.numbers, options.specialchars);
 
 				// set the generate password, and trigger the keyup event
 				newElement.val(pass).keyup();
 			}
-			
-			function generatePass(length, uppercase, lowercase, numbers, specialchars) 
+
+			function generatePass(length, uppercase, lowercase, numbers, specialchars)
 			{
 				// the vowels
 				var v = new Array('a', 'e','u', 'ae', 'ea');
-				
+
 				// the consonants
 				var c = new Array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
-				
+
 				// the number-mapping
 				var n = new Array();
 				n['a'] = 4; n['b'] = 8; n['e'] = 3; n['g'] = 6; n['l'] = 1; n['o'] = 0; n['s'] = 5; n['t'] = 7; n['z'] = 2;
-				
+
 				// the special chars-mapping
 				var s = new Array();
 				s['a'] = '@'; s['i'] = '!'; s['c'] = 'ç'; s['s'] = '$'; s['g'] = '&'; s['h'] = '#'; s['l'] = '|'; s['x'] = '%';
-				
+
 				// init vars
 				var pass = '';
 				var tmp = '';
-				
+
 				// add a random consonant and vowel as longs as the length isn't reached
 				for (i = 0; i < length; i++) tmp += c[Math.floor(Math.random() * c.length)]+v[Math.floor(Math.random() * v.length)];
-				
+
 				// convert some chars to uppercase
-				for (i = 0; i < length; i++) 
+				for (i = 0; i < length; i++)
 				{
 					if(Math.floor(Math.random()*2)) pass += tmp.substr(i,1).toUpperCase();
 					else pass += tmp.substr(i,1);
-				}	
-				
+				}
+
 				// numbers allowed?
-				if(numbers) 
+				if(numbers)
 				{
 					tmp = '';
 					for(var i in pass) {
@@ -223,12 +223,12 @@
 					}
 					pass = tmp;
 				}
-				
+
 				// special chars allowed
-				if(specialchars) 
+				if(specialchars)
 				{
 					tmp = '';
-					for(var i in pass) 
+					for(var i in pass)
 					{
 						// replace with a special number if the random number can be devided by 2
 						if(typeof s[pass[i].toLowerCase()] != 'undefined' && (Math.floor(Math.random()*4)%2)) tmp += s[pass[i].toLowerCase()];
@@ -236,16 +236,16 @@
 					}
 					pass = tmp;
 				}
-				
+
 				// if uppercase isn't allowed we convert all to lowercase
 				if(!uppercase) pass = pass.toLowerCase();
-				
+
 				// if lowercase isn't allowed we convert all to uppercase
 				if(!lowercase) pass = pass.toUpperCase();
-				
+
 				// return
 				return pass;
-			}			
+			}
 		});
 	};
 })(jQuery);
@@ -269,7 +269,8 @@
 			extraParams: {},
 			inputClasses: 'inputText',
 			allowEmpty: false,
-			tooltip: 'click to edit'
+			tooltip: 'click to edit',
+			after_save: null
 		};
 
 		// extend options
@@ -337,8 +338,11 @@
 				// remove events
 				element.unbind('click').unbind('focus');
 
-				// set html (replacing quotes with htmlentity, otherwise the inputfield is 'broken')
-				element.html('<input type="text" class="' + options.inputClasses + '" value="' + utils.string.replaceAll(options.current.value, '"', '&quot;') + '" />');
+				// replacing quotes, less than and greater than with htmlentity, otherwise the inputfield is 'broken'
+				options.current.value = utils.string.replaceAll(options.current.value, '"', '&quot;');
+
+				// set html
+				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
 
 				// store element
 				options.current.element = $(element.find('input')[0]);
@@ -372,8 +376,14 @@
 				// get parent
 				var parent = options.current.element.parent();
 
+				// get value and replace quotes, less than and greater than with their htmlentities
+				var newValue = options.current.element.val();
+				newValue = utils.string.replaceAll(newValue, '"', '&quot;');
+				newValue = utils.string.replaceAll(newValue, '<', '&lt;');
+				newValue = utils.string.replaceAll(newValue, '>', '&gt;');
+
 				// set HTML and rebind events
-				parent.html(options.current.element.val()).bind('click focus', createElement);
+				parent.html(newValue).bind('click focus', createElement);
 
 				// add class
 				parent.removeClass('inlineEditing');
@@ -405,6 +415,9 @@
 						data: options.current.extraParams,
 						success: function(data, textStatus)
 						{
+							// call callback if it is a valid callback
+							if(typeof options.after_save == 'function') eval(options.after_save)($this);
+
 							// destroy the element
 							destroyElement();
 						},
@@ -412,10 +425,10 @@
 						{
 							// reset
 							options.current.element.val(options.current.value);
-							
+
 							// destroy the element
 							destroyElement();
-							
+
 							// show message
 							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
@@ -473,19 +486,19 @@
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
-				
+
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
-					
+
 					// clear other timers
 					clearTimeout(timer);
-					
+
 					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
-				
+
 				return !blockSubmit;
 			});
 
@@ -557,13 +570,13 @@
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
-				
+
 				// enter of splitchar should add an element
 				if(code == 13 || String.fromCharCode(code) == options.splitChar)
 				{
 					// hide before..
 					$('#errorMessage-'+ id).remove();
-					
+
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
@@ -614,7 +627,7 @@
 
 				// a value should contain the split char
 				if(value.split(options.secondSplitChar).length == 1) value = '';
-				
+
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
@@ -668,7 +681,7 @@
 					for(var i in elements)
 					{
 						var humanValue = elements[i].split(options.secondSplitChar)[1];
-						
+
 						html += '	<li><span><strong>' + humanValue + '</strong>' + '		<a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '	</li>';
 					}
 
@@ -763,38 +776,38 @@
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
-				
+
 				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
-					
+
 					// clear other timers
 					clearTimeout(timer);
-					
+
 					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
-				
+
 				return !blockSubmit;
 			});
 
 			// build replace html
-			var html = 	'<div class="tagsWrapper">' + 
-						'	<div class="oneLiner">' + 
-						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + 
-						'		<div class="buttonHolder">' + 
+			var html = 	'<div class="tagsWrapper">' +
+						'	<div class="oneLiner">' +
+						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' +
+						'		<div class="buttonHolder">' +
 						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
-			html += 	'">' + 
-						'				<span>' + options.addLabel + '</span>' + 
-						'			</a>' + 
-						'		</div>' + 
-						'	</div>' + 
-						'	<div id="elementList-' + id + '" class="tagList">' + 
-						'	</div>' + 
+			html += 	'">' +
+						'				<span>' + options.addLabel + '</span>' +
+						'			</a>' +
+						'		</div>' +
+						'	</div>' +
+						'	<div id="elementList-' + id + '" class="tagList">' +
+						'	</div>' +
 						'</div>';
 
 			// hide current element
@@ -861,13 +874,13 @@
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
-				
+
 				// enter of splitchar should add an element
 				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{
 					// hide before..
 					$('#errorMessage-'+ id).remove();
-					
+
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
@@ -968,8 +981,8 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li><span><strong>' + elements[i] + '</strong>' + 
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + 
+						html += '	<li><span><strong>' + elements[i] + '</strong>' +
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' +
 								'	</li>';
 					}
 
@@ -1051,7 +1064,7 @@
 			var possibleOptions = $(this).find('option');
 			var elements = get();
 			var blockSubmit = false;
-			
+
 			// bind submit
 			$(this.form).submit(function()
 			{
@@ -1065,30 +1078,30 @@
 			}
 
 			// build replace html
-			var html =	'<div class="multipleSelectWrapper">' + 
-						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' + 
-						'	<div class="oneLiner">' + 
+			var html =	'<div class="multipleSelectWrapper">' +
+						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' +
+						'	<div class="oneLiner">' +
 						'		<p>' +
 						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
-			
-			
+
+
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
 				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
 			}
-			
+
 			html +=		'			</select>' +
-						'		</p>' + 
-						'		<div class="buttonHolder">' + 
+						'		</p>' +
+						'		<div class="buttonHolder">' +
 						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
-			html += 	'">' + 
-						'				<span>' + options.addLabel + '</span>' + 
-						'			</a>' + 
-						'		</div>' + 
-						'	</div>' + 
+			html += 	'">' +
+						'				<span>' + options.addLabel + '</span>' +
+						'			</a>' +
+						'		</div>' +
+						'	</div>' +
 						'</div>';
 
 			// hide current element
@@ -1177,11 +1190,11 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' + 
-								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' + 
-								'		<div class="buttonHolder">' + 
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
-								'		</div>' + 
+						html += '	<li class="oneLiner">' +
+								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
+								'		<div class="buttonHolder">' +
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+								'		</div>' +
 								'	</li>';
 
 						// remove from dropdown
@@ -1198,7 +1211,7 @@
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
 				$('#addValue-' + id).removeClass('disabled').prop('disabled', false);
-				if($('#addValue-' + id + ' option:enabled').length == 0) 
+				if($('#addValue-' + id + ' option:enabled').length == 0)
 				{
 					$('#addButton-' + id).addClass('disabledButton');
 					$('#addValue-' + id).addClass('disabled').prop('disabled', true);
@@ -1239,7 +1252,7 @@
 
 				// set new value
 				$('#' + id).val(elements.join(options.splitChar));
-				
+
 				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', false);
 
 				// rebuild element list
@@ -1388,7 +1401,7 @@
 
 			// unblock the submit event when we lose focus
 			$('#addValue-' + id).bind('blur', function(evt) { blockSubmit = false; });
-			
+
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(evt)
 			{
@@ -1494,11 +1507,11 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' + 
-								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' + 
-								'		<div class="buttonHolder">' + 
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
-								'		</div>' + 
+						html += '	<li class="oneLiner">' +
+								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' +
+								'		<div class="buttonHolder">' +
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+								'		</div>' +
 								'	</li>';
 					}
 
@@ -1508,7 +1521,7 @@
 
 				// set html
 				$('#elementList-' + id).html(html);
-				
+
 				// call callback if specified
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}

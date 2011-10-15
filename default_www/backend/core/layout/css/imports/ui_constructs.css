@@ -7,6 +7,7 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -57,12 +58,12 @@
 	padding: 6px 12px;
 
 	/* @inc .topRc */
-	border-top-left-radius: 4px;
 	-webkit-border-top-left-radius: 4px;
-	-moz-border-radius-topleft: 4px;
-	border-top-right-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 }
 
 .box .headingRTE {
@@ -134,7 +135,6 @@
 	background: #FFA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFD), to(#FFA));
 	background: -moz-linear-gradient(top, #FFD, #FFA);
-
 }
 
 	.box .moderate p {
@@ -144,12 +144,12 @@
 .box .options:last-child {
 
 	/* @inc .bottomRc */
-	border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
 	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
 	-moz-border-radius-bottomleft: 4px;
 	border-bottom-right-radius: 4px;
-	-webkit-border-bottom-right-radius: 4px;
-	-moz-border-radius-bottomright: 4px;
+	border-bottom-left-radius: 4px;
 }
 
 .box input[type="submit"] {
@@ -189,17 +189,16 @@
 }
 
 .box.modal {
-
-	/* @inc .boxShadow */
-	box-shadow: 0 4px 12px rgba(0,0,0,0.33);
-	-webkit-box-shadow: 0 4px 12px rgba(0,0,0,0.33);
-	-moz-box-shadow: rgba(0,0,0,0.33) 0 4px 12px;
-
 	width: 550px;
 	position: relative;
 	left: -275px;
 	top: -220px;
 	background: #FFF;
+
+	/* @inc .boxShadow */
+	-moz-box-shadow: rgba(0,0,0,0.33) 0 4px 12px;
+	-webkit-box-shadow: 0 4px 12px rgba(0,0,0,0.33);
+	box-shadow: 0 4px 12px rgba(0,0,0,0.33);
 }
 
 .modal .heading {
@@ -305,9 +304,9 @@
 	background: #EEE;
 
 	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 	.boxLevel2 h4 + .inputList label {
@@ -335,10 +334,10 @@ div#pageTitle {
 }
 
 #pageUrl {
-	padding: 0 0 24px;
 	/* @inc .secondaryContent */
 	font-size: 11px;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	padding: 0 0 24px;
 }
 
 #pageUrl abbr {

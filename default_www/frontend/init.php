@@ -87,9 +87,6 @@ class FrontendInit
 
 		// disable magic quotes
 		SpoonFilter::disableMagicQuotes();
-
-		// start session
-		$this->initSession();
 	}
 
 
@@ -155,17 +152,21 @@ class FrontendInit
 						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
-						$action = str_replace($module, '', $action);
+						$action = substr($action, strlen($module));
 						$module = substr($module, 0, -1);
 
-						// file to be loaded
-						$pathToLoad = FRONTEND_PATH . '/modules/' . $module . '/engine/' . $action . '.php';
-
-						// if it exists, load it!
-						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+						// check the actions, engine & widgets directories
+						foreach(array('actions', 'engine', 'widgets') as $dir)
 						{
-							require_once $pathToLoad;
-							break;
+							// file to be loaded
+							$pathToLoad = FRONTEND_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+
+							// if it exists, load it!
+							if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+							{
+								require_once $pathToLoad;
+								break;
+							}
 						}
 					}
 				}
@@ -326,17 +327,6 @@ class FrontendInit
 
 		// stop script execution
 		exit;
-	}
-
-
-	/**
-	 * Start session
-	 *
-	 * @return	void
-	 */
-	private function initSession()
-	{
-		SpoonSession::start();
 	}
 
 

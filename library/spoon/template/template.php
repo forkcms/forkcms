@@ -90,8 +90,6 @@ class SpoonTemplate
 
 	/**
  	 * Creates a template instance and assigns a few default variables.
- 	 *
- 	 * @return	void
 	 */
 	public function __construct()
 	{
@@ -109,7 +107,6 @@ class SpoonTemplate
 	/**
 	 * Adds a form to this template.
 	 *
-	 * @return	void
 	 * @param	SpoonForm $form		The form-instance to add.
 	 */
 	public function addForm(SpoonForm $form)
@@ -121,7 +118,6 @@ class SpoonTemplate
 	/**
 	 * Assign values to variables.
 	 *
-	 * @return	void
 	 * @param	mixed $variable			The key to search for or an array with keys & values.
 	 * @param	mixed[optional] $value	The value to replace the key with. If the first element is an array, this argument is not required.
 	 */
@@ -149,7 +145,6 @@ class SpoonTemplate
 	/**
 	 * Assign an entire array with keys & values.
 	 *
-	 * @return	void
 	 * @param	array $values				This array with keys and values will be used to search and replace in the template file.
 	 * @param	string[optional] $prefix	An optional prefix eg. 'lbl' that can be used.
 	 * @param	string[optional] $suffix	An optional suffix eg. 'msg' that can be used.
@@ -166,7 +161,6 @@ class SpoonTemplate
 	/**
 	 * Cache a certain block.
 	 *
-	 * @return	void
 	 * @param	string $name				The name of the block that you want to cache.
 	 * @param	int[optional] $lifetime		The lifetime in seconds.
 	 */
@@ -183,7 +177,6 @@ class SpoonTemplate
 	/**
 	 * Clear the entire cache or a specific item.
 	 *
-	 * @return	void
 	 * @param	string[optional] $name	The name of the cache block that you want to clear from the directory with cached files.
 	 */
 	public function clearCache($name = null)
@@ -206,7 +199,6 @@ class SpoonTemplate
 	/**
 	 * Clear the entire compiled directory or a specific template.
 	 *
-	 * @return	void
 	 * @param	string[optional] $template	The filename of a specific template to mark for recompiling.
 	 */
 	public function clearCompiled($template = null)
@@ -229,7 +221,6 @@ class SpoonTemplate
 	/**
 	 * Compile a given template.
 	 *
-	 * @return	void
 	 * @param	string $path		The path to the template, excluding the template filename.
 	 * @param 	string $template	The filename of the template within the path.
 	 */
@@ -282,7 +273,6 @@ class SpoonTemplate
 	/**
 	 * Deassign a variable.
 	 *
-	 * @return	void
 	 * @param	string $name	The name of the key that you want to remove from the list of already assigned variables.
 	 */
 	public function deAssign($name)
@@ -294,7 +284,6 @@ class SpoonTemplate
 	/**
 	 * Display the output.
 	 *
-	 * @return	void
 	 * @param	string $template	The filename of the template that you want to display.
 	 */
 	public function display($template)
@@ -442,7 +431,6 @@ class SpoonTemplate
 	/**
 	 * Map a modifier to a given function/method.
 	 *
-	 * @return	void
 	 * @param	string $name		The name that you wish to use in the templates as a modifier.
 	 * @param	mixed $function		The function or method to map this name to. In case it's a method, provide this as an array containing class and method name.
 	 */
@@ -455,7 +443,6 @@ class SpoonTemplate
 	/**
 	 * Set the cache directory.
 	 *
-	 * @return	void
 	 * @param	string $path	The location of the directory where you want to store your cached template blocks.
 	 */
 	public function setCacheDirectory($path)
@@ -467,7 +454,6 @@ class SpoonTemplate
 	/**
 	 * Set the compile directory.
 	 *
-	 * @return	void
 	 * @param	string $path	The location of the directory where you want to store your compiled templates.
 	 */
 	public function setCompileDirectory($path)
@@ -479,7 +465,6 @@ class SpoonTemplate
 	/**
 	 * If enabled, recompiles a template even if it has already been compiled.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Do we need to recompile the template every time it loads.
 	 */
 	public function setForceCompile($on = true)
@@ -500,5 +485,3 @@ class SpoonTemplate
  * @since		0.1.1
  */
 class SpoonTemplateException extends SpoonException {}
-
-?>

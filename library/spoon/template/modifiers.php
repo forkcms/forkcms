@@ -53,8 +53,6 @@ class SpoonTemplateModifiers
 
 	/**
 	 * Clears the entire modifiers list.
-	 *
-	 * @return	void
 	 */
 	public static function clearModifiers()
 	{
@@ -114,7 +112,6 @@ class SpoonTemplateModifiers
 	/**
 	 * Maps a specific modifier to a function/method.
 	 *
-	 * @return	void
 	 * @param	string $name		The name of the modifier that you want to map.
 	 * @param	mixed $function		The function or method that you want to map to the provided name. To map a method provided this argument as an array containing class and method.
 	 */
@@ -159,5 +156,3 @@ class SpoonTemplateModifiers
 		return mb_convert_case($string, MB_CASE_UPPER, SPOON_CHARSET);
 	}
 }
-
-?>

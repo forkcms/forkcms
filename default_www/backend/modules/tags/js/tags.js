@@ -6,18 +6,18 @@ if(!jsBackend) { var jsBackend = new Object(); }
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsBackend.tags = 
+jsBackend.tags =
 {
 	// init, something like a constructor
-	init: function() 
+	init: function()
 	{
-		if($('.datagrid td.tag').length > 0) 
+		if($('.dataGrid td.tag').length > 0)
 		{
 			// build ajax-url
 			var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=edit&language=' + jsBackend.current.language;
 
-			// bind 
-			$('.datagrid td.tag').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
+			// bind
+			$('.dataGrid td.tag').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
 		}
 	},
 

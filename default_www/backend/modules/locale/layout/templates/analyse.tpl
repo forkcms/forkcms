@@ -9,7 +9,7 @@
 </div>
 
 {option:dgFrontend}
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3>{$lblFrontend|ucfirst}</h3>
 	</div>
@@ -24,7 +24,7 @@
 
 
 {option:dgBackend}
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3>{$lblBackend|ucfirst}</h3>
 	</div>

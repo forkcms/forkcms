@@ -159,7 +159,6 @@ class SpoonDatagridColumn
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name				The name of the column.
 	 * @param	string[optional] $label		The label to use for the column.
 	 * @param	string[optional] $value		The value of the column.
@@ -187,8 +186,6 @@ class SpoonDatagridColumn
 
 	/**
 	 * Clears the list of attributes for this column.
-	 *
-	 * @return	void
 	 */
 	public function clearAttributes()
 	{
@@ -341,8 +338,6 @@ class SpoonDatagridColumn
 
 	/**
 	 * Retrieve the default sorting method.
-	 *
-	 * @return	void
 	 */
 	public function getSortingMethod()
 	{
@@ -386,7 +381,6 @@ class SpoonDatagridColumn
 	/**
 	 * Set the attributes.
 	 *
-	 * @return	void
 	 * @param	array $attributes	The attributes as key/value pairs.
 	 */
 	public function setAttributes(array $attributes)
@@ -398,7 +392,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the confirm message.
 	 *
-	 * @return	void
 	 * @param	string $message				The message to show.
 	 * @param	string[optional] $custom	Custom code you wish to use to confirm.
 	 */
@@ -413,7 +406,6 @@ class SpoonDatagridColumn
 	/**
 	 * Set the header attributes.
 	 *
-	 * @return	void
 	 * @param	array $attributes	The attributes as key/value pairs.
 	 */
 	public function setHeaderAttributes(array $attributes)
@@ -425,7 +417,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the hidden status.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should this column be hidden?
 	 */
 	public function setHidden($on = true)
@@ -437,7 +428,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the image.
 	 *
-	 * @return	void
 	 * @param	string $image		The path to the image.
 	 * @param	string $title		The title for the image.
 	 */
@@ -451,7 +441,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the label.
 	 *
-	 * @return	void
 	 * @param	string $label	The label for the column.
 	 */
 	public function setLabel($label)
@@ -463,7 +452,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the overwrite status.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should the current value be overwriten?
 	 */
 	public function setOverwrite($on = true)
@@ -475,7 +463,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the sequence.
 	 *
-	 * @return	void
 	 * @param	int $sequence	The new sequence of the column (0-based).
 	 */
 	public function setSequence($sequence)
@@ -487,7 +474,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the sorting.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Is this column sortable?
 	 */
 	public function setSorting($on = true)
@@ -499,7 +485,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the default sorting method for this column.
 	 *
-	 * @return	void
 	 * @param	string[optional] $sort	The default sorting method, possible values are: asc, desc.
 	 */
 	public function setSortingMethod($sort = 'asc')
@@ -511,7 +496,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the URL.
 	 *
-	 * @return	void
 	 * @param	string $URL					The URL to set.
 	 * @param	string[optional] $title		The title of the URL.
 	 */
@@ -525,7 +509,6 @@ class SpoonDatagridColumn
 	/**
 	 * Sets the value & its overwrite setting.
 	 *
-	 * @return	void
 	 * @param	string $value				The new value.
 	 * @param	bool[optional] $overwrite	Should the current value be overwritten?
 	 */
@@ -535,5 +518,3 @@ class SpoonDatagridColumn
 		$this->overwriteValue = (bool) $overwrite;
 	}
 }
-
-?>

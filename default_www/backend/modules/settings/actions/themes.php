@@ -36,7 +36,7 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -154,6 +154,9 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 						// getting here meant we found no matching template for the new theme; pick first theme's template as default
 						BackendPagesModel::updatePagesTemplates($oldTemplateId, $newDefaultTemplateId);
 					}
+
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_changed_theme');
 				}
 
 				// assign report

@@ -25,10 +25,10 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		if(BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED')
 		{
 			// remove all parameters from the module settings
-			BackendModel::setModuleSetting('analytics', 'session_token', null);
-			BackendModel::setModuleSetting('analytics', 'account_name', null);
-			BackendModel::setModuleSetting('analytics', 'table_id', null);
-			BackendModel::setModuleSetting('analytics', 'profile_title', null);
+			BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
+			BackendModel::setModuleSetting($this->getModule(), 'account_name', null);
+			BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
+			BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
 
 			// remove cache files
 			BackendAnalyticsModel::removeCacheFiles();
@@ -92,17 +92,17 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging();
+			$dataGrid->setPaging();
 
 			// hide columns
-			$datagrid->setColumnsHidden('id', 'date');
+			$dataGrid->setColumnsHidden('id', 'date');
 		}
 
 		// parse the datagrid
-		return (!empty($results) ? $datagrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="datagrid"><tr><td>' . BL::msg('NoReferrers') . '</td></tr></table>');
+		return (!empty($results) ? $dataGrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="dataGrid"><tr><td>' . BL::msg('NoReferrers') . '</td></tr></table>');
 	}
 
 
@@ -120,20 +120,20 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		if(!empty($results))
 		{
 			// get the datagrid
-			$datagrid = new BackendDataGridArray($results);
+			$dataGrid = new BackendDataGridArray($results);
 
 			// no pagination
-			$datagrid->setPaging();
+			$dataGrid->setPaging();
 
 			// hide columns
-			$datagrid->setColumnsHidden('id', 'date');
+			$dataGrid->setColumnsHidden('id', 'date', 'url');
 
 			// set url
-			$datagrid->setColumnURL('referrer', 'http://[referrer]');
+			$dataGrid->setColumnURL('referrer', '[url]');
 		}
 
 		// parse the datagrid
-		return (!empty($results) ? $datagrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="datagrid"><tr><td>' . BL::msg('NoKeywords') . '</td></tr></table>');
+		return (!empty($results) ? $dataGrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="dataGrid"><tr><td>' . BL::msg('NoKeywords') . '</td></tr></table>');
 	}
 }
 

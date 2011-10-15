@@ -16,7 +16,7 @@
 											<td width="32">
 											</td>
 											<td width="476">
-												<h2><a href="#">Fork 2.0.0 test</a></h2>
+												<h2><a href="{$siteURL}">Fork 2.0.0 test</a></h2>
 												<p class="small">Is deze nieuwsbrief onleesbaar? Bekijk de <a id="onlineVersionURL" href="#">online versie</a>.</p>
 											</td>
 											<td width="32">
@@ -54,11 +54,11 @@
 											<td width="31">
 											</td>
 											<td width="277" valign="top">
-											<!-- tinymce  -->
+											<!-- tinymce -->
 												<textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditor">
 													{$contentHtml}
 												</textarea>
-											<!-- /tinymce  -->
+											<!-- /tinymce -->
 											</td>
 											<td width="24">
 											</td>

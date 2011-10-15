@@ -153,6 +153,17 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Retrives the already assigned variables.
+	 *
+	 * @return	array
+	 */
+	public function getAssignedVariables()
+	{
+		return $this->variables;
+	}
+
+
+	/**
 	 * Fetch the parsed content from this template.
 	 *
 	 * @return	string							The actual parsed content after executing this template.
@@ -224,6 +235,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('formatnumber', array('FrontendTemplateModifiers', 'formatNumber'));
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
+		$this->mapModifier('camelcase', array('SpoonFilter', 'toCamelCase'));
 
 		// dates
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
@@ -281,7 +293,6 @@ class FrontendTemplate extends SpoonTemplate
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->assign('FACEBOOK_ADMIN_IDS', FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null));
 		if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) $this->assign('FACEBOOK_APP_ID', FrontendModel::getModuleSetting('core', 'facebook_app_id', null));
 		if(FrontendModel::getModuleSetting('core', 'facebook_app_secret', null) !== null) $this->assign('FACEBOOK_APP_SECRET', FrontendModel::getModuleSetting('core', 'facebook_app_secret', null));
-		if(FrontendModel::getModuleSetting('core', 'facebook_api_key', null) !== null) $this->assign('FACEBOOK_API_KEY', FrontendModel::getModuleSetting('core', 'facebook_api_key', null));
 
 		// theme
 		if(FrontendModel::getModuleSetting('core', 'theme') !== null)
@@ -410,7 +421,7 @@ class FrontendTemplateModifiers
 		$var = (string) $var;
 
 		// detect links
-		$var = SpoonFilter::replaceURLsWithAnchors($var);
+		$var = SpoonFilter::replaceURLsWithAnchors($var, FrontendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false));
 
 		// replace newlines
 		$var = str_replace("\r", '', $var);
@@ -587,7 +598,9 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the subnavigation html
-	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:<excludeIds-splitted-by-dash>]}
+	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:'<excludeIds-splitted-by-dash>']}
+	 *
+	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *
 	 * @return	string
 	 * @param	string[optional] $var			The variable.

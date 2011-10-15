@@ -46,7 +46,7 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -150,10 +150,13 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 				}
 
 				// at this point, groups are set
-				BackendModel::setModuleSetting('mailmotor', 'cm_groups_set', true);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_groups_set', true);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_import_groups');
 
 				// redirect to the index
-				$this->redirect(BackendModel::createURLForAction('index', 'mailmotor') . '&report=groups-imported&var[]=' . count($this->externalGroups) . '&var[]=' . $subscribersTotal);
+				$this->redirect(BackendModel::createURLForAction('index', $this->getModule()) . '&report=groups-imported&var[]=' . count($this->externalGroups) . '&var[]=' . $subscribersTotal);
 			}
 		}
 	}

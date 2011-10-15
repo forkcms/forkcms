@@ -91,8 +91,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// get data
 			$this->record = FrontendBlogModel::getRevision($this->URL->getParameter(1), $this->URL->getParameter('revision', 'int'));
 
-			// add no-index to meta-custom, so the draft won't get accidentally indexed
-			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+			// add no-index, so the draft won't get accidentally indexed
+			$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 		}
 
 		// get by URL
@@ -101,19 +101,20 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// anything found?
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 
+		// get comments
+		$this->comments = FrontendBlogModel::getComments($this->record['id']);
+
+		// get tags
+		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
+
+		// get settings
+		$this->settings = FrontendModel::getModuleSettings('blog');
+
 		// overwrite URLs
 		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url'];
 		$this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
-
-		// get tags
-		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['revision_id']);
-
-		// get comments
-		$this->comments = FrontendBlogModel::getComments($this->record['id']);
-
-		// get settings
-		$this->settings = FrontendModel::getModuleSettings('blog');
+		$this->record['comments_count'] = count($this->comments);
 
 		// reset allow comments
 		if(!$this->settings['allow_comments']) $this->record['allow_comments'] = false;
@@ -155,17 +156,17 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		// add RSS-feed
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true);
 
 		// get RSS-link for the comments
 		$rssCommentsLink = FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') . '/' . $this->record['url'];
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) . '" href="' . $rssCommentsLink . '" />');
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])), 'href' => $rssCommentsLink), true);
 
 		// build Facebook Open Graph-data
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
 			// default image
 			$image = SITE_URL . '/facebook.png';
@@ -181,17 +182,13 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
 			}
 
-			$meta = '<!-- openGraph meta-data -->' . "\n";
-			$meta .= '<meta property="og:title" content="' . $this->record['title'] . '" />' . "\n";
-			$meta .= '<meta property="og:type" content="article" />' . "\n";
-			$meta .= '<meta property="og:image" content="' . $image . '" />' . "\n";
-			$meta .= '<meta property="og:url" content="' . SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'] . '" />' . "\n";
-			$meta .= '<meta property="og:site_name" content="' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) . '" />' . "\n";
-			$meta .= '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids') . '" />' . "\n";
-			$meta .= '<meta property="og:description" content="' . $this->record['title'] . '" />' . "\n";
-
-			// add
-			$this->header->addMetaCustom($meta);
+			// add OpenGraph data
+			$this->header->addOpenGraphData('title', $this->record['title'], true);
+			$this->header->addOpenGraphData('type', 'article', true);
+			$this->header->addOpenGraphData('image', $image, true);
+			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'], true);
+			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
+			$this->header->addOpenGraphData('description', $this->record['title'], true);
 		}
 
 		// add into breadcrumb
@@ -199,8 +196,12 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// set meta
 		$this->header->setPageTitle($this->record['meta_title'], ($this->record['meta_title_overwrite'] == 'Y'));
-		$this->header->setMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+		$this->header->addMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+
+		// advanced SEO-attributes
+		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
+		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
 		// assign article
 		$this->tpl->assign('item', $this->record);
@@ -310,12 +311,21 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// should we check if the item is spam
 				if($spamFilterEnabled)
 				{
+					// check for spam
+					$result = FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website);
+
 					// if the comment is spam alter the comment status so it will appear in the spam queue
-					if(FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website)) $comment['status'] = 'spam';
+					if($result) $comment['status'] = 'spam';
+
+					// if the status is unknown then we should moderate it manually
+					elseif($result == 'unknown') $comment['status'] = 'moderation';
 				}
 
 				// insert comment
 				$comment['id'] = FrontendBlogModel::insertComment($comment);
+
+				// trigger event
+				FrontendModel::triggerEvent('blog', 'after_add_comment', array('comment' => $comment));
 
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)

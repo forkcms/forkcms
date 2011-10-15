@@ -17,19 +17,20 @@ CREATE TABLE IF NOT EXISTS `emails` (
 
 
 CREATE TABLE IF NOT EXISTS `meta` (
- `id` int(11) NOT NULL auto_increment,
- `keywords` varchar(255) NOT NULL,
- `keywords_overwrite` enum('N','Y') NOT NULL default 'N',
- `description` varchar(255) NOT NULL,
- `description_overwrite` enum('N','Y') NOT NULL default 'N',
- `title` varchar(255) NOT NULL,
- `title_overwrite` enum('N','Y') NOT NULL default 'N',
- `url` varchar(255) NOT NULL,
- `url_overwrite` enum('N','Y') NOT NULL default 'N',
- `custom` text character set utf8 COMMENT 'used for custom meta-information',
- PRIMARY KEY (`id`),
- KEY `idx_url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `keywords` varchar(255) NOT NULL,
+  `keywords_overwrite` enum('N','Y') NOT NULL DEFAULT 'N',
+  `description` varchar(255) NOT NULL,
+  `description_overwrite` enum('N','Y') NOT NULL DEFAULT 'N',
+  `title` varchar(255) NOT NULL,
+  `title_overwrite` enum('N','Y') NOT NULL DEFAULT 'N',
+  `url` varchar(255) NOT NULL,
+  `url_overwrite` enum('N','Y') NOT NULL DEFAULT 'N',
+  `custom` text CHARACTER SET utf8 COMMENT 'used for custom meta-information',
+  `data` text COMMENT 'used for extra meta-information',
+  PRIMARY KEY (`id`),
+  KEY `idx_url` (`url`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `modules` (
@@ -550,3 +551,35 @@ CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
  PRIMARY KEY (`id`),
  KEY `idx_group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+CREATE  TABLE IF NOT EXISTS `backend_navigation` (
+  `id` INT(11) UNSIGNED NOT NULL auto_increment,
+  `parent_id` INT(11) NOT NULL ,
+  `label` VARCHAR(255) NOT NULL ,
+  `url` VARCHAR(255) NULL ,
+  `selected_for` TEXT NULL ,
+  `sequence` INT(11) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `hooks_queue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `module` varchar(255) NOT NULL,
+  `callback` text NOT NULL,
+  `data` text ,
+  `status` enum('busy','error','queued') NOT NULL DEFAULT 'queued',
+  `created_on` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `hooks_subscriptions` (
+  `event_module` varchar(255) NOT NULL,
+  `event_name` varchar(255) NOT NULL,
+  `module` varchar(255) NOT NULL,
+  `callback` text NOT NULL,
+  `created_on` datetime NOT NULL,
+  UNIQUE KEY `event_module` (`event_module`(100),`event_name`(100),`module`(100))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>analytics</name>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>Analytics</name>
+		<description><![CDATA[Through this module you can assess the most important statistics that were gathered by Google Analytics. Don't forget to add the tracking code, otherwise this module will be useless.]]></description>
+	</info>
+	<events>
+		<event application="backend" name="after_add_landing_page"><![CDATA[Triggered when a landing page is added.]]></event>
+		<event application="backend" name="after_delete_landing_page"><![CDATA[Triggered when a landing page is deleted.]]></event>
+	</events>
+</module>

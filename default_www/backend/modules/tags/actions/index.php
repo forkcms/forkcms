@@ -42,28 +42,28 @@ class BackendTagsIndex extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendTagsModel::QRY_DATAGRID_BROWSE, BL::getWorkingLanguage());
+		$this->dataGrid = new BackendDataGridDB(BackendTagsModel::QRY_DATAGRID_BROWSE, BL::getWorkingLanguage());
 
 		// header labels
-		$this->datagrid->setHeaderLabels(array('tag' => ucfirst(BL::lbl('Name')), 'num_tags' => ucfirst(BL::lbl('Amount'))));
+		$this->dataGrid->setHeaderLabels(array('tag' => ucfirst(BL::lbl('Name')), 'num_tags' => ucfirst(BL::lbl('Amount'))));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
-		$this->datagrid->setSortParameter('desc');
+		$this->dataGrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
+		$this->dataGrid->setSortParameter('desc');
 
 		// add the multicheckbox column
-		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]');
+		$this->dataGrid->setMassActionCheckboxes('checkbox', '[id]');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
 		$ddmMassAction->setOptionAttributes('delete', array('message-id' => 'confirmDelete'));
-		$this->datagrid->setMassAction($ddmMassAction);
+		$this->dataGrid->setMassAction($ddmMassAction);
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// add attributes, so the inline editing has all the needed data
-		$this->datagrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));
+		$this->dataGrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));
 	}
 
 
@@ -74,7 +74,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
 

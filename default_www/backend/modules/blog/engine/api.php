@@ -34,7 +34,14 @@ class BackendBlogAPI
 			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger then 10000.'));
 
 			// get comments
-			$comments = (array) BackendBlogModel::getAllCommentsForStatus($status, $limit, $offset);
+			$comments = (array) BackendModel::getDB()->getRecords('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+																	p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
+																	FROM blog_comments AS i
+																	INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+																	INNER JOIN meta AS m ON p.meta_id = m.id
+																	GROUP BY i.id
+																	LIMIT ?, ?',
+																	array($offset, $limit));
 
 			// init var
 			$return = array('comments' => null);
@@ -68,6 +75,58 @@ class BackendBlogAPI
 				// add
 				$return['comments'][] = $item;
 			}
+
+			// return
+			return $return;
+		}
+	}
+
+
+	/**
+	 * Get a single comment
+	 *
+	 * @return	array		An array with the comment.
+	 * @param	int $id		The id of the comment.
+	 */
+	public static function commentsGetById($id)
+	{
+		// authorize
+		if(API::authorize())
+		{
+			// get comment
+			$comment = (array) BackendBlogModel::getComment($id);
+
+			// init var
+			$return = array('comments' => null);
+
+			// any comment found?
+			if(empty($comment)) return $return;
+
+			// create array
+			$item['comment'] = array();
+
+			// article meta data
+			$item['comment']['article']['@attributes']['id'] = $comment['post_id'];
+			$item['comment']['article']['@attributes']['lang'] = $comment['language'];
+			$item['comment']['article']['title'] = $comment['post_title'];
+			$item['comment']['article']['url'] = SITE_URL . BackendModel::getURLForBlock('blog', 'detail', $comment['language']) . '/' . $comment['post_url'];
+
+			// set attributes
+			$item['comment']['@attributes']['id'] = $comment['id'];
+			$item['comment']['@attributes']['created_on'] = date('c', $comment['created_on']);
+			$item['comment']['@attributes']['status'] = $comment['status'];
+
+			// set content
+			$item['comment']['text'] = $comment['text'];
+			$item['comment']['url'] = $item['comment']['article']['url'] . '#comment-' . $comment['id'];
+
+			// author data
+			$item['comment']['author']['@attributes']['email'] = $comment['email'];
+			$item['comment']['author']['name'] = $comment['author'];
+			$item['comment']['author']['website'] = $comment['website'];
+
+			// add
+			$return['comments'][] = $item;
 
 			// return
 			return $return;
@@ -133,7 +192,7 @@ class BackendBlogAPI
 		if(API::authorize())
 		{
 			// redefine
-			if(!is_array($id)) $id = array($id);
+			if(!is_array($id)) $id = (array) explode(',', $id);
 			$status = (string) $status;
 
 			// update statuses

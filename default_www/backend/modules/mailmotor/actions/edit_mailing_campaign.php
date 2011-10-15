@@ -44,7 +44,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse the
 			$this->parse();
 
 			// display the page
@@ -129,6 +129,9 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 
 				// update the item
 				BackendMailmotorModel::updateMailing($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($this->record['name']) . '&highlight=id-' . $item['id']);

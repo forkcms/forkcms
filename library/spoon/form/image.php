@@ -38,7 +38,6 @@ class SpoonFormImage extends SpoonFormFile
 	/**
 	 * Constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	string[optional] $class			The CSS-class to be used.
 	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
@@ -197,5 +196,3 @@ class SpoonFormImage extends SpoonFormFile
 		return $isSquare;
 	}
 }
-
-?>

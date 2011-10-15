@@ -34,11 +34,17 @@ class BackendMailmotorMassCampaignAction extends BackendBaseAction
 			$ids = (array) $_GET['id'];
 
 			// delete comment(s)
-			if($action == 'delete') BackendMailmotorModel::deleteCampaigns($ids);
+			if($action == 'delete')
+			{
+				BackendMailmotorModel::deleteCampaigns($ids);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_delete_campaigns', array('ids' => $ids));
+			}
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=delete_campaigns');
+		$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=delete-campaigns');
 	}
 }
 

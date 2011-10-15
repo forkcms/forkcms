@@ -352,12 +352,12 @@ ins {
 
 /*
 
-	Name:       Winston datagrid module [0.4]
+	Name:       Winston dataGrid module [0.4]
 	Desc:       Basic styles for styling tabular data
 
 */
 
-table.datagrid  {
+table.dataGrid  {
 	width: 100%;
 	margin: 0 0 12px;
 	/* INC .secondaryContent */
@@ -365,33 +365,33 @@ table.datagrid  {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 }
 
-table.datagrid td,
-table.datagrid th {
+table.dataGrid td,
+table.dataGrid th {
 	padding: 6px 12px;
 }
 
-	table.datagridSmall td,
-	table.datagridSmall th {
+	table.dataGridSmall td,
+	table.dataGridSmall th {
 		padding: 6px;
 		font-size: 11px;
 	}
 
-table.datagrid th {
+table.dataGrid th {
 	font-weight: 700;
 	color: #000;
 	line-height: 1.2;
 	text-align: left;
 }
 
-table.datagrid tr.rowOdd { background: #FFF; }
-table.datagrid tr.rowEven { background: #EEE; }
+table.dataGrid tr.rowOdd { background: #FFF; }
+table.dataGrid tr.rowEven { background: #EEE; }
 
-table.datagrid th {
+table.dataGrid th {
 	border: 1px solid #CCC;
 	background: #F5F5F5;
 }
 
-table.datagrid td {
+table.dataGrid td {
 	border: 1px solid #CCC;
 }
 

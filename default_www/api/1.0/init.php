@@ -59,7 +59,6 @@ class APIInit
 
 		// define constants
 		$this->definePaths();
-		$this->defineURLs();
 
 		// set include path
 		$this->setIncludePath();
@@ -141,7 +140,7 @@ class APIInit
 						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
-						$action = str_replace($module, '', $action);
+						$action = substr($action, strlen($module));
 						$module = substr($module, 0, -1);
 
 						// file to be loaded
@@ -179,20 +178,6 @@ class APIInit
 		define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
 		define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
 		define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
-	}
-
-
-	/**
-	 * Define URLs
-	 *
-	 * @return	void
-	 */
-	private function defineURLs()
-	{
-//		define('BACKEND_CORE_URL', '/backend/core');
-//		define('BACKEND_CACHE_URL', '/backend/cache');
-
-//		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 
 

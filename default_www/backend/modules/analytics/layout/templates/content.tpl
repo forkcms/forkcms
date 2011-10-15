@@ -71,7 +71,7 @@
 </div>
 
 {* Top pages *}
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3><a href="{$var|geturl:'all_pages'}">{$lblTopPages|ucfirst}</a></h3>
 		<div class="buttonHolderRight">
@@ -84,7 +84,7 @@
 	{/option:dgContent}
 
 	{option:!dgContent}
-		<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 			<tr>
 				<td>{$msgNoContent}</td>
 			</tr>
@@ -93,7 +93,7 @@
 </div>
 
 {* Top exit pages *}
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3><a href="{$var|geturl:'exit_pages'}">{$lblTopExitPages|ucfirst}</a></h3>
 		<div class="buttonHolderRight">
@@ -106,7 +106,7 @@
 	{/option:dgExitPages}
 
 	{option:!dgExitPages}
-		<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 			<tr>
 				<td>{$msgNoExitPages}</td>
 			</tr>
@@ -115,7 +115,7 @@
 </div>
 
 {* Top entry pages *}
-<div class="datagridHolder">
+<div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3><a href="{$var|geturl:'landing_pages'}">{$lblTopLandingPages|ucfirst}</a></h3>
 		<div class="buttonHolderRight">
@@ -128,7 +128,7 @@
 	{/option:dgLandingPages}
 
 	{option:!dgLandingPages}
-		<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 			<tr>
 				<td>{$msgNoLandingPages}</td>
 			</tr>

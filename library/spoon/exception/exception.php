@@ -46,7 +46,6 @@ class SpoonException extends Exception
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $message				The message that should be used.
 	 * @param	int[optional] $code			A numeric code for the exceptions.
 	 * @param	mixed[optional] $obfuscate	The string(s) that will be obfuscated.
@@ -87,14 +86,14 @@ class SpoonException extends Exception
 }
 
 
-// redefine the exception handler
-set_exception_handler('exceptionHandler');
+// Redefine the exception handler if we are not running in the command line.
+if(!Spoon::inCli()) set_exception_handler('exceptionHandler');
 
 
 /**
- * Prints out the thrown exception in a more readable manner
+ * Prints out the thrown exception in a more readable manner for a person using
+ * a web browser.
  *
- * @return	void
  * @param	SpoonException $exception
  */
 function exceptionHandler($exception)
@@ -103,7 +102,7 @@ function exceptionHandler($exception)
 	$trace = $exception->getTrace();
 
 	// specific name
-	$name = (is_callable(array($exception, 'getName'))) ? $exception->getName() : 'UnknownException';
+	$name = (is_callable(array($exception, 'getName'))) ? $exception->getName() : get_class($exception);
 
 	// spoon type exception
 	if(is_callable(array($exception, 'getName')) && strtolower(substr($exception->getName(), 0, 5)) == 'spoon' && $exception->getCode() != 0)
@@ -424,5 +423,3 @@ function exceptionHandler($exception)
 	// stop script execution
 	exit;
 }
-
-?>

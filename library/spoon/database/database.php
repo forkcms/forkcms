@@ -104,7 +104,6 @@ class SpoonDatabase
 	/**
 	 * Creates a database connection instance.
 	 *
-	 * @return	void
 	 * @param	string $driver			The driver to use. Available drivers depend on your server configuration.
 	 * @param	string $hostname		The host or IP of your database server.
 	 * @param	string $username		The username to authenticate on your database server.
@@ -125,8 +124,6 @@ class SpoonDatabase
 
 	/**
 	 * Creates a new database connection if it was not yet made.
-	 *
-	 * @return	void
 	 */
 	private function connect()
 	{
@@ -218,7 +215,6 @@ class SpoonDatabase
 	/**
 	 * Drops one or more tables.
 	 *
-	 * @return	void
 	 * @param	mixed $tables		The table(s) to drop.
 	 */
 	public function drop($tables)
@@ -230,7 +226,6 @@ class SpoonDatabase
 	/**
 	 * Executes a query.
 	 *
-	 * @return	void
 	 * @param	string $query					The query to execute, only use with queries that don't return a result.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
@@ -333,6 +328,17 @@ class SpoonDatabase
 
 
 	/**
+	 * Retrieve the selected database.
+	 *
+	 * @return	string The name of the database.
+	 */
+	public function getDatabase()
+	{
+		return $this->database;
+	}
+
+
+	/**
 	 * Retrieve the debug setting
 	 *
 	 * @return	bool	true if debug is enabled, false if not.
@@ -396,6 +402,17 @@ class SpoonDatabase
 	public function getHandler()
 	{
 		return $this->handler;
+	}
+
+
+	/**
+	 * Retrieve the hostname.
+	 *
+	 * @return	string The hostname.
+	 */
+	public function getHostname()
+	{
+		return $this->hostname;
 	}
 
 
@@ -494,6 +511,17 @@ class SpoonDatabase
 		}
 
 		return $results;
+	}
+
+
+	/**
+	 * Retrieve the password.
+	 *
+	 * @return	string	The password.
+	 */
+	public function getPassword()
+	{
+		return $this->password;
 	}
 
 
@@ -659,6 +687,17 @@ class SpoonDatabase
 		if($value === null) return PDO::PARAM_NULL;
 		elseif(is_int($value) || is_float($value)) return PDO::PARAM_INT;
 		return PDO::PARAM_STR;
+	}
+
+
+	/**
+	 * Retrieve the username.
+	 *
+	 * @return	string	The username.
+	 */
+	public function getUsername()
+	{
+		return $this->username;
 	}
 
 
@@ -852,7 +891,6 @@ class SpoonDatabase
 	/**
 	 * Optimize one or more tables
 	 *
-	 * @return	void
 	 * @param	mixed $tables	An array containing the name(s) of the tables to optimize.
 	 */
 	public function optimize($tables)
@@ -896,7 +934,6 @@ class SpoonDatabase
 	/**
 	 * Set database name
 	 *
-	 * @return	void
 	 * @param	string $database	The name of the database.
 	 */
 	private function setDatabase($database)
@@ -908,7 +945,6 @@ class SpoonDatabase
 	/**
 	 * Set the debug status
 	 *
-	 * @return	void
 	 * @param	bool[optional] $on	Should debug-mode be activated. Be carefull, this will use a lot of resources (Memory and CPU).
 	 */
 	public function setDebug($on = true)
@@ -920,7 +956,6 @@ class SpoonDatabase
 	/**
 	 * Set driver type
 	 *
-	 * @return	void
 	 * @param	string $driver	The driver to use. Available drivers depend on your server configuration.
 	 */
 	private function setDriver($driver)
@@ -939,7 +974,6 @@ class SpoonDatabase
 	/**
 	 * Set hostname
 	 *
-	 * @return	void
 	 * @param	string $hostname	The host or IP of your database-server.
 	 */
 	private function setHostname($hostname)
@@ -951,7 +985,6 @@ class SpoonDatabase
 	/**
 	 * Set password
 	 *
-	 * @return	void
 	 * @param	string $password	The password to authenticate on your database-server.
 	 */
 	private function setPassword($password)
@@ -963,7 +996,6 @@ class SpoonDatabase
 	/**
 	 * Set port
 	 *
-	 * @return	void
 	 * @param	int $port	The port to connect on.
 	 */
 	private function setPort($port)
@@ -975,7 +1007,6 @@ class SpoonDatabase
 	/**
 	 * Set username
 	 *
-	 * @return	void
 	 * @param	string $username	The username to authenticate on your database-server.
 	 */
 	private function setUsername($username)
@@ -987,7 +1018,6 @@ class SpoonDatabase
 	/**
 	 * Truncate on or more tables
 	 *
-	 * @return	void
 	 * @param	mixed $tables	A string or array containing the list of tables to truncate.
 	 */
 	public function truncate($tables)
@@ -1123,5 +1153,3 @@ class SpoonDatabase
  * @since		1.1.0
  */
 class SpoonDatabaseException extends SpoonException {}
-
-?>

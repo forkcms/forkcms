@@ -39,7 +39,7 @@ class BackendFaqAdd extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -130,6 +130,9 @@ class BackendFaqAdd extends BackendBaseActionAdd
 
 				// insert the item
 				$item['id'] = BackendFaqModel::insertQuestion($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);

@@ -165,7 +165,7 @@ class SpoonLog
 	/**
 	 * Write a message to the log.
 	 *
-	 * @return	void
+	 * @return	SpoonLog
 	 * @param	string $message		the message that should be logged.
 	 */
 	public function write($message)
@@ -175,7 +175,7 @@ class SpoonLog
 		$milliseconds = round($milliseconds * 1000, 0);
 
 		// redefine var
-		$message = date('Y-m-d H:i:s') . ' ' . $milliseconds . 'ms | ' . $message . "\n";
+		$message = date('Y-m-d H:i:s') . ' ' . $milliseconds . 'ms | ' . $message . PHP_EOL;
 
 		// file
 		$file = $this->getPath() . '/' . $this->type . '.log';
@@ -206,5 +206,3 @@ class SpoonLog
  * @since		1.0.0
  */
 class SpoonLogException extends SpoonException {}
-
-?>

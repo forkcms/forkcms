@@ -10,7 +10,7 @@
 	</div>
 </div>
 
-{option:datagrid}
+{option:dataGrid}
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblMap|ucfirst}</h3>
@@ -18,12 +18,17 @@
 		<div class="options">
 			{option:items}
 				<div id="map" style="height: {$settings.height}px; width: 100%;"></div>
-    	
+
+				{* Store item text in a div because JS goes bananas with multiline HTML *}
+				{iteration:items}
+					<div id="markerText{$items.id}" style="display:none;">{$items.text}</div>
+				{/iteration:items}
+
 				<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 				<script type="text/javascript">
 					// create boundaries
 					var latlngBounds = new google.maps.LatLngBounds();
-    	
+
 					// set options
 					var options =
 					{
@@ -42,19 +47,19 @@
 						// set map type
 						mapTypeId: google.maps.MapTypeId.{$settings.map_type}
 					};
-    	
+
 					// create map
 					var map = new google.maps.Map(document.getElementById('map'), options);
-    	
+
 					// function to add markers to the map
 					function addMarker(lat, lng, title, text)
 					{
 						// create position
 						position = new google.maps.LatLng(lat, lng);
-    	
+
 						// add to boundaries
 						latlngBounds.extend(position);
-    	
+
 						// add marker
 						var marker = new google.maps.Marker(
 						{
@@ -65,7 +70,7 @@
 							// set title
 							title: title
 						});
-    	
+
 						// add click event on marker
 						google.maps.event.addListener(marker, 'click', function()
 						{
@@ -73,15 +78,15 @@
 							new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker);
 						});
 					}
-    	
+
 					// loop items and add to map
 					{iteration:items}
-						{option:items.lat}{option:items.lng}addMarker({$items.lat}, {$items.lng}, '{$items.title}', '{$items.text}');{/option:items.lat}{/option:items.lng}
+						{option:items.lat}{option:items.lng}addMarker({$items.lat}, {$items.lng}, '{$items.title}', $('#markerText' + {$items.id}).html());{/option:items.lat}{/option:items.lng}
 					{/iteration:items}
-    	
+
 					// set center to the middle of our boundaries
 					map.setCenter(latlngBounds.getCenter());
-    	
+
 					// set zoom automatically, defined by points (if allowed)
 					if('{$settings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
 				</script>
@@ -89,12 +94,12 @@
 		</div>
 	</div>
 
-	<div class="datagridHolder">
-		{$datagrid}
+	<div class="dataGridHolder">
+		{$dataGrid}
 	</div>
-{/option:datagrid}
+{/option:dataGrid}
 
-{option:!datagrid}<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>{/option:!datagrid}
+{option:!dataGrid}<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>{/option:!dataGrid}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

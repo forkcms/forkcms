@@ -10,14 +10,12 @@
 	{* Meta *}
 	<meta charset="utf-8" />
 	<meta name="generator" content="Fork CMS" />
-	<meta name="description" content="{$metaDescription}" />
-	<meta name="keywords" content="{$metaKeywords}" />
-	{option:debug}<meta name="robots" content="noindex, nofollow" />{/option:debug}
+	{$meta}
 	{$metaCustom}
 
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />
-	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png">
+	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
 
 	{* Stylesheets *}
 	{iteration:cssFiles}

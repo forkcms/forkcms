@@ -43,7 +43,7 @@
 				{/option:block1}
 			{/option:block1IsHTML}
 			{option:!block1IsHTML}
-				{include:{$block1}}
+				{$block1}
 			{/option:!block1IsHTML}
 		</section>
 
@@ -52,13 +52,12 @@
 		</footer>
 	</div>
 
-	{* Site wide HTML *}
-	{$siteHTMLFooter}
-
 	{* General Javascript *}
 	{iteration:javascriptFiles}
 		<script src="{$javascriptFiles.file}"></script>
 	{/iteration:javascriptFiles}
 
+	{* Site wide HTML *}
+	{$siteHTMLFooter}
 </body>
 </html>

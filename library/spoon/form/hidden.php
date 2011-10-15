@@ -38,7 +38,6 @@ class SpoonFormHidden extends SpoonFormAttributes
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name					The name.
 	 * @param	string[optional] $value			The initial value.
 	 */
@@ -123,5 +122,3 @@ class SpoonFormHidden extends SpoonFormAttributes
 		return $output;
 	}
 }
-
-?>

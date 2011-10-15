@@ -136,11 +136,25 @@ class InstallerStep2 extends InstallerStep
 		// check for open basedir
 		// self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', $variables);
 
+
+		/*
+		 * Try to check if mod_rewrite is enabled
+		 */
+		// check if the .htaccess file exists
+		self::checkRequirement('modRewriteHtaccessExists', (defined('PATH_WWW') && file_exists(PATH_WWW . '/.htaccess')) , $variables);
+
+		// only check for mod_rewrite if we know it is Apache, this will fail on some exotic setups
+		if(isset($_SERVER['SERVER_SOFTWARE']) && substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache') > 0)
+		{
+			// check if the mod_rewrite_enabled-variable is available in the $_SERVER-array, it will be set in the .htaccess-file
+			self::checkRequirement('modRewriteVariable', (isset($_SERVER['mod_rewrite_enabled']) && $_SERVER['mod_rewrite_enabled'] == 'true') , $variables);
+		}
+
+
 		/*
 		 * Make sure the filesystem is prepared for the installation and everything can be read/
 		 * written correctly.
 		 */
-
 		// check if the backend-cache-directory is writable
 		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/')), $variables);
 
@@ -202,7 +216,11 @@ class InstallerStep2 extends InstallerStep
 			$count = count($pathLibrary);
 
 			// just one found? add it into the session
-			if($count == 1) $_SESSION['path_library'] = $pathLibrary[0];
+			if($count == 1)
+			{
+				$_SESSION['path_library'] = $pathLibrary[0];
+				$pathLibrary = $pathLibrary[0];
+			}
 
 			// none found means there is no Spoon
 			elseif($count == 0) return false;
@@ -380,21 +398,18 @@ class InstallerStep2 extends InstallerStep
 		// redefine argument
 		$path = rtrim((string) $path, '/');
 
-		// create temporary file
-		$file = tempnam($path, 'isWritable');
+		// create random file
+		$file = uniqid() . '.tmp';
 
-		// file has been created
-		if($file !== false)
-		{
-			// remove temporary file
-			@unlink($file);
+		$return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
 
-			// file could not be created = writable
-			return true;
-		}
+		if($return === false) return false;
 
-		// file could not be created = not writable
-		return false;
+		// unlink the random file
+		@unlink($path . '/' . $file);
+
+		// return
+		return true;
 	}
 }
 

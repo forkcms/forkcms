@@ -44,6 +44,15 @@ class FormBuilderInstall extends ModuleInstaller
 		$this->setActionRights(1, 'form_builder', 'sequence');
 		$this->setActionRights(1, 'form_builder', 'export_data');
 
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$this->setNavigation($navigationModulesId, 'FormBuilder', 'form_builder/index', array(
+			'form_builder/add',
+			'form_builder/edit',
+			'form_builder/data',
+			'form_builder/data_details'
+		));
+
 		// get search extra id
 		$searchId = (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
 

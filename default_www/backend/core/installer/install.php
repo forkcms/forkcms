@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class ModuleInstaller
@@ -261,10 +262,6 @@ class ModuleInstaller
 				// current locale items (used to check for conflicts)
 				$currentLocale = (array) $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
 
-
-				// @todo: waarom geen xpath?
-
-
 				// applications
 				foreach($xml as $application => $modules)
 				{
@@ -422,7 +419,7 @@ class ModuleInstaller
 		else $query .= ' AND data IS NULL';
 
 		// get id (if its already exists)
-		$extraId =  (int) $this->getDB()->getVar($query, $parameters);
+		$extraId = (int) $this->getDB()->getVar($query, $parameters);
 
 		// doesn't already exist
 		if($extraId === 0)
@@ -449,8 +446,9 @@ class ModuleInstaller
 	 * @param	bool[optional] $titleOverwrite			Should the pagetitle be overwritten?
 	 * @param	bool[optional] $urlOverwrite			Should the URL be overwritten?
 	 * @param	string[optional] $custom				Any custom meta-data.
+	 * @param	array[optional] $data					Any custom meta-data.
 	 */
-	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null)
+	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
 	{
 		// build item
 		$item = array('keywords' => (string) $keywords,
@@ -461,7 +459,8 @@ class ModuleInstaller
 						'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
 						'url' => (string) $url,
 						'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
-						'custom' => (!is_null($custom) ? (string) $custom : null));
+						'custom' => (!is_null($custom) ? (string) $custom : null),
+						'data' => (!is_null($data)) ? serialize($data) : null);
 
 		// insert meta and return id
 		return (int) $this->getDB()->insert('meta', $item);
@@ -506,7 +505,6 @@ class ModuleInstaller
 		if(!isset($revision['allow_children'])) $revision['allow_children'] = 'Y';
 		if(!isset($revision['allow_edit'])) $revision['allow_edit'] = 'Y';
 		if(!isset($revision['allow_delete'])) $revision['allow_delete'] = 'Y';
-		if(!isset($revision['no_follow'])) $revision['no_follow'] = 'N';
 		if(!isset($revision['sequence'])) $revision['sequence'] = (int) $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?', array($revision['language'], $revision['parent_id'], $revision['type']));
 		if(!isset($revision['extra_ids'])) $revision['extra_ids'] = null;
 		if(!isset($revision['has_extra'])) $revision['has_extra'] = $revision['extra_ids'] ? 'Y' : 'N';
@@ -524,9 +522,10 @@ class ModuleInstaller
 			if(!isset($meta['url'])) $meta['url'] = SpoonFilter::urlise($revision['title']);
 			if(!isset($meta['url_overwrite'])) $meta['url_overwrite'] = false;
 			if(!isset($meta['custom'])) $meta['custom'] = null;
+			if(!isset($meta['data'])) $meta['data'] = null;
 
 			// insert meta
-			$revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom']);
+			$revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom'], $meta['data']);
 		}
 
 		// insert page
@@ -671,6 +670,60 @@ class ModuleInstaller
 
 
 	/**
+	 * Set a new navigation item.
+	 *
+	 * @return	int								New navigation id.
+	 * @param	int $parentId					Id of the navigation item under we should add this.
+	 * @param	string $label					Label for the item.
+	 * @param	string[optional] $url			Url for the item. If ommitted the first child is used.
+	 * @param	array[optional] $selectedFor	Set selected when these actions are active.
+	 * @param	int[optional] $sequence			Sequence to use for this item.
+	 */
+	protected function setNavigation($parentId, $label, $url = '', array $selectedFor = null, $sequence = null)
+	{
+		// recast
+		$parentId = (int) $parentId;
+		$label = (string) $label;
+		$url = (string) $url;
+		$selectedFor = ($selectedFor !== null && is_array($selectedFor)) ? serialize($selectedFor) : null;
+
+		// no custom sequence
+		if($sequence === null)
+		{
+			// get maximum sequence for this parent
+			$maxSequence = (int) $this->getDB()->getVar('SELECT MAX(sequence) FROM backend_navigation WHERE parent_id = ?', $parentId);
+
+			// add at the end
+			$sequence = $maxSequence + 1;
+		}
+
+		// a custom sequence was set
+		else $sequence = (int) $sequence;
+
+		// get the id for this url
+		$id = (int) $this->getDB()->getVar('SELECT id
+											FROM backend_navigation
+											WHERE parent_id = ? AND label = ? AND url = ?',
+											array($parentId, $label, $url));
+
+		// doesnt exist yet, add it
+		if($id === 0)
+		{
+			return $this->getDB()->insert('backend_navigation', array(
+				'parent_id' => $parentId,
+				'label' => $label,
+				'url' => $url,
+				'selected_for' => $selectedFor,
+				'sequence' => $sequence)
+			);
+		}
+
+		// already exists so return current id
+		return $id;
+	}
+
+
+	/**
 	 * Stores a module specific setting in the database.
 	 *
 	 * @return	void
@@ -715,7 +768,6 @@ class ModuleInstaller
 
 
 /**
- * CoreInstall
  * Installer for the core
  *
  * @package		backend
@@ -723,12 +775,13 @@ class ModuleInstaller
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class CoreInstall extends ModuleInstaller
 {
 	/**
-	 * Installe the module
+	 * Install the module
 	 *
 	 * @return	void
 	 */
@@ -756,6 +809,10 @@ class CoreInstall extends ModuleInstaller
 
 		// set settings
 		$this->setSettings();
+
+		// add core navigation
+		$this->setNavigation(null, 'Dashboard', 'dashboard/index', null, 1);
+		$this->setNavigation(null, 'Modules', null, null, 3);
 	}
 
 
@@ -771,6 +828,7 @@ class CoreInstall extends ModuleInstaller
 
 		// action rights
 		$this->setActionRights(1, 'dashboard', 'index');
+		$this->setActionRights(1, 'dashboard', 'alter_sequence');
 	}
 
 
@@ -792,7 +850,7 @@ class CoreInstall extends ModuleInstaller
 		// other settings
 		$this->setSetting('core', 'theme');
 		$this->setSetting('core', 'akismet_key', '');
-		$this->setSetting('core', 'google_maps_keky', '');
+		$this->setSetting('core', 'google_maps_key', '');
 		$this->setSetting('core', 'max_num_revisions', 20);
 		$this->setSetting('core', 'site_domains', array($this->getVariable('site_domain')));
 		$this->setSetting('core', 'site_html_header', '');

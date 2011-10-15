@@ -1,8 +1,13 @@
 # README
 
-## Documentation
+## Install
 
-Point your browse to [http://your-fork-install/docs](http://your-fork-install/docs) to see the documentation, or go to [http://www.fork-cms.com/docs](http://www.fork-cms.com/docs) for the online version.
+1. default_www should be your document_root on your webserver, so upload all the content into you document_root
+2. upload library on the same level as your document_root (if your hoster doesn't allow this, you can move the library folder inside your document_root)
+3. open up your browser en go to your website
+4. follow the steps on the screen
+5. have fun
+
 
 ## Bugs
 
