@@ -16,8 +16,6 @@ var jsFrontend =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.share').length > 0) $('.share').shareMenu();
-		
 		// init stuff
 		jsFrontend.initAjax();
 

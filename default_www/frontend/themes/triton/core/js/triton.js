@@ -26,4 +26,6 @@ $(document).ready(function() {
 		if(!parentCopy.html().replace(/\s*/g, '')) parent.addClass('floatedImage');
 	});
 
+	// enable the share-menu
+	if($('.share').length > 0) $('.share').shareMenu();
 });
