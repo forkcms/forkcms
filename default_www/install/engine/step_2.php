@@ -147,7 +147,7 @@ class InstallerStep2 extends InstallerStep
 		if(isset($_SERVER['SERVER_SOFTWARE']) && substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache') > 0)
 		{
 			// check if the mod_rewrite_enabled-variable is available in the $_SERVER-array, it will be set in the .htaccess-file
-			self::checkRequirement('modRewriteVariable', (isset($_SERVER['mod_rewrite_enabled']) && $_SERVER['mod_rewrite_enabled'] == 'true') , $variables);
+			self::checkRequirement('modRewriteVariable', ((isset($_SERVER['mod_rewrite_enabled']) && $_SERVER['mod_rewrite_enabled'] == 'true') || (isset($_SERVER['REDIRECT_mod_rewrite_enabled']) && $_SERVER['REDIRECT_mod_rewrite_enabled'] == 'true')), $variables);
 		}
 
 

@@ -10,6 +10,7 @@ Bugfixes:
 
 * Content Blocks: some backend functions didn't take into account the current working language.
 * Content Blocks: exclude invalid templates.
+* Installer: some very specific Apache-version will prepend the Apache-variables with REDIRECT_, thx to Steve De Veirman.
 
 
 2.6.12 (2011-10-11)
