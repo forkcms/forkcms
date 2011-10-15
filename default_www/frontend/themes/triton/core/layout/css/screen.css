@@ -1942,7 +1942,7 @@ a.button:visited {
 }
 .share ul.shareMenu {
 	position: absolute;
-	top: 20px;
+	top: 14px;
 	left: 0;
 	z-index: 99999;
 	background-color: #FFF;
