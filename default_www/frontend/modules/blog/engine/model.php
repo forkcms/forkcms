@@ -76,7 +76,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// urls
 		$items = FrontendModel::buildActionURL($items, 'blog');
-		$items = FrontendModel::buildActionURL($items, 'blog', 'category', 'category_full_url', 'category_url');
+		$items = FrontendModel::buildActionURL($items, 'blog', 'category', 'category_url', 'category_full_url');
 
 		// loop
 		foreach($items as $key => $row)
@@ -191,7 +191,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// urls
 		$items = FrontendModel::buildActionURL($items, 'blog');
-		$items = FrontendModel::buildActionURL($items, 'blog', 'category', 'category_full_url', 'category_url');
+		$items = FrontendModel::buildActionURL($items, 'blog', 'category', 'category_url', 'category_full_url');
 
 		// loop
 		foreach($items as $key => $row)

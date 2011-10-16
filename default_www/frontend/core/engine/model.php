@@ -96,16 +96,49 @@ class FrontendModel
 
 
 	/**
-	 * Builds an action URL for multiple records.
+	 * This method will generate all the full url for an item.
+	 *
+	 * @examples:
+	 *
+	 * #1
+	 * $data = array(
+	 * 		'url' => 'first-blogpost',
+	 * 		'title' => 'First blogpost',
+	 * 		'category_id' => 1
+	 * );
+	 * buildActionURL($data, 'blog'); will return
+	 * $data = array(
+	 * 		'url' => 'first-blogpost',
+	 * 		'full_url' => '/blog/detail/first-blogpost',
+	 * 		'title' => 'First blogpost',
+	 * 		'category_id' => 1
+	 * );
+	 *
+	 * #2
+	 * $data = array(
+	 * 		'url' => 'first-blogpost',
+	 * 		'cat_url' => 'first-category',
+	 * 		'title' => 'First blogpost',
+	 * 		'category_id' => 1
+	 * );
+	 * buildActionURL($data, 'blog', 'category', 'category_url', 'cat_url'); will return
+	 * $data = array(
+	 * 		'url' => 'first-blogpost',
+	 * 		'cat_url' => 'first-category',
+	 * 		'category_url' => '/blog/category/first-category',
+	 * 		'title' => 'First blogpost',
+	 * 		'category_id' => 1
+	 * );
+	 *
 	 *
 	 * @return	array
 	 * @param	array $data					The records to convert the URL for.
 	 * @param	string $module				The module to create the URL for.
 	 * @param	string[optional] $action	The action to link to.
-	 * @param	string[optional] $fullURL	The full url to refer to.
-	 * @param	string[optional] $fetchURL	The url to fetch the data from
+	 * @param	string[optional] $tplURL	The full url to refer to.
+	 * @param	string[optional] $metaURL	The url to fetch the data from
 	 */
-	public static function buildActionURL($data, $module, $action = 'detail', $fullURL = 'full_url', $fetchURL = 'url')
+	public static function buildActionURL(array $data, $module, $action = 'detail', $metaURL = 'url', $tplURL = 'full_url')
 	{
 		// no entries
 		if(empty($data)) return array();
@@ -113,11 +146,11 @@ class FrontendModel
 		// if the provided last element is an array, recursivly build the url
 		if(is_array(current($data)))
 		{
-			foreach($data as &$item) $item = self::buildActionURL($item, $module, $action, $fullURL, $fetchURL);
+			foreach($data as &$item) $item = self::buildActionURL($item, $module, $action, $metaURL, $tplURL);
 		}
 
 		// this is not a multidimensional array, set the full url if the fetch url is given
-		elseif(isset($data[$fetchURL])) $data[$fullURL] = FrontendNavigation::getURLForBlock($module, $action) . '/' . $data[$fetchURL];
+		elseif(isset($data[$metaURL])) $data[$tplURL] = FrontendNavigation::getURLForBlock($module, $action) . '/' . $data[$metaURL];
 
 		// return
 		return $data;

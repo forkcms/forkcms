@@ -40,7 +40,7 @@ class FrontendBlogWidgetCategories extends FrontendBaseWidget
 		$categories = FrontendBlogModel::getAllCategories();
 
 		// any categories?
-		if(!empty($categories)) $categories = FrontendModel::buildActionURL($categories, 'blog', 'category', 'url');
+		if(!empty($categories)) $categories = FrontendModel::buildActionURL($categories, 'blog', 'category', 'url', 'url');
 
 		// assign comments
 		$this->tpl->assign('widgetBlogCategories', $categories);

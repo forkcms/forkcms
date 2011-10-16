@@ -111,7 +111,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->settings = FrontendModel::getModuleSettings('blog');
 
 		// overwrite URLs
-		$this->record = FrontendModel::buildActionURL($this->record, 'blog', 'category', 'category_full_url', 'category_url');
+		$this->record = FrontendModel::buildActionURL($this->record, 'blog', 'category', 'category_url', 'category_full_url');
 		$this->record = FrontendModel::buildActionURL($this->record, 'blog');
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 		$this->record['comments_count'] = count($this->comments);
