@@ -131,7 +131,7 @@ class FrontendPage extends FrontendBaseObject
 		$this->footer->parse();
 
 		// assign the id so we can use it as an option
-		$this->tpl->assign('page' . $this->pageId, true);
+		$this->tpl->assign('isPage' . $this->pageId, true);
 
 		// fetch variables from main template
 		$mainVariables = $this->tpl->getAssignedVariables();
