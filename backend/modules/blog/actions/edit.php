@@ -241,7 +241,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$url404 = BackendModel::getURL(404);
 
 		// parse additional variables
-		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+		if($url404 != $url) $this->tpl->assign('detailURL', SITE_PROTOCOL . '://' . SITE_DOMAIN . $url);
 
 		// fetch proper slug
 		$this->record['url'] = $this->meta->getURL();

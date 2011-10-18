@@ -17,7 +17,7 @@
 */
 
 abbr.help {
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat 0 -494px;
+	background: url(../../images/sprites/fork_icons.png) no-repeat 0 -494px;
 	width: 14px;
 	height: 12px;
 	display: block;

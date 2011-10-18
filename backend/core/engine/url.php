@@ -53,8 +53,11 @@ class BackendURL
 		// add ourself to the reference so other classes can retrieve us
 		Spoon::set('url', $this);
 
+		// find request uri that matters
+		$queryString = mb_substr($_SERVER['REQUEST_URI'], mb_strlen(SITE_RELATIVE_URL));
+
 		// set query-string for later use
-		$this->setQueryString($_SERVER['REQUEST_URI']);
+		$this->setQueryString($queryString);
 
 		// set host for later use
 		$this->setHost($_SERVER['HTTP_HOST']);
@@ -143,7 +146,7 @@ class BackendURL
 			array_shift($chunks);
 
 			// redirect to login
-			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks));
+			SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks));
 		}
 
 		// get the module, null will be the default
@@ -204,7 +207,7 @@ class BackendURL
 			if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
 			{
 				// redirect to login
-				SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode('/' . $this->getQueryString()));
+				SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode('/' . $this->getQueryString()));
 			}
 
 			// the person is logged in
@@ -214,7 +217,7 @@ class BackendURL
 				if(!BackendAuthentication::isAllowedModule($module))
 				{
 					// the user doesn't have access, redirect to error page
-					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
+					SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
 				}
 
 				// we have access
@@ -224,7 +227,7 @@ class BackendURL
 					if(!BackendAuthentication::isAllowedAction($action, $module))
 					{
 						// the user hasn't access, redirect to error page
-						SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
+						SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
 					}
 
 					// let's do it

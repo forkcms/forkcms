@@ -63,8 +63,8 @@ class ApplicationRouting
 	 */
 	private function processQueryString()
 	{
-		// get querystring
-		$queryString = trim($_SERVER['REQUEST_URI'], '/');
+		// find request uri that matters
+		$queryString = trim(mb_substr($_SERVER['REQUEST_URI'], mb_strlen(dirname($_SERVER['SCRIPT_NAME']))), '/');
 
 		// split into chunks
 		$chunks = explode('/', $queryString);

@@ -52,7 +52,7 @@
 .box .heading,
 .widget .heading {
 	background: #E4E4E4;
-	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 -97px;
+	background: url(../../images/sprites/th.gif) repeat-x 0 -97px;
 	border: 1px solid #D7D7D7;
 	border-color: #BDBDBD;
 	padding: 6px 12px;

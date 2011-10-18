@@ -9,7 +9,8 @@ var jsFrontend =
 	debug: false,
 	current:
 	{
-		language: '{$FRONTEND_LANGUAGE}'
+		language: '{$FRONTEND_LANGUAGE}',
+		relativeUrl: '{$SITE_RELATIVE_URL}'
 	},
 
 
@@ -359,7 +360,7 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=autocomplete&language=' + jsFrontend.current.language,
+					url: jsFrontend.current.relativeUrl + '/frontend/ajax.php?module=search&action=autocomplete&language=' + jsFrontend.current.language,
 					type: 'GET',
 					data: 'term=' + request.term,
 					success: function(data, textStatus)
@@ -392,7 +393,7 @@ jsFrontend.search =
 			// ajax call!
 			$.ajax(
 			{
-				url: '/frontend/ajax.php?module=search&action=save',
+				url: jsFrontend.current.relativeUrl + '/frontend/ajax.php?module=search&action=save',
 				type: 'GET',
 				data: 'term=' + $(this).val() + '&language=' + jsFrontend.current.language
 			});
@@ -418,7 +419,7 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=autosuggest&language=' + jsFrontend.current.language,
+					url: jsFrontend.current.relativeUrl + '/frontend/ajax.php?module=search&action=autosuggest&language=' + jsFrontend.current.language,
 					type: 'GET',
 					data: 'term=' + request.term + '&length=' + length,
 					success: function(data, textStatus)
@@ -451,7 +452,7 @@ jsFrontend.search =
 			// ajax call!
 			$.ajax(
 			{
-				url: '/frontend/ajax.php?module=search&action=save',
+				url: jsFrontend.current.relativeUrl + '/frontend/ajax.php?module=search&action=save',
 				type: 'GET',
 				data: 'term=' + $(this).val() + '&language=' + jsFrontend.current.language
 			});
@@ -493,7 +494,7 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=livesuggest&language=' + jsFrontend.current.language,
+					url: jsFrontend.current.relativeUrl + '/frontend/ajax.php?module=search&action=livesuggest&language=' + jsFrontend.current.language,
 					type: 'GET',
 					data: 'term=' + $(this).val(),
 					success: function(data, textStatus)

@@ -79,7 +79,7 @@
 				// make the call
 				$.ajax(
 				{
-					url: '/backend/ajax.php?module=core&action=generate_url&language=' + jsBackend.current.language,
+					url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=core&action=generate_url&language=' + jsBackend.current.language,
 					data: 'url=' + url +
 							'&metaId=' + $('#metaId').val() +
 							'&baseFieldName=' + $('#baseFieldName').val() +

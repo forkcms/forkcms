@@ -369,7 +369,7 @@ jsBackend.analytics.loading =
 			type: 'POST',
 			timeout: 5000,
 			dataType: 'json',
-			url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=check_status&language=' + jsBackend.current.language,
+			url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=check_status&language=' + jsBackend.current.language,
 			data: 'page=' + page + '&identifier=' + identifier,
 			success: function(data, textStatus)
 			{

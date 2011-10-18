@@ -55,11 +55,14 @@ class FrontendURL
 		// add ourself to the reference so other classes can retrieve us
 		Spoon::set('url', $this);
 
+		// find request uri that matters
+		$queryString = mb_substr($_SERVER['REQUEST_URI'], mb_strlen(SITE_RELATIVE_URL));
+
 		// if there is a trailing slash we permanent redirect to the page without slash
-		if(mb_strlen($_SERVER['REQUEST_URI']) != 1 && mb_substr($_SERVER['REQUEST_URI'], -1) == '/') SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);
+		if(mb_strlen($queryString) != 1 && mb_substr($queryString, -1) == '/') SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);
 
 		// set query-string for later use
-		$this->setQueryString($_SERVER['REQUEST_URI']);
+		$this->setQueryString($queryString);
 
 		// set host for later use
 		$this->setHost($_SERVER['HTTP_HOST']);
@@ -298,7 +301,7 @@ class FrontendURL
 			if($mustRedirect)
 			{
 				// build URL
-				$URL = rtrim('/' . $language . '/' . $this->getQueryString(), '/');
+				$URL = rtrim(SITE_RELATIVE_URL . '/' . $language . '/' . $this->getQueryString(), '/');
 
 				// set header & redirect
 				SpoonHTTP::redirect($URL, 301);

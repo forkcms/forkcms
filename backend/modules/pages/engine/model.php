@@ -1033,7 +1033,7 @@ class BackendPagesModel
 		else $URL = '/' . $URL;
 
 		// return the unique URL!
-		return urldecode($URL);
+		return SITE_RELATIVE_URL . urldecode($URL);
 	}
 
 

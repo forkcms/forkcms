@@ -120,8 +120,8 @@ class FrontendHeader extends FrontendBaseObject
 		// add to array if it isn't there already
 		if(!$inArray)
 		{
-			// build temporary arrat
-			$temp['file'] = (string) $file;
+			// build temporary array
+			$temp['file'] = SITE_RELATIVE_URL . (string) $file;
 			$temp['add_timestamp'] = $addTimestamp;
 
 			// add to files
@@ -181,7 +181,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->javascriptFiles))
 		{
 			// add to files
-			$this->javascriptFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
+			$this->javascriptFiles[] = array('file' => SITE_RELATIVE_URL . $file, 'add_timestamp' => $addTimestamp);
 		}
 	}
 

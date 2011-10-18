@@ -29,7 +29,7 @@ jsBackend.locale.controls =
 		if($('.dataGrid td.translationValue').length > 0)
 		{
 			// buil ajax-url
-			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=save_translation&language='+ jsBackend.current.language;
+			var url = jsBackend.current.relativeUrl + '/backend/ajax.php?module='+ jsBackend.current.module +'&action=save_translation&language='+ jsBackend.current.language;
 
 			// bind
 			$('.dataGrid td.translationValue').inlineTextEdit(

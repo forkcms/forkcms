@@ -299,7 +299,7 @@ class FrontendTemplate extends SpoonTemplate
 		{
 			$this->assign('THEME', FrontendModel::getModuleSetting('core', 'theme', 'default'));
 			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
-			$this->assign('THEME_URL', '/frontend/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
+			$this->assign('THEME_URL', SITE_RELATIVE_URL . '/frontend/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
 		}
 	}
 

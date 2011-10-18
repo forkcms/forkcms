@@ -195,7 +195,7 @@ class BackendModel
 		}
 
 		// build the URL and return it
-		return '/' . NAMED_APPLICATION . '/' . $language . '/' . $module . '/' . $action . $querystring;
+		return SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/' . $module . '/' . $action . $querystring;
 	}
 
 
@@ -702,8 +702,8 @@ class BackendModel
 		// add URL
 		else $URL .= $keys[$pageId];
 
-		// return the unique URL!
-		return urldecode($URL);
+		// return the URL!
+		return SITE_RELATIVE_URL . urldecode($URL);
 	}
 
 

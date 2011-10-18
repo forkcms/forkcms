@@ -14,7 +14,7 @@ jsBackend.tags =
 		if($('.dataGrid td.tag').length > 0)
 		{
 			// build ajax-url
-			var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=edit&language=' + jsBackend.current.language;
+			var url = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=edit&language=' + jsBackend.current.language;
 
 			// bind
 			$('.dataGrid td.tag').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });

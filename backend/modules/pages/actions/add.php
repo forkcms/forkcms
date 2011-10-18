@@ -250,7 +250,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('positions', $this->positions);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
-		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
+		$this->tpl->assign('prefixURL', SITE_PROTOCOL . '://' . SITE_DOMAIN . rtrim(BackendPagesModel::getFullURL(1), '/'));
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
 		// get default template id

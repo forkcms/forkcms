@@ -73,7 +73,7 @@ jsBackend.faq =
 					$.ajax(
 					{
 						cache: false, type: 'POST', dataType: 'json', 
-						url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence_questions&language=' + jsBackend.current.language,
+						url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence_questions&language=' + jsBackend.current.language,
 						data: 'questionId=' + questionId + '&fromCategoryId=' + fromCategoryId + '&toCategoryId=' + toCategoryId + '&fromCategorySequence=' + fromCategorySequence + '&toCategorySequence=' + toCategorySequence,
 						success: function(data, textStatus)
 						{ 

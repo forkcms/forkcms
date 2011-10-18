@@ -15,7 +15,8 @@ jsBackend =
 	{
 		module: null,
 		action: null,
-		language: null
+		language: null,
+		relativeUrl: '{$SITE_RELATIVE_URL}'
 	},
 
 
@@ -23,7 +24,8 @@ jsBackend =
 	init: function()
 	{
 		// get url and split into chunks
-		var chunks = document.location.pathname.split('/');
+		requestUri = document.location.pathname.substr(jsBackend.current.relativeUrl.length);
+		var chunks = requestUri.split('/');
 
 		// set some properties
 		jsBackend.current.module = chunks[3];
@@ -1070,27 +1072,25 @@ jsBackend.forms =
 		if($('#sidebar input.tagBox').length > 0)
 		{
 			$('#sidebar input.tagBox').tagBox(
-				{
-					emptyMessage: '{$msgNoTags|addslashes}',
-					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
-					addLabel: '{$lblAdd|ucfirst}',
-					removeLabel: '{$lblDeleteThisTag|ucfirst}',
-					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}'
-				}
-			);
+			{
+				emptyMessage: '{$msgNoTags|addslashes}',
+				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				addLabel: '{$lblAdd|ucfirst}',
+				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				autoCompleteUrl: jsBackend.current.relativeUrl + '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}'
+			});
 		}
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
 		{
 			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
-				{
-					emptyMessage: '{$msgNoTags|addslashes}',
-					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
-					addLabel: '{$lblAdd|ucfirst}',
-					removeLabel: '{$lblDeleteThisTag|ucfirst}',
-					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}',
-					showIconOnly: false
-				}
-			);
+			{
+				emptyMessage: '{$msgNoTags|addslashes}',
+				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				addLabel: '{$lblAdd|ucfirst}',
+				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				autoCompleteUrl: jsBackend.current.relativeUrl + '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}',
+				showIconOnly: false
+			});
 		}
 	},
 
@@ -1613,7 +1613,7 @@ jsBackend.tableSequenceByDragAndDrop =
 					var action = (typeof $(table.parents('table.dataGrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.dataGrid')).data('action').toString();
 
 					// buil ajax-url
-					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
+					var url = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
 
 					// append
 					if(typeof $(table.parents('table.dataGrid')).data('extra-params') != 'undefined') url += $(table.parents('table.dataGrid')).data('extra-params');

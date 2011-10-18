@@ -57,7 +57,7 @@ jsBackend.blog.controls =
 							
 							$.ajax(
 							{
-								url: '/backend/ajax.php?module='+ jsBackend.current.module +'&action=add_category&language={$LANGUAGE}',
+								url: jsBackend.current.relativeUrl + '/backend/ajax.php?module='+ jsBackend.current.module +'&action=add_category&language={$LANGUAGE}',
 								data: 'value=' + $('#categoryTitle').val(),
 								success: function(json, textStatus)
 								{

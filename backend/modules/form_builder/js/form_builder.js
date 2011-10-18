@@ -70,10 +70,10 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.urlDelete = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=delete_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlGet = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=get_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlSave = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlSequence = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.urlDelete = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=delete_field&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.urlGet = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=get_field&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.urlSave = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_field&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.urlSequence = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();

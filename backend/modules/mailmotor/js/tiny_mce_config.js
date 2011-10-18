@@ -2,7 +2,7 @@ $(function() {
 	$('textarea.inputEditor').tinymce(
 	{
 		// location of TinyMCE script
-		script_url : '/backend/core/js/tiny_mce/tiny_mce.js',
+		script_url : '{$SITE_RELATIVE_URL}/backend/core/js/tiny_mce/tiny_mce.js',
 		
 		// set height, so we don't have a tiny TinyMCE
 		height: '300',
@@ -53,7 +53,7 @@ $(function() {
 		imagemanager_handle: 'image',
 
 		// file lists
-		external_link_list_url: '/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js?{$timestamp}',
+		external_link_list_url: '{$SITE_RELATIVE_URL}/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js?{$timestamp}',
 
 		// paste
 		paste_auto_cleanup_on_paste: true,
