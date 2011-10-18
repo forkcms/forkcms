@@ -12,6 +12,7 @@ Bugfixes:
 * Content Blocks: some backend functions didn't take into account the current working language.
 * Content Blocks: exclude invalid templates.
 * Installer: some very specific Apache-version will prepend the Apache-variables with REDIRECT_, thx to Steve De Veirman.
+* Pages: when adding more then 1 module to a page you will get a nice error message instead of a PHP error.
 
 
 2.6.12 (2011-10-11)

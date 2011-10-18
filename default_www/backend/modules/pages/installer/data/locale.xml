@@ -6,6 +6,10 @@
         <translation language="nl"><![CDATA[Pagina kan niet verplaatst worden.]]></translation>
         <translation language="en"><![CDATA[Page can't be moved.]]></translation>
       </item>
+      <item type="error" name="CantAdd2Modules">
+        <translation language="nl"><![CDATA[Je kan maar 1 module per pagina toevoegen.]]></translation>
+        <translation language="en"><![CDATA[You can only add 1 module per page.]]></translation>
+      </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
       </item>
