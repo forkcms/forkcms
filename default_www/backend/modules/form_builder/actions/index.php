@@ -48,17 +48,21 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
 
-		// set colum URLs
-		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-
 		// set method label
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'getLocale'), array('Method_[method]'), 'method');
 
 		// set the amount of sent forms
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderIndex', 'parseNumForms'), array('[id]', '[sent_forms]'), 'sent_forms');
 
-		// add edit column
-		$this->dataGrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::getLabel('Edit'));
+		// action allowed
+		if(BackendAuthentication::isAllowedAction('edit','form_builder'))
+		{
+			// set colum URLs
+			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+			
+			// add edit column
+			$this->dataGrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::getLabel('Edit'));
+		}
 	}
 
 
@@ -95,8 +99,13 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 		// no forms sent
 		else $output = sprintf(BL::getMessage('SentForms'), $sentForms);
 
-		// output
-		return '<a href="' . BackendModel::createURLForAction('data') . '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
+		// action allowed
+		if(BackendAuthentication::isAllowedAction('data','form_builder'))
+		{
+			// output
+			return '<a href="' . BackendModel::createURLForAction('data') . '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
+		}
+		else return $output;
 	}
 }
 
