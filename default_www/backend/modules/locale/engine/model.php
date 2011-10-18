@@ -937,7 +937,7 @@ class BackendLocaleModel
 		$parameters = array($application, '%' . $name . '%', '%' . $value . '%');
 
 		// add module to the query if needed
-		if($module != null)
+		if($module)
 		{
 			$query .= ' AND l.module = ?';
 			$parameters[] = $module;

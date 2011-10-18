@@ -1,3 +1,20 @@
+2.6.13 (2011-10-18)
+--
+Improvements:
+
+* Locale: make it possible to browse translations for all modules at once.
+* Mailmotor: email address can't be edited; change code to reflect this.
+* Core: Facebook open Graph-tags will now be parsed when an app OR admin-id is configured.
+* Core: added a share-widget, see http://www.fork-cms.com/knowledge-base/detail/using-the-share-widgetmenu.
+
+Bugfixes:
+
+* Content Blocks: some backend functions didn't take into account the current working language.
+* Content Blocks: exclude invalid templates.
+* Installer: some very specific Apache-version will prepend the Apache-variables with REDIRECT_, thx to Steve De Veirman.
+* Pages: when adding more then 1 module to a page you will get a nice error message instead of a PHP error.
+
+
 2.6.12 (2011-10-11)
 --
 Improvements:
