@@ -73,6 +73,10 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// check if allowed to add
+		$this->tpl->assign('actionAddAllowed',BackendAuthentication::isAllowedAction('add','form_builder'));
+		
+		// add datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
