@@ -70,10 +70,10 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.urlDelete = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=delete_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlGet = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=get_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlSave = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlSequence = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.paramsDelete = 'module=' + jsBackend.current.module + '&action=delete_field&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.paramsGet = 'module=' + jsBackend.current.module + '&action=get_field&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.paramsSave = 'module=' + jsBackend.current.module + '&action=save_field&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.paramsSequence = 'module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
@@ -101,8 +101,11 @@ jsBackend.formBuilder.fields =
 			if(id != '')
 			{
 				// make the call
-				$.ajax({ url: jsBackend.formBuilder.fields.urlDelete,
-					data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ id,
+				$.ajax(
+				{
+					data: jsBackend.formBuilder.fields.ParamsDelete +
+							'&form_id=' + jsBackend.formBuilder.formId +
+							'&field_id=' + id,
 					success: function(data, textStatus)
 					{
 						// success
@@ -262,9 +265,11 @@ jsBackend.formBuilder.fields =
 				for(var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1]);
 				
 				// make ajax call
-				$.ajax({cache: false, type: 'POST', dataType: 'json', 
-					url: jsBackend.formBuilder.fields.urlSequence,
-					data: 'form_id=' + jsBackend.formBuilder.formId +'&new_id_sequence=' + newIdSequence.join(','),
+				$.ajax(
+				{
+					data: jsBackend.formBuilder.fields.paramsSequence +
+							'&form_id=' + jsBackend.formBuilder.formId +
+							'&new_id_sequence=' + newIdSequence.join(','),
 					success: function(data, textStatus)
 					{ 
 						// not a succes so revert the changes
@@ -315,9 +320,11 @@ jsBackend.formBuilder.fields =
 			if(id != '')
 			{
 				// make the call
-				$.ajax({ url: jsBackend.formBuilder.fields.urlGet,
-					data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ id,
-					type: 'get',
+				$.ajax(
+				{
+					data: jsBackend.formBuilder.fields.paramsGet +
+							'&form_id=' + jsBackend.formBuilder.formId +
+							'&field_id=' + id,
 					success: function(data, textStatus)
 					{
 						// success
@@ -668,8 +675,17 @@ jsBackend.formBuilder.fields =
 		var requiredErrorMessage = $('#checkboxRequiredErrorMessage').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&values='+ values +'&default_values='+ defaultValue +'&required='+ required +'&required_error_message='+ requiredErrorMessage,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&label=' + label +
+					'&values=' + values +
+					'&default_values=' + defaultValue +
+					'&required=' + required +
+					'&required_error_message=' + requiredErrorMessage,
 			success: function(data, textStatus)
 			{
 				// success
@@ -727,8 +743,17 @@ jsBackend.formBuilder.fields =
 		var requiredErrorMessage = $('#dropdownRequiredErrorMessage').val();
 		
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&values='+ values +'&default_values='+ defaultValue +'&required='+ required +'&required_error_message='+ requiredErrorMessage,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&label=' + label +
+					'&values=' + values +
+					'&default_values=' + defaultValue +
+					'&required=' + required +
+					'&required_error_message='+ requiredErrorMessage,
 			success: function(data, textStatus)
 			{
 				// success
@@ -782,8 +807,13 @@ jsBackend.formBuilder.fields =
 		var value = $('#heading').val();
 		
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&values='+ value,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&values=' + value,
 			success: function(data, textStatus)
 			{
 				// success
@@ -837,8 +867,13 @@ jsBackend.formBuilder.fields =
 		var value = $('#paragraph').val();
 		
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&values='+ value,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&values=' + value,
 			success: function(data, textStatus)
 			{
 				// success
@@ -893,8 +928,17 @@ jsBackend.formBuilder.fields =
 		var requiredErrorMessage = $('#radiobuttonRequiredErrorMessage').val();
 		
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&values='+ values +'&default_values='+ defaultValue +'&required='+ required +'&required_error_message='+ requiredErrorMessage,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&label=' + label +
+					'&values=' + values +
+					'&default_values=' + defaultValue +
+					'&required=' + required +
+					'&required_error_message=' + requiredErrorMessage,
 			success: function(data, textStatus)
 			{
 				// success
@@ -948,8 +992,13 @@ jsBackend.formBuilder.fields =
 		var value = $('#submit').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&values='+ value,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&values=' + value,
 			success: function(data, textStatus)
 			{
 				// success
@@ -1006,8 +1055,19 @@ jsBackend.formBuilder.fields =
 		var errorMessage = $('#textareaErrorMessage').val();
 		
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&default_values='+ value +'&required='+ required +'&required_error_message='+ requiredErrorMessage +'&validation='+ validation +'&validation_parameter='+ validationParameter +'&error_message='+ errorMessage,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&label=' + label +
+					'&default_values=' + value +
+					'&required=' + required +
+					'&required_error_message=' + requiredErrorMessage +
+					'&validation=' + validation +
+					'&validation_parameter=' + validationParameter +
+					'&error_message=' + errorMessage,
 			success: function(data, textStatus)
 			{
 				// success
@@ -1067,8 +1127,19 @@ jsBackend.formBuilder.fields =
 		var errorMessage = $('#textboxErrorMessage').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&default_values='+ value +'&required='+ required +'&required_error_message='+ requiredErrorMessage +'&validation='+ validation +'&validation_parameter='+ validationParameter +'&error_message='+ errorMessage,
+		$.ajax(
+		{
+			data: jsBackend.formBuilder.fields.paramsSave +
+					'&form_id=' + jsBackend.formBuilder.formId +
+					'&field_id=' + fieldId +
+					'&type=' + type +
+					'&label=' + label +
+					'&default_values=' + value +
+					'&required=' + required +
+					'&required_error_message=' + requiredErrorMessage +
+					'&validation=' + validation +
+					'&validation_parameter=' + validationParameter +
+					'&error_message=' + errorMessage,
 			success: function(data, textStatus)
 			{
 				// success

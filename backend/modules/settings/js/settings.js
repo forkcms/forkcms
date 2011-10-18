@@ -39,8 +39,7 @@ jsBackend.settings =
 		// make the call
 		$.ajax(
 		{
-			url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=settings&action=test_email_connection&language=' + jsBackend.current.language,
-			data: $('#settingsEmail').serialize(),
+			data: 'module=settings&action=test_email_connection&language=' + jsBackend.current.language + '&' + $('#settingsEmail').serialize(),
 			success: function(data, textStatus)
 			{
 				// hide spinner

@@ -72,9 +72,14 @@ jsBackend.faq =
 					// make ajax call
 					$.ajax(
 					{
-						cache: false, type: 'POST', dataType: 'json', 
-						url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence_questions&language=' + jsBackend.current.language,
-						data: 'questionId=' + questionId + '&fromCategoryId=' + fromCategoryId + '&toCategoryId=' + toCategoryId + '&fromCategorySequence=' + fromCategorySequence + '&toCategorySequence=' + toCategorySequence,
+						data: 'module=' + jsBackend.current.module +
+								'&action=sequence_questions' +
+								'&language=' + jsBackend.current.language +
+								'&questionId=' + questionId +
+								'&fromCategoryId=' + fromCategoryId +
+								'&toCategoryId=' + toCategoryId +
+								'&fromCategorySequence=' + fromCategorySequence +
+								'&toCategorySequence=' + toCategorySequence,
 						success: function(data, textStatus)
 						{ 
 							// not a succes so revert the changes

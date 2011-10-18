@@ -12,7 +12,7 @@ jsBackend.analyticsDashboard =
 			// make the call to check the status
 			$.ajax(
 			{
-				url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=analytics&action=refresh_traffic_sources&language=' + jsBackend.current.language,
+				data: 'module=analytics&action=refresh_traffic_sources&language=' + jsBackend.current.language,
 				success: function(data, textStatus)
 				{
 					// redirect

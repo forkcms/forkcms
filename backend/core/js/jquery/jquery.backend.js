@@ -79,15 +79,16 @@
 				// make the call
 				$.ajax(
 				{
-					url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=core&action=generate_url&language=' + jsBackend.current.language,
-					data: 'url=' + url +
+					data: 'module=core' +
+							'&action=generate_url' +
+							'&language=' + jsBackend.current.language +
+							'&url=' + url +
 							'&metaId=' + $('#metaId').val() +
 							'&baseFieldName=' + $('#baseFieldName').val() +
 							'&custom=' + $('#custom').val() +
 							'&className=' + $('#className').val() +
 							'&methodName=' + $('#methodName').val() +
 							'&parameters=' + $('#parameters').val(),
-					type: 'POST',
 					success: function(data, textStatus)
 					{
 						url = data.data;
@@ -437,7 +438,7 @@
 					// make the call
 					$.ajax(
 					{
-						url: options.saveUrl,
+						url: options.saveUrl, // @todo
 						data: options.current.extraParams,
 						success: function(data, textStatus)
 						{
@@ -553,8 +554,7 @@
 				{
 					$.ajax(
 					{
-						url: options.autoCompleteUrl,
-						type: 'GET',
+						url: options.autoCompleteUrl, // @todo
 						data: 'term=' + request.term,
 						success: function(data, textStatus)
 						{
@@ -856,7 +856,7 @@
 					{
 						$.ajax(
 						{
-							url: options.autoCompleteUrl,
+							url: options.autoCompleteUrl, // @todo
 							type: 'GET',
 							data: 'term=' + request.term,
 							success: function(data, textStatus)
@@ -1361,7 +1361,7 @@
 					{
 						$.ajax(
 						{
-							url: options.autoCompleteUrl,
+							url: options.autoCompleteUrl, // @todo
 							type: 'GET',
 							data: 'term=' + request.term,
 							success: function(data, textStatus)

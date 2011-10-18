@@ -365,12 +365,8 @@ jsBackend.analytics.loading =
 		// make the call to check the status
 		$.ajax(
 		{
-			cache: false,
-			type: 'POST',
 			timeout: 5000,
-			dataType: 'json',
-			url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=check_status&language=' + jsBackend.current.language,
-			data: 'page=' + page + '&identifier=' + identifier,
+			data: 'module=' + jsBackend.current.module + '&action=check_status&language=' + jsBackend.current.language + '&page=' + page + '&identifier=' + identifier,
 			success: function(data, textStatus)
 			{
 				// redirect

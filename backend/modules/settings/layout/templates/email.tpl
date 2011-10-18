@@ -16,7 +16,6 @@
 			<p>
 				{$ddmMailerType} {$ddmMailerTypeError}
 
-				{* @todo @yoni: style me *}
 				<small>
 					<a id="testEmailConnection" href="#">{$msgSendTestMail}</a>
 					<span id="testEmailConnectionSpinner" style="display: none;"><img style="margin-top: 3px;" src="/backend/core/layout/images/spinner.gif" width="12px" height="12px" alt="loading" /></span>

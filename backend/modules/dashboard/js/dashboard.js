@@ -151,8 +151,7 @@ jsBackend.dashboard =
 		// make the call
 		$.ajax(
 		{
-			url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=dashboard&action=alter_sequence&language=' + jsBackend.current.language,
-			data: 'new_sequence=' + JSON.stringify(newSequence),
+			data: 'module=dashboard&action=alter_sequence&language=' + jsBackend.current.language + '&new_sequence=' + JSON.stringify(newSequence),
 			success: function(data, textStatus)
 			{
 				// not a succes so revert the changes

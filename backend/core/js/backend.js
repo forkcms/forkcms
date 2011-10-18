@@ -63,6 +63,7 @@ jsBackend =
 		// set defaults for AJAX
 		$.ajaxSetup(
 		{
+			url: jsBackend.current.relativeUrl + '/backend/ajax.php',
 			cache: false,
 			type: 'POST',
 			dataType: 'json',
@@ -1612,10 +1613,7 @@ jsBackend.tableSequenceByDragAndDrop =
 					var table = $(this);
 					var action = (typeof $(table.parents('table.dataGrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.dataGrid')).data('action').toString();
 
-					// buil ajax-url
-					var url = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
-
-					// append
+					// fetch extra parameters
 					if(typeof $(table.parents('table.dataGrid')).data('extra-params') != 'undefined') url += $(table.parents('table.dataGrid')).data('extra-params');
 
 					// init var
@@ -1628,8 +1626,8 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						url: url,
-						data: 'new_id_sequence=' + newIdSequence.join(','),
+						url: url, // @todo
+						data: 'module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language + '&new_id_sequence=' + newIdSequence.join(','),
 						success: function(data, textStatus)
 						{
 							// not a succes so revert the changes

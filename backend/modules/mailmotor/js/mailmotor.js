@@ -203,9 +203,7 @@ jsBackend.mailmotor.linkAccount =
 			{
 				$.ajax(
 				{
-					cache: false, 
-					url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=load_client_info&language=' + jsBackend.current.language,
-					data: 'client_id='+ clientId,
+					data: 'module=' + jsBackend.current.module + '&action=load_client_info&language=' + jsBackend.current.language + '&client_id='+ clientId,
 					success: function(data, textStatus)
 					{
 						$.each($('#countries').find('option'), function(index, item)
@@ -243,9 +241,7 @@ jsBackend.mailmotor.linkAccount =
 		// make the call
 		$.ajax(
 		{
-			cache: false, 
-			url: jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language,
-			data: 'url='+ url.val() +'&username='+ username.val() +'&password='+ password.val(),
+			data: 'module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language + '&url='+ url.val() +'&username='+ username.val() +'&password='+ password.val(),
 			success: function(data, textStatus)
 			{
 				// remove all previous errors
@@ -354,9 +350,6 @@ jsBackend.mailmotor.step3 =
 				// prevent the form from submitting
 				e.preventDefault();
 
-				// build ajax URL
-				var url = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_content&language=' + jsBackend.current.language;
-
 				// set variables
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
@@ -371,8 +364,7 @@ jsBackend.mailmotor.step3 =
 				// make the call
 				$.ajax(
 				{
-					url: url,
-					data: jsBackend.current.relativeUrl + 'mailing_id='+ variables.mailingId +'&subject='+ subject +'&content_plain='+ plainText +'&content_html=' + textareaValue +'&full_content_html='+ bodyHTML,
+					data: 'module=' + jsBackend.current.module + '&action=save_content&language=' + jsBackend.current.language + '&mailing_id='+ variables.mailingId +'&subject='+ subject +'&content_plain='+ plainText +'&content_html=' + textareaValue +'&full_content_html='+ bodyHTML,
 					success: function(data, textStatus)
 					{
 						if(data.code == 200)
@@ -483,9 +475,6 @@ jsBackend.mailmotor.step4 =
 
 	saveSendDate: function()
 	{
-		// build ajax URL
-		var url = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_send_date&language=' + jsBackend.current.language;
-
 		// cache date/time values
 		var sendOnDate = $('#sendOnDate').val();
 		var sendOnTime = $('#sendOnTime').val();
@@ -493,8 +482,7 @@ jsBackend.mailmotor.step4 =
 		// make the call
 		$.ajax(
 		{
-			url: url,
-			data: 'mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
+			data: 'module=' + jsBackend.current.module + '&action=save_send_date&language=' + jsBackend.current.language + '&mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
 			success: function(data, textStatus)
 			{
 				if(data.code != 200)
@@ -538,8 +526,7 @@ jsBackend.mailmotor.step4 =
 		// save the send date
 		jsBackend.mailmotor.step4.saveSendDate();
 
-		// build ajax URL
-		var url = jsBackend.current.relativeUrl + '/backend/ajax.php?module=' + jsBackend.current.module + '&action=send_mailing&language=' + jsBackend.current.language;
+		// fetch dom nodes
 		var confirmBox = $('#sendMailingConfirmationModal');
 		var buttonPane = $('.ui-dialog-buttonpane');
 
@@ -549,8 +536,7 @@ jsBackend.mailmotor.step4 =
 		// make the call
 		$.ajax(
 		{
-			url: url,
-			data: 'id='+ variables.mailingId,
+			data: 'module=' + jsBackend.current.module + '&action=send_mailing&language=' + jsBackend.current.language + '&id='+ variables.mailingId,
 			success: function(data, textStatus)
 			{
 				if(data.code == 200)
