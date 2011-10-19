@@ -10,14 +10,14 @@
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
-class MailmotorInstall extends ModuleInstaller
+class MailmotorInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// install settings
 		$this->installSettings();

@@ -9,14 +9,14 @@
  * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
-class AnalyticsInstall extends ModuleInstaller
+class AnalyticsInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');

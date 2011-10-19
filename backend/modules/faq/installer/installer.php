@@ -9,14 +9,14 @@
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.1
  */
-class FaqInstall extends ModuleInstaller
+class FaqInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');

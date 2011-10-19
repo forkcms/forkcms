@@ -96,23 +96,26 @@ class BackendExtensionsModuleInstall extends BackendBaseActionIndex
 	private function install()
 	{
 		// we need the installer
-		require_once BACKEND_CORE_PATH . '/installer/install.php';
-		require_once BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/install.php';
+		require_once BACKEND_CORE_PATH . '/installer/installer.php';
+		require_once BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/installer.php';
 
 		// installer class name
-		$class = SpoonFilter::toCamelCase($this->currentModule) . 'Install';
+		$class = SpoonFilter::toCamelCase($this->currentModule) . 'Installer';
 
 		// possible variables available for the module installers
 		$variables = array();
 
-		// execute installer
-		$install = new $class(
+		// init installer
+		$installer = new $class(
 			BackendModel::getDB(true),
 			BL::getActiveLanguages(),
 			array_keys(BL::getInterfaceLanguages()),
 			false,
 			$variables
 		);
+
+		// execute installation
+		$installer->install();
 
 		// clear all cache
 		$this->clearCache();
@@ -133,7 +136,7 @@ class BackendExtensionsModuleInstall extends BackendBaseActionIndex
 		}
 
 		// no installer class present
-		if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/install.php'))
+		if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/installer.php'))
 		{
 			$this->redirect(BackendModel::createURLForAction('modules') . '&error=no-installer-file&var=' . $this->currentModule);
 		}

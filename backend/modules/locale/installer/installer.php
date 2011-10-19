@@ -11,14 +11,14 @@
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
-class LocaleInstall extends ModuleInstaller
+class LocaleInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');

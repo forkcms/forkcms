@@ -10,7 +10,7 @@
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class UsersInstall extends ModuleInstaller
+class UsersInstaller extends ModuleInstaller
 {
 	/**
 	 * Add a GOD-user
@@ -80,7 +80,7 @@ class UsersInstall extends ModuleInstaller
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');

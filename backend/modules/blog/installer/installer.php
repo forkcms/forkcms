@@ -11,7 +11,7 @@
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
-class BlogInstall extends ModuleInstaller
+class BlogInstaller extends ModuleInstaller
 {
 	/**
 	 * Default category id
@@ -45,7 +45,7 @@ class BlogInstall extends ModuleInstaller
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');

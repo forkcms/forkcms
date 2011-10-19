@@ -9,14 +9,14 @@
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.6.6
  */
-class ExtensionsInstall extends ModuleInstaller
+class ExtensionsInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// add 'content_blocks' as a module
 		$this->addModule('extensions', 'The content blocks module.');

@@ -10,14 +10,14 @@
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class ContentBlocksInstall extends ModuleInstaller
+class ContentBlocksInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');

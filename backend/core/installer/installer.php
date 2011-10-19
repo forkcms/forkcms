@@ -64,9 +64,6 @@ class ModuleInstaller
 		$this->interfaceLanguages = $interfaceLanguages;
 		$this->example = (bool) $example;
 		$this->variables = $variables;
-
-		// call the execute method
-		$this->execute();
 	}
 
 
@@ -787,14 +784,14 @@ class ModuleInstaller
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
-class CoreInstall extends ModuleInstaller
+class CoreInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// validate variables
 		if($this->getVariable('default_language') === null) throw new SpoonException('Default frontend language is not provided.');

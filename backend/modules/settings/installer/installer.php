@@ -10,14 +10,14 @@
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class SettingsInstall extends ModuleInstaller
+class SettingsInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// add 'settings' as a module
 		$this->addModule('settings', 'The module to manage your settings.');

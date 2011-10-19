@@ -10,14 +10,14 @@
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
-class SearchInstall extends ModuleInstaller
+class SearchInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
 	 *
 	 * @return	void
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
