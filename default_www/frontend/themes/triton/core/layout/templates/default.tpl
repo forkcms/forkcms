@@ -237,6 +237,5 @@
 
 	{* Site wide HTML *}
 	{$siteHTMLFooter}
->>>>>>> master
 </body>
 </html>
