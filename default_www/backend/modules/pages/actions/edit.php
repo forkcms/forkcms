@@ -384,6 +384,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			// init var
 			$templateId = (int) $this->frm->getField('template_id')->getValue();
 
+			// validate that we are not trying to link 2 modules
+			$hasBlock = false;
+
 			// loop blocks in template
 			for($i = 0; $i < $this->templates[$templateId]['num_blocks']; $i++)
 			{
@@ -391,7 +394,10 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
 
 				// reset some stuff
-				if($extraId > 0)
+				if($extraId <= 0) $extraId = null;
+
+				// extra-type is not HTML
+				if($extraId !== null)
 				{
 					// type of block
 					if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
@@ -402,6 +408,12 @@ class BackendPagesEdit extends BackendBaseActionEdit
 							$this->frm->getField('block_html_' . $i)->addError(BL::err('HomeCantHaveBlocks'));
 							$this->frm->addError(BL::err('HomeCantHaveBlocks'));
 						}
+
+						// set error
+						if($hasBlock) $this->frm->getField('block_html_' . $i)->addError(BL::err('CantAdd2Modules'));
+
+						// reset var
+						$hasBlock = true;
 					}
 				}
 			}
@@ -433,7 +445,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['id'] = $this->record['id'];
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $this->record['parent_id'];
-				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
+				$page['template_id'] = $templateId;
 				$page['meta_id'] = (int) $this->meta->save();
 				$page['language'] = BackendLanguage::getWorkingLanguage();
 				$page['type'] = $this->record['type'];
@@ -457,9 +469,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 				// insert page, store the id, we need it when building the blocks
 				$page['revision_id'] = BackendPagesModel::update($page);
-
-				// init var
-				$hasBlock = false;
 
 				// build blocks
 				$blocks = array();
@@ -488,23 +497,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 							// reset vars
 							$extraId = null;
 							$html = (string) $this->frm->getField('block_html_' . $i)->getValue();
-						}
-
-						// not HTML
-						else
-						{
-							// type of block
-							if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
-							{
-								// home can't have blocks
-								if($this->record['id'] == 1) throw new BackendException('Home can\'t have any blocks.');
-
-								// set error
-								if($hasBlock) throw new BackendException('Can\'t add 2 blocks');
-
-								// reset var
-								$hasBlock = true;
-							}
 						}
 
 						// build block

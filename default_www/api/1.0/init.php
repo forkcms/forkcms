@@ -59,7 +59,6 @@ class APIInit
 
 		// define constants
 		$this->definePaths();
-		$this->defineURLs();
 
 		// set include path
 		$this->setIncludePath();
@@ -179,16 +178,6 @@ class APIInit
 		define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
 		define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
 		define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
-	}
-
-
-	/**
-	 * Define URLs
-	 *
-	 * @return	void
-	 */
-	private function defineURLs()
-	{
 	}
 
 

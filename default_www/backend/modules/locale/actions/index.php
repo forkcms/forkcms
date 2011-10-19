@@ -204,7 +204,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 		// set filter
 		$this->filter['application'] = $this->getParameter('application') == null ? 'frontend' : $this->getParameter('application');
-		$this->filter['module'] = $this->getParameter('module', 'string', 'core');
+		$this->filter['module'] = $this->getParameter('module', 'string', null);
 		$this->filter['type'] = $this->getParameter('type', 'array');
 		$this->filter['language'] = $this->getParameter('language', 'array');
 		$this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');

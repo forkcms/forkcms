@@ -125,8 +125,8 @@ class SpoonSession
 		// fetch key
 		if(self::exists((string) $key)) return $_SESSION[(string) $key];
 
-		// key does't exist
-		return false;
+		// key doesn't exist
+		return null;
 	}
 
 
