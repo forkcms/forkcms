@@ -24,7 +24,7 @@ class LocaleInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'locale' as a module
-		$this->addModule('locale', 'The module to manage your website/cms locale.');
+		$this->addModule('locale');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

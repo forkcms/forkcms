@@ -360,9 +360,7 @@ class InstallerStep7 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep6::isAllowed() &&
-				isset($_SESSION['email']) &&
-				isset($_SESSION['password']);
+		return InstallerStep6::isAllowed() && isset($_SESSION['email']) && isset($_SESSION['password']);
 	}
 
 

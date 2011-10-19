@@ -22,7 +22,7 @@ class FormBuilderInstaller extends ModuleInstaller
 		$this->importSQL(PATH_WWW . '/backend/modules/form_builder/installer/data/install.sql');
 
 		// add as a module
-		$this->addModule('form_builder', 'The module to create and manage forms.');
+		$this->addModule('form_builder');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

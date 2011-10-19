@@ -23,7 +23,7 @@ class ContentBlocksInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'content_blocks' as a module
-		$this->addModule('content_blocks', 'The content blocks module.');
+		$this->addModule('content_blocks');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

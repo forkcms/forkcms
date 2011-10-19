@@ -20,7 +20,7 @@ class SettingsInstaller extends ModuleInstaller
 	public function install()
 	{
 		// add 'settings' as a module
-		$this->addModule('settings', 'The module to manage your settings.');
+		$this->addModule('settings');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

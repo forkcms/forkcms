@@ -23,7 +23,7 @@ class SearchInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'search' as a module
-		$this->addModule('search', 'The search module.');
+		$this->addModule('search');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

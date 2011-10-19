@@ -176,7 +176,7 @@ class MailmotorInstaller extends ModuleInstaller
 	private function installSettings()
 	{
 		// add 'blog' as a module
-		$this->addModule('mailmotor', 'The module to manage and send mailings.');
+		$this->addModule('mailmotor');
 
 		// get email from the session
 		$email = SpoonSession::exists('email') ? SpoonSession::get('email') : null;

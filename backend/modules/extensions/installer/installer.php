@@ -18,8 +18,8 @@ class ExtensionsInstaller extends ModuleInstaller
 	 */
 	public function install()
 	{
-		// add 'content_blocks' as a module
-		$this->addModule('extensions', 'The content blocks module.');
+		// add 'extensions' as a module
+		$this->addModule('extensions');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

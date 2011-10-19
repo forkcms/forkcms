@@ -86,7 +86,7 @@ class UsersInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'users' as a module
-		$this->addModule('users', 'User management.');
+		$this->addModule('users');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

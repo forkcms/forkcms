@@ -22,7 +22,7 @@ class ProfilesInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'profiles' as a module
-		$this->addModule('profiles', 'The profiles module.');
+		$this->addModule('profiles');
 
 		// module rights
 		$this->setModuleRights(1, 'profiles');

@@ -23,7 +23,7 @@ class TagsInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'blog' as a module
-		$this->addModule('tags', 'The tags module.');
+		$this->addModule('tags');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

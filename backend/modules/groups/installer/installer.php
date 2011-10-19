@@ -12,43 +12,6 @@
 class GroupsInstaller extends ModuleInstaller
 {
 	/**
-	 * Install the module
-	 *
-	 * @return	void
-	 */
-	public function install()
-	{
-		// load install.sql
-		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
-
-		// add 'settings' as a module
-		$this->addModule('groups', 'The module to manage usergroups.');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
-
-		// module rights
-		$this->setModuleRights(1, 'groups');
-
-		// action rights
-		$this->setActionRights(1, 'groups', 'index');
-		$this->setActionRights(1, 'groups', 'add');
-		$this->setActionRights(1, 'groups', 'edit');
-		$this->setActionRights(1, 'groups', 'delete');
-
-		// set navigation
-		$navigationSettingsId = $this->setNavigation(null, 'Settings');
-		$this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
-			'groups/add',
-			'groups/edit'
-		), 5);
-
-		// insert admins dashboard sequence
-		$this->insertDashboardSequence();
-	}
-
-
-	/**
 	 * Insert an empty admin dashboard sequence
 	 *
 	 * @return	void
@@ -99,6 +62,43 @@ class GroupsInstaller extends ModuleInstaller
 		// insert settings
 		$db->insert('groups_settings', $groupSetting);
 		$db->insert('users_settings', $userSetting);
+	}
+
+
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	public function install()
+	{
+		// load install.sql
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
+
+		// add 'settings' as a module
+		$this->addModule('groups');
+
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
+		// module rights
+		$this->setModuleRights(1, 'groups');
+
+		// action rights
+		$this->setActionRights(1, 'groups', 'index');
+		$this->setActionRights(1, 'groups', 'add');
+		$this->setActionRights(1, 'groups', 'edit');
+		$this->setActionRights(1, 'groups', 'delete');
+
+		// set navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
+			'groups/add',
+			'groups/edit'
+		), 5);
+
+		// insert admins dashboard sequence
+		$this->insertDashboardSequence();
 	}
 }
 

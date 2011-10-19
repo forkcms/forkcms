@@ -22,38 +22,6 @@ class PagesInstaller extends ModuleInstaller
 
 
 	/**
-	 * Class constructor.
-	 *
-	 * @return	void
-	 */
-	public function install()
-	{
-		// load install.sql
-		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
-
-		// add 'pages' as a module
-		$this->addModule('pages', 'The module to manage your pages and website structure.');
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
-
-		// import data
-		$this->importData();
-
-		// set rights
-		$this->setRights();
-
-		// set navigation
-		$this->setNavigation(null, 'Pages', 'pages/index', array('pages/add', 'pages/edit'), 2);
-
-		// settings navigation
-		$navigationSettingsId = $this->setNavigation(null, 'Settings');
-		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-		$this->setNavigation($navigationModulesId, 'Pages', 'pages/settings');
-	}
-
-
-	/**
 	 * Import the data
 	 *
 	 * @return	void
@@ -208,6 +176,38 @@ class PagesInstaller extends ModuleInstaller
 		// disable meta navigation
 		$this->setSetting('pages', 'meta_navigation', false);
 
+	}
+
+
+	/**
+	 * Install this module.
+	 *
+	 * @return	void
+	 */
+	public function install()
+	{
+		// load install.sql
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
+
+		// add 'pages' as a module
+		$this->addModule('pages');
+
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
+		// import data
+		$this->importData();
+
+		// set rights
+		$this->setRights();
+
+		// set navigation
+		$this->setNavigation(null, 'Pages', 'pages/index', array('pages/add', 'pages/edit'), 2);
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Pages', 'pages/settings');
 	}
 
 

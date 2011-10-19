@@ -22,7 +22,7 @@ class LocationInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'location' as a module
-		$this->addModule('location', 'The location module.');
+		$this->addModule('location');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

@@ -22,7 +22,7 @@ class FaqInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'search' as a module
-		$this->addModule('faq', 'The faq module.');
+		$this->addModule('faq');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

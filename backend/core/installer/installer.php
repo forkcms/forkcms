@@ -72,9 +72,8 @@ class ModuleInstaller
 	 *
 	 * @return	void
 	 * @param	string $name					The name of the module.
-	 * @param	string[optional] $description	A description for the module.
 	 */
-	protected function addModule($name, $description = null)
+	protected function addModule($name)
 	{
 		// redefine
 		$name = (string) $name;
@@ -83,16 +82,17 @@ class ModuleInstaller
 		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?', $name))
 		{
 			// build item
-			$item = array('name' => $name,
-							'description' => $description,
-							'active' => 'Y');
+			$item = array(
+				'name' => $name,
+				'active' => 'Y',
+				'installed_on' => gmdate('Y-m-d H:i:s'));
 
 			// insert module
 			$this->getDB()->insert('modules', $item);
 		}
 
 		// activate and update description
-		else $this->getDB()->update('modules', array('description' => $description, 'active' => 'Y'), 'name = ?', $name);
+		else $this->getDB()->update('modules', array('active' => 'Y', 'installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
 	}
 
 
@@ -189,6 +189,22 @@ class ModuleInstaller
 
 
 	/**
+	 * Get a setting
+	 *
+	 * @return	mixed
+	 * @param	string $module	The name of the module.
+	 * @param	string $name	The name of the setting.
+	 */
+	protected function getSetting($module, $name)
+	{
+		return unserialize($this->getDB()->getVar('SELECT value
+													FROM modules_settings
+													WHERE module = ? AND name = ?',
+													array((string) $module, (string) $name)));
+	}
+
+
+	/**
 	 * Get the id of the requested template of the active theme.
 	 *
 	 * @return	int
@@ -202,22 +218,6 @@ class ModuleInstaller
 
 		// return best matching template id
 		return (int) $this->getDB()->getVar('SELECT id FROM pages_templates WHERE theme = ? ORDER BY path LIKE ? DESC, id ASC LIMIT 1', array((string) $theme, '%' . (string) $template . '%'));
-	}
-
-
-	/**
-	 * Get a setting
-	 *
-	 * @return	mixed
-	 * @param	string $module	The name of the module.
-	 * @param	string $name	The name of the setting.
-	 */
-	protected function getSetting($module, $name)
-	{
-		return unserialize($this->getDB()->getVar('SELECT value
-													FROM modules_settings
-													WHERE module = ? AND name = ?',
-													array((string) $module, (string) $name)));
 	}
 
 
@@ -805,10 +805,10 @@ class CoreInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add core modules
-		$this->addModule('core', 'The Fork CMS core module.');
-		$this->addModule('authentication', 'The module to manage authentication');
-		$this->addModule('dashboard', 'The dashboard containing module specific widgets.');
-		$this->addModule('error', 'The error module, used for displaying errors.');
+		$this->addModule('core');
+		$this->addModule('authentication');
+		$this->addModule('dashboard');
+		$this->addModule('error');
 
 		// set rights
 		$this->setRights();

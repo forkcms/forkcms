@@ -41,6 +41,18 @@ class BlogInstaller extends ModuleInstaller
 
 
 	/**
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
+	 */
+	private function getCategory($language)
+	{
+		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?', array((string) $language));
+	}
+
+
+	/**
 	 * Install the module
 	 *
 	 * @return	void
@@ -51,7 +63,7 @@ class BlogInstaller extends ModuleInstaller
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'blog' as a module
-		$this->addModule('blog', 'The blog module.');
+		$this->addModule('blog');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
@@ -151,18 +163,6 @@ class BlogInstaller extends ModuleInstaller
 			// install example data if requested
 			if($this->installExample()) $this->installExampleData($language);
 		}
-	}
-
-
-	/**
-	 * Fetch the id of the first category in this language we come across
-	 *
-	 * @return	int
-	 * @param	string $language	The language to use.
-	 */
-	private function getCategory($language)
-	{
-		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?', array((string) $language));
 	}
 
 
