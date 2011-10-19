@@ -40,14 +40,7 @@ class FrontendBlogWidgetCategories extends FrontendBaseWidget
 		$categories = FrontendBlogModel::getAllCategories();
 
 		// any categories?
-		if(!empty($categories))
-		{
-			// build link
-			$link = FrontendNavigation::getURLForBlock('blog', 'category');
-
-			// loop and reset url
-			foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];
-		}
+		if(!empty($categories)) $categories = FrontendModel::buildActionURL($categories, 'blog', 'category', 'url', 'url');
 
 		// assign comments
 		$this->tpl->assign('widgetBlogCategories', $categories);
