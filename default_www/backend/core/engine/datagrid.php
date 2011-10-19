@@ -865,15 +865,16 @@ class BackendDataGridFunctions
 		// get settings
 		$avatar = $user->getSetting('avatar', 'no-avatar.gif');
 		$nickname = $user->getSetting('nickname');
+		$allowed = BackendAuthentication::isAllowedAction('edit','users');
 
 		// build html
 		$html = '<div class="dataGridAvatar">' . "\n";
 		$html .= '	<div class="avatar av24">' . "\n";
-		$html .= '		<a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . "\n";
+		if($allowed) $html .= '		<a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . "\n";
 		$html .= '			<img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
-		$html .= '		</a>' . "\n";
+		if($allowed) $html .= '		</a>' . "\n";
 		$html .= '	</div>';
-		$html .= '	<p><a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
+		$html .= '	<p><a href="' . (($allowed) ? (BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id) : '#') . '">' . $nickname . '</a></p>' . "\n";
 		$html .= '</div>';
 
 		// return

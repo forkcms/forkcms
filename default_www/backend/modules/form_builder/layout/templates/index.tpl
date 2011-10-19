@@ -3,11 +3,13 @@
 
 <div class="pageTitle">
 	<h2>{$lblFormBuilder|ucfirst}</h2>
+    {option:actionAddAllowed}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
+    {/option:actionAddAllowed}
 </div>
 
 {option:dataGrid}
