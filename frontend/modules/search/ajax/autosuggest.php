@@ -234,8 +234,8 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 	private function validateForm()
 	{
 		// set values
-		$this->term = SpoonFilter::getGetValue('term', null, '');
-		$this->length = (int) SpoonFilter::getGetValue('length', null, 50);
+		$this->term = SpoonFilter::getPostValue('term', null, '');
+		$this->length = (int) SpoonFilter::getPostValue('length', null, 50);
 
 		// validate
 		if($this->term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');

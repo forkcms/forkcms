@@ -57,7 +57,11 @@ jsBackend.blog.controls =
 							
 							$.ajax(
 							{
-								data: 'module='+ jsBackend.current.module +'&action=add_category&language=' + jsBackend.current.language + 'value=' + $('#categoryTitle').val(),
+								data:
+								{
+									fork: { module: jsBackend.current.module, action: 'add_category', language: jsBackend.current.language },
+									value: $('#categoryTitle').val()
+								},
 								success: function(json, textStatus)
 								{
 									if(json.code != 200)

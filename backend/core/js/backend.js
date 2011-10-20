@@ -67,7 +67,8 @@ jsBackend =
 			cache: false,
 			type: 'POST',
 			dataType: 'json',
-			timeout: 10000
+			timeout: 10000,
+			data: { fork: { module: jsBackend.current.module, action: jsBackend.current.action, language: jsBackend.current.language }}
 		});
 
 		// global error handler
@@ -1078,7 +1079,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				autoCompleteUrl: jsBackend.current.relativeUrl + '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}'
+				params: {fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language }}
 			});
 		}
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
@@ -1089,7 +1090,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				autoCompleteUrl: jsBackend.current.relativeUrl + '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}',
+				params: {fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language }},
 				showIconOnly: false
 			});
 		}
@@ -1626,8 +1627,11 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						url: url, // @todo
-						data: 'module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language + '&new_id_sequence=' + newIdSequence.join(','),
+						data:
+						{
+							fork: { module: jsBackend.current.module, action: action, language: jsBackend.current.language },
+							new_id_sequence: newIdSequence.join(',')
+						},
 						success: function(data, textStatus)
 						{
 							// not a succes so revert the changes

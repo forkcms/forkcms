@@ -203,7 +203,11 @@ jsBackend.mailmotor.linkAccount =
 			{
 				$.ajax(
 				{
-					data: 'module=' + jsBackend.current.module + '&action=load_client_info&language=' + jsBackend.current.language + '&client_id='+ clientId,
+					data:
+					{
+						fork: { module: jsBackend.current.module, action: 'load_client_info', language: jsBackend.current.language },
+						client_id: clientId
+					},
 					success: function(data, textStatus)
 					{
 						$.each($('#countries').find('option'), function(index, item)
@@ -241,7 +245,13 @@ jsBackend.mailmotor.linkAccount =
 		// make the call
 		$.ajax(
 		{
-			data: 'module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language + '&url='+ url.val() +'&username='+ username.val() +'&password='+ password.val(),
+			data:
+			{
+				fork: { module: jsBackend.current.module, action: 'link_account', language: jsBackend.current.language },
+				url: url.val(),
+				username: username.val(),
+				password: password.val()
+			},
 			success: function(data, textStatus)
 			{
 				// remove all previous errors
@@ -364,7 +374,15 @@ jsBackend.mailmotor.step3 =
 				// make the call
 				$.ajax(
 				{
-					data: 'module=' + jsBackend.current.module + '&action=save_content&language=' + jsBackend.current.language + '&mailing_id='+ variables.mailingId +'&subject='+ subject +'&content_plain='+ plainText +'&content_html=' + textareaValue +'&full_content_html='+ bodyHTML,
+					data:
+					{
+						fork: { module: jsBackend.current.module, action: 'save_content', language: jsBackend.current.language },
+						mailing_id: variables.mailingId,
+						subject: subject,
+						content_plain: plainText,
+						content_html: textareaValue,
+						full_content_html: bodyHTML
+					},
 					success: function(data, textStatus)
 					{
 						if(data.code == 200)
@@ -482,7 +500,13 @@ jsBackend.mailmotor.step4 =
 		// make the call
 		$.ajax(
 		{
-			data: 'module=' + jsBackend.current.module + '&action=save_send_date&language=' + jsBackend.current.language + '&mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
+			data:
+			{
+				fork: { module: jsBackend.current.module, action: 'save_send_date', language: jsBackend.current.language },
+				mailing_id: variables.mailingId,
+				send_on_date: sendOnDate,
+				send_on_time: sendOnTime
+			},
 			success: function(data, textStatus)
 			{
 				if(data.code != 200)
@@ -536,7 +560,11 @@ jsBackend.mailmotor.step4 =
 		// make the call
 		$.ajax(
 		{
-			data: 'module=' + jsBackend.current.module + '&action=send_mailing&language=' + jsBackend.current.language + '&id='+ variables.mailingId,
+			data:
+			{
+				fork: { module: jsBackend.current.module, action: 'send_mailing', language: jsBackend.current.language },
+				id: variables.mailingId
+			},
 			success: function(data, textStatus)
 			{
 				if(data.code == 200)

@@ -22,7 +22,7 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$term = SpoonFilter::getGetValue('term', null, '');
+		$term = SpoonFilter::getPostValue('term', null, '');
 		$limit = (int) FrontendModel::getModuleSetting('search', 'autocomplete_num_items', 10);
 
 		// validate

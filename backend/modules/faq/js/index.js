@@ -72,14 +72,15 @@ jsBackend.faq =
 					// make ajax call
 					$.ajax(
 					{
-						data: 'module=' + jsBackend.current.module +
-								'&action=sequence_questions' +
-								'&language=' + jsBackend.current.language +
-								'&questionId=' + questionId +
-								'&fromCategoryId=' + fromCategoryId +
-								'&toCategoryId=' + toCategoryId +
-								'&fromCategorySequence=' + fromCategorySequence +
-								'&toCategorySequence=' + toCategorySequence,
+						data:
+						{
+							fork: { module: jsBackend.current.module, action: 'sequence_questions', language: jsBackend.current.language },
+							questionId: questionId,
+							fromCategoryId: fromCategoryId,
+							toCategoryId: toCategoryId,
+							fromCategorySequence: fromCategorySequence,
+							toCategorySequence: toCategorySequence
+						},
 						success: function(data, textStatus)
 						{ 
 							// not a succes so revert the changes

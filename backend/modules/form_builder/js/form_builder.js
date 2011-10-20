@@ -70,10 +70,10 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.paramsDelete = 'module=' + jsBackend.current.module + '&action=delete_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.paramsGet = 'module=' + jsBackend.current.module + '&action=get_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.paramsSave = 'module=' + jsBackend.current.module + '&action=save_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.paramsSequence = 'module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.paramsDelete = {fork: { module: jsBackend.current.module, action: 'delete_field', language: jsBackend.current.language} };
+		jsBackend.formBuilder.fields.paramsGet = {fork: { module: jsBackend.current.module, action: 'get_field', language: jsBackend.current.language} };
+		jsBackend.formBuilder.fields.paramsSave = {fork: { module: jsBackend.current.module, action: 'save_field', language: jsBackend.current.language} };
+		jsBackend.formBuilder.fields.paramsSequence = {fork: { module: jsBackend.current.module, action: 'sequence', language: jsBackend.current.language} };
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
@@ -103,9 +103,11 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: jsBackend.formBuilder.fields.ParamsDelete +
-							'&form_id=' + jsBackend.formBuilder.formId +
-							'&field_id=' + id,
+					data: $.extend(jsBackend.formBuilder.fields.ParamsDelete,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						field_id: id
+					}),
 					success: function(data, textStatus)
 					{
 						// success
@@ -267,9 +269,11 @@ jsBackend.formBuilder.fields =
 				// make ajax call
 				$.ajax(
 				{
-					data: jsBackend.formBuilder.fields.paramsSequence +
-							'&form_id=' + jsBackend.formBuilder.formId +
-							'&new_id_sequence=' + newIdSequence.join(','),
+					data: $.extend(jsBackend.formBuilder.fields.paramsSequence,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						new_id_sequence: newIdSequence.join(',')
+					}),
 					success: function(data, textStatus)
 					{ 
 						// not a succes so revert the changes
@@ -322,9 +326,11 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: jsBackend.formBuilder.fields.paramsGet +
-							'&form_id=' + jsBackend.formBuilder.formId +
-							'&field_id=' + id,
+					data: $.extend(jsBackend.formBuilder.fields.paramsGet,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						field_id: id
+					}),
 					success: function(data, textStatus)
 					{
 						// success
@@ -677,6 +683,17 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				values: values,
+				default_values: defaultValue,
+				required: required,
+				required_error_message: requiredErrorMessage
+			}),
 			data: jsBackend.formBuilder.fields.paramsSave +
 					'&form_id=' + jsBackend.formBuilder.formId +
 					'&field_id=' + fieldId +
@@ -745,15 +762,17 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: jsBackend.formBuilder.fields.paramsSave +
-					'&form_id=' + jsBackend.formBuilder.formId +
-					'&field_id=' + fieldId +
-					'&type=' + type +
-					'&label=' + label +
-					'&values=' + values +
-					'&default_values=' + defaultValue +
-					'&required=' + required +
-					'&required_error_message='+ requiredErrorMessage,
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				values: values,
+				default_values: defaultValue,
+				required: required,
+				required_error_message: requiredErrorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -809,11 +828,13 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: jsBackend.formBuilder.fields.paramsSave +
-					'&form_id=' + jsBackend.formBuilder.formId +
-					'&field_id=' + fieldId +
-					'&type=' + type +
-					'&values=' + value,
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				values: values
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -869,11 +890,13 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: jsBackend.formBuilder.fields.paramsSave +
-					'&form_id=' + jsBackend.formBuilder.formId +
-					'&field_id=' + fieldId +
-					'&type=' + type +
-					'&values=' + value,
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				values: values
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -930,15 +953,17 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: jsBackend.formBuilder.fields.paramsSave +
-					'&form_id=' + jsBackend.formBuilder.formId +
-					'&field_id=' + fieldId +
-					'&type=' + type +
-					'&label=' + label +
-					'&values=' + values +
-					'&default_values=' + defaultValue +
-					'&required=' + required +
-					'&required_error_message=' + requiredErrorMessage,
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				values: values,
+				default_values: defaultValue,
+				required: required,
+				required_error_message: requiredErrorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -994,11 +1019,13 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: jsBackend.formBuilder.fields.paramsSave +
-					'&form_id=' + jsBackend.formBuilder.formId +
-					'&field_id=' + fieldId +
-					'&type=' + type +
-					'&values=' + value,
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				values: values
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -1057,17 +1084,19 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: jsBackend.formBuilder.fields.paramsSave +
-					'&form_id=' + jsBackend.formBuilder.formId +
-					'&field_id=' + fieldId +
-					'&type=' + type +
-					'&label=' + label +
-					'&default_values=' + value +
-					'&required=' + required +
-					'&required_error_message=' + requiredErrorMessage +
-					'&validation=' + validation +
-					'&validation_parameter=' + validationParameter +
-					'&error_message=' + errorMessage,
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				default_values: value,
+				required: required,
+				required_error_message: requiredErrorMessage,
+				validation: validation,
+				validation_parameter: validationParameter,
+				error_message: errorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -1129,17 +1158,19 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: jsBackend.formBuilder.fields.paramsSave +
-					'&form_id=' + jsBackend.formBuilder.formId +
-					'&field_id=' + fieldId +
-					'&type=' + type +
-					'&label=' + label +
-					'&default_values=' + value +
-					'&required=' + required +
-					'&required_error_message=' + requiredErrorMessage +
-					'&validation=' + validation +
-					'&validation_parameter=' + validationParameter +
-					'&error_message=' + errorMessage,
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				default_values: value,
+				required: required,
+				required_error_message: requiredErrorMessage,
+				validation: validation,
+				validation_parameter: validationParameter,
+				error_message: errorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success

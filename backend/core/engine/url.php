@@ -207,7 +207,7 @@ class BackendURL
 			if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
 			{
 				// redirect to login
-				SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode('/' . $this->getQueryString()));
+				SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode(SITE_RELATIVE_URL . '/' . $this->getQueryString()));
 			}
 
 			// the person is logged in
@@ -217,7 +217,7 @@ class BackendURL
 				if(!BackendAuthentication::isAllowedModule($module))
 				{
 					// the user doesn't have access, redirect to error page
-					SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
+					SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode(SITE_RELATIVE_URL . '/' . $this->getQueryString()));
 				}
 
 				// we have access
@@ -227,7 +227,7 @@ class BackendURL
 					if(!BackendAuthentication::isAllowedAction($action, $module))
 					{
 						// the user hasn't access, redirect to error page
-						SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
+						SpoonHTTP::redirect(SITE_RELATIVE_URL . '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode(SITE_RELATIVE_URL . '/' . $this->getQueryString()));
 					}
 
 					// let's do it

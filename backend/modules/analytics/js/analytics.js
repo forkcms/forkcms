@@ -366,7 +366,12 @@ jsBackend.analytics.loading =
 		$.ajax(
 		{
 			timeout: 5000,
-			data: 'module=' + jsBackend.current.module + '&action=check_status&language=' + jsBackend.current.language + '&page=' + page + '&identifier=' + identifier,
+			data:
+			{
+				fork: { module: jsBackend.current.module, action: 'check_status', language: jsBackend.current.language },
+				page: page,
+				identifier: identifier
+			},
 			success: function(data, textStatus)
 			{
 				// redirect
