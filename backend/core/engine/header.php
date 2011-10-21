@@ -166,7 +166,7 @@ class BackendHeader
 				if($file['add_timestamp'] !== false) $file['path'] .= (strpos($file['path'], '?') !== false) ? '&m=' . $lastModifiedTime : '?m=' . $lastModifiedTime;
 
 				// add
-				$cssFiles[] = array('path' => $file['path']);
+				$cssFiles[] = array('path' => SITE_RELATIVE_URL . $file['path']);
 			}
 		}
 
@@ -187,16 +187,16 @@ class BackendHeader
 			foreach($this->javascriptFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('path' => $file['path']);
+				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('path' => SITE_RELATIVE_URL . $file['path']);
 
 				// make the file uncacheble
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['path'], 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
+					if(substr($file['path'], 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => SITE_RELATIVE_URL . $file['path'] . '&amp;m=' . time());
 
 					// add lastmodified time
-					else $javascriptFiles[] = array('path' => $file['path'] . '?m=' . $lastModifiedTime);
+					else $javascriptFiles[] = array('path' => SITE_RELATIVE_URL . $file['path'] . '?m=' . $lastModifiedTime);
 				}
 			}
 		}

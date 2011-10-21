@@ -49,12 +49,16 @@ define('DB_PASSWORD', '<database-password>');
 /**
  * Site configuration
  */
-// the domain (without http)
+// the protocol
+define('SITE_PROTOCOL', isset($_SERVER['SERVER_PROTOCOL']) ? (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') : '<site-protocol>');
+// the domain (without http(s))
 define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '<site-domain>');
 // the default title
 define('SITE_DEFAULT_TITLE', '<site-default-title>');
+// the relative url
+define('SITE_RELATIVE_URL', '<site-relative-url>');
 // the url
-define('SITE_URL', 'http://' . SITE_DOMAIN);
+define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN . SITE_RELATIVE_URL);
 // is the site multilanguage?
 define('SITE_MULTILANGUAGE', '<site-multilanguage>');
 // default action group tag

@@ -299,7 +299,7 @@ class FrontendTemplate extends SpoonTemplate
 		{
 			$this->assign('THEME', FrontendModel::getModuleSetting('core', 'theme', 'default'));
 			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
-			$this->assign('THEME_URL', '/frontend/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
+			$this->assign('THEME_URL', SITE_RELATIVE_URL . '/frontend/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
 		}
 	}
 
@@ -525,22 +525,22 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the navigation html
-	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>]}
+	 * 	syntax: {$var|getnavigation[:<type>][:<pageId>][:<depth>][:<excludeIds-splitted-by-dash>]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var			The variable.
 	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer.
-	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build.
+	 * @param	int[optional] $pageId			The parent wherefore the navigation should be build.
 	 * @param	int[optional] $depth			The maximum depth that has to be build.
 	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -).
 	 */
-	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
+	public static function getNavigation($var = null, $type = 'page', $pageId = 0, $depth = null, $excludeIds = null)
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
 
 		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds);
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $pageId, $depth, $excludeIds);
 
 		// return the var
 		if($return != '') return $return;
@@ -598,7 +598,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the subnavigation html
-	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:'<excludeIds-splitted-by-dash>']}
+	 * 	syntax: {$var|getsubnavigation[:<type>][:<pageId>][:<startDepth>][:<endDepth>][:'<excludeIds-splitted-by-dash>']}
 	 *
 	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *

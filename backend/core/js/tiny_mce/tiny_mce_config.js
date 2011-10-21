@@ -28,7 +28,7 @@ tinyMCE.init(
 
 	// layout options
 	body_class: 'content',
-	content_css: '/frontend/core/layout/css/screen.css{option:THEME_HAS_CSS},/frontend/themes/{$THEME}/core/layout/css/screen.css{/option:THEME_HAS_CSS},/backend/core/layout/css/editor_content.css{option:THEME_HAS_EDITOR_CSS},/frontend/themes/{$THEME}/core/layout/css/editor_content.css{/option:THEME_HAS_EDITOR_CSS}',
+	content_css: '{$SITE_RELATIVE_URL}/frontend/core/layout/css/screen.css{option:THEME_HAS_CSS},{$SITE_RELATIVE_URL}/frontend/themes/{$THEME}/core/layout/css/screen.css{/option:THEME_HAS_CSS},{$SITE_RELATIVE_URL}/backend/core/layout/css/editor_content.css{option:THEME_HAS_EDITOR_CSS},{$SITE_RELATIVE_URL}/frontend/themes/{$THEME}/core/layout/css/editor_content.css{/option:THEME_HAS_EDITOR_CSS}',
 
 	// theme options
 	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor,|,charmap,code,|,fullscreen,|,template',
@@ -53,23 +53,23 @@ tinyMCE.init(
 	[
 		{
 			title: 'Paragraph with left aligned image',
-			src: '/backend/core/js/tiny_mce/snippets/image_left.html',
+			src: '{$SITE_RELATIVE_URL}/backend/core/js/tiny_mce/snippets/image_left.html',
 			description: 'Paragraph with left aligned image'
 		},
 		{
 			title: 'Paragraph with right aligned image',
-			src: '/backend/core/js/tiny_mce/snippets/image_right.html',
+			src: '{$SITE_RELATIVE_URL}/backend/core/js/tiny_mce/snippets/image_right.html',
 			description: 'Paragraph with right aligned image'
 		},
 		{
 			title: 'Basic table',
-			src: '/backend/core/js/tiny_mce/snippets/table.html',
+			src: '{$SITE_RELATIVE_URL}/backend/core/js/tiny_mce/snippets/table.html',
 			description: 'Basic table'
 		}
 	],
 
 	// file lists
-	external_link_list_url: '/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js?{$timestamp}',
+	external_link_list_url: '{$SITE_RELATIVE_URL}/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js?{$timestamp}',
 
 	// paste
 	paste_auto_cleanup_on_paste: true,

@@ -830,8 +830,8 @@ class BackendMailmotorCMHelper
 		if(!isset($item['group_cm_ids'])) $item['group_cm_ids'] = self::getCampaignMonitorIDsForGroups($item['groups']);
 
 		// fetch the content URLs
-		if(!isset($item['content_html_url'])) $item['content_html_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'html', true);
-		if(!isset($item['content_plain_url'])) $item['content_plain_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'plain', true);
+		if(!isset($item['content_html_url'])) $item['content_html_url'] = SITE_PROTOCOL . '://' . SITE_DOMAIN . BackendMailmotorModel::getMailingPreviewURL($item['id'], 'html', true);
+		if(!isset($item['content_plain_url'])) $item['content_plain_url'] = SITE_PROTOCOL . '://' . SITE_DOMAIN . BackendMailmotorModel::getMailingPreviewURL($item['id'], 'plain', true);
 
 		// create the campaign in CM
 		$result = self::insertMailing($item);

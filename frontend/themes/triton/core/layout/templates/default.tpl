@@ -7,7 +7,7 @@
 
 				{* Logo *}
 				<div id="logo">
-					<h2><a href="/">{$siteTitle}</a></h2>
+					<h2><a href="{$SITE_RELATIVE_URL}/">{$siteTitle}</a></h2>
 				</div>
 
 				{* Skip link *}

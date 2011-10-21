@@ -8,18 +8,18 @@
 	<title>Fork 2.0.0 test - Fork CMS</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="/backend/modules/mailmotor/layout/css/iframe.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/imports/tinymce.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{$SITE_RELATIVE_URL}/backend/modules/mailmotor/layout/css/iframe.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{$SITE_RELATIVE_URL}/backend/core/layout/css/imports/tinymce.css" />
 
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.js"></script>
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.tools.js"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/core/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/core/js/jquery/jquery.ui.js"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/core/js/jquery/jquery.tools.js"></script>
 
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.backend.js"></script>
-	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=backend.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=utils.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=mailmotor.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/core/js/tiny_mce/jquery.tinymce.js"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/core/js/jquery/jquery.backend.js"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/js.php?module=core&amp;file=backend.js&amp;language=nl&amp;m=1272467798"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/js.php?module=core&amp;file=utils.js&amp;language=nl&amp;m=1272467798"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/js.php?module=mailmotor&amp;file=mailmotor.js&amp;language=nl&amp;m=1272467798"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/core/js/tiny_mce/jquery.tinymce.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 			var variables = new Array();
@@ -40,7 +40,7 @@
 			}
 		//]]>
 	</script>
-	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=tiny_mce_config.js&amp;language={$LANGUAGE}"></script>
+	<script type="text/javascript" src="{$SITE_RELATIVE_URL}/backend/js.php?module=mailmotor&amp;file=tiny_mce_config.js&amp;language={$LANGUAGE}"></script>
 </head>
 <body id="content" class="edit addEdit">
 	{$templateHtml}

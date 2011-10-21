@@ -395,7 +395,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assign('positions', $this->positions);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
-		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
+		$this->tpl->assign('prefixURL', SITE_PROTOCOL . '://' . SITE_DOMAIN . rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
 		// init var

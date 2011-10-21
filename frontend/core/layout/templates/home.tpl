@@ -5,7 +5,7 @@
 		<header id="header">
 			{* Logo *}
 			<h2>
-				<a href="/">{$siteTitle}</a>
+				<a href="{$SITE_RELATIVE_URL}/">{$siteTitle}</a>
 			</h2>
 
 			{* Language *}

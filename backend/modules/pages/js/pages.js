@@ -845,7 +845,7 @@ jsBackend.pages.tree =
 			},
 			types:
 			{
-				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/backend/modules/pages/js/jstree/themes/fork/icons.gif' } },
+				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '{$SITE_RELATIVE_URL}/backend/modules/pages/js/jstree/themes/fork/icons.gif' } },
 				'page': { icon: { position: '0 -80px' } },
 				'folder': { icon: { position: false } },
 				'hidden': { icon: { position: false } },
@@ -896,8 +896,11 @@ jsBackend.pages.tree =
 		$.ajax(
 		{
 			async: false, // important that this isn't asynchronous
-			url: '/backend/ajax.php?module=pages&action=get_info&language='+ jsBackend.current.language,
-			data: 'id=' + currentPageID,
+			data:
+			{
+				fork: { module: jsBackend.current.module, action: 'get_info', language: jsBackend.current.language },
+				id: currentPageID
+			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
 				if(jsBackend.debug) alert(textStatus);
@@ -947,8 +950,13 @@ jsBackend.pages.tree =
 		// make the call
 		$.ajax(
 		{
-			url: '/backend/ajax.php?module=pages&action=move&language='+ jsBackend.current.language,
-			data: 'id=' + currentPageID + '&dropped_on='+ droppedOnPageID +'&type='+ type,
+			data:
+			{
+				fork: { module: jsBackend.current.module, action: 'move', language: jsBackend.current.language },
+				id: currentPageID,
+				dropped_on: droppedOnPageID,
+				type: type
+			},
 			success: function(json, textStatus)
 			{
 				if(json.code != 200)

@@ -15,7 +15,7 @@
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 		<span class="oneLiner">
-			<span><a href="{$SITE_URL}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl"></span></a></span>
+			<span><a href="{$prefixURL}">{$prefixURL}/<span id="generatedUrl"></span></a></span>
 		</span>
 	</p>
 
@@ -175,7 +175,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
-							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}</span>{$txtUrl} {$txtUrlError}
+							<span id="urlFirstPart">{$prefixURL}</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
 				</div>

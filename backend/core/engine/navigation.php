@@ -139,7 +139,7 @@ class BackendNavigation
 				// start li
 				if($selected) $HTML .= '<li class="selected">' . "\n";
 				else $HTML .= '<li>' . "\n";
-				$HTML .= '	<a href="/' . NAMED_APPLICATION . '/' . BackendLanguage::getWorkingLanguage() . '/' . $url . '">' . $label . '</a>' . "\n";
+				$HTML .= '	<a href="'. SITE_RELATIVE_URL .'/' . NAMED_APPLICATION . '/' . BackendLanguage::getWorkingLanguage() . '/' . $url . '">' . $label . '</a>' . "\n";
 			}
 
 			// children?

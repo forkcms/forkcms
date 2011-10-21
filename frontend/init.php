@@ -202,9 +202,9 @@ class FrontendInit
 	 */
 	private function defineURLs()
 	{
-		define('FRONTEND_CORE_URL', '/' . APPLICATION . '/core');
-		define('FRONTEND_CACHE_URL', '/' . APPLICATION . '/cache');
-		define('FRONTEND_FILES_URL', '/frontend/files');
+		define('FRONTEND_CORE_URL', SITE_RELATIVE_URL . '/' . APPLICATION . '/core');
+		define('FRONTEND_CACHE_URL', SITE_RELATIVE_URL . '/' . APPLICATION . '/cache');
+		define('FRONTEND_FILES_URL', SITE_RELATIVE_URL . '/' . APPLICATION . '/files');
 	}
 
 
@@ -374,7 +374,7 @@ class FrontendInit
 			if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
 			{
 				// redirect to installer
-				header('Location: /install');
+				header('Location: '. rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') .'/install');
 			}
 
 			// we can nog load configuration file, however we can not run installer

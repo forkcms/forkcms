@@ -1153,7 +1153,7 @@ class BackendMailmotorModel
 		$forCM = SpoonFilter::getValue($forCM, array(false, true), false, 'int');
 
 		// return the URL
-		return SITE_URL . BackendModel::getURLForBlock('mailmotor', 'detail') . '/' . $id . '?type=' . $contentType . '&cm=' . $forCM;
+		return BackendModel::getURLForBlock('mailmotor', 'detail') . '/' . $id . '?type=' . $contentType . '&cm=' . $forCM;
 	}
 
 

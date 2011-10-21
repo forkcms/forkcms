@@ -39,7 +39,7 @@
 }
 
 .tagsWrapper li a {
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat -1px -201px;
+	background: url(../../images/sprites/fork_icons.png) no-repeat -1px -201px;
 	display: block;
 	width: 7px;
 	height: 16px;

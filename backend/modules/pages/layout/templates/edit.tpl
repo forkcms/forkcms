@@ -25,7 +25,7 @@
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 		<span class="oneLiner">
-			<span><a href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></a></span>
+			<span><a href="{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">{$prefixURL}/<span id="generatedUrl">{$item.url}</span></a></span>
 		</span>
 	</p>
 
@@ -244,7 +244,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
-							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
+							<span id="urlFirstPart">{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
 				</div>

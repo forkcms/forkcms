@@ -113,7 +113,9 @@ class InstallerStep7 extends InstallerStep
 		$variables['<database-username>'] = addslashes(SpoonSession::get('db_username'));
 		$variables['<database-password>'] = addslashes(SpoonSession::get('db_password'));
 		$variables['<database-port>'] = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306;
-		$variables['<site-domain>'] = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local';
+		$variables['<site-protocol>'] = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https';
+		$variables['<site-domain>'] = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'forkcms.local';
+		$variables['<site-relative-url>'] = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/');
 		$variables['<site-default-title>'] = 'Fork CMS';
 		$variables['\'<site-multilanguage>\''] = SpoonSession::get('multiple_languages') ? 'true' : 'false';
 		$variables['<path-www>'] = PATH_WWW;

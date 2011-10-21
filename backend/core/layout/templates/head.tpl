@@ -7,11 +7,11 @@
 	<meta name="robots" content="noindex, nofollow" />
 
 	<title>{$SITE_TITLE} - Fork CMS</title>
-	<link rel="shortcut icon" href="/backend/favicon.ico" />
+	<link rel="shortcut icon" href="{$SITE_RELATIVE_URL}/backend/favicon.ico" />
 
 	{iteration:cssFiles}<link rel="stylesheet" type="text/css" media="screen" href="{$cssFiles.path}" />{$CRLF}{$TAB}{/iteration:cssFiles}
-	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
-	<!--[if IE 8]><link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/conditionals/ie8.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="{$SITE_RELATIVE_URL}/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" type="text/css" media="screen" href="{$SITE_RELATIVE_URL}/backend/core/layout/css/conditionals/ie8.css" /><![endif]-->
 
 	{iteration:javascriptFiles}<script type="text/javascript" src="{$javascriptFiles.path}"></script>{$CRLF}{$TAB}{/iteration:javascriptFiles}
 </head>
