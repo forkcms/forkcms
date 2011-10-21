@@ -13,7 +13,7 @@
 		{$dataGrid}
 	</div>
 {/option:dataGrid}
-{option:!dataGrid}{$msgNoItems}{/option:!dataGrid}
+{option:!dataGrid}{$msgNoCategories}{/option:!dataGrid}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
