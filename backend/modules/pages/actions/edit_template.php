@@ -6,6 +6,7 @@
  * @package		backend
  * @subpackage	pages
  *
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>

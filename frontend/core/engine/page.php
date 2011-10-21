@@ -7,6 +7,7 @@
  * @subpackage	core
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 class FrontendPage extends FrontendBaseObject

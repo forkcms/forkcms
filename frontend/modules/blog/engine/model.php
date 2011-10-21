@@ -10,7 +10,7 @@
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Annelies Van Extergem <annelies@netlash.com>
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */

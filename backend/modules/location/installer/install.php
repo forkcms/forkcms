@@ -6,7 +6,7 @@
  * @package		installer
  * @subpackage	location
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.1
  */
 class LocationInstall extends ModuleInstaller

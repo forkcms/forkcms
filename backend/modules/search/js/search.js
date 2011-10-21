@@ -4,7 +4,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 /**
  * All methods related to the search
  * 
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  */
 jsBackend.search = 
 {

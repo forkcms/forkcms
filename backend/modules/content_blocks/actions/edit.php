@@ -9,7 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 class BackendContentBlocksEdit extends BackendBaseActionEdit

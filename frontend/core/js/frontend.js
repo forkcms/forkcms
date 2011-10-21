@@ -326,7 +326,7 @@ jsFrontend.gravatar =
 /**
  * Search controls
  *
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  */
 jsFrontend.search =
 {

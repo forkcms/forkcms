@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 final class FrontendSearchConfig extends FrontendBaseConfig

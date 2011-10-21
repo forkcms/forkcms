@@ -18,6 +18,7 @@ require_once 'step_7.php';
  * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 class Installer

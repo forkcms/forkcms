@@ -5,7 +5,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
  * Interaction for the pages module
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend.pages =
@@ -44,7 +44,7 @@ jsBackend.pages =
 /**
  * All methods related to the controls (buttons, ...)
  *
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
@@ -613,7 +613,7 @@ jsBackend.pages.extras =
 /**
  * All methods related to the templates
  *
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.pages.template =

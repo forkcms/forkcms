@@ -1419,6 +1419,7 @@ jsBackend.tabs =
  * Apply TinyMCE
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  */
 jsBackend.tinyMCE =
 {

@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	tags
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */

@@ -21,6 +21,7 @@ Improvements:
 * Core: removed "markup" folder, this is now available at http://www.fork-cms.com/markup.
 * Core: allow for non-standard characters to be used in urls.
 * Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
+* Core: update default favicon.
 
 
 2.6.13 (2011-10-18)

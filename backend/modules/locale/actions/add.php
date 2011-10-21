@@ -8,6 +8,7 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Lowie Benoot <lowie@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 class BackendLocaleAdd extends BackendBaseActionAdd
