@@ -40,6 +40,10 @@
         <translation language="nl"><![CDATA[geïnstalleerde modules]]></translation>
         <translation language="en"><![CDATA[installed modules]]></translation>
       </item>
+      <item type="label" name="UploadModule">
+        <translation language="nl"><![CDATA[module opladen]]></translation>
+        <translation language="en"><![CDATA[upload module]]></translation>
+      </item>
       <item type="label" name="Version">
         <translation language="nl"><![CDATA[versie]]></translation>
         <translation language="en"><![CDATA[version]]></translation>
@@ -47,6 +51,16 @@
       <item type="message" name="ConfirmModuleInstall">
         <translation language="nl"><![CDATA[Ben je zeker dat je de module "%1$s" wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ExtensionIsMissing">
+        <translation language="nl"><![CDATA[ge mankeert iet.]]></translation>
+        <translation language="en"><![CDATA[
+        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />
+			<ul>
+				<li>Contact your server administrator with the above message.</li>
+				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>
+			</ul>]]>
+		</translation>
       </item>
       <item type="message" name="InformationFileCouldNotBeLoaded">
         <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>

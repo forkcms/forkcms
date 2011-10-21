@@ -4,7 +4,7 @@
 <div class="pageTitle">
 	<h2>{$lblExtensions|ucfirst}: {$lblModules}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'module_install'}" class="button icon iconAdd" title="{$lblUploadModule|ucfirst}">
+		<a href="{$var|geturl:'module_upload'}" class="button icon iconAdd" title="{$lblUploadModule|ucfirst}">
 			<span>{$lblUploadModule|ucfirst}</span>
 		</a>
 	</div>

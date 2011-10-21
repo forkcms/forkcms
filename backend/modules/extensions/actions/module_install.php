@@ -1,7 +1,8 @@
 <?php
 
 /**
- * This is the install-action it will install a module.
+ * This is the module install-action.
+ * It will install the module given via the "module" GET parameter.
  *
  * @package		backend
  * @subpackage	extensions
@@ -17,44 +18,6 @@ class BackendExtensionsModuleInstall extends BackendBaseActionIndex
 	 * @var	string
 	 */
 	private $currentModule;
-
-
-	/**
-	 * Clear all applications cache.
-	 *
-	 * Note: we do not need to rebuild anything, the core will do this when noticing the cache files are missing.
-	 *
-	 * @return	void
-	 */
-	private function clearCache()
-	{
-		// list of cache files to be deleted
-		$filesToDelete = array();
-
-		// backend navigation
-		$filesToDelete[] = BACKEND_CACHE_PATH . '/navigation/navigation.php';
-
-		// backend locale
-		foreach(SpoonFile::getList(BACKEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = BACKEND_CACHE_PATH . '/locale/' . $file;
-		}
-
-		// frontend navigation
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/navigation', '/\.(php|js)$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH . '/navigation/' . $file;
-		}
-
-		// frontend locale
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH . '/locale/' . $file;
-		}
-
-		// delete the files
-		foreach($filesToDelete as $file) SpoonFile::delete($file);
-	}
 
 
 	/**
@@ -77,7 +40,7 @@ class BackendExtensionsModuleInstall extends BackendBaseActionIndex
 			$this->validateInstall();
 
 			// do the actual install
-			$this->install();
+			BackendExtensionsModel::installModule($this->currentModule);
 
 			// redirect to index with a success message
 			$this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
@@ -85,40 +48,6 @@ class BackendExtensionsModuleInstall extends BackendBaseActionIndex
 
 		// no item found, redirect to index, because somebody is fucking with our url
 		else $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
-	}
-
-
-	/**
-	 * Execute the modules installer
-	 *
-	 * @return	void
-	 */
-	private function install()
-	{
-		// we need the installer
-		require_once BACKEND_CORE_PATH . '/installer/installer.php';
-		require_once BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/installer.php';
-
-		// installer class name
-		$class = SpoonFilter::toCamelCase($this->currentModule) . 'Installer';
-
-		// possible variables available for the module installers
-		$variables = array();
-
-		// init installer
-		$installer = new $class(
-			BackendModel::getDB(true),
-			BL::getActiveLanguages(),
-			array_keys(BL::getInterfaceLanguages()),
-			false,
-			$variables
-		);
-
-		// execute installation
-		$installer->install();
-
-		// clear all cache
-		$this->clearCache();
 	}
 
 

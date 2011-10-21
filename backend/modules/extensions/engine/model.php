@@ -23,6 +23,44 @@ class BackendExtensionsModel
 
 
 	/**
+	 * Clear all applications cache.
+	 *
+	 * Note: we do not need to rebuild anything, the core will do this when noticing the cache files are missing.
+	 *
+	 * @return	void
+	 */
+	public static function clearCache()
+	{
+		// list of cache files to be deleted
+		$filesToDelete = array();
+
+		// backend navigation
+		$filesToDelete[] = BACKEND_CACHE_PATH . '/navigation/navigation.php';
+
+		// backend locale
+		foreach(SpoonFile::getList(BACKEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
+		{
+			$filesToDelete[] = BACKEND_CACHE_PATH . '/locale/' . $file;
+		}
+
+		// frontend navigation
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/navigation', '/\.(php|js)$/') as $file)
+		{
+			$filesToDelete[] = FRONTEND_CACHE_PATH . '/navigation/' . $file;
+		}
+
+		// frontend locale
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
+		{
+			$filesToDelete[] = FRONTEND_CACHE_PATH . '/locale/' . $file;
+		}
+
+		// delete the files
+		foreach($filesToDelete as $file) SpoonFile::delete($file);
+	}
+
+
+	/**
 	 * Does this module exist.
 	 * This does not check for existence in the database but on the filesystem.
 	 *
@@ -104,12 +142,46 @@ class BackendExtensionsModel
 
 
 	/**
+	 * Install a module.
+	 *
+	 * @param	string $module
+	 */
+	public static function installModule($module)
+	{
+		// we need the installer
+		require_once BACKEND_CORE_PATH . '/installer/installer.php';
+		require_once BACKEND_MODULES_PATH . '/' . $module . '/installer/installer.php';
+
+		// installer class name
+		$class = SpoonFilter::toCamelCase($module) . 'Installer';
+
+		// possible variables available for the module installers
+		$variables = array();
+
+		// init installer
+		$installer = new $class(
+			BackendModel::getDB(true),
+			BL::getActiveLanguages(),
+			array_keys(BL::getInterfaceLanguages()),
+			false,
+			$variables
+		);
+
+		// execute installation
+		$installer->install();
+
+		// clear the cache so locale (and so much more) gets rebuilded
+		self::clearCache();
+	}
+
+
+	/**
 	 * Checks if a module is already installed.
 	 *
 	 * @return	bool
 	 * @param	string $module
 	 */
-	public static function isInstalled($module)
+	public static function isModuleInstalled($module)
 	{
 		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?', (string) $module);
 	}

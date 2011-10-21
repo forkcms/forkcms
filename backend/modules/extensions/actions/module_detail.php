@@ -86,7 +86,7 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 	private function loadData()
 	{
 		// inform that the module is not installed yet
-		if(!BackendExtensionsModel::isInstalled($this->currentModule))
+		if(!BackendExtensionsModel::isModuleInstalled($this->currentModule))
 		{
 			$this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
 		}
@@ -148,7 +148,7 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 		$this->tpl->assign('name', $this->currentModule);
 		$this->tpl->assign('warnings', $this->warnings);
 		$this->tpl->assign('information', $this->information);
-		$this->tpl->assign('isInstallable', !BackendExtensionsModel::isInstalled($this->currentModule));
+		$this->tpl->assign('isInstallable', !BackendExtensionsModel::isModuleInstalled($this->currentModule));
 
 		// data grids
 		$this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
