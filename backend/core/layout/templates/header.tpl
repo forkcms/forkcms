@@ -1,5 +1,5 @@
 <div id="headerHolder">
-	<h1><a href="/{option:SITE_MULTILANGUAGE}{$LANGUAGE}{/option:SITE_MULTILANGUAGE}" title="{$lblVisitWebsite|ucfirst}">{$SITE_TITLE}</a></h1>
+	<h1><a href="{$SITE_RELATIVE_URL}/{option:SITE_MULTILANGUAGE}{$LANGUAGE}{/option:SITE_MULTILANGUAGE}" title="{$lblVisitWebsite|ucfirst}">{$SITE_TITLE}</a></h1>
 	<table cellspacing="0" cellpadding="0" id="header">
 		<tr>
 			<td id="navigation">

@@ -45,13 +45,13 @@ class FrontendAJAX
 	public function __construct()
 	{
 		// set the module
-		$this->setModule(SpoonFilter::getPostValue('module', null, ''));
+		$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
 
 		// set the action
-		$this->setAction(SpoonFilter::getPostValue('action', null, ''));
+		$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getPostValue('language', null, ''));
+		$this->setLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : '');
 
 		// create a new action
 		$action = new FrontendAJAXAction($this->getAction(), $this->getModule());

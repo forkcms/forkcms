@@ -121,7 +121,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(!$inArray)
 		{
 			// build temporary array
-			$temp['file'] = SITE_RELATIVE_URL . (string) $file;
+			$temp['file'] = (string) $file;
 			$temp['add_timestamp'] = $addTimestamp;
 
 			// add to files
@@ -181,7 +181,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->javascriptFiles))
 		{
 			// add to files
-			$this->javascriptFiles[] = array('file' => SITE_RELATIVE_URL . $file, 'add_timestamp' => $addTimestamp);
+			$this->javascriptFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
 		}
 	}
 
@@ -586,7 +586,7 @@ class FrontendHeader extends FrontendBaseObject
 		$this->parseCss();
 
 		// parse JS
-		$this->parseJavascript();
+		$this->parseJS();
 
 		// parse custom header HTML and Google Analytics
 		$this->parseCustomHeaderHTMLAndGoogleAnalytics();
@@ -619,7 +619,7 @@ class FrontendHeader extends FrontendBaseObject
 				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
 
 				// add
-				$cssFiles[] = $file;
+				$cssFiles[] = SITE_RELATIVE_URL . $file;
 			}
 		}
 
@@ -719,7 +719,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @return	void
 	 */
-	private function parseJavascript()
+	private function parseJS()
 	{
 		// init var
 		$javascriptFiles = null;
@@ -736,19 +736,19 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($existingJavascriptFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => $file['file']);
+				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => SITE_RELATIVE_URL . $file['file']);
 
 				// make the file uncachable
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] . '&amp;m=' . time());
+					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => SITE_RELATIVE_URL . $file['file'] . '&amp;m=' . time());
 
 					// add lastmodified time
 					else
 					{
 						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
-						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
+						$javascriptFiles[] = array('file' => SITE_RELATIVE_URL . $file['file'] . $modifiedTime);
 					}
 				}
 			}

@@ -19,7 +19,7 @@
 
 	{* Stylesheets *}
 	{iteration:cssFiles}
-		<link rel="stylesheet" href="{$cssFiles.file}" />
+		<link rel="stylesheet" href="{$SITE_RELATIVE_URL}{$cssFiles.file}" />
 	{/iteration:cssFiles}
 
 	{* HTML5 Javascript *}

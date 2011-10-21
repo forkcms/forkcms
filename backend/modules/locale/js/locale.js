@@ -31,7 +31,7 @@ jsBackend.locale.controls =
 			// bind
 			$('.dataGrid td.translationValue').inlineTextEdit(
 			{
-				params: {fork: { module: jsBackend.current.module, action: 'save_translation', language: jsBackend.current.language }},
+				params: { fork: { module: jsBackend.current.module, action: 'save_translation', language: jsBackend.current.language } },
 				tooltip: '{$msgClickToEdit}',
 				afterSave: function(item)
 				{

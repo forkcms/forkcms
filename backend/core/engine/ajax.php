@@ -39,7 +39,7 @@ class BackendAJAX
 		$this->validateLogin();
 
 		// named application
-		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend_ajax');
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 
 		// set the module
 		$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');

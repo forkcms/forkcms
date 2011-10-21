@@ -1079,7 +1079,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				params: {fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language }}
+				params: { fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language } }
 			});
 		}
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
@@ -1090,7 +1090,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				params: {fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language }},
+				params: { fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language } },
 				showIconOnly: false
 			});
 		}
