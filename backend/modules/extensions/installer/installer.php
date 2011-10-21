@@ -30,10 +30,13 @@ class ExtensionsInstaller extends ModuleInstaller
 		// action rights
 		$this->setActionRights(1, 'content_blocks', 'modules');
 
-		// set navigation
+		// settings navigation
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
-		$navigationExtensionsId = $this->setNavigation($navigationSettingsId, 'Extensions');
-		$this->setNavigation($navigationExtensionsId, 'Modules', 'extensions/modules', array('extensions/module_detail'));
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Overview', 'extensions/modules', array(
+			'extensions/module_detail',
+			'extensions/module_upload'
+		));
 	}
 }
 
