@@ -7,6 +7,7 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class BackendFaqEditCategory extends BackendBaseActionEdit
@@ -67,10 +68,13 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('edit_category');
+		$this->frm = new BackendForm('editCategory');
 
 		// create elements
-		$this->frm->addText('name', $this->record['name']);
+		$this->frm->addText('title', $this->record['title']);
+
+		// meta object
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
 
 
@@ -84,12 +88,11 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
-		// assign id, name
-		$this->tpl->assign('id', $this->record['id']);
-		$this->tpl->assign('name', $this->record['name']);
+		// assign
+		$this->tpl->assign('item', $this->record);
 
-		// can the category be deleted?
-		if(BackendFaqModel::isCategoryAllowedToBeDeleted($this->id)) $this->tpl->assign('showDelete', true);
+		// delete allowed?
+		$this->tpl->assign('deleteAllowed', BackendFaqModel::deleteCategoryAllowed($this->id));
 	}
 
 
@@ -103,29 +106,32 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// set callback for generating an unique URL
+			$this->meta->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']));
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+
+			// validate meta
+			$this->meta->validate();
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
 				$item['id'] = $this->id;
-				$item['name'] = $this->frm->getField('name')->getValue();
-				$item['language'] = BL::getWorkingLanguage();
-				$item['extra_id'] = $this->record['extra_id'];
+				$item['language'] = $this->record['language'];
+				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['meta_id'] = $this->meta->save(true);
 
 				// update the item
 				BackendFaqModel::updateCategory($item);
 
-				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'after_edite_category', array('item' => $item));
-
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}
