@@ -70,7 +70,7 @@
 			{/iteration:positionColumn4}
 		</div>
 
-		<div class="row borderTop">
+		<div class="row">
 			{* Column 6 position *}
 			{iteration:positionColumn6}
 				<section class="col-6">
@@ -84,7 +84,7 @@
 			{/iteration:positionColumn6}
 		</div>
 
-		<div class="row borderTop">
+		<div class="row">
 			{* Column 9 position *}
 			{iteration:positionColumn9}
 				<section class="col-9">
