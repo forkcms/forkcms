@@ -56,7 +56,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		parent::execute();
 
 		// load additional js
-		$this->header->addJS('templates.js');
+		$this->header->addJS('template.js');
 
 		// load data
 		$this->loadData();

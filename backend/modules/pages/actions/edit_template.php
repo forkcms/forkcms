@@ -41,7 +41,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		parent::execute();
 
 		// load additional js
-		$this->header->addJS('templates.js');
+		$this->header->addJS('template.js');
 
 		// load record
 		$this->loadData();
