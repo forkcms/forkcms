@@ -129,15 +129,18 @@ body:after { content: ""; display: block; position: fixed; top: -40px; left: 0; 
 
 article { padding-bottom: 1.8em; }
 
-#blogPosts article {
+#blogIndex article,
+#blogRecentArticlesFullWidget article {
 	margin-bottom: 1.8em;
 }
 
-#blogPosts article:last-of-type {
+#blogIndex article.lastChild,
+#blogRecentArticlesFullWidget article.lastChild {
 	margin-bottom: 0;
 }
 
-#blogPosts article header h2 {
+#blogIndex article header h2,
+#blogRecentArticlesFullWidget article header h2 {
 	font-size: 1.67em;
 	line-height: 1.077em;
 	margin-bottom: 1.077em;
@@ -203,7 +206,7 @@ aside ul {
 
 /* footer */
 
-#doorMat .date {
+#doormat .date {
 	display: block;
 	text-transform: uppercase;
 	letter-spacing: 0.3em;
@@ -364,6 +367,10 @@ a:link,
 a:visited {
 	color: #9c6;
 	text-decoration: none;
+	-webkit-transition: color .2s;
+	-moz-transition: color .2s;
+	-o-transition: color .2s;
+	transition: color .2s;
 }
 
 a:hover,
@@ -383,7 +390,7 @@ h2 a:visited {
 	h2 a:hover,
 	h2 a:active,
 	h2 a:focus {
-		color: #333;
+		color: #666;
 	}
 
 
@@ -420,7 +427,11 @@ h2 a:visited {
 /* blog */
 
 .meta a:link,
-.meta a:visited { color: #666; }
+.meta a:visited { color: #111; }
+
+.meta a:hover,
+.meta a:active,
+.meta a:focus { color: #666; }
 
 .pagination li a { color: #999; }
 .pagination li a:hover { color: #666; }
@@ -437,11 +448,36 @@ h2 a:visited {
 	color: #FFF;
 }
 
+/* comments */
+
+.comment:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; font-size: 0; line-height: 0; }
+.comment { zoom: 1; }
+
+.comment {
+	padding-bottom: 1.8em;
+}
+
+	.comment .imageHolder {
+		width: 48px;
+		height: 48px;
+		margin: 2px 12px 0 0;
+		float: left;
+	}
+
+	.comment .commentContent {
+		width: 80%;
+		float: left;
+	}
+
+		.comment .commentContent .commentAuthor {
+			font-size: 0.85em;
+			margin-bottom: 0;
+		}
+
 /* aside */
 
 aside { color: #999; }
 aside h3 { color: #666; }
-
 
 /* footer */
 
@@ -449,12 +485,12 @@ aside h3 { color: #666; }
 #footer,
 #doormatHolder { background: #080808; }
 
-#doorMat h4 { color: #fff; }
-#doorMat .date { color: #ccc; }
+#doormat h4 { color: #fff; }
+#doormat .date { color: #ccc; }
 
 footer a:link,
 footer a:visited { color: #999; }
-footer a:hover { color: #9c6;}
+footer a:hover { color: #9c6; }
 
 /* 6. Media Queries
 -------------------------------------- */
@@ -556,6 +592,795 @@ footer a:hover { color: #9c6;}
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
 
+}
+
+/*
+	Forms
+	Media: screen, projection
+	Author: Yoni De Beule
+	        Johan Ronsse
+*/
+
+/* General fields and textareas */
+
+input.inputText,
+input.inputPassword,
+input.inputSearch,
+input.inputDate,
+textarea {
+	color: #666;
+	border-color: #999 #bbb #bbb #bbb;
+	border-style: solid;
+	border-width: 1px;
+	padding: 3px 4px;
+	margin: 0;
+	background-color: #fff;
+	background-image: none;
+	background-image: -moz-linear-gradient(0% 3px 90deg,#fff, #cecece);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 3, from(#cecece), to(#fff));
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+textarea {
+	line-height: 1.5;
+}
+
+input.inputText:focus,
+input.inputPassword:focus,
+input.inputSearch:focus,
+input.inputDate:focus,
+textarea:focus {
+	background-color: #fff;
+	background-image: none;
+	background-image: -moz-linear-gradient(0% 3px 90deg,#fff, #dedede);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 3, from(#dedede), to(#fff));
+	-webkit-box-shadow: 0 0 3px #c2deff;
+	-moz-box-shadow: 0 0 3px #c2deff;
+	box-shadow: 0 0 3px #c2deff;
+	border-color: #82a7d4;
+	color: #000;
+	outline: none
+}
+
+input.inputText[disabled],
+input.inputPassword[disabled],
+input.inputSearch[disabled],
+input.inputDate[disabled],
+textarea[disabled] {
+	color: #999;
+	background-color: #f4f4f4;
+	background-image: none;
+	background-image: -moz-linear-gradient(0% 3px 90deg,#f4f4f4, #c4c4c4);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 3, from(#c4c4c4), to(#f4f4f4));
+}
+
+/* Selects */
+
+select {
+	margin-top: 2px;
+}
+
+	option {
+		width: auto;
+	}
+
+/* Input lists */
+
+.inputList {
+	padding-bottom: 6px;
+}
+
+	.inputList li {
+		padding-left: 24px;
+		position: relative;
+		padding-bottom: 6px;
+		list-style-type: none;
+	}
+
+		.inputList input {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.ie6 .inputList input {
+			left: -24px;
+		}
+
+		.inputList label {
+			overflow: visible;
+			height: auto;
+			padding: 0;
+		}
+
+/* Fieldsets and legends */
+
+.visibleFieldset {
+	border: 1px solid #ddd;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 12px 12px 0 12px;
+	margin-bottom: 12px;
+}
+
+.visibleFieldset:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.ie6 .visibleFieldset, .ie7 .visibleFieldset { zoom: 1; }
+
+	legend {
+		font-weight: 700;
+		color: #999;
+	}
+	
+		.ie6 legend {
+			margin-bottom: 10px;
+		}
+
+/* Paragraph */
+
+form p { padding: 0 0 12px 0; margin-bottom: 0; }
+form p:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.ie6 form p, .ie7 form p { zoom: 1; }
+
+/* Labels */
+
+label,
+.label {
+	display: block;
+	padding-bottom: 2px;
+	height: 18px;
+	overflow: hidden;
+}
+
+/* Inline errors */
+
+.errorArea input.inputText,
+.errorArea input.inputPassword,
+.errorArea input.inputSearch,
+.errorArea input.inputDate,
+.errorArea textarea {
+	border: 1px solid #d00c00;
+}
+
+.errorArea label,
+.errorArea .label {
+	color: #d00c00;
+}
+
+.errorArea input.inputText:focus,
+.errorArea input.inputPassword:focus,
+.errorArea input.inputSearch:focus,
+.errorArea input.inputDate:focus {
+	-webkit-box-shadow: 0 0 3px #d00c00;
+	-moz-box-shadow: 0 0 3px #d00c00;
+	box-shadow: 0 0 3px #d00c00;
+}
+
+.errorArea .inlineError,
+.errorArea .formError {
+	font-size: 11px;
+	line-height: 1.636;
+	color: #d00c00;
+	display: block;
+	height: 18px;
+	overflow: hidden;
+	white-space: nowrap;
+	clear: left;
+	text-overflow: ellipsis;
+}
+
+/* Help texts */
+
+.helpTxt {
+	font-size: 11px;
+	line-height: 1.636;
+	color: #999;
+	display: block;
+	height: 18px;
+	overflow: hidden;
+	white-space: nowrap;
+	clear: left;
+	text-overflow: ellipsis;
+}
+
+/* Form grid control */
+
+	/* One-fourth width */
+
+	.tinyInput input.inputText,
+	.tinyInput input.inputPassword,
+	.tinyInput input.tinyInput,
+	.tinyInput input.inputDate {
+		width: 16px;
+	}
+
+	.tinyInput select,
+	.alignBlocks p.tinyInput,
+	.alignFields p.tinyInput,
+	.alignFields .tinyInput .helpTxt {
+		width: 26px;
+	}
+
+	/* Half width */
+
+	.smallInput input.inputText,
+	.smallInput input.inputPassword,
+	.smallInput input.inputSearch,
+	.smallInput input.inputDate {
+		width: 52px;
+	}
+
+	.smallInput select,
+	.alignBlocks p.smallInput,
+	.alignFields p.smallInput,
+	.alignFields .smallInput .helpTxt {
+		width: 62px;
+	}
+
+	/* Normal width */
+
+	input.inputText,
+	input.inputPassword,
+	input.inputSearch,
+	input.inputDate {
+		width: 124px;
+	}
+
+	select,
+	.alignBlocks p,
+	.alignFields p,
+	.alignFields p .helpTxt,
+	.horizontal label,
+	.horizontal .label,
+	.horizontal .oneLiner :first-child label,
+	.horizontal .oneLiner :first-child .label,
+	.horizontal .oneLiner .firstChild label,
+	.horizontal .oneLiner .firstChild .label {
+		width: 134px;
+	}
+
+	/* Two-third width */
+
+	.mediumInput input.inputText,
+	.mediumInput input.inputPassword,
+	.mediumInput input.inputSearch,
+	.mediumInput input.inputDate {
+		width: 196px;
+	}
+
+	.mediumInput select,
+	.alignBlocks p.mediumInput,
+	.alignFields p.mediumInput,
+	.alignFields .mediumInput .helpTxt {
+		width: 206px;
+	}
+
+	/* Double width */
+
+	.bigInput input.inputText,
+	.bigInput input.inputPassword,
+	.bigInput input.inputSearch,
+	.bigInput input.inputDate,
+	textarea {
+		width: 268px;
+	}
+
+	.bigInput select,
+	.alignBlocks p.bigInput,
+	.alignFields p.bigInput,
+	.alignFields .bigInput .helpTxt {
+		width: 278px;
+	}
+
+	/* Left padding (horizontal) */
+
+	.horizontal .alignBlocks,
+	.horizontal .alignFields,
+	.horizontal .alignButtons,
+	.horizontal .helpTxt,
+	.horizontal .inlineError,
+	.horizontal .formError {
+		padding-left: 134px; /* This value should be the same as the width value in "Normal width" */
+	}
+
+	/* Left margin (horizontal) */
+
+	.horizontal input.inputSubmit,
+	.horizontal input.inputButton,
+	.horizontal button,
+	.horizontal a.button {
+		margin-left: 134px; /* This value should be the same as the width value in "Normal width" */
+	}
+
+	/* Maximum width for inputlist (horizontal) */
+
+	.horizontal .inputList li label {
+		width: 278px; /* This value should be the same as the width value in "Double width" */
+	}
+
+/* Floating elements */
+
+	/* Floating blocks */
+
+	.alignBlocks {
+		position: relative;
+		left: -5px;
+		padding-bottom: 12px;
+	}
+
+	.alignBlocks:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.ie6 .alignBlocks, .ie7 .alignBlocks { zoom: 1; }
+
+		.alignBlocks p {
+			padding: 0 5px;
+			overflow: hidden;
+			float: left;
+		}
+
+	/* Floating fields */
+
+	.alignFields {
+		position: relative;
+		padding-bottom: 12px;
+	}
+
+	.alignFields:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.ie6 .alignFields, .ie7 .alignFields { zoom: 1; }
+
+		.alignFields label {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.alignFields input,
+		.alignFields select {
+			float: left;
+		}
+
+		.ie6 .alignFields input,
+		.ie6 .alignFields select,
+		.ie7 .alignFields input,
+		.ie7 .alignFields select {
+			float: none;
+		}
+
+		.alignFields p {
+			padding: 20px 12px 0 0;
+			float: left;
+		}
+
+	/* Floating buttons */
+
+	.alignButtons {
+		padding-bottom: 12px;
+	}
+
+	.alignButtons:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.ie6 .alignButtons, .ie7 .alignButtons { zoom: 1; }
+
+		.alignButtons p {
+			float: left;
+			padding-right: 4px;
+			padding-bottom: 0;
+		}
+
+/* Oneliners */
+
+.oneLiner {
+	padding-bottom: 12px;
+}
+
+.oneLiner:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.ie6 .oneLiner, .ie7 .oneLiner { zoom: 1; }
+
+	.oneLiner p {
+		float: left;
+		padding: 0 6px 0 0;
+	}
+
+		.oneLiner label {
+			float: left;
+			padding-right: 6px;
+		}
+
+		.oneLiner input,
+		.oneLiner select {
+			float: left;
+		}
+
+	.oneLiner .inputList {
+		padding-bottom: 0;
+	}
+
+	.ie6 .oneLiner .inputList input {
+		left: 0;
+	}
+
+		.oneLiner .inputList li {
+			float: left;
+			padding-bottom: 0;
+		}
+
+/* Horizontal */
+
+.horizontal label,
+.horizontal .label {
+	float: left;
+}
+
+	/* Floating blocks */
+
+	.horizontal .alignBlocks .helpTxt,
+	.horizontal .alignBlocks .inlineError,
+	.horizontal .alignBlocks .formError {
+		padding-left: 0;
+	}
+
+	/* Floating fields */
+
+	.horizontal .alignFields .helpTxt,
+	.horizontal .alignFields .inlineError,
+	.horizontal .alignFields .formError {
+		padding-left: 0;
+	}
+
+	.horizontal .alignFields p {
+		padding-top: 0;
+	}
+
+		.horizontal .alignFields label {
+			top: 2px;
+		}
+
+	/* Floating buttons */
+
+	.horizontal .alignButtons input.inputSubmit,
+	.horizontal .alignButtons input.inputButton,
+	.horizontal .alignButtons button,
+	.horizontal .alignButtons a.button,
+	.horizontal .alignFields input.inputSubmit,
+	.horizontal .alignFields input.inputButton,
+	.horizontal .alignFields button,
+	.horizontal .alignFields a.button,
+	.horizontal .alignBlocks input.inputSubmit,
+	.horizontal .alignBlocks input.inputButton,
+	.horizontal .alignBlocks button,
+	.horizontal .alignBlocks a.button {
+		margin-left: 0;
+	}
+
+	/* Inputlists */
+
+	.horizontal .inputList:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.ie6 .horizontal .inputList, .ie7 .horizontal .inputList { zoom: 1; }
+
+	.horizontal .inputList ul {
+		float: left;
+	}
+
+		.horizontal .inputList li label {
+			float: none;
+		}
+
+	/* Oneliners */
+
+	.horizontal .oneLiner label,
+	.horizontal .oneLiner .label {
+		width: auto;
+		padding: 2px 6px 2px 0;
+	}
+
+		.horizontal .oneLiner :first-child label,
+		.horizontal .oneLiner :first-child .label,
+		.horizontal .oneLiner .firstChild label,
+		.horizontal .oneLiner .firstChild .label {
+			padding: 2px 0;
+		}
+
+		.horizontal .formSectionContent .oneLiner :first-child label,
+		.horizontal .formSectionContent .oneLiner :first-child .label,
+		.horizontal .formSectionContent .oneLiner .firstChild label,
+		.horizontal .formSectionContent .oneLiner .firstChild .label {
+			width: auto;
+			padding: 2px 6px 2px 0;
+		}
+
+	.horizontal .oneLiner input.inputSubmit,
+	.horizontal .oneLiner input.inputButton,
+	.horizontal .oneLiner button,
+	.horizontal .oneLiner a.button {
+		margin-left: 0;
+	}
+
+	.horizontal .oneLiner .inputList {
+		float: left;
+	}
+
+		.horizontal .oneLiner .inputList li label {
+			width: auto;
+		}
+
+	/* Form sections */
+
+	.formSection {
+		padding: 0 0 8px 0;
+	}
+
+	.formSection:after  { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.ie6 .formSection, .ie7 .formSection { zoom: 1; }
+
+		.formSection p {
+			padding-bottom: 2px;
+		}
+
+		.formSection .oneLiner p {
+			padding-bottom: 0;
+		}
+
+	.horizontal .formSectionContent {
+		padding-bottom: 4px;
+		float: left;
+	}
+
+	.horizontal .formSectionContent .alignBlocks,
+	.horizontal .formSectionContent .alignFields,
+	.horizontal .formSectionContent .alignButtons,
+	.horizontal .formSectionContent .helpTxt,
+	.horizontal .formSectionContent .inlineError,
+	.horizontal .formSectionContent .formError {
+		padding-left: 0;
+	}
+
+/* Messages */
+
+.message {
+	padding: 12px 12px 0 12px;
+	border: 1px solid #ddd;
+	margin-bottom: 24px;
+	border-color: #ddd;
+	color: #333;
+	background-color: #fff;
+	background-image: none;
+	background-image: -moz-linear-gradient(0% 100% 90deg,#fff, #f8f8f8);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#fff));
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	position: relative;
+}
+
+	.message .close:link,
+	.message .close:visited {
+		display: block;
+		position: absolute;
+		overflow: hidden;
+		padding: 4px;
+		top: 4px;
+		right: 4px;
+		height: 8px;
+		width: 8px;
+		border: 0;
+		text-indent: -9999px;
+		background: url(../images/close.png) no-repeat 4px 4px;
+
+		opacity: .50;
+		filter: alpha(opacity=50);
+		-ms-filter: "alpha(opacity=50)";
+		-khtml-opacity: .50;
+		-moz-opacity: .50;
+	}
+
+	.message .close:hover,
+	.message .close:active,
+	.message .close:focus {
+		opacity: 1;
+		filter: alpha(opacity=100);
+		-ms-filter: "alpha(opacity=100)";
+		-khtml-opacity: 1;
+		-moz-opacity: 1;
+	}
+
+	/* Error messages */
+
+	.error {
+		border-color: #8b0800;
+		color: #fae7e6;
+		background-color: #d00c00;
+		background-image: none;
+		background-image: -moz-linear-gradient(0% 100% 90deg,#d00c00, #b80900);
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b80900), to(#d00c00));
+	}
+
+	.error h1,
+	.error h2,
+	.error h3,
+	.error h4 {
+		color: #fff;
+	}
+
+		.error a {
+			color: #fff;
+			border-color: #df5c54;
+		}
+
+		.error a:link,
+		.error a:visited {
+			color: #fff;
+			border-color: #df5c54;
+		}
+
+		.error a:hover,
+		.error a:active,
+		.error a:focus {
+			color: #fff;
+			border-color: #fff;
+		}
+
+	/* Success messages */
+
+	.success {
+		border-color: #4c721f;
+		color: #f1f7eb;
+		background-color: #72aa2e;
+		background-image: none;
+		background-image: -moz-linear-gradient(0% 100% 90deg,#72aa2e, #65a01c);
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#65a01c), to(#72aa2e));
+	}
+
+	.success h1,
+	.success h2,
+	.success h3,
+	.success h4 {
+		color: #fff;
+	}
+
+		.success a {
+			color: #fff;
+			border-color: #a0c673;
+		}
+
+		.success a:link,
+		.success a:visited {
+			color: #fff;
+			border-color: #a0c673;
+		}
+
+		.success a:hover,
+		.success a:active,
+		.success a:focus {
+			color: #fff;
+			border-color: #fff;
+		}
+
+	/* Notice messages */
+
+	.notice {
+		border-color: #e6901e;
+		color: #332d1c;
+		background-color: #ffe38a;
+		background-image: none;
+		background-image: -moz-linear-gradient(0% 100% 90deg,#ffe38a, #ffce58);
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffce58), to(#ffe38a));
+	}
+
+	.notice h1,
+	.notice h2,
+	.notice h3,
+	.notice h4 {
+		color: #000;
+	}
+
+		.notice a {
+			color: #000;
+			border-color: #ab985d;
+		}
+
+		.notice a:link,
+		.notice a:visited {
+			color: #000;
+			border-color: #ab985d;
+		}
+
+		.notice a:hover,
+		.notice a:active,
+		.notice a:focus {
+			color: #000;
+			border-color: #000;
+		}
+
+/* Buttons */
+
+input.inputSubmit,
+input.inputButton,
+button,
+a.button,
+a.button:link,
+a.button:visited {
+	font: 700 11px/1.636 Arial, sans-serif;
+	color: #fff;
+	background: #366eac;
+	background: -moz-linear-gradient(top, #6facf1 0%, #366eac 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6facf1), color-stop(100%,#366eac));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6FACF1', endColorstr='#366EAC',GradientType=0 )chroma(color=#000000);
+	border: 1px solid #366eac;
+	padding: 3px;
+	cursor: pointer;
+	overflow: visible;
+	white-space: nowrap;
+	text-align: center;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	margin: 0;
+}
+
+button::-moz-focus-inner{ padding: 0; border: 0 }
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	input.inputSubmit,
+	input.inputButton,
+	button {
+		padding: 2px 3px;
+	}
+}
+
+.ie6 input.inputSubmit,
+.ie6 input.inputButton,
+.ie6 button {
+	margin-top: -1px;
+	padding: 1px 3px;
+}
+
+.ie7 input.inputSubmit,
+.ie7 input.inputButton,
+.ie7 button {
+	padding: 1px 3px 0 3px;
+}
+
+.ie8 input.inputSubmit,
+.ie8 input.inputButton,
+.ie8 button {
+	padding: 2px 3px;
+}
+
+input.inputSubmit:hover,
+input.inputButton:hover,
+input.buttonHover,
+button:hover,
+button.buttonHover,
+a.button:hover,
+a.button:active,
+a.button:focus {
+	background: #2d5c91;
+	background: -moz-linear-gradient(top, #366eac 0%, #6facf1 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#366eac), color-stop(100%,#6facf1));
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#366EAC', endColorstr='#6FACF1',GradientType=0 )chroma(color=#000000);
+}
+
+input.inputSubmit[disabled="disabled"],
+input.inputButton[disabled="disabled"],
+button[disabled="disabled"],
+a.disabledButton {
+	cursor: default;
+	opacity: .50;
+	filter: alpha(opacity=50);
+	-ms-filter: "alpha(opacity=50)";
+	-khtml-opacity: .50;
+	-moz-opacity: .50;
+}
+
+a.button,
+a.button:link,
+a.button:visited {
+	float: left;
+	text-decoration: none;
+	padding: 2px 6px;
 }
 
 /* Print
