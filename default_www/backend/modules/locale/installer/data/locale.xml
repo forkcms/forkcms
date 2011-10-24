@@ -295,8 +295,8 @@
         <translation language="en"><![CDATA[To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.]]></translation>
       </item>
       <item type="error" name="JPGGIFAndPNGOnly">
-        <translation language="nl"><![CDATA[Enkel jpg]]></translation>
-        <translation language="en"><![CDATA[Only jpg]]></translation>
+        <translation language="nl"><![CDATA[Enkel jpg, gif of png]]></translation>
+        <translation language="en"><![CDATA[Only jpg, gif or png]]></translation>
       </item>
       <item type="error" name="ModuleNotAllowed">
         <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze module.]]></translation>
