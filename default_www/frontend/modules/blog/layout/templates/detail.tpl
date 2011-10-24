@@ -37,6 +37,9 @@
 							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
+					<li>
+						<a href="{$item.full_url}" class="share">Share</a>
+					</li>
 				</ul>
 			</header>
 			<div class="bd content">

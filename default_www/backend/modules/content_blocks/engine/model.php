@@ -147,13 +147,13 @@ class BackendContentBlocksModel
 	public static function getTemplates()
 	{
 		// fetch templates available in core
-		$templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
+		$templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets', '/.*?\.tpl/');
 
 		// fetch current active theme
 		$theme = BackendModel::getModuleSetting('core', 'theme', 'core');
 
 		// fetch theme templates if a theme is selected
-		if($theme != 'core') $templates = array_merge($templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets'));
+		if($theme != 'core') $templates = array_merge($templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets', '/.*?\.tpl/'));
 
 		// no duplicates (core templates will be overridden by theme templates) and sort alphabetically
 		$templates = array_unique($templates);
