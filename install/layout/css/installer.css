@@ -70,7 +70,8 @@ span.error {
 
 ul#moduleList {
 	-moz-column-count: 3;
-	/* No webkit since support is buggy */
+	-webkit-column-count: 3;
+	column-count: 3;
 }
 
 h3 {
