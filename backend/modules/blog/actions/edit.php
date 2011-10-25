@@ -8,7 +8,7 @@
  *
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */

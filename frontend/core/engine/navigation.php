@@ -8,6 +8,7 @@
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 class FrontendNavigation extends FrontendBaseObject

@@ -2,16 +2,16 @@
 --
 Improvements:
 * Core: Completely re-invented the blocks system; it's now position-driven.
-* Introduce the concept of positions that can contain an arbitrary number of blocks.
-* Merged tabs "Content" & "Template" to present a more straightforward UI.
-* Added ability to order blocks.
-* Created fallback-system for blocks that were assigned to no-longer-existing positions.
-* Added the posibility to show/hide a block.
-* Edit HTML content in TinyMCE in a dialog.
-* Updated installer.
-* Updated template creation in backend.
-* Updated theme Triton to be position-based.
-* Added the possibility to either completely overwrite of re-use existing blocks when updating a template.
+* Core: Introduce the concept of positions that can contain an arbitrary number of blocks.
+* Pages: Merged tabs "Content" & "Template" to present a more straightforward UI.
+* Pages: Added ability to order blocks on a page.
+* Pages: Created fallback-system for blocks that were assigned to no-longer-existing positions.
+* Pages: Added the posibility to show/hide a block.
+* Pages: Edit HTML content in TinyMCE in a dialog.
+* Core: Updated installer.
+* Core: Updated template creation in backend.
+* Core: Updated theme Triton to be position-based.
+* Pages: Added the possibility to either completely overwrite or re-use existing blocks when updating a template.
 * Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 * Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
@@ -21,6 +21,7 @@ Improvements:
 * Core: removed "markup" folder, this is now available at http://www.fork-cms.com/markup.
 * Core: allow for non-standard characters to be used in urls.
 * Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
+* Core: updated default favicon.
 
 
 2.6.13 (2011-10-18)

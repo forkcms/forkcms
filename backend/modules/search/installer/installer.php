@@ -6,7 +6,7 @@
  * @package		installer
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */

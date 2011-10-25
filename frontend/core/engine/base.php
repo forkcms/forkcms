@@ -219,6 +219,7 @@ class FrontendBaseConfig
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 class FrontendBaseBlock
@@ -730,6 +731,7 @@ class FrontendBaseBlock
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.0
  */
 class FrontendBaseWidget

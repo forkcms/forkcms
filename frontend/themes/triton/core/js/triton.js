@@ -1,5 +1,5 @@
-$(document).ready(function() {
-
+$(document).ready(function()
+{
 	// a-img problem
 	$('.content a > img').parent().addClass('linkedImage');
 

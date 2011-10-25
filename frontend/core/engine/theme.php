@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.2.0
  */
 class FrontendTheme

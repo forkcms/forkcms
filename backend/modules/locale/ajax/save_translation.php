@@ -7,6 +7,7 @@
  * @subpackage	locale
  *
  * @author		Lowie Benoot <lowie@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		2.1
  */
 class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction

@@ -302,7 +302,6 @@ td.num_tags {
 	cursor: move;
 }
 
-
 .dataGrid tbody tr:hover td,
 .dataGrid tbody tr.selected td {
 	background: #1A57AD;
@@ -331,6 +330,20 @@ td.num_tags {
 
 .dataGrid tr.even td {
 	background: #F1F5FA;
+}
+
+/* Grayed out */
+
+.dataGrid tr.grayedOut td {
+	-moz-opacity: .60;
+	filter: alpha(opacity=60);
+	opacity: .60;
+}
+
+.dataGrid tr.grayedOut:hover td {
+	-moz-opacity: 1;
+	filter: none;
+	opacity: 1;
 }
 
 .dataGrid tr:last-child td,

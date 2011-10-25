@@ -4,3 +4,4 @@
 .settings
 .*.swp
 Capfile
+default_www/backend/cache/navigation/

@@ -6,6 +6,7 @@
  * @package		backend
  * @subpackage	pages
  *
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -55,7 +56,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		parent::execute();
 
 		// load additional js
-		$this->header->addJS('templates.js');
+		$this->header->addJS('template.js');
 
 		// load data
 		$this->loadData();
