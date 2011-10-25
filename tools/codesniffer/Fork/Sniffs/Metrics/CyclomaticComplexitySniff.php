@@ -11,12 +11,16 @@ class Fork_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffer_S
 	/**
 	 * A complexity higer than this value will throw an error.
 	 *
+	 * @todo needs to become 30 in the near future
+	 *
 	 * @var int
 	 */
 	protected $absoluteComplexity = 50;
 
 	/**
 	 * A complexity higher than this value will throw a warning.
+	 *
+	 * @todo needs to become 10 in the near future
 	 *
 	 * @var int
 	 */
