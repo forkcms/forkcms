@@ -247,8 +247,9 @@ class BackendForm extends SpoonForm
 		$HTML = (bool) $HTML;
 
 		// we add JS because we need TinyMCE
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
+		$this->header->addJS('ckeditor/ckeditor.js', 'core', false);
+		$this->header->addJS('ckeditor/adapters/jquery.js', 'core', false);
+		$this->header->addJS('ckeditor/config.js', 'core', true);
 
 		// create and return a textarea for TinyMCE
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);

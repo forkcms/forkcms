@@ -41,7 +41,7 @@ jsBackend =
 		jsBackend.messages.init();
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
-		jsBackend.tinyMCE.init();
+		//jsBackend.tinyMCE.init();
 
 		// IE fixes
 		jsBackend.selectors.init();
