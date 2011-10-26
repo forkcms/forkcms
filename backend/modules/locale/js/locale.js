@@ -1,15 +1,14 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
+/**
+ * Interaction for the locale module
+ *
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.locale =
 {
 	init: function()
 	{
 		jsBackend.locale.controls.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -64,12 +63,8 @@ jsBackend.locale.controls =
 		{
 			$('select#module option').prop('disabled', false);
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
-$(document).ready(jsBackend.locale.init);
+$(jsBackend.locale.init);
