@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
- * This class defines the API,
+ * This class defines the API.
  *
- * @package		api
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class API
 {
@@ -18,19 +21,16 @@ class API
 	const ERROR = 500;
 	const NOT_FOUND = 404;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// simulate $_REQUEST
 		$parameters = array_merge($_GET, $_POST);
 
 		// validate parameters
-		if(!isset($parameters['method'])) self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
+		if(!isset($parameters['method']))
+		{
+			self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
+		}
 
 		// check GET
 		$method = SpoonFilter::getValue($parameters['method'], null, '');
@@ -59,7 +59,10 @@ class API
 		require_once $path;
 
 		// validate if the method exists
-		if(!is_callable(array($className, $methodName))) self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+		if(!is_callable(array($className, $methodName)))
+		{
+			self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+		}
 
 		// call the method
 		try
@@ -82,9 +85,11 @@ class API
 				foreach($matches[0] as $i => $row)
 				{
 					// set documentation
-					$parameterDocumentation[$matches[2][$i]] = array('type' => str_replace('[optional]', '', $matches[1][$i]),
-																		'optional' => (substr_count($matches[1][$i], '[optional]') > 0),
-																		'description' => $matches[3][$i]);
+					$parameterDocumentation[$matches[2][$i]] = array(
+						'type' => str_replace('[optional]', '', $matches[1][$i]),
+						'optional' => (substr_count($matches[1][$i], '[optional]') > 0),
+						'description' => $matches[3][$i]
+					);
 				}
 			}
 
@@ -95,7 +100,10 @@ class API
 				$name = $parameter->getName();
 
 				// check if the parameter is available
-				if(!$parameter->isOptional() && !isset($parameters[$name])) self::output(self::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
+				if(!$parameter->isOptional() && !isset($parameters[$name]))
+				{
+					self::output(self::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
+				}
 
 				// add not-passed arguments
 				if($parameter->isOptional() && !isset($parameters[$name])) $arguments[] = $parameter->getDefaultValue();
@@ -108,7 +116,12 @@ class API
 					if($parameter->isOptional()) $defaultValue = $parameter->getDefaultValue();
 
 					// add argument
-					$arguments[] = SpoonFilter::getValue($parameters[$name], null, $defaultValue, $parameterDocumentation[$name]['type']);
+					$arguments[] = SpoonFilter::getValue(
+						$parameters[$name],
+						null,
+						$defaultValue,
+						$parameterDocumentation[$name]['type']
+					);
 				}
 
 				// fallback
@@ -140,14 +153,12 @@ class API
 		}
 	}
 
-
 	/**
 	 * Callback-method for elements in the return-array
 	 *
-	 * @return	void
-	 * @param	mixed $input		The value.
-	 * @param	string $key			The key.
-	 * @param	DOMElement $XML		The root-element.
+	 * @param mixed $input The value.
+	 * @param string $key The key.
+	 * @param DOMElement $XML The root-element.
 	 */
 	private static function arrayToXML(&$input, $key, $XML)
 	{
@@ -190,7 +201,10 @@ class API
 			if(is_string($input))
 			{
 				// check if value contains special chars, if so wrap in CDATA
-				if(substr_count($input, '&') > 0 || substr_count($input, '<') > 0 || substr_count($input, '>') > 0) $element->appendChild(new DOMCdataSection($input));
+				if(substr_count($input, '&') > 0 || substr_count($input, '<') > 0 || substr_count($input, '>') > 0)
+				{
+					$element->appendChild(new DOMCdataSection($input));
+				}
 
 				// just regular element
 				else $element->appendChild(new DOMText($input));
@@ -235,11 +249,10 @@ class API
 		}
 	}
 
-
 	/**
 	 * Default authentication
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function authorize()
 	{
@@ -269,7 +282,13 @@ class API
 		$apiKey = $user->getSetting('api_key');
 
 		// no API-access
-		if(!$apiAccess) self::output(self::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
+		if(!$apiAccess)
+		{
+			self::output(
+				self::FORBIDDEN,
+				array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.')
+			);
+		}
 
 		// create hash
 		$hash = BackendAuthentication::getEncryptedString($email . $apiKey, $nonce);
@@ -281,13 +300,11 @@ class API
 		return true;
 	}
 
-
 	/**
 	 * Output the return
 	 *
-	 * @return	void
-	 * @param	int $statusCode			The status code.
-	 * @param	array[optional] $data	The data to return.
+	 * @param int $statusCode The status code.
+	 * @param array[optional] $data The data to return.
 	 */
 	public static function output($statusCode, array $data = null)
 	{
@@ -300,22 +317,19 @@ class API
 			// json
 			case 'json':
 				self::outputJSON($statusCode, $data);
-			break;
+				break;
 
 			// xml
 			default:
 				self::outputXML($statusCode, $data);
-			break;
 		}
 	}
-
 
 	/**
 	 * Output as JSON
 	 *
-	 * @return	void
-	 * @param	int $statusCode			The status code.
-	 * @param	array[optional] $data	The data to return.
+	 * @param int $statusCode The status code.
+	 * @param array[optional] $data The data to return.
 	 */
 	private static function outputJSON($statusCode, array $data = null)
 	{
@@ -347,13 +361,11 @@ class API
 		exit;
 	}
 
-
 	/**
 	 * Output as XML
 	 *
-	 * @return	void
-	 * @param	int $statusCode			The status code.
-	 * @param	array[optional] $data	The data to return.
+	 * @param int $statusCode The status code.
+	 * @param array[optional] $data The data to return.
 	 */
 	private static function outputXML($statusCode, array $data = null)
 	{
@@ -397,5 +409,3 @@ class API
 		exit;
 	}
 }
-
-?>

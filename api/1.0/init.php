@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
- * This class will initiate the API
+ * This class will initiate the API.
  *
- * @package		api
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class APIInit
 {
@@ -18,16 +21,11 @@ class APIInit
 	 */
 	private $type;
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $type	The type of init to load, possible values are: backend, backend_ajax, backend_cronjob, backend_js.
+	 * @param string $type The type of init to load, possible values: backend, backend_ajax, backend_cronjob, backend_js
 	 */
 	public function __construct($type)
 	{
-		// init vars
 		$allowedTypes = array('api');
 		$type = (string) $type;
 
@@ -54,37 +52,23 @@ class APIInit
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		// require globals
 		$this->requireGlobals();
-
-		// define constants
 		$this->definePaths();
-
-		// set include path
 		$this->setIncludePath();
-
-		// set debugging
 		$this->setDebugging();
 
-		// require spoon
+		// get spoon
 		require_once 'spoon/spoon.php';
 
-		// require backend-classes
 		$this->requireAPIClasses();
-
-		// disable magic quotes
 		SpoonFilter::disableMagicQuotes();
-
-		// start session
 		$this->initSession();
 	}
-
 
 	/**
 	 * Autoloader for the backend
 	 *
-	 * @return	void
-	 * @param	string $className	The name of the class to require.
+	 * @param string $className The name of the class to require.
 	 */
 	public static function autoLoader($className)
 	{
@@ -103,10 +87,16 @@ class APIInit
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
 
 		// backend
-		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = BACKEND_CORE_PATH . '/engine/' . str_replace('backend', '', $className) . '.php';
+		elseif(substr($className, 0, 7) == 'backend')
+		{
+			$pathToLoad = BACKEND_CORE_PATH . '/engine/' . str_replace('backend', '', $className) . '.php';
+		}
 
 		// frontend
-		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH . '/engine/' . str_replace('frontend', '', $className) . '.php';
+		elseif(substr($className, 0, 8) == 'frontend')
+		{
+			$pathToLoad = FRONTEND_CORE_PATH . '/engine/' . str_replace('frontend', '', $className) . '.php';
+		}
 
 		// file check in core
 		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
@@ -158,15 +148,11 @@ class APIInit
 		}
 	}
 
-
 	/**
 	 * Define paths
-	 *
-	 * @return	void
 	 */
 	private function definePaths()
 	{
-		// general paths
 		define('API_CORE_PATH', PATH_WWW . '/' . APPLICATION);
 		define('BACKEND_PATH', PATH_WWW . '/backend');
 		define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
@@ -180,17 +166,15 @@ class APIInit
 		define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
 	}
 
-
 	/**
 	 * A custom error-handler so we can handle warnings about undefined labels
 	 *
-	 * @return	bool
-	 * @param	int $errorNumber		The level of the error raised, as an integer.
-	 * @param	string $errorString		The error message, as a string.
+	 * @param int $errorNumber The level of the error raised, as an integer.
+	 * @param string $errorString The error message, as a string.
+	 * @return bool
 	 */
 	public static function errorHandler($errorNumber, $errorString)
 	{
-		// redefine
 		$errorNumber = (int) $errorNumber;
 		$errorString = (string) $errorString;
 
@@ -214,50 +198,44 @@ class APIInit
 		else return false;
 	}
 
-
 	/**
 	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
 	 *
-	 * @return	void
-	 * @param	object $exception	The exception that was thrown.
-	 * @param	string $output		The output that should be mailed.
+	 * @param object $exception The exception that was thrown.
+	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
-		// redefine
 		$output = (string) $output;
 
 		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
 
 		// create response array
-		$response = array('code' => ($exception->getCode() != 0) ? $exception->getCode() : 500, 'message' => $exception->getMessage());
+		$response = array(
+			'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
+			'message' => $exception->getMessage()
+		);
 
 		// output JSON to the browser
 		echo json_encode($response);
-
-		// stop script execution
 		exit;
 	}
-
 
 	/**
 	 * This method will be called by the Spoon Exceptionhandler
 	 *
-	 * @return	void
-	 * @param	object $exception	The exception that was thrown.
-	 * @param	string $output		The output that should be mailed.
+	 * @param object $exception The exception that was thrown.
+	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionHandler($exception, $output)
 	{
-		// redefine
 		$exception = $exception;
 		$output = (string) $output;
 
 		// mail it?
 		if(SPOON_DEBUG_EMAIL != '')
 		{
-			// e-mail headers
 			$headers = "MIME-Version: 1.0\n";
 			$headers .= "Content-type: text/html; charset=iso-8859-15\n";
 			$headers .= "X-Priority: 3\n";
@@ -269,27 +247,19 @@ class APIInit
 			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
 		}
 
-		// build HTML for nice error
-		$html = '<html><body>Something went wrong.</body></html>';
-
-		// output HTML to the browser
-		echo $html;
-
-		// stop script execution
+		echo '<html><body>Something went wrong.</body></html>';
 		exit;
 	}
 
-
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in JS-files parsed through PHP
+	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions
+	 * thrown in JS-files parsed through PHP
 	 *
-	 * @return	void
-	 * @param	object $exception	The exception that was thrown.
-	 * @param	string $output		The output that should be mailed.
+	 * @param object $exception The exception that was thrown.
+	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
-		// redefine
 		$output = (string) $output;
 
 		// set correct headers
@@ -297,37 +267,26 @@ class APIInit
 
 		// output exception
 		echo '// ' . $exception->getMessage();
-
-		// stop script execution
 		exit;
 	}
 
-
 	/**
 	 * Start session
-	 *
-	 * @return	void
 	 */
 	private function initSession()
 	{
 		SpoonSession::start();
 	}
 
-
 	/**
 	 * Require all needed classes
-	 *
-	 * @return	void
 	 */
 	private function requireAPIClasses()
 	{
 	}
 
-
 	/**
 	 * Require globals-file
-	 *
-	 * @return	void
 	 */
 	private function requireGlobals()
 	{
@@ -352,19 +311,16 @@ class APIInit
 				header('Location: /install');
 			}
 
-			// we can nog load configuration file, however we can not run installer
-			echo 'Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.';
-
-			// stop script execution
+			// we can not load configuration file, however we can not run installer
+			echo 'Required configuration files are missing. Try deleting current files, clearing your database, ';
+			echo 're-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and ';
+			echo '<a href="/install">rerun the installer</a>.';
 			exit;
 		}
 	}
 
-
 	/**
 	 * Set debugging
-	 *
-	 * @return	void
 	 */
 	private function setDebugging()
 	{
@@ -377,7 +333,10 @@ class APIInit
 			// show errors on the screen
 			ini_set('display_errors', 'On');
 
-			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
+			/*
+			 * in debug mode notices are triggered when using non existing locale, so we use a custom
+			 * errorhandler to cleanup the message
+			 */
 			set_error_handler(array('APIInit', 'errorHandler'));
 		}
 
@@ -395,24 +354,20 @@ class APIInit
 			{
 				case 'backend_ajax':
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-				break;
+					break;
 
 				case 'backend_js':
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-				break;
+					break;
 
 				default:
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
-				break;
 			}
 		}
 	}
 
-
 	/**
 	 * Set include path
-	 *
-	 * @return	void
 	 */
 	private function setIncludePath()
 	{
@@ -420,5 +375,3 @@ class APIInit
 		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }
-
-?>
