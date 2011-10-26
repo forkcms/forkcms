@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Fork_Sniffs_Styleguide_QueriesSniff
  * Check if queries meet the standards
  *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Fork_Sniffs_Styleguide_QueriesSniff implements PHP_CodeSniffer_Sniff
 {
