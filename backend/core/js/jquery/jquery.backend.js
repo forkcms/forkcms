@@ -7,6 +7,7 @@
  * Meta-handler
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 (function($)
 {
@@ -21,59 +22,54 @@
 		// loop all elements
 		return this.each(function()
 		{
-			// init var
-			var element = $(this);
+			// variables
+			$element = $(this);
+			$pageTitle = $('#pageTitle');
+			$pageTitleOverwrite = $('#pageTitleOverwrite');
+			$navigationTitle = $('#navigationTitle');
+			$navigationTitleOverwrite = $('#navigationTitleOverwrite');
+			$metaDescription = $('#metaDescription');
+			$metaDescriptionOverwrite = $('#metaDescriptionOverwrite');
+			$metaKeywords = $('#metaKeywords');
+			$metaKeywordsOverwrite = $('#metaKeywordsOverwrite');
+			$urlOverwrite = $('#urlOverwrite');
 
 			// bind keypress
-			$(this).bind('keyup', calculateMeta);
+			$element.bind('keyup', calculateMeta);
 
 			// bind change on the checkboxes
-			if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+			if($pageTitle.length > 0 && $pageTitleOverwrite.length > 0)
 			{
-				$('#pageTitleOverwrite').change(function(evt)
+				$pageTitleOverwrite.change(function(evt)
 				{
-					if(!$(this).is(':checked'))
-					{
-						$('#pageTitle').val(element.val());
-					}
+					if(!$element.is(':checked')) $pageTitle.val($element.val());
 				});
 			}
 
-			if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+			if($navigationTitle.length > 0 && $navigationTitleOverwrite.length > 0)
 			{
-				$('#navigationTitleOverwrite').change(function(evt)
+				$navigationTitleOverwrite.change(function(evt)
 				{
-					if(!$(this).is(':checked'))
-					{
-						$('#navigationTitle').val(element.val());
-					}
+					if(!$element.is(':checked')) $navigationTitle.val($element.val());
 				});
 			}
 
-			$('#metaDescriptionOverwrite').change(function(evt)
+			$metaDescriptionOverwrite.change(function(evt)
 			{
-				if(!$(this).is(':checked'))
-				{
-					$('#metaDescription').val(element.val());
-				}
+				if(!$element.is(':checked')) $metaDescription.val($element.val());
 			});
 
-			$('#metaKeywordsOverwrite').change(function(evt)
+			$metaKeywordsOverwrite.change(function(evt)
 			{
-				if(!$(this).is(':checked'))
-				{
-					$('#metaKeywords').val(element.val());
-				}
+				if(!$element.is(':checked')) $metaKeywords.val($element.val());
 			});
 
-			$('#urlOverwrite').change(function(evt)
+			$urlOverwrite.change(function(evt)
 			{
-				if(!$(this).is(':checked'))
-				{
-					generateUrl(element.val());
-				}
+				if(!$element.is(':checked')) generateUrl($element.val());
 			});
 
+			// generate url
 			function generateUrl(url)
 			{
 				// make the call
@@ -102,38 +98,27 @@
 					}
 				});
 			}
+
 			// calculate meta
 			function calculateMeta(evt, element)
 			{
 				var title = (typeof element != 'undefined') ? element.val() : $(this).val();
 
-				if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+				if($pageTitle.length > 0 && $pageTitleOverwrite.length > 0)
 				{
-					if(!$('#pageTitleOverwrite').is(':checked'))
-					{
-						$('#pageTitle').val(title);
-					}
+					if(!$pageTitleOverwrite.is(':checked')) $pageTitle.val(title);
 				}
 
-				if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+				if($navigationTitle.length > 0 && $navigationTitleOverwrite.length > 0)
 				{
-					if(!$('#navigationTitleOverwrite').is(':checked'))
-					{
-						$('#navigationTitle').val(title);
-					}
+					if(!$navigationTitleOverwrite.is(':checked')) $navigationTitle.val(title);
 				}
 
-				if(!$('#metaDescriptionOverwrite').is(':checked'))
-				{
-					$('#metaDescription').val(title);
-				}
+				if(!$metaDescriptionOverwrite.is(':checked')) $metaDescription.val(title);
 
-				if(!$('#metaKeywordsOverwrite').is(':checked'))
-				{
-					$('#metaKeywords').val(title);
-				}
+				if(!$metaKeywordsOverwrite.is(':checked')) $metaKeywords.val(title);
 
-				if(!$('#urlOverwrite').is(':checked'))
+				if(!$urlOverwrite.is(':checked'))
 				{
 					if(typeof pageID == 'undefined' || pageID != 1)
 					{
@@ -315,9 +300,9 @@
 			$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
 
 			// grab element
-			var span = $this.find('span');
-			var element = span.eq(0);
-			var tooltip = span.eq(1);
+			$span = $this.find('span');
+			var element = $span.eq(0);
+			var tooltip = $span.eq(1);
 
 			// bind events
 			element.bind('click focus', createElement);
