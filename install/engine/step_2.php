@@ -158,7 +158,7 @@ class InstallerStep2 extends InstallerStep
 		/*
 		 * Ensure that Apache .htaccess file is written and mod_rewrite does its job
 		 */
-		self::checkRequirement('modRewrite', (bool) getenv('MOD_REWRITE'), self::STATUS_WARNING);
+		self::checkRequirement('modRewrite', (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')), self::STATUS_WARNING);
 
 		// error status
 		return !in_array(self::STATUS_ERROR, self::$variables);
