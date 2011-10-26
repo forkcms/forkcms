@@ -21,7 +21,7 @@ var jsBackend =
 	init: function()
 	{
 		// variables
-		$body = $('body');
+		var $body = $('body');
 
 		// get url and split into chunks
 		var chunks = document.location.pathname.split('/');
@@ -47,9 +47,6 @@ var jsBackend =
 		// IE fixes
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
-
-		// add touch class when touch enabled
-		if(!!window.TouchEvent){ $body.addClass('touch-enabled'); }
 
 		// do not move, should be run as the last item.
 		{option:!SPOON_DEBUG}jsBackend.forms.unloadWarning();{/option:!SPOON_DEBUG}
