@@ -5,7 +5,7 @@
 	<div class="heading">
 		<h3>{$lblExtensions|ucfirst}: {$lblUploadModule}</h3>
 	</div>
-	{option:!extensionIsMissing}
+	{option:!zlibIsMissing}
 		{form:upload}
 			<div class="options">
 				<div class="horizontal">
@@ -22,15 +22,15 @@
 				</div>
 			</div>
 		{/form:upload}
-	{/option:!extensionIsMissing}
+	{/option:!zlibIsMissing}
 
-	{option:extensionIsMissing}
+	{option:zlibIsMissing}
 		<div class="options">
 			<p>
-				{$msgExtensionIsMissing}
+				{$msgZlibIsMissing}
 			</p>
 		</div>
-	{/option:extensionIsMissing}
+	{/option:zlibIsMissing}
 </div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

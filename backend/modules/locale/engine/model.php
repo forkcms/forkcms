@@ -387,7 +387,7 @@ class BackendLocaleModel
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
 
 		// get labels from table
-		$lbl = (array) BackendModel::getDB()->getColumn('SELECT label FROM pages_extras');
+		$lbl = (array) BackendModel::getDB()->getColumn('SELECT label FROM modules_extras');
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
 
 		// loop files

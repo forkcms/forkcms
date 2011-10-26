@@ -42,7 +42,7 @@ class BackendLocationModel
 						'action' => 'location');
 
 		// delete extra
-		$db->delete('pages_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+		$db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// delete item
 		$db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
@@ -112,13 +112,13 @@ class BackendLocationModel
 						'data' => null,
 						'hidden' => 'N',
 						'sequence' => $db->getVar('SELECT MAX(i.sequence) + 1
-													FROM pages_extras AS i
+													FROM modules_extras AS i
 													WHERE i.module = ?', array('location')));
 		if(is_null($extra['sequence'])) $extra['sequence'] = $db->getVar('SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-																			FROM pages_extras AS i');
+																			FROM modules_extras AS i');
 
 		// insert extra
-		$item['extra_id'] = $db->insert('pages_extras', $extra);
+		$item['extra_id'] = $db->insert('modules_extras', $extra);
 		$extra['id'] = $item['extra_id'];
 
 		// insert and return the new id
@@ -129,7 +129,7 @@ class BackendLocationModel
 											'extra_label' => ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
 											'language' => $item['language'],
 											'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id']));
-		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+		$db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// return the new id
 		return $item['id'];
@@ -160,7 +160,7 @@ class BackendLocationModel
 						'hidden' => 'N');
 
 		// update extra
-		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+		$db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// update item
 		return $db->update('location', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));

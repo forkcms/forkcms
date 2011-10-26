@@ -68,7 +68,7 @@ class ProfilesInstaller extends ModuleInstaller
 		$resendActivationId = $this->insertExtra('profiles', 'block', 'ResendActivation', 'resend_activation', null, 'N', 5009);
 
 		// get search widget id
-		$searchId = (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND action = ?', array('search', 'form'));
+		$searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND action = ?', array('search', 'form'));
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
@@ -77,7 +77,7 @@ class ProfilesInstaller extends ModuleInstaller
 			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												INNER JOIN pages_extras AS e ON e.id = b.extra_id
+												INNER JOIN modules_extras AS e ON e.id = b.extra_id
 												WHERE e.module = ? AND p.language = ?', array('profiles', $language)) == 0)
 			{
 				// activate page

@@ -37,7 +37,7 @@ class BackendExtensionsModuleUpload extends BackendBaseActionAdd
 		}
 
 		// show message that we are missing an extension
-		else $this->tpl->assign('extensionIsMissing', true);
+		else $this->tpl->assign('zlibIsMissing', true);
 
 		// display the page
 		$this->display();

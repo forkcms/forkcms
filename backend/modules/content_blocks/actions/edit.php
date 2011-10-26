@@ -91,9 +91,6 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 		// check if selected template is still available
 		if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
-
-		// get templates
-		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 

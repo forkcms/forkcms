@@ -217,7 +217,7 @@ class ModuleInstaller
 		if($theme === null) $theme = $this->getSetting('core', 'theme');
 
 		// return best matching template id
-		return (int) $this->getDB()->getVar('SELECT id FROM pages_templates WHERE theme = ? ORDER BY path LIKE ? DESC, id ASC LIMIT 1', array((string) $theme, '%' . (string) $template . '%'));
+		return (int) $this->getDB()->getVar('SELECT id FROM themes_templates WHERE theme = ? ORDER BY path LIKE ? DESC, id ASC LIMIT 1', array((string) $theme, '%' . (string) $template . '%'));
 	}
 
 
@@ -396,10 +396,10 @@ class ModuleInstaller
 		if(is_null($sequence))
 		{
 			// set next sequence number for this module
-			$sequence = $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages_extras WHERE module = ?', array((string) $module));
+			$sequence = $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?', array((string) $module));
 
 			// this is the first extra for this module: generate new 1000-series
-			if(is_null($sequence)) $sequence = $sequence = $this->getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM pages_extras');
+			if(is_null($sequence)) $sequence = $sequence = $this->getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras');
 		}
 
 		// redefine
@@ -421,7 +421,7 @@ class ModuleInstaller
 						'sequence' => $sequence);
 
 		// build query
-		$query = 'SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?';
+		$query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?';
 		$parameters = array($item['module'], $item['type'], $item['label']);
 
 		// data parameter must match
@@ -441,7 +441,7 @@ class ModuleInstaller
 		if($extraId === 0)
 		{
 			// insert extra and return id
-			return (int) $this->getDB()->insert('pages_extras', $item);
+			return (int) $this->getDB()->insert('modules_extras', $item);
 		}
 
 		// exists so return id

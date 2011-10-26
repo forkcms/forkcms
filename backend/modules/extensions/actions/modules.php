@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is the index-action (default), it will display the overview of modules.
+ * This is the modules-action, it will display the overview of modules.
  *
  * @package		backend
  * @subpackage	extensions

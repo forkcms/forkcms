@@ -30,7 +30,6 @@ class SettingsInstaller extends ModuleInstaller
 
 		// action rights
 		$this->setActionRights(1, 'settings', 'index');
-		$this->setActionRights(1, 'settings', 'themes');
 		$this->setActionRights(1, 'settings', 'email');
 		$this->setActionRights(1, 'settings', 'seo');
 		$this->setActionRights(1, 'settings', 'test_email_connection');
@@ -43,16 +42,11 @@ class SettingsInstaller extends ModuleInstaller
 		$navigationAdvancedId = $this->setNavigation($navigationSettingsId, 'Advanced', null, null, 2);
 		$this->setNavigation($navigationAdvancedId, 'Email', 'settings/email');
 
-		// theme navigation
-		$navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes', null, null, 3);
-		$this->setNavigation($navigationThemesId, 'ThemesSelection', 'settings/themes');
-		$this->setNavigation($navigationThemesId, 'Templates', 'pages/templates', array(
-			'pages/add_template',
-			'pages/edit_template'
-		));
-
 		// modules settings navigation
 		$this->setNavigation($navigationSettingsId, 'Modules', null, null, 6);
+
+		// themes settings navigation
+		$this->setNavigation($navigationSettingsId, 'Themes', null, null, 7);
 	}
 }
 

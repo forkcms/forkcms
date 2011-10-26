@@ -52,15 +52,9 @@
         <translation language="nl"><![CDATA[Ben je zeker dat je de module "%1$s" wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
       </item>
-      <item type="message" name="ExtensionIsMissing">
-        <translation language="nl"><![CDATA[ge mankeert iet.]]></translation>
-        <translation language="en"><![CDATA[
-        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />
-			<ul>
-				<li>Contact your server administrator with the above message.</li>
-				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>
-			</ul>]]>
-		</translation>
+      <item type="message" name="HelpThemes">
+        <translation language="nl"><![CDATA[Duid aan welk thema je wil gebruiken.]]></translation>
+        <translation language="en"><![CDATA[Select the theme you wish to use.]]></translation>
       </item>
       <item type="message" name="InformationFileCouldNotBeLoaded">
         <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
@@ -85,6 +79,26 @@
       <item type="message" name="Module">
         <translation language="nl"><![CDATA[module "%1$s"]]></translation>
         <translation language="en"><![CDATA[module "%1$s"]]></translation>
+      </item>
+      <item type="message" name="ZlibIsMissing">
+        <translation language="nl">
+        	<![CDATA[
+        	Uw server ontbreekt de benodigde PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extensie. Fork CMS heeft deze extensie nodig om je geüploade module uit te pakken.<br /><br />
+			<ul>
+				<li>Contacteer je server administrator met bovenstaande melding.</li>
+				<li>Op pak manueel de bestanden uit het ZIP archief uit op je computer en upload deze (waarschijnlijk via FTP) naar je website root.</li>
+			</ul>
+			]]>
+		</translation>
+        <translation language="en">
+        	<![CDATA[
+        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />
+			<ul>
+				<li>Contact your server administrator with the above message.</li>
+				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>
+			</ul>
+			]]>
+		</translation>
       </item>
     </extensions>
   </backend>

@@ -14,25 +14,14 @@
 class PagesInstaller extends ModuleInstaller
 {
 	/**
-	 * Name of the default theme
-	 *
-	 * @var	string
-	 */
-	private $defaultTheme = 'triton';
-
-
-	/**
 	 * Import the data
 	 *
 	 * @return	void
 	 */
 	private function importData()
 	{
-		// insert templates
-		$this->insertTemplates();
-
 		// insert required pages
-		$this->insertPagesAndExtras();
+		$this->insertPages();
 
 		// install example data if requested
 		if($this->installExample()) $this->installExampleData();
@@ -44,9 +33,9 @@ class PagesInstaller extends ModuleInstaller
 	 *
 	 * @return	void
 	 */
-	private function insertPagesAndExtras()
+	private function insertPages()
 	{
-		// insert/get extra ids
+		// get extra ids
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
@@ -101,81 +90,6 @@ class PagesInstaller extends ModuleInstaller
 									array('extra_id' => $extras['search_form'], 'position' => 'top'));
 			}
 		}
-	}
-
-
-	/**
-	 * Insert the templates
-	 *
-	 * @return	void
-	 */
-	private function insertTemplates()
-	{
-		/*
-		 * Fallback templates
-		 */
-
-		// build templates
-		$templates['core']['default'] = array('theme' => 'core',
-												'label' => 'Default',
-												'path' => 'core/layout/templates/default.tpl',
-												'active' => 'Y',
-												'data' => serialize(array('format' => '[main]',
-																			'names' => array('main'))));
-
-		$templates['core']['home'] = array('theme' => 'core',
-											'label' => 'Home',
-											'path' => 'core/layout/templates/home.tpl',
-											'active' => 'Y',
-											'data' => serialize(array('format' => '[main]',
-																		'names' => array('main'))));
-
-		// insert templates
-		$this->getDB()->insert('pages_templates', $templates['core']['default']);
-		$this->getDB()->insert('pages_templates', $templates['core']['home']);
-
-
-		/*
-		 * Triton templates
-		 */
-
-		// search will be installed by default; already link it to this template
-		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
-
-		// build templates
-		$templates['triton']['default'] = array('theme' => 'triton',
-												'label' => 'Default',
-												'path' => 'core/layout/templates/default.tpl',
-												'active' => 'Y',
-												'data' => serialize(array('format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
-																			'names' => array('main', 'left', 'top', 'advertisement'),
-																			'default_extras' => array('top' => array($extras['search_form'])))));
-
-		$templates['triton']['home'] = array('theme' => 'triton',
-												'label' => 'Home',
-												'path' => 'core/layout/templates/home.tpl',
-												'active' => 'Y',
-												'data' => serialize(array('format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
-																			'names' => array('main', 'left', 'right', 'top', 'advertisement'),
-																			'default_extras' => array('top' => array($extras['search_form'])))));
-
-		// insert templates
-		$this->getDB()->insert('pages_templates', $templates['triton']['default']);
-		$this->getDB()->insert('pages_templates', $templates['triton']['home']);
-
-		/*
-		 * General theme settings
-		 */
-
-		// set default theme (to be installed next)
-		$this->setSetting('core', 'theme', $this->defaultTheme, true);
-
-		// set default template
-		$this->setSetting('pages', 'default_template', $this->getTemplateId('default'));
-
-		// disable meta navigation
-		$this->setSetting('pages', 'meta_navigation', false);
-
 	}
 
 
@@ -325,11 +239,6 @@ class PagesInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'pages', 'add');
 		$this->setActionRights(1, 'pages', 'delete');
 		$this->setActionRights(1, 'pages', 'edit');
-
-		$this->setActionRights(1, 'pages', 'templates');
-		$this->setActionRights(1, 'pages', 'add_template');
-		$this->setActionRights(1, 'pages', 'edit_template');
-		$this->setActionRights(1, 'pages', 'delete_template');
 
 		$this->setActionRights(1, 'pages', 'settings');
 	}
