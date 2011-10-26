@@ -23,6 +23,9 @@ textarea {
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
 	-webkit-transition: background-color 0.28s linear;
+	-moz-transition: background-color 0.28s linear;
+	-o-transition: background-color 0.28s linear;
+	transition: background-color 0.28s linear;
 
 	/* @inc .rc */
 	-moz-border-radius: 4px;
