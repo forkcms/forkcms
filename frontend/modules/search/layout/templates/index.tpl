@@ -15,6 +15,18 @@
 					<label for="q">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtQ} {$txtQError}
 				</p>
+				{option:googleCorrections}
+				<p>
+					{$lblDidYouMean|ucfirst}:
+					<ul>
+					{iteration:googleCorrections}
+						<li>
+							<a href="{$googleCorrections.url}" title="{$googleCorrections.label}">{$googleCorrections.label}</a>
+						</li>
+					{/iteration:googleCorrections}
+					</ul>
+				</p>
+				{/option:googleCorrections}
 				<p>
 					<input id="submit" class="inputSubmit" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
 				</p>
