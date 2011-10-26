@@ -1,10 +1,19 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
+/**
+ * Interaction for the analytics module
+ *
+ * @author	Annelies Vanextergem <annelies@netlash.com>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.analytics =
 {
 	init: function()
 	{
+		// variables
+		$chartPieChart = $('#chartPieChart');
+		$chartWidget = $('#chartWidget');
+		$chartDoubleMetricPerDay = $('#chartDoubleMetricPerDay');
+		$chartSingleMetricPerDay = $('#chartSingleMetricPerDay');
+
 		jsBackend.analytics.charts.init();
 		jsBackend.analytics.chartDoubleMetricPerDay.init();
 		jsBackend.analytics.chartPieChart.init();
@@ -12,11 +21,7 @@ jsBackend.analytics =
 		jsBackend.analytics.chartWidget.init();
 		jsBackend.analytics.loading.init();
 		jsBackend.analytics.resize.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -24,7 +29,7 @@ jsBackend.analytics.charts =
 {
 	init: function()
 	{
-		if($('#chartPieChart').length > 0 || $('#chartDoubleMetricPerDay').length > 0 || $('#chartSingleMetricPerDay').length > 0 || $('#chartWidget').length > 0)
+		if($chartPieChart.length > 0 || $chartDoubleMetricPerDay.length > 0 || $chartSingleMetricPerDay.length > 0 || $chartWidget.length > 0)
 		{
 			Highcharts.setOptions(
 			{
@@ -44,40 +49,40 @@ jsBackend.analytics.charts =
 				}
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
-jsBackend.analytics.chartPieChart = 
+jsBackend.analytics.chartPieChart =
 {
 	chart: '',
 
 	init: function()
 	{
-		if($('#chartPieChart').length > 0) { jsBackend.analytics.chartPieChart.create(); }
+		if($chartPieChart.length > 0) { jsBackend.analytics.chartPieChart.create(); }
 	},
 
 	// add new chart
 	create: function(evt)
 	{
-		var pieChartValues = $('#dataChartPieChart ul.data li');
+		// variables
+		$pieChartValues = $('#dataChartPieChart ul.data li');
 		var pieChartData = [];
 
-		pieChartValues.each(function()
+		$pieChartValues.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			pieChartData.push(
 			{
-				'name': $(this).children('span.label').html(),
-				'y': parseInt($(this).children('span.value').html()),
-				'percentage': parseInt($(this).children('span.percentage').html())
+				'name': $this.children('span.label').html(),
+				'y': parseInt($this.children('span.value').html()),
+				'percentage': parseInt($this.children('span.percentage').html())
 			});
 		});
 
-		var containerWidth = $('#chartPieChart').width();
+		var containerWidth = $chartPieChart.width();
 
 		jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart(
 		{
@@ -116,11 +121,7 @@ jsBackend.analytics.chartPieChart =
 	destroy: function()
 	{
 		jsBackend.analytics.chartPieChart.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -130,7 +131,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
 	init: function()
 	{
-		if($('#chartDoubleMetricPerDay').length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
+		if($chartDoubleMetricPerDay.length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
 	},
 
 	// add new chart
@@ -187,11 +188,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 	destroy: function()
 	{
 		jsBackend.analytics.chartDoubleMetricPerDay.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -201,7 +198,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 
 	init: function()
 	{
-		if($('#chartSingleMetricPerDay').length > 0) { jsBackend.analytics.chartSingleMetricPerDay.create(); }
+		if($chartSingleMetricPerDay.length > 0) { jsBackend.analytics.chartSingleMetricPerDay.create(); }
 	},
 
 	// add new chart
@@ -252,11 +249,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 	destroy: function()
 	{
 		jsBackend.analytics.chartSingleMetricPerDay.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -266,7 +259,7 @@ jsBackend.analytics.chartWidget =
 
 	init: function()
 	{
-		if($('#chartWidget').length > 0) { jsBackend.analytics.chartWidget.create(); }
+		if($chartWidget.length > 0) { jsBackend.analytics.chartWidget.create(); }
 	},
 
 	// add new chart
@@ -322,11 +315,7 @@ jsBackend.analytics.chartWidget =
 	destroy: function()
 	{
 		jsBackend.analytics.chartWidget.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -338,10 +327,13 @@ jsBackend.analytics.loading =
 
 	init: function()
 	{
-		if($('#longLoader').length > 0)
+		// variables
+		$longLoader = $('#longLoader');
+
+		if($longLoader.length > 0)
 		{
 			// loading bar stuff
-			$('#longLoader').show();
+			$longLoader.show();
 
 			// get the page to get data for
 			var page = $('#page').html();
@@ -361,6 +353,9 @@ jsBackend.analytics.loading =
 		// get data
 		var page = jsBackend.analytics.loading.page;
 		var identifier = jsBackend.analytics.loading.identifier;
+		$longLoader = $('#longLoader');
+		$statusError = $('#statusError');
+		$loading = $('#loading');
 
 		// make the call to check the status
 		$.ajax(
@@ -392,11 +387,11 @@ jsBackend.analytics.loading =
 					clearInterval(jsBackend.analytics.loading.interval);
 
 					// loading bar stuff
-					$('#longLoader').show();
+					$longLoader.show();
 
 					// show box
-					$('#statusError').show();
-					$('#loading').hide();
+					$statusError.show();
+					$loading.hide();
 
 					// show message
 					jsBackend.messages.add('error', textStatus);
@@ -414,9 +409,9 @@ jsBackend.analytics.loading =
 				clearInterval(jsBackend.analytics.loading.interval);
 
 				// show box and hide loading bar
-				$('#statusError').show();
-				$('#loading').hide();
-				$('#longLoader').hide();
+				$statusError.show();
+				$loading.hide();
+				$longLoader.hide();
 
 				// show message
 				jsBackend.messages.add('error', textStatus);
@@ -425,11 +420,7 @@ jsBackend.analytics.loading =
 				if(jsBackend.debug) alert(textStatus);
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -437,7 +428,7 @@ jsBackend.analytics.resize =
 {
 	interval: 1000,
 	timeout: false,
-		
+
 	init: function()
 	{
 		$(window).resize(function()
@@ -450,7 +441,7 @@ jsBackend.analytics.resize =
 			}
 		});
 	},
-		
+
 	resizeEnd: function()
 	{
 		if(new Date() - resizeTime < jsBackend.analytics.resize.interval)
@@ -460,33 +451,29 @@ jsBackend.analytics.resize =
 		else
 		{
 			timeout = false;
-			if($('#chartPieChart').length > 0)
+			if($chartPieChart.length > 0)
 			{
-				$('#chartPieChart').html('&nbsp;');
+				$chartPieChart.html('&nbsp;');
 				jsBackend.analytics.chartPieChart.create();
 			}
-			if($('#chartDoubleMetricPerDay').length > 0)
+			if($chartDoubleMetricPerDay.length > 0)
 			{
-				$('#chartDoubleMetricPerDay').html('&nbsp;');
+				$chartDoubleMetricPerDay.html('&nbsp;');
 				jsBackend.analytics.chartDoubleMetricPerDay.create();
 			}
-			if($('#chartSingleMetricPerDay').length > 0)
+			if($chartSingleMetricPerDay.length > 0)
 			{
-				$('#chartSingleMetricPerDay').html('&nbsp;');
+				$chartSingleMetricPerDay.html('&nbsp;');
 				jsBackend.analytics.chartSingleMetricPerDay.create();
 			}
-			if($('#chartWidget').length > 0)
+			if($chartWidget.length > 0)
 			{
-				$('#chartWidget').html('&nbsp;');
+				$chartWidget.html('&nbsp;');
 				jsBackend.analytics.chartWidget.create();
 			}
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
-$(document).ready(jsBackend.analytics.init);
+$(jsBackend.analytics.init);
