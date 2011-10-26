@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will handle the incoming URL.
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendURL
 {
@@ -18,14 +21,12 @@ class BackendURL
 	 */
 	private $action;
 
-
 	/**
 	 * The host, will be used for cookies
 	 *
 	 * @var	string
 	 */
 	private $host;
-
 
 	/**
 	 * The current module
@@ -34,7 +35,6 @@ class BackendURL
 	 */
 	private $module;
 
-
 	/**
 	 * The querystring
 	 *
@@ -42,76 +42,58 @@ class BackendURL
 	 */
 	private $queryString;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
-		// add ourself to the reference so other classes can retrieve us
+		// add to registry
 		Spoon::set('url', $this);
 
-		// set query-string for later use
 		$this->setQueryString($_SERVER['REQUEST_URI']);
-
-		// set host for later use
 		$this->setHost($_SERVER['HTTP_HOST']);
-
-		// process URL
 		$this->processQueryString();
 	}
-
 
 	/**
 	 * Get the current action found in the URL
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the host
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getHost()
 	{
 		return $this->host;
 	}
 
-
 	/**
 	 * Get the current module found in the URL
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get the full querystring
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getQueryString()
 	{
 		return $this->queryString;
 	}
 
-
 	/**
 	 * Process the querystring
-	 *
-	 * @return	void
 	 */
 	private function processQueryString()
 	{
@@ -122,7 +104,11 @@ class BackendURL
 		$positionQuestionMark = strpos($queryString, '?');
 
 		// remove the GET-chunk from the parameters
-		$processedQueryString = ($positionQuestionMark === false) ? $queryString : substr($queryString, 0, $positionQuestionMark);
+		if($positionQuestionMark === false) $processedQueryString = $queryString;
+		else
+		{
+			$processedQueryString = substr($queryString, 0, $positionQuestionMark);
+		}
 
 		// split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
 		$chunks = (array) explode('/', trim($processedQueryString, '/'));
@@ -134,7 +120,11 @@ class BackendURL
 		$isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax.php');
 
 		// get the language, this will always be in front
-		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], array_keys(BackendLanguage::getWorkingLanguages()), '') : '';
+		$language = '';
+		if(isset($chunks[1]) && $chunks[1] != '')
+		{
+			$language = SpoonFilter::getValue($chunks[1], array_keys(BackendLanguage::getWorkingLanguages()), '');
+		}
 
 		// no language provided?
 		if($language == '' && !$isJS && !$isAJAX)
@@ -165,8 +155,14 @@ class BackendURL
 				else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
 			}
 
-			// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
+			/*
+			 * check if the config is present? If it isn't present there is a huge problem, so we
+			 * will stop our code by throwing an error
+			 */
+			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php'))
+			{
+				throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
+			}
 
 			// build config-object-name
 			$configClassName = 'Backend' . SpoonFilter::toCamelCase($module . '_config');
@@ -175,7 +171,12 @@ class BackendURL
 			require_once BACKEND_MODULE_PATH . '/config.php';
 
 			// validate if class exists (aka has correct name)
-			if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+			if(!class_exists($configClassName))
+			{
+				throw new BackendException(
+					'The config file is present, but the classname should be: ' . $configClassName . '.'
+				);
+			}
 
 			// create config-object, the constructor will do some magic
 			$config = new $configClassName($module);
@@ -237,7 +238,9 @@ class BackendURL
 						if(BackendAuthentication::getUser()->isAuthenticated())
 						{
 							// set interface language based on the user preferences
-							BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('interface_language', 'nl'));
+							BackendLanguage::setLocale(
+								BackendAuthentication::getUser()->getSetting('interface_language', 'nl')
+							);
 						}
 
 						// no authenticated user
@@ -266,53 +269,43 @@ class BackendURL
 		}
 	}
 
-
 	/**
 	 * Set the current action
 	 *
-	 * @return	void
-	 * @param	string $action	The action to set.
+	 * @param string $action The action to set.
 	 */
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the host
 	 *
-	 * @return	void
-	 * @param	string $host	The host.
+	 * @param string $host The host.
 	 */
 	private function setHost($host)
 	{
 		$this->host = (string) $host;
 	}
 
-
 	/**
 	 * Set the current module
 	 *
-	 * @return	void
-	 * @param	string $module	The module to set.
+	 * @param string $module The module to set.
 	 */
 	public function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 
-
 	/**
 	 * Set the querystring
 	 *
-	 * @return	void
-	 * @param	string $queryString		The full query-string.
+	 * @param string $queryString The full query-string.
 	 */
 	private function setQueryString($queryString)
 	{
 		$this->queryString = trim((string) $queryString, '/');
 	}
 }
-
-?>

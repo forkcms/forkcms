@@ -3,13 +3,9 @@
 /**
  * This is the configuration-object for the core
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
-final class BackendCoreConfig extends BackendBaseConfig
+class BackendCoreConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -18,7 +14,6 @@ final class BackendCoreConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,5 +21,3 @@ final class BackendCoreConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

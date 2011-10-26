@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class implements a lot of functionality that can be extended by a specific action
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseAction
 {
@@ -18,14 +21,12 @@ class BackendBaseAction
 	 */
 	protected $action;
 
-
 	/**
 	 * The parameters (urldecoded)
 	 *
 	 * @var	array
 	 */
 	protected $parameters = array();
-
 
 	/**
 	 * The header object
@@ -34,14 +35,12 @@ class BackendBaseAction
 	 */
 	protected $header;
 
-
 	/**
 	 * The current module
 	 *
 	 * @var	string
 	 */
 	protected $module;
-
 
 	/**
 	 * A reference to the current template
@@ -50,7 +49,6 @@ class BackendBaseAction
 	 */
 	public $tpl;
 
-
 	/**
 	 * A reference to the URL-instance
 	 *
@@ -58,12 +56,9 @@ class BackendBaseAction
 	 */
 	public $URL;
 
-
 	/**
-	 * Default constructor
-	 * The constructor will set some properties. It populates the parameter array with urldecoded values for easy-use.
-	 *
-	 * @return	void
+	 * The constructor will set some properties. It populates the parameter array with urldecoded
+	 * values for easy-use.
 	 */
 	public function __construct()
 	{
@@ -80,32 +75,31 @@ class BackendBaseAction
 		foreach((array) $_GET as $key => $value) $this->parameters[$key] = $value;
 	}
 
-
 	/**
 	 * Display, this wil output the template to the browser
 	 * If no template is specified we build the path form the current module and action
 	 *
-	 * @return	void
-	 * @param	string[optional] $template	The template to use, if not provided it will be based on the action.
+	 * @param string[optional] $template The template to use, if not provided it will be based on the action.
 	 */
 	public function display($template = null)
 	{
 		// parse header
 		$this->header->parse();
 
-		// if no template is specified, we have to build the path ourself
-		// the default template is based on the name of the current action
-		if($template === null) $template = BACKEND_MODULE_PATH . '/layout/templates/' . $this->URL->getAction() . '.tpl';
+		/*
+		 * If no template is specified, we have to build the path ourself. The default template is
+		 * based on the name of the current action
+		 */
+		if($template === null)
+		{
+			$template = BACKEND_MODULE_PATH . '/layout/templates/' . $this->URL->getAction() . '.tpl';
+		}
 
-		// display
 		$this->tpl->display($template);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -130,21 +124,27 @@ class BackendBaseAction
 		$this->header->addJS('utils.js', 'core', true);
 		$this->header->addJS('backend.js', 'core', true);
 
-		// add default js file (if the file exists)
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) $this->header->addJS($this->getModule() . '.js', null, true);
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js')) $this->header->addJS($this->getAction() . '.js', null, true);
+		// add module js
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
+		{
+			$this->header->addJS($this->getModule() . '.js', null, true);
+		}
+
+		// add action js
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
+		{
+			$this->header->addJS($this->getAction() . '.js', null, true);
+		}
 
 		// if not in debug-mode we should include the minified version
 		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/layout/css/minified.css'))
 		{
-			// include the minified CSS-file
 			$this->header->addCSS('minified.css', 'core');
 		}
 
-		// debug-mode or minified file does not exists
+		// debug-mode or minified file does not exist
 		else
 		{
-			// add css
 			$this->header->addCSS('reset.css', 'core');
 			$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
 			$this->header->addCSS('debug.css', 'core');
@@ -152,7 +152,10 @@ class BackendBaseAction
 		}
 
 		// add module specific css
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css')) $this->header->addCSS($this->getModule() . '.css', null);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
+		{
+			$this->header->addCSS($this->getModule() . '.css', null);
+		}
 
 		// store var so we don't have to call this function twice
 		$var = $this->getParameter('var', 'array');
@@ -186,81 +189,73 @@ class BackendBaseAction
 		}
 	}
 
-
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get a parameter for a given key
 	 * The function will return null if the key is not available
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
 	 *
-	 * @return	mixed
-	 * @param	string $key						The name of the parameter.
-	 * @param	string[optional] $type			The return-type, possible values are: bool, boolean, int, integer, float, double, string, array.
-	 * @param	mixed[optional] $defaultValue	The value that should be returned if the key is not available.
+	 * @param string $key The name of the parameter.
+	 * @param string[optional] $type The return-type, possible values are: bool, boolean, int, integer, float, double, string, array.
+	 * @param mixed[optional] $defaultValue The value that should be returned if the key is not available.
+	 * @return mixed
 	 */
 	public function getParameter($key, $type = 'string', $defaultValue = null)
 	{
-		// redefine key
 		$key = (string) $key;
 
 		// parameter exists
-		if(isset($this->parameters[$key]) && $this->parameters[$key] != '') return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
+		if(isset($this->parameters[$key]) && $this->parameters[$key] != '')
+		{
+			return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
+		}
 
-		// no such parameter
 		return $defaultValue;
 	}
-
 
 	/**
 	 * Redirect to a given URL
 	 *
-	 * @return	void
-	 * @param	string $URL	The URL to redirect to.
+	 * @param string $URL The URL to redirect to.
 	 */
 	public function redirect($URL)
 	{
 		SpoonHTTP::redirect(str_replace('&amp;', '&', (string) $URL));
 	}
 
-
 	/**
 	 * Set the action, for later use
 	 *
-	 * @return	void
-	 * @param	string $action	The action to load.
+	 * @param string $action The action to load.
 	 */
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the module, for later use
 	 *
-	 * @return	void
-	 * @param	string $module	The module to load.
+	 * @param string $module The module to load.
 	 */
 	private function setModule($module)
 	{
@@ -268,16 +263,11 @@ class BackendBaseAction
 	}
 }
 
-
 /**
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the index action
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseActionIndex extends BackendBaseAction
 {
@@ -288,30 +278,21 @@ class BackendBaseActionIndex extends BackendBaseAction
 	 */
 	protected $dataGrid;
 
-
 	/**
 	 * Execute the current action
 	 * This method will be overwriten in most of the actions, but still be called to add general stuff
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, will add general CSS and JS
 		parent::execute();
 	}
 }
-
 
 /**
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the add action
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseActionAdd extends BackendBaseAction
 {
@@ -322,7 +303,6 @@ class BackendBaseActionAdd extends BackendBaseAction
 	 */
 	protected $frm;
 
-
 	/**
 	 * The backends meta-object
 	 *
@@ -330,29 +310,20 @@ class BackendBaseActionAdd extends BackendBaseAction
 	 */
 	protected $meta;
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// parse form
 		$this->frm->parse($this->tpl);
 	}
 }
-
 
 /**
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the edit action
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseActionEdit extends BackendBaseAction
 {
@@ -363,14 +334,12 @@ class BackendBaseActionEdit extends BackendBaseAction
 	 */
 	protected $dgRevisions;
 
-
 	/**
 	 * The form instance
 	 *
 	 * @var	BackendForm
 	 */
 	protected $frm;
-
 
 	/**
 	 * The id of the item to edit
@@ -379,14 +348,12 @@ class BackendBaseActionEdit extends BackendBaseAction
 	 */
 	protected $id;
 
-
 	/**
 	 * The backends meta-object
 	 *
 	 * @var	BackendMeta
 	 */
 	protected $meta;
-
 
 	/**
 	 * The data of the item to edit
@@ -395,11 +362,8 @@ class BackendBaseActionEdit extends BackendBaseAction
 	 */
 	protected $record;
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -407,16 +371,11 @@ class BackendBaseActionEdit extends BackendBaseAction
 	}
 }
 
-
 /**
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the delete action
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseActionDelete extends BackendBaseAction
 {
@@ -427,7 +386,6 @@ class BackendBaseActionDelete extends BackendBaseAction
 	 */
 	protected $id;
 
-
 	/**
 	 * The data of the item to edite
 	 *
@@ -435,12 +393,9 @@ class BackendBaseActionDelete extends BackendBaseAction
 	 */
 	protected $record;
 
-
 	/**
 	 * Execute the current action
 	 * This method will be overwriten in most of the actions, but still be called to add general stuff
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -448,15 +403,10 @@ class BackendBaseActionDelete extends BackendBaseAction
 	}
 }
 
-
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseAJAXAction
 {
@@ -465,14 +415,12 @@ class BackendBaseAJAXAction
 	const FORBIDDEN = 403;
 	const ERROR = 500;
 
-
 	/**
 	 * The current action
 	 *
 	 * @var	string
 	 */
 	protected $action;
-
 
 	/**
 	 * The current module
@@ -481,63 +429,52 @@ class BackendBaseAJAXAction
 	 */
 	protected $module;
 
-
 	/**
-	 * Default constructor
 	 * The constructor will set some properties. It populates the parameter array with urldecoded values for easy-use.
 	 *
-	 * @return	void
-	 * @param	string $action		The action to load.
-	 * @param	string $module		The module to load.
+	 * @param string $action The action to load.
+	 * @param string $module The module to load.
 	 */
 	public function __construct($action, $module)
 	{
-		// store the current module and action (we grab them from the URL)
 		$this->setModule($module);
 		$this->setAction($action);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// this method will be overwritten by the children
 	}
 
-
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Output an answer to the browser
 	 *
-	 * @return	void
-	 * @param	int $statusCode				The status code for the response, use the available constants. (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
-	 * @param	mixed[optional] $data		The data to output.
-	 * @param	string[optional] $message	The text-message to send.
+	 * @param int $statusCode The status code for the response, use the available constants. (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
+	 * @param mixed[optional] $data The data to output.
+	 * @param string[optional] $message The text-message to send.
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
@@ -554,29 +491,23 @@ class BackendBaseAJAXAction
 
 		// output JSON to the browser
 		echo json_encode($response);
-
-		// stop script execution
 		exit;
 	}
-
 
 	/**
 	 * Set the action, for later use
 	 *
-	 * @return	void
-	 * @param	string $action		The action to load.
+	 * @param string $action The action to load.
 	 */
 	protected function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the module, for later use
 	 *
-	 * @return	void
-	 * @param	string $module		The module to load.
+	 * @param string $module The module to load.
 	 */
 	protected function setModule($module)
 	{
@@ -584,15 +515,10 @@ class BackendBaseAJAXAction
 	}
 }
 
-
 /**
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseConfig
 {
@@ -603,14 +529,12 @@ class BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
 	 * @var	array
 	 */
 	protected $disabledActions = array();
-
 
 	/**
 	 * The disabled AJAX-actions
@@ -619,14 +543,12 @@ class BackendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 
-
 	/**
 	 * The current loaded module
 	 *
 	 * @var	string
 	 */
 	protected $module;
-
 
 	/**
 	 * All the possible actions
@@ -635,7 +557,6 @@ class BackendBaseConfig
 	 */
 	protected $possibleActions = array();
 
-
 	/**
 	 * All the possible AJAX actions
 	 *
@@ -643,22 +564,16 @@ class BackendBaseConfig
 	 */
 	protected $possibleAJAXActions = array();
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $module	The module wherefor this is the configuration-file.
+	 * @param string $module The module wherefor this is the configuration-file.
 	 */
 	public function __construct($module)
 	{
-		// set module
 		$this->module = (string) $module;
 
-		// check if model exists
+		// require the model if it exists
 		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
 		{
-			// the model exists, so we require it
 			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
 		}
 
@@ -666,56 +581,49 @@ class BackendBaseConfig
 		$this->setPossibleActions();
 	}
 
-
 	/**
 	 * Get the default action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getDefaultAction()
 	{
 		return $this->defaultAction;
 	}
 
-
 	/**
 	 * Get the current loaded module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get the possible actions
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getPossibleActions()
 	{
 		return $this->possibleActions;
 	}
 
-
 	/**
 	 * Get the possible AJAX actions
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getPossibleAJAXActions()
 	{
 		return $this->possibleAJAXActions;
 	}
 
-
 	/**
 	 * Set the possible actions, based on files in folder
 	 * You can disable action in the config file. (Populate $disabledActions)
-	 *
-	 * @return	void
 	 */
 	protected function setPossibleActions()
 	{
@@ -747,16 +655,11 @@ class BackendBaseConfig
 	}
 }
 
-
 /**
  * This is the base-object for cronjobs. The module-specific cronjob-files can extend the functionality from this class
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendBaseCronjob
 {
@@ -767,14 +670,12 @@ class BackendBaseCronjob
 	 */
 	protected $action;
 
-
 	/**
 	 * The current id
 	 *
 	 * @var	int
 	 */
 	protected $id;
-
 
 	/**
 	 * The current module
@@ -783,14 +684,9 @@ class BackendBaseCronjob
 	 */
 	protected $module;
 
-
 	/**
-	 * Default constructor
-	 * The constructor will set some properties.
-	 *
-	 * @return	void
-	 * @param	string $action		The action to load.
-	 * @param	string $module		The module to load.
+	 * @param string $action The action to load.
+	 * @param string $module The module to load.
 	 */
 	public function __construct($action, $module)
 	{
@@ -799,11 +695,8 @@ class BackendBaseCronjob
 		$this->setAction($action);
 	}
 
-
 	/**
 	 * Clear/removed the busy file
-	 *
-	 * @return	void
 	 */
 	protected function clearBusyFile()
 	{
@@ -814,11 +707,8 @@ class BackendBaseCronjob
 		SpoonFile::delete($path);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -830,56 +720,48 @@ class BackendBaseCronjob
 		}
 	}
 
-
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the id
 	 *
-	 * @return	int
+	 * @return int
 	 */
 	public function getId()
 	{
 		return strtolower($this->getModule() . '_' . $this->getAction());
 	}
 
-
 	/**
 	 * Get the module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Set the action, for later use
 	 *
-	 * @return	void
-	 * @param	string $action		The action to load.
+	 * @param string $action The action to load.
 	 */
 	protected function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the busy file
-	 *
-	 * @return	void
 	 */
 	protected function setBusyFile()
 	{
@@ -924,12 +806,10 @@ class BackendBaseCronjob
 		if($isBusy) exit;
 	}
 
-
 	/**
 	 * Set the module, for later use
 	 *
-	 * @return	void
-	 * @param	string $module		The module to load.
+	 * @param string $module The module to load.
 	 */
 	protected function setModule($module)
 	{
@@ -937,15 +817,10 @@ class BackendBaseCronjob
 	}
 }
 
-
 /**
  * This is the base-object for widgets
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBaseWidget
 {
@@ -956,14 +831,12 @@ class BackendBaseWidget
 	 */
 	private $column = 'left';
 
-
 	/**
 	 * The header object
 	 *
 	 * @var	BackendHeader
 	 */
 	protected $header;
-
 
 	/**
 	 * The position in the column where the widget should be shown
@@ -972,14 +845,12 @@ class BackendBaseWidget
 	 */
 	private $position;
 
-
 	/**
 	 * Required rights needed for this widget.
 	 *
 	 * @var	array
 	 */
 	protected $rights = array();
-
 
 	/**
 	 * The template to use
@@ -988,7 +859,6 @@ class BackendBaseWidget
 	 */
 	private $templatePath;
 
-
 	/**
 	 * A reference to the current template
 	 *
@@ -996,118 +866,96 @@ class BackendBaseWidget
 	 */
 	public $tpl;
 
-
 	/**
-	 * Default constructor
-	 * The constructor will set some properties. It populates the parameter array with urldecoded values for easy-use.
-	 *
-	 * @return	void
+	 * The constructor will set some properties, it populates the parameter array with urldecoded
+	 * values for ease of use.
 	 */
 	public function __construct()
 	{
-		// get objects from the reference so they are accessable from the action-object
 		$this->tpl = Spoon::get('template');
 		$this->header = Spoon::get('header');
 	}
-
 
 	/**
 	 * Display, this wil output the template to the browser
 	 * If no template is specified we build the path form the current module and action
 	 *
-	 * @return	void
-	 * @param	string[optional] $template		The template to use.
+	 * @param string[optional] $template The template to use.
 	 */
 	protected function display($template = null)
 	{
 		if($template !== null) $this->templatePath = (string) $template;
 	}
 
-
 	/**
 	 * Get the column
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getColumn()
 	{
 		return $this->column;
 	}
 
-
 	/**
 	 * Get the position
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getPosition()
 	{
 		return $this->position;
 	}
 
-
 	/**
 	 * Get the template path
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getTemplatePath()
 	{
 		return $this->templatePath;
 	}
 
-
 	/**
 	 * Is this widget allowed for this user?
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public function isAllowed()
 	{
-		// loop all rights
 		foreach($this->rights as $rights)
 		{
-			// define vars
 			list($module, $action) = explode('/', $rights);
 
-			// not exactly 2 vars
+			// check action rights
 			if(isset($module) && isset($action))
 			{
 				if(!BackendAuthentication::isAllowedAction($action, $module)) return false;
 			}
 		}
 
-		// everything turned out just fine
 		return true;
 	}
-
 
 	/**
 	 * Set column for the widget
 	 *
-	 * @return	void
-	 * @param	string $column	Possible values are: left, middle, right.
+	 * @param string $column Possible values are: left, middle, right.
 	 */
 	protected function setColumn($column)
 	{
-		// allowed values
 		$allowedColumns = array('left', 'middle', 'right');
-
-		// redefine
 		$this->column = SpoonFilter::getValue((string) $column, $allowedColumns, 'left');
 	}
-
 
 	/**
 	 * Set the position for the widget
 	 *
-	 * @return	void
-	 * @param	int $position	The position for the widget.
+	 * @param int $position The position for the widget.
 	 */
 	protected function setPosition($position)
 	{
 		$this->position = (int) $position;
 	}
 }
-
-?>

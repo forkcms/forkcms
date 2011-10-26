@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will handle AJAX-related stuff
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendAJAX
 {
@@ -19,7 +22,6 @@ class BackendAJAX
 	 */
 	private $action;
 
-
 	/**
 	 * The module
 	 *
@@ -27,40 +29,29 @@ class BackendAJAX
 	 */
 	private $module;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// check if the user is logged in
 		$this->validateLogin();
 
 		// named application
-		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend_ajax');
+		if(!defined('NAMED_APPLICATION'))
+		{
+			define('NAMED_APPLICATION', 'backend_ajax');
+		}
 
-		// set the module
 		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
-
-		// set the action
 		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
-
-		// set the language
 		$this->setLanguage(SpoonFilter::getGetValue('language', null, ''));
 
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());
 
-		// try to execute
 		try
 		{
-			// execute the action
 			$action->execute();
 		}
 
-		// we should catch exceptions
 		catch(Exception $e)
 		{
 			// set correct headers
@@ -75,46 +66,40 @@ class BackendAJAX
 		}
 	}
 
-
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Set action
 	 *
-	 * @return	void
-	 * @param	string $value	The action to use.
+	 * @param string $value The action to use.
 	 */
 	public function setAction($value)
 	{
 		$this->action = (string) $value;
 	}
 
-
 	/**
 	 * Set the language
 	 *
-	 * @return	void
-	 * @param	string $value	The language to set.
+	 * @param string $value The language to set.
 	 */
 	public function setLanguage($value)
 	{
@@ -136,12 +121,10 @@ class BackendAJAX
 		BackendLanguage::setWorkingLanguage($value);
 	}
 
-
 	/**
 	 * Set module
 	 *
-	 * @return	void
-	 * @param	string $value	The module to use.
+	 * @param string $value The module to use.
 	 */
 	public function setModule($value)
 	{
@@ -159,19 +142,14 @@ class BackendAJAX
 			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Module not allowed.');
 		}
 
-		// create URL instance, the templatemodifiers need this object
+		// create URL instance, since the template modifiers need this object
 		$URL = new BackendURL();
-
-		// set the module
 		$URL->setModule($this->module);
 	}
-
 
 	/**
 	 * Do authentication stuff
 	 * This method could end the script by throwing an exception
-	 *
-	 * @return	void
 	 */
 	private function validateLogin()
 	{
@@ -190,5 +168,3 @@ class BackendAJAX
 		BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('interface_language'));
 	}
 }
-
-?>
