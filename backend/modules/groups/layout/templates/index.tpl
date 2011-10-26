@@ -4,7 +4,7 @@
 <div class="pageTitle">
 	<h2>{$lblGroups|ucfirst}</h2>
 	<div class="buttonHolderRight">
-		<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span>{$lblAdd|ucfirst}</span></a>
+		<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span>{$lblAddGroup|ucfirst}</span></a>
 	</div>
 </div>
 <div class="dataGridHolder">
