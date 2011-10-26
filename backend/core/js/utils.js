@@ -2,6 +2,7 @@
  * Utilities; usefull scripts
  *
  * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 var utils =
 {
@@ -33,12 +34,8 @@ utils.array =
 
 		// fallback
 		return false;
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -91,12 +88,8 @@ utils.cookies =
 
 		// fallback
 		return null;
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -165,12 +158,8 @@ utils.form =
 	{
 		var regexp = /^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[0-9a-zA-Z]+)((:[0-9]+)?)((\/([~0-9a-zA-Z\#%@\.\/_-]+)?(\?[0-9a-zA-Z%@\/&=_-]+)?)?)$/i;
 		return regexp.test(element.val());
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -396,12 +385,8 @@ utils.string =
 
 		// XHTML
 		return value;
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -463,11 +448,5 @@ utils.url =
 
 		// cough up value
 		return getValue;
-	},
-
-
-	/**
-	 * End of object
-	 */
-	eoo: true
+	}
 }
