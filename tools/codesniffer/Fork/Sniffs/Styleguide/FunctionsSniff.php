@@ -21,6 +21,7 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 		$lines = file($phpcsFile->getFilename());
 		$next = $tokens[$stackPtr + 1];
 
+		// function whitespaces
 		if($next['content'] != ' ')
 		{
 			$phpcsFile->addError('After "function" we expect exactly one space.', $stackPtr);
@@ -159,7 +160,6 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 			}
 		}
 
-		// cleanup
 		unset($tokens);
 		unset($current);
 		unset($lines);
@@ -169,6 +169,8 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 
 	/**
 	 * Register on functions.
+	 *
+	 * @return array
 	 */
 	public function register()
 	{
