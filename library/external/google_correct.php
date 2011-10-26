@@ -123,6 +123,7 @@ class GoogleCorrect
 		// start the curl request
 		$curl = curl_init();
 
+		// set the options
 		curl_setopt_array($curl, $cOptions);
 
 		// execution
