@@ -23,6 +23,9 @@ textarea {
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
 	-webkit-transition: background-color 0.28s linear;
+	-moz-transition: background-color 0.28s linear;
+	-o-transition: background-color 0.28s linear;
+	transition: background-color 0.28s linear;
 
 	/* @inc .rc */
 	-moz-border-radius: 4px;
@@ -51,14 +54,6 @@ textarea {
 	padding: 3px 2px;
 	color: #333;
 }
-
-	/* Fix alignment in Chrome/Saf */
-	@media screen and (-webkit-min-device-pixel-ratio:0) {
-		input[type="text"],
-		input[type="password"] {
-			height: 14px;
-		}
-	}
 
 .inputText:focus,
 .inputPassword:focus,
@@ -130,7 +125,7 @@ input[type="submit"] {
 		list-style: disc;
 		margin-left: 15px;
 	}
-	
+
 .forkForms .inputList {
 	padding: 0 0 12px 0;
 }
@@ -148,12 +143,12 @@ input[type="submit"] {
 		padding-bottom: 0;
 	}
 
-.forkForms .inputListHorizontal li { 
+.forkForms .inputListHorizontal li {
 	float: left;
 	margin-right: 12px;
 }
-	
-	
+
+
 /*
 	Horizontal forms
 */
@@ -282,7 +277,7 @@ input[type="submit"] {
 }
 
 .forkForms .labelWidthLong span.formError  {
-	padding-left: 145px;
+	padding-left: 155px;
 }
 
 .forkForms abbr { cursor: help; }
