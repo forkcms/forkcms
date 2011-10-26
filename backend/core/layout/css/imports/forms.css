@@ -52,14 +52,6 @@ textarea {
 	color: #333;
 }
 
-	/* Fix alignment in Chrome/Saf */
-	@media screen and (-webkit-min-device-pixel-ratio:0) {
-		input[type="text"],
-		input[type="password"] {
-			height: 14px;
-		}
-	}
-
 .inputText:focus,
 .inputPassword:focus,
 textarea:focus {
