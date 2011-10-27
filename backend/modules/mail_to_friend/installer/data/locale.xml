@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<backend>
+		<mail_to_friend>
+			<item type="label" name="Detail">
+				<translation language="nl"><![CDATA[detail]]></translation>
+				<translation language="en"><![CDATA[detail]]></translation>
+			</item>
+			<item type="label" name="Info">
+				<translation language="nl"><![CDATA[informatie]]></translation>
+				<translation language="en"><![CDATA[information]]></translation>
+			</item>
+			<item type="label" name="Message">
+				<translation language="nl"><![CDATA[bericht]]></translation>
+				<translation language="en"><![CDATA[message]]></translation>
+			</item>
+			<item type="label" name="SendOn">
+				<translation language="nl"><![CDATA[verstuurd op]]></translation>
+				<translation language="en"><![CDATA[send on]]></translation>
+			</item>
+		</mail_to_friend>
+		<core>
+			<item type="label" name="MailToFriend">
+				<translation language="nl"><![CDATA[mail een vriend]]></translation>
+				<translation language="en"><![CDATA[mail to friend]]></translation>
+			</item>
+		</core>
+	</backend>
+	<frontend>
+		<core>
+			<item type="label" name="FriendEmail">
+				<translation language="nl"><![CDATA[e-mailadres vriend]]></translation>
+				<translation language="en"><![CDATA[e-mail address friend]]></translation>
+			</item>
+			<item type="label" name="FriendName">
+				<translation language="nl"><![CDATA[naam vriend]]></translation>
+				<translation language="en"><![CDATA[friends name]]></translation>
+			</item>
+			<item type="label" name="MailToFriend">
+				<translation language="nl"><![CDATA[mail een vriend]]></translation>
+				<translation language="en"><![CDATA[mail to friend]]></translation>
+			</item>
+			<item type="label" name="OwnEmail">
+				<translation language="nl"><![CDATA[jouw e-mailadres]]></translation>
+				<translation language="en"><![CDATA[your e-mail address]]></translation>
+			</item>
+			<item type="label" name="OwnName">
+				<translation language="nl"><![CDATA[jouw naam]]></translation>
+				<translation language="en"><![CDATA[your name]]></translation>
+			</item>
+			<item type="label" name="SharedLink">
+				<translation language="nl"><![CDATA[%1$s wil een link met u delen.]]></translation>
+				<translation language="en"><![CDATA[%1$s wants to share a link with you.]]></translation>
+			</item>
+			<item type="message" name="MailShareMessage">
+				<translation language="nl"><![CDATA[%1$s, %2$s wil deze <a href="%3$s">link</a> met u delen.]]></translation>
+				<translation language="en"><![CDATA[%1$s, %2$s wants to share this <a href="%3$s">link</a> with you.]]></translation>
+			</item>
+			<item type="message" name="MailToFriendSend">
+				<translation language="nl"><![CDATA[De email naar uw vriend is succesvol verzonden.]]></translation>
+				<translation language="en"><![CDATA[The email to your friend is send.]]></translation>
+			</item>
+		</core>
+	</frontend>
+</locale>

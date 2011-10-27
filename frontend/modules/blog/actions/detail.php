@@ -30,6 +30,14 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 
 	/**
+	 * The mail to friend form
+	 *
+	 * @var	FrontendForm
+	 */
+	private $mailToFriend;
+
+
+	/**
 	 * The blogpost
 	 *
 	 * @var	array
@@ -142,6 +150,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->addText('email', $email);
 		$this->frm->addText('website', $website, null);
 		$this->frm->addTextarea('message');
+
+		// add the mail to friend form
+		$this->mailToFriend = new FrontendMailToFriend($this->tpl);
+		$this->mailToFriend->setPageUrl($this->record['full_url']);
 	}
 
 
@@ -218,6 +230,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// parse the form
 		$this->frm->parse($this->tpl);
+
+		// parse the mail to a friend form
+		$this->mailToFriend->parse();
 
 		// some options
 		if($this->URL->getParameter('comment', 'string') == 'moderation') $this->tpl->assign('commentIsInModeration', true);

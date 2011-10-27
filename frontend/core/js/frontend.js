@@ -27,6 +27,9 @@ var jsFrontend =
 
 		// init gravatar
 		jsFrontend.gravatar.init();
+		
+		// init mail to friend
+		jsFrontend.mailToFriend.init();
 
 		// init search
 		jsFrontend.search.init();
@@ -317,6 +320,43 @@ jsFrontend.gravatar =
 		});
 	},
 
+
+	// end
+	eoo: true
+},
+
+
+/**
+ * The mail to friend actions
+ * 
+ * @author	Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ */
+jsFrontend.mailToFriend =
+{
+	// init, something like a constructor
+	init: function()
+	{
+		// assign the 
+		if($('div.mailToFriend').length > 0) jsFrontend.mailToFriend.assign();
+	},
+
+	// assign the data
+	assign: function()
+	{
+		// get the status
+		if($('.mailToFriendForm').is(':visible')) $('.mailToFriendForm').dialog();
+		
+		// if we click on the mail to friend link
+		$('a.mailToFriend').click(function(evt)
+		{
+			// prevent default actions
+			evt.preventDefault();
+			
+			// open the dialog
+			$('.mailToFriendForm').dialog();
+		});
+	},
+	
 
 	// end
 	eoo: true

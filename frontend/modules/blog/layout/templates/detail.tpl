@@ -45,6 +45,10 @@
 			<div class="bd content">
 				{$item.text}
 			</div>
+
+			{* Mail to friend *}
+			{include:core/layout/templates/mailtofriend.tpl}
+
 			<footer class="ft">
 				<ul class="pageNavigation">
 					{option:navigation.previous}

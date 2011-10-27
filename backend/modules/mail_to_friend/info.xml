@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>mail_to_friend</name>
+	<requirements>
+		<minimum_version>2.6.10</minimum_version>
+	</requirements>
+	<info lang="en">
+		<name>mail_to_friend</name>
+		<description><![CDATA[]]></description>
+	</info>
+	<events>
+		<event application="backend" name=""><![CDATA[]]></event>
+	</events>
+</module>
