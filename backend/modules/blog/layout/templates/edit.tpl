@@ -44,6 +44,22 @@
 							</div>
 						</div>
 
+						{* Image *}
+						<div class="box">
+							<div class="heading">
+								<h3>{$lblImage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+							</div>
+							<div class="options">
+								<p>
+									<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" width="500" alt="{$lblImage|ucfirst}" />
+								</p>
+								<p>
+									<label for="image">{$lblImage|ucfirst}</label>
+									{$fileImage} {$fileImageError}
+								</p>
+							</div>
+						</div>
+
 						{* Summary *}
 						<div class="box">
 							<div class="heading">

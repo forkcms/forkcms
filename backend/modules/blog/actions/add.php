@@ -10,6 +10,7 @@
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Matthias Mullie <matthias@mullie.eu>
+ * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @since		2.0
  */
 class BackendBlogAdd extends BackendBaseActionAdd
@@ -69,6 +70,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
+		$this->frm->addImage('image');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -118,6 +120,14 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 			if($this->frm->getField('category_id')->getValue() == 'new_category') $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
 
+			// validate the image
+			if($this->frm->getField('image')->isFilled(BL::err('FieldIsRequired')))
+			{
+				// image extension and mime type
+				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
+				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
+			}
+
 			// validate meta
 			$this->meta->validate();
 
@@ -140,6 +150,15 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;
 				$item['status'] = $status;
+
+				// the image path
+				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
+
+				// build the image name
+				$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+
+				// upload the image
+				$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
 
 				// insert the item
 				$item['revision_id'] = BackendBlogModel::insert($item);

@@ -186,6 +186,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
+		$this->frm->addImage('image');
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -282,6 +283,14 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 
+			// do the image checks
+			if($this->frm->getField('image')->isFilled())
+			{
+				// image extension and mime type
+				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
+				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
+			}
+
 			// validate meta
 			$this->meta->validate();
 
@@ -303,6 +312,42 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['status'] = $status;
+				$item['image'] = $this->record['image'];
+
+				// the image path
+				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
+
+				// new image given?
+				if($this->frm->getField('image')->isFilled())
+				{
+					// delete the old image
+					SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
+
+					// build the image name
+					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+
+					// upload the image
+					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+				}
+				// rename the old image
+				else
+				{
+					// get the old file extension
+					$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
+
+					// get the new image name
+					$newName = $this->meta->getURL() . '.' . $imageExtension;
+
+					// only change the name if there is a difference
+					if($newName != $item['image'])
+					{
+						// move the old file to the new name
+						SpoonFile::move($imagePath . '/source/' . $item['image'], $imagePath . '/source/' . $newName);
+
+						// assign the new name to the database
+						$item['image'] = $newName;
+					}
+				}
 
 				// update the item
 				$item['revision_id'] = BackendBlogModel::update($item);
