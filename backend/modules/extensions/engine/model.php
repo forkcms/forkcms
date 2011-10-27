@@ -576,7 +576,7 @@ class BackendExtensionsModel
 		$core = array('core' => array());
 		$core['core']['value'] = 'core';
 		$core['core']['label'] = BL::lbl('NoTheme');
-		$core['core']['thumbnail'] = '/frontend/themes/core/thumbnail.png'; // @todo: set correct paths
+		$core['core']['thumbnail'] = '/frontend/core/layout/images/thumbnail.png';
 		$records = array_merge($core, $records);
 
 		// return the records

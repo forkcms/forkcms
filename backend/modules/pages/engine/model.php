@@ -1493,7 +1493,7 @@ class BackendPagesModel
 		$overwrite = (bool) $overwrite;
 
 		// fetch new template data
-		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
+		$newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
 		$newTemplate['data'] = @unserialize($newTemplate['data']);
 
 		// fetch all pages

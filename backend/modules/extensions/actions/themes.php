@@ -56,7 +56,10 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 		// fetch the themes
 		$themes = BackendExtensionsModel::getThemes();
 
-		// no thtmes found
+		// set selected theme
+		$selected = isset($_POST['themes']) ? $_POST['themes'] : BackendModel::getModuleSetting('core', 'theme', 'core');
+
+		// no themes found
 		if(empty($themes)) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
 
 		// loop the templates
@@ -66,14 +69,14 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 			$record['variables'] = array('thumbnail' => $record['thumbnail']);
 
 			// set selected template
-			if($record['value'] == BackendModel::getModuleSetting('core', 'theme', 'core')) $record['variables']['selected'] = true;
+			if($record['value'] == $selected) $record['variables']['selected'] = true;
 
 			// unset the language field
 			unset($record['thumbnail']);
 		}
 
 		// templates
-		$this->frm->addRadiobutton('themes', $themes, BackendModel::getModuleSetting('core', 'theme', 'core'));
+		$this->frm->addRadiobutton('themes', $themes, $selected);
 	}
 
 
