@@ -191,7 +191,7 @@ class BackendAuthentication
 		if(self::isLoggedIn() && self::getUser()->isGod()) return true;
 
 		// always allowed modules (yep, hardcoded, because, we don't want other people to fuck up)
-		$alwaysAllowed = array('error', 'authentication');
+		$alwaysAllowed = array('core', 'error', 'authentication');
 
 		// redefine
 		$module = (string) $module;
