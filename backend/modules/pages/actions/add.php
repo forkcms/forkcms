@@ -300,31 +300,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			// validate that we are not trying to link 2 modules
 			$hasBlock = false;
 
-			// loop blocks in template
-			for($i = 0; $i < $this->templates[$templateId]['num_blocks']; $i++)
-			{
-				// get the extra id
-				$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
-
-				// reset some stuff
-				if($extraId <= 0) $extraId = null;
-
-				// extra-type is not HTML
-				if($extraId !== null)
-				{
-					// type of block
-					if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
-					{
-						// set error
-						if($hasBlock) $this->frm->getField('block_html_' . $i)->addError(BL::err('CantAdd2Modules'));
-
-						// reset var
-						$hasBlock = true;
-					}
-				}
-			}
-
-
 			// validate meta
 			$this->meta->validate();
 
