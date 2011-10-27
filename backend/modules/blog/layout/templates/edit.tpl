@@ -47,12 +47,18 @@
 						{* Image *}
 						<div class="box">
 							<div class="heading">
-								<h3>{$lblImage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+								<h3>{$lblImage|ucfirst}</h3>
 							</div>
 							<div class="options">
+								{option:item.image}
 								<p>
 									<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" width="500" alt="{$lblImage|ucfirst}" />
 								</p>
+								<p>
+									<label for="deleteImage">{$lblDelete|ucfirst}</label>
+									{$chkDeleteImage} {$chkDeleteImageError}
+								</p>
+								{/option:item.image}
 								<p>
 									<label for="image">{$lblImage|ucfirst}</label>
 									{$fileImage} {$fileImageError}

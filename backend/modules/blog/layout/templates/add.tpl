@@ -41,7 +41,7 @@
 						{* Image *}
 						<div class="box">
 							<div class="heading">
-								<h3>{$lblImage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+								<h3>{$lblImage|ucfirst}</h3>
 							</div>
 							<div class="options">
 								<p>

@@ -121,7 +121,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			if($this->frm->getField('category_id')->getValue() == 'new_category') $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
 
 			// validate the image
-			if($this->frm->getField('image')->isFilled(BL::err('FieldIsRequired')))
+			if($this->frm->getField('image')->isFilled())
 			{
 				// image extension and mime type
 				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
@@ -154,11 +154,15 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				// the image path
 				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
-				// build the image name
-				$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+				// validate the image
+				if($this->frm->getField('image')->isFilled())
+				{
+					// build the image name
+					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
 
-				// upload the image
-				$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+					// upload the image
+					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+				}
 
 				// insert the item
 				$item['revision_id'] = BackendBlogModel::insert($item);

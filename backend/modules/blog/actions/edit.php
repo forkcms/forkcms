@@ -187,6 +187,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
 		$this->frm->addImage('image');
+		$this->frm->addCheckbox('delete_image');
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -317,6 +318,16 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				// the image path
 				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
+				// if the image should be deleted
+				if($this->frm->getField('delete_image')->isChecked())
+				{
+					// delete the image
+					SpoonFile::delete($imagePath . '/source/' . $item['image']);
+
+					// reset the name
+					$item['image'] = null;
+				}
+
 				// new image given?
 				if($this->frm->getField('image')->isFilled())
 				{
@@ -330,7 +341,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
 				}
 				// rename the old image
-				else
+				elseif($item['image'] != null)
 				{
 					// get the old file extension
 					$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
