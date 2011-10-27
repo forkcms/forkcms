@@ -39,16 +39,16 @@ class BackendAJAX
 		$this->validateLogin();
 
 		// named application
-		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend_ajax');
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 
 		// set the module
-		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
+		$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
 
 		// set the action
-		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
+		$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', null, ''));
+		$this->setLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
 
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());

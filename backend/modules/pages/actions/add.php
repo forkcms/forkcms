@@ -285,9 +285,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			if($redirectValue == 'internal') $this->frm->getField('internal_redirect')->isFilled(BL::err('FieldIsRequired'));
 			if($redirectValue == 'external') $this->frm->getField('external_redirect')->isURL(BL::err('InvalidURL'));
 
-			// id of the selected template
-			$templateId = (int) $this->frm->getField('template_id')->getValue();
-
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, $this->frm->getField('is_action')->getChecked()));
 
@@ -296,9 +293,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-
-			// validate that we are not trying to link 2 modules
-			$hasBlock = false;
 
 			// validate meta
 			$this->meta->validate();
@@ -319,7 +313,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['id'] = BackendPagesModel::getMaximumPageId() + 1;
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $parentId;
-				$page['template_id'] = $templateId;
+				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
 				$page['meta_id'] = (int) $this->meta->save();
 				$page['language'] = BackendLanguage::getWorkingLanguage();
 				$page['type'] = 'root';

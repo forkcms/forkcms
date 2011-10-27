@@ -79,15 +79,17 @@
 				// make the call
 				$.ajax(
 				{
-					url: '/backend/ajax.php?module=core&action=generate_url&language=' + jsBackend.current.language,
-					data: 'url=' + url +
-							'&metaId=' + $('#metaId').val() +
-							'&baseFieldName=' + $('#baseFieldName').val() +
-							'&custom=' + $('#custom').val() +
-							'&className=' + $('#className').val() +
-							'&methodName=' + $('#methodName').val() +
-							'&parameters=' + $('#parameters').val(),
-					type: 'POST',
+					data:
+					{
+						fork: { module: 'core', action: 'generate_url', language: jsBackend.current.language },
+						url: url,
+						metaId: $('#metaId').val(),
+						baseFieldName: $('#baseFieldName').val(),
+						custom: $('#custom').val(),
+						className: $('#className').val(),
+						methodName: $('#methodName').val(),
+						parameters: $('#parameters').val()
+					},
 					success: function(data, textStatus)
 					{
 						url = data.data;
@@ -290,13 +292,13 @@
 		// define defaults
 		var defaults =
 		{
-			saveUrl: null,
+			params: {},
 			current: {},
 			extraParams: {},
 			inputClasses: 'inputText',
 			allowEmpty: false,
 			tooltip: 'click to edit',
-			after_save: null
+			afterSave: null
 		};
 
 		// extend options
@@ -437,12 +439,11 @@
 					// make the call
 					$.ajax(
 					{
-						url: options.saveUrl,
-						data: options.current.extraParams,
+						data: $.extend(options.params, options.current.extraParams),
 						success: function(data, textStatus)
 						{
 							// call callback if it is a valid callback
-							if(typeof options.after_save == 'function') eval(options.after_save)($this);
+							if(typeof options.afterSave == 'function') eval(options.afterSave)($this);
 
 							// destroy the element
 							destroyElement();
@@ -487,7 +488,7 @@
 			errorMessage: 'Add the item before submitting',
 			addLabel: 'add',
 			removeLabel: 'delete',
-			autoCompleteUrl: '',
+			params: {},
 			showIconOnly: true,
 			multiple: true
 		};
@@ -538,53 +539,54 @@
 			// hide current element
 			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
-
 			// prepend html
 			$(this).before(html);
 
 			// add elements list
 			build();
 
-			$('#addValue-' + id).autocomplete(
+			// bind autocomplete if needed
+			if(options.params.length)
 			{
-				delay: 200,
-				minLength: 2,
-				source: function(request, response)
+				$('#addValue-' + id).autocomplete(
 				{
-					$.ajax(
+					delay: 200,
+					minLength: 2,
+					source: function(request, response)
 					{
-						url: options.autoCompleteUrl,
-						type: 'GET',
-						data: 'term=' + request.term,
-						success: function(data, textStatus)
+						$.ajax(
 						{
-							// init var
-							var realData = [];
-
-							// alert the user
-							if(data.code != 200 && jsBackend.debug)
+							data: $.extend(options.params, { term: request.term }),
+							success: function(data, textStatus)
 							{
-								alert(data.message);
-							}
+								// init var
+								var realData = [];
 
-							if(data.code == 200)
-							{
-								for(var i in data.data)
+								// alert the user
+								if(data.code != 200 && jsBackend.debug)
 								{
-									realData.push(
-									{
-										label: data.data[i].name,
-										value: data.data[i].value + options.secondSplitChar + data.data[i].name
-									});
+									alert(data.message);
 								}
-							}
 
-							// set response
-							response(realData);
-						}
-					});
-				}
-			});
+								if(data.code == 200)
+								{
+									for(var i in data.data)
+									{
+										realData.push(
+										{
+											label: data.data[i].name,
+											value: data.data[i].value + options.secondSplitChar + data.data[i].name
+										});
+									}
+								}
+
+								// set response
+								response(realData);
+							}
+						});
+					}
+				});
+			}
 
 			// bind keypress on value-field
 			$('#addValue-' + id).bind('keyup', function(evt)
@@ -776,7 +778,7 @@
 			errorMessage: 'Add the tag before submitting',
 			addLabel: 'add',
 			removeLabel: 'delete',
-			autoCompleteUrl: '',
+			params: {},
 			canAddNew: false,
 			showIconOnly: true,
 			multiple: true
@@ -846,7 +848,7 @@
 			build();
 
 			// bind autocomplete if needed
-			if(options.autoCompleteUrl != '')
+			if(options.params.length)
 			{
 				$('#addValue-' + id).autocomplete(
 				{
@@ -856,9 +858,7 @@
 					{
 						$.ajax(
 						{
-							url: options.autoCompleteUrl,
-							type: 'GET',
-							data: 'term=' + request.term,
+							data: $.extend(options.params, { term: request.term }),
 							success: function(data, textStatus)
 							{
 								// init var
@@ -1305,7 +1305,7 @@
 			emptyMessage: '',
 			addLabel: 'add',
 			removeLabel: 'delete',
-			autoCompleteUrl: '',
+			params: {},
 			canAddNew: false,
 			showIconOnly: false,
 			afterBuild: null
@@ -1351,7 +1351,7 @@
 			build();
 
 			// bind autocomplete if needed
-			if(options.autoCompleteUrl != '')
+			if(options.params.length)
 			{
 				$('#addValue-' + id).autocomplete(
 				{
@@ -1361,9 +1361,7 @@
 					{
 						$.ajax(
 						{
-							url: options.autoCompleteUrl,
-							type: 'GET',
-							data: 'term=' + request.term,
+							data: $.extend(options.params, { term: request.term }),
 							success: function(data, textStatus)
 							{
 								// init var

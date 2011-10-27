@@ -396,7 +396,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	private function validateForm()
 	{
 		// set search term
-		$this->term = SpoonFilter::getGetValue('term', null, '');
+		$this->term = SpoonFilter::getPostValue('term', null, '');
 
 		// validate
 		if($this->term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
