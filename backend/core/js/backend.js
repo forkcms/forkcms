@@ -314,6 +314,7 @@ jsBackend.controls =
 			// get id
 			var id = $(this).data('messageId');
 			var url = $(this).attr('href');
+			if(typeof url == 'undefined') url = $(this).find('a').attr('href');
 
 			if(id != '' && url != '')
 			{
