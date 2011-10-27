@@ -23,9 +23,6 @@ class FrontendPagesWidgetSitemap extends FrontendBaseWidget
 
 		// load template
 		$this->loadTemplate();
-
-		// assign sitemap navigation
-		$this->tpl->assign('widgetPagesNavigation', FrontendNavigation::getNavigationHTML('page', 0, null, array(), true));
 	}
 }
 
