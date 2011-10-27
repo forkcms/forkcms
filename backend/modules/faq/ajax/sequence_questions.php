@@ -7,6 +7,7 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
@@ -29,7 +30,7 @@ class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
 		$toCategorySequence = SpoonFilter::getPostValue('toCategorySequence', null, '', 'string');
 
 		// invalid question id
-		if(!BackendFaqModel::existsQuestion($questionId)) $this->output(self::BAD_REQUEST, null, 'question does not exist');
+		if(!BackendFaqModel::exists($questionId)) $this->output(self::BAD_REQUEST, null, 'question does not exist');
 
 		// list ids
 		$fromCategorySequence = (array) explode(',', ltrim($fromCategorySequence, ','));
@@ -43,7 +44,7 @@ class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
 			$item['category_id'] = $toCategoryId;
 
 			// update the category
-			BackendFaqModel::updateQuestion($item);
+			BackendFaqModel::update($item);
 
 			// loop id's and set new sequence
 			foreach($toCategorySequence as $i => $id)
@@ -54,7 +55,7 @@ class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
 				$item['sequence'] = $i + 1;
 
 				// update sequence
-				if(BackendFaqModel::existsQuestion($item['id'])) BackendFaqModel::updateQuestion($item);
+				if(BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
 			}
 		}
 
@@ -66,7 +67,7 @@ class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
 			$item['sequence'] = $i + 1;
 
 			// update sequence
-			if(BackendFaqModel::existsQuestion($item['id'])) BackendFaqModel::updateQuestion($item);
+			if(BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
 		}
 
 		// success output

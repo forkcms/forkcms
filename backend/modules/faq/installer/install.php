@@ -6,11 +6,40 @@
  * @package		installer
  * @subpackage	faq
  *
- * @author		Matthias Mullie <matthias@mullie.eu>
+ * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class FaqInstall extends ModuleInstaller
 {
+	/**
+	 * Default category id
+	 *
+	 * @var	int
+	 */
+	private $defaultCategoryId;
+
+
+	/**
+	 * Add a category for a language
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
+	 * @param	string $title		The title of the category.
+	 * @param	string $url			The URL for the category.
+	 */
+	private function addCategory($language, $title, $url)
+	{
+		// build array
+		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+		$item['language'] = (string) $language;
+		$item['title'] = (string) $title;
+		$item['sequence'] = 1;
+
+		return (int) $this->getDB()->insert('faq_categories', $item);
+	}
+
+
 	/**
 	 * Install the module
 	 *
@@ -27,6 +56,9 @@ class FaqInstall extends ModuleInstaller
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
+		// make module searchable
+		$this->makeSearchable('faq');
+
 		// module rights
 		$this->setModuleRights(1, 'faq');
 
@@ -41,16 +73,74 @@ class FaqInstall extends ModuleInstaller
 		$this->setActionRights(1, 'faq', 'edit_category');
 		$this->setActionRights(1, 'faq', 'delete_category');
 		$this->setActionRights(1, 'faq', 'sequence_questions');
+		$this->setActionRights(1, 'faq', 'process_feedback');
+		$this->setActionRights(1, 'faq', 'settings');
 
 		// extras
-		$this->insertExtra('faq', 'block', 'Faq', 'index', null, 'N', 9001);
-		$this->insertExtra('faq', 'block', 'Category', 'category', null, 'N', 9002);
+		$faqId = $this->insertExtra('faq', 'block', 'Faq');
+		$this->insertExtra('faq', 'block', 'Category', 'category');
+		$this->insertExtra('faq', 'widget', 'MostReadQuestions', 'most_read');
+		$this->insertExtra('faq', 'widget', 'AskOwnQuestion', 'own_question');
+
+		// set the settings
+		$this->setSetting('faq', 'overview_num_items_per_category', 0);
+		$this->setSetting('faq', 'most_read_num_items', 0);
+		$this->setSetting('faq', 'related_num_items', 0);
+		$this->setSetting('faq', 'spamfilter', false);
+		$this->setSetting('faq', 'allow_feedback', false);
+		$this->setSetting('faq', 'allow_own_question', false);
+		$this->setSetting('faq', 'send_email_on_new_feedback', false);
+
+		// loop languages
+		foreach($this->getLanguages() as $language)
+		{
+			// fetch current categoryId
+			$this->defaultCategoryId = $this->getCategory($language);
+
+			// no category exists
+			if($this->defaultCategoryId == 0)
+			{
+				// add category
+				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+			}
+
+			// check if a page for blog already exists in this language
+			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
+												FROM pages AS p
+												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+												WHERE b.extra_id = ? AND p.language = ?',
+												array($faqId, $language)))
+			{
+				// insert page
+				$this->insertPage(array('title' => 'FAQ',
+										'language' => $language),
+									null,
+									array('extra_id' => $faqId));
+			}
+		}
 
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
-		$navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
-		$this->setNavigation($navigationFaqId, 'Questions', 'faq/index', array('faq/add', 'faq/edit'));
-		$this->setNavigation($navigationFaqId, 'Categories', 'faq/categories', array('faq/add_category', 'faq/edit_category'));
+		$navigationBlogId = $this->setNavigation($navigationModulesId, 'Faq');
+		$this->setNavigation($navigationBlogId, 'Questions', 'faq/index', array('faq/add',	'faq/edit'));
+		$this->setNavigation($navigationBlogId, 'Categories', 'faq/categories', array('faq/add_category',	'faq/edit_category'));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');
+	}
+
+
+	/**
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
+	 */
+	private function getCategory($language)
+	{
+		return (int) $this->getDB()->getVar('SELECT id FROM faq_categories WHERE language = ?', array((string) $language));
 	}
 }
 
