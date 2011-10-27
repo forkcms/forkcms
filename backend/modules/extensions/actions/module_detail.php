@@ -104,7 +104,7 @@ class BackendExtensionsModuleDetail extends BackendBaseActionIndex
 			if($infoXml !== false)
 			{
 				// convert xml to useful array
-				$this->information = BackendExtensionsModel::processInformationXml($infoXml);
+				$this->information = BackendExtensionsModel::processModuleXml($infoXml);
 
 				// empty data (nothing useful)
 				if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileIsEmpty'));

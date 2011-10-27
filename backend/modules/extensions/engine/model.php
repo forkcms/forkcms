@@ -442,7 +442,7 @@ class BackendExtensionsModel
 			if($infoXml !== false)
 			{
 				// process XML to a clean array
-				$info = self::processInformationXml($infoXml);
+				$info = self::processModuleXml($infoXml);
 
 				// set fields if they were found in the XML
 				if(isset($info['description'])) $module['description'] = BackendDataGridFunctions::truncate($info['description'], 80);
@@ -561,12 +561,30 @@ class BackendExtensionsModel
 		// loop and complete the records
 		foreach($records as $key => $record)
 		{
-			// @todo: read xml
+			// path to info.xml
+			$pathInfoXml = PATH_WWW . '/frontend/themes/' . $record . '/info.xml';
+
+			// load info.xml
+			$infoXml = @simplexml_load_file($pathInfoXml, null, LIBXML_NOCDATA);
+
+			// valid XML
+			if($infoXml !== false)
+			{
+				// convert xml to useful array
+				$information = BackendExtensionsModel::processThemeXml($infoXml);
+			}
+
+			// invalid xml or not found, ignore theme
+			else
+			{
+				unset($records[$key]);
+				continue;
+			}
 
 			// add additional values
 			$records[$record]['value'] = $record;
 			$records[$record]['label'] = $record;
-			$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/thumbnail.png'; // @todo: fetch from xml
+			$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/' . $information['thumbnail'];
 
 			// unset the key
 			unset($records[$key]);
@@ -646,22 +664,22 @@ class BackendExtensionsModel
 
 
 	/**
-	 * Process the information XML and return an array with the information.
+	 * Process the module's information XML and return an array with the information.
 	 *
 	 * @return	array
 	 * @param	SimpleXMLElement $xml
 	 */
-	public static function processInformationXml(SimpleXMLElement $xml)
+	public static function processModuleXml(SimpleXMLElement $xml)
 	{
 		// init
 		$information = array();
 
 		// version
-		$version = $xml->xpath('/module/version/text()');
+		$version = $xml->xpath('/module/version');
 		if(isset($version[0])) $information['version'] = (string) $version[0];
 
 		// description
-		$description = $xml->xpath('/module/description/text()');
+		$description = $xml->xpath('/module/description');
 		if(isset($description[0])) $information['description'] = (string) $description[0];
 
 		// authors
@@ -677,7 +695,7 @@ class BackendExtensionsModel
 			$event = (array) $event;
 
 			// attributes
-			$attributes = isset($event['@attributes']) ? (array) $event['@attributes'] : array();
+			$attributes = $event->attributes();
 
 			// build event information and add it to the list
 			$information['events'][] = array(
@@ -685,6 +703,94 @@ class BackendExtensionsModel
 				'name' => (isset($attributes['name'])) ? $attributes['name'] : '',
 				'description' => $event[0]
 			);
+		}
+
+		// information array
+		return $information;
+	}
+
+
+	/**
+	 * Process the theme's information XML and return an array with the information.
+	 *
+	 * @return	array
+	 * @param	SimpleXMLElement $xml
+	 */
+	public static function processThemeXml(SimpleXMLElement $xml)
+	{
+		// init
+		$information = array();
+
+		// fetch theme node
+		$theme = $xml->xpath('/theme');
+		if(isset($theme[0])) $theme = $theme[0];
+
+		// fetch general theme info
+		$information['name'] = (string) $theme->name;
+		$information['version'] = (string) $theme->version;
+		$information['requirements'] = (array) $theme->requirements;
+		$information['thumbnail'] = (string) $theme->thumbnail;
+		$information['description'] = (string) $theme->description;
+
+		// authors
+		foreach($xml->xpath('/theme/authors/author') as $author)
+		{
+			$information['authors'][] = (array) $author;
+		}
+
+		// meta navigation
+		$meta = $theme->metanavigation->attributes();
+		if(isset($meta['supported']))
+		{
+			$information['meta'] = (string) $meta['supported'] && (string) $meta['supported'] !== 'false';
+		}
+
+		// templates
+		foreach($xml->xpath('/theme/templates/template') as $templateXML)
+		{
+			// init var
+			$template = array();
+
+			// template data
+			$template['label'] = (string) $templateXML['label'];
+			$template['path'] = (string) $templateXML['path'];
+
+			// loop positions
+			foreach($templateXML->positions->position as $positionXML)
+			{
+				// init var
+				$position = array();
+
+				// position name
+				$position['name'] = (string) $positionXML['name'];
+
+				// widgets
+				$position['widgets'] = array();
+				if($positionXML->defaults->widget)
+				{
+					foreach($positionXML->defaults->widget as $widget)
+					{
+						$position['widgets'][] = array('module' => (string) $widget['module'],
+													'action' => (string) $widget['action']);
+					}
+				}
+
+				// editor
+				$position['editors'] = array();
+				if($positionXML->defaults->editor)
+				{
+					foreach($positionXML->defaults->editor as $editor)
+					{
+						$position['editors'][] = (string) $editor;
+					}
+				}
+
+				// add position
+				$template['positions'][] = $position;
+			}
+
+			// add template
+			$information['templates'][] = $template;
 		}
 
 		// information array
