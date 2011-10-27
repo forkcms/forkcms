@@ -149,8 +149,8 @@
 						{iteration:groups}
 							<li>{$groups.chkGroups} <label for="{$groups.id}">{$groups.label}</label></li>
 						{/iteration:groups}
-						{$chkGroupsError}
 					</ul>
+					{$chkGroupsError}
 				</div>
 			</div>
 		</div>

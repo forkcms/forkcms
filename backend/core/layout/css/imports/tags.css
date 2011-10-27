@@ -6,6 +6,7 @@
     @subpackage   core
 
     @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
     @since        2.0
 
 */
@@ -13,7 +14,6 @@
 .tagsWrapper input.inputText {
 	width: 120px;
 }
-
 
 .tagsWrapper .tagsList {
 	padding-top: 12px;
@@ -52,18 +52,23 @@
 .tagsWrapper li span {
 	display: block;
 	float: left;
-	background: #dee7f8;
-	background: -webkit-gradient(linear, left top, left bottom, from(#C9DCFF), to(#DEE7F8));
-	background: -moz-linear-gradient(top, #C9DCFF, #DEE7F8);
+	background: #c9dcff;
+	background: -moz-linear-gradient(top, #c9dcff 0%, #dee7f8 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c9dcff), color-stop(100%,#dee7f8));
+	background: -webkit-linear-gradient(top, #c9dcff 0%,#dee7f8 100%);
+	background: -o-linear-gradient(top, #c9dcff 0%,#dee7f8 100%);
+	background: -ms-linear-gradient(top, #c9dcff 0%,#dee7f8 100%);
+	background: linear-gradient(top, #c9dcff 0%,#dee7f8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9dcff', endColorstr='#dee7f8',GradientType=0 );
 
 	line-height: 16px;
 	border: 1px solid #a4bdec;
 	padding: 0 6px;
 
 	/* @inc .doubleRc */
-	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
+	border-radius: 8px;
 }
 
 .tagsWrapper ul,

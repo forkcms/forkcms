@@ -25,7 +25,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private $javascriptFiles = array();
+	private $jsFiles = array();
 
 
 	/**
@@ -121,7 +121,7 @@ class FrontendHeader extends FrontendBaseObject
 		// add to array if it isn't there already
 		if(!$inArray)
 		{
-			// build temporary arrat
+			// build temporary array
 			$temp['file'] = (string) $file;
 			$temp['add_timestamp'] = $addTimestamp;
 
@@ -176,13 +176,13 @@ class FrontendHeader extends FrontendBaseObject
 		}
 
 		// try to minify
-		if($minify) $file = $this->minifyJavascript($file);
+		if($minify) $file = $this->minifyJS($file);
 
 		// already in array?
-		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->javascriptFiles))
+		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles))
 		{
 			// add to files
-			$this->javascriptFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
+			$this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
 		}
 	}
 
@@ -379,9 +379,9 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @return	array
 	 */
-	public function getJavascriptFiles()
+	public function getJSFiles()
 	{
-		return $this->javascriptFiles;
+		return $this->jsFiles;
 	}
 
 
@@ -530,7 +530,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * @return	string
 	 * @param	string $file	The file to be minified.
 	 */
-	private function minifyJavascript($file)
+	private function minifyJS($file)
 	{
 		// create unique filename
 		$fileName = md5($file) . '.js';
@@ -584,10 +584,10 @@ class FrontendHeader extends FrontendBaseObject
 		$this->parseMetaAndLinks();
 
 		// parse CSS
-		$this->parseCss();
+		$this->parseCSS();
 
 		// parse JS
-		$this->parseJavascript();
+		$this->parseJS();
 
 		// parse custom header HTML and Google Analytics
 		$this->parseCustomHeaderHTMLAndGoogleAnalytics();
@@ -605,7 +605,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @return	void
 	 */
-	private function parseCss()
+	private function parseCSS()
 	{
 		// init var
 		$cssFiles = null;
@@ -720,43 +720,46 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @return	void
 	 */
-	private function parseJavascript()
+	private function parseJS()
 	{
 		// init var
-		$javascriptFiles = null;
-		$existingJavascriptFiles = $this->getJavascriptFiles();
+		$jsFiles = null;
+		$existingJSFiles = $this->getJSFiles();
 
 		// if there aren't any JS-files added we don't need to do something
-		if(!empty($existingJavascriptFiles))
+		if(!empty($existingJSFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
 			$ignoreCache = array('/frontend/core/js/jquery/jquery.js',
 									'/frontend/core/js/jquery/jquery.ui.js');
 
 			// loop the JS-files
-			foreach($existingJavascriptFiles as $file)
+			foreach($existingJSFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => $file['file']);
+				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $file = array('file' => $file['file']);
 
 				// make the file uncachable
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] . '&amp;m=' . time());
+					if(substr($file['file'], 0, 11) == '/frontend/js') $file = array('file' => $file['file'] . '&amp;m=' . time());
 
 					// add lastmodified time
 					else
 					{
 						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
-						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
+						$file = array('file' => $file['file'] . $modifiedTime);
 					}
 				}
+
+				// add
+				$jsFiles[] = $file;
 			}
 		}
 
 		// js-files
-		$this->tpl->assign('javascriptFiles', $javascriptFiles);
+		$this->tpl->assign('jsFiles', $jsFiles);
 	}
 
 

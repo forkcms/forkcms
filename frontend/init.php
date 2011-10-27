@@ -205,7 +205,7 @@ class FrontendInit
 	{
 		define('FRONTEND_CORE_URL', '/' . APPLICATION . '/core');
 		define('FRONTEND_CACHE_URL', '/' . APPLICATION . '/cache');
-		define('FRONTEND_FILES_URL', '/frontend/files');
+		define('FRONTEND_FILES_URL', '/' . APPLICATION . '/files');
 	}
 
 

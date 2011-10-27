@@ -53,9 +53,9 @@
 	</div>
 
 	{* General Javascript *}
-	{iteration:javascriptFiles}
-		<script src="{$javascriptFiles.file}"></script>
-	{/iteration:javascriptFiles}
+	{iteration:jsFiles}
+		<script src="{$jsFiles.file}"></script>
+	{/iteration:jsFiles}
 
 	<script src="{$THEME_URL}/core/js/respond.min.js"></script>
 

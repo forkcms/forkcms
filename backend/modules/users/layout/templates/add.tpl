@@ -25,8 +25,9 @@
 					<div class="oneLiner" style="margin-bottom: 6px;">
 						<p>
 							<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtPassword} {$txtPasswordError}
+							{$txtPassword}
 						</p>
+						{$txtPasswordError}
 					</div>
 					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
 						<tr>
@@ -104,7 +105,7 @@
 				<div class="heading">
 					<h3>{$lblAccountManagement|ucfirst}</h3>
 				</div>
-				<div class="options last horizontal">
+				<div class="options last">
 					<ul class="inputList">
 						<li>{$chkActive} <label for="active">{$msgHelpActive}</label> {$chkActiveError}</li>
 						<li>{$chkApiAccess} <label for="api_access">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
@@ -114,8 +115,8 @@
 						{iteration:groups}
 							<li>{$groups.chkGroups} <label for="{$groups.id}">{$groups.label}</label></li>
 						{/iteration:groups}
-						{$chkGroupsError}
 					</ul>
+					{$chkGroupsError}
 				</div>
 			</div>
 		</div>
