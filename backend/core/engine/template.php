@@ -430,6 +430,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a number as a float
+	 *  syntax: {$var|formatfloat}
 	 *
 	 * @return	string
 	 * @param	float $number				The number to format.
@@ -519,7 +520,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Convert a var into navigation-html
-	 * 	syntax: {$var|getnavigation:startdepth[:maximumdepth]}
+	 * 	syntax: {$var|getnavigation:startdepth[:enddepth]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var		A placeholder var, will be replaced with the generated HTML.
@@ -540,7 +541,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Convert a var into a URL
-	 * 	syntax: {$var|geturl:<action>[:<module>]}
+	 * 	syntax: {$var|geturl:action[:module[:suffix]]}
 	 *
 	 * @return	void
 	 * @param	string[optional] $var		A placeholder variable, it will be replaced with the URL.
@@ -562,6 +563,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Get a random var between a min and max
+	 *  syntax: {$var|rand:min:max}
 	 *
 	 * @return	int
 	 * @param	string[optional] $var	The string passed from the template.
@@ -582,6 +584,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Convert this string into a well formed label.
+	 * 	syntax: {$var|tolabel}
 	 *
 	 * @return	string
 	 * @param	string $value	The value to convert to a label.
@@ -594,7 +597,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Truncate a string
-	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
+	 * 	syntax: {$var|truncate:max-length[:append-hellip]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var					A placeholder var, will be replaced with the generated HTML.

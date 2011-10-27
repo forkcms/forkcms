@@ -455,7 +455,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Format a number as currency
-	 * 	syntax: {$var|formatcurrency[:<currency>][:<decimals>]}
+	 * 	syntax: {$var|formatcurrency[:currency[:decimals]]}
 	 *
 	 * @return	string
 	 * @param	string $var						The string to form.
@@ -479,7 +479,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Format a number as a float
-	 * @later	grab settings from database
+	 * 	syntax: {$var|formatfloat[:decimals]}
 	 *
 	 * @return	string
 	 * @param	float $number				The number to format.
@@ -526,7 +526,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the navigation html
-	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>]}
+	 * 	syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash]]]]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var			The variable.
@@ -553,7 +553,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get a given field for a page-record
-	 * 	syntax: {$var|getpageinfo:404:'title'}
+	 * 	syntax: {$var|getpageinfo:pageId[:field[:language]]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var			The string passed from the template.
@@ -583,6 +583,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Fetch the path for an include (theme file if available, core file otherwise)
+	 * 	syntax: {$var|getpath:file}
 	 *
 	 * @return	string
 	 * @param	string $var		The variable.
@@ -599,7 +600,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the subnavigation html
-	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:'<excludeIds-splitted-by-dash>']}
+	 * 	syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:'excludeIds-splitted-by-dash']]]]]}
 	 *
 	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *
@@ -656,7 +657,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the URL for a given pageId & language
-	 * 	syntax: {$var|geturl:404}
+	 * 	syntax: {$var|geturl:pageId[:language]}
 	 *
 	 * @return	string
 	 * @param	string $var						The string passed from the template.
@@ -677,7 +678,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the URL for a give module & action combination
-	 * 	syntax: {$var|geturlforblock:<module>:<action>:<language>}
+	 * 	syntax: {$var|geturlforblock:module[:action[:language]]}
 	 *
 	 * @return	string
 	 * @param	string $var						The string passed from the template.
@@ -700,6 +701,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Fetch an URL based on an extraId
+	 * 	syntax: {$var|geturlforextraid:extraId[:language]}
 	 *
 	 * @return	string
 	 * @param	string $var						The string passed from the template.
@@ -720,6 +722,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Highlights all strings in <code> tags.
+	 * 	syntax: {$var|highlight}
 	 *
 	 * @return	string
 	 * @param	string $var		The string passed from the template.
@@ -750,6 +753,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get a random var between a min and max
+	 * 	syntax: {$var|rand:min:max}
 	 *
 	 * @return	int
 	 * @param	string[optional] $var	The string passed from the template.
@@ -769,7 +773,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Formats a timestamp as a string that indicates the time ago
-	 * 	syntax: {$var|timeAgo}
+	 * 	syntax: {$var|timeago}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var		A UNIX-timestamp that will be formated as a time-ago-string.
@@ -789,7 +793,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Truncate a string
-	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
+	 * 	syntax: {$var|truncate:max-length[:append-hellip]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var		The string passed from the template.
@@ -827,7 +831,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the value for a user-setting
-	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
+	 * 	syntax {$var|usersetting:setting[:userId]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var	The string passed from the template.

@@ -34,14 +34,14 @@ jsBackend.ckeditor =
 
 				// buttons
 				toolbar_Full: [
-					{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike'] },
-					{ name: 'clipboard',   items: [ 'Undo', 'Redo' ] },
-					{ name: 'paragraph',   items: [ 'NumberedList', 'BulletedList', 'Blockquote' ] },
-					{ name: 'links',       items: [ 'Link', 'Unlink', 'Anchor' ] },
-					{ name: 'document',    items: [ 'Source', 'ShowBlocks', 'Maximize', 'Templates' ] },
+					{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
+					{ name: 'clipboard', items: ['Undo', 'Redo']},
+					{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
+					{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
+					{ name: 'document', items: ['Source', 'ShowBlocks', 'Maximize', 'Templates']},
 					'/',
-					{ name: 'insert',      items : [ 'Table', '-', 'Image', 'Flash', 'SpecialChar' ] },
-					{ name: 'styles',      items : [ 'Format' ] }
+					{ name: 'insert', items : ['Table', '-', 'Image', 'Flash', 'SpecialChar']},
+					{ name: 'styles', items : ['Format']}
 				],
 
 				// skin
@@ -49,8 +49,11 @@ jsBackend.ckeditor =
 				uiColor: '#E7F0F8',
 //				toolbarStartupExpanded: false
 
+				// load some extra plugins
+				extraPlugins: 'stylesheetparser',
+
 				// remove useless plugins
-				removePlugins: 'about,a11yhelp,bidi,colorbutton,colordialog,font,format,find,forms,horizontalrule,indent,newpage,pagebreak,preview,print,smiley'
+				removePlugins: 'about,a11yhelp,bidi,colorbutton,colordialog,font,find,forms,horizontalrule,indent,newpage,pagebreak,preview,print,smiley'
 
 			}
 		);
