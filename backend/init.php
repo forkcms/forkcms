@@ -204,9 +204,8 @@ class BackendInit
 	 */
 	private function defineURLs()
 	{
-		define('BACKEND_CORE_URL', '/backend/core');
-		define('BACKEND_CACHE_URL', '/backend/cache');
-
+		define('BACKEND_CORE_URL', '/' . APPLICATION . '/core');
+		define('BACKEND_CACHE_URL', '/' . APPLICATION . '/cache');
 		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 

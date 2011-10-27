@@ -64,23 +64,21 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 			}
 
 			// check what error we have
-			switch($e->getMessage())
+			if(strpos($e->getMessage(), 'HTML Content URL Required'))
 			{
-				case 'HTML Content URL Required':
-					$message = BL::err('HTMLContentURLRequired', $this->getModule());
-				break;
-
-				case 'Payment details required':
-					$message = sprintf(BL::err('PaymentDetailsRequired', $this->getModule()), BackendModel::getModuleSetting($this->getModule(), 'cm_username'));
-				break;
-
-				case 'Duplicate Campaign Name':
-					$message = BL::err('DuplicateCampaignName', $this->getModule());
-				break;
-
-				default:
-					$message = $e->getMessage();
-				break;
+				$message = BL::err('HTMLContentURLRequired', $this->getModule());
+			}
+			elseif(strpos($e->getMessage(), 'Payment details required'))
+			{
+				$message = sprintf(BL::err('PaymentDetailsRequired', $this->getModule()), BackendModel::getModuleSetting($this->getModule(), 'cm_username'));
+			}
+			elseif(strpos($e->getMessage(), 'Duplicate Campaign Name'))
+			{
+				$message = BL::err('DuplicateCampaignName', $this->getModule());
+			}
+			else
+			{
+				$message = $e->getMessage();
 			}
 
 			// stop the script and show our error

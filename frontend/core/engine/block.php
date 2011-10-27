@@ -158,7 +158,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 				foreach($this->config->getPossibleActions() as $actionName)
 				{
 					// get action that should be passed as parameter
-					$actionURL = FL::act(SpoonFilter::toCamelCase($actionName));
+					$actionURL = urlencode(FL::act(SpoonFilter::toCamelCase($actionName)));
 
 					// the action is the requested one
 					if($actionURL == $actionParameter)

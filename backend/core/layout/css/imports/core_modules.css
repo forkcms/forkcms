@@ -628,7 +628,7 @@
 	/*
 		Pages templates (add/edit)
 	*/
-	
+
 	#positionsList {
 		padding: 12px 0;
 	}
@@ -637,34 +637,34 @@
 	#positionsList .positionBlock {
 		float: left;
 	}
-	
+
 	#positionsList .addBlock {
 		float: left;
 		clear: left;
 		margin-top: 5px;
 	}
-	
+
 	#positionsList #addPosition {
 		clear: left;
 		margin: 10px 0 0 10px;
 	}
-	
+
 	#positionsList .defaultBlocks {
 		clear: left;
 		margin-left: 115px;
 		padding-top: 5px;
 	}
-	
+
 	#positionsList .position {
 		padding: 10px;
 		clear: left;
 	}
-	
+
 	#positionsList .defaultBlock {
 		clear: left;
 		padding-top: 5px;
 	}
-	
+
 	#positionsList .position:nth-child(2n + 1) {
 		background: #F1F5FA;
 	}
@@ -676,7 +676,7 @@
 	#positionsList .iconDelete {
 		margin-left: 10px;
 	}
-	
+
 	#templateLayout > * {
 		float: left;
 	}

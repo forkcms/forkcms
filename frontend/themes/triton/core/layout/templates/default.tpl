@@ -130,9 +130,9 @@
 	</div>
 
 	{* General Javascript *}
-	{iteration:javascriptFiles}
-		<script src="{$javascriptFiles.file}"></script>
-	{/iteration:javascriptFiles}
+	{iteration:jsFiles}
+		<script src="{$jsFiles.file}"></script>
+	{/iteration:jsFiles}
 
 	{* Theme specific Javascript *}
 	<script src="{$THEME_URL}/core/js/triton.js"></script>

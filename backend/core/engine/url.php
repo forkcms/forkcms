@@ -187,14 +187,14 @@ class BackendURL
 		// if it is an request for a JS-file or an AJAX-file we only need the module
 		if($isJS || $isAJAX)
 		{
-			// set the working language, this is not the interface language
-			BackendLanguage::setWorkingLanguage(SpoonFilter::getGetValue('language', null, SITE_DEFAULT_LANGUAGE));
+			// set the module
+			$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
 
-			// set current module
-			$this->setModule(SpoonFilter::getGetValue('module', null, null));
+			// set the action
+			$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
 
-			// set action
-			$this->setAction('index');
+			// set the language
+			BackendLanguage::setWorkingLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
 		}
 
 		// regular request

@@ -105,19 +105,18 @@
 	background: #f1f5fa;
 }
 
-.selectThumbList li.selected {
-	border-color: #1a57ad;
-	background: #1A57AD;
-	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
-	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
-}
-
+.selectThumbList li.selected,
 .selectThumbList li.selected:hover,
 .selectThumbList li.selected:active {
 	border-color: #1a57ad;
-	background: #1A57AD;
-	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
-	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
+	background: #5c93d5;
+	background: -moz-linear-gradient(top, #5c93d5 0%, #1a57ad 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5c93d5), color-stop(100%,#1a57ad));
+	background: -webkit-linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	background: -o-linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	background: -ms-linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	background: linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c93d5', endColorstr='#1a57ad',GradientType=0 );
 }
 
 	.selectThumbList li span {

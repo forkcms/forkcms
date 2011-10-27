@@ -50,9 +50,14 @@ abbr.help {
 	width: 240px;
 	z-index: 2001;
 	padding: 4px 12px;
-	background: #8947D6;
-	background: -webkit-gradient(linear, left top, left bottom, from(#AC67FF), to(#8645D3));
-	background: -moz-linear-gradient(top, #AC67FF, #8645D3);
+	background: #ac67ff;
+	background: -moz-linear-gradient(top, #ac67ff 0%, #8645d3 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ac67ff), color-stop(100%,#8645d3));
+	background: -webkit-linear-gradient(top, #ac67ff 0%,#8645d3 100%);
+	background: -o-linear-gradient(top, #ac67ff 0%,#8645d3 100%);
+	background: -ms-linear-gradient(top, #ac67ff 0%,#8645d3 100%);
+	background: linear-gradient(top, #ac67ff 0%,#8645d3 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ac67ff', endColorstr='#8645d3',GradientType=0 );
 	border: 1px solid #8645D3;
 	color: #FFF;
 	font-weight: 400;

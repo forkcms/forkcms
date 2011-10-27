@@ -18,12 +18,17 @@
 	z-index: 2001;
 	padding: 4px 12px;
 	position: relative;
-	background: #E9F0F7;
 	border: 1px solid #B8BCC9;
 
 	/* Gradient */
-	background: -webkit-gradient(linear, left top, left bottom, from(#EFF5FD), to(#E9F0F7));
-	background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
+	background: #eff5fd;
+	background: -moz-linear-gradient(top, #eff5fd 0%, #e9f0f7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eff5fd), color-stop(100%,#e9f0f7));
+	background: -webkit-linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	background: -o-linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	background: -ms-linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	background: linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff5fd', endColorstr='#e9f0f7',GradientType=0 );
 
 	/* @inc .rc */
 	-moz-border-radius: 4px;
