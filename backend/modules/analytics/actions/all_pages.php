@@ -1,52 +1,38 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the all-pages-action, it will display the overview of analytics posts
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class BackendAnalyticsAllPages extends BackendAnalyticsBase
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Parse this page
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent parse
 		parent::parse();
-
-		// overview data
 		$this->parseOverviewData();
-
-		// get and parse data for chart
 		$this->parseChartData();
-
-		// parse pages
 		$this->parsePages();
 
 		// init google url
@@ -58,15 +44,11 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
 	}
 
-
 	/**
 	 * Parses the data to make the chart with
-	 *
-	 * @return	void
 	 */
 	private function parseChartData()
 	{
-		// init vars
 		$maxYAxis = 2;
 		$metrics = array('visitors', 'pageviews');
 		$graphData = array();
@@ -107,17 +89,13 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 			}
 		}
 
-		// parse
 		$this->tpl->assign('maxYAxis', $maxYAxis);
 		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
 		$this->tpl->assign('graphData', $graphData);
 	}
 
-
 	/**
 	 * Parses the overview data
-	 *
-	 * @return	void
 	 */
 	private function parseOverviewData()
 	{
@@ -178,30 +156,17 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		}
 	}
 
-
 	/**
 	 * Parse pages datagrid
-	 *
-	 * @return	void
 	 */
 	private function parsePages()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getPages($this->startTimestamp, $this->endTimestamp);
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// no pagination
-			$dataGrid->setPaging();
-
-			// hide columns
+			$dataGrid->setPaging(false);
 			$dataGrid->setColumnHidden('page_encoded');
-
-			// set url
 			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
 
 			// parse the datagrid
@@ -209,5 +174,3 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		}
 	}
 }
-
-?>

@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the analytics module
  *
- * @package		installer
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class AnalyticsInstall extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -64,5 +65,3 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->setNavigation($navigationModulesId, 'Analytics', 'analytics/settings');
 	}
 }
-
-?>
