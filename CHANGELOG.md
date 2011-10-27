@@ -23,6 +23,7 @@ Improvements:
 * Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
 * Core: updated default favicon.
 * Pages: updated pages getNavigation; the 'includeChildren' parameter was useless.
+* Blog: the blog module now standard has an image field.
 
 
 2.6.13 (2011-10-18)
