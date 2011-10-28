@@ -10,7 +10,7 @@
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		3.0.0
  */
-class BackendExtensionsUploadModule extends BackendBaseActionAdd
+class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action.
@@ -104,70 +104,47 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 						// zip file needs to contain some files
 						if($zip->numFiles > 0)
 						{
-							// directories we are allowed to upload to
-							$allowedDirectories = array(
-								'frontend/themes'
-							);
-
-							// list of validated files (these files will actually be unpacked)
-							$files = array();
+							// get first entry (= the theme folder)
+							$file = $zip->statIndex(0);
 
 							// name of the module we are trying to upload
-							$moduleName = null;
+							$themeName = trim($file['name'], '/');
 
-							// check every file in the zip
-							for($i = 0; $i < $zip->numFiles; $i++)
+							// find info.xml
+							$infoXml = $zip->getFromName($themeName . '/info.xml');
+
+							// add error if info.xml is not found
+							if($infoXml === false)
 							{
-								// get the file name
-								$file = $zip->statIndex($i);
-								$fileName = $file['name'];
-
-								// check if the file is in one of the valid directories
-								foreach($allowedDirectories as $directory)
+								$fileFile->addError(sprintf(BL::getError('NoInformationFile'), $themeName));
+							}
+							else
+							{
+								// parse xml
+								try
 								{
-									// yay, in a valid directory
-									if(stripos($fileName, $directory) !== false)
-									{
-										// extract the module name from the url
-										$tmpName = trim(str_ireplace($directory, '', $fileName), '/');
-										if($tmpName == '') break;
-										$chunks = explode('/', $tmpName);
-										$tmpName = $chunks[0];
+									// load info.xml
+									$infoXml = new SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
 
-										// first module we find, store the name
-										if($moduleName === null) $moduleName = $tmpName;
+									// convert xml to useful array
+									$this->information = BackendExtensionsModel::processThemeXml($infoXml);
 
-										// the name does not match the previous madule we found, skip the file
-										elseif($moduleName !== $tmpName) break;
+									// empty data (nothing useful)
+									if(empty($this->information)) $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
 
-										// passed all our tests, store it for extraction
-										$files[] = $fileName;
+									// check if theme name in info.xml matches folder name
+									if($this->information['name'] != $themeName) $fileFile->addError(BL::getMessage('ThemeNameDoesntMatch'));
+								}
 
-										// go to next file
-										break;
-									}
+								// warning that the information file is corrupt
+								catch(Exception $e)
+								{
+									$fileFile->addError(BL::getMessage('InformationFileCouldNotBeLoaded'));
 								}
 							}
 
-							// after filtering we have some files to extract
-							if(count($files) > 0)
-							{
-								// module already exists on the filesystem
-								if(!BackendExtensionsModel::existsModule($moduleName))
-								{
-									// installer in array?
-									if(!in_array('backend/modules/' . $moduleName . '/installer/installer.php', $files))
-									{
-										$fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
-									}
-								}
-
-								// wow wow, you are trying to upload an already existing module
-								else $fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
-							}
-
-							// after filtering no files left (nothing useful found)
-							else $fileFile->addError(BL::getError('FileContentsIsUseless'));
+							// wow wow, you are trying to upload an already existing theme
+							if(BackendExtensionsModel::existsTheme($themeName)) $fileFile->addError(sprintf(BL::getError('ThemeAlreadyExists'), $themeName));
 						}
 
 						// empty zip file
@@ -183,13 +160,13 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// unpack module files
-				$zip->extractTo(FRONTEND_PATH . '/themes', $files);
+				$zip->extractTo(FRONTEND_PATH . '/themes');
 
 				// run installer
-				BackendExtensionsModel::installModule($moduleName);
+				BackendExtensionsModel::installTheme($themeName);
 
 				// redirect with fireworks
-				$this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $moduleName . '&highlight=row-module_' . $moduleName);
+				$this->redirect(BackendModel::createURLForAction('themes') . '&report=theme-installed&var=' . $themeName);
 			}
 		}
 	}

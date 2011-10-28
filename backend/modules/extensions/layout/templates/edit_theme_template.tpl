@@ -118,7 +118,7 @@
 
 	<div class="fullwidthOptions">
 		{option:deleteAllowed}
-			<a href="{$var|geturl:'delete_template'}&amp;id={$template.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete_theme_template'}&amp;id={$template.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 		{/option:deleteAllowed}

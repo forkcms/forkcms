@@ -282,6 +282,23 @@ class BackendExtensionsModel
 
 
 	/**
+	 * Does this template exist.
+	 * This does not check for existence in the database but on the filesystem.
+	 *
+	 * @return	bool
+	 * @param	string $theme		Theme to check for existence.
+	 */
+	public static function existsTheme($theme)
+	{
+		// recast
+		$theme = (string) $theme;
+
+		// check if modules directory exists
+		return SpoonDirectory::exists(FRONTEND_PATH . '/themes/' . $theme);
+	}
+
+
+	/**
 	 * Get extras
 	 *
 	 * @return	array
@@ -431,17 +448,20 @@ class BackendExtensionsModel
 			if(isset($installedModules[$moduleName])) $module['installed'] = true;
 
 			// get extra info from the info.xml
-			$infoXml = @simplexml_load_file(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', null, LIBXML_NOCDATA);
-
-			// we need a valid XML
-			if($infoXml !== false)
+			try
 			{
+				$infoXml = new SimpleXMLElement(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', LIBXML_NOCDATA, true);
+
 				// process XML to a clean array
 				$info = self::processModuleXml($infoXml);
 
 				// set fields if they were found in the XML
 				if(isset($info['description'])) $module['description'] = BackendDataGridFunctions::truncate($info['description'], 80);
 				if(isset($info['version'])) $module['version'] = $info['version'];
+			}
+			catch(Exception $e)
+			{
+				// don't act upon error, we simply won't possess some info
 			}
 
 			// add to list of managable modules
@@ -559,27 +579,26 @@ class BackendExtensionsModel
 			// path to info.xml
 			$pathInfoXml = PATH_WWW . '/frontend/themes/' . $record . '/info.xml';
 
-			// load info.xml
-			$infoXml = @simplexml_load_file($pathInfoXml, null, LIBXML_NOCDATA);
-
-			// valid XML
-			if($infoXml !== false)
+			try
 			{
+				// load info.xml
+				$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+
 				// convert xml to useful array
 				$information = BackendExtensionsModel::processThemeXml($infoXml);
+				if(!$information) throw new BackendException('Invalid info.xml');
+
+				// add additional values
+				$records[$record]['value'] = $record;
+				$records[$record]['label'] = $record;
+				$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/' . $information['thumbnail'];
 			}
 
 			// invalid xml or not found, ignore theme
-			else
+			catch(Exception $e)
 			{
-				unset($records[$key]);
-				continue;
+				// no need to act, the unset below will take care of removing the corrupt entry
 			}
-
-			// add additional values
-			$records[$record]['value'] = $record;
-			$records[$record]['label'] = $record;
-			$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/' . $information['thumbnail'];
 
 			// unset the key
 			unset($records[$key]);
@@ -598,9 +617,22 @@ class BackendExtensionsModel
 
 
 	/**
+	 * Inserts a new template
+	 *
+	 * @return	int
+	 * @param	array $template	The data for the template to insert.
+	 */
+	public static function insertTemplate(array $template)
+	{
+		// insert
+		return (int) BackendModel::getDB(true)->insert('themes_templates', $template);
+	}
+
+
+	/**
 	 * Install a module.
 	 *
-	 * @param	string $module
+	 * @param	string $module		The name of the module to be installed.
 	 */
 	public static function installModule($module)
 	{
@@ -628,6 +660,76 @@ class BackendExtensionsModel
 
 		// clear the cache so locale (and so much more) gets rebuilded
 		self::clearCache();
+	}
+
+
+	/**
+	 * Install a theme.
+	 *
+	 * @param	string $theme		The name of the theme to be installed.
+	 */
+	public static function installTheme($theme)
+	{
+		// set path to info.xml
+		$pathInfoXml = FRONTEND_PATH . '/themes/' . $theme . '/info.xml';
+
+		// load info.xml
+		$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+
+		// convert xml to useful array
+		$information = BackendExtensionsModel::processThemeXml($infoXml);
+		if(!$information) throw new BackendException('Invalid info.xml');
+
+		// loop templates
+		foreach($information['templates'] as $template)
+		{
+			// init var
+			$item = array();
+
+			// build array
+			$item['theme'] = $information['name'];
+			$item['label'] = $template['label'];
+			$item['path'] = $template['path'];
+			$item['active'] = 'Y'; // @todo: useless
+
+			// set format
+			$item['data']['format'] = $template['format'];
+
+			// build positions
+			$item['data']['names'] = array();
+			$item['data']['default_extras'] = array();
+			foreach($template['positions'] as $position)
+			{
+				// init position
+				$item['data']['names'][] = $position['name'];
+				$item['data']['default_extras'][$position['name']] = array();
+
+				// add default widgets
+				foreach($position['widgets'] as $widget)
+				{
+					// fetch extra_id for this extra
+					$extraId = (int) BackendModel::getDB()->getVar('SELECT i.id
+																	FROM modules_extras AS i
+																	WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
+																	array('widget', $widget['module'], $widget['action'], 'N'));
+
+					// add extra to defaults
+					if($extraId) $item['data']['default_extras'][$position['name']][] = $extraId;
+				}
+
+				// add default editors
+				foreach($position['editors'] as $editor)
+				{
+					$item['data']['default_extras'][$position['name']][] = 0;
+				}
+			}
+
+			// serialize the data
+			$item['data'] = serialize($item['data']);
+
+			// insert the item
+			$item['id'] = self::insertTemplate($item);
+		}
 	}
 
 
@@ -773,6 +875,7 @@ class BackendExtensionsModel
 			// template data
 			$template['label'] = (string) $templateXML['label'];
 			$template['path'] = (string) $templateXML['path'];
+			$template['format'] = (string) trim($templateXML->format);
 
 			// loop positions
 			foreach($templateXML->positions->position as $positionXML)
@@ -800,7 +903,7 @@ class BackendExtensionsModel
 				{
 					foreach($positionXML->defaults->editor as $editor)
 					{
-						$position['editors'][] = (string) $editor;
+						$position['editors'][] = (string) trim($editor);
 					}
 				}
 
@@ -813,7 +916,7 @@ class BackendExtensionsModel
 		}
 
 		// information array
-		return $information;
+		return self::validateThemeInformation($information);
 	}
 
 
@@ -849,6 +952,84 @@ class BackendExtensionsModel
 
 		// return
 		return $table;
+	}
+
+
+	/**
+	 * Make sure that we have an entirely valid theme information array
+	 *
+	 * @return	array
+	 * @param	array $information		Contains the parsed theme info.xml data.
+	 */
+	public static function validateThemeInformation($information)
+	{
+		// set default thumbnail if not sets
+		if(!$information['thumbnail']) $information['thumbnail'] = 'thumbnail.png';
+
+		// check if there are templates
+		if(isset($information['templates']) && $information['templates'])
+		{
+			// loop templates
+			foreach($information['templates'] as $i => $template)
+			{
+				// check template data
+				if(!isset($template['label']) || !$template['label'] ||
+					!isset($template['path']) || !$template['path'] ||
+					!isset($template['format']) || !$template['format'])
+				{
+					unset($information['templates'][$i]);
+					continue;
+				}
+
+				// check if there are positions
+				if(isset($template['positions']) && $template['positions'])
+				{
+					// loop positions
+					foreach($template['positions'] as $j => $position)
+					{
+						// check if position is valid
+						if(!isset($position['name']) || !$position['name'])
+						{
+							unset($information['templates'][$i]['positions'][$j]);
+							continue;
+						}
+
+						// ensure widgets are well-formed
+						if(!isset($position['widgets']) || !$position['widgets'])
+						{
+							$information['templates'][$i]['positions'][$j]['widgets'] = array();
+						}
+
+						// ensure editors are well-formed
+						if(!isset($position['editors']) || !$position['editors'])
+						{
+							$information['templates'][$i]['positions'][$j]['editors'] = array();
+						}
+
+						// loop widgets
+						foreach($position['widgets'] as $k => $widget)
+						{
+							// check if widget is valid
+							if(!isset($widget['module']) || !$widget['module'] ||
+								!isset($widget['action']) || !$widget['action'])
+							{
+								unset($information['templates'][$i]['positions'][$j]['widgets'][$k]);
+								continue;
+							}
+						}
+					}
+				}
+
+				// check if there still are valid positions
+				if(!isset($information['templates'][$i]['positions']) || !$information['templates'][$i]['positions']) return null;
+			}
+
+			// check if there still are valid templates
+			if(!isset($information['templates']) || !$information['templates']) return null;
+		}
+
+		// return cleaned array
+		return $information;
 	}
 
 

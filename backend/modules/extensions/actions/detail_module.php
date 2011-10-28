@@ -97,12 +97,11 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 		// information needs to exists
 		if(SpoonFile::exists($pathInfoXml))
 		{
-			// load info.xml
-			$infoXml = @simplexml_load_file($pathInfoXml, null, LIBXML_NOCDATA);
-
-			// valid XML
-			if($infoXml !== false)
+			try
 			{
+				// load info.xml
+				$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+
 				// convert xml to useful array
 				$this->information = BackendExtensionsModel::processModuleXml($infoXml);
 
@@ -111,7 +110,10 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 			}
 
 			// warning that the information file is corrupt
-			else $this->warnings[] = array('message' => BL::getMessage('InformationFileCouldNotBeLoaded'));
+			catch(Exception $e)
+			{
+				$this->warnings[] = array('message' => BL::getMessage('InformationFileCouldNotBeLoaded'));
+			}
 		}
 
 		// warning that the information file is missing
