@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>profiles</name>
+	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>Profiles</name>
-		<description><![CDATA[This module will be used to manage the profiles.']]></description>
-	</info>
+	<description>
+		<![CDATA[This module will be used to manage the profiles.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Dieter Vanden Eynde]]></name>
+			<url><![CDATA[http://www.netlash.com/]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Lester Lievens]]></name>
+		</author>
+	</authors>
 	<events>
 		<event application="backend" name="after_unblock"><![CDATA[Triggered when a profile is unblocked.]]></event>
 		<event application="backend" name="after_block"><![CDATA[Triggered when a profile is blocked.]]></event>

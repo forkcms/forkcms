@@ -13,6 +13,14 @@
 class BackendGroupsAdd extends BackendBaseActionAdd
 {
 	/**
+	 * The action groups
+	 *
+	 * @var array
+	 */
+	private $actionGroups = array();
+
+
+	/**
 	 * The actions
 	 *
 	 * @var	array

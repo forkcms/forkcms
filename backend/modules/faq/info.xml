@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>faq</name>
+	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>FAQ</name>
-		<description><![CDATA[This module enables you to manage FAQs on your site.']]></description>
-	</info>
+	<description>
+		<![CDATA[This module enables you to manage FAQs on your site.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Lester Lievens]]></name>
+		</author>
+	</authors>
 	<events>
 		<event application="backend" name="after_add"><![CDATA[Triggered when a faq is added.]]></event>
 		<event application="backend" name="after_delete"><![CDATA[Triggered when a faq is deleted.]]></event>

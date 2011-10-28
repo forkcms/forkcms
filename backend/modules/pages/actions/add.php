@@ -66,7 +66,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
 		// get the templates
-		$this->templates = BackendPagesModel::getTemplates();
+		$this->templates = BackendExtensionsModel::getTemplates();
 
 		// init var
 		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', false);
@@ -85,7 +85,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->templates[$defaultTemplateId]['checked'] = true;
 
 		// get the extras
-		$this->extras = BackendPagesModel::getExtras();
+		$this->extras = BackendExtensionsModel::getExtras();
 
 		// load the form
 		$this->loadForm();
@@ -248,8 +248,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('positions', $this->positions);
-		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
-		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
+		$this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+		$this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
 		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 

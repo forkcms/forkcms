@@ -286,34 +286,44 @@ class InstallerStep7 extends InstallerStep
 		 * First we need to install the core. All the linked modules, settings and sql tables are
 		 * being installed.
 		 */
-		require_once PATH_WWW . '/backend/core/installer/install.php';
+		require_once PATH_WWW . '/backend/core/installer/installer.php';
+
+		// create the core installer
+		$installer = new CoreInstaller(
+			$this->db,
+			SpoonSession::get('languages'),
+			SpoonSession::get('interface_languages'),
+			SpoonSession::get('example_data'),
+			array(
+				'default_language' => SpoonSession::get('default_language'),
+				'default_interface_language' => SpoonSession::get('default_interface_language'),
+				'spoon_debug_email' => SpoonSession::get('email'),
+				'api_email' => SpoonSession::get('email'),
+				'site_domain' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
+				'site_title' => 'Fork CMS',
+				'smtp_server' => '',
+				'smtp_port' => '',
+				'smtp_username' => '',
+				'smtp_password' => ''
+			)
+		);
 
 		// install the core
-		$install = new CoreInstall($this->db,
-									SpoonSession::get('languages'),
-									SpoonSession::get('interface_languages'),
-									SpoonSession::get('example_data'),
-									array('default_language' => SpoonSession::get('default_language'),
-											'default_interface_language' => SpoonSession::get('default_interface_language'),
-											'spoon_debug_email' => SpoonSession::get('email'),
-											'api_email' => SpoonSession::get('email'),
-											'site_domain' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
-											'site_title' => 'Fork CMS',
-											'smtp_server' => '',
-											'smtp_port' => '',
-											'smtp_username' => '',
-											'smtp_password' => ''));
+		$installer->install();
 
 		// variables passed to module installers
 		$variables = array();
 		$variables['email'] = SpoonSession::get('email');
 		$variables['default_interface_language'] = SpoonSession::get('default_interface_language');
 
+		// modules to install (required + selected)
+		$modules = array_unique(array_merge($this->modules['required'], SpoonSession::get('modules')));
+
 		// loop required modules
-		foreach($this->modules['required'] as $module)
+		foreach($modules as $module)
 		{
 			// install exists
-			if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/install.php'))
+			if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
 			{
 				// users module needs custom variables
 				if($module == 'users')
@@ -321,34 +331,23 @@ class InstallerStep7 extends InstallerStep
 					$variables['password'] = SpoonSession::get('password');
 				}
 
-				// load file
-				require_once PATH_WWW . '/backend/modules/' . $module . '/installer/install.php';
+				// load installer file
+				require_once PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php';
 
-				// class name
-				$class = SpoonFilter::toCamelCase($module) . 'Install';
+				// build installer class name
+				$class = SpoonFilter::toCamelCase($module) . 'Installer';
 
-				// execute installer
-				$install = new $class($this->db, SpoonSession::get('languages'), SpoonSession::get('interface_languages'), SpoonSession::get('example_data'), $variables);
-			}
-		}
+				// create installer
+				$installer = new $class(
+					$this->db,
+					SpoonSession::get('languages'),
+					SpoonSession::get('interface_languages'),
+					SpoonSession::get('example_data'),
+					$variables
+				);
 
-		// optional modules
-		foreach(SpoonSession::get('modules') as $module)
-		{
-			if(!in_array($module, $this->modules['required']))
-			{
-				// install exists
-				if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/install.php'))
-				{
-					// load file
-					require_once PATH_WWW . '/backend/modules/' . $module . '/installer/install.php';
-
-					// class name
-					$class = SpoonFilter::toCamelCase($module) . 'Install';
-
-					// execute installer
-					$install = new $class($this->db, SpoonSession::get('languages'), SpoonSession::get('interface_languages'), SpoonSession::get('example_data'), $variables);
-				}
+				// install the module
+				$installer->install();
 			}
 		}
 	}
@@ -361,9 +360,7 @@ class InstallerStep7 extends InstallerStep
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep6::isAllowed() &&
-				isset($_SESSION['email']) &&
-				isset($_SESSION['password']);
+		return InstallerStep6::isAllowed() && isset($_SESSION['email']) && isset($_SESSION['password']);
 	}
 
 

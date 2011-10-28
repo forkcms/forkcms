@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>groups</name>
+	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>Groups</name>
-		<description><![CDATA[]]></description>
-	</info>
+	<authors>
+		<author>
+			<name><![CDATA[Jeroen Van den Bossche]]></name>
+			<url><![CDATA[http://www.netlash.com/]]></url>
+		</author>
+	</authors>
 	<events>
 		<event application="backend" name="after_add"><![CDATA[Triggered when a group is added.]]></event>
 		<event application="backend" name="after_delete"><![CDATA[Triggered when a group is deleted.]]></event>

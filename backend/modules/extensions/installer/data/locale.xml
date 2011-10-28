@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+      <item type="label" name="Details">
+        <translation language="nl"><![CDATA[details]]></translation>
+        <translation language="en"><![CDATA[details]]></translation>
+      </item>
+      <item type="label" name="Extensions">
+        <translation language="nl"><![CDATA[extensions]]></translation>
+        <translation language="en"><![CDATA[extensions]]></translation>
+      </item>
+    </core>
+    <extensions>
+      <item type="error" name="AlreadyInstalled">
+        <translation language="nl"><![CDATA[De module "%1$s" is reeds geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[The module "%1$s" is already installed.]]></translation>
+      </item>
+      <item type="error" name="NoInstallerFile">
+        <translation language="nl"><![CDATA[We konden geen installer voor de module "%1$s" vinden.]]></translation>
+        <translation language="en"><![CDATA[We could not find an installer for the module "%1$s".]]></translation>
+      </item>
+      <item type="label" name="Authors">
+        <translation language="nl"><![CDATA[auteurs]]></translation>
+        <translation language="en"><![CDATA[authors]]></translation>
+      </item>
+      <item type="label" name="Events">
+        <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
+        <translation language="en"><![CDATA[events (hooks)]]></translation>
+      </item>
+      <item type="label" name="Install">
+        <translation language="nl"><![CDATA[installeer]]></translation>
+        <translation language="en"><![CDATA[install]]></translation>
+      </item>
+      <item type="label" name="InstallableModules">
+        <translation language="nl"><![CDATA[niet geïnstalleerde modules]]></translation>
+        <translation language="en"><![CDATA[non installed modules]]></translation>
+      </item>
+      <item type="label" name="InstalledModules">
+        <translation language="nl"><![CDATA[geïnstalleerde modules]]></translation>
+        <translation language="en"><![CDATA[installed modules]]></translation>
+      </item>
+      <item type="label" name="UploadModule">
+        <translation language="nl"><![CDATA[module opladen]]></translation>
+        <translation language="en"><![CDATA[upload module]]></translation>
+      </item>
+      <item type="label" name="Version">
+        <translation language="nl"><![CDATA[versie]]></translation>
+        <translation language="en"><![CDATA[version]]></translation>
+      </item>
+      <item type="message" name="ConfirmModuleInstall">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de module "%1$s" wil installeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="HelpThemes">
+        <translation language="nl"><![CDATA[Duid aan welk thema je wil gebruiken.]]></translation>
+        <translation language="en"><![CDATA[Select the theme you wish to use.]]></translation>
+      </item>
+      <item type="message" name="InformationFileCouldNotBeLoaded">
+        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
+        <translation language="en"><![CDATA[A info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
+      </item>
+      <item type="message" name="InformationFileIsEmpty">
+        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
+        <translation language="en"><![CDATA[A info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
+      </item>
+      <item type="message" name="InformationFileIsMissing">
+        <translation language="nl"><![CDATA[Er is geen informatie over deze module beschikbaar.]]></translation>
+        <translation language="en"><![CDATA[There is no information available for this module.]]></translation>
+      </item>
+      <item type="message" name="InformationModuleIsNotInstalled">
+        <translation language="nl"><![CDATA[Deze module is nog niet geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[This module is not yet installed.]]></translation>
+      </item>
+      <item type="message" name="ModuleInstalled">
+        <translation language="nl"><![CDATA[De module "%1$s" werd geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
+      </item>
+      <item type="message" name="Module">
+        <translation language="nl"><![CDATA[module "%1$s"]]></translation>
+        <translation language="en"><![CDATA[module "%1$s"]]></translation>
+      </item>
+      <item type="message" name="ZlibIsMissing">
+        <translation language="nl">
+        	<![CDATA[
+        	Uw server ontbreekt de benodigde PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extensie. Fork CMS heeft deze extensie nodig om je geüploade module uit te pakken.<br /><br />
+			<ul>
+				<li>Contacteer je server administrator met bovenstaande melding.</li>
+				<li>Op pak manueel de bestanden uit het ZIP archief uit op je computer en upload deze (waarschijnlijk via FTP) naar je website root.</li>
+			</ul>
+			]]>
+		</translation>
+        <translation language="en">
+        	<![CDATA[
+        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />
+			<ul>
+				<li>Contact your server administrator with the above message.</li>
+				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>
+			</ul>
+			]]>
+		</translation>
+      </item>
+    </extensions>
+  </backend>
+</locale>

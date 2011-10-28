@@ -212,7 +212,7 @@ class BackendModel
 	public static function deleteExtra($module = null, $type = null, array $data = null)
 	{
 		// init
-		$query = 'SELECT i.id, i.data FROM pages_extras AS i WHERE 1';
+		$query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
 		$parameters = array();
 
 		// module
@@ -266,7 +266,7 @@ class BackendModel
 		BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
 
 		// delete extra
-		BackendModel::getDB(true)->delete('pages_extras', 'id = ?', $id);
+		BackendModel::getDB(true)->delete('modules_extras', 'id = ?', $id);
 	}
 
 
@@ -632,26 +632,6 @@ class BackendModel
 
 		// return
 		return $possibleFormats;
-	}
-
-
-	/**
-	 * Fetch the list of available themes
-	 *
-	 * @return	array
-	 */
-	public static function getThemes()
-	{
-		// fetch themes
-		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
-
-		// create array
-		$themes = array_combine($themes, $themes);
-
-		// add core templates
-		$themes = array_merge(array('core' => BL::lbl('NoTheme')), $themes);
-
-		return $themes;
 	}
 
 

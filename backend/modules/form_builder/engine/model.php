@@ -443,7 +443,7 @@ class BackendFormBuilderModel
 		$extra['sequence'] = '400' . $insertId;
 
 		// insert extra
-		BackendModel::getDB(true)->insert('pages_extras', $extra);
+		BackendModel::getDB(true)->insert('modules_extras', $extra);
 
 		// return the insert id
 		return $insertId;
@@ -496,7 +496,7 @@ class BackendFormBuilderModel
 		$extra['data'] = serialize(array('extra_label' => $values['name'], 'id' => $id));
 
 		// update extra
-		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('form_builder', 'widget', '400' . $id));
+		$db->update('modules_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('form_builder', 'widget', '400' . $id));
 
 		// return id
 		return $id;

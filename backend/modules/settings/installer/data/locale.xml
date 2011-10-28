@@ -106,10 +106,6 @@
         <translation language="nl"><![CDATA[Gebruik geen titel en omschrijving van de Yahoo! Directory.]]></translation>
         <translation language="en"><![CDATA[Opt out of the Yahoo! Directory override.]]></translation>
       </item>
-      <item type="message" name="HelpThemes">
-        <translation language="nl"><![CDATA[Duid aan welk thema je wil gebruiken.]]></translation>
-        <translation language="en"><![CDATA[Select the theme you wish to use.]]></translation>
-      </item>
       <item type="message" name="HelpTimeFormat">
         <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
         <translation language="en"><![CDATA[This format is used to display dates on the website.]]></translation>
