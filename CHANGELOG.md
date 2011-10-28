@@ -24,6 +24,8 @@ Improvements:
 * Core: updated default favicon.
 * Pages: updated pages getNavigation; the 'includeChildren' parameter was useless.
 * Core: refactored javascript ajax-calls.
+* Extensions: it is now possible to install your own modules via ZIP upload.
+* Core: the active state of modules has been stripped. This is no longer useful.
 
 
 2.6.13 (2011-10-18)
