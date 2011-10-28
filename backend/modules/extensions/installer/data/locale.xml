@@ -72,6 +72,10 @@
         <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>
         <translation language="en"><![CDATA[Position %s is reserved.]]></translation>
       </item>
+      <item type="label" name="Overwrite">
+        <translation language="nl"><![CDATA[overschrijf]]></translation>
+        <translation language="en"><![CDATA[overwrite]]></translation>
+      </item>
       <item type="error" name="ThemeAlreadyExists">
         <translation language="nl"><![CDATA[Het thema "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
         <translation language="en"><![CDATA[The theme "%1$s" already exists, you can not upload it again.]]></translation>
@@ -116,6 +120,10 @@
         <translation language="nl"><![CDATA[geïnstalleerde modules]]></translation>
         <translation language="en"><![CDATA[installed modules]]></translation>
       </item>
+      <item type="label" name="Overwrite">
+        <translation language="nl"><![CDATA[overschrijf]]></translation>
+        <translation language="en"><![CDATA[overwrite]]></translation>
+      </item>
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>
@@ -147,6 +155,10 @@
       <item type="message" name="EditedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
         <translation language="en"><![CDATA[The template "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="HelpOverwrite">
+        <translation language="nl"><![CDATA[<strong>Opgelet!</strong>Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!]]></translation>
+        <translation language="en"><![CDATA[<strong>Attention!</strong> Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.]]></translation>
       </item>
       <item type="message" name="HelpPositionsLayout">
         <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rijs toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>

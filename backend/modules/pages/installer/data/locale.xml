@@ -66,10 +66,6 @@
         <translation language="nl"><![CDATA[metanavigatie]]></translation>
         <translation language="en"><![CDATA[meta navigation]]></translation>
       </item>
-      <item type="label" name="Overwrite">
-        <translation language="nl"><![CDATA[overschrijf]]></translation>
-        <translation language="en"><![CDATA[overwrite]]></translation>
-      </item>
       <item type="label" name="Redirect">
         <translation language="nl"><![CDATA[redirect]]></translation>
         <translation language="en"><![CDATA[redirect]]></translation>
@@ -129,10 +125,6 @@
       <item type="message" name="HelpNavigationTitle">
         <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
         <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
-      </item>
-      <item type="message" name="HelpOverwrite">
-        <translation language="nl"><![CDATA[<strong>Opgelet!</strong>Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!]]></translation>
-        <translation language="en"><![CDATA[<strong>Attention!</strong> Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.]]></translation>
       </item>
       <item type="message" name="HomeNoBlock">
         <translation language="nl"><![CDATA[Er kan geen module gekoppeld worden aan de home-pagina.]]></translation>
