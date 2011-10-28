@@ -28,6 +28,9 @@ class BackendFaqDeleteFeedback extends BackendBaseActionDelete
 		// process the feedback
 		BackendFaqModel::deleteFeedback($feedbackId);
 
+		// trigger event
+		BackendModel::triggerEvent($this->getModule(), 'after_delete_feedback', array('item' => $feedback));
+
 		// redirect
 		$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $feedback['question_id'] . '&report=deleted#tabFeedback');
 	}
