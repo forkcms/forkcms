@@ -213,6 +213,26 @@ class BackendURL
 				// does our user has access to this module?
 				if(!BackendAuthentication::isAllowedModule($module))
 				{
+					// if the module is the dashboard redirect to the first allowed module
+					if($module == 'dashboard')
+					{
+						// require navigation-file
+						require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
+
+						// loop the navigation to find the first allowed module
+						foreach($navigation as $key => $value)
+						{
+							// split up chunks
+							list($module, $action) = explode('/', $value['url']);
+
+							// user allowed?
+							if(BackendAuthentication::isAllowedModule($module))
+							{
+								// redirect to the page
+								SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
+							}
+						}
+					}
 					// the user doesn't have access, redirect to error page
 					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
 				}
