@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `emails` (
 
 CREATE TABLE IF NOT EXISTS `meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sitemap_id` int(11) NOT NULL,
   `keywords` varchar(255) NOT NULL,
   `keywords_overwrite` enum('N','Y') NOT NULL DEFAULT 'N',
   `description` varchar(255) NOT NULL,
@@ -31,6 +32,18 @@ CREATE TABLE IF NOT EXISTS `meta` (
   PRIMARY KEY (`id`),
   KEY `idx_url` (`url`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
+
+CREATE TABLE `meta_sitemap` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `module` varchar(255) NOT NULL DEFAULT '',
+  `action` varchar(255) NOT NULL DEFAULT '',
+  `full_url` varchar(255) NOT NULL DEFAULT '',
+  `priority` decimal(10,2) NOT NULL,
+  `change_frequency` enum('always','hourly','daily','weekly','monthly','yearly','never') NOT NULL DEFAULT 'monthly',
+  `visible` enum('N','Y') NOT NULL DEFAULT 'Y',
+  `edited_on` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
 CREATE TABLE IF NOT EXISTS `modules` (
@@ -583,3 +596,5 @@ CREATE TABLE IF NOT EXISTS `hooks_subscriptions` (
   `created_on` datetime NOT NULL,
   UNIQUE KEY `event_module` (`event_module`(100),`event_name`(100),`module`(100))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
