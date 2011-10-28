@@ -67,16 +67,33 @@
 	<div class="heading">
 		<h3>{$lblSitemap|ucfirst}</h3>
 	</div>
+
 	<div class="options">
 		<p>
 			<label for="useSitemap">{$chkUseSitemap} {$lblUseSitemap|ucfirst}</label>
 		</p>
 	</div>
+
 	<div class="options">
 		<p>
-			<label for="sitemapPriority">{$lblCustomSitemapPriority|ucfirst}</label>
+			<label for="sitemapPriorityOverwrite">{$lblSitemapPriority|ucfirst}</label>
 			<span class="helpTxt">{$msgHelpSitemapPriority}</span>
-			{$txtSitemapPriority} {$txtSitemapPriorityError}
+		</p>
+		<ul class="inputList checkboxTextFieldCombo">
+			<li>
+				{$chkSitemapPriorityOverwrite}
+				{$txtSitemapPriority} {$txtSitemapPriorityError}
+			</li>
+		</ul>
+	</div>
+
+	<div class="options">
+		<p>
+			<label for="sitemapChangeFrequency">{$lblSitemapChangeFrequency|ucfirst}</label>
+			<span class="helpTxt">{$msgHelpSitemapChangeFrequency}</span>
+		</p>
+		<p>
+			{$ddmSitemapChangeFrequency} {$ddmSitemapChangeFrequencyError}
 		</p>
 	</div>
 </div>
