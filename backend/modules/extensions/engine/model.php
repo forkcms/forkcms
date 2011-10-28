@@ -691,9 +691,6 @@ class BackendExtensionsModel
 		// events
 		foreach($xml->xpath('/module/events/event') as $event)
 		{
-			// lose the simplexmlelement
-			$event = (array) $event;
-
 			// attributes
 			$attributes = $event->attributes();
 
