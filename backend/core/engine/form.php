@@ -246,11 +246,13 @@ class BackendForm extends SpoonForm
 		$classError = 'inputEditorError ' . (string) $classError;
 		$HTML = (bool) $HTML;
 
+		// we add JS because we need CKEditor
 		$this->header->addJS('ckeditor/ckeditor.js', 'core', false);
 		$this->header->addJS('ckeditor/adapters/jquery.js', 'core', false);
+		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 		$this->header->addJS('ckeditor/config.js', 'core', true);
 
-		// create and return a textarea for TinyMCE
+		// create and return a textarea for the editor
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
 	}
 
