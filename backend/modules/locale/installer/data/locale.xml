@@ -430,6 +430,10 @@
         <translation language="nl"><![CDATA[alle pagina's]]></translation>
         <translation language="en"><![CDATA[all pages]]></translation>
       </item>
+      <item type="label" name="Always">
+        <translation language="nl"><![CDATA[altijd]]></translation>
+        <translation language="en"><![CDATA[always]]></translation>
+      </item>
       <item type="label" name="Amount">
         <translation language="nl"><![CDATA[aantal]]></translation>
         <translation language="en"><![CDATA[amount]]></translation>
@@ -593,6 +597,10 @@
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
         <translation language="en"><![CDATA[custom URL]]></translation>
+      </item>
+      <item type="label" name="Daily">
+        <translation language="nl"><![CDATA[dagelijks]]></translation>
+        <translation language="en"><![CDATA[daily]]></translation>
       </item>
       <item type="label" name="Dashboard">
         <translation language="nl"><![CDATA[dashboard]]></translation>
@@ -766,6 +774,10 @@
         <translation language="nl"><![CDATA[home]]></translation>
         <translation language="en"><![CDATA[home]]></translation>
       </item>
+      <item type="label" name="Hourly">
+        <translation language="nl"><![CDATA[elk uur]]></translation>
+        <translation language="en"><![CDATA[hourly]]></translation>
+      </item>
       <item type="label" name="Image">
         <translation language="nl"><![CDATA[afbeelding]]></translation>
         <translation language="en"><![CDATA[image]]></translation>
@@ -906,6 +918,10 @@
         <translation language="nl"><![CDATA[module-instellingen]]></translation>
         <translation language="en"><![CDATA[module settings]]></translation>
       </item>
+      <item type="label" name="Monthly">
+        <translation language="nl"><![CDATA[maandelijks]]></translation>
+        <translation language="en"><![CDATA[monthly]]></translation>
+      </item>
       <item type="label" name="Move">
         <translation language="nl"><![CDATA[verplaats]]></translation>
         <translation language="en"><![CDATA[move]]></translation>
@@ -929,6 +945,10 @@
       <item type="label" name="NavigationTitle">
         <translation language="nl"><![CDATA[navigatietitel]]></translation>
         <translation language="en"><![CDATA[navigation title]]></translation>
+      </item>
+      <item type="label" name="Never">
+        <translation language="nl"><![CDATA[nooit]]></translation>
+        <translation language="en"><![CDATA[never]]></translation>
       </item>
       <item type="label" name="NewPassword">
         <translation language="nl"><![CDATA[nieuw wachtwoord]]></translation>
@@ -1186,6 +1206,14 @@
         <translation language="nl"><![CDATA[sitemap]]></translation>
         <translation language="en"><![CDATA[sitemap]]></translation>
       </item>
+      <item type="label" name="SitemapChangeFrequency">
+        <translation language="nl"><![CDATA[veranderlijkheid van de sitemap]]></translation>
+        <translation language="en"><![CDATA[change frequency for the sitemap]]></translation>
+      </item>
+      <item type="label" name="SitemapPriority">
+        <translation language="nl"><![CDATA[de prioriteit voor deze pagina]]></translation>
+        <translation language="en"><![CDATA[the priority for this page]]></translation>
+      </item>
       <item type="label" name="SMTP">
         <translation language="nl"><![CDATA[SMTP]]></translation>
         <translation language="en"><![CDATA[SMTP]]></translation>
@@ -1338,6 +1366,10 @@
         <translation language="nl"><![CDATA[gebruikers]]></translation>
         <translation language="en"><![CDATA[users]]></translation>
       </item>
+      <item type="label" name="UseSitemap">
+        <translation language="nl"><![CDATA[sitemap gebruiken voor dit item]]></translation>
+        <translation language="en"><![CDATA[use a sitemap for this item]]></translation>
+      </item>
       <item type="label" name="UseThisDraft">
         <translation language="nl"><![CDATA[gebruik deze kladversie]]></translation>
         <translation language="en"><![CDATA[use this draft]]></translation>
@@ -1390,6 +1422,10 @@
         <translation language="nl"><![CDATA[titel website]]></translation>
         <translation language="en"><![CDATA[website title]]></translation>
       </item>
+      <item type="label" name="Weekly">
+        <translation language="nl"><![CDATA[wekelijks]]></translation>
+        <translation language="en"><![CDATA[weekly]]></translation>
+      </item>
       <item type="label" name="Weight">
         <translation language="nl"><![CDATA[gewicht]]></translation>
         <translation language="en"><![CDATA[weight]]></translation>
@@ -1413,6 +1449,10 @@
       <item type="label" name="WithSelected">
         <translation language="nl"><![CDATA[met geselecteerde]]></translation>
         <translation language="en"><![CDATA[with selected]]></translation>
+      </item>
+      <item type="label" name="Yearly">
+        <translation language="nl"><![CDATA[jaarlijks]]></translation>
+        <translation language="en"><![CDATA[yearly]]></translation>
       </item>
       <item type="message" name="ACT">
         <translation language="nl"><![CDATA[actie]]></translation>
