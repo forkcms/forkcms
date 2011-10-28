@@ -50,6 +50,10 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 	 */
 	private function loadForm()
 	{
+		// @todo: not yet installed templates
+
+
+
 		// create form
 		$this->frm = new BackendForm('settingsThemes');
 

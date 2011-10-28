@@ -183,7 +183,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// unpack module files
-				$zip->extractTo(PATH_WWW, $files);
+				$zip->extractTo(FRONTEND_PATH . '/themes', $files);
 
 				// run installer
 				BackendExtensionsModel::installModule($moduleName);
