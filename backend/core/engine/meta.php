@@ -150,8 +150,8 @@ class BackendMeta
 		// no module set
 		if(!isset($this->module)) return false;
 
-		// generate the url
-		$fullUrl = BackendModel::getURLForBlock($this->module, $this->action);
+		if($this->module == 'pages') $fullUrl = (SITE_MULTILANGUAGE) ? '/' . BL::getWorkingLanguage() : '';
+		else $fullUrl = BackendModel::getURLForBlock('blog', 'detail');
 
 		// 404 url?
 		if($fullUrl == BackendModel::getURL(404)) return false;
