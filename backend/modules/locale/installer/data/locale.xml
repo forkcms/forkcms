@@ -1770,8 +1770,13 @@
         <translation language="nl"><![CDATA[Er ging iets mis]]></translation>
         <translation language="en"><![CDATA[Something went wrong]]></translation>
       </item>
+      <item type="error" name="InvalidInteger">
+        <translation language="nl"><![CDATA[Gelieve een geldig geheel getal in te geven.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid integer.]]></translation>
+      </item>
       <item type="error" name="InvalidNumber">
         <translation language="nl"><![CDATA[Gelieve een geldig getal in te geven.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid number.]]></translation>
       </item>
       <item type="error" name="InvalidURL">
         <translation language="nl"><![CDATA[Dit is een ongeldige URL.]]></translation>
