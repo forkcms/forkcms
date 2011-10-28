@@ -16,6 +16,22 @@
         <translation language="nl"><![CDATA[De module "%1$s" is reeds geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[The module "%1$s" is already installed.]]></translation>
       </item>
+      <item type="error" name="CorruptedFile">
+        <translation language="nl"><![CDATA[Het geüploade bestand is geen geldig ZIP bestand en kon niet worden uitgepakt.]]></translation>
+        <translation language="en"><![CDATA[The uploaded file is not a valid ZIP file and could not be extracted.]]></translation>
+      </item>
+      <item type="error" name="FileContentsIsUseless">
+        <translation language="nl"><![CDATA[We vonden geen module in het geüploade bestand. Controleer de inhoud.]]></translation>
+        <translation language="en"><![CDATA[We could not find a module in the uploaded file. Verify the contents.]]></translation>
+      </item>
+      <item type="error" name="FileIsEmpty">
+        <translation language="nl"><![CDATA[Het bestand is leeg. Controleer de inhoud.]]></translation>
+        <translation language="en"><![CDATA[The file is empty. Verify the contents.]]></translation>
+      </item>
+      <item type="error" name="ModuleAlreadyExists">
+        <translation language="nl"><![CDATA[De module "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
+        <translation language="en"><![CDATA[The module "%1$s" already exists, you can not upload it again.]]></translation>
+      </item>
       <item type="error" name="NoInstallerFile">
         <translation language="nl"><![CDATA[We konden geen installer voor de module "%1$s" vinden.]]></translation>
         <translation language="en"><![CDATA[We could not find an installer for the module "%1$s".]]></translation>
@@ -83,6 +99,10 @@
 	  <item type="message" name="ModuleInstalled">
         <translation language="nl"><![CDATA[De module "%1$s" werd geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
+      </item>
+	  <item type="message" name="ModulesNotWritable">
+        <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de modules map. Controleer of de modules map in alle applicaties schrijfrechten hebben.]]></translation>
+        <translation language="en"><![CDATA[We do not have write rights to the modules folders. Check if the modules folders in all applications have write rights.]]></translation>
       </item>
       <item type="message" name="ZlibIsMissing">
         <translation language="nl">

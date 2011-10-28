@@ -2,7 +2,7 @@
 
 /**
  * This is the module upload-action.
- * It will install a module given via a compressed zip file.
+ * It will install a module via a compressed zip file.
  *
  * @package		backend
  * @subpackage	extensions
@@ -23,8 +23,13 @@ class BackendExtensionsModuleUpload extends BackendBaseActionAdd
 		parent::execute();
 
 		// zip extension is required for module upload
-		// @todo do not allow upload if we do not have write rights
-		if(extension_loaded('zlib'))
+		if(!extension_loaded('zlib')) $this->tpl->assign('zlibIsMissing', true);
+
+		// we need write rights to upload files
+		elseif(!$this->isWritable()) $this->tpl->assign('notWritable', true);
+
+		// oke, we can upload
+		else
 		{
 			// load form
 			$this->loadForm();
@@ -36,11 +41,24 @@ class BackendExtensionsModuleUpload extends BackendBaseActionAdd
 			$this->parse();
 		}
 
-		// show message that we are missing an extension
-		else $this->tpl->assign('zlibIsMissing', true);
-
 		// display the page
 		$this->display();
+	}
+
+
+	/**
+	 * Do we have write rights to the modules folders?
+	 *
+	 * @return	bool
+	 */
+	private function isWritable()
+	{
+		// check if writable
+		if(!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) return false;
+		if(!BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH)) return false;
+
+		// everything is writeable
+		return true;
 	}
 
 
@@ -76,7 +94,7 @@ class BackendExtensionsModuleUpload extends BackendBaseActionAdd
 			if($fileFile->isFilled(BL::err('FieldIsRequired')))
 			{
 				// only xml files allowed
-				if($fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'xml')))
+				if($fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip')))
 				{
 					// create ziparchive instance
 					$zip = new ZipArchive();
@@ -127,7 +145,7 @@ class BackendExtensionsModuleUpload extends BackendBaseActionAdd
 										// passed all our tests, store it for extraction
 										$files[] = $fileName;
 
-										// got to next file
+										// go to next file
 										break;
 									}
 								}
@@ -136,18 +154,18 @@ class BackendExtensionsModuleUpload extends BackendBaseActionAdd
 							// after filtering we have some files to extract
 							if(count($files) > 0)
 							{
-								// module already installed?
-								if(!BackendExtensionsModel::isModuleInstalled($moduleName))
+								// module already exists on the filesystem
+								if(!BackendExtensionsModel::existsModule($moduleName))
 								{
 									// installer in array?
 									if(!in_array('backend/modules/' . $moduleName . '/installer/installer.php', $files))
 									{
-										$fileFile->addError(BL::getError('NoModuleInstallerFound'));
+										$fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
 									}
 								}
 
 								// wow wow, you are trying to upload an already existing module
-								else $fileFile->addError(BL::getError('ModuleAlreadyExists'));
+								else $fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
 							}
 
 							// after filtering no files left (nothing useful found)
@@ -166,11 +184,14 @@ class BackendExtensionsModuleUpload extends BackendBaseActionAdd
 			// passed all validation
 			if($this->frm->isCorrect())
 			{
-				// unpack everything from $files
+				// unpack module files
+				$zip->extractTo(PATH_WWW, $files);
 
 				// run installer
+				BackendExtensionsModel::installModule($moduleName);
 
 				// redirect with fireworks
+				$this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $moduleName . '&highlight=row-module_' . $moduleName);
 			}
 		}
 	}

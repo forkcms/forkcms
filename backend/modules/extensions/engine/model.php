@@ -664,6 +664,33 @@ class BackendExtensionsModel
 
 
 	/**
+	 * Check if a directory is writable.
+	 * The default is_writable function has problems due to Windows ACLs "bug"
+	 *
+	 * @return	bool
+	 * @param	string $path	The path to check.
+	 */
+	public static function isWritable($path)
+	{
+		// redefine argument
+		$path = rtrim((string) $path, '/');
+
+		// create random file
+		$file = uniqid() . '.tmp';
+
+		$return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
+
+		if($return === false) return false;
+
+		// unlink the random file
+		@unlink($path . '/' . $file);
+
+		// return
+		return true;
+	}
+
+
+	/**
 	 * Process the module's information XML and return an array with the information.
 	 *
 	 * @return	array

@@ -5,6 +5,23 @@
 	<div class="heading">
 		<h3>{$lblExtensions|ucfirst}: {$lblUploadModule}</h3>
 	</div>
+
+	{option:zlibIsMissing}
+		<div class="options">
+			<p>
+				{$msgZlibIsMissing}
+			</p>
+		</div>
+	{/option:zlibIsMissing}
+
+	{option:notWritable}
+		<div class="options">
+			<p>
+				{$msgModulesNotWritable}
+			</p>
+		</div>
+	{/option:notWritable}
+
 	{option:!zlibIsMissing}
 		{form:upload}
 			<div class="options">
@@ -23,14 +40,6 @@
 			</div>
 		{/form:upload}
 	{/option:!zlibIsMissing}
-
-	{option:zlibIsMissing}
-		<div class="options">
-			<p>
-				{$msgZlibIsMissing}
-			</p>
-		</div>
-	{/option:zlibIsMissing}
 </div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
