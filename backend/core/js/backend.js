@@ -41,7 +41,6 @@ jsBackend =
 		jsBackend.messages.init();
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
-		//jsBackend.tinyMCE.init();
 
 		// IE fixes
 		jsBackend.selectors.init();
@@ -1131,9 +1130,6 @@ jsBackend.forms =
 		// initialize var
 		var changed = false;
 
-		// save editors to the textarea-fields
-		if(typeof tinyMCE != 'undefined') tinyMCE.triggerSave();
-
 		// loop fields
 		$('.checkBeforeUnload').each(function()
 		{
@@ -1407,104 +1403,6 @@ jsBackend.tabs =
 				evt.preventDefault();
 				$('.tabs').tabs('select', $(this).attr('href'));
 			});
-		}
-	},
-
-
-	// end
-	eoo: true
-}
-
-
-/**
- * Apply TinyMCE
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Matthias Mullie <matthias@mullie.eu>
- */
-jsBackend.tinyMCE =
-{
-	// init, something like a constructor
-	init: function()
-	{
-		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
-
-		// bind click on the element
-		$('.clickToEdit').live('click', function(evt)
-		{
-			// get id
-			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
-
-			// validate id
-			if(typeof id != undefined)
-			{
-				// show the toolbar
-				$('#'+ id + '_external').show();
-
-				// set focus to the editor
-				tinyMCE.get(id).focus();
-			}
-		});
-	},
-
-
-	// format text (after retrieving it from the editor)
-	afterSave: function(editor, object)
-	{
-		// create dom tree
-		var $tmp = $('<div />').html(object.content);
-
-		// remove target="_self"
-		$tmp.find('a[target=_self]').removeAttr('target');
-
-		// replace target="_blank" with class="targetBlank"
-		$tmp.find('a[target=_blank]').addClass('targetBlank').removeAttr('target');
-
-		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
-		editor.setContent(utils.string.xhtml($tmp.html()));
-	},
-
-
-	// format text (before placing it in the editor)
-	loadContent: function(editor, object)
-	{
-		// create dom tree
-		var $tmp = $('<div />').html(object.content);
-
-		// replace target="_blank" with class="targetBlank"
-		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
-
-		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
-		editor.setContent(utils.string.xhtml($tmp.html()));
-
-		// check content
-		jsBackend.tinyMCE.checkContent(editor);
-	},
-
-
-	// custom content checks
-	checkContent: function(editor)
-	{
-		if(editor.isDirty())
-		{
-			var content = editor.getContent();
-			var warnings = [];
-
-			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt|addslashes}'); }
-
-			// invalid links?
-			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks|addslashes}'); }
-
-			// any warnings?
-			if(warnings.length > 0)
-			{
-				if($('#' + editor.id + '_warnings').length > 0) $('#' + editor.id + '_warnings').html(warnings.join(' '));
-				else $('#' + editor.id + '_parent').after('<span id="'+ editor.id + '_warnings' +'" class="infoMessage editorWarning">'+ warnings.join(' ') + '</span>');
-			}
-
-			// no warnings
-			else $('#' + editor.id + '_warnings').remove();
 		}
 	},
 
