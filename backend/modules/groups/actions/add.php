@@ -451,13 +451,13 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 
 			// create dashboard sequence
 			$this->dashboardSequence[$widget['module']] += array(
-																$widget['widget'] => array(
-																						'column' => $instance->getColumn(),
-																						'position' => (int) $instance->getPosition(),
-																						'hidden' => false,
-																						'present' => false
-																					)
-															);
+				$widget['widget'] => array(
+					'column' => $instance->getColumn(),
+					'position' => (int) $instance->getPosition(),
+					'hidden' => false,
+					'present' => false
+				)
+			);
 
 			// loop through presets
 			foreach($widgetPresets as $preset)

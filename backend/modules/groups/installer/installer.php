@@ -21,47 +21,30 @@ class GroupsInstaller extends ModuleInstaller
 		// get db
 		$db = $this->getDB();
 
-		// create standard dashboard sequence
-		$sequence = array(
-			'settings' => array(
-				'analyse' => array(
-					'column' => 'left',
-					'position' => 1,
-					'hidden' => false,
-					'present' => true
-				)
-			),
-			'blog' => array(
-				'comments' => array(
-					'column' => 'middle',
-					'position' => 1,
-					'hidden' => false,
-					'present' => true
-				)
-			),
-			'mailmotor' => array(
-				'statistics' => array(
-					'column' => 'right',
-					'position' => 1,
-					'hidden' => false,
-					'present' => true
-				)
-			)
-		);
-
 		// build groupsetting
 		$groupSetting['group_id'] = 1;
 		$groupSetting['name'] = 'dashboard_sequence';
-		$groupSetting['value'] = serialize($sequence);
+		$groupSetting['value'] = serialize(array());
 
 		// build usersetting
 		$userSetting['user_id'] = 1;
 		$userSetting['name'] = 'dashboard_sequence';
-		$userSetting['value'] = serialize($sequence);
+		$userSetting['value'] = serialize(array());
 
 		// insert settings
 		$db->insert('groups_settings', $groupSetting);
 		$db->insert('users_settings', $userSetting);
+
+		// create default dashboard widget
+		$analyse = array(
+			'column' => 'left',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert default dashboard widget
+		$this->insertDashboardWidget('settings', 'analyse', $analyse);
 	}
 
 

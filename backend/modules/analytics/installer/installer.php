@@ -45,6 +45,8 @@ class AnalyticsInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'analytics', 'mass_landing_page_action');
 		$this->setActionRights(1, 'analytics', 'refresh_traffic_sources');
 		$this->setActionRights(1, 'analytics', 'settings');
+		$this->setActionRights(1, 'analytics', 'traffic_sources');
+		$this->setActionRights(1, 'analytics', 'visitors');
 
 		// set navigation
 		$navigationMarketingId = $this->setNavigation(null, 'Marketing', 'analytics/index', null, 4);
@@ -62,6 +64,36 @@ class AnalyticsInstaller extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Analytics', 'analytics/settings');
+
+		// insert dashboard widgets
+		$this->insertWidgets();
+	}
+
+
+	/**
+	 * Insert an empty admin dashboard sequence
+	 *
+	 * @return	void
+	 */
+	private function insertWidgets()
+	{
+		// build widgets
+		$trafficSources = array(
+			'column' => 'middle',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+		$visitors = array(
+			'column' => 'middle',
+			'position' => 2,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert widgets
+		$this->insertDashboardWidget('analytics', 'traffic_sources', $trafficSources);
+		$this->insertDashboardWidget('analytics', 'visitors', $visitors);
 	}
 }
 

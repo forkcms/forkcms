@@ -1,6 +1,7 @@
 3.0.0 (xxxx-xx-xx)
 --
 Improvements:
+
 * Core: Completely re-invented the blocks system; it's now position-driven.
 * Core: Introduce the concept of positions that can contain an arbitrary number of blocks.
 * Pages: Merged tabs "Content" & "Template" to present a more straightforward UI.
@@ -24,7 +25,10 @@ Improvements:
 * Core: updated default favicon.
 * Pages: updated pages getNavigation; the 'includeChildren' parameter was useless.
 * Core: refactored javascript ajax-calls.
-* Extensions: it is now possible to install your own modules via ZIP upload.
+* Installer: refactored installation of dashboard widgets.
+* Analytics: dashboard widgets are now added for all users upon installation.
+* Extensions: it is now possible to install modules via ZIP upload.
+* Extensions: it is now possible to install themes via ZIP upload.
 * Core: the active state of modules has been stripped. This is no longer useful.
 
 

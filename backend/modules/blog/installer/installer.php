@@ -101,6 +101,9 @@ class BlogInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'mass_comment_action');
 		$this->setActionRights(1, 'blog', 'settings');
 
+		// insert dashboard widget
+		$this->insertWidget();
+
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
@@ -163,6 +166,26 @@ class BlogInstaller extends ModuleInstaller
 			// install example data if requested
 			if($this->installExample()) $this->installExampleData($language);
 		}
+	}
+
+
+	/**
+	 * Insert an empty admin dashboard sequence
+	 *
+	 * @return	void
+	 */
+	private function insertWidget()
+	{
+		// build widget
+		$comments = array(
+			'column' => 'right',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert widget
+		$this->insertDashboardWidget('blog', 'comments', $comments);
 	}
 
 
