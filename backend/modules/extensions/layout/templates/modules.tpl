@@ -7,6 +7,9 @@
 		<a href="{$var|geturl:'module_upload'}" class="button icon iconAdd" title="{$lblUploadModule|ucfirst}">
 			<span>{$lblUploadModule|ucfirst}</span>
 		</a>
+		<a href="http://www.fork-cms.com/extensions" class="button icon" title="{$lblFindModules|ucfirst}">
+			<span>{$lblFindModules|ucfirst}</span>
+		</a>
 	</div>
 </div>
 

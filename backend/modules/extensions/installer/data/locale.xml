@@ -28,6 +28,10 @@
         <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
         <translation language="en"><![CDATA[events (hooks)]]></translation>
       </item>
+      <item type="label" name="FindModules">
+        <translation language="nl"><![CDATA[vind modules]]></translation>
+        <translation language="en"><![CDATA[find modules]]></translation>
+      </item>
       <item type="label" name="Install">
         <translation language="nl"><![CDATA[installeer]]></translation>
         <translation language="en"><![CDATA[install]]></translation>
@@ -72,13 +76,13 @@
         <translation language="nl"><![CDATA[Deze module is nog niet geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[This module is not yet installed.]]></translation>
       </item>
-      <item type="message" name="ModuleInstalled">
-        <translation language="nl"><![CDATA[De module "%1$s" werd geïnstalleerd.]]></translation>
-        <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
-      </item>
       <item type="message" name="Module">
         <translation language="nl"><![CDATA[module "%1$s"]]></translation>
         <translation language="en"><![CDATA[module "%1$s"]]></translation>
+      </item>
+	  <item type="message" name="ModuleInstalled">
+        <translation language="nl"><![CDATA[De module "%1$s" werd geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
       </item>
       <item type="message" name="ZlibIsMissing">
         <translation language="nl">
