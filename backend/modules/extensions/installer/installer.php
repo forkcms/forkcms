@@ -129,8 +129,8 @@ class ExtensionsInstaller extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Overview', 'extensions/modules', array(
-			'extensions/module_detail',
-			'extensions/module_upload'
+			'extensions/detail_module',
+			'extensions/upload_module'
 		));
 
 		// theme navigation
@@ -152,9 +152,9 @@ class ExtensionsInstaller extends ModuleInstaller
 	{
 
 		// action rights
-		$this->setActionRights(1, 'extensions', 'module_detail');
-		$this->setActionRights(1, 'extensions', 'module_install');
-		$this->setActionRights(1, 'extensions', 'module_upload');
+		$this->setActionRights(1, 'extensions', 'detail_module');
+		$this->setActionRights(1, 'extensions', 'install_module');
+		$this->setActionRights(1, 'extensions', 'upload_module');
 		$this->setActionRights(1, 'extensions', 'modules');
 
 		$this->setActionRights(1, 'extensions', 'themes');

@@ -12,7 +12,7 @@
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
-class BackendExtensionssEditThemeTemplate extends BackendBaseActionEdit
+class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 {
 	/**
 	 * The position's default extras.

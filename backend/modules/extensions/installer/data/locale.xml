@@ -48,6 +48,10 @@
         <translation language="nl"><![CDATA[vind modules]]></translation>
         <translation language="en"><![CDATA[find modules]]></translation>
       </item>
+      <item type="label" name="FindThemes">
+        <translation language="nl"><![CDATA[vind themes]]></translation>
+        <translation language="en"><![CDATA[find themes]]></translation>
+      </item>
       <item type="label" name="Install">
         <translation language="nl"><![CDATA[installeer]]></translation>
         <translation language="en"><![CDATA[install]]></translation>
@@ -63,6 +67,10 @@
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>
+      </item>
+      <item type="label" name="UploadTheme">
+        <translation language="nl"><![CDATA[theme opladen]]></translation>
+        <translation language="en"><![CDATA[upload theme]]></translation>
       </item>
       <item type="label" name="Version">
         <translation language="nl"><![CDATA[versie]]></translation>
@@ -101,8 +109,12 @@
         <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
       </item>
 	  <item type="message" name="ModulesNotWritable">
-        <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de modules map. Controleer of de modules map in alle applicaties schrijfrechten hebben.]]></translation>
-        <translation language="en"><![CDATA[We do not have write rights to the modules folders. Check if the modules folders in all applications have write rights.]]></translation>
+        <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de modules mappen. Controleer of je schrijfrechten hebt op de modules map in alle applicaties.]]></translation>
+        <translation language="en"><![CDATA[We do not have write rights to the modules folders. Check if you have write rights on the modules folders in all applications.]]></translation>
+      </item>
+	  <item type="message" name="ThemesNotWritable">
+        <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de themes map. Controleer of je schrijfrechten hebt op de themes map in de frontend-applicatie.]]></translation>
+        <translation language="en"><![CDATA[We do not have write rights to the themes folder. Check if you have write rights on the themes folders in the frontend-application.]]></translation>
       </item>
       <item type="message" name="ZlibIsMissing">
         <translation language="nl">
@@ -110,7 +122,7 @@
         	Uw server ontbreekt de benodigde PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extensie. Fork CMS heeft deze extensie nodig om je geüploade module uit te pakken.<br /><br />
 			<ul>
 				<li>Contacteer je server administrator met bovenstaande melding.</li>
-				<li>Op pak manueel de bestanden uit het ZIP archief uit op je computer en upload deze (waarschijnlijk via FTP) naar je website root.</li>
+				<li>Of pak manueel de bestanden uit het ZIP archief uit op je computer en upload deze (waarschijnlijk via FTP) naar je website root.</li>
 			</ul>
 			]]>
 		</translation>

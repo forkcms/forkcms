@@ -92,13 +92,13 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name'));
 
 		// set colum URLs
-		$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]');
+		$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
 
 		// add details column
-		$this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]', BL::lbl('Details'));
+		$this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
 
 		// add install column
-		$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('module_install') . '&amp;module=[raw_name]', BL::lbl('Install'));
+		$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
 		$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'));
 	}
 
@@ -120,10 +120,10 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name'));
 
 		// set colum URLs
-		$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]');
+		$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
 
 		// add details column
-		$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]', BL::lbl('Details'));
+		$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
 	}
 
 

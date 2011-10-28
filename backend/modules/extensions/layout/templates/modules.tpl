@@ -4,10 +4,10 @@
 <div class="pageTitle">
 	<h2>{$lblExtensions|ucfirst}: {$lblModules}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'module_upload'}" class="button icon iconAdd" title="{$lblUploadModule|ucfirst}">
+		<a href="{$var|geturl:'upload_module'}" class="button icon iconImport" title="{$lblUploadModule|ucfirst}">
 			<span>{$lblUploadModule|ucfirst}</span>
 		</a>
-		<a href="http://www.fork-cms.com/extensions" class="button icon" title="{$lblFindModules|ucfirst}">
+		<a href="http://www.fork-cms.com/extensions" class="button icon iconNext" title="{$lblFindModules|ucfirst}">
 			<span>{$lblFindModules|ucfirst}</span>
 		</a>
 	</div>

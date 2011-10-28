@@ -4,7 +4,7 @@
 {form:edit}
 	<div class="box horizontal labelWidthLong">
 		<div class="heading">
-			<h3>{$lblTemplates|ucfirst}: {$lblEditTemplate}</h3>
+			<h3>{$lblExtensions|ucfirst}: {$lblEditTemplate}</h3>
 		</div>
 
 		<div class="options">

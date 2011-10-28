@@ -7,8 +7,12 @@
 	</requirements>
 	<authors>
 		<author>
-			<name><![CDATA[Matthias Mullie]]></name>
-			<url><![CDATA[http://www.netlash.com/]]></url>
+			<name><![CDATA[Tijs Verkoyen]]></name>
+			<url><![CDATA[http://www.sumocoders.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Davy Hellemans]]></name>
+			<url><![CDATA[http://blog.bauffman.be]]></url>
 		</author>
 	</authors>
 	<events>

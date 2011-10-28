@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>search</name>
-	<version>1.0.0</version>
+	<version>2.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
@@ -11,7 +11,7 @@
 	<authors>
 		<author>
 			<name><![CDATA[Matthias Mullie]]></name>
-			<url><![CDATA[http://www.netlash.com/]]></url>
+			<url><![CDATA[http://www.mullie.eu]]></url>
 		</author>
 	</authors>
 	<events>

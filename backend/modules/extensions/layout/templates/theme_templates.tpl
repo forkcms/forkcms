@@ -3,7 +3,7 @@
 
 {form:themes}
 	<div class="pageTitle">
-		<h2>{$lblTemplates|ucfirst} {$lblFor} {$ddmTheme}</h2>
+		<h2>{$lblExtensions|ucfirst}: {$lblTemplates} {$lblFor} {$ddmTheme}</h2>
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add_template'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="button icon iconAdd" title="{$lblAddTemplate|ucfirst}">
 				<span>{$lblAddTemplate|ucfirst}</span>

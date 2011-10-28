@@ -4,7 +4,7 @@
 {form:add}
 	<div class="box horizontal">
 		<div class="heading">
-			<h3>{$lblTemplates|ucfirst}: {$lblAddTemplate}</h3>
+			<h3>{$lblExtensions|ucfirst}: {$lblAddTemplate}</h3>
 		</div>
 
 		<div class="options">

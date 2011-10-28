@@ -2,7 +2,15 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblGeneralSettings|ucfirst}</h2>
+	<h2>{$lblExtensions|ucfirst}: {$lblThemes}</h2>
+	<div class="buttonHolderRight">
+		<a href="{$var|geturl:'upload_theme'}" class="button icon iconImport" title="{$lblUploadTheme|ucfirst}">
+			<span>{$lblUploadTheme|ucfirst}</span>
+		</a>
+		<a href="http://www.fork-cms.com/extensions" class="button icon iconNext" title="{$lblFindThemes|ucfirst}">
+			<span>{$lblFindThemes|ucfirst}</span>
+		</a>
+	</div>
 </div>
 
 {form:settingsThemes}
