@@ -9,6 +9,7 @@
  * @author		Lester Lievens <lester@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
  * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @since		2.1
  */
 class BackendFaqAdd extends BackendBaseActionAdd
@@ -126,6 +127,9 @@ class BackendFaqAdd extends BackendBaseActionAdd
 
 				// save the tags
 				BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
 				// add search index
 				if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
