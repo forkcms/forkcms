@@ -12,6 +12,14 @@
 class BackendMeta
 {
 	/**
+	 * The action to use
+	 *
+	 * @var	string
+	 */
+	protected $action;
+
+
+	/**
 	 * The name of the field we should use to generate default-values
 	 *
 	 * @var	string
@@ -57,6 +65,14 @@ class BackendMeta
 	 * @var	int
 	 */
 	protected $id;
+
+
+	/**
+	 * The module to use
+	 *
+	 * @var	string
+	 */
+	protected $module;
 
 
 	/**
@@ -156,6 +172,25 @@ class BackendMeta
 
 		// return value
 		return ($this->data['description_overwrite'] == 'Y');
+	}
+
+
+	/**
+	 * This will generate the full url of an item
+	 *
+	 * @return	mixed
+	 */
+	public function getFullUrl()
+	{
+		// no module set
+		if(!isset($this->module)) return false;
+
+		// generate the url
+		$fullUrl = BackendModel::getURLForBlock($this->module, $this->action);
+
+		// 404 url?
+		if($fullUrl == BackendModel::getURL(404)) return false;
+		else return SITE_URL . $fullUrl;
 	}
 
 
@@ -285,6 +320,7 @@ class BackendMeta
 			if($this->custom && !isset($_POST['meta_custom'])) $_POST['meta_custom'] = (isset($this->data['custom'])) ? $this->data['custom'] : null;
 			if(!isset($_POST['seo_index'])) $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none';
 			if(!isset($_POST['seo_follow'])) $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none';
+			if(!isset($_POST['use_sitemap'])) $_POST['use_sitemap'] = (isset($this->data['use_sitemap'])) ? $this->data['use_sitemap'] : 'N';
 		}
 
 		// add page title elements into the form
@@ -302,6 +338,12 @@ class BackendMeta
 		// add URL elements into the form
 		$this->frm->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
 		$this->frm->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
+
+		// sitemap enabled
+		$this->frm->addCheckbox('use_sitemap', (!isset($this->data['sitemap_use_sitemap']) || (isset($this->data['sitemap_use_sitemap']) && $this->data['sitemap_use_sitemap'] == 'Y')));
+
+		// sitemap priority
+		$this->frm->addText('sitemap_priority', (isset($this->data['sitemap_priority'])) ? urldecode($this->data['sitemap_priority']) : 0.8);
 
 		// advanced SEO
 		$indexValues = array(
@@ -345,8 +387,11 @@ class BackendMeta
 		$this->id = (int) $id;
 
 		// get item
-		$this->data = (array) BackendModel::getDB()->getRecord('SELECT *
+		$this->data = (array) BackendModel::getDB()->getRecord('SELECT m.*, s.id AS sitemap_id, s.module, s.action, s.priority AS sitemap_priority,
+																s.change_frequency AS sitemap_change_frequency, s.visible AS sitemap_use_sitemap,
+																s.changed_on AS sitemap_changed_on
 																FROM meta AS m
+																LEFT OUTER JOIN meta_sitemap AS s ON s.id = m.sitemap_id
 																WHERE m.id = ?',
 																array($this->id));
 
@@ -355,6 +400,10 @@ class BackendMeta
 
 		// unserialize data
 		if(isset($this->data['data'])) $this->data['data'] = @unserialize($this->data['data']);
+
+		// set the module
+		if(isset($this->data['module'])) $this->setModule($this->data['module']);
+		if(isset($this->data['action'])) $this->setAction($this->data['action']);
 	}
 
 
@@ -410,28 +459,75 @@ class BackendMeta
 		// get db
 		$db = BackendModel::getDB(true);
 
+		// the sitemap values
+		$sitemap['visible'] = ($this->frm->getField('use_sitemap')->isChecked()) ? 'Y' : 'N';
+		$sitemap['module'] = $this->module;
+		$sitemap['action'] = $this->action;
+		$sitemap['priority'] = $this->frm->getField('sitemap_priority')->getValue();
+
 		// should we update the record
 		if($update)
 		{
+			// update the sitemap
+			$db->update('meta_sitemap', $sitemap, 'id = ?', $this->data['sitemap_id']);
+
 			// validate
 			if($this->id === null) throw new BackendException('No metaID specified.');
 
 			// update the existing record
 			$db->update('meta', $meta, 'id = ?', array($this->id));
-
-			// return the id
-			return $this->id;
 		}
 
 		// insert a new meta-record
 		else
 		{
-			// insert
-			$id = (int) $db->insert('meta', $meta);
+			// when working with revisions, a sitemap will already provided
+			if(isset($this->data['sitemap_id']))
+			{
+//				Spoon::dump($sitemap);
+				// update the sitemap item
+				$db->update('meta_sitemap', $sitemap, 'id = ?', $this->data['sitemap_id']);
 
-			// return the id
-			return $id;
+				// set the sitemap id in the values
+				$sitemap['id'] = $this->data['sitemap_id'];
+			}
+			// brand new item
+			else $sitemap['id'] = (int) $db->insert('meta_sitemap', $sitemap);
+
+			// set the sitemap id in the meta
+			$meta['sitemap_id'] = $sitemap['id'];
+
+			// insert the meta
+			$this->id = (int) $db->insert('meta', $meta);
 		}
+
+		// return the meta id
+		return $this->id;
+	}
+
+
+	/**
+	 * Sets the action to use
+	 *
+	 * @return	void
+	 * @param	string $action		The action to set.
+	 */
+	public function setAction($action)
+	{
+		$this->action = (string) $action;
+	}
+
+
+	/**
+	 * Sets the module to use
+	 *
+	 * @return	void
+	 * @param	string $module		The module to set.
+	 */
+	public function setModule($module)
+	{
+		// set the url
+		$this->module = (string) $module;
 	}
 
 
@@ -521,6 +617,12 @@ class BackendMeta
 			if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
 			else $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
 
+			// sitemap enabled
+			if($this->frm->getField('use_sitemap')->isChecked()) $useSitemap = 'Y';
+			else $useSitemap = 'N';
+
+//			Spoon::dump($this->frm->getField('use_sitemap')->isChecked());
+
 			// get the real URL
 			$URL = $this->generateURL($URL);
 
@@ -538,6 +640,8 @@ class BackendMeta
 			$this->data['url'] = $URL;
 			$this->data['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['custom'] = $custom;
+			$this->data['use_sitemap'] = $useSitemap;
+			$this->data['sitemap_priority'] = $this->frm->getField('sitemap_priority');
 			if($this->frm->getField('seo_index')->getValue() == 'none') unset($this->data['data']['seo_index']);
 			else $this->data['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
 			if($this->frm->getField('seo_follow')->getValue() == 'none') unset($this->data['data']['seo_follow']);

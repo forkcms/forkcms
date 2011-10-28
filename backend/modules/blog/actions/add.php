@@ -72,6 +72,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+		$this->meta->setModule($this->URL->getModule());
+		$this->meta->setAction('detail');
 	}
 
 
@@ -85,12 +87,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		// call parent
 		parent::parse();
 
-		// get url
-		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
-		$url404 = BackendModel::getURL(404);
-
 		// parse additional variables
-		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+		$this->tpl->assign('detailURL', $this->meta->getFullUrl());
 	}
 
 
