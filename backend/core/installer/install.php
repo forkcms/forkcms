@@ -382,6 +382,57 @@ class ModuleInstaller
 
 
 	/**
+	 * Insert a dashboard widget
+	 *
+	 * @return	void
+	 * @param	array $module		The widget's module name.
+	 * @param	array $widget		The widget's name.
+	 * @param	array $data			The widget's data.
+	 */
+	protected function insertDashboardWidget($module, $widget, $data)
+	{
+		// get db
+		$db = $this->getDB();
+
+		// fetch current settings
+		$groupSettings = (array) $db->getRecords('SELECT * FROM groups_settings WHERE name = ?', array('dashboard_sequence'));
+		$userSettings = (array) $db->getRecords('SELECT * FROM users_settings WHERE name = ?', array('dashboard_sequence'));
+
+		// loop group settings
+		foreach($groupSettings as $settings)
+		{
+			// unserialize data
+			$settings['value'] = unserialize($settings['value']);
+
+			// add new widget
+			$settings['value'][$module][$widget] = $data;
+
+			// re-serialize value
+			$settings['value'] = serialize($settings['value']);
+
+			// update in db
+			$db->update('groups_settings', $settings, 'group_id = ? AND name = ?', array($settings['group_id'], $settings['name']));
+		}
+
+		// loop user settings
+		foreach($userSettings as $settings)
+		{
+			// unserialize data
+			$settings['value'] = unserialize($settings['value']);
+
+			// add new widget
+			$settings['value'][$module][$widget] = $data;
+
+			// re-serialize value
+			$settings['value'] = serialize($settings['value']);
+
+			// update in db
+			$db->update('users_settings', $settings, 'user_id = ? AND name = ?', array($settings['user_id'], $settings['name']));
+		}
+	}
+
+
+	/**
 	 * Insert an extra
 	 *
 	 * @return	int

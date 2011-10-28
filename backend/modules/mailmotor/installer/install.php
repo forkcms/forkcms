@@ -34,6 +34,9 @@ class MailmotorInstall extends ModuleInstaller
 		// install the pages for the module
 		$this->installPages();
 
+		// insert dashboard widget
+		$this->insertWidget();
+
 		// set navigation
 		$navigationMailmotorId = $this->setNavigation(null, 'Mailmotor', null, null, 5);
 		$this->setNavigation($navigationMailmotorId, 'Newsletters', 'mailmotor/index', array(
@@ -68,6 +71,26 @@ class MailmotorInstall extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Mailmotor', 'mailmotor/settings');
+	}
+
+
+	/**
+	 * Insert an empty admin dashboard sequence
+	 *
+	 * @return	void
+	 */
+	private function insertWidget()
+	{
+		// build widget
+		$statistics = array(
+			'column' => 'right',
+			'position' => 2,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert widget
+		$this->insertDashboardWidget('mailmotor', 'statistics', $statistics);
 	}
 
 
