@@ -188,9 +188,7 @@ class FrontendModel
 			// fetch settings
 			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
 															FROM modules_settings AS ms
-															INNER JOIN modules AS m ON ms.module = m.name
-															WHERE m.active = ?',
-															array('Y'));
+															INNER JOIN modules AS m ON ms.module = m.name');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);

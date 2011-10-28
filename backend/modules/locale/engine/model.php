@@ -372,7 +372,7 @@ class BackendLocaleModel
 	{
 		// init some vars
 		$tree = self::getTree(BACKEND_PATH);
-		$modules = BackendModel::getModules(false);
+		$modules = BackendModel::getModules();
 
 		// search fo the error module
 		$key = array_search('error', $modules);
@@ -1013,8 +1013,8 @@ class BackendLocaleModel
 		// paths that should be ignored
 		$ignore = array(BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/tiny_mce', FRONTEND_CACHE_PATH);
 
-		// get active modules
-		$activeModules = BackendModel::getModules(true);
+		// get modules
+		$modules = BackendModel::getModules();
 
 		// get the folder listing
 		$items = SpoonDirectory::getList($path, true, array('.svn', '.git'));
@@ -1030,7 +1030,7 @@ class BackendLocaleModel
 			else $moduleName = substr($path, $start, ($end - $start));
 
 			// don't go any deeper
-			if(!in_array($moduleName, $activeModules)) return $tree;
+			if(!in_array($moduleName, $modules)) return $tree;
 		}
 
 		// loop items
@@ -1158,7 +1158,7 @@ class BackendLocaleModel
 
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
-		$possibleModules = BackendModel::getModules(false);
+		$possibleModules = BackendModel::getModules();
 		$possibleLanguages = array('frontend' => array_keys(BL::getWorkingLanguages()), 'backend' => array_keys(BL::getInterfaceLanguages()));
 		$possibleTypes = array();
 

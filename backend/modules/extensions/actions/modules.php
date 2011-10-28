@@ -89,7 +89,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => ucfirst(BL::getLabel('Name'))));
 
 		// hide some columns
-		$this->dataGridInstallableModules->setColumnsHidden(array('active', 'installed', 'name'));
+		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name'));
 
 		// set colum URLs
 		$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]');
@@ -113,20 +113,14 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// create datagrid
 		$this->dataGridInstalledModules = new BackendDataGridArray($this->installedModules);
 
-		// header labels
-		$this->dataGridInstalledModules->setHeaderLabels(array('active' => ''));
-
 		// sorting columns
 		$this->dataGridInstalledModules->setSortingColumns(array('name'));
 
 		// hide some columns
-		$this->dataGridInstalledModules->setColumnsHidden(array('active', 'installed', 'raw_name'));
+		$this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name'));
 
 		// set colum URLs
 		$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]');
-
-		// clean status message
-		$this->dataGridInstalledModules->setColumnFunction(array(__CLASS__, 'parseModuleStatus'), '[active]', 'active');
 
 		// add details column
 		$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('module_detail') . '&amp;module=[raw_name]', BL::lbl('Details'));
@@ -143,19 +137,6 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// parse data grid
 		$this->tpl->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
 		$this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
-	}
-
-
-	/**
-	 * Parse the status of a module in the datagrid.
-	 *
-	 * @return	string
-	 * @param	bool $active
-	 */
-	public static function parseModuleStatus($active)
-	{
-		if($active) return BL::getLabel('Active');
-		else return BL::getLabel('InActive');
 	}
 }
 

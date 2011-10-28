@@ -157,8 +157,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		// create filter with modules which may not be displayed
 		$filter = array('authentication', 'error', 'core');
 
-		// get all active filtered modules
-		$modules = array_diff(BackendModel::getModules(true), $filter);
+		// get all modules
+		$modules = array_diff(BackendModel::getModules(), $filter);
 
 		// loop all modules
 		foreach($modules as $module)
@@ -270,8 +270,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	 */
 	private function getWidgets()
 	{
-		// get all active modules
-		$modules = BackendModel::getModules(true);
+		// get all modules
+		$modules = BackendModel::getModules();
 
 		// loop all modules
 		foreach($modules as $module)

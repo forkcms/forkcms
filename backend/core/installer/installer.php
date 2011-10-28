@@ -84,7 +84,6 @@ class ModuleInstaller
 			// build item
 			$item = array(
 				'name' => $name,
-				'active' => 'Y',
 				'installed_on' => gmdate('Y-m-d H:i:s'));
 
 			// insert module
@@ -92,7 +91,7 @@ class ModuleInstaller
 		}
 
 		// activate and update description
-		else $this->getDB()->update('modules', array('active' => 'Y', 'installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
+		else $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
 	}
 
 

@@ -292,9 +292,9 @@ class BackendExtensionsModel
 		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
 																FROM modules_extras AS i
 																INNER JOIN modules AS m ON i.module = m.name
-																WHERE m.active = ? AND i.hidden = ?
+																WHERE i.hidden = ?
 																ORDER BY i.module, i.sequence',
-																array('Y', 'N'), 'id');
+																array('N'), 'id');
 
 		// init var
 		$itemsToRemove = array();
@@ -345,9 +345,9 @@ class BackendExtensionsModel
 		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
 																FROM modules_extras AS i
 																INNER JOIN modules AS m ON i.module = m.name
-																WHERE m.active = ? AND i.hidden = ?
+																WHERE i.hidden = ?
 																ORDER BY i.module, i.sequence',
-																array('Y', 'N'));
+																array('N'));
 
 		// build array
 		$values = array();
@@ -404,7 +404,7 @@ class BackendExtensionsModel
 	public static function getModules()
 	{
 		// get installed modules
-		$installedModules = (array) BackendModel::getDB()->getRecords('SELECT name, active FROM modules', null, 'name');
+		$installedModules = (array) BackendModel::getDB()->getRecords('SELECT name FROM modules', null, 'name');
 
 		// get modules present on the filesystem
 		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
@@ -425,15 +425,10 @@ class BackendExtensionsModel
 			$module['name'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($moduleName)));
 			$module['description'] = '';
 			$module['version'] = '';
-			$module['active'] = false;
 			$module['installed'] = false;
 
 			// the module is present in the database, that means its installed
-			if(isset($installedModules[$moduleName]))
-			{
-				$module['installed'] = true;
-				$module['active'] = ($installedModules[$moduleName]['active'] == 'Y');
-			}
+			if(isset($installedModules[$moduleName])) $module['installed'] = true;
 
 			// get extra info from the info.xml
 			$infoXml = @simplexml_load_file(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', null, LIBXML_NOCDATA);

@@ -141,14 +141,11 @@ class BackendAuthentication
 			// init var
 			$db = BackendModel::getDB();
 
-			// get active modules
-			$activeModules = (array) $db->getColumn('SELECT m.name
-														FROM modules AS m
-														WHERE m.active = ?',
-														array('Y'));
+			// get modules
+			$modules = BackendModel::getModules();
 
 			// add always allowed
-			foreach($alwaysAllowed as $allowedModule => $actions) $activeModules[] = $allowedModule;
+			foreach($alwaysAllowed as $allowedModule => $actions) $modules[] = $allowedModule;
 
 			// get allowed actions
 			$allowedActionsRows = (array) $db->getRecords('SELECT gra.module, gra.action, gra.level
@@ -162,8 +159,8 @@ class BackendAuthentication
 			// add all actions and there level
 			foreach($allowedActionsRows as $row)
 			{
-				// add if the module is active
-				if(in_array($row['module'], $activeModules)) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+				// add if the module is installed
+				if(in_array($row['module'], $modules)) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
 			}
 		}
 

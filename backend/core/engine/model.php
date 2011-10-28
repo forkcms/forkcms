@@ -464,36 +464,21 @@ class BackendModel
 	 * Get the modules
 	 *
 	 * @return	array
-	 * @param	bool[optional] $activeOnly	Only return the active modules.
 	 */
-	public static function getModules($activeOnly = true)
+	public static function getModules()
 	{
-		// redefine
-		$activeOnly = (bool) $activeOnly;
-
 		// validate cache
-		if(empty(self::$modules) || !isset(self::$modules['active']) || !isset(self::$modules['all']))
+		if(empty(self::$modules))
 		{
 			// get all modules
-			$modules = (array) self::getDB()->getPairs('SELECT m.name, m.active
+			$modules = (array) self::getDB()->getColumn('SELECT m.name
 														FROM modules AS m');
 
-			// loop
-			foreach($modules as $module => $active)
-			{
-				// if the module is active
-				if($active == 'Y') self::$modules['active'][] = $module;
-
-				// add to all
-				self::$modules['all'][] = $module;
-			}
+			// add modules to the cache
+			foreach($modules as $module) self::$modules[] = $module;
 		}
 
-		// only return the active modules
-		if($activeOnly) return self::$modules['active'];
-
-		// fallback
-		return self::$modules['all'];
+		return self::$modules;
 	}
 
 
@@ -559,15 +544,14 @@ class BackendModel
 	 * Fetch the list of modules, but for a dropdown
 	 *
 	 * @return	array
-	 * @param	bool[optional] $activeOnly	Only return the active modules.
 	 */
-	public static function getModulesForDropDown($activeOnly = true)
+	public static function getModulesForDropDown()
 	{
 		// init var
 		$dropdown = array('core' => 'core');
 
 		// fetch modules
-		$modules = self::getModules($activeOnly);
+		$modules = self::getModules();
 
 		// loop and add into the return-array (with correct label)
 		foreach($modules as $module) $dropdown[$module] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module)));
