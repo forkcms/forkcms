@@ -1,8 +1,12 @@
 # README
 
-## Documentation
+## Install
 
-Point your browse to [http://your-fork-install/docs](http://your-fork-install/docs) to see the documentation, or go to [http://www.fork-cms.com/docs](http://www.fork-cms.com/docs) for the online version.
+1. upload all the content into you document_root
+3. open up your browser en go to your website
+4. follow the steps on the screen
+5. have fun
+
 
 ## Bugs
 

@@ -328,6 +328,17 @@ class SpoonDatabase
 
 
 	/**
+	 * Retrieve the selected database.
+	 *
+	 * @return	string The name of the database.
+	 */
+	public function getDatabase()
+	{
+		return $this->database;
+	}
+
+
+	/**
 	 * Retrieve the debug setting
 	 *
 	 * @return	bool	true if debug is enabled, false if not.
@@ -391,6 +402,17 @@ class SpoonDatabase
 	public function getHandler()
 	{
 		return $this->handler;
+	}
+
+
+	/**
+	 * Retrieve the hostname.
+	 *
+	 * @return	string The hostname.
+	 */
+	public function getHostname()
+	{
+		return $this->hostname;
 	}
 
 
@@ -489,6 +511,17 @@ class SpoonDatabase
 		}
 
 		return $results;
+	}
+
+
+	/**
+	 * Retrieve the password.
+	 *
+	 * @return	string	The password.
+	 */
+	public function getPassword()
+	{
+		return $this->password;
 	}
 
 
@@ -654,6 +687,17 @@ class SpoonDatabase
 		if($value === null) return PDO::PARAM_NULL;
 		elseif(is_int($value) || is_float($value)) return PDO::PARAM_INT;
 		return PDO::PARAM_STR;
+	}
+
+
+	/**
+	 * Retrieve the username.
+	 *
+	 * @return	string	The username.
+	 */
+	public function getUsername()
+	{
+		return $this->username;
 	}
 
 
