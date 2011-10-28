@@ -365,8 +365,7 @@ class BackendMeta
 
 		// get item
 		$this->data = (array) BackendModel::getDB()->getRecord('SELECT m.*, s.id AS sitemap_id, s.module, s.action, s.priority AS sitemap_priority,
-																s.change_frequency AS sitemap_change_frequency, s.visible AS sitemap_use_sitemap,
-																s.changed_on AS sitemap_changed_on
+																s.change_frequency AS sitemap_change_frequency, s.visible AS sitemap_use_sitemap
 																FROM meta AS m
 																LEFT OUTER JOIN meta_sitemap AS s ON s.id = m.sitemap_id
 																WHERE m.id = ?',
@@ -441,6 +440,8 @@ class BackendMeta
 		$sitemap['action'] = $this->action;
 		$sitemap['priority'] = $this->form->getField('sitemap_priority')->getValue();
 		$sitemap['change_frequency'] = $this->form->getField('sitemap_change_frequency')->getValue();
+		$sitemap['full_url'] = $this->getFullUrl() . '/' . $this->getURL();
+		$sitemap['edited_on'] = BackendModel::getUTCDate();
 		if(isset($this->data['sitemap_id'])) $sitemap['id'] = (int) $this->data['sitemap_id'];
 
 		if($update)
