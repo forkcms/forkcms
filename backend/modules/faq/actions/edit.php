@@ -168,6 +168,9 @@ class BackendFaqEdit extends BackendBaseActionEdit
 				// save the tags
 				BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
+
 				// edit search index
 				if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
 
