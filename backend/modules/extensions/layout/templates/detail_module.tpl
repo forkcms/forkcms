@@ -40,14 +40,6 @@
 						</div>
 					</div>
 				{/option:dataGridEvents}
-				<div class="box">
-					<div class="heading">
-						<h3>{$lblUsed|ucfirst}</h3>
-					</div>
-					<div class="options">
-						<p>{$information.used}</p>
-					</div>
-				</div>
 			</td>
 			<td id="sidebar">
 				{option:information.version}
