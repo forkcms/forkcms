@@ -3,50 +3,31 @@
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Dave Lens <dave@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendBlogAdd extends BackendBaseActionAdd
 {
 
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
@@ -74,15 +55,11 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// get url
@@ -93,11 +70,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -121,7 +95,6 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			// validate meta
 			$this->meta->validate();
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -173,5 +146,3 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

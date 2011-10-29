@@ -3,49 +3,28 @@
 /**
  * This is the add-action, it will display a form to create a new category
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendBlogAddCategory extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('addCategory');
-
-		// create elements
 		$this->frm->addText('title', null, 255, 'inputText title', 'inputTextError title');
 
 		// meta
@@ -55,15 +34,11 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		$this->meta->setURLCallback('BackendBlogModel', 'getURLForCategory');
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
 			// cleanup the submitted fields, ignore fields that were added by hackers
@@ -95,5 +70,3 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

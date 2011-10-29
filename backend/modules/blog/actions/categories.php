@@ -3,40 +3,24 @@
 /**
  * This is the categories-action, it will display the overview of blog categories
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogCategories extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load datagrids
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -65,28 +49,23 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		$this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
-
 	/**
 	 * Convert the count in a human readable one.
 	 *
-	 * @return	string
-	 * @param	int $count		The count.
-	 * @param	string $link	The link for the count.
+	 * @param int $count The count.
+	 * @param string $link The link for the count.
+	 * @return string
 	 */
 	public static function setClickableCount($count, $link)
 	{
-		// redefine
 		$count = (int) $count;
 		$link = (string) $link;
 		$return = '';
@@ -97,5 +76,3 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		return $return;
 	}
 }
-
-?>

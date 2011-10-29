@@ -3,11 +3,7 @@
 /**
  * This import-action will let you import a blog from blogger.com
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogImportBlogger extends BackendBaseActionEdit
 {
@@ -18,13 +14,12 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 	 */
 	private $newIds = array();
 
-
 	/**
 	 * Download a file
 	 *
-	 * @return	mixed
-	 * @param	string $oldURL		The URL of the file to download.
-	 * @param	int $id				The new ID of the blogpost.
+	 * @param string $oldURL The URL of the file to download.
+	 * @param int $id The new ID of the blogpost.
+	 * @return mixed
 	 */
 	public static function download($oldURL, $id)
 	{
@@ -128,65 +123,42 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 			SpoonFile::download($oldURL, $destinationPath);
 		}
 
-		// catch exceptions
 		catch(Exception $e)
 		{
 			return false;
 		}
 
-
 		// return the new URL
 		return str_replace(FRONTEND_FILES_PATH, FRONTEND_FILES_URL, $destinationPath);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// set infinite time
 		set_time_limit(0);
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('import');
-
-		// add a filefield
 		$this->frm->addFile('blogger');
 	}
-
 
 	/**
 	 * Process the XML and treat it as a comment
 	 *
-	 * @return	bool
-	 * @param	SimpleXMLElement $xml	The XML to process.
+	 * @param SimpleXMLElement $xml The XML to process.
+	 * @return bool
 	 */
 	private function processXMLAsComment(SimpleXMLElement $xml)
 	{
@@ -244,12 +216,11 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		return true;
 	}
 
-
 	/**
 	 * Process the XML and treat it as a blogpost
 	 *
-	 * @return	bool
-	 * @param	SimpleXMLElement $xml	The XML to process.
+	 * @param SimpleXMLElement $xml The XML to process.
+	 * @return bool
 	 */
 	private function processXMLAsPost(SimpleXMLElement $xml)
 	{
@@ -306,16 +277,26 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$item['text'] = preg_replace('|\s{2,}|', ' ', $item['text']);
 
 		// cleanup
-		$search = array('<br /><br />', '<div><br /></div>',
-						'<div>', '</div>', '<i>', '</i>', '<b>', '</b>',
-						'<p><object', '</object></p>',
-						'<p><p>', '</p></p>',
-						'...');
-		$replace = array('</p><p>', '</p><p>',
-							'', '', '<em>', '</em>', '<strong>', '</strong>',
-							'<object', '</object>',
-							'<p>', '</p>',
-							'…');
+		$search = array(
+			'<br /><br />',
+			'<div><br /></div>',
+			'<div>', '</div>',
+			'<i>', '</i>',
+			'<b>', '</b>',
+			'<p><object', '</object></p>',
+			'<p><p>', '</p></p>',
+			'...'
+		);
+
+		$replace = array(
+			'</p><p>', '</p><p>',
+			'', '',
+			'<em>', '</em>',
+			'<strong>', '</strong>',
+			'<object', '</object>',
+			'<p>', '</p>',
+			'…'
+		);
 
 		// cleanup
 		$item['text'] = '<p>' . str_replace($search, $replace, SpoonFilter::htmlentitiesDecode($item['text'])) . '</p>';
@@ -352,7 +333,6 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 					$item['text'] = str_replace($file, $imagesURL . '/' . $destinationFile, $item['text']);
 				}
 
-				// catch exceptions
 				catch(Exception $e)
 				{
 					// ignore
@@ -408,11 +388,8 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		return true;
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -510,5 +487,3 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

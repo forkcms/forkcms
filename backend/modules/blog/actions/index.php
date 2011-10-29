@@ -3,14 +3,10 @@
 /**
  * This is the index-action (default), it will display the overview of blog posts
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davyhellemans@netlash.com>
+ * @author Dave Lens <dave@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendBlogIndex extends BackendBaseActionIndex
 {
@@ -21,14 +17,12 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 */
 	private $category;
 
-
 	/**
 	 * The id of the category where is filtered on
 	 *
 	 * @var	int
 	 */
 	private $categoryId;
-
 
 	/**
 	 * DataGrids
@@ -37,15 +31,11 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 */
 	private $dgDrafts, $dgPosts, $dgRecent;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// set category id
@@ -67,21 +57,13 @@ class BackendBlogIndex extends BackendBaseActionIndex
 			}
 		}
 
-		// load datagrid
 		$this->loadDataGrids();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrid with all the posts
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridAllPosts()
 	{
@@ -125,11 +107,8 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Loads the datagrid with all the drafts
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridDrafts()
 	{
@@ -173,11 +152,8 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Loads the datagrid with the most recent posts.
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridRecentPosts()
 	{
@@ -220,29 +196,20 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Loads the datagrids for the blogposts
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
-		// all blogposts
 		$this->loadDataGridAllPosts();
-
-		// drafts
 		$this->loadDataGridDrafts();
 
 		// the most recent blogposts, only shown when we have more than 1 page in total
 		if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDataGridRecentPosts();
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -276,5 +243,3 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		if(!empty($this->category)) $this->tpl->assign('filterCategory', $this->category);
 	}
 }
-
-?>

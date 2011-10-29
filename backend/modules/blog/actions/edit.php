@@ -3,14 +3,10 @@
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Dave Lens <dave@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
@@ -21,7 +17,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	 */
 	private $categoryId;
 
-
 	/**
 	 * DataGrid for the drafts
 	 *
@@ -29,11 +24,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	 */
 	private $dgDrafts;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -43,32 +35,18 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendBlogModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// set category id
 			$this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
 			if($this->categoryId == 0) $this->categoryId = null;
 
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load drafts
 			$this->loadDrafts();
-
-			// load the datagrid with revisions
 			$this->loadRevisions();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the datagrid
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -76,16 +54,12 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
 	 * If a revision-id was specified in the URL we load the revision and not the actual data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get the record
 		$this->record = (array) BackendBlogModel::get($this->id);
 
 		// is there a revision specified?
@@ -121,11 +95,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the datagrid with drafts
-	 *
-	 * @return	void
 	 */
 	private function loadDrafts()
 	{
@@ -155,11 +126,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -194,11 +162,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
 	}
 
-
 	/**
 	 * Load the datagrid with revisions
-	 *
-	 * @return	void
 	 */
 	private function loadRevisions()
 	{
@@ -225,11 +190,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -258,11 +220,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -345,5 +304,3 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>
