@@ -30,7 +30,7 @@
 class CampaignMonitor
 {
 	// internal constant to enable/disable debugging
-	const DEBUG = false;
+	const DEBUG = true;
 
 	// url for the campaignmonitor API
 	const API_URL = 'http://api.createsend.com/api/v3';
@@ -1858,6 +1858,28 @@ class CampaignMonitor
 
 		// make the call
 		return $this->doCall('campaigns/'. $campaignId .'/send', $parameters, 'POST');
+	}
+
+
+	/**
+	 * This sends a preview campaign based for a given campaign ID.
+	 *
+	 * @return	bool
+	 * @param	string $campaignId	The ID of the campaign to send.
+	 * @param	mixed $recipients This can be an e-mail address string, or an array of addresses.
+	 * @param	string[optional] $personalization This can be 'Fallback','Random', or a specific e-mail address.
+	 */
+	public function sendCampaignPreview($campaignId, $recipients, $personalization = 'Fallback')
+	{
+		$campaignId = empty($campaignId) ? $this->getCampaignId() : $campaignId;
+		$recipients = !is_array($recipients) ? array($recipients) : $recipients;
+
+		// set parameters
+		$parameters['PreviewRecipients'] = $recipients;
+		$parameters['SendDate'] = $personalization;
+
+		// make the call
+		return $this->doCall('campaigns/'. $campaignId .'/sendpreview', $parameters, 'POST');
 	}
 
 
