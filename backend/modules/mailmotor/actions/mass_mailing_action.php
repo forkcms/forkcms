@@ -44,7 +44,7 @@ class BackendMailmotorMassMailingAction extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('index') . '&report=delete_mailings');
+		$this->redirect(BackendModel::createURLForAction('index') . '&report=delete-mailings');
 	}
 }
 
