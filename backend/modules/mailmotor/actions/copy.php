@@ -32,7 +32,6 @@ class BackendMailmotorCopy extends BackendBaseAction
 		{
 			// get the mailing and reset some fields
 			$mailing = BackendMailmotorModel::getMailing($id);
-			$mailing['name'] = $mailing['name'] . ' (#' . (BackendMailmotorModel::getMaximumId() + 1) . ')';
 			$mailing['status'] = 'concept';
 			$mailing['send_on'] = null;
 			$mailing['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
