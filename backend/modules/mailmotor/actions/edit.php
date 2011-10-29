@@ -574,23 +574,6 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 
 				BackendMailmotorCMHelper::sendPreviewMailing($this->id, $txtEmail->getValue());
 
-				/*
-				// set from email
-				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting($this->getModule(), 'from_email') : $this->record['from_email'];
-				$fromName = empty($this->record['from_name']) ? BackendModel::getModuleSetting($this->getModule(), 'from_name') : $this->record['from_name'];
-				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting($this->getModule(), 'reply_to_email') : $this->record['reply_to_email'];
-
-				// build URL
-				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';
-
-				$subject = '[TEST] ' . $this->record['subject'];
-				$HTML = $this->record['data']['full_content_html'];
-				$plainText = (!empty($this->record['content_plain'])) ? $this->record['content_plain'] : null;
-
-				// send mail
-				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true, $plainText);
-				*/
-
 				// build URL
 				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';
 
