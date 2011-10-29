@@ -278,7 +278,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=3&amp;error=complete-step-3');
 
 		// get preview URL
-		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
+		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id'], 'html', true);
 
 		// check if the mailmotor is linked
 		if(BackendModel::getURLForBlock($this->getModule(), 'detail') == BackendModel::getURL(404)) $previewURL = false;
@@ -572,6 +572,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 					This, however, is the point where a preview is sent to a specific address.
 				*/
 
+				BackendMailmotorCMHelper::sendPreviewMailing($this->id, $txtEmail->getValue());
+
+				/*
 				// set from email
 				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting($this->getModule(), 'from_email') : $this->record['from_email'];
 				$fromName = empty($this->record['from_name']) ? BackendModel::getModuleSetting($this->getModule(), 'from_name') : $this->record['from_name'];
@@ -586,6 +589,10 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 
 				// send mail
 				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true, $plainText);
+				*/
+
+				// build URL
+				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';
 
 				// send the preview
 				$this->redirect($url . '&amp;report=preview-sent&amp;var=' . $txtEmail->getValue());
