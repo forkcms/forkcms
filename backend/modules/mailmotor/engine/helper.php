@@ -889,12 +889,6 @@ class BackendMailmotorCMHelper
 		if(!isset($item['content_html_url'])) $item['content_html_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'html', true);
 		if(!isset($item['content_plain_url'])) $item['content_plain_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'plain', true);
 
-		// create the campaign in CM
-		//$result = self::insertMailing($item);
-
-		// if result equals false, we have a problem
-		//if($result === false) throw new SpoonException('The mailing couldn\'t be created, please try again.');
-
 		// at this point $result should equal the CM ID, so let's attempt to send it
 		self::getCM()->sendCampaign($item['cm_id'], $item['from_email'], $item['delivery_date']);
 	}

@@ -30,7 +30,7 @@
 class CampaignMonitor
 {
 	// internal constant to enable/disable debugging
-	const DEBUG = true;
+	const DEBUG = false;
 
 	// url for the campaignmonitor API
 	const API_URL = 'http://api.createsend.com/api/v3';
