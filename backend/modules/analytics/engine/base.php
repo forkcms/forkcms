@@ -43,7 +43,7 @@ class BackendAnalyticsBase extends BackendBaseActionIndex
 	 */
 	protected function parse()
 	{
-		// periodpicker
+		// period picker
 		if(isset($this->pagePath)) BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp, array('page_path' => $this->pagePath));
 		else BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp);
 	}

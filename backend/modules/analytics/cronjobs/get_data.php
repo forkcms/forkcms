@@ -101,8 +101,6 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			{
 				// set status in cache
 				SpoonFile::setContent($filename, 'unauthorized');
-
-				// stop here
 				return;
 			}
 		}
@@ -170,6 +168,8 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
 			// nothing in cache - fetch from google and set cache
 			if(!isset($data['metrics_per_day']) || $force) $data['metrics_per_day']['entries'] = BackendAnalyticsHelper::getMetricsPerDay($startTimestamp, $endTimestamp);
+
+			// @todo refactor the code below. Isnt a switch statement more suitable?
 
 			// traffic sources, top keywords and top referrals on index page
 			if($page == 'all' || $page == 'index')

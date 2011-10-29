@@ -85,11 +85,7 @@ class BackendAnalyticsModel
 	 */
 	public static function deleteLandingPage($ids)
 	{
-		// make sure $ids is an array
-		$ids = (array) $ids;
-
-		// delete data
-		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', $ids) . ')');
+		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
 	}
 
 	/**
@@ -123,7 +119,7 @@ class BackendAnalyticsModel
 		// aggregate exists
 		if(isset($aggregates[$name])) return $aggregates[$name];
 
-		// doesnt exist
+		// doesn't exist
 		return '';
 	}
 
@@ -205,7 +201,7 @@ class BackendAnalyticsModel
 	 */
 	private static function getAttributesFromCache($type, $startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache
+		// doesn't exist in cache
 		if(!isset(self::$data[$type]['attributes']))
 		{
 			// load cache xml file

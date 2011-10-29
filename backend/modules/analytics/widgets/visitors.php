@@ -80,10 +80,8 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 			}
 		}
 
-		// loop the metrics
 		foreach($graphData as $metric)
 		{
-			// loop the data
 			foreach($metric['data'] as $data)
 			{
 				// get the maximum value

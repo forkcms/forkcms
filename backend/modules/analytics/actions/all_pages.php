@@ -53,20 +53,16 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		$metrics = array('visitors', 'pageviews');
 		$graphData = array();
 
-		// get metrics per day
 		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-		// loop metrics
 		foreach($metrics as $i => $metric)
 		{
-			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
 			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 
-			// loop metrics per day
 			foreach($metricsPerDay as $j => $data)
 			{
 				// cast SimpleXMLElement to array
@@ -81,7 +77,6 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		// loop the metrics
 		foreach($graphData as $metric)
 		{
-			// loop the data
 			foreach($metric['data'] as $data)
 			{
 				// get the maximum value
@@ -101,8 +96,6 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 	{
 		// get aggregates
 		$results = BackendAnalyticsModel::getAggregates($this->startTimestamp, $this->endTimestamp);
-
-		// get total aggregates
 		$resultsTotal = BackendAnalyticsModel::getAggregatesTotal($this->startTimestamp, $this->endTimestamp);
 
 		// are there some values?
@@ -112,7 +105,6 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		// show message if there is no data
 		$this->tpl->assign('dataAvailable', $dataAvailable);
 
-		// there are some results
 		if(!empty($results))
 		{
 			// pageviews percentage of total
@@ -139,7 +131,6 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
 			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+' . $exitsPercentageDifference;
 
-			// parse data
 			$this->tpl->assign('timeOnSite', BackendAnalyticsModel::getTimeFromSeconds($timeOnSite));
 			$this->tpl->assign('timeOnSiteTotal', BackendAnalyticsModel::getTimeFromSeconds($timeOnSiteTotal));
 			$this->tpl->assign('timeOnSiteDifference', $timeOnSiteDifference);

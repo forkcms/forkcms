@@ -67,7 +67,6 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		$metrics = array('pageviews');
 		$graphData = array();
 
-		// loop metrics
 		foreach($metrics as $i => $metric)
 		{
 			// build graph data array
@@ -76,7 +75,6 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['data'] = array();
 
-			// loop metrics per day
 			foreach($metricsPerDay as $j => $data)
 			{
 				// cast SimpleXMLElement to array

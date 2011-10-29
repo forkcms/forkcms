@@ -19,15 +19,12 @@ class BackendAnalyticsDeleteLandingPage extends BackendBaseActionDelete
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
 		if($this->id !== null && BackendAnalyticsModel::existsLandingPage($this->id))
 		{
 			parent::execute();
-
-			// get data
 			$this->record = (array) BackendAnalyticsModel::getLandingPage($this->id);
 
 			// delete item
