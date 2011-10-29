@@ -24,12 +24,9 @@ class FrontendSitemap
 	 */
 	protected function loadData()
 	{
-		$this->metaData = FrontendModel::getDB()->getRecords(
-			'SELECT s.*
+		$this->metaData = FrontendModel::getDB()->getRecords('SELECT s.*
 			 FROM meta_sitemap AS s
-			 WHERE s.visible = ?',
-			array('Y')
-		);
+			 WHERE s.visible = ?', array('Y'));
 	}
 
 	public function parse()
@@ -38,19 +35,19 @@ class FrontendSitemap
 		SpoonHTTP::setHeaders(array('Content-Type: application/xml'));
 
 		$output = '<?xml version="1.0" encoding="UTF-8"?>';
-		$output.= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		$output .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
 		foreach($this->metaData as $page)
 		{
-			$output.= "\t" . '<sitemap>';
-			$output.= "\t\t" . '<loc>' . $page['full_url'] . '</loc>';
-			$output.= "\t\t" . '<lastmod>' . $page['edited_on'] . '</lastmod>';
-			$output.= "\t\t" . '<changefreq>' . $page['change_frequency'] . '</changefreq>';
-			$output.= "\t\t" . '<priority>' . $page['priority'] . '</priority>';
-			$output.= "\t" . '</sitemap>';
+			$output .= "\t" . '<sitemap>';
+			$output .= "\t\t" . '<loc>' . $page['full_url'] . '</loc>';
+			$output .= "\t\t" . '<lastmod>' . $page['edited_on'] . '</lastmod>';
+			$output .= "\t\t" . '<changefreq>' . $page['change_frequency'] . '</changefreq>';
+			$output .= "\t\t" . '<priority>' . $page['priority'] . '</priority>';
+			$output .= "\t" . '</sitemap>';
 		}
 
-		$output.= '</sitemapindex>';
+		$output .= '</sitemapindex>';
 
 		echo $output;
 	}

@@ -482,7 +482,7 @@ class BackendMeta
 			$itemId = $data['id'];
 			unset($data['id']);
 
-			$db->update('meta_sitemap', $data, (int) $itemId);
+			$db->update('meta_sitemap', $data, 'id = ?', (int) $itemId);
 		}
 		// if there is no id given, create a new record
 		else $itemId = $db->insert('meta_sitemap', $data);
