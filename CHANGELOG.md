@@ -32,6 +32,7 @@ Improvements:
 * Core: the active state of modules has been stripped. This is no longer useful.
 
 
+
 2.6.13 (2011-10-18)
 --
 Improvements:
