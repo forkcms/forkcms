@@ -110,8 +110,20 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$item['data'] = serialize(array('full_content_html' => $HTML));
 		$item['edited_on'] = date('Y-m-d H:i:s');
 
-		// update mailing
+		// update mailing in our database
 		BackendMailmotorModel::updateMailing($item);
+
+		/*
+			we should insert the draft into campaignmonitor here,
+			so we can use sendCampaignPreview in step 4.
+		*/
+		$item['groups'] = $this->mailing['groups'];
+		$item['name'] = $this->mailing['name'];
+		$item['from_name'] = $this->mailing['from_name'];
+		$item['from_email'] = $this->mailing['from_email'];
+		$item['reply_to_email'] = $this->mailing['reply_to_email'];
+
+		BackendMailmotorCMHelper::saveMailingDraft($item);
 
 		// trigger event
 		BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step3', array('item' => $item));

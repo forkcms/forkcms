@@ -816,6 +816,71 @@ class BackendMailmotorCMHelper
 
 
 	/**
+	 * Creates a campaign draft into campaignmonitor.
+	 *
+	 * @return	string			The campaign ID of the newly created draft.
+	 * @param	array $item		The mailing record to update a campaign draft.
+	 */
+	public static function insertMailingDraft(array $item)
+	{
+		// get the preview URLs, so CM knows where to get the HTML/plaintext content
+		$item['content_html_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'html', true);
+		$item['content_plain_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'plain', true);
+
+		// get the CM IDs for all groups linked to the mailing record
+		if(!isset($item['group_cm_ids']))
+		{
+			$item['group_cm_ids'] = self::getCampaignMonitorIDsForGroups($item['groups']);
+		}
+
+		// create the campaign ID, and obtain the campaign CM ID
+		$campaignID = self::getCM()->createCampaign(
+			// if we add a timestamp to the name, we won't get the duplicate campaign name errors.
+			$item['name'] . ' - ' . time(),
+			$item['subject'],
+			$item['from_name'],
+			$item['from_email'],
+			$item['reply_to_email'],
+			$item['content_html_url'],
+			$item['content_plain_url'],
+			$item['group_cm_ids']
+		);
+
+		// if we received a valid CM ID, insert the CM ID in the database
+		if(is_string($campaignID))
+		{
+			self::insertCampaignMonitorID('campaign', $campaignID, $item['id']);
+		}
+
+		// return the campaign CM ID
+		return $campaignID;
+	}
+
+
+	/**
+	 * Saves a draft mailing into campaignmonitor
+	 *
+	 * @return	string 			The newly created campaignmonitor ID
+	 * @param	array $item		The mailing record to create/update a campaign draft.
+	 */
+	public static function saveMailingDraft(array $item)
+	{
+		// get the campaignmonitor ID for campaign
+		$campaignID = self::getCampaignMonitorID('campaign', $item['id']);
+
+		// either insert/update a draft, depends if we found a valid campaign ID or not
+		if(!$campaignID)
+		{
+			return self::insertMailingDraft($item);
+		}
+		else
+		{
+			return self::updateMailingDraft($item);
+		}
+	}
+
+
+	/**
 	 * Creates a campaign in campaignmonitor and sends it
 	 *
 	 * @return	void
@@ -833,14 +898,22 @@ class BackendMailmotorCMHelper
 		if(!isset($item['content_html_url'])) $item['content_html_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'html', true);
 		if(!isset($item['content_plain_url'])) $item['content_plain_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'plain', true);
 
-		// create the campaign in CM
-		$result = self::insertMailing($item);
-
-		// if result equals false, we have a problem
-		if($result === false) throw new SpoonException('The mailing couldn\'t be created, please try again.');
-
 		// at this point $result should equal the CM ID, so let's attempt to send it
-		self::getCM()->sendCampaign($result, $item['from_email'], $item['delivery_date']);
+		self::getCM()->sendCampaign($item['cm_id'], $item['from_email'], $item['delivery_date']);
+	}
+
+
+	/**
+	 * Creates a campaign in campaignmonitor and sends it
+	 *
+	 * @param int $id The ID of the mailing
+	 * @param string $recipient The e-mail address to send a preview mailing to.
+	 */
+	public static function sendPreviewMailing($id, $recipient)
+	{
+		$campaignID = self::getCampaignMonitorID('campaign', $id);
+
+		self::getCM()->sendCampaignPreview($campaignID, $recipient);
 	}
 
 
@@ -1030,6 +1103,40 @@ class BackendMailmotorCMHelper
 
 		// reinsert the groups for this mailing
 		BackendMailmotorModel::updateGroupsForMailing($id, $groups);
+	}
+
+
+	/**
+	 * "Updates" a mailing draft; it deletes and re-creates a draft mailing.
+	 * Campaignmonitor does not have an updateDraft method, so we have to do it this way in order
+	 * to be able to use their sendCampaignPreview method.
+	 *
+	 * @return	mixed 		Returns the newly made campaign ID, or false if the method failed.
+	 * @param	array $item	The mailing record to update a campaign draft.
+	 */
+	public static function updateMailingDraft(array $item)
+	{
+		// get the DB
+		$db = BackendModel::getDB(true);
+
+		// get the CM campaign ID for this campaign
+		$campaignID = self::getCampaignMonitorID('campaign', $item['id']);
+
+		// if the campaign ID
+		if(is_string($campaignID))
+		{
+			// first we insert the new campaign draft and store the CM ID
+			$newCampaignID = self::insertMailingDraft($item);
+
+			// delete the old CM campaign
+			self::getCM()->deleteCampaign($campaignID);
+
+			// remove the old CM ID from the database
+			$db->delete('mailmotor_campaignmonitor_ids', 'cm_id = ?', $campaignID);
+
+			// return the CM ID for the newly created draft campaign
+			return $newCampaignID;
+		}
 	}
 }
 
