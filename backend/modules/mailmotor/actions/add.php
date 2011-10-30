@@ -102,10 +102,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 			$rbtLanguages = $this->frm->getField('languages');
 
 			// validate fields
-			if($txtName->isFilled(BL::err('NameIsRequired')))
-			{
-				if(BackendMailmotorModel::existsMailingByName($txtName->getValue())) $txtName->addError(BL::err('MailingAlreadyExists'));
-			}
+			$txtName->isFilled(BL::err('NameIsRequired'));
 			$txtFromName->isFilled(BL::err('NameIsRequired'));
 			$txtFromEmail->isFilled(BL::err('EmailIsRequired'));
 			$txtReplyToEmail->isFilled(BL::err('EmailIsRequired'));
