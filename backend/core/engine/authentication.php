@@ -116,6 +116,7 @@ class BackendAuthentication
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
 		$alwaysAllowed = array(
 			'dashboard' => array('index' => 7),
+			'core' => array('generate_url' => 7),
 			'error' => array('index' => 7),
 			'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7)
 		);
@@ -188,7 +189,7 @@ class BackendAuthentication
 		if(self::isLoggedIn() && self::getUser()->isGod()) return true;
 
 		// always allowed modules (yep, hardcoded, because, we don't want other people to fuck up)
-		$alwaysAllowed = array('error', 'authentication');
+		$alwaysAllowed = array('core', 'error', 'authentication');
 
 		// redefine
 		$module = (string) $module;

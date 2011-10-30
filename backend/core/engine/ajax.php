@@ -40,9 +40,9 @@ class BackendAJAX
 			define('NAMED_APPLICATION', 'backend_ajax');
 		}
 
-		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
-		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
-		$this->setLanguage(SpoonFilter::getGetValue('language', null, ''));
+		$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
+		$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
+		$this->setLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
 
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());

@@ -1,6 +1,7 @@
 3.0.0 (xxxx-xx-xx)
 --
 Improvements:
+
 * Core: Completely re-invented the blocks system; it's now position-driven.
 * Core: Introduce the concept of positions that can contain an arbitrary number of blocks.
 * Pages: Merged tabs "Content" & "Template" to present a more straightforward UI.
@@ -23,6 +24,9 @@ Improvements:
 * Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
 * Core: updated default favicon.
 * Pages: updated pages getNavigation; the 'includeChildren' parameter was useless.
+* Core: refactored javascript ajax-calls.
+* Installer: refactored installation of dashboard widgets.
+* Analytics: dashboard widgets are now added for all users upon installation.
 
 
 2.6.13 (2011-10-18)

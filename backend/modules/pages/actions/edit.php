@@ -441,9 +441,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			if($redirectValue == 'internal') $this->frm->getField('internal_redirect')->isFilled(BL::err('FieldIsRequired'));
 			if($redirectValue == 'external') $this->frm->getField('external_redirect')->isURL(BL::err('InvalidURL'));
 
-			// init var
-			$templateId = (int) $this->frm->getField('template_id')->getValue();
-
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()));
 
@@ -471,7 +468,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['id'] = $this->record['id'];
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $this->record['parent_id'];
-				$page['template_id'] = $templateId;
+				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
 				$page['meta_id'] = (int) $this->meta->save();
 				$page['language'] = BackendLanguage::getWorkingLanguage();
 				$page['type'] = $this->record['type'];

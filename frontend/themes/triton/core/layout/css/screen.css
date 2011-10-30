@@ -1044,6 +1044,27 @@ a.linkedImage {
 }
 
 /*
+	Share
+*/
+
+.share {
+	position: relative;
+}
+
+	.share ul.shareMenu {
+		position: absolute;
+		top: 14px;
+		left: 0;
+		z-index: 99999;
+		background-color: #FFF;
+	}
+
+		.share ul.shareMenu li {
+			float: none !important;
+			padding: 3px 10px;
+		}
+
+/*
 	Forms
 */
 
@@ -1934,20 +1955,3 @@ a.button:visited {
 		color: #000;
 	}
 }
-
-
-/* Share menu @todo	fix me plz */
-.share {
-	position: relative;
-}
-.share ul.shareMenu {
-	position: absolute;
-	top: 14px;
-	left: 0;
-	z-index: 99999;
-	background-color: #FFF;
-}
-	.share ul.shareMenu li {
-		float: none !important;
-		padding: 3px 10px;
-	}

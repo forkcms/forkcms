@@ -227,7 +227,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// redefine
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-		// does the keys exists in the cache?
+		// do the keys exists in the cache?
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file @later: the file should be regenerated
@@ -445,7 +445,7 @@ class FrontendNavigation extends FrontendBaseObject
 		else $URL .= $keys[$pageId];
 
 		// return the URL
-		return $URL;
+		return urldecode($URL);
 	}
 
 

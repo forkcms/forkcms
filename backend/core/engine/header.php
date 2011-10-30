@@ -27,7 +27,7 @@ class BackendHeader
 	 *
 	 * @var	array
 	 */
-	private $javascriptFiles = array();
+	private $jsFiles = array();
 
 	/**
 	 * Template instance
@@ -123,7 +123,7 @@ class BackendHeader
 		else $realPath = '/backend/core/js/' . $fileName;
 
 		// add if not already added
-		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->javascriptFiles)) $this->javascriptFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
+		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->jsFiles)) $this->jsFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
 	/**
@@ -132,7 +132,7 @@ class BackendHeader
 	public function parse()
 	{
 		$cssFiles = array();
-		$javascriptFiles = array();
+		$jsFiles = array();
 
 		// get last modified time for the header template
 		$lastModifiedTime = @filemtime($this->tpl->getCompileDirectory() . '/' . md5(realpath(BACKEND_CORE_PATH . '/layout/templates/header.tpl')) . '_header.tpl.php');
@@ -158,7 +158,7 @@ class BackendHeader
 		$this->tpl->assign('cssFiles', $cssFiles);
 
 		// if there aren't any JS-files added we don't need to do something
-		if(!empty($this->javascriptFiles))
+		if(!empty($this->jsFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
 			$ignoreCache = array(
@@ -169,24 +169,24 @@ class BackendHeader
 				'/backend/core/js/tiny_mce/tiny_mce.js'
 			);
 
-			foreach($this->javascriptFiles as $file)
+			foreach($this->jsFiles as $file)
 			{
-				// some files shouldn't be uncacheable
-				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('path' => $file['path']);
+				// some files shouldn't be uncachable
+				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $jsFiles[] = array('path' => $file['path']);
 
 				// make the file uncacheble
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['path'], 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
+					if(substr($file['path'], 0, 11) == '/backend/js') $jsFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
 
 					// add lastmodified time
-					else $javascriptFiles[] = array('path' => $file['path'] . '?m=' . $lastModifiedTime);
+					else $jsFiles[] = array('path' => $file['path'] . '?m=' . $lastModifiedTime);
 				}
 			}
 		}
 
 		// assign JS-files
-		$this->tpl->assign('javascriptFiles', $javascriptFiles);
+		$this->tpl->assign('jsFiles', $jsFiles);
 	}
 }

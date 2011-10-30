@@ -188,14 +188,14 @@ class BackendURL
 		// if it is an request for a JS-file or an AJAX-file we only need the module
 		if($isJS || $isAJAX)
 		{
-			// set the working language, this is not the interface language
-			BackendLanguage::setWorkingLanguage(SpoonFilter::getGetValue('language', null, SITE_DEFAULT_LANGUAGE));
+			// set the module
+			$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
 
-			// set current module
-			$this->setModule(SpoonFilter::getGetValue('module', null, null));
+			// set the action
+			$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
 
-			// set action
-			$this->setAction('index');
+			// set the language
+			BackendLanguage::setWorkingLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
 		}
 
 		// regular request
@@ -214,6 +214,26 @@ class BackendURL
 				// does our user has access to this module?
 				if(!BackendAuthentication::isAllowedModule($module))
 				{
+					// if the module is the dashboard redirect to the first allowed module
+					if($module == 'dashboard')
+					{
+						// require navigation-file
+						require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
+
+						// loop the navigation to find the first allowed module
+						foreach($navigation as $key => $value)
+						{
+							// split up chunks
+							list($module, $action) = explode('/', $value['url']);
+
+							// user allowed?
+							if(BackendAuthentication::isAllowedModule($module))
+							{
+								// redirect to the page
+								SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
+							}
+						}
+					}
 					// the user doesn't have access, redirect to error page
 					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
 				}

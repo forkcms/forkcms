@@ -43,7 +43,15 @@ var jsFrontend =
 	initAjax: function()
 	{
 		// set defaults for AJAX
-		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });
+		$.ajaxSetup(
+		{
+			url: '/frontend/ajax.php',
+			cache: false,
+			type: 'POST',
+			dataType: 'json',
+			timeout: 10000,
+			data: { fork: { module: null, action: null, language: jsFrontend.current.language } }
+		});
 	},
 
 
@@ -359,9 +367,11 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=autocomplete&language=' + jsFrontend.current.language,
-					type: 'GET',
-					data: 'term=' + request.term,
+					data:
+					{
+						fork: { module: 'search', action: 'autocomplete', language: jsFrontend.current.language },
+						term: request.term
+					},
 					success: function(data, textStatus)
 					{
 						// init var
@@ -392,9 +402,11 @@ jsFrontend.search =
 			// ajax call!
 			$.ajax(
 			{
-				url: '/frontend/ajax.php?module=search&action=save',
-				type: 'GET',
-				data: 'term=' + $(this).val() + '&language=' + jsFrontend.current.language
+				data:
+				{
+					fork: { module: 'search', action: 'save', language: jsFrontend.current.language },
+					term: $(this).val()
+				}
 			});
 		});
 	},
@@ -418,9 +430,12 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=autosuggest&language=' + jsFrontend.current.language,
-					type: 'GET',
-					data: 'term=' + request.term + '&length=' + length,
+					data:
+					{
+						fork: { module: 'search', action: 'autosuggest', language: jsFrontend.current.language },
+						term: request.term,
+						length: length
+					},
 					success: function(data, textStatus)
 					{
 						// init var
@@ -451,9 +466,11 @@ jsFrontend.search =
 			// ajax call!
 			$.ajax(
 			{
-				url: '/frontend/ajax.php?module=search&action=save',
-				type: 'GET',
-				data: 'term=' + $(this).val() + '&language=' + jsFrontend.current.language
+				data:
+				{
+					fork: { module: 'search', action: 'save', language: jsFrontend.current.language },
+					term: $(this).val()
+				},
 			});
 		})
 		// and also: alter the autocomplete style: add description!
@@ -493,9 +510,11 @@ jsFrontend.search =
 				// ajax call!
 				$.ajax(
 				{
-					url: '/frontend/ajax.php?module=search&action=livesuggest&language=' + jsFrontend.current.language,
-					type: 'GET',
-					data: 'term=' + $(this).val(),
+					data:
+					{
+						fork: { module: 'search', action: 'livesuggest', language: jsFrontend.current.language },
+						term: $(this).val()
+					},
 					success: function(data, textStatus)
 					{
 						// allow for new calls
