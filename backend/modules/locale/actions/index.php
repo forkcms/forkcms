@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
  *
- * @package		backend
- * @subpackage	locale
- *
- * @author		Lowie Benoot <lowie@netlash.com>
- * @since		2.1
+ * @author Lowie Benoot <lowie@netlash.com>
  */
 class BackendLocaleIndex extends BackendBaseActionIndex
 {
@@ -18,7 +21,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private $filter;
 
-
 	/**
 	 * Is God?
 	 *
@@ -26,41 +28,22 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private $isGod;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// is the user a GodUser?
 		$this->isGod = BackendAuthentication::getUser()->isGod();
-
-		// set filter
 		$this->setFilter();
-
-		// load form
 		$this->loadForm();
-
-		// load datagrids
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the datagrid
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -127,18 +110,12 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		}
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
-
-		// add fields
 		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
 		$this->frm->addText('name', $this->filter['name']);
 		$this->frm->addText('value', $this->filter['value']);
@@ -151,11 +128,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -181,11 +155,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->tpl->assign('addURL', BackendModel::createURLForAction('add', null, null, null) . $this->filterQuery);
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
@@ -215,5 +186,3 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->filterQuery = $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);;
 	}
 }
-
-?>
