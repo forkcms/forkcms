@@ -13,16 +13,38 @@
 <div id="dataGridQuestionsHolder">
 	{option:dataGrids}
 		{iteration:dataGrids}
-			<div {option:dataGrids.content}class="dataGridHolder"{/option:dataGrids.content} id="dataGrid-{$dataGrids.id}">
-				<div class="tableHeading clearfix">
-					<h3>{$dataGrids.title}</h3>
+			<div class="dataGridHolder" id="dataGrid-{$dataGrids.id}">
+				<div class="tableHeading">
+					<h3>{$dataGrids.name}</h3>
 				</div>
 				{option:dataGrids.content}
 					{$dataGrids.content}
 				{/option:dataGrids.content}
 
 				{option:!dataGrids.content}
-					<p>{$msgNoQuestionInCategory}</p>
+					<table class="dataGrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
+						<thead>
+							<tr>
+								<th class="dragAndDropHandle">
+									<span>&#160;</span>
+								</th>
+								<th class="question">
+									<span>{$lblQuestion|ucfirst}</span>
+								</th>
+								<th class="hidden">
+									<span>{$lblHidden|ucfirst}</span>
+								</th>
+								<th class="edit">
+									<span>&#160;</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="noQuestions">
+								<td colspan="3">{$msgNoQuestionInCategory}</td>
+							</tr>
+						</tbody>
+					</table>
 				{/option:!dataGrids.content}
 			</div>
 		{/iteration:dataGrids}

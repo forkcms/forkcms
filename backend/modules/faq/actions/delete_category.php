@@ -7,7 +7,6 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class BackendFaqDeleteCategory extends BackendBaseActionDelete
@@ -25,27 +24,20 @@ class BackendFaqDeleteCategory extends BackendBaseActionDelete
 		// does the item exist
 		if($this->id !== null && BackendFaqModel::existsCategory($this->id))
 		{
-			// get data
-			$this->record = (array) BackendFaqModel::getCategory($this->id);
+			// call parent, this will probably add some general CSS/JS or other required files
+			parent::execute();
 
-			// allowed to delete the category?
-			if(BackendBlogModel::deleteCategoryAllowed($this->id))
-			{
-				// call parent, this will probably add some general CSS/JS or other required files
-				parent::execute();
+			// get item
+			$this->record = BackendFaqModel::getCategory($this->id);
 
-				// delete item
-				BackendFaqModel::deleteCategory($this->id);
+			// delete item
+			BackendFaqModel::deleteCategory($this->id);
 
-				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('id' => $this->id));
+			// trigger event
+			BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('id' => $this->id));
 
-				// category was deleted, so redirect
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
-			}
-
-			// delete category not allowed
-			else $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
+			// item was deleted, so redirect
+			$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted&var=' . urlencode($this->record['name']));
 		}
 
 		// something went wrong

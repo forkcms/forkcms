@@ -7,7 +7,6 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class BackendFaqDelete extends BackendBaseActionDelete
@@ -23,16 +22,16 @@ class BackendFaqDelete extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendFaqModel::exists($this->id))
+		if($this->id !== null && BackendFaqModel::existsQuestion($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// get item
-			$this->record = BackendFaqModel::get($this->id);
+			$this->record = BackendFaqModel::getQuestion($this->id);
 
 			// delete item
-			BackendFaqModel::delete($this->id);
+			BackendFaqModel::deleteQuestion($this->id);
 
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));

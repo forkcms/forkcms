@@ -7,7 +7,6 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class BackendFaqAddCategory extends BackendBaseActionAdd
@@ -28,7 +27,7 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the dataGrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -44,13 +43,10 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('addCategory');
+		$this->frm = new BackendForm('add_category');
 
 		// create elements
-		$this->frm->addText('title');
-
-		// meta
-		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+		$this->frm->addText('name');
 	}
 
 
@@ -64,25 +60,18 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique URL
-			$this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
-
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-
-			// validate meta
-			$this->meta->validate();
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['meta_id'] = $this->meta->save();
+				$item['name'] = $this->frm->getField('name')->getValue();
 				$item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;
 
 				// insert the item
@@ -92,7 +81,7 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}
