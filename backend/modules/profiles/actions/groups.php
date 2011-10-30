@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the groups-action, it will display the overview of profile groups.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Lester Lievens <lester@netlash.com>
  */
 class BackendProfilesGroups extends BackendBaseActionIndex
 {
@@ -19,7 +22,6 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 	 */
 	private $filter;
 
-
 	/**
 	 * Form.
 	 *
@@ -27,24 +29,25 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 	 */
 	private $frm;
 
-
 	/**
 	 * Builds the query for this datagrid.
 	 *
-	 * @return	array		An array with two arguments containing the query and its parameters.
+	 * @return array An array with two arguments containing the query and its parameters.
 	 */
 	private function buildQuery()
 	{
-		// init var
 		$parameters = array();
 
-		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
-		// wherin we allow the query to be in the actionfile itself
-		$query = 'SELECT pg.id, pg.name, COUNT(gr.id) AS members_count
-					FROM profiles_groups AS pg
-					LEFT OUTER JOIN profiles_groups_rights AS gr ON gr.group_id = pg.id AND (gr.expires_on IS NULL OR gr.expires_on > NOW())
-					GROUP BY pg.id
-					HAVING 1';
+		/*
+		 * Start query, as you can see this query is build in the wrong place, because of the
+		 * filter it is a special case wherin we allow the query to be in the actionfile itself
+		 */
+		$query =
+			'SELECT pg.id, pg.name, COUNT(gr.id) AS members_count
+			 FROM profiles_groups AS pg
+			 LEFT OUTER JOIN profiles_groups_rights AS gr ON gr.group_id = pg.id AND (gr.expires_on IS NULL OR gr.expires_on > NOW())
+			 GROUP BY pg.id
+			 HAVING 1';
 
 		// add name
 		if($this->filter['name'] !== null)
@@ -57,38 +60,21 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 		return array($query, $parameters);
 	}
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// set filter
 		$this->setFilter();
-
-		// load form
 		$this->loadForm();
-
-		// load datagrids
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the datagrid.
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -115,11 +101,8 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 		$this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -133,11 +116,8 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Parse & display the page.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -153,13 +133,12 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 		$this->tpl->assign($this->filter);
 	}
 
-
 	/**
 	 * Parse amount of profiles for the datagrid.
 	 *
-	 * @return	string
-	 * @param	int $groupId		Group id.
-	 * @param	int $numProfiles	Number of profiles.
+	 * @param int $groupId Group id.
+	 * @param int $numProfiles Number of profiles.
+	 * @return string
 	 */
 	public static function parseNumProfiles($groupId, $numProfiles)
 	{
@@ -173,16 +152,11 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 		return '<a href="' . BackendModel::createURLForAction('index') . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
 		$this->filter['name'] = $this->getParameter('name');
 	}
 }
-
-?>

@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit_group-action, it will display a form to edit an existing group.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendProfilesEditGroup extends BackendBaseActionEdit
 {
@@ -19,11 +22,8 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 	 */
 	private $group;
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -33,22 +33,11 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendProfilesModel::existsGroup($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -56,11 +45,8 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data for a question
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -68,41 +54,28 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 		$this->group = BackendProfilesModel::getGroup($this->id);
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('editGroup');
-
-		// create elements
 		$this->frm->addText('name', $this->group['name']);
 	}
 
-
 	/**
 	 * Parse the form.
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign the active record and additional variables
 		$this->tpl->assign('group', $this->group);
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -144,5 +117,3 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

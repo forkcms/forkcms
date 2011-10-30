@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Mass action handler to delete profiles or add them to a specific group.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Jan Moesen <jan@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Jan Moesen <jan.moesen@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendProfilesMassAction extends BackendBaseAction
 {
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -94,5 +95,3 @@ class BackendProfilesMassAction extends BackendBaseAction
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=no-profiles-selected');
 	}
 }
-
-?>

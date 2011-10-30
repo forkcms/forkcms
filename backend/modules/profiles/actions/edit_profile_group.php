@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit_profile_group-action, it will display a form to add a profile to a group.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 {
@@ -19,11 +22,8 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 	 */
 	private $profileGroup;
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -37,22 +37,11 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 			// does profile exists
 			if($this->profileId !== null && BackendProfilesModel::exists($this->profileId))
 			{
-				// call parent, this will probably add some general CSS/JS or other required files
 				parent::execute();
-
-				// get data
 				$this->getData();
-
-				// load the form
 				$this->loadForm();
-
-				// validate the form
 				$this->validateForm();
-
-				// parse
 				$this->parse();
-
-				// display the page
 				$this->display();
 			}
 
@@ -64,23 +53,16 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data about group rights.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get information
 		$this->profileGroup = BackendProfilesModel::getProfileGroup($this->id);
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -99,11 +81,8 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 		$this->frm->getField('group')->setDefaultElement('');
 	}
 
-
 	/**
 	 * Parse.
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -114,11 +93,8 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 		$this->tpl->assign('profileGroup', $this->profileGroup);
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -166,5 +142,3 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

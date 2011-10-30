@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit an existing profile.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendProfilesEdit extends BackendBaseActionEdit
 {
@@ -19,7 +22,6 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 	 */
 	private $profile;
 
-
 	/**
 	 * Groups data grid.
 	 *
@@ -27,39 +29,22 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 	 */
 	private $dgGroups;
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist?
 		if($this->id !== null && BackendProfilesModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the data grids
 			$this->loadGroups();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the data grids
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -67,11 +52,8 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the profile data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -79,11 +61,8 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		$this->profile = BackendProfilesModel::get($this->id);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -136,11 +115,8 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		$this->frm->getField('country')->setDefaultElement('');
 	}
 
-
 	/**
 	 * Load the data grid with groups.
-	 *
-	 * @return	void
 	 */
 	private function loadGroups()
 	{
@@ -163,11 +139,8 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		$this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id, BL::getLabel('Edit'));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -187,11 +160,8 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		if($this->profile['status'] === 'blocked') $this->tpl->assign('blocked', true);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -309,5 +279,3 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>
