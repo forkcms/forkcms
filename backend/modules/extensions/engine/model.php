@@ -7,6 +7,7 @@
  * @subpackage	extensions
  *
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		3.0.0
  */
 class BackendExtensionsModel
