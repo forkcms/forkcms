@@ -23,6 +23,7 @@
  *
  *
  * @author		Dave Lens <dave@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		1.0.0
  */
 class SpoonEmail
@@ -81,6 +82,14 @@ class SpoonEmail
 	 * @var array
 	 */
 	private $content = array('html' => '', 'plain' => '');
+	
+	
+	/**
+	 * Content transfer encoding value for the html and plaintext content.
+	 *
+	 * @var	string
+	 */
+	private $contentTransferEncoding = '8bit';
 
 
 	/**
@@ -316,6 +325,26 @@ class SpoonEmail
 
 
 	/**
+	 * Apply the content tranfer encoding.
+	 *
+	 * @return	string
+	 * @param	string $content		Content to apply the encoding to.
+	 */
+	private function encodeContent($content)
+	{
+		// apply specific encoding
+		switch($this->contentTransferEncoding)
+		{
+			case 'base64':
+				$content = chunk_split(base64_encode($content));
+			break;
+		}
+
+		return $content;
+	}
+
+
+	/**
 	 * Gets attachment content MIME type for given file extension.
 	 *
 	 * @return	string
@@ -433,6 +462,10 @@ class SpoonEmail
 		// if plain body is not set, we'll strip the HTML tags from the HTML body
 		if(empty($this->content['plain'])) $this->content['plain'] = SpoonFilter::stripHTML($this->content['html'], null, true);
 
+		// encode the content
+		$this->content['html'] = $this->encodeContent($this->content['html']);
+		$this->content['plain'] = $this->encodeContent($this->content['plain']);
+
 		// build headers
 		$this->addHeader('Date: ' . SpoonDate::getDate('r'));
 		$this->addHeader('From: ' . $this->from['name'] . ' <' . $this->from['email'] . '>');
@@ -480,12 +513,12 @@ class SpoonEmail
 			$this->addHeader('--' . $secondBoundary);
 			$this->addHeader('Content-Type: text/plain; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
+			$this->addHeader('Content-Transfer-Encoding: ' . $this->contentTransferEncoding . self::LF);
 			$this->addHeader($this->content['plain'] . self::LF);
 			$this->addHeader('--' . $secondBoundary);
 			$this->addHeader('Content-Type: text/html; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
+			$this->addHeader('Content-Transfer-Encoding: ' . $this->contentTransferEncoding . self::LF);
 			$this->addHeader($this->content['html'] . self::LF);
 			$this->addHeader('--' . $secondBoundary . '--');
 		}
@@ -496,12 +529,12 @@ class SpoonEmail
 			// continue the rest of the headers
 			$this->addHeader('Content-Type: text/plain; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
+			$this->addHeader('Content-Transfer-Encoding: ' . $this->contentTransferEncoding . self::LF);
 			$this->addHeader($this->content['plain'] . self::LF);
 			$this->addHeader('--' . $boundary);
 			$this->addHeader('Content-Type: text/html; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
+			$this->addHeader('Content-Transfer-Encoding: ' . $this->contentTransferEncoding . self::LF);
 			$this->addHeader($this->content['html'] . self::LF);
 		}
 
@@ -706,6 +739,18 @@ class SpoonEmail
 	public function setCharset($charset = 'utf-8')
 	{
 		$this->charset = ($charset !== null) ? SpoonFilter::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+	}
+
+
+	/**
+	 * Set content transfer encoding.
+	 * This is used for encoding the HTML and plaintext content.
+	 *
+	 * @param	string $encoding 	Encoding type. Possible values: 7bit, 8bit, base64, binary.
+	 */
+	public function setContentTransferEncoding($encoding)
+	{
+		$this->contentTransferEncoding = SpoonFilter::getValue($encoding, array('7bit', '8bit', 'base64', 'binary'), '8bit');
 	}
 
 

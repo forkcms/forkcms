@@ -7,6 +7,7 @@
  *
  * @author	Davy Hellemans <davy@netlash.com>
  * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  */
 
 /**
@@ -26,7 +27,7 @@ define('SPOON_CHARSET', 'utf-8');
  * Fork configuration
  */
 // version of Fork
-define('FORK_VERSION', '2.6.4');
+define('FORK_VERSION', '3.0.0');
 
 
 /**
@@ -49,12 +50,14 @@ define('DB_PASSWORD', '<database-password>');
 /**
  * Site configuration
  */
-// the domain (without http)
+// the protocol
+define('SITE_PROTOCOL', isset($_SERVER['SERVER_PROTOCOL']) ? (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') : 'http');
+// the domain (without http(s))
 define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '<site-domain>');
 // the default title
 define('SITE_DEFAULT_TITLE', '<site-default-title>');
 // the url
-define('SITE_URL', 'http://' . SITE_DOMAIN);
+define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
 // is the site multilanguage?
 define('SITE_MULTILANGUAGE', '<site-multilanguage>');
 // default action group tag

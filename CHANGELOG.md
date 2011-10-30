@@ -1,10 +1,157 @@
-2.6.5 (xxxx-xx-xx)
+3.0.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Completely re-invented the blocks system; it's now position-driven.
+* Core: Introduce the concept of positions that can contain an arbitrary number of blocks.
+* Pages: Merged tabs "Content" & "Template" to present a more straightforward UI.
+* Pages: Added ability to order blocks on a page.
+* Pages: Created fallback-system for blocks that were assigned to no-longer-existing positions.
+* Pages: Added the posibility to show/hide a block.
+* Pages: Edit HTML content in TinyMCE in a dialog.
+* Core: Updated installer.
+* Core: Updated template creation in backend.
+* Core: Updated theme Triton to be position-based.
+* Pages: Added the possibility to either completely overwrite or re-use existing blocks when updating a template.
+* Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
+* Installer: added 'getTemplateId' function to easily fetch a template id.
+* Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
+* Installer: added improved test for mod_rewrite (will produce warning if not enabled.)
+* Installer: refactored code: every step now doublechecks all previous steps and redirects back on error.
+* Core: updated folder structure to prevent installation issues with folders needing to be outside the document root.
+* Core: removed "markup" folder, this is now available at http://www.fork-cms.com/markup.
+* Core: allow for non-standard characters to be used in urls.
+* Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
+* Core: updated default favicon.
+* Pages: updated pages getNavigation; the 'includeChildren' parameter was useless.
+* Core: refactored javascript ajax-calls.
+* Installer: refactored installation of dashboard widgets.
+* Analytics: dashboard widgets are now added for all users upon installation.
+
+
+2.6.13 (2011-10-18)
+--
+Improvements:
+
+* Locale: make it possible to browse translations for all modules at once.
+* Mailmotor: email address can't be edited; change code to reflect this.
+* Core: Facebook open Graph-tags will now be parsed when an app OR admin-id is configured.
+* Core: added a share-widget, see http://www.fork-cms.com/knowledge-base/detail/using-the-share-widgetmenu.
+
+Bugfixes:
+
+* Content Blocks: some backend functions didn't take into account the current working language.
+* Content Blocks: exclude invalid templates.
+* Installer: some very specific Apache-version will prepend the Apache-variables with REDIRECT_, thx to Steve De Veirman.
+* Pages: when adding more then 1 module to a page you will get a nice error message instead of a PHP error.
+
+
+2.6.12 (2011-10-11)
+--
+Improvements:
+
+* Core: removed empty method.
+* Core: detect if .htaccess is available and mod_rewrite enabled in the installer.
+* Core: when adding a filefield it is now possible to easily show a label with the available extensions.
+
+
+2.6.11 (2011-10-04)
+--
+Improvements:
+
+* Core: Made the parent_id available in the template.
+* Core: Upgraded TinyMCE to 3.4.6
+* Core: Made the Facebook integration work with the signed requests.
+
+Bugfixes:
+
+* Core: re-added some missing locale into the imagemanager, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/185-268-moxicode-unassigned-literals.
+* Core: fixed some errors in the api-methods for blog.
+* Core: fixed a bug where updating a page template tried to input data in a non-existing database column.
+* Core: fixed a typo in the dutch disclaimer, thx to Bart Deslagmulder, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/190.
+
+
+2.6.10 (2011-09-27)
+--
+Improvements:
+
+* Search: IP address is no longer shown in statistics.
+* Core: Improved config to let TinyMCE cleanup Internet Explorer HTML.
+* Search: Search won't show the 404 page anymore, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/186-268-search-finds-404-page.
+
+Bugfixes:
+
+* Groups: when no bundled actions were available a PHP notice was thrown.
+* Dashboard: validate if a position is already taken.
+* Pages: sort sequences after checking its existence.
+
+
+2.6.9 (2011-09-20)
+--
+Improvements:
+
+* Core: Upgraded jQuery to 1.6.4.
+* Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, thx to Martijn Dierckx, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
+* Core: Added an api-method to remove an apple-device token.
+* Core: Emails are now send base64 encoded. This to prevent that linebreaks, which are added when the max text line length is reached, corrupt the content.
+* Blog: Added an api-method to grab a single comment.
+* Blog: When calling blog.comments.UpdateStatus you can pass multiple ids by seperating them with a ,.
+* Tags: Overview is now sorted alphabetically.
+
+Bugfixes:
+
+* Blog: Fixed a bug in the blog module where it called an unexisting FrontendTag-function, thx to jelmersnoeck.
+
+
+2.6.8 (2011-09-13)
+--
+Improvements:
+
+* Core: TinyMCE link-list is now sorted according the pages-tree, as requested by Frederik (http://forum.fork-cms.com/discussions/feature-requests/11-tinymce-linklist-sort).
+* Core: Mails from formbuilder will contain the sitetitle instead of Fork CMS, thx to Frederik.
+* Core: Updated the schema.
+
+Bugfixes:
+
+* Blog: deleting a draft no longer triggers an error.
+* Blog: fix deletion of category: check for blogposts in category did not check blog status.
+* Groups: permission management now works correctly in Chrome.
+
+
+2.6.7 (2011-09-09)
+--
+Bugfixes:
+
+* Install triggered an error "Headers already sent".
+
+Improvements:
+
+* Core: Upgraded TinyMCE to 3.4.5 - fixed Opera issues with editor.
+* Core: Updated JS utils.urlise to better reflect the SpoonFilter::urlise (. should also convert to dash)
+* Core: Shorter GA-tracking code (thx to Jeroen Desloovere)
+
+
+2.6.6 (2011-09-06)
+--
+Bugfixes:
+
+* Facebook-class: fixed oAuth-calls.
+* Autoloader was replacing too much, when using the module name inside an action (eg: mass_files_action in the module files), thx to freshface.
+
+Improvements:
+
+* Core: upgraded jQuery to 1.6.3.
+* Core: added two method (getDate & getTime) as BackendDatagrid-functions, as requested by Frederik (see: http://forum.fork-cms.com/discussions/general/48-shortdate-for-formatting-dat-in-datagrid).
+
+
+2.6.5 (2011-08-30)
 --
 Improvements:
 
 * Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
 * Core: improved default-filtering in locale. From now on frontend and all types are default. 
 * Core: return id of inserted mail.
+* Pages: sitemap page will now also display child pages.
 
 
 2.6.4 (2011-08-23)

@@ -1,0 +1,64 @@
+# follow symlinks & disallow directory listing
+# note: your hosting company might not allow these directives to be set. In that case,
+# you should either find another hosting company (advised) or remove the line below.
+Options +FollowSymlinks -Indexes
+
+# file etags (used when comparing local cached file to server file)
+FileETag MTime Size
+
+<IfModule mod_rewrite.c>
+	# nice urls
+	RewriteEngine On
+
+	# backend is an existing folder, but it should be handled as all urls
+	RewriteCond %{REQUEST_URI} ^/backend/$
+	RewriteRule . index.php [NC,L]
+
+	# handle urls
+	RewriteCond %{REQUEST_URI} !^$
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . index.php [NC,L]
+
+	# set environment variable to let PHP know that urls are being rewritten
+	RewriteRule .* - [E=MOD_REWRITE:1]
+</IfModule>
+
+# file caching in browser
+<IfModule mod_expires.c>
+	ExpiresActive On
+	<FilesMatch "\.(ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|eot)$">
+		ExpiresDefault "access plus 1 month" 
+	</FilesMatch>
+</IfModule>
+
+# gzip on Apache 2
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript
+
+	# these browsers do not support deflate
+	BrowserMatch ^Mozilla/4 gzip-only-text/html 
+	BrowserMatch ^Mozilla/4.0[678] no-gzip
+	BrowserMatch bMSIE !no-gzip !gzip-only-text/html
+
+	SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force
+</IfModule>
+
+# gzip on Apache 1
+<IfModule mod_gzip.c>
+    mod_gzip_on Yes
+
+    mod_gzip_item_include mime ^application/javascript$
+    mod_gzip_item_include mime ^application/x-javascript$
+    mod_gzip_item_include mime ^application/xhtml+xml$
+    mod_gzip_item_include mime ^application/xml$
+    mod_gzip_item_include mime ^text/css$
+    mod_gzip_item_include mime ^text/html$
+    mod_gzip_item_include mime ^text/javascript$
+    mod_gzip_item_include mime ^text/plain$
+    mod_gzip_item_include mime ^text/xml$
+    mod_gzip_item_exclude mime ^image/
+
+    # browser issues
+    mod_gzip_item_exclude reqheader "User-agent: Mozilla/4.0[678]"
+</IfModule>
