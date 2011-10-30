@@ -3,4 +3,4 @@
 .buildpath
 .settings
 .*.swp
-default_www/backend/cache/navigation/
+backend/cache/navigation/
