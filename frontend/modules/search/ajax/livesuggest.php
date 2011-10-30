@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the livesuggest-action, it will output a list of results for a certain search
  *
- * @package		frontend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 {
@@ -18,14 +21,12 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	 */
 	private $cacheFile;
 
-
 	/**
 	 * The items
 	 *
 	 * @var	array
 	 */
 	private $items;
-
 
 	/**
 	 * Limit of data to fetch
@@ -34,14 +35,12 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	 */
 	private $limit;
 
-
 	/**
 	 * Offset of data to fetch
 	 *
 	 * @var	int
 	 */
 	private $offset;
-
 
 	/**
 	 * The pagination array
@@ -51,14 +50,12 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	 */
 	protected $pagination = array('limit' => 20, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * The requested page
 	 *
 	 * @var	int
 	 */
 	private $requestedPage;
-
 
 	/**
 	 * The search term
@@ -67,11 +64,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	 */
 	private $term = '';
 
-
 	/**
 	 * Display
-	 *
-	 * @return	void
 	 */
 	private function display()
 	{
@@ -95,32 +89,21 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		$this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/modules/search/layout/templates/results.tpl', false, true));
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent
 		parent::execute();
-
-		// load template
 		$this->loadTemplate();
-
-		// validate form
 		$this->validateForm();
-
-		// display
 		$this->display();
 	}
-
 
 	/**
 	 * Load the cached data
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	private function getCachedData()
 	{
@@ -149,11 +132,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		return true;
 	}
 
-
 	/**
 	 * Load the data
-	 *
-	 * @return	void
 	 */
 	private function getRealData()
 	{
@@ -190,11 +170,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		}
 	}
 
-
 	/**
 	 * Load the template
-	 *
-	 * @return	void
 	 */
 	protected function loadTemplate()
 	{
@@ -202,11 +179,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		$this->tpl = new FrontendTemplate(false);
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -240,11 +214,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		$this->parsePagination();
 	}
 
-
 	/**
 	 * Parse pagination
-	 *
-	 * @return	void
 	 */
 	protected function parsePagination()
 	{
@@ -387,11 +358,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		$this->tpl->assign('pagination', $pagination);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -402,5 +370,3 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if($this->term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
 	}
 }
-
-?>
