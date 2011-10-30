@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the setting-overview
  *
- * @package		backend
- * @subpackage	settings
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendSettingsIndex extends BackendBaseActionIndex
 {
@@ -19,7 +22,6 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 	 */
 	private $frm;
 
-
 	/**
 	 * Should we show boxes for their API keys
 	 *
@@ -27,15 +29,11 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 	 */
 	private $needsAkismet, $needsGoogleMaps;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get some data
@@ -46,24 +44,14 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->needsAkismet = (!empty($modulesThatRequireAkismet));
 		$this->needsGoogleMaps = (!empty($modulesThatRequireGoogleMaps));
 
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -139,11 +127,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		if($this->needsGoogleMaps) $this->frm->addText('google_maps_key', BackendModel::getModuleSetting('core', 'google_maps_key', null));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -158,11 +143,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->parseWarnings();
 	}
 
-
 	/**
 	 * Show the warnings based on the active modules & configured settings
-	 *
-	 * @return	void
 	 */
 	private function parseWarnings()
 	{
@@ -173,11 +155,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->tpl->assign('warnings', $warnings);
 	}
 
-
 	/**
 	 * Validates the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -297,5 +276,3 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>

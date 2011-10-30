@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the SEO-action, it will display a form to set SEO settings
  *
- * @package		backend
- * @subpackage	settings
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendSettingsSeo extends BackendBaseActionIndex
 {
@@ -18,63 +21,39 @@ class BackendSettingsSeo extends BackendBaseActionIndex
 	 */
 	private $frm;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('settingsSeo');
-
 		$this->frm->addCheckbox('seo_noodp', BackendModel::getModuleSetting('core', 'seo_noodp', false));
 		$this->frm->addCheckbox('seo_noydir', BackendModel::getModuleSetting('core', 'seo_noydir', false));
 		$this->frm->addCheckbox('seo_nofollow_in_comments', BackendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse the form
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validates the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -96,5 +75,3 @@ class BackendSettingsSeo extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>

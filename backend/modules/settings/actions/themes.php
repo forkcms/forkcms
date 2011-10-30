@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the themes-action, it will display a form to set theme settings
  *
- * @package		backend
- * @subpackage	settings
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendSettingsThemes extends BackendBaseActionIndex
 {
@@ -19,62 +22,37 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 	 */
 	private $frm;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('settingsThemes');
-
-		// theme
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', 'core'));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse the form
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validates the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -163,5 +141,3 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>
