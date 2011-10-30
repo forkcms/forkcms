@@ -1,29 +1,25 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is a widget with the subscribe form
  *
- * @package		frontend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class FrontendMailmotorWidgetSubscribe extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent
 		parent::execute();
-
-		// load template
 		$this->loadTemplate();
 	}
 }
-
-?>
