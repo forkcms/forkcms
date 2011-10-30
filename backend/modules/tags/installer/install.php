@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the tags module
  *
- * @package		installer
- * @subpackage	tags
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TagsInstall extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -53,21 +54,24 @@ class TagsInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if a page for tags already exists in this language
+			// @todo refactor this if statement
 			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
 												WHERE b.extra_id = ? AND p.language = ?', array($tagsID, $language)) == 0)
 			{
 				// insert contact page
-				$this->insertPage(array('title' => 'Tags',
-										'type' => 'root',
-										'language' => $language),
-									null,
-									array('extra_id' => $tagsID, 'position' => 'main'),
-									array('extra_id' => $searchId, 'position' => 'top'));
+				$this->insertPage(
+					array(
+						'title' => 'Tags',
+						'type' => 'root',
+						'language' => $language
+					),
+					null,
+					array('extra_id' => $tagsID, 'position' => 'main'),
+					array('extra_id' => $searchId, 'position' => 'top')
+				);
 			}
 		}
 	}
 }
-
-?>
