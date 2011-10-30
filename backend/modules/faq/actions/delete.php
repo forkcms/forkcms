@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete a question
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester@netlash.com>
  */
 class BackendFaqDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -44,5 +45,3 @@ class BackendFaqDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

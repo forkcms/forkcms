@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the faq module
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester@netlash.com>
  */
-final class BackendFaqConfig extends BackendBaseConfig
+class BackendFaqConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -18,14 +21,12 @@ final class BackendFaqConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
 	 * @var	array
 	 */
 	protected $disabledActions = array();
-
 
 	/**
 	 * The disabled AJAX-actions
@@ -34,5 +35,3 @@ final class BackendFaqConfig extends BackendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 }
-
-?>

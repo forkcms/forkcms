@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Reorder questions
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester@netlash.com>
  */
 class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -73,5 +73,3 @@ class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
 		$this->output(self::OK, null, 'sequence updated');
 	}
 }
-
-?>
