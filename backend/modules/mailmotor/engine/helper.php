@@ -323,7 +323,7 @@ class BackendMailmotorCMHelper
 			$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
+			$cm = new CampaignMonitor($url, $username, $password, 60, self::getClientId());
 
 			// set CampaignMonitor object reference
 			Spoon::set('campaignmonitor', $cm);
