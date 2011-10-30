@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the detail-action
  *
- * @package		frontend
- * @subpackage	tags
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class FrontendTagsDetail extends FrontendBaseBlock
 {
@@ -20,7 +23,6 @@ class FrontendTagsDetail extends FrontendBaseBlock
 	 */
 	private $record = array();
 
-
 	/**
 	 * The items per module with this tag
 	 *
@@ -28,35 +30,21 @@ class FrontendTagsDetail extends FrontendBaseBlock
 	 */
 	private $results = array();
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
 
-		// hide contenTitle, in the template the title is wrapped with an inverse-option
 		$this->tpl->assign('hideContentTitle', true);
-
-		// load template
 		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -79,10 +67,12 @@ class FrontendTagsDetail extends FrontendBaseBlock
 			$class = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
 
 			// get the ids of the items linked to the tag
-			$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
-																	FROM modules_tags
-																	WHERE module = ? AND tag_id = ?',
-																	array($module, $this->record['id']));
+			$otherIds = (array) FrontendModel::getDB()->getColumn(
+				'SELECT other_id
+				 FROM modules_tags
+				 WHERE module = ? AND tag_id = ?',
+				array($module, $this->record['id'])
+			);
 
 			// set module class
 			$class = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
@@ -95,11 +85,8 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		}
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -113,5 +100,3 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		$this->breadcrumb->addElement($this->record['name']);
 	}
 }
-
-?>
