@@ -285,8 +285,8 @@ class BackendGroupsModel
 	/**
 	 * Get all users in a group
 	 *
-	 * @return array
 	 * @param  int $groupId The id of the group.
+	 * @return array
 	 */
 	public static function getUsers($groupId)
 	{
