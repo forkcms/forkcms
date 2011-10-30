@@ -5,20 +5,27 @@ if(!jsBackend) { var jsBackend = new Object(); }
  * Interaction for the faq categories
  *
  * @author	Lester Lievens <lester@netlash.com>
+ * @author	Annelies Van Extergem <annelies@netlash.com>
+ * @author	Davy Van Vooren <davy.vanvooren@netlash.com>
  */
 jsBackend.faq =
 {
-	/**
-	 * Kind of constructor
-	 */
+	// init, something like a constructor
 	init: function()
-	{	
-		// destroy default drag and drop
-		$('.sequenceByDragAndDrop tbody').sortable('destroy');
-		
-		// drag and drop
-		jsBackend.faq.bindDragAndDropCategoryFaq();
-		jsBackend.faq.checkForEmptyCategories();
+	{
+		// index stuff
+		if($('#dataGridQuestionsHolder').length > 0) 
+		{
+			// destroy default drag and drop
+			$('.sequenceByDragAndDrop tbody').sortable('destroy');
+			
+			// drag and drop
+			jsBackend.faq.bindDragAndDropCategoryFaq();
+			jsBackend.faq.checkForEmptyCategories();
+		}
+
+		// do meta
+		if($('#title').length > 0) $('#title').doMeta();
 	},
 
 
@@ -27,10 +34,17 @@ jsBackend.faq =
 	 */
 	checkForEmptyCategories: function()
 	{
+		// reset initial empty grids
+		$('table.emptyGrid').each(function(){
+			$(this).find('td').parent().remove();
+			$(this).append('<tr class="noQuestions"><td colspan="' + $(this).find('th').length + '">{$msgNoQuestionInCategory}</td></tr>');
+			$(this).removeClass('emptyGrid');
+		});
+		
 		// when there are empty categories
 		if($('tr.noQuestions').length > 0)
 		{
-			// make datagrid droppable
+			// make dataGrid droppable
 			$('table.dataGrid').droppable(
 			{
 				// only accept table rows
@@ -41,6 +55,11 @@ jsBackend.faq =
 					$(this).find('tr.noQuestions').remove();
 				}
 			});
+			
+			// cleanup remaining no questions
+			$('table.dataGrid').each(function(){
+				if($(this).find('tr').length > 2) $(this).find('tr.noQuestions').remove();
+			});
 		}
 	},
 
@@ -50,7 +69,7 @@ jsBackend.faq =
 	 */
 	bindDragAndDropCategoryFaq: function()
 	{	
-		// go over every datagrid
+		// go over every dataGrid
 		$.each($('div.dataGridHolder'), function()
 		{
 			// make them sortable
@@ -86,17 +105,26 @@ jsBackend.faq =
 							// not a succes so revert the changes
 							if(data.code == 200)
 							{ 
+								// change count in title (if any)
+								$('div#dataGrid-' + fromCategoryId + ' h3').html($('div#dataGrid-' + fromCategoryId + ' h3').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + fromCategoryId + ' table.dataGrid tr').length - 1 ) + ')'));
+								
 								// if there are no records -> show message					
 								if($('div#dataGrid-' + fromCategoryId + ' table.dataGrid tr').length == 1)
 								{
 									$('div#dataGrid-' + fromCategoryId + ' table.dataGrid').append('<tr class="noQuestions"><td colspan="3">{$msgNoQuestionInCategory}</td></tr>');
 								}
 								
+								// check empty categories
+								jsBackend.faq.checkForEmptyCategories();
+
 								// redo odd-even
 								var table = $('table.dataGrid');
 								table.find('tr').removeClass('odd').removeClass('even');
 								table.find('tr:even').addClass('even');
 								table.find('tr:odd').addClass('odd');
+								
+								// change count in title (if any)
+								$('div#dataGrid-' + toCategoryId + ' h3').html($('div#dataGrid-' + toCategoryId + ' h3').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.dataGrid tr').length - 1 ) + ')'));
 							}
 							else
 							{

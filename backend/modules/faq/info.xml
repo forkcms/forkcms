@@ -2,18 +2,19 @@
 <module>
 	<name>faq</name>
 	<requirements>
-		<minimum_version>2.0.0</minimum_version>
+		<minimum_version>2.6.10</minimum_version>
 	</requirements>
 	<info lang="en">
-		<name>FAQ</name>
-		<description><![CDATA[This module enables you to manage FAQs on your site.']]></description>
+		<name>Faq</name>
+		<description><![CDATA[The faq module enables you to show a frequently asked question section with feedback on your website.]]></description>
 	</info>
 	<events>
-		<event application="backend" name="after_add"><![CDATA[Triggered when a faq is added.]]></event>
-		<event application="backend" name="after_delete"><![CDATA[Triggered when a faq is deleted.]]></event>
-		<event application="backend" name="after_edit"><![CDATA[Triggered when a faq is edited.]]></event>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a question is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a question is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a question is edited.]]></event>
 		<event application="backend" name="after_add_category"><![CDATA[Triggered when a category is added.]]></event>
 		<event application="backend" name="after_delete_category"><![CDATA[Triggered when a category is deleted.]]></event>
 		<event application="backend" name="after_edit_category"><![CDATA[Triggered when a category is edited.]]></event>
+		<event application="backend" name="after_delete_feedback"><![CDATA[Triggered when feedback is deleted.]]></event>
 	</events>
 </module>
