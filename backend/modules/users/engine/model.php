@@ -1,80 +1,71 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the users module.
  *
- * @package		backend
- * @subpackage	users
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendUsersModel
 {
-	/**
-	 * Overview of the active users
-	 *
-	 * @var	string
-	 */
-	const QRY_BROWSE = 'SELECT i.id
-						FROM users AS i
-						WHERE i.deleted = ?';
-
+	const QRY_BROWSE =
+		'SELECT i.id
+		 FROM users AS i
+		 WHERE i.deleted = ?';
 
 	/**
 	 * Mark the user as deleted and deactivate his account.
 	 *
-	 * @return	void
-	 * @param	int $id		The userId to delete.
+	 * @param int $id The userId to delete.
 	 */
 	public static function delete($id)
 	{
 		BackendModel::getDB(true)->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', array((int) $id));
 	}
 
-
 	/**
 	 * Deletes the reset_password_key and reset_password_timestamp for a given user ID
 	 *
-	 * @return	void
-	 * @param	int $id		The userId wherfore the reset-stuff should be deleted.
+	 * @param int $id The userId wherfore the reset-stuff should be deleted.
 	 */
 	public static function deleteResetPasswordSettings($id)
 	{
 		BackendModel::getDB(true)->delete('users_settings', '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?', array((int) $id));
 	}
 
-
 	/**
 	 * Was a user deleted before?
 	 *
-	 * @return	bool
-	 * @param	string $email	The e-mail adress to check.
+	 * @param string $email The e-mail adress to check.
+	 * @return bool
 	 */
 	public static function emailDeletedBefore($email)
 	{
-		// redefine
-		$email = (string) $email;
-
 		// no user to ignore
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
-														FROM users AS i
-														WHERE i.email = ? AND i.deleted = ?',
-														array($email, 'Y'));
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(i.id)
+			 FROM users AS i
+			 WHERE i.email = ? AND i.deleted = ?',
+			array((string) $email, 'Y')
+		);
 	}
-
 
 	/**
 	 * Does the user exist.
 	 *
-	 * @return	bool
-	 * @param	int $id						The userId to check for existance.
-	 * @param	bool[optional] $active		Should the user be active also?
+	 * @param int $id The userId to check for existance.
+	 * @param bool[optional] $active Should the user be active also?
+	 * @return bool
 	 */
 	public static function exists($id, $active = true)
 	{
-		// redefine
 		$id = (int) $id;
 		$active = (bool) $active;
 
@@ -82,30 +73,32 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// if the user should also be active, there should be at least one row to return true
-		if($active) return (bool) $db->getVar('SELECT COUNT(i.id)
-												FROM users AS i
-												WHERE i.id = ? AND i.deleted = ?',
-												array($id, 'N'));
+		if($active) return (bool) $db->getVar(
+			'SELECT COUNT(i.id)
+			 FROM users AS i
+			 WHERE i.id = ? AND i.deleted = ?',
+			array($id, 'N')
+		);
 
 		// fallback, this doesn't take the active nor deleted status in account
-		return (bool) $db->getVar('SELECT COUNT(i.id)
-									FROM users AS i
-									WHERE i.id = ?',
-									array($id));
+		return (bool) $db->getVar(
+			'SELECT COUNT(i.id)
+			 FROM users AS i
+			 WHERE i.id = ?',
+			array($id)
+		);
 	}
-
 
 	/**
 	 * Does a email already exist?
 	 * If you specify a userId, the email with the given id will be ignored.
 	 *
-	 * @return	bool
-	 * @param	string $email		The email to check for.
-	 * @param	int[optional] $id	The userId to be ignored.
+	 * @param string $email The email to check for.
+	 * @param int[optional] $id The userId to be ignored.
+	 * @return bool
 	 */
 	public static function existsEmail($email, $id = null)
 	{
-		// redefine
 		$email = (string) $email;
 		$id = ($id !== null) ? (int) $id : null;
 
@@ -113,24 +106,27 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// userid specified?
-		if($id !== null) return (bool) $db->getVar('SELECT COUNT(i.id)
-													FROM users AS i
-													WHERE i.id != ? AND i.email = ?',
-													array($id, $email));
+		if($id !== null) return (bool) $db->getVar(
+			'SELECT COUNT(i.id)
+			 FROM users AS i
+			 WHERE i.id != ? AND i.email = ?',
+			array($id, $email)
+		);
 
 		// no user to ignore
-		return (bool) $db->getVar('SELECT COUNT(i.id)
-									FROM users AS i
-									WHERE i.email = ?',
-									array($email));
+		return (bool) $db->getVar(
+			'SELECT COUNT(i.id)
+			 FROM users AS i
+			 WHERE i.email = ?',
+			array($email)
+		);
 	}
-
 
 	/**
 	 * Get all data for a given user
 	 *
-	 * @return	array
-	 * @param	int $id		The userId to get the data for.
+	 * @param int $id The userId to get the data for.
+	 * @return array
 	 */
 	public static function get($id)
 	{
@@ -141,16 +137,20 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// get general user data
-		$user = (array) $db->getRecord('SELECT i.id, i.email, i.active
-										FROM users AS i
-										WHERE i.id = ?',
-										array($id));
+		$user = (array) $db->getRecord(
+			'SELECT i.id, i.email, i.active
+			 FROM users AS i
+			 WHERE i.id = ?',
+			array($id)
+		);
 
 		// get user-settings
-		$user['settings'] = (array) $db->getPairs('SELECT s.name, s.value
-													FROM users_settings AS s
-													WHERE s.user_id = ?',
-													array($id));
+		$user['settings'] = (array) $db->getPairs(
+			'SELECT s.name, s.value
+			 FROM users_settings AS s
+			 WHERE s.user_id = ?',
+			array($id)
+		);
 
 		// loop settings and unserialize them
 		foreach($user['settings'] as &$value) $value = unserialize($value);
@@ -159,11 +159,10 @@ class BackendUsersModel
 		return $user;
 	}
 
-
 	/**
 	 * Fetch the list of date formats including examples of these formats.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getDateFormats()
 	{
@@ -180,42 +179,43 @@ class BackendUsersModel
 		return $possibleFormats;
 	}
 
-
 	/**
 	 * Get user groups
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getGroups()
 	{
-		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
-														FROM groups AS i');
+		return (array) BackendModel::getDB()->getPairs(
+			'SELECT i.id, i.name
+			 FROM groups AS i'
+		);
 	}
-
 
 	/**
 	 * Get the user ID linked to a given email
 	 *
-	 * @return	int
-	 * @param	string $email	The email for the user.
+	 * @param string $email The email for the user.
+	 * @return int
 	 */
 	public static function getIdByEmail($email)
 	{
 		// get user-settings
-		$userId = BackendModel::getDB()->getVar('SELECT i.id
-													FROM users AS i
-													WHERE i.email = ?',
-													array((string) $email));
+		$userId = BackendModel::getDB()->getVar(
+			'SELECT i.id
+			 FROM users AS i
+			 WHERE i.email = ?',
+			array((string) $email)
+		);
 
 		// userId or false on error
 		return ($userId == 0) ? false : (int) $userId;
 	}
 
-
 	/**
 	 * Fetch the list of number formats including examples of these formats.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getNumberFormats()
 	{
@@ -232,11 +232,10 @@ class BackendUsersModel
 		return $possibleFormats;
 	}
 
-
 	/**
 	 * Fetch the list of time formats including examples of these formats.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getTimeFormats()
 	{
@@ -253,20 +252,21 @@ class BackendUsersModel
 		return $possibleFormats;
 	}
 
-
 	/**
 	 * Get all users
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getUsers()
 	{
 		// fetch users
-		$users = (array) BackendModel::getDB()->getPairs('SELECT i.id, s.value
-															FROM users AS i
-															INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
-															WHERE i.active = ? AND i.deleted = ?',
-															array('nickname', 'Y', 'N'), 'id');
+		$users = (array) BackendModel::getDB()->getPairs(
+			'SELECT i.id, s.value
+			 FROM users AS i
+			 INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
+			 WHERE i.active = ? AND i.deleted = ?',
+			array('nickname', 'Y', 'N'), 'id'
+		);
 
 		// loop users & unserialize
 		foreach($users as &$value) $value = unserialize($value);
@@ -275,13 +275,12 @@ class BackendUsersModel
 		return $users;
 	}
 
-
 	/**
 	 * Add a new user.
 	 *
-	 * @return	int
-	 * @param	array $user			The userdata.
-	 * @param	array $settings		The settings for the new user.
+	 * @param array $user The userdata.
+	 * @param array $settings The settings for the new user.
+	 * @return int
 	 */
 	public static function insert(array $user, array $settings)
 	{
@@ -302,13 +301,12 @@ class BackendUsersModel
 		return $userId;
 	}
 
-
 	/**
 	 * Restores a user
 	 * @later	this method should check if all needed data is present
 	 *
-	 * @return	bool
-	 * @param	string $email	The e-mail adress of the user to restore.
+	 * @param string $email The e-mail adress of the user to restore.
+	 * @return bool
 	 */
 	public static function undoDelete($email)
 	{
@@ -319,11 +317,13 @@ class BackendUsersModel
 		$db = BackendModel::getDB(true);
 
 		// get id
-		$id = $db->getVar('SELECT id
-							FROM users AS i
-							INNER JOIN users_settings AS s ON i.id = s.user_id
-							WHERE i.email = ? AND i.deleted = ?',
-							array($email, 'Y'));
+		$id = $db->getVar(
+			'SELECT id
+			 FROM users AS i
+			 INNER JOIN users_settings AS s ON i.id = s.user_id
+			 WHERE i.email = ? AND i.deleted = ?',
+			array($email, 'Y')
+		);
 
 		// no valid users
 		if($id === null) return false;
@@ -338,14 +338,12 @@ class BackendUsersModel
 		}
 	}
 
-
 	/**
 	 * Save the changes for a given user
 	 * Remark: $user['id'] should be available
 	 *
-	 * @return	void
-	 * @param	array $user			The userdata.
-	 * @param	array $settings		The settings for the user.
+	 * @param array $user The userdata.
+	 * @param array $settings The settings for the user.
 	 */
 	public static function update(array $user, array $settings)
 	{
@@ -359,23 +357,22 @@ class BackendUsersModel
 		foreach($settings as $key => $value)
 		{
 			// insert or update
-			$db->execute('INSERT INTO users_settings(user_id, name, value)
-							VALUES(?, ?, ?)
-							ON DUPLICATE KEY UPDATE value = ?',
-							array($user['id'], $key, serialize($value), serialize($value)));
+			$db->execute(
+				'INSERT INTO users_settings(user_id, name, value)
+				 VALUES(?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?',
+				array($user['id'], $key, serialize($value), serialize($value))
+			);
 		}
 
-		// return updated
 		return $updated;
 	}
-
 
 	/**
 	 * Update the user password
 	 *
-	 * @return	void
-	 * @param	BackendUser $user	An instance of BackendUser.
-	 * @param	string $password	The new password for the user.
+	 * @param BackendUser $user An instance of BackendUser.
+	 * @param string $password The new password for the user.
 	 */
 	public static function updatePassword(BackendUser $user, $password)
 	{
@@ -390,5 +387,3 @@ class BackendUsersModel
 		self::deleteResetPasswordSettings($userId);
 	}
 }
-
-?>

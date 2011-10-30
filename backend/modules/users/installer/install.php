@@ -1,25 +1,27 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the contact module
  *
- * @package		installer
- * @subpackage	users
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class UsersInstall extends ModuleInstaller
 {
 	/**
 	 * Add a GOD-user
-	 *
-	 * @return	void
 	 */
 	private function addUser()
 	{
 		// no god user already exists
+		// @todo refactor this nasty if statement...
 		if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
 											FROM users
 											WHERE is_god = ? AND deleted = ? AND active = ?',
@@ -74,11 +76,8 @@ class UsersInstall extends ModuleInstaller
 		}
 	}
 
-
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -117,5 +116,3 @@ class UsersInstall extends ModuleInstaller
 		$this->addUser();
 	}
 }
-
-?>
