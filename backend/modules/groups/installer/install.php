@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the groups module
  *
- * @package		installer
- * @subpackage	groups
- *
- * @author		Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
- * @since		2.0
+ * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class GroupsInstall extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -47,15 +48,11 @@ class GroupsInstall extends ModuleInstaller
 		$this->insertDashboardSequence();
 	}
 
-
 	/**
 	 * Insert an empty admin dashboard sequence
-	 *
-	 * @return	void
 	 */
 	private function insertDashboardSequence()
 	{
-		// get db
 		$db = $this->getDB();
 
 		// create standard dashboard sequence
@@ -101,5 +98,3 @@ class GroupsInstall extends ModuleInstaller
 		$db->insert('users_settings', $userSetting);
 	}
 }
-
-?>
