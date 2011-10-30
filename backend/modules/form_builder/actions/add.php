@@ -1,51 +1,37 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new item.
  *
- * @package		backend
- * @subpackage	form_builder
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendFormBuilderAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('add');
-
-		// create elements
 		$this->frm->addText('name');
 		$this->frm->addDropdown('method', array('database' => BL::getLabel('MethodDatabase'), 'database_email' => BL::getLabel('MethodDatabaseEmail')), 'database_email');
 		$this->frm->addText('email');
@@ -53,18 +39,13 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('success_message');
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// shorten the fields
@@ -89,7 +70,6 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 				elseif(BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
 			}
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build array
@@ -124,5 +104,3 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>
