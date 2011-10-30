@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 // load substantial steps
 require_once 'step.php';
 require_once 'step_1.php';
@@ -10,16 +17,11 @@ require_once 'step_5.php';
 require_once 'step_6.php';
 require_once 'step_7.php';
 
-
 /**
  * Fork Installer
  *
- * @package		install
- * @subpackage	installer
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class Installer
 {
@@ -30,11 +32,8 @@ class Installer
 	 */
 	private $step;
 
-
 	/**
 	 * Class constructor.
-	 *
-	 * @return	void
 	 */
 	public function __construct()
 	{
@@ -48,11 +47,8 @@ class Installer
 		$this->execute();
 	}
 
-
 	/**
 	 * Executes the proper step
-	 *
-	 * @return	void
 	 */
 	private function execute()
 	{
@@ -64,11 +60,8 @@ class Installer
 		$instance->execute();
 	}
 
-
 	/**
 	 * Sets the step based on a few checks
-	 *
-	 * @return	void
 	 */
 	private function setStep()
 	{
@@ -98,5 +91,3 @@ class Installer
 		exit;
 	}
 }
-
-?>
