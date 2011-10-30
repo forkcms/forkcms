@@ -18,10 +18,6 @@
         <translation language="nl"><![CDATA[aantal gebruikers]]></translation>
         <translation language="en"><![CDATA[number of users]]></translation>
       </item>
-      <item type="label" name="Screenname">
-        <translation language="nl"><![CDATA[scherm naam]]></translation>
-        <translation language="en"><![CDATA[screen name]]></translation>
-      </item>
       <item type="label" name="Checkbox">
         <translation language="nl"><![CDATA[&nbsp;]]></translation>
         <translation language="en"><![CDATA[&nbsp;]]></translation>

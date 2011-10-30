@@ -310,7 +310,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
 
 		// add columns
-		$this->dataGridUsers->addColumn('nickname', ucfirst(BL::lbl('Screenname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->addColumn('nickname', ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 		$this->dataGridUsers->addColumn('surname', ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 		$this->dataGridUsers->addColumn('name', ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
