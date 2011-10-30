@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to create a draft based on an existing mailing.
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorCopy extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -57,5 +58,3 @@ class BackendMailmotorCopy extends BackendBaseAction
 		$this->redirect(BackendModel::createURLForAction('index') . '&report=mailing-copied&var=' . $mailing['name']);
 	}
 }
-
-?>

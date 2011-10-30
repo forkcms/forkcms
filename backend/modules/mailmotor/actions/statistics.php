@@ -1,19 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This page will display the statistical overview of a sent mailing
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorStatistics extends BackendBaseActionIndex
 {
 	// maximum number of items
 	const PAGING_LIMIT = 10;
-
 
 	/**
 	 * The given mailing ID
@@ -22,14 +24,12 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 	 */
 	private $id;
 
-
 	/**
 	 * The mailing record
 	 *
 	 * @var	array
 	 */
 	private $mailing;
-
 
 	/**
 	 * The statistics record
@@ -38,42 +38,24 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 	 */
 	private $statistics;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// add highchart javascript
 		$this->header->addJS('highcharts.js');
-
-		// get the data
 		$this->getData();
-
-		// load datagrid
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Gets all data needed for this page
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
@@ -89,11 +71,8 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=no-statistics-loaded&amp;var=' . str_replace('#', '', $this->mailing['name']));
 	}
 
-
 	/**
 	 * Loads the datagrid with the clicked link
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -130,11 +109,8 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -148,5 +124,3 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->tpl->assign('stats', $this->statistics);
 	}
 }
-
-?>

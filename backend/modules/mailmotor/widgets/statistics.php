@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the classic fork mailmotor widget
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 {
-	// max number of items to show per page
 	const PAGING_LIMIT = 10;
-
 
 	/**
 	 * the default group ID
@@ -23,38 +24,21 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 	 */
 	private $groupId;
 
-
 	/**
 	 * Execute the widget
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// add css
 		$this->header->addCSS('widgets.css', 'mailmotor');
-
-		// set column
 		$this->setColumn('right');
-
-		// set position
 		$this->setPosition(1);
-
-		// fetch the default group ID
 		$this->groupId = BackendMailmotorModel::getDefaultGroupID();
-
-		// parse
 		$this->parse();
-
-		// display
 		$this->display();
 	}
 
-
 	/**
 	 * Load the datagrid for statistics
-	 *
-	 * @return	void
 	 */
 	private function loadStatistics()
 	{
@@ -100,11 +84,8 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		}
 	}
 
-
 	/**
 	 * Load the datagrid for subscriptions
-	 *
-	 * @return	void
 	 */
 	private function loadSubscriptions()
 	{
@@ -131,11 +112,8 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		}
 	}
 
-
 	/**
 	 * Load the datagrid for unsubscriptions
-	 *
-	 * @return	void
 	 */
 	private function loadUnsubscriptions()
 	{
@@ -145,16 +123,9 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// no pagination
 			$dataGrid->setPaging(false);
-
-			// set edit link
 			$dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
-
-			// set column functions
 			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 			// parse the datagrid
@@ -162,11 +133,8 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		}
 	}
 
-
 	/**
 	 * Parse stuff into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -175,5 +143,3 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		$this->loadUnsubscriptions();
 	}
 }
-
-?>

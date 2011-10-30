@@ -1,24 +1,26 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorCMHelper
 {
 	/**
 	 * Checks if a valid CM account is set up
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function checkAccount()
 	{
-		// try and call the CM object
 		try
 		{
 			self::getCM();
@@ -33,16 +35,14 @@ class BackendMailmotorCMHelper
 		return true;
 	}
 
-
 	/**
 	 * Creates a new client
 	 *
-	 * @return	void
-	 * @param	string $companyName			The client company name.
-	 * @param	string $contactName			The personal name of the principle contact for this client.
-	 * @param	string $email				An email address to which this client will be sent application-related emails.
-	 * @param	string[optional] $country	This client’s country.
-	 * @param	string[optional] $timezone	Client timezone for tracking and reporting data.
+	 * @param string $companyName The client company name.
+	 * @param string $contactName The personal name of the principle contact for this client.
+	 * @param string $email An email address to which this client will be sent application-related emails.
+	 * @param string[optional] $country This client’s country.
+	 * @param string[optional] $timezone Client timezone for tracking and reporting data.
 	 */
 	public static function createClient($companyName, $contactName, $email, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
 	{
@@ -53,13 +53,12 @@ class BackendMailmotorCMHelper
 		BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $clientId);
 	}
 
-
 	/**
 	 * Creates a new custom field for a given group
 	 *
-	 * @return	bool
-	 * @param	string $name	The name of the custom field.
-	 * @param	int $groupId	The group ID you want to add the custom field for.
+	 * @param string $name The name of the custom field.
+	 * @param int $groupId The group ID you want to add the custom field for.
+	 * @return bool
 	 */
 	public static function createCustomField($name, $groupId)
 	{
@@ -80,13 +79,11 @@ class BackendMailmotorCMHelper
 		return false;
 	}
 
-
 	/**
 	 * Deletes a custom field from a given group
 	 *
-	 * @return	void
-	 * @param	string $name	The name of the custom field.
-	 * @param	string $groupId	The CampaignMonitor ID of the list you want to remove the custom field from.
+	 * @param string $name The name of the custom field.
+	 * @param string $groupId The CampaignMonitor ID of the list you want to remove the custom field from.
 	 */
 	public static function deleteCustomField($name, $groupId)
 	{
@@ -107,16 +104,13 @@ class BackendMailmotorCMHelper
 		return false;
 	}
 
-
 	/**
 	 * Deletes one or more groups
 	 *
-	 * @return	void
-	 * @param 	mixed $ids	The ids to delete.
+	 * @param  mixed $ids The ids to delete.
 	 */
 	public static function deleteGroups($ids)
 	{
-		// get DB
 		$db = BackendModel::getDB(true);
 
 		// if $ids is not an array, make one
@@ -142,12 +136,10 @@ class BackendMailmotorCMHelper
 		}
 	}
 
-
 	/**
 	 * Deletes one or more mailings
 	 *
-	 * @return	void
-	 * @param 	mixed $ids	The ids to delete.
+	 * @param  mixed $ids The ids to delete.
 	 */
 	public static function deleteMailings($ids)
 	{
@@ -163,18 +155,17 @@ class BackendMailmotorCMHelper
 		foreach($ids as $id)
 		{
 			/*
-				Depending on when you call this method it may or may not trigger an exception due to emails no longer existing with CM.
-				That's why this bit is in a try/catch.
+				Depending on when you call this method it may or may not trigger an exception due
+				to emails no longer existing with CM. That's why this bit is in a try/catch.
 			*/
 			try
 			{
 				self::getCM()->deleteCampaign(self::getCampaignMonitorID('campaign', $id));
 			}
 
-			// ignore exceptions
 			catch(Exception $e)
 			{
-				// do nothing
+				// ignore exception
 			}
 
 			// delete group
@@ -182,12 +173,11 @@ class BackendMailmotorCMHelper
 		}
 	}
 
-
 	/**
 	 * Returns all bounces
 	 *
-	 * @return	array
-	 * @param	int $id		The id of the campaign.
+	 * @param int $id The id of the campaign.
+	 * @return array
 	 */
 	public static function getBounces($id)
 	{
@@ -214,32 +204,28 @@ class BackendMailmotorCMHelper
 		return (array) $bounces;
 	}
 
-
 	/**
 	 * Inserts a record into the mailmotor_campaignmonitor_ids table
 	 *
-	 * @return	string
-	 * @param	string $type		The type to insert.
-	 * @param	string $otherId		The ID in our tables.
+	 * @param string $type The type to insert.
+	 * @param string $otherId The ID in our tables.
+	 * @return string
 	 */
 	public static function getCampaignMonitorID($type, $otherId)
 	{
-		// get db
-		$db = BackendModel::getDB();
-
-		// insert the campaignmonitor ID
-		return $db->getVar('SELECT cm_id
-							FROM mailmotor_campaignmonitor_ids
-							WHERE type = ? AND other_id = ?',
-							array($type, $otherId));
+		return BackendModel::getDB()->getVar(
+			'SELECT cm_id
+			 FROM mailmotor_campaignmonitor_ids
+			 WHERE type = ? AND other_id = ?',
+			array($type, $otherId)
+		);
 	}
-
 
 	/**
 	 * Returns the CM IDs for a given list of group IDs
 	 *
-	 * @return	array
-	 * @param 	array $groupIds		The IDs of the groups.
+	 * @param  array $groupIds The IDs of the groups.
+	 * @return array
 	 */
 	public static function getCampaignMonitorIDsForGroups(array $groupIds)
 	{
@@ -247,18 +233,19 @@ class BackendMailmotorCMHelper
 		if(empty($groupIds)) return array();
 
 		// fetch campaignmonitor IDs
-		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
-															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $groupIds) . ')',
-															array('list'));
+		return (array) BackendModel::getDB()->getColumn(
+			'SELECT mci.cm_id
+			 FROM mailmotor_campaignmonitor_ids AS mci
+			 WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $groupIds) . ')',
+			array('list')
+		);
 	}
-
 
 	/**
 	 * Returns the CM IDs for a given list of template IDs
 	 *
-	 * @return	array
-	 * @param 	array $templateIds	The ids of the templates.
+	 * @param  array $templateIds The ids of the templates.
+	 * @return array
 	 */
 	public static function getCampaignMonitorIDsForTemplates($templateIds)
 	{
@@ -266,28 +253,28 @@ class BackendMailmotorCMHelper
 		$templates = (empty($templateIds)) ? array(BackendMailmotorModel::getDefaultTemplateID()) : $templateIds;
 
 		// fetch campaignmonitor IDs
-		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
-															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $templates) . ')',
-															array('template'));
+		return (array) BackendModel::getDB()->getColumn(
+			'SELECT mci.cm_id
+			 FROM mailmotor_campaignmonitor_ids AS mci
+			 WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $templates) . ')',
+			array('template')
+		);
 	}
-
 
 	/**
 	 * Returns the client ID from the settings
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getClientID()
 	{
 		return (string) BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
 	}
 
-
 	/**
 	 * Returns the clients for use in a dropdown
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getClientsAsPairs()
 	{
@@ -307,15 +294,13 @@ class BackendMailmotorCMHelper
 			$results[$client['id']] = $client['name'];
 		}
 
-		// return the results
 		return $results;
 	}
-
 
 	/**
 	 * Returns the CampaignMonitor object.
 	 *
-	 * @return	CampaignMonitor
+	 * @return CampaignMonitor
 	 */
 	public static function getCM()
 	{
@@ -344,15 +329,13 @@ class BackendMailmotorCMHelper
 			Spoon::set('campaignmonitor', $cm);
 		}
 
-		// return the CampaignMonitor object
 		return Spoon::get('campaignmonitor');
 	}
-
 
 	/**
 	 * Returns the CampaignMonitor countries as pairs
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getCountriesAsPairs()
 	{
@@ -366,12 +349,11 @@ class BackendMailmotorCMHelper
 		return $records;
 	}
 
-
 	/**
 	 * Returns the custom fields by a given group ID
 	 *
-	 * @return	array
-	 * @param	int $groupId	The id of the group.
+	 * @param int $groupId The id of the group.
+	 * @return array
 	 */
 	public static function getCustomFields($groupId)
 	{
@@ -405,13 +387,12 @@ class BackendMailmotorCMHelper
 		return (array) $fields;
 	}
 
-
 	/**
 	 * Returns what addresses opened a certain mailing
 	 *
-	 * @return	array
-	 * @param	string $cmId				The id of the mailing in CampaignMonitor.
-	 * @param	bool[optional] $getColumn	If this is true, it will return an array with just the email addresses who opened the mailing.
+	 * @param string $cmId The id of the mailing in CampaignMonitor.
+	 * @param bool[optional] $getColumn If this is true, it will return an array with just the email addresses who opened the mailing.
+	 * @return array
 	 */
 	public static function getMailingOpens($cmId, $getColumn = false)
 	{
@@ -434,12 +415,11 @@ class BackendMailmotorCMHelper
 		return (array) $results;
 	}
 
-
 	/**
 	 * Get the custom field value for 'name'
 	 *
-	 * @return	string
-	 * @param	array $fields		The custom fields array.
+	 * @param array $fields The custom fields array.
+	 * @return string
 	 */
 	private static function getNameFieldValue($fields)
 	{
@@ -455,14 +435,13 @@ class BackendMailmotorCMHelper
 		return $name;
 	}
 
-
 	/**
 	 * Returns the statistics for a given mailing
 	 *
-	 * @return	array
-	 * @param	int $id							The id of the mailing.
-	 * @param	bool[optional] $fetchClicks		If the click-count should be included.
-	 * @param	bool[optional] $fetchOpens		If the open-count should be included.
+	 * @param int $id The id of the mailing.
+	 * @param bool[optional] $fetchClicks If the click-count should be included.
+	 * @param bool[optional] $fetchOpens If the open-count should be included.
+	 * @return array
 	 */
 	public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
 	{
@@ -563,12 +542,11 @@ class BackendMailmotorCMHelper
 		return false;
 	}
 
-
 	/**
 	 * Returns the statistics for a given e-mail address
 	 *
-	 * @return	array
-	 * @param	string $email	The emailaddress to get the stats for.
+	 * @param string $email The emailaddress to get the stats for.
+	 * @return array
 	 */
 	public static function getStatisticsByAddress($email)
 	{
@@ -617,12 +595,11 @@ class BackendMailmotorCMHelper
 		return (array) $stats;
 	}
 
-
 	/**
 	 * Returns the statistics for all mailings in a given campaign
 	 *
-	 * @return	array
-	 * @param	int $id		The id of the campaign.
+	 * @param int $id The id of the campaign.
+	 * @return array
 	 */
 	public static function getStatisticsByCampaignID($id)
 	{
@@ -667,16 +644,14 @@ class BackendMailmotorCMHelper
 		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
 		$stats['clicks_percentage'] = ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
-		// return the stats
 		return (array) $stats;
 	}
-
 
 	/**
 	 * Returns all subscribers, regardless of the page limit CM gives us.
 	 *
-	 * @return	array
-	 * @param	string $listId	The list ID to get the subscribers from.
+	 * @param string $listId The list ID to get the subscribers from.
+	 * @return array
 	 */
 	public static function getSubscribers($listId)
 	{
@@ -706,15 +681,13 @@ class BackendMailmotorCMHelper
 			}
 		}
 
-		// return the results
 		return $results;
 	}
-
 
 	/**
 	 * Returns the CampaignMonitor countries as pairs
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getTimezonesAsPairs()
 	{
@@ -728,14 +701,13 @@ class BackendMailmotorCMHelper
 		return $records;
 	}
 
-
 	/**
 	 * Inserts a record into the mailmotor_campaignmonitor_ids table
 	 *
-	 * @return	string
-	 * @param	string $type		The type of the record.
-	 * @param	string $id			The id in CampaignMonitor.
-	 * @param	string $otherId		The id in our tables.
+	 * @param string $type The type of the record.
+	 * @param string $id The id in CampaignMonitor.
+	 * @param string $otherId The id in our tables.
+	 * @return string
 	 */
 	public static function insertCampaignMonitorID($type, $id, $otherId)
 	{
@@ -749,12 +721,11 @@ class BackendMailmotorCMHelper
 		BackendModel::getDB(true)->insert('mailmotor_campaignmonitor_ids', array('type' => $type, 'cm_id' => $id, 'other_id' => $otherId));
 	}
 
-
 	/**
 	 * Creates a list in campaignmonitor and inserts the group record in the database. Returns the group ID
 	 *
-	 * @return	int
-	 * @param	array $item		The group record to insert.
+	 * @param array $item The group record to insert.
+	 * @return int
 	 */
 	public static function insertGroup(array $item)
 	{
@@ -788,12 +759,11 @@ class BackendMailmotorCMHelper
 		}
 	}
 
-
 	/**
 	 * Creates a campaign in campaignmonitor. Returns the campaign ID
 	 *
-	 * @return	mixed
-	 * @param	array $item		The mailing record to insert.
+	 * @param array $item The mailing record to insert.
+	 * @return mixed
 	 */
 	public static function insertMailing(array $item)
 	{
@@ -814,12 +784,11 @@ class BackendMailmotorCMHelper
 		return false;
 	}
 
-
 	/**
 	 * Creates a campaign draft into campaignmonitor.
 	 *
-	 * @return	string			The campaign ID of the newly created draft.
-	 * @param	array $item		The mailing record to update a campaign draft.
+	 * @param array $item The mailing record to update a campaign draft.
+	 * @return string The campaign ID of the newly created draft.
 	 */
 	public static function insertMailingDraft(array $item)
 	{
@@ -856,12 +825,11 @@ class BackendMailmotorCMHelper
 		return $campaignID;
 	}
 
-
 	/**
 	 * Saves a draft mailing into campaignmonitor
 	 *
-	 * @return	string 			The newly created campaignmonitor ID
-	 * @param	array $item		The mailing record to create/update a campaign draft.
+	 * @param array $item The mailing record to create/update a campaign draft.
+	 * @return string The newly created campaignmonitor ID
 	 */
 	public static function saveMailingDraft(array $item)
 	{
@@ -879,12 +847,10 @@ class BackendMailmotorCMHelper
 		}
 	}
 
-
 	/**
 	 * Creates a campaign in campaignmonitor and sends it
 	 *
-	 * @return	void
-	 * @param	array $item		The mailing record to insert.
+	 * @param array $item The mailing record to insert.
 	 */
 	public static function sendMailing($item)
 	{
@@ -902,7 +868,6 @@ class BackendMailmotorCMHelper
 		self::getCM()->sendCampaign($item['cm_id'], $item['from_email'], $item['delivery_date']);
 	}
 
-
 	/**
 	 * Creates a campaign in campaignmonitor and sends it
 	 *
@@ -916,14 +881,13 @@ class BackendMailmotorCMHelper
 		self::getCM()->sendCampaignPreview($campaignID, $recipient);
 	}
 
-
 	/**
 	 * Subscribes an e-mail address and send him/her to CampaignMonitor
 	 *
-	 * @return	bool
-	 * @param	string $email					The emailaddress.
-	 * @param	string[optional] $groupId		The group wherin the emailaddress should be added.
-	 * @param	array[optional] $customFields	Any optional custom fields.
+	 * @param string $email The emailaddress.
+	 * @param string[optional] $groupId The group wherin the emailaddress should be added.
+	 * @param array[optional] $customFields Any optional custom fields.
+	 * @return bool
 	 */
 	public static function subscribe($email, $groupId = null, $customFields = null)
 	{
@@ -962,11 +926,20 @@ class BackendMailmotorCMHelper
 			$subscriberGroup['subscribed_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 			// insert/update the user
-			$db->execute('INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
-							VALUES (?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
-							array($subscriberGroup['email'], $subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on'],
-									$subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on']));
+			$db->execute(
+				'INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
+				 VALUES (?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
+				array(
+					$subscriberGroup['email'],
+					$subscriberGroup['group_id'],
+					$subscriberGroup['status'],
+					$subscriberGroup['subscribed_on'],
+					$subscriberGroup['group_id'],
+					$subscriberGroup['status'],
+					$subscriberGroup['subscribed_on']
+				)
+			);
 
 			// update custom fields for this subscriber/group
 			if(!empty($customFields)) BackendMailmotorModel::updateCustomFields($customFields, $groupId, $email);
@@ -979,13 +952,12 @@ class BackendMailmotorCMHelper
 		return false;
 	}
 
-
 	/**
 	 * Unsubscribes an e-mail address from CampaignMonitor and our database
 	 *
-	 * @return	bool
-	 * @param	string $email				The emailaddress to unsubscribe.
-	 * @param	string[optional] $groupId	The group wherefrom the emailaddress should be unsubscribed.
+	 * @param string $email The emailaddress to unsubscribe.
+	 * @param string[optional] $groupId The group wherefrom the emailaddress should be unsubscribed.
+	 * @return bool
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{
@@ -1020,29 +992,25 @@ class BackendMailmotorCMHelper
 		return false;
 	}
 
-
 	/**
 	 * Updates a client
 	 *
-	 * @return	void
-	 * @param	string $companyName			The client company name.
-	 * @param	string $contactName			The personal name of the principle contact for this client.
-	 * @param	string $email				An email address to which this client will be sent application-related emails.
-	 * @param	string[optional] $country	This client’s country.
-	 * @param	string[optional] $timezone	Client timezone for tracking and reporting data.
+	 * @param string $companyName The client company name.
+	 * @param string $contactName The personal name of the principle contact for this client.
+	 * @param string $email An email address to which this client will be sent application-related emails.
+	 * @param string[optional] $country This client’s country.
+	 * @param string[optional] $timezone Client timezone for tracking and reporting data.
 	 */
 	public static function updateClient($companyName, $contactName, $email, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
 	{
-		// update client
 		self::getCM()->updateClientBasics($companyName, $contactName, $email, $country, $timezone);
 	}
-
 
 	/**
 	 * Updates a list with campaignmonitor and in the database. Returns the affected rows
 	 *
-	 * @return	int
-	 * @param	array $item		The new data.
+	 * @param array $item The new data.
+	 * @return int
 	 */
 	public static function updateGroup($item)
 	{
@@ -1063,12 +1031,10 @@ class BackendMailmotorCMHelper
 		return (int) BackendMailmotorModel::updateGroup($item);
 	}
 
-
 	/**
 	 * Updates a mailing
 	 *
-	 * @return	void
-	 * @param	array $item		The mailing record to update.
+	 * @param array $item The mailing record to update.
 	 */
 	public static function updateMailing(array $item)
 	{
@@ -1105,14 +1071,13 @@ class BackendMailmotorCMHelper
 		BackendMailmotorModel::updateGroupsForMailing($id, $groups);
 	}
 
-
 	/**
 	 * "Updates" a mailing draft; it deletes and re-creates a draft mailing.
 	 * Campaignmonitor does not have an updateDraft method, so we have to do it this way in order
 	 * to be able to use their sendCampaignPreview method.
 	 *
-	 * @return	mixed 		Returns the newly made campaign ID, or false if the method failed.
-	 * @param	array $item	The mailing record to update a campaign draft.
+	 * @param array $item The mailing record to update a campaign draft.
+	 * @return mixed Returns the newly made campaign ID, or false if the method failed.
 	 */
 	public static function updateMailingDraft(array $item)
 	{
@@ -1139,5 +1104,3 @@ class BackendMailmotorCMHelper
 		}
 	}
 }
-
-?>

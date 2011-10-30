@@ -1,24 +1,23 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This page will display the overview of groups
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorGroups extends BackendBaseActionIndex
 {
-	// maximim number of items
 	const PAGING_LIMIT = 10;
-
 
 	/**
 	 * Checks if default groups were set, and shows a message with more info if they are not.
-	 *
-	 * @return	void
 	 */
 	private function checkForDefaultGroups()
 	{
@@ -29,35 +28,20 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		$this->tpl->assign('noDefaultsSet', true);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// check for default groups
 		$this->checkForDefaultGroups();
-
-		// load datagrid
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrid with the groups
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -98,17 +82,11 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
-
-?>
