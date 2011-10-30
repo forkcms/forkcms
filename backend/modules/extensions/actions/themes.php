@@ -24,7 +24,7 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 	 *
 	 * @var	array
 	 */
-	private $installableThemes, $installedThemes;
+	private $installableThemes = array(), $installedThemes = array();
 
 
 	/**

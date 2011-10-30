@@ -41,6 +41,17 @@
 				{/option:dataGridTemplates}
 			</td>
 			<td id="sidebar">
+				{option:information.thumbnail}
+					<div class="box">
+						<div class="heading">
+							<h3>{$lblImage|ucfirst}</h3>
+						</div>
+						<div class="options">
+							<img src="/frontend/themes/{$name}/{$information.thumbnail}" alt="{$name}" />
+						</div>
+					</div>
+				{/option:information.thumbnail}
+
 				{option:information.version}
 					<div class="box">
 						<div class="heading">

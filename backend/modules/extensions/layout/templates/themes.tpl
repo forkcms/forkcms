@@ -14,6 +14,7 @@
 </div>
 
 {form:settingsThemes}
+	{option:installableThemes}
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblNotInstalledThemes|ucfirst}</h3>
@@ -34,6 +35,7 @@
 			</ul>
 		</div>
 	</div>
+	{/option:installableThemes}
 
 	<div class="box">
 		<div class="heading">

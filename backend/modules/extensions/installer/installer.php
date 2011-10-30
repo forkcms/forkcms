@@ -135,12 +135,13 @@ class ExtensionsInstaller extends ModuleInstaller
 
 		// theme navigation
 		$navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
-		$this->setNavigation($navigationThemesId, 'ThemesSelection', 'extensions/themes');
-		$this->setNavigation($navigationThemesId, 'Templates', 'extensions/theme_templates', array(
-			'extensions/add_theme_template',
-			'extensions/edit_theme_template',
+		$this->setNavigation($navigationThemesId, 'ThemesSelection', 'extensions/themes', array(
 			'extensions/upload_theme',
 			'extensions/detail_theme'
+		));
+		$this->setNavigation($navigationThemesId, 'Templates', 'extensions/theme_templates', array(
+			'extensions/add_theme_template',
+			'extensions/edit_theme_template'
 		));
 	}
 
