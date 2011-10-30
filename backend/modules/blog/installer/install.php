@@ -166,12 +166,9 @@ class BlogInstall extends ModuleInstaller
 
 	/**
 	 * Insert an empty admin dashboard sequence
-	 *
-	 * @return	void
 	 */
 	private function insertWidget()
 	{
-		// build widget
 		$comments = array(
 			'column' => 'right',
 			'position' => 1,
@@ -179,10 +176,8 @@ class BlogInstall extends ModuleInstaller
 			'present' => true
 		);
 
-		// insert widget
 		$this->insertDashboardWidget('blog', 'comments', $comments);
 	}
-
 
 	/**
 	 * Install example data

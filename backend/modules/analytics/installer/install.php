@@ -70,21 +70,18 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertWidgets();
 	}
 
-
 	/**
 	 * Insert an empty admin dashboard sequence
-	 *
-	 * @return	void
 	 */
 	private function insertWidgets()
 	{
-		// build widgets
 		$trafficSources = array(
 			'column' => 'middle',
 			'position' => 1,
 			'hidden' => false,
 			'present' => true
 		);
+
 		$visitors = array(
 			'column' => 'middle',
 			'position' => 2,

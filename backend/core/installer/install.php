@@ -359,10 +359,9 @@ class ModuleInstaller
 	/**
 	 * Insert a dashboard widget
 	 *
-	 * @return	void
-	 * @param	array $module		The widget's module name.
-	 * @param	array $widget		The widget's name.
-	 * @param	array $data			The widget's data.
+	 * @param array $module
+	 * @param array $widget
+	 * @param array $data
 	 */
 	protected function insertDashboardWidget($module, $widget, $data)
 	{
@@ -405,7 +404,6 @@ class ModuleInstaller
 			$db->update('users_settings', $settings, 'user_id = ? AND name = ?', array($settings['user_id'], $settings['name']));
 		}
 	}
-
 
 	/**
 	 * Insert an extra

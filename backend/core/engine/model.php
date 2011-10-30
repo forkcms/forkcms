@@ -225,10 +225,10 @@ class BackendModel
 	/**
 	 * Generate a totally random but readable/speakable password
 	 *
-	 * @return string
 	 * @param int[optional] $length The maximum length for the password to generate.
 	 * @param bool[optional] $uppercaseAllowed Are uppercase letters allowed?
 	 * @param bool[optional] $lowercaseAllowed Are lowercase letters allowed?
+	 * @return string
 	 */
 	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
 	{
@@ -401,8 +401,8 @@ class BackendModel
 	/**
 	 * Get the modules
 	 *
-	 * @return array
 	 * @param bool[optional] $activeOnly Only return the active modules.
+	 * @return array
 	 */
 	public static function getModules($activeOnly = true)
 	{
