@@ -32,7 +32,11 @@
 
 			function getTinyMCEContent()
 			{
-				// this cleans the tinyMCE and moves the current content to the textarea
+				/*
+					this cleans the tinyMCE and moves the current content to the textarea
+					first parameter determines whether or not to skip cleanup, second
+					if we should skip the callback method
+				*/
 				tinyMCE.triggerSave(false, true);
 
 				// return the content
