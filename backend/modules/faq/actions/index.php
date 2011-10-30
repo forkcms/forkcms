@@ -7,13 +7,12 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.1
  */
 class BackendFaqIndex extends BackendBaseActionIndex
 {
 	/**
-	 * The dataGrids
+	 * The datagrids
 	 *
 	 * @var	array
 	 */
@@ -30,10 +29,10 @@ class BackendFaqIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// load dataGrids
-		$this->loadDatagrids();
+		// load the datagrids
+		$this->loadDataGrids();
 
-		// parse page
+		// parse the datagrids
 		$this->parse();
 
 		// display the page
@@ -42,20 +41,20 @@ class BackendFaqIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Loads the dataGrids
+	 * Load the datagrids
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrids()
+	private function loadDataGrids()
 	{
 		// load all categories
-		$categories = BackendFaqModel::getCategories(true);
+		$categories = BackendFaqModel::getCategories();
 
-		// loop categories and create a dataGrid for each one
-		foreach($categories as $categoryId => $categoryTitle)
+		// run over categories and create datagrid for each one
+		foreach($categories as $category)
 		{
-			// create dataGrid
-			$dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $categoryId));
+			// create datagrid
+			$dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $category['id']));
 
 			// set attributes
 			$dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
@@ -79,37 +78,29 @@ class BackendFaqIndex extends BackendBaseActionIndex
 			$dataGrid->setColumnsSequence('dragAndDropHandle');
 
 			// add a class on the handler column, so JS knows this is just a handler
-			$dataGrid->setColumnAttributes('question', array('class' => 'title'));
 			$dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 
 			// our JS needs to know an id, so we can send the new order
 			$dataGrid->setRowAttributes(array('id' => '[id]'));
 
-<<<<<<< HEAD
-			// add dataGrid to list
-			$this->dataGrids[] = array('id' => $categoryId,
-									   'title' => $categoryTitle,
-									   'content' => $dataGrid->getContent());
-=======
 			// add datagrid to list
 			$this->dataGrids[] = array(
 									'id' => $category['id'],
 									'name' => $category['name'],
 									'content' => $dataGrid->getContent()
 								);
->>>>>>> 170c938d964cfe1376b48d9def10036168378b89
 		}
 	}
 
 
 	/**
-	 * Parse the dataGrids and the reports
+	 * Parse the datagrids and the reports
 	 *
 	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse dataGrids
+		// parse datagrids
 		if(!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
 	}
 }

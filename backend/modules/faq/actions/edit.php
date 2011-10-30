@@ -7,16 +7,19 @@
  * @subpackage	faq
  *
  * @author		Lester Lievens <lester@netlash.com>
-<<<<<<< HEAD
- * @author		Matthias Mullie <matthias@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
-=======
  * @author		Matthias Mullie <matthias@mullie.eu>
->>>>>>> 170c938d964cfe1376b48d9def10036168378b89
  * @since		2.1
  */
 class BackendFaqEdit extends BackendBaseActionEdit
 {
+	/**
+	 * The available categories
+	 *
+	 * @var	array
+	 */
+	private $categories;
+
+
 	/**
 	 * Execute the action
 	 *
@@ -28,7 +31,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if($this->id !== null && BackendFaqModel::exists($this->id))
+		if($this->id !== null && BackendFaqModel::existsQuestion($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -42,7 +45,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the dataGrid
+			// parse
 			$this->parse();
 
 			// display the page
@@ -55,14 +58,17 @@ class BackendFaqEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Get the data
+	 * Get the data for a question
 	 *
 	 * @return	void
 	 */
 	private function getData()
 	{
 		// get the record
-		$this->record = (array) BackendFaqModel::get($this->id);
+		$this->record = BackendFaqModel::getQuestion($this->id);
+
+		// get categories
+		$this->categories = BackendFaqModel::getCategoriesForDropdown();
 	}
 
 
@@ -80,18 +86,12 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
-		// get categories
-		$categories = BackendFaqModel::getCategories();
-
 		// create elements
-		$this->frm->addText('title', $this->record['question'], null, 'inputText title', 'inputTextError title');
+		$this->frm->addText('question', $this->record['question'])->setAttribute('id', 'title');
+		$this->frm->getField('question')->setAttribute('class', 'title ' . $this->frm->getField('question')->getAttribute('class'));
 		$this->frm->addEditor('answer', $this->record['answer']);
+		$this->frm->addDropdown('categories', $this->categories, $this->record['category_id']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-		$this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
-		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
-
-		// meta object
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
 
 
@@ -105,15 +105,11 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
-		// get url
-		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
-		$url404 = BackendModel::getURL(404);
-
-		// parse additional variables
-		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
-
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
+
+		// assign categories
+		$this->tpl->assign('categories', $this->categories);
 	}
 
 
@@ -127,40 +123,27 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique URL
-			$this->meta->setUrlCallback('BackendFaqModel', 'getURL', array($this->record['id']));
-
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::err('QuestionIsRequired'));
+			$this->frm->getField('question')->isFilled(BL::err('QuestionIsRequired'));
 			$this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
-			$this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
-
-			// validate meta
-			$this->meta->validate();
+			$this->frm->getField('categories')->isFilled(BL::err('CategoryIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
 				$item['id'] = $this->id;
-				$item['meta_id'] = $this->meta->save(true);
-				$item['category_id'] = $this->frm->getField('category_id')->getValue();
 				$item['language'] = $this->record['language'];
-				$item['question'] = $this->frm->getField('title')->getValue();
+				$item['category_id'] = $this->frm->getField('categories')->getValue();
+				$item['question'] = $this->frm->getField('question')->getValue();
 				$item['answer'] = $this->frm->getField('answer')->getValue(true);
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 
-				// update the item
-				BackendFaqModel::update($item);
-
-				// save the tags
-				BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
-
-				// edit search index
-				if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
+				// update question values in database
+				BackendFaqModel::updateQuestion($item);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
