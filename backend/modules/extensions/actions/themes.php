@@ -12,7 +12,7 @@
 class BackendExtensionsThemes extends BackendBaseActionIndex
 {
 	/**
-	 * The form instance
+	 * The form instance.
 	 *
 	 * @var	BackendForm
 	 */
@@ -20,7 +20,15 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 
 
 	/**
-	 * Execute the action
+	 * List of available themes (installed & installable)
+	 *
+	 * @var	array
+	 */
+	private $installableThemes, $installedThemes;
+
+
+	/**
+	 * Execute the action.
 	 *
 	 * @return	void
 	 */
@@ -28,6 +36,9 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		// load the data
+		$this->loadData();
 
 		// load the form
 		$this->loadForm();
@@ -44,24 +55,39 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 
 
 	/**
-	 * Load the form
+	 * Load the available themes.
+	 *
+	 * @return	void
+	 */
+	private function loadData()
+	{
+		// loop themes
+		foreach(BackendExtensionsModel::getThemes() as $theme)
+		{
+			// themes that are already installed = have at least 1 template in DB
+			if($theme['installed']) $this->installedThemes[] = $theme;
+
+			// themes that are not yet installed, but contain valid info.xml installation data
+			elseif($theme['installable']) $this->installableThemes[] = $theme;
+		}
+	}
+
+
+	/**
+	 * Load the form.
 	 *
 	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// @todo: not yet installed templates
-
-
-
 		// create form
 		$this->frm = new BackendForm('settingsThemes');
 
 		// fetch the themes
-		$themes = BackendExtensionsModel::getThemes();
+		$themes = $this->installedThemes;
 
 		// set selected theme
-		$selected = isset($_POST['themes']) ? $_POST['themes'] : BackendModel::getModuleSetting('core', 'theme', 'core');
+		$selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : BackendModel::getModuleSetting('core', 'theme', 'core');
 
 		// no themes found
 		if(empty($themes)) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
@@ -80,12 +106,12 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 		}
 
 		// templates
-		$this->frm->addRadiobutton('themes', $themes, $selected);
+		$this->frm->addRadiobutton('installedThemes', $themes, $selected);
 	}
 
 
 	/**
-	 * Parse the form
+	 * Parse the form.
 	 *
 	 * @return	void
 	 */
@@ -93,11 +119,14 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 	{
 		// parse the form
 		$this->frm->parse($this->tpl);
+
+		// parse not yet installed themes
+		$this->tpl->assign('installableThemes', $this->installableThemes);
 	}
 
 
 	/**
-	 * Validates the form
+	 * Validates the form.
 	 *
 	 * @return	void
 	 */
@@ -110,7 +139,7 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 			if($this->frm->isCorrect())
 			{
 				// determine themes
-				$newTheme = $this->frm->getField('themes')->getValue();
+				$newTheme = $this->frm->getField('installedThemes')->getValue();
 				$oldTheme = BackendModel::getModuleSetting('core', 'theme', 'core');
 
 				// check if we actually switched themes

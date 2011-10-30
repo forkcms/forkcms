@@ -294,7 +294,7 @@ class BackendExtensionsModel
 		$theme = (string) $theme;
 
 		// check if modules directory exists
-		return SpoonDirectory::exists(FRONTEND_PATH . '/themes/' . $theme);
+		return SpoonDirectory::exists(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
 	}
 
 
@@ -576,29 +576,34 @@ class BackendExtensionsModel
 		// loop and complete the records
 		foreach($records as $key => $record)
 		{
-			// path to info.xml
-			$pathInfoXml = PATH_WWW . '/frontend/themes/' . $record . '/info.xml';
-
 			try
 			{
+				// path to info.xml
+				$pathInfoXml = PATH_WWW . '/frontend/themes/' . $record . '/info.xml';
+
 				// load info.xml
 				$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 				// convert xml to useful array
 				$information = BackendExtensionsModel::processThemeXml($infoXml);
 				if(!$information) throw new BackendException('Invalid info.xml');
-
-				// add additional values
-				$records[$record]['value'] = $record;
-				$records[$record]['label'] = $record;
-				$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/' . $information['thumbnail'];
 			}
 
-			// invalid xml or not found, ignore theme
+			// no or invalid info.xml found
 			catch(Exception $e)
 			{
-				// no need to act, the unset below will take care of removing the corrupt entry
+				// spoon thumbnail value
+				$information['thumbnail'] = 'thumbnail.png';
 			}
+
+			// add additional values
+			$records[$record]['value'] = $record;
+			$records[$record]['label'] = $record;
+			$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/' . $information['thumbnail'];
+
+			// doublecheck if templates for this theme are installed already
+			$records[$record]['installed'] = self::isThemeInstalled($record);
+			$records[$record]['installable'] = isset($information['templates']);
 
 			// unset the key
 			unset($records[$key]);
@@ -609,6 +614,8 @@ class BackendExtensionsModel
 		$core['core']['value'] = 'core';
 		$core['core']['label'] = BL::lbl('NoTheme');
 		$core['core']['thumbnail'] = '/frontend/core/layout/images/thumbnail.png';
+		$core['core']['installed'] = self::isThemeInstalled('core');
+		$core['core']['installable'] = false;
 		$records = array_merge($core, $records);
 
 		// return the records
@@ -757,6 +764,18 @@ class BackendExtensionsModel
 															FROM pages AS i
 															WHERE i.template_id = ? AND i.status = ?',
 															array((int) $templateId, 'active'));
+	}
+
+
+	/**
+	 * Checks if a theme is already installed.
+	 *
+	 * @return	bool
+	 * @param	string $theme
+	 */
+	public static function isThemeInstalled($theme)
+	{
+		return (bool) BackendModeL::getDB()->getVar('SELECT COUNT(id) FROM themes_templates WHERE theme = ?', array($theme));
 	}
 
 

@@ -13,7 +13,7 @@
 class BackendExtensionsInstallModule extends BackendBaseActionIndex
 {
 	/**
-	 * Module we request the details of.
+	 * Module we want to install.
 	 *
 	 * @var	string
 	 */

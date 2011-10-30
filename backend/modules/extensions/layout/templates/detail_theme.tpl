@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblExtensions|ucfirst}: {$msgModule|sprintf:{$name}}</h2>
+	<h2>{$lblExtensions|ucfirst}: {$msgTheme|sprintf:{$name}}</h2>
 </div>
 
 {option:warnings}
@@ -29,16 +29,16 @@
 						</div>
 					</div>
 				{/option:information.description}
-				{option:dataGridEvents}
+				{option:dataGridTemplates}
 					<div class="box">
 						<div class="heading">
-							<h3>{$lblEvents|ucfirst}</h3>
+							<h3>{$lblTemplates|ucfirst}</h3>
 						</div>
 						<div class="dataGridHolder">
-							{$dataGridEvents}
+							{$dataGridTemplates}
 						</div>
 					</div>
-				{/option:dataGridEvents}
+				{/option:dataGridTemplates}
 			</td>
 			<td id="sidebar">
 				{option:information.version}
@@ -82,7 +82,7 @@
 {option:isInstallable}
 <div class="fullwidthOptions">
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'install_module'}&amp;module={$name}" data-message-id="confirmInstall" class="askConfirmation button mainButton">
+		<a href="{$var|geturl:'install_theme'}&amp;theme={$name}" data-message-id="confirmInstall" class="askConfirmation button mainButton">
 			<span>{$lblInstall|ucfirst}</span>
 		</a>
 	</div>
@@ -91,7 +91,7 @@
 
 <div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
 	<p>
-		{$msgConfirmModuleInstall|sprintf:{$name}}
+		{$msgConfirmTemplateInstall|sprintf:{$name}}
 	</p>
 </div>
 

@@ -16,22 +16,44 @@
 {form:settingsThemes}
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblThemes|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
+			<h3>{$lblNotInstalledThemes|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<p>{$msgHelpInstallableThemes}</p>
+			<ul id="installableThemes" class="selectThumbList clearfix">
+				{iteration:installableThemes}
+					<li>
+						<label>
+							<img src="{$installableThemes.thumbnail}" width="172" height="129" alt="{$installableThemes.label|ucfirst}" />
+							<span>{$installableThemes.label|ucfirst}</span>
+						</label>
+						<a href="{$var|geturl:'install_theme'}&theme={$installableThemes.value}" data-message-id="confirmInstall" class="askConfirmation button icon iconNext linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblInstall|ucfirst}</span></a>
+						<a href="{$var|geturl:'detail_theme'}&theme={$installableThemes.value}" class="button icon iconDetail linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblDetails|ucfirst}</span></a>
+					</li>
+				{/iteration:installableThemes}
+			</ul>
+		</div>
+	</div>
+
+	<div class="box">
+		<div class="heading">
+			<h3>{$lblInstalledThemes|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
 		</div>
 		<div class="options">
 			<p>{$msgHelpThemes}</p>
-			<ul id="themeSelection" class="selectThumbList clearfix">
-				{iteration:themes}
-					<li{option:themes.selected} class="selected"{/option:themes.selected}>
-						{$themes.rbtThemes}
-						<label for="{$themes.id}">
-							<img src="{$themes.thumbnail}" width="172" height="129" alt="{$themes.label|ucfirst}" />
-							<span>{$themes.label|ucfirst}</span>
+			<ul id="installedThemes" class="selectThumbList clearfix">
+				{iteration:installedThemes}
+					<li{option:installedThemes.selected} class="selected"{/option:installedThemes.selected}>
+						{$installedThemes.rbtInstalledThemes}
+						<label for="{$installedThemes.id}">
+							<img src="{$installedThemes.thumbnail}" width="172" height="129" alt="{$installedThemes.label|ucfirst}" />
+							<span>{$installedThemes.label|ucfirst}</span>
 						</label>
+						<a href="{$var|geturl:'detail_theme'}&theme={$installedThemes.value}" class="button icon iconDetail linkButton" title="{$installedThemes.label|ucfirst}"><span>{$lblDetails|ucfirst}</span></a>
 					</li>
-				{/iteration:themes}
+				{/iteration:installedThemes}
 			</ul>
-			{option:rbtThemesError}<p class="error">{$rbtThemesError}</p>{/option:rbtThemesError}
+			{option:rbtInstalledThemesError}<p class="error">{$rbtThemesError}</p>{/option:rbtInstalledThemesError}
 		</div>
 	</div>
 
@@ -41,6 +63,12 @@
 		</div>
 	</div>
 {/form:settingsThemes}
+
+<div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
+	<p>
+		{$msgConfirmTemplateInstall|sprintf:{$name}}
+	</p>
+</div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

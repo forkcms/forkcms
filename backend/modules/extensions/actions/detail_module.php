@@ -146,7 +146,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		// set module name
+		// assign module data
 		$this->tpl->assign('name', $this->currentModule);
 		$this->tpl->assign('warnings', $this->warnings);
 		$this->tpl->assign('information', $this->information);
