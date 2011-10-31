@@ -1522,6 +1522,10 @@
         <translation language="nl"><![CDATA[Er zijn ongeldige links.]]></translation>
         <translation language="en"><![CDATA[There are invalid links.]]></translation>
       </item>
+      <item type="message" name="EditorSelectInternalPage">
+        <translation language="nl"><![CDATA[Kies een interne pagina]]></translation>
+        <translation language="en"><![CDATA[Choose an internal page]]></translation>
+      </item>
       <item type="message" name="EN">
         <translation language="nl"><![CDATA[Engels]]></translation>
         <translation language="en"><![CDATA[English]]></translation>

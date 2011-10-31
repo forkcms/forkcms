@@ -238,6 +238,12 @@ class BackendForm extends SpoonForm
 		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 		$this->header->addJS('ckeditor/config.js', 'core', true);
 
+		// add the internal link lists-file
+		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
+		{
+			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js', null, null, true);
+		}
+
 		// create and return a textarea for the editor
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
 	}

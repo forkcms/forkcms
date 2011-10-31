@@ -162,6 +162,30 @@ jsBackend.ckeditor =
 
 			// remove the upload tab because we like our users to think about the place of their images
 			dialogDefinition.removeContents('upload');
+
+			// get the info tab
+			var infoTab = dialogDefinition.getContents('info');
+
+			// add a new element
+			infoTab.add(
+				{
+					type: 'vbox',
+					id: 'localPageOptions',
+					children: [
+						{
+							type: 'select',
+							label: '{$msgEditorSelectInternalPage}',
+							id: 'localPage',
+							title: '{$msgEditorSelectInternalPage}',
+							items: linkList,
+							onChange: function(evt)
+							{
+								CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
+							}
+						}
+					]
+				}
+			);
 		}
 
 		// specific stuff for the table-dialog

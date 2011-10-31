@@ -471,29 +471,25 @@ class BackendAnalyticsModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// there is no cache file
-		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
+		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js')) return array();
 
 		// read the cache file
-		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
+		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js');
 
 		// get the array
-		preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
+		preg_match('/var linkList = (.*);$/s', $cacheFile, $matches);
 
 		// no matched
-		if(empty($matches)) return array();
+		if(empty($matches) || !isset($matches[1])) return array();
 
-		// create array
-		$matches = explode('],', str_replace('[', '', $matches[count($matches) - 1]));
+		$rawList = json_decode($matches[1]);
 
 		// init vars
 		$cacheList = array();
 
 		// loop list
-		foreach($matches as $item)
+		foreach($rawList as $item)
 		{
-			// trim item
-			$item = explode('", "', trim($item," \n\r\t\""));
-
 			// build cache list
 			$cacheList[$item[1]] = $item[0];
 		}
