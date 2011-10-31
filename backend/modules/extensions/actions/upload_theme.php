@@ -145,6 +145,24 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 
 							// wow wow, you are trying to upload an already existing theme
 							if(BackendExtensionsModel::existsTheme($themeName)) $fileFile->addError(sprintf(BL::getError('ThemeAlreadyExists'), $themeName));
+
+							// list of validated files (these files will actually be unpacked)
+							$files = array();
+
+							// check every file in the zip
+							for($i = 0; $i < $zip->numFiles; $i++)
+							{
+								// get the file name
+								$file = $zip->statIndex($i);
+								$fileName = $file['name'];
+
+								// yay, in a valid directory
+								if(stripos($fileName, $themeName . '/') === 0)
+								{
+									// valid file, add to extraction-list
+									$files[] = $fileName;
+								}
+							}
 						}
 
 						// empty zip file
@@ -160,7 +178,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// unpack module files
-				$zip->extractTo(FRONTEND_PATH . '/themes');
+				$zip->extractTo(FRONTEND_PATH . '/themes', $files);
 
 				// run installer
 				BackendExtensionsModel::installTheme($themeName);

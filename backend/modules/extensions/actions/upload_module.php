@@ -107,8 +107,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 						{
 							// directories we are allowed to upload to
 							$allowedDirectories = array(
-								'backend/modules',
-								'frontend/modules'
+								'backend/modules/',
+								'frontend/modules/'
 							);
 
 							// list of validated files (these files will actually be unpacked)
@@ -128,7 +128,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 								foreach($allowedDirectories as $directory)
 								{
 									// yay, in a valid directory
-									if(stripos($fileName, $directory) !== false)
+									if(stripos($fileName, $directory) === 0)
 									{
 										// extract the module name from the url
 										$tmpName = trim(str_ireplace($directory, '', $fileName), '/');
