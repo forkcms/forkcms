@@ -434,16 +434,25 @@ class FrontendHeader extends FrontendBaseObject
 		// fix urls
 		$matches = array();
 		$pattern = '/url\(';
-		$pattern .= 	'("|\'){0,1}';
-		$pattern .= 		'([\/\.a-z].*)';
-		$pattern .= 	'("|\'){0,1}';
-		$pattern .= 	'\)/iUs';
+		$pattern .= 	'["\']?';
+		$pattern .= 		'(.*?)';
+		$pattern .= 	'["\']?';
+		$pattern .= 	'\)/is';
+		$content = preg_replace($pattern, 'url("' . dirname($file) . '/$1")', $content);
 
-		$content = preg_replace($pattern, 'url($3' . dirname($file) . '/$2$3)', $content);
+		// re-fix data
+		$matches = array();
+		$pattern = '/url\(';
+		$pattern .= 	'["\']?';
+		$pattern .= 		'"' . preg_quote(dirname($file), '/') . '\/(data:.*?)"';
+		$pattern .= 	'["\']?';
+		$pattern .= 	'\)/is';
+		$content = preg_replace($pattern, 'url("$1")', $content);
 
 		// remove comments
-		$content = preg_replace('/\/\*(.*)\*\//iUs', '', $content);
-		$content = preg_replace('/([\t\w]{1,})\/\/.*/i', '', $content);
+		// @todo: commented because this may mess up base64 encoded images in css
+//		$content = preg_replace('/\/\*(.*?)\*\//is', '', $content);
+//		$content = preg_replace('/[\t\w]*\/\/.*/i', '', $content);
 
 		// remove tabs
 		$content = preg_replace('/\t/i', '', $content);
