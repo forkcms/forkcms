@@ -25,6 +25,7 @@
 		<event application="backend" name="after_add_category"><![CDATA[Triggered when a category is added.]]></event>
 		<event application="backend" name="after_delete_category"><![CDATA[Triggered when a category is deleted.]]></event>
 		<event application="backend" name="after_edit_category"><![CDATA[Triggered when a category is edited.]]></event>
+		<event application="backend" name="after_add_feedback"><![CDATA[Triggered when a feedback comment is added.]]></event>
 		<event application="backend" name="after_delete_feedback"><![CDATA[Triggered when a feedback comment is deleted.]]></event>
 	</events>
 </module>
