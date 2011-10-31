@@ -2233,6 +2233,16 @@
         <translation language="de"><![CDATA[hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter]]></translation>
       </item>
+      <item type="label" name="AddBlock">
+        <translation language="nl"><![CDATA[blok toevoegen]]></translation>
+        <translation language="en"><![CDATA[add block]]></translation>
+        <translation language="it"><![CDATA[aggiungi blocco]]></translation>
+        <translation language="ru"><![CDATA[Добавить блок]]></translation>
+        <translation language="cn"><![CDATA[添加阻止]]></translation>
+        <translation language="de"><![CDATA[Block hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un bloc]]></translation>
+        <translation language="hu"><![CDATA[blokk hozzáadása]]></translation>
+      </item>
       <item type="label" name="AddCategory">
         <translation language="nl"><![CDATA[categorie toevoegen]]></translation>
         <translation language="en"><![CDATA[add category]]></translation>
