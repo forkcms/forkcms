@@ -38,7 +38,7 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
 		$meta['description_overwrite'] = 'N';
 		$meta['title'] = $item['title'];
 		$meta['title_overwrite'] = 'N';
-		$meta['url'] = BackendBlogModel::getURLForCategory($item['title']);
+		$meta['url'] = BackendBlogModel::getURLForCategory(SpoonFilter::urlise($item['title']));
 
 		// update
 		$item['id'] = BackendBlogModel::insertCategory($item, $meta);
