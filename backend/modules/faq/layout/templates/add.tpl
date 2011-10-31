@@ -6,76 +6,81 @@
 </div>
 
 {form:add}
-	{option:categories}
-		<p>
-			{$txtQuestion} {$txtQuestionError}
-		</p>
-		<div class="ui-tabs">
-			<div class="ui-tabs-panel">
-				<div class="options">
-					<table border="0" cellspacing="0" cellpadding="0" width="100%">
-						<tr>
-							<td id="leftColumn">
-								<div class="box">
-									<div class="heading">
-										<h3>{$lblAnswer|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
-									</div>
-									<div class="optionsRTE">
-										{$txtAnswer} {$txtAnswerError}
-									</div>
-								</div>
+	{$txtTitle} {$txtTitleError}
 
-							</td>
-
-							<td id="sidebar">
-
-								<div id="questionCategory" class="box">
-									<div class="heading">
-										<h3>{$lblCategory|ucfirst}</h3>
-									</div>
-
-									<div class="options">
-										<p>
-											{$ddmCategories} {$ddmCategoriesError}
-										</p>
-									</div>
-								</div>
-
-								<div id="publishOptions" class="box">
-									<div class="heading">
-										<h3>{$lblStatus|ucfirst}</h3>
-									</div>
-
-									<div class="options">
-										<ul class="inputList">
-											{iteration:hidden}
-											<li>
-												{$hidden.rbtHidden}
-												<label for="{$hidden.id}">{$hidden.label}</label>
-											</li>
-											{/iteration:hidden}
-										</ul>
-									</div>
-								</div>
-
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
+	<div id="pageUrl">
+		<div class="oneLiner">
+			{option:detailURL}<p><span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span></p>{/option:detailURL}
+			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
 		</div>
-		<div class="fullwidthOptions">
-			<div class="buttonHolderRight">
-				<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddQuestion|ucfirst}" />
-			</div>
-		</div>
-	{/option:categories}
+	</div>
 
-	{option:!categories}
-		<p>
-			{$msgNoCategories|sprintf:{$var|geturl:'add_category'}}
-		</p>
-	{/option:!categories}
+	<div class="tabs">
+		<ul>
+			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
+		</ul>
+
+		<div id="tabContent">
+			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+				<tr>
+					<td id="leftColumn">
+						<div class="box">
+							<div class="heading">
+								<h3>{$lblAnswer|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+							</div>
+							<div class="optionsRTE">
+								{$txtAnswer} {$txtAnswerError}
+							</div>
+						</div>
+					</td>
+
+					<td id="sidebar">
+						<div id="publishOptions" class="box">
+							<div class="heading">
+								<h3>{$lblStatus|ucfirst}</h3>
+							</div>
+
+							<div class="options">
+								<ul class="inputList">
+									{iteration:hidden}
+									<li>
+										{$hidden.rbtHidden}
+										<label for="{$hidden.id}">{$hidden.label}</label>
+									</li>
+									{/iteration:hidden}
+								</ul>
+							</div>
+						</div>
+
+						<div class="box" id="articleMeta">
+							<div class="heading">
+								<h3>{$lblMetaData|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<label for="categoryId">{$lblCategory|ucfirst}</label>
+								{$ddmCategoryId} {$ddmCategoryIdError}
+							</div>
+							<div class="options">
+								<label for="tags">{$lblTags|ucfirst}</label>
+								{$txtTags} {$txtTagsError}
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="tabSEO">
+			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
+		</div>
+	</div>
+
+	<div class="fullwidthOptions">
+		<div class="buttonHolderRight">
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+		</div>
+	</div>
 {/form:add}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
