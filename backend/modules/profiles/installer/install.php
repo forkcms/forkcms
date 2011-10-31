@@ -22,11 +22,11 @@ class ProfilesInstall extends ModuleInstaller
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
-
 		// add 'profiles' as a module
 		$this->addModule('profiles', 'The profiles module.');
+
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// module rights
 		$this->setModuleRights(1, 'profiles');
