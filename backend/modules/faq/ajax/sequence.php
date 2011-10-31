@@ -31,7 +31,7 @@ class BackendFaqAjaxSequence extends BackendBaseAJAXAction
 		foreach($ids as $i => $id)
 		{
 			// build item
-			$item = BackendFaqModel::getCategory((int) $id);
+			$item['id'] = (int) $id;
 
 			// change sequence
 			$item['sequence'] = $i + 1;

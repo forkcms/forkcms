@@ -11,6 +11,8 @@
  * This is the edit category action, it will display a form to edit an existing category.
  *
  * @author Lester Lievens <lester@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Jelmer Snoeck <jelmer@netlash.com>
  */
 class BackendFaqEditCategory extends BackendBaseActionEdit
 {
@@ -21,18 +23,18 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 	{
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exists?
+		// does the item exist?
 		if($this->id !== null && BackendFaqModel::existsCategory($this->id))
 		{
 			parent::execute();
+
 			$this->getData();
 			$this->loadForm();
 			$this->validateForm();
+
 			$this->parse();
 			$this->display();
 		}
-
-		// no item found, throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
 	}
 
@@ -49,8 +51,11 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 	 */
 	private function loadForm()
 	{
-		$this->frm = new BackendForm('edit_category');
-		$this->frm->addText('name', $this->record['name']);
+		// create form
+		$this->frm = new BackendForm('editCategory');
+		$this->frm->addText('title', $this->record['title']);
+
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
 
 	/**
@@ -60,14 +65,9 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 	{
 		parent::parse();
 
-		$this->tpl->assign('id', $this->record['id']);
-		$this->tpl->assign('name', $this->record['name']);
-
-		// can the category be deleted?
-		if(BackendFaqModel::isCategoryAllowedToBeDeleted($this->id))
-		{
-			$this->tpl->assign('showDelete', true);
-		}
+		// assign the data
+		$this->tpl->assign('item', $this->record);
+		$this->tpl->assign('deleteAllowed', BackendFaqModel::deleteCategoryAllowed($this->id));
 	}
 
 	/**
@@ -77,27 +77,28 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 	{
 		if($this->frm->isSubmitted())
 		{
+			$this->meta->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']));
+
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->meta->validate();
 
 			if($this->frm->isCorrect())
 			{
 				// build item
 				$item['id'] = $this->id;
-				$item['name'] = $this->frm->getField('name')->getValue();
-				$item['language'] = BL::getWorkingLanguage();
-				$item['extra_id'] = $this->record['extra_id'];
+				$item['language'] = $this->record['language'];
+				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['meta_id'] = $this->meta->save(true);
 
 				// update the item
 				BackendFaqModel::updateCategory($item);
-
-				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'after_edite_category', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}
