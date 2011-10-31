@@ -6,9 +6,9 @@
 	</requirements>
 	<info lang="en">
 		<name>mail_to_friend</name>
-		<description><![CDATA[]]></description>
+		<description><![CDATA[This is the mail to friend module. It allows visitors to mail a page easily to a friend.]]></description>
 	</info>
 	<events>
-		<event application="backend" name=""><![CDATA[]]></event>
+		<event application="backend" name="after_mail_to_friend"><![CDATA[This is triggered when a visitor sends a page to a friend.]]></event>
 	</events>
 </module>
