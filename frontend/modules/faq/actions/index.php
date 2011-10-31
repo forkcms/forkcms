@@ -21,7 +21,6 @@ class FrontendFaqIndex extends FrontendBaseBlock
 	 */
 	private $items = array();
 
-
 	/**
 	 * Execute the extra
 	 */

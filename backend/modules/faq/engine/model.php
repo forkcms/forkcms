@@ -45,6 +45,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Delete a specific category
+	 *
 	 * @param int $id
 	 */
 	public static function deleteCategory($id)
@@ -65,6 +67,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Is the deletion of a category allowed?
+	 *
 	 * @param int $id
 	 * @return bool
 	 */
@@ -79,6 +83,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Delete the feedback
+	 *
 	 * @param int $itemId
 	 */
 	public static function deleteFeedback($itemId)
@@ -88,6 +94,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Does the question exsist?
+	 *
 	 * @param int $id
 	 * @return bool
 	 */
@@ -102,6 +110,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Does the category exist?
+	 *
 	 * @param int $id
 	 * @return bool
 	 */
@@ -116,6 +126,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Fetch a question
+	 *
 	 * @param int $id
 	 * @return array
 	 */
@@ -201,6 +213,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Fetch a category
+	 *
 	 * @param int $id
 	 * @return array
 	 */
@@ -215,6 +229,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Fetch the feedback item
+	 *
 	 * @param int $id
 	 * @return array
 	 */
@@ -229,6 +245,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Get the maximum sequence for a category
+	 *
 	 * @return int
 	 */
 	public static function getMaximumCategorySequence()
@@ -364,6 +382,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Insert a question in the database
+	 *
 	 * @param array $item
 	 * @return int
 	 */
@@ -378,6 +398,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Insert a category in the database
+	 *
 	 * @param array $item
 	 * @param array[optional] $meta The metadata for the category to insert.
 	 * @return int
@@ -396,6 +418,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Update a certain question
+	 *
 	 * @param array $item
 	 */
 	public static function update(array $item)
@@ -406,6 +430,8 @@ class BackendFaqModel
 
 
 	/**
+	 * Update a certain category
+	 *
 	 * @param array $item
 	 */
 	public static function updateCategory(array $item)

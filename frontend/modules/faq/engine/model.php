@@ -16,6 +16,8 @@
 class FrontendFaqModel implements FrontendTagsInterface
 {
 	/**
+	 * Fetch a question
+	 *
 	 * @param	string $url		The url of the item.
 	 * @return	array
 	 */
@@ -29,7 +31,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
 			 WHERE m.url = ? AND i.language = ? AND i.hidden = ?
 			 ORDER BY i.sequence',
-			 array((string) $url, FRONTEND_LANGUAGE, 'N'));
+			array((string) $url, FRONTEND_LANGUAGE, 'N')
+		);
 	}
 
 	/**
@@ -55,7 +58,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 AND i.id NOT IN (' . implode(',', $excludeIds) . ')
 			 ORDER BY i.sequence
 			 LIMIT ?',
-			 array((int) $categoryId, FRONTEND_LANGUAGE, 'N', (int) $limit));
+			array((int) $categoryId, FRONTEND_LANGUAGE, 'N', (int) $limit)
+		);
 
 		else $items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.*, m.url
@@ -64,7 +68,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
 			 AND i.id NOT IN (' . implode(',', $excludeIds) . ')
 			 ORDER BY i.sequence',
-			 array((int) $categoryId, FRONTEND_LANGUAGE, 'N'));
+			array((int) $categoryId, FRONTEND_LANGUAGE, 'N')
+		);
 
 		// init var
 		$link = FrontendNavigation::getURLForBlock('faq', 'detail');
@@ -88,7 +93,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 WHERE i.language = ?
 			 ORDER BY i.sequence',
-			 array(FRONTEND_LANGUAGE));
+			array(FRONTEND_LANGUAGE)
+		);
 
 		// init var
 		$link = FrontendNavigation::getURLForBlock('faq', 'category');
@@ -113,7 +119,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 WHERE m.url = ? AND i.language = ?
 			 ORDER BY i.sequence',
-			 array((string) $url, FRONTEND_LANGUAGE));
+			array((string) $url, FRONTEND_LANGUAGE)
+		);
 	}
 
 	/**
@@ -130,7 +137,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 INNER JOIN meta AS m ON m.id = i.meta_id
 			 WHERE i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
 			 ORDER BY i.question',
-			 array('N'));
+			array('N')
+		);
 
 		if(!empty($items))
 		{
@@ -171,7 +179,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 WHERE i.num_views > 0 AND i.language = ? AND i.hidden = ?
 			 ORDER BY (i.num_usefull_yes + i.num_usefull_no) DESC
 			 LIMIT ?',
-			 rray(FRONTEND_LANGUAGE, 'N', (int) $limit));
+			array(FRONTEND_LANGUAGE, 'N', (int) $limit)
+		);
 
 		$link = FrontendNavigation::getURLForBlock('faq', 'detail');
 		foreach($items as &$item) $item['full_url'] = $link . '/' . $item['url'];
@@ -201,7 +210,9 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 WHERE i.language = ? AND i.hidden = ? AND i.id IN(' . implode(',', $relatedIDs) . ')
 			 ORDER BY i.question
 			 LIMIT ?',
-			 array(FRONTEND_LANGUAGE, 'N', (int) $limit), 'id');
+			array(FRONTEND_LANGUAGE, 'N', (int) $limit),
+			'id'
+		);
 
 		foreach($items as &$row) $row['full_url'] = $link . '/' . $row['url'];
 
@@ -256,7 +267,9 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 INNER JOIN faq_categories AS c ON c.id = i.category_id
 			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
 			 WHERE i.hidden = ? AND i.language = ? AND i.id IN (' . implode(',', $ids) . ')',
-			 array('N', FRONTEND_LANGUAGE), 'id');
+			array('N', FRONTEND_LANGUAGE),
+			'id'
+		);
 
 		// prepare items for search
 		foreach($items as &$item)
@@ -293,25 +306,29 @@ class FrontendFaqModel implements FrontendTagsInterface
 			'UPDATE faq_questions
 			 SET num_usefull_yes = num_usefull_yes + 1
 			 WHERE id = ?',
-			array((int) $id));
+			array((int) $id)
+		);
 
 		else $db->execute(
 			'UPDATE faq_questions
 			 SET num_usefull_no = num_usefull_no + 1
 			 WHERE id = ?',
-			array((int) $id));
+			array((int) $id)
+		);
 
 		// update counter with previous feedback (decrease)
 		if($previousFeedback) $db->execute(
 			'UPDATE faq_questions
 			 SET num_usefull_yes = num_usefull_yes - 1
 			 WHERE id = ?',
-			array((int) $id));
+			array((int) $id)
+		);
 
 		elseif($previousFeedback !== null) $db->execute(
 			'UPDATE faq_questions
 			 SET num_usefull_no = num_usefull_no - 1
 			 WHERE id = ?',
-			array((int) $id));
+			array((int) $id)
+		);
 	}
 }

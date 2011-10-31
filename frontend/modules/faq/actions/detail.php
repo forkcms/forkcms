@@ -1,13 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the detail-action
  *
- * @package		frontend
- * @subpackage	faq
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.3
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Jelmer Snoeck <jelmer@netlash.com>
  */
 class FrontendFaqDetail extends FrontendBaseBlock
 {
@@ -18,14 +22,12 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * The faq
 	 *
 	 * @var	array
 	 */
 	private $record;
-
 
 	/**
 	 * The settings
@@ -34,7 +36,6 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	 */
 	private $settings;
 
-
 	/**
 	 * The status of the form
 	 *
@@ -42,11 +43,8 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	 */
 	private $status = null;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -75,11 +73,8 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -111,11 +106,8 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		if($this->status == FL::getAction('Spam')) $this->status = 'spam';
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -132,11 +124,8 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		$this->frm->addTextarea('message');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -165,11 +154,8 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		if(!empty($this->status)) $this->tpl->assign($this->status, true);
 	}
 
-
 	/**
 	 * Update the view count for this item
-	 *
-	 * @return	void
 	 */
 	private function updateStatistics()
 	{
@@ -183,11 +169,8 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		SpoonSession::set('viewed_faq_' . $this->record['id'], true);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -275,5 +258,3 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		else $this->tpl->assign('hideFeedbackNoInfo', true);
 	}
 }
-
-?>

@@ -52,8 +52,8 @@ class BackendFaqIndex extends BackendBaseActionIndex
 			$dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 			$dataGrid->setColumnsHidden(array('category_id', 'sequence'));
 			$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
-			$dataGrid->setColumnsSequence('dragAndDropHandle');
 			$dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
+			$dataGrid->setColumnsSequence('dragAndDropHandle');
 			$dataGrid->setColumnAttributes('question', array('class' => 'title'));
 			$dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 			$dataGrid->setRowAttributes(array('id' => '[id]'));
