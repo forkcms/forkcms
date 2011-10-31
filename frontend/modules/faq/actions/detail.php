@@ -250,7 +250,7 @@ class FrontendFaqDetail extends FrontendBaseBlock
 				}
 
 				// trigger event
-				FrontendModel::triggerEvent('blog', 'after_add_feedback', array('comment' => $text));
+				FrontendModel::triggerEvent('faq', 'after_add_feedback', array('comment' => $text));
 
 				// save status
 				$this->redirect($this->record['full_url'] . '/' . FL::getAction('Success'));
