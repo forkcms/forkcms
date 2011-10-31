@@ -79,8 +79,6 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'));
 	}
 
-
-
 	/**
 	 * Load the data grid for installed modules.
 	 */
