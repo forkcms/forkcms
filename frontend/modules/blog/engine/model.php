@@ -29,7 +29,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	{
 		$return = (array) FrontendModel::getDB()->getRecord(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-			 c.title AS category_title, m2.url AS category_url,
+			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 			 i.allow_comments,
 			 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
@@ -64,7 +64,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	{
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-			 c.title AS category_title, m2.url AS category_url,
+			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 			 m.url
 			 FROM blog_posts AS i
@@ -185,7 +185,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	{
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-			 c.title AS category_title, m2.url AS category_url,
+			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 			 m.url
 			 FROM blog_posts AS i

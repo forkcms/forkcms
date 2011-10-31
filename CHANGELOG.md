@@ -24,6 +24,7 @@ Improvements:
 * Core: validate slugs that are being added with javascript whilst typing the title using meta-class.
 * Core: updated default favicon.
 * Pages: updated pages getNavigation; the 'includeChildren' parameter was useless.
+<<<<<<< HEAD
 * Core: refactored javascript ajax-calls.
 * Installer: refactored installation of dashboard widgets.
 * Analytics: dashboard widgets are now added for all users upon installation.
@@ -31,6 +32,7 @@ Improvements:
 * Extensions: it is now possible to install modules via ZIP upload.
 * Extensions: it is now possible to install themes via ZIP upload.
 * Core: the active state of modules has been stripped. This is no longer useful.
+* Blog: the blog module now standard has an image field.
 
 
 2.6.13 (2011-10-18)
