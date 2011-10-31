@@ -37,6 +37,13 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	private static $templatePath;
 
+	/**
+	 * The ignored pages. These will not be shown in the menu.
+	 *
+	 * @var array
+	 */
+	private static $ignoreNavigation = array();
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -280,6 +287,13 @@ class FrontendNavigation extends FrontendBaseObject
 
 				// not hidden
 				if($page['hidden'])
+				{
+					unset($navigation[$type][$parentId][$id]);
+					continue;
+				}
+
+				// is the item set to be ignored?
+				if(array_search($id, self::$ignoreNavigation) !== false)
 				{
 					unset($navigation[$type][$parentId][$id]);
 					continue;
@@ -545,9 +559,33 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
+	 * This function lets you add ignored pages
+	 *
+	 * @param mixed $pageIds This can be a single page id or this can be an array with page ids.
+	 * @param bool $overwrite Overwrite previous stated ignored pages or not.
+	 */
+	public static function setIgnoredPages($pageIds, $overwrite = false)
+	{
+		$pageIds = (array) $pageIds;
+
+		// if we should overwrite the current ignored pages, loop the items to push them
+		if(!$overwrite) foreach($pageIds as $pageId) array_push(self::$ignoreNavigation, $pageId);
+		else self::$ignoreNavigation = $pageIds;
+
+	}
+
+	/**
 	 * Set the selected page ids
 	 */
-	public function setSelectedPageIds()
+	public function
+
+
+	/**
+	 * The ignored pages. These will not be shown in the menu.
+	 *
+	 * @var array
+	 */
+	private static $ignoreNavigation = array();()
 	{
 		// get pages
 		$pages = (array) $this->URL->getPages();
