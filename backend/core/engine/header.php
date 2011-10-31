@@ -167,6 +167,7 @@ class BackendHeader
 				'/backend/core/js/jquery/jquery.tools.js',
 				'/backend/core/js/jquery/jquery.backend.js',
 				'/backend/core/js/ckeditor/ckeditor.js',
+				'/backend/core/js/ckeditor/adapters/jquery.js',
 				'/backend/core/js/ckfinder/ckfinder.js'
 			);
 
