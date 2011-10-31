@@ -69,7 +69,7 @@ class BackendLanguage
 	*
 	* @return array
 	*/
-	public static function getLanguagesForCheckboxes()
+	public static function getCheckboxValues()
 	{
 		$languages = BL::getActiveLanguages();
 		$results = array();
