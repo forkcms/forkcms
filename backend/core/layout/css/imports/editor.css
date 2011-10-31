@@ -88,17 +88,4 @@
 		border-radius: 4px;
 	}
 
-/*
-	TinyMCE
-	External toolbar overrides
-*/
-
-a.mceExternalClose { display: none; }
-
-div.mceExternalToolbar { 
-	position: relative !important; 
-	top: 0 !important; 
-	background-color: #F0F0EE !important;
-}
-
 .editorWarning { display: inline-block; margin-top: 3px; }
