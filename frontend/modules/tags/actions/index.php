@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action
  *
- * @package		frontend
- * @subpackage	tags
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class FrontendTagsIndex extends FrontendBaseBlock
 {
@@ -18,40 +21,26 @@ class FrontendTagsIndex extends FrontendBaseBlock
 	 */
 	private $tags = array();
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// load template
 		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data from the database.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->tags = FrontendTagsModel::getAll();
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -59,5 +48,3 @@ class FrontendTagsIndex extends FrontendBaseBlock
 		$this->tpl->assign('tags', $this->tags);
 	}
 }
-
-?>

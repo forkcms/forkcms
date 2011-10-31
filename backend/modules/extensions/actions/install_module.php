@@ -4,26 +4,19 @@
  * This is the module install-action.
  * It will install the module given via the "module" GET parameter.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		3.0.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendExtensionsInstallModule extends BackendBaseActionIndex
 {
 	/**
 	 * Module we want to install.
 	 *
-	 * @var	string
+	 * @var string
 	 */
 	private $currentModule;
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -50,11 +43,8 @@ class BackendExtensionsInstallModule extends BackendBaseActionIndex
 		else $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Validate if the module can be installed.
-	 *
-	 * @return	void
 	 */
 	private function validateInstall()
 	{
@@ -71,5 +61,3 @@ class BackendExtensionsInstallModule extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>

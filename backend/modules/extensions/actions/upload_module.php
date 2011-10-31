@@ -4,18 +4,12 @@
  * This is the module upload-action.
  * It will install a module via a compressed zip file.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		3.0.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendExtensionsUploadModule extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -31,13 +25,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		// oke, we can upload
 		else
 		{
-			// load form
 			$this->loadForm();
-
-			// validate le form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
@@ -45,11 +34,10 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		$this->display();
 	}
 
-
 	/**
 	 * Do we have write rights to the modules folders?
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	private function isWritable()
 	{
@@ -61,11 +49,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		return true;
 	}
 
-
 	/**
 	 * Create a form and its elements.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -76,11 +61,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		$this->frm->addFile('file');
 	}
 
-
 	/**
 	 * Validate a submitted form and process it.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -196,5 +178,3 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

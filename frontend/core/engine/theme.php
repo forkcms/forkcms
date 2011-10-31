@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will take care of functionality pertaining themes.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendTheme
 {
@@ -18,13 +21,12 @@ class FrontendTheme
 	 */
 	private static $theme;
 
-
 	/**
 	 * Get the file path based on the theme.
 	 * If it does not exist in the theme it will return $file.
 	 *
-	 * @return	string					Path to the (theme) file.
-	 * @param	string $file			Path to the file.
+	 * @param string $file Path to the file.
+	 * @return string Path to the (theme) file.
 	 */
 	public static function getPath($file)
 	{
@@ -55,11 +57,10 @@ class FrontendTheme
 		return $file;
 	}
 
-
 	/**
 	 * Gets the active theme name
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getTheme()
 	{
@@ -70,5 +71,3 @@ class FrontendTheme
 		return self::$theme;
 	}
 }
-
-?>

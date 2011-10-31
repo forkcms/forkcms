@@ -3,60 +3,40 @@
 /**
  * This is the modules-action, it will display the overview of modules.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		3.0.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendExtensionsModules extends BackendBaseActionIndex
 {
 	/**
 	 * Data grids.
 	 *
-	 * @var	BackendDataGrid
+	 * @var BackendDataGrid
 	 */
 	private $dataGridInstalledModules, $dataGridInstallableModules;
-
 
 	/**
 	 * Modules that are or or not installed.
 	 * This is used as a source for the data grids.
 	 *
-	 * @var	array
+	 * @var array
 	 */
 	private $installedModules = array(), $installableModules = array();
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the data for the data grids
 		$this->loadData();
-
-		// load the data grids
 		$this->loadDataGridInstalled();
 		$this->loadDataGridInstallable();
-
-		// parse the data grid
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the data for the 2 data grids.
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -71,11 +51,8 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		}
 	}
 
-
 	/**
 	 * Load the data grid for installable modules.
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridInstallable()
 	{
@@ -103,10 +80,9 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 	}
 
 
+
 	/**
 	 * Load the data grid for installed modules.
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridInstalled()
 	{
@@ -126,11 +102,8 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
 	}
 
-
 	/**
 	 * Parse the datagrids and the reports.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -139,5 +112,3 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
 	}
 }
-
-?>

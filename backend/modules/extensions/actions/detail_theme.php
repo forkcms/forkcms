@@ -3,11 +3,7 @@
 /**
  * This is the detail-action it will display the details of a theme.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		3.0.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 {
@@ -18,14 +14,12 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 	 */
 	private $currentTheme;
 
-
 	/**
 	 * Datagrids.
 	 *
 	 * @var	BackendDataGrid
 	 */
 	private $dataGridTemplates;
-
 
 	/**
 	 * Information fetched from the info.xml.
@@ -34,7 +28,6 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 	 */
 	private $information = array();
 
-
 	/**
 	 * List of warnings.
 	 *
@@ -42,11 +35,8 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 	 */
 	private $warnings = array();
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -56,19 +46,10 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 		// does the item exist
 		if($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// load data
 			$this->loadData();
-
-			// load datagrid
 			$this->loadDataGridTemplates();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -76,12 +57,9 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 		else $this->redirect(BackendModel::createURLForAction('themes') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the data.
 	 * This will also set some warnings if needed.
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -120,11 +98,8 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 		else $this->warnings[] = array('message' => BL::getMessage('InformationFileIsMissing'));
 	}
 
-
 	/**
 	 * Load the data grid which contains the events.
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridTemplates()
 	{
@@ -158,11 +133,8 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 		$this->dataGridTemplates->setPaging(false);
 	}
 
-
 	/**
 	 * Parse.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -176,5 +148,3 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 		$this->tpl->assign('dataGridTemplates', (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults() > 0) ? $this->dataGridTemplates->getContent() : false);
 	}
 }
-
-?>

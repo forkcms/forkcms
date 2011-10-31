@@ -1,48 +1,36 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the settings-action, it will display a form to set general location settings
  *
- * @package		backend
- * @subpackage	location
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocationSettings extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load form
 		$this->loadForm();
-
-		// validates the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the settings form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// init settings form
 		$this->frm = new BackendForm('settings');
 
 		// add map info (overview map)
@@ -58,21 +46,15 @@ class BackendLocationSettings extends BackendBaseActionEdit
 		$this->frm->addDropdown('map_type_widget', array('ROADMAP' => BL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => BL::lbl('Satellite', $this->getModule()), 'HYBRID' => BL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => BL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type_widget', 'roadmap'));
 	}
 
-
 	/**
 	 * Validates the settings form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// form is submitted
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// form is validated
 			if($this->frm->isCorrect())
 			{
 				// set our settings (overview map)
@@ -96,5 +78,3 @@ class BackendLocationSettings extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

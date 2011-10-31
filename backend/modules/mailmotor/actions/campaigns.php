@@ -1,45 +1,34 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This page will display the overview of campaigns
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorCampaigns extends BackendBaseActionIndex
 {
-	// maximum number of items
 	const PAGING_LIMIT = 10;
-
 
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load datagrid
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrid with the campaigns
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -86,24 +75,19 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
-
 
 	/**
 	 * Sets a link to the campaign statistics if it contains sent mailings
 	 *
-	 * @return	string
-	 * @param	int $id		The ID of the campaign.
+	 * @param int $id The ID of the campaign.
+	 * @return string
 	 */
 	public static function setStatisticsLink($id)
 	{
@@ -117,5 +101,3 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		return ($hasSentMailings) ? $html : '';
 	}
 }
-
-?>

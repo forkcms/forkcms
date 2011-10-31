@@ -34,8 +34,8 @@
 		<event application="frontend" name="after_forgot_password"><![CDATA[Triggered when someone submitted the forgot password form.]]></event>
 		<event application="frontend" name="after_logged_in"><![CDATA[Triggered when a profile logged in.]]></event>
 		<event application="frontend" name="after_logout"><![CDATA[Triggered when a profile signed off.]]></event>
-		<event application="frontend" name="after_profile_email"><![CDATA[Triggered when a profile alters his emailaddress]]></event>
-		<event application="frontend" name="after_profile_password"><![CDATA[Triggered when a profile changes his password.]]></event>
+		<event application="frontend" name="after_change_email"><![CDATA[Triggered when a profile alters his emailaddress]]></event>
+		<event application="frontend" name="after_change_password"><![CDATA[Triggered when a profile changes his password.]]></event>
 		<event application="frontend" name="after_saved_settings"><![CDATA[Triggered when a profile changes the settings.]]></event>
 		<event application="frontend" name="after_register"><![CDATA[Triggered when someone registers.]]></event>
 		<event application="frontend" name="after_resend_activation"><![CDATA[Triggered when someone submitted the form to resend the activation code.]]></event>

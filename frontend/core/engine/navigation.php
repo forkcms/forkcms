@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will be used to build the navigation
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendNavigation extends FrontendBaseObject
 {
@@ -18,9 +21,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private static $keys = array(),
-					$navigation = array();
-
+	private static $keys = array(), $navigation = array();
 
 	/**
 	 * The selected pageIds
@@ -29,7 +30,6 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	private static $selectedPageIds = array();
 
-
 	/**
 	 * The path of the template to include, or that replaced the current one
 	 *
@@ -37,15 +37,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	private static $templatePath;
 
-
-	/**
-	 * Default constructor.
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
-		// call the parent
 		parent::__construct();
 
 		// set template path
@@ -55,21 +48,19 @@ class FrontendNavigation extends FrontendBaseObject
 		$this->setSelectedPageIds();
 	}
 
-
 	/**
 	 * Creates a Backend URL for a given action and module
 	 * If you don't specify a language the current language will be used.
 	 *
-	 * @return	string
-	 * @param	string $action					The action to build the URL for.
-	 * @param	string $module					The module to build the URL for.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
-	 * @param	array[optional] $parameters		GET-parameters to use.
-	 * @param	bool[optional] $urlencode		Should the parameters be urlencoded?
+	 * @param string $action The action to build the URL for.
+	 * @param string $module The module to build the URL for.
+	 * @param string[optional] $language The language to use, if not provided we will use the working language.
+	 * @param array[optional] $parameters GET-parameters to use.
+	 * @param bool[optional] $urlencode Should the parameters be urlencoded?
+	 * @return string
 	 */
 	public static function getBackendURLForBlock($action, $module, $language = null, array $parameters = null, $urlencode = true)
 	{
-		// redefine parameters
 		$action = (string) $action;
 		$module = (string) $module;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
@@ -98,16 +89,14 @@ class FrontendNavigation extends FrontendBaseObject
 		return '/private/' . $language . '/' . $module . '/' . $action . $querystring;
 	}
 
-
 	/**
 	 * Get the first child for a given parent
 	 *
-	 * @return	mixed
-	 * @param	int $pageId		The pageID wherefor we should retrieve the first child.
+	 * @param int $pageId The pageID wherefor we should retrieve the first child.
+	 * @return mixed
 	 */
 	public static function getFirstChildId($pageId)
 	{
-		// redefine
 		$pageId = (int) $pageId;
 
 		// init var
@@ -130,11 +119,10 @@ class FrontendNavigation extends FrontendBaseObject
 		return false;
 	}
 
-
 	/**
 	 * Get all footerlinks
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getFooterLinks()
 	{
@@ -169,16 +157,14 @@ class FrontendNavigation extends FrontendBaseObject
 		return $return;
 	}
 
-
 	/**
 	 * Get the page-keys
 	 *
-	 * @return	array
-	 * @param	string[optional] $language	The language wherefor the navigation should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param string[optional] $language The language wherefor the navigation should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @return array
 	 */
 	public static function getKeys($language = null)
 	{
-		// redefine
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// does the keys exists in the cache?
@@ -215,12 +201,11 @@ class FrontendNavigation extends FrontendBaseObject
 		return self::$keys[$language];
 	}
 
-
 	/**
 	 * Get the navigation-items
 	 *
-	 * @return	array
-	 * @param	string[optional] $language	The language wherefor the keys should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param string[optional] $language The language wherefor the keys should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @return array
 	 */
 	public static function getNavigation($language = null)
 	{
@@ -247,17 +232,15 @@ class FrontendNavigation extends FrontendBaseObject
 		return self::$navigation[$language];
 	}
 
-
 	/**
 	 * Get navigation HTML
 	 *
-	 * @return	string
-	 * @param	string[optional] $type			The type of navigation the HTML should be build for.
-	 * @param	int[optional] $parentId			The parentID to start of.
-	 * @param	int[optional] $depth			The maximum depth to parse.
-	 * @param	array[optional] $excludeIds		PageIDs to be excluded.
-	 * @param	bool[optional] $includeChildren	Children can be included regardless of whether we're at the current page.
-	 * @param	int[optional] $depthCounter		A counter that will hold the current depth.
+	 * @param string[optional] $type The type of navigation the HTML should be build for.
+	 * @param int[optional] $parentId The parentID to start of.
+	 * @param int[optional] $depth The maximum depth to parse.
+	 * @param array[optional] $excludeIds PageIDs to be excluded.
+	 * @param int[optional] $depthCounter A counter that will hold the current depth.
+	 * @return string
 	 */
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
 	{
@@ -351,13 +334,12 @@ class FrontendNavigation extends FrontendBaseObject
 		return $tpl->getContent(self::$templatePath, true, true);
 	}
 
-
 	/**
 	 * Get a menuId for an specified URL
 	 *
-	 * @return	int
-	 * @param 	string $URL						The URL wherfor you want a pageID.
-	 * @param	string[optional] $language		The language wherefor the pageID should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @param  string $URL The URL wherfor you want a pageID.
+	 * @param string[optional] $language The language wherefor the pageID should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @return int
 	 */
 	public static function getPageId($URL, $language = null)
 	{
@@ -378,12 +360,11 @@ class FrontendNavigation extends FrontendBaseObject
 		return (int) $key;
 	}
 
-
 	/**
 	 * Get more info about a page
 	 *
-	 * @return	mixed
-	 * @param	int $pageId		The pageID wherefor you want more information.
+	 * @param int $pageId The pageID wherefor you want more information.
+	 * @return mixed
 	 */
 	public static function getPageInfo($pageId)
 	{
@@ -418,17 +399,15 @@ class FrontendNavigation extends FrontendBaseObject
 		return false;
 	}
 
-
 	/**
 	 * Get URL for a given pageId
 	 *
-	 * @return	string
-	 * @param	int $pageId						The pageID wherefor you want the URL.
-	 * @param	string[optional] $language		The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @param int $pageId The pageID wherefor you want the URL.
+	 * @param string[optional] $language The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @return string
 	 */
 	public static function getURL($pageId, $language = null)
 	{
-		// redefine
 		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
@@ -448,18 +427,16 @@ class FrontendNavigation extends FrontendBaseObject
 		return urldecode($URL);
 	}
 
-
 	/**
 	 * Get the URL for a give module & action combination
 	 *
-	 * @return	string
-	 * @param	string $module					The module wherefor the URL should be build.
-	 * @param	string[optional] $action		The specific action wherefor the URL shoul be build.
-	 * @param	string[optional] $language		The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @param string $module The module wherefor the URL should be build.
+	 * @param string[optional] $action The specific action wherefor the URL shoul be build.
+	 * @param string[optional] $language The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @return string
 	 */
 	public static function getURLForBlock($module, $action = null, $language = null)
 	{
-		// redefine
 		$module = (string) $module;
 		$action = ($action !== null) ? (string) $action : null;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
@@ -521,17 +498,15 @@ class FrontendNavigation extends FrontendBaseObject
 		return self::getURL(404, $language);
 	}
 
-
 	/**
 	 * Fetch the first direct link to an extra id
 	 *
-	 * @return	string
-	 * @param	int $id							The id of the extra.
-	 * @param	string[optional] $language		The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @param int $id The id of the extra.
+	 * @param string[optional] $language The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @return string
 	 */
 	public static function getURLForExtraId($id, $language = null)
 	{
-		// redefine
 		$id = (int) $id;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
@@ -569,11 +544,8 @@ class FrontendNavigation extends FrontendBaseObject
 		return self::getURL(404, $language);
 	}
 
-
 	/**
 	 * Set the selected page ids
-	 *
-	 * @return	void
 	 */
 	public function setSelectedPageIds()
 	{
@@ -600,17 +572,13 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Set the path for the template
 	 *
-	 * @return	void
-	 * @param	string $path	The path to set.
+	 * @param string $path The path to set.
 	 */
 	private function setTemplatePath($path)
 	{
 		self::$templatePath = (string) $path;
 	}
 }
-
-?>

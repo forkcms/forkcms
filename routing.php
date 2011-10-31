@@ -1,37 +1,35 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Application routing
  *
- * @package			Frontend
- *
- * @author			Tijs Verkoyen <tijs@netlash.com>
- * @author			Davy Hellemans <davy@netlash.com>
- * @author			Dieter Vanden Eynde <dieter@netlash.com>
- * @since			2.0
+ * @author 	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author 	Davy Hellemans <davy@netlash.com>
+ * @author 	Dieter Vanden Eynde <dieter@netlash.com>
  */
 class ApplicationRouting
 {
-	// Default application
 	const DEFAULT_APPLICATION = 'frontend';
-
 
 	/**
 	 * Virtual folders mappings
 	 *
 	 * @var	array
 	 */
-	private static $routes = array('' => self::DEFAULT_APPLICATION,
-									'private' => 'backend',
-									'backend' => 'backend',
-									'api' => 'api');
+	private static $routes = array(
+		'' => self::DEFAULT_APPLICATION,
+		'private' => 'backend',
+		'backend' => 'backend',
+		'api' => 'api'
+	);
 
-
-	/**
-	 * Class constructor.
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// spoof querystring on lighttpd
@@ -44,22 +42,18 @@ class ApplicationRouting
 		require_once APPLICATION . '/index.php';
 	}
 
-
 	/**
 	 * Get the possible routes
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getRoutes()
 	{
 		return self::$routes;
 	}
 
-
 	/**
 	 * Process the querystring to define the application
-	 *
-	 * @return	void
 	 */
 	private function processQueryString()
 	{
@@ -87,7 +81,6 @@ class ApplicationRouting
 		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', $proposedApplication);
 	}
 
-
 	/**
 	 * Spoof QUERY_STRING when on a lighttp webserver
 	 *
@@ -95,8 +88,6 @@ class ApplicationRouting
 	 * This function fakes the QUERY_STRING.
 	 *
 	 * PHP uses QUERY_STRING to fill up the GET array. Without this fix GET would be empty
-	 *
-	 * @return	void
 	 */
 	public static function spoofQueryString()
 	{
@@ -124,5 +115,3 @@ class ApplicationRouting
 		}
 	}
 }
-
-?>

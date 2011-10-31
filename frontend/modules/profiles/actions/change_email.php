@@ -1,16 +1,19 @@
 <?php
 
-/**
- * This is the profile email-action.
+/*
+ * This file is part of Fork CMS.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
  */
-class FrontendProfilesProfileEmail extends FrontendBaseBlock
+
+/**
+ * Change the e-mail of the current logged in profile.
+ *
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
+ */
+class FrontendProfilesChangeEmail extends FrontendBaseBlock
 {
 	/**
 	 * FrontendForm instance.
@@ -19,7 +22,6 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * The current profile.
 	 *
@@ -27,33 +29,19 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 	 */
 	private $profile;
 
-
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// profile logged in
 		if(FrontendProfilesAuthentication::isLoggedIn())
 		{
-			// load parent
 			parent::execute();
-
-			// get data
 			$this->getData();
-
-			// load template
 			$this->loadTemplate();
-
-			// load
 			$this->loadForm();
-
-			// validate
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
@@ -61,11 +49,8 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		else $this->redirect(FrontendNavigation::getURL(404));
 	}
 
-
 	/**
 	 * Get profile data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -73,32 +58,23 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		$this->profile = FrontendProfilesAuthentication::getProfile();
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create the form
 		$this->frm = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
-
-		// create & add elements
 		$this->frm->addPassword('password');
 		$this->frm->addText('email', $this->profile->getEmail());
 	}
 
-
 	/**
 	 * Parse the data into the template.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
 		// have the settings been saved?
-		if($this->URL->getParameter('saved') == 'true')
+		if($this->URL->getParameter('sent') == 'true')
 		{
 			// show success message
 			$this->tpl->assign('updateEmailSuccess', true);
@@ -108,11 +84,8 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -156,10 +129,10 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 				FrontendProfilesModel::update($this->profile->getId(), array('email' => $txtEmail->getValue()));
 
 				// trigger event
-				FrontendModel::triggerEvent('profiles', 'after_profile_email', array('id' => $this->profile->getId()));
+				FrontendModel::triggerEvent('profiles', 'after_change_email', array('id' => $this->profile->getId()));
 
 				// redirect
-				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'profile_email') . '?saved=true');
+				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_email') . '?sent=true');
 			}
 
 			// show errors
@@ -167,5 +140,3 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

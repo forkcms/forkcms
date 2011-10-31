@@ -1,18 +1,20 @@
 <?php
 
-// require the CM helper class
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 require_once 'engine/helper.php';
 
 /**
  * This is the configuration-object
  *
- * @package		frontend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
-final class FrontendMailmotorConfig extends FrontendBaseConfig
+class FrontendMailmotorConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action
@@ -21,7 +23,6 @@ final class FrontendMailmotorConfig extends FrontendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -29,5 +30,3 @@ final class FrontendMailmotorConfig extends FrontendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

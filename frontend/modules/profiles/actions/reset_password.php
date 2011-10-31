@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
- * This is the resetPassword-action.
+ * Reset your password using a token received from the forgot_password action.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendProfilesResetPassword extends FrontendBaseBlock
 {
@@ -19,11 +22,8 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -53,7 +53,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 			}
 
 			// invalid key
-			elseif($this->URL->getParameter('saved') != 'true') $this->redirect(FrontendNavigation::getURL(404));
+			elseif($this->URL->getParameter('sent') != 'true') $this->redirect(FrontendNavigation::getURL(404));
 
 			// parse
 			$this->parse();
@@ -63,11 +63,8 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 		else $this->redirect(FrontendNavigation::getURL(404));
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -79,16 +76,13 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 		$this->frm->addCheckbox('show_password');
 	}
 
-
 	/**
 	 * Parse the data into the template.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
 		// has the password been saved?
-		if($this->URL->getParameter('saved') == 'true')
+		if($this->URL->getParameter('sent') == 'true')
 		{
 			// show message
 			$this->tpl->assign('resetPasswordSuccess', true);
@@ -101,11 +95,8 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 		else $this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -137,7 +128,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 				FrontendModel::triggerEvent('profiles', 'after_reset_password', array('id' => $profileId));
 
 				// redirect
-				$this->redirect(FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(0) . '?saved=true');
+				$this->redirect(FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(0) . '?sent=true');
 			}
 
 			// show errors
@@ -145,5 +136,3 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

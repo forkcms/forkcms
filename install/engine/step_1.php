@@ -1,22 +1,23 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Step 1 of the Fork installer
  *
- * @package		install
- * @subpackage	installer
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class InstallerStep1 extends InstallerStep
 {
 	/**
 	 * Execute this step
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -71,7 +72,6 @@ class InstallerStep1 extends InstallerStep
 				$variables['content'] .= '<option value="' . $path . '">' . $path . '</option>';
 			}
 
-
 			$variables['content'] .= '</select>
 										</p>
 										<p class="buttonHolder">
@@ -107,24 +107,13 @@ class InstallerStep1 extends InstallerStep
 		exit;
 	}
 
-
-	/**
-	 * This step is always allowed.
-	 *
-	 * @return	bool
-	 */
-	public static function isAllowed()
-	{
-		return true;
-	}
-
-
-	/**
+/**
 	 * Try to guess the location of the library based on spoon library
 	 *
-	 * @return	void
-	 * @param	string $directory			The directory to start from.
-	 * @param	array[optional] $library	An array to hold the paths that were guesed.
+	 * @todo is this still necessary since library is now always within the same fork dir?
+	 *
+	 * @param string $directory The directory to start from.
+	 * @param array[optional] $library An array to hold the paths that were guesed.
 	 */
 	private static function guessLibraryPath($directory, array &$library = null)
 	{
@@ -156,6 +145,14 @@ class InstallerStep1 extends InstallerStep
 			}
 		}
 	}
-}
 
-?>
+	/**
+	 * This step is always allowed.
+	 *
+	 * @return bool
+	 */
+	public static function isAllowed()
+	{
+		return true;
+	}
+}

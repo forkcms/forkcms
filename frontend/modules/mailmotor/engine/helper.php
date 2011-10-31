@@ -3,62 +3,59 @@
 /**
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
- * @package		frontend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class FrontendMailmotorCMHelper
 {
 	/**
 	 * Checks if a group exists by its CampaignMonitor ID
 	 *
-	 * @return	bool
-	 * @param	string $id	The id of the group on Campaign Monitor.
+	 * @param string $id The id of the group on Campaign Monitor.
+	 * @return bool
 	 */
 	public static function existsGroupByCampaignMonitorID($id)
 	{
-		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(mg.id)
-														FROM mailmotor_groups AS mg
-														INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-														WHERE mci.cm_id = ? AND mci.type = ?',
-														array($id, 'list'));
+		return (bool) FrontendModel::getDB()->getVar(
+			'SELECT COUNT(mg.id)
+			 FROM mailmotor_groups AS mg
+			 INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
+			 WHERE mci.cm_id = ? AND mci.type = ?',
+			array($id, 'list')
+		);
 	}
-
 
 	/**
 	 * Inserts a record into the mailmotor_campaignmonitor_ids table
 	 *
-	 * @return	string
-	 * @param	string $type		The type for the item.
-	 * @param	string $otherId		The id of the item.
+	 * @param string $type The type for the item.
+	 * @param string $otherId The id of the item.
+	 * @return string
 	 */
 	public static function getCampaignMonitorID($type, $otherId)
 	{
-		return FrontendModel::getDB()->getVar('SELECT cm_id
-												FROM mailmotor_campaignmonitor_ids
-												WHERE type = ? AND other_id = ?',
-												array($type, $otherId));
+		return FrontendModel::getDB()->getVar(
+			'SELECT cm_id
+			 FROM mailmotor_campaignmonitor_ids
+			 WHERE type = ? AND other_id = ?',
+			array($type, $otherId)
+		);
 	}
-
 
 	/**
 	 * Returns the client ID from the settings
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getClientID()
 	{
 		return (string) FrontendModel::getModuleSetting('mailmotor', 'cm_client_id');
 	}
 
-
 	/**
 	 * Returns the CampaignMonitor object
 	 *
-	 * @return	CampaignMonitor
-	 * @param	int[optional] $listId		The default list id to use.
+	 * @param int[optional] $listId The default list id to use.
+	 * @return CampaignMonitor
 	 */
 	public static function getCM($listId = null)
 	{
@@ -97,11 +94,10 @@ class FrontendMailmotorCMHelper
 		return Spoon::get('campaignmonitor');
 	}
 
-
 	/**
 	 * Returns the default list ID
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getDefaultListID()
 	{
@@ -112,13 +108,12 @@ class FrontendMailmotorCMHelper
 		return self::getCampaignMonitorID('list', $groupId);
 	}
 
-
 	/**
 	 * Subscribes an e-mail address and send him/her to CampaignMonitor
 	 *
-	 * @return	bool
-	 * @param	string $email					The e-mail address to subscribe.
-	 * @param	string[optional] $groupId		The id of the group to subscribe to.
+	 * @param string $email The e-mail address to subscribe.
+	 * @param string[optional] $groupId The id of the group to subscribe to.
+	 * @return bool
 	 */
 	public static function subscribe($email, $groupId = null)
 	{
@@ -138,11 +133,18 @@ class FrontendMailmotorCMHelper
 			$subscriber['created_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
 			// insert/update the user
-			$db->execute('INSERT INTO mailmotor_addresses(email, source, created_on)
-							VALUES (?, ?, ?)
-							ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
-							array($subscriber['email'], $subscriber['source'], $subscriber['created_on'],
-									$subscriber['source'], $subscriber['created_on']));
+			$db->execute(
+				'INSERT INTO mailmotor_addresses(email, source, created_on)
+				 VALUES (?, ?, ?)
+				 ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
+				array(
+					$subscriber['email'],
+					$subscriber['source'],
+					$subscriber['created_on'],
+					$subscriber['source'],
+					$subscriber['created_on']
+				)
+			);
 
 			// set variables
 			$subscriberGroup['email'] = $email;
@@ -151,11 +153,20 @@ class FrontendMailmotorCMHelper
 			$subscriberGroup['subscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
 			// insert/update the user
-			$db->execute('INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
-							VALUES (?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
-							array($subscriberGroup['email'], $subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on'],
-									$subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on']));
+			$db->execute(
+				'INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
+				 VALUES (?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
+				array(
+					$subscriberGroup['email'],
+					$subscriberGroup['group_id'],
+					$subscriberGroup['status'],
+					$subscriberGroup['subscribed_on'],
+					$subscriberGroup['group_id'],
+					$subscriberGroup['status'],
+					$subscriberGroup['subscribed_on']
+				)
+			);
 
 			// user subscribed
 			return true;
@@ -165,13 +176,12 @@ class FrontendMailmotorCMHelper
 		return false;
 	}
 
-
 	/**
 	 * Unsubscribes an e-mail address from CampaignMonitor and our database
 	 *
-	 * @return	bool
-	 * @param	string $email					The e-mail address to unsubscribe.
-	 * @param	string[optional] $groupId		The id of the group to unsubscribe from.
+	 * @param string $email The e-mail address to unsubscribe.
+	 * @param string[optional] $groupId The id of the group to unsubscribe from.
+	 * @return bool
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{
@@ -216,5 +226,3 @@ class FrontendMailmotorCMHelper
 		return false;
 	}
 }
-
-?>

@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to export submissions of a form.
  *
- * @package		backend
- * @subpackage	form_builder
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendFormBuilderExportData extends BackendBaseAction
 {
@@ -19,14 +22,12 @@ class BackendFormBuilderExportData extends BackendBaseAction
 	 */
 	private $columnHeaders = array();
 
-
 	/**
 	 * The filter.
 	 *
 	 * @var	array
 	 */
 	private $filter;
-
 
 	/**
 	 * CSV rows.
@@ -35,23 +36,25 @@ class BackendFormBuilderExportData extends BackendBaseAction
 	 */
 	private $rows = array();
 
-
 	/**
 	 * Builds the query for this datagrid.
 	 *
-	 * @return	array		An array with two arguments containing the query and its parameters.
+	 * @return array		An array with two arguments containing the query and its parameters.
 	 */
 	private function buildQuery()
 	{
 		// init var
 		$parameters = array($this->id);
 
-		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
-		// wherin we allow the query to be in the actionfile itself
-		$query = 'SELECT i.*, UNIX_TIMESTAMP(i.sent_on) AS sent_on, d.*
-					FROM forms_data AS i
-					INNER JOIN forms_data_fields AS d ON i.id = d.data_id
-					WHERE i.form_id = ?';
+		/*
+		 * Start query, as you can see this query is build in the wrong place, because of the filter
+		 * it is a special case wherin we allow the query to be in the actionfile itself
+		 */
+		$query =
+			'SELECT i.*, UNIX_TIMESTAMP(i.sent_on) AS sent_on, d.*
+			 FROM forms_data AS i
+			 INNER JOIN forms_data_fields AS d ON i.id = d.data_id
+			 WHERE i.form_id = ?';
 
 		// add start date
 		if($this->filter['start_date'] !== '')
@@ -75,15 +78,11 @@ class BackendFormBuilderExportData extends BackendBaseAction
 			$parameters[] = BackendModel::getUTCDate(null, gmmktime(23, 59, 59, $chunks[1], $chunks[0], $chunks[2]));
 		}
 
-		// new query
 		return array($query, $parameters);
 	}
 
-
 	/**
 	 * Create the CSV.
-	 *
-	 * @return	void
 	 */
 	private function createCsv()
 	{
@@ -101,35 +100,22 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 		// output
 		echo $csv;
-
-		// exit here
 		exit;
 	}
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
 		if($this->id !== null && BackendFormBuilderModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// set filter
 			$this->setFilter();
-
-			// set csv items
 			$this->setItems();
-
-			// create csv
 			$this->createCsv();
 		}
 
@@ -137,11 +123,8 @@ class BackendFormBuilderExportData extends BackendBaseAction
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
@@ -184,11 +167,8 @@ class BackendFormBuilderExportData extends BackendBaseAction
 		else $this->filter['end_date'] = '';
 	}
 
-
 	/**
 	 * Fetch data for this form from the database and reformat to csv rows.
-	 *
-	 * @return	void
 	 */
 	private function setItems()
 	{
@@ -244,5 +224,3 @@ class BackendFormBuilderExportData extends BackendBaseAction
 		$this->rows = array_values($this->rows);
 	}
 }
-
-?>

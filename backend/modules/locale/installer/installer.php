@@ -1,22 +1,23 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the locale module
  *
- * @package		installer
- * @subpackage	locale
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class LocaleInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -60,5 +61,3 @@ class LocaleInstaller extends ModuleInstaller
 		), 4);
 	}
 }
-
-?>

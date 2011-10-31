@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to update one or more e-mail addresses (delete, ...)
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorMassAddressAction extends BackendBaseAction
 {
@@ -18,7 +21,6 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 	 */
 	private $emails;
 
-
 	/**
 	 * The group ID we have to perform the actions for
 	 *
@@ -26,11 +28,8 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 	 */
 	private $groupId;
 
-
 	/**
 	 * Delete addresses
-	 *
-	 * @return	void
 	 */
 	private function deleteAddresses()
 	{
@@ -80,15 +79,11 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 		$this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// action to execute
@@ -110,20 +105,17 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 			{
 				case 'delete':
 					$this->deleteAddresses();
-				break;
+					break;
 
 				case 'export':
 					$this->exportAddresses();
-				break;
+					break;
 			}
 		}
 	}
 
-
 	/**
 	 * Export addresses
-	 *
-	 * @return	void
 	 */
 	private function exportAddresses()
 	{
@@ -131,5 +123,3 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 		BackendMailmotorModel::exportAddresses($this->emails);
 	}
 }
-
-?>

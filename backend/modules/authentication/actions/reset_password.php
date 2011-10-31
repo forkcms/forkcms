@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the reset password action, it will display a form that allows the user to reset his/her password.
  *
- * @package		backend
- * @subpackage	authentication
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 {
@@ -18,14 +21,12 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 	 */
 	protected $frm;
 
-
 	/**
 	 * User email
 	 *
 	 * @var	$email
 	 */
 	private $email;
-
 
 	/**
 	 * Reset password key
@@ -34,46 +35,36 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 	 */
 	private $key;
 
-
 	/**
 	 * User record
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	private $user;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// the user email and key provided match
-		if(!$this->isUserAllowed()) $this->redirect(BackendModel::createURLForAction('index'));
+		if(!$this->isUserAllowed())
+		{
+			$this->redirect(BackendModel::createURLForAction('index'));
+		}
 
-		// load form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse the error
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
-
 
 	/**
 	 * The user is allowed on this page
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	private function isUserAllowed()
 	{
@@ -107,18 +98,12 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		return false;
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create the form
 		$this->frm = new BackendForm();
-
-		// create elements and add to the form
 		$this->frm->addPassword('backend_new_password');
 		$this->frm->addPassword('backend_new_password_repeated');
 
@@ -126,15 +111,11 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		$this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
 			// shorten fields
@@ -159,7 +140,6 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 				}
 			}
 
-			// is the form submitted
 			if($this->frm->isCorrect())
 			{
 				// change the users password
@@ -178,5 +158,3 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

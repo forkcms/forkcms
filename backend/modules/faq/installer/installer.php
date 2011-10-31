@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the faq module
  *
- * @package		installer
- * @subpackage	faq
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FaqInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -53,5 +54,3 @@ class FaqInstaller extends ModuleInstaller
 		$this->setNavigation($navigationFaqId, 'Categories', 'faq/categories', array('faq/add_category', 'faq/edit_category'));
 	}
 }
-
-?>

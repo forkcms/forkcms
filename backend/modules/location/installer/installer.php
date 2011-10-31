@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the location module
  *
- * @package		installer
- * @subpackage	location
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class LocationInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -63,5 +64,3 @@ class LocationInstaller extends ModuleInstaller
 		$this->insertExtra('location', 'block', 'Location', null, 'a:1:{s:3:"url";s:37:"/private/nl/location/index?token=true";}', 'N');
 	}
 }
-
-?>

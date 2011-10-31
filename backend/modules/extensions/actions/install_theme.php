@@ -4,26 +4,19 @@
  * This is the theme install-action.
  * It will install the theme given via the "theme" GET parameter.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		3.0.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendExtensionsInstallTheme extends BackendBaseActionIndex
 {
 	/**
 	 * Theme we ant to install.
 	 *
-	 * @var	string
+	 * @var string
 	 */
 	private $currentTheme;
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -58,11 +51,8 @@ class BackendExtensionsInstallTheme extends BackendBaseActionIndex
 		else $this->redirect(BackendModel::createURLForAction('themes') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Validate if the theme can be installed.
-	 *
-	 * @return	void
 	 */
 	private function validateInstall()
 	{
@@ -79,5 +69,3 @@ class BackendExtensionsInstallTheme extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>

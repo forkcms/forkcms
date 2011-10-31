@@ -1,19 +1,20 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This page will display the overview of custom fields
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorCustomFields extends BackendBaseActionIndex
 {
-	// maximum number of items
 	const PAGING_LIMIT = 10;
-
 
 	/**
 	 * The group record
@@ -22,35 +23,20 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 	 */
 	private $group;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get data
 		$this->getData();
-
-		// load datagrid
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Gets data related to custom fields
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -74,11 +60,8 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		}
 	}
 
-
 	/**
 	 * Loads the datagrid with the campaigns
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -110,11 +93,8 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -125,12 +105,11 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->tpl->assign('group', $this->group);
 	}
 
-
 	/**
 	 * Sets a link to the campaign statistics if it contains sent mailings
 	 *
-	 * @return	string
-	 * @param	int $id		The ID of the campaign.
+	 * @param int $id The ID of the campaign.
+	 * @return string
 	 */
 	public function setStatisticsLink($id)
 	{
@@ -144,5 +123,3 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		return ($hasSentMailings) ? $html : '';
 	}
 }
-
-?>

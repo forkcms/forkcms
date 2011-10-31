@@ -2686,6 +2686,16 @@
         <translation language="de"><![CDATA[Kategorie]]></translation>
         <translation language="fr"><![CDATA[catégorie]]></translation>
       </item>
+      <item type="label" name="ChangeEmail">
+        <translation language="nl"><![CDATA[e-mail aanpassen]]></translation>
+        <translation language="en"><![CDATA[change e-mail]]></translation>
+        <translation language="hu"><![CDATA[e-mail változtatás]]></translation>
+        <translation language="ru"><![CDATA[Изменить E-mail]]></translation>
+        <translation language="it"><![CDATA[cambia email]]></translation>
+        <translation language="cn"><![CDATA[更改Email]]></translation>
+        <translation language="de"><![CDATA[E-Mail ändern]]></translation>
+        <translation language="fr"><![CDATA[changer d'e-mail]]></translation>
+      </item>
       <item type="label" name="ChangePassword">
         <translation language="nl"><![CDATA[wijzig wachtwoord]]></translation>
         <translation language="en"><![CDATA[change password]]></translation>
@@ -4545,26 +4555,6 @@
         <translation language="de"><![CDATA[Profil]]></translation>
         <translation language="fr"><![CDATA[profil]]></translation>
       </item>
-      <item type="label" name="ProfileEmail">
-        <translation language="nl"><![CDATA[e-mail aanpassen]]></translation>
-        <translation language="en"><![CDATA[change e-mail]]></translation>
-        <translation language="hu"><![CDATA[e-mail változtatás]]></translation>
-        <translation language="ru"><![CDATA[Изменить E-mail]]></translation>
-        <translation language="it"><![CDATA[cambia email]]></translation>
-        <translation language="cn"><![CDATA[更改Email]]></translation>
-        <translation language="de"><![CDATA[E-Mail ändern]]></translation>
-        <translation language="fr"><![CDATA[changer d'e-mail]]></translation>
-      </item>
-      <item type="label" name="ProfilePassword">
-        <translation language="nl"><![CDATA[wachtwoord aanpassen]]></translation>
-        <translation language="en"><![CDATA[change password]]></translation>
-        <translation language="hu"><![CDATA[jelszó változtatás]]></translation>
-        <translation language="ru"><![CDATA[Изменить пароль]]></translation>
-        <translation language="it"><![CDATA[cambia password]]></translation>
-        <translation language="cn"><![CDATA[更改密码]]></translation>
-        <translation language="de"><![CDATA[Passwort ändern]]></translation>
-        <translation language="fr"><![CDATA[changer de mot de passe]]></translation>
-      </item>
       <item type="label" name="Profiles">
         <translation language="nl"><![CDATA[profielen]]></translation>
         <translation language="en"><![CDATA[profiles]]></translation>
@@ -4576,17 +4566,6 @@
         <translation language="cn"><![CDATA[资料]]></translation>
         <translation language="de"><![CDATA[Profile]]></translation>
         <translation language="fr"><![CDATA[profiles]]></translation>
-      </item>
-      <item type="label" name="ProfileSettings">
-        <translation language="nl"><![CDATA[profiel instellingen]]></translation>
-        <translation language="en"><![CDATA[profile settings]]></translation>
-        <translation language="hu"><![CDATA[profil beállítások]]></translation>
-        <translation language="ru"><![CDATA[Настройки профиля]]></translation>
-        <translation language="it"><![CDATA[impostazioni del profilo]]></translation>
-        <translation language="tr"><![CDATA[Profil ayarları]]></translation>
-        <translation language="cn"><![CDATA[资料设置]]></translation>
-        <translation language="de"><![CDATA[Profileinstellungen]]></translation>
-        <translation language="fr"><![CDATA[réglages profil]]></translation>
       </item>
       <item type="label" name="Publish">
         <translation language="nl"><![CDATA[publiceer]]></translation>

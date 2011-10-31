@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendFaqAdd extends BackendBaseActionAdd
 {
@@ -19,61 +22,38 @@ class BackendFaqAdd extends BackendBaseActionAdd
 	 */
 	private $categories;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get all data
 		$this->getData();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Get the data for a question
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get categories
 		$this->categories = BackendFaqModel::getCategoriesForDropdown();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
-		// create elements
 		$this->frm->addText('question')->setAttribute('id', 'title');
 		$this->frm->getField('question')->setAttribute('class', 'title ' . $this->frm->getField('question')->getAttribute('class'));
 		$this->frm->addEditor('answer');
@@ -81,33 +61,22 @@ class BackendFaqAdd extends BackendBaseActionAdd
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
-
-		// assign categories
 		$this->tpl->assign('categories', $this->categories);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
@@ -115,7 +84,6 @@ class BackendFaqAdd extends BackendBaseActionAdd
 			$this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
 			$this->frm->getField('categories')->isFilled(BL::err('CategoryIsRequired'));
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -140,5 +108,3 @@ class BackendFaqAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

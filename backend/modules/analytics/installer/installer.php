@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the analytics module
  *
- * @package		installer
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class AnalyticsInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -69,21 +70,18 @@ class AnalyticsInstaller extends ModuleInstaller
 		$this->insertWidgets();
 	}
 
-
 	/**
 	 * Insert an empty admin dashboard sequence
-	 *
-	 * @return	void
 	 */
 	private function insertWidgets()
 	{
-		// build widgets
 		$trafficSources = array(
 			'column' => 'middle',
 			'position' => 1,
 			'hidden' => false,
 			'present' => true
 		);
+
 		$visitors = array(
 			'column' => 'middle',
 			'position' => 2,
@@ -96,5 +94,3 @@ class AnalyticsInstaller extends ModuleInstaller
 		$this->insertDashboardWidget('analytics', 'visitors', $visitors);
 	}
 }
-
-?>

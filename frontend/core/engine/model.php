@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the frontend.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendModel
 {
@@ -18,12 +21,11 @@ class FrontendModel
 	 */
 	private static $moduleSettings = array();
 
-
 	/**
 	 * Add a number to the string
 	 *
-	 * @return	string
-	 * @param	string $string	The string where the number will be appended to.
+	 * @param string $string The string where the number will be appended to.
+	 * @return string
 	 */
 	public static function addNumber($string)
 	{
@@ -53,13 +55,12 @@ class FrontendModel
 		return $string;
 	}
 
-
 	/**
 	 * Add parameters to an URL
 	 *
-	 * @return	string
-	 * @param	string $URL			The URL to append the parameters too.
-	 * @param	array $parameters	The parameters as key-value-pairs.
+	 * @param string $URL The URL to append the parameters too.
+	 * @param array $parameters The parameters as key-value-pairs.
+	 * @return string
 	 */
 	public static function addURLParameters($URL, array $parameters)
 	{
@@ -94,14 +95,13 @@ class FrontendModel
 		else return $URL .= '?' . $queryString . $hash;
 	}
 
-
 	/**
 	 * Generate a totally random but readable/speakable password
 	 *
-	 * @return	string
-	 * @param	int[optional] $length				The maximum length for the password to generate.
-	 * @param	bool[optional] $uppercaseAllowed	Are uppercase letters allowed?
-	 * @param	bool[optional] $lowercaseAllowed	Are lowercase letters allowed?
+	 * @param int[optional] $length The maximum length for the password to generate.
+	 * @param bool[optional] $uppercaseAllowed Are uppercase letters allowed?
+	 * @param bool[optional] $lowercaseAllowed Are lowercase letters allowed?
+	 * @return string
 	 */
 	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
 	{
@@ -137,17 +137,15 @@ class FrontendModel
 		return $pass;
 	}
 
-
 	/**
 	 * Get (or create and get) a database-connection
 	 * @later split the write and read connection
 	 *
-	 * @return	SpoonDatabase
-	 * @param	bool[optional] $write	Do you want the write-connection or not?
+	 * @param bool[optional] $write Do you want the write-connection or not?
+	 * @return SpoonDatabase
 	 */
 	public static function getDB($write = false)
 	{
-		// redefine
 		$write = (bool) $write;
 
 		// do we have a db-object ready?
@@ -167,14 +165,13 @@ class FrontendModel
 		return Spoon::get('database');
 	}
 
-
 	/**
 	 * Get a module setting
 	 *
-	 * @return	mixed
-	 * @param	string $module					The module wherefor a setting has to be retrieved.
-	 * @param	string $name					The name of the setting to be retrieved.
-	 * @param	mixed[optional] $defaultValue	A value that will be stored if the setting isn't present.
+	 * @param string $module The module wherefor a setting has to be retrieved.
+	 * @param string $name The name of the setting to be retrieved.
+	 * @param mixed[optional] $defaultValue A value that will be stored if the setting isn't present.
+	 * @return mixed
 	 */
 	public static function getModuleSetting($module, $name, $defaultValue = null)
 	{
@@ -186,9 +183,11 @@ class FrontendModel
 		if(empty(self::$moduleSettings))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
-															FROM modules_settings AS ms
-															INNER JOIN modules AS m ON ms.module = m.name');
+			$settings = (array) self::getDB()->getRecords(
+				'SELECT ms.module, ms.name, ms.value
+				 FROM modules_settings AS ms
+				 INNER JOIN modules AS m ON ms.module = m.name'
+			);
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -201,24 +200,24 @@ class FrontendModel
 		return self::$moduleSettings[$module][$name];
 	}
 
-
 	/**
 	 * Get all module settings at once
 	 *
-	 * @return	array
-	 * @param	string $module	The module wherefor all settings has to be retrieved.
+	 * @param string $module The module wherefor all settings has to be retrieved.
+	 * @return array
 	 */
 	public static function getModuleSettings($module)
 	{
-		// redefine
 		$module = (string) $module;
 
 		// get them all
 		if(empty(self::$moduleSettings[$module]))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
-															FROM modules_settings AS ms');
+			$settings = (array) self::getDB()->getRecords(
+				'SELECT ms.module, ms.name, ms.value
+				 FROM modules_settings AS ms'
+			);
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -231,12 +230,11 @@ class FrontendModel
 		return self::$moduleSettings[$module];
 	}
 
-
 	/**
 	 * Get all data for a page
 	 *
-	 * @return	array
-	 * @param	int $pageId		The pageId wherefor the data will be retrieved.
+	 * @param int $pageId The pageId wherefor the data will be retrieved.
+	 * @return array
 	 */
 	public static function getPage($pageId)
 	{
@@ -247,20 +245,22 @@ class FrontendModel
 		$db = self::getDB();
 
 		// get data
-		$record = (array) $db->getRecord('SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
-												m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-												m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-												m.custom AS meta_custom,
-												m.url, m.url_overwrite,
-												m.data AS meta_data,
-												t.path AS template_path, t.data AS template_data
-											FROM pages AS p
-											INNER JOIN meta AS m ON p.meta_id = m.id
-											INNER JOIN themes_templates AS t ON p.template_id = t.id
-											WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
-											LIMIT 1',
-											array($pageId, 'active', 'N', FRONTEND_LANGUAGE));
+		$record = (array) $db->getRecord(
+			'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
+			 	m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+			 	m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+			 	m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+			 	m.custom AS meta_custom,
+			 	m.url, m.url_overwrite,
+			 	m.data AS meta_data,
+			 	t.path AS template_path, t.data AS template_data
+			 FROM pages AS p
+			 INNER JOIN meta AS m ON p.meta_id = m.id
+			 INNER JOIN themes_templates AS t ON p.template_id = t.id
+			 WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
+			 LIMIT 1',
+			array($pageId, 'active', 'N', FRONTEND_LANGUAGE)
+		);
 
 		// validate
 		if(empty($record)) return array();
@@ -274,14 +274,16 @@ class FrontendModel
 		$numBlocks = count($record['template_data']['names']);
 
 		// get blocks
-		$blocks = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html, pb.position,
-											pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-											FROM pages_blocks AS pb
-											INNER JOIN pages AS p ON p.revision_id = pb.revision_id
-											LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-											WHERE pb.revision_id = ? AND p.status = ? AND pb.visible = ?
-											ORDER BY pb.position, pb.sequence',
-											array('N', $record['revision_id'], 'active', 'Y'));
+		$blocks = (array) $db->getRecords(
+			'SELECT pe.id AS extra_id, pb.html, pb.position,
+			 pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
+			 FROM pages_blocks AS pb
+			 INNER JOIN pages AS p ON p.revision_id = pb.revision_id
+			 LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
+			 WHERE pb.revision_id = ? AND p.status = ? AND pb.visible = ?
+			 ORDER BY pb.position, pb.sequence',
+			array('N', $record['revision_id'], 'active', 'Y')
+		);
 
 		// loop blocks
 		foreach($blocks as $block)
@@ -293,39 +295,38 @@ class FrontendModel
 			$record['positions'][$block['position']][] = $block;
 		}
 
-		// return page record
 		return $record;
 	}
-
 
 	/**
 	 * Get a revision for a page
 	 *
-	 * @return	array
-	 * @param	int $revisionId		The revisionID.
+	 * @param int $revisionId The revisionID.
+	 * @return array
 	 */
 	public static function getPageRevision($revisionId)
 	{
-		// redefine
 		$revisionId = (int) $revisionId;
 
 		// get database instance
 		$db = self::getDB();
 
 		// get data
-		$record = (array) $db->getRecord('SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
-												m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-												m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-												m.custom AS meta_custom,
-												m.url, m.url_overwrite,
-												t.path AS template_path, t.data AS template_data
-											FROM pages AS p
-											INNER JOIN meta AS m ON p.meta_id = m.id
-											INNER JOIN themes_templates AS t ON p.template_id = t.id
-											WHERE p.revision_id = ? AND p.language = ?
-											LIMIT 1',
-											array($revisionId, FRONTEND_LANGUAGE));
+		$record = (array) $db->getRecord(
+			'SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
+			 	m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+			 	m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+			 	m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+			 	m.custom AS meta_custom,
+			 	m.url, m.url_overwrite,
+			 	t.path AS template_path, t.data AS template_data
+			 FROM pages AS p
+			 INNER JOIN meta AS m ON p.meta_id = m.id
+			 INNER JOIN themes_templates AS t ON p.template_id = t.id
+			 WHERE p.revision_id = ? AND p.language = ?
+			 LIMIT 1',
+			array($revisionId, FRONTEND_LANGUAGE)
+		);
 
 		// validate
 		if(empty($record)) return array();
@@ -335,14 +336,16 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords('SELECT pe.id AS extra_id, pb.html,
-														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-														FROM pages_blocks AS pb
-														INNER JOIN pages AS p ON p.revision_id = pb.revision_id
-														LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-														WHERE pb.revision_id = ? AND p.status = ?
-														ORDER BY pb.id',
-														array('N', $record['revision_id'], 'active'));
+		$record['blocks'] = (array) $db->getRecords(
+			'SELECT pe.id AS extra_id, pb.html,
+			 pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
+			 FROM pages_blocks AS pb
+			 INNER JOIN pages AS p ON p.revision_id = pb.revision_id
+			 LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
+			 WHERE pb.revision_id = ? AND p.status = ?
+			 ORDER BY pb.id',
+			array('N', $record['revision_id'], 'active')
+		);
 
 		// loop blocks
 		foreach($record['blocks'] as $index => $row)
@@ -355,13 +358,12 @@ class FrontendModel
 		return $record;
 	}
 
-
 	/**
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
-	 * @return	string
-	 * @param	string[optional] $format	The format wherin the data will be returned, if not provided we will return it in MySQL-datetime-format.
-	 * @param	int[optional] $timestamp	A UNIX-timestamp that will be used as base.
+	 * @param string[optional] $format The format wherin the data will be returned, if not provided we will return it in MySQL-datetime-format.
+	 * @param int[optional] $timestamp A UNIX-timestamp that will be used as base.
+	 * @return string
 	 */
 	public static function getUTCDate($format = null, $timestamp = null)
 	{
@@ -375,17 +377,16 @@ class FrontendModel
 		return gmdate($format, (int) $timestamp);
 	}
 
-
 	/**
 	 * General method to check if something is spam
 	 *
-	 * @return	bool|string					Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
-	 * @param	string $content				The content that was submitted.
-	 * @param	string $permaLink			The permanent location of the entry the comment was submitted to.
-	 * @param	string[optional] $author	Commenters name.
-	 * @param	string[optional] $email		Commenters email address.
-	 * @param	string[optional] $URL		Commenters URL.
-	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
+	 * @param string $content The content that was submitted.
+	 * @param string $permaLink The permanent location of the entry the comment was submitted to.
+	 * @param string[optional] $author Commenters name.
+	 * @param string[optional] $email Commenters email address.
+	 * @param string[optional] $URL Commenters URL.
+	 * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
+	 * @return bool|string Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
 	 */
 	public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
 	{
@@ -405,7 +406,7 @@ class FrontendModel
 		$akismet->setTimeOut(10);
 		$akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
-		// try it to decide if the item is spam
+		// try it, to decide if the item is spam
 		try
 		{
 			// check with Akismet if the item is spam
@@ -426,15 +427,13 @@ class FrontendModel
 		return false;
 	}
 
-
 	/**
 	 * Push a notification to Apple's notifications-server
 	 *
-	 * @return	void
-	 * @param	mixed $alert						The message/dictonary to send.
-	 * @param	int[optional] $badge				The number for the badge.
-	 * @param	string[optional] $sound				The sound that should be played.
-	 * @param 	array[optional] $extraDictionaries	Extra dictionaries.
+	 * @param mixed $alert The message/dictonary to send.
+	 * @param int[optional] $badge The number for the badge.
+	 * @param string[optional] $sound The sound that should be played.
+	 * @param array[optional] $extraDictionaries Extra dictionaries.
 	 */
 	public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{
@@ -446,11 +445,13 @@ class FrontendModel
 		if($publicKey != '' && $privateKey != '')
 		{
 			// get all apple-device tokens
-			$deviceTokens = (array) FrontendModel::getDB()->getColumn('SELECT s.value
-																		FROM users AS i
-																		INNER JOIN users_settings AS s
-																		WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
-																		array('Y', 'N', 'apple_device_token', 'N;'));
+			$deviceTokens = (array) FrontendModel::getDB()->getColumn(
+				'SELECT s.value
+				 FROM users AS i
+				 INNER JOIN users_settings AS s
+				 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
+				array('Y', 'N', 'apple_device_token', 'N;')
+			);
 
 			// any devices?
 			if(!empty($deviceTokens))
@@ -491,10 +492,12 @@ class FrontendModel
 							foreach($response as $deviceToken)
 							{
 								// get setting wherin the token is available
-								$row = $db->getRecord('SELECT i.*
-														FROM users_settings AS i
-														WHERE i.name = ? AND i.value LIKE ?',
-														array('apple_device_token', '%' . $deviceToken . '%'));
+								$row = $db->getRecord(
+									'SELECT i.*
+									 FROM users_settings AS i
+									 WHERE i.name = ? AND i.value LIKE ?',
+									array('apple_device_token', '%' . $deviceToken . '%')
+								);
 
 								// any rows?
 								if(!empty($row))
@@ -520,7 +523,6 @@ class FrontendModel
 						}
 					}
 
-					// catch exceptions
 					catch(Exception $e)
 					{
 						if(SPOON_DEBUG) throw $e;
@@ -531,37 +533,33 @@ class FrontendModel
 
 	}
 
-
 	/**
 	 * Store a modulesetting
 	 *
-	 * @return	void
-	 * @param	string $module		The module wherefor a setting has to be stored.
-	 * @param	string $name		The name of the setting.
-	 * @param	mixed $value		The value (will be serialized so make sure the type is correct).
+	 * @param string $module The module wherefor a setting has to be stored.
+	 * @param string $name The name of the setting.
+	 * @param mixed $value The value (will be serialized so make sure the type is correct).
 	 */
 	public static function setModuleSetting($module, $name, $value)
 	{
-		// redefine
 		$module = (string) $module;
 		$name = (string) $name;
 		$value = serialize($value);
 
 		// store
-		self::getDB(true)->execute('INSERT INTO modules_settings (module, name, value)
-									VALUES (?, ?, ?)
-									ON DUPLICATE KEY UPDATE value = ?',
-									array($module, $name, $value, $value));
+		self::getDB(true)->execute(
+			'INSERT INTO modules_settings (module, name, value)
+			 VALUES (?, ?, ?)
+			 ON DUPLICATE KEY UPDATE value = ?',
+			array($module, $name, $value, $value)
+		);
 
 		// store in cache
 		self::$moduleSettings[$module][$name] = unserialize($value);
 	}
 
-
 	/**
 	 * Start processing the hooks
-	 *
-	 * @return	void
 	 */
 	public static function startProcessingHooks()
 	{
@@ -646,15 +644,13 @@ class FrontendModel
 		return true;
 	}
 
-
 	/**
 	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
 	 *
-	 * @return	void
-	 * @param	string $eventModule		The module that triggers the event.
-	 * @param	string $eventName		The name of the event.
-	 * @param	string $module			The module that subsribes to the event.
-	 * @param	mixed $callback			The callback that should be executed when the event is triggered.
+	 * @param string $eventModule The module that triggers the event.
+	 * @param string $eventName The name of the event.
+	 * @param string $module The module that subsribes to the event.
+	 * @param mixed $callback The callback that should be executed when the event is triggered.
 	 */
 	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
 	{
@@ -672,6 +668,7 @@ class FrontendModel
 		$db = self::getDB(true);
 
 		// update if already existing
+		// @todo refactor this nasty if statement
 		if((int) $db->getVar('SELECT COUNT(*)
 									FROM hooks_subscriptions AS i
 									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
@@ -685,18 +682,15 @@ class FrontendModel
 		else $db->insert('hooks_subscriptions', $item);
 	}
 
-
 	/**
 	 * Trigger an event
 	 *
-	 * @return	void
-	 * @param	string $module			The module that triggers the event.
-	 * @param	string $eventName		The name of the event.
-	 * @param	mixed[optional] $data	The data that should be send to subscribers.
+	 * @param string $module The module that triggers the event.
+	 * @param string $eventName The name of the event.
+	 * @param mixed[optional] $data The data that should be send to subscribers.
 	 */
 	public static function triggerEvent($module, $eventName, $data = null)
 	{
-		// redefine
 		$module = (string) $module;
 		$eventName = (string) $eventName;
 
@@ -707,10 +701,12 @@ class FrontendModel
 		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
 
 		// get all items that subscribe to this event
-		$subscriptions = (array) self::getDB()->getRecords('SELECT i.module, i.callback
-															FROM hooks_subscriptions AS i
-															WHERE i.event_module = ? AND i.event_name = ?',
-															array($module, $eventName));
+		$subscriptions = (array) self::getDB()->getRecords(
+			'SELECT i.module, i.callback
+			 FROM hooks_subscriptions AS i
+			 WHERE i.event_module = ? AND i.event_name = ?',
+			array($module, $eventName)
+		);
 
 		// any subscriptions?
 		if(!empty($subscriptions))
@@ -740,26 +736,23 @@ class FrontendModel
 		}
 	}
 
-
 	/**
 	 * Unsubscribe from an event
 	 *
-	 * @return	void
-	 * @param	string $eventModule		The module that triggers the event.
-	 * @param	string $eventName		The name of the event.
-	 * @param	string $module			The module that subsribes to the event.
+	 * @param string $eventModule The module that triggers the event.
+	 * @param string $eventName The name of the event.
+	 * @param string $module The module that subsribes to the event.
 	 */
 	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
 	{
-		// redefine
 		$eventModule = (string) $eventModule;
 		$eventName = (string) $eventName;
 		$module = (string) $module;
 
-		// get db
-		self::getDB(true)->delete('hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
-									array($eventModule, $eventName, $module));
+		self::getDB(true)->delete(
+			'hooks_subscriptions',
+			'event_module = ? AND event_name = ? AND module = ?',
+			array($eventModule, $eventName, $module)
+		);
 	}
 }
-
-?>

@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to update an item
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendPagesEdit extends BackendBaseActionEdit
 {
@@ -20,14 +23,12 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 */
 	private $blocksContent = array();
 
-
 	/**
 	 * DataGrid for the drafts
 	 *
 	 * @var	BackendDataGrid
 	 */
 	private $dgDrafts;
-
 
 	/**
 	 * The extras
@@ -36,14 +37,12 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 */
 	private $extras = array();
 
-
 	/**
 	 * The positions
 	 *
 	 * @var	array
 	 */
 	private $positions = array();
-
 
 	/**
 	 * The template data
@@ -52,15 +51,11 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 */
 	private $templates = array();
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably edit some general CSS/JS or other required files
 		parent::execute();
 
 		// load record
@@ -92,30 +87,16 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// get the extras
 		$this->extras = BackendExtensionsModel::getExtras();
 
-		// load the form
 		$this->loadForm();
-
-		// load drafts
 		$this->loadDrafts();
-
-		// load the datagrid with the versions
 		$this->loadRevisions();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the record
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -168,11 +149,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
 	}
 
-
 	/**
 	 * Load the datagrid with drafts
-	 *
-	 * @return	void
 	 */
 	private function loadDrafts()
 	{
@@ -202,11 +180,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -346,11 +321,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $isAction));
 	}
 
-
 	/**
 	 * Load the datagrid
-	 *
-	 * @return	void
 	 */
 	private function loadRevisions()
 	{
@@ -377,11 +349,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -422,11 +391,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -545,5 +511,3 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

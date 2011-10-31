@@ -3,11 +3,7 @@
 /**
  * This is the detail-action
  *
- * @package		frontend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class FrontendMailmotorDetail extends FrontendBaseBlock
 {
@@ -18,14 +14,12 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 	 */
 	private $forCM = false;
 
-
 	/**
 	 * The ID of the mailing
 	 *
 	 * @var	int
 	 */
 	private $id;
-
 
 	/**
 	 * The mailing
@@ -34,7 +28,6 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 	 */
 	private $record;
 
-
 	/**
 	 * The type of content to show (HTML or plain)
 	 *
@@ -42,15 +35,11 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 	 */
 	private $type;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
 
 		// hide contenTitle, in the template the title is wrapped with an inverse-option
@@ -67,11 +56,8 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -91,11 +77,8 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -141,5 +124,3 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 		$this->tpl->assign('mailingContent', $content);
 	}
 }
-
-?>

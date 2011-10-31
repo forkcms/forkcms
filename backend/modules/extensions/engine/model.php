@@ -3,12 +3,8 @@
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		3.0.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendExtensionsModel
 {
@@ -22,7 +18,6 @@ class BackendExtensionsModel
 									WHERE i.theme = ?
 									ORDER BY i.label ASC';
 
-
 	/**
 	 * Modules which are part of the core and can not be managed.
 	 *
@@ -33,13 +28,12 @@ class BackendExtensionsModel
 		'error', 'extensions', 'settings'
 	);
 
-
 	/**
 	 * Build HTML for a template (visual representation)
 	 *
-	 * @return	string
-	 * @param	array $template			The template format.
-	 * @param	bool[optional] $large	Will the HTML be used in a large version?
+	 * @param array $template The template format.
+	 * @param bool[optional] $large Will the HTML be used in a large version?
+	 * @return string
 	 */
 	public static function buildTemplateHTML($format, $large = false)
 	{
@@ -158,13 +152,10 @@ class BackendExtensionsModel
 		return $html;
 	}
 
-
 	/**
 	 * Clear all applications cache.
 	 *
 	 * Note: we do not need to rebuild anything, the core will do this when noticing the cache files are missing.
-	 *
-	 * @return	void
 	 */
 	public static function clearCache()
 	{
@@ -196,16 +187,14 @@ class BackendExtensionsModel
 		foreach($filesToDelete as $file) SpoonFile::delete($file);
 	}
 
-
 	/**
-	 * Delete a template
+	 * Delete a template.
 	 *
-	 * @return	bool
-	 * @param	int $id		The id of the template to delete.
+	 * @param int $id The id of the template to delete.
+	 * @return bool
 	 */
 	public static function deleteTemplate($id)
 	{
-		// redefine
 		$id = (int) $id;
 
 		// get all templates
@@ -228,10 +217,12 @@ class BackendExtensionsModel
 		$db->delete('themes_templates', 'id = ?', $id);
 
 		// get all non-active pages that use this template
-		$ids = (array) $db->getColumn('SELECT i.revision_id
-										FROM pages AS i
-										WHERE i.template_id = ? AND i.status != ?',
-										array($id, 'active'));
+		$ids = (array) $db->getColumn(
+			'SELECT i.revision_id
+			 FROM pages AS i
+			 WHERE i.template_id = ? AND i.status != ?',
+			array($id, 'active')
+		);
 
 		// any items
 		if(!empty($ids))
@@ -241,78 +232,71 @@ class BackendExtensionsModel
 			$db->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
 		}
 
-		// return
 		return true;
 	}
-
 
 	/**
 	 * Does this module exist.
 	 * This does not check for existence in the database but on the filesystem.
 	 *
-	 * @return	bool
-	 * @param	string $module		Module to check for existence.
+	 * @param string $module Module to check for existence.
+	 * @return bool
 	 */
 	public static function existsModule($module)
 	{
-		// recast
 		$module = (string) $module;
 
 		// check if modules directory exists
 		return SpoonDirectory::exists(BACKEND_MODULES_PATH . '/' . $module);
 	}
 
-
 	/**
 	 * Check if a template exists
 	 *
-	 * @return	bool
-	 * @param	int $id		The Id of the template to check for existence.
+	 * @param int $id The Id of the template to check for existence.
+	 * @return bool
 	 */
 	public static function existsTemplate($id)
 	{
-		// redefine
 		$id = (int) $id;
 
 		// get data
-		return (bool) BackendModel::getDB()->getVar('SELECT i.id
-														FROM themes_templates AS i
-														WHERE i.id = ?',
-														array($id));
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT i.id FROM themes_templates AS i	WHERE i.id = ?',
+			array($id)
+		);
 	}
-
 
 	/**
 	 * Does this template exist.
 	 * This does not check for existence in the database but on the filesystem.
 	 *
-	 * @return	bool
-	 * @param	string $theme		Theme to check for existence.
+	 * @param string $theme Theme to check for existence.
+	 * @return bool
 	 */
 	public static function existsTheme($theme)
 	{
-		// recast
 		$theme = (string) $theme;
 
 		// check if modules directory exists
 		return SpoonDirectory::exists(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
 	}
 
-
 	/**
 	 * Get extras
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getExtras()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
-																FROM modules_extras AS i
-																INNER JOIN modules AS m ON i.module = m.name
-																WHERE i.hidden = ?
-																ORDER BY i.module, i.sequence',
-																array('N'), 'id');
+		$extras = (array) BackendModel::getDB()->getRecords(
+			'SELECT i.id, i.module, i.type, i.label, i.data
+			 FROM modules_extras AS i
+			 INNER JOIN modules AS m ON i.module = m.name
+			 WHERE i.hidden = ?
+			 ORDER BY i.module, i.sequence',
+			array('N'), 'id');
 
 		// init var
 		$itemsToRemove = array();
@@ -351,21 +335,22 @@ class BackendExtensionsModel
 		return $extras;
 	}
 
-
 	/**
 	 * Get all the available extra's
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getExtrasData()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
-																FROM modules_extras AS i
-																INNER JOIN modules AS m ON i.module = m.name
-																WHERE i.hidden = ?
-																ORDER BY i.module, i.sequence',
-																array('N'));
+		$extras = (array) BackendModel::getDB()->getRecords(
+			'SELECT i.id, i.module, i.type, i.label, i.data
+			 FROM modules_extras AS i
+			 INNER JOIN modules AS m ON i.module = m.name
+			 WHERE i.hidden = ?
+			 ORDER BY i.module, i.sequence',
+			array('N')
+		);
 
 		// build array
 		$values = array();
@@ -407,17 +392,15 @@ class BackendExtensionsModel
 			if(!empty($row['items']['block'])) $row['items']['block'] = SpoonFilter::arraySortKeys($row['items']['block']);
 		}
 
-		// return
 		return $values;
 	}
-
 
 	/**
 	 * Get modules based on the directory listing in the backend application.
 	 *
 	 * If a module contains a info.xml it will be parsed.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getModules()
 	{
@@ -469,35 +452,30 @@ class BackendExtensionsModel
 			$managableModules[] = $module;
 		}
 
-		// managable modules
 		return $managableModules;
 	}
-
 
 	/**
 	 * Get a given template
 	 *
-	 * @return	array
-	 * @param	int $id		The id of the requested template.
+	 * @param int $id The id of the requested template.
+	 * @return array
 	 */
 	public static function getTemplate($id)
 	{
-		// redefine
 		$id = (int) $id;
 
 		// fetch data
-		return (array) BackendModel::getDB()->getRecord('SELECT i.*
-															FROM themes_templates AS i
-															WHERE i.id = ?',
-															array($id));
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT i.* FROM themes_templates AS i WHERE i.id = ?',
+			array($id));
 	}
-
 
 	/**
 	 * Get templates
 	 *
-	 * @return	array
-	 * @param	string[optional] $theme		The thele we want to fetch the templates from.
+	 * @param string[optional] $theme The theme we want to fetch the templates from.
+	 * @return array
 	 */
 	public static function getTemplates($theme = null)
 	{
@@ -559,15 +537,13 @@ class BackendExtensionsModel
 			$i++;
 		}
 
-		// return
 		return (array) $templates;
 	}
-
 
 	/**
 	 * Fetch the list of available themes
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getThemes()
 	{
@@ -619,28 +595,24 @@ class BackendExtensionsModel
 		$core['core']['installable'] = false;
 		$records = array_merge($core, $records);
 
-		// return the records
 		return (array) $records;
 	}
-
 
 	/**
 	 * Inserts a new template
 	 *
-	 * @return	int
-	 * @param	array $template	The data for the template to insert.
+	 * @param array $template The data for the template to insert.
+	 * @return int
 	 */
 	public static function insertTemplate(array $template)
 	{
-		// insert
 		return (int) BackendModel::getDB(true)->insert('themes_templates', $template);
 	}
-
 
 	/**
 	 * Install a module.
 	 *
-	 * @param	string $module		The name of the module to be installed.
+	 * @param string $module The name of the module to be installed.
 	 */
 	public static function installModule($module)
 	{
@@ -670,11 +642,10 @@ class BackendExtensionsModel
 		self::clearCache();
 	}
 
-
 	/**
 	 * Install a theme.
 	 *
-	 * @param	string $theme		The name of the theme to be installed.
+	 * @param string $theme The name of the theme to be installed.
 	 */
 	public static function installTheme($theme)
 	{
@@ -716,10 +687,12 @@ class BackendExtensionsModel
 				foreach($position['widgets'] as $widget)
 				{
 					// fetch extra_id for this extra
-					$extraId = (int) BackendModel::getDB()->getVar('SELECT i.id
-																	FROM modules_extras AS i
-																	WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
-																	array('widget', $widget['module'], $widget['action'], 'N'));
+					$extraId = (int) BackendModel::getDB()->getVar(
+						'SELECT i.id
+						 FROM modules_extras AS i
+						 WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
+						array('widget', $widget['module'], $widget['action'], 'N')
+					);
 
 					// add extra to defaults
 					if($extraId) $item['data']['default_extras'][$position['name']][] = $extraId;
@@ -740,52 +713,56 @@ class BackendExtensionsModel
 		}
 	}
 
-
 	/**
 	 * Checks if a module is already installed.
 	 *
-	 * @return	bool
-	 * @param	string $module
+	 * @param string $module
+	 * @return bool
 	 */
 	public static function isModuleInstalled($module)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?', (string) $module);
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(name) FROM modules WHERE name = ?',
+			(string) $module
+		);
 	}
-
 
 	/**
 	 * Is the provided template id in use by active versions of pages?
 	 *
-	 * @return	bool
-	 * @param	int $templateId		The id of the template to check.
+	 * @param int $templateId The id of the template to check.
+	 * @return bool
 	 */
 	public static function isTemplateInUse($templateId)
 	{
-		return (bool) BackendModel::getDB(false)->getVar('SELECT COUNT(i.template_id)
-															FROM pages AS i
-															WHERE i.template_id = ? AND i.status = ?',
-															array((int) $templateId, 'active'));
+		return (bool) BackendModel::getDB(false)->getVar(
+			'SELECT COUNT(i.template_id)
+			 FROM pages AS i
+			 WHERE i.template_id = ? AND i.status = ?',
+			array((int) $templateId, 'active')
+		);
 	}
-
 
 	/**
 	 * Checks if a theme is already installed.
 	 *
-	 * @return	bool
-	 * @param	string $theme
+	 * @param string $theme
+	 * @return bool
 	 */
 	public static function isThemeInstalled($theme)
 	{
-		return (bool) BackendModeL::getDB()->getVar('SELECT COUNT(id) FROM themes_templates WHERE theme = ?', array($theme));
+		return (bool) BackendModeL::getDB()->getVar(
+			'SELECT COUNT(id) FROM themes_templates WHERE theme = ?',
+			array($theme)
+		);
 	}
-
 
 	/**
 	 * Check if a directory is writable.
 	 * The default is_writable function has problems due to Windows ACLs "bug"
 	 *
-	 * @return	bool
-	 * @param	string $path	The path to check.
+	 * @param string $path The path to check.
+	 * @return bool
 	 */
 	public static function isWritable($path)
 	{
@@ -802,20 +779,17 @@ class BackendExtensionsModel
 		// unlink the random file
 		@unlink($path . '/' . $file);
 
-		// return
 		return true;
 	}
-
 
 	/**
 	 * Process the module's information XML and return an array with the information.
 	 *
-	 * @return	array
-	 * @param	SimpleXMLElement $xml
+	 * @param SimpleXMLElement $xml
+	 * @return array
 	 */
 	public static function processModuleXml(SimpleXMLElement $xml)
 	{
-		// init
 		$information = array();
 
 		// version
@@ -846,20 +820,17 @@ class BackendExtensionsModel
 			);
 		}
 
-		// information array
 		return $information;
 	}
-
 
 	/**
 	 * Process the theme's information XML and return an array with the information.
 	 *
-	 * @return	array
-	 * @param	SimpleXMLElement $xml
+	 * @param SimpleXMLElement $xml
+	 * @return array
 	 */
 	public static function processThemeXml(SimpleXMLElement $xml)
 	{
-		// init
 		$information = array();
 
 		// fetch theme node
@@ -939,16 +910,14 @@ class BackendExtensionsModel
 		return self::validateThemeInformation($information);
 	}
 
-
 	/**
-	 * Convert the template syntax into an array to work with
+	 * Convert the template syntax into an array to work with.
 	 *
-	 * @return	array
-	 * @param	string $syntax	The syntax.
+	 * @param string $syntax
+	 * @return array
 	 */
 	public static function templateSyntaxToArray($syntax)
 	{
-		// redefine
 		$syntax = (string) $syntax;
 
 		// cleanup
@@ -970,16 +939,24 @@ class BackendExtensionsModel
 			$table[$i] = (array) explode(',', $row);
 		}
 
-		// return
 		return $table;
 	}
 
+	/**
+	 * Update a template
+	 *
+	 * @param array $item The new data for the template.
+	 */
+	public static function updateTemplate(array $item)
+	{
+		BackendModel::getDB(true)->update('themes_templates', $item, 'id = ?', array((int) $item['id']));
+	}
 
 	/**
 	 * Make sure that we have an entirely valid theme information array
 	 *
-	 * @return	array
-	 * @param	array $information		Contains the parsed theme info.xml data.
+	 * @param array $information Contains the parsed theme info.xml data.
+	 * @return array
 	 */
 	public static function validateThemeInformation($information)
 	{
@@ -993,9 +970,7 @@ class BackendExtensionsModel
 			foreach($information['templates'] as $i => $template)
 			{
 				// check template data
-				if(!isset($template['label']) || !$template['label'] ||
-					!isset($template['path']) || !$template['path'] ||
-					!isset($template['format']) || !$template['format'])
+				if(!isset($template['label']) || !$template['label'] || !isset($template['path']) || !$template['path'] || !isset($template['format']) || !$template['format'])
 				{
 					unset($information['templates'][$i]);
 					continue;
@@ -1030,8 +1005,7 @@ class BackendExtensionsModel
 						foreach($position['widgets'] as $k => $widget)
 						{
 							// check if widget is valid
-							if(!isset($widget['module']) || !$widget['module'] ||
-								!isset($widget['action']) || !$widget['action'])
+							if(!isset($widget['module']) || !$widget['module'] || !isset($widget['action']) || !$widget['action'])
 							{
 								unset($information['templates'][$i]['positions'][$j]['widgets'][$k]);
 								continue;
@@ -1048,22 +1022,6 @@ class BackendExtensionsModel
 			if(!isset($information['templates']) || !$information['templates']) return null;
 		}
 
-		// return cleaned array
 		return $information;
 	}
-
-
-	/**
-	 * Update a template
-	 *
-	 * @return	void
-	 * @param	array $item			The new data for the template.
-	 */
-	public static function updateTemplate(array $item)
-	{
-		// update item
-		return BackendModel::getDB(true)->update('themes_templates', $item, 'id = ?', array((int) $item['id']));
-	}
 }
-
-?>

@@ -1,42 +1,33 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This widget will analyze the CMS warnings
  *
- * @package		backend
- * @subpackage	settings
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendSettingsWidgetAnalyse extends BackendBaseWidget
 {
 	/**
 	 * Execute the widget
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// set column
 		$this->setColumn('left');
-
-		// set position
 		$this->setPosition(1);
-
-		// parse
 		$this->parse();
-
-		// display
 		$this->display();
 	}
 
-
 	/**
 	 * Parse into template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -47,5 +38,3 @@ class BackendSettingsWidgetAnalyse extends BackendBaseWidget
 		if(!empty($warnings)) $this->tpl->assign('warnings', $warnings);
 	}
 }
-
-?>

@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * FrontendAJAX
  * This class will handle AJAX-related stuff
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class FrontendAJAX
 {
@@ -20,14 +23,12 @@ class FrontendAJAX
 	 */
 	private $action;
 
-
 	/**
 	 * The language
 	 *
 	 * @var	string
 	 */
 	private $language;
-
 
 	/**
 	 * The module
@@ -36,12 +37,6 @@ class FrontendAJAX
 	 */
 	private $module;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// set the module
@@ -56,14 +51,12 @@ class FrontendAJAX
 		// create a new action
 		$action = new FrontendAJAXAction($this->getAction(), $this->getModule());
 
-		// attempt to execute this action
 		try
 		{
 			// execute the action
 			$action->execute();
 		}
 
-		// we should catch exceptions
 		catch(Exception $e)
 		{
 			// if we are debugging, we obviously want to see the exception
@@ -77,46 +70,40 @@ class FrontendAJAX
 		}
 	}
 
-
 	/**
 	 * Get the loaded action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the loaded module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Set action
 	 *
-	 * @return	void
-	 * @param	string $value	The action that should be executed.
+	 * @param string $value The action that should be executed.
 	 */
 	public function setAction($value)
 	{
 		$this->action = (string) $value;
 	}
 
-
 	/**
 	 * Set the language
 	 *
-	 * @return	void
-	 * @param	string $value	The (interface-)language, will be used to parse labels.
+	 * @param string $value The (interface-)language, will be used to parse labels.
 	 */
 	public function setLanguage($value)
 	{
@@ -150,12 +137,10 @@ class FrontendAJAX
 		FrontendLanguage::setLocale($this->language);
 	}
 
-
 	/**
 	 * Set module
 	 *
-	 * @return	void
-	 * @param	string $value	The module, wherefore an action will be executed.
+	 * @param string $value The module, wherefore an action will be executed.
 	 */
 	public function setModule($value)
 	{
@@ -164,16 +149,11 @@ class FrontendAJAX
 	}
 }
 
-
 /**
  * FrontendAJAXAction
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class FrontendAJAXAction
 {
@@ -184,14 +164,12 @@ class FrontendAJAXAction
 	 */
 	private $action;
 
-
 	/**
 	 * The config file
 	 *
 	 * @var	FrontendBaseConfig
 	 */
 	private $config;
-
 
 	/**
 	 * The current module
@@ -200,14 +178,9 @@ class FrontendAJAXAction
 	 */
 	private $module;
 
-
 	/**
-	 * Default constructor.
-	 * You have to specify the action and module so we know what to do with this instance.
-	 *
-	 * @return	void
-	 * @param	string $action	The action that should be executed.
-	 * @param	string $module	The module that wherein the action is available.
+	 * @param string $action The action that should be executed.
+	 * @param string $module The module that wherein the action is available.
 	 */
 	public function __construct($action, $module)
 	{
@@ -219,12 +192,9 @@ class FrontendAJAXAction
 		$this->loadConfig();
 	}
 
-
 	/**
 	 * Execute the action.
 	 * We will build the classname, require the class and call the execute method.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -254,37 +224,32 @@ class FrontendAJAXAction
 		call_user_func(array($object, 'execute'));
 	}
 
-
 	/**
 	 * Get the current action.
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the current module.
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Load the config file for the requested module.
 	 * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions.
 	 * Other configurations will also be stored in it.
-	 *
-	 * @return	void
 	 */
 	public function loadConfig()
 	{
@@ -310,29 +275,23 @@ class FrontendAJAXAction
 		$this->config = new $configClassName($this->getModule());
 	}
 
-
 	/**
 	 * Set the action
 	 *
-	 * @return	void
-	 * @param	string $action	The action that should be executed.
+	 * @param string $action The action that should be executed.
 	 */
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the module
 	 *
-	 * @return	void
-	 * @param	string $module	The module wherin the action is available.
+	 * @param string $module The module wherin the action is available.
 	 */
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 }
-
-?>

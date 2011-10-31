@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the groups module
  *
- * @package		installer
- * @subpackage	groups
- *
- * @author		Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
- * @since		2.0
+ * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class GroupsInstaller extends ModuleInstaller
 {
 	/**
 	 * Insert an empty admin dashboard sequence
-	 *
-	 * @return	void
 	 */
 	private function insertDashboardSequence()
 	{
-		// get db
 		$db = $this->getDB();
 
 		// build groupsetting
@@ -47,11 +47,8 @@ class GroupsInstaller extends ModuleInstaller
 		$this->insertDashboardWidget('settings', 'analyse', $analyse);
 	}
 
-
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -84,5 +81,3 @@ class GroupsInstaller extends ModuleInstaller
 		$this->insertDashboardSequence();
 	}
 }
-
-?>

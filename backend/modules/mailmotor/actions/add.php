@@ -1,44 +1,33 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new mailing
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validates the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -79,11 +68,8 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		$this->frm->addRadiobutton('languages', $languages, BL::getWorkingLanguage());
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -102,10 +88,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 			$rbtLanguages = $this->frm->getField('languages');
 
 			// validate fields
-			if($txtName->isFilled(BL::err('NameIsRequired')))
-			{
-				if(BackendMailmotorModel::existsMailingByName($txtName->getValue())) $txtName->addError(BL::err('MailingAlreadyExists'));
-			}
+			$txtName->isFilled(BL::err('NameIsRequired'));
 			$txtFromName->isFilled(BL::err('NameIsRequired'));
 			$txtFromEmail->isFilled(BL::err('EmailIsRequired'));
 			$txtReplyToEmail->isFilled(BL::err('EmailIsRequired'));
@@ -156,5 +139,3 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

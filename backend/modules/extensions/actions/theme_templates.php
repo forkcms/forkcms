@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the templates-action, it will display the templates-overview
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 {
@@ -20,7 +23,6 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 	 */
 	private $availableThemes;
 
-
 	/**
 	 * The current selected theme
 	 *
@@ -28,38 +30,21 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 	 */
 	private $selectedTheme;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load record
 		$this->loadData();
-
-		// load the form
 		$this->loadForm();
-
-		// load the datagrid
 		$this->loadDataGrid();
-
-		// parse the datagrid
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the record
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -73,11 +58,8 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 		$this->selectedTheme = SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('core', 'theme', 'core'));
 	}
 
-
 	/**
 	 * Load the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -91,11 +73,8 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_theme_template') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -106,11 +85,8 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 		$this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme, false, 'inputDropdown dontCheckBeforeUnload', 'inputDropdownError dontCheckBeforeUnload');
 	}
 
-
 	/**
 	 * Parse the datagrid and the reports
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -124,5 +100,3 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 		$this->tpl->assign('selectedTheme', urlencode($this->selectedTheme));
 	}
 }
-
-?>

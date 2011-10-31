@@ -1,20 +1,14 @@
 <?php
 
 /**
- * Installer for the extensions module
+ * Installer for the extensions module.
  *
- * @package		installer
- * @subpackage	extensions
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.6.6
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class ExtensionsInstaller extends ModuleInstaller
 {
 	/**
 	 * Pre-insert default extras of the default theme.
-	 *
-	 * @return void
 	 */
 	private function insertExtras()
 	{
@@ -22,11 +16,8 @@ class ExtensionsInstaller extends ModuleInstaller
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 	}
 
-
 	/**
 	 * Insert the templates.
-	 *
-	 * @return	void
 	 */
 	private function insertTemplates()
 	{
@@ -35,24 +26,31 @@ class ExtensionsInstaller extends ModuleInstaller
 		 */
 
 		// build templates
-		$templates['core']['default'] = array('theme' => 'core',
-												'label' => 'Default',
-												'path' => 'core/layout/templates/default.tpl',
-												'active' => 'Y',
-												'data' => serialize(array('format' => '[main]',
-																			'names' => array('main'))));
+		$templates['core']['default'] = array(
+			'theme' => 'core',
+			'label' => 'Default',
+			'path' => 'core/layout/templates/default.tpl',
+			'active' => 'Y',
+			'data' => serialize(array(
+				'format' => '[main]',
+				'names' => array('main')
+			))
+		);
 
-		$templates['core']['home'] = array('theme' => 'core',
-											'label' => 'Home',
-											'path' => 'core/layout/templates/home.tpl',
-											'active' => 'Y',
-											'data' => serialize(array('format' => '[main]',
-																		'names' => array('main'))));
+		$templates['core']['home'] = array(
+			'theme' => 'core',
+			'label' => 'Home',
+			'path' => 'core/layout/templates/home.tpl',
+			'active' => 'Y',
+			'data' => serialize(array(
+				'format' => '[main]',
+				'names' => array('main')
+			))
+		);
 
 		// insert templates
 		$this->getDB()->insert('themes_templates', $templates['core']['default']);
 		$this->getDB()->insert('themes_templates', $templates['core']['home']);
-
 
 		/*
 		 * Triton templates
@@ -62,21 +60,29 @@ class ExtensionsInstaller extends ModuleInstaller
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
 		// build templates
-		$templates['triton']['default'] = array('theme' => 'triton',
-												'label' => 'Default',
-												'path' => 'core/layout/templates/default.tpl',
-												'active' => 'Y',
-												'data' => serialize(array('format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
-																			'names' => array('main', 'left', 'top', 'advertisement'),
-																			'default_extras' => array('top' => array($extras['search_form'])))));
+		$templates['triton']['default'] = array(
+			'theme' => 'triton',
+			'label' => 'Default',
+			'path' => 'core/layout/templates/default.tpl',
+			'active' => 'Y',
+			'data' => serialize(array(
+				'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
+				'names' => array('main', 'left', 'top', 'advertisement'),
+				'default_extras' => array('top' => array($extras['search_form']))
+			))
+		);
 
-		$templates['triton']['home'] = array('theme' => 'triton',
-												'label' => 'Home',
-												'path' => 'core/layout/templates/home.tpl',
-												'active' => 'Y',
-												'data' => serialize(array('format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
-																			'names' => array('main', 'left', 'right', 'top', 'advertisement'),
-																			'default_extras' => array('top' => array($extras['search_form'])))));
+		$templates['triton']['home'] = array(
+			'theme' => 'triton',
+			'label' => 'Home',
+			'path' => 'core/layout/templates/home.tpl',
+			'active' => 'Y',
+			'data' => serialize(array(
+				'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
+				'names' => array('main', 'left', 'right', 'top', 'advertisement'),
+				'default_extras' => array('top' => array($extras['search_form']))
+			))
+		);
 
 		// insert templates
 		$this->getDB()->insert('themes_templates', $templates['triton']['default']);
@@ -96,11 +102,8 @@ class ExtensionsInstaller extends ModuleInstaller
 		$this->setSetting('pages', 'meta_navigation', false);
 	}
 
-
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -145,15 +148,11 @@ class ExtensionsInstaller extends ModuleInstaller
 		));
 	}
 
-
 	/**
 	 * Set the rights
-	 *
-	 * @return	void
 	 */
 	private function setRights()
 	{
-
 		// action rights
 		$this->setActionRights(1, 'extensions', 'detail_module');
 		$this->setActionRights(1, 'extensions', 'install_module');
@@ -168,5 +167,3 @@ class ExtensionsInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'pages', 'delete_theme_template');
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the overview
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester@netlash.com>
  */
 class BackendFaqIndex extends BackendBaseActionIndex
 {
@@ -18,39 +21,24 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	 */
 	private $dataGrids;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the datagrids
 		$this->loadDataGrids();
-
-		// parse the datagrids
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
-		// load all categories
 		$categories = BackendFaqModel::getCategories();
 
-		// run over categories and create datagrid for each one
 		foreach($categories as $category)
 		{
 			// create datagrid
@@ -85,24 +73,21 @@ class BackendFaqIndex extends BackendBaseActionIndex
 
 			// add datagrid to list
 			$this->dataGrids[] = array(
-									'id' => $category['id'],
-									'name' => $category['name'],
-									'content' => $dataGrid->getContent()
-								);
+				'id' => $category['id'],
+				'name' => $category['name'],
+				'content' => $dataGrid->getContent()
+			);
 		}
 	}
 
-
 	/**
 	 * Parse the datagrids and the reports
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse datagrids
-		if(!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
+		if(!empty($this->dataGrids))
+		{
+			$this->tpl->assign('dataGrids', $this->dataGrids);
+		}
 	}
 }
-
-?>

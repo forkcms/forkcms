@@ -1,16 +1,19 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit an item
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 {
@@ -21,7 +24,6 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 	 */
 	private $extras = array();
 
-
 	/**
 	 * The position's names.
 	 *
@@ -29,41 +31,22 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 	 */
 	private $names = array();
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load additional js
 		$this->header->addJS('template.js');
-
-		// load record
 		$this->loadData();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the record
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -99,11 +82,8 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 		$this->tpl->assign('deleteAllowed', $deleteAllowed);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -166,9 +146,10 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 		asort($widgets, SORT_STRING);
 
 		// create array
-		$defaultExtras = array('' => array(0 => ucfirst(BL::lbl('Editor'))),
-//								ucfirst(BL::lbl('Modules')) => $blocks,
-								ucfirst(BL::lbl('Widgets')) => $widgets);
+		$defaultExtras = array(
+			'' => array(0 => ucfirst(BL::lbl('Editor'))),
+			ucfirst(BL::lbl('Widgets')) => $widgets
+		);
 
 		// create default position field
 		$position = array();
@@ -250,26 +231,19 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 		$this->tpl->assign('positions', $positions);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign form errors
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -372,5 +346,3 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

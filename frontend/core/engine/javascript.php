@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will handle files JS-files that have to be parsed by PHP
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendJavascript
 {
@@ -19,14 +22,12 @@ class FrontendJavascript
 	 */
 	private $filename;
 
-
 	/**
 	 * The language
 	 *
 	 * @var	string
 	 */
 	private $language;
-
 
 	/**
 	 * The module
@@ -35,12 +36,6 @@ class FrontendJavascript
 	 */
 	private $module;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// if the application wasn't defined before we will define it
@@ -69,45 +64,40 @@ class FrontendJavascript
 		$tpl->display(FrontendTheme::getPath($file), true);
 	}
 
-
 	/**
 	 * Get file
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getFile()
 	{
 		return $this->filename;
 	}
 
-
 	/**
 	 * Get language
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getLanguage()
 	{
 		return $this->language;
 	}
 
-
 	/**
 	 * Get module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Set file
 	 *
-	 * @return	void
-	 * @param	string $value	The file to load.
+	 * @param string $value The file to load.
 	 */
 	private function setFile($value)
 	{
@@ -163,7 +153,6 @@ class FrontendJavascript
 			else exit(SPOON_DEBUG_MESSAGE);
 		}
 
-
 		// check if the path exists, if not whe should given an error
 		if(!SpoonFile::exists($path))
 		{
@@ -178,12 +167,10 @@ class FrontendJavascript
 		}
 	}
 
-
 	/**
 	 * Set language
 	 *
-	 * @return	void
-	 * @param	string $value	The language.
+	 * @param string $value The language.
 	 */
 	private function setLanguage($value)
 	{
@@ -197,17 +184,13 @@ class FrontendJavascript
 		FrontendLanguage::setLocale($this->language);
 	}
 
-
 	/**
 	 * Set module
 	 *
-	 * @return	void
-	 * @param	string $value	The module.
+	 * @param string $value The module.
 	 */
 	private function setModule($value)
 	{
 		$this->module = (string) $value;
 	}
 }
-
-?>

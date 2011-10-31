@@ -1,25 +1,25 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the autocomplete-action, it will output a list of tags that start with a certain string.
  *
- * @package		backend
- * @subpackage	tags
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -35,5 +35,3 @@ class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 		$this->output(self::OK, $tags);
 	}
 }
-
-?>

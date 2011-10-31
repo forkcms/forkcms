@@ -4,18 +4,12 @@
  * This is the theme upload-action.
  * It will install a theme via a compressed zip file.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Matthias Mullie <matthias@netlash.com>
- * @since		3.0.0
+ * @author Matthias Mullie <matthias@netlash.com>
  */
 class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -31,13 +25,8 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 		// oke, we can upload
 		else
 		{
-			// load form
 			$this->loadForm();
-
-			// validate le form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
@@ -45,11 +34,10 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 		$this->display();
 	}
 
-
 	/**
 	 * Do we have write rights to the modules folders?
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	private function isWritable()
 	{
@@ -60,11 +48,8 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 		return true;
 	}
 
-
 	/**
 	 * Create a form and its elements.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -75,11 +60,8 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 		$this->frm->addFile('file');
 	}
 
-
 	/**
 	 * Validate a submitted form and process it.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -189,5 +171,3 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

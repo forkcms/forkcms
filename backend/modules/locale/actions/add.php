@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add action, it will display a form to add an item to the locale.
  *
- * @package		backend
- * @subpackage	locale
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Lowie Benoot <lowie@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Lowie Benoot <lowie@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocaleAdd extends BackendBaseActionAdd
 {
@@ -20,42 +23,24 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	 */
 	private $filter;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// filter options
 		$this->setFilter();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// id given?
 		if($this->getParameter('id') != null)
 		{
 			// get the translation
@@ -87,30 +72,20 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
-
-		// parse filter
 		$this->tpl->assign($this->filter);
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
-		// get filter values
 		$this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
@@ -122,18 +97,13 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// redefine fields
@@ -177,7 +147,6 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				$this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore'));
 			}
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -202,5 +171,3 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

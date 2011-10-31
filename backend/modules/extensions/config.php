@@ -3,11 +3,7 @@
 /**
  * This is the configuration-object for the extensions module.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		3.0.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 final class BackendExtensionsConfig extends BackendBaseConfig
 {
@@ -18,14 +14,12 @@ final class BackendExtensionsConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'modules';
 
-
 	/**
 	 * The disabled actions
 	 *
 	 * @var	array
 	 */
 	protected $disabledActions = array();
-
 
 	/**
 	 * The disabled AJAX-actions
@@ -34,5 +28,3 @@ final class BackendExtensionsConfig extends BackendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 }
-
-?>

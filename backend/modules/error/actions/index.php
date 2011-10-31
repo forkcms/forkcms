@@ -1,39 +1,32 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display an error depending on a given parameters
  *
- * @package		backend
- * @subpackage	error
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendErrorIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// parse the error
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Parse the correct messages into the template
-	 *
-	 * @return	void
 	 */
 	public function parse()
 	{
@@ -46,7 +39,7 @@ class BackendErrorIndex extends BackendBaseActionIndex
 			case 'module-not-allowed':
 			case 'action-not-allowed':
 				SpoonHTTP::setHeadersByCode(403);
-			break;
+				break;
 		}
 
 		// querystring provided?
@@ -76,5 +69,3 @@ class BackendErrorIndex extends BackendBaseActionIndex
 		$this->tpl->assign('message', BL::err(SpoonFilter::toCamelCase($errorType, '-')));
 	}
 }
-
-?>

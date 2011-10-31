@@ -1,35 +1,36 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action, it can be used as a dashboard.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendProfilesIndex extends FrontendBaseBlock
 {
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// no url parameter
+		// only logged in profiles can seer their dashboard
 		if(FrontendProfilesAuthentication::isLoggedIn())
 		{
 			// call the parent
 			parent::execute();
 
 			/*
-			 * You could use this as some kind of dashboard where you could show an activity stream, some statistics, ...
+			 * You could use this as some kind of dashboard where you can show an activity
+			 * stream, some statistics, ...
 			 */
 
-			// load template
 			$this->loadTemplate();
 		}
 
@@ -38,4 +39,3 @@ class FrontendProfilesIndex extends FrontendBaseBlock
 	}
 }
 
-?>

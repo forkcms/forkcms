@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the login screen
  *
- * @package		backend
- * @subpackage	authentication
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendAuthenticationIndex extends BackendBaseActionIndex
 {
@@ -18,87 +21,54 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	 */
 	private $frm, $frmForgotPassword;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// check if the user is really logged on
 		if(BackendAuthentication::getUser()->isAuthenticated())
 		{
-			// get the redirect-URL from the URL
 			$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard'));
-
-			// redirect to the correct URL (URL the user was looking for or fallback)
 			$this->redirect($redirectURL);
 		}
 
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load form
 		$this->load();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse the error
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
-	 * Load the form
-	 *
-	 * @return	void
+	 * Load the forms
 	 */
 	private function load()
 	{
-		// create the login form
 		$this->frm = new BackendForm(null, null, 'post', true, false);
-
-		// create elements and add to the form
 		$this->frm->addText('backend_email');
 		$this->frm->addPassword('backend_password');
 
-		// create form for forgot password
 		$this->frmForgotPassword = new BackendForm('forgotPassword');
-
-		// create elements and add to the form
 		$this->frmForgotPassword->addText('backend_email_forgot');
 	}
 
-
 	/**
 	 * Parse the action into the template
-	 *
-	 * @return	void
 	 */
 	public function parse()
 	{
-		// parse the form
 		$this->frm->parse($this->tpl);
 		$this->frmForgotPassword->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the forms
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
-			// redefine fields
 			$txtEmail = $this->frm->getField('backend_email');
 			$txtPassword = $this->frm->getField('backend_password');
 
@@ -234,11 +204,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			// errors?
 			else
 			{
-				// show form
 				$this->tpl->assign('showForm', true);
 			}
 		}
 	}
 }
-
-?>

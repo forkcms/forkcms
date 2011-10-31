@@ -1,45 +1,34 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @package		backend
- * @subpackage	form_builder
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendFormBuilderEdit extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
 		if($this->id !== null && BackendFormBuilderModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -47,29 +36,20 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->record = BackendFormBuilderModel::get($this->id);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('edit');
-
-		// create elements
 		$this->frm->addText('name', $this->record['name']);
 		$this->frm->addDropdown('method', array('database' => BL::getLabel('MethodDatabase'), 'database_email' => BL::getLabel('MethodDatabaseEmail')), $this->record['method']);
 		$this->frm->addText('email', $this->record['email']);
@@ -127,21 +107,14 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addText('submit');
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// fields
 		$this->parseFields();
-
-		// call parent
 		parent::parse();
 
-		// assign fields
 		$this->tpl->assign('id', $this->record['id']);
 		$this->tpl->assign('name', $this->record['name']);
 
@@ -149,11 +122,8 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->parseErrorMessages();
 	}
 
-
 	/**
 	 * Parse the default error messages
-	 *
-	 * @return	void
 	 */
 	private function parseErrorMessages()
 	{
@@ -164,15 +134,11 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->tpl->assign('errors', BackendFormBuilderModel::getErrors());
 	}
 
-
 	/**
 	 * Parse the fields
-	 *
-	 * @return	void
 	 */
 	private function parseFields()
 	{
-		// init
 		$fieldsHTML = array();
 
 		// get fields
@@ -203,18 +169,13 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->tpl->assign('fields', $fieldsHTML);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// shorten the fields
@@ -239,7 +200,6 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 				elseif(BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue(), $this->id)) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
 			}
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build array
@@ -262,5 +222,3 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

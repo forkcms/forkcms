@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class is the real code, it creates an action, loads the configfile, ...
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendAction
 {
@@ -19,14 +22,12 @@ class BackendAction
 	 */
 	private $action;
 
-
 	/**
 	 * The config file
 	 *
 	 * @var	BackendBaseConfig
 	 */
 	private $config;
-
 
 	/**
 	 * The current module
@@ -35,7 +36,6 @@ class BackendAction
 	 */
 	private $module;
 
-
 	/**
 	 * BackendTemplate
 	 *
@@ -43,37 +43,32 @@ class BackendAction
 	 */
 	public $tpl;
 
-
 	/**
-	 * Default constructor
 	 * You have to specify the action and module so we know what to do with this instance
 	 *
-	 * @return	void
-	 * @param	string $action		The action to load.
-	 * @param	string $module		The module to load.
+	 * @param string $action The action to load.
+	 * @param string $module The module to load.
 	 */
 	public function __construct($action, $module)
 	{
 		// grab stuff from the reference and store them in this object (for later/easy use)
 		$this->tpl = Spoon::get('template');
 
-		// set properties
 		$this->setModule($module);
 		$this->setAction($action);
 
-		// load the configfile for the required module
 		$this->loadConfig();
 
 		// is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
-		if(!in_array($this->getAction(), $this->config->getPossibleActions())) throw new BackendException('This is an invalid action (' . $this->getAction() . ').');
+		if(!in_array($this->getAction(), $this->config->getPossibleActions()))
+		{
+			throw new BackendException('This is an invalid action (' . $this->getAction() . ').');
+		}
 	}
-
 
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -98,42 +93,35 @@ class BackendAction
 
 		// create action-object
 		$object = new $actionClassName();
-
-		// call the execute method of the real action (defined in the module)
 		$object->execute();
 	}
-
 
 	/**
 	 * Get the current action
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the current module
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Load the config file for the requested module.
 	 * In the config file we have to find dissabled actions, the constructor will read the folder and set possible actions
 	 * Other configurations will be stored in it also.
-	 *
-	 * @return	void
 	 */
 	public function loadConfig()
 	{
@@ -163,29 +151,23 @@ class BackendAction
 		$this->config = new $configClassName($this->getModule());
 	}
 
-
 	/**
 	 * Set the action
 	 *
-	 * @return	void
-	 * @param	string $action		The action to load.
+	 * @param string $action The action to load.
 	 */
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the module
 	 *
-	 * @return	void
-	 * @param	string $module		The module to load.
+	 * @param string $module The module to load.
 	 */
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 }
-
-?>

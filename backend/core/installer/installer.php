@@ -1,16 +1,19 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * The base-class for the installer
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class ModuleInstaller
 {
@@ -21,14 +24,12 @@ class ModuleInstaller
 	 */
 	private $db;
 
-
 	/**
 	 * The frontend language(s)
 	 *
 	 * @var array
 	 */
 	private $languages = array();
-
 
 	/**
 	 * The backend language(s)
@@ -37,7 +38,6 @@ class ModuleInstaller
 	 */
 	private $interfaceLanguages = array();
 
-
 	/**
 	 * The variables passed by the installer
 	 *
@@ -45,20 +45,15 @@ class ModuleInstaller
 	 */
 	private $variables = array();
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	SpoonDatabase $db			The database-connection.
-	 * @param	array $languages			The selected frontend languages.
-	 * @param	array $interfaceLanguages	The selected backend languages.
-	 * @param	bool[optional] $example		Should example data be installed.
-	 * @param	array[optional] $variables	The passed variables.
+	 * @param SpoonDatabase $db The database-connection.
+	 * @param array $languages The selected frontend languages.
+	 * @param array $interfaceLanguages The selected backend languages.
+	 * @param bool[optional] $example Should example data be installed.
+	 * @param array[optional] $variables The passed variables.
 	 */
 	public function __construct(SpoonDatabase $db, array $languages, array $interfaceLanguages, $example = false, array $variables = array())
 	{
-		// set DB
 		$this->db = $db;
 		$this->languages = $languages;
 		$this->interfaceLanguages = $interfaceLanguages;
@@ -66,16 +61,13 @@ class ModuleInstaller
 		$this->variables = $variables;
 	}
 
-
 	/**
 	 * Inserts a new module
 	 *
-	 * @return	void
-	 * @param	string $name					The name of the module.
+	 * @param string $name The name of the module.
 	 */
 	protected function addModule($name)
 	{
-		// redefine
 		$name = (string) $name;
 
 		// module does not yet exists
@@ -94,121 +86,110 @@ class ModuleInstaller
 		else $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
 	}
 
-
 	/**
 	 * Method that will be overriden by the specific installers
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
 		// just a placeholder
 	}
 
-
 	/**
 	 * Get the database-handle
 	 *
-	 * @return	SpoonDatabase
+	 * @return SpoonDatabase
 	 */
 	protected function getDB()
 	{
 		return $this->db;
 	}
 
-
 	/**
 	 * Get the default user
 	 *
-	 * @return	int
+	 * @return int
 	 */
 	protected function getDefaultUserID()
 	{
 		try
 		{
 			// fetch default user id
-			return (int) $this->getDB()->getVar('SELECT id
-													FROM users
-													WHERE is_god = ? AND active = ? AND deleted = ?
-													ORDER BY id ASC',
-													array('Y', 'Y', 'N'));
+			return (int) $this->getDB()->getVar(
+				'SELECT id
+				 FROM users
+				 WHERE is_god = ? AND active = ? AND deleted = ?
+				 ORDER BY id ASC',
+				array('Y', 'Y', 'N')
+			);
 		}
 
-		// catch exceptions
 		catch(Exception $e)
 		{
 			return 1;
 		}
 	}
 
-
 	/**
 	 * Get the selected cms interface languages
-	 *
-	 * @return	void
 	 */
 	protected function getInterfaceLanguages()
 	{
 		return $this->interfaceLanguages;
 	}
 
-
 	/**
 	 * Get the selected languages
-	 *
-	 * @return	void
 	 */
 	protected function getLanguages()
 	{
 		return $this->languages;
 	}
 
-
 	/**
 	 * Get a locale item.
 	 *
-	 * @return	mixed
-	 * @param	string $name					The name of the locale.
-	 * @param	string[optional] $module		The name of the module.
-	 * @param	string[optional] $language		The language.
-	 * @param	string[optional] $type			The type of locale.
-	 * @param	string[optional] $application	The application.
+	 * @param string $name
+	 * @param string[optional] $module
+	 * @param string[optional] $language The language abbreviation.
+	 * @param string[optional] $type The type of locale.
+	 * @param string[optional] $application
+	 * @return mixed
 	 */
 	protected function getLocale($name, $module = 'core', $language = 'en', $type = 'lbl', $application = 'backend')
 	{
-		// get translation
-		$translation = (string) $this->getDB()->getVar('SELECT value
-														FROM locale
-														WHERE name = ? AND module = ? AND language = ? AND type = ? AND application = ?',
-														array((string) $name, (string) $module, (string) $language, (string) $type, (string) $application));
+		$translation = (string) $this->getDB()->getVar(
+			'SELECT value
+			 FROM locale
+			 WHERE name = ? AND module = ? AND language = ? AND type = ? AND application = ?',
+			array((string) $name, (string) $module, (string) $language, (string) $type, (string) $application)
+		);
 
-		// if no translation is found we return the name
 		return ($translation != '') ? $translation : $name;
 	}
-
 
 	/**
 	 * Get a setting
 	 *
-	 * @return	mixed
-	 * @param	string $module	The name of the module.
-	 * @param	string $name	The name of the setting.
+	 * @param string $module The name of the module.
+	 * @param string $name The name of the setting.
+	 * @return mixed
 	 */
 	protected function getSetting($module, $name)
 	{
-		return unserialize($this->getDB()->getVar('SELECT value
-													FROM modules_settings
-													WHERE module = ? AND name = ?',
-													array((string) $module, (string) $name)));
+		return unserialize($this->getDB()->getVar(
+			'SELECT value
+			 FROM modules_settings
+			 WHERE module = ? AND name = ?',
+			array((string) $module, (string) $name))
+		);
 	}
-
 
 	/**
 	 * Get the id of the requested template of the active theme.
 	 *
-	 * @return	int
-	 * @param	string $template
-	 * @param	string[optional] $theme
+	 * @return int
+	 * @param string $template
+	 * @param string[optional] $theme
 	 */
 	protected function getTemplateId($template, $theme = null)
 	{
@@ -216,36 +197,33 @@ class ModuleInstaller
 		if($theme === null) $theme = $this->getSetting('core', 'theme');
 
 		// return best matching template id
-		return (int) $this->getDB()->getVar('SELECT id FROM themes_templates WHERE theme = ? ORDER BY path LIKE ? DESC, id ASC LIMIT 1', array((string) $theme, '%' . (string) $template . '%'));
+		return (int) $this->getDB()->getVar(
+			'SELECT id FROM themes_templates
+			 WHERE theme = ?
+			 ORDER BY path LIKE ? DESC, id ASC
+			 LIMIT 1',
+			array((string) $theme, '%' . (string) $template . '%'));
 	}
-
 
 	/**
 	 * Get a variable
 	 *
-	 * @return	mixed
-	 * @param	string $name	The name of the variable.
+	 * @param string $name
+	 * @return mixed
 	 */
 	protected function getVariable($name)
 	{
-		// is the variable available?
-		if(!isset($this->variables[$name])) return null;
-
-		// return the real value
-		return $this->variables[$name];
+		return (!isset($this->variables[$name])) ? null : $this->variables[$name];
 	}
-
 
 	/**
 	 * Imports the locale XML file
 	 *
-	 * @return	void
-	 * @param	string $filename					The full path for the XML-file.
-	 * @param	bool[optional] $overwriteConflicts	Should we overwrite when there is a conflict?
+	 * @param string $filename The full path for the XML-file.
+	 * @param bool[optional] $overwriteConflicts Should we overwrite when there is a conflict?
 	 */
 	protected function importLocale($filename, $overwriteConflicts = false)
 	{
-		// recast
 		$filename = (string) $filename;
 		$overwriteConflicts = (bool) $overwriteConflicts;
 
@@ -278,7 +256,9 @@ class ModuleInstaller
 				);
 
 				// current locale items (used to check for conflicts)
-				$currentLocale = (array) $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+				$currentLocale = (array) $this->getDB()->getColumn(
+					'SELECT CONCAT(application, module, type, language, name) FROM locale'
+				);
 
 				// @todo: why no xpath?
 
@@ -335,16 +315,17 @@ class ModuleInstaller
 								if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
 								{
 									// overwrite
-									$this->getDB()->update('locale',
-															$locale,
-															'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
-															array($application, $module, $type, $language, $name));
+									$this->getDB()->update(
+										'locale',
+										$locale,
+										'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
+										array($application, $module, $type, $language, $name)
+									);
 								}
 
-								// insert translation that doesnt exists yet
+								// insert translation that doesn't exist yet
 								elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
 								{
-									// insert
 									$this->getDB()->insert('locale', $locale);
 								}
 							}
@@ -355,12 +336,10 @@ class ModuleInstaller
 		}
 	}
 
-
 	/**
 	 * Imports the sql file
 	 *
-	 * @return	void
-	 * @param	string $filename	The full path for the SQL-file.
+	 * @param string $filename The full path for the SQL-file.
 	 */
 	protected function importSQL($filename)
 	{
@@ -381,14 +360,12 @@ class ModuleInstaller
 		}
 	}
 
-
 	/**
 	 * Insert a dashboard widget
 	 *
-	 * @return	void
-	 * @param	array $module		The widget's module name.
-	 * @param	array $widget		The widget's name.
-	 * @param	array $data			The widget's data.
+	 * @param array $module
+	 * @param array $widget
+	 * @param array $data
 	 */
 	protected function insertDashboardWidget($module, $widget, $data)
 	{
@@ -432,18 +409,17 @@ class ModuleInstaller
 		}
 	}
 
-
 	/**
 	 * Insert an extra
 	 *
-	 * @return	int
-	 * @param	string $module				The module for the extra.
-	 * @param	string $type				The type, possible values are: homepage, widget, block.
-	 * @param	string $label				The label for the extra.
-	 * @param	string[optional] $action	The action.
-	 * @param	string[optional] $data		Optional data, will be passed in the extra.
-	 * @param	bool[optional] $hidden		Is this extra hidden?
-	 * @param	int[optional] $sequence		The sequence for the extra.
+	 * @param string $module The module for the extra.
+	 * @param string $type The type, possible values are: homepage, widget, block.
+	 * @param string $label The label for the extra.
+	 * @param string[optional] $action The action.
+	 * @param string[optional] $data Optional data, will be passed in the extra.
+	 * @param bool[optional] $hidden Is this extra hidden?
+	 * @param int[optional] $sequence The sequence for the extra.
+	 * @return int
 	 */
 	protected function insertExtra($module, $type, $label, $action = null, $data = null, $hidden = false, $sequence = null)
 	{
@@ -457,7 +433,6 @@ class ModuleInstaller
 			if(is_null($sequence)) $sequence = $sequence = $this->getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras');
 		}
 
-		// redefine
 		$module = (string) $module;
 		$type = (string) $type;
 		$label = (string) $label;
@@ -467,13 +442,15 @@ class ModuleInstaller
 		$sequence = (int) $sequence;
 
 		// build item
-		$item = array('module' => $module,
-						'type' => $type,
-						'label' => $label,
-						'action' => $action,
-						'data' => $data,
-						'hidden' => $hidden,
-						'sequence' => $sequence);
+		$item = array(
+			'module' => $module,
+			'type' => $type,
+			'label' => $label,
+			'action' => $action,
+			'data' => $data,
+			'hidden' => $hidden,
+			'sequence' => $sequence
+		);
 
 		// build query
 		$query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?';
@@ -503,52 +480,48 @@ class ModuleInstaller
 		return $extraId;
 	}
 
-
 	/**
 	 * Insert a meta item
 	 *
-	 * @return	int
-	 * @param	string $keywords						The keyword of the item.
-	 * @param	string $description						A description of the item.
-	 * @param	string $title							The page title for the item.
-	 * @param	string $url								The unique URL.
-	 * @param	bool[optional] $keywordsOverwrite		Should the keywords be overwritten?
-	 * @param	bool[optional] $descriptionOverwrite	Should the descriptions be overwritten?
-	 * @param	bool[optional] $titleOverwrite			Should the pagetitle be overwritten?
-	 * @param	bool[optional] $urlOverwrite			Should the URL be overwritten?
-	 * @param	string[optional] $custom				Any custom meta-data.
-	 * @param	array[optional] $data					Any custom meta-data.
+	 * @param string $keywords The keyword of the item.
+	 * @param string $description A description of the item.
+	 * @param string $title The page title for the item.
+	 * @param string $url The unique URL.
+	 * @param bool[optional] $keywordsOverwrite Should the keywords be overwritten?
+	 * @param bool[optional] $descriptionOverwrite Should the descriptions be overwritten?
+	 * @param bool[optional] $titleOverwrite Should the pagetitle be overwritten?
+	 * @param bool[optional] $urlOverwrite Should the URL be overwritten?
+	 * @param string[optional] $custom Any custom meta-data.
+	 * @param array[optional] $data Any custom meta-data.
+	 * @return int
 	 */
 	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
 	{
-		// build item
-		$item = array('keywords' => (string) $keywords,
-						'keywords_overwrite' => ($keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N'),
-						'description' => (string) $description,
-						'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
-						'title' => (string) $title,
-						'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-						'url' => (string) $url,
-						'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
-						'custom' => (!is_null($custom) ? (string) $custom : null),
-						'data' => (!is_null($data)) ? serialize($data) : null);
+		$item = array(
+			'keywords' => (string) $keywords,
+			'keywords_overwrite' => ($keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N'),
+			'description' => (string) $description,
+			'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
+			'title' => (string) $title,
+			'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
+			'url' => (string) $url,
+			'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
+			'custom' => (!is_null($custom) ? (string) $custom : null),
+			'data' => (!is_null($data)) ? serialize($data) : null
+		);
 
-		// insert meta and return id
 		return (int) $this->getDB()->insert('meta', $item);
 	}
-
 
 	/**
 	 * Insert a page
 	 *
-	 * @return	void
-	 * @param	array $revision				An array with the revision data.
-	 * @param	array[optional] $meta		The meta-data.
-	 * @param	array[optional] $block		The blocks.
+	 * @param array $revision An array with the revision data.
+	 * @param array[optional] $meta The meta-data.
+	 * @param array[optional] $block The blocks.
 	 */
 	protected function insertPage(array $revision, array $meta = null, array $block = null)
 	{
-		// redefine
 		$revision = (array) $revision;
 		$meta = (array) $meta;
 
@@ -625,7 +598,6 @@ class ModuleInstaller
 			if(!isset($block['visible'])) $block['visible'] = 'Y';
 			if(!isset($block['sequence'])) $block['sequence'] = count($positions[$block['position']]) - 1;
 
-			// insert block
 			$this->getDB()->insert('pages_blocks', $block);
 		}
 
@@ -633,57 +605,54 @@ class ModuleInstaller
 		return $revision['id'];
 	}
 
-
 	/**
 	 * Should example data be installed
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	protected function installExample()
 	{
 		return $this->example;
 	}
 
-
 	/**
 	 * Make a module searchable
 	 *
-	 * @return	void
-	 * @param	string $module					The module to make searchable.
-	 * @param	bool[optional] $searchable		Enable/disable search for this module by default?
-	 * @param	int[optional] $weight			Set default search weight for this module.
+	 * @param string $module The module to make searchable.
+	 * @param bool[optional] $searchable Enable/disable search for this module by default?
+	 * @param int[optional] $weight Set default search weight for this module.
 	 */
 	protected function makeSearchable($module, $searchable = true, $weight = 1)
 	{
-		// redefine
 		$module = (string) $module;
 		$searchable = $searchable && $searchable !== 'N' ? 'Y' : 'N';
 		$weight = (int) $weight;
 
 		// make module searchable
-		$this->getDB()->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
-									ON DUPLICATE KEY UPDATE searchable = ?, weight = ?', array($module, $searchable, $weight, $searchable, $weight));
+		$this->getDB()->execute(
+			'INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
+			 ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
+			array($module, $searchable, $weight, $searchable, $weight)
+		);
 	}
-
 
 	/**
 	 * Set the rights for an action
 	 *
-	 * @return	void
-	 * @param	int $groupId			The group wherefor the rights will be set.
-	 * @param	string $module			The module wherin the action appears.
-	 * @param	string $action			The action wherefor the rights have to set.
-	 * @param	int[optional] $level	The leve, default is 7 (max).
+	 * @param int $groupId The group wherefor the rights will be set.
+	 * @param string $module The module wherin the action appears.
+	 * @param string $action The action wherefor the rights have to set.
+	 * @param int[optional] $level The leve, default is 7 (max).
 	 */
 	protected function setActionRights($groupId, $module, $action, $level = 7)
 	{
-		// redefine
 		$groupId = (int) $groupId;
 		$module = (string) $module;
 		$action = (string) $action;
 		$level = (int) $level;
 
 		// action doesn't exist
+		// @todo refactor me...
 		if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
 											FROM groups_rights_actions
 											WHERE group_id = ? AND module = ? AND action = ?',
@@ -695,22 +664,18 @@ class ModuleInstaller
 							'action' => $action,
 							'level' => $level);
 
-			// insert
 			$this->getDB()->insert('groups_rights_actions', $item);
 		}
 	}
 
-
 	/**
 	 * Sets the rights for a module
 	 *
-	 * @return	void
-	 * @param	int $groupId		The group wherefor the rights will be set.
-	 * @param	string $module		The module too set the rights for.
+	 * @param int $groupId The group wherefor the rights will be set.
+	 * @param string $module The module too set the rights for.
 	 */
 	protected function setModuleRights($groupId, $module)
 	{
-		// redefine
 		$groupId = (int) $groupId;
 		$module = (string) $module;
 
@@ -720,29 +685,27 @@ class ModuleInstaller
 											WHERE group_id = ? AND module = ?',
 											array((int) $groupId, (string) $module)))
 		{
-			// build item
-			$item = array('group_id' => $groupId,
-							'module' => $module);
+			$item = array(
+				'group_id' => $groupId,
+				'module' => $module
+			);
 
-			// insert
 			$this->getDB()->insert('groups_rights_modules', $item);
 		}
 	}
 
-
 	/**
 	 * Set a new navigation item.
 	 *
-	 * @return	int								New navigation id.
-	 * @param	int $parentId					Id of the navigation item under we should add this.
-	 * @param	string $label					Label for the item.
-	 * @param	string[optional] $url			Url for the item. If ommitted the first child is used.
-	 * @param	array[optional] $selectedFor	Set selected when these actions are active.
-	 * @param	int[optional] $sequence			Sequence to use for this item.
+	 * @param int $parentId Id of the navigation item under we should add this.
+	 * @param string $label Label for the item.
+	 * @param string[optional] $url Url for the item. If ommitted the first child is used.
+	 * @param array[optional] $selectedFor Set selected when these actions are active.
+	 * @param int[optional] $sequence Sequence to use for this item.
+	 * @return int
 	 */
 	protected function setNavigation($parentId, $label, $url = '', array $selectedFor = null, $sequence = null)
 	{
-		// recast
 		$parentId = (int) $parentId;
 		$label = (string) $label;
 		$url = (string) $url;
@@ -762,12 +725,14 @@ class ModuleInstaller
 		else $sequence = (int) $sequence;
 
 		// get the id for this url
-		$id = (int) $this->getDB()->getVar('SELECT id
-											FROM backend_navigation
-											WHERE parent_id = ? AND label = ? AND url = ?',
-											array($parentId, $label, $url));
+		$id = (int) $this->getDB()->getVar(
+			'SELECT id
+			 FROM backend_navigation
+			 WHERE parent_id = ? AND label = ? AND url = ?',
+			array($parentId, $label, $url)
+		);
 
-		// doesnt exist yet, add it
+		// doesn't exist yet, add it
 		if($id === 0)
 		{
 			return $this->getDB()->insert('backend_navigation', array(
@@ -783,68 +748,61 @@ class ModuleInstaller
 		return $id;
 	}
 
-
 	/**
 	 * Stores a module specific setting in the database.
 	 *
-	 * @return	void
-	 * @param	string $module				The module wherefore the setting will be set.
-	 * @param	string $name				The name of the setting.
-	 * @param	mixed[optional] $value		The optional value.
-	 * @param	bool[optional] $overwrite	Overwrite no matter what.
+	 * @param string $module The module wherefore the setting will be set.
+	 * @param string $name The name of the setting.
+	 * @param mixed[optional] $value The optional value.
+	 * @param bool[optional] $overwrite Overwrite no matter what.
 	 */
 	protected function setSetting($module, $name, $value = null, $overwrite = false)
 	{
-		// redefine
 		$module = (string) $module;
 		$name = (string) $name;
 		$value = serialize($value);
 		$overwrite = (bool) $overwrite;
 
-		// overwrite
 		if($overwrite)
 		{
-			// insert setting
-			$this->getDB()->execute('INSERT INTO modules_settings (module, name, value)
-										VALUES (?, ?, ?)
-										ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
+			$this->getDB()->execute(
+				'INSERT INTO modules_settings (module, name, value)
+				 VALUES (?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?',
+				array($module, $name, $value, $value)
+			);
 		}
 
 		// doesn't already exist
+		// @todo refactor me...
 		elseif(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
 												FROM modules_settings
 												WHERE module = ? AND name = ?',
 												array($module, $name)))
 		{
 			// build item
-			$item = array('module' => $module,
-							'name' => $name,
-							'value' => $value);
+			$item = array(
+				'module' => $module,
+				'name' => $name,
+				'value' => $value
+			);
 
-			// insert setting
 			$this->getDB()->insert('modules_settings', $item);
 		}
 	}
 }
 
-
 /**
  * Installer for the core
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class CoreInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -865,10 +823,7 @@ class CoreInstaller extends ModuleInstaller
 		$this->addModule('dashboard');
 		$this->addModule('error');
 
-		// set rights
 		$this->setRights();
-
-		// set settings
 		$this->setSettings();
 
 		// add core navigation
@@ -876,27 +831,19 @@ class CoreInstaller extends ModuleInstaller
 		$this->setNavigation(null, 'Modules', null, null, 3);
 	}
 
-
 	/**
 	 * Set the rights
-	 *
-	 * @return	void
 	 */
 	private function setRights()
 	{
-		// module rights
 		$this->setModuleRights(1, 'dashboard');
 
-		// action rights
 		$this->setActionRights(1, 'dashboard', 'index');
 		$this->setActionRights(1, 'dashboard', 'alter_sequence');
 	}
 
-
 	/**
 	 * Store the settings
-	 *
-	 * @return	void
 	 */
 	private function setSettings()
 	{
@@ -970,7 +917,7 @@ class CoreInstaller extends ModuleInstaller
 			// get the keys
 			$keys = $api->coreRequestKeys($this->getVariable('site_domain'), $this->getVariable('api_email'));
 
-			// ap settings
+			// api settings
 			$this->setSetting('core', 'fork_api_public_key', $keys['public']);
 			$this->setSetting('core', 'fork_api_private_key', $keys['private']);
 
@@ -992,5 +939,3 @@ class CoreInstaller extends ModuleInstaller
 		}
 	}
 }
-
-?>

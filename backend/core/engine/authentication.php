@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * The class below will handle all authentication stuff. It will handle module-access, action-acces, ...
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendAuthentication
 {
@@ -19,14 +22,12 @@ class BackendAuthentication
 	 */
 	private static $allowedActions = array();
 
-
 	/**
 	 * All allowed modules
 	 *
 	 * @var	array
 	 */
 	private static $allowedModules = array();
-
 
 	/**
 	 * A userobject for the current authenticated user
@@ -35,11 +36,8 @@ class BackendAuthentication
 	 */
 	private static $user;
 
-
 	/**
 	 * Cleanup sessions for the current user and sessions that are invalid
-	 *
-	 * @return	void
 	 */
 	public static function cleanupOldSessions()
 	{
@@ -47,18 +45,16 @@ class BackendAuthentication
 		BackendModel::getDB(true)->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
 	}
 
-
 	/**
 	 * Returns the encrypted password for a user by giving a email/password
 	 * Returns false if no user was found for this user/pass combination
 	 *
-	 * @return	string
-	 * @param	string $email		The email.
-	 * @param	string $password	The password.
+	 * @param string $email The email.
+	 * @param string $password The password.
+	 * @return string
 	 */
 	public static function getEncryptedPassword($email, $password)
 	{
-		// redefine
 		$email = (string) $email;
 		$password = (string) $password;
 
@@ -76,18 +72,16 @@ class BackendAuthentication
 		return (string) self::getEncryptedString($password, $key);
 	}
 
-
 	/**
 	 * Returns a string encrypted like sha1(md5($salt) . md5($string))
 	 * 	The salt is an optional extra string you can strenghten your encryption with
 	 *
-	 * @return	string
-	 * @param	string $string			The string to encrypt.
-	 * @param	string[optional] $salt	The salt to use.
+	 * @param string $string The string to encrypt.
+	 * @param string[optional] $salt The salt to use.
+	 * @return string
 	 */
 	public static function getEncryptedString($string, $salt = null)
 	{
-		// redefine
 		$string = (string) $string;
 		$salt = (string) $salt;
 
@@ -95,28 +89,24 @@ class BackendAuthentication
 		return (string) sha1(md5($salt) . md5($string));
 	}
 
-
 	/**
 	 * Returns the current authenticated user
 	 *
-	 * @return	BackendUser
+	 * @return BackendUser
 	 */
 	public static function getUser()
 	{
 		// if the user-object doesn't exist create a new one
 		if(self::$user === null) self::$user = new BackendUser();
-
-		// return the object
 		return self::$user;
 	}
-
 
 	/**
 	 * Is the given action allowed for the current user
 	 *
-	 * @return	bool
-	 * @param	string $action		The action to check for.
-	 * @param	string $module		The module wherin the action is located.
+	 * @param string $action The action to check for.
+	 * @param string $module The module wherin the action is located.
+	 * @return bool
 	 */
 	public static function isAllowedAction($action, $module)
 	{
@@ -124,12 +114,13 @@ class BackendAuthentication
 		if(self::getUser()->isGod()) return true;
 
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
-		$alwaysAllowed = array('dashboard' => array('index' => 7),
-								'core' => array('generate_url' => 7),
-								'error' => array('index' => 7),
-								'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7));
+		$alwaysAllowed = array(
+			'dashboard' => array('index' => 7),
+			'core' => array('generate_url' => 7),
+			'error' => array('index' => 7),
+			'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7)
+		);
 
-		// redefine
 		$action = (string) $action;
 		$module = (string) $module;
 
@@ -149,13 +140,15 @@ class BackendAuthentication
 			foreach($alwaysAllowed as $allowedModule => $actions) $modules[] = $allowedModule;
 
 			// get allowed actions
-			$allowedActionsRows = (array) $db->getRecords('SELECT gra.module, gra.action, gra.level
-															FROM users_sessions AS us
-															INNER JOIN users AS u ON us.user_id = u.id
-															INNER JOIN users_groups AS ug ON u.id = ug.user_id
-															INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
-															WHERE us.session_id = ? AND us.secret_key = ?',
-															array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
+			$allowedActionsRows = (array) $db->getRecords(
+				'SELECT gra.module, gra.action, gra.level
+				 FROM users_sessions AS us
+				 INNER JOIN users AS u ON us.user_id = u.id
+				 INNER JOIN users_groups AS ug ON u.id = ug.user_id
+				 INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
+				 WHERE us.session_id = ? AND us.secret_key = ?',
+				array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+			);
 
 			// add all actions and there level
 			foreach($allowedActionsRows as $row)
@@ -176,12 +169,11 @@ class BackendAuthentication
 		return false;
 	}
 
-
 	/**
 	 * Is the given module allowed for the current user
 	 *
-	 * @return	bool
-	 * @param	string $module	The module to check for.
+	 * @param string $module The module to check for.
+	 * @return bool
 	 */
 	public static function isAllowedModule($module)
 	{
@@ -204,13 +196,15 @@ class BackendAuthentication
 			$db = BackendModel::getDB();
 
 			// get allowed modules
-			$allowedModules = $db->getColumn('SELECT grm.module
-												FROM users_sessions AS us
-												INNER JOIN users AS u ON us.user_id = u.id
-												INNER JOIN users_groups AS ug ON u.id = ug.user_id
-												INNER JOIN groups_rights_modules AS grm ON ug.group_id = grm.group_id
-												WHERE us.session_id = ? AND us.secret_key = ?',
-												array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
+			$allowedModules = $db->getColumn(
+				'SELECT grm.module
+				 FROM users_sessions AS us
+				 INNER JOIN users AS u ON us.user_id = u.id
+				 INNER JOIN users_groups AS ug ON u.id = ug.user_id
+				 INNER JOIN groups_rights_modules AS grm ON ug.group_id = grm.group_id
+				 WHERE us.session_id = ? AND us.secret_key = ?',
+				array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+			);
 
 			// add all modules
 			foreach($allowedModules as $row) self::$allowedModules[$row] = true;
@@ -223,26 +217,28 @@ class BackendAuthentication
 		else return self::$allowedModules[$module];
 	}
 
-
 	/**
 	 * Is the current user logged in?
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function isLoggedIn()
 	{
 		// check if all needed values are set in the session
+		// @todo could be written by SpoonSession::get (since that no longer throws exceptions)
 		if(SpoonSession::exists('backend_logged_in', 'backend_secret_key') && (bool) SpoonSession::get('backend_logged_in') && (string) SpoonSession::get('backend_secret_key') != '')
 		{
 			// get database instance
 			$db = BackendModel::getDB(true);
 
 			// get the row from the tables
-			$sessionData = $db->getRecord('SELECT us.id, us.user_id
-											FROM users_sessions AS us
-											WHERE us.session_id = ? AND us.secret_key = ?
-											LIMIT 1',
-											array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
+			$sessionData = $db->getRecord(
+				'SELECT us.id, us.user_id
+				 FROM users_sessions AS us
+				 WHERE us.session_id = ? AND us.secret_key = ?
+				 LIMIT 1',
+				array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+			);
 
 			// if we found a matching row, we know the user is logged in, so we update his session
 			if($sessionData !== null)
@@ -276,33 +272,32 @@ class BackendAuthentication
 		}
 	}
 
-
 	/**
 	 * Login the user with the given credentials.
 	 * Will return a boolean that indicates if the user is logged in.
 	 *
-	 * @return	bool
-	 * @param	string $login		The users login.
-	 * @param	string $password	The password provided by the user.
+	 * @param string $login The users login.
+	 * @param string $password The password provided by the user.
+	 * @return bool
 	 */
 	public static function loginUser($login, $password)
 	{
-		// redefine
 		$login = (string) $login;
 		$password = (string) $password;
 
-		// init vars
 		$db = BackendModel::getDB(true);
 
 		// fetch the encrypted password
 		$passwordEncrypted = BackendAuthentication::getEncryptedPassword($login, $password);
 
 		// check in database (is the user active and not deleted, are the email and password correct?)
-		$userId = (int) $db->getVar('SELECT u.id
-										FROM users AS u
-										WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
-										LIMIT 1',
-										array($login, $passwordEncrypted, 'Y', 'N'));
+		$userId = (int) $db->getVar(
+			'SELECT u.id
+			 FROM users AS u
+			 WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
+			 LIMIT 1',
+			array($login, $passwordEncrypted, 'Y', 'N')
+		);
 
 		// not 0 = valid user!
 		if($userId !== 0)
@@ -340,11 +335,8 @@ class BackendAuthentication
 		}
 	}
 
-
 	/**
 	 * Logsout the current user
-	 *
-	 * @return	void
 	 */
 	public static function logout()
 	{
@@ -356,5 +348,3 @@ class BackendAuthentication
 		SpoonSession::set('backend_secret_key', '');
 	}
 }
-
-?>

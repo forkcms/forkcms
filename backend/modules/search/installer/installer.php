@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the search module
  *
- * @package		installer
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class SearchInstaller extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	public function install()
 	{
@@ -62,6 +63,7 @@ class SearchInstaller extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if a page for search already exists in this language
+			// @todo refactor this nasty if statement...
 			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
@@ -69,11 +71,15 @@ class SearchInstaller extends ModuleInstaller
 												array($searchId, $language)))
 			{
 				// insert search
-				$this->insertPage(array('title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
-										'type' => 'root',
-										'language' => $language),
-									null,
-									array('extra_id' => $searchId, 'position' => 'main'));
+				$this->insertPage(
+					array(
+						'title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')
+					),
+					'type' => 'root',
+					'language' => $language),
+					null,
+					array('extra_id' => $searchId, 'position' => 'main')
+				);
 			}
 		}
 
@@ -84,11 +90,8 @@ class SearchInstaller extends ModuleInstaller
 		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/cache/search')) SpoonDirectory::create(PATH_WWW . '/frontend/cache/search');
 	}
 
-
 	/**
 	 * Activate search on pages
-	 *
-	 * @return	void
 	 */
 	private function searchPages()
 	{
@@ -99,10 +102,12 @@ class SearchInstaller extends ModuleInstaller
 		$db = $this->getDB();
 
 		// get existing menu items
-		$menu = $db->getRecords('SELECT id, revision_id, language, title
-									FROM pages
-									WHERE status = ?',
-									array('active'));
+		$menu = $db->getRecords(
+			'SELECT id, revision_id, language, title
+			 FROM pages
+			 WHERE status = ?',
+			array('active')
+		);
 
 		// loop menu items
 		foreach($menu as $id => $page)
@@ -114,14 +119,18 @@ class SearchInstaller extends ModuleInstaller
 			$text = strip_tags(implode(' ', $blocks));
 
 			// add page to search index
-			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active)
-							VALUES (?, ?, ?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE value = ?, active = ?', array('pages', (int) $page['id'], (string) $page['language'], 'title', $page['title'], 'Y', $page['title'], 'Y'));
-			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active)
-							VALUES (?, ?, ?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE value = ?, active = ?', array('pages', (int) $page['id'], (string) $page['language'], 'text', $text, 'Y', $text, 'Y'));
+			$db->execute(
+				'INSERT INTO search_index (module, other_id, language, field, value, active)
+				 VALUES (?, ?, ?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?, active = ?',
+				array('pages', (int) $page['id'], (string) $page['language'], 'title', $page['title'], 'Y', $page['title'], 'Y')
+			);
+			$db->execute(
+				'INSERT INTO search_index (module, other_id, language, field, value, active)
+				 VALUES (?, ?, ?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?, active = ?',
+				array('pages', (int) $page['id'], (string) $page['language'], 'text', $text, 'Y', $text, 'Y')
+			);
 		}
 	}
 }
-
-?>

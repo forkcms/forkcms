@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to update one or more custom fields (delete, ...)
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 {
@@ -18,7 +21,6 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 	 */
 	private $fields;
 
-
 	/**
 	 * The group record
 	 *
@@ -26,11 +28,8 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 	 */
 	private $group;
 
-
 	/**
 	 * Delete addresses
-	 *
-	 * @return	void
 	 */
 	private function deleteCustomFields()
 	{
@@ -65,15 +64,11 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 		$this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=deleted-custom-fields&var=' . $this->group['name']);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// action to execute
@@ -104,10 +99,8 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 			{
 				case 'delete':
 					$this->deleteCustomFields();
-				break;
+					break;
 			}
 		}
 	}
 }
-
-?>

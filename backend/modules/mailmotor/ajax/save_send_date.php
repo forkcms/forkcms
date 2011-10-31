@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This saved the date on which the mailing is to be sent
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -56,5 +56,3 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 		$this->output(self::OK, array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp), sprintf(BL::msg('SendOn', $this->getModule()), $messageDate, $sendOnTime));
 	}
 }
-
-?>

@@ -3,37 +3,30 @@
 /**
  * This is the detail-action it will display the details of a module.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		3.0.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendExtensionsDetailModule extends BackendBaseActionIndex
 {
 	/**
 	 * Module we request the details of.
 	 *
-	 * @var	string
+	 * @var string
 	 */
 	private $currentModule;
-
 
 	/**
 	 * Datagrids.
 	 *
-	 * @var	BackendDataGrid
+	 * @var BackendDataGrid
 	 */
 	private $dataGridEvents;
-
 
 	/**
 	 * Information fetched from the info.xml.
 	 *
-	 * @var	array
+	 * @var array
 	 */
 	private $information = array();
-
 
 	/**
 	 * List of warnings.
@@ -42,11 +35,8 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	 */
 	private $warnings = array();
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -76,12 +66,9 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 		else $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the data.
 	 * This will also set some warnings if needed.
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -120,11 +107,8 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 		else $this->warnings[] = array('message' => BL::getMessage('InformationFileIsMissing'));
 	}
 
-
 	/**
 	 * Load the data grid which contains the events.
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridEvents()
 	{
@@ -138,11 +122,8 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 		$this->dataGridEvents->setPaging(false);
 	}
 
-
 	/**
 	 * Parse.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -156,5 +137,3 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 		$this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
 	}
 }
-
-?>

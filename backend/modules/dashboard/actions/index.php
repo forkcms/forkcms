@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the login screen
  *
- * @package		backend
- * @subpackage	dashboard
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendDashboardIndex extends BackendBaseActionIndex
 {
@@ -18,32 +21,19 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 	 */
 	private $widgets = array('left' => array(), 'middle' => array(), 'right' => array());
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load data
 		$this->loadData();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the data
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -144,11 +134,8 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		foreach($this->widgets as &$column) ksort($column);
 	}
 
-
 	/**
 	 * Parse the page with its widgets.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -165,5 +152,3 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		$this->tpl->assign('rightColumn', $this->widgets['right']);
 	}
 }
-
-?>

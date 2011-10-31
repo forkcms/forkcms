@@ -1,32 +1,30 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is our extended version of SpoonDataGrid
- *
  * This class will handle a lot of stuff for you, for example:
  * 	- it will set debugmode
  *	- it will set the compile-directory
  * 	- ...
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class BackendDataGrid extends SpoonDataGrid
 {
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	SpoonDataGridSource $source	The datasource.
+	 * @param SpoonDataGridSource $source
 	 */
 	public function __construct(SpoonDataGridSource $source)
 	{
-		// call parent constructor
 		parent::__construct($source);
 
 		// set debugmode, this will force the recompile for the used templates
@@ -68,18 +66,16 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setTemplate(BACKEND_CORE_PATH . '/layout/templates/datagrid.tpl');
 	}
 
-
 	/**
 	 * Adds a new column
 	 *
-	 * @return	void
-	 * @param	string $name				The name for the new column.
-	 * @param	string[optional] $label		The label for the column.
-	 * @param	string[optional] $value		The value for the column.
-	 * @param	string[optional] $URL		The URL for the link inside the column.
-	 * @param	string[optional] $title		A title for the image inside the column.
-	 * @param	string[optional] $image		An URL to the image inside the column.
-	 * @param	int[optional] $sequence		The sequence for the column.
+	 * @param string $name The name for the new column.
+	 * @param string[optional] $label The label for the column.
+	 * @param string[optional] $value The value for the column.
+	 * @param string[optional] $URL The URL for the link inside the column.
+	 * @param string[optional] $title A title for the image inside the column.
+	 * @param string[optional] $image An URL to the image inside the column.
+	 * @param int[optional] $sequence The sequence for the column.
 	 */
 	public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
@@ -121,19 +117,17 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setColumnHeaderAttributes($name, array('class' => $name));
 	}
 
-
 	/**
 	 * Adds a new column with a custom action button
 	 *
-	 * @return	void
-	 * @param	string $name						The name for the new column.
-	 * @param	string[optional] $label				The label for the column.
-	 * @param	string[optional] $value				The value for the column.
-	 * @param	string[optional] $URL				The URL for the link inside the column.
-	 * @param	string[optional] $title				The title for the link inside the column.
-	 * @param	array[optional] $anchorAttributes	The attributes for the anchor inside the column.
-	 * @param	string[optional] $image				An URL to the image inside the column.
-	 * @param	int[optional] $sequence				The sequence for the column.
+	 * @param string $name The name for the new column.
+	 * @param string[optional] $label The label for the column.
+	 * @param string[optional] $value The value for the column.
+	 * @param string[optional] $URL The URL for the link inside the column.
+	 * @param string[optional] $title The title for the link inside the column.
+	 * @param array[optional] $anchorAttributes The attributes for the anchor inside the column.
+	 * @param string[optional] $image An URL to the image inside the column.
+	 * @param int[optional] $sequence The sequence for the column.
 	 */
 	public function addColumnAction($name, $label = null, $value = null, $URL = null, $title = null, $anchorAttributes = null, $image = null, $sequence = null)
 	{
@@ -155,18 +149,17 @@ class BackendDataGrid extends SpoonDataGrid
 		parent::addColumn($name, $label, $value, null, $title, $image, $sequence);
 
 		// set column attributes
-		$this->setColumnAttributes($name, array('class' => 'action action' . SpoonFilter::toCamelCase($name),
-												'style' => 'width: 10%;'));
+		$this->setColumnAttributes($name, array(
+			'class' => 'action action' . SpoonFilter::toCamelCase($name),
+			'style' => 'width: 10%;'
+		));
 
 		// set header attributes
 		$this->setColumnHeaderAttributes($name, array('class' => $name));
 	}
 
-
 	/**
 	 * Enable drag and drop for the current datagrid
-	 *
-	 * @return	void
 	 */
 	public function enableSequenceByDragAndDrop()
 	{
@@ -192,11 +185,10 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setRowAttributes(array('data-id' => '[id]'));
 	}
 
-
 	/**
 	 * Retrieve the parsed output.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getContent()
 	{
@@ -210,32 +202,27 @@ class BackendDataGrid extends SpoonDataGrid
 		return parent::getContent();
 	}
 
-
 	/**
 	 * Sets the active tab for this datagrid
 	 *
-	 * @return	void
-	 * @param	string $tab		The name of the tab to show.
+	 * @param string $tab The name of the tab to show.
 	 */
 	public function setActiveTab($tab)
 	{
 		$this->setURL('#' . $tab, true);
 	}
 
-
 	/**
 	 * Set a custom column confirm message.
 	 *
-	 * @return	void
-	 * @param	string $column					The name of the column to set the confirm for.
-	 * @param	string $message					The message to use as a confirmmessage.
-	 * @param	string[optional] $custom		Unused parameter.
-	 * @param	string[optional] $title			The title for the column.
-	 * @param	string[optional] $uniqueId		A unique ID that will be uses.
+	 * @param string $column The name of the column to set the confirm for.
+	 * @param string $message The message to use as a confirmmessage.
+	 * @param string[optional] $custom Unused parameter.
+	 * @param string[optional] $title The title for the column.
+	 * @param string[optional] $uniqueId A unique ID that will be uses.
 	 */
 	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
 	{
-		// redefine
 		$column = (string) $column;
 		$message = (string) $message;
 		$custom = (string) $custom;
@@ -295,15 +282,13 @@ class BackendDataGrid extends SpoonDataGrid
 		}
 	}
 
-
 	/**
 	 * Sets the column function to be executed for every row
 	 *
-	 * @return	void
-	 * @param	mixed $function					The function to execute.
-	 * @param	mixed[optional] $arguments		The arguments to pass to the function.
-	 * @param	mixed $columns					The column wherin the result will be printed.
-	 * @param	bool[optional] $overwrite		Should the orginal value be overwritten.
+	 * @param mixed $function The function to execute.
+	 * @param mixed[optional] $arguments The arguments to pass to the function.
+	 * @param mixed $columns The column wherin the result will be printed.
+	 * @param bool[optional] $overwrite Should the orginal value be overwritten.
 	 */
 	public function setColumnFunction($function, $arguments = null, $columns, $overwrite = true)
 	{
@@ -321,7 +306,7 @@ class BackendDataGrid extends SpoonDataGrid
 			case array('BackendDataGridFunctions', 'getTimeAgo'):
 				$attributes = array('class' => 'date');
 				$headerAttributes = array('class' => 'date');
-			break;
+				break;
 		}
 
 		// add attributes if they are given
@@ -339,12 +324,10 @@ class BackendDataGrid extends SpoonDataGrid
 		}
 	}
 
-
 	/**
 	 * Sets the dropdown for the mass action
 	 *
-	 * @return	void
-	 * @param	SpoonFormDropdown $actionDropDown	A dropdown-instance.
+	 * @param SpoonFormDropdown $actionDropDown A dropdown-instance.
 	 */
 	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
@@ -363,15 +346,13 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->tpl->assign('massAction', $HTML);
 	}
 
-
 	/**
 	 * Sets the checkboxes for the mass action
 	 *
-	 * @return	void
-	 * @param	string $column						The name for the column that will hold the checkboxes.
-	 * @param	string $value						The value for the checkbox.
-	 * @param	array[optional] $excludedValues		The values that should be excluded.
-	 * @param	array[optional] $checkedValues		The values that should be checked.
+	 * @param string $column The name for the column that will hold the checkboxes.
+	 * @param string $value The value for the checkbox.
+	 * @param array[optional] $excludedValues The values that should be excluded.
+	 * @param array[optional] $checkedValues The values that should be checked.
 	 */
 	public function setMassActionCheckboxes($column, $value, array $excludedValues = null, array $checkedValues = null)
 	{
@@ -426,11 +407,8 @@ class BackendDataGrid extends SpoonDataGrid
 		}
 	}
 
-
 	/**
 	 * Sets all the default settings needed when attempting to use sorting
-	 *
-	 * @return	void
 	 */
 	private function setSortingOptions()
 	{
@@ -441,13 +419,11 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setSortingLabels(BL::lbl('SortAscending'), BL::lbl('SortedAscending'), BL::lbl('SortDescending'), BL::lbl('SortedDescending'));
 	}
 
-
 	/**
 	 * Set a tooltip
 	 *
-	 * @return	void
-	 * @param	string $column					The name of the column to set the tooltop for.
-	 * @param	string $message					The key for the message (will be parsed through BL::msg).
+	 * @param string $column The name of the column to set the tooltop for.
+	 * @param string $message The key for the message (will be parsed through BL::msg).
 	 */
 	public function setTooltip($column, $message)
 	{
@@ -461,13 +437,11 @@ class BackendDataGrid extends SpoonDataGrid
 		$instance->setLabel($instance->getLabel() . '<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">' . $value . '</span>');
 	}
 
-
 	/**
 	 * Sets an URL, optionally only appending the provided piece
 	 *
-	 * @return	void
-	 * @param	string $URL					The URL to set.
-	 * @param	bool[optional] $append		Should it be appended to the existing URL.
+	 * @param string $URL The URL to set.
+	 * @param bool[optional] $append Should it be appended to the existing URL.
 	 */
 	public function setURL($URL, $append = false)
 	{
@@ -476,31 +450,26 @@ class BackendDataGrid extends SpoonDataGrid
 	}
 }
 
-
 /**
  * This is our implementation of iSpoonDatagGridPaging
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendDataGridPaging implements iSpoonDataGridPaging
 {
 	/**
 	 * Builds & returns the pagination
 	 *
-	 * @return	string
-	 * @param	string $URL								The URL.
-	 * @param	int $offset								The calculated offset.
-	 * @param	string $order							The name of the column to sort on.
-	 * @param	string $sort							The sorting method, possible values are: asc, desc.
-	 * @param	int $numResults							The number of results.
-	 * @param	int $numPerPage							The items per page.
-	 * @param	bool[optional] $debug					Should debugging be enabled?
-	 * @param	string[optional] $compileDirectory		The director for compiled templates.
+	 * @param string $URL
+	 * @param int $offset
+	 * @param string $order The name of the column to sort on.
+	 * @param string $sort The sorting method, possible values are: asc, desc.
+	 * @param int $numResults
+	 * @param int $numPerPage The items per page.
+	 * @param bool[optional] $debug
+	 * @param string[optional] $compileDirectory
+	 * @return string
 	 */
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{
@@ -634,59 +603,39 @@ class BackendDataGridPaging implements iSpoonDataGridPaging
 		$tpl->assign('nextLabel', BL::lbl('NextPage'));
 		$tpl->assign('goToLabel', BL::lbl('GoToPage'));
 
-		// cough it up
 		return $tpl->getContent(BACKEND_CORE_PATH . '/layout/templates/datagrid_paging.tpl');
 	}
 }
 
-
 /**
  * A datagrid with an array as source
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendDataGridArray extends BackendDataGrid
 {
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	array $array	The data.
+	 * @param array $array The data.
 	 */
 	public function __construct(array $array)
 	{
-		// create a new source-object
 		$source = new SpoonDataGridSourceArray($array);
-
-		// call the parent, as in create a new datagrid with the created source
 		parent::__construct($source);
 	}
 }
 
-
 /**
  * A datagrid with a DB-connection as source
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendDataGridDB extends BackendDataGrid
 {
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $query						The query to retrieve the data.
-	 * @param	array[optional] $parameters			The parameters to be used inside the query.
-	 * @param	string[optional] $resultsQuery		The optional count query, used to calculate the number of results.
-	 * @param	array[optional] $resultsParameters 	Theh parameters to be used inside the results query.
+	 * @param string $query The query to retrieve the data.
+	 * @param array[optional] $parameters The parameters to be used inside the query.
+	 * @param string[optional] $resultsQuery The optional count query, used to calculate the number of results.
+	 * @param array[optional] $resultsParameters  Theh parameters to be used inside the results query.
 	 */
 	public function __construct($query, $parameters = array(), $resultsQuery = null, $resultsParameters = array())
 	{
@@ -696,32 +645,25 @@ class BackendDataGridDB extends BackendDataGrid
 		// create a new source-object
 		$source = new SpoonDataGridSourceDB(BackendModel::getDB(), array($query, (array) $parameters), $results);
 
-		// call the parent, as in create a new datagrid with the created source
 		parent::__construct($source);
 	}
 }
 
-
 /**
- * A set of common used functions that will be applied on rows or columns
+ * A set of commonly used functions that will be applied on rows or columns
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendDataGridFunctions
 {
 	/**
 	 * Formats plain text as HTML, links will be detected, paragraphs will be inserted
 	 *
-	 * @return	string
-	 * @param	string $var		The data to cleanup.
+	 * @param string $var The data to cleanup.
+	 * @return string
 	 */
 	public static function cleanupPlainText($var)
 	{
-		// redefine
 		$var = (string) $var;
 
 		// detect links
@@ -738,37 +680,32 @@ class BackendDataGridFunctions
 		$var = str_replace("\n", '', $var);
 		$var = str_replace('<p></p>', '', $var);
 
-		// return
 		return $var;
 	}
-
 
 	/**
 	 * Format a number as a float
 	 *
-	 * @return	string
-	 * @param	float $number				The number to format.
-	 * @param	int[optional] $decimals		The number of decimals.
+	 * @param float $number The number to format.
+	 * @param int[optional] $decimals The number of decimals.
+	 * @return string
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
-		// redefine
 		$number = (float) $number;
 		$decimals = (int) $decimals;
 
 		return number_format($number, $decimals, '.', ' ');
 	}
 
-
 	/**
 	 * Format a date according the users' settings
 	 *
-	 * @return	string
-	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable date.
+	 * @param int $timestamp The UNIX-timestamp to format as a human readable date.
+	 * @return string
 	 */
 	public static function getDate($timestamp)
 	{
-		// redefine
 		$timestamp = (int) $timestamp;
 
 		// if invalid timestamp return an empty string
@@ -781,16 +718,14 @@ class BackendDataGridFunctions
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
 	}
 
-
 	/**
 	 * Format a date as a long representation according the users' settings
 	 *
-	 * @return	string
-	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable date.
+	 * @param int $timestamp The UNIX-timestamp to format as a human readable date.
+	 * @return string
 	 */
 	public static function getLongDate($timestamp)
 	{
-		// redefine
 		$timestamp = (int) $timestamp;
 
 		// if invalid timestamp return an empty string
@@ -803,16 +738,14 @@ class BackendDataGridFunctions
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
 	}
 
-
 	/**
 	 * Format a time according the users' settings
 	 *
-	 * @return	string
-	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable time.
+	 * @param int $timestamp The UNIX-timestamp to format as a human readable time.
+	 * @return string
 	 */
 	public static function getTime($timestamp)
 	{
-		// redefine
 		$timestamp = (int) $timestamp;
 
 		// if invalid timestamp return an empty string
@@ -825,16 +758,14 @@ class BackendDataGridFunctions
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
 	}
 
-
 	/**
 	 * Get time ago as a string for use in a datagrid
 	 *
-	 * @return	string
-	 * @param	int $timestamp		The UNIX-timestamp to convert in a time-ago-string.
+	 * @param int $timestamp The UNIX-timestamp to convert in a time-ago-string.
+	 * @return string
 	 */
 	public static function getTimeAgo($timestamp)
 	{
-		// redefine
 		$timestamp = (int) $timestamp;
 
 		// get user setting for long dates
@@ -843,20 +774,17 @@ class BackendDataGridFunctions
 		// get the time ago as a string
 		$timeAgo = SpoonDate::getTimeAgo($timestamp, BL::getInterfaceLanguage(), $format);
 
-		// return
 		return '<abbr title="' . SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage()) . '">' . $timeAgo . '</abbr>';
 	}
-
 
 	/**
 	 * Get the HTML for a user to use in a datagrid
 	 *
-	 * @return	string
-	 * @param	int $id		The Id of the user.
+	 * @param int $id The Id of the user.
+	 * @return string
 	 */
 	public static function getUser($id)
 	{
-		// redefine
 		$id = (int) $id;
 
 		// create user instance
@@ -876,38 +804,33 @@ class BackendDataGridFunctions
 		$html .= '	<p><a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
 		$html .= '</div>';
 
-		// return
 		return $html;
 	}
-
 
 	/**
 	 * Returns an image tag
 	 *
-	 * @return	string
-	 * @param	string $path				The path to the image.
-	 * @param	string $image				The filename of the image.
-	 * @param	string[optional] $title		The title (will be used as alt).
+	 * @param string $path The path to the image.
+	 * @param string $image The filename of the image.
+	 * @param string[optional] $title The title (will be used as alt).
+	 * @return string
 	 */
 	public static function showImage($path, $image, $title = '')
 	{
-		// redefine
 		$path = (string) $path;
 		$image = (string) $image;
 		$title = (string) $title;
 
-		// return
 		return '<img src="' . $path . '/' . $image . '" alt="' . $title . '" />';
 	}
-
 
 	/**
 	 * Truncate a string
 	 *
-	 * @return	string
-	 * @param	string[optional] $string	The string to truncate.
-	 * @param	int $length					The maximumlength for the string.
-	 * @param	bool[optional] $useHellip	Should a hellip be appended?
+	 * @param string[optional] $string The string to truncate.
+	 * @param int $length The maximumlength for the string.
+	 * @param bool[optional] $useHellip Should a hellip be appended?
+	 * @return string
 	 */
 	public static function truncate($string = null, $length, $useHellip = true)
 	{
@@ -929,10 +852,7 @@ class BackendDataGridFunctions
 			// add hellip
 			if($useHellip) $string .= '…';
 
-			// return
 			return SpoonFilter::htmlspecialchars($string);
 		}
 	}
 }
-
-?>

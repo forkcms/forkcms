@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 {
@@ -20,14 +23,12 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 	 */
 	private $availableThemes = array();
 
-
 	/**
 	 * The position's default extras.
 	 *
 	 * @var	array
 	 */
 	private $extras = array();
-
 
 	/**
 	 * The position's names.
@@ -36,7 +37,6 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 	 */
 	private $names = array();
 
-
 	/**
 	 * The theme we are adding a template for.
 	 *
@@ -44,15 +44,11 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 	 */
 	private $selectedTheme;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// load additional js
@@ -60,25 +56,14 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 
 		// load data
 		$this->loadData();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load necessary data.
-	 *
-	 * @return	void.
 	 */
 	private function loadData()
 	{
@@ -92,11 +77,8 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		$this->selectedTheme = SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('core', 'theme', 'core'));
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -142,7 +124,6 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 
 		// create array
 		$defaultExtras = array('' => array(0 => ucfirst(BL::lbl('Editor'))),
-//								ucfirst(BL::lbl('Modules')) => $blocks,
 								ucfirst(BL::lbl('Widgets')) => $widgets);
 
 		// create default position field
@@ -217,11 +198,8 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		$this->tpl->assign('positions', $positions);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -232,11 +210,8 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -329,5 +304,3 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

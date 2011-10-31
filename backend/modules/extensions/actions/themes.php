@@ -1,40 +1,38 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the themes-action, it will display the overview of modules.
  *
- * @package		backend
- * @subpackage	extensions
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		3.0.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendExtensionsThemes extends BackendBaseActionIndex
 {
 	/**
 	 * The form instance.
 	 *
-	 * @var	BackendForm
+	 * @var BackendForm
 	 */
 	private $frm;
-
 
 	/**
 	 * List of available themes (installed & installable)
 	 *
-	 * @var	array
+	 * @var array
 	 */
 	private $installableThemes = array(), $installedThemes = array();
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// load the data
@@ -42,22 +40,13 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 
 		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the available themes.
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -72,15 +61,11 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 		}
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('settingsThemes');
 
 		// fetch the themes
@@ -109,26 +94,19 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 		$this->frm->addRadiobutton('installedThemes', $themes, $selected);
 	}
 
-
 	/**
 	 * Parse the form.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse the form
 		$this->frm->parse($this->tpl);
 
 		// parse not yet installed themes
 		$this->tpl->assign('installableThemes', $this->installableThemes);
 	}
 
-
 	/**
 	 * Validates the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -217,5 +195,3 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>

@@ -1,73 +1,52 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the overview of analytics posts
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendAnalyticsIndex extends BackendAnalyticsBase
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Parse this page
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent parse
 		parent::parse();
 
-		// get warnings
 		$warnings = BackendAnalyticsModel::checkSettings();
-
-		// assign warnings
 		$this->tpl->assign('warnings', $warnings);
 
-		// no warnings
 		if(empty($warnings))
 		{
-			// get and parse overview data
 			$this->parseOverviewData();
-
-			// get and parse data for chart
 			$this->parseLineChartData();
 			$this->parsePieChartData();
-
-			// get and parse important referrals
 			$this->parseImportantReferrals();
-
-			// get and parse important keywords
 			$this->parseImportantKeywords();
 
-			// init google url
 			$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 			$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
 			$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
 
-			// parse links to google
 			$this->tpl->assign('googleTopReferrersURL', sprintf($googleURL, 'referring_sources', $googleTableId, $googleDate));
 			$this->tpl->assign('googleTopKeywordsURL', sprintf($googleURL, 'keywords', $googleTableId, $googleDate));
 			$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
@@ -81,87 +60,65 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		}
 	}
 
-
 	/**
 	 * Parses the most important keywords
-	 *
-	 * @return	void
 	 */
 	private function parseImportantKeywords()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getTopKeywords($this->startTimestamp, $this->endTimestamp, 25);
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
 
-			// set headers values
-			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
-			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Views'));
-
 			// set headers
-			$dataGrid->setHeaderLabels($headers);
+			$dataGrid->setHeaderLabels(
+				array(
+					'pageviews' => ucfirst(BL::lbl('Views')),
+					'pageviews_percentage' => '% ' . ucfirst(BL::lbl('Views'))
+				)
+			);
 
 			// parse the datagrid
 			$this->tpl->assign('dgKeywords', $dataGrid->getContent());
 		}
 	}
 
-
 	/**
 	 * Parses the most important referrals
-	 *
-	 * @return	void
 	 */
 	private function parseImportantReferrals()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getTopReferrals($this->startTimestamp, $this->endTimestamp, 25);
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// hide columns
 			$dataGrid->setColumnsHidden(array('referral_long'));
-
-			// set headers values
-			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
-			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Views'));
-
-			// set column url
 			$dataGrid->setColumnURL('referral', 'http://[referral_long]', '[referral_long]');
 
 			// set headers
-			$dataGrid->setHeaderLabels($headers);
+			$dataGrid->setHeaderLabels(
+				array(
+					'pageviews' => ucfirst(BL::lbl('Views')),
+					'pageviews_percentage' => '% ' . ucfirst(BL::lbl('Views'))
+				)
+			);
 
 			// parse the datagrid
 			$this->tpl->assign('dgReferrers', $dataGrid->getContent());
 		}
 	}
 
-
 	/**
 	 * Parses the data to make the line-chart
-	 *
-	 * @return	void
 	 */
 	private function parseLineChartData()
 	{
-		// init vars
 		$maxYAxis = 2;
 		$metrics = array('visitors', 'pageviews');
 		$graphData = array();
 
-		// get metrics per day
 		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-		// loop metrics
 		foreach($metrics as $i => $metric)
 		{
 			// build graph data array
@@ -171,7 +128,6 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 
-			// loop metrics per day
 			foreach($metricsPerDay as $j => $data)
 			{
 				// cast SimpleXMLElement to array
@@ -183,7 +139,6 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			}
 		}
 
-		// loop the metrics
 		foreach($graphData as $metric)
 		{
 			// loop the data
@@ -194,24 +149,18 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			}
 		}
 
-		// parse
 		$this->tpl->assign('maxYAxis', $maxYAxis);
 		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
 		$this->tpl->assign('graphData', $graphData);
 	}
 
-
 	/**
 	 * Parses the overview data
-	 *
-	 * @return	void
 	 */
 	private function parseOverviewData()
 	{
 		// get aggregates
 		$results = BackendAnalyticsModel::getAggregates($this->startTimestamp, $this->endTimestamp);
-
-		// get total aggregates
 		$resultsTotal = BackendAnalyticsModel::getAggregatesTotal($this->startTimestamp, $this->endTimestamp);
 
 		// are there some values?
@@ -221,7 +170,6 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		// show message if there is no data
 		$this->tpl->assign('dataAvailable', $dataAvailable);
 
-		// there are some results
 		if(!empty($results))
 		{
 			// time on site values
@@ -248,7 +196,6 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
 			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
-			// parse data
 			$this->tpl->assign('pageviews', $results['pageviews']);
 			$this->tpl->assign('visitors', $results['visitors']);
 			$this->tpl->assign('pageviews', $results['pageviews']);
@@ -268,21 +215,14 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		}
 	}
 
-
 	/**
 	 * Parses the data to make the pie-chart
-	 *
-	 * @return	void
 	 */
 	private function parsePieChartData()
 	{
-		// get sources
+		$graphData = array();
 		$sources = BackendAnalyticsModel::getTrafficSourcesGrouped($this->startTimestamp, $this->endTimestamp);
 
-		// init vars
-		$graphData = array();
-
-		// loop metrics
 		foreach($sources as $i => $source)
 		{
 			// get label
@@ -295,9 +235,6 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$graphData[$i]['percentage'] = (string) $source['percentage'];
 		}
 
-		// parse
 		$this->tpl->assign('pieGraphData', $graphData);
 	}
 }
-
-?>
