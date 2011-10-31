@@ -698,7 +698,7 @@ class BackendExtensionsModel
 			$item['theme'] = $information['name'];
 			$item['label'] = $template['label'];
 			$item['path'] = $template['path'];
-			$item['active'] = 'Y'; // @todo: useless
+			$item['active'] = 'Y';
 
 			// set format
 			$item['data']['format'] = $template['format'];
