@@ -11,6 +11,7 @@
  * This action will delete a question
  *
  * @author Lester Lievens <lester@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class BackendFaqDelete extends BackendBaseActionDelete
 {
@@ -19,29 +20,19 @@ class BackendFaqDelete extends BackendBaseActionDelete
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exist
-		if($this->id !== null && BackendFaqModel::existsQuestion($this->id))
+		if($this->id !== null && BackendFaqModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get item
-			$this->record = BackendFaqModel::getQuestion($this->id);
+			$this->record = BackendFaqModel::get($this->id);
 
 			// delete item
-			BackendFaqModel::deleteQuestion($this->id);
+			BackendFaqModel::delete($this->id);
+			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('item' => $this->record));
 
-			// trigger event
-			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
-			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['question']));
 		}
-
-		// something went wrong
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
