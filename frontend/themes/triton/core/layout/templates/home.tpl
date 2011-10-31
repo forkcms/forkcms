@@ -29,14 +29,7 @@
 
 				{* Top position *}
 				{iteration:positionTop}
-					{option:positionTop.blockIsHTML}
-						<div id="headerSearch">
-							{$positionTop.blockContent}
-						</div>
-					{/option:positionTop.blockIsHTML}
-					{option:!positionTop.blockIsHTML}
-						{$positionTop.blockContent}
-					{/option:!positionTop.blockIsHTML}
+					{$positionTop.blockContent}
 				{/iteration:positionTop}
 
 				{* Breadcrumb *}

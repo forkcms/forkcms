@@ -22,13 +22,13 @@
 	<templates>
 		<template label="Default" path="core/layout/templates/default.tpl">
 			<positions>
-				<position name="main">
+				<position name="main" />
+				<position name="left" />
+				<position name="top">
 					<defaults>
 						<widget module="search" action="form" />
 					</defaults>
 				</position>
-				<position name="left" />
-				<position name="top" />
 				<position name="advertisement" />
 			</positions>
 			<format>
@@ -37,14 +37,14 @@
 		</template>
 		<template label="Home" path="core/layout/templates/home.tpl">
 			<positions>
-				<position name="main">
+				<position name="main" />
+				<position name="left" />
+				<position name="right" />
+				<position name="top">
 					<defaults>
 						<widget module="search" action="form" />
 					</defaults>
 				</position>
-				<position name="left" />
-				<position name="right" />
-				<position name="top" />
 				<position name="advertisement" />
 			</positions>
 			<format>

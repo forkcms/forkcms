@@ -477,8 +477,8 @@
         <translation language="nl"><![CDATA[campagne]]></translation>
       </item>
       <item type="label" name="CampaignName">
-        <translation language="en"><![CDATA[campaign]]></translation>
-        <translation language="nl"><![CDATA[campagne]]></translation>
+        <translation language="en"><![CDATA[campaign name]]></translation>
+        <translation language="nl"><![CDATA[campagnenaam]]></translation>
       </item>
       <item type="label" name="ChooseTemplate">
         <translation language="en"><![CDATA[choose a template]]></translation>
