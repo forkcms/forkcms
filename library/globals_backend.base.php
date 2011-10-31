@@ -8,5 +8,3 @@
  * @author	Davy Hellemans <davy@netlash.com>
  * @author	Tijs Verkoyen <tijs@netlash.com>
  */
-
-?>

@@ -14,7 +14,7 @@
  * Spoon configuration
  */
 // should the debug information be shown
-define('SPOON_DEBUG', true);
+define('SPOON_DEBUG', false);
 // mailaddress where the exceptions will be mailed to (<tag>-bugs@fork-cms.be)
 define('SPOON_DEBUG_EMAIL', '<spoon-debug-email>');
 // message for the visitors when an exception occur
@@ -75,5 +75,3 @@ define('ACTION_RIGHTS_LEVEL', '<action-rights-level>');
 define('PATH_WWW', '<path-www>');
 // path to the library
 define('PATH_LIBRARY', '<path-library>');
-
-?>
