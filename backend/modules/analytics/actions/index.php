@@ -99,7 +99,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$dataGrid->setHeaderLabels(
 				array(
 					'pageviews' => ucfirst(BL::lbl('Views')),
-					'pageviews_percentage' => '% ' . ucfirst(BL::lbl('Views'));
+					'pageviews_percentage' => '% ' . ucfirst(BL::lbl('Views'))
 				)
 			);
 
