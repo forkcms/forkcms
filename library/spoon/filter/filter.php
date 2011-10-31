@@ -866,7 +866,7 @@ class SpoonFilter
 
 
 	/**
-	 * Prepares a string so that it can be used in urls. Special characters are stripped/replaced.
+	 * Prepares a string so that it can be used in urls.
 	 *
 	 * @return	string						The urlised string.
 	 * @param	string $value				The value that should be urlised.
@@ -877,57 +877,37 @@ class SpoonFilter
 		// define charset
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
-		// allowed characters
-		$characters = array('a', 'b', 'c', 'd', 'e', 'f', 'g',
-							'h', 'i', 'j', 'k', 'l', 'm', 'n',
-							'o', 'p', 'q', 'r', 's', 't', 'u',
-							'v', 'w', 'x', 'y', 'z', '0', '1',
-							'2', '3', '4', '5', '6', '7', '8',
-							'9', '-', '_', ' ');
+		// reserved characters (RFC 3986)
+		$reservedCharacters = array(
+			'/', '?', ':', '@', '#', '[', ']',
+			'!', '$', '&', '\'', '(', ')', '*',
+			'+', ',', ';', '='
+		);
 
-		// redefine value
-		$value = mb_strtolower($value, $charset);
+		// remove reserved characters
+		$value = str_replace($reservedCharacters, ' ', $value);
 
-		// replace special characters
-		$replace = array();
-		$replace['.'] = ' ';
-		$replace['@'] = ' at ';
-		$replace['©'] = ' copyright ';
-		$replace['€'] = ' euro ';
-		$replace['™'] = ' tm ';
-		$replace['&'] = ' and ';
-
-		// replace special characters
-		$value = str_replace(array_keys($replace), array_values($replace), $value);
-
-		// reform non ascii characters
-		$value = iconv($charset, 'ASCII//TRANSLIT//IGNORE', $value);
-
-		// remove spaces at the beginning and the end
-		$value = trim($value);
-
-		// default endvalue
-		$newValue = '';
-
-		// loop charachtesr
-		for($i = 0; $i < mb_strlen($value, $charset); $i++)
-		{
-			// valid character (so add to new string)
-			if(in_array(mb_substr($value, $i, 1, $charset), $characters)) $newValue .= mb_substr($value, $i, 1, $charset);
-		}
+		// replace double quote, since this one might cause problems in html (e.g. <a href="double"quote">)
+		$value = str_replace('"', ' ', $value);
 
 		// replace spaces by dashes
-		$newValue = str_replace(' ', '-', $newValue);
+		$value = str_replace(' ', '-', $value);
 
-		// there IS a value
-		if(strlen($newValue) != 0)
+		// only urlencode if not yet urlencoded
+		if(urldecode($value) == $value)
 		{
-			// convert "--" to "-"
-			$newValue = preg_replace('/\-+/', '-', $newValue);
+			// to lowercase
+			$value = mb_strtolower($value, $charset);
+
+			// urlencode
+			$value = urlencode($value);
 		}
 
+		// convert "--" to "-"
+		$value = preg_replace('/\-+/', '-', $value);
+
 		// trim - signs
-		return trim($newValue, '-');
+		return trim($value, '-');
 	}
 }
 

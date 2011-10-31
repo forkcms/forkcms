@@ -1,23 +1,27 @@
 <?php
 
 /**
- * Fork_Sniffs_Styleguide_ClassesSniff
  * Checks if classes are meeting the styleguide
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 {
-	private static $functions = array();
-	private static $classesWithErrors = array();
+	/**
+	 * @var array
+	 */
+	protected static $classesWithErrors = array();
 
+	/**
+	 * @var array
+	 */
+	protected static $functions = array();
 
 	/**
 	 * Process the code
 	 *
-	 * @return	void
-	 * @param	PHP_CodeSniffer_File $phpcsFile	The codesniffer file.
-	 * @param	mixed $stackPtr					The stackpointer.
+	 * @param PHP_CodeSniffer_File $phpcsFile
+	 * @param int $stackPtr
 	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
@@ -39,13 +43,16 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 				// multiple classes in one file
 				if($nextClass !== false)
 				{
-					if(!($lines[$tokens[$current['scope_closer']]['line']] == "\n" && $lines[$tokens[$current['scope_closer']]['line'] + 1] == "\n" && trim($lines[$tokens[$current['scope_closer']]['line'] + 2]) != ''))
+					if(!($lines[$tokens[$current['scope_closer']]['line']] == "\n" && trim($lines[$tokens[$current['scope_closer']]['line'] + 1]) != ''))
 					{
-						$phpcsFile->addError('Expected 2 empty lines after a class.', $stackPtr);
+						$phpcsFile->addError('Expected 1 blank line after a class.', $stackPtr);
 					}
 				}
 
-				if($next['code'] != T_WHITESPACE) $phpcsFile->addError('Space expected after class, interface', $stackPtr);
+				if($next['code'] != T_WHITESPACE)
+				{
+					$phpcsFile->addError('Space expected after class, interface', $stackPtr);
+				}
 
 				// find comment
 				if($phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, $stackPtr - 4) === false) $phpcsFile->addError('PHPDoc expected before class', $stackPtr);
@@ -89,38 +96,6 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 
 					for($i = $startComment; $i <= $endComment; $i++)
 					{
-						// package
-						if(substr($tokens[$i]['content'], 0, 11) == ' * @package')
-						{
-							// reset
-							$hasPackage = true;
-
-							// find part
-							$content = trim(substr($tokens[$i]['content'], strrpos($tokens[$i]['content'], "\t")));
-
-							// validate content
-							if($content != $correctPackage) $phpcsFile->addError('Invalid value for @package', $i);
-
-							// validate syntax
-							if(substr($tokens[$i]['content'], 11, 1) != "\t") $phpcsFile->addError('After @package there should be at least one tab', $i);
-						}
-
-						// subpackage
-						if(substr($tokens[$i]['content'], 0, 14) == ' * @subpackage')
-						{
-							// reset
-							$hasSubPackage = true;
-
-							// find part
-							$content = trim(substr($tokens[$i]['content'], strrpos($tokens[$i]['content'], "\t")));
-
-							// validate content
-							if(substr_count($correctSubPackage, '.') == 0 && $content != $correctSubPackage) $phpcsFile->addError('Invalid value for @subpackage', $i);
-
-							// validate syntax
-							if(substr($tokens[$i]['content'], 14, 1) != "\t") $phpcsFile->addError('After @subpackage there should be at least one tab', $i);
-						}
-
 						// author
 						if(substr($tokens[$i]['content'], 0, 10) == ' * @author')
 						{
@@ -128,44 +103,40 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 							$hasAuthor = true;
 
 							// validate syntax
-							if(substr($tokens[$i]['content'], 10, 1) != "\t") $phpcsFile->addError('After @author there should be at least one tab', $i);
+							if(substr($tokens[$i]['content'], 10, 1) != ' ')
+							{
+								$phpcsFile->addError('After @author there should be exactly one space.', $i);
+							}
 
-							// find part
-							$content = trim(substr($tokens[$i]['content'], strrpos($tokens[$i]['content'], "\t")));
-
-							// validate
-							if(preg_match('/.*<.*@.*>$/', $content) != 1) $phpcsFile->addError('Invalid syntax for the @author-value', $i);
-						}
-
-						// since
-						if(substr($tokens[$i]['content'], 0, 9) == ' * @since')
-						{
-							// reset
-							$hasSince = true;
-
-							// validate syntax
-							if(substr($tokens[$i]['content'], 9, 1) != "\t") $phpcsFile->addError('After @since there should be at least one tab', $i);
-
-							// find part
-							$content = trim(substr($tokens[$i]['content'], strrpos($tokens[$i]['content'], "\t")));
-
-							// validate
-							if(preg_match('/^[0-9\.]*$/', $content) != 1) $phpcsFile->addError('Invalid syntax for the @since-value', $i);
+							// validate author format
+							$content = trim(substr($tokens[$i]['content'], strrpos($tokens[$i]['content'], ' ')));
+							if(preg_match('/.*<.*@.*>$/', $content) != 1)
+							{
+								$phpcsFile->addError('Invalid syntax for the @author-value', $i);
+							}
 						}
 					}
 
-					if(!$hasPackage) $phpcsFile->addError('No package found in PHPDoc', $startComment);
-					if(!$hasSubPackage) $phpcsFile->addError('No subpackage found in PHPDoc', $startComment);
-					if(!$hasAuthor) $phpcsFile->addError('No author found in PHPDoc', $startComment);
-					if(!$hasSince) $phpcsFile->addError('No since found in PHPDoc', $startComment);
+					// no author found
+					if(!$hasAuthor)
+					{
+						$phpcsFile->addError('No author found in PHPDoc', $startComment);
+					}
 				}
-			break;
+				break;
 
 			case T_EXTENDS:
 			case T_IMPLEMENTS:
-				if($previous['content'] != ' ') $phpcsFile->addError('Space excpected before extends, implements', $stackPtr);
-				if($next['content'] != ' ') $phpcsFile->addError('Space expected after extends, implements', $stackPtr);
-			break;
+				if($previous['content'] != ' ')
+				{
+					$phpcsFile->addError('Space excpected before extends, implements', $stackPtr);
+				}
+
+				if($next['content'] != ' ')
+				{
+					$phpcsFile->addError('Space expected after extends, implements', $stackPtr);
+				}
+				break;
 
 			case T_FUNCTION:
 				$prevClass = $phpcsFile->findPrevious(T_CLASS, $stackPtr);
@@ -176,22 +147,17 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 					{
 						// get class
 						$className = strtolower($tokens[$prevClass + 2]['content']);
-
 						if(!in_array($className, self::$classesWithErrors))
 						{
-							// add
+							// add to list of functions
 							self::$functions[$className][] = strtolower($tokens[$stackPtr + 2]['content']);
 
-							// copy to local
+							// create local copy
 							$local = self::$functions[$className];
-
-							// sort
 							sort($local);
 
-							// gte dif
+							// check difference
 							$diff = (array) array_diff_assoc($local, self::$functions[$className]);
-
-							// check
 							if(count($diff) > 0)
 							{
 								$phpcsFile->addError('The methods should be placed in alphabetical order.', $stackPtr);
@@ -200,16 +166,15 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 						}
 					}
 				}
-			break;
+				break;
 
 			case T_CLONE:
 			case T_NAMESPACE:
 			case T_NS_SEPARATOR:
 				// @later we don't use these elements at the moment
-			break;
+				break;
 		}
 
-		// cleanup
 		unset($tokens);
 		unset($current);
 		unset($lines);
@@ -218,16 +183,11 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 
 	}
 
-
 	/**
-	 * Register
-	 *
-	 * @return	void
+	 * Register on class related tokens.
 	 */
 	public function register()
 	{
 		return array(T_CLASS, T_EXTENDS, T_IMPLEMENTS, T_INTERFACE, T_NAMESPACE, T_NS_SEPARATOR, T_CLONE, T_FUNCTION);
 	}
 }
-
-?>
