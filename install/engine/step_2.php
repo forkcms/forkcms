@@ -123,11 +123,20 @@ class InstallerStep2 extends InstallerStep
 		// check if the backend-cache-directory is writable
 		self::checkRequirement('fileSystemBackendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/'), self::STATUS_ERROR);
 
+		// check if the backend-modules-directory is writable
+		self::checkRequirement('fileSystemBackendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/backend/modules/'), self::STATUS_WARNING);
+
 		// check if the frontend-cache-directory is writable
 		self::checkRequirement('fileSystemFrontendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/'), self::STATUS_ERROR);
 
 		// check if the frontend-files-directory is writable
 		self::checkRequirement('fileSystemFrontendFiles', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/'), self::STATUS_ERROR);
+
+		// check if the frontend-modules-directory is writable
+		self::checkRequirement('fileSystemFrontendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/modules/'), self::STATUS_WARNING);
+
+		// check if the frontend-themes-directory is writable
+		self::checkRequirement('fileSystemFrontendThemes', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/themes/'), self::STATUS_WARNING);
 
 		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);

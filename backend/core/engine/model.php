@@ -168,7 +168,8 @@ class BackendModel
 	 */
 	public static function deleteExtra($module = null, $type = null, array $data = null)
 	{
-		$query = 'SELECT i.id, i.data FROM pages_extras AS i WHERE 1';
+		// init
+		$query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
 		$parameters = array();
 
 		// module
@@ -219,7 +220,7 @@ class BackendModel
 		BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
 
 		// delete extra
-		BackendModel::getDB(true)->delete('pages_extras', 'id = ?', $id);
+		BackendModel::getDB(true)->delete('modules_extras', 'id = ?', $id);
 	}
 
 	/**
@@ -401,36 +402,21 @@ class BackendModel
 	/**
 	 * Get the modules
 	 *
-	 * @param bool[optional] $activeOnly Only return the active modules.
 	 * @return array
 	 */
-	public static function getModules($activeOnly = true)
+	public static function getModules()
 	{
-		$activeOnly = (bool) $activeOnly;
-
 		// validate cache
-		if(empty(self::$modules) || !isset(self::$modules['active']) || !isset(self::$modules['all']))
+		if(empty(self::$modules))
 		{
 			// get all modules
-			$modules = (array) self::getDB()->getPairs('SELECT m.name, m.active
-														FROM modules AS m');
+			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
 
-			// loop
-			foreach($modules as $module => $active)
-			{
-				// if the module is active
-				if($active == 'Y') self::$modules['active'][] = $module;
-
-				// add to all
-				self::$modules['all'][] = $module;
-			}
+			// add modules to the cache
+			foreach($modules as $module) self::$modules[] = $module;
 		}
 
-		// only return the active modules
-		if($activeOnly) return self::$modules['active'];
-
-		// fallback
-		return self::$modules['all'];
+		return self::$modules;
 	}
 
 	/**
@@ -495,17 +481,16 @@ class BackendModel
 	}
 
 	/**
-	 * Fetch the list of modules, but for a dropdown
+	 * Fetch the list of modules, but for a dropdown.
 	 *
-	 * @param bool[optional] $activeOnly Only return the active modules.
 	 * @return array
 	 */
-	public static function getModulesForDropDown($activeOnly = true)
+	public static function getModulesForDropDown()
 	{
 		$dropdown = array('core' => 'core');
 
 		// fetch modules
-		$modules = self::getModules($activeOnly);
+		$modules = self::getModules();
 
 		// loop and add into the return-array (with correct label)
 		foreach($modules as $module)
@@ -566,22 +551,6 @@ class BackendModel
 		}
 
 		return $possibleFormats;
-	}
-
-	/**
-	 * Fetch the list of available themes
-	 *
-	 * @return array
-	 */
-	public static function getThemes()
-	{
-		// fetch themes
-		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
-		$themes = array_combine($themes, $themes);
-
-		// add core templates
-		$themes = array_merge(array('core' => BL::lbl('NoTheme')), $themes);
-		return $themes;
 	}
 
 	/**

@@ -61,10 +61,10 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		// init var
 		$items = array();
 
-		// get active modules
+		// get modules
 		$modules = BackendModel::getModules();
 
-		// loop active modules
+		// loop modules
 		foreach($modules as $module)
 		{
 			// check if their is a model-file

@@ -10,33 +10,9 @@
         <translation language="nl"><![CDATA[Het is onmogelijk om 2 (of meer) modules aan dezelfde pagina te koppelen.]]></translation>
         <translation language="en"><![CDATA[It isn't possible to link 2 (or more) modules to the same page.]]></translation>
       </item>
-      <item type="error" name="DeleteTemplate">
-        <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
-        <translation language="en"><![CDATA[You can't delete this template.]]></translation>
-      </item>
       <item type="error" name="HomeCantHaveBlocks">
         <translation language="nl"><![CDATA[Je kan geen modules aan de homepage koppelen.]]></translation>
         <translation language="en"><![CDATA[You can't link a module to the homepage.]]></translation>
-      </item>
-      <item type="error" name="InvalidTemplateSyntax">
-        <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
-        <translation language="en"><![CDATA[Invalid syntax.]]></translation>
-      </item>
-      <item type="error" name="DuplicatePositionName">
-        <translation language="nl"><![CDATA[De positienaam %s is gedupliceerd.]]></translation>
-        <translation language="en"><![CDATA[Position %s is duplicated.]]></translation>
-      </item>
-      <item type="error" name="NoAlphaNumPositionName">
-        <translation language="nl"><![CDATA[De positienaam %s is niet alfanumeriek.]]></translation>
-        <translation language="en"><![CDATA[Position %s is not alphanumerical.]]></translation>
-      </item>
-      <item type="error" name="NonExistingPositionName">
-        <translation language="nl"><![CDATA[De positienaam %s is niet gedefiniëerd.]]></translation>
-        <translation language="en"><![CDATA[Position %s is not defined.]]></translation>
-      </item>
-      <item type="error" name="ReservedPositionName">
-        <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>
-        <translation language="en"><![CDATA[Position %s is reserved.]]></translation>
       </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
@@ -46,10 +22,6 @@
         <translation language="nl"><![CDATA[blok toevoegen]]></translation>
         <translation language="en"><![CDATA[add block]]></translation>
       </item>
-      <item type="label" name="AddPosition">
-        <translation language="nl"><![CDATA[positie toevoegen]]></translation>
-        <translation language="en"><![CDATA[add position]]></translation>
-      </item>
       <item type="label" name="ChangeTemplate">
         <translation language="nl"><![CDATA[Wijzig template]]></translation>
         <translation language="en"><![CDATA[Change template]]></translation>
@@ -57,10 +29,6 @@
       <item type="label" name="DeleteBlock">
         <translation language="nl"><![CDATA[blok verwijderen]]></translation>
         <translation language="en"><![CDATA[delete block]]></translation>
-      </item>
-      <item type="label" name="DeletePosition">
-        <translation language="nl"><![CDATA[positie verwijderen]]></translation>
-        <translation language="en"><![CDATA[delete position]]></translation>
       </item>
       <item type="label" name="EditModuleContent">
         <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
@@ -98,18 +66,6 @@
         <translation language="nl"><![CDATA[metanavigatie]]></translation>
         <translation language="en"><![CDATA[meta navigation]]></translation>
       </item>
-      <item type="label" name="Overwrite">
-        <translation language="nl"><![CDATA[overschrijf]]></translation>
-        <translation language="en"><![CDATA[overwrite]]></translation>
-      </item>
-      <item type="label" name="Position">
-        <translation language="nl"><![CDATA[positie]]></translation>
-        <translation language="en"><![CDATA[position]]></translation>
-      </item>
-      <item type="label" name="Positions">
-        <translation language="nl"><![CDATA[posities]]></translation>
-        <translation language="en"><![CDATA[positions]]></translation>
-      </item>
       <item type="label" name="Redirect">
         <translation language="nl"><![CDATA[redirect]]></translation>
         <translation language="en"><![CDATA[redirect]]></translation>
@@ -121,10 +77,6 @@
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The page "%1$s" was added.]]></translation>
-      </item>
-      <item type="message" name="AddedTemplate">
-        <translation language="nl"><![CDATA[De template "%1$s" werd toegevoegd.]]></translation>
-        <translation language="en"><![CDATA[The template "%1$s" was added.]]></translation>
       </item>
       <item type="message" name="BlockAttached">
         <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
@@ -138,10 +90,6 @@
         <translation language="nl"><![CDATA[Ben je zeker dat je deze block wil verwijderen?]]></translation>
         <translation language="en"><![CDATA[Are your sure you want to delete this block?]]></translation>
       </item>
-      <item type="message" name="ConfirmDeleteTemplate">
-        <translation language="nl"><![CDATA[Ben je zeker dat je de template "%1$s" wil verwijderen?]]></translation>
-        <translation language="en"><![CDATA[Are your sure you want to delete the template "%1$s"?]]></translation>
-      </item>
       <item type="message" name="ContentSaveWarning">
         <translation language="nl"><![CDATA[<p><strong>Belangrijk:</strong> De inhoud wordt pas aangepast nadat de pagina wordt opgeslagen.</p>]]></translation>
         <translation language="en"><![CDATA[<p><strong>Important:</strong> This content will not be updated until the page has been saved.</p>]]></translation>
@@ -150,17 +98,9 @@
         <translation language="nl"><![CDATA[De pagina "%1$s" werd verwijderd.]]></translation>
         <translation language="en"><![CDATA[The page "%1$s" was deleted.]]></translation>
       </item>
-      <item type="message" name="DeletedTemplate">
-        <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
-        <translation language="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
-      </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd opgeslagen.]]></translation>
         <translation language="en"><![CDATA[The page "%1$s" was saved.]]></translation>
-      </item>
-      <item type="message" name="EditedTemplate">
-        <translation language="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
-        <translation language="en"><![CDATA[The template "%1$s" was saved.]]></translation>
       </item>
       <item type="message" name="FallbackInfo">
         <translation language="nl"><![CDATA[<p><strong>Niet elk blok kon automatisch worden toegewezen aan een positie.</strong></p><p>Blokken die toegevoegd werden op posities die in deze template niet beschikbaar zijn worden hier weergegeven. Standaard-blokken uit de vorige template die niet voorkomen in de huidige template worden ook hier getoond.<br />Je kan deze eenvoudig verslepen naar de gewenste positie.</p><p>Deze blokken zullen vervallen bij het opslaan van de pagina of het kiezen van een andere template.</p>]]></translation>
@@ -186,22 +126,6 @@
         <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
         <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
       </item>
-      <item type="message" name="HelpOverwrite">
-        <translation language="nl"><![CDATA[<strong>Opgelet!</strong>Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!]]></translation>
-        <translation language="en"><![CDATA[<strong>Attention!</strong> Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.]]></translation>
-      </item>
-      <item type="message" name="HelpPositionsLayout">
-        <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rijs toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
-        <translation language="en"><![CDATA[<strong>A visual representation to be used in the pages-module.</strong><ul><li>Add a row: use <strong>[]</strong></li><li>Reflect a position: use <strong>position name</strong></li><li>Reflect a non-editable area: use <strong>/</strong></li></ul><p>If you want a position to display wider or higher in it's graphical representation, repeat the position multiple times (both horizontal and vertical, but the shape should form a rectangle)</p><strong>A template could look like the chart below:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
-      </item>
-      <item type="message" name="HelpTemplateFormat">
-        <translation language="nl"><![CDATA[vb. [left,main,right],[/,main,/]]]></translation>
-        <translation language="en"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
-      </item>
-      <item type="message" name="HelpTemplateLocation">
-	    <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/layout/templates</code> van je thema.]]></translation>
-		<translation language="en"><![CDATA[Put your templates in the <code>core/layout/templates</code> folder of your theme.]]></translation>
-      </item>
       <item type="message" name="HomeNoBlock">
         <translation language="nl"><![CDATA[Er kan geen module gekoppeld worden aan de home-pagina.]]></translation>
         <translation language="en"><![CDATA[A module can't be linked to the homepage.]]></translation>
@@ -222,10 +146,6 @@
         <translation language="nl"><![CDATA[De pagina "%1$s" werd verplaatst.]]></translation>
         <translation language="en"><![CDATA[The page "%1$s" was moved.]]></translation>
       </item>
-      <item type="message" name="PathToTemplate">
-        <translation language="nl"><![CDATA[Pad naar de template]]></translation>
-        <translation language="en"><![CDATA[Path to template]]></translation>
-      </item>
       <item type="message" name="RichText">
         <translation language="nl"><![CDATA[Editor]]></translation>
         <translation language="en"><![CDATA[Editor]]></translation>
@@ -233,10 +153,6 @@
       <item type="message" name="TemplateChangeWarning">
         <translation language="nl"><![CDATA[<strong>Let op:</strong> Het wijzigen van de template kan als gevolg hebben dat je inhoud op een andere plaats staat niet langer getoond wordt.]]></translation>
         <translation language="en"><![CDATA[<strong>Warning:</strong> Changing the template can cause existing content to be in another place or no longer be shown.]]></translation>
-      </item>
-      <item type="message" name="TemplateInUse">
-        <translation language="nl"><![CDATA[Deze template is in gebruik]]></translation>
-        <translation language="en"><![CDATA[This template is in use.]]></translation>
       </item>
       <item type="message" name="WidgetAttached">
         <translation language="nl"><![CDATA[De widget <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>

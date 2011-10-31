@@ -79,7 +79,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 			'SELECT p.id, p.title, m.url, p.revision_id AS text
 			 FROM pages AS p
 			 INNER JOIN meta AS m ON p.meta_id = m.id
-			 INNER JOIN pages_templates AS t ON p.template_id = t.id
+			 INNER JOIN themes_templates AS t ON p.template_id = t.id
 			 WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' . implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.language = ?',
 			array('active', 'N', FRONTEND_LANGUAGE), 'id'
 		);

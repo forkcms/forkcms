@@ -28,6 +28,9 @@ Improvements:
 * Installer: refactored installation of dashboard widgets.
 * Analytics: dashboard widgets are now added for all users upon installation.
 * Profiles: refactored action names to better represent their purpose.
+* Extensions: it is now possible to install modules via ZIP upload.
+* Extensions: it is now possible to install themes via ZIP upload.
+* Core: the active state of modules has been stripped. This is no longer useful.
 
 
 2.6.13 (2011-10-18)
@@ -256,7 +259,7 @@ Bugfixes:
 Bugfixes:
 
 * Pages: Don't show hidden extras in the widget- and block-dropdowns.
-* Pages: hidden pages_extras don't get shown in the template anymore.
+* Pages: hidden modules_extras don't get shown in the template anymore.
 * Pages: when editing a page with a external redirect there was an error because of the disabled field, fixed the JS, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/169.
 
 Improvements

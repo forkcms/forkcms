@@ -37,8 +37,8 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 	 */
 	private function loadData()
 	{
-		// get all active modules
-		$modules = BackendModel::getModules(true);
+		// get all modules
+		$modules = BackendModel::getModules();
 
 		// get user sequence
 		$userSequence = BackendAuthentication::getUser()->getSetting('dashboard_sequence');
