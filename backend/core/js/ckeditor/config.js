@@ -71,7 +71,8 @@ jsBackend.ckeditor =
 				entities_latin: false,
 
 				// load some extra plugins
-				extraPlugins: 'stylesheetparser,MediaEmbed',
+				// extraPlugins: 'stylesheetparser,MediaEmbed',
+				extraPlugins: 'MediaEmbed',
 
 				// remove useless plugins
 				removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley'
@@ -210,11 +211,23 @@ jsBackend.ckeditor =
 
 	onBlur: function(evt)
 	{
-		// show the click to edit
-		$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
+		// current element
+		var $currentElement = $(document.activeElement);
+		var outsideEditor = true;
 
-		// hide the toolbar
-		if($('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':visible')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').hide();
+		// check if the current active elements is an element related to an editor
+		if(typeof $currentElement.attr('id') != 'undefined' && $currentElement.attr('id').indexOf('cke_') >= 0) outsideEditor = false;
+		else if(typeof $currentElement.attr('class') != 'undefined' && $currentElement.attr('class').indexOf('cke_') >= 0) outsideEditor = false;
+
+		// focus outside the editor?
+		if(outsideEditor)
+		{
+			// show the click to edit
+			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
+
+			// hide the toolbar
+			if($('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':visible')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').hide();
+		}
 
 		// check the content
 		jsBackend.ckeditor.checkContent(evt);
