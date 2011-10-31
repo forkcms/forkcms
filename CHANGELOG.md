@@ -42,6 +42,7 @@ Improvements:
 * Locale: added translations for Russian (by Медведев Илья - http://iam-medvedev.ru)
 * Locale: added partial translations for Turkish (by Serkan Yildiz - http://twitter.com/#!/GeekOfWeb)
 * Locale: added partial translations for Polish (by Pawel Frankowski - http://www.blog.elimu.pl & Konrad Confue Przydział - http://confue.xaa.pl)
+* Blog: the blog module now standard has an image field.
 
 
 2.6.13 (2011-10-18)
