@@ -275,7 +275,6 @@ class FrontendFaqModel implements FrontendTagsInterface
 		foreach($items as &$item)
 		{
 			$item['full_url'] = FrontendNavigation::getURLForBlock('faq', 'detail') . '/' . $item['url'];
-			$url = new FrontendURL($item['full_url']);
 		}
 
 		return $items;
