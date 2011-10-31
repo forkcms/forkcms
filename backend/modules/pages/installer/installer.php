@@ -50,7 +50,7 @@ class PagesInstaller extends ModuleInstaller
 						'id' => 1,
 						'parent_id' => 0,
 						'template_id' => $this->getTemplateId('home'),
-						'title' => 'Home',
+						'title' => ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
 						'language' => $language,
 						'allow_move' => 'N',
 						'allow_delete' => 'N'
@@ -163,7 +163,7 @@ class PagesInstaller extends ModuleInstaller
 						'id' => 1,
 						'parent_id' => 0,
 						'template_id' => $this->getTemplateId('home'),
-						'title' => 'Home',
+						'title' => ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
 						'language' => $language,
 						'allow_move' => 'N',
 						'allow_delete' => 'N'
@@ -175,10 +175,10 @@ class PagesInstaller extends ModuleInstaller
 					array('extra_id' => $extras['search_form'], 'position' => 'top')
 				);
 
-				// insert blog
+				// blog
 				$this->insertPage(
 					array(
-						'title' => 'Blog',
+						'title' => ucfirst($this->getLocale('Blog', 'core', $language, 'lbl', 'frontend')),
 						'language' => $language
 					),
 					null,
@@ -190,7 +190,7 @@ class PagesInstaller extends ModuleInstaller
 					array('extra_id' => $extras['search_form'], 'position' => 'top')
 				);
 
-				// insert about us page
+				// about us parent
 				$aboutUsId = $this->insertPage(
 					array(
 						'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')
@@ -214,10 +214,10 @@ class PagesInstaller extends ModuleInstaller
 					array('extra_id' => $extras['search_form'], 'position' => 'top')
 				);
 
-				// team
+				// about us child
 				$this->insertPage(
 					array(
-						'title' => 'Team',
+						'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
 						'parent_id' => $aboutUsId,
 						'language' => $language
 					),

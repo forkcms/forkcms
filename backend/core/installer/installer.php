@@ -504,7 +504,7 @@ class ModuleInstaller
 			'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
 			'title' => (string) $title,
 			'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-			'url' => (string) $url,
+			'url' => SpoonFilter::urlise((string) $url, 'utf-8'),
 			'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
 			'custom' => (!is_null($custom) ? (string) $custom : null),
 			'data' => (!is_null($data)) ? serialize($data) : null
@@ -561,7 +561,7 @@ class ModuleInstaller
 			if(!isset($meta['description_overwrite'])) $meta['description_overwrite'] = false;
 			if(!isset($meta['title'])) $meta['title'] = $revision['title'];
 			if(!isset($meta['title_overwrite'])) $meta['title_overwrite'] = false;
-			if(!isset($meta['url'])) $meta['url'] = SpoonFilter::urlise($revision['title']);
+			if(!isset($meta['url'])) $meta['url'] = $revision['title'];
 			if(!isset($meta['url_overwrite'])) $meta['url_overwrite'] = false;
 			if(!isset($meta['custom'])) $meta['custom'] = null;
 			if(!isset($meta['data'])) $meta['data'] = null;
