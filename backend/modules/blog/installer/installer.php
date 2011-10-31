@@ -44,14 +44,28 @@ class BlogInstaller extends ModuleInstaller
 	/**
 	 * Fetch the id of the first category in this language we come across
 	 *
-	 * @return	int
-	 * @param	string $language	The language to use.
+	 * @param string $language The language to use.
+	 * @return int
 	 */
 	private function getCategory($language)
 	{
 		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?', array((string) $language));
 	}
 
+	/**
+	 * Insert an empty admin dashboard sequence
+	 */
+	private function insertWidget()
+	{
+		$comments = array(
+			'column' => 'right',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		$this->insertDashboardWidget('blog', 'comments', $comments);
+	}
 
 	/**
 	 * Install the module
@@ -123,7 +137,11 @@ class BlogInstaller extends ModuleInstaller
 		$this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
 
 		// get search extra id
-		$searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+		$searchId = (int) $this->getDB()->getVar(
+			'SELECT id FROM modules_extras
+			 WHERE module = ? AND type = ? AND action = ?',
+			array('search', 'widget', 'form')
+		);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
@@ -166,21 +184,6 @@ class BlogInstaller extends ModuleInstaller
 				$this->installExampleData($language);
 			}
 		}
-	}
-
-	/**
-	 * Insert an empty admin dashboard sequence
-	 */
-	private function insertWidget()
-	{
-		$comments = array(
-			'column' => 'right',
-			'position' => 1,
-			'hidden' => false,
-			'present' => true
-		);
-
-		$this->insertDashboardWidget('blog', 'comments', $comments);
 	}
 
 	/**
@@ -278,4 +281,3 @@ class BlogInstaller extends ModuleInstaller
 		}
 	}
 }
-
