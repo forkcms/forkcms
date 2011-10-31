@@ -450,9 +450,7 @@ class FrontendHeader extends FrontendBaseObject
 		$content = preg_replace($pattern, 'url("$1")', $content);
 
 		// remove comments
-		// @todo: commented because this may mess up base64 encoded images in css
-//		$content = preg_replace('/\/\*(.*?)\*\//is', '', $content);
-//		$content = preg_replace('/[\t\w]*\/\/.*/i', '', $content);
+		$content = preg_replace('/\/\*(.*?)\*\//is', '', $content);
 
 		// remove tabs
 		$content = preg_replace('/\t/i', '', $content);
