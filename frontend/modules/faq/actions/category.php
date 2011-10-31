@@ -32,9 +32,8 @@ class FrontendFaqCategory extends FrontendBaseBlock
 	{
 		parent::execute();
 
-		$this->getData();
-
 		$this->tpl->assign('hideContentTitle', true);
+		$this->getData();
 		$this->loadTemplate();
 		$this->parse();
 	}

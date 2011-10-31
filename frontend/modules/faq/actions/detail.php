@@ -48,28 +48,16 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
 
 		// hide contenTitle, in the template the title is wrapped with an inverse-option
 		$this->tpl->assign('hideContentTitle', true);
 
-		// load template
 		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// update stats
 		$this->updateStatistics();
-
-		// load form
 		$this->loadForm();
-
-		// validate form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
 	}
 
@@ -111,17 +99,13 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new FrontendForm('feedback');
-
-		// set hidden values
-		$rbtUsefullValues[] = array('label' => FL::lbl('Yes'), 'value' => 'Y');
-		$rbtUsefullValues[] = array('label' => FL::lbl('No'), 'value' => 'N');
-
-		// create elements
 		$this->frm->addHidden('question_id', $this->record['id']);
-		$this->frm->addRadiobutton('usefull', $rbtUsefullValues);
 		$this->frm->addTextarea('message');
+		$this->frm->addRadiobutton('usefull', array(
+			array('label' => FL::lbl('Yes'), 'value' => 'Y'),
+			array('label' => FL::lbl('No'), 'value' => 'N')
+		));
 	}
 
 	/**
@@ -129,7 +113,7 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
-		// add into breadcrumb
+		// add to breadcrumb
 		$this->breadcrumb->addElement($this->record['category_title'], $this->record['category_full_url']);
 		$this->breadcrumb->addElement($this->record['question']);
 
@@ -174,13 +158,9 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	 */
 	private function validateForm()
 	{
-		// get settings
 		$feedbackAllowed = (isset($this->settings['allow_feedback']) && $this->settings['allow_feedback']);
-
-		// feedback isn't allowed so we don't have to validate
 		if(!$feedbackAllowed) return false;
 
-		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
 			// reformat data
@@ -195,7 +175,6 @@ class FrontendFaqDetail extends FrontendBaseBlock
 			// validate required fields
 			if(!$usefull) $this->frm->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// reformat data

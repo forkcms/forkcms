@@ -29,7 +29,6 @@ class FrontendFaqIndex extends FrontendBaseBlock
 		parent::execute();
 
 		$this->getData();
-
 		$this->loadTemplate();
 		$this->parse();
 	}
