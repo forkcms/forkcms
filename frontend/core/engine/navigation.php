@@ -255,6 +255,9 @@ class FrontendNavigation extends FrontendBaseObject
 		// get navigation
 		$navigation = self::getNavigation();
 
+		// merge the exclude ids with the previously set exclude ids
+		$excludeIds = array_merge((array) $excludeIds, self::$excludedPageIds);
+
 		// meta-navigation is requested but meta isn't enabled
 		if($type == 'meta' && !FrontendModel::getModuleSetting('pages', 'meta_navigation', true)) return '';
 
