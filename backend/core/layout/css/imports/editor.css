@@ -34,16 +34,6 @@
 	opacity: 1;
 }
 
-.options:hover .tinyActive .clickToEdit,
-.optionsRTE:hover .tinyActive .clickToEdit {
-	/* @inc .transparent */
-	-ms-filter: "alpha(opacity=0)";
-	filter: alpha(opacity=0);
-	-khtml-opacity: 0;
-	-moz-opacity: 0;
-	opacity: 0;
-}
-
 .clickToEdit {
 	position: absolute;
 	opacity: 0;

@@ -998,7 +998,11 @@ class BackendLocaleModel
 	private static function getTree($path, array $tree = array())
 	{
 		// paths that should be ignored
-		$ignore = array(BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/tiny_mce', FRONTEND_CACHE_PATH);
+		$ignore = array(
+			BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/ckeditor',
+			BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/ckfinder',
+			FRONTEND_CACHE_PATH
+		);
 
 		// get active modules
 		$activeModules = BackendModel::getModules(true);
