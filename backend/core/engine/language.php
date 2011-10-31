@@ -65,10 +65,10 @@ class BackendLanguage
 	}
 
 	/**
-	* Get all active languages in a format usable by SpoonForm's addRadioButton
-	*
-	* @return array
-	*/
+	 * Get all active languages in a format usable by SpoonForm's addRadioButton
+	 *
+	 * @return array
+	 */
 	public static function getCheckboxValues()
 	{
 		$languages = BL::getActiveLanguages();
