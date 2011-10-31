@@ -591,7 +591,6 @@ class FrontendNavigation extends FrontendBaseObject
 	{
 		$pageIds = (array) $pageIds;
 
-		// if we should overwrite the current ignored pages, loop the items to push them
 		foreach($pageIds as $pageId) array_push(self::$excludedPageIds, $pageId);
 	}
 
