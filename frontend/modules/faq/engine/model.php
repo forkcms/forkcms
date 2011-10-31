@@ -276,11 +276,6 @@ class FrontendFaqModel implements FrontendTagsInterface
 		{
 			$item['full_url'] = FrontendNavigation::getURLForBlock('faq', 'detail') . '/' . $item['url'];
 			$url = new FrontendURL($item['full_url']);
-
-			$breadcrumb = new FrontendBreadcrumb($url);
-			$breadcrumb->addElement($item['category_title'], FrontendNavigation::getURLForBlock('faq', 'category') . '/' . $item['category_url']);
-			$breadcrumb->addElement($item['title'], $item['full_url']);
-			$item['breadcrumb'] = $breadcrumb->getItems();
 		}
 
 		return $items;
