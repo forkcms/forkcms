@@ -11,10 +11,16 @@ jsBackend.ckeditor =
 	// initialize the editor
 	init: function()
 	{
-		CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
-		CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
+		// load the editor
+		if($('textarea.inputEditor, textarea.inputEditorError').length > 0)
+		{
+			// bind on some global events
+			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
+			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
 
-		if($('textarea.inputEditor, textarea.inputEditorError').length > 0) jsBackend.ckeditor.load();
+			// load the editors
+			jsBackend.ckeditor.load();
+		}
 	},
 
 	load: function()
@@ -73,9 +79,15 @@ jsBackend.ckeditor =
 		);
 	},
 
-	//
 	callback: function(element)
 	{
+		// add the click to edit div
+		$(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+
+		// add the optionsRTE-class if it isn't present
+		if(!$(element).parent('div, p').hasClass('optionsRTE')) $(element).parent('div, p').addClass('optionsRTE');
+
+		// add the CKFinder
 		CKFinder.setupCKEditor(null, {
 			basePath: '/backend/core/js/ckfinder',
 			width: 800
@@ -174,6 +186,9 @@ jsBackend.ckeditor =
 
 	onBlur: function(evt)
 	{
+		// show the click to edit
+		$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
+
 		// hide the toolbar
 		if($('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':visible')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').hide();
 
@@ -181,8 +196,12 @@ jsBackend.ckeditor =
 		jsBackend.ckeditor.checkContent(evt);
 	},
 
-	onFocus: function(evt) {
-		//
+	onFocus: function(evt)
+	{
+		// hide the click to edit
+		$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
+
+		// show the toolbar, I know the little icon isn't correct.
 		if($('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':hidden')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').show();
 	},
 

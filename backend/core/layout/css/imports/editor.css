@@ -7,12 +7,13 @@
 
     @author       Johan Ronsse <johan@netlash.com>
                   Thomas Deceuninck <thomasdeceuninck@netlash.com>
+                  Tijs Verkoyen <tijs@sumocoders.be>
     @since        2.0
 
 */
 
 /*
-	"Click to edit" message on TinyMCEs;
+	"Click to edit" message on Editors;
 */
 
 .options, .optionsRTE {
@@ -58,12 +59,9 @@
 	opacity: 0;
 }
 
-	.options .clickToEdit {
-		top: 67px;
-	}
-
+	.options .clickToEdit,
 	.optionsRTE .clickToEdit {
-		top: 37px;
+		top: 127px;
 	}
 
 .clickToEdit {
