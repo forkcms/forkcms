@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the forgotPassword-action.
+ * Request a reset password email.
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
@@ -38,7 +38,7 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 		}
 
 		// already logged in, redirect to settings
-		else $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'profile_settings'));
+		else $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
 	}
 
 	/**

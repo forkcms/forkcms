@@ -6,6 +6,14 @@
         <translation language="nl"><![CDATA[activeer]]></translation>
         <translation language="en"><![CDATA[activate]]></translation>
       </item>
+      <item type="label" name="ChangeEmail">
+        <translation language="nl"><![CDATA[e-mail aanpassen]]></translation>
+        <translation language="en"><![CDATA[change e-mail]]></translation>
+      </item>
+      <item type="label" name="ChangePassword">
+        <translation language="nl"><![CDATA[wachtwoord aanpassen]]></translation>
+        <translation language="en"><![CDATA[change password]]></translation>
+      </item>
       <item type="label" name="Dashboard">
         <translation language="nl"><![CDATA[dashboard]]></translation>
         <translation language="en"><![CDATA[dashboard]]></translation>
@@ -26,21 +34,9 @@
         <translation language="nl"><![CDATA[profiel]]></translation>
         <translation language="en"><![CDATA[profile]]></translation>
       </item>
-      <item type="label" name="ProfileEmail">
-        <translation language="nl"><![CDATA[e-mail aanpassen]]></translation>
-        <translation language="en"><![CDATA[change e-mail]]></translation>
-      </item>
-      <item type="label" name="ProfilePassword">
-        <translation language="nl"><![CDATA[wachtwoord aanpassen]]></translation>
-        <translation language="en"><![CDATA[change password]]></translation>
-      </item>
       <item type="label" name="Profiles">
         <translation language="nl"><![CDATA[profielen]]></translation>
         <translation language="en"><![CDATA[profiles]]></translation>
-      </item>
-      <item type="label" name="ProfileSettings">
-        <translation language="nl"><![CDATA[profiel instellingen]]></translation>
-        <translation language="en"><![CDATA[profile settings]]></translation>
       </item>
       <item type="label" name="Register">
         <translation language="nl"><![CDATA[registreren]]></translation>
@@ -53,6 +49,10 @@
       <item type="label" name="ResetPassword">
         <translation language="nl"><![CDATA[wachtwoord opnieuw instellen]]></translation>
         <translation language="en"><![CDATA[reset password]]></translation>
+      </item>
+      <item type="label" name="Settings">
+        <translation language="nl"><![CDATA[instellingen]]></translation>
+        <translation language="en"><![CDATA[settings]]></translation>
       </item>
     </core>
     <profiles>

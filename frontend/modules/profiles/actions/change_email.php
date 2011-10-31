@@ -8,12 +8,12 @@
  */
 
 /**
- * This is the profile email-action.
+ * Change the e-mail of the current logged in profile.
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
-class FrontendProfilesProfileEmail extends FrontendBaseBlock
+class FrontendProfilesChangeEmail extends FrontendBaseBlock
 {
 	/**
 	 * FrontendForm instance.
@@ -74,7 +74,7 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 	private function parse()
 	{
 		// have the settings been saved?
-		if($this->URL->getParameter('saved') == 'true')
+		if($this->URL->getParameter('sent') == 'true')
 		{
 			// show success message
 			$this->tpl->assign('updateEmailSuccess', true);
@@ -129,10 +129,10 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 				FrontendProfilesModel::update($this->profile->getId(), array('email' => $txtEmail->getValue()));
 
 				// trigger event
-				FrontendModel::triggerEvent('profiles', 'after_profile_email', array('id' => $this->profile->getId()));
+				FrontendModel::triggerEvent('profiles', 'after_change_email', array('id' => $this->profile->getId()));
 
 				// redirect
-				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'profile_email') . '?saved=true');
+				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_email') . '?sent=true');
 			}
 
 			// show errors

@@ -8,12 +8,12 @@
  */
 
 /**
- * This is the profile password-action.
+ * Change the password of the current logged in profile.
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
-class FrontendProfilesProfilePassword extends FrontendBaseBlock
+class FrontendProfilesChangePassword extends FrontendBaseBlock
 {
 	/**
 	 * FrontendForm instance.
@@ -75,7 +75,7 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 	private function parse()
 	{
 		// have the settings been saved?
-		if($this->URL->getParameter('saved') == 'true')
+		if($this->URL->getParameter('sent') == 'true')
 		{
 			// show success message
 			$this->tpl->assign('updatePasswordSuccess', true);
@@ -118,10 +118,10 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 				FrontendProfilesAuthentication::updatePassword($this->profile->getId(), $txtNewPassword->getValue());
 
 				// trigger event
-				FrontendModel::triggerEvent('profiles', 'after_profile_password', array('id' => $this->profile->getId()));
+				FrontendModel::triggerEvent('profiles', 'after_change_password', array('id' => $this->profile->getId()));
 
 				// redirect
-				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'profile_password') . '?saved=true');
+				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_password') . '?sent=true');
 			}
 
 			// show errors

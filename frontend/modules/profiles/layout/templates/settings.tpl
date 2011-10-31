@@ -25,7 +25,7 @@
 						{$txtEmail}{$txtEmailError}
 					</p>
 					<p>
-						<a href="{$var|geturlforblock:'profiles':'profile_email'}">{$msgChangeEmail}</a>
+						<a href="{$var|geturlforblock:'profiles':'change_email'}">{$msgChangeEmail}</a>
 					</p>
 					<p{option:txtFirstNameError} class="errorArea"{/option:txtFirstNameError}>
 						<label for="firstName">{$lblFirstName|ucfirst}</label>

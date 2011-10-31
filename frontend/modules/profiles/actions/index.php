@@ -20,7 +20,7 @@ class FrontendProfilesIndex extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
-		// no url parameter
+		// only logged in profiles can seer their dashboard
 		if(FrontendProfilesAuthentication::isLoggedIn())
 		{
 			// call the parent

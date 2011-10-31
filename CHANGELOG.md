@@ -27,6 +27,7 @@ Improvements:
 * Core: refactored javascript ajax-calls.
 * Installer: refactored installation of dashboard widgets.
 * Analytics: dashboard widgets are now added for all users upon installation.
+* Profiles: refactored action names to better represent their purpose.
 
 
 2.6.13 (2011-10-18)

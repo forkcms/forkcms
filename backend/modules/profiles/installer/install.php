@@ -22,6 +22,9 @@ class ProfilesInstall extends ModuleInstaller
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+
 		// add 'profiles' as a module
 		$this->addModule('profiles', 'The profiles module.');
 
@@ -61,9 +64,9 @@ class ProfilesInstall extends ModuleInstaller
 		$indexId = $this->insertExtra('profiles', 'block', 'Dashboard', null, null, 'N', 5002);
 		$loginId = $this->insertExtra('profiles', 'block', 'Login', 'login', null, 'N', 5003);
 		$logoutId = $this->insertExtra('profiles', 'block', 'Logout', 'logout', null, 'N', 5004);
-		$profileEmailId = $this->insertExtra('profiles', 'block', 'ProfileEmail', 'profile_email', null, 'N', 5005);
-		$profilePasswordId = $this->insertExtra('profiles', 'block', 'ProfilePassword', 'profile_password', null, 'N', 5006);
-		$profileSettingsId = $this->insertExtra('profiles', 'block', 'ProfileSettings', 'profile_settings', null, 'N', 5007);
+		$changeEmailId = $this->insertExtra('profiles', 'block', 'ChangeEmail', 'change_email', null, 'N', 5005);
+		$changePasswordId = $this->insertExtra('profiles', 'block', 'ChangePassword', 'change_password', null, 'N', 5006);
+		$settingsId = $this->insertExtra('profiles', 'block', 'Settings', 'settings', null, 'N', 5007);
 		$registerId = $this->insertExtra('profiles', 'block', 'Register', 'register', null, 'N', 5008);
 		$resetPasswordId = $this->insertExtra('profiles', 'block', 'ResetPassword', 'reset_password', null, 'N', 5008);
 		$resendActivationId = $this->insertExtra('profiles', 'block', 'ResendActivation', 'resend_activation', null, 'N', 5009);
@@ -186,7 +189,7 @@ class ProfilesInstall extends ModuleInstaller
 						'language' => $language
 					),
 					null,
-					array('extra_id' => $profileSettingsId, 'position' => 'main'),
+					array('extra_id' => $settingsId, 'position' => 'main'),
 					array('extra_id' => $searchId, 'position' => 'top')
 				);
 
@@ -198,7 +201,7 @@ class ProfilesInstall extends ModuleInstaller
 						'language' => $language
 					),
 					null,
-					array('extra_id' => $profileEmailId, 'position' => 'main'),
+					array('extra_id' => $changeEmailId, 'position' => 'main'),
 					array('extra_id' => $searchId, 'position' => 'top')
 				);
 
@@ -210,13 +213,10 @@ class ProfilesInstall extends ModuleInstaller
 						'language' => $language
 					),
 					null,
-					array('extra_id' => $profilePasswordId, 'position' => 'main'),
+					array('extra_id' => $changePasswordId, 'position' => 'main'),
 					array('extra_id' => $searchId, 'position' => 'top')
 				);
 			}
 		}
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
