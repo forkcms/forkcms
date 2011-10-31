@@ -149,7 +149,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 
 			// set headers
 			$dataGrid->setHeaderLabels(
-				array('pageviews_percentage' = > '% ' . ucfirst(BL::lbl('Pageviews')))
+				array('pageviews_percentage' => '% ' . ucfirst(BL::lbl('Pageviews')))
 			);
 
 			// parse the datagrid
