@@ -142,6 +142,9 @@ class FrontendMailToFriend
 				$data['page'] = $this->getPageUrl();
 				$this->insert($data);
 
+				// trigger an event so people can do other things with this
+				FrontendModel::triggerEvent('core', 'after_mail_to_friend', $data);
+
 				// assign the success message
 				$this->tpl->assign('mailToFriendSend', true);
 			}
