@@ -208,9 +208,6 @@ class FrontendFaqDetail extends FrontendBaseBlock
 						{
 							// set the status to spam
 							$this->redirect($this->record['full_url'] . '/' . FL::getAction('Spam'));
-
-							// return
-							return;
 						}
 					}
 
