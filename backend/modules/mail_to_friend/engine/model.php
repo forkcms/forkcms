@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the mail_to_friend module
  *
- * @package		backend
- * @subpackage	mail_to_friend
- *
- * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		2.6.10
+ * @author Jelmer Snoeck <jelmer@netlash.com>
  */
 class BackendMailToFriendModel
 {
@@ -16,47 +19,45 @@ class BackendMailToFriendModel
 	 *
 	 * @var	string
 	 */
-	const QRY_BROWSE_MAILS = 'SELECT m.id, m.own, m.friend, UNIX_TIMESTAMP(m.created_on) AS send_on
-								FROM mail_to_friend AS m
-								WHERE m.language = ?';
-
+	const QRY_BROWSE_MAILS =
+		'SELECT m.id, m.own, m.friend, UNIX_TIMESTAMP(m.created_on) AS send_on
+		 FROM mail_to_friend AS m
+		 WHERE m.language = ?';
 
 	/**
 	 * Checks if an item exists
 	 *
-	 * @return	bool
 	 * @param	int $id		The item id.
+	 * @return	bool
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
-														FROM mail_to_friend AS i
-														WHERE i.id = ?',
-														(int) $id);
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(i.id)
+			 FROM mail_to_friend AS i
+			 WHERE i.id = ?',
+			array((int) $id));
 	}
-
 
 	/**
 	 * Fetches an item
 	 *
-	 * @return	array
 	 * @param	int $id		The id of the item to fetch.
+	 * @return	array
 	 */
 	public static function get($id)
 	{
-		$data = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on
-															FROM mail_to_friend AS i
-															WHERE i.id = ?',
-															(int) $id);
+		$data = (array) BackendModel::getDB()->getRecord(
+			'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on
+			 FROM mail_to_friend AS i
+			 WHERE i.id = ?',
+			array((int) $id));
 
-		// unserialize the data
 		$data['own'] = unserialize($data['own']);
 		$data['friend'] = unserialize($data['friend']);
 
-		// return
 		return $data;
 	}
-
 
 	/**
 	 * Fetches all the items ready for export
@@ -65,25 +66,18 @@ class BackendMailToFriendModel
 	 */
 	public static function getAllForExport()
 	{
-		$data = (array) BackendModel::getDB()->getRecords('SELECT i.*
-															FROM mail_to_friend AS i
-															WHERE i.language = ?',
-															array(BL::getWorkingLanguage()));
+		$data = (array) BackendModel::getDB()->getRecords(
+			'SELECT i.*
+			 FROM mail_to_friend AS i
+			 WHERE i.language = ?',
+			array(BL::getWorkingLanguage()));
 
-		// the return data
 		$returnData = array();
-
-		// loop the data
 		foreach($data as $key => $mail)
 		{
-			// set the return data
 			$returnData[$key] = array();
-
-			// unserialize the data
 			$mail['own'] = unserialize($mail['own']);
 			$mail['friend'] = unserialize($mail['friend']);
-
-			// set the id
 			$returnData[$key]['id'] = $mail['id'];
 
 			// loop the users information
@@ -97,27 +91,21 @@ class BackendMailToFriendModel
 			$returnData[$key]['date'] = $mail['created_on'];
 		}
 
-		// return the data
 		return $returnData;
 	}
-
 
 	/**
 	 * Fetches a certain value from a serialized array
 	 *
-	 * @return	string
 	 * @param	string $data		The serialized data.
 	 * @param	string $value		The value to fetch.
+	 * @return	string
 	 */
 	public static function getDataGridData($data, $value)
 	{
-		// unserialize the data
 		$data = unserialize($data);
-
-		// check if the value is set
 		if(!isset($data[$value])) return;
 
-		// return the value
 		return $data[$value];
 	}
 }

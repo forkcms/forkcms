@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the mail_to_friend module
  *
- * @package		backend
- * @subpackage	mail_to_friend
- *
- * @author		Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @since		2.6.10
+ * @author Jelmer Snoeck <jelmer@netlash.com>
  */
 final class BackendMailToFriendConfig extends BackendBaseConfig
 {
