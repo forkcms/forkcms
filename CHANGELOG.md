@@ -2,17 +2,17 @@
 --
 Improvements:
 
-* Core: Completely re-invented the blocks system; it's now position-driven.
-* Core: Introduce the concept of positions that can contain an arbitrary number of blocks.
-* Pages: Merged tabs "Content" & "Template" to present a more straightforward UI.
-* Pages: Added ability to order blocks on a page.
-* Pages: Created fallback-system for blocks that were assigned to no-longer-existing positions.
-* Pages: Added the posibility to show/hide a block.
-* Pages: Edit HTML content in TinyMCE in a dialog.
-* Core: Updated installer.
-* Core: Updated template creation in backend.
-* Core: Updated theme Triton to be position-based.
-* Pages: Added the possibility to either completely overwrite or re-use existing blocks when updating a template.
+* Core: completely re-invented the blocks system; it's now position-driven.
+* Core: introduce the concept of positions that can contain an arbitrary number of blocks.
+* Pages: merged tabs "Content" & "Template" to present a more straightforward UI.
+* Pages: added ability to order blocks on a page.
+* Pages: created fallback-system for blocks that were assigned to no-longer-existing positions.
+* Pages: added the posibility to show/hide a block.
+* Pages: edit HTML content in TinyMCE in a dialog.
+* Core: updated installer.
+* Core: updated template creation in backend.
+* Core: updated theme Triton to be position-based.
+* Pages: added the possibility to either completely overwrite or re-use existing blocks when updating a template.
 * Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 * Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
@@ -28,9 +28,20 @@ Improvements:
 * Installer: refactored installation of dashboard widgets.
 * Analytics: dashboard widgets are now added for all users upon installation.
 * Profiles: refactored action names to better represent their purpose.
-* Extensions: it is now possible to install modules via ZIP upload.
-* Extensions: it is now possible to install themes via ZIP upload.
+* Extensions: uploaded modules can be installed.
+* Extensions: uploaded themes can be installed.
+* Extensions: it is now possible to install modules via ZIP upload in the CMS.
+* Extensions: it is now possible to install themes via ZIP upload in the CMS.
 * Core: the active state of modules has been stripped. This is no longer useful.
+* Core: new coding standards have been applied.
+* Locale: added translations for Chinese (by Millie Lin - http://www.witmin.com)
+* Locale: added translations for French (by Matthias Budde - http://www.flocoon.com & Jeremy Swinnen - http://blog.stratos42.com)
+* Locale: added translations for German (by Philipp Kruft - http://www.novacore.de)
+* Locale: added translations for Hungarian (by Bota David - http://kukac7.hu)
+* Locale: added translations for Italian (by NebuLab - http://nebulab.it)
+* Locale: added translations for Russian (by Медведев Илья - http://iam-medvedev.ru)
+* Locale: added partial translations for Turkish (by Serkan Yildiz - http://twitter.com/#!/GeekOfWeb)
+* Locale: added partial translations for Polish (by Pawel Frankowski - http://www.blog.elimu.pl & Konrad Confue Przydział - http://confue.xaa.pl)
 
 
 2.6.13 (2011-10-18)
