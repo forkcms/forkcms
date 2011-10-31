@@ -42,7 +42,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addText('nickname', null, 24);
 		$this->frm->addText('name', null, 255);
 		$this->frm->addText('surname', null, 255);
-		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
+		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), BackendModel::getModuleSetting('core', 'default_interface_language'));
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
 		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing'));

@@ -37,7 +37,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 	public function execute()
 	{
 		parent::execute();
-		$this->header->addJS('template.js');
+		$this->header->addJS('theme_template.js');
 		$this->loadData();
 		$this->loadForm();
 		$this->validateForm();
