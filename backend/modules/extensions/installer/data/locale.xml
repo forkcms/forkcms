@@ -188,6 +188,11 @@
 			
 		]]></translation>
       </item>
+      <item type="label" name="AddBlock">
+        <translation language="nl"><![CDATA[blok toevoegen]]></translation>
+        <translation language="en"><![CDATA[add block]]></translation>
+        <translation language="fr"><![CDATA[ajouter une block]]></translation>
+      </item>
       <item type="label" name="AddPosition">
         <translation language="nl"><![CDATA[positie toevoegen]]></translation>
         <translation language="en"><![CDATA[add position]]></translation>

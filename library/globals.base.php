@@ -14,7 +14,7 @@
  * Spoon configuration
  */
 // should the debug information be shown
-define('SPOON_DEBUG', false);
+define('SPOON_DEBUG', '<debug-mode>');
 // mailaddress where the exceptions will be mailed to (<tag>-bugs@fork-cms.be)
 define('SPOON_DEBUG_EMAIL', '<spoon-debug-email>');
 // message for the visitors when an exception occur
