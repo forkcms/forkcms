@@ -46,7 +46,7 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		// add language
 		if($this->filter['language'] !== null)
 		{
-			// create an array for the languages, surrounded by quotes (example: 'nl')
+			// create an array for the languages, surrounded by quotes (example: 'en')
 			$languages = array();
 			foreach($this->filter['language'] as $key => $val) $languages[$key] = '\'' . $val . '\'';
 

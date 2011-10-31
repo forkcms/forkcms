@@ -29,8 +29,11 @@ class LocaleInstaller extends ModuleInstaller
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
-		// general settings
-		$this->setSetting('locale', 'languages', array('de', 'en', 'es', 'fr', 'nl'));
+		// import core locale
+		$this->importLocale(dirname(dirname(dirname(dirname(__FILE__)))) . '/core/installer/data/locale.xml');
+
+		// import dashboard locale
+		$this->importLocale(dirname(dirname(dirname(__FILE__))) . '/dashboard/installer/data/locale.xml');
 
 		// module rights
 		$this->setModuleRights(1, 'locale');

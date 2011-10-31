@@ -264,12 +264,17 @@ class ModuleInstaller
 				// possible values
 				$possibleApplications = array('frontend', 'backend');
 				$possibleModules = (array) $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
-				$possibleLanguages = array('frontend' => $this->getLanguages(), 'backend' => $this->getInterfaceLanguages());
 				$possibleTypes = array(
 					'act' => 'action',
 					'err' => 'error',
 					'lbl' => 'label',
 					'msg' => 'message'
+				);
+
+				// install English translations anyhow, they're fallback
+				$possibleLanguages = array(
+					'frontend' => array_unique(array_merge(array('en'), $this->getLanguages())),
+					'backend' => array_unique(array_merge(array('en'), $this->getInterfaceLanguages()))
 				);
 
 				// current locale items (used to check for conflicts)
@@ -936,7 +941,14 @@ class CoreInstaller extends ModuleInstaller
 		$this->setSetting('core', 'smtp_password', $this->getVariable('smtp_password'));
 
 		// default titles
-		$siteTitles = array('nl' => 'Mijn website', 'fr' => 'Mon site web', 'en' => 'My website');
+		$siteTitles = array('en' => 'My website',
+							'cn' => '我的网站',
+							'nl' => 'Mijn website',
+							'fr' => 'Mon site web',
+							'de' => 'Meine Webseite',
+							'hu' => 'Hhonlapom',
+							'it' => 'il mio sito web',
+							'ru' => 'мой сайт');
 
 		// language specific
 		foreach($this->getLanguages() as $language)

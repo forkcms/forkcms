@@ -17,7 +17,7 @@
 	{option:installableThemes}
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblNotInstalledThemes|ucfirst}</h3>
+			<h3>{$lblInstallableThemes|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<p>{$msgHelpInstallableThemes}</p>

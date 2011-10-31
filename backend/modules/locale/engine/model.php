@@ -926,7 +926,7 @@ class BackendLocaleModel
 		// redefine languages
 		$languages = (array) $languages;
 
-		// create an array for the languages, surrounded by quotes (example: 'nl')
+		// create an array for the languages, surrounded by quotes (example: 'en')
 		$aLanguages = array();
 		foreach($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
 
@@ -1159,8 +1159,13 @@ class BackendLocaleModel
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
 		$possibleModules = BackendModel::getModules();
-		$possibleLanguages = array('frontend' => array_keys(BL::getWorkingLanguages()), 'backend' => array_keys(BL::getInterfaceLanguages()));
 		$possibleTypes = array();
+
+		// install English translations anyhow, they're fallback
+		$possibleLanguages = array(
+			'frontend' => array_unique(array_merge(array('en'), array_keys(BL::getWorkingLanguages()))),
+			'backend' => array_unique(array_merge(array('en'), array_keys(BL::getInterfaceLanguages())))
+		);
 
 		// types
 		$typesShort = (array) BackendModel::getDB()->getEnumValues('locale', 'type');

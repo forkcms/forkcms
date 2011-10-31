@@ -84,7 +84,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
 		$this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
 		$this->frm->addText('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
-		$this->frm->addDropdown('language', BackendLanguage::getLocaleLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
+		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
 	}
 
 

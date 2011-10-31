@@ -62,22 +62,53 @@ class InstallerStep3 extends InstallerStep
 
 		// multiple languages (frontend)
 		$this->frm->addMultiCheckbox('languages', array(array('value' => 'en', 'label' => 'English'),
+														array('value' => 'cn', 'label' => 'Chinese'),
+														array('value' => 'nl', 'label' => 'Dutch'),
 														array('value' => 'fr', 'label' => 'French'),
-														array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'en'));
+														array('value' => 'de', 'label' => 'German'),
+														array('value' => 'hu', 'label' => 'Hungarian'),
+														array('value' => 'it', 'label' => 'Italian'),
+														array('value' => 'ru', 'label' => 'Russian')), (SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'en'));
 
 		// multiple languages (backend)
 		$this->frm->addMultiCheckbox('interface_languages', array(array('value' => 'en', 'label' => 'English'),
+																	array('value' => 'cn', 'label' => 'Chinese'),
+																	array('value' => 'nl', 'label' => 'Dutch'),
 																	array('value' => 'fr', 'label' => 'French'),
-																	array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('interface_languages') ? SpoonSession::get('interface_languages') : 'en'));
+																	array('value' => 'de', 'label' => 'German'),
+																	array('value' => 'hu', 'label' => 'Hungarian'),
+																	array('value' => 'it', 'label' => 'Italian'),
+																	array('value' => 'ru', 'label' => 'Russian')), (SpoonSession::exists('interface_languages') ? SpoonSession::get('interface_languages') : 'en'));
 
 		// single language (frontend)
-		$this->frm->addDropdown('language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
+		$this->frm->addDropdown('language', array('en' => 'English',
+													'cn' => 'Chinese',
+													'nl' => 'Dutch',
+													'fr' => 'French',
+													'de' => 'German',
+													'hu' => 'Hungarian',
+													'it' => 'Italian',
+													'ru' => 'Russian'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
 
 		// default language (frontend)
-		$this->frm->addDropdown('default_language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
+		$this->frm->addDropdown('default_language', array('en' => 'English',
+															'cn' => 'Chinese',
+															'nl' => 'Dutch',
+															'fr' => 'French',
+															'de' => 'German',
+															'hu' => 'Hungarian',
+															'it' => 'Italian',
+															'ru' => 'Russian'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en'));
 
 		// default language (backend)
-		$this->frm->addDropdown('default_interface_language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_interface_language') ? SpoonSession::get('default_interface_language') : 'en'));
+		$this->frm->addDropdown('default_interface_language', array('en' => 'English',
+																	'cn' => 'Chinese',
+																	'nl' => 'Dutch',
+																	'fr' => 'French',
+																	'de' => 'German',
+																	'hu' => 'Hungarian',
+																	'it' => 'Italian',
+																	'ru' => 'Russian'), (SpoonSession::exists('default_interface_language') ? SpoonSession::get('default_interface_language') : 'en'));
 	}
 
 

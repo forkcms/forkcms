@@ -74,7 +74,6 @@ class FrontendLanguage
 			$value .= "\n";
 			$value .= '// init var' . "\n";
 			$value .= '$' . $type . ' = array();' . "\n";
-			$value .= '$' . $type . '[\'core\'] = array();' . "\n";
 
 			// loop locale
 			foreach($locale as $i => $item)
@@ -325,7 +324,8 @@ class FrontendLanguage
 		if(!$force && !in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language (' . $language . ').');
 
 		// validate file, generate it if needed
-		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, APPLICATION);
+		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/locale/en.php')) self::buildCache('en', 'frontend');
+		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, 'frontend');
 
 		// init vars
 		$act = array();
@@ -333,14 +333,19 @@ class FrontendLanguage
 		$lbl = array();
 		$msg = array();
 
-		// require file
-		require FRONTEND_CACHE_PATH . '/locale/' . $language . '.php';
-
-		// set language specific labels
+		// set English translations, they'll be the fallback
+		require FRONTEND_CACHE_PATH . '/locale/en.php';
 		self::$act = (array) $act;
 		self::$err = (array) $err;
 		self::$lbl = (array) $lbl;
 		self::$msg = (array) $msg;
+
+		// overwrite with the requested language's translations
+		require FRONTEND_CACHE_PATH . '/locale/' . $language . '.php';
+		self::$act = array_merge(self::$act, (array) $act);
+		self::$err = array_merge(self::$err, (array) $err);
+		self::$lbl = array_merge(self::$lbl, (array) $lbl);
+		self::$msg = array_merge(self::$msg, (array) $msg);
 	}
 }
 

@@ -257,7 +257,7 @@ class BackendURL
 						if(BackendAuthentication::getUser()->isAuthenticated())
 						{
 							// set interface language based on the user preferences
-							BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('interface_language', 'nl'));
+							BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('interface_language', 'en'));
 						}
 
 						// no authenticated user

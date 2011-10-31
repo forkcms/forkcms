@@ -88,10 +88,10 @@ class BackendLanguage
 		$key = (string) $key;
 		$module = (string) $module;
 
-		// if the error exists return it,
+		// check if the error exists
 		if(isset(self::$err[$module][$key])) return self::$err[$module][$key];
 
-		// if it exists in the core-errors
+		// check if the error exists in the core
 		if(isset(self::$err['core'][$key])) return self::$err['core'][$key];
 
 		// otherwise return the key in label-format
@@ -132,7 +132,7 @@ class BackendLanguage
 		$languages = array();
 
 		// grab the languages from the settings & loop language to reset the label
-		foreach((array) BackendModel::getModuleSetting('core', 'interface_languages', array('nl')) as $key)
+		foreach((array) BackendModel::getModuleSetting('core', 'interface_languages', array('en')) as $key)
 		{
 			// fetch language's translation
 			$languages[$key] = self::getMessage(mb_strtoupper($key), 'core');
@@ -167,10 +167,10 @@ class BackendLanguage
 		$key = (string) $key;
 		$module = (string) $module;
 
-		// if the error exists return it,
+		// check if the label exists
 		if(isset(self::$lbl[$module][$key])) return self::$lbl[$module][$key];
 
-		// if it exists in the core-errors
+		// check if the label exists in the core
 		if(isset(self::$lbl['core'][$key])) return self::$lbl['core'][$key];
 
 		// otherwise return the key in label-format
@@ -186,30 +186,6 @@ class BackendLanguage
 	public static function getLabels()
 	{
 		return self::$lbl;
-	}
-
-
-	/**
-	 * Get all the possible locale languages
-	 *
-	 * @return	array
-	 */
-	public static function getLocaleLanguages()
-	{
-		// grab from settings
-		$languages = (array) BackendModel::getModuleSetting('locale', 'languages');
-
-		// init var
-		$return = array();
-
-		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = self::getMessage(mb_strtoupper($key), 'core');
-
-		// sort alphabetically
-		asort($return);
-
-		// return
-		return $return;
 	}
 
 
@@ -234,10 +210,10 @@ class BackendLanguage
 		$key = (string) $key;
 		$module = (string) $module;
 
-		// if the error exists return it,
+		// check if the message exists
 		if(isset(self::$msg[$module][$key])) return self::$msg[$module][$key];
 
-		// if it exists in the core-errors
+		// check if the message exists in the core
 		if(isset(self::$msg['core'][$key])) return self::$msg['core'][$key];
 
 		// otherwise return the key in label-format
@@ -278,7 +254,7 @@ class BackendLanguage
 		$languages = array();
 
 		// grab the languages from the settings & loop language to reset the label
-		foreach((array) BackendModel::getModuleSetting('core', 'languages', array('nl')) as $key)
+		foreach((array) BackendModel::getModuleSetting('core', 'languages', array('en')) as $key)
 		{
 			// fetch the language's translation
 			$languages[$key] = self::getMessage(mb_strtoupper($key), 'core');
@@ -304,15 +280,12 @@ class BackendLanguage
 		// redefine
 		$language = (string) $language;
 
-		// check if file exists
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/' . $language . '.php'))
-		{
-			// require the BackendLocaleModel
-			require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
+		// require the BackendLocaleModel
+		require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
 
-			// build locale file
-			BackendLocaleModel::buildCache($language, APPLICATION);
-		}
+		// validate file, generate it if needed
+		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/en.php')) BackendLocaleModel::buildCache('en', APPLICATION);
+		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/' . $language . '.php')) BackendLocaleModel::buildCache($language, APPLICATION);
 
 		// store
 		self::$currentInterfaceLanguage = $language;
@@ -339,13 +312,26 @@ class BackendLanguage
 		$lbl = array();
 		$msg = array();
 
-		// require file
-		require BACKEND_CACHE_PATH . '/locale/' . $language . '.php';
-
-		// set language specific labels
+		// set English translations, they'll be the fallback
+		require BACKEND_CACHE_PATH . '/locale/en.php';
 		self::$err = (array) $err;
 		self::$lbl = (array) $lbl;
 		self::$msg = (array) $msg;
+
+		// overwrite with the requested language's translations
+		require BACKEND_CACHE_PATH . '/locale/' . $language . '.php';
+		foreach(self::$err as $module => &$translations)
+		{
+			if(isset($err[$module])) $translations = array_merge($translations, $err[$module]);
+		}
+		foreach(self::$lbl as $module => &$translations)
+		{
+			if(isset($lbl[$module])) $translations = array_merge($translations, (array) $lbl[$module]);
+		}
+		foreach(self::$msg as $module => &$translations)
+		{
+			if(isset($msg[$module])) $translations = array_merge($translations, (array) $msg[$module]);
+		}
 	}
 
 
