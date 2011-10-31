@@ -21,7 +21,6 @@ class BackendMailToFriendIndex extends BackendBaseActionIndex
 	{
 		parent::execute();
 		$this->loadDataGrid();
-
 		$this->parse();
 		$this->display();
 	}

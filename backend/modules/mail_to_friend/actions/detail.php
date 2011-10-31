@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the Detail action, it will display a form to create a new item
+ * This is the Detail action, it will display some information about a mailing
  *
  * @author Jelmer Snoeck <jelmer@netlash.com>
  */
@@ -21,7 +21,6 @@ class BackendMailToFriendDetail extends BackendBaseActionEdit
 	{
 		parent::execute();
 		$this->loadData();
-
 		$this->parse();
 		$this->display();
 	}

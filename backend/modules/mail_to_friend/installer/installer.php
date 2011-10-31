@@ -17,7 +17,7 @@ class MailToFriendInstall extends ModuleInstaller
 	/**
 	 * Execute the installer
 	 */
-	public function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');

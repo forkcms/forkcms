@@ -27,8 +27,8 @@ class BackendMailToFriendModel
 	/**
 	 * Checks if an item exists
 	 *
-	 * @param	int $id		The item id.
-	 * @return	bool
+	 * @param int $id
+	 * @return bool
 	 */
 	public static function exists($id)
 	{
@@ -42,8 +42,8 @@ class BackendMailToFriendModel
 	/**
 	 * Fetches an item
 	 *
-	 * @param	int $id		The id of the item to fetch.
-	 * @return	array
+	 * @param int $id
+	 * @return array
 	 */
 	public static function get($id)
 	{
@@ -62,7 +62,7 @@ class BackendMailToFriendModel
 	/**
 	 * Fetches all the items ready for export
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getAllForExport()
 	{
@@ -97,9 +97,9 @@ class BackendMailToFriendModel
 	/**
 	 * Fetches a certain value from a serialized array
 	 *
-	 * @param	string $data		The serialized data.
-	 * @param	string $value		The value to fetch.
-	 * @return	string
+	 * @param string $data
+	 * @param string $value
+	 * @return string
 	 */
 	public static function getDataGridData($data, $value)
 	{

@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the Export action, it will display a form to create a new item
+ * This is the Export action, it enables you to download the data
  *
  * @author Jelmer Snoeck <jelmer@netlash.com>
  */
