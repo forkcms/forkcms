@@ -1078,7 +1078,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				params: { fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language } }
+				params: { fork: { module: 'tags', action: 'autocomplete' } }
 			});
 		}
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
@@ -1089,7 +1089,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				params: { fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language } },
+				params: { fork: { module: 'tags', action: 'autocomplete' } },
 				showIconOnly: false
 			});
 		}
@@ -1629,7 +1629,7 @@ jsBackend.tableSequenceByDragAndDrop =
 					{
 						data:
 						{
-							fork: { module: jsBackend.current.module, action: action, language: jsBackend.current.language },
+							fork: { action: action },
 							new_id_sequence: newIdSequence.join(',')
 						},
 						success: function(data, textStatus)

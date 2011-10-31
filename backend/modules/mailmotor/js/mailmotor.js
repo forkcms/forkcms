@@ -206,7 +206,7 @@ jsBackend.mailmotor.linkAccount =
 				{
 					data:
 					{
-						fork: { module: jsBackend.current.module, action: 'load_client_info', language: jsBackend.current.language },
+						fork: { action: 'load_client_info' },
 						client_id: clientId
 					},
 					success: function(data, textStatus)
@@ -248,7 +248,7 @@ jsBackend.mailmotor.linkAccount =
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'link_account', language: jsBackend.current.language },
+				fork: { action: 'link_account' },
 				url: url.val(),
 				username: username.val(),
 				password: password.val()
@@ -398,7 +398,7 @@ jsBackend.mailmotor.step3 =
 				{
 					data:
 					{
-						fork: { module: jsBackend.current.module, action: 'save_content', language: jsBackend.current.language },
+						fork: { action: 'save_content' },
 						mailing_id: variables.mailingId,
 						subject: subject,
 						content_plain: plainText,
@@ -524,7 +524,7 @@ jsBackend.mailmotor.step4 =
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'save_send_date', language: jsBackend.current.language },
+				fork: { action: 'save_send_date' },
 				mailing_id: variables.mailingId,
 				send_on_date: sendOnDate,
 				send_on_time: sendOnTime
@@ -584,7 +584,7 @@ jsBackend.mailmotor.step4 =
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'send_mailing', language: jsBackend.current.language },
+				fork: { action: 'send_mailing' },
 				id: variables.mailingId
 			},
 			success: function(data, textStatus)

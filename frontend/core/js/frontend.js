@@ -369,7 +369,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'autocomplete', language: jsFrontend.current.language },
+						fork: { module: 'search', action: 'autocomplete' },
 						term: request.term
 					},
 					success: function(data, textStatus)
@@ -404,7 +404,7 @@ jsFrontend.search =
 			{
 				data:
 				{
-					fork: { module: 'search', action: 'save', language: jsFrontend.current.language },
+					fork: { module: 'search', action: 'save' },
 					term: $(this).val()
 				}
 			});
@@ -432,7 +432,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'autosuggest', language: jsFrontend.current.language },
+						fork: { module: 'search', action: 'autosuggest' },
 						term: request.term,
 						length: length
 					},
@@ -468,7 +468,7 @@ jsFrontend.search =
 			{
 				data:
 				{
-					fork: { module: 'search', action: 'save', language: jsFrontend.current.language },
+					fork: { module: 'search', action: 'save' },
 					term: $(this).val()
 				},
 			});
@@ -512,7 +512,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'livesuggest', language: jsFrontend.current.language },
+						fork: { module: 'search', action: 'livesuggest' },
 						term: $(this).val()
 					},
 					success: function(data, textStatus)

@@ -70,10 +70,10 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.paramsDelete = { fork: { module: jsBackend.current.module, action: 'delete_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsGet = { fork: { module: jsBackend.current.module, action: 'get_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsSave = { fork: { module: jsBackend.current.module, action: 'save_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsSequence = { fork: { module: jsBackend.current.module, action: 'sequence', language: jsBackend.current.language } };
+		jsBackend.formBuilder.fields.paramsDelete = { fork: { action: 'delete_field' } };
+		jsBackend.formBuilder.fields.paramsGet = { fork: { action: 'get_field' } };
+		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'save_field' } };
+		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();

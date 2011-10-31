@@ -81,7 +81,7 @@
 				{
 					data:
 					{
-						fork: { module: 'core', action: 'generate_url', language: jsBackend.current.language },
+						fork: { module: 'core', action: 'generate_url' },
 						url: url,
 						metaId: $('#metaId').val(),
 						baseFieldName: $('#baseFieldName').val(),

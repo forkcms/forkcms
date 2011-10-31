@@ -74,7 +74,7 @@ jsBackend.faq =
 					{
 						data:
 						{
-							fork: { module: jsBackend.current.module, action: 'sequence_questions', language: jsBackend.current.language },
+							fork: { action: 'sequence_questions' },
 							questionId: questionId,
 							fromCategoryId: fromCategoryId,
 							toCategoryId: toCategoryId,
