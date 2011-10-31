@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+	<name>goldengate</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>3.0.0</minimum_version>
+	</requirements>
+	<thumbnail>thumbnail.png</thumbnail>
+	<description>
+		<![CDATA[
+			Golden Gate is a grid based HTML5 and CSS3 theme. The theme is inspired by the great Golden Gate Bridge in the fantastic city of San Francisco.
+			Golden Gate gets it’s speed from using as little images as possible, and optimising the ones it does. By using semantic HTML Golden gate is also accessible and search engine friendly.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name>Yoni De Beule</name>
+			<url>http://www.yonidebeule.be</url>
+		</author>
+	</authors>
+	<metanavigation supported="false" />
+	<templates>
+		<template label="Default" path="core/layout/templates/default.tpl">
+			<positions>
+				<position name="main" />
+				<position name="left" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+				<position name="right" />
+				<position name="footer">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top],[/,/,/,/],[left,main,main,right],[/,/,/,footer]
+			</format>
+		</template>
+		<template label="Home" path="core/layout/templates/home.tpl">
+			<positions>
+				<position name="main" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+				<position name="header">
+					<defaults>
+						<editor />
+					</defaults>
+				</position>
+				<position name="title">
+					<defaults>
+						<editor />
+					</defaults>
+				</position>
+				<position name="items" />
+				<position name="wide" />
+				<position name="footer">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top],[/,header,header,header],[main,main,main,main],[title,/,/,/],[items,items,items,items],[wide,wide,wide,wide],[/,/,/,footer]
+			</format>
+		</template>
+	</templates>
+</theme>

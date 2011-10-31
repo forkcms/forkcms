@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>form_builder</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[This module enables you to build custom forms.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Dieter Vanden Eynde]]></name>
+			<url><![CDATA[http://www.netlash.com/]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a form is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a form is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a form is edited.]]></event>
+		<event application="frontend" name="after_submission"><![CDATA[Triggered when a form is submitted.]]></event>
+	</events>
+</module>

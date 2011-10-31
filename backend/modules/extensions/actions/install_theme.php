@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	extensions
  *
- * @author		Matthias Mullie <matthias@mullie>
+ * @author		Matthias Mullie <matthias@mullie.eu>
  * @since		3.0.0
  */
 class BackendExtensionsInstallTheme extends BackendBaseActionIndex
