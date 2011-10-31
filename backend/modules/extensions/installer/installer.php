@@ -153,17 +153,22 @@ class ExtensionsInstaller extends ModuleInstaller
 	 */
 	private function setRights()
 	{
-		// action rights
+		// modules
+		$this->setActionRights(1, 'extensions', 'modules');
 		$this->setActionRights(1, 'extensions', 'detail_module');
 		$this->setActionRights(1, 'extensions', 'install_module');
 		$this->setActionRights(1, 'extensions', 'upload_module');
-		$this->setActionRights(1, 'extensions', 'modules');
 
+		// themes
 		$this->setActionRights(1, 'extensions', 'themes');
+		$this->setActionRights(1, 'extensions', 'detail_theme');
+		$this->setActionRights(1, 'extensions', 'install_theme');
+		$this->setActionRights(1, 'extensions', 'upload_theme');
 
-		$this->setActionRights(1, 'pages', 'theme_templates');
-		$this->setActionRights(1, 'pages', 'add_theme_template');
-		$this->setActionRights(1, 'pages', 'edit_theme_template');
-		$this->setActionRights(1, 'pages', 'delete_theme_template');
+		// templates
+		$this->setActionRights(1, 'extensions', 'theme_templates');
+		$this->setActionRights(1, 'extensions', 'add_theme_template');
+		$this->setActionRights(1, 'extensions', 'edit_teme_template');
+		$this->setActionRights(1, 'extensions', 'delete_theme_template');
 	}
 }
