@@ -187,9 +187,9 @@ class ModuleInstaller
 	/**
 	 * Get the id of the requested template of the active theme.
 	 *
-	 * @return int
 	 * @param string $template
 	 * @param string[optional] $theme
+	 * @return int
 	 */
 	protected function getTemplateId($template, $theme = null)
 	{

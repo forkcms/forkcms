@@ -15,6 +15,30 @@
 class AnalyticsInstaller extends ModuleInstaller
 {
 	/**
+	 * Insert an empty admin dashboard sequence
+	 */
+	private function insertWidgets()
+	{
+		$trafficSources = array(
+			'column' => 'middle',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		$visitors = array(
+			'column' => 'middle',
+			'position' => 2,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert widgets
+		$this->insertDashboardWidget('analytics', 'traffic_sources', $trafficSources);
+		$this->insertDashboardWidget('analytics', 'visitors', $visitors);
+	}
+
+	/**
 	 * Install the module
 	 */
 	public function install()
@@ -68,29 +92,5 @@ class AnalyticsInstaller extends ModuleInstaller
 
 		// insert dashboard widgets
 		$this->insertWidgets();
-	}
-
-	/**
-	 * Insert an empty admin dashboard sequence
-	 */
-	private function insertWidgets()
-	{
-		$trafficSources = array(
-			'column' => 'middle',
-			'position' => 1,
-			'hidden' => false,
-			'present' => true
-		);
-
-		$visitors = array(
-			'column' => 'middle',
-			'position' => 2,
-			'hidden' => false,
-			'present' => true
-		);
-
-		// insert widgets
-		$this->insertDashboardWidget('analytics', 'traffic_sources', $trafficSources);
-		$this->insertDashboardWidget('analytics', 'visitors', $visitors);
 	}
 }
