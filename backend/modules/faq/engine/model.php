@@ -31,7 +31,6 @@ class BackendFaqModel
 		 GROUP BY i.id
 		 ORDER BY i.sequence ASC';
 
-
 	/**
 	 * Delete a question
 	 *
@@ -42,7 +41,6 @@ class BackendFaqModel
 		BackendModel::getDB(true)->delete('faq_questions', 'id = ?', array((int) $id));
 		BackendTagsModel::saveTags($id, '', 'faq');
 	}
-
 
 	/**
 	 * Delete a specific category
@@ -65,7 +63,6 @@ class BackendFaqModel
 		}
 	}
 
-
 	/**
 	 * Is the deletion of a category allowed?
 	 *
@@ -81,7 +78,6 @@ class BackendFaqModel
 			 array((int) $id, BL::getWorkingLanguage())) == 0);
 	}
 
-
 	/**
 	 * Delete the feedback
 	 *
@@ -91,7 +87,6 @@ class BackendFaqModel
 	{
 		BackendModel::getDB(true)->delete('faq_feedback', 'id = ?', (int) $itemId);
 	}
-
 
 	/**
 	 * Does the question exsist?
@@ -108,7 +103,6 @@ class BackendFaqModel
 			 array((int) $id, BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Does the category exist?
 	 *
@@ -123,7 +117,6 @@ class BackendFaqModel
 			 WHERE i.id = ? AND i.language = ?',
 			 array((int) $id, BL::getWorkingLanguage()));
 	}
-
 
 	/**
 	 * Fetch a question
@@ -141,7 +134,6 @@ class BackendFaqModel
 			 array((int) $id, BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Fetches all the feedback for a question
 	 *
@@ -156,7 +148,6 @@ class BackendFaqModel
 			 WHERE f.question_id = ?',
 			 array((int) $id));
 	}
-
 
 	/**
 	 * Get all items by a given tag id
@@ -181,7 +172,6 @@ class BackendFaqModel
 
 		return $items;
 	}
-
 
 	/**
 	 * Get all the categories
@@ -211,7 +201,6 @@ class BackendFaqModel
 			 array(BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Fetch a category
 	 *
@@ -226,7 +215,6 @@ class BackendFaqModel
 			 WHERE i.id = ? AND i.language = ?',
 			 array((int) $id, BL::getWorkingLanguage()));
 	}
-
 
 	/**
 	 * Fetch the feedback item
@@ -243,7 +231,6 @@ class BackendFaqModel
 			 array((int) $id));
 	}
 
-
 	/**
 	 * Get the maximum sequence for a category
 	 *
@@ -257,7 +244,6 @@ class BackendFaqModel
 			 WHERE i.language = ?',
 			 array(BL::getWorkingLanguage()));
 	}
-
 
 	/**
 	 * Get the max sequence id for a category
@@ -273,7 +259,6 @@ class BackendFaqModel
 			 WHERE i.category_id = ?',
 			 array((int) $id));
 	}
-
 
 	/**
 	 * Retrieve the unique URL for an item
@@ -327,7 +312,6 @@ class BackendFaqModel
 		return $url;
 	}
 
-
 	/**
 	 * Retrieve the unique URL for a category
 	 *
@@ -380,7 +364,6 @@ class BackendFaqModel
 		return $url;
 	}
 
-
 	/**
 	 * Insert a question in the database
 	 *
@@ -395,7 +378,6 @@ class BackendFaqModel
 
 		return $insertId;
 	}
-
 
 	/**
 	 * Insert a category in the database
@@ -416,7 +398,6 @@ class BackendFaqModel
 		return $item['id'];
 	}
 
-
 	/**
 	 * Update a certain question
 	 *
@@ -427,7 +408,6 @@ class BackendFaqModel
 		BackendModel::getDB(true)->update('faq_questions', $item, 'id = ?', array((int) $item['id']));
 		BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
 	}
-
 
 	/**
 	 * Update a certain category

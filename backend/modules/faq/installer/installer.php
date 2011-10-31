@@ -21,7 +21,6 @@ class FaqInstaller extends ModuleInstaller
 	 */
 	private $defaultCategoryId;
 
-
 	/**
 	 * Add a category for a language
 	 *
@@ -41,6 +40,20 @@ class FaqInstaller extends ModuleInstaller
 		return (int) $this->getDB()->insert('faq_categories', $item);
 	}
 
+	/**
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @param string $language
+	 * @return int
+	 */
+	private function getCategory($language)
+	{
+		return (int) $this->getDB()->getVar(
+			'SELECT id
+			 FROM faq_categories
+			 WHERE language = ?',
+			array((string) $language));
+	}
 
 	/**
 	 * Install the module
@@ -116,21 +129,5 @@ class FaqInstaller extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');
-	}
-
-
-	/**
-	 * Fetch the id of the first category in this language we come across
-	 *
-	 * @param string $language
-	 * @return int
-	 */
-	private function getCategory($language)
-	{
-		return (int) $this->getDB()->getVar(
-			'SELECT id
-			 FROM faq_categories
-			 WHERE language = ?',
-			array((string) $language));
 	}
 }

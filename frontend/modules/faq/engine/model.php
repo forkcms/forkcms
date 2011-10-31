@@ -18,8 +18,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 	/**
 	 * Fetch a question
 	 *
-	 * @param	string $url		The url of the item.
-	 * @return	array
+	 * @param string $url
+	 * @return array
 	 */
 	public static function get($url)
 	{
