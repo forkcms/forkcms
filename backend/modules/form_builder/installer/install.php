@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the form_builder module
  *
- * @package		installer
- * @subpackage	form_builder
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FormBuilderInstall extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -118,16 +119,15 @@ class FormBuilderInstall extends ModuleInstaller
 			$extraId = $this->insertExtra('form_builder', 'widget', 'FormBuilder', 'form', serialize(array('language' => $form['language'], 'extra_label' => $form['name'], 'id' => $formId)), 'N', '400' . $formId);
 
 			// insert contact page
-			$this->insertPage(array('title' => ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend')),
-									'parent_id' => 1,
-									'language' => $language),
-								null,
-								array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/contact.txt'),
-								array('extra_id' => $extraId, 'position' => 'main'),
-								array('extra_id' => $searchId, 'position' => 'top'));
-
+			$this->insertPage(
+				array('title' => ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend')),
+				'parent_id' => 1,
+				'language' => $language),
+				null,
+				array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/contact.txt'),
+				array('extra_id' => $extraId, 'position' => 'main'),
+				array('extra_id' => $searchId, 'position' => 'top')
+			);
 		}
 	}
 }
-
-?>

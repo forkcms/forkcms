@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will generate a valid url based upon the submitted url.
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -50,5 +51,3 @@ class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 		$this->output(self::OK, $URL);
 	}
 }
-
-?>

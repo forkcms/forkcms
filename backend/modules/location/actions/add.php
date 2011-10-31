@@ -1,51 +1,37 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @package		backend
- * @subpackage	location
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocationAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('add');
-
-		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text');
 		$this->frm->addText('street');
@@ -55,18 +41,13 @@ class BackendLocationAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('country', SpoonLocale::getCountries(BL::getInterfaceLanguage()), 'BE');
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
@@ -76,7 +57,6 @@ class BackendLocationAdd extends BackendBaseActionAdd
 			$this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -99,6 +79,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				$id = BackendLocationModel::insert($item);
 
 				// add search index
+				// @todo why is this commented out
 				// if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
@@ -117,5 +98,3 @@ class BackendLocationAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

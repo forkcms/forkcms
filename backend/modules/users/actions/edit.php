@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
- * @package		backend
- * @subpackage	users
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendUsersEdit extends BackendBaseActionEdit
 {
@@ -18,36 +21,21 @@ class BackendUsersEdit extends BackendBaseActionEdit
 	 */
 	private $user;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the user exists
 		if($this->id !== null && BackendUsersModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the user we want to edit
 			$this->record = (array) BackendUsersModel::get($this->id);
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -55,11 +43,8 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -106,15 +91,11 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		if(BackendAuthentication::getUser()->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// reset avatar URL
@@ -131,11 +112,8 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->tpl->assign('allowPasswordEdit', (BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod()));
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -288,5 +266,3 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

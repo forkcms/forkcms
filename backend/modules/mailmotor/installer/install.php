@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the mailmotor module
  *
- * @package		installer
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class MailmotorInstall extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -33,6 +34,9 @@ class MailmotorInstall extends ModuleInstaller
 
 		// install the pages for the module
 		$this->installPages();
+
+		// insert dashboard widget
+		$this->insertWidget();
 
 		// set navigation
 		$navigationMailmotorId = $this->setNavigation(null, 'Mailmotor', null, null, 5);
@@ -70,11 +74,25 @@ class MailmotorInstall extends ModuleInstaller
 		$this->setNavigation($navigationModulesId, 'Mailmotor', 'mailmotor/settings');
 	}
 
+	/**
+	 * Insert an empty admin dashboard sequence
+	 */
+	private function insertWidget()
+	{
+		// build widget
+		$statistics = array(
+			'column' => 'right',
+			'position' => 2,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert widget
+		$this->insertDashboardWidget('mailmotor', 'statistics', $statistics);
+	}
 
 	/**
 	 * Install the module and it's actions
-	 *
-	 * @return	void
 	 */
 	private function installModule()
 	{
@@ -124,11 +142,8 @@ class MailmotorInstall extends ModuleInstaller
 		$this->setActionRights(1, 'mailmotor', 'statistics_link');
 	}
 
-
 	/**
 	 * Install the pages for this module
-	 *
-	 * @return	void
 	 */
 	private function installPages()
 	{
@@ -144,34 +159,41 @@ class MailmotorInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			$parentID = $this->insertPage(array('title' => ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
-												'type' => 'root',
-												'language' => $language),
-											null,
-											array('extra_id' => $sentMailingsID, 'position' => 'main'),
-											array('extra_id' => $searchId, 'position' => 'top'));
+			$parentID = $this->insertPage(
+				array('title' => ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
+				'type' => 'root',
+				'language' => $language),
+				null,
+				array('extra_id' => $sentMailingsID, 'position' => 'main'),
+				array('extra_id' => $searchId, 'position' => 'top')
+			);
 
-			$this->insertPage(array('parent_id' => $parentID,
-									'title' => ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')),
-									'language' => $language),
-								null,
-								array('extra_id' => $subscribeFormID, 'position' => 'main'),
-								array('extra_id' => $searchId, 'position' => 'top'));
+			$this->insertPage(
+				array(
+					'parent_id' => $parentID,
+					'title' => ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')
+				),
+				'language' => $language),
+				null,
+				array('extra_id' => $subscribeFormID, 'position' => 'main'),
+				array('extra_id' => $searchId, 'position' => 'top')
+			);
 
-			$this->insertPage(array('parent_id' => $parentID,
-									'title' => ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')),
-									'language' => $language),
-								null,
-								array('extra_id' => $unsubscribeFormID, 'position' => 'main'),
-								array('extra_id' => $searchId, 'position' => 'top'));
+			$this->insertPage(
+				array(
+					'parent_id' => $parentID,
+					'title' => ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')
+				),
+				'language' => $language),
+				null,
+				array('extra_id' => $unsubscribeFormID, 'position' => 'main'),
+				array('extra_id' => $searchId, 'position' => 'top')
+			);
 		}
 	}
 
-
 	/**
 	 * Install settings
-	 *
-	 * @return	void
 	 */
 	private function installSettings()
 	{
@@ -206,5 +228,3 @@ class MailmotorInstall extends ModuleInstaller
 		$this->setSetting('mailmotor', 'cm_account', false);
 	}
 }
-
-?>

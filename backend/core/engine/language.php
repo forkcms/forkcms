@@ -1,13 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
- * This class will store the language-dependant content for the Backend, it will also store the current language for the user.
+ * This class will store the language-dependant content for the Backend, it will also store the
+ * current language for the user.
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendLanguage
 {
@@ -16,10 +20,7 @@ class BackendLanguage
 	 *
 	 * @var	array
 	 */
-	protected static $err = array(),
-					 $lbl = array(),
-					 $msg = array();
-
+	protected static $err = array(), $lbl = array(), $msg = array();
 
 	/**
 	 * The active languages
@@ -28,14 +29,12 @@ class BackendLanguage
 	 */
 	protected static $activeLanguages;
 
-
 	/**
 	 * The current interface-language
 	 *
 	 * @var	string
 	 */
 	protected static $currentInterfaceLanguage;
-
 
 	/**
 	 * The current language that the user is working with
@@ -44,11 +43,10 @@ class BackendLanguage
 	 */
 	protected static $currentWorkingLanguage;
 
-
 	/**
 	 * Get the active languages
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getActiveLanguages()
 	{
@@ -66,13 +64,12 @@ class BackendLanguage
 		return self::$activeLanguages;
 	}
 
-
 	/**
 	 * Get an error from the language-file
 	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module wherin we should search.
+	 * @param string $key The key to get.
+	 * @param string[optional] $module The module wherin we should search.
+	 * @return string
 	 */
 	public static function getError($key, $module = null)
 	{
@@ -84,7 +81,6 @@ class BackendLanguage
 			else $module = 'core';
 		}
 
-		// redefine
 		$key = (string) $key;
 		$module = (string) $module;
 
@@ -98,37 +94,33 @@ class BackendLanguage
 		return '{$err' . SpoonFilter::toCamelCase($module) . $key . '}';
 	}
 
-
 	/**
 	 * Get all the errors from the language-file
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getErrors()
 	{
 		return (array) self::$err;
 	}
 
-
 	/**
 	 * Get the current interface language
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getInterfaceLanguage()
 	{
 		return self::$currentInterfaceLanguage;
 	}
 
-
 	/**
 	 * Get all the possible interface languages
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getInterfaceLanguages()
 	{
-		// init var
 		$languages = array();
 
 		// grab the languages from the settings & loop language to reset the label
@@ -145,13 +137,12 @@ class BackendLanguage
 		return $languages;
 	}
 
-
 	/**
 	 * Get a label from the language-file
 	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module wherin we should search.
+	 * @param string $key The key to get.
+	 * @param string[optional] $module The module wherin we should search.
+	 * @return string
 	 */
 	public static function getLabel($key, $module = null)
 	{
@@ -163,7 +154,6 @@ class BackendLanguage
 			else $module = 'core';
 		}
 
-		// redefine
 		$key = (string) $key;
 		$module = (string) $module;
 
@@ -177,22 +167,20 @@ class BackendLanguage
 		return '{$lbl' . SpoonFilter::toCamelCase($module) . $key . '}';
 	}
 
-
 	/**
 	 * Get all the labels from the language-file
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getLabels()
 	{
 		return self::$lbl;
 	}
 
-
 	/**
 	 * Get all the possible locale languages
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getLocaleLanguages()
 	{
@@ -207,22 +195,18 @@ class BackendLanguage
 
 		// sort alphabetically
 		asort($return);
-
-		// return
 		return $return;
 	}
-
 
 	/**
 	 * Get a message from the language-file
 	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module wherin we should search.
+	 * @param string $key The key to get.
+	 * @param string[optional] $module The module wherin we should search.
+	 * @return string
 	 */
 	public static function getMessage($key, $module = null)
 	{
-		// do we know the module
 		if($module === null)
 		{
 			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
@@ -230,7 +214,6 @@ class BackendLanguage
 			else $module = 'core';
 		}
 
-		// redefine
 		$key = (string) $key;
 		$module = (string) $module;
 
@@ -244,37 +227,33 @@ class BackendLanguage
 		return '{$msg' . SpoonFilter::toCamelCase($module) . $key . '}';
 	}
 
-
 	/**
 	 * Get the messages
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getMessages()
 	{
 		return self::$msg;
 	}
 
-
 	/**
 	 * Get the current working language
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getWorkingLanguage()
 	{
 		return self::$currentWorkingLanguage;
 	}
 
-
 	/**
 	 * Get all possible working languages
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getWorkingLanguages()
 	{
-		// init var
 		$languages = array();
 
 		// grab the languages from the settings & loop language to reset the label
@@ -286,22 +265,17 @@ class BackendLanguage
 
 		// sort alphabetically
 		asort($languages);
-
-		// return languages
 		return $languages;
 	}
-
 
 	/**
 	 * Set locale
 	 * It will require the correct file and init the needed vars
 	 *
-	 * @return	void
-	 * @param	string $language		The language to load.
+	 * @param string $language The language to load.
 	 */
 	public static function setLocale($language)
 	{
-		// redefine
 		$language = (string) $language;
 
 		// check if file exists
@@ -348,12 +322,10 @@ class BackendLanguage
 		self::$msg = (array) $msg;
 	}
 
-
 	/**
 	 * Set the current working language
 	 *
-	 * @return	void
-	 * @param	string $language		The language to use, if not provided we will use the working language.
+	 * @param string $language The language to use, if not provided we will use the working language.
 	 */
 	public static function setWorkingLanguage($language)
 	{
@@ -361,57 +333,47 @@ class BackendLanguage
 	}
 }
 
-
 /**
  * An alias for BackendLanguage with some extras.
  *
- *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BL extends BackendLanguage
 {
 	/**
 	 * Get an error from the language-file
 	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module wherein we should search.
+	 * @param string $key The key to get.
+	 * @param string[optional] $module The module wherein we should search.
+	 * @return string
 	 */
 	public static function err($key, $module = null)
 	{
 		return BackendLanguage::getError($key, $module);
 	}
 
-
 	/**
 	 * Get a label from the language-file
 	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module wherein we should search.
+	 * @param string $key The key to get.
+	 * @param string[optional] $module The module wherein we should search.
+	 * @return string
 	 */
 	public static function lbl($key, $module = null)
 	{
 		return BackendLanguage::getLabel($key, $module);
 	}
 
-
 	/**
 	 * Get a message from the language-file
 	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module wherein we should search.
+	 * @param string $key The key to get.
+	 * @param string[optional] $module The module wherein we should search.
+	 * @return string
 	 */
 	public static function msg($key, $module = null)
 	{
 		return BackendLanguage::getMessage($key, $module);
 	}
 }
-
-?>

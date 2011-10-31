@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the groups module
  *
- * @package		installer
- * @subpackage	groups
- *
- * @author		Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
- * @since		2.0
+ * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class GroupsInstall extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -47,59 +48,36 @@ class GroupsInstall extends ModuleInstaller
 		$this->insertDashboardSequence();
 	}
 
-
 	/**
 	 * Insert an empty admin dashboard sequence
-	 *
-	 * @return	void
 	 */
 	private function insertDashboardSequence()
 	{
-		// get db
 		$db = $this->getDB();
-
-		// create standard dashboard sequence
-		$sequence = array(
-			'settings' => array(
-				'analyse' => array(
-					'column' => 'left',
-					'position' => 1,
-					'hidden' => false,
-					'present' => true
-				)
-			),
-			'blog' => array(
-				'comments' => array(
-					'column' => 'middle',
-					'position' => 1,
-					'hidden' => false,
-					'present' => true
-				)
-			),
-			'mailmotor' => array(
-				'statistics' => array(
-					'column' => 'right',
-					'position' => 1,
-					'hidden' => false,
-					'present' => true
-				)
-			)
-		);
 
 		// build groupsetting
 		$groupSetting['group_id'] = 1;
 		$groupSetting['name'] = 'dashboard_sequence';
-		$groupSetting['value'] = serialize($sequence);
+		$groupSetting['value'] = serialize(array());
 
 		// build usersetting
 		$userSetting['user_id'] = 1;
 		$userSetting['name'] = 'dashboard_sequence';
-		$userSetting['value'] = serialize($sequence);
+		$userSetting['value'] = serialize(array());
 
 		// insert settings
 		$db->insert('groups_settings', $groupSetting);
 		$db->insert('users_settings', $userSetting);
+
+		// create default dashboard widget
+		$analyse = array(
+			'column' => 'left',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert default dashboard widget
+		$this->insertDashboardWidget('settings', 'analyse', $analyse);
 	}
 }
-
-?>

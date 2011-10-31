@@ -1,58 +1,44 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Step 6 of the Fork installer
  *
- * @package		install
- * @subpackage	installer
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class InstallerStep6 extends InstallerStep
 {
 	/**
 	 * Executes this step.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// load form
 		$this->loadForm();
-
-		// validate form
 		$this->validateForm();
-
-		// parse form
 		$this->parseForm();
-
-		// show output
 		$this->tpl->display('layout/templates/step_6.tpl');
 	}
-
 
 	/**
 	 * Is this step allowed.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep5::isAllowed() &&
-				isset($_SESSION['db_hostname']) &&
-				isset($_SESSION['db_database']) &&
-				isset($_SESSION['db_username']) &&
-				isset($_SESSION['db_password']);
+		return InstallerStep5::isAllowed() && isset($_SESSION['db_hostname']) && isset($_SESSION['db_database']) && isset($_SESSION['db_username']) && isset($_SESSION['db_password']);
 	}
-
 
 	/**
 	 * Loads the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -68,11 +54,8 @@ class InstallerStep6 extends InstallerStep
 		$this->frm->getField('confirm')->setAttributes(array('autocomplete' => 'off'));
 	}
 
-
 	/**
 	 * Validate the form based on the variables in $_POST
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -99,5 +82,3 @@ class InstallerStep6 extends InstallerStep
 		}
 	}
 }
-
-?>

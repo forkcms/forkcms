@@ -1,26 +1,28 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Frontend RSS class.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class FrontendRSS extends SpoonFeedRSS
 {
 	/**
 	 * The default constructor
 	 *
-	 * @return	void
-	 * @param	string $title			The title off the feed.
-	 * @param	string $link			The link of the feed.
-	 * @param	string $description		The description of the feed.
-	 * @param	array[optional] $items	An array with SpoonRSSItems.
+	 * @param string $title The title off the feed.
+	 * @param string $link The link of the feed.
+	 * @param string $description The description of the feed.
+	 * @param array[optional] $items An array with SpoonRSSItems.
 	 */
 	public function __construct($title, $link, $description, array $items = array())
 	{
@@ -52,17 +54,15 @@ class FrontendRSS extends SpoonFeedRSS
 		}
 	}
 
-
 	/**
 	 * Set the image for the feed.
 	 *
-	 * @return	void
-	 * @param	string $URL						URL of the image.
-	 * @param	string $title					Title of the image.
-	 * @param	string $link					Link of the image.
-	 * @param	int[optional] $width			Width of the image.
-	 * @param	int[optional] $height			Height of the image.
-	 * @param	string[optional] $description	Description of the image.
+	 * @param string $URL URL of the image.
+	 * @param string $title Title of the image.
+	 * @param string $link Link of the image.
+	 * @param int[optional] $width Width of the image.
+	 * @param int[optional] $height Height of the image.
+	 * @param string[optional] $description Description of the image.
 	 */
 	public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
 	{
@@ -74,16 +74,11 @@ class FrontendRSS extends SpoonFeedRSS
 	}
 }
 
-
 /**
  * FrontendRSSItem, this is our extended version of SpoonRSSItem
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class FrontendRSSItem extends SpoonFeedRSSItem
 {
@@ -94,14 +89,10 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 */
 	private $utm = array('utm_source' => 'feed', 'utm_medium' => 'rss');
 
-
 	/**
-	 * Default constructor.
-	 *
-	 * @return	void
-	 * @param	string $title			The title for the item.
-	 * @param	string $link			The link for the item.
-	 * @param	string $description		The content for the item.
+	 * @param string $title The title for the item.
+	 * @param string $link The link for the item.
+	 * @param string $description The content for the item.
 	 */
 	public function __construct($title, $link, $description)
 	{
@@ -119,12 +110,11 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		$this->setGuid($link, true);
 	}
 
-
 	/**
 	 * Process links, will prepend SITE_URL if needed and append UTM-parameters
 	 *
-	 * @return	string
-	 * @param	string $content		The content to process.
+	 * @param string $content The content to process.
+	 * @return string
 	 */
 	public function processLinks($content)
 	{
@@ -162,16 +152,13 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 			$content = str_replace($searchLinks, $replaceLinks, $content);
 		}
 
-		// return content
 		return $content;
 	}
-
 
 	/**
 	 * Set the author.
 	 *
-	 * @return	void
-	 * @param	string $author		The author to use.
+	 * @param string $author The author to use.
 	 */
 	public function setAuthor($author)
 	{
@@ -185,13 +172,11 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		parent::setAuthor($author);
 	}
 
-
 	/**
 	 * Set the description.
 	 * All links and images that link to internal files will be prepended with the sites URL
 	 *
-	 * @return	void
-	 * @param	string $description		The content of the item.
+	 * @param string $description The content of the item.
 	 */
 	public function setDescription($description)
 	{
@@ -205,14 +190,12 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		parent::setDescription($description);
 	}
 
-
 	/**
 	 * Set the guid.
 	 * If the link is an internal link the sites URL will be prepended.
 	 *
-	 * @return	void
-	 * @param	string $link					The guid for an item.
-	 * @param	bool[optional] $isPermaLink		Is this link permanent?
+	 * @param string $link The guid for an item.
+	 * @param bool[optional] $isPermaLink Is this link permanent?
 	 */
 	public function setGuid($link, $isPermaLink = true)
 	{
@@ -226,13 +209,11 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		parent::setGuid($link, $isPermaLink);
 	}
 
-
 	/**
 	 * Set the link.
 	 * If the link is an internal link the sites URL will be prepended.
 	 *
-	 * @return	void
-	 * @param	string $link	The link for the item.
+	 * @param string $link The link for the item.
 	 */
 	public function setLink($link)
 	{
@@ -245,7 +226,4 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		// call parent
 		parent::setLink($link);
 	}
-
 }
-
-?>

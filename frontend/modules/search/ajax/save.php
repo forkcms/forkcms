@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the save-action, it will save the searched term in the statistics
  *
- * @package		frontend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendSearchAjaxSave extends FrontendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -53,5 +53,3 @@ class FrontendSearchAjaxSave extends FrontendBaseAJAXAction
 		$this->output(self::OK);
 	}
 }
-
-?>

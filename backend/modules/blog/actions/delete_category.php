@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete a category
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendBlogDeleteCategory extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
@@ -51,5 +51,3 @@ class BackendBlogDeleteCategory extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
 	}
 }
-
-?>

@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the profile password-action.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendProfilesProfilePassword extends FrontendBaseBlock
 {
@@ -19,7 +22,6 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * The current profile.
 	 *
@@ -27,33 +29,19 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 	 */
 	private $profile;
 
-
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// profile logged in
 		if(FrontendProfilesAuthentication::isLoggedIn())
 		{
-			// load parent
 			parent::execute();
-
-			// get data
 			$this->getData();
-
-			// load template
 			$this->loadTemplate();
-
-			// load
 			$this->loadForm();
-
-			// validate
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
@@ -61,11 +49,8 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 		else $this->redirect(FrontendNavigation::getURL(404));
 	}
 
-
 	/**
 	 * Get profile data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -73,28 +58,19 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 		$this->profile = FrontendProfilesAuthentication::getProfile();
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create the form
 		$this->frm = new FrontendForm('updatePassword', null, null, 'updatePasswordForm');
-
-		// create & add elements
 		$this->frm->addPassword('old_password');
 		$this->frm->addPassword('new_password', null, null, 'inputText showPasswordInput');
 		$this->frm->addCheckbox('show_password');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -109,11 +85,8 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -156,5 +129,3 @@ class FrontendProfilesProfilePassword extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

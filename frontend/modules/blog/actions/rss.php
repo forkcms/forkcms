@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the RSS-feed
  *
- * @package		frontend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class FrontendBlogRSS extends FrontendBaseBlock
 {
@@ -19,7 +22,6 @@ class FrontendBlogRSS extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * The settings
 	 *
@@ -27,44 +29,27 @@ class FrontendBlogRSS extends FrontendBaseBlock
 	 */
 	private $settings;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// load the data
 		$this->getData();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get articles
 		$this->items = FrontendBlogModel::getAll(30);
-
-		// get settings
 		$this->settings = FrontendModel::getModuleSettings('blog');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -136,5 +121,3 @@ class FrontendBlogRSS extends FrontendBaseBlock
 		$rss->parse();
 	}
 }
-
-?>

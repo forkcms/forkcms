@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class BackendPagesAdd extends BackendBaseActionAdd
 {
@@ -20,14 +23,12 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	private $blocksContent = array();
 
-
 	/**
 	 * The positions
 	 *
 	 * @var	array
 	 */
 	private $positions = array();
-
 
 	/**
 	 * The extras
@@ -36,7 +37,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	private $extras = array();
 
-
 	/**
 	 * The template data
 	 *
@@ -44,11 +44,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	private $templates = array();
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -87,24 +84,14 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// get the extras
 		$this->extras = BackendPagesModel::getExtras();
 
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -237,11 +224,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -266,11 +250,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -390,5 +371,3 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

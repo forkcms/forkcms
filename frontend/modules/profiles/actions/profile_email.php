@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the profile email-action.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendProfilesProfileEmail extends FrontendBaseBlock
 {
@@ -19,7 +22,6 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * The current profile.
 	 *
@@ -27,33 +29,19 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 	 */
 	private $profile;
 
-
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// profile logged in
 		if(FrontendProfilesAuthentication::isLoggedIn())
 		{
-			// load parent
 			parent::execute();
-
-			// get data
 			$this->getData();
-
-			// load template
 			$this->loadTemplate();
-
-			// load
 			$this->loadForm();
-
-			// validate
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
@@ -61,11 +49,8 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		else $this->redirect(FrontendNavigation::getURL(404));
 	}
 
-
 	/**
 	 * Get profile data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -73,27 +58,18 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		$this->profile = FrontendProfilesAuthentication::getProfile();
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create the form
 		$this->frm = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
-
-		// create & add elements
 		$this->frm->addPassword('password');
 		$this->frm->addText('email', $this->profile->getEmail());
 	}
 
-
 	/**
 	 * Parse the data into the template.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -108,11 +84,8 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -167,5 +140,3 @@ class FrontendProfilesProfileEmail extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

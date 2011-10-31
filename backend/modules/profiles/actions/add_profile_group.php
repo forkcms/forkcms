@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add_profile_group-action, it will display a form to add a profile to a group.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendProfilesAddProfileGroup extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -25,19 +26,10 @@ class BackendProfilesAddProfileGroup extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendProfilesModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -45,11 +37,8 @@ class BackendProfilesAddProfileGroup extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -68,11 +57,8 @@ class BackendProfilesAddProfileGroup extends BackendBaseActionEdit
 		$this->frm->getField('group')->setDefaultElement('');
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -119,5 +105,3 @@ class BackendProfilesAddProfileGroup extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

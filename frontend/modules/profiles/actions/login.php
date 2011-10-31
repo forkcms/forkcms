@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the login-action.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendProfilesLogin extends FrontendBaseBlock
 {
@@ -19,30 +22,19 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * Execute.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// load parent
 		parent::execute();
 
  		// profile not logged in
 		if(!FrontendProfilesAuthentication::isLoggedIn())
 		{
-			// load template
 			$this->loadTemplate();
-
-			// load
 			$this->loadForm();
-
-			// validate
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
@@ -50,40 +42,27 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 		else $this->redirect(SITE_URL);
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create the form
 		$this->frm = new FrontendForm('login', null, null, 'loginForm');
-
-		// create & add elements
 		$this->frm->addText('email');
 		$this->frm->addPassword('password');
 		$this->frm->addCheckbox('remember', true);
 	}
 
-
 	/**
 	 * Parse the data into the template.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// parse the form
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -147,5 +126,3 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

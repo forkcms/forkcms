@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the category-action
  *
- * @package		frontend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@netlash.com>
  */
 class FrontendBlogCategory extends FrontendBaseBlock
 {
@@ -19,14 +22,12 @@ class FrontendBlogCategory extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * The requested category
 	 *
 	 * @var	array
 	 */
 	private $category;
-
 
 	/**
 	 * The pagination array
@@ -36,32 +37,19 @@ class FrontendBlogCategory extends FrontendBaseBlock
 	 */
 	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// load template
 		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -101,11 +89,8 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->items = FrontendBlogModel::getAllForCategory($requestedCategory, $this->pagination['limit'], $this->pagination['offset']);
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -138,5 +123,3 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->parsePagination();
 	}
 }
-
-?>

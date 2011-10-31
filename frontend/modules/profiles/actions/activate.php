@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the activate-action.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendProfilesActivate extends FrontendBaseBlock
 {
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -58,5 +59,3 @@ class FrontendProfilesActivate extends FrontendBaseBlock
 		else $this->redirect(FrontendNavigation::getURL(404));
 	}
 }
-
-?>

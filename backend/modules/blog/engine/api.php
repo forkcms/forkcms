@@ -1,24 +1,27 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be available through the API
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendBlogAPI
 {
 	/**
 	 * Get the comments
 	 *
-	 * @return	array						An array with the comments
-	 * @param	string[optional] $status	The type of comments to get. Possible values are: published, moderation, spam.
-	 * @param	int[optional] $limit		The maximum number of items to retrieve.
-	 * @param	int[optional] $offset		The offset.
+	 * @param string[optional] $status The type of comments to get. Possible values are: published, moderation, spam.
+	 * @param int[optional] $limit The maximum number of items to retrieve.
+	 * @param int[optional] $offset The offset.
+	 * @return array
 	 */
 	public static function commentsGet($status = null, $limit = 30, $offset = 0)
 	{
@@ -34,16 +37,17 @@ class BackendBlogAPI
 			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger then 10000.'));
 
 			// get comments
-			$comments = (array) BackendModel::getDB()->getRecords('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
-																	p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
-																	FROM blog_comments AS i
-																	INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-																	INNER JOIN meta AS m ON p.meta_id = m.id
-																	GROUP BY i.id
-																	LIMIT ?, ?',
-																	array($offset, $limit));
+			$comments = (array) BackendModel::getDB()->getRecords(
+				'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+				 p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
+				 FROM blog_comments AS i
+				 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+				 INNER JOIN meta AS m ON p.meta_id = m.id
+				 GROUP BY i.id
+				 LIMIT ?, ?',
+				array($offset, $limit)
+			);
 
-			// init var
 			$return = array('comments' => null);
 
 			// build return array
@@ -76,17 +80,15 @@ class BackendBlogAPI
 				$return['comments'][] = $item;
 			}
 
-			// return
 			return $return;
 		}
 	}
 
-
 	/**
 	 * Get a single comment
 	 *
-	 * @return	array		An array with the comment.
-	 * @param	int $id		The id of the comment.
+	 * @param int $id The id of the comment.
+	 * @return array
 	 */
 	public static function commentsGetById($id)
 	{
@@ -128,22 +130,19 @@ class BackendBlogAPI
 			// add
 			$return['comments'][] = $item;
 
-			// return
 			return $return;
 		}
 	}
 
-
 	/**
 	 * Update a comment
 	 *
-	 * @return	void
-	 * @param	int $id								The id of the comment.
-	 * @param	string[optional] $status			The new status for the comment. Possible values are: published, moderation, spam.
-	 * @param	string[optional] $text				The new text for the comment.
-	 * @param	string[optional] $authorName		The new author for the comment.
-	 * @param	string[optional] $authorEmail		The new email for the comment.
-	 * @param	string[optional] $authorWebsite		The new website for the comment.
+	 * @param int $id The id of the comment.
+	 * @param string[optional] $status The new status for the comment. Possible values are: published, moderation, spam.
+	 * @param string[optional] $text The new text for the comment.
+	 * @param string[optional] $authorName The new author for the comment.
+	 * @param string[optional] $authorEmail The new email for the comment.
+	 * @param string[optional] $authorWebsite The new website for the comment.
 	 */
 	public static function commentsUpdate($id, $status = null, $text = null, $authorName = null, $authorEmail = null, $authorWebsite = null)
 	{
@@ -178,13 +177,11 @@ class BackendBlogAPI
 		}
 	}
 
-
 	/**
 	 * Update the status for multiple comments at once.
 	 *
-	 * @return	void
-	 * @param	array $id		The id/ids of the comment(s) to update.
-	 * @param	string $status	The new status for the comment. Possible values are: published, moderation, spam.
+	 * @param array $id The id/ids of the comment(s) to update.
+	 * @param string $status The new status for the comment. Possible values are: published, moderation, spam.
 	 */
 	public static function commentsUpdateStatus($id, $status)
 	{
@@ -200,5 +197,3 @@ class BackendBlogAPI
 		}
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the pages-overview
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendPagesIndex extends BackendBaseActionIndex
 {
@@ -18,15 +21,11 @@ class BackendPagesIndex extends BackendBaseActionIndex
 	 */
 	private $dgDrafts, $dgRecentlyEdited;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// add js
@@ -51,11 +50,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->display();
 	}
 
-
 	/**
 	 * Load the datagird with the drafts
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridDrafts()
 	{
@@ -82,11 +78,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEdited'))));
 	}
 
-
 	/**
 	 * Load the datagrid with the recently edited items
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridRecentlyEdited()
 	{
@@ -113,11 +106,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->dgRecentlyEdited->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEdited'))));
 	}
 
-
 	/**
 	 * Load the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
@@ -128,11 +118,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->loadDataGridDrafts();
 	}
 
-
 	/**
 	 * Parse the datagrid and the reports
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -148,5 +135,3 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		else $this->tpl->assign('openedPageId', 1);
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This cronjob will fetch the requested data
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 {
@@ -18,56 +21,42 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	 */
 	private $cachePath;
 
-
 	/**
 	 * Cleanup cache files
-	 *
-	 * @return	void
 	 */
 	private function cleanupCache()
 	{
-		// get cache files
 		$files = SpoonFile::getList($this->cachePath);
-
-		// loop items
 		foreach($files as $file)
 		{
-			// get info
 			$fileinfo = SpoonFile::getInfo($this->cachePath . '/' . $file);
 
-			// file is more than one week old
+			// delete file if more than 1 week old
 			if($fileinfo['modification_date'] < strtotime('-1 week'))
 			{
-				// delete file
 				SpoonFile::delete($this->cachePath . '/' . $file);
 			}
 		}
 	}
 
-
 	/**
 	 * Cleanup database
-	 *
-	 * @return	void
 	 */
 	private function cleanupDatabase()
 	{
-		// cleanup pages
-		BackendModel::getDB(true)->delete('analytics_pages', 'date_viewed < ?', array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week'))));
+		BackendModel::getDB(true)->delete(
+			'analytics_pages',
+			'date_viewed < ?',
+			array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week')))
+		);
 	}
-
 
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// init vars
 		$this->cachePath = BACKEND_CACHE_PATH . '/analytics';
 
 		// get parameters
@@ -85,11 +74,9 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			// is everything still set?
 			if(BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED')
 			{
-				// get interval
 				$interval = BackendModel::getModuleSetting('analytics', 'interval', 'week');
 				if($interval == 'week') $interval .= ' -2 days';
 
-				// redefine vars
 				$page = 'all';
 				$startTimestamp = strtotime('-1' . $interval);
 				$endTimestamp = time();
@@ -114,8 +101,6 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			{
 				// set status in cache
 				SpoonFile::setContent($filename, 'unauthorized');
-
-				// stop here
 				return;
 			}
 		}
@@ -123,31 +108,19 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		// some parameters aren't given? throw exception
 		else throw new SpoonException('Some parameters are missing.');
 
-		// get dashboard data
 		$this->getDashboardData();
-
-		// get data
 		$this->getData($startTimestamp, $endTimestamp, $force, $page, $pageId, $filename);
-
-		// cleanup cache
 		$this->cleanupCache();
-
-		// cleanup database
 		$this->cleanupDatabase();
 	}
 
-
 	/**
 	 * Get data from analytics
-	 *
-	 * @return	void
 	 */
 	private function getDashboardData()
 	{
-		// try
 		try
 		{
-			// init vars
 			$startTimestamp = strtotime('-1 week -1 days', mktime(0, 0, 0));
 			$endTimestamp = mktime(0, 0, 0);
 
@@ -155,35 +128,33 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			$data = BackendAnalyticsModel::getDashboardDataFromCache($startTimestamp, $endTimestamp);
 
 			// nothing in cache - fetch from google and set cache
-			if(!isset($data['dashboard_data'])) $data['dashboard_data']['entries'] = BackendAnalyticsHelper::getDashboardData($startTimestamp, $endTimestamp);
+			if(!isset($data['dashboard_data']))
+			{
+				$data['dashboard_data']['entries'] = BackendAnalyticsHelper::getDashboardData($startTimestamp, $endTimestamp);
+			}
 
 			// update cache file
 			BackendAnalyticsModel::writeCacheFile($data, $startTimestamp, $endTimestamp);
 		}
 
-		// something went wrong
 		catch(Exception $e)
 		{
-			// throw exception
 			throw new SpoonException('Something went wrong while getting dashboard data.');
 		}
 	}
 
-
 	/**
 	 * Get data from analytics
 	 *
-	 * @return	void
-	 * @param	int $startTimestamp			The start timestamp for the data to collect.
-	 * @param	int $endTimestamp			The end timestamp for the data to collect.
-	 * @param	bool[optional] $force		Force getting data. Don't rely on cache.
-	 * @param	string[optional] $page		The page to get data for.
-	 * @param	string[optional] $pageId	The id of the page to get data for.
-	 * @param	string[optional] $filename	The name of the cache file.
+	 * @param int $startTimestamp The start timestamp for the data to collect.
+	 * @param int $endTimestamp The end timestamp for the data to collect.
+	 * @param bool[optional] $force Force getting data. Don't rely on cache.
+	 * @param string[optional] $page The page to get data for.
+	 * @param string[optional] $pageId The id of the page to get data for.
+	 * @param string[optional] $filename The name of the cache file.
 	 */
 	private function getData($startTimestamp, $endTimestamp, $force = false, $page = 'all', $pageId = null, $filename = null)
 	{
-		// try
 		try
 		{
 			// get data from cache
@@ -197,6 +168,8 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
 			// nothing in cache - fetch from google and set cache
 			if(!isset($data['metrics_per_day']) || $force) $data['metrics_per_day']['entries'] = BackendAnalyticsHelper::getMetricsPerDay($startTimestamp, $endTimestamp);
+
+			// @todo refactor the code below. Isnt a switch statement more suitable?
 
 			// traffic sources, top keywords and top referrals on index page
 			if($page == 'all' || $page == 'index')
@@ -226,8 +199,10 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 					// add entries to items
 					foreach($gaResults['entries'] as $entry)
 					{
-						$topReferrals[] = array('referrer' => $entry['source'] . $entry['referralPath'],
-										 		'pageviews' => $entry['pageviews']);
+						$topReferrals[] = array(
+							'referrer' => $entry['source'] . $entry['referralPath'],
+							'pageviews' => $entry['pageviews']
+						);
 					}
 
 					// set cache
@@ -310,13 +285,10 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			BackendAnalyticsModel::writeCacheFile($data, $startTimestamp, $endTimestamp);
 		}
 
-		// something went wrong
 		catch(Exception $e)
 		{
 			// set file content to indicate something went wrong if needed
 			if(isset($filename)) SpoonFile::setContent($filename, 'error');
-
-			// or throw exception
 			else throw new SpoonException('Something went wrong while getting data.');
 		}
 
@@ -324,5 +296,3 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		if(isset($filename)) SpoonFile::setContent($filename, 'done');
 	}
 }
-
-?>

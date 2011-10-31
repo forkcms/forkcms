@@ -1,45 +1,41 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to perform mass actions on landing pages (delete, ...)
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// action to execute
 		$action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
 		// no id's provided
-		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('landing_pages') . '&error=no-items-selected');
+		if(!isset($_GET['id']))
+		{
+			$this->redirect(BackendModel::createURLForAction('landing_pages') . '&error=no-items-selected');
+		}
 
 		// at least one id
 		else
 		{
-			// redefine id's
-			$ids = (array) $_GET['id'];
-
 			// delete items
-			if($action == 'delete') BackendAnalyticsModel::deleteLandingPage($ids);
+			if($action == 'delete') BackendAnalyticsModel::deleteLandingPage((array) $ids);
 		}
 
 		// redirect
 		$this->redirect(BackendModel::createURLForAction('landing_pages') . '&report=' . $action);
 	}
 }
-
-?>

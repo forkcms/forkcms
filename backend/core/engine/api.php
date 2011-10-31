@@ -1,29 +1,29 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be available through the API
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendCoreAPI
 {
 	/**
 	 * Add a device to a user.
 	 *
-	 * @return	void
-	 * @param	string $token	The token of the device.
-	 * @param	string $email	The emailaddress for the user to link the device to.
+	 * @param string $token The token of the device.
+	 * @param string $email The emailaddress for the user to link the device to.
 	 */
 	public static function appleAdddevice($token, $email)
 	{
-		// authorized?
-		if(API::authorize())
+		if(API::authorize()) // @todo refactor to eg isAuthorized (looks strange now)
 		{
-			// redefine
 			$token = str_replace(' ', '', (string) $token);
 
 			// validate
@@ -35,7 +35,10 @@ class BackendCoreAPI
 			$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
 
 			// validate keys
-			if($publicKey == '' || $privateKey == '') API::output(API::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configer them in the backend.'));
+			if($publicKey == '' || $privateKey == '')
+			{
+				API::output(API::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configure them in the backend.'));
+			}
 
 			try
 			{
@@ -61,7 +64,6 @@ class BackendCoreAPI
 				if(!empty($tokens)) $user->setSetting('apple_device_token', $tokens);
 			}
 
-			// catch exceptions
 			catch(Exception $e)
 			{
 				API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
@@ -69,17 +71,14 @@ class BackendCoreAPI
 		}
 	}
 
-
 	/**
 	 * Remove a device from a user.
 	 *
-	 * @return	void
-	 * @param	string $token	The token of the device.
-	 * @param	string $email	The emailaddress for the user to link the device to.
+	 * @param string $token The token of the device.
+	 * @param string $email The emailaddress for the user to link the device to.
 	 */
 	public static function appleRemovedevice($token, $email)
 	{
-		// authorized?
 		if(API::authorize())
 		{
 			// redefine
@@ -117,7 +116,6 @@ class BackendCoreAPI
 				}
 			}
 
-			// catch exceptions
 			catch(Exception $e)
 			{
 				API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
@@ -125,17 +123,15 @@ class BackendCoreAPI
 		}
 	}
 
-
 	/**
 	 * Get the API-key for a user.
 	 *
-	 * @return	array
-	 * @param	string $email		The emailaddress for the user.
-	 * @param	string $password	The password for the user.
+	 * @param string $email The emailaddress for the user.
+	 * @param string $password The password for the user.
+	 * @return array
 	 */
 	public static function getAPIKey($email, $password)
 	{
-		// get variables
 		$email = (string) $email;
 		$password = (string) $password;
 
@@ -168,18 +164,15 @@ class BackendCoreAPI
 		return array('api_key' => $user->getSetting('api_key'));
 	}
 
-
 	/**
 	 * Get info about the site.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getInfo()
 	{
-		// authorized?
 		if(API::authorize())
 		{
-			// init
 			$info = array();
 
 			// get all languages
@@ -204,10 +197,7 @@ class BackendCoreAPI
 				$info['languages'][] = $var;
 			}
 
-			// return info
 			return $info;
 		}
 	}
 }
-
-?>

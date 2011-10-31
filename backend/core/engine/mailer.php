@@ -1,42 +1,44 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will send mails
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Dave Lens <dave@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Sam Tubbax <sam@sumocoders.be>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Sam Tubbax <sam@sumocoders.be>
  */
 class BackendMailer
 {
 	/**
 	 * Adds an email to the queue.
 	 *
-	 * @return	int								The id of the inserted mail.
-	 * @param	string $subject					The subject for the email.
-	 * @param	string $template				The template to use.
-	 * @param	array[optional] $variables		Variables that should be assigned in the email.
-	 * @param	string[optional] $toEmail		The to-address for the email.
-	 * @param	string[optional] $toName		The to-name for the email.
-	 * @param	string[optional] $fromEmail		The from-address for the mail.
-	 * @param	string[optional] $fromName		The from-name for the mail.
-	 * @param	string[optional] $replyToEmail	The replyto-address for the mail.
-	 * @param	string[optional] $replyToName	The replyto-name for the mail.
-	 * @param	bool[optional] $queue			Should the mail be queued?
-	 * @param	int[optional] $sendOn			When should the email be send, only used when $queue is true.
-	 * @param	bool[optional] $isRawHTML		If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
-	 * @param	string[optional] $plainText		The plain text version.
-	 * @param	array[optional] $attachments	Paths to attachments to include.
+	 * @param string $subject The subject for the email.
+	 * @param string $template The template to use.
+	 * @param array[optional] $variables Variables that should be assigned in the email.
+	 * @param string[optional] $toEmail The to-address for the email.
+	 * @param string[optional] $toName The to-name for the email.
+	 * @param string[optional] $fromEmail The from-address for the mail.
+	 * @param string[optional] $fromName The from-name for the mail.
+	 * @param string[optional] $replyToEmail The replyto-address for the mail.
+	 * @param string[optional] $replyToName The replyto-name for the mail.
+	 * @param bool[optional] $queue Should the mail be queued?
+	 * @param int[optional] $sendOn When should the email be send, only used when $queue is true.
+	 * @param bool[optional] $isRawHTML If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
+	 * @param string[optional] $plainText The plain text version.
+	 * @param array[optional] $attachments Paths to attachments to include.
+	 * @return int The id of the inserted mail.
 	 */
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null, array $attachments = null)
 	{
-		// redefine
 		$subject = (string) strip_tags($subject);
 		$template = (string) $template;
 
@@ -147,28 +149,27 @@ class BackendMailer
 		return $id;
 	}
 
-
 	/**
 	 * Get all queued mail ids
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getQueuedMailIds()
 	{
-		// return the ids
-		return (array) BackendModel::getDB()->getColumn('SELECT e.id
-															FROM emails AS e
-															WHERE e.send_on < ? OR e.send_on IS NULL',
-															array(BackendModel::getUTCDate()));
+		return (array) BackendModel::getDB()->getColumn(
+			'SELECT e.id
+			 FROM emails AS e
+			 WHERE e.send_on < ? OR e.send_on IS NULL',
+			array(BackendModel::getUTCDate())
+		);
 	}
-
 
 	/**
 	 * Returns the content from a given template
 	 *
-	 * @return	string
-	 * @param	string $template				The template to use.
-	 * @param	array[optional] $variables		The variabled to assign.
+	 * @param string $template The template to use.
+	 * @param array[optional] $variables The variabled to assign.
+	 * @return string
 	 */
 	private static function getTemplateContent($template, $variables = null)
 	{
@@ -204,26 +205,23 @@ class BackendMailer
 		return (string) $cssToInlineStyles->convert();
 	}
 
-
 	/**
 	 * Send an email
 	 *
-	 * @return	void
-	 * @param	int $id		The id of the mail to send.
+	 * @param int $id The id of the mail to send.
 	 */
 	public static function send($id)
 	{
-		// redefine
 		$id = (int) $id;
-
-		// get db
 		$db = BackendModel::getDB(true);
 
 		// get record
-		$emailRecord = (array) $db->getRecord('SELECT *
-												FROM emails AS e
-												WHERE e.id = ?',
-												array($id));
+		$emailRecord = (array) $db->getRecord(
+			'SELECT *
+			 FROM emails AS e
+			 WHERE e.id = ?',
+			array($id)
+		);
 
 		// mailer type
 		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
@@ -279,5 +277,3 @@ class BackendMailer
 		}
 	}
 }
-
-?>

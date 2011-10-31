@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit a subscriber
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorEditAddress extends BackendBaseActionEdit
 {
@@ -18,14 +21,12 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 	 */
 	private $customFields = array();
 
-
 	/**
 	 * The e-mail parameter
 	 *
 	 * @var	string
 	 */
 	private $email;
-
 
 	/**
 	 * The passed group record
@@ -34,7 +35,6 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 	 */
 	private $group;
 
-
 	/**
 	 * The subscriptions this e-mail is part of
 	 *
@@ -42,39 +42,22 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 	 */
 	private $subscriptions;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->email = $this->getParameter('email');
 
 		// does the item exist
 		if(BackendMailmotorModel::existsAddress($this->email))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// load the custom fields
 			$this->loadCustomFields();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -82,11 +65,8 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -109,11 +89,8 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		$this->group = BackendMailmotorModel::getGroup($this->id);
 	}
 
-
 	/**
 	 * Load the custom fields
-	 *
-	 * @return	void
 	 */
 	private function loadCustomFields()
 	{
@@ -149,11 +126,8 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		$this->tpl->assign('fields', $this->customFields);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -177,11 +151,8 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		if(!empty($this->subscriptions)) $this->frm->addDropdown('subscriptions', $this->subscriptions, $this->id);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -195,11 +166,8 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		$this->tpl->assign('group', $this->group);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -275,5 +243,3 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

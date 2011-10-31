@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Frontend page class, this class will handle everything on a page
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendPage extends FrontendBaseObject
 {
@@ -19,14 +22,12 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private $breadcrumb;
 
-
 	/**
 	 * Current page id
 	 *
 	 * @var	int
 	 */
 	private static $currentPageId;
-
 
 	/**
 	 * Footer instance
@@ -35,14 +36,12 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private $footer;
 
-
 	/**
 	 * Header instance
 	 *
 	 * @var	FrontendHeader
 	 */
 	private $header;
-
 
 	/**
 	 * The current pageId
@@ -51,14 +50,12 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private $pageId;
 
-
 	/**
 	 * Content of the page
 	 *
 	 * @var	array
 	 */
 	private $record = array();
-
 
 	/**
 	 * The path of the template to show
@@ -67,7 +64,6 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private $templatePath;
 
-
 	/**
 	 * The statuscode
 	 *
@@ -75,15 +71,8 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private $statusCode = 200;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
-		// call parent
 		parent::__construct();
 
 		// get pageId for requested URL
@@ -111,11 +100,8 @@ class FrontendPage extends FrontendBaseObject
 		$this->display();
 	}
 
-
 	/**
 	 * Display the page
-	 *
-	 * @return	void
 	 */
 	public function display()
 	{
@@ -176,22 +162,18 @@ class FrontendPage extends FrontendBaseObject
 		$this->tpl->display($this->templatePath, false, true);
 	}
 
-
 	/**
 	 * Get the current pageid
 	 *
-	 * @return	int
+	 * @return int
 	 */
 	public static function getCurrentPageId()
 	{
 		return self::$currentPageId;
 	}
 
-
 	/**
 	 * Get page content
-	 *
-	 * @return	void
 	 */
 	public function getPageContent()
 	{
@@ -249,11 +231,8 @@ class FrontendPage extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Parse the languages
-	 *
-	 * @return	void
 	 */
 	private function parseLanguages()
 	{
@@ -285,11 +264,8 @@ class FrontendPage extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Processes the page
-	 *
-	 * @return	void
 	 */
 	private function processPage()
 	{
@@ -388,16 +364,11 @@ class FrontendPage extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Store the data for statistics
-	 *
-	 * @return	void
 	 */
 	private function storeStatistics()
 	{
-		// @later	save temp statistics data here.
+		// @later save temp statistics data here.
 	}
 }
-
-?>

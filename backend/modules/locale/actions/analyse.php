@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the analyse-action, it will display an overview of used locale.
  *
- * @package		backend
- * @subpackage	locale
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Lowie Benoot <lowie@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Lowie Benoot <lowie@netlash.com>
  */
 class BackendLocaleAnalyse extends BackendBaseActionIndex
 {
@@ -17,40 +20,27 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	 *
 	 * @var	BackendDataGridArray
 	 */
-	private $dgBackend,
-			$dgFrontend;
-
+	private $dgBackend, $dgFrontend;
 
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load datagrids
 		$this->loadDataGrids();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
-
 
 	/**
 	 * Format a serialized path-array into something that is usable in a datagrid
 	 *
-	 * @return	string
-	 * @param	string $files	The serialized array with the paths.
+	 * @param string $files The serialized array with the paths.
+	 * @return string
 	 */
 	public static function formatFilesList($files)
 	{
-		// redefine
 		$files = (array) unserialize((string) $files);
 
 		// no files
@@ -69,18 +59,14 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		return $return;
 	}
 
-
 	/**
 	 * Load the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
 		/*
 		 * Frontend datagrid
 		 */
-		// create datagrid
 		$this->dgFrontend = new BackendDataGridArray(BackendLocaleModel::getNonExistingFrontendLocale(BL::getWorkingLanguage()));
 
 		// overrule default URL
@@ -111,7 +97,6 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		/*
 		 * Backend datagrid
 		 */
-		// create datagrid
 		$this->dgBackend = new BackendDataGridArray(BackendLocaleModel::getNonExistingBackendLocale(BL::getWorkingLanguage()));
 
 		// overrule default URL
@@ -140,11 +125,8 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->dgBackend->setPaging(false);
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -156,5 +138,3 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->tpl->assign('language', BackendLanguage::getWorkingLanguage());
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This saves the mailing content
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 {
@@ -18,16 +21,14 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 */
 	private $mailing;
 
-
 	/**
 	 * Adds Google UTM GET Parameters to all anchor links in the mailing
 	 *
-	 * @return	string
-	 * @param	string $HTML	The HTML wherin the parameters will be added.
+	 * @param string $HTML The HTML wherin the parameters will be added.
+	 * @return string
 	 */
 	private function addUTMParameters($HTML)
 	{
-		// init var
 		$matches = array();
 
 		// search for all hrefs
@@ -63,15 +64,11 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		return str_replace($search, $replace, $HTML);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -110,8 +107,20 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$item['data'] = serialize(array('full_content_html' => $HTML));
 		$item['edited_on'] = date('Y-m-d H:i:s');
 
-		// update mailing
+		// update mailing in our database
 		BackendMailmotorModel::updateMailing($item);
+
+		/*
+			we should insert the draft into campaignmonitor here,
+			so we can use sendCampaignPreview in step 4.
+		*/
+		$item['groups'] = $this->mailing['groups'];
+		$item['name'] = $this->mailing['name'];
+		$item['from_name'] = $this->mailing['from_name'];
+		$item['from_email'] = $this->mailing['from_email'];
+		$item['reply_to_email'] = $this->mailing['reply_to_email'];
+
+		BackendMailmotorCMHelper::saveMailingDraft($item);
 
 		// trigger event
 		BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step3', array('item' => $item));
@@ -120,14 +129,13 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', $this->getModule()));
 	}
 
-
 	/**
 	 * Returns the fully parsed e-mail content
 	 *
-	 * @return	string
-	 * @param	string $template			The template to use.
-	 * @param	string $contentHTML			The content.
-	 * @param	string $fullContentHTML		The full content.
+	 * @param string $template The template to use.
+	 * @param string $contentHTML The content.
+	 * @param string $fullContentHTML The full content.
+	 * @return string
 	 */
 	private function getEmailContent($template, $contentHTML, $fullContentHTML)
 	{
@@ -170,14 +178,13 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		return $fullContentHTML;
 	}
 
-
 	/**
 	 * Returns the text between 2 tags
 	 *
-	 * @return	array
-	 * @param	string $tag					The tag.
-	 * @param	string $html				The HTML to search in.
-	 * @param	bool[optional] $strict		Use strictmode?
+	 * @param string $tag The tag.
+	 * @param string $html The HTML to search in.
+	 * @param bool[optional] $strict Use strictmode?
+	 * @return array
 	 */
 	private function getTextBetweenTags($tag, $html, $strict = false)
 	{
@@ -203,9 +210,6 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 			$results[] = $item->nodeValue;
 		}
 
-		// return the results
 		return $results;
 	}
 }
-
-?>

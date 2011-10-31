@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendMailmotorSettings extends BackendBaseActionEdit
 {
@@ -18,14 +21,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private $accountLinked = false;
 
-
 	/**
 	 * The client ID
 	 *
 	 * @var	string
 	 */
 	private $clientID;
-
 
 	/**
 	 * The forms used on this page
@@ -34,7 +35,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private $frmAccount, $frmClient, $frmGeneral;
 
-
 	/**
 	 * Mailmotor settings
 	 *
@@ -42,12 +42,11 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private $settings = array();
 
-
 	/**
 	 * Attempts to create a client
 	 *
-	 * @return	mixed
-	 * @param	array $record		The client record to create.
+	 * @param array $record The client record to create.
+	 * @return mixed
 	 */
 	private function createClient($record)
 	{
@@ -78,11 +77,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -100,11 +96,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$this->display();
 	}
 
-
 	/**
 	 * Get all necessary data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -119,11 +112,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$this->clientID = BackendMailmotorCMHelper::getClientID();
 	}
 
-
 	/**
 	 * Loads the account settings form
-	 *
-	 * @return	void
 	 */
 	private function loadAccountForm()
 	{
@@ -143,11 +133,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Loads the client settings form
-	 *
-	 * @return	void
 	 */
 	private function loadClientForm()
 	{
@@ -195,11 +182,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		if(BackendAuthentication::getUser()->isGod()) $this->frmClient->addText('price_per_email', $this->settings['price_per_email']);
 	}
 
-
 	/**
 	 * Loads the general settings form
-	 *
-	 * @return	void
 	 */
 	private function loadGeneralForm()
 	{
@@ -220,11 +204,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		if(BackendAuthentication::getUser()->isGod()) $this->frmGeneral->addText('price_per_email', $this->settings['price_per_email']);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -243,12 +224,11 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$this->frmGeneral->parse($this->tpl);
 	}
 
-
 	/**
 	 * Updates a client record.
 	 *
-	 * @return	mixed
-	 * @param	array $record		The client record to update.
+	 * @param array $record The client record to update.
+	 * @return mixed
 	 */
 	private function updateClient($record)
 	{
@@ -276,11 +256,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Validates the account tab. On successful validation it will unlink an existing campaignmonitor account.
-	 *
-	 * @return	void
 	 */
 	private function validateAccountForm()
 	{
@@ -306,11 +283,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Validates the client tab
-	 *
-	 * @return	void
 	 */
 	private function validateClientForm()
 	{
@@ -383,11 +357,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Validates the general tab
-	 *
-	 * @return	void
 	 */
 	private function validateGeneralForm()
 	{
@@ -423,5 +394,3 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

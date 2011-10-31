@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the blog module
  *
- * @package		installer
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BlogInstall extends ModuleInstaller
 {
@@ -20,18 +23,17 @@ class BlogInstall extends ModuleInstaller
 	 */
 	private $defaultCategoryId;
 
-
 	/**
 	 * Add a category for a language
 	 *
-	 * @return	int
-	 * @param	string $language	The language to use.
-	 * @param	string $title		The title of the category.
-	 * @param	string $url			The URL for the category.
+	 * @param string $language The language to use.
+	 * @param string $title The title of the category.
+	 * @param string $url The URL for the category.
+	 * @return int
 	 */
 	private function addCategory($language, $title, $url)
 	{
-		// build array
+		$item = array();
 		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
 		$item['language'] = (string) $language;
 		$item['title'] = (string) $title;
@@ -39,21 +41,15 @@ class BlogInstall extends ModuleInstaller
 		return (int) $this->getDB()->insert('blog_categories', $item);
 	}
 
-
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
-		// add 'blog' as a module
 		$this->addModule('blog', 'The blog module.');
-
-		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// general settings
@@ -67,7 +63,6 @@ class BlogInstall extends ModuleInstaller
 		$this->setSetting('blog', 'recent_articles_list_num_items', 5);
 		$this->setSetting('blog', 'max_num_revisions', 20);
 
-		// make module searchable
 		$this->makeSearchable('blog');
 
 		// module rights
@@ -88,6 +83,9 @@ class BlogInstall extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'index');
 		$this->setActionRights(1, 'blog', 'mass_comment_action');
 		$this->setActionRights(1, 'blog', 'settings');
+
+		// insert dashboard widget
+		$this->insertWidget();
 
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
@@ -140,37 +138,51 @@ class BlogInstall extends ModuleInstaller
 												WHERE b.extra_id = ? AND p.language = ?',
 												array($blogId, $language)))
 			{
-				// insert page
-				$this->insertPage(array('title' => 'Blog',
-										'language' => $language),
-									null,
-									array('extra_id' => $blogId, 'position' => 'main'),
-									array('extra_id' => $searchId, 'position' => 'top'));
+				$this->insertPage(
+					array('title' => 'Blog', 'language' => $language),
+					null,
+					array('extra_id' => $blogId, 'position' => 'main'),
+					array('extra_id' => $searchId, 'position' => 'top')
+				);
 			}
 
-			// install example data if requested
-			if($this->installExample()) $this->installExampleData($language);
+			if($this->installExample())
+			{
+				$this->installExampleData($language);
+			}
 		}
 	}
-
 
 	/**
 	 * Fetch the id of the first category in this language we come across
 	 *
-	 * @return	int
-	 * @param	string $language	The language to use.
+	 * @param string $language The language to use.
+	 * @return int
 	 */
 	private function getCategory($language)
 	{
 		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?', array((string) $language));
 	}
 
+	/**
+	 * Insert an empty admin dashboard sequence
+	 */
+	private function insertWidget()
+	{
+		$comments = array(
+			'column' => 'right',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		$this->insertDashboardWidget('blog', 'comments', $comments);
+	}
 
 	/**
 	 * Install example data
 	 *
-	 * @return	void
-	 * @param	string $language	The language to use.
+	 * @param string $language The language to use.
 	 */
 	private function installExampleData($language)
 	{
@@ -181,76 +193,85 @@ class BlogInstall extends ModuleInstaller
 		if(!(bool) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)))
 		{
 			// insert sample blogpost 1
-			$db->insert('blog_posts', array('id' => 1,
-											'category_id' => $this->defaultCategoryId,
-											'user_id' => $this->getDefaultUserID(),
-											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
-											'language' => $language,
-											'title' => 'Nunc sediam est',
-											'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-											'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-											'status' => 'active',
-											'publish_on' => gmdate('Y-m-d H:i:00'),
-											'created_on' => gmdate('Y-m-d H:i:00'),
-											'edited_on' => gmdate('Y-m-d H:i:00'),
-											'hidden' => 'N',
-											'allow_comments' => 'Y',
-											'num_comments' => '3'));
+			$db->insert('blog_posts', array(
+				'id' => 1,
+				'category_id' => $this->defaultCategoryId,
+				'user_id' => $this->getDefaultUserID(),
+				'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
+				'language' => $language,
+				'title' => 'Nunc sediam est',
+				'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'status' => 'active',
+				'publish_on' => gmdate('Y-m-d H:i:00'),
+				'created_on' => gmdate('Y-m-d H:i:00'),
+				'edited_on' => gmdate('Y-m-d H:i:00'),
+				'hidden' => 'N',
+				'allow_comments' => 'Y',
+				'num_comments' => '3'
+			));
 
 			// insert sample blogpost 2
-			$db->insert('blog_posts', array('id' => 2,
-											'category_id' => $this->defaultCategoryId,
-											'user_id' => $this->getDefaultUserID(),
-											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
-											'language' => $language,
-											'title' => 'Lorem ipsum',
-											'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-											'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-											'status' => 'active',
-											'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-											'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-											'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-											'hidden' => 'N',
-											'allow_comments' => 'Y',
-											'num_comments' => '0'));
+			$db->insert('blog_posts', array(
+				'id' => 2,
+				'category_id' => $this->defaultCategoryId,
+				'user_id' => $this->getDefaultUserID(),
+				'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
+				'language' => $language,
+				'title' => 'Lorem ipsum',
+				'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'status' => 'active',
+				'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+				'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+				'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+				'hidden' => 'N',
+				'allow_comments' => 'Y',
+				'num_comments' => '0'
+			));
 
 			// insert example comment 1
-			$db->insert('blog_comments', array('post_id' => 1,
-												'language' => $language,
-												'created_on' => gmdate('Y-m-d H:i:00'),
-												'author' => 'Matthias Mullie',
-												'email' => 'matthias@spoon-library.com',
-												'website' => 'http://www.anantasoft.com',
-												'text' => 'cool!',
-												'type' => 'comment',
-												'status' => 'published',
-												'data' => null));
+			$db->insert('blog_comments', array(
+				'post_id' => 1,
+				'language' => $language,
+				'created_on' => gmdate('Y-m-d H:i:00'),
+				'author' => 'Matthias Mullie',
+				'email' => 'matthias@spoon-library.com',
+				'website' => 'http://www.anantasoft.com',
+				'text' => 'cool!',
+				'type' => 'comment',
+				'status' => 'published',
+				'data' => null
+			));
 
 			// insert example comment 2
-			$db->insert('blog_comments', array('post_id' => 1,
-												'language' => $language,
-												'created_on' => gmdate('Y-m-d H:i:00'),
-												'author' => 'Davy Hellemans',
-												'email' => 'davy@spoon-library.com',
-												'website' => 'http://www.spoon-library.com',
-												'text' => 'awesome!',
-												'type' => 'comment',
-												'status' => 'published',
-												'data' => null));
+			$db->insert('blog_comments', array(
+				'post_id' => 1,
+				'language' => $language,
+				'created_on' => gmdate('Y-m-d H:i:00'),
+				'author' => 'Davy Hellemans',
+				'email' => 'davy@spoon-library.com',
+				'website' => 'http://www.spoon-library.com',
+				'text' => 'awesome!',
+				'type' => 'comment',
+				'status' => 'published',
+				'data' => null
+			));
 
 			// insert example comment 3
-			$db->insert('blog_comments', array('post_id' => 1,
-												'language' => $language,
-												'created_on' => gmdate('Y-m-d H:i:00'),
-												'author' => 'Tijs Verkoyen',
-												'email' => 'tijs@spoon-library.com',
-												'website' => 'http://www.sumocoders.be',
-												'text' => 'wicked!',
-												'type' => 'comment',
-												'status' => 'published',
-												'data' => null));
+			$db->insert('blog_comments', array(
+				'post_id' => 1,
+				'language' => $language,
+				'created_on' => gmdate('Y-m-d H:i:00'),
+				'author' => 'Tijs Verkoyen',
+				'email' => 'tijs@spoon-library.com',
+				'website' => 'http://www.sumocoders.be',
+				'text' => 'wicked!',
+				'type' => 'comment',
+				'status' => 'published',
+				'data' => null
+			));
 		}
 	}
 }
 
-?>

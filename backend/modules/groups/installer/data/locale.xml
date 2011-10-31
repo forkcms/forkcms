@@ -2,10 +2,6 @@
 <locale>
   <backend>
     <groups>
-      <item type="label" name="Presets">
-        <translation language="nl"><![CDATA[presets]]></translation>
-        <translation language="en"><![CDATA[presets]]></translation>
-      </item>    
       <item type="label" name="DisplayWidgets">
         <translation language="nl"><![CDATA[te tonen widgets]]></translation>
         <translation language="en"><![CDATA[widgets to display]]></translation>
@@ -21,10 +17,6 @@
       <item type="label" name="NumUsers">
         <translation language="nl"><![CDATA[aantal gebruikers]]></translation>
         <translation language="en"><![CDATA[number of users]]></translation>
-      </item>
-      <item type="label" name="Screenname">
-        <translation language="nl"><![CDATA[scherm naam]]></translation>
-        <translation language="en"><![CDATA[screen name]]></translation>
       </item>
       <item type="label" name="Checkbox">
         <translation language="nl"><![CDATA[&nbsp;]]></translation>

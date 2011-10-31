@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the import-action, it will import records from a CSV file
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 {
@@ -18,11 +21,8 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 	 */
 	private $groupId;
 
-
 	/**
 	 * Generates and downloads the example CSV file
-	 *
-	 * @return	void
 	 */
 	private function downloadExampleFile()
 	{
@@ -40,42 +40,25 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/example.csv', $csv, null, null, ';', '"', true);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// store the passed group ID
 		$this->groupId = SpoonFilter::getGetValue('group_id', null, 0, 'int');
-
-		// download the example file
 		$this->downloadExampleFile();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
-
 
 	/**
 	 * Reformats a subscriber record with custom fields to the necessary format used in the import.
 	 *
-	 * @return	array
-	 * @param	array $subscriber	The subscriber record as it comes out of the CSV.
+	 * @param array $subscriber The subscriber record as it comes out of the CSV.
+	 * @return array
 	 */
 	private function formatSubscriberCSVRow($subscriber)
 	{
@@ -98,15 +81,11 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			}
 		}
 
-		// return the record
 		return $item;
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -132,13 +111,12 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$this->tpl->assign('import', true);
 	}
 
-
 	/**
 	 * Processes the subscriber import. Returns an array with failed subscribers.
 	 *
-	 * @return	array			A list with failed subscribers.
-	 * @param	array $csv		The uploaded CSV file.
-	 * @param	int $groupID	The group ID for which we're importing.
+	 * @param array $csv The uploaded CSV file.
+	 * @param int $groupID The group ID for which we're importing.
+	 * @return array A list with failed subscribers.
 	 */
 	private function processImport($csv, $groupID)
 	{
@@ -210,11 +188,8 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		return $failedSubscribersCSV;
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -305,5 +280,3 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

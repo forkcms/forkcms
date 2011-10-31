@@ -1679,12 +1679,12 @@
         <translation language="en"><![CDATA[Your password has been changed.]]></translation>
       </item>
       <item type="message" name="Redirecting">
-        <translation language="nl"><![CDATA[U wordt omgeleidt.]]></translation>
+        <translation language="nl"><![CDATA[U wordt omgeleid.]]></translation>
         <translation language="en"><![CDATA[You are being redirected.]]></translation>
       </item>
       <item type="message" name="ResetYourPasswordMailContent">
-        <translation language="nl"><![CDATA[Reset je wachtwoord door op de link hieronder te klikken. Indien je niet hier niet om gevraagd hebt hoef je geen actie te ondernemen.]]></translation>
-        <translation language="en"><![CDATA[Reset your password by clicking the link below. If you didn't ask for this]]></translation>
+        <translation language="nl"><![CDATA[Reset je wachtwoord door op de link hieronder te klikken. Indien je niet hier niet om gevraagd hebt kan je deze mail negeren.]]></translation>
+        <translation language="en"><![CDATA[Reset your password by clicking the link below. If you didn't ask for this, you can ignore this message.]]></translation>
       </item>
       <item type="message" name="ResetYourPasswordMailSubject">
         <translation language="nl"><![CDATA[Wijzig je wachtwoord]]></translation>

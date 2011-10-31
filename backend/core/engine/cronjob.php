@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will handle cronjob related stuff
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendCronjob
 {
@@ -18,14 +21,12 @@ class BackendCronjob
 	 */
 	private $action;
 
-
 	/**
 	 * The id
 	 *
 	 * @var	int
 	 */
 	private $id;
-
 
 	/**
 	 * The working language
@@ -34,7 +35,6 @@ class BackendCronjob
 	 */
 	private $language;
 
-
 	/**
 	 * The module
 	 *
@@ -42,12 +42,6 @@ class BackendCronjob
 	 */
 	private $module;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// because some cronjobs will be run on the command line we should pass parameters
@@ -99,54 +93,46 @@ class BackendCronjob
 
 		// create new action
 		$action = new BackendCronjobAction($this->getAction(), $this->getModule());
-
-		// execute
 		$action->execute();
 	}
-
 
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get language
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getLanguage()
 	{
 		return $this->language;
 	}
 
-
 	/**
 	 * Get module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Set action
 	 *
-	 * @return	void
-	 * @param	string $value		The action to load.
+	 * @param string $value The action to load.
 	 */
 	public function setAction($value)
 	{
-		// redefine
 		$value = (string) $value;
 
 		// validate
@@ -163,12 +149,10 @@ class BackendCronjob
 		$this->action = (string) $value;
 	}
 
-
 	/**
 	 * Set language
 	 *
-	 * @return	void
-	 * @param	string $value	The language to load.
+	 * @param string $value The language to load.
 	 */
 	public function setLanguage($value)
 	{
@@ -188,16 +172,13 @@ class BackendCronjob
 		BackendLanguage::setWorkingLanguage($this->language);
 	}
 
-
 	/**
 	 * Set module
 	 *
-	 * @return	void
-	 * @param	string $value	The module to use.
+	 * @param string $value The module to use.
 	 */
 	public function setModule($value)
 	{
-		// redefine
 		$value = (string) $value;
 
 		// validate
@@ -215,15 +196,10 @@ class BackendCronjob
 	}
 }
 
-
 /**
  * This class is the real code, it creates an action, ...
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendCronjobAction
 {
@@ -234,7 +210,6 @@ class BackendCronjobAction
 	 */
 	private $action;
 
-
 	/**
 	 * The current module
 	 *
@@ -242,28 +217,21 @@ class BackendCronjobAction
 	 */
 	private $module;
 
-
 	/**
-	 * Default constructor
 	 * You have to specify the action and module so we know what to do with this instance
 	 *
-	 * @return	void
-	 * @param	string $action		The action to load.
-	 * @param	string $module		The module to load.
+	 * @param string $action The action to load.
+	 * @param string $module The module to load.
 	 */
 	public function __construct($action, $module)
 	{
-		// set properties
 		$this->setModule($module);
 		$this->setAction($action);
 	}
 
-
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -314,58 +282,50 @@ class BackendCronjobAction
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
-
-		// call the execute method of the real action (defined in the module)
 		$object->execute();
 	}
 
-
 	/**
 	 * Get the current action
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+	 * REMARK: You should not use this method from your code, but it has to be public so we can
+	 * access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the current module
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+	 * REMARK: You should not use this method from your code, but it has to be public so we can
+	 * access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Set the action
 	 *
-	 * @return	void
-	 * @param	string $action	The action to load.
+	 * @param string $action The action to load.
 	 */
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the module
 	 *
-	 * @return	void
-	 * @param	string $module	The module to load.
+	 * @param string $module The module to load.
 	 */
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 }
-
-?>

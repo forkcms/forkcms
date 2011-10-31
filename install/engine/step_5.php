@@ -1,56 +1,44 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Step 5 of the Fork installer
  *
- * @package		install
- * @subpackage	installer
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class InstallerStep5 extends InstallerStep
 {
 	/**
 	 * Executes this step.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// load form
 		$this->loadForm();
-
-		// validate form
 		$this->validateForm();
-
-		// parse form
 		$this->parseForm();
-
-		// show output
 		$this->tpl->display('layout/templates/step_5.tpl');
 	}
-
 
 	/**
 	 * Is this step allowed.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep4::isAllowed() &&
-				isset($_SESSION['modules']) &&
-				isset($_SESSION['example_data']);
+		return InstallerStep4::isAllowed() && isset($_SESSION['modules']) && isset($_SESSION['example_data']);
 	}
-
 
 	/**
 	 * Loads the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -75,11 +63,8 @@ class InstallerStep5 extends InstallerStep
 		$this->frm->addPassword('password', SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null);
 	}
 
-
 	/**
 	 * Validate the form based on the variables in $_POST
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -142,5 +127,3 @@ class InstallerStep5 extends InstallerStep
 		}
 	}
 }
-
-?>

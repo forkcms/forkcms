@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This edit-action will update tags using Ajax
  *
- * @package		backend
- * @subpackage	tags
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -44,5 +44,3 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 		$this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
 	}
 }
-
-?>

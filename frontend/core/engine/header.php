@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendHeader extends FrontendBaseObject
 {
@@ -19,14 +22,12 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private $cssFiles = array();
 
-
 	/**
 	 * The added js-files
 	 *
 	 * @var	array
 	 */
 	private $jsFiles = array();
-
 
 	/**
 	 * The links
@@ -35,14 +36,12 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private $links = array();
 
-
 	/**
 	 * Meta data
 	 *
 	 * @var	array
 	 */
 	private $meta = array();
-
 
 	/**
 	 * The custom meta data
@@ -51,7 +50,6 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private $metaCustom = '';
 
-
 	/**
 	 * Pagetitle
 	 *
@@ -59,15 +57,8 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private $pageTitle;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
-		// call the parent
 		parent::__construct();
 
 		// store in reference
@@ -88,18 +79,15 @@ class FrontendHeader extends FrontendBaseObject
 		$this->addJS('/frontend/core/js/frontend.js', false, true);
 	}
 
-
 	/**
 	 * Add a CSS file into the array
 	 *
-	 * @return	void
-	 * @param 	string $file					The path for the CSS-file that should be loaded.
-	 * @param	bool[optional] $minify			Should the CSS be minified?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
+	 * @param  string $file The path for the CSS-file that should be loaded.
+	 * @param bool[optional] $minify Should the CSS be minified?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addCSS($file, $minify = true, $addTimestamp = null)
 	{
-		// redefine
 		$file = (string) $file;
 		$minify = (bool) $minify;
 
@@ -130,19 +118,16 @@ class FrontendHeader extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Add a javascript file into the array
 	 *
-	 * @return	void
-	 * @param 	string $file						The path to the javascript-file that should be loaded.
-	 * @param	bool[optional] $minify				Should the file be minified?
-	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
-	 * @param	bool[optional] $addTimestamp		May we add a timestamp for caching purposes?
+	 * @param  string $file The path to the javascript-file that should be loaded.
+	 * @param bool[optional] $minify Should the file be minified?
+	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addJS($file, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
 	{
-		// redefine
 		$file = (string) $file;
 		$minify = (bool) $minify;
 
@@ -186,18 +171,15 @@ class FrontendHeader extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Add link
 	 *
-	 * @return	void
-	 * @param	array $attributes			The attributes to parse.
-	 * @param	bool[optional] $overwrite	Should we overwrite the current value?
-	 * @param	mixed[optional] $uniqueKeys	Which keys can we use to decide if an item is unique.
+	 * @param array $attributes The attributes to parse.
+	 * @param bool[optional] $overwrite Should we overwrite the current value?
+	 * @param mixed[optional] $uniqueKeys Which keys can we use to decide if an item is unique.
 	 */
 	public function addLink(array $attributes, $overwrite = false, $uniqueKeys = null)
 	{
-		// redefine
 		$overwrite = (bool) $overwrite;
 		$uniqueKeys = (array) $uniqueKeys;
 
@@ -224,14 +206,12 @@ class FrontendHeader extends FrontendBaseObject
 		else $this->links[$uniqueKey] = $attributes;
 	}
 
-
 	/**
 	 * Add meta data
 	 *
-	 * @return	void
-	 * @param	array $attributes			The attributes to parse.
-	 * @param	bool[optional] $overwrite	Should we overwrite the current value?
-	 * @param	mixed[optional] $uniqueKeys	Which keys can we use to decide if an item is unique.
+	 * @param array $attributes The attributes to parse.
+	 * @param bool[optional] $overwrite Should we overwrite the current value?
+	 * @param mixed[optional] $uniqueKeys Which keys can we use to decide if an item is unique.
 	 */
 	public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null)
 	{
@@ -273,51 +253,44 @@ class FrontendHeader extends FrontendBaseObject
 		else $this->meta[$uniqueKey] = $attributes;
 	}
 
-
 	/**
 	 * Add meta-description, somewhat a shortcut for the addMetaData-method
 	 *
-	 * @return	void
-	 * @param	string $value				The description.
-	 * @param	bool[optional] $overwrite	Should we overwrite the previous value?
+	 * @param string $value The description.
+	 * @param bool[optional] $overwrite Should we overwrite the previous value?
 	 */
 	public function addMetaDescription($value, $overwrite = false)
 	{
 		$this->addMetaData(array('name' => 'description', 'content' => $value), $overwrite);
 	}
 
-
 	/**
 	 * Add meta-keywords, somewhat a shortcut for the addMetaData-method
 	 *
-	 * @return	void
-	 * @param	string $value				The description.
-	 * @param	bool[optional] $overwrite	Should we overwrite the previous value?
+	 * @param string $value The description.
+	 * @param bool[optional] $overwrite Should we overwrite the previous value?
 	 */
 	public function addMetaKeywords($value, $overwrite = false)
 	{
 		$this->addMetaData(array('name' => 'keywords', 'content' => $value), $overwrite);
 	}
 
-
 	/**
 	 * Add Open Graph data
 	 *
-	 * @return	void
-	 * @param	string $key					The key (without og:).
-	 * @param	string $value				The value.
-	 * @param	bool[optional] $overwrite	Should we overwrite the previous value?
+	 * @param string $key The key (without og:).
+	 * @param string $value The value.
+	 * @param bool[optional] $overwrite Should we overwrite the previous value?
 	 */
 	public function addOpenGraphData($key, $value, $overwrite = false)
 	{
 		$this->addMetaData(array('property' => 'og:' . $key, 'content' => $value), $overwrite, 'property');
 	}
 
-
 	/**
 	 * Sort function for CSS-files
 	 *
-	 * @return	void
+	 * @todo this should return $this->cssFiles, making it more usable within getCssFiles
 	 */
 	private function cssSort()
 	{
@@ -358,11 +331,10 @@ class FrontendHeader extends FrontendBaseObject
 		$this->cssFiles = $return;
 	}
 
-
 	/**
 	 * Get all added CSS files
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getCSSFiles()
 	{
@@ -373,57 +345,52 @@ class FrontendHeader extends FrontendBaseObject
 		return $this->cssFiles;
 	}
 
-
 	/**
 	 * get all added javascript files
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getJSFiles()
 	{
 		return $this->jsFiles;
 	}
 
-
 	/**
 	 * Get all links
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getLinks()
 	{
 		return $this->links;
 	}
 
-
 	/**
 	 * Get meta
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getMeta()
 	{
 		return $this->meta;
 	}
 
-
 	/**
 	 * Get the custom meta
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getMetaCustom()
 	{
 		return $this->metaCustom;
 	}
 
-
 	/**
 	 * Get all attributes for meta tag specified by the attribute and the value for that attribute.
 	 *
-	 * @return	array
-	 * @param	string $attribute			The attribute to match on.
-	 * @param	string $attributeValue		The value for the unique attribute.
+	 * @param string $attribute The attribute to match on.
+	 * @param string $attributeValue The value for the unique attribute.
+	 * @return array
 	 */
 	public function getMetaValue($attribute, $attributeValue)
 	{
@@ -435,23 +402,21 @@ class FrontendHeader extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Get the pagetitle
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getPageTitle()
 	{
 		return $this->pageTitle;
 	}
 
-
 	/**
 	 * Minify a CSS-file
 	 *
-	 * @return	string
-	 * @param	string $file	The file to be minified.
+	 * @param string $file The file to be minified.
+	 * @return string
 	 */
 	private function minifyCSS($file)
 	{
@@ -523,12 +488,11 @@ class FrontendHeader extends FrontendBaseObject
 		return $finalURL;
 	}
 
-
 	/**
 	 * Minify a javascript-file
 	 *
-	 * @return	string
-	 * @param	string $file	The file to be minified.
+	 * @param string $file The file to be minified.
+	 * @return string
 	 */
 	private function minifyJS($file)
 	{
@@ -563,11 +527,8 @@ class FrontendHeader extends FrontendBaseObject
 		return $finalURL;
 	}
 
-
 	/**
 	 * Parse the header into the template
-	 *
-	 * @return	void
 	 */
 	public function parse()
 	{
@@ -599,11 +560,8 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 	}
 
-
 	/**
 	 * Parse the CSS-files
-	 *
-	 * @return	void
 	 */
 	private function parseCSS()
 	{
@@ -628,11 +586,8 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('cssFiles', $cssFiles);
 	}
 
-
 	/**
 	 * Parse Google Analytics
-	 *
-	 * @return	void
 	 */
 	private function parseCustomHeaderHTMLAndGoogleAnalytics()
 	{
@@ -667,11 +622,8 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));
 	}
 
-
 	/**
 	 * Parse Facebook related header-data
-	 *
-	 * @return	void
 	 */
 	private function parseFacebook()
 	{
@@ -699,11 +651,11 @@ class FrontendHeader extends FrontendBaseObject
 			{
 				case 'en':
 					$locale = 'en_US';
-				break;
+					break;
 
 				case 'nl':
 					$locale = 'nl_BE';
-				break;
+					break;
 
 				default:
 					$locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
@@ -714,11 +666,8 @@ class FrontendHeader extends FrontendBaseObject
 		}
 	}
 
-
 	/**
 	 * Parse the JS-files
-	 *
-	 * @return	void
 	 */
 	private function parseJS()
 	{
@@ -730,8 +679,10 @@ class FrontendHeader extends FrontendBaseObject
 		if(!empty($existingJSFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
-			$ignoreCache = array('/frontend/core/js/jquery/jquery.js',
-									'/frontend/core/js/jquery/jquery.ui.js');
+			$ignoreCache = array(
+				'/frontend/core/js/jquery/jquery.js',
+				'/frontend/core/js/jquery/jquery.ui.js'
+			);
 
 			// loop the JS-files
 			foreach($existingJSFiles as $file)
@@ -762,11 +713,8 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('jsFiles', $jsFiles);
 	}
 
-
 	/**
 	 * Parse the meta and link-tags
-	 *
-	 * @return	void
 	 */
 	private function parseMetaAndLinks()
 	{
@@ -813,11 +761,8 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('metaCustom', $this->getMetaCustom());
 	}
 
-
 	/**
 	 * Parse SEO specific data
-	 *
-	 * @return	void
 	 */
 	private function parseSeo()
 	{
@@ -826,29 +771,24 @@ class FrontendHeader extends FrontendBaseObject
 		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
 	}
 
-
 	/**
 	 * Set the custom meta
 	 *
-	 * @return	void
-	 * @param	string $meta	The meta data to set.
+	 * @param string $meta The meta data to set.
 	 */
 	public function setMetaCustom($meta)
 	{
 		$this->metaCustom = (string) $meta;
 	}
 
-
 	/**
 	 * Set the pagetitle
 	 *
-	 * @return	void
-	 * @param	string $value				The pagetitle to be set or to be prepended.
-	 * @param	bool[optional] $overwrite	Should the existing pagetitle be overwritten?
+	 * @param string $value The pagetitle to be set or to be prepended.
+	 * @param bool[optional] $overwrite Should the existing pagetitle be overwritten?
 	 */
 	public function setPageTitle($value, $overwrite = false)
 	{
-		// redefine vars
 		$value = trim((string) $value);
 		$overwrite = (bool) $overwrite;
 
@@ -873,5 +813,3 @@ class FrontendHeader extends FrontendBaseObject
 		}
 	}
 }
-
-?>

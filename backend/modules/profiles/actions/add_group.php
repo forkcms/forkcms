@@ -1,60 +1,43 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add_group-action, it will display a form to add a group for profiles.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class BackendProfilesAddGroup extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('addGroup');
-
-		// create elements
 		$this->frm->addText('name');
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -96,5 +79,3 @@ class BackendProfilesAddGroup extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

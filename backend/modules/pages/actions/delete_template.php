@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the delete-action, it will delete a template
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -55,5 +56,3 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('templates') . '&error=non-existing');
 	}
 }
-
-?>

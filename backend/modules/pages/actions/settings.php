@@ -1,45 +1,34 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the settings-action, it will display a form to set general pages settings
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendPagesSettings extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load form
 		$this->loadForm();
-
-		// validates the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the settings form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -50,11 +39,8 @@ class BackendPagesSettings extends BackendBaseActionEdit
 		$this->frm->addCheckbox('meta_navigation', BackendModel::getModuleSetting($this->getModule(), 'meta_navigation', false));
 	}
 
-
 	/**
 	 * Validates the settings form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -76,5 +62,3 @@ class BackendPagesSettings extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

@@ -1,44 +1,36 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the search module
  *
- * @package		backend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendSearchModel
 {
-	/**
-	 * Overview of all synonyms
-	 *
-	 * @var	string
-	 */
-	const QRY_DATAGRID_BROWSE_SYNONYMS = 'SELECT i.id, i.term, i.synonym
-											FROM search_synonyms AS i
-											WHERE i.language = ?';
+	const QRY_DATAGRID_BROWSE_SYNONYMS =
+		'SELECT i.id, i.term, i.synonym
+		 FROM search_synonyms AS i
+		 WHERE i.language = ?';
 
-
-	/**
-	 * Overview of all statistics
-	 *
-	 * @var	string
-	 */
-	const QRY_DATAGRID_BROWSE_STATISTICS = 'SELECT UNIX_TIMESTAMP(i.time) AS time, i.term, i.data
-											FROM search_statistics AS i
-											WHERE i.language = ?';
-
+	const QRY_DATAGRID_BROWSE_STATISTICS =
+		'SELECT UNIX_TIMESTAMP(i.time) AS time, i.term, i.data
+		 FROM search_statistics AS i
+		 WHERE i.language = ?';
 
 	/**
 	 * Add an index
 	 *
-	 * @return	void
-	 * @param	string $module				The module wherin will be searched.
-	 * @param	int $otherId				The id of the record.
-	 * @param 	array $fields				A key/value pair of fields to index.
-	 * @param	string[optional] $language	The frontend language for this entry.
+	 * @param string $module The module wherin will be searched.
+	 * @param int $otherId The id of the record.
+	 * @param  array $fields A key/value pair of fields to index.
+	 * @param string[optional] $language The frontend language for this entry.
 	 */
 	public static function addIndex($module, $otherId, array $fields, $language = null)
 	{
@@ -68,12 +60,10 @@ class BackendSearchModel
 		self::invalidateCache();
 	}
 
-
 	/**
 	 * Delete a synonym
 	 *
-	 * @return	void
-	 * @param	int $id		The id of the item we want to delete.
+	 * @param int $id The id of the item we want to delete.
 	 */
 	public static function deleteSynonym($id)
 	{
@@ -84,15 +74,13 @@ class BackendSearchModel
 		self::invalidateCache();
 	}
 
-
 	/**
 	 * Edit an index
 	 *
-	 * @return	void
-	 * @param	string $module				The module wherin will be searched.
-	 * @param	int $otherId				The id of the record.
-	 * @param 	array $fields				A key/value pair of fields to index.
-	 * @param	string[optional] $language	The frontend language for this entry.
+	 * @param string $module The module wherin will be searched.
+	 * @param int $otherId The id of the record.
+	 * @param  array $fields A key/value pair of fields to index.
+	 * @param string[optional] $language The frontend language for this entry.
 	 */
 	public static function editIndex($module, $otherId, array $fields, $language = null)
 	{
@@ -115,104 +103,114 @@ class BackendSearchModel
 			$value = strip_tags((string) $value);
 
 			// update search index
-			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active)
-							VALUES (?, ?, ?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE value = ?, active = ?', array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y'));
+			$db->execute(
+				'INSERT INTO search_index (module, other_id, language, field, value, active)
+				 VALUES (?, ?, ?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?, active = ?',
+				array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
+			);
 		}
 
 		// invalidate the cache for search
 		self::invalidateCache();
 	}
 
-
 	/**
 	 * Check if a synonym exists
 	 *
-	 * @return	bool
-	 * @param	int $id			The id of the item we're looking for.
+	 * @param int $id The id of the item we're looking for.
+	 * @return bool
 	 */
 	public static function existsSynonymById($id)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
-														FROM search_synonyms
-														WHERE id = ?', array((int) $id));
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM search_synonyms
+			 WHERE id = ?',
+			array((int) $id)
+		);
 	}
-
 
 	/**
 	 * Check if a synonym exists
 	 *
-	 * @return	bool
-	 * @param	string $term				The term we're looking for.
-	 * @param	int[optional] $exclude		Exclude a certain id.
+	 * @param string $term The term we're looking for.
+	 * @param int[optional] $exclude Exclude a certain id.
+	 * @return bool
 	 */
 	public static function existsSynonymByTerm($term, $exclude = null)
 	{
-		if($exclude == null) return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
-																			FROM search_synonyms
-																			WHERE term = ?',
-																			array((string) $term));
+		if($exclude == null) return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM search_synonyms
+			 WHERE term = ?',
+			array((string) $term)
+		);
 
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
-														FROM search_synonyms
-														WHERE term = ? AND id != ?',
-														array((string) $term, (int) $exclude));
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM search_synonyms
+			 WHERE term = ? AND id != ?',
+			array((string) $term, (int) $exclude)
+		);
 	}
-
 
 	/**
 	 * Get modules search settings
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getModuleSettings()
 	{
-		return BackendModel::getDB()->getRecords('SELECT module, searchable, weight
-													FROM search_modules',
-													array(), 'module');
+		return BackendModel::getDB()->getRecords(
+			'SELECT module, searchable, weight
+			 FROM search_modules',
+			array(), 'module'
+		);
 	}
-
 
 	/**
 	 * Get a synonym
 	 *
-	 * @return	array
-	 * @param	int $id						The id of the item we're looking for.
+	 * @param int $id The id of the item we're looking for.
+	 * @return array
 	 */
 	public static function getSynonym($id)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT *
-															FROM search_synonyms
-															WHERE id = ?', array((int) $id));
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT *
+			 FROM search_synonyms
+			 WHERE id = ?',
+			array((int) $id)
+		);
 	}
-
 
 	/**
 	 * Insert module search settings
 	 *
-	 * @return	void
-	 * @param	string $module				The module wherin will be searched.
-	 * @param	string $searchable			Is the module searchable?
-	 * @param	string $weight				Weight of this module's results.
+	 * @param string $module The module wherin will be searched.
+	 * @param string $searchable Is the module searchable?
+	 * @param string $weight Weight of this module's results.
 	 */
 	public static function insertModuleSettings($module, $searchable, $weight)
 	{
 		// insert or update
-		BackendModel::getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight)
-											VALUES (?, ?, ?)
-											ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
-											array($module['module'], $searchable, $weight, $searchable, $weight));
+		BackendModel::getDB(true)->execute(
+			'INSERT INTO search_modules (module, searchable, weight)
+			 VALUES (?, ?, ?)
+			 ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
+			array($module['module'], $searchable, $weight, $searchable, $weight)
+		);
 
 		// invalidate the cache for search
 		self::invalidateCache();
 	}
 
-
 	/**
 	 * Insert a synonym
 	 *
-	 * @return	int
-	 * @param	array $item					The data to insert in the db.
+	 * @param array $item The data to insert in the db.
+	 * @return int
 	 */
 	public static function insertSynonym($item)
 	{
@@ -226,25 +224,20 @@ class BackendSearchModel
 		return $id;
 	}
 
-
 	/**
 	 * Invalidate search cache
-	 *
-	 * @return	void
 	 */
 	public static function invalidateCache()
 	{
 		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/search/') as $file) SpoonFile::delete(FRONTEND_CACHE_PATH . '/search/' . $file);
 	}
 
-
 	/**
 	 * Remove an index
 	 *
-	 * @return	void
-	 * @param	string $module				The module wherin will be searched.
-	 * @param	int $otherId				The id of the record.
-	 * @param	string[optional] $language	The language to use.
+	 * @param string $module The module wherin will be searched.
+	 * @param int $otherId The id of the record.
+	 * @param string[optional] $language The language to use.
 	 */
 	public static function removeIndex($module, $otherId, $language = null)
 	{
@@ -261,12 +254,10 @@ class BackendSearchModel
 		self::invalidateCache();
 	}
 
-
 	/**
 	 * Update a synonym
 	 *
-	 * @return	void
-	 * @param	array $item					The data to update in the db.
+	 * @param array $item The data to update in the db.
 	 */
 	public static function updateSynonym($item)
 	{
@@ -277,5 +268,3 @@ class BackendSearchModel
 		self::invalidateCache();
 	}
 }
-
-?>

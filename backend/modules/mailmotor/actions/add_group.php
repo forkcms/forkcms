@@ -1,44 +1,33 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new group
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave@netlash.com>
  */
 class BackendMailmotorAddGroup extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -59,11 +48,8 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 		$this->frm->addRadiobutton('default', $chkDefaultForLanguageValues);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -108,5 +94,3 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

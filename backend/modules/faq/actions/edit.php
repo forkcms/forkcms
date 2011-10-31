@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendFaqEdit extends BackendBaseActionEdit
 {
@@ -19,11 +22,8 @@ class BackendFaqEdit extends BackendBaseActionEdit
 	 */
 	private $categories;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -33,22 +33,11 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendFaqModel::existsQuestion($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -56,37 +45,26 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data for a question
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get the record
 		$this->record = BackendFaqModel::getQuestion($this->id);
-
-		// get categories
 		$this->categories = BackendFaqModel::getCategoriesForDropdown();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('edit');
 
 		// set hidden values
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
-		// create elements
 		$this->frm->addText('question', $this->record['question'])->setAttribute('id', 'title');
 		$this->frm->getField('question')->setAttribute('class', 'title ' . $this->frm->getField('question')->getAttribute('class'));
 		$this->frm->addEditor('answer', $this->record['answer']);
@@ -94,36 +72,24 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
-		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
-
-		// assign categories
 		$this->tpl->assign('categories', $this->categories);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
@@ -131,7 +97,6 @@ class BackendFaqEdit extends BackendBaseActionEdit
 			$this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
 			$this->frm->getField('categories')->isFilled(BL::err('CategoryIsRequired'));
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -154,5 +119,3 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

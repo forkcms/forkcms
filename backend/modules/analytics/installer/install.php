@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the analytics module
  *
- * @package		installer
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies@netlash.com>
  */
 class AnalyticsInstall extends ModuleInstaller
 {
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -45,6 +46,8 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'analytics', 'mass_landing_page_action');
 		$this->setActionRights(1, 'analytics', 'refresh_traffic_sources');
 		$this->setActionRights(1, 'analytics', 'settings');
+		$this->setActionRights(1, 'analytics', 'traffic_sources');
+		$this->setActionRights(1, 'analytics', 'visitors');
 
 		// set navigation
 		$navigationMarketingId = $this->setNavigation(null, 'Marketing', 'analytics/index', null, 4);
@@ -62,7 +65,32 @@ class AnalyticsInstall extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Analytics', 'analytics/settings');
+
+		// insert dashboard widgets
+		$this->insertWidgets();
+	}
+
+	/**
+	 * Insert an empty admin dashboard sequence
+	 */
+	private function insertWidgets()
+	{
+		$trafficSources = array(
+			'column' => 'middle',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		$visitors = array(
+			'column' => 'middle',
+			'position' => 2,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert widgets
+		$this->insertDashboardWidget('analytics', 'traffic_sources', $trafficSources);
+		$this->insertDashboardWidget('analytics', 'visitors', $visitors);
 	}
 }
-
-?>
