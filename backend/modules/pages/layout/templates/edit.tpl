@@ -390,6 +390,21 @@
 	</div>
 {/form:edit}
 
+<div class="box" id="blockHtml" style="display: none;">
+	<div class="blockContentHTML optionsRTE">
+		<fieldset>
+			<div class="generalMessage singleMessage infoMessage">
+				{$msgContentSaveWarning}
+			</div>
+			<div class="heading">
+				<h3>{$lblEditor|ucfirst}</h3>
+			</div>
+			{$txtHtml}
+			{$txtHtmlError}
+		</fieldset>
+	</div>
+</div>
+
 <script type="text/javascript">
 	//<![CDATA[
 		// the ID of the page

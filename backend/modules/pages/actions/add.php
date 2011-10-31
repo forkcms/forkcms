@@ -53,8 +53,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
 		$this->header->addJS('jstree/jquery.tree.js');
 		$this->header->addJS('jstree/lib/jquery.cookie.js');
 		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
@@ -106,6 +104,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+		$this->frm->addEditor('html');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 
