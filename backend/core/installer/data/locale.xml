@@ -6258,8 +6258,8 @@
         <translation language="fr"><![CDATA[Résumez brièvement le contenu. Ce résumé est affiché dans les pages de résultats de moteurs de recherche.]]></translation>
       </item>
       <item type="message" name="HelpMetaKeywords">
-        <translation language="nl"><![CDATA[Kies een aantal goed gekozen termen die de inhoud omschrijven.]]></translation>
-        <translation language="en"><![CDATA[Choose a number of wellthought terms that describe the content.]]></translation>
+        <translation language="nl"><![CDATA[Kies een aantal goed gekozen termen die de inhoud omschrijven. Vanuit SEO-standpunt bieden deze echter niet langer een meerwaarde.]]></translation>
+        <translation language="en"><![CDATA[Choose a number of wellthought terms that describe the content. From an SEO point of view, these do not longer present an added value though.]]></translation>
         <translation language="hu"><![CDATA[Válassz egy számot a jól átgondolt kifejezések közül, ami jól leírja a tartalmat.]]></translation>
         <translation language="it"><![CDATA[Scegli un numero di termini che descrivono il contenuto.]]></translation>
         <translation language="ru"><![CDATA[Ключевые слова, описывающие сайт.]]></translation>
