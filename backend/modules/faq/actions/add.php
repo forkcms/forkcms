@@ -11,36 +11,24 @@
  * This is the add-action, it will display a form to create a new item
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <matthias@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Jelmer Snoeck <jelmer@netlash.com>
  */
 class BackendFaqAdd extends BackendBaseActionAdd
 {
-	/**
-	 * The available categories
-	 *
-	 * @var	array
-	 */
-	private $categories;
-
 	/**
 	 * Execute the action
 	 */
 	public function execute()
 	{
 		parent::execute();
-		$this->getData();
+
 		$this->loadForm();
 		$this->validateForm();
+
 		$this->parse();
 		$this->display();
-	}
-
-	/**
-	 * Get the data for a question
-	 */
-	private function getData()
-	{
-		$this->categories = BackendFaqModel::getCategoriesForDropdown();
 	}
 
 	/**
@@ -48,26 +36,41 @@ class BackendFaqAdd extends BackendBaseActionAdd
 	 */
 	private function loadForm()
 	{
+		// create form
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
-		$this->frm->addText('question')->setAttribute('id', 'title');
-		$this->frm->getField('question')->setAttribute('class', 'title ' . $this->frm->getField('question')->getAttribute('class'));
+		// get categories
+		$categories = BackendFaqModel::getCategories();
+
+		// create elements
+		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('answer');
-		$this->frm->addDropdown('categories', $this->categories);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+		$this->frm->addDropdown('category_id', $categories);
+		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
 
 	/**
-	 * Parse the form
+	 * Parse the page
 	 */
 	protected function parse()
 	{
+		// call parent
 		parent::parse();
-		$this->tpl->assign('categories', $this->categories);
+
+		// get url
+		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+		$url404 = BackendModel::getURL(404);
+
+		// parse additional variables
+		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 	}
 
 	/**
@@ -80,29 +83,31 @@ class BackendFaqAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('question')->isFilled(BL::err('QuestionIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('QuestionIsRequired'));
 			$this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
-			$this->frm->getField('categories')->isFilled(BL::err('CategoryIsRequired'));
+			$this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
+			$this->meta->validate();
 
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['meta_id'] = $this->meta->save();
+				$item['category_id'] = $this->frm->getField('category_id')->getValue();
 				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
-				$item['category_id'] = $this->frm->getField('categories')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['question'] = $this->frm->getField('question')->getValue();
+				$item['question'] = $this->frm->getField('title')->getValue();
 				$item['answer'] = $this->frm->getField('answer')->getValue(true);
-				$item['hidden'] = $this->frm->getField('hidden')->getValue();
-				$item['sequence'] = BackendFaqModel::getMaximumQuestionSequence($this->frm->getField('categories')->getValue()) + 1;
 				$item['created_on'] = BackendModel::getUTCDate();
+				$item['hidden'] = $this->frm->getField('hidden')->getValue();
+				$item['sequence'] = BackendFaqModel::getMaximumSequence($this->frm->getField('category_id')->getValue()) + 1;
 
-				// insert the item
-				$item['id'] = BackendFaqModel::insertQuestion($item);
-
-				// trigger event
+				// save the data
+				$item['id'] = BackendFaqModel::insert($item);
+				BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
-				// everything is saved, so redirect to the overview
+				// add search index
+				if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
 			}
 		}

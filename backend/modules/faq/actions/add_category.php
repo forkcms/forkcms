@@ -11,6 +11,9 @@
  * This is the add-action, it will display a form to create a new category
  *
  * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Jelmer Snoeck <jelmer@netlash.com>
  */
 class BackendFaqAddCategory extends BackendBaseActionAdd
 {
@@ -20,8 +23,10 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	public function execute()
 	{
 		parent::execute();
+
 		$this->loadForm();
 		$this->validateForm();
+
 		$this->parse();
 		$this->display();
 	}
@@ -31,8 +36,10 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	 */
 	private function loadForm()
 	{
-		$this->frm = new BackendForm('add_category');
-		$this->frm->addText('name');
+		$this->frm = new BackendForm('addCategory');
+		$this->frm->addText('title');
+
+		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
 
 	/**
@@ -42,26 +49,28 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	{
 		if($this->frm->isSubmitted())
 		{
+			$this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
+
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->meta->validate();
 
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['meta_id'] = $this->meta->save();
 				$item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;
 
-				// insert the item
+				// save the data
 				$item['id'] = BackendFaqModel::insertCategory($item);
-
-				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

@@ -11,7 +11,9 @@
  * In this file we store all generic functions that we will be using in the faq module
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <matthias@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFaqModel
 {
@@ -22,50 +24,89 @@ class BackendFaqModel
 		 ORDER BY i.sequence ASC';
 
 	const QRY_DATAGRID_BROWSE_CATEGORIES =
-		'SELECT i.id, i.name, i.sequence
+		'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
 		 FROM faq_categories AS i
+		 LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND p.language = i.language
 		 WHERE i.language = ?
+		 GROUP BY i.id
 		 ORDER BY i.sequence ASC';
 
 	/**
-	 * Delete a category
+	 * Delete a question
 	 *
-	 * @param int $id The id of the category to be deleted.
+	 * @param int $id
+	 */
+	public static function delete($id)
+	{
+		BackendModel::getDB(true)->delete('faq_questions', 'id = ?', array((int) $id));
+		BackendTagsModel::saveTags($id, '', 'faq');
+	}
+
+	/**
+	 * Delete a specific category
+	 *
+	 * @param int $id
 	 */
 	public static function deleteCategory($id)
 	{
 		$db = BackendModel::getDB(true);
 		$item = self::getCategory($id);
 
-		// build extra
-		$extra = array(
-			'id' => $item['extra_id'],
-			'module' => 'faq',
-			'type' => 'block',
-			'action' => 'category'
-		);
+		if(!empty($item))
+		{
+			$db->delete('meta', 'id = ?', array($item['meta_id']));
+			$db->delete('faq_categories', 'id = ?', array((int) $id));
+			$db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
-		// delete extra
-		$db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
-
-		// delete the record
-		$db->delete('faq_categories', 'id = ?', array((int) $id));
+			// invalidate the cache for blog
+			BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+		}
 	}
 
 	/**
-	 * Delete a question
+	 * Is the deletion of a category allowed?
 	 *
-	 * @param int $id The id of the question to be deleted.
+	 * @param int $id
+	 * @return bool
 	 */
-	public static function deleteQuestion($id)
+	public static function deleteCategoryAllowed($id)
 	{
-		BackendModel::getDB(true)->delete('faq_questions', 'id = ?', array((int) $id));
+		return (BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM faq_questions AS i
+			 WHERE i.category_id = ? AND i.language = ?',
+			 array((int) $id, BL::getWorkingLanguage())) == 0);
 	}
 
 	/**
-	 * Checks if a category exists
+	 * Delete the feedback
 	 *
-	 * @param int $id The id of the category to check for existence.
+	 * @param int $itemId
+	 */
+	public static function deleteFeedback($itemId)
+	{
+		BackendModel::getDB(true)->delete('faq_feedback', 'id = ?', (int) $itemId);
+	}
+
+	/**
+	 * Does the question exsist?
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public static function exists($id)
+	{
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(i.id)
+		 	 FROM faq_questions AS i
+			 WHERE i.id = ? AND i.language = ?',
+			 array((int) $id, BL::getWorkingLanguage()));
+	}
+
+	/**
+	 * Does the category exist?
+	 *
+	 * @param int $id
 	 * @return bool
 	 */
 	public static function existsCategory($id)
@@ -74,62 +115,96 @@ class BackendFaqModel
 			'SELECT COUNT(i.id)
 			 FROM faq_categories AS i
 			 WHERE i.id = ? AND i.language = ?',
-			array((int) $id, BL::getWorkingLanguage())
-		);
+			 array((int) $id, BL::getWorkingLanguage()));
 	}
 
 	/**
-	 * Checks if a question exists
+	 * Fetch a question
 	 *
-	 * @param int $id The id of the question to check for existence.
-	 * @return bool
-	 */
-	public static function existsQuestion($id)
-	{
-		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(i.id)
-			 FROM faq_questions AS i
-			 WHERE i.id = ? AND i.language = ?',
-			array((int) $id, BL::getWorkingLanguage())
-		);
-	}
-
-	/**
-	 * Get all categories
-	 *
+	 * @param int $id
 	 * @return array
 	 */
-	public static function getCategories()
+	public static function get($id)
+	{
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT i.*, m.url
+			 FROM faq_questions AS i
+			 INNER JOIN meta AS m ON m.id = i.meta_id
+			 WHERE i.id = ? AND i.language = ?',
+			 array((int) $id, BL::getWorkingLanguage()));
+	}
+
+	/**
+	 * Fetches all the feedback for a question
+	 *
+	 * @param int $id The question id.
+	 * @return array
+	 */
+	public static function getAllFeedback($id)
 	{
 		return (array) BackendModel::getDB()->getRecords(
-			'SELECT i.*
-			 FROM faq_categories AS i
-			 WHERE i.language = ?
-			 ORDER BY i.sequence ASC',
-			array(BL::getWorkingLanguage())
-		);
+			'SELECT f.*
+			 FROM faq_feedback AS f
+			 WHERE f.question_id = ?',
+			 array((int) $id));
 	}
 
 	/**
-	 * Get all category names for dropdown
+	 * Get all items by a given tag id
 	 *
+	 * @param int $tagId
 	 * @return array
 	 */
-	public static function getCategoriesForDropdown()
+	public static function getByTag($tagId)
 	{
-		return (array) BackendModel::getDB()->getPairs(
-			'SELECT i.id, i.name
-			 FROM faq_categories AS i
-			 WHERE i.language = ?
-			 ORDER BY i.sequence ASC',
-			array(BL::getWorkingLanguage())
-		);
+		$items = (array) BackendModel::getDB()->getRecords(
+			'SELECT i.id AS url, i.title, mt.module
+			 FROM modules_tags AS mt
+			 INNER JOIN tags AS t ON mt.tag_id = t.id
+			 INNER JOIN faq_questions AS i ON mt.other_id = i.id
+			 WHERE mt.module = ? AND mt.tag_id = ? AND i.language = ?',
+			 array('faq', (int) $tagId, BL::getWorkingLanguage()));
+
+		foreach($items as &$row)
+		{
+			$row['url'] = BackendModel::createURLForAction('edit', 'faq', null, array('id' => $row['url']));
+		}
+
+		return $items;
 	}
 
 	/**
-	 * Get category by id
+	 * Get all the categories
 	 *
-	 * @param int $id The id of the category.
+	 * @param bool[optional] $includeCount
+	 * @return array
+	 */
+	public static function getCategories($includeCount = false)
+	{
+		$db = BackendModel::getDB();
+
+		if($includeCount)
+		{
+			return (array) $db->getPairs(
+				'SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
+				 FROM faq_categories AS i
+				 LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
+				 WHERE i.language = ?
+				 GROUP BY i.id',
+				 array(BL::getWorkingLanguage()));
+		}
+
+		return (array) $db->getPairs(
+			'SELECT i.id, i.title
+			 FROM faq_categories AS i
+			 WHERE i.language = ?',
+			 array(BL::getWorkingLanguage()));
+	}
+
+	/**
+	 * Fetch a category
+	 *
+	 * @param int $id
 	 * @return array
 	 */
 	public static function getCategory($id)
@@ -137,173 +212,211 @@ class BackendFaqModel
 		return (array) BackendModel::getDB()->getRecord(
 			'SELECT i.*
 			 FROM faq_categories AS i
-			 WHERE i.id = ?',
-			array((int) $id)
-		);
+			 WHERE i.id = ? AND i.language = ?',
+			 array((int) $id, BL::getWorkingLanguage()));
 	}
 
 	/**
-	 * Get the max sequence id for category
+	 * Fetch the feedback item
+	 *
+	 * @param int $id
+	 * @return array
+	 */
+	public static function getFeedback($id)
+	{
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT f.*
+			 FROM faq_feedback AS f
+			 WHERE f.id = ?',
+			 array((int) $id));
+	}
+
+	/**
+	 * Get the maximum sequence for a category
 	 *
 	 * @return int
 	 */
 	public static function getMaximumCategorySequence()
 	{
 		return (int) BackendModel::getDB()->getVar(
-			'SELECT MAX(i.sequence) FROM faq_categories AS i'
-		);
+			'SELECT MAX(i.sequence)
+			 FROM faq_categories AS i
+			 WHERE i.language = ?',
+			 array(BL::getWorkingLanguage()));
 	}
 
 	/**
-	 * Get the max sequence id for question
+	 * Get the max sequence id for a category
 	 *
-	 * @param int $id The category id.
+	 * @param int $id		The category id.
 	 * @return int
 	 */
-	public static function getMaximumQuestionSequence($id)
+	public static function getMaximumSequence($id)
 	{
 		return (int) BackendModel::getDB()->getVar(
 			'SELECT MAX(i.sequence)
 			 FROM faq_questions AS i
 			 WHERE i.category_id = ?',
-			array((int) $id)
-		);
+			 array((int) $id));
 	}
 
 	/**
-	 * Get a question by id
+	 * Retrieve the unique URL for an item
 	 *
-	 * @param int $id The question id.
-	 * @return array
+	 * @param string $url
+	 * @param int[optional] $id	The id of the item to ignore.
+	 * @return string
 	 */
-	public static function getQuestion($id)
+	public static function getURL($url, $id = null)
 	{
-		return (array) BackendModel::getDB()->getRecord(
-			'SELECT i.*
-			 FROM faq_questions AS i
-			 WHERE i.id = ?',
-			array((int) $id)
-		);
+		$url = SpoonFilter::urlise((string) $url);
+		$db = BackendModel::getDB();
+
+		// new item
+		if($id === null)
+		{
+			// get number of categories with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM faq_questions AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND m.url = ?',
+				 array(BL::getWorkingLanguage(), $url));
+
+			// already exists
+			if($number != 0)
+			{
+				$url = BackendModel::addNumber($url);
+				return self::getURL($url);
+			}
+		}
+		// current category should be excluded
+		else
+		{
+			// get number of items with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM faq_questions AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
+				 array(BL::getWorkingLanguage(), $url, $id));
+
+			// already exists
+			if($number != 0)
+			{
+				$url = BackendModel::addNumber($url);
+				return self::getURL($url, $id);
+			}
+		}
+
+		return $url;
 	}
 
 	/**
-	 * Add a new category.
+	 * Retrieve the unique URL for a category
 	 *
-	 * @param array $item The data to insert.
+	 * @param string $url
+	 * @param int[optional] $id The id of the category to ignore.
+	 * @return string
+	 */
+	public static function getURLForCategory($url, $id = null)
+	{
+		$url = SpoonFilter::urlise((string) $url);
+		$db = BackendModel::getDB();
+
+		// new category
+		if($id === null)
+		{
+			// get number of categories with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM faq_categories AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND m.url = ?',
+				 array(BL::getWorkingLanguage(), $url));
+
+			// already exists
+			if($number != 0)
+			{
+				$url = BackendModel::addNumber($url);
+				return self::getURLForCategory($url);
+			}
+		}
+		// current category should be excluded
+		else
+		{
+			// get number of items with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM faq_categories AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
+				 array(BL::getWorkingLanguage(), $url, $id));
+
+			// already exists
+			if($number != 0)
+			{
+				$url = BackendModel::addNumber($url);
+				return self::getURLForCategory($url, $id);
+			}
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Insert a question in the database
+	 *
+	 * @param array $item
 	 * @return int
 	 */
-	public static function insertCategory(array $item)
+	public static function insert(array $item)
+	{
+		$insertId = BackendModel::getDB(true)->insert('faq_questions', $item);
+
+		BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+
+		return $insertId;
+	}
+
+	/**
+	 * Insert a category in the database
+	 *
+	 * @param array $item
+	 * @param array[optional] $meta The metadata for the category to insert.
+	 * @return int
+	 */
+	public static function insertCategory(array $item, $meta = null)
 	{
 		$db = BackendModel::getDB(true);
 
-		// build extra
-		$extra = array(
-			'module' => 'faq',
-			'type' => 'block',
-			'label' => 'Faq',
-			'action' => 'category',
-			'data' => null,
-			'hidden' => 'N',
-			'sequence' => $db->getVar(
-				'SELECT MAX(i.sequence) + 1
-				 FROM modules_extras AS i
-				 WHERE i.module = ?', array('faq')
-			)
-		);
-		if(is_null($extra['sequence'])) $extra['sequence'] = $db->getVar(
-			'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-			 FROM modules_extras AS i'
-		);
-
-		// insert extra
-		$item['extra_id'] = $db->insert('modules_extras', $extra);
-		$extra['id'] = $item['extra_id'];
-
-		// insert and return the new id
+		if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
 		$item['id'] = $db->insert('faq_categories', $item);
 
-		// update extra (item id is now known)
-		$extra['data'] = serialize(array(
-			'id' => $item['id'],
-			'extra_label' => ucfirst(BL::lbl('Faq', 'core')) . ': ' . $item['name'],
-			'language' => $item['language'],
-			'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
-		);
-		$db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+		BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
 
-		// return the new id
 		return $item['id'];
 	}
 
 	/**
-	 * Add a new question.
+	 * Update a certain question
 	 *
-	 * @param array $item The data to insert.
-	 * @return int
+	 * @param array $item
 	 */
-	public static function insertQuestion(array $item)
+	public static function update(array $item)
 	{
-		return BackendModel::getDB(true)->insert('faq_questions', $item);
+		BackendModel::getDB(true)->update('faq_questions', $item, 'id = ?', array((int) $item['id']));
+		BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
 	}
 
 	/**
-	 * Is this category allowed to be deleted?
+	 * Update a certain category
 	 *
-	 * @param int $id The category id to check.
-	 * @return bool
-	 */
-	public static function isCategoryAllowedToBeDeleted($id)
-	{
-		return !(bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(i.id)
-			 FROM faq_questions AS i
-			 WHERE i.category_id = ?',
-			array((int) $id)
-		);
-	}
-
-	/**
-	 * Update a category item
-	 *
-	 * @param array $item The updated values.
-	 * @return int
+	 * @param array $item
 	 */
 	public static function updateCategory(array $item)
 	{
-		$db = BackendModel::getDB(true);
-
-		// build extra
-		$extra = array(
-			'id' => $item['extra_id'],
-			'module' => 'faq',
-			'type' => 'block',
-			'label' => 'Faq',
-			'action' => 'category',
-			'data' => serialize(array(
-				'id' => $item['id'],
-				'extra_label' => ucfirst(BL::lbl('Faq', 'core')) . ': ' . $item['name'],
-				'language' => $item['language'],
-				'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
-				),
-			'hidden' => 'N'
-		);
-
-		// update extra
-		$db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
-
-		// update category
-		return $db->update('faq_categories', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));
-	}
-
-	/**
-	 * Update a question item
-	 *
-	 * @param array $item The updated item.
-	 * @return int
-	 */
-	public static function updateQuestion(array $item)
-	{
-		return BackendModel::getDB(true)->update('faq_questions', $item, 'id = ?', array((int) $item['id']));
+		BackendModel::getDB(true)->update('faq_categories', $item, 'id = ?', array($item['id']));
+		BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
 	}
 }
-

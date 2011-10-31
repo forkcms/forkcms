@@ -11,15 +11,18 @@
  * This is the index-action (default), it will display the overview
  *
  * @author Lester Lievens <lester@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Davy Van Vooren <davy.vanvooren@netlash.com>
+ * @author Jelmer Snoeck <jelmer@netlash.com>
  */
 class BackendFaqIndex extends BackendBaseActionIndex
 {
 	/**
-	 * The datagrids
+	 * The dataGrids
 	 *
 	 * @var	array
 	 */
-	private $dataGrids;
+	private $dataGrids, $emptyDatagrid;
 
 	/**
 	 * Execute the action
@@ -27,67 +30,53 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	public function execute()
 	{
 		parent::execute();
-		$this->loadDataGrids();
+		$this->loadDatagrids();
+
 		$this->parse();
 		$this->display();
 	}
 
 	/**
-	 * Load the datagrids
+	 * Loads the dataGrids
 	 */
-	private function loadDataGrids()
+	private function loadDatagrids()
 	{
-		$categories = BackendFaqModel::getCategories();
+		// load all categories
+		$categories = BackendFaqModel::getCategories(true);
 
-		foreach($categories as $category)
+		// loop categories and create a dataGrid for each one
+		foreach($categories as $categoryId => $categoryTitle)
 		{
-			// create datagrid
-			$dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $category['id']));
-
-			// set attributes
+			$dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $categoryId));
 			$dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
-
-			// disable paging
-			$dataGrid->setPaging(false);
-
-			// set colum URLs
 			$dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-
-			// set colums hidden
 			$dataGrid->setColumnsHidden(array('category_id', 'sequence'));
-
-			// add edit column
 			$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
-
-			// add a column for the handle, so users have something to hold while draging
 			$dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
-
-			// make sure the column with the handler is the first one
 			$dataGrid->setColumnsSequence('dragAndDropHandle');
-
-			// add a class on the handler column, so JS knows this is just a handler
+			$dataGrid->setColumnAttributes('question', array('class' => 'title'));
 			$dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
-
-			// our JS needs to know an id, so we can send the new order
 			$dataGrid->setRowAttributes(array('id' => '[id]'));
 
-			// add datagrid to list
-			$this->dataGrids[] = array(
-				'id' => $category['id'],
-				'name' => $category['name'],
-				'content' => $dataGrid->getContent()
-			);
+			// add dataGrid to list
+			$this->dataGrids[] = array('id' => $categoryId,
+									   'title' => $categoryTitle,
+									   'content' => $dataGrid->getContent());
 		}
+
+		// set empty datagrid
+		$this->emptyDatagrid = new BackendDataGridArray(array(array('dragAndDropHandle' => '', 'question' => BL::msg('NoQuestionInCategory'), 'edit' => '')));
+		$this->emptyDatagrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop emptyGrid'));
+		$this->emptyDatagrid->setHeaderLabels(array('edit' => null, 'dragAndDropHandle' => null));
 	}
 
 	/**
-	 * Parse the datagrids and the reports
+	 * Parse the dataGrids and the reports
 	 */
 	private function parse()
 	{
-		if(!empty($this->dataGrids))
-		{
-			$this->tpl->assign('dataGrids', $this->dataGrids);
-		}
+		// parse dataGrids
+		if(!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
+		$this->tpl->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
 	}
 }

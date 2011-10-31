@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>faq</name>
-	<version>1.0.0</version>
+	<version>2.0.0</version>
 	<requirements>
-		<minimum_version>2.0.0</minimum_version>
+		<minimum_version>3.0.0</minimum_version>
 	</requirements>
 	<description>
 		<![CDATA[This module enables you to manage FAQs on your site.]]>
@@ -13,6 +13,10 @@
 			<name><![CDATA[Lester Lievens]]></name>
 			<url><![CDATA[http://www.twitter.com/ElLesso]]></url>
 		</author>
+		<author>
+			<name><![CDATA[Jelmer Snoeck]]></name>
+			<url><![CDATA[http://www.jelmersnoeck.com/]]></url>
+		</author>
 	</authors>
 	<events>
 		<event application="backend" name="after_add"><![CDATA[Triggered when a faq is added.]]></event>
@@ -21,5 +25,7 @@
 		<event application="backend" name="after_add_category"><![CDATA[Triggered when a category is added.]]></event>
 		<event application="backend" name="after_delete_category"><![CDATA[Triggered when a category is deleted.]]></event>
 		<event application="backend" name="after_edit_category"><![CDATA[Triggered when a category is edited.]]></event>
+		<event application="backend" name="after_add_feedback"><![CDATA[Triggered when a feedback comment is added.]]></event>
+		<event application="backend" name="after_delete_feedback"><![CDATA[Triggered when a feedback comment is deleted.]]></event>
 	</events>
 </module>
