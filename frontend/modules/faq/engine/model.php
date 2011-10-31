@@ -83,7 +83,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 	/**
 	 * Get all categories
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getCategories()
 	{
