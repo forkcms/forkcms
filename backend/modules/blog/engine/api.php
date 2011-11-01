@@ -34,7 +34,7 @@ class BackendBlogAPI
 			$offset = (int) $offset;
 
 			// validate
-			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger then 10000.'));
+			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
 
 			// get comments
 			$comments = (array) BackendModel::getDB()->getRecords(
