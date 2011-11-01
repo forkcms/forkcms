@@ -63,24 +63,6 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 				BackendModel::getDB(true)->delete('mailmotor_campaignmonitor_ids', 'cm_id = ?', $cmId);
 			}
 
-			// check what error we have
-			if(strpos($e->getMessage(), 'HTML Content URL Required'))
-			{
-				$message = BL::err('HTMLContentURLRequired', $this->getModule());
-			}
-			elseif(strpos($e->getMessage(), 'Payment details required'))
-			{
-				$message = sprintf(BL::err('PaymentDetailsRequired', $this->getModule()), BackendModel::getModuleSetting($this->getModule(), 'cm_username'));
-			}
-			elseif(strpos($e->getMessage(), 'Duplicate Campaign Name'))
-			{
-				$message = BL::err('DuplicateCampaignName', $this->getModule());
-			}
-			else
-			{
-				$message = $e->getMessage();
-			}
-
 			// stop the script and show our error
 			$this->output(902, null, $message);
 		}
