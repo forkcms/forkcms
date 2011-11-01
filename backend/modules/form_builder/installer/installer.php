@@ -11,6 +11,7 @@
  * Installer for the form_builder module
  *
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FormBuilderInstaller extends ModuleInstaller
 {
@@ -66,7 +67,7 @@ class FormBuilderInstaller extends ModuleInstaller
 			$form['user_id'] = $this->getDefaultUserID();
 			$form['name'] = ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend'));
 			$form['method'] = 'database_email';
-			$form['email'] = $this->getVariable('email');
+			$form['email'] = serialize(array($this->getVariable('email')));
 			$form['success_message'] = $this->getLocale('ContactMessageSent', 'core', $language, 'msg', 'frontend');
 			$form['identifier'] = 'contact-' . $language;
 			$form['created_on'] = gmdate('Y-m-d H:i:s');

@@ -11,6 +11,7 @@
  * In this file we store all generic functions that we will be using in the form_builder module
  *
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderModel
 {
@@ -220,6 +221,17 @@ class BackendFormBuilderModel
 	}
 
 	/**
+	 * Formats the recipients based on the serialized string
+	 *
+	 * @param string $string The serialized string that should be formated
+	 * @return string
+	 */
+	public static function formatRecipients($string)
+	{
+		return implode(', ', (array) @unserialize((string) $string));
+	}
+
+	/**
 	 * Get all data for a given id.
 	 *
 	 * @param int $id The id for the record to get.
@@ -227,7 +239,12 @@ class BackendFormBuilderModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT f.*	FROM forms AS f WHERE f.id = ?', (int) $id);
+		$return = (array) BackendModel::getDB()->getRecord('SELECT f.*	FROM forms AS f WHERE f.id = ?', (int) $id);
+
+		// unserialize the emailaddresses
+		if(isset($return['email'])) $return['email'] = (array) unserialize($return['email']);
+
+		return $return;
 	}
 
 	/**
@@ -457,7 +474,7 @@ class BackendFormBuilderModel
 		$db->update('forms', $values, 'id = ?', $id);
 
 		// build array
-		$extra['data'] = serialize(array('extra_label' => $values['name'], 'id' => $id));
+		$extra['data'] = serialize(array('language' => BL::getWorkingLanguage(), 'extra_label' => $values['name'], 'id' => $id));
 
 		// update extra
 		$db->update('modules_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('form_builder', 'widget', '400' . $id));

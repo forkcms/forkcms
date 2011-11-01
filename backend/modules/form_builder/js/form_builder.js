@@ -2,6 +2,7 @@
  * Javascript for building forms
  *
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 if(!jsBackend) { var jsBackend = new Object(); }
 
@@ -29,6 +30,14 @@ jsBackend.formBuilder =
 			jsBackend.formBuilder.handleMethodField();
 			$('select#method').live('change', jsBackend.formBuilder.handleMethodField);
 		}
+
+		$('#email').multipleTextbox(
+		{
+			emptyMessage: '{$msgNoEmailaddresses}',
+			addLabel: '{$lblCoreAdd|ucfirst}',
+			removeLabel: '{$lblDelete|ucfirst}',
+			canAddNew: true
+		});
 	},
 
 	/**

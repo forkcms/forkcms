@@ -11,6 +11,7 @@
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderEdit extends BackendBaseActionEdit
 {
@@ -52,7 +53,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 		$this->frm->addText('name', $this->record['name']);
 		$this->frm->addDropdown('method', array('database' => BL::getLabel('MethodDatabase'), 'database_email' => BL::getLabel('MethodDatabaseEmail')), $this->record['method']);
-		$this->frm->addText('email', $this->record['email']);
+		$this->frm->addText('email', implode(',', (array) $this->record['email']));
 		$this->frm->addText('identifier', $this->record['identifier']);
 		$this->frm->addEditor('success_message', $this->record['success_message']);
 
@@ -185,10 +186,30 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 			$txtSuccessMessage = $this->frm->getField('success_message');
 			$txtIdentifier = $this->frm->getField('identifier');
 
+			$emailAddresses = (array) explode(',', $txtEmail->getValue());
+
 			// validate fields
 			$txtName->isFilled(BL::getError('NameIsRequired'));
 			$txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-			if($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') $txtEmail->isEmail(BL::getError('EmailIsRequired'));
+			if($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email')
+			{
+				$error = false;
+
+				// check the addresses
+				foreach($emailAddresses as $address)
+				{
+					$address = trim($address);
+
+					if(!SpoonFilter::isEmail($address))
+					{
+						$error = true;
+						break;
+					}
+				}
+
+				// add error
+				if($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
+			}
 
 			// identifier
 			if($txtIdentifier->isFilled())
@@ -205,7 +226,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 				// build array
 				$values['name'] = $txtName->getValue();
 				$values['method'] = $ddmMethod->getValue();
-				$values['email'] = ($ddmMethod->getValue() == 'database_email') ? $txtEmail->getValue() : null;
+				$values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
 				$values['success_message'] = $txtSuccessMessage->getValue(true);
 				$values['identifier'] = ($txtIdentifier->isFilled() ? $txtIdentifier->getValue() : BackendFormBuilderModel::createIdentifier());
 				$values['edited_on'] = BackendModel::getUTCDate();

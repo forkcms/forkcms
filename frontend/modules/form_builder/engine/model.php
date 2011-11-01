@@ -4,6 +4,7 @@
  * In this file we store all generic functions that we will be using in the form_builder module
  *
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormBuilderModel
 {
@@ -24,6 +25,9 @@ class FrontendFormBuilderModel
 			 WHERE i.id = ?',
 			$id
 		);
+
+		// unserialize the recipients
+		if(isset($form['email'])) $form['email'] = (array) unserialize($form['email']);
 
 		// get validation
 		$form['fields'] = self::getFields($id);
