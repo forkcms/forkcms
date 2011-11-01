@@ -371,7 +371,10 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$this->frmGeneral->getField('reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
 
 			// user is god
-			if(BackendAuthentication::getUser()->isGod()) $this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'));
+			if(BackendAuthentication::getUser()->isGod())
+			{
+				$this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'));
+			}
 
 			// form is validated
 			if($this->frmGeneral->isCorrect())
@@ -383,7 +386,14 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->getModule(), 'plain_text_editable', $this->frmGeneral->getField('plain_text_editable')->getValue());
 
 				// set price per email
-				if(BackendAuthentication::getUser()->isGod()) BackendModel::setModuleSetting($this->getModule(), 'price_per_email', $this->frmGeneral->getField('price_per_email')->getValue());
+				if(BackendAuthentication::getUser()->isGod())
+				{
+					BackendModel::setModuleSetting(
+						$this->getModule(),
+						'price_per_email',
+						$this->frmGeneral->getField('price_per_email')->getValue()
+					);
+				}
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_general_settings');
