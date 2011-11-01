@@ -6,9 +6,11 @@ Improvements:
 
 Bugfixes:
 
+* Core: when requesting the meta-navigation while there are no items an exceptions was thrown, mentioned by Niels on http://forkcms.lighthouseapp.com/projects/61890/tickets/195.
 * Core: when editing non-active languages the files parsed through javascript.php were using the default language, as pointed out by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/200.
 * Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
 * Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.  
+* Core: fix default module, action, language in JS - was messed up on dashboard.
 
 
 3.0.0 (2011-11-01)
