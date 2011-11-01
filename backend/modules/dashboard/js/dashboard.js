@@ -145,7 +145,7 @@ jsBackend.dashboard =
 
 		// hide removed
 		$('.sortableWidget.isRemoved').hide();
-		
+
 		// make the call
 		$.ajax(
 		{

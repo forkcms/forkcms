@@ -1,3 +1,13 @@
+x.x.x (xxxx-xx-xx)
+--
+Improvements:
+
+
+Bugfixes:
+
+* Core: fix default module, action, language in JS - was messed up on dashboard.
+
+
 3.0.0 (2011-11-01)
 --
 Improvements:
