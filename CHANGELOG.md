@@ -1,3 +1,10 @@
+3.1.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
+
+
 3.0.0 (2011-11-01)
 --
 Improvements:

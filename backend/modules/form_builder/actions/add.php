@@ -11,6 +11,7 @@
  * This is the add-action, it will display a form to create a new item.
  *
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderAdd extends BackendBaseActionAdd
 {
@@ -55,10 +56,30 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 			$txtSuccessMessage = $this->frm->getField('success_message');
 			$txtIdentifier = $this->frm->getField('identifier');
 
+			$emailAddresses = (array) explode(',', $txtEmail->getValue());
+
 			// validate fields
 			$txtName->isFilled(BL::getError('NameIsRequired'));
 			$txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-			if($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') $txtEmail->isEmail(BL::getError('EmailIsRequired'));
+			if($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email')
+			{
+				$error = false;
+
+				// check the addresses
+				foreach($emailAddresses as $address)
+				{
+					$address = trim($address);
+
+					if(!SpoonFilter::isEmail($address))
+					{
+						$error = true;
+						break;
+					}
+				}
+
+				// add error
+				if($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
+			}
 
 			// identifier
 			if($txtIdentifier->isFilled())
@@ -77,7 +98,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 				$values['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$values['name'] = $txtName->getValue();
 				$values['method'] = $ddmMethod->getValue();
-				$values['email'] = ($values['method'] == 'database_email') ? $txtEmail->getValue() : null;
+				$values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
 				$values['success_message'] = $txtSuccessMessage->getValue(true);
 				$values['identifier'] = ($txtIdentifier->isFilled() ? $txtIdentifier->getValue() : BackendFormBuilderModel::createIdentifier());
 				$values['created_on'] = BackendModel::getUTCDate();

@@ -4,6 +4,7 @@
  * This is the form widget.
  *
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 {
@@ -396,8 +397,12 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$variables['name'] = $this->item['name'];
 					$variables['fields'] = $emailFields;
 
-					// add email
-					FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $this->item['email'], $this->item['name']);
+					// loop recipients
+					foreach($this->item['email'] as $address)
+					{
+						// add email
+						FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $address, $this->item['name']);
+					}
 				}
 
 				// trigger event
