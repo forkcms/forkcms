@@ -4,6 +4,10 @@ Improvements:
 
 * Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
 
+Bugfixes:
+
+* Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
+
 
 3.0.0 (2011-11-01)
 --

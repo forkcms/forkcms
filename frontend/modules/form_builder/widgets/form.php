@@ -341,10 +341,18 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					if($rule == 'required') $this->frm->getField($fieldName)->isFilled($settings['error_message']);
 
 					// email
-					elseif($rule == 'email') $this->frm->getField($fieldName)->isEmail($settings['error_message']);
+					elseif($rule == 'email')
+					{
+						// only check this if the field is filled, if the field is required it will be validated before
+						if($this->frm->getField($fieldName)->isFilled()) $this->frm->getField($fieldName)->isEmail($settings['error_message']);
+					}
 
 					// numeric
-					elseif($rule == 'numeric') $this->frm->getField($fieldName)->isNumeric($settings['error_message']);
+					elseif($rule == 'numeric')
+					{
+						// only check this if the field is filled, if the field is required it will be validated before
+						if($this->frm->getField($fieldName)->isFilled()) $this->frm->getField($fieldName)->isNumeric($settings['error_message']);
+					}
 				}
 			}
 
