@@ -48,7 +48,7 @@ class BackendJavascript
 		$this->setFile(SpoonFilter::getGetValue('file', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', BackendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', array_keys(BackendLanguage::getWorkingLanguages()), SITE_DEFAULT_LANGUAGE));
 
 		// build the path
 		if($this->module == 'core') $path = BACKEND_CORE_PATH . '/js/' . $this->getFile();
