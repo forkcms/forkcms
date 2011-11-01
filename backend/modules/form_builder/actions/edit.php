@@ -53,7 +53,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 		$this->frm->addText('name', $this->record['name']);
 		$this->frm->addDropdown('method', array('database' => BL::getLabel('MethodDatabase'), 'database_email' => BL::getLabel('MethodDatabaseEmail')), $this->record['method']);
-		$this->frm->addText('email', implode(',', $this->record['email']));
+		$this->frm->addText('email', implode(',', (array) $this->record['email']));
 		$this->frm->addText('identifier', $this->record['identifier']);
 		$this->frm->addEditor('success_message', $this->record['success_message']);
 
