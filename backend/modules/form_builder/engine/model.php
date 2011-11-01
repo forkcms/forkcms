@@ -474,7 +474,7 @@ class BackendFormBuilderModel
 		$db->update('forms', $values, 'id = ?', $id);
 
 		// build array
-		$extra['data'] = serialize(array('extra_label' => $values['name'], 'id' => $id));
+		$extra['data'] = serialize(array('language' => BL::getWorkingLanguage(), 'extra_label' => $values['name'], 'id' => $id));
 
 		// update extra
 		$db->update('modules_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('form_builder', 'widget', '400' . $id));

@@ -7,6 +7,7 @@ Improvements:
 Bugfixes:
 
 * Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
+* Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.  
 
 
 3.0.0 (2011-11-01)
