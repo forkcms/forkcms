@@ -33,7 +33,7 @@ jsBackend.formBuilder =
 
 		$('#email').multipleTextbox(
 		{
-			emptyMessage: '{$msgNoEmailadresses}',
+			emptyMessage: '{$msgNoEmailaddresses}',
 			addLabel: '{$lblCoreAdd|ucfirst}',
 			removeLabel: '{$lblDelete|ucfirst}',
 			canAddNew: true
