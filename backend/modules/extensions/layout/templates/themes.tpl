@@ -68,7 +68,7 @@
 
 <div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
 	<p>
-		{$msgConfirmTemplateInstall|sprintf:{$name}}
+		{$msgConfirmThemeInstall|sprintf:{$name}}
 	</p>
 </div>
 
