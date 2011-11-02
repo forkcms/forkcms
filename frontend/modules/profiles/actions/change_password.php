@@ -11,7 +11,7 @@
  * Change the password of the current logged in profile.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesChangePassword extends FrontendBaseBlock
 {

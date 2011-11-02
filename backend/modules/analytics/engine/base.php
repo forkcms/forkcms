@@ -10,7 +10,7 @@
 /**
  * This class implements a lot of functionality that can be extended by a specific action
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsBase extends BackendBaseActionIndex
 {

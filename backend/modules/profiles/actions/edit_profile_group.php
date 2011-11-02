@@ -11,7 +11,7 @@
  * This is the edit_profile_group-action, it will display a form to add a profile to a group.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 {

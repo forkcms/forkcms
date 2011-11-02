@@ -10,7 +10,7 @@
 /**
  * This checks if a CampaignMonitor account exists or not, and links it if it does
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 {

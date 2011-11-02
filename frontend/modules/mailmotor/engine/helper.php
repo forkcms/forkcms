@@ -3,7 +3,7 @@
 /**
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorCMHelper
 {

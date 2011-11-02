@@ -11,7 +11,7 @@
  * This action is used to export submissions of a form.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderExportData extends BackendBaseAction
 {

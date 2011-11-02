@@ -4,7 +4,7 @@
  * This is the module install-action.
  * It will install the module given via the "module" GET parameter.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendExtensionsInstallModule extends BackendBaseActionIndex
 {

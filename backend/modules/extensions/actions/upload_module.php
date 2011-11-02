@@ -4,7 +4,7 @@
  * This is the module upload-action.
  * It will install a module via a compressed zip file.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendExtensionsUploadModule extends BackendBaseActionAdd
 {

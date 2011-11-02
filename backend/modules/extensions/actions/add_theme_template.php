@@ -11,7 +11,7 @@
  * This is the add-action, it will display a form to create a new item
  *
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd

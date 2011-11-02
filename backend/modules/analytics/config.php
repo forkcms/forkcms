@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the analytics module
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsConfig extends BackendBaseConfig
 {

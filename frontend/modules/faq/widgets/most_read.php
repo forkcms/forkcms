@@ -10,7 +10,7 @@
 /**
  * This is a widget with recent blog-articles
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FrontendFaqWidgetMostRead extends FrontendBaseWidget
 {

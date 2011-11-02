@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendTagsConfig extends FrontendBaseConfig
 {

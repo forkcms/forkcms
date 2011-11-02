@@ -10,7 +10,7 @@
 /**
  * Installer for the profiles module.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class ProfilesInstaller extends ModuleInstaller
 {

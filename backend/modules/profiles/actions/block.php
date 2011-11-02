@@ -11,7 +11,7 @@
  * This action will toggle the block status a profile.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendProfilesBlock extends BackendBaseActionDelete
 {

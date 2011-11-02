@@ -10,7 +10,7 @@
 /**
  * This page will display the statistical overview of who clicked a certain link in a specified mailing
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 {

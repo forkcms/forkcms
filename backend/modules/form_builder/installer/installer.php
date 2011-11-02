@@ -10,7 +10,7 @@
 /**
  * Installer for the form_builder module
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FormBuilderInstaller extends ModuleInstaller

@@ -11,7 +11,7 @@
  * This is the index-action (default), it will display the setting-overview
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendSettingsIndex extends BackendBaseActionIndex
 {

@@ -11,7 +11,7 @@
  * This is the add-action, it will display a form to create a new user
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendUsersAdd extends BackendBaseActionAdd
 {

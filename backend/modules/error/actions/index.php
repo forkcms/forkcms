@@ -11,7 +11,7 @@
  * This is the index-action (default), it will display an error depending on a given parameters
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendErrorIndex extends BackendBaseActionIndex
 {

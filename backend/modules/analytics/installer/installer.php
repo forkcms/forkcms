@@ -10,7 +10,7 @@
 /**
  * Installer for the analytics module
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class AnalyticsInstaller extends ModuleInstaller
 {

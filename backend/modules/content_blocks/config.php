@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the content_blocks module
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendContentBlocksConfig extends BackendBaseConfig
 {

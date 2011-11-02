@@ -3,9 +3,9 @@
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendContentBlocksModel
 {

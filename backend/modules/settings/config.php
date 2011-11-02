@@ -11,7 +11,7 @@
  * This is the configuration-object for the settings module
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 final class BackendSettingsConfig extends BackendBaseConfig
 {

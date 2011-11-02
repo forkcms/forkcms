@@ -10,7 +10,7 @@
 /**
  * This action is used to export email addresses by group ID
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorExportAddresses extends BackendBaseAction
 {

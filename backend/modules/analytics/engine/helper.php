@@ -10,8 +10,8 @@
 /**
  * Helper class to make our life easier
  *
- * @author Dieter Van den Eynde <dieter@netlash.com>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Dieter Van den Eynde <dieter.vandeneynde@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsHelper
 {

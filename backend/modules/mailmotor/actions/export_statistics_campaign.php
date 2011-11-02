@@ -10,7 +10,7 @@
 /**
  * This action is used to export statistics for a given campaign ID
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorExportStatisticsCampaign extends BackendBaseAction
 {

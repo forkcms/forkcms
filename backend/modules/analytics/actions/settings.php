@@ -10,8 +10,8 @@
 /**
  * This is the settings-action, it will display a form to set general analytics settings
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendAnalyticsSettings extends BackendBaseActionEdit
 {

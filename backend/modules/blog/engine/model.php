@@ -10,8 +10,8 @@
 /**
  * In this file we store all generic functions that we will be using in the blog module
  *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Dave Lens <dave@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
  */

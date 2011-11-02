@@ -3,7 +3,7 @@
 /**
  * This is the modules-action, it will display the overview of modules.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendExtensionsModules extends BackendBaseActionIndex
 {

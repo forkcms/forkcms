@@ -10,8 +10,8 @@
 /**
  * This is the settings-action, it will display a form to set general faq settings
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
- * @author Jelmer Snoeck <jelmer@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFaqSettings extends BackendBaseActionEdit
 {

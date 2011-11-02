@@ -10,8 +10,8 @@
 /**
  * This is the edit action, it will display a form to edit an existing locale item.
  *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocaleEdit extends BackendBaseActionEdit

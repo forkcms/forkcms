@@ -11,7 +11,7 @@
  * Installer for the search module
  *
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class SearchInstaller extends ModuleInstaller
 {

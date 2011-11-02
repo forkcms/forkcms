@@ -11,7 +11,7 @@
  * In this file we store all generic functions that we will be using in the pages module
  *
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FrontendPagesModel implements FrontendTagsInterface
 {

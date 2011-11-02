@@ -11,7 +11,7 @@
  * Reset your password using a token received from the forgot_password action.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesResetPassword extends FrontendBaseBlock
 {

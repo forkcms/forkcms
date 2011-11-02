@@ -11,7 +11,7 @@
  * In this file we store all generic functions that we will be using in the PagesModule
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendPagesModel

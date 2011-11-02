@@ -10,7 +10,7 @@
 /**
  * This is the edit-action, it will display a form to edit a group
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorEditGroup extends BackendBaseActionEdit
 {
