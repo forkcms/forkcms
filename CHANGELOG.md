@@ -13,7 +13,8 @@ Bugfixes:
 * Core: removed the guessing of the library path in the installer.
 * Extensions: fixed typo, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/207 by Bart.
 * Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
-* Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.  
+* Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.
+* Location: invalid item was used in the template, and the JS should only be excuted after jQuery is loaded, as mentioned by Floris on http://forkcms.lighthouseapp.com/projects/61890/tickets/205.
 
 
 3.0.0 (2011-11-01)
