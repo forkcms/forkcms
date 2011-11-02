@@ -168,7 +168,7 @@ class ExtensionsInstaller extends ModuleInstaller
 		// templates
 		$this->setActionRights(1, 'extensions', 'theme_templates');
 		$this->setActionRights(1, 'extensions', 'add_theme_template');
-		$this->setActionRights(1, 'extensions', 'edit_teme_template');
+		$this->setActionRights(1, 'extensions', 'edit_theme_template');
 		$this->setActionRights(1, 'extensions', 'delete_theme_template');
 	}
 }
