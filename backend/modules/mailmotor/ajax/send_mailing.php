@@ -50,21 +50,8 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		}
 		catch(Exception $e)
 		{
-			// fetch campaign ID in CM
-			$cmId = BackendMailmotorCMHelper::getCampaignMonitorID('campaign', $id);
-
-			// check if the CM ID isn't false
-			if($cmId !== false)
-			{
-				// delete the mailing in CM
-				BackendMailmotorCMHelper::getCM()->deleteCampaign($cmId);
-
-				// delete the reference
-				BackendModel::getDB(true)->delete('mailmotor_campaignmonitor_ids', 'cm_id = ?', $cmId);
-			}
-
 			// stop the script and show our error
-			$this->output(902, null, $message);
+			$this->output(902, null, $e->getMessage());
 		}
 
 		// set status to 'sent'
