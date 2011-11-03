@@ -5,6 +5,7 @@ Improvements:
 * Core: Upgraded TinyMCE to 3.4.7
 * Core: TinyMCE now includes all languages that are possible in the interface-language-dropdown.
 * Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
+* Pages: added a widget that shows the subpages as blocks with their title and meta description.
 
 Bugfixes:
 
