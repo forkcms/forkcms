@@ -10,7 +10,7 @@ Bugfixes:
 * Core: when editing non-active languages the files parsed through javascript.php were using the default language, as pointed out by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/200.
 * Core: fix default module, action, language in JS - was messed up on dashboard.
 * Core: fix issue in template compiler; nested iterations where child ends in name of parent, did not work.
-* Core: removed the guessing of the library path in the installer.
+* Core: removed the guessing of the library path in the installer. When Spoon can't be located a textbox will be shown wherin you can enter the path to Spoon.
 * Extensions: fixed typo, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/207 by Bart.
 * Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
 * Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.

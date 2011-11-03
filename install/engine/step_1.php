@@ -28,19 +28,35 @@ class InstallerStep1 extends InstallerStep
 		// head
 		$variables['head'] = file_get_contents('layout/templates/head.tpl');
 		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
+		$hasError = false;
 
 		// was the form submitted?
-		if(isset($_GET['spoon_location']) && in_array($_GET['spoon_location'], $possiblePaths))
+		if(isset($_GET['spoon_location']))
 		{
-			// store in session
-			$_SESSION['path_library'] = $_GET['spoon_location'];
+			// empty path
+			if($_GET['spoon_location'] == '') $hasError = true;
 
-			// redirect to step 2
-			header('Location: index.php?step=2');
-			exit;
+			else
+			{
+				// cleanup the path
+				$temporaryPath = realpath(rtrim($_GET['spoon_location'], '/'));
+
+				if(file_exists($temporaryPath . '/spoon/spoon.php'))
+				{
+					// store in session
+					$_SESSION['path_library'] = $temporaryPath;
+
+					// redirect to step 2
+					header('Location: index.php?step=2');
+					exit;
+				}
+
+				// add error
+				else $hasError = true;
+			}
 		}
 
-		// this should be teh pathe
+		// this should be the path
 		$path = realpath(dirname(__FILE__) . '/../../library');
 
 		// just one found? add it into the session
@@ -56,9 +72,19 @@ class InstallerStep1 extends InstallerStep
 		// nothing found
 		else
 		{
-			$variables['content'] = '<div class="formMessage errorMessage">
-										<p>We couldn\'t locate Spoon Library. Make sure you uploaded the <code>library</code>-folder.</p>
-									</div>';
+			$variables['content'] = '<h3>Location of Spoon</h3>
+									 <div>
+										<p>We couldn\'t locate Spoon Library, give us a hand and enter the path to the library-folder below.</p>
+										<p>
+											<label for="spoonLocation">Path<abbr title="Required field">*</abbr></label>
+											<input type="text" name="spoon_location" id="spoonLocation" class="inputText" style="width: 350px;">';
+
+			if($hasError) $variables['content'] .= '<span style="padding-left: 0;" class="formError">The path you entered doesn\'t contain Spoon Library.</span>';
+
+			$variables['content'] .= '	</p>
+										<p class="buttonHolder">
+											<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" />
+										</p>';
 		}
 
 		// template contents
