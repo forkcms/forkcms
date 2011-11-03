@@ -10,7 +10,7 @@
 /**
  * This is a widget which shows the subpages.
  *
- * @author		Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FrontendPagesWidgetSubpages extends FrontendBaseWidget
 {
