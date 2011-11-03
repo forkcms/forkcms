@@ -1,18 +1,73 @@
 ﻿if(!jsBackend) { var jsBackend = new Object(); }
 
-
 /**
  * CK Editor related objects
+ * @todo	merge this into backend.js after the improvements of Thomas are merged.
+ * @todo	cleanup, check Thomas' branch
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.ckeditor =
 {
+	defaultConfig: {
+		customConfig: '',
+
+		// layout configuration
+		bodyClass: 'content',
+		contentsCss: [
+						'/frontend/core/layout/css/screen.css',{option:THEME_HAS_CSS}
+						'/frontend/themes/{$THEME}/core/layout/css/screen.css', {/option:THEME_HAS_CSS}
+						'/backend/core/layout/css/editor_content.css'{option:THEME_HAS_EDITOR_CSS},
+						'/frontend/themes/{$THEME}/core/layout/css/editor_content.css'{/option:THEME_HAS_EDITOR_CSS}
+					],
+		stylesSet: [],
+
+		// language options
+		contentsLanguage: '{$LANGUAGE}',
+		language: '{$INTERFACE_LANGUAGE}',
+
+		// paste options
+		forcePasteAsPlainText: true,
+
+		// buttons
+		toolbar_Full: [
+			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
+			{ name: 'clipboard', items: ['Undo', 'Redo']},
+			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
+			{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
+			{ name: 'document', items: ['Source', 'ShowBlocks', 'Maximize', 'Templates']},
+			'/',
+			{ name: 'insert', items : ['Table', '-', 'Image', 'MediaEmbed', '-', 'SpecialChar']},
+			{ name: 'styles', items : ['Format', 'Styles']}
+		],
+
+		// layout
+		skin: 'kama',
+		uiColor: '#E7F0F8',
+		toolbarStartupExpanded: false,
+
+		// entities
+		entities: false,
+		entities_greek: false,
+		entities_latin: false,
+
+		// load some extra plugins
+		// extraPlugins: 'stylesheetparser,MediaEmbed',
+		extraPlugins: 'MediaEmbed',
+
+		// remove useless plugins
+		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley',
+
+		// custom vars
+		editorType: 'default',
+		showClickToEdit: true
+	},
+
 	// initialize the editor
 	init: function()
 	{
 		// load the editor
-		if($('textarea.inputEditor, textarea.inputEditorError').length > 0)
+		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
 		{
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
@@ -25,76 +80,26 @@ jsBackend.ckeditor =
 
 	load: function()
 	{
+		// extend the editor config
+		var editorConfig = $.extend(jsBackend.ckeditor.defaultConfig, {});
+
+		// specific config for the newsletter
+		var newsletterConfig = $.extend(jsBackend.ckeditor, {
+			showClickToEdit: false
+		});
+
 		// bind on inputEditor and inputEditorError
-		$('textarea.inputEditor, textarea.inputEditorError').ckeditor(
-			jsBackend.ckeditor.callback,
-			{
-				customConfig: '',
-
-				// layout configuration
-				bodyClass: 'content',
-				contentsCss: [
-								'/frontend/core/layout/css/screen.css',{option:THEME_HAS_CSS}
-								'/frontend/themes/{$THEME}/core/layout/css/screen.css', {/option:THEME_HAS_CSS}
-								'/backend/core/layout/css/editor_content.css'{option:THEME_HAS_EDITOR_CSS},
-								'/frontend/themes/{$THEME}/core/layout/css/editor_content.css'{/option:THEME_HAS_EDITOR_CSS}
-							],
-				stylesSet: [],
-
-				// language options
-				contentsLanguage: '{$LANGUAGE}',
-				language: '{$INTERFACE_LANGUAGE}',
-
-				// paste options
-				forcePasteAsPlainText: true,
-
-				toolbar_Simple: [
-					{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
-					{ name: 'clipboard', items: ['Undo', 'Redo']},
-					{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
-					{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-					{ name: 'document', items: ['Source']},
-					'/',
-					{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar']},
-					{ name: 'styles', items : ['Format', 'Styles']}
-				],
-
-				// buttons
-				toolbar_Full: [
-					{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
-					{ name: 'clipboard', items: ['Undo', 'Redo']},
-					{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
-					{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-					{ name: 'document', items: ['Source', 'ShowBlocks', 'Maximize', 'Templates']},
-					'/',
-					{ name: 'insert', items : ['Table', '-', 'Image', 'MediaEmbed', '-', 'SpecialChar']},
-					{ name: 'styles', items : ['Format', 'Styles']}
-				],
-
-				// layout
-				skin: 'kama',
-				uiColor: '#E7F0F8',
-				toolbarStartupExpanded: false,
-
-				// entities
-				entities: false,
-				entities_greek: false,
-				entities_latin: false,
-
-				// load some extra plugins
-				// extraPlugins: 'stylesheetparser,MediaEmbed',
-				extraPlugins: 'MediaEmbed',
-
-				// remove useless plugins
-				removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley'
-			}
-		);
+		$('textarea.inputEditor, textarea.inputEditorError').ckeditor(jsBackend.ckeditor.callback, editorConfig);
+		$('textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').ckeditor(jsBackend.ckeditor.callback, newsletterConfig);
 	},
 
 	callback: function(element)
 	{
-		// add the click to edit div
-		$(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+		if($(element).ckeditorGet().config.showClickToEdit)
+		{
+			// add the click to edit div
+			$(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+		}
 
 		// add the optionsRTE-class if it isn't present
 		if(!$(element).parent('div, p').hasClass('optionsRTE')) $(element).parent('div, p').addClass('optionsRTE');
