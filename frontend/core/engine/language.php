@@ -112,7 +112,7 @@ class FrontendLanguage
 	public static function getAction($key)
 	{
 		// redefine
-		$key = (string) $key;
+		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the action exists return it,
 		if(isset(self::$act[$key])) return self::$act[$key];
@@ -197,7 +197,7 @@ class FrontendLanguage
 	public static function getError($key)
 	{
 		// redefine
-		$key = (string) $key;
+		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the error exists return it,
 		if(isset(self::$err[$key])) return self::$err[$key];
@@ -225,7 +225,7 @@ class FrontendLanguage
 	public static function getLabel($key)
 	{
 		// redefine
-		$key = (string) $key;
+		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the error exists return it,
 		if(isset(self::$lbl[$key])) return self::$lbl[$key];
@@ -253,7 +253,7 @@ class FrontendLanguage
 	public static function getMessage($key)
 	{
 		// redefine
-		$key = (string) $key;
+		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the error exists return it,
 		if(isset(self::$msg[$key])) return self::$msg[$key];
