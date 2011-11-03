@@ -33,9 +33,6 @@
 		<item name="prev">Prev</item>
 		<item name="next">Next</item>
 		<item name="image_data">Getting image data, please wait...</item>
-		<item name="page">Page</item>
-		<item name="of">of</item>
-		<item name="download">Download</item>
 	</group>
 	<group target="button">
 		<item name="create">Create</item>

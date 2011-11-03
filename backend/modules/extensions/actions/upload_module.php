@@ -118,8 +118,11 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 										$chunks = explode('/', $tmpName);
 										$tmpName = $chunks[0];
 
+										// ignore hidden files
+										if(substr(basename($fileName), 0, 1) == '.') break;
+
 										// first module we find, store the name
-										if($moduleName === null) $moduleName = $tmpName;
+										elseif($moduleName === null) $moduleName = $tmpName;
 
 										// the name does not match the previous madule we found, skip the file
 										elseif($moduleName !== $tmpName) break;

@@ -27,8 +27,8 @@
         <translation language="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmThemeInstall">
-        <translation language="nl"><![CDATA[Ben je zeker dat je thema "%1$s" wil installeren?]]></translation>
-        <translation language="en"><![CDATA[Are you sure you want to install theme "%1$s"?]]></translation>
+        <translation language="nl"><![CDATA[Ben je zeker dat je dit thema wil installeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to install this theme?]]></translation>
       </item>
       <item type="message" name="DeletedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>

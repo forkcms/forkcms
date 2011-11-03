@@ -63,7 +63,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 		$this->record['data'] = unserialize($this->record['data']);
 		$this->names = $this->record['data']['names'];
 		if(isset($this->record['data']['default_extras_' . BL::getWorkingLanguage()])) $this->extras = $this->record['data']['default_extras_' . BL::getWorkingLanguage()];
-		else $this->extras = $this->record['data']['default_extras'];
+		elseif(isset($this->record['data']['default_extras'])) $this->extras = $this->record['data']['default_extras'];
 
 		// assign
 		$this->tpl->assign('template', $this->record);
