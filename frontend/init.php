@@ -28,14 +28,11 @@ class FrontendInit
 	 */
 	public function __construct($type)
 	{
-		// init vars
 		$allowedTypes = array('frontend', 'frontend_ajax', 'frontend_js');
 		$type = (string) $type;
 
 		// check if this is a valid type
 		if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
-
-		// set type
 		$this->type = $type;
 
 		// register the autoloader
@@ -57,7 +54,6 @@ class FrontendInit
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		// require globals
 		$this->requireGlobals();
 
 		// get last modified time for globals
@@ -69,10 +65,8 @@ class FrontendInit
 		// define as a constant
 		define('LAST_MODIFIED_TIME', $lastModifiedTime);
 
-		// define constants
 		$this->definePaths();
 		$this->defineURLs();
-
 		$this->setIncludePath();
 		$this->setDebugging();
 
@@ -121,45 +115,43 @@ class FrontendInit
 			// we'll need the original class name again, with the uppercases
 			$className = func_get_arg(0);
 
-			// split in parts
-			if(preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts))
+			// split in parts, if nothing is found we stop processing
+			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
+
+			// the real matches
+			$parts = $parts[0];
+
+			// doublecheck that we are looking for a frontend class, of that isn't the case we should stop.
+			$root = array_shift($parts);
+			if(strtolower($root) != 'frontend') return;
+
+			foreach($parts as $i => $part)
 			{
-				// the real matches
-				$parts = $parts[0];
+				// skip the first
+				if($i == 0) continue;
 
-				// doublecheck that we are looking for a frontend class
-				$root = array_shift($parts);
-				if(strtolower($root) == 'frontend')
+				// action
+				$action = strtolower(implode('_', $parts));
+
+				// module
+				$module = '';
+				for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
+
+				// fix action & module
+				$action = substr($action, strlen($module));
+				$module = substr($module, 0, -1);
+
+				// check the actions, engine & widgets directories
+				foreach(array('actions', 'engine', 'widgets') as $dir)
 				{
-					foreach($parts as $i => $part)
+					// file to be loaded
+					$pathToLoad = FRONTEND_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+
+					// if it exists, load it!
+					if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
 					{
-						// skip the first
-						if($i == 0) continue;
-
-						// action
-						$action = strtolower(implode('_', $parts));
-
-						// module
-						$module = '';
-						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
-
-						// fix action & module
-						$action = substr($action, strlen($module));
-						$module = substr($module, 0, -1);
-
-						// check the actions, engine & widgets directories
-						foreach(array('actions', 'engine', 'widgets') as $dir)
-						{
-							// file to be loaded
-							$pathToLoad = FRONTEND_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
-
-							// if it exists, load it!
-							if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
-							{
-								require_once $pathToLoad;
-								break;
-							}
-						}
+						require_once $pathToLoad;
+						break;
 					}
 				}
 			}

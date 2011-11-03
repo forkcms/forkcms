@@ -652,24 +652,20 @@ class BackendModel
 			}
 		}
 
-		// pageId stored?
-		if($pageIdForURL !== null)
-		{
-			// build URL
-			$URL = self::getURL($pageIdForURL, $language);
+		// still no page id?
+		if($pageIdForURL === null) return self::getURL(404);
 
-			// set locale
-			FrontendLanguage::setLocale($language);
+		// build URL
+		$URL = self::getURL($pageIdForURL, $language);
 
-			// append action
-			$URL .= '/' . urldecode(FL::act(SpoonFilter::toCamelCase($action)));
+		// set locale
+		FrontendLanguage::setLocale($language);
 
-			// return the unique URL!
-			return $URL;
-		}
+		// append action
+		$URL .= '/' . urldecode(FL::act(SpoonFilter::toCamelCase($action)));
 
-		// fallback
-		return self::getURL(404);
+		// return the unique URL!
+		return $URL;
 	}
 
 	/**
