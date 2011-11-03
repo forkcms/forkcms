@@ -33,9 +33,6 @@
 		<item name="prev">Vorige</item>
 		<item name="next">Volgende</item>
 		<item name="image_data">Afbeelding ophalen, moment geduld a.u.b.</item>
-		<item name="page">Pagina</item>
-		<item name="of">van</item>
-		<item name="download">Download</item>
 	</group>
 	<group target="button">
 		<item name="create">Aanmaken</item>
