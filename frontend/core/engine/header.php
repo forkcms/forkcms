@@ -288,6 +288,31 @@ class FrontendHeader extends FrontendBaseObject
 	}
 
 	/**
+	 * Add Open Graph image
+	 *
+	 * @param string $image The path to the image.
+	 * @param bool[optional] $overwrite Should we overwrite the previous value?
+	 */
+	public function addOpenGraphImage($image, $overwrite = false)
+	{
+		// remove site url from path
+		$image = str_replace(SITE_URL, '', $image);
+
+		// check if it no longer points to an absolute uri
+		if(substr($image, 0, 7) != 'http://')
+		{
+			// check if image exists
+			if(!SpoonFile::exists(PATH_WWW . $image)) return;
+
+			// convert to absolute path
+			$image = SITE_URL . $image;
+		}
+
+		// add to metadata
+		$this->addMetaData(array('property' => 'og:image', 'content' => $image), $overwrite, array('property', 'content'));
+	}
+
+	/**
 	 * Sort function for CSS-files
 	 *
 	 * @todo this should return $this->cssFiles, making it more usable within getCssFiles
@@ -329,6 +354,24 @@ class FrontendHeader extends FrontendBaseObject
 
 		// reset property
 		$this->cssFiles = $return;
+	}
+
+	/**
+	 * Extract images from content that can be added add Open Graph image
+	 *
+	 * @param string $content The content (wherefrom to extract the images).
+	 */
+	public function extractOpenGraphImages($content)
+	{
+		// try to get an image in the content
+		$matches = array();
+
+		// check if images are present in the content
+		if(preg_match_all('/<img.*?src="(.*?)".*?\/>/i', $content, $matches))
+		{
+			// loop all found images and add to Open Graph metadata
+			foreach($matches[1] as $image) $this->addOpenGraphImage($image);
+		}
 	}
 
 	/**
@@ -636,14 +679,14 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$parseFacebook = false;
 
-		// facebook admins given?
+		// check if facebook admins are set
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
 		{
 			$this->addMetaData(array('property' => 'fb:admins', 'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)), true, array('property'));
 			$parseFacebook = true;
 		}
 
-		// if no facebook admin is given but an app is configured we use the application as an admin
+		// check if no facebook admin is set but an app is configured we use the application as an admin
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) == '' && FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
 			$this->addMetaData(array('property' => 'fb:app_id', 'content' => FrontendModel::getModuleSetting('core', 'facebook_app_id', null)), true, array('property'));
@@ -670,6 +713,10 @@ class FrontendHeader extends FrontendBaseObject
 
 			// add the locale property
 			$this->addOpenGraphData('locale', $locale);
+
+			// if a default image has been set for facebook, assign it
+			$this->addOpenGraphImage('/frontend/themes/' . FrontendTheme::getTheme() . '/facebook.png');
+			$this->addOpenGraphImage('/facebook.png');
 		}
 	}
 
