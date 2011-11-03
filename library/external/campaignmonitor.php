@@ -1849,9 +1849,6 @@ class CampaignMonitor
 	 */
 	public function sendCampaign($campaignId, $confirmationEmail, $deliveryDate = null)
 	{
-		// set ID
-		$campaignId = empty($campaignId) ? $this->getCampaignId() : $campaignId;
-
 		// set parameters
 		$parameters['ConfirmationEmail'] = (string) $confirmationEmail;
 		$parameters['SendDate'] = $deliveryDate;
@@ -1871,7 +1868,6 @@ class CampaignMonitor
 	 */
 	public function sendCampaignPreview($campaignId, $recipients, $personalization = 'Fallback')
 	{
-		$campaignId = empty($campaignId) ? $this->getCampaignId() : $campaignId;
 		$recipients = !is_array($recipients) ? array($recipients) : $recipients;
 
 		// set parameters

@@ -120,7 +120,35 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$item['from_email'] = $this->mailing['from_email'];
 		$item['reply_to_email'] = $this->mailing['reply_to_email'];
 
-		BackendMailmotorCMHelper::saveMailingDraft($item);
+		try
+		{
+			BackendMailmotorCMHelper::saveMailingDraft($item);
+		}
+		catch(Exception $e)
+		{
+			// check what error we have
+			if(strpos($e->getMessage(), 'HTML Content URL Required'))
+			{
+				$message = BL::err('HTMLContentURLRequired', $this->getModule());
+			}
+			elseif(strpos($e->getMessage(), 'Payment details required'))
+			{
+				$error = BL::err('PaymentDetailsRequired', $this->getModule());
+				$cmUsername = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
+				$message = sprintf($error, $cmUsername);
+			}
+			elseif(strpos($e->getMessage(), 'Duplicate Campaign Name'))
+			{
+				$message = BL::err('DuplicateCampaignName', $this->getModule());
+			}
+			else
+			{
+				$message = $e->getMessage();
+			}
+
+			// stop the script and show our error
+			$this->output(902, null, $message);
+		}
 
 		// trigger event
 		BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step3', array('item' => $item));
