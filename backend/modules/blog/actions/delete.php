@@ -10,8 +10,8 @@
 /**
  * This action will delete a blogpost
  *
- * @author Dave Lens <dave@netlash.com>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogDelete extends BackendBaseActionDelete
@@ -46,6 +46,9 @@ class BackendBlogDelete extends BackendBaseActionDelete
 
 			// delete item
 			BackendBlogModel::delete($this->id);
+
+			// delete the image
+			SpoonFile::delete(FRONTEND_FILES_PATH . '/blog/images/source/' . $this->record['image']);
 
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));

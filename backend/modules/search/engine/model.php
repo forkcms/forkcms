@@ -34,8 +34,8 @@ class BackendSearchModel
 	 */
 	public static function addIndex($module, $otherId, array $fields, $language = null)
 	{
-		// module active?
-		if(!in_array('search', BackendModel::getModules(true))) return;
+		// module exists?
+		if(!in_array('search', BackendModel::getModules())) return;
 
 		// no fields?
 		if(empty($fields)) return;
@@ -84,8 +84,8 @@ class BackendSearchModel
 	 */
 	public static function editIndex($module, $otherId, array $fields, $language = null)
 	{
-		// module active?
-		if(!in_array('search', BackendModel::getModules(true))) return;
+		// module exists?
+		if(!in_array('search', BackendModel::getModules())) return;
 
 		// no fields?
 		if(empty($fields)) return;
@@ -241,8 +241,8 @@ class BackendSearchModel
 	 */
 	public static function removeIndex($module, $otherId, $language = null)
 	{
-		// module active?
-		if(!in_array('search', BackendModel::getModules(true))) return;
+		// module exists?
+		if(!in_array('search', BackendModel::getModules())) return;
 
 		// set language
 		if(!$language) $language = BL::getWorkingLanguage();

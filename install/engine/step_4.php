@@ -69,6 +69,9 @@ class InstallerStep4 extends InstallerStep
 
 		// example data
 		$this->frm->addCheckbox('example_data', (SpoonSession::exists('example_data') ? SpoonSession::get('example_data') : true));
+
+		// debug mode
+		$this->frm->addCheckbox('debug_mode', (SpoonSession::exists('debug_mode') ? SpoonSession::get('debug_mode') : false));
 	}
 
 	/**
@@ -113,6 +116,9 @@ class InstallerStep4 extends InstallerStep
 
 				// example data
 				SpoonSession::set('example_data', $this->frm->getField('example_data')->getChecked());
+
+				// debug mode
+				SpoonSession::set('debug_mode', $this->frm->getField('debug_mode')->getChecked());
 
 				// redirect
 				SpoonHTTP::redirect('index.php?step=5');

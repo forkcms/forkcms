@@ -38,8 +38,8 @@ class FrontendFooter extends FrontendBaseObject
 					$locale = 'en_US';
 					break;
 
-				case 'nl':
-					$locale = 'nl_BE';
+				case 'cn':
+					$locale = 'zh-CN';
 					break;
 
 				default:

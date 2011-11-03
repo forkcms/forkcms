@@ -10,7 +10,7 @@
 /**
  * Delete a field via ajax.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderAjaxDeleteField extends BackendBaseAJAXAction
 {

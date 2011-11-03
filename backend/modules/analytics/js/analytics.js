@@ -368,7 +368,7 @@ jsBackend.analytics.loading =
 			timeout: 5000,
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'check_status', language: jsBackend.current.language },
+				fork: { action: 'check_status' },
 				page: page,
 				identifier: identifier
 			},

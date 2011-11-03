@@ -10,7 +10,7 @@
 /**
  * This loads CM client info
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAjaxLoadClientInfo extends BackendBaseAJAXAction
 {

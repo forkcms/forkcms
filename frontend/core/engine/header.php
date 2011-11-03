@@ -434,16 +434,23 @@ class FrontendHeader extends FrontendBaseObject
 		// fix urls
 		$matches = array();
 		$pattern = '/url\(';
-		$pattern .= 	'("|\'){0,1}';
-		$pattern .= 		'([\/\.a-z].*)';
-		$pattern .= 	'("|\'){0,1}';
-		$pattern .= 	'\)/iUs';
+		$pattern .= 	'["\']?';
+		$pattern .= 		'(.*?)';
+		$pattern .= 	'["\']?';
+		$pattern .= 	'\)/is';
+		$content = preg_replace($pattern, 'url("' . dirname($file) . '/$1")', $content);
 
-		$content = preg_replace($pattern, 'url($3' . dirname($file) . '/$2$3)', $content);
+		// re-fix data
+		$matches = array();
+		$pattern = '/url\(';
+		$pattern .= 	'["\']?';
+		$pattern .= 		'"' . preg_quote(dirname($file), '/') . '\/(data:.*?)"';
+		$pattern .= 	'["\']?';
+		$pattern .= 	'\)/is';
+		$content = preg_replace($pattern, 'url("$1")', $content);
 
 		// remove comments
-		$content = preg_replace('/\/\*(.*)\*\//iUs', '', $content);
-		$content = preg_replace('/([\t\w]{1,})\/\/.*/i', '', $content);
+		$content = preg_replace('/\/\*(.*?)\*\//is', '', $content);
 
 		// remove tabs
 		$content = preg_replace('/\t/i', '', $content);
@@ -653,8 +660,8 @@ class FrontendHeader extends FrontendBaseObject
 					$locale = 'en_US';
 					break;
 
-				case 'nl':
-					$locale = 'nl_BE';
+				case 'cn':
+					$locale = 'zh-CN';
 					break;
 
 				default:

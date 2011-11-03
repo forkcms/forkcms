@@ -11,7 +11,7 @@
  * This is the edit-action, it will display a form to edit a group
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendGroupsEdit extends BackendBaseActionEdit
 {
@@ -130,8 +130,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		// create filter with modules which may not be displayed
 		$filter = array('authentication', 'error', 'core');
 
-		// get all active filtered modules
-		$modules = array_diff(BackendModel::getModules(true), $filter);
+		// get all modules
+		$modules = array_diff(BackendModel::getModules(), $filter);
 
 		// loop all modules
 		foreach($modules as $module)
@@ -231,7 +231,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	 */
 	private function getWidgets()
 	{
-		$modules = BackendModel::getModules(true);
+		// get all modules
+		$modules = BackendModel::getModules();
 
 		// loop all modules
 		foreach($modules as $module)

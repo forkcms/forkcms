@@ -11,7 +11,7 @@
  * This class is the real code, it creates an action, loads the configfile, ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendAJAXAction
 {

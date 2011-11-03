@@ -10,7 +10,7 @@
 /**
  * This action will update a translation using AJAX
  *
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
@@ -29,7 +29,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 
 		// get parameters
 		$language = SpoonFilter::getPostValue('language', array_keys($possibleLanguages), null, 'string');
-		$module = SpoonFilter::getPostValue('module', BackendModel::getModules(false), null, 'string');
+		$module = SpoonFilter::getPostValue('module', BackendModel::getModules(), null, 'string');
 		$name = SpoonFilter::getPostValue('name', null, null, 'string');
 		$type = SpoonFilter::getPostValue('type', BackendModel::getDB()->getEnumValues('locale', 'type'), null, 'string');
 		$application = SpoonFilter::getPostValue('application', array('backend', 'frontend'), null, 'string');

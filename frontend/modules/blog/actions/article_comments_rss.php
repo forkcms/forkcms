@@ -11,7 +11,7 @@
  * This is the RSS-feed for comments on a certain article.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 {

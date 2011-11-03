@@ -12,7 +12,7 @@
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendContentBlocksEdit extends BackendBaseActionEdit
@@ -74,9 +74,6 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 		// check if selected template is still available
 		if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
-
-		// get templates
-		$this->templates = BackendContentBlocksModel::getTemplates();
 	}
 
 	/**

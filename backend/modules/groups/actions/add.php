@@ -15,6 +15,13 @@
 class BackendGroupsAdd extends BackendBaseActionAdd
 {
 	/**
+	 * The action groups
+	 *
+	 * @var array
+	 */
+	private $actionGroups = array();
+
+	/**
 	 * The actions
 	 *
 	 * @var	array
@@ -121,8 +128,8 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		// create filter with modules which may not be displayed
 		$filter = array('authentication', 'error', 'core');
 
-		// get all active filtered modules
-		$modules = array_diff(BackendModel::getModules(true), $filter);
+		// get all modules
+		$modules = array_diff(BackendModel::getModules(), $filter);
 
 		// loop all modules
 		foreach($modules as $module)
@@ -211,7 +218,8 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	private function getWidgets()
 	{
-		$modules = BackendModel::getModules(true);
+		// get all modules
+		$modules = BackendModel::getModules();
 
 		foreach($modules as $module)
 		{

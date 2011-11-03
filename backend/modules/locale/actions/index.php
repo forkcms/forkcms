@@ -10,7 +10,7 @@
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
  *
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
 class BackendLocaleIndex extends BackendBaseActionIndex
 {

@@ -10,7 +10,7 @@
 /**
  * This page will display the overview of groups
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorGroups extends BackendBaseActionIndex
 {

@@ -43,7 +43,7 @@ jsBackend.settings =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend({ fork: { module: jsBackend.current.module, action: 'test_email_connection', language: jsBackend.current.language } }, settings),
+			data: $.extend({ fork: { action: 'test_email_connection' } }, settings),
 			success: function(data, textStatus)
 			{
 				// hide spinner

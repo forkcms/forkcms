@@ -11,7 +11,7 @@
  * This is the export-action, it will create a XML with locale items.
  *
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
 class BackendLocaleExport extends BackendBaseActionIndex
 {
@@ -47,7 +47,7 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		// add language
 		if($this->filter['language'] !== null)
 		{
-			// create an array for the languages, surrounded by quotes (example: 'nl')
+			// create an array for the languages, surrounded by quotes (example: 'en')
 			$languages = array();
 			foreach($this->filter['language'] as $key => $val) $languages[$key] = '\'' . $val . '\'';
 

@@ -454,7 +454,7 @@ class BackendDataGrid extends SpoonDataGrid
  * This is our implementation of iSpoonDatagGridPaging
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendDataGridPaging implements iSpoonDataGridPaging
 {
@@ -610,7 +610,7 @@ class BackendDataGridPaging implements iSpoonDataGridPaging
 /**
  * A datagrid with an array as source
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendDataGridArray extends BackendDataGrid
 {
@@ -627,7 +627,7 @@ class BackendDataGridArray extends BackendDataGrid
 /**
  * A datagrid with a DB-connection as source
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendDataGridDB extends BackendDataGrid
 {

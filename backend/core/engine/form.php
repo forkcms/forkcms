@@ -10,7 +10,7 @@
 /**
  * This is our extended version of SpoonForm
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendForm extends SpoonForm

@@ -10,7 +10,7 @@
 /**
  * This saved the date on which the mailing is to be sent
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 {

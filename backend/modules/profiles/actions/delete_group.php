@@ -11,7 +11,7 @@
  * This action will delete a profile group.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendProfilesDeleteGroup extends BackendBaseActionDelete
 {

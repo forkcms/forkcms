@@ -12,7 +12,7 @@
  *
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendPagesEdit extends BackendBaseActionEdit
 {
@@ -72,7 +72,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
 		// get the templates
-		$this->templates = BackendPagesModel::getTemplates();
+		$this->templates = BackendExtensionsModel::getTemplates();
 
 		// set the default template as checked
 		$this->templates[$this->record['template_id']]['checked'] = true;
@@ -85,7 +85,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		}
 
 		// get the extras
-		$this->extras = BackendPagesModel::getExtras();
+		$this->extras = BackendExtensionsModel::getExtras();
 
 		$this->loadForm();
 		$this->loadDrafts();
@@ -362,8 +362,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('positions', $this->positions);
-		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
-		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
+		$this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+		$this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
 		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 

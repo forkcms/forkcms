@@ -11,7 +11,7 @@
  * This is the index-action (default), it will display the setting-overview
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendSettingsIndex extends BackendBaseActionIndex
 {
@@ -85,7 +85,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addDropdown('number_format', BackendModel::getNumberFormats(), BackendModel::getModuleSetting('core', 'number_format'));
 
 		// create a list of the languages
-		foreach(BackendModel::getModuleSetting('core', 'languages', array('nl')) as $abbreviation)
+		foreach(BackendModel::getModuleSetting('core', 'languages', array('en')) as $abbreviation)
 		{
 			// is this the default language
 			$defaultLanguage = ($abbreviation == SITE_DEFAULT_LANGUAGE) ? true : false;

@@ -3,7 +3,7 @@
 /**
  * This is the detail-action
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorDetail extends FrontendBaseBlock
 {

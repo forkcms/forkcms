@@ -15,7 +15,7 @@
  * 	- it will assign a lot of constants
  * 	- ...
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendTemplate extends SpoonTemplate

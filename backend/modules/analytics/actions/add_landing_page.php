@@ -10,7 +10,7 @@
 /**
  * This is the add-landing-page-action, it will display a form to create a new landing page
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 {

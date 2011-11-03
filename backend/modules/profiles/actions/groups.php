@@ -10,7 +10,7 @@
 /**
  * This is the groups-action, it will display the overview of profile groups.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Lester Lievens <lester@netlash.com>
  */
 class BackendProfilesGroups extends BackendBaseActionIndex

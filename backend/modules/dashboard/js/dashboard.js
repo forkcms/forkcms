@@ -145,13 +145,13 @@ jsBackend.dashboard =
 
 		// hide removed
 		$('.sortableWidget.isRemoved').hide();
-		
+
 		// make the call
 		$.ajax(
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'alter_sequence', language: jsBackend.current.language },
+				fork: { action: 'alter_sequence' },
 				new_sequence: JSON.stringify(newSequence)
 			},
 			success: function(data, textStatus)

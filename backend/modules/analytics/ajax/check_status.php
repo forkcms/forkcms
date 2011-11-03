@@ -10,7 +10,7 @@
 /**
  * This edit-action will check the status using Ajax
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 {

@@ -10,7 +10,7 @@
 /**
  * This is the data-action it will display the overview of sent data
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderData extends BackendBaseActionIndex
 {

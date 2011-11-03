@@ -10,7 +10,7 @@
 /**
  * This action is used to create a draft based on an existing mailing.
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorCopy extends BackendBaseAction
 {

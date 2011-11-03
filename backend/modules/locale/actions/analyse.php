@@ -11,7 +11,7 @@
  * This is the analyse-action, it will display an overview of used locale.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
 class BackendLocaleAnalyse extends BackendBaseActionIndex
 {

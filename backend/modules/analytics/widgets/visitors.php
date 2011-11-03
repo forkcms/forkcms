@@ -10,7 +10,7 @@
 /**
  * This widget will show the latest visitors
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 {

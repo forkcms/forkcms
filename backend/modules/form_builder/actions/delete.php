@@ -10,7 +10,7 @@
 /**
  * This is the delete-action, it will delete an item.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderDelete extends BackendBaseActionDelete
 {

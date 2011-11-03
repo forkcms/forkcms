@@ -11,8 +11,8 @@
  * In this file we store all generic functions that we will be using with profiles.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
- * @author Jan Moesen <jan@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class FrontendProfilesModel
 {

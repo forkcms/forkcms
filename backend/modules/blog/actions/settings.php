@@ -11,7 +11,7 @@
  * This is the settings-action, it will display a form to set general blog settings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendBlogSettings extends BackendBaseActionEdit
 {
