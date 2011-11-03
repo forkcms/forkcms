@@ -10,8 +10,8 @@
 /**
  * In this file we store all generic data communication functions
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
- * @author Dieter Van den Eynde <dieter@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Dieter Van den Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendAnalyticsModel
 {

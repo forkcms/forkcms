@@ -179,7 +179,7 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 				'title' => FL::lbl('More'),
 				'text' => FL::msg('MoreResults'),
 				'full_url' => FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term
-		);
+			);
 		}
 
 		// format data
@@ -201,7 +201,7 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 			$item['full_url'] .= $glue . http_build_query($utm, '', '&');
 
 			// format description
-			$item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? substr(strip_tags($item['text']), 0, $this->length) . '…' : $item['text']) : '';
+			$item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? mb_substr(strip_tags($item['text']), 0, $this->length, SPOON_CHARSET) . '…' : $item['text']) : '';
 		}
 
 		// output

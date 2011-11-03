@@ -10,8 +10,8 @@
 /**
  * This is the content-action, it will display the overview of analytics posts
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsContent extends BackendAnalyticsBase
 {
@@ -149,7 +149,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 
 			// set headers
 			$dataGrid->setHeaderLabels(
-				array('pageviews_percentage' = > '% ' . ucfirst(BL::lbl('Pageviews')))
+				array('pageviews_percentage' => '% ' . ucfirst(BL::lbl('Pageviews')))
 			);
 
 			// parse the datagrid

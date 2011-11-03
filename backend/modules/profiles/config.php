@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the profiles module.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendProfilesConfig extends BackendBaseConfig
 {

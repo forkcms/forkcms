@@ -10,8 +10,8 @@
 /**
  * This is the index-action, it will display the overview of tags
  *
- * @author Dave Lens <dave@netlash.com>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendTagsIndex extends BackendBaseActionIndex

@@ -10,7 +10,8 @@
 /**
  * This is the index-action (default), it will display the overview
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderIndex extends BackendBaseActionIndex
 {
@@ -34,6 +35,7 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 		$this->dataGrid->setHeaderLabels(array('email' => ucfirst(BL::getLabel('Recipient')), 'sent_forms' => ''));
 		$this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
 		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'formatRecipients'), array('[email]'), 'email');
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'getLocale'), array('Method_[method]'), 'method');
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderIndex', 'parseNumForms'), array('[id]', '[sent_forms]'), 'sent_forms');
 		$this->dataGrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::getLabel('Edit'));

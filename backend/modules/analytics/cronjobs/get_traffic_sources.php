@@ -10,7 +10,7 @@
 /**
  * This cronjob will fetch the traffic sources
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsCronjobGetTrafficSources extends BackendBaseCronjob
 {

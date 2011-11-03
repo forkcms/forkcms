@@ -13,9 +13,17 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendNavigation extends FrontendBaseObject
 {
+	/**
+	 * The excluded page ids. These will not be shown in the menu.
+	 *
+	 * @var array
+	 */
+	private static $excludedPageIds = array();
+
 	/**
 	 * The keys an structural data for pages
 	 *
@@ -247,8 +255,11 @@ class FrontendNavigation extends FrontendBaseObject
 		// get navigation
 		$navigation = self::getNavigation();
 
+		// merge the exclude ids with the previously set exclude ids
+		$excludeIds = array_merge((array) $excludeIds, self::$excludedPageIds);
+
 		// meta-navigation is requested but meta isn't enabled
-		if($type == 'meta' && !FrontendModel::getModuleSetting('pages', 'meta_navigation', true)) return '';
+		if($type == 'meta' && (!FrontendModel::getModuleSetting('pages', 'meta_navigation', true) || !isset($navigation['meta']))) return '';
 
 		// validate
 		if(!isset($navigation[$type])) throw new FrontendException('This type (' . $type . ') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
@@ -542,6 +553,19 @@ class FrontendNavigation extends FrontendBaseObject
 
 		// fallback
 		return self::getURL(404, $language);
+	}
+
+	/**
+	 * This function lets you add ignored pages
+	 *
+	 * @param mixed $pageIds This can be a single page id or this can be an array with page ids.
+	 */
+	public static function setExcludedPageIds($pageIds)
+	{
+		$pageIds = (array) $pageIds;
+
+		// go trough the page ids to add them to the excluded page ids for later usage
+		foreach($pageIds as $pageId) array_push(self::$excludedPageIds, $pageId);
 	}
 
 	/**

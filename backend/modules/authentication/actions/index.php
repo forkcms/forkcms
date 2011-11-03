@@ -146,8 +146,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				// create filter with modules which may not be displayed
 				$filter = array('authentication', 'error', 'core');
 
-				// get all active filtered modules
-				$modules = array_diff(BackendModel::getModules(true), $filter);
+				// get all modules
+				$modules = array_diff(BackendModel::getModules(), $filter);
 
 				// loop through modules and break on first allowed module
 				foreach($modules as $module) if(BackendAuthentication::isAllowedModule($module)) break;

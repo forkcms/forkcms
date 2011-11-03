@@ -10,7 +10,7 @@
 /**
  * This edit-action will refresh the traffic sources using Ajax
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 {

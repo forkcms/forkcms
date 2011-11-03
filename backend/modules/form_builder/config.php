@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the formbuilder module
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderConfig extends BackendBaseConfig
 {

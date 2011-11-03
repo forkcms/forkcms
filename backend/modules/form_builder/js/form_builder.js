@@ -2,6 +2,7 @@
  * Javascript for building forms
  *
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 if(!jsBackend) { var jsBackend = new Object(); }
 
@@ -29,6 +30,14 @@ jsBackend.formBuilder =
 			jsBackend.formBuilder.handleMethodField();
 			$('select#method').live('change', jsBackend.formBuilder.handleMethodField);
 		}
+
+		$('#email').multipleTextbox(
+		{
+			emptyMessage: '{$msgNoEmailaddresses}',
+			addLabel: '{$lblCoreAdd|ucfirst}',
+			removeLabel: '{$lblDelete|ucfirst}',
+			canAddNew: true
+		});
 	},
 
 	/**
@@ -70,10 +79,10 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.paramsDelete = { fork: { module: jsBackend.current.module, action: 'delete_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsGet = { fork: { module: jsBackend.current.module, action: 'get_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsSave = { fork: { module: jsBackend.current.module, action: 'save_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsSequence = { fork: { module: jsBackend.current.module, action: 'sequence', language: jsBackend.current.language } };
+		jsBackend.formBuilder.fields.paramsDelete = { fork: { action: 'delete_field' } };
+		jsBackend.formBuilder.fields.paramsGet = { fork: { action: 'get_field' } };
+		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'save_field' } };
+		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();

@@ -10,7 +10,7 @@
 /**
  * This action is used to perform mass actions on tags (delete, ...)
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendTagsMassAction extends BackendBaseAction
 {

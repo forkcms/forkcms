@@ -10,7 +10,7 @@
 /**
  * This action is used to update one or more data items
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderMassDataAction extends BackendBaseAction
 {

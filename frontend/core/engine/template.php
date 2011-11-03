@@ -749,7 +749,7 @@ class FrontendTemplateModifiers
 			if($useHellip) $length = $length - 1;
 
 			// get the amount of requested characters
-			$var = mb_substr($var, 0, $length);
+			$var = mb_substr($var, 0, $length, SPOON_CHARSET);
 
 			// add hellip
 			if($useHellip) $var .= '…';

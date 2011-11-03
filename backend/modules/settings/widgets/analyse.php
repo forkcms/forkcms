@@ -11,7 +11,7 @@
  * This widget will analyze the CMS warnings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendSettingsWidgetAnalyse extends BackendBaseWidget
 {

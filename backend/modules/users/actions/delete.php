@@ -11,7 +11,7 @@
  * This is the delete-action, it will deactivate and mark the user as deleted
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendUsersDelete extends BackendBaseActionDelete
 {

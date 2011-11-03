@@ -259,7 +259,7 @@ class BackendURL
 						{
 							// set interface language based on the user preferences
 							BackendLanguage::setLocale(
-								BackendAuthentication::getUser()->getSetting('interface_language', 'nl')
+								BackendAuthentication::getUser()->getSetting('interface_language', 'en')
 							);
 						}
 

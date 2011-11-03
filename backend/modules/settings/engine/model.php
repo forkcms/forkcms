@@ -10,7 +10,7 @@
 /**
  * In this file we store all generic functions that we will be using in the settings module.
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendSettingsModel
@@ -24,10 +24,10 @@ class BackendSettingsModel
 	{
 		// init vars
 		$modules = array();
-		$activeModules = BackendModel::getModules(true);
+		$installedModules = BackendModel::getModules();
 
-		// loop active modules
-		foreach($activeModules as $module)
+		// loop modules
+		foreach($installedModules as $module)
 		{
 			// fetch setting
 			$setting = BackendModel::getModuleSetting($module, 'requires_akismet', false);
@@ -49,10 +49,10 @@ class BackendSettingsModel
 	{
 		// init vars
 		$modules = array();
-		$activeModules = BackendModel::getModules(true);
+		$installedModules = BackendModel::getModules();
 
-		// loop active modules
-		foreach($activeModules as $module)
+		// loop modules
+		foreach($installedModules as $module)
 		{
 			// fetch setting
 			$setting = BackendModel::getModuleSetting($module, 'requires_google_maps', false);
@@ -74,13 +74,13 @@ class BackendSettingsModel
 	{
 		// init vars
 		$warnings = array();
-		$activeModules = BackendModel::getModules(true);
+		$installedModules = BackendModel::getModules();
 
 		// add warnings
 		$warnings = array_merge($warnings, BackendModel::checkSettings());
 
-		// loop active modules
-		foreach($activeModules as $module)
+		// loop modules
+		foreach($installedModules as $module)
 		{
 			// model class
 			$class = 'Backend' . SpoonFilter::toCamelCase($module) . 'Model';

@@ -10,7 +10,7 @@
 /**
  * This is the import-action, it will import records from a CSV file
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 {

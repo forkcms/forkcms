@@ -11,7 +11,7 @@
  * This is the autocomplete-action, it will output a list of tags that start with a certain string.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 {

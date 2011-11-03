@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the tags module
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 final class BackendTagsConfig extends BackendBaseConfig
 {

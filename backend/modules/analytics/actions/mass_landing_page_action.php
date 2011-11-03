@@ -10,7 +10,7 @@
 /**
  * This action is used to perform mass actions on landing pages (delete, ...)
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
 {

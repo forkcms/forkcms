@@ -10,7 +10,7 @@
 /**
  * This is the index-action (default), it will display the overview of mailings
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorIndex extends BackendBaseActionIndex
 {

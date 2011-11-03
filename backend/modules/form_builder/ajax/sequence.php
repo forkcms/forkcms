@@ -10,7 +10,7 @@
 /**
  * Resequence the fields via ajax.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
 {

@@ -186,9 +186,7 @@ class FrontendModel
 			$settings = (array) self::getDB()->getRecords(
 				'SELECT ms.module, ms.name, ms.value
 				 FROM modules_settings AS ms
-				 INNER JOIN modules AS m ON ms.module = m.name
-				 WHERE m.active = ?',
-				array('Y')
+				 INNER JOIN modules AS m ON ms.module = m.name'
 			);
 
 			// loop settings and cache them, also unserialize the values
@@ -258,7 +256,7 @@ class FrontendModel
 			 	t.path AS template_path, t.data AS template_data
 			 FROM pages AS p
 			 INNER JOIN meta AS m ON p.meta_id = m.id
-			 INNER JOIN pages_templates AS t ON p.template_id = t.id
+			 INNER JOIN themes_templates AS t ON p.template_id = t.id
 			 WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
 			 LIMIT 1',
 			array($pageId, 'active', 'N', FRONTEND_LANGUAGE)
@@ -281,7 +279,7 @@ class FrontendModel
 			 pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 			 FROM pages_blocks AS pb
 			 INNER JOIN pages AS p ON p.revision_id = pb.revision_id
-			 LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
+			 LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
 			 WHERE pb.revision_id = ? AND p.status = ? AND pb.visible = ?
 			 ORDER BY pb.position, pb.sequence',
 			array('N', $record['revision_id'], 'active', 'Y')
@@ -324,7 +322,7 @@ class FrontendModel
 			 	t.path AS template_path, t.data AS template_data
 			 FROM pages AS p
 			 INNER JOIN meta AS m ON p.meta_id = m.id
-			 INNER JOIN pages_templates AS t ON p.template_id = t.id
+			 INNER JOIN themes_templates AS t ON p.template_id = t.id
 			 WHERE p.revision_id = ? AND p.language = ?
 			 LIMIT 1',
 			array($revisionId, FRONTEND_LANGUAGE)
@@ -343,7 +341,7 @@ class FrontendModel
 			 pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 			 FROM pages_blocks AS pb
 			 INNER JOIN pages AS p ON p.revision_id = pb.revision_id
-			 LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
+			 LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
 			 WHERE pb.revision_id = ? AND p.status = ?
 			 ORDER BY pb.id',
 			array('N', $record['revision_id'], 'active')

@@ -10,7 +10,7 @@
 /**
  * This action is used to update one or more comments (status, delete, ...)
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendBlogMassCommentAction extends BackendBaseAction
 {

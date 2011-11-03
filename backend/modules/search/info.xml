@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>search</name>
+	<version>2.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>Search</name>
-		<description><![CDATA[The search can be used by other modules to make modules searchable.]]></description>
-	</info>
+	<description>
+		<![CDATA[The search can be used by other modules to make modules searchable.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Matthias Mullie]]></name>
+			<url><![CDATA[http://www.mullie.eu]]></url>
+		</author>
+	</authors>
 	<events>
 		<event application="backend" name="after_add_synonym"><![CDATA[Triggered when a synonym is added.]]></event>
 		<event application="backend" name="after_delete_synonym"><![CDATA[Triggered when a synonym is deleted.]]></event>

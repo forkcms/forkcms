@@ -4,7 +4,7 @@
  * This is the detail widget.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget

@@ -11,8 +11,8 @@
  * This is the detail-action
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendBlogDetail extends FrontendBaseBlock
 {
@@ -143,24 +143,15 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
-			// default image
-			$image = SITE_URL . '/facebook.png';
+			// add specified image
+			$this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
 
-			// try to get an image in the content
-			$matches = array();
-			preg_match('/<img.*src="(.*)".*\/>/iU', $this->record['text'], $matches);
+			// add images from content
+			$this->header->extractOpenGraphImages($this->record['text']);
 
-			// found an image?
-			if(isset($matches[1]))
-			{
-				$image = $matches[1];
-				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
-			}
-
-			// add OpenGraph data
+			// add additional OpenGraph data
 			$this->header->addOpenGraphData('title', $this->record['title'], true);
 			$this->header->addOpenGraphData('type', 'article', true);
-			$this->header->addOpenGraphData('image', $image, true);
 			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'], true);
 			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
 			$this->header->addOpenGraphData('description', $this->record['title'], true);

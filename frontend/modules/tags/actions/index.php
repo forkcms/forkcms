@@ -10,7 +10,7 @@
 /**
  * This is the index-action
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendTagsIndex extends FrontendBaseBlock
 {

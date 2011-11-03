@@ -22,13 +22,10 @@ jsBackend =
 	// init, something like a constructor
 	init: function()
 	{
-		// get url and split into chunks
-		var chunks = document.location.pathname.split('/');
-
 		// set some properties
-		jsBackend.current.module = chunks[3];
-		jsBackend.current.action = chunks[4];
-		jsBackend.current.language = chunks[2];
+		jsBackend.current.module = '{$MODULE}';
+		jsBackend.current.action = '{$ACTION}';
+		jsBackend.current.language = '{$LANGUAGE}';
 
 		// init stuff
 		jsBackend.initAjax();
@@ -1077,7 +1074,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				params: { fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language } }
+				params: { fork: { module: 'tags', action: 'autocomplete' } }
 			});
 		}
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
@@ -1088,7 +1085,7 @@ jsBackend.forms =
 				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
-				params: { fork: { module: 'tags', action: 'autocomplete', language: jsBackend.current.language } },
+				params: { fork: { module: 'tags', action: 'autocomplete' } },
 				showIconOnly: false
 			});
 		}
@@ -1152,14 +1149,10 @@ jsBackend.forms =
 		});
 
 		// not changed?
-		if(!changed) {
-			// prevent default
-			/*
-			 * I know this line triggers errors, if you remove it the unload won't work anymore.
-			 * Probably you'll fix this by passing the evt as an argument of the function, well this will break the functionality also..
-			 * Uhu, a "wtf" is in place..
-			 */
-			evt.preventDefault();
+		if(!changed)
+		{
+			// prevent default action from being executed
+			if(evt) evt.preventDefault();
 
 			// unbind the event
 			$(window).unbind('beforeunload');
@@ -1527,7 +1520,7 @@ jsBackend.tableSequenceByDragAndDrop =
 					{
 						data:
 						{
-							fork: { module: jsBackend.current.module, action: action, language: jsBackend.current.language },
+							fork: { action: action },
 							new_id_sequence: newIdSequence.join(',')
 						},
 						success: function(data, textStatus)

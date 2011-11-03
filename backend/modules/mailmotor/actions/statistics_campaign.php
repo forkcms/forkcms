@@ -10,7 +10,7 @@
 /**
  * This page will display the statistical overview of all sent mailings in a specified campaign
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 {

@@ -19,7 +19,7 @@ class FrontendFaqConfig extends FrontendBaseConfig
 	 *
 	 * @var	string
 	 */
-	protected $defaultAction = 'category';
+	protected $defaultAction = 'index';
 
 	/**
 	 * The disabled actions

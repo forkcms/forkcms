@@ -10,7 +10,7 @@
 /**
  * This is the index-action, it will display the overview of profiles.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Lester Lievens <lester@netlash.com>
  */
 class BackendProfilesIndex extends BackendBaseActionIndex

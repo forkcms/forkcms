@@ -8,10 +8,10 @@
  */
 
 /**
- * This is the resetPassword-action.
+ * Reset your password using a token received from the forgot_password action.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesResetPassword extends FrontendBaseBlock
 {
@@ -53,7 +53,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 			}
 
 			// invalid key
-			elseif($this->URL->getParameter('saved') != 'true') $this->redirect(FrontendNavigation::getURL(404));
+			elseif($this->URL->getParameter('sent') != 'true') $this->redirect(FrontendNavigation::getURL(404));
 
 			// parse
 			$this->parse();
@@ -82,7 +82,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 	private function parse()
 	{
 		// has the password been saved?
-		if($this->URL->getParameter('saved') == 'true')
+		if($this->URL->getParameter('sent') == 'true')
 		{
 			// show message
 			$this->tpl->assign('resetPasswordSuccess', true);
@@ -128,7 +128,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 				FrontendModel::triggerEvent('profiles', 'after_reset_password', array('id' => $profileId));
 
 				// redirect
-				$this->redirect(FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(0) . '?saved=true');
+				$this->redirect(FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(0) . '?sent=true');
 			}
 
 			// show errors

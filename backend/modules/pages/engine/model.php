@@ -11,7 +11,7 @@
  * In this file we store all generic functions that we will be using in the PagesModule
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendPagesModel
@@ -69,7 +69,7 @@ class BackendPagesModel
 		// get extras
 		$extras = (array) BackendModel::getDB()->getRecords(
 			'SELECT i.id, i.module, i.action
-			 FROM pages_extras AS i
+			 FROM modules_extras AS i
 			 WHERE i.type = ? AND i.hidden = ?',
 			array('block', 'N'), 'id'
 		);
@@ -77,7 +77,7 @@ class BackendPagesModel
 		// get widgets
 		$widgets = (array) BackendModel::getDB()->getRecords(
 			'SELECT i.id, i.module, i.action
-			 FROM pages_extras AS i
+			 FROM modules_extras AS i
 			 WHERE i.type = ? AND i.hidden = ?',
 			array('widget', 'N'), 'id'
 		);
@@ -408,130 +408,6 @@ class BackendPagesModel
 	}
 
 	/**
-	 * Build HTML for a template (visual representation)
-	 *
-	 * @param array $template The template format.
-	 * @param bool[optional] $large Will the HTML be used in a large version?
-	 * @return string
-	 */
-	public static function buildTemplateHTML($format, $large = false)
-	{
-		// cleanup
-		$table = self::templateSyntaxToArray($format);
-
-		// add start html
-		$html = '<table border="0" cellpadding="0" cellspacing="10">' . "\n";
-		$html .= '	<tbody>' . "\n";
-
-		// init var
-		$rows = count($table);
-		$cells = count($table[0]);
-
-		// loop rows
-		for($y = 0; $y < $rows; $y++)
-		{
-			// start row
-			$html .= '		<tr>' . "\n";
-
-			// loop cells
-			for($x = 0; $x < $cells; $x++)
-			{
-				// skip if needed
-				if(!isset($table[$y][$x])) continue;
-
-				// get value
-				$value = $table[$y][$x];
-
-				// init var
-				$colspan = 1;
-
-				// reset items in the same collumn
-				while($x + $colspan < $cells && $table[$y][$x + $colspan] === $value) $table[$y][$x + $colspan++] = null;
-
-				// init var
-				$rowspan = 1;
-				$rowMatches = true;
-
-				// loop while the rows match
-				while($rowMatches && $y + $rowspan < $rows)
-				{
-					// loop columns inside spanned columns
-					for($i = 0; $i < $colspan; $i++)
-					{
-						// check value
-						if($table[$y + $rowspan][$x + $i] !== $value)
-						{
-							// no match, so stop
-							$rowMatches = false;
-							break;
-						}
-					}
-
-					// any rowmatches?
-					if($rowMatches)
-					{
-						// loop columns and reset value
-						for($i = 0; $i < $colspan; $i++) $table[$y + $rowspan][$x + $i] = null;
-
-						// increment
-						$rowspan++;
-					}
-				}
-
-				// decide state
-				$exists = $value != '/';
-
-				// set values
-				$title = ucfirst($value);
-				$type = '';
-
-				// start cell
-				$html .= '<td';
-
-				// add rowspan if needed
-				if($rowspan > 1) $html .= ' rowspan="' . $rowspan . '"';
-
-				// add colspan if needed
-				if($colspan > 1) $html .= ' colspan="' . $colspan . '"';
-
-				// does the cell need content?
-				if(!$exists) $html .= ' class="empty">&nbsp;</td>' . "\n";
-
-				// the cell need a name
-				else
-				{
-					// large visual?
-					if($large)
-					{
-						$html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '" class="box">
-									<div class="heading linkedBlocksTitle"><h3>' . $title . '</h3></div>
-									<div class="linkedBlocks"><!-- linked blocks will be added here --></div>
-									<div class="buttonHolder buttonAddHolder">
-										<a href="#addBlock" class="button icon iconAdd addBlock">
-											<span>' . ucfirst(BL::lbl('AddBlock')) . '</span>
-										</a>
-									</div>
-								</td>' . "\n";
-					}
-
-					// just regular
-					else $html .= '><a href="#position-' . $value . '" title="' . $title . '">' . $title . '</a></td>' . "\n";
-				}
-			}
-
-			// end row
-			$html .= '		</tr>' . "\n";
-		}
-
-		// end html
-		$html .= '	</tbody>' . "\n";
-		$html .= '</table>' . "\n";
-
-		// return html
-		return $html;
-	}
-
-	/**
 	 * Creates the html for the menu
 	 *
 	 * @param string[optional] $type The type of navigation.
@@ -628,55 +504,6 @@ class BackendPagesModel
 	}
 
 	/**
-	 * Delete a template
-	 *
-	 * @param int $id The id of the template to delete.
-	 * @return bool
-	 */
-	public static function deleteTemplate($id)
-	{
-		// redefine
-		$id = (int) $id;
-
-		// get all templates
-		$templates = self::getTemplates();
-
-		// we can't delete a template that doesn't exist
-		if(!isset($templates[$id])) return false;
-
-		// we can't delete the last template
-		if(count($templates) == 1) return false;
-
-		// we can't delete the default template
-		if($id == BackendModel::getModuleSetting('pages', 'default_template')) return false;
-		if(BackendPagesModel::isTemplateInUse($id)) return false;
-
-		// get db
-		$db = BackendModel::getDB(true);
-
-		// delete
-		$db->delete('pages_templates', 'id = ?', $id);
-
-		// get all non-active pages that use this template
-		$ids = (array) $db->getColumn(
-			'SELECT i.revision_id
-			 FROM pages AS i
-			 WHERE i.template_id = ? AND i.status != ?',
-			array($id, 'active')
-		);
-
-		// any items
-		if(!empty($ids))
-		{
-			// delete those pages and the linked blocks
-			$db->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
-			$db->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
-		}
-
-		return true;
-	}
-
-	/**
 	 * Check if a page exists
 	 *
 	 * @param int $id The id to check for existence.
@@ -694,26 +521,6 @@ class BackendPagesModel
 			 FROM pages AS i
 			 WHERE i.id = ? AND i.language = ? AND i.status IN (?, ?)',
 			array($id, $language, 'active', 'draft')
-		);
-	}
-
-	/**
-	 * Check if a template exists
-	 *
-	 * @param int $id The Id of the template to check for existence.
-	 * @return bool
-	 */
-	public static function existsTemplate($id)
-	{
-		// redefine
-		$id = (int) $id;
-
-		// get data
-		return (bool) BackendModel::getDB()->getVar(
-			'SELECT i.id
-			 FROM pages_templates AS i
-			 WHERE i.id = ?',
-			array($id)
 		);
 	}
 
@@ -742,7 +549,7 @@ class BackendPagesModel
 			 GROUP_CONCAT(b.extra_id) AS extra_ids
 			 FROM pages AS i
 			 LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
-			 LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
+			 LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
 			 WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
 			 GROUP BY i.revision_id',
 			array('block', $id, $revisionId, $language)
@@ -828,121 +635,6 @@ class BackendPagesModel
 
 		// return
 		return $items;
-	}
-
-	/**
-	 * Get extras
-	 *
-	 * @return array
-	 */
-	public static function getExtras()
-	{
-		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords(
-			'SELECT i.id, i.module, i.type, i.label, i.data
-			 FROM pages_extras AS i
-			 INNER JOIN modules AS m ON i.module = m.name
-			 WHERE m.active = ? AND i.hidden = ?
-			 ORDER BY i.module, i.sequence',
-			array('Y', 'N'), 'id'
-		);
-
-		// init var
-		$itemsToRemove = array();
-
-		// loop extras
-		foreach($extras as $id => &$row)
-		{
-			// unserialize data
-			$row['data'] = @unserialize($row['data']);
-
-			// remove items that are not for the current language
-			if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) $itemsToRemove[] = $id;
-
-			// set URL if needed
-			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
-
-			// build name
-			$name = ucfirst(BL::lbl($row['label']));
-			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
-			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
-
-			// add human readable name
-			$module = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
-			$row['human_name'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ': ' . $name;
-			$row['path'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
-		}
-
-		// any items to remove?
-		if(!empty($itemsToRemove))
-		{
-			// loop and remove items
-			foreach($itemsToRemove as $id) unset($extras[$id]);
-		}
-
-		// return extras
-		return $extras;
-	}
-
-	/**
-	 * Get all the available extra's
-	 *
-	 * @return array
-	 */
-	public static function getExtrasData()
-	{
-		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords(
-			'SELECT i.id, i.module, i.type, i.label, i.data
-			 FROM pages_extras AS i
-			 INNER JOIN modules AS m ON i.module = m.name
-			 WHERE m.active = ? AND i.hidden = ?
-			 ORDER BY i.module, i.sequence',
-			array('Y', 'N')
-		);
-
-		// build array
-		$values = array();
-
-		// init var
-		$itemsToRemove = array();
-
-		// loop extras
-		foreach($extras as $id => $row)
-		{
-			// unserialize data
-			$row['data'] = @unserialize($row['data']);
-
-			// remove items that are not for the current language
-			if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) continue;
-
-			// set URL if needed
-			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
-
-			// build name
-			$name = ucfirst(BL::lbl($row['label']));
-			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
-			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
-
-			// create modulename
-			$moduleName = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
-
-			// build array
-			if(!isset($values[$row['module']])) $values[$row['module']] = array('value' => $row['module'], 'name' => $moduleName, 'items' => array());
-
-			// add real extra
-			$values[$row['module']]['items'][$row['type']][$name] = array('id' => $row['id'], 'label' => $name);
-		}
-
-		// loop
-		foreach($values as &$row)
-		{
-			if(!empty($row['items']['widget'])) $row['items']['widget'] = SpoonFilter::arraySortKeys($row['items']['widget']);
-			if(!empty($row['items']['block'])) $row['items']['block'] = SpoonFilter::arraySortKeys($row['items']['block']);
-		}
-
-		// return
-		return $values;
 	}
 
 	/**
@@ -1254,94 +946,6 @@ class BackendPagesModel
 	}
 
 	/**
-	 * Get a given template
-	 *
-	 * @param int $id The id of the requested template.
-	 * @return array
-	 */
-	public static function getTemplate($id)
-	{
-		return (array) BackendModel::getDB()->getRecord(
-			'SELECT i.*
-			 FROM pages_templates AS i
-			 WHERE i.id = ?',
-			array((int) $id)
-		);
-	}
-
-	/**
-	 * Get templates
-	 *
-	 * @param string[optional] $theme The thele we want to fetch the templates from.
-	 * @return array
-	 */
-	public static function getTemplates($theme = null)
-	{
-		// get db
-		$db = BackendModel::getDB();
-
-		// validate input
-		$theme = SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
-
-		// get templates
-		$templates = (array) $db->getRecords(
-			'SELECT i.id, i.label, i.path, i.data
-			 FROM pages_templates AS i
-			 WHERE i.theme = ? AND i.active = ?
-			 ORDER BY i.label ASC',
-			array($theme, 'Y'), 'id'
-		);
-
-		// get extras
-		$extras = (array) self::getExtras();
-
-		// init var
-		$half = (int) ceil(count($templates) / 2);
-		$i = 0;
-
-		// loop templates to unserialize the data
-		foreach($templates as $key => &$row)
-		{
-			// unserialize
-			$row['data'] = unserialize($row['data']);
-			$row['has_block'] = false;
-
-			// reset
-			if(isset($row['data']['default_extras_' . BL::getWorkingLanguage()])) $row['data']['default_extras'] = $row['data']['default_extras_' . BL::getWorkingLanguage()];
-
-			// any extras?
-			if(isset($row['data']['default_extras']))
-			{
-				// loop extras
-				foreach($row['data']['default_extras'] as $value)
-				{
-					// store if the module has blocks
-					if(SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type'] == 'block') $row['has_block'] = true;
-				}
-			}
-
-			// validate
-			if(!isset($row['data']['format'])) throw new BackendException('Invalid template-format.');
-
-			// build template HTML
-			$row['html'] = self::buildTemplateHTML($row['data']['format']);
-			$row['htmlLarge'] = self::buildTemplateHTML($row['data']['format'], true);
-
-			// add all data as json
-			$row['json'] = json_encode($row);
-
-			// add the break-element so the templates can be split in 2 columns in the templatechooser
-			if($i == $half) $row['break'] = true;
-
-			// increment
-			$i++;
-		}
-
-		// return
-		return (array) $templates;
-	}
-
-	/**
 	 * Get all pages/level
 	 *
 	 * @param array $ids The parentIds.
@@ -1366,7 +970,7 @@ class BackendPagesModel
 			 FROM pages AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
-			 LEFT OUTER JOIN pages_extras AS e ON e.id = b.extra_id AND e.type = ?
+			 LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
 			 WHERE i.parent_id IN (' . implode(', ', $ids) . ')
 			 	AND i.status = ? AND i.language = ?
 			 GROUP BY i.revision_id
@@ -1677,33 +1281,6 @@ class BackendPagesModel
 	}
 
 	/**
-	 * Inserts a new template
-	 *
-	 * @param array $template The data for the template to insert.
-	 * @return int
-	 */
-	public static function insertTemplate(array $template)
-	{
-		return (int) BackendModel::getDB(true)->insert('pages_templates', $template);
-	}
-
-	/**
-	 * Is the provided template id in use by active versions of pages?
-	 *
-	 * @param int $templateId The id of the template to check.
-	 * @return bool
-	 */
-	public static function isTemplateInUse($templateId)
-	{
-		return (bool) BackendModel::getDB(false)->getVar(
-			'SELECT COUNT(i.template_id)
-			 FROM pages AS i
-			 WHERE i.template_id = ? AND i.status = ?',
-			array((int) $templateId, 'active')
-		);
-	}
-
-	/**
 	 * Move a page
 	 *
 	 * @param int $id The id for the page that has to be moved.
@@ -1850,40 +1427,6 @@ class BackendPagesModel
 	}
 
 	/**
-	 * Convert the template syntax into an array to work with
-	 *
-	 * @param string $syntax The syntax.
-	 * @return array
-	 */
-	public static function templateSyntaxToArray($syntax)
-	{
-		$syntax = (string) $syntax;
-
-		// cleanup
-		$syntax = trim(str_replace(array("\n", "\r"), '', $syntax));
-
-		// init var
-		$table = array();
-
-		// split into rows
-		$rows = explode('],[', $syntax);
-
-		// loop rows
-		foreach($rows as $i => $row)
-		{
-			// cleanup
-			$row = trim(str_replace(array('[',']'), '', $row));
-
-			// build table
-			$table[$i] = (array) explode(',', $row);
-		}
-
-		// return
-		return $table;
-
-	}
-
-	/**
 	 * Update a page
 	 *
 	 * @param array $page The new data for the page.
@@ -1951,7 +1494,7 @@ class BackendPagesModel
 		$overwrite = (bool) $overwrite;
 
 		// fetch new template data
-		$newTemplate = BackendPagesModel::getTemplate($newTemplateId);
+		$newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
 		$newTemplate['data'] = @unserialize($newTemplate['data']);
 
 		// fetch all pages
@@ -2024,15 +1567,5 @@ class BackendPagesModel
 			// insert the blocks
 			BackendPagesModel::insertBlocks($blocksContent);
 		}
-	}
-
-	/**
-	 * Update a template
-	 *
-	 * @param array $item The new data for the template.
-	 */
-	public static function updateTemplate(array $item)
-	{
-		return BackendModel::getDB(true)->update('pages_templates', $item, 'id = ?', array((int) $item['id']));
 	}
 }

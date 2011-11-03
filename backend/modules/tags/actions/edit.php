@@ -10,8 +10,8 @@
 /**
  * This is the edit action, it will display a form to edit an existing tag.
  *
- * @author Dave Lens <dave@netlash.com>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendTagsEdit extends BackendBaseActionEdit
 {
@@ -61,10 +61,10 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		// init var
 		$items = array();
 
-		// get active modules
+		// get modules
 		$modules = BackendModel::getModules();
 
-		// loop active modules
+		// loop modules
 		foreach($modules as $module)
 		{
 			// check if their is a model-file

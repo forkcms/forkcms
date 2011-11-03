@@ -10,8 +10,8 @@
 /**
  * This is the add action, it will display a form to add an item to the locale.
  *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocaleAdd extends BackendBaseActionAdd
@@ -69,7 +69,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
 		$this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
 		$this->frm->addText('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
-		$this->frm->addDropdown('language', BackendLanguage::getLocaleLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
+		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
 	}
 
 	/**

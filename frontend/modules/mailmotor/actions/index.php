@@ -3,7 +3,7 @@
 /**
  * This is the index-action
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorIndex extends FrontendBaseBlock
 {

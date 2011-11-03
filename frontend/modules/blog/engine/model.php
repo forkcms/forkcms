@@ -10,12 +10,12 @@
 /**
  * In this file we store all generic functions that we will be using in the blog module
  *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Dave Lens <dave@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendBlogModel implements FrontendTagsInterface
 {
@@ -29,7 +29,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	{
 		$return = (array) FrontendModel::getDB()->getRecord(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-			 c.title AS category_title, m2.url AS category_url,
+			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 			 i.allow_comments,
 			 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
@@ -64,7 +64,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	{
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-			 c.title AS category_title, m2.url AS category_url,
+			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 			 m.url
 			 FROM blog_posts AS i
@@ -185,7 +185,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	{
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-			 c.title AS category_title, m2.url AS category_url,
+			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 			 m.url
 			 FROM blog_posts AS i

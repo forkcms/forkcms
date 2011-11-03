@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>tags</name>
+	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>Tags</name>
-		<description><![CDATA[This module manages the tags, other modules can use these module, as it is loaded by default.]]></description>
-	</info>
+	<authors>
+		<author>
+			<name><![CDATA[Dave Lens]]></name>
+			<url><![CDATA[http://www.davelens.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Davy Hellemans]]></name>
+			<url><![CDATA[http://blog.bauffman.be]]></url>
+		</author>
+	</authors>
+	<description>
+		<![CDATA[This module manages the tags, other modules can use these module, as it is loaded by default.]]>
+	</description>
 	<events>
 		<event application="backend" name="after_edit"><![CDATA[Triggered when a tag is edited.]]></event>
 	</events>

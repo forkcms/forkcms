@@ -10,7 +10,7 @@
 /**
  * This widget will show the latest traffic sources
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 {

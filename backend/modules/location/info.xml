@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>location</name>
+	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>Location</name>
-		<description><![CDATA[]]></description>
-	</info>
+	<authors>
+		<author>
+			<name><![CDATA[Matthias Mullie]]></name>
+			<url><![CDATA[http://www.mullie.eu]]></url>
+		</author>
+	</authors>
 	<events>
-		<event application="backend" name="after_edit"><![CDATA[Triggered when a group is added.]]></event>
-		<event application="backend" name="after_delete"><![CDATA[Triggered when a group is deleted.]]></event>
-		<event application="backend" name="after_edit"><![CDATA[Triggered when a group is edited.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a location is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a location is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a location is edited.]]></event>
 		<event application="backend" name="after_saved_settings"><![CDATA[Triggered when settings are saved.]]></event>
 	</events>
 </module>

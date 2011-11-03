@@ -894,7 +894,7 @@ jsBackend.pages.tree =
 			async: false, // important that this isn't asynchronous
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'get_info', language: jsBackend.current.language },
+				fork: { action: 'get_info' },
 				id: currentPageID
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
@@ -948,7 +948,7 @@ jsBackend.pages.tree =
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'move', language: jsBackend.current.language },
+				fork: { action: 'move' },
 				id: currentPageID,
 				dropped_on: droppedOnPageID,
 				type: type

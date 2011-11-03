@@ -10,8 +10,8 @@
 /**
  * This is the edit action, it will display a form to edit an existing locale item.
  *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocaleEdit extends BackendBaseActionEdit
@@ -65,7 +65,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
 		$this->frm->addText('name', $this->record['name']);
 		$this->frm->addText('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
-		$this->frm->addDropdown('language', BackendLanguage::getLocaleLanguages(), $this->record['language']);
+		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $this->record['language']);
 	}
 
 	/**

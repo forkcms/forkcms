@@ -11,7 +11,7 @@
  * The class below will handle all stuff relates to the current authenticated user
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendUser
 {
