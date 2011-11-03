@@ -34,7 +34,7 @@ jsBackend.ckeditor =
 				// layout configuration
 				bodyClass: 'content',
 				contentsCss: [
-								'/frontend/core/layout/css/screen.css'{option:THEME_HAS_CSS},
+								'/frontend/core/layout/css/screen.css',{option:THEME_HAS_CSS}
 								'/frontend/themes/{$THEME}/core/layout/css/screen.css', {/option:THEME_HAS_CSS}
 								'/backend/core/layout/css/editor_content.css'{option:THEME_HAS_EDITOR_CSS},
 								'/frontend/themes/{$THEME}/core/layout/css/editor_content.css'{/option:THEME_HAS_EDITOR_CSS}
@@ -47,6 +47,17 @@ jsBackend.ckeditor =
 
 				// paste options
 				forcePasteAsPlainText: true,
+
+				toolbar_Simple: [
+					{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
+					{ name: 'clipboard', items: ['Undo', 'Redo']},
+					{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
+					{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
+					{ name: 'document', items: ['Source']},
+					'/',
+					{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar']},
+					{ name: 'styles', items : ['Format', 'Styles']}
+				],
 
 				// buttons
 				toolbar_Full: [
