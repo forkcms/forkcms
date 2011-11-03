@@ -5168,6 +5168,10 @@
         <translation language="de"><![CDATA[stark]]></translation>
         <translation language="fr"><![CDATA[gras]]></translation>
       </item>
+      <item type="label" name="Subpages">
+        <translation language="nl"><![CDATA[subpagina's]]></translation>
+        <translation language="en"><![CDATA[subpages]]></translation>
+      </item>
       <item type="label" name="SubscribeForm">
         <translation language="en"><![CDATA[subscribe form]]></translation>
         <translation language="nl"><![CDATA[inschrijfformulier]]></translation>

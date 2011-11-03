@@ -3,6 +3,7 @@
 Improvements:
 
 * Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
+* Pages: added a widget that shows the subpages as blocks with their title and meta description.
 
 Bugfixes:
 

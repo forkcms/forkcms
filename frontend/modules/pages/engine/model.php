@@ -57,6 +57,35 @@ class FrontendPagesModel implements FrontendTagsInterface
 	}
 
 	/**
+	 * Fetch a list of subpages of a page.
+	 *
+	 * @param int $ids The id of the item to grab the subpages for.
+	 * @return array
+	 */
+	public static function getSubpages($id)
+	{
+		// fetch items
+		$items = (array) FrontendModel::getDB()->getRecords(
+			'SELECT i.id, i.title, m.description, i.parent_id
+			 FROM pages AS i
+			 INNER JOIN meta AS m ON m.id = i.meta_id
+			 WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
+			 AND i.language = ? AND i.publish_on <= ?
+			 ORDER BY i.sequence ASC',
+			array((int) $id, 'active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00'));
+
+		// has items
+		if(!empty($items))
+		{
+			// reset url
+			foreach($items as &$row) $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+		}
+
+		// return
+		return $items;
+	}
+
+	/**
 	 * Parse the search results for this module
 	 *
 	 * Note: a module's search function should always:
