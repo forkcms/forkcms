@@ -3,7 +3,7 @@
 /**
  * This is the detail-action
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorDetail extends FrontendBaseBlock
 {
@@ -91,11 +91,11 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 		// set the content to parse
 		$content = ($this->type == 'html') ? $this->record['data']['full_content_html'] : $this->record['content_plain'];
 
-		// cm is asking the info
+	// cm is asking the info
 		if($this->forCM)
 		{
 			// replace the unsubscribe
-			if(preg_match_all('/<a id="unsubscribeURL".*?>.*?<\/a>/is', $content, $matches))
+			if(preg_match_all('/<a.*?id="unsubscribeURL".*?>.*?<\/a>/', $content, $matches))
 			{
 				// loop the matches
 				foreach($matches[0] as $match)
@@ -109,7 +109,7 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 			}
 
 			// online preview links
-			if(preg_match_all('/<a id="onlineVersionURL".*?>.*?<\/a>/is', $content, $matches))
+			if(preg_match_all('/<a.*?id="onlineVersionURL".*?>.*?<\/a>/', $content, $matches))
 			{
 				// loop the matches
 				foreach($matches[0] as $match)
