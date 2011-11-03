@@ -22,10 +22,13 @@ jsBackend =
 	// init, something like a constructor
 	init: function()
 	{
+		// get url and split into chunks
+		var chunks = document.location.pathname.split('/');
+
 		// set some properties
-		jsBackend.current.module = '{$MODULE}';
-		jsBackend.current.action = '{$ACTION}';
-		jsBackend.current.language = '{$LANGUAGE}';
+		jsBackend.current.module = chunks[3];
+		jsBackend.current.action = chunks[4];
+		jsBackend.current.language = chunks[2];
 
 		// init stuff
 		jsBackend.initAjax();
