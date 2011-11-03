@@ -106,7 +106,7 @@ class BackendLanguage
 			else $module = 'core';
 		}
 
-		$key = (string) $key;
+		$key = SpoonFilter::toCamelCase((string) $key);
 		$module = (string) $module;
 
 		// check if the error exists
@@ -179,7 +179,7 @@ class BackendLanguage
 			else $module = 'core';
 		}
 
-		$key = (string) $key;
+		$key = SpoonFilter::toCamelCase((string) $key);
 		$module = (string) $module;
 
 		// check if the label exists
@@ -218,7 +218,7 @@ class BackendLanguage
 			else $module = 'core';
 		}
 
-		$key = (string) $key;
+		$key = SpoonFilter::toCamelCase((string) $key);
 		$module = (string) $module;
 
 		// check if the message exists
