@@ -22,7 +22,8 @@ jsBackend.dashboard =
 	},
 
 
-	close: function(evt) {
+	close: function(evt)
+	{
 		// prevent default
 		evt.preventDefault();
 
@@ -39,6 +40,7 @@ jsBackend.dashboard =
 		// prevent default
 		evt.preventDefault();
 
+<<<<<<< HEAD
 		// variables
 		$editDashboardMessage = $('#editDashboardMessage');
 		$editDashboardClose = $('.editDashboardClose');
@@ -54,6 +56,7 @@ jsBackend.dashboard =
 		$(this).hide();
 
 		// show help text
+<<<<<<< HEAD
 		$editDashboardMessage.slideDown();
 
 		// show close buttons
@@ -111,7 +114,7 @@ jsBackend.dashboard =
 	{
 		// prevent default
 		evt.preventDefault();
-		
+
 		// variables
 		$editDashboard = $('#editDashboard');
 		$editDashboardMessage = $('#editDashboardMessage');
@@ -143,14 +146,15 @@ jsBackend.dashboard =
 			var items = new Array();
 
 			// loop widgets
-			$(this).find('.sortableWidget:visible').each(function() {
+			$(this).find('.sortableWidget:visible').each(function()
+			{
 				// add item
 				items.push({ module: $(this).data('module'), widget: $(this).data('widget'), hidden: $(this).hasClass('isRemoved'), present: true });
 			});
 
 			// add to all
 			newSequence.push(items);
-		})
+		});
 
 		// hide removed
 		$('.sortableWidget.isRemoved').hide();
@@ -158,8 +162,11 @@ jsBackend.dashboard =
 		// make the call
 		$.ajax(
 		{
-			url: '/backend/ajax.php?module=dashboard&action=alter_sequence&language=' + jsBackend.current.language,
-			data: 'new_sequence=' + JSON.stringify(newSequence),
+			data:
+			{
+				fork: { action: 'alter_sequence' },
+				new_sequence: JSON.stringify(newSequence)
+			},
 			success: function(data, textStatus)
 			{
 				// not a succes so revert the changes

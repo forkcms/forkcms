@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
- * This is the forgotPassword-action.
+ * Request a reset password email.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesForgotPassword extends FrontendBaseBlock
 {
@@ -19,57 +22,36 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// only for guests
 		if(!FrontendProfilesAuthentication::isLoggedIn())
 		{
-			// load parent
 			parent::execute();
-
-			// load template
 			$this->loadTemplate();
-
-			// load
 			$this->loadForm();
-
-			// validate
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
 		// already logged in, redirect to settings
-		else $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'profile_settings'));
+		else $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
 	}
-
 
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create the form
 		$this->frm = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
-
-		// create & add elements
 		$this->frm->addText('email');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -87,11 +69,8 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -147,5 +126,3 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

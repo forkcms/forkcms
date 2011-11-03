@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action, it will display the overview of profiles.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Lester Lievens <lester@netlash.com>
  */
 class BackendProfilesIndex extends BackendBaseActionIndex
 {
@@ -19,7 +22,6 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 	 */
 	private $filter;
 
-
 	/**
 	 * Form.
 	 *
@@ -27,11 +29,10 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 	 */
 	private $frm;
 
-
 	/**
 	 * Builds the query for this datagrid.
 	 *
-	 * @return	array		An array with two arguments containing the query and its parameters.
+	 * @return array		An array with two arguments containing the query and its parameters.
 	 */
 	private function buildQuery()
 	{
@@ -77,41 +78,22 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		return array($query, $parameters);
 	}
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// use our custom JavaScript
 		$this->header->addJS('profiles.js');
-
-		// set filter
 		$this->setFilter();
-
-		// load form
 		$this->loadForm();
-
-		// load datagrids
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the datagrid
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -145,11 +127,8 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		$this->dgProfiles->setMassAction($ddmMassAction);
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -176,11 +155,8 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Parse & display the page.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -196,11 +172,8 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		$this->tpl->assign($this->filter);
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
@@ -209,5 +182,3 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		$this->filter['group'] = $this->getParameter('group');
 	}
 }
-
-?>

@@ -9,7 +9,7 @@
 	<div id="tabs" class="tabs">
 		<ul>
 			<li><a href="#tabName">{$lblName|ucfirst}</a></li>
-			<li><a href="#tabPresets">{$lblPresets|ucfirst}</a></li>
+			<li><a href="#tabDashboard">{$lblDashboard|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 		</ul>
 
@@ -27,10 +27,10 @@
 			</div>
 		</div>
 
-		<div id="tabPresets">
+		<div id="tabDashboard">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>{$lblPresets|ucfirst}</h3>
+					<h3>{$lblDashboard|ucfirst}</h3>
 				</div>
 				<div class="options labelWidthLong horizontal">
 					<label for="widgetList">{$lblDisplayWidgets|ucfirst}</label>

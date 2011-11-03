@@ -896,8 +896,11 @@ jsBackend.pages.tree =
 		$.ajax(
 		{
 			async: false, // important that this isn't asynchronous
-			url: '/backend/ajax.php?module=pages&action=get_info&language='+ jsBackend.current.language,
-			data: 'id=' + currentPageID,
+			data:
+			{
+				fork: { action: 'get_info' },
+				id: currentPageID
+			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
 				if(jsBackend.debug) alert(textStatus);
@@ -947,8 +950,13 @@ jsBackend.pages.tree =
 		// make the call
 		$.ajax(
 		{
-			url: '/backend/ajax.php?module=pages&action=move&language='+ jsBackend.current.language,
-			data: 'id=' + currentPageID + '&dropped_on='+ droppedOnPageID +'&type='+ type,
+			data:
+			{
+				fork: { action: 'move' },
+				id: currentPageID,
+				dropped_on: droppedOnPageID,
+				type: type
+			},
 			success: function(json, textStatus)
 			{
 				if(json.code != 200)

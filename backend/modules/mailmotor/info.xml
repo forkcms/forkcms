@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>mailmotor</name>
+	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>Mailmotor</name>
-		<description><![CDATA[The mailmotor is a integration of Campaign Monitor in the backend. The module is an easy-to-use interface wherein mailings can be build and send.]]></description>
-	</info>
+	<description>
+		<![CDATA[The mailmotor is a integration of Campaign Monitor in the backend. The module is an easy-to-use interface wherein mailings can be build and send.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Dave Lens]]></name>
+			<url><![CDATA[http://www.davelens.be]]></url>
+		</author>
+	</authors>
 	<events>
 		<event application="backend" name="after_add_address"><![CDATA[Triggered when an address is added.]]></event>
 		<event application="backend" name="after_edit_address"><![CDATA[Triggered when an address is edited.]]></event>

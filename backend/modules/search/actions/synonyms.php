@@ -1,41 +1,32 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the synonyms-action, it will display the overview of search synonyms
  *
- * @package		backend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendSearchSynonyms extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load datagrids
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -55,11 +46,8 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -67,5 +55,3 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
-
-?>

@@ -3,6 +3,7 @@
  *
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.formBuilder =
 {
@@ -32,6 +33,14 @@ jsBackend.formBuilder =
 			jsBackend.formBuilder.handleMethodField();
 			$selectMethod.live('change', jsBackend.formBuilder.handleMethodField);
 		}
+
+		$('#email').multipleTextbox(
+		{
+			emptyMessage: '{$msgNoEmailaddresses}',
+			addLabel: '{$lblCoreAdd|ucfirst}',
+			removeLabel: '{$lblDelete|ucfirst}',
+			canAddNew: true
+		});
 	},
 
 	/**
@@ -60,12 +69,12 @@ jsBackend.formBuilder.fields =
 	defaultErrorMessages: {},
 
 	/**
-	 * Ajax urls
+	 * Ajax params
 	 */
-	urlDelete: '',
-	urlGet: '',
-	urlSave: '',
-	urlSequence: '',
+	paramsDelete: '',
+	paramsGet: '',
+	paramsSave: '',
+	paramsSequence: '',
 
 	/**
 	 * Initialization
@@ -73,10 +82,10 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.urlDelete = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=delete_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlGet = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=get_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlSave = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_field&language=' + jsBackend.current.language;
-		jsBackend.formBuilder.fields.urlSequence = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
+		jsBackend.formBuilder.fields.paramsDelete = { fork: { action: 'delete_field' } };
+		jsBackend.formBuilder.fields.paramsGet = { fork: { action: 'get_field' } };
+		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'save_field' } };
+		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
@@ -85,7 +94,6 @@ jsBackend.formBuilder.fields =
 		jsBackend.formBuilder.fields.bindDelete();
 		jsBackend.formBuilder.fields.bindDragAndDrop();
 	},
-
 
 	/**
 	 * Bind delete actions
@@ -105,8 +113,13 @@ jsBackend.formBuilder.fields =
 			if(id != '')
 			{
 				// make the call
-				$.ajax({ url: jsBackend.formBuilder.fields.urlDelete,
-					data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ id,
+				$.ajax(
+				{
+					data: $.extend(jsBackend.formBuilder.fields.ParamsDelete,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						field_id: id
+					}),
 					success: function(data, textStatus)
 					{
 						// success
@@ -124,10 +137,10 @@ jsBackend.formBuilder.fields =
 						}
 
 						// show error message
-						else{ jsBackend.messages.add('error', textStatus); }
+						else jsBackend.messages.add('error', textStatus);
 
 						// alert the user
-						if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+						if(data.code != 200 && jsBackend.debug) { alert(data.message); }
 					}
 				});
 			}
@@ -149,86 +162,124 @@ jsBackend.formBuilder.fields =
 			if(id != '')
 			{
 				// initialize
-				$('#'+ id).dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, width: 400,
-									buttons: { '{$lblSave|ucfirst}': function()
-																	{
-																		// save/validate by type
-																		switch(id)
-																		{
-																			case 'textboxDialog':
-																				jsBackend.formBuilder.fields.saveTextbox();
-																				break;
-																			case 'textareaDialog':
-																				jsBackend.formBuilder.fields.saveTextarea();
-																				break;
-																			case 'headingDialog':
-																				jsBackend.formBuilder.fields.saveHeading();
-																				break;
-																			case 'paragraphDialog':
-																				jsBackend.formBuilder.fields.saveParagraph();
-																				break;
-																			case 'submitDialog':
-																				jsBackend.formBuilder.fields.saveSubmit();
-																				break;
-																			case 'dropdownDialog':
-																				jsBackend.formBuilder.fields.saveDropdown();
-																				break;
-																			case 'radiobuttonDialog':
-																				jsBackend.formBuilder.fields.saveRadiobutton();
-																				break;
-																			case 'checkboxDialog':
-																				jsBackend.formBuilder.fields.saveCheckbox();
-																				break;
-																		}
-																	},
-												'{$lblCancel|ucfirst}': function(){ $(this).dialog('close'); }
-											 },
+				$('#'+ id).dialog(
+				{
+					autoOpen: false,
+					draggable: false,
+					resizable: false,
+					modal: true,
+					width: 400,
+					buttons:
+					{
+						'{$lblSave|ucfirst}': function()
+						{
+							// save/validate by type
+							switch(id)
+							{
+								case 'textboxDialog':
+									jsBackend.formBuilder.fields.saveTextbox();
+									break;
+								case 'textareaDialog':
+									jsBackend.formBuilder.fields.saveTextarea();
+									break;
+								case 'headingDialog':
+									jsBackend.formBuilder.fields.saveHeading();
+									break;
+								case 'paragraphDialog':
+									jsBackend.formBuilder.fields.saveParagraph();
+									break;
+								case 'submitDialog':
+									jsBackend.formBuilder.fields.saveSubmit();
+									break;
+								case 'dropdownDialog':
+									jsBackend.formBuilder.fields.saveDropdown();
+									break;
+								case 'radiobuttonDialog':
+									jsBackend.formBuilder.fields.saveRadiobutton();
+									break;
+								case 'checkboxDialog':
+									jsBackend.formBuilder.fields.saveCheckbox();
+									break;
+							}
+						},
+						'{$lblCancel|ucfirst}': function(){ $(this).dialog('close'); }
+					 },
 
-									// set focus on first input field
-									open: function(evt)
-									{
-										// bind special boxes
-										if(id == 'dropdownDialog'){ $('input#dropdownValues').multipleTextbox({ emptyMessage: '{$msgNoValues}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDelete|ucfirst}', showIconOnly: true, afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback}); }
-										else if(id == 'radiobuttonDialog'){ $('input#radiobuttonValues').multipleTextbox({ emptyMessage: '{$msgNoValues}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDelete|ucfirst}', showIconOnly: true, afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback}); }
-										else if(id == 'checkboxDialog'){ $('input#checkboxValues').multipleTextbox({ emptyMessage: '{$msgNoValues}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDelete|ucfirst}', showIconOnly: true, afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback}); }
-										else if(id == 'paragraphDialog')
-										{
-											// we want other buttons
-											tinyMCE.activeEditor.settings.theme_advanced_buttons1 = 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor';
-											tinyMCE.activeEditor.settings.theme_advanced_buttons2 = 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes';
-											tinyMCE.activeEditor.settings.theme_advanced_buttons3 = '';
+					// set focus on first input field
+					open: function(evt)
+					{
+						// bind special boxes
+						if(id == 'dropdownDialog')
+						{
+							$('input#dropdownValues').multipleTextbox(
+							{
+								emptyMessage: '{$msgNoValues}',
+								addLabel: '{$lblAdd|ucfirst}',
+								removeLabel: '{$lblDelete|ucfirst}',
+								showIconOnly: true,
+								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
+							});
+						}
+						else if(id == 'radiobuttonDialog')
+						{
+							$('input#radiobuttonValues').multipleTextbox(
+							{
+								emptyMessage: '{$msgNoValues}',
+								addLabel: '{$lblAdd|ucfirst}',
+								removeLabel: '{$lblDelete|ucfirst}',
+								showIconOnly: true,
+								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
+							});
+						}
+						else if(id == 'checkboxDialog')
+						{
+							$('input#checkboxValues').multipleTextbox(
+							{
+								emptyMessage: '{$msgNoValues}',
+								addLabel: '{$lblAdd|ucfirst}',
+								removeLabel: '{$lblDelete|ucfirst}',
+								showIconOnly: true,
+								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
+							});
+						}
+						else if(id == 'paragraphDialog')
+						{
+							// we want other buttons
+							tinyMCE.activeEditor.settings.theme_advanced_buttons1 = 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor';
+							tinyMCE.activeEditor.settings.theme_advanced_buttons2 = 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes';
+							tinyMCE.activeEditor.settings.theme_advanced_buttons3 = '';
 
-											// create tinymce control
-											tinyMCE.execCommand('mceAddControl', false, 'paragraph');
-										}
+							// create tinymce control
+							tinyMCE.execCommand('mceAddControl', false, 'paragraph');
+						}
 
-										// focus on first input element
-										if($(this).find(':input:visible').length > 0){ $(this).find(':input:visible')[0].focus(); }
+						// focus on first input element
+						if($(this).find(':input:visible').length > 0) $(this).find(':input:visible')[0].focus();
 
-										// toggle error messages
-										jsBackend.formBuilder.fields.toggleValidationErrors(id);
-									},
+						// toggle error messages
+						jsBackend.formBuilder.fields.toggleValidationErrors(id);
+					},
 
-									// before closing the dialog
-									beforeclose: function(evt)
-									{
-										// no items message
-										jsBackend.formBuilder.fields.toggleNoItems();
+					// before closing the dialog
+					beforeclose: function(evt)
+					{
+						// no items message
+						jsBackend.formBuilder.fields.toggleNoItems();
 
-										// unload tinymce
-										if(tinyMCE.getInstanceById('paragraph'))
-										{
-											tinyMCE.execCommand('mceSetContent', false, 'paragraph');
-											tinyMCE.execCommand('mceRemoveControl', false, 'paragraph');
-										}
+						// unload tinymce
+						if(tinyMCE.getInstanceById('paragraph'))
+						{
+							tinyMCE.execCommand('mceSetContent', false, 'paragraph');
+							tinyMCE.execCommand('mceRemoveControl', false, 'paragraph');
+						}
 
-										// reset
-										jsBackend.formBuilder.fields.resetDialog(id);
+						// reset
+						jsBackend.formBuilder.fields.resetDialog(id);
 
-										// toggle error messages
-										jsBackend.formBuilder.fields.toggleValidationErrors(id);
-									}
-								 });
+						// toggle error messages
+						jsBackend.formBuilder.fields.toggleValidationErrors(id);
+					}
+				});
 			}
 		});
 
@@ -242,7 +293,7 @@ jsBackend.formBuilder.fields =
 			var id = $(this).attr('rel');
 
 			// bind
-			if(id != ''){ $('#'+ id).dialog('open'); }
+			if(id != '') $('#'+ id).dialog('open');
 		});
 	},
 
@@ -252,7 +303,8 @@ jsBackend.formBuilder.fields =
 	bindDragAndDrop: function()
 	{
 		// bind sortable
-		$('#fieldsHolder').sortable({
+		$('#fieldsHolder').sortable(
+		{
 			items: 'div.field',
 			handle: 'span.dragAndDropHandle',
 			containment: '#fieldsHolder',
@@ -266,9 +318,13 @@ jsBackend.formBuilder.fields =
 				for(var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1]);
 
 				// make ajax call
-				$.ajax({cache: false, type: 'POST', dataType: 'json',
-					url: jsBackend.formBuilder.fields.urlSequence,
-					data: 'form_id=' + jsBackend.formBuilder.formId +'&new_id_sequence=' + newIdSequence.join(','),
+				$.ajax(
+				{
+					data: $.extend(jsBackend.formBuilder.fields.paramsSequence,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						new_id_sequence: newIdSequence.join(',')
+					}),
 					success: function(data, textStatus)
 					{
 						// not a succes so revert the changes
@@ -282,7 +338,7 @@ jsBackend.formBuilder.fields =
 						}
 
 						// alert the user
-						if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+						if(data.code != 200 && jsBackend.debug) alert(data.message);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown)
 					{
@@ -319,17 +375,21 @@ jsBackend.formBuilder.fields =
 			if(id != '')
 			{
 				// make the call
-				$.ajax({ url: jsBackend.formBuilder.fields.urlGet,
-					data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ id,
-					type: 'get',
+				$.ajax(
+				{
+					data: $.extend(jsBackend.formBuilder.fields.paramsGet,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						field_id: id
+					}),
 					success: function(data, textStatus)
 					{
 						// success
 						if(data.code == 200)
 						{
 							// init default values
-							if(data.data.field.settings == null){ data.data.field.settings = {}; }
-							if(data.data.field.settings.default_values == null){ data.data.field.settings.default_values = ''; }
+							if(data.data.field.settings == null) data.data.field.settings = {};
+							if(data.data.field.settings.default_values == null) data.data.field.settings.default_values = '';
 
 							// textbox edit
 							if(data.data.field.type == 'textbox')
@@ -539,10 +599,10 @@ jsBackend.formBuilder.fields =
 						}
 
 						// show error message
-						else{ jsBackend.messages.add('error', textStatus); }
+						else jsBackend.messages.add('error', textStatus);
 
 						// alert the user
-						if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+						if(data.code != 200 && jsBackend.debug) alert(data.message);
 					}
 				});
 			}
@@ -565,8 +625,8 @@ jsBackend.formBuilder.fields =
 			jsBackend.formBuilder.fields.handleValidation(wrapper);
 
 			// on change
-			$(wrapper).find('select:first').live('change', function(){ jsBackend.formBuilder.fields.handleValidation(wrapper); });
-			$(wrapper).find('input:checkbox').live('change', function(){ jsBackend.formBuilder.fields.handleValidation(wrapper); });
+			$(wrapper).find('select:first').live('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
+			$(wrapper).find('input:checkbox').live('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 		});
 	},
 
@@ -592,7 +652,7 @@ jsBackend.formBuilder.fields =
 				$(wrapper).find('.validationRequiredErrorMessage input:visible:first').val(jsBackend.formBuilder.fields.defaultErrorMessages.required);
 			}
 		}
-		else{ $(wrapper).find('.validationRequiredErrorMessage').slideUp(); }
+		else $(wrapper).find('.validationRequiredErrorMessage').slideUp();
 
 		// toggle validation error message
 		if($(validation).val() != '')
@@ -603,7 +663,7 @@ jsBackend.formBuilder.fields =
 			// default error message
 			$(wrapper).find('.validationErrorMessage input:visible:first').val(jsBackend.formBuilder.fields.defaultErrorMessages[$(validation).val()]);
 		}
-		else{ $(wrapper).find('.validationErrorMessage').slideUp(); }
+		else $(wrapper).find('.validationErrorMessage').slideUp();
 	},
 
 
@@ -672,8 +732,19 @@ jsBackend.formBuilder.fields =
 		var requiredErrorMessage = $('#checkboxRequiredErrorMessage').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&values='+ values +'&default_values='+ defaultValue +'&required='+ required +'&required_error_message='+ requiredErrorMessage,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				values: values,
+				default_values: defaultValue,
+				required: required,
+				required_error_message: requiredErrorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -707,10 +778,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -731,8 +802,19 @@ jsBackend.formBuilder.fields =
 		var requiredErrorMessage = $('#dropdownRequiredErrorMessage').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&values='+ values +'&default_values='+ defaultValue +'&required='+ required +'&required_error_message='+ requiredErrorMessage,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				values: values,
+				default_values: defaultValue,
+				required: required,
+				required_error_message: requiredErrorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -766,10 +848,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -786,8 +868,15 @@ jsBackend.formBuilder.fields =
 		var value = $('#heading').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&values='+ value,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				values: value
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -818,10 +907,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -841,8 +930,15 @@ jsBackend.formBuilder.fields =
 		var value = $('#paragraph').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&values='+ value,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				values: value
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -873,10 +969,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -897,8 +993,19 @@ jsBackend.formBuilder.fields =
 		var requiredErrorMessage = $('#radiobuttonRequiredErrorMessage').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&values='+ values +'&default_values='+ defaultValue +'&required='+ required +'&required_error_message='+ requiredErrorMessage,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				values: values,
+				default_values: defaultValue,
+				required: required,
+				required_error_message: requiredErrorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -932,10 +1039,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -952,8 +1059,15 @@ jsBackend.formBuilder.fields =
 		var value = $('#submit').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&values='+ value,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				values: values
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -984,10 +1098,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -1010,8 +1124,21 @@ jsBackend.formBuilder.fields =
 		var errorMessage = $('#textareaErrorMessage').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&default_values='+ value +'&required='+ required +'&required_error_message='+ requiredErrorMessage +'&validation='+ validation +'&validation_parameter='+ validationParameter +'&error_message='+ errorMessage,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				default_values: value,
+				required: required,
+				required_error_message: requiredErrorMessage,
+				validation: validation,
+				validation_parameter: validationParameter,
+				error_message: errorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -1045,10 +1172,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -1071,8 +1198,21 @@ jsBackend.formBuilder.fields =
 		var errorMessage = $('#textboxErrorMessage').val();
 
 		// make the call
-		$.ajax({ url: jsBackend.formBuilder.fields.urlSave,
-			data: 'form_id='+ jsBackend.formBuilder.formId +'&field_id='+ fieldId +'&type='+ type +'&label='+ label +'&default_values='+ value +'&required='+ required +'&required_error_message='+ requiredErrorMessage +'&validation='+ validation +'&validation_parameter='+ validationParameter +'&error_message='+ errorMessage,
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				default_values: value,
+				required: required,
+				required_error_message: requiredErrorMessage,
+				validation: validation,
+				validation_parameter: validationParameter,
+				error_message: errorMessage
+			}),
 			success: function(data, textStatus)
 			{
 				// success
@@ -1106,10 +1246,10 @@ jsBackend.formBuilder.fields =
 				}
 
 				// show error message
-				else{ jsBackend.messages.add('error', textStatus); }
+				else jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug){ alert(data.message); }
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
 	},
@@ -1134,10 +1274,10 @@ jsBackend.formBuilder.fields =
 		else
 		{
 			// already field items so add after them
-			if($('#fieldsHolder .field').length >= 1){ $('#fieldsHolder .field:last').after(fieldHTML); }
+			if($('#fieldsHolder .field').length >= 1) $('#fieldsHolder .field:last').after(fieldHTML);
 
 			// first field so add in beginning
-			else{ $('#fieldsHolder').prepend(fieldHTML); }
+			else $('#fieldsHolder').prepend(fieldHTML);
 		}
 
 		// highlight
@@ -1154,10 +1294,10 @@ jsBackend.formBuilder.fields =
 		var rowCount = $('#fieldsHolder .field').length;
 
 		// got items (always 1 item in it)
-		if(rowCount >= 1){ $('#noFields').hide(); }
+		if(rowCount >= 1) $('#noFields').hide();
 
 		// no items
-		else{ $('#noFields').show(); }
+		else $('#noFields').show();
 	},
 
 
@@ -1179,7 +1319,7 @@ jsBackend.formBuilder.fields =
 			$(this).find('.formError').each(function()
 			{
 				// has a message so highlight tab
-				if($(this).html() != ''){ $('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent().addClass('ui-state-error'); }
+				if($(this).html() != '') $('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent().addClass('ui-state-error');
 			});
 		});
 
@@ -1187,10 +1327,10 @@ jsBackend.formBuilder.fields =
 		$("#"+ id).find('.formError').each(function()
 		{
 			// has a message
-			if($(this).html() != ''){ $(this).show(); }
+			if($(this).html() != '') $(this).show();
 
 			// no message
-			else{ $(this).hide(); }
+			else $(this).hide();
 		});
 	}
 }

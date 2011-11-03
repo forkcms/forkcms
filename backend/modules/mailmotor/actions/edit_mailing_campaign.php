@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit a mailing's campaign
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 {
@@ -18,11 +21,8 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 	 */
 	private $campaigns;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -32,22 +32,11 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		// does the item exist
 		if(BackendMailmotorModel::existsMailing($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -55,11 +44,8 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -73,11 +59,8 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -88,11 +71,8 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		$this->frm->addDropdown('campaigns', $this->campaigns, $this->record['campaign_id']);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -103,11 +83,8 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		$this->tpl->assign('group', $this->record);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -139,5 +116,3 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

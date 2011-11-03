@@ -1,22 +1,20 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 // if someone tries to access the folder frontend, we redirect them to the homepage
 if(!defined('APPLICATION'))
 {
-	// redirect
 	header('Location: /');
-
-	// stop script
 	exit;
 }
 
-// require init
 require_once 'init.php';
 
-// initialize components
 new FrontendInit(APPLICATION);
-
-// create frontend
 new Frontend();
-
-?>

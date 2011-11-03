@@ -3,11 +3,8 @@
 /**
  * This is the form widget.
  *
- * @package		frontend
- * @subpackage	form_builder
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 {
@@ -18,14 +15,12 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 	 */
 	private $fieldsHTML;
 
-
 	/**
 	 * The form.
 	 *
 	 * @var FrontendForm
 	 */
 	private $frm;
-
 
 	/**
 	 * The form item.
@@ -34,14 +29,13 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 	 */
 	private $item;
 
-
 	/**
 	 * Create form action and strip the identifier parameter.
 	 *
 	 * We use this function to create the action for the form.
 	 * This action cannot contain an identifier since these are used for statistics and failed form submits cannot be tracked.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	private function createAction()
 	{
@@ -83,48 +77,32 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		return SITE_URL . '/' . $action;
 	}
 
-
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// parent execute
 		parent::execute();
 
-		// load template
 		$this->loadTemplate();
-
-		// load data
 		$this->loadData();
 
 		// success message
 		if(isset($_GET['identifier']) && $_GET['identifier'] == $this->item['identifier']) $this->parseSuccessMessage();
 
-		// create form
+		// create/handle form
 		else
 		{
-			// load data
 			$this->loadForm();
-
-			// validate form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
 		}
 
-		// display
 		return $this->tpl->getContent(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/layout/widgets/' . $this->getAction() . '.tpl');
 	}
 
-
 	/**
 	 * Load the data.
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -132,11 +110,8 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		$this->item = FrontendFormBuilderModel::get((int) $this->data['id']);
 	}
 
-
 	/**
 	 * Load the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -248,7 +223,6 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		}
 	}
 
-
 	/**
 	 * Load the template.
 	 *
@@ -256,8 +230,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 	 * Every form needs to have its own scope so error messages stay within the current scope.
 	 * (Without an own scope the successMessage would show in all forms instead of just 1 form.)
 	 *
-	 * @return	void
-	 * @param	string[optional] $path	Unused parameter but needed because parent function uses it.
+	 * @param string[optional] $path Unused parameter but needed because parent function uses it.
 	 */
 	protected function loadTemplate($path = null)
 	{
@@ -267,11 +240,8 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		$this->tpl = new FrontendTemplate(false);
 	}
 
-
 	/**
 	 * Parse.
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -326,22 +296,16 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		}
 	}
 
-
 	/**
 	 * Parse the success message.
-	 *
-	 * @return	void
 	 */
 	private function parseSuccessMessage()
 	{
 		$this->tpl->assign('successMessage', $this->item['success_message']);
 	}
 
-
 	/**
 	 * Validate the form.
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -377,10 +341,18 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					if($rule == 'required') $this->frm->getField($fieldName)->isFilled($settings['error_message']);
 
 					// email
-					elseif($rule == 'email') $this->frm->getField($fieldName)->isEmail($settings['error_message']);
+					elseif($rule == 'email')
+					{
+						// only check this if the field is filled, if the field is required it will be validated before
+						if($this->frm->getField($fieldName)->isFilled()) $this->frm->getField($fieldName)->isEmail($settings['error_message']);
+					}
 
 					// numeric
-					elseif($rule == 'numeric') $this->frm->getField($fieldName)->isNumeric($settings['error_message']);
+					elseif($rule == 'numeric')
+					{
+						// only check this if the field is filled, if the field is required it will be validated before
+						if($this->frm->getField($fieldName)->isFilled()) $this->frm->getField($fieldName)->isNumeric($settings['error_message']);
+					}
 				}
 			}
 
@@ -433,8 +405,12 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$variables['name'] = $this->item['name'];
 					$variables['fields'] = $emailFields;
 
-					// add email
-					FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $this->item['email'], $this->item['name']);
+					// loop recipients
+					foreach($this->item['email'] as $address)
+					{
+						// add email
+						FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $address, $this->item['name']);
+					}
 				}
 
 				// trigger event
@@ -464,5 +440,3 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		}
 	}
 }
-
-?>

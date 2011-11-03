@@ -301,52 +301,56 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// post/get data
 		$data = $this->getMethod(true);
 
-		// default values
-		$values = $this->values;
+		// allowed values
+		$allowedValues = array();
+
+		// loop initial values and fill the array of allowed values
+		foreach($this->values as $key => $value)
+		{
+			// the current key represents an optgroup
+			if(is_array($value))
+				$allowedValues = array_merge($allowedValues, $value);
+
+			else
+				$allowedValues[$key] = $value;
+		}
 
 		// submitted field
 		if($this->isSubmitted() && isset($data[$this->attributes['name']]))
 		{
-			// option groups
-			if(is_array($this->optionGroups)) $values = $data[$this->attributes['name']];
-
-			// no option groups
-			else
+			// multiple selection allowed
+			if(!$this->single)
 			{
-				// multiple selection allowed
-				if(!$this->single)
+				// reset
+				$values = array();
+
+				// loop choices
+				foreach((array) $data[$this->attributes['name']] as $value)
 				{
-					// reset
-					$values = array();
-
-					// loop choices
-					foreach((array) $data[$this->attributes['name']] as $value)
-					{
-						// external data is allowed
-						if($this->allowExternalData) $values[] = $value;
-
-						// external data is not allowed
-						else
-						{
-							if((isset($this->values[$value]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $value) && !in_array($value, $values))) $values[] = $value;
-						}
-					}
-				}
-
-				// ony single selection
-				else
-				{
-					// rest
-					$values = null;
-
 					// external data is allowed
-					if($this->allowExternalData) $values = (string) $data[$this->attributes['name']];
+					if($this->allowExternalData) $values[] = $value;
 
-					// external data is NOT allowed
+					// external data is not allowed
 					else
 					{
-						if(isset($this->values[(string) $data[$this->attributes['name']]])) $values = (string) $data[$this->attributes['name']];
+						if((isset($allowedValues[$value]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $value) && !in_array($value, $values))) $values[] = $value;
 					}
+				}
+			}
+
+			// ony single selection
+			else
+			{
+				// rest
+				$values = null;
+
+				// external data is allowed
+				if($this->allowExternalData) $values = (string) $data[$this->attributes['name']];
+
+				// external data is NOT allowed
+				else
+				{
+					if(isset($allowedValues[(string) $data[$this->attributes['name']]]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $data[$this->attributes['name']] && $this->defaultElement[1] != '')) $values = (string) $data[$this->attributes['name']];
 				}
 			}
 		}
@@ -703,7 +707,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			foreach($values as $label => $value)
 			{
 				// dropdownfield with optgroups?
-				$this->optionGroups[$label] = (is_array($value)) ? true : false;
+				$this->optionGroups[$label] = is_array($value);
 
 				// is option group
 				if($this->optionGroups[$label])

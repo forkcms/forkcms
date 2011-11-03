@@ -1849,15 +1849,33 @@ class CampaignMonitor
 	 */
 	public function sendCampaign($campaignId, $confirmationEmail, $deliveryDate = null)
 	{
-		// set ID
-		$campaignId = empty($campaignId) ? $this->getCampaignId() : $campaignId;
-
 		// set parameters
 		$parameters['ConfirmationEmail'] = (string) $confirmationEmail;
 		$parameters['SendDate'] = $deliveryDate;
 
 		// make the call
 		return $this->doCall('campaigns/'. $campaignId .'/send', $parameters, 'POST');
+	}
+
+
+	/**
+	 * This sends a preview campaign based for a given campaign ID.
+	 *
+	 * @return	bool
+	 * @param	string $campaignId	The ID of the campaign to send.
+	 * @param	mixed $recipients This can be an e-mail address string, or an array of addresses.
+	 * @param	string[optional] $personalization This can be 'Fallback','Random', or a specific e-mail address.
+	 */
+	public function sendCampaignPreview($campaignId, $recipients, $personalization = 'Fallback')
+	{
+		$recipients = !is_array($recipients) ? array($recipients) : $recipients;
+
+		// set parameters
+		$parameters['PreviewRecipients'] = $recipients;
+		$parameters['SendDate'] = $personalization;
+
+		// make the call
+		return $this->doCall('campaigns/'. $campaignId .'/sendpreview', $parameters, 'POST');
 	}
 
 

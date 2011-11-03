@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using to get and set profile information.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Jan Moesen <jan@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class FrontendProfilesProfile
 {
@@ -20,14 +23,12 @@ class FrontendProfilesProfile
 	 */
 	private $displayName;
 
-
 	/**
 	 * The profile email.
 	 *
 	 * @var	string
 	 */
 	private $email;
-
 
 	/**
 	 * The groups this profile belongs to, if any. The keys are the group IDs, the values the HTML-escaped group names.
@@ -36,14 +37,12 @@ class FrontendProfilesProfile
 	 */
 	protected $groups;
 
-
 	/**
 	 * The profile id.
 	 *
 	 * @var	int
 	 */
 	private $id;
-
 
 	/**
 	 * The profile register date (unix timestamp).
@@ -52,14 +51,12 @@ class FrontendProfilesProfile
 	 */
 	private $registeredOn;
 
-
 	/**
 	 * The profile settings.
 	 *
 	 * @var	array
 	 */
 	private $settings = array();
-
 
 	/**
 	 * The profile status.
@@ -68,7 +65,6 @@ class FrontendProfilesProfile
 	 */
 	private $status;
 
-
 	/**
 	 * The profile url.
 	 *
@@ -76,69 +72,62 @@ class FrontendProfilesProfile
 	 */
 	private $url;
 
-
 	/**
 	 * Constructor.
 	 *
-	 * @return	void
-	 * @param	int[optional] $profileId	The profile id to load data from.
+	 * @param int[optional] $profileId The profile id to load data from.
 	 */
 	public function __construct($profileId = null)
 	{
 		if($profileId !== null) $this->loadProfile((int) $profileId);
 	}
 
-
 	/**
 	 * Get display name.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getDisplayName()
 	{
 		return $this->displayName;
 	}
 
-
 	/**
 	 * Get email.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getEmail()
 	{
 		return $this->email;
 	}
 
-
 	/**
 	 * Get profile id.
 	 *
-	 * @return	int
+	 * @return int
 	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
-
 	/**
 	 * Get registered on date.
 	 *
-	 * @return	int
+	 * @return int
 	 */
 	public function getRegisteredOn()
 	{
 		return $this->registeredOn;
 	}
 
-
 	/**
 	 * Get a profile setting by name.
 	 *
-	 * @return	mixed
-	 * @param	string $name						Setting name.
-	 * @param	string[optional] $defaultValue		Default value is used when the setting does not exist.
+	 * @param string $name Setting name.
+	 * @param string[optional] $defaultValue Default value is used when the setting does not exist.
+	 * @return mixed
 	 */
 	public function getSetting($name, $defaultValue = null)
 	{
@@ -152,11 +141,10 @@ class FrontendProfilesProfile
 		else return $defaultValue;
 	}
 
-
 	/**
 	 * Get all settings.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getSettings()
 	{
@@ -167,54 +155,51 @@ class FrontendProfilesProfile
 		return $this->settings;
 	}
 
-
 	/**
 	 * Get status.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getStatus()
 	{
 		return $this->status;
 	}
 
-
 	/**
 	 * Get profile url.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getUrl()
 	{
 		return $this->url;
 	}
 
-
 	/**
 	 * Does this user belong to the group with the given ID?
 	 *
-	 * @return	int
-	 * @param	int $groupId	Group id.
+	 * @param int $groupId Group id.
+	 * @return int
 	 */
 	public function isInGroup($groupId)
 	{
 		return isset($this->groups[$groupId]);
 	}
 
-
 	/**
 	 * Load a user profile by id.
 	 *
-	 * @return	void
-	 * @param	int $id		Profile id to load.
+	 * @param int $id Profile id to load.
 	 */
 	private function loadProfile($id)
 	{
 		// get profile data
-		$profileData = (array) FrontendModel::getDB()->getRecord('SELECT p.id, p.email, p.status, p.display_name, UNIX_TIMESTAMP(p.registered_on) AS registered_on
-																	FROM profiles AS p
-																	WHERE p.id = ?',
-																	(int) $id);
+		$profileData = (array) FrontendModel::getDB()->getRecord(
+			'SELECT p.id, p.email, p.status, p.display_name, UNIX_TIMESTAMP(p.registered_on) AS registered_on
+			 FROM profiles AS p
+			 WHERE p.id = ?',
+			(int) $id
+		);
 
 		// set properties
 		$this->setId($profileData['id']);
@@ -224,68 +209,60 @@ class FrontendProfilesProfile
 		$this->setRegisteredOn($profileData['registered_on']);
 
 		// get the groups (only the ones we still have access to)
-		$this->groups = (array) FrontendModel::getDB()->getPairs('SELECT pg.id, pg.name
-																FROM profiles_groups AS pg
-																INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
-																WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
-																array(':id' => (int) $id));
+		$this->groups = (array) FrontendModel::getDB()->getPairs(
+			'SELECT pg.id, pg.name
+			 FROM profiles_groups AS pg
+			 INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
+			 WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
+			array(':id' => (int) $id)
+		);
 	}
-
 
 	/**
 	 * Set a display name.
 	 *
-	 * @return	void
-	 * @param	string $value		Display name value.
+	 * @param string $value Display name value.
 	 */
 	public function setDisplayName($value)
 	{
 		$this->displayName = (string) $value;
 	}
 
-
 	/**
 	 * Set a profile email.
 	 *
-	 * @return	void
-	 * @param	string $value		Email address.
+	 * @param string $value Email address.
 	 */
 	public function setEmail($value)
 	{
 		$this->email = (string) $value;
 	}
 
-
 	/**
 	 * Set a profile id.
 	 *
-	 * @return	void
-	 * @param	int $value		Id of the profile.
+	 * @param int $value Id of the profile.
 	 */
 	public function setId($value)
 	{
 		$this->id = (int) $value;
 	}
 
-
 	/**
 	 * Set a register date.
 	 *
-	 * @return	void
-	 * @param	int $value		Register date timestamp.
+	 * @param int $value Register date timestamp.
 	 */
 	public function setRegisteredOn($value)
 	{
 		$this->registeredOn = (int) $value;
 	}
 
-
 	/**
 	 * Set a profile setting.
 	 *
-	 * @return	void
-	 * @param	string $name		Setting name.
-	 * @param	string $value		New setting value.
+	 * @param string $name Setting name.
+	 * @param string $value New setting value.
 	 */
 	public function setSetting($name, $value)
 	{
@@ -296,29 +273,23 @@ class FrontendProfilesProfile
 		$this->settings[$name] = $value;
 	}
 
-
 	/**
 	 * Set a profile status.
 	 *
-	 * @return	void
-	 * @param	string $value		Status.
+	 * @param string $value Status.
 	 */
 	public function setStatus($value)
 	{
 		$this->status = (string) $value;
 	}
 
-
 	/**
 	 * Set a profile url.
 	 *
-	 * @return	void
-	 * @param	string $value		Url.
+	 * @param string $value Url.
 	 */
 	public function setUrl($value)
 	{
 		$this->url = (string) $value;
 	}
 }
-
-?>

@@ -3,11 +3,7 @@
 /**
  * This is the subscribe-action
  *
- * @package		frontend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorSubscribe extends FrontendBaseBlock
 {
@@ -18,32 +14,19 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 	 */
 	private $frm;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// load template
 		$this->loadTemplate();
-
-		// load
 		$this->loadForm();
-
-		// validate
 		$this->validateForm();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -54,11 +37,8 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 		$this->frm->addText('email');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -76,11 +56,8 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -126,5 +103,3 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 	}
 
 }
-
-?>

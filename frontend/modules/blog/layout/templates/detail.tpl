@@ -43,6 +43,7 @@
 				</ul>
 			</header>
 			<div class="bd content">
+				{option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" />{/option:item.image}
 				{$item.text}
 			</div>
 			<footer class="ft">

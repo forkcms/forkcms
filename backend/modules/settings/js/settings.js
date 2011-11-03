@@ -14,33 +14,36 @@ jsBackend.settings =
 	init: function()
 	{
 		$('#facebookAdminIds').multipleTextbox(
-		{ 
-			emptyMessage: '{$msgNoAdminIds}', 
-			addLabel: '{$lblAdd|ucfirst}', 
+		{
+			emptyMessage: '{$msgNoAdminIds}',
+			addLabel: '{$lblAdd|ucfirst}',
 			removeLabel: '{$lblDelete|ucfirst}',
 			canAddNew: true
-		}); 
-		
+		});
+
 		if($('#testEmailConnection').length > 0) $('#testEmailConnection').bind('click', jsBackend.settings.testEmailConnection);
-		
+
 	},
 
-	
-	testEmailConnection: function(evt) 
+
+	testEmailConnection: function(evt)
 	{
 		// prevent default
 		evt.preventDefault();
-		
+
 		// show spinner
 		$('#testEmailConnectionSpinner').show();
 		$('#testEmailConnectionError').hide();
 		$('#testEmailConnectionSuccess').hide();
-		
+
+		// fetch email parameters
+		var settings = new Object();
+		$.each($('#settingsEmail').serializeArray(), function() { settings[this.name] = this.value; });
+
 		// make the call
 		$.ajax(
 		{
-			url: '/backend/ajax.php?module=settings&action=test_email_connection&language=' + jsBackend.current.language,
-			data: $('#settingsEmail').serialize(),
+			data: $.extend({ fork: { action: 'test_email_connection' } }, settings),
 			success: function(data, textStatus)
 			{
 				// hide spinner
@@ -54,13 +57,13 @@ jsBackend.settings =
 			{
 				// hide spinner
 				$('#testEmailConnectionSpinner').hide();
-				
+
 				// show error
 				$('#testEmailConnectionError').show();
 			}
-		});		
+		});
 	},
-	
+
 
 	eoo: true
 }

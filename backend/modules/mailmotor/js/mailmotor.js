@@ -12,16 +12,17 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.step3.init();
 		jsBackend.mailmotor.step4.init();
 		jsBackend.mailmotor.templateSelection.init();
-		
+
 		// multiple text box for adding multiple emailaddresses
-		if($('form#add #email').length > 0) {
+		if($('form#add #email').length > 0)
+		{
 			$('form#add #email').multipleTextbox(
-				{ 
-					emptyMessage: '', 
-					addLabel: '{$lblAdd|ucfirst}', 
-					removeLabel: '{$lblDelete|ucfirst}',
-					canAddNew: true
-				}); 
+			{
+				emptyMessage: '',
+				addLabel: '{$lblAdd|ucfirst}',
+				removeLabel: '{$lblDelete|ucfirst}',
+				canAddNew: true
+			});
 		}
 	},
 
@@ -67,7 +68,7 @@ jsBackend.mailmotor.chartPieChart =
 {
 	init: function()
 	{
-		if($('#chartPieChart').length > 0) { jsBackend.mailmotor.chartPieChart.create(); }
+		if($('#chartPieChart').length > 0) jsBackend.mailmotor.chartPieChart.create();
 	},
 
 	// add new chart
@@ -116,7 +117,7 @@ jsBackend.mailmotor.chartPieChart =
 				}
 			},
 			legend: { style: { right: '10px' } },
-			series: [ {type: 'pie', data: pieChartData } ]
+			series: [ { type: 'pie', data: pieChartData } ]
 		});
 	},
 
@@ -184,7 +185,7 @@ jsBackend.mailmotor.linkAccount =
 			// do the call to link the account
 			jsBackend.mailmotor.linkAccount.doCall();
 		});
-		
+
 		// create client is checked
 		$('#clientId').change(function(e)
 		{
@@ -197,15 +198,17 @@ jsBackend.mailmotor.linkAccount =
 				$('#contactName').val('');
 				$('#contactEmail').val('');
 			}
-			
+
 			// an existing client was chosen, so we have to update the info fields with the current details of the client
 			else
 			{
 				$.ajax(
 				{
-					cache: false, 
-					url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=load_client_info&language=' + jsBackend.current.language,
-					data: 'client_id='+ clientId,
+					data:
+					{
+						fork: { action: 'load_client_info' },
+						client_id: clientId
+					},
 					success: function(data, textStatus)
 					{
 						$.each($('#countries').find('option'), function(index, item)
@@ -215,7 +218,7 @@ jsBackend.mailmotor.linkAccount =
 								$(this).prop('selected', true);
 							}
 						});
-						
+
 						$.each($('#timezones').find('option'), function(index, item)
 						{
 							if($(this).text() == data.data.timezone)
@@ -223,7 +226,7 @@ jsBackend.mailmotor.linkAccount =
 								$(this).prop('selected', true);
 							}
 						});
-						
+
 						$('#companyName').val(data.data.company);
 						$('#contactName').val(data.data.contact_name);
 						$('#contactEmail').val(data.data.email);
@@ -243,9 +246,13 @@ jsBackend.mailmotor.linkAccount =
 		// make the call
 		$.ajax(
 		{
-			cache: false, 
-			url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language,
-			data: 'url='+ url.val() +'&username='+ username.val() +'&password='+ password.val(),
+			data:
+			{
+				fork: { action: 'link_account' },
+				url: url.val(),
+				username: username.val(),
+				password: password.val()
+			},
 			success: function(data, textStatus)
 			{
 				// remove all previous errors
@@ -255,7 +262,7 @@ jsBackend.mailmotor.linkAccount =
 				if(data.code == 200)
 				{
 					// client_id field is set
-					window.location = document.location.pathname +'?token=true&report='+ data.data.message +'#tabSettingsClient';
+					window.location = window.location.pathname + '?token=true&report=' + data.data.message + '#tabSettingsClient';
 				}
 				else
 				{
@@ -354,25 +361,50 @@ jsBackend.mailmotor.step3 =
 				// prevent the form from submitting
 				e.preventDefault();
 
-				// build ajax URL
-				var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_content&language=' + jsBackend.current.language;
-
 				// set variables
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
-
-				// remove tiny fields added to the body by naughty tinyMCE
-				body.find('div.mceListBoxMenu').remove();
+				var textareaValue = iframe[0].contentWindow.getTinyMCEContent();
 				
-				// set iframe variables
-				var textareaValue = encodeURIComponent(iframe[0].contentWindow.getTinyMCEContent());
-				var bodyHTML = encodeURIComponent(body.html());
+				// remove tiny fields added to the body by naughty tinyMCE
+				body.find('.mceListBoxMenu').remove();
+				body.find('.mceEditor').remove();
+				body.find('.clickToEdit').remove();
+				
+				/*
+					This may seem strange, but here's why I did it like this:
+					Some templates caused tinymce().getContent() to return the entire TinyMCE codes.
+					If we add the textarea's value after the textarea, and then remove it, we don't
+					run into this problem.
+				*/
+				var textarea = body.find('#contentHtml');
+				
+				/*
+					By escaping the textareaValue below, we ensure that entities will remain intact.
+					in mailmotor/detail.php on the frontend, we do a rawurlencode of the contents,
+					so CampaignMonitor receives the HTML contents with parsed entities.
+				*/
+				textarea.after(escape(textareaValue));
+				textarea.remove();
 
+				// set iframe variables
+				var bodyHTML = body.html();
+				
+				// we unescape the entire HTML so the user won't panic whilst the ajax is loading
+				body.html(unescape(body.html()));
+				
 				// make the call
 				$.ajax(
 				{
-					url: url,
-					data: 'mailing_id='+ variables.mailingId +'&subject='+ subject +'&content_plain='+ plainText +'&content_html=' + textareaValue +'&full_content_html='+ bodyHTML,
+					data:
+					{
+						fork: { action: 'save_content' },
+						mailing_id: variables.mailingId,
+						subject: subject,
+						content_plain: plainText,
+						content_html: textareaValue,
+						full_content_html: bodyHTML
+					},
 					success: function(data, textStatus)
 					{
 						if(data.code == 200)
@@ -382,11 +414,6 @@ jsBackend.mailmotor.step3 =
 						}
 						else
 						{
-							// hide all previous errors, and add the new one
-							$('#'+ data.data.element).parent().children('.formError').remove();
-							$('#'+ data.data.element).parent().append('<span class="formError">'+ data.data.element_error +'</span>');
-
-							// show message
 							jsBackend.messages.add('error', data.message);
 						}
 					}
@@ -483,9 +510,6 @@ jsBackend.mailmotor.step4 =
 
 	saveSendDate: function()
 	{
-		// build ajax URL
-		var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_send_date&language=' + jsBackend.current.language;
-
 		// cache date/time values
 		var sendOnDate = $('#sendOnDate').val();
 		var sendOnTime = $('#sendOnTime').val();
@@ -493,8 +517,13 @@ jsBackend.mailmotor.step4 =
 		// make the call
 		$.ajax(
 		{
-			url: url,
-			data: 'mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
+			data:
+			{
+				fork: { action: 'save_send_date' },
+				mailing_id: variables.mailingId,
+				send_on_date: sendOnDate,
+				send_on_time: sendOnTime
+			},
 			success: function(data, textStatus)
 			{
 				if(data.code != 200)
@@ -538,8 +567,7 @@ jsBackend.mailmotor.step4 =
 		// save the send date
 		jsBackend.mailmotor.step4.saveSendDate();
 
-		// build ajax URL
-		var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=send_mailing&language=' + jsBackend.current.language;
+		// fetch dom nodes
 		var confirmBox = $('#sendMailingConfirmationModal');
 		var buttonPane = $('.ui-dialog-buttonpane');
 
@@ -549,8 +577,11 @@ jsBackend.mailmotor.step4 =
 		// make the call
 		$.ajax(
 		{
-			url: url,
-			data: 'id='+ variables.mailingId,
+			data:
+			{
+				fork: { action: 'send_mailing' },
+				id: variables.mailingId
+			},
 			success: function(data, textStatus)
 			{
 				if(data.code == 200)
@@ -591,10 +622,10 @@ jsBackend.mailmotor.templateSelection =
 		{
 			// prevent default
 			evt.preventDefault();
-			
+
 			// store the object
 			var radiobutton = $(this).find('input:radio:first');
-			
+
 			// set checked
 			radiobutton.prop('checked', true);
 

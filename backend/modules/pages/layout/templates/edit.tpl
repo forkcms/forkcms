@@ -284,7 +284,7 @@
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>Tags</h3>
+					<h3>{$lblTags|ucfirst}</h3>
 				</div>
 				<div class="options">
 					{$txtTags} {$txtTagsError}

@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete a membership of a profile in a group.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendProfilesDeleteProfileGroup extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -45,5 +46,3 @@ class BackendProfilesDeleteProfileGroup extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

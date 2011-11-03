@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the settings module
  *
- * @package		backend
- * @subpackage	settings
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 final class BackendSettingsConfig extends BackendBaseConfig
 {
@@ -19,14 +22,12 @@ final class BackendSettingsConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
 	 * @var	array
 	 */
 	protected $disabledActions = array();
-
 
 	/**
 	 * The disabled AJAX-actions
@@ -35,7 +36,6 @@ final class BackendSettingsConfig extends BackendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 
-
 	/**
 	 * The linked actions
 	 *
@@ -43,5 +43,3 @@ final class BackendSettingsConfig extends BackendBaseConfig
 	 */
 	protected $linkedAjaxActions = array();
 }
-
-?>

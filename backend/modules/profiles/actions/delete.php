@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete or undelete a profile.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
  */
 class BackendProfilesDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -64,5 +65,3 @@ class BackendProfilesDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

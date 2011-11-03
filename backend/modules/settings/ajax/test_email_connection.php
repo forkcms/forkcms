@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This test-email-action will test the mail-connection
  *
- * @package		backend
- * @subpackage	settings
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendSettingsAjaxTestEmailConnection extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// mailer type
@@ -87,5 +87,3 @@ class BackendSettingsAjaxTestEmailConnection extends BackendBaseAJAXAction
 		}
 	}
 }
-
-?>

@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFooter extends FrontendBaseObject
 {
 	/**
 	 * Parse the footer into the template
-	 *
-	 * @return	void
 	 */
 	public function parse()
 	{
@@ -35,11 +36,11 @@ class FrontendFooter extends FrontendBaseObject
 			{
 				case 'en':
 					$locale = 'en_US';
-				break;
+					break;
 
-				case 'nl':
-					$locale = 'nl_BE';
-				break;
+				case 'cn':
+					$locale = 'zh-CN';
+					break;
 
 				default:
 					$locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
@@ -47,6 +48,7 @@ class FrontendFooter extends FrontendBaseObject
 
 			// add Facebook container
 			$siteHTMLFooter .= "\n" . '<div id="fb-root"></div>' . "\n";
+
 			// add facebook JS
 			$siteHTMLFooter .= '<script>' . "\n";
 			if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
@@ -67,5 +69,3 @@ class FrontendFooter extends FrontendBaseObject
 		$this->tpl->assign('siteHTMLFooter', $siteHTMLFooter);
 	}
 }
-
-?>

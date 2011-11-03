@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the logout-action.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesLogout extends FrontendBaseBlock
 {
 	/**
 	 * Execute the extra.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -29,5 +30,3 @@ class FrontendProfilesLogout extends FrontendBaseBlock
 		$this->redirect(SITE_URL);
 	}
 }
-
-?>

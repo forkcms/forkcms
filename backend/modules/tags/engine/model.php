@@ -1,35 +1,32 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the TagsModule
  *
- * @package		backend
- * @subpackage	tags
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendTagsModel
 {
-	/**
-	 * Overview of all tags
-	 *
-	 * @var	string
-	 */
-	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.tag, i.number AS num_tags
-									FROM tags AS i
-									WHERE i.language = ?
-									GROUP BY i.id';
-
+	const QRY_DATAGRID_BROWSE =
+		'SELECT i.id, i.tag, i.number AS num_tags
+		 FROM tags AS i
+		 WHERE i.language = ?
+		 GROUP BY i.id';
 
 	/**
 	 * Delete one or more tags.
 	 *
-	 * @return	void
-	 * @param 	mixed $ids	The ids to delete.
+	 * @param  mixed $ids The ids to delete.
 	 */
 	public static function delete($ids)
 	{
@@ -44,92 +41,91 @@ class BackendTagsModel
 		$db->delete('modules_tags', 'tag_id IN (' . implode(',', $ids) . ')');
 	}
 
-
 	/**
 	 * Check if a tag exists.
 	 *
-	 * @return	bool
-	 * @param	int $id		The id to check for existence.
+	 * @param int $id The id to check for existence.
+	 * @return bool
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT i.id
-														FROM tags AS i
-														WHERE i.id = ?',
-														array((int) $id));
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT i.id
+			 FROM tags AS i
+			 WHERE i.id = ?',
+			array((int) $id)
+		);
 	}
-
 
 	/**
 	 * Check if a tag exists
 	 *
-	 * @return	bool
-	 * @param	string $tag		The tag to check for existence.
+	 * @param string $tag The tag to check for existence.
+	 * @return bool
 	 */
 	public static function existsTag($tag)
 	{
-		return (BackendModel::getDB()->getVar('SELECT i.tag
-												FROM tags AS i
-												WHERE i.tag = ?',
-												array((string) $tag)) != '');
+		return (BackendModel::getDB()->getVar('SELECT i.tag FROM tags AS i  WHERE i.tag = ?', array((string) $tag)) != '');
 	}
-
 
 	/**
 	 * Get tag record.
 	 *
-	 * @return	array
-	 * @param	int $id		The id of the record to get.
+	 * @param int $id The id of the record to get.
+	 * @return array
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT i.tag AS name
-															FROM tags AS i
-															WHERE i.id = ?',
-															array((int) $id));
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT i.tag AS name
+			 FROM tags AS i
+			 WHERE i.id = ?',
+			array((int) $id)
+		);
 	}
-
 
 	/**
 	 * Get tags that start with the given string
 	 *
-	 * @return	array
-	 * @param	string $term	The searchstring.
+	 * @param string $term The searchstring.
+	 * @return array
 	 */
 	public static function getStartsWith($term)
 	{
-		return (array) BackendModel::getDB()->getRecords('SELECT i.tag AS name, i.tag AS value
-															FROM tags AS i
-															WHERE i.tag LIKE ?
-															ORDER BY i.tag ASC',
-															array((string) $term . '%'));
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT i.tag AS name, i.tag AS value
+			 FROM tags AS i
+			 WHERE i.tag LIKE ?
+			 ORDER BY i.tag ASC',
+			array((string) $term . '%')
+		);
 	}
-
 
 	/**
 	 * Get tags for an item
 	 *
-	 * @return	mixed
-	 * @param	string $module				The module wherin will be searched.
-	 * @param	int $otherId				The id of the record.
-	 * @param	string[optional] $type		The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
-	 * @param	string[optional] $language	The language to use, of not provided the working language will be used.
+	 * @param string $module The module wherin will be searched.
+	 * @param int $otherId The id of the record.
+	 * @param string[optional] $type The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
+	 * @param string[optional] $language The language to use, of not provided the working language will be used.
+	 * @return mixed
 	 */
 	public static function getTags($module, $otherId, $type = 'string', $language = null)
 	{
-		// redefine
 		$module = (string) $module;
 		$otherId = (int) $otherId;
 		$type = (string) SpoonFilter::getValue($type, array('string', 'array'), 'string');
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// fetch tags
-		$tags = (array) BackendModel::getDB()->getColumn('SELECT i.tag
-															FROM tags AS i
-															INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
-															WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
-															ORDER BY i.tag ASC',
-															array($module, $otherId, $language));
+		$tags = (array) BackendModel::getDB()->getColumn(
+			'SELECT i.tag
+			 FROM tags AS i
+			 INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
+			 WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
+			 ORDER BY i.tag ASC',
+			array($module, $otherId, $language)
+		);
 
 		// return as an imploded string
 		if($type == 'string') return implode(',', $tags);
@@ -138,17 +134,15 @@ class BackendTagsModel
 		return $tags;
 	}
 
-
 	/**
 	 * Get a unique URL for a tag
 	 *
-	 * @return	string
-	 * @param	string $URL			The URL to use as a base.
-	 * @param	int[optional] $id	The ID to ignore.
+	 * @param string $URL The URL to use as a base.
+	 * @param int[optional] $id The ID to ignore.
+	 * @return string
 	 */
 	public static function getURL($URL, $id = null)
 	{
-		// redefine
 		$URL = (string) $URL;
 		$language = BL::getWorkingLanguage();
 
@@ -159,10 +153,12 @@ class BackendTagsModel
 		if($id === null)
 		{
 			// get number of tags with the specified url
-			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM tags AS i
-											WHERE i.url = ? AND i.language = ?',
-											array($URL, $language));
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM tags AS i
+				 WHERE i.url = ? AND i.language = ?',
+				array($URL, $language)
+			);
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -182,10 +178,12 @@ class BackendTagsModel
 			$id = (int) $id;
 
 			// get number of tags with the specified url
-			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM tags AS i
-											WHERE i.url = ? AND i.language = ? AND i.id != ?',
-											array($URL, $language, $id));
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM tags AS i
+				 WHERE i.url = ? AND i.language = ? AND i.id != ?',
+				array($URL, $language, $id)
+			);
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -198,21 +196,18 @@ class BackendTagsModel
 			}
 		}
 
-		// return the unique URL!
 		return $URL;
 	}
-
 
 	/**
 	 * Insert a new tag
 	 *
-	 * @return	int
-	 * @param	string $tag						The data for the tag.
-	 * @param	string[optional] $language		The language wherin the tag will be inserted, if not provided the workinglanguage will be used.
+	 * @param string $tag The data for the tag.
+	 * @param string[optional] $language The language wherin the tag will be inserted, if not provided the workinglanguage will be used.
+	 * @return int
 	 */
 	public static function insert($tag, $language = null)
 	{
-		// redefine
 		$tag = (string) $tag;
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
@@ -226,19 +221,16 @@ class BackendTagsModel
 		return (int) BackendModel::getDB(true)->insert('tags', $item);
 	}
 
-
 	/**
 	 * Save the tags
 	 *
-	 * @return	void
-	 * @param	int $otherId				The id of the item to tag.
-	 * @param	mixed $tags					The tags for the item.
-	 * @param	string $module				The module wherin the item is located.
-	 * @param	string[optional] $language	The language wherin the tags will be inserted, if not provided the workinglanguage will be used.
+	 * @param int $otherId The id of the item to tag.
+	 * @param mixed $tags The tags for the item.
+	 * @param string $module The module wherin the item is located.
+	 * @param string[optional] $language The language wherin the tags will be inserted, if not provided the workinglanguage will be used.
 	 */
 	public static function saveTags($otherId, $tags, $module, $language = null)
 	{
-		// redefine
 		$otherId = (int) $otherId;
 		$tags = (is_array($tags)) ? (array) $tags : (string) $tags;
 		$module = (string) $module;
@@ -254,11 +246,13 @@ class BackendTagsModel
 		$db = BackendModel::getDB(true);
 
 		// get current tags for item
-		$currentTags = (array) $db->getPairs('SELECT i.tag, i.id
-												FROM tags AS i
-												INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
-												WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?',
-												array($module, $otherId, $language));
+		$currentTags = (array) $db->getPairs(
+			'SELECT i.tag, i.id
+			 FROM tags AS i
+			 INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
+			 WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?',
+			array($module, $otherId, $language)
+		);
 
 		// remove old links
 		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ?', $otherId);
@@ -280,12 +274,14 @@ class BackendTagsModel
 			}
 
 			// get tag ids
-			$tagsAndIds = (array) $db->getPairs('SELECT i.tag, i.id
-													FROM tags AS i
-													WHERE i.tag IN ("' . implode('", "', $tags) . '") AND i.language = ?',
-													array($language));
+			$tagsAndIds = (array) $db->getPairs(
+				'SELECT i.tag, i.id
+				 FROM tags AS i
+				 WHERE i.tag IN ("' . implode('", "', $tags) . '") AND i.language = ?',
+				array($language)
+			);
 
-			// loop again and create tags that don't exist already
+			// loop again and create tags that don't already exist
 			foreach($tags as $tag)
 			{
 				// doesn' exist yet
@@ -330,18 +326,14 @@ class BackendTagsModel
 		$db->delete('tags', 'number = ?', 0);
 	}
 
-
 	/**
 	 * Update a tag
 	 * Remark: $tag['id'] should be available.
 	 *
-	 * @return	void
-	 * @param	array $item		The new data for the tag.
+	 * @param array $item The new data for the tag.
 	 */
 	public static function update($item)
 	{
 		return BackendModel::getDB(true)->update('tags', $item, 'id = ?', $item['id']);
 	}
 }
-
-?>

@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete a synonym
  *
- * @package		backend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -36,7 +37,6 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_delete_synonym', array('id' => $this->id));
 
-
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=deleted-synonym&var=' . urlencode($this->record['term']));
 		}
@@ -45,5 +45,3 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('synonyms') . '&error=non-existing');
 	}
 }
-
-?>

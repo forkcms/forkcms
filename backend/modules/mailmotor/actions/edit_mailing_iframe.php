@@ -1,47 +1,39 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit the mailing contents through an iframe
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 {
 	/**
 	 * The active template
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	private $template;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
 		if(BackendMailmotorModel::existsMailing($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display(BACKEND_MODULE_PATH . '/layout/templates/edit_mailing_iframe.tpl');
 		}
 
@@ -49,11 +41,8 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -67,11 +56,8 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -83,11 +69,8 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		$this->parseTemplateContent();
 	}
 
-
 	/**
 	 * Parse the content editor
-	 *
-	 * @return	void
 	 */
 	private function parseTemplateContent()
 	{
@@ -137,5 +120,3 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		$this->tpl->assign('templateHtml', $HTML);
 	}
 }
-
-?>

@@ -1,39 +1,35 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the cronjob to send the queued emails.
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy@spoon-library.com>
  */
 class BackendCoreCronjobSendQueuedEmails extends BackendBaseCronjob
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// set busy file
 		$this->setBusyFile();
 
-		// get all queued mails
-		$queuedMailIds = BackendMailer::getQueuedMailIds();
-
-		// any mails to send?
-		if(!empty($queuedMailIds))
+		// send all queued e-mails
+		foreach(BackendMailer::getQueuedMailIds() as $id)
 		{
-			// loop mails & send them
-			foreach($queuedMailIds as $id) BackendMailer::send($id);
+			BackendMailer::send($id);
 		}
 
 		// remove busy file
 		$this->clearBusyFile();
 	}
 }
-
-?>

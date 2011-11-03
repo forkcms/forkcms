@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to perform mass actions on tags (delete, ...)
  *
- * @package		backend
- * @subpackage	tags
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendTagsMassAction extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// action to execute
@@ -41,5 +41,3 @@ class BackendTagsMassAction extends BackendBaseAction
 		$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted');
 	}
 }
-
-?>

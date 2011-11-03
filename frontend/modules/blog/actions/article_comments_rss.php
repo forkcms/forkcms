@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the RSS-feed for comments on a certain article.
  *
- * @package		frontend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 {
@@ -19,7 +22,6 @@ class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 	 */
 	private $record;
 
-
 	/**
 	 * The comments
 	 *
@@ -27,29 +29,18 @@ class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// load the data
 		$this->getData();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -66,11 +57,8 @@ class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 		$this->items = FrontendBlogModel::getComments($this->record['id']);
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -102,9 +90,6 @@ class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 			$rss->addItem($rssItem);
 		}
 
-		// output
 		$rss->parse();
 	}
 }
-
-?>
