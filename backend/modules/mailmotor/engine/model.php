@@ -10,7 +10,7 @@
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorModel
 {
@@ -80,6 +80,7 @@ class BackendMailmotorModel
 	 */
 	public static function checkSettings()
 	{
+		$warnings = array();
 
 		// analytics session token
 		if(BackendModel::getModuleSetting('mailmotor', 'cm_account') == false)

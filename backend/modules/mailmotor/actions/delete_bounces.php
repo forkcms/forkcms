@@ -10,7 +10,7 @@
 /**
  * This action will delete all bounces for a specified mailing
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
 {

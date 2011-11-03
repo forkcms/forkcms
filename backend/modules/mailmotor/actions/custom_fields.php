@@ -10,7 +10,7 @@
 /**
  * This page will display the overview of custom fields
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorCustomFields extends BackendBaseActionIndex
 {

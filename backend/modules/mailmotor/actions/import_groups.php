@@ -10,7 +10,7 @@
 /**
  * This is the import-action, it will import groups and their subscribers from CampaignMonitor
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorImportGroups extends BackendBaseActionAdd
 {

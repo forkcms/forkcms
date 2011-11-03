@@ -12,7 +12,7 @@ require_once 'engine/helper.php';
 /**
  * This is the configuration-object
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorConfig extends FrontendBaseConfig
 {

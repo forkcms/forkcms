@@ -10,7 +10,7 @@
 /**
  * This is a widget with the subscribe form
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorWidgetSubscribe extends FrontendBaseWidget
 {
