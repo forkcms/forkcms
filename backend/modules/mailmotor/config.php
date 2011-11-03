@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the mailmotor module
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorConfig extends BackendBaseConfig
 {

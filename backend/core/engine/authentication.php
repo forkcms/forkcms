@@ -11,7 +11,7 @@
  * The class below will handle all authentication stuff. It will handle module-access, action-acces, ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendAuthentication
 {

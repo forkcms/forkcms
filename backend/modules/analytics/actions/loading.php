@@ -10,8 +10,8 @@
 /**
  * This is the loading-action, it will display a spinner while data is collected
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendAnalyticsLoading extends BackendAnalyticsBase
 {

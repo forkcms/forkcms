@@ -11,9 +11,9 @@
  * In this file we store all generic functions that we will be using in the TagsModule
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave@netlash.com>
- * @author Davy Hellemans <davy@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendTagsModel
 {

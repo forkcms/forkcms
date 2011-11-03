@@ -11,8 +11,8 @@
  * This action will delete a category
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Annelies Van Extergem <annelies@netlash.com>
- * @author Jelmer Snoeck <jelmer@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFaqDeleteCategory extends BackendBaseActionDelete
 {

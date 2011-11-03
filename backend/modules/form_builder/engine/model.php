@@ -10,7 +10,7 @@
 /**
  * In this file we store all generic functions that we will be using in the form_builder module
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderModel
@@ -501,7 +501,7 @@ class BackendFormBuilderModel
  *
  * @todo this class should be in helper.php like the other modules do
  *
- * Dieter Vanden Eynde <dieter@netlash.com>
+ * Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FormBuilderHelper
 {

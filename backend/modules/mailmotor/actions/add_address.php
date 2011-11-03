@@ -10,7 +10,7 @@
 /**
  * This is the add-action, it will display a form to create a new subscriber
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAddAddress extends BackendBaseActionAdd
 {

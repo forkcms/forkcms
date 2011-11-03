@@ -10,7 +10,7 @@
 /**
  * This action will delete a landing page
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsDeleteLandingPage extends BackendBaseActionDelete
 {

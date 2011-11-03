@@ -10,9 +10,9 @@
 /**
  * This is the detail-action
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FrontendTagsDetail extends FrontendBaseBlock
 {

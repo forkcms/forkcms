@@ -10,7 +10,7 @@
 /**
  * This is the detail-page-action, it will display the overview of analytics posts
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 {

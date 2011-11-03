@@ -10,7 +10,7 @@
 /**
  * This is the reset password action, it will display a form that allows the user to reset his/her password.
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 {

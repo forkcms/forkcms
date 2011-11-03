@@ -10,8 +10,8 @@
 /**
  * This is the all-pages-action, it will display the overview of analytics posts
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsAllPages extends BackendAnalyticsBase
 {

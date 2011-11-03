@@ -11,7 +11,7 @@
  * Change the e-mail of the current logged in profile.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesChangeEmail extends FrontendBaseBlock
 {

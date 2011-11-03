@@ -3,7 +3,7 @@
 /**
  * This is the form widget.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendFormBuilderWidgetForm extends FrontendBaseWidget

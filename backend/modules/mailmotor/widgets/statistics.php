@@ -10,7 +10,7 @@
 /**
  * This is the classic fork mailmotor widget
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendMailmotorWidgetStatistics extends BackendBaseWidget

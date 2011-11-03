@@ -11,7 +11,7 @@
  * This is the category-action
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Jelmer Snoeck <jelmer@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendFaqCategory extends FrontendBaseBlock
 {

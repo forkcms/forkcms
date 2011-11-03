@@ -11,7 +11,7 @@
  * This class will handle files JS-files that have to be parsed by PHP
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendJavascript
 {

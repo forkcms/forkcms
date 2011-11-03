@@ -13,7 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Jelmer Snoeck <jelmer@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendNavigation extends FrontendBaseObject
 {
@@ -259,7 +259,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$excludeIds = array_merge((array) $excludeIds, self::$excludedPageIds);
 
 		// meta-navigation is requested but meta isn't enabled
-		if($type == 'meta' && (!FrontendModel::getModuleSetting('pages', 'meta_navigation', true)) || !isset($navigation['meta'])) return '';
+		if($type == 'meta' && (!FrontendModel::getModuleSetting('pages', 'meta_navigation', true) || !isset($navigation['meta']))) return '';
 
 		// validate
 		if(!isset($navigation[$type])) throw new FrontendException('This type (' . $type . ') isn\'t a valid navigation type. Possible values are: page, footer, meta.');

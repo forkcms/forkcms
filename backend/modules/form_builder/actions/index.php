@@ -10,7 +10,7 @@
 /**
  * This is the index-action (default), it will display the overview
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderIndex extends BackendBaseActionIndex

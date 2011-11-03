@@ -10,7 +10,7 @@
 /**
  * This is a widget with the form to ask a question
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 {

@@ -10,7 +10,7 @@
 /**
  * This is the delete-action, it will delete a template
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendExtensionsDeleteThemeTemplate extends BackendBaseActionDelete
 {

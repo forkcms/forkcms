@@ -3,7 +3,7 @@
 /**
  * This is the configuration-object for the extensions module.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 final class BackendExtensionsConfig extends BackendBaseConfig
 {

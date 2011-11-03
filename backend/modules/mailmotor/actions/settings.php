@@ -9,7 +9,7 @@
 
 /**
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendMailmotorSettings extends BackendBaseActionEdit

@@ -10,7 +10,7 @@
 /**
  * This is the resend activation-action. It will resend your activation email.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesResendActivation extends FrontendBaseBlock
 {

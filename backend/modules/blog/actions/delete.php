@@ -10,8 +10,8 @@
 /**
  * This action will delete a blogpost
  *
- * @author Dave Lens <dave@netlash.com>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogDelete extends BackendBaseActionDelete

@@ -10,8 +10,8 @@
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @author Dave Lens <dave@netlash.com>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */

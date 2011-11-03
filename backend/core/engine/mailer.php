@@ -10,10 +10,10 @@
 /**
  * This class will send mails
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dave Lens <dave@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Sam Tubbax <sam@sumocoders.be>
  */
 class BackendMailer

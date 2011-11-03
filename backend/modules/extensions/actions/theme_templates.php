@@ -11,7 +11,7 @@
  * This is the templates-action, it will display the templates-overview
  *
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendExtensionsThemeTemplates extends BackendBaseActionEdit

@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class PagesInstaller extends ModuleInstaller
 {

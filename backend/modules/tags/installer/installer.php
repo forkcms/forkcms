@@ -10,7 +10,7 @@
 /**
  * Installer for the tags module
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class TagsInstaller extends ModuleInstaller

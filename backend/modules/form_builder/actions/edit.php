@@ -10,7 +10,7 @@
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderEdit extends BackendBaseActionEdit

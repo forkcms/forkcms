@@ -10,8 +10,8 @@
 /**
  * This is the index-action (default), it will display the overview of analytics posts
  *
- * @author Annelies Van Extergem <annelies@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendAnalyticsIndex extends BackendAnalyticsBase
 {

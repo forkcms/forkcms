@@ -11,7 +11,7 @@
  * This is the export-action, it will create a XML with locale items.
  *
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Lowie Benoot <lowie@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
 class BackendLocaleExport extends BackendBaseActionIndex
 {

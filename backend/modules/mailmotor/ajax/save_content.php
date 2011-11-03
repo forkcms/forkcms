@@ -10,7 +10,7 @@
 /**
  * This saves the mailing content
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 {

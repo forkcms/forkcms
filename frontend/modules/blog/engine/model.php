@@ -10,12 +10,12 @@
 /**
  * In this file we store all generic functions that we will be using in the blog module
  *
- * @author Davy Hellemans <davy@netlash.com>
- * @author Dave Lens <dave@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendBlogModel implements FrontendTagsInterface
 {

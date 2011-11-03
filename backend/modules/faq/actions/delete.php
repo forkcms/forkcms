@@ -11,7 +11,7 @@
  * This action will delete a question
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFaqDelete extends BackendBaseActionDelete
 {

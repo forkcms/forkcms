@@ -10,7 +10,7 @@
 /**
  * This is the add-action, it will display a form to create a new item.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendFormBuilderAdd extends BackendBaseActionAdd

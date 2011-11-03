@@ -11,8 +11,8 @@
  * This class will handle the incomming URL.
  *
  * @author 	Tijs Verkoyen <tijs@sumocoders.be>
- * @author 	Davy Hellemans <davy@netlash.com>
- * @author 	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author 	Davy Hellemans <davy.hellemans@netlash.com>
+ * @author 	Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendURL
 {

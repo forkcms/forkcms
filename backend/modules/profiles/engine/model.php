@@ -10,7 +10,7 @@
 /**
  * In this file we store all generic functions that we will be using in the profiles module.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendProfilesModel
 {

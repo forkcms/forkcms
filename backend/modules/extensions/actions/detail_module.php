@@ -3,7 +3,7 @@
 /**
  * This is the detail-action it will display the details of a module.
  *
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendExtensionsDetailModule extends BackendBaseActionIndex
 {

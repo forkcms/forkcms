@@ -10,7 +10,7 @@
 /**
  * This action is used to update one or more mailings (delete, ...)
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorMassMailingAction extends BackendBaseAction
 {

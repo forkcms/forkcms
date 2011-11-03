@@ -10,10 +10,10 @@
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
  *
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendContentBlocksModel
 {

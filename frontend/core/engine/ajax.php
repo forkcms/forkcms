@@ -12,7 +12,7 @@
  * This class will handle AJAX-related stuff
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendAJAX
 {
@@ -153,7 +153,7 @@ class FrontendAJAX
  * FrontendAJAXAction
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendAJAXAction
 {

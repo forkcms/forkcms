@@ -11,7 +11,7 @@
  * This is the index-action, it can be used as a dashboard.
  *
  * @author Lester Lievens <lester@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendProfilesIndex extends FrontendBaseBlock
 {
