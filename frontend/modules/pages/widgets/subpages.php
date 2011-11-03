@@ -68,5 +68,3 @@ class FrontendPagesWidgetSubpages extends FrontendBaseWidget
 		$this->tpl->assign('widgetSubpages', $this->items);
 	}
 }
-
-?>
