@@ -34,6 +34,11 @@ jsBackend =
 		if(!jsBackend.current.module) jsBackend.current.module = 'dashboard';
 		if(!jsBackend.current.action) jsBackend.current.action = 'index';
 
+		if(jsBackend.current.module == '')
+		{
+			jsBackend.current.module = 'dashboard';
+		}
+
 		// init stuff
 		jsBackend.initAjax();
 		jsBackend.balloons.init();
