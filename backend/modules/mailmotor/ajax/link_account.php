@@ -22,9 +22,15 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$url = ltrim(SpoonFilter::getPostValue('url', null, ''), 'http://');
+		$url = SpoonFilter::getPostValue('url', null, '');
 		$username = SpoonFilter::getPostValue('username', null, '');
 		$password = SpoonFilter::getPostValue('password', null, '');
+
+		// filter out the 'http://' from the URL
+		if(strpos($url, 'http://') !== false)
+		{
+			$url = str_replace('http://', '', $url);
+		}
 
 		// check input
 		if(empty($url)) $this->output(self::BAD_REQUEST, array('field' => 'url'), BL::err('NoCMAccountCredentials'));
