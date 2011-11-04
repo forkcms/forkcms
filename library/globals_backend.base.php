@@ -6,5 +6,5 @@
  * @package	Backend
  *
  * @author	Davy Hellemans <davy@netlash.com>
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */

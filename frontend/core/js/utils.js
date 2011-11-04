@@ -1,7 +1,7 @@
 /**
  * Utilities; usefull scripts
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 var utils =
 {
@@ -14,7 +14,7 @@ var utils =
 /**
  * Functions related to arrays
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.array =
 {
@@ -44,7 +44,7 @@ utils.array =
 /**
  * Function related to cookies
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.cookies =
 {
@@ -102,7 +102,7 @@ utils.cookies =
 /**
  * Functions related to forms
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.form =
 {
