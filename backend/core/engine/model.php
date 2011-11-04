@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the backend.
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendModel
 {
@@ -17,9 +20,7 @@ class BackendModel
 	 *
 	 * @var	array
 	 */
-	private static $keys = array(),
-					$navigation = array();
-
+	private static $keys = array(), $navigation = array();
 
 	/**
 	 * Cached modules
@@ -28,7 +29,6 @@ class BackendModel
 	 */
 	private static $modules = array();
 
-
 	/**
 	 * Cached module settings
 	 *
@@ -36,12 +36,11 @@ class BackendModel
 	 */
 	private static $moduleSettings;
 
-
 	/**
 	 * Add a number to the string
 	 *
-	 * @return	string
-	 * @param	string $string	The string where the number will be appended to.
+	 * @param string $string The string where the number will be appended to.
+	 * @return string
 	 */
 	public static function addNumber($string)
 	{
@@ -67,19 +66,16 @@ class BackendModel
 		// not numeric, so add -2
 		else $string .= '-2';
 
-		// return
 		return $string;
 	}
-
 
 	/**
 	 * Checks the settings and optionally returns an array with warnings
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function checkSettings()
 	{
-		// init var
 		$warnings = array();
 		$akismetModules = BackendSettingsModel::getModulesThatRequireAkismet();
 		$googleMapsModules = BackendSettingsModel::getModulesThatRequireGoogleMaps();
@@ -106,45 +102,9 @@ class BackendModel
 
 		// check if debug-mode is active
 		if(SPOON_DEBUG) $warnings[] = array('message' => BL::err('DebugModeIsActive'));
-/*
-		// @note: robots.txt are removed
-		// 	indexability is now based on meta noindex (SPOON_DEBUG true = not noindex)
 
-		// try to validate robots.txt
-		if(SpoonFile::exists(PATH_WWW . '/robots.txt'))
-		{
-			// get content
-			$content = SpoonFile::getContent(PATH_WWW . '/robots.txt');
-			$isOK = true;
-
-			// split into lines
-			$lines = explode("\n", $content);
-
-			// loop lines
-			foreach($lines as $line)
-			{
-				// cleanup line
-				$line = mb_strtolower(trim($line));
-
-				// validate disallow
-				if(substr($line, 0, 8) == 'disallow')
-				{
-					// split into chunks
-					$chunks = explode(':', $line);
-
-					// validate disallow
-					if(isset($chunks[1]) && trim($chunks[1]) == '/') $isOK = false;
-				}
-			}
-
-			// add warning
-			if(!$isOK) $warnings[] = array('message' => BL::err('RobotsFileIsNotOK'));
-		}
-*/
-		// return
 		return $warnings;
 	}
-
 
 	/**
 	 * Creates an URL for a given action and module
@@ -152,19 +112,18 @@ class BackendModel
 	 * If you don't specify a module the current module will be used.
 	 * If you don't specify a language the current language will be used.
 	 *
-	 * @return	string
-	 * @param	string[optional] $action		The action to build the URL for.
-	 * @param	string[optional] $module		The module to build the URL for.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
-	 * @param	array[optional] $parameters		GET-parameters to use.
-	 * @param	bool[optional] $urlencode		Should the parameters be urlencoded?
+	 * @param string[optional] $action The action to build the URL for.
+	 * @param string[optional] $module The module to build the URL for.
+	 * @param string[optional] $language The language to use, if not provided we will use the working language.
+	 * @param array[optional] $parameters GET-parameters to use.
+	 * @param bool[optional] $urlencode Should the parameters be urlencoded?
+	 * @return string
 	 */
 	public static function createURLForAction($action = null, $module = null, $language = null, array $parameters = null, $urlencode = true)
 	{
 		// grab the URL from the reference
 		$URL = Spoon::get('url');
 
-		// redefine parameters
 		$action = ($action !== null) ? (string) $action : $URL->getAction();
 		$module = ($module !== null) ? (string) $module : $URL->getModule();
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
@@ -198,21 +157,19 @@ class BackendModel
 		return '/' . NAMED_APPLICATION . '/' . $language . '/' . $module . '/' . $action . $querystring;
 	}
 
-
 	/**
 	 * Delete a page extra by module, type or data.
 	 *
 	 * Data is a key/value array. Example: array(id => 23, language => nl);
 	 *
-	 * @return	void
-	 * @param	string[optional] $module	The module wherefore the extra exists.
-	 * @param	string[optional] $type		The type of extra, possible values are block, homepage, widget.
-	 * @param	array[optional] $data		Extra data that exists.
+	 * @param string[optional] $module The module wherefore the extra exists.
+	 * @param string[optional] $type The type of extra, possible values are block, homepage, widget.
+	 * @param array[optional] $data Extra data that exists.
 	 */
 	public static function deleteExtra($module = null, $type = null, array $data = null)
 	{
 		// init
-		$query = 'SELECT i.id, i.data FROM pages_extras AS i WHERE 1';
+		$query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
 		$parameters = array();
 
 		// module
@@ -250,33 +207,29 @@ class BackendModel
 		}
 	}
 
-
 	/**
 	 * Delete a page extra by its id
 	 *
-	 * @return	void
-	 * @param	int $id		The id of the extra to delete.
+	 * @param int $id The id of the extra to delete.
 	 */
 	public static function deleteExtraById($id)
 	{
-		// redefine
 		$id = (int) $id;
 
 		// unset blocks
 		BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
 
 		// delete extra
-		BackendModel::getDB(true)->delete('pages_extras', 'id = ?', $id);
+		BackendModel::getDB(true)->delete('modules_extras', 'id = ?', $id);
 	}
-
 
 	/**
 	 * Generate a totally random but readable/speakable password
 	 *
-	 * @return	string
-	 * @param	int[optional] $length				The maximum length for the password to generate.
-	 * @param	bool[optional] $uppercaseAllowed	Are uppercase letters allowed?
-	 * @param	bool[optional] $lowercaseAllowed	Are lowercase letters allowed?
+	 * @param int[optional] $length The maximum length for the password to generate.
+	 * @param bool[optional] $uppercaseAllowed Are uppercase letters allowed?
+	 * @param bool[optional] $lowercaseAllowed Are lowercase letters allowed?
+	 * @return string
 	 */
 	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
 	{
@@ -284,7 +237,10 @@ class BackendModel
 		$vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
 
 		// list of allowed consonants and consonant sounds
-		$consonants = array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
+		$consonants = array(
+			'b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w',
+			'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st'
+		);
 
 		// init vars
 		$consonantsCount = count($consonants);
@@ -308,24 +264,21 @@ class BackendModel
 		// reformat it again, if uppercase isn't allowed
 		if(!$lowercaseAllowed) $pass = strtoupper($pass);
 
-		// return pass
 		return $pass;
 	}
-
 
 	/**
 	 * Generate a random string
 	 *
-	 * @return	string
-	 * @param	int[optional] $length			Length of random string.
-	 * @param	bool[optional] $numeric			Use numeric characters.
-	 * @param	bool[optional] $lowercase		Use alphanumeric lowercase characters.
-	 * @param	bool[optional] $uppercase		Use alphanumeric uppercase characters.
-	 * @param	bool[optional] $special			Use special characters.
+	 * @param int[optional] $length Length of random string.
+	 * @param bool[optional] $numeric Use numeric characters.
+	 * @param bool[optional] $lowercase Use alphanumeric lowercase characters.
+	 * @param bool[optional] $uppercase Use alphanumeric uppercase characters.
+	 * @param bool[optional] $special Use special characters.
+	 * @return string
 	 */
 	public static function generateRandomString($length = 15, $numeric = true, $lowercase = true, $uppercase = true, $special = true)
 	{
-		// init
 		$characters = '';
 		$string = '';
 
@@ -345,19 +298,16 @@ class BackendModel
 			$string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
 		}
 
-		// cough up
 		return $string;
 	}
-
 
 	/**
 	 * Fetch the list of long date formats including examples of these formats.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getDateFormatsLong()
 	{
-		// init var
 		$possibleFormats = array();
 
 		// loop available formats
@@ -367,19 +317,16 @@ class BackendModel
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
-		// return
 		return $possibleFormats;
 	}
-
 
 	/**
 	 * Fetch the list of short date formats including examples of these formats.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getDateFormatsShort()
 	{
-		// init var
 		$possibleFormats = array();
 
 		// loop available formats
@@ -389,21 +336,18 @@ class BackendModel
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
-		// return
 		return $possibleFormats;
 	}
-
 
 	/**
 	 * Get (or create and get) a database-connection
 	 * If the database wasn't stored in the reference before we will create it and add it
 	 *
-	 * @return	SpoonDatabase
-	 * @param	bool[optional] $write	Do you want the write-connection or not?
+	 * @param bool[optional] $write Do you want the write-connection or not?
+	 * @return SpoonDatabase
 	 */
 	public static function getDB($write = false)
 	{
-		// redefine
 		$write = (bool) $write;
 
 		// do we have a db-object ready?
@@ -419,20 +363,17 @@ class BackendModel
 			Spoon::set('database', $db);
 		}
 
-		// return
 		return Spoon::get('database');
 	}
-
 
 	/**
 	 * Get the page-keys
 	 *
-	 * @return	array
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param string[optional] $language The language to use, if not provided we will use the working language.
+	 * @return array
 	 */
 	public static function getKeys($language = null)
 	{
-		// redefine
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// does the keys exists in the cache?
@@ -455,77 +396,61 @@ class BackendModel
 			self::$keys[$language] = $keys;
 		}
 
-		// return
 		return self::$keys[$language];
 	}
-
 
 	/**
 	 * Get the modules
 	 *
-	 * @return	array
-	 * @param	bool[optional] $activeOnly	Only return the active modules.
+	 * @return array
 	 */
-	public static function getModules($activeOnly = true)
+	public static function getModules()
 	{
-		// redefine
-		$activeOnly = (bool) $activeOnly;
-
 		// validate cache
-		if(empty(self::$modules) || !isset(self::$modules['active']) || !isset(self::$modules['all']))
+		if(empty(self::$modules))
 		{
 			// get all modules
-			$modules = (array) self::getDB()->getPairs('SELECT m.name, m.active
-														FROM modules AS m');
+			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
 
-			// loop
-			foreach($modules as $module => $active)
-			{
-				// if the module is active
-				if($active == 'Y') self::$modules['active'][] = $module;
-
-				// add to all
-				self::$modules['all'][] = $module;
-			}
+			// add modules to the cache
+			foreach($modules as $module) self::$modules[] = $module;
 		}
 
-		// only return the active modules
-		if($activeOnly) return self::$modules['active'];
-
-		// fallback
-		return self::$modules['all'];
+		return self::$modules;
 	}
-
 
 	/**
 	 * Get a certain module-setting
 	 *
-	 * @return	mixed
-	 * @param	string $module					The module in which the setting is stored.
-	 * @param	string $key						The name of the setting.
-	 * @param	mixed[optional] $defaultValue	The value to return if the setting isn't present.
+	 * @param string $module The module in which the setting is stored.
+	 * @param string $key The name of the setting.
+	 * @param mixed[optional] $defaultValue The value to return if the setting isn't present.
+	 * @return mixed
 	 */
 	public static function getModuleSetting($module, $key, $defaultValue = null)
 	{
-		// are the values available
-		if(empty(self::$moduleSettings)) self::getModuleSettings();
-
-		// redefine
 		$module = (string) $module;
 		$key = (string) $key;
 
-		// if the value isn't present we should set a defaultvalue
-		if(!isset(self::$moduleSettings[$module][$key])) return $defaultValue;
+		// are the values available
+		if(empty(self::$moduleSettings))
+		{
+			self::getModuleSettings();
+		}
 
-		// return
+		// if the value isn't present we should set a defaultvalue
+		if(!isset(self::$moduleSettings[$module][$key]))
+		{
+			return $defaultValue;
+		}
+
 		return self::$moduleSettings[$module][$key];
 	}
-
 
 	/**
 	 * Get all module settings at once
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getModuleSettings()
 	{
@@ -533,8 +458,10 @@ class BackendModel
 		if(empty(self::$moduleSettings))
 		{
 			// get all settings
-			$moduleSettings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
-																	FROM modules_settings AS ms');
+			$moduleSettings = (array) self::getDB()->getRecords(
+				'SELECT ms.module, ms.name, ms.value
+				 FROM modules_settings AS ms'
+			);
 
 			// loop and store settings in the cache
 			foreach($moduleSettings as $setting)
@@ -550,42 +477,38 @@ class BackendModel
 			}
 		}
 
-		// return
 		return self::$moduleSettings;
 	}
 
-
 	/**
-	 * Fetch the list of modules, but for a dropdown
+	 * Fetch the list of modules, but for a dropdown.
 	 *
-	 * @return	array
-	 * @param	bool[optional] $activeOnly	Only return the active modules.
+	 * @return array
 	 */
-	public static function getModulesForDropDown($activeOnly = true)
+	public static function getModulesForDropDown()
 	{
-		// init var
 		$dropdown = array('core' => 'core');
 
 		// fetch modules
-		$modules = self::getModules($activeOnly);
+		$modules = self::getModules();
 
 		// loop and add into the return-array (with correct label)
-		foreach($modules as $module) $dropdown[$module] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module)));
+		foreach($modules as $module)
+		{
+			$dropdown[$module] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module)));
+		}
 
-		// return data
 		return $dropdown;
 	}
-
 
 	/**
 	 * Get the navigation-items
 	 *
-	 * @return	array
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param string[optional] $language The language to use, if not provided we will use the working language.
+	 * @return array
 	 */
 	public static function getNavigation($language = null)
 	{
-		// redefine
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// does the keys exists in the cache?
@@ -608,19 +531,16 @@ class BackendModel
 			self::$navigation[$language] = $navigation;
 		}
 
-		// return
 		return self::$navigation[$language];
 	}
-
 
 	/**
 	 * Fetch the list of number formats including examples of these formats.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getNumberFormats()
 	{
-		// init var
 		$possibleFormats = array();
 
 		// loop available formats
@@ -630,39 +550,16 @@ class BackendModel
 			$possibleFormats[$format] = $example;
 		}
 
-		// return
 		return $possibleFormats;
 	}
-
-
-	/**
-	 * Fetch the list of available themes
-	 *
-	 * @return	array
-	 */
-	public static function getThemes()
-	{
-		// fetch themes
-		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
-
-		// create array
-		$themes = array_combine($themes, $themes);
-
-		// add core templates
-		$themes = array_merge(array('core' => BL::lbl('NoTheme')), $themes);
-
-		return $themes;
-	}
-
 
 	/**
 	 * Fetch the list of time formats including examples of these formats.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getTimeFormats()
 	{
-		// init var
 		$possibleFormats = array();
 
 		// loop available formats
@@ -672,21 +569,18 @@ class BackendModel
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
-		// return
 		return $possibleFormats;
 	}
-
 
 	/**
 	 * Get URL for a given pageId
 	 *
-	 * @return	string
-	 * @param	int $pageId						The id of the page to get the URL for.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param int $pageId The id of the page to get the URL for.
+	 * @param string[optional] $language The language to use, if not provided we will use the working language.
+	 * @return string
 	 */
 	public static function getURL($pageId, $language = null)
 	{
-		// redefine
 		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
@@ -706,18 +600,16 @@ class BackendModel
 		return urldecode($URL);
 	}
 
-
 	/**
 	 * Get the URL for a give module & action combination
 	 *
-	 * @return	string
-	 * @param	string $module					The module to get the URL for.
-	 * @param	string[optional] $action		The action to get the URL for.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param string $module The module to get the URL for.
+	 * @param string[optional] $action The action to get the URL for.
+	 * @param string[optional] $language The language to use, if not provided we will use the working language.
+	 * @return string
 	 */
 	public static function getURLForBlock($module, $action = null, $language = null)
 	{
-		// redefine
 		$module = (string) $module;
 		$action = ($action !== null) ? (string) $action : null;
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
@@ -731,10 +623,8 @@ class BackendModel
 		// loop types
 		foreach($navigation as $level)
 		{
-			// loop level
 			foreach($level as $pages)
 			{
-				// loop pages
 				foreach($pages as $pageId => $properties)
 				{
 					// only process pages with extra_blocks
@@ -762,37 +652,31 @@ class BackendModel
 			}
 		}
 
-		// pageId stored?
-		if($pageIdForURL !== null)
-		{
-			// build URL
-			$URL = self::getURL($pageIdForURL, $language);
+		// still no page id?
+		if($pageIdForURL === null) return self::getURL(404);
 
-			// set locale
-			FrontendLanguage::setLocale($language);
+		// build URL
+		$URL = self::getURL($pageIdForURL, $language);
 
-			// append action
-			$URL .= '/' . urldecode(FL::act(SpoonFilter::toCamelCase($action)));
+		// set locale
+		FrontendLanguage::setLocale($language);
 
-			// return the unique URL!
-			return $URL;
-		}
+		// append action
+		$URL .= '/' . urldecode(FL::act(SpoonFilter::toCamelCase($action)));
 
-		// fallback
-		return self::getURL(404);
+		// return the unique URL!
+		return $URL;
 	}
-
 
 	/**
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
-	 * @return	string
-	 * @param	string[optional] $format	The format to return the timestamp in. Default is MySQL datetime format.
-	 * @param	int[optional] $timestamp	The timestamp to use, if not provided the current time will be used.
+	 * @param string[optional] $format The format to return the timestamp in. Default is MySQL datetime format.
+	 * @param int[optional] $timestamp The timestamp to use, if not provided the current time will be used.
+	 * @return string
 	 */
 	public static function getUTCDate($format = null, $timestamp = null)
 	{
-		// init var
 		$format = ($format !== null) ? (string) $format : 'Y-m-d H:i:s';
 
 		// no timestamp given
@@ -802,13 +686,12 @@ class BackendModel
 		return gmdate($format, (int) $timestamp);
 	}
 
-
 	/**
 	 * Get the UTC timestamp for a date/time object combination.
 	 *
-	 * @return	int
-	 * @param	SpoonFormDate $date					An instance of SpoonFormDate.
-	 * @param	SpoonFormTime[optional] $time		An instance of SpoonFormTime.
+	 * @param SpoonFormDate $date An instance of SpoonFormDate.
+	 * @param SpoonFormTime[optional] $time An instance of SpoonFormTime.
+	 * @return int
 	 */
 	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
 	{
@@ -838,15 +721,13 @@ class BackendModel
 		return mktime($hour, $minute, 0, $month, $day, $year);
 	}
 
-
 	/**
 	 * Image Delete
 	 *
-	 * @return	void
-	 * @param	string $module					Module name.
-	 * @param	string $filename				Filename.
-	 * @param	string[optional] $subDirectory	Subdirectory.
-	 * @param	array[optional] $fileSizes		Possible file sizes.
+	 * @param string $module Module name.
+	 * @param string $filename Filename.
+	 * @param string[optional] $subDirectory Subdirectory.
+	 * @param array[optional] $fileSizes Possible file sizes.
 	 */
 	public static function imageDelete($module, $filename, $subDirectory = '', $fileSizes = null)
 	{
@@ -864,16 +745,14 @@ class BackendModel
 		SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
 	}
 
-
 	/**
 	 * Image Save
 	 *
-	 * @return	void
-	 * @param	SpoonFormImage $imageFile		ImageFile.
-	 * @param	string $module					Module name.
-	 * @param	string $filename				Filename.
-	 * @param	string[optional] $subDirectory	Subdirectory.
-	 * @param	array[optional] $fileSizes		Possible file sizes.
+	 * @param SpoonFormImage $imageFile ImageFile.
+	 * @param string $module Module name.
+	 * @param string $filename Filename.
+	 * @param string[optional] $subDirectory Subdirectory.
+	 * @param array[optional] $fileSizes Possible file sizes.
 	 */
 	public static function imageSave($imageFile, $module, $filename, $subDirectory = '', $fileSizes = null)
 	{
@@ -902,17 +781,14 @@ class BackendModel
 		$imageFile->moveFile(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
 	}
 
-
 	/**
 	 * Invalidate cache
 	 *
-	 * @return	void
-	 * @param	string[optional] $module	A specific module to clear the cache for.
-	 * @param	string[optional] $language	The language to use.
+	 * @param string[optional] $module A specific module to clear the cache for.
+	 * @param string[optional] $language The language to use.
 	 */
 	public static function invalidateFrontendCache($module = null, $language = null)
 	{
-		// redefine
 		$module = ($module !== null) ? (string) $module : null;
 		$language = ($language !== null) ? (string) $language : null;
 
@@ -938,17 +814,15 @@ class BackendModel
 		foreach($files as $file) SpoonFile::delete($path . '/' . $file);
 	}
 
-
 	/**
 	 * Ping the known webservices
 	 *
-	 * @return	bool								If everything went fine true will be returned, otherwise false.
-	 * @param	string[optional] $pageOrFeedURL		The page/feed that has changed.
-	 * @param	string[optional] $category			An optional category for the site.
+	 * @param string[optional] $pageOrFeedURL The page/feed that has changed.
+	 * @param string[optional] $category An optional category for the site.
+	 * @return bool If everything went fne true will, otherwise false.
 	 */
 	public static function ping($pageOrFeedURL = null, $category = null)
 	{
-		// redefine
 		$siteTitle = self::getModuleSetting('core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
 		$siteURL = SITE_URL;
 		$pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
@@ -1060,41 +934,36 @@ class BackendModel
 			}
 		}
 
-		// return
 		return true;
 	}
-
 
 	/**
 	 * Saves a module-setting into the DB and the cached array
 	 *
-	 * @return	void
-	 * @param	string $module		The module to set the setting for.
-	 * @param	string $key			The name of the setting.
-	 * @param	string $value		The value to store.
+	 * @param string $module The module to set the setting for.
+	 * @param string $key The name of the setting.
+	 * @param string $value The value to store.
 	 */
 	public static function setModuleSetting($module, $key, $value)
 	{
-		// redefine
 		$module = (string) $module;
 		$key = (string) $key;
 		$valueToStore = serialize($value);
 
 		// store
-		self::getDB(true)->execute('INSERT INTO modules_settings(module, name, value)
-											VALUES(?, ?, ?)
-											ON DUPLICATE KEY UPDATE value = ?',
-											array($module, $key, $valueToStore, $valueToStore));
+		self::getDB(true)->execute(
+			'INSERT INTO modules_settings(module, name, value)
+			 VALUES(?, ?, ?)
+			 ON DUPLICATE KEY UPDATE value = ?',
+			array($module, $key, $valueToStore, $valueToStore)
+		);
 
 		// cache it
 		self::$moduleSettings[$module][$key] = $value;
 	}
 
-
 	/**
 	 * Start processing the hooks
-	 *
-	 * @return	void
 	 */
 	public static function startProcessingHooks()
 	{
@@ -1175,25 +1044,23 @@ class BackendModel
 		// close the socket
 		fclose($socket);
 
-		// return
 		return true;
 	}
-
 
 	/**
 	 * Submit ham, this call is intended for the marking of false positives, things that were incorrectly marked as spam.
 	 *
-	 * @return	bool						If everything went fine true will be returned, otherwise an exception will be triggered.
-	 * @param	string $userIp				IP address of the comment submitter.
-	 * @param	string $userAgent			User agent information.
-	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment.
-	 * @param	string[optional] $email		Submitted email address.
-	 * @param	string[optional] $url		Commenter URL.
-	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
-	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
-	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
+	 * @param string $userIp IP address of the comment submitter.
+	 * @param string $userAgent User agent information.
+	 * @param string[optional] $content The content that was submitted.
+	 * @param string[optional] $author Submitted name with the comment.
+	 * @param string[optional] $email Submitted email address.
+	 * @param string[optional] $url Commenter URL.
+	 * @param string[optional] $permalink The permanent location of the entry the comment was submitted to.
+	 * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
+	 * @param string[optional] $referrer The content of the HTTP_REFERER header should be sent here.
+	 * @param array[optional] $others Other data (the variables from $_SERVER).
+	 * @return bool If everthing went fine, true will be returned, otherwise an exception will be triggered.
 	 */
 	public static function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
@@ -1231,21 +1098,20 @@ class BackendModel
 		return false;
 	}
 
-
 	/**
 	 * Submit spam, his call is for submitting comments that weren't marked as spam but should have been.
 	 *
-	 * @return	bool						If everything went fine true will be returned, otherwise an exception will be triggered.
-	 * @param	string $userIp				IP address of the comment submitter.
-	 * @param	string $userAgent			User agent information.
-	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment.
-	 * @param	string[optional] $email		Submitted email address.
-	 * @param	string[optional] $url		Commenter URL.
-	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
-	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
-	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
+	 * @param string $userIp IP address of the comment submitter.
+	 * @param string $userAgent User agent information.
+	 * @param string[optional] $content The content that was submitted.
+	 * @param string[optional] $author Submitted name with the comment.
+	 * @param string[optional] $email Submitted email address.
+	 * @param string[optional] $url Commenter URL.
+	 * @param string[optional] $permalink The permanent location of the entry the comment was submitted to.
+	 * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
+	 * @param string[optional] $referrer The content of the HTTP_REFERER header should be sent here.
+	 * @param array[optional] $others Other data (the variables from $_SERVER).
+	 * @return bool If everything went fine true will be returned, otherwise an exception will be triggered.
 	 */
 	public static function submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
@@ -1283,15 +1149,13 @@ class BackendModel
 		return false;
 	}
 
-
 	/**
 	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
 	 *
-	 * @return	void
-	 * @param	string $eventModule		The module that triggers the event.
-	 * @param	string $eventName		The name of the event.
-	 * @param	string $module			The module that subsribes to the event.
-	 * @param	mixed $callback			The callback that should be executed when the event is triggered.
+	 * @param string $eventModule The module that triggers the event.
+	 * @param string $eventName The name of the event.
+	 * @param string $module The module that subsribes to the event.
+	 * @param mixed $callback The callback that should be executed when the event is triggered.
 	 */
 	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
 	{
@@ -1309,6 +1173,7 @@ class BackendModel
 		$db = self::getDB(true);
 
 		// update if already existing
+		// @todo refactor
 		if((int) $db->getVar('SELECT COUNT(*)
 									FROM hooks_subscriptions AS i
 									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
@@ -1322,18 +1187,15 @@ class BackendModel
 		else $db->insert('hooks_subscriptions', $item);
 	}
 
-
 	/**
 	 * Trigger an event
 	 *
-	 * @return	void
-	 * @param	string $module			The module that triggers the event.
-	 * @param	string $eventName		The name of the event.
-	 * @param	mixed[optional] $data	The data that should be send to subscribers.
+	 * @param string $module The module that triggers the event.
+	 * @param string $eventName The name of the event.
+	 * @param mixed[optional] $data The data that should be send to subscribers.
 	 */
 	public static function triggerEvent($module, $eventName, $data = null)
 	{
-		// redefine
 		$module = (string) $module;
 		$eventName = (string) $eventName;
 
@@ -1344,10 +1206,12 @@ class BackendModel
 		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
 
 		// get all items that subscribe to this event
-		$subscriptions = (array) self::getDB()->getRecords('SELECT i.module, i.callback
-															FROM hooks_subscriptions AS i
-															WHERE i.event_module = ? AND i.event_name = ?',
-															array($module, $eventName));
+		$subscriptions = (array) self::getDB()->getRecords(
+			'SELECT i.module, i.callback
+			 FROM hooks_subscriptions AS i
+			 WHERE i.event_module = ? AND i.event_name = ?',
+			array($module, $eventName)
+		);
 
 		// any subscriptions?
 		if(!empty($subscriptions))
@@ -1377,26 +1241,22 @@ class BackendModel
 		}
 	}
 
-
 	/**
 	 * Unsubscribe from an event
 	 *
-	 * @return	void
-	 * @param	string $eventModule		The module that triggers the event.
-	 * @param	string $eventName		The name of the event.
-	 * @param	string $module			The module that subsribes to the event.
+	 * @param string $eventModule The module that triggers the event.
+	 * @param string $eventName The name of the event.
+	 * @param string $module The module that subsribes to the event.
 	 */
 	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
 	{
-		// redefine
 		$eventModule = (string) $eventModule;
 		$eventName = (string) $eventName;
 		$module = (string) $module;
 
-		// get db
-		self::getDB(true)->delete('hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
-									array($eventModule, $eventName, $module));
+		self::getDB(true)->delete(
+			'hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
+			array($eventModule, $eventName, $module)
+		);
 	}
 }
-
-?>

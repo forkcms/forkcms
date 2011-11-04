@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is our extended version of SpoonTemplateCompiler
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendTemplateCompiler extends SpoonTemplateCompiler
 {
@@ -17,8 +20,8 @@ class FrontendTemplateCompiler extends SpoonTemplateCompiler
 	 * a relative path to an include, which will then automatically choose the theme path (if available)
 	 * or the module's path.
 	 *
-	 * @return	string				The updated content, containing the parsed include tags.
-	 * @param	string $content		The content that may contain the include tags.
+	 * @param string $content The content that may contain the include tags.
+	 * @return string The updated content, containing the parsed include tags.
 	 */
 	protected function parseIncludes($content)
 	{
@@ -73,5 +76,3 @@ class FrontendTemplateCompiler extends SpoonTemplateCompiler
 		return $content;
 	}
 }
-
-?>

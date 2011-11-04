@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will handle the incomming URL.
  *
- * @package			frontend
- * @subpackage		core
- *
- * @author			Tijs Verkoyen <tijs@netlash.com>
- * @author			Davy Hellemans <davy@netlash.com>
- * @author			Dieter Vanden Eynde <dieter@netlash.com>
- * @since			2.0
+ * @author 	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author 	Davy Hellemans <davy.hellemans@netlash.com>
+ * @author 	Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendURL
 {
@@ -20,14 +23,12 @@ class FrontendURL
 	 */
 	private $pages = array();
 
-
 	/**
 	 * The parameters
 	 *
 	 * @var	array
 	 */
 	private $parameters = array();
-
 
 	/**
 	 * The host, will be used for cookies
@@ -36,7 +37,6 @@ class FrontendURL
 	 */
 	private $host;
 
-
 	/**
 	 * The querystring
 	 *
@@ -44,12 +44,6 @@ class FrontendURL
 	 */
 	private $queryString;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// add ourself to the reference so other classes can retrieve us
@@ -71,11 +65,10 @@ class FrontendURL
 		define('SELF', SITE_URL . '/' . $this->queryString);
 	}
 
-
 	/**
 	 * Get the domain
 	 *
-	 * @return	string	The current domain (without www.)
+	 * @return string The current domain (without www.)
 	 */
 	public function getDomain()
 	{
@@ -86,23 +79,21 @@ class FrontendURL
 		return str_replace('www.', '', $host);
 	}
 
-
 	/**
 	 * Get the host
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getHost()
 	{
 		return $this->host;
 	}
 
-
 	/**
 	 * Get a page specified by the given index
 	 *
-	 * @return	mixed
-	 * @param	int $index	The index (0-based).
+	 * @param int $index The index (0-based).
+	 * @return mixed
 	 */
 	public function getPage($index)
 	{
@@ -116,27 +107,25 @@ class FrontendURL
 		return null;
 	}
 
-
 	/**
 	 * Return all the pages
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getPages()
 	{
 		return $this->pages;
 	}
 
-
 	/**
 	 * Get a parameter specified by the given index
 	 * The function will return null if the key is not available
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
 	 *
-	 * @return	mixed
-	 * @param	mixed $index						The index of the parameter.
-	 * @param	string[optional] $type				The return type, possible values are: bool, boolean, int, integer, float, double, string, array.
-	 * @param	mixed[optional] $defaultValue		The value that should be returned if the key is not available.
+	 * @param mixed $index The index of the parameter.
+	 * @param string[optional] $type The return type, possible values are: bool, boolean, int, integer, float, double, string, array.
+	 * @param mixed[optional] $defaultValue The value that should be returned if the key is not available.
+	 * @return mixed
 	 */
 	public function getParameter($index, $type = 'string', $defaultValue = null)
 	{
@@ -151,34 +140,29 @@ class FrontendURL
 		return $defaultValue;
 	}
 
-
 	/**
 	 * Return all the parameters
 	 *
-	 * @return	array
-	 * @param	bool[optional] $includeGET		Should the GET-parameters be included?
+	 * @param bool[optional] $includeGET Should the GET-parameters be included?
+	 * @return array
 	 */
 	public function getParameters($includeGET = true)
 	{
 		return ($includeGET) ? $this->parameters : array_diff($this->parameters, $_GET);
 	}
 
-
 	/**
 	 * Get the querystring
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getQueryString()
 	{
 		return $this->queryString;
 	}
 
-
 	/**
 	 * Process the querystring
-	 *
-	 * @return	void
 	 */
 	private function processQueryString()
 	{
@@ -420,53 +404,43 @@ class FrontendURL
 		}
 	}
 
-
 	/**
 	 * Set the host
 	 *
-	 * @return	void
-	 * @param	string $host	The value of the host.
+	 * @param string $host The value of the host.
 	 */
 	private function setHost($host)
 	{
 		$this->host = (string) $host;
 	}
 
-
 	/**
 	 * Set the pages
 	 *
-	 * @return	void
-	 * @param	array[optional] $pages		An array of all the pages to set.
+	 * @param array[optional] $pages An array of all the pages to set.
 	 */
 	private function setPages(array $pages = array())
 	{
 		$this->pages = $pages;
 	}
 
-
 	/**
 	 * Set the parameters
 	 *
-	 * @return	void
-	 * @param	array[optional] $parameters	An array of all the parameters to set.
+	 * @param array[optional] $parameters An array of all the parameters to set.
 	 */
 	private function setParameters(array $parameters = array())
 	{
 		foreach($parameters as $key => $value) $this->parameters[$key] = $value;
 	}
 
-
 	/**
 	 * Set the querystring
 	 *
-	 * @return	void
-	 * @param	string $queryString		The full querystring.
+	 * @param string $queryString The full querystring.
 	 */
 	private function setQueryString($queryString)
 	{
 		$this->queryString = trim((string) $queryString, '/');
 	}
 }
-
-?>

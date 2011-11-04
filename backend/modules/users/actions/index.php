@@ -1,42 +1,33 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the users-overview
  *
- * @package		backend
- * @subpackage	users
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendUsersIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the datagrid
 		$this->loadDataGrid();
-
-		// parse the datagrid
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the datagrid.
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -53,16 +44,11 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 	}
 
-
 	/**
 	 * Parse the datagrid
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
-
-?>

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
@@ -8,12 +15,8 @@
  * 	- it will assign a lot of constants
  * 	- ...
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendTemplate extends SpoonTemplate
 {
@@ -24,17 +27,13 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private $URL;
 
-
 	/**
-	 * Default constructor
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
-	 * @return	void
-	 * @param	bool[optional] $addToReference		Should the instance be added into the reference.
+	 * @param bool[optional] $addToReference Should the instance be added into the reference.
 	 */
 	public function __construct($addToReference = true)
 	{
-		// parent constructor
 		parent::__construct();
 
 		// get URL instance
@@ -49,54 +48,40 @@ class BackendTemplate extends SpoonTemplate
 		// set compile directory
 		$this->setCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
 
-		// when debugging the template should be recompiled every time
+		// when debugging, the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
 
 		// map custom modifiers
 		$this->mapCustomModifiers();
 	}
 
-
 	/**
 	 * Output the template into the browser
 	 * Will also assign the interfacelabels and all user-defined constants.
 	 *
-	 * @return	void
-	 * @param	string $template				The path for the template.
-	 * @param	bool[optional] $customHeaders	Are there custom headers set?
+	 * @param string $template The path for the template.
+	 * @param bool[optional] $customHeaders Are there custom headers set?
 	 */
 	public function display($template, $customHeaders = false)
 	{
-		// parse constants
 		$this->parseConstants();
-
-		// parse authenticated user
 		$this->parseAuthenticatedUser();
-
-		// check debug
 		$this->parseDebug();
-
-		// parse the label
 		$this->parseLabels();
-
-		// parse locale
 		$this->parseLocale();
-
-		// parse some vars
 		$this->parseVars();
 
 		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('Content-type: text/html;charset=utf-8');
+		if(!$customHeaders)
+		{
+			SpoonHTTP::setHeaders('Content-type: text/html;charset=utf-8');
+		}
 
-		// call the parent
 		parent::display($template);
 	}
 
-
 	/**
 	 * Map the fork-specific modifiers
-	 *
-	 * @return	void
 	 */
 	private function mapCustomModifiers()
 	{
@@ -132,11 +117,8 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('tolabel', array('BackendTemplateModifiers', 'toLabel'));
 	}
 
-
 	/**
 	 * Parse the settings for the authenticated user
-	 *
-	 * @return	void
 	 */
 	private function parseAuthenticatedUser()
 	{
@@ -149,7 +131,6 @@ class BackendTemplate extends SpoonTemplate
 			// get authenticated user-settings
 			$settings = (array) BackendAuthentication::getUser()->getSettings();
 
-			// loop settings
 			foreach($settings as $key => $setting)
 			{
 				// redefine setting
@@ -160,15 +141,20 @@ class BackendTemplate extends SpoonTemplate
 			}
 
 			// assign special vars
-			$this->assign('authenticatedUserEditUrl', BackendModel::createURLForAction('edit', 'users', null, array('id' => BackendAuthentication::getUser()->getUserId())));
+			$this->assign(
+				'authenticatedUserEditUrl',
+				BackendModel::createURLForAction(
+					'edit',
+					'users',
+					null,
+					array('id' => BackendAuthentication::getUser()->getUserId())
+				)
+			);
 		}
 	}
 
-
 	/**
 	 * Parse all user-defined constants
-	 *
-	 * @return	void
 	 */
 	private function parseConstants()
 	{
@@ -225,22 +211,16 @@ class BackendTemplate extends SpoonTemplate
 		}
 	}
 
-
 	/**
 	 * Assigns an option if we are in debug-mode
-	 *
-	 * @return	void
 	 */
 	private function parseDebug()
 	{
 		$this->assign('debug', SPOON_DEBUG);
 	}
 
-
 	/**
 	 * Assign the labels
-	 *
-	 * @return	void
 	 */
 	private function parseLabels()
 	{
@@ -309,11 +289,8 @@ class BackendTemplate extends SpoonTemplate
 		$this->assignArray($realMessages, 'msg');
 	}
 
-
 	/**
 	 * Parse the locale (things like months, days, ...)
-	 *
-	 * @return	void
 	 */
 	private function parseLocale()
 	{
@@ -338,11 +315,8 @@ class BackendTemplate extends SpoonTemplate
 		$this->assignArray($localeToAssign);
 	}
 
-
 	/**
 	 * Parse some vars
-	 *
-	 * @return	void
 	 */
 	private function parseVars()
 	{
@@ -369,15 +343,10 @@ class BackendTemplate extends SpoonTemplate
 	}
 }
 
-
 /**
  * This is our class with custom modifiers.
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendTemplateModifiers
 {
@@ -385,21 +354,20 @@ class BackendTemplateModifiers
 	 * Dumps the data
 	 * 	syntax: {$var|dump}
 	 *
-	 * @return	string
-	 * @param	string $var		The variable to dump.
+	 * @param string $var The variable to dump.
+	 * @return string
 	 */
 	public static function dump($var)
 	{
 		Spoon::dump($var, false);
 	}
 
-
 	/**
 	 * Format a UNIX-timestamp as a date
-	 * 	syntax: {$var|formatdate}
+	 * syntax: {$var|formatdate}
 	 *
-	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format.
+	 * @param int $var The UNIX-timestamp to format.
+	 * @return string
 	 */
 	public static function formatDate($var)
 	{
@@ -410,13 +378,12 @@ class BackendTemplateModifiers
 		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
 	}
 
-
 	/**
 	 * Format a UNIX-timestamp as a datetime
-	 * 	syntax: {$var|formatdatetime}
+	 * syntax: {$var|formatdatetime}
 	 *
-	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format.
+	 * @param int $var The UNIX-timestamp to format.
+	 * @return string
 	 */
 	public static function formatDateTime($var)
 	{
@@ -427,17 +394,15 @@ class BackendTemplateModifiers
 		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
 	}
 
-
 	/**
 	 * Format a number as a float
 	 *
-	 * @return	string
-	 * @param	float $number				The number to format.
-	 * @param	int[optional] $decimals		The number of decimals.
+	 * @param float $number The number to format.
+	 * @param int[optional] $decimals The number of decimals.
+	 * @return string
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
-		// redefine
 		$number = (float) $number;
 		$decimals = (int) $decimals;
 
@@ -454,17 +419,15 @@ class BackendTemplateModifiers
 		return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
 	}
 
-
 	/**
 	 * Format a number
-	 * 	syntax: {$var|formatnumber}
+	 * syntax: {$var|formatnumber}
 	 *
-	 * @return	string
-	 * @param	float $var		The number to format.
+	 * @param float $var The number to format.
+	 * @return string
 	 */
 	public static function formatNumber($var)
 	{
-		// redefine
 		$var = (float) $var;
 
 		// get setting
@@ -483,13 +446,12 @@ class BackendTemplateModifiers
 		return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
 	}
 
-
 	/**
 	 * Format a UNIX-timestamp as a date
-	 * 	syntac: {$var|formatdate}
+	 * syntac: {$var|formatdate}
 	 *
-	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format.
+	 * @param int $var The UNIX-timestamp to format.
+	 * @return string
 	 */
 	public static function formatTime($var)
 	{
@@ -500,35 +462,30 @@ class BackendTemplateModifiers
 		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
 	}
 
-
 	/**
 	 * Convert a var into main-navigation-html
 	 * 	syntax: {$var|getmainnavigation}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
+	 * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
+	 * @return string
 	 */
 	public static function getMainNavigation($var = null)
 	{
-		// redefine
-		$var = (string) $var;
-
+		$var = (string) $var; // @todo what is this doing here?
 		return Spoon::get('navigation')->getNavigation(1, 1);
 	}
 
-
 	/**
 	 * Convert a var into navigation-html
-	 * 	syntax: {$var|getnavigation:startdepth[:maximumdepth]}
+	 * syntax: {$var|getnavigation:startdepth[:maximumdepth]}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var		A placeholder var, will be replaced with the generated HTML.
-	 * @param	int[optional] $startDepth	The start depth of the navigation to get.
-	 * @param	int[optional] $endDepth		The ending depth of the navigation to get.
+	 * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
+	 * @param int[optional] $startDepth The start depth of the navigation to get.
+	 * @param int[optional] $endDepth The ending depth of the navigation to get.
+	 * @return string
 	 */
 	public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
 	{
-		// redefine
 		$var = (string) $var;
 		$startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
 		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
@@ -537,16 +494,15 @@ class BackendTemplateModifiers
 		return Spoon::get('navigation')->getNavigation($startDepth, $endDepth);
 	}
 
-
 	/**
 	 * Convert a var into a URL
-	 * 	syntax: {$var|geturl:<action>[:<module>]}
+	 * syntax: {$var|geturl:<action>[:<module>]}
 	 *
-	 * @return	void
-	 * @param	string[optional] $var		A placeholder variable, it will be replaced with the URL.
-	 * @param	string[optional] $action	The action to build the URL for.
-	 * @param	string[optional] $module	The module to build the URL for.
-	 * @param	string[optional] $suffix	A string to append.
+	 * @param string[optional] $var A placeholder variable, it will be replaced with the URL.
+	 * @param string[optional] $action The action to build the URL for.
+	 * @param string[optional] $module The module to build the URL for.
+	 * @param string[optional] $suffix A string to append.
+	 * @return string
 	 */
 	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
 	{
@@ -559,47 +515,39 @@ class BackendTemplateModifiers
 		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage()) . $suffix;
 	}
 
-
 	/**
 	 * Get a random var between a min and max
 	 *
-	 * @return	int
-	 * @param	string[optional] $var	The string passed from the template.
-	 * @param	int $min				The minimum number.
-	 * @param	int $max				The maximim number.
+	 * @param string[optional] $var The string passed from the template.
+	 * @param int $min The minimum number.
+	 * @param int $max The maximim number.
+	 * @return int
 	 */
 	public static function random($var = null, $min, $max)
 	{
-		// redefine
 		$var = (string) $var;
-		$min = (int) $min;
-		$max = (int) $max;
-
-		// return
-		return rand($min, $max);
+		return rand((int) $min, (int) $max);
 	}
-
 
 	/**
 	 * Convert this string into a well formed label.
 	 *
-	 * @return	string
-	 * @param	string $value	The value to convert to a label.
+	 * @param string $value The value to convert to a label.
+	 * @return string
 	 */
 	public static function toLabel($value)
 	{
 		return ucfirst(BL::lbl(SpoonFilter::toCamelCase($value, '_', false)));
 	}
 
-
 	/**
 	 * Truncate a string
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var					A placeholder var, will be replaced with the generated HTML.
-	 * @param	int $length					The maximum length of the truncated string.
-	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
+	 * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
+	 * @param int $length The maximum length of the truncated string.
+	 * @param bool[optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
+	 * @return string
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
@@ -624,10 +572,7 @@ class BackendTemplateModifiers
 			// add hellip
 			if($useHellip) $var .= '…';
 
-			// return
 			return SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
 		}
 	}
 }
-
-?>

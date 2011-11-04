@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
  */
-final class FrontendProfilesConfig extends FrontendBaseConfig
+class FrontendProfilesConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action
@@ -18,7 +21,6 @@ final class FrontendProfilesConfig extends FrontendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,5 +28,3 @@ final class FrontendProfilesConfig extends FrontendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

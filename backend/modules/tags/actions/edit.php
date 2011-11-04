@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit action, it will display a form to edit an existing tag.
  *
- * @package		backend
- * @subpackage	tags
- *
- * @author		Dave Lens <dave@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendTagsEdit extends BackendBaseActionEdit
 {
@@ -19,39 +22,22 @@ class BackendTagsEdit extends BackendBaseActionEdit
 	 */
 	protected $dgUsage;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
 		if($this->id !== null && BackendTagsModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the datagrid
 			$this->loadDataGrid();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the page
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -59,32 +45,26 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->record = BackendTagsModel::get($this->id);
 	}
 
-
 	/**
 	 * Load the datagrid
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
 		// init var
 		$items = array();
 
-		// get active modules
+		// get modules
 		$modules = BackendModel::getModules();
 
-		// loop active modules
+		// loop modules
 		foreach($modules as $module)
 		{
 			// check if their is a model-file
@@ -118,47 +98,27 @@ class BackendTagsEdit extends BackendBaseActionEdit
 
 		// create datagrid
 		$this->dgUsage = new BackendDataGridArray($items);
-
-		// disable paging
 		$this->dgUsage->setPaging(false);
-
-		// hide columns
 		$this->dgUsage->setColumnsHidden(array('url'));
-
-		// set headers
 		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::lbl('Title')), 'url' => ''));
-
-		// set url
 		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::lbl('Edit')));
-
-		// add use column
 		$this->dgUsage->addColumn('edit', null, ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('edit');
-
-		// create elements
 		$this->frm->addText('name', $this->record['name']);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign id, name
@@ -169,11 +129,8 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		$this->tpl->assign('usage', ($this->dgUsage->getNumResults() != 0) ? $this->dgUsage->getContent() : false);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -206,5 +163,3 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

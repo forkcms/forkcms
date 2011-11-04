@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to export statistics by mailing ID
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorExportStatistics extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// action to execute
@@ -34,5 +34,3 @@ class BackendMailmotorExportStatistics extends BackendBaseAction
 		$this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
 	}
 }
-
-?>

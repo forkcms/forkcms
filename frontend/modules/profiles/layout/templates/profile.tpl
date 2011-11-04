@@ -2,7 +2,7 @@
 	{option:isLoggedIn}
 		<p>
 			<strong>{$msgWelcomeUserX|sprintf:{$profileDisplayName}}</strong>
-			<a href="{$var|geturlforblock:'profiles':'profile_settings'}" title="{$profileDisplayName}">{$lblProfileSettings|ucfirst}</a>
+			<a href="{$var|geturlforblock:'profiles':'settings'}" title="{$profileDisplayName}">{$lblProfileSettings|ucfirst}</a>
 			<a href="{$var|geturlforblock:'profiles':'logout'}">{$lblLogout|ucfirst}</a>
 		</p>
 	{/option:isLoggedIn}

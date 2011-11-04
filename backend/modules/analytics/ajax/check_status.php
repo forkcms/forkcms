@@ -1,27 +1,25 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This edit-action will check the status using Ajax
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get parameters
 		$page = trim(SpoonFilter::getPostValue('page', null, ''));
 		$identifier = trim(SpoonFilter::getPostValue('identifier', null, ''));
 
@@ -31,7 +29,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		// init vars
 		$filename = BACKEND_CACHE_PATH . '/analytics/' . $page . '_' . $identifier . '.txt';
 
-		// does the temporary file still exits?
+		// does the temporary file still exist?
 		$status = SpoonFile::getContent($filename);
 
 		// no file - create one
@@ -79,13 +77,9 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
 			BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
 
-			// remove cache files
 			BackendAnalyticsModel::removeCacheFiles();
-
-			// clear tables
 			BackendAnalyticsModel::clearTables();
 
-			// return status
 			$this->output(self::OK, array('status' => 'unauthorized'), 'No longer authorized.');
 		}
 
@@ -108,10 +102,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			// file's been missing for more than ten cycles - just stop here
 			if($counter > 10)
 			{
-				// remove file
 				SpoonFile::delete($filename);
-
-				// return status
 				$this->output(self::ERROR, array('status' => 'missing'), 'Error while retrieving data - file was never created.');
 			}
 
@@ -123,12 +114,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		}
 
 		/* FALLBACK - SOMETHING WENT WRONG */
-		// remove file
 		SpoonFile::delete($filename);
-
-		// return status
 		$this->output(self::ERROR, array('status' => 'error'), 'Error while retrieving data.');
 	}
 }
-
-?>

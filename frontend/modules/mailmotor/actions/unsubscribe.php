@@ -3,11 +3,7 @@
 /**
  * This is the index-action
  *
- * @package		frontend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 {
@@ -18,14 +14,12 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 	 */
 	private $email;
 
-
 	/**
 	 * FrontendForm instance
 	 *
 	 * @var	FrontendForm
 	 */
 	private $frm;
-
 
 	/**
 	 * The group passed to this page
@@ -34,11 +28,8 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 	 */
 	private $group;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -46,24 +37,14 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 		$this->group = SpoonFilter::getGetValue('group', null, '');
 		$this->email = urldecode(SpoonFilter::getGetValue('email', null, ''));
 
-		// load template
 		$this->loadTemplate();
-
-		// load
 		$this->loadForm();
-
-		// validate
 		$this->validateForm();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -74,11 +55,8 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 		$this->frm->addText('email');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -117,11 +95,8 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -170,5 +145,3 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

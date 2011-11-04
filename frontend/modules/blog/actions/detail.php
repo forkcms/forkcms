@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the detail-action
  *
- * @package		frontend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendBlogDetail extends FrontendBaseBlock
 {
@@ -20,14 +23,12 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	 */
 	private $comments;
 
-
 	/**
 	 * Form instance
 	 *
 	 * @var FrontendForm
 	 */
 	private $frm;
-
 
 	/**
 	 * The blogpost
@@ -36,7 +37,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	 */
 	private $record;
 
-
 	/**
 	 * The settings
 	 *
@@ -44,41 +44,22 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	 */
 	private $settings;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// hide contenTitle, in the template the title is wrapped with an inverse-option
 		$this->tpl->assign('hideContentTitle', true);
-
-		// load template
 		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// load form
 		$this->loadForm();
-
-		// validate form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -120,11 +101,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if(!$this->settings['allow_comments']) $this->record['allow_comments'] = false;
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -144,11 +122,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->addTextarea('message');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -168,24 +143,15 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
-			// default image
-			$image = SITE_URL . '/facebook.png';
+			// add specified image
+			$this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
 
-			// try to get an image in the content
-			$matches = array();
-			preg_match('/<img.*src="(.*)".*\/>/iU', $this->record['text'], $matches);
+			// add images from content
+			$this->header->extractOpenGraphImages($this->record['text']);
 
-			// found an image?
-			if(isset($matches[1]))
-			{
-				$image = $matches[1];
-				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
-			}
-
-			// add OpenGraph data
+			// add additional OpenGraph data
 			$this->header->addOpenGraphData('title', $this->record['title'], true);
 			$this->header->addOpenGraphData('type', 'article', true);
-			$this->header->addOpenGraphData('image', $image, true);
 			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'], true);
 			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
 			$this->header->addOpenGraphData('description', $this->record['title'], true);
@@ -231,11 +197,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->tpl->assign('navigation', FrontendBlogModel::getNavigation($this->record['id']));
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -354,7 +317,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// store author-data in cookies
 				try
 				{
-					// set cookies
 					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
 					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
 					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
@@ -370,5 +332,3 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

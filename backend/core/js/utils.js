@@ -1,7 +1,8 @@
 /**
  * Utilities; usefull scripts
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 var utils =
 {
@@ -14,7 +15,7 @@ var utils =
 /**
  * Functions related to arrays
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.array =
 {
@@ -44,7 +45,7 @@ utils.array =
 /**
  * Function related to cookies
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.cookies =
 {
@@ -102,7 +103,7 @@ utils.cookies =
 /**
  * Functions related to forms
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 utils.form =
 {
@@ -276,7 +277,7 @@ utils.string =
 
 	/**
 	 * Strip HTML tags
-	 * 
+	 *
 	 * @return	string
 	 */
 	stripTags: function(value)

@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This edit-action will reorder moved pages using Ajax
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendPagesAjaxMove extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -41,5 +42,3 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 		else $this->output(self::ERROR, null, 'page not moved');
 	}
 }
-
-?>

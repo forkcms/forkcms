@@ -1,31 +1,29 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the delete-action, it will delete an item.
  *
- * @package		backend
- * @subpackage	groups
- * @actiongroup	management	This is the all-around management action.
- *
- * @author		Jeroen Van den Bossche <jeroenvandenbossche@gmail.com>
- * @since		2.0
+ * @author Jeroen Van den Bossche <jeroenvandenbossche@gmail.com>
  */
 class BackendGroupsDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get id
 		$this->id = $this->getParameter('id', 'int');
 
 		// group exists and id is not null?
 		if($this->id !== null && BackendGroupsModel::exists($this->id))
 		{
-			// call parent
 			parent::execute();
 
 			// get record
@@ -45,5 +43,3 @@ class BackendGroupsDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

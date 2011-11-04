@@ -30,6 +30,10 @@ jsBackend =
 		jsBackend.current.action = chunks[4];
 		jsBackend.current.language = chunks[2];
 
+		// set defaults
+		if(!jsBackend.current.module) jsBackend.current.module = 'dashboard';
+		if(!jsBackend.current.action) jsBackend.current.action = 'index';
+
 		// init stuff
 		jsBackend.initAjax();
 		jsBackend.balloons.init();
@@ -61,10 +65,12 @@ jsBackend =
 		// set defaults for AJAX
 		$.ajaxSetup(
 		{
+			url: '/backend/ajax.php',
 			cache: false,
 			type: 'POST',
 			dataType: 'json',
-			timeout: 10000
+			timeout: 10000,
+			data: { fork: { module: jsBackend.current.module, action: jsBackend.current.action, language: jsBackend.current.language }}
 		});
 
 		// global error handler
@@ -312,6 +318,7 @@ jsBackend.controls =
 			// get id
 			var id = $(this).data('messageId');
 			var url = $(this).attr('href');
+			if(typeof url == 'undefined') url = $(this).find('a').attr('href');
 
 			if(id != '' && url != '')
 			{
@@ -1070,27 +1077,25 @@ jsBackend.forms =
 		if($('#sidebar input.tagBox').length > 0)
 		{
 			$('#sidebar input.tagBox').tagBox(
-				{
-					emptyMessage: '{$msgNoTags|addslashes}',
-					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
-					addLabel: '{$lblAdd|ucfirst}',
-					removeLabel: '{$lblDeleteThisTag|ucfirst}',
-					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}'
-				}
-			);
+			{
+				emptyMessage: '{$msgNoTags|addslashes}',
+				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				addLabel: '{$lblAdd|ucfirst}',
+				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				params: { fork: { module: 'tags', action: 'autocomplete' } }
+			});
 		}
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
 		{
 			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
-				{
-					emptyMessage: '{$msgNoTags|addslashes}',
-					errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
-					addLabel: '{$lblAdd|ucfirst}',
-					removeLabel: '{$lblDeleteThisTag|ucfirst}',
-					autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}',
-					showIconOnly: false
-				}
-			);
+			{
+				emptyMessage: '{$msgNoTags|addslashes}',
+				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				addLabel: '{$lblAdd|ucfirst}',
+				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				params: { fork: { module: 'tags', action: 'autocomplete' } },
+				showIconOnly: false
+			});
 		}
 	},
 
@@ -1155,14 +1160,10 @@ jsBackend.forms =
 		});
 
 		// not changed?
-		if(!changed) {
-			// prevent default
-			/*
-			 * I know this line triggers errors, if you remove it the unload won't work anymore.
-			 * Probably you'll fix this by passing the evt as an argument of the function, well this will break the functionality also..
-			 * Uhu, a "wtf" is in place..
-			 */
-			evt.preventDefault();
+		if(!changed)
+		{
+			// prevent default action from being executed
+			if(evt) evt.preventDefault();
 
 			// unbind the event
 			$(window).unbind('beforeunload');
@@ -1613,10 +1614,7 @@ jsBackend.tableSequenceByDragAndDrop =
 					var table = $(this);
 					var action = (typeof $(table.parents('table.dataGrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.dataGrid')).data('action').toString();
 
-					// buil ajax-url
-					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
-
-					// append
+					// fetch extra parameters
 					if(typeof $(table.parents('table.dataGrid')).data('extra-params') != 'undefined') url += $(table.parents('table.dataGrid')).data('extra-params');
 
 					// init var
@@ -1629,8 +1627,11 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						url: url,
-						data: 'new_id_sequence=' + newIdSequence.join(','),
+						data:
+						{
+							fork: { action: action },
+							new_id_sequence: newIdSequence.join(',')
+						},
 						success: function(data, textStatus)
 						{
 							// not a succes so revert the changes

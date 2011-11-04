@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
- * This is the cronjob to processes the queued hooks.
+ * This is the cronjob that processes the queued hooks.
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.2
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -33,15 +34,16 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		// store PID
 		SpoonFile::setContent(BACKEND_CACHE_PATH . '/hooks/pid', $pid);
 
-		// loop forever
 		while(true)
 		{
 			// get 1 item
-			$item = $db->getRecord('SELECT *
-									FROM hooks_queue
-									WHERE status = ?
-									LIMIT 1',
-									array('queued'));
+			$item = $db->getRecord(
+				'SELECT *
+				 FROM hooks_queue
+				 WHERE status = ?
+				 LIMIT 1',
+				array('queued')
+			);
 
 			// any item?
 			if(!empty($item))
@@ -124,5 +126,3 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		}
 	}
 }
-
-?>

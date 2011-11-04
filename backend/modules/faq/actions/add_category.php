@@ -1,90 +1,77 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new category
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFaqAddCategory extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
 
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
-		$this->frm = new BackendForm('add_category');
+		$this->frm = new BackendForm('addCategory');
+		$this->frm->addText('title');
 
-		// create elements
-		$this->frm->addText('name');
+		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
-
 
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
+			$this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
+
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->meta->validate();
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['meta_id'] = $this->meta->save();
 				$item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;
 
-				// insert the item
+				// save the data
 				$item['id'] = BackendFaqModel::insertCategory($item);
-
-				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}
 }
-
-?>

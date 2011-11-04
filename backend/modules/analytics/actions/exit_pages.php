@@ -1,55 +1,40 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the exit-pages-action, it will display the overview of analytics posts
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsExitPages extends BackendAnalyticsBase
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Parse this page
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent parse
 		parent::parse();
-
-		// overview data
 		$this->parseOverviewData();
-
-		// get and parse data for chart
 		$this->parseChartData();
-
-		// parse exit pages
 		$this->parseExitPages();
 
-		// init google url
 		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
 		$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
@@ -58,15 +43,11 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		$this->tpl->assign('googleTopExitPagesURL', sprintf($googleURL, 'exits', $googleTableId, $googleDate));
 	}
 
-
 	/**
 	 * Parses the data to make the chart
-	 *
-	 * @return	void
 	 */
 	private function parseChartData()
 	{
-		// init vars
 		$maxYAxis = 2;
 		$metrics = array('exits');
 		$graphData = array();
@@ -74,7 +55,6 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		// get metrics per day
 		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-		// loop metrics
 		foreach($metrics as $i => $metric)
 		{
 			// build graph data array
@@ -83,7 +63,6 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['data'] = array();
 
-			// loop metrics per day
 			foreach($metricsPerDay as $j => $data)
 			{
 				// cast SimpleXMLElement to array
@@ -98,7 +77,6 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		// loop the metrics
 		foreach($graphData as $metric)
 		{
-			// loop the data
 			foreach($metric['data'] as $data)
 			{
 				// get the maximum value
@@ -112,30 +90,17 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		$this->tpl->assign('graphData', $graphData);
 	}
 
-
 	/**
 	 * Parse exit pages datagrid
-	 *
-	 * @return	void
 	 */
 	private function parseExitPages()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getExitPages($this->startTimestamp, $this->endTimestamp);
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// no pagination
 			$dataGrid->setPaging();
-
-			// hide columns
 			$dataGrid->setColumnHidden('page_encoded');
-
-			// set url
 			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
@@ -143,18 +108,13 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		}
 	}
 
-
 	/**
 	 * Parses the overview data
-	 *
-	 * @return	void
 	 */
 	private function parseOverviewData()
 	{
 		// get aggregates
 		$results = BackendAnalyticsModel::getAggregates($this->startTimestamp, $this->endTimestamp);
-
-		// get total aggregates
 		$resultsTotal = BackendAnalyticsModel::getAggregatesTotal($this->startTimestamp, $this->endTimestamp);
 
 		// are there some values?
@@ -164,7 +124,6 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		// show message if there is no data
 		$this->tpl->assign('dataAvailable', $dataAvailable);
 
-		// there are some results
 		if(!empty($results))
 		{
 			// exits percentage of total
@@ -179,7 +138,6 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
 			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+' . $exitsPercentageDifference;
 
-			// parse data
 			$this->tpl->assign('exits', $results['exits']);
 			$this->tpl->assign('exitsPercentageOfTotal', $exitsPercentageOfTotal);
 			$this->tpl->assign('pageviews', $results['exitPagesPageviews']);
@@ -190,5 +148,3 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		}
 	}
 }
-
-?>

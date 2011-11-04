@@ -1,32 +1,25 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is a widget wherin the sitemap lives
  *
- * @package		frontend
- * @subpackage	pages
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendPagesWidgetSitemap extends FrontendBaseWidget
+class FrontendPagesWidgetChildren extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent
 		parent::execute();
-
-		// load template
 		$this->loadTemplate();
-
-		// assign sitemap navigation
-		$this->tpl->assign('widgetPagesNavigation', FrontendNavigation::getNavigationHTML('page', 0, null, array(), true));
 	}
 }
-
-?>

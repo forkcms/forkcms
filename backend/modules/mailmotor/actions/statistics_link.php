@@ -1,19 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This page will display the statistical overview of who clicked a certain link in a specified mailing
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 {
 	// maximum number of items
 	const PAGING_LIMIT = 10;
-
 
 	/**
 	 * The given mailing record
@@ -22,14 +24,12 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 	 */
 	private $mailing;
 
-
 	/**
 	 * The statistics record
 	 *
 	 * @var	array
 	 */
 	private $statistics;
-
 
 	/**
 	 * The given link URL
@@ -38,41 +38,22 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 	 */
 	public $linkURL;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get the data
 		$this->getData();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// load datagrid
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Gets all data needed for this page
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -94,11 +75,8 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-statistics-loaded');
 	}
 
-
 	/**
 	 * Loads the datagrid with the clicked link
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -122,26 +100,17 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Load the form for the group
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('add');
-
-		// add fields
 		$this->frm->addText('group');
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -161,11 +130,8 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$this->tpl->assign('mailing', $this->mailing);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -207,5 +173,3 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>

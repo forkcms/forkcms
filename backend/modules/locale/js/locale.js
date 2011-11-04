@@ -28,15 +28,13 @@ jsBackend.locale.controls =
 
 		if($('.dataGrid td.translationValue').length > 0)
 		{
-			// buil ajax-url
-			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=save_translation&language='+ jsBackend.current.language;
-
 			// bind
 			$('.dataGrid td.translationValue').inlineTextEdit(
 			{
-				saveUrl: url,
+				params: { fork: { action: 'save_translation' } },
 				tooltip: '{$msgClickToEdit}',
-				after_save: function(item) {
+				afterSave: function(item)
+				{
 					if(item.find('span:empty').length == 1) item.addClass('highlighted');
 					else item.removeClass('highlighted');
 				}

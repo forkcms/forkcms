@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the loading-action, it will display a spinner while data is collected
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendAnalyticsLoading extends BackendAnalyticsBase
 {
@@ -19,7 +22,6 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 	 */
 	private $pageId;
 
-
 	/**
 	 * The redirect action and identifier to give along with the curl call
 	 *
@@ -27,36 +29,22 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 	 */
 	private $redirectAction, $identifier;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// call to get_data script
 		$this->getData();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Call to the get_data script
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// init vars
 		$this->redirectAction = SpoonFilter::getGetValue('redirect_action', null, 'index');
 		$this->identifier = time() . rand(0, 999);
 		$this->pageId = SpoonFilter::getGetValue('page_id', null, '');
@@ -89,28 +77,17 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 		$options[CURLOPT_RETURNTRANSFER] = true;
 		$options[CURLOPT_TIMEOUT] = 1;
 
-		// init
 		$curl = curl_init();
-
-		// set options
 		curl_setopt_array($curl, $options);
-
-		// execute
 		curl_exec($curl);
-
-		// close
 		curl_close($curl);
 	}
 
-
 	/**
 	 * Parse this page
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// get page
 		$page = ($this->pageId != '' ? BackendAnalyticsModel::getPageForId($this->pageId) : null);
 
 		// update date_viewed for this page
@@ -124,5 +101,3 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 		$this->tpl->assign('identifier', ($this->pageId != '' ? $this->pageId . '_' : '') . $this->identifier);
 	}
 }
-
-?>

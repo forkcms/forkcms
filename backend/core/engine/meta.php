@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class represents a META-object
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendMeta
 {
@@ -18,14 +21,12 @@ class BackendMeta
 	 */
 	protected $baseFieldName;
 
-
 	/**
 	 * The callback method
 	 *
 	 * @var	array
 	 */
 	protected $callback = array();
-
 
 	/**
 	 * Do we need meta ustom
@@ -34,14 +35,12 @@ class BackendMeta
 	 */
 	protected $custom;
 
-
 	/**
 	 * The data, when a existing meta-record is loaded
 	 *
 	 * @var	array
 	 */
 	protected $data;
-
 
 	/**
 	 * The form instance
@@ -50,14 +49,12 @@ class BackendMeta
 	 */
 	protected $frm;
 
-
 	/**
 	 * The id, when an existing meta-record is loaded
 	 *
 	 * @var	int
 	 */
 	protected $id;
-
 
 	/**
 	 * The URL-instance
@@ -66,15 +63,11 @@ class BackendMeta
 	 */
 	protected $URL;
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	BackendForm $form					An instance of Backendform, the elements will be parsed in here.
-	 * @param	int[optional] $metaId				The metaID to load.
-	 * @param	string[optional] $baseFieldName		The field where the URL should be based on.
-	 * @param	bool[optional] $custom				Add/show custom-meta.
+	 * @param BackendForm $form An instance of Backendform, the elements will be parsed in here.
+	 * @param int[optional] $metaId The metaID to load.
+	 * @param string[optional] $baseFieldName The field where the URL should be based on.
+	 * @param bool[optional] $custom Add/show custom-meta.
 	 */
 	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
 	{
@@ -103,12 +96,11 @@ class BackendMeta
 		$this->loadForm();
 	}
 
-
 	/**
 	 * Generate an url, using the predefined callback.
 	 *
-	 * @return	string
-	 * @param	string $URL		The base-url to start from.
+	 * @param string $URL The base-url to start from.
+	 * @return string
 	 */
 	public function generateURL($URL)
 	{
@@ -128,11 +120,10 @@ class BackendMeta
 		return call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 	}
 
-
 	/**
 	 * Get the current value for the meta-description;
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getDescription()
 	{
@@ -143,11 +134,10 @@ class BackendMeta
 		return $this->data['description'];
 	}
 
-
 	/**
 	 * Should the description overwrite the default
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getDescriptionOverwrite()
 	{
@@ -158,11 +148,10 @@ class BackendMeta
 		return ($this->data['description_overwrite'] == 'Y');
 	}
 
-
 	/**
 	 * Get the current value for the metaId;
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getId()
 	{
@@ -173,11 +162,10 @@ class BackendMeta
 		return (int) $this->data['id'];
 	}
 
-
 	/**
 	 * Get the current value for the meta-keywords;
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getKeywords()
 	{
@@ -188,11 +176,10 @@ class BackendMeta
 		return $this->data['keywords'];
 	}
 
-
 	/**
 	 * Should the keywords overwrite the default
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getKeywordsOverwrite()
 	{
@@ -203,11 +190,10 @@ class BackendMeta
 		return ($this->data['keywords_overwrite'] == 'Y');
 	}
 
-
 	/**
 	 * Get the current value for the page title;
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getTitle()
 	{
@@ -218,11 +204,10 @@ class BackendMeta
 		return $this->data['title'];
 	}
 
-
 	/**
 	 * Should the title overwrite the default
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getTitleOverwrite()
 	{
@@ -233,11 +218,10 @@ class BackendMeta
 		return ($this->data['title_overwrite'] == 'Y');
 	}
 
-
 	/**
 	 * Return the current value for an URL
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getURL()
 	{
@@ -248,11 +232,10 @@ class BackendMeta
 		return urldecode($this->data['url']);
 	}
 
-
 	/**
 	 * Should the URL overwrite the default
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getURLOverwrite()
 	{
@@ -263,11 +246,8 @@ class BackendMeta
 		return ($this->data['url_overwrite'] == 'Y');
 	}
 
-
 	/**
 	 * Add all element into the form
-	 *
-	 * @return	void
 	 */
 	protected function loadForm()
 	{
@@ -332,23 +312,22 @@ class BackendMeta
 		$this->frm->addHidden('parameters', SpoonFilter::htmlspecialchars(serialize($this->callback['parameters'])));
 	}
 
-
 	/**
 	 * Load a specific meta-record
 	 *
-	 * @return	void
-	 * @param	int $id		The id of the record to load.
+	 * @param int $id The id of the record to load.
 	 */
 	protected function loadMeta($id)
 	{
-		// redefine
 		$this->id = (int) $id;
 
 		// get item
-		$this->data = (array) BackendModel::getDB()->getRecord('SELECT *
-																FROM meta AS m
-																WHERE m.id = ?',
-																array($this->id));
+		$this->data = (array) BackendModel::getDB()->getRecord(
+			'SELECT *
+			 FROM meta AS m
+			 WHERE m.id = ?',
+			array($this->id)
+		);
 
 		// validate meta-record
 		if(empty($this->data)) throw new BackendException('Meta-record doesn\'t exist.');
@@ -357,16 +336,14 @@ class BackendMeta
 		if(isset($this->data['data'])) $this->data['data'] = @unserialize($this->data['data']);
 	}
 
-
 	/**
 	 * Saves the meta object
 	 *
-	 * @return	int
-	 * @param	bool[optional] $update		Should we update the record or insert a new one.
+	 * @param bool[optional] $update Should we update the record or insert a new one.
+	 * @return int
 	 */
 	public function save($update = false)
 	{
-		// redefine
 		$update = (bool) $update;
 
 		// get meta keywords
@@ -434,20 +411,17 @@ class BackendMeta
 		}
 	}
 
-
 	/**
 	 * Set the callback to calculate an unique URL
 	 * REMARK: this method has to be public and static
 	 * REMARK: if you specify arguments they will be appended
 	 *
-	 * @return	void
-	 * @param	string $className				Name of the class to use.
-	 * @param	string $methodName				Name of the method to use.
-	 * @param	array[optional] $parameters		Parameters to parse, they will be passed after ours.
+	 * @param string $className Name of the class to use.
+	 * @param string $methodName Name of the method to use.
+	 * @param array[optional] $parameters Parameters to parse, they will be passed after ours.
 	 */
 	public function setURLCallback($className, $methodName, $parameters = array())
 	{
-		// redefine
 		$className = (string) $className;
 		$methodName = (string) $methodName;
 		$parameters = (array) $parameters;
@@ -459,12 +433,9 @@ class BackendMeta
 		$this->loadForm();
 	}
 
-
 	/**
 	 * Validates the form
 	 * It checks if there is a value when a checkbox is checked
-	 *
-	 * @return	void
 	 */
 	public function validate()
 	{
@@ -545,5 +516,3 @@ class BackendMeta
 		}
 	}
 }
-
-?>

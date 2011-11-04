@@ -1,16 +1,19 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Dave Lens <dave@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
@@ -21,7 +24,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	 */
 	private $categoryId;
 
-
 	/**
 	 * DataGrid for the drafts
 	 *
@@ -29,11 +31,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	 */
 	private $dgDrafts;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -43,32 +42,18 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendBlogModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// set category id
 			$this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
 			if($this->categoryId == 0) $this->categoryId = null;
 
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load drafts
 			$this->loadDrafts();
-
-			// load the datagrid with revisions
 			$this->loadRevisions();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the datagrid
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -76,16 +61,12 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
 	 * If a revision-id was specified in the URL we load the revision and not the actual data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get the record
 		$this->record = (array) BackendBlogModel::get($this->id);
 
 		// is there a revision specified?
@@ -121,11 +102,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the datagrid with drafts
-	 *
-	 * @return	void
 	 */
 	private function loadDrafts()
 	{
@@ -155,11 +133,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -186,6 +161,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
+		$this->frm->addImage('image');
+		$this->frm->addCheckbox('delete_image');
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -194,11 +171,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
 	}
 
-
 	/**
 	 * Load the datagrid with revisions
-	 *
-	 * @return	void
 	 */
 	private function loadRevisions()
 	{
@@ -225,11 +199,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -258,11 +229,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -281,6 +249,14 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
+
+			// do the image checks
+			if($this->frm->getField('image')->isFilled())
+			{
+				// image extension and mime type
+				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
+				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
+			}
 
 			// validate meta
 			$this->meta->validate();
@@ -303,6 +279,53 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['status'] = $status;
+				$item['image'] = $this->record['image'];
+
+				// the image path
+				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
+
+				// if the image should be deleted
+				if($this->frm->getField('delete_image')->isChecked())
+				{
+					// delete the image
+					SpoonFile::delete($imagePath . '/source/' . $item['image']);
+
+					// reset the name
+					$item['image'] = null;
+				}
+
+				// new image given?
+				if($this->frm->getField('image')->isFilled())
+				{
+					// delete the old image
+					SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
+
+					// build the image name
+					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+
+					// upload the image
+					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+				}
+
+				// rename the old image
+				elseif($item['image'] != null)
+				{
+					// get the old file extension
+					$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
+
+					// get the new image name
+					$newName = $this->meta->getURL() . '.' . $imageExtension;
+
+					// only change the name if there is a difference
+					if($newName != $item['image'])
+					{
+						// move the old file to the new name
+						SpoonFile::move($imagePath . '/source/' . $item['image'], $imagePath . '/source/' . $newName);
+
+						// assign the new name to the database
+						$item['image'] = $newName;
+					}
+				}
 
 				// update the item
 				$item['revision_id'] = BackendBlogModel::update($item);
@@ -345,5 +368,3 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>
