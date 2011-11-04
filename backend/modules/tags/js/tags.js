@@ -16,12 +16,7 @@ jsBackend.tags =
 			// bind
 			$('.dataGrid td.tag').inlineTextEdit({ saveParams: 'module=' + jsBackend.current.module + '&action=edit&language=' + jsBackend.current.language, tooltip: '{$msgClickToEdit}' });
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 $(document).ready(jsBackend.tags.init);

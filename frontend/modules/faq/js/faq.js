@@ -13,10 +13,7 @@ jsFrontend.faq =
 	init: function()
 	{
 		if($('#faqFeedbackForm').length > 0) jsFrontend.faq.feedback.init();
-	},
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -30,16 +27,12 @@ jsFrontend.faq.feedback =
 		{
 			// get usefull status
 			var usefull = ($('#usefullY').attr('checked') ? true : false);
-			
+
 			// show or hide the form
 			if(usefull) { $('form#feedback').submit(); }
 			else { $('#feedbackNoInfo').show(); }
 		});
-	},
-
-	// end
-	eoo: true
+	}
 }
-
 
 $(document).ready(function() { jsFrontend.faq.init(); });

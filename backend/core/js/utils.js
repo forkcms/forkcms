@@ -7,8 +7,7 @@
 var utils =
 {
 	// datamembers
-	debug: false,
-	eoo: true
+	debug: false
 }
 
 
@@ -265,7 +264,7 @@ utils.string =
 
 	/**
 	 * Strip HTML tags
-	 * 
+	 *
 	 * @return	string
 	 */
 	stripTags: function(value)

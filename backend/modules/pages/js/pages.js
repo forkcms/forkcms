@@ -33,11 +33,7 @@ jsBackend.pages =
 
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -602,13 +598,8 @@ jsBackend.pages.extras =
 	updatedBlock: function(element)
 	{
 		element.effect('highlight');
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * All methods related to the templates
@@ -787,13 +778,8 @@ jsBackend.pages.template =
 				}
 			 }
 		 });
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * All methods related to the tree
@@ -976,12 +962,7 @@ jsBackend.pages.tree =
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 $(document).ready(jsBackend.pages.init);

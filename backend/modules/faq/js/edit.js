@@ -14,14 +14,14 @@ jsBackend.faq.edit =
 	init: function()
 	{
 		// hide the data
-		
+
 		$('.longFeedback').hide();
 		// add the click handler
 		$('.container').live('click', jsBackend.faq.edit.clickHandler);
 	},
 
 
-	clickHandler: function(event) 
+	clickHandler: function(event)
 	{
 		event.preventDefault();
 
@@ -33,7 +33,7 @@ jsBackend.faq.edit =
 			// change css
 			link.removeClass('iconCollapsed');
 			link.addClass('iconExpanded');
-			
+
 			// show the feedback
 			$(this).next('.longFeedback').show();
 		}
@@ -44,15 +44,11 @@ jsBackend.faq.edit =
 			// change css
 			link.addClass('iconCollapsed');
 			link.removeClass('iconExpanded');
-			
+
 			// hide the feedback
 			$(this).next('.longFeedback').hide();
-		}	
-	},
-
-
-	eoo: true
+		}
+	}
 }
-
 
 $(document).ready(jsBackend.faq.edit.init);

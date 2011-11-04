@@ -16,7 +16,7 @@ jsBackend.template =
 	 * Kind of constructor
 	 */
 	init: function()
-	{	
+	{
 		// add first default position
 		if($('#position1').length == 0) jsBackend.template.addPosition();
 
@@ -136,7 +136,7 @@ jsBackend.template =
 			// update for (label), id & name (input)
 			$('input[id^=position]', this).attr('id', 'position' + positionIndex).attr('name', 'position_' + positionIndex);
 			$('label[for^=position]', this).attr('for', 'position' + positionIndex);
-			
+
 			// loop all blocks
 			$('.defaultBlock', this).each(function(i)
 			{
@@ -147,11 +147,7 @@ jsBackend.template =
 				$('select[id^=type]', this).attr('id', 'type' + positionIndex + blockIndex).attr('name', 'type_' + positionIndex + '_' + blockIndex);
 			});
 		});
-	},
-
-
-	eoo: true
+	}
 }
-
 
 $(document).ready(jsBackend.template.init);

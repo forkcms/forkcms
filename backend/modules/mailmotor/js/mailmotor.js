@@ -24,13 +24,8 @@ jsBackend.mailmotor =
 				canAddNew: true
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.charts =
 {
@@ -56,11 +51,7 @@ jsBackend.mailmotor.charts =
 				}
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -119,12 +110,8 @@ jsBackend.mailmotor.chartPieChart =
 			legend: { style: { right: '10px' } },
 			series: [ { type: 'pie', data: pieChartData } ]
 		});
-	},
-
-
-	// end
-	eoo: true
-};
+	}
+}
 
 
 jsBackend.mailmotor.changeGroup =
@@ -141,12 +128,8 @@ jsBackend.mailmotor.changeGroup =
 			// redirect with the new group
 			window.location = document.location.pathname +'?token=true&email='+ variables['email'] +'&group_id='+ $(this).val();
 		});
-	},
-
-
-	// end
-	eoo: true
-};
+	}
+}
 
 
 jsBackend.mailmotor.linkAccount =
@@ -275,13 +258,8 @@ jsBackend.mailmotor.linkAccount =
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
-};
-
+	}
+}
 
 jsBackend.mailmotor.resizing =
 {
@@ -330,13 +308,8 @@ jsBackend.mailmotor.resizing =
 				$('#iframeOverlay').remove();
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.step3 =
 {
@@ -365,12 +338,12 @@ jsBackend.mailmotor.step3 =
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
 				var textareaValue = iframe[0].contentWindow.getTinyMCEContent();
-				
+
 				// remove tiny fields added to the body by naughty tinyMCE
 				body.find('.mceListBoxMenu').remove();
 				body.find('.mceEditor').remove();
 				body.find('.clickToEdit').remove();
-				
+
 				/*
 					This may seem strange, but here's why I did it like this:
 					Some templates caused tinymce().getContent() to return the entire TinyMCE codes.
@@ -378,7 +351,7 @@ jsBackend.mailmotor.step3 =
 					run into this problem.
 				*/
 				var textarea = body.find('#contentHtml');
-				
+
 				/*
 					By escaping the textareaValue below, we ensure that entities will remain intact.
 					in mailmotor/detail.php on the frontend, we do a rawurlencode of the contents,
@@ -389,10 +362,10 @@ jsBackend.mailmotor.step3 =
 
 				// set iframe variables
 				var bodyHTML = body.html();
-				
+
 				// we unescape the entire HTML so the user won't panic whilst the ajax is loading
 				body.html(unescape(body.html()));
-				
+
 				// make the call
 				$.ajax(
 				{
@@ -420,13 +393,8 @@ jsBackend.mailmotor.step3 =
 				});
 			});
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.step4 =
 {
@@ -602,13 +570,8 @@ jsBackend.mailmotor.step4 =
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.templateSelection =
 {
@@ -639,12 +602,7 @@ jsBackend.mailmotor.templateSelection =
 				radiobutton.parent('li').addClass('selected');
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 $(document).ready(jsBackend.mailmotor.init);

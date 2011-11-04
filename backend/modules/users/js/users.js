@@ -1,8 +1,5 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
- * Interaction for the users module
+ * Interaction for the dashboard module
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -12,11 +9,7 @@ jsBackend.users =
 	init: function()
 	{
 		jsBackend.users.controls.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
 
@@ -57,12 +50,7 @@ jsBackend.users.controls =
 		if(maxLength == 0) maxLength = 255;
 
 		return utils.string.trim(utils.string.trim($('#name').val()) +' '+ utils.string.trim($('#surname').val())).substring(0, maxLength);
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.users.init);
+$(jsBackend.users.init);

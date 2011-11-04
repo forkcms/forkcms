@@ -62,11 +62,7 @@ jsBackend.settings =
 				$('#testEmailConnectionError').show();
 			}
 		});
-	},
-
-
-	eoo: true
+	}
 }
-
 
 $(document).ready(jsBackend.settings.init);

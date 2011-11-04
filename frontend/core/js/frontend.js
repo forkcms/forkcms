@@ -52,13 +52,8 @@ var jsFrontend =
 			timeout: 10000,
 			data: { fork: { module: null, action: null, language: jsFrontend.current.language } }
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Controls related javascript
@@ -78,13 +73,8 @@ jsFrontend.controls =
 	bindTargetBlank: function()
 	{
 		$('a.targetBlank').attr('target', '_blank');
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Facebook related
@@ -108,13 +98,8 @@ jsFrontend.facebook =
 			// subscribe and track message
 			FB.Event.subscribe('message.send', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'send', targetUrl]); });
 		}
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Form related javascript
@@ -279,12 +264,8 @@ jsFrontend.forms =
 				});
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -323,12 +304,8 @@ jsFrontend.gravatar =
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -546,13 +523,8 @@ jsFrontend.search =
 				});
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Gravatar related javascript
@@ -591,12 +563,8 @@ jsFrontend.statistics =
 				_gaq.push(['_trackEvent', 'Outbound Links', link, title]);
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -628,12 +596,7 @@ jsFrontend.twitter =
 				}
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 $(jsFrontend.init);

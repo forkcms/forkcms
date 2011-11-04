@@ -5,11 +5,11 @@ jsFrontend.profiles = {
 	 * Kind of constructor
 	 */
 	init: function()
-	{	
+	{
 		jsFrontend.profiles.showPassword();
 	},
-	
-	
+
+
 	/**
 	 * Make possible to show passwords in clear text
 	 */
@@ -23,25 +23,22 @@ jsFrontend.profiles = {
 			{
 				// clone password and change type
 				$('.showPasswordInput').clone().attr('type', 'input').insertAfter($('.showPasswordInput'));
-				
+
 				// remove original
 				$('.showPasswordInput:first').remove();
 			}
-			
+
 			// checkbox not checked
 			else
 			{
 				// clone password and change type
 				$('.showPasswordInput').clone().attr('type', 'password').insertAfter($('.showPasswordInput'));
-				
+
 				// remove original
 				$('.showPasswordInput:first').remove();
 			}
 		});
-	},
-		
-	// end
-	eoo: true
+	}
 }
 
-$(document).ready(jsFrontend.profiles.init); 
+$(document).ready(jsFrontend.profiles.init);

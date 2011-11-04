@@ -5,13 +5,8 @@ jsBackend.extensions =
 	init: function()
 	{
 		jsBackend.extensions.themeSelection.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.extensions.themeSelection =
 {
@@ -25,7 +20,7 @@ jsBackend.extensions.themeSelection =
 		{
 			// store the object
 			var radiobutton = $(this).find('input:radio:first');
-			
+
 			// set checked
 			radiobutton.prop('checked', true);
 
@@ -39,12 +34,7 @@ jsBackend.extensions.themeSelection =
 				radiobutton.parent('li').addClass('selected');
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 $(document).ready(jsBackend.extensions.init);

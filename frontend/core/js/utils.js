@@ -6,8 +6,7 @@
 var utils =
 {
 	// datamembers
-	debug: false,
-	eoo: true
+	debug: false
 }
 
 
@@ -33,13 +32,8 @@ utils.array =
 
 		// fallback
 		return false;
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Function related to cookies
@@ -91,13 +85,8 @@ utils.cookies =
 
 		// fallback
 		return null;
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Functions related to forms
@@ -165,11 +154,7 @@ utils.form =
 	{
 		var regexp = /^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[0-9a-zA-Z]+)((:[0-9]+)?)((\/([~0-9a-zA-Z\#%@\.\/_-]+)?(\?[0-9a-zA-Z%@\/&=_-]+)?)?)$/i;
 		return regexp.test(element.val());
-	},
-
-
-	// end
-	eoo: true
+	}
 },
 
 
@@ -384,12 +369,8 @@ utils.string =
 
 		// XHTML
 		return value;
-	},
-
-
-	// end
-	eoo: true
-},
+	}
+}
 
 
 /**
@@ -451,11 +432,5 @@ utils.url =
 
 		// cough up value
 		return getValue;
-	},
-
-
-	/**
-	 * End of object
-	 */
-	eoo: true
+	}
 }

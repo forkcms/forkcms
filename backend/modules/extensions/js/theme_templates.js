@@ -12,7 +12,7 @@ jsBackend.templates =
 	 * Kind of constructor
 	 */
 	init: function()
-	{	
+	{
 		// change template
 		jsBackend.templates.changeTemplate();
 	},
@@ -29,11 +29,7 @@ jsBackend.templates =
 			// redirect to page to display template overview of this theme
 			window.location.search = '?theme=' + $(this).val();
 		});
-	},
-
-
-	eoo: true
+	}
 }
-
 
 $(document).ready(jsBackend.templates.init);
