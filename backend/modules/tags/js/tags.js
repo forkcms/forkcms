@@ -8,11 +8,9 @@ jsBackend.tags =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.dataGrid td.tag').length > 0)
-		{
-			// bind
-			$('.dataGrid td.tag').inlineTextEdit({ params: { fork: { action: 'edit' } }, tooltip: '{$msgClickToEdit}' });
-		}
+		$dataGridTag = $('.dataGrid td.tag');
+
+		if($dataGridTag.length > 0) $dataGridTag.inlineTextEdit({ params: { fork: { action: 'edit' } }, tooltip: '{$msgClickToEdit}' });
 	}
 }
 
