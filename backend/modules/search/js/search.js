@@ -8,10 +8,12 @@ jsBackend.search =
 	// init, something like a constructor
 	init: function()
 	{
+		$synonymBox = $('input.synonymBox');
+
 		// synonyms box
-		if($('input.synonymBox').length > 0)
+		if($synonymBox.length > 0)
 		{
-			$('input.synonymBox').multipleTextbox(
+			$synonymBox.multipleTextbox(
 			{
 				emptyMessage: '{$msgNoSynonymsBox}',
 				addLabel: '{$lblAdd|ucfirst}',
@@ -22,8 +24,10 @@ jsBackend.search =
 		// settings enable/disable
 		$('#searchModules input[type=checkbox]').change(function()
 		{
-			if($(this).is(':checked')) { $('#' + $(this).attr('id') + 'Weight').removeAttr('disabled').removeClass('disabled'); }
-			else { $('#' + $(this).attr('id') + 'Weight').prop('disabled', true).addClass('disabled'); }
+			$this = $(this);
+
+			if($this.is(':checked')) { $('#' + $this.attr('id') + 'Weight').removeAttr('disabled').removeClass('disabled'); }
+			else { $('#' + $this.attr('id') + 'Weight').prop('disabled', true).addClass('disabled'); }
 		});
 	}
 }
