@@ -147,7 +147,18 @@ input[type="submit"] {
 	float: left;
 	margin-right: 12px;
 }
-
+/*
+	Faq
+*/
+	/*
+		Feedback
+	*/
+	#faq span.positiveFeedback {
+		color: green;
+	}
+	#faq span.negativeFeedback {
+		color: red;
+	}
 
 /*
 	Horizontal forms

@@ -112,9 +112,17 @@
         <translation language="de"><![CDATA[bearbeite Frage "%1$s"]]></translation>
         <translation language="fr"><![CDATA[éditer la question "%1$s"]]></translation>
       </item>
+      <item type="message" name="FeedbackInfo">
+        <translation language="nl"><![CDATA[Dit zijn alle berichten achtergelaten door bezoekers die dit antwoord niet nuttig vonden.]]></translation>
+        <translation language="en"><![CDATA[These are all the messages from visitors who did't find this answer usefull.]]></translation>
+      </item>
       <item type="message" name="HelpSpamFilter">
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in feedback en gebruikersvragen te vermijden.]]></translation>
         <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam in feedback and user questions.]]></translation>
+      </item>
+      <item type="message" name="NoFeedbackItems">
+        <translation language="nl"><![CDATA[Er zijn momenteel geen feedback berichten.]]></translation>
+        <translation language="en"><![CDATA[There are no feedback comments at the moment.]]></translation>
       </item>
       <item type="message" name="NoQuestionInCategory">
         <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
@@ -150,9 +158,17 @@
       </item>
     </faq>
     <core>
+      <item type="label" name="AllQuestions">
+        <translation language="nl"><![CDATA[alle vragen]]></translation>
+        <translation language="en"><![CDATA[all questions]]></translation>
+      </item>
       <item type="label" name="Faq">
         <translation language="nl"><![CDATA[FAQ]]></translation>
         <translation language="en"><![CDATA[FAQ]]></translation>
+      </item>
+      <item type="label" name="Feedback">
+        <translation language="nl"><![CDATA[feedback]]></translation>
+        <translation language="en"><![CDATA[feedback]]></translation>
       </item>
       <item type="label" name="Questions">
         <translation language="nl"><![CDATA[vragen]]></translation>
@@ -165,6 +181,10 @@
       <item type="label" name="MostReadQuestions">
         <translation language="nl"><![CDATA[meest gelezen vragen]]></translation>
         <translation language="en"><![CDATA[most read questions]]></translation>
+      </item>
+      <item type="message" name="NoFeedback">
+        <translation language="nl"><![CDATA[Er is nog geen feedback.]]></translation>
+        <translation language="en"><![CDATA[There is no feedback yet.]]></translation>
       </item>
     </core>
   </backend>

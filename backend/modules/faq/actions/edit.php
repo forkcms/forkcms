@@ -22,7 +22,6 @@ class BackendFaqEdit extends BackendBaseActionEdit
 	 */
 	private $feedback;
 
-
 	/**
 	 * Execute the action
 	 */
@@ -51,7 +50,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 	private function getData()
 	{
 		$this->record = (array) BackendFaqModel::get($this->id);
-		$this->feedback = BackendFaqModel::getAllFeedback($this->id);
+		$this->feedback = BackendFaqModel::getAllFeedbackForQuestion($this->id);
 	}
 
 	/**
