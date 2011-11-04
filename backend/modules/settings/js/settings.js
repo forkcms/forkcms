@@ -5,9 +5,6 @@
  */
 jsBackend.settings =
 {
-	/**
-	 * Kind of constructor
-	 */
 	init: function()
 	{
 		$('#facebookAdminIds').multipleTextbox(
@@ -18,8 +15,7 @@ jsBackend.settings =
 			canAddNew: true
 		});
 
-		if($('#testEmailConnection').length > 0) $('#testEmailConnection').bind('click', jsBackend.settings.testEmailConnection);
-
+		$('#testEmailConnection').bind('click', jsBackend.settings.testEmailConnection);
 	},
 
 	testEmailConnection: function(evt)
@@ -27,14 +23,21 @@ jsBackend.settings =
 		// prevent default
 		evt.preventDefault();
 
+		$spinner = $('#testEmailConnectionSpinner');
+		$error = $('#testEmailConnectionError');
+		$success = $('#testEmailConnectionSuccess');
+		$email = $('#settingsEmail');
+
 		// show spinner
-		$('#testEmailConnectionSpinner').show();
-		$('#testEmailConnectionError').hide();
-		$('#testEmailConnectionSuccess').hide();
+		$spinner.show();
+
+		// hide previous results
+		$error.hide();
+		$success.hide();
 
 		// fetch email parameters
 		var settings = new Object();
-		$.each($('#settingsEmail').serializeArray(), function() { settings[this.name] = this.value; });
+		$.each($email.serializeArray(), function() { settings[this.name] = this.value; });
 
 		// make the call
 		$.ajax(
@@ -43,19 +46,19 @@ jsBackend.settings =
 			success: function(data, textStatus)
 			{
 				// hide spinner
-				$('#testEmailConnectionSpinner').hide();
+				$spinner.hide();
 
 				// show success
-				if(data.code == 200) $('#testEmailConnectionSuccess').show();
-				else $('#testEmailConnectionsError').show();
+				if(data.code == 200) $success.show();
+				else $error.show();
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
 				// hide spinner
-				$('#testEmailConnectionSpinner').hide();
+				$spinner.hide();
 
 				// show error
-				$('#testEmailConnectionError').show();
+				$error.show();
 			}
 		});
 	}
