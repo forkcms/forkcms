@@ -60,7 +60,6 @@ jsBackend.formBuilder =
 	}
 }
 
-
 jsBackend.formBuilder.fields =
 {
 	/**
@@ -356,7 +355,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Bind edit actions
 	 */
@@ -609,7 +607,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Bind validation dropdown
 	 */
@@ -629,7 +626,6 @@ jsBackend.formBuilder.fields =
 			$(wrapper).find('input:checkbox').live('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 		});
 	},
-
 
 	/**
 	 * Handle validation status
@@ -666,7 +662,6 @@ jsBackend.formBuilder.fields =
 		else $(wrapper).find('.validationErrorMessage').slideUp();
 	},
 
-
 	/**
 	 * Fill up the default values dropdown after rebuilding the multipleTextbox
 	 */
@@ -697,7 +692,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Reset a dialog by emptying the form fields and removing errors
 	 */
@@ -715,7 +709,6 @@ jsBackend.formBuilder.fields =
 		// select first tab
 		$('#'+ id +' .tabs').tabs('select', 0);
 	},
-
 
 	/**
 	 * Handle checkbox save
@@ -786,7 +779,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle dropdown save
 	 */
@@ -856,7 +848,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle heading save
 	 */
@@ -914,7 +905,6 @@ jsBackend.formBuilder.fields =
 			}
 		});
 	},
-
 
 	/**
 	 * Handle paragraph save
@@ -976,7 +966,6 @@ jsBackend.formBuilder.fields =
 			}
 		});
 	},
-
 
 	/**
 	 * Handle radiobutton save
@@ -1047,7 +1036,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle submit save
 	 */
@@ -1105,7 +1093,6 @@ jsBackend.formBuilder.fields =
 			}
 		});
 	},
-
 
 	/**
 	 * Handle textarea save
@@ -1180,7 +1167,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle textbox save
 	 */
@@ -1254,7 +1240,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Append the field to the form or update it on its current location
 	 */
@@ -1284,7 +1269,6 @@ jsBackend.formBuilder.fields =
 		$('#fieldHolder-'+ fieldId).effect("highlight", {}, 3000);
 	},
 
-
 	/**
 	 * Toggle the no items message based on the amount of rows
 	 */
@@ -1299,7 +1283,6 @@ jsBackend.formBuilder.fields =
 		// no items
 		else $('#noFields').show();
 	},
-
 
 	/**
 	 * Toggle validation errors

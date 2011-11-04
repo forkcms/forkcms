@@ -21,7 +21,6 @@ jsBackend.dashboard =
 		$editDashboardClose.bind('click', jsBackend.dashboard.close);
 	},
 
-
 	close: function(evt)
 	{
 		// prevent default
@@ -33,7 +32,6 @@ jsBackend.dashboard =
 		if($widget.hasClass('isRemoved')) $widget.find('.options, .footer, .dataGridHolder').show().removeClass('isRemoved');
 		else $widget.find('.options, .footer, .dataGridHolder').hide().addClass('isRemoved');
 	},
-
 
 	load: function(evt)
 	{
@@ -105,7 +103,6 @@ jsBackend.dashboard =
 			function() { $(this).removeClass('isDraggable'); }
 		);
 	},
-
 
 	// save the changes
 	save: function(evt)
@@ -197,6 +194,5 @@ jsBackend.dashboard =
 		});
 	}
 }
-
 
 $(jsBackend.dashboard.init);

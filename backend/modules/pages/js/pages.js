@@ -1,6 +1,5 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-
 /**
  * Interaction for the pages module
  *
@@ -36,7 +35,6 @@ jsBackend.pages =
 	}
 }
 
-
 /**
  * All methods related to the controls (buttons, ...)
  *
@@ -62,7 +60,6 @@ jsBackend.pages.extras =
 		// make the blocks sortable
 		jsBackend.pages.extras.sortable();
 	},
-
 
 	// store the extra for real
 	addBlock: function(selectedExtraId, selectedPosition)
@@ -110,7 +107,6 @@ jsBackend.pages.extras =
 //		jsBackend.pages.extras.resetIndexes();
 	},
 
-
 	// add block visual on template
 	addBlockVisual: function(position, index, extraId, visible)
 	{
@@ -154,7 +150,6 @@ jsBackend.pages.extras =
 		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
 	},
 
-
 	// delete a linked block
 	deleteBlock: function(index)
 	{
@@ -170,7 +165,6 @@ jsBackend.pages.extras =
 		// reset indexes (sequence)
 		jsBackend.pages.extras.resetIndexes();
 	},
-
 
 	// edit content
 	editContent: function(e)
@@ -239,14 +233,12 @@ jsBackend.pages.extras =
 		tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
 	},
 
-
 	// hide fallback
 	hideFallback: function()
 	{
 		// after removing all from fallback; hide fallback
 		if($('#templateVisualFallback .templatePositionCurrentType').length == 0) $('#templateVisualFallback').hide();
 	},
-
 
 	// populate the dropdown with the modules
 	populateExtraModules: function()
@@ -274,7 +266,6 @@ jsBackend.pages.extras =
 			$('#extraModuleHolder').show();
 		}
 	},
-
 
 	// populates the dropdown with the extra's
 	populateExtraIds: function()
@@ -309,7 +300,6 @@ jsBackend.pages.extras =
 			}
 		}
 	},
-
 
 	// reset all indexes to keep all items in proper order
 	resetIndexes: function()
@@ -352,7 +342,6 @@ jsBackend.pages.extras =
 		$('.contentBlock').removeClass('reset');
 	},
 
-
 	// save/reset the content
 	setContent: function(index, previousContent)
 	{
@@ -373,7 +362,6 @@ jsBackend.pages.extras =
 		// mark as updated
 		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
 	},
-
 
 	// add a block
 	showAddDialog: function(evt)
@@ -466,7 +454,6 @@ jsBackend.pages.extras =
 		}
 	},
 
-
 	// delete a block
 	showDeleteDialog: function(evt)
 	{
@@ -506,7 +493,6 @@ jsBackend.pages.extras =
 			 });
 		}
 	},
-
 
 	// re-order blocks
 	sortable: function()
@@ -555,7 +541,6 @@ jsBackend.pages.extras =
 		});
 	},
 
-
 	// toggle block visibility
 	toggleVisibility: function(e)
 	{
@@ -593,7 +578,6 @@ jsBackend.pages.extras =
 		}
 	},
 
-
 	// display an effect on updated items
 	updatedBlock: function(element)
 	{
@@ -612,7 +596,6 @@ jsBackend.pages.template =
 	// indicates whether or not the page content is original or has been altered already
 	original: true,
 
-
 	// init, something like a constructor
 	init: function()
 	{
@@ -622,7 +605,6 @@ jsBackend.pages.template =
 		// load to initialize when adding a page
 		jsBackend.pages.template.changeTemplate();
 	},
-
 
 	// method to change a template
 	changeTemplate: function()
@@ -745,7 +727,6 @@ jsBackend.pages.template =
 		jsBackend.pages.extras.sortable();
 	},
 
-
 	// show the dialog to alter the selected template
 	showTemplateDialog: function(evt)
 	{
@@ -859,7 +840,6 @@ jsBackend.pages.tree =
 		});
 	},
 
-
 	// before an item will be moved we have to do some checks
 	beforeMove: function(node, refNode, type, tree)
 	{
@@ -910,7 +890,6 @@ jsBackend.pages.tree =
 		return result;
 	},
 
-
 	// when an item is selected
 	onSelect: function(node, tree)
 	{
@@ -921,7 +900,6 @@ jsBackend.pages.tree =
 		// only redirect if destination isn't the current one.
 		if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
 	},
-
 
 	// when an item is moved
 	onMove: function(node, refNode, type, tree, rollback)

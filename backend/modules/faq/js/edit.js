@@ -1,6 +1,5 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-
 /**
  * Interaction for the faq categories
  *
@@ -19,7 +18,6 @@ jsBackend.faq.edit =
 		// add the click handler
 		$('.container').live('click', jsBackend.faq.edit.clickHandler);
 	},
-
 
 	clickHandler: function(event)
 	{

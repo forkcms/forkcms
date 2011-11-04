@@ -2,7 +2,6 @@
  * jQuery Fork stuff
  */
 
-
 /**
  * Meta-handler
  *
@@ -131,7 +130,6 @@
 		});
 	};
 })(jQuery);
-
 
 /**
  * Password generator
@@ -263,7 +261,6 @@
 	};
 })(jQuery);
 
-
 /**
  * Inline editing
  *
@@ -382,7 +379,6 @@
 				});
 			}
 
-
 			// destroy the element
 			function destroyElement()
 			{
@@ -404,7 +400,6 @@
 				// restore
 				editing = false;
 			}
-
 
 			// save the element
 			function saveElement()
@@ -453,7 +448,6 @@
 		});
 	};
 })(jQuery);
-
 
 /**
  * key-value-box
@@ -706,7 +700,6 @@
 				$('#elementList-' + id).html(html);
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -723,7 +716,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -743,7 +735,6 @@
 		});
 	};
 })(jQuery);
-
 
 /**
  * Tag-box
@@ -1005,7 +996,6 @@
 				$('#elementList-' + id).html(html);
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1022,7 +1012,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -1042,7 +1031,6 @@
 		});
 	};
 })(jQuery);
-
 
 /**
  * Multiple select box
@@ -1094,7 +1082,6 @@
 						'	<div class="oneLiner">' +
 						'		<p>' +
 						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
-
 
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
@@ -1182,7 +1169,6 @@
 				}
 			}
 
-
 			// build the list
 			function build()
 			{
@@ -1233,7 +1219,6 @@
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1250,7 +1235,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -1272,7 +1256,6 @@
 		});
 	};
 })(jQuery);
-
 
 /**
  * Multiple text box
@@ -1497,7 +1480,6 @@
 				}
 			}
 
-
 			// build the list
 			function build()
 			{
@@ -1535,7 +1517,6 @@
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1552,7 +1533,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)

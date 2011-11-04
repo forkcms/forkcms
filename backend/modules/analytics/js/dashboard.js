@@ -64,5 +64,4 @@ jsBackend.analyticsDashboard =
 	}
 }
 
-
 $(jsBackend.analyticsDashboard.init);

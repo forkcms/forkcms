@@ -26,7 +26,6 @@ jsBackend.faq =
 		if($('#title').length > 0) $('#title').doMeta();
 	},
 
-
 	/**
 	 * Check for empty categories and make it still possible to drop questions
 	 */
@@ -60,7 +59,6 @@ jsBackend.faq =
 			});
 		}
 	},
-
 
 	/**
 	 * Bind drag and dropping of a category
@@ -153,6 +151,5 @@ jsBackend.faq =
 		});
 	}
 }
-
 
 $(jsBackend.faq.init);

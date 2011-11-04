@@ -19,7 +19,6 @@ jsBackend.blog =
 	}
 }
 
-
 jsBackend.blog.controls =
 {
 	currentCategory: null,
@@ -126,6 +125,5 @@ jsBackend.blog.controls =
 		jsBackend.blog.controls.currentCategory = $categoryId.val();
 	}
 }
-
 
 $(jsBackend.blog.init);

@@ -1,6 +1,5 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-
 /**
  * All methods related to the search
  *

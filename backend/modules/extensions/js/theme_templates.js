@@ -1,6 +1,5 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-
 /**
  * Interaction for the pages templates
  *
@@ -16,7 +15,6 @@ jsBackend.templates =
 		// change template
 		jsBackend.templates.changeTemplate();
 	},
-
 
 	/**
 	 * Switch templates

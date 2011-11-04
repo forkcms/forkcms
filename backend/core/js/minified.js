@@ -816,7 +816,6 @@ b.dequeue()})})}})(jQuery);
  * jQuery Fork stuff
  */
 
-
 /**
  * Meta-handler
  *
@@ -945,7 +944,6 @@ b.dequeue()})})}})(jQuery);
 		});
 	};
 })(jQuery);
-
 
 /**
  * Password generator
@@ -1077,7 +1075,6 @@ b.dequeue()})})}})(jQuery);
 	};
 })(jQuery);
 
-
 /**
  * Inline editing
  *
@@ -1196,7 +1193,6 @@ b.dequeue()})})}})(jQuery);
 				});
 			}
 
-
 			// destroy the element
 			function destroyElement()
 			{
@@ -1218,7 +1214,6 @@ b.dequeue()})})}})(jQuery);
 				// restore
 				editing = false;
 			}
-
 
 			// save the element
 			function saveElement()
@@ -1267,7 +1262,6 @@ b.dequeue()})})}})(jQuery);
 		});
 	};
 })(jQuery);
-
 
 /**
  * key-value-box
@@ -1520,7 +1514,6 @@ b.dequeue()})})}})(jQuery);
 				$('#elementList-' + id).html(html);
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1537,7 +1530,6 @@ b.dequeue()})})}})(jQuery);
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -1557,7 +1549,6 @@ b.dequeue()})})}})(jQuery);
 		});
 	};
 })(jQuery);
-
 
 /**
  * Tag-box
@@ -1819,7 +1810,6 @@ b.dequeue()})})}})(jQuery);
 				$('#elementList-' + id).html(html);
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1836,7 +1826,6 @@ b.dequeue()})})}})(jQuery);
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -1856,7 +1845,6 @@ b.dequeue()})})}})(jQuery);
 		});
 	};
 })(jQuery);
-
 
 /**
  * Multiple select box
@@ -1908,7 +1896,6 @@ b.dequeue()})})}})(jQuery);
 						'	<div class="oneLiner">' +
 						'		<p>' +
 						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
-
 
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
@@ -1996,7 +1983,6 @@ b.dequeue()})})}})(jQuery);
 				}
 			}
 
-
 			// build the list
 			function build()
 			{
@@ -2047,7 +2033,6 @@ b.dequeue()})})}})(jQuery);
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -2064,7 +2049,6 @@ b.dequeue()})})}})(jQuery);
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -2086,7 +2070,6 @@ b.dequeue()})})}})(jQuery);
 		});
 	};
 })(jQuery);
-
 
 /**
  * Multiple text box
@@ -2311,7 +2294,6 @@ b.dequeue()})})}})(jQuery);
 				}
 			}
 
-
 			// build the list
 			function build()
 			{
@@ -2349,7 +2331,6 @@ b.dequeue()})})}})(jQuery);
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -2366,7 +2347,6 @@ b.dequeue()})})}})(jQuery);
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)

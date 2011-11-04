@@ -1,6 +1,5 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-
 /**
  * Interaction for the pages templates
  *
@@ -10,7 +9,6 @@ jsBackend.template =
 {
 	// default position names
 	defaultPositions: new Array('', 'main', 'left', 'right', 'top'),
-
 
 	/**
 	 * Kind of constructor
@@ -29,7 +27,6 @@ jsBackend.template =
 		$('.deletePosition').live('click', jsBackend.template.deletePosition);
 		$('.deleteBlock').live('click', jsBackend.template.deleteBlock);
 	},
-
 
 	/**
 	 * Add a block to a position
@@ -52,7 +49,6 @@ jsBackend.template =
 		// add to dom
 		blockContainer.insertBefore($(this));
 	},
-
 
 	/**
 	 * Add a position
@@ -85,7 +81,6 @@ jsBackend.template =
 		positionContainer.insertAfter($('#positionsList .position:last'));
 	},
 
-
 	/**
 	 * Delete a block in a position
 	 */
@@ -111,7 +106,6 @@ jsBackend.template =
 			$('select[id^=type]', this).attr('id', 'type' + positionIndex + blockIndex).attr('name', 'type_' + positionIndex + '_' + blockIndex);
 		});
 	},
-
 
 	/**
 	 * Delete a position

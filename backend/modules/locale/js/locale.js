@@ -11,7 +11,6 @@ jsBackend.locale =
 	}
 }
 
-
 jsBackend.locale.controls =
 {
 	init: function()
@@ -63,6 +62,5 @@ jsBackend.locale.controls =
 		}
 	}
 }
-
 
 $(jsBackend.locale.init);

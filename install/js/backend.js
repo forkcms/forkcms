@@ -15,7 +15,6 @@ jsBackend =
 	}
 }
 
-
 jsBackend.controls =
 {
 	// init, something like a constructor
@@ -23,7 +22,6 @@ jsBackend.controls =
 	{
 		jsBackend.controls.bindPasswordStrengthMeter();
 	},
-
 
 	bindPasswordStrengthMeter: function()
 	{
@@ -59,7 +57,6 @@ jsBackend.controls =
 			});
 		}
 	},
-
 
 	// check a string for passwordstrength
 	checkPassword: function(string)
@@ -109,7 +106,6 @@ jsBackend.controls =
 	}
 }
 
-
 jsBackend.forms =
 {
 	// init, something like a constructor
@@ -119,13 +115,11 @@ jsBackend.forms =
 		jsBackend.forms.submitWithLinks();
 	},
 
-
 	// set the focus on the first field
 	focusFirstField: function()
 	{
 		$('form input:visible:not(.noFocus):first').focus();
 	},
-
 
 	// submit with links
 	submitWithLinks: function()
@@ -175,7 +169,6 @@ jsBackend.forms =
 	}
 }
 
-
 jsBackend.layout =
 {
 	// init, something like a constructor
@@ -193,7 +186,6 @@ jsBackend.layout =
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
 	},
-
 
 	// datafilter layout fixes
 	dataFilter: function()
@@ -216,7 +208,6 @@ jsBackend.layout =
 		$('.datafilter tbody .options').height(tallest);
 	},
 
-
 	// datagrid layout
 	dataGrid: function()
 	{
@@ -230,7 +221,6 @@ jsBackend.layout =
 		$('.dynamicStriping.dataGrid tr:nth-child(2n)').addClass('even');
 		$('.dynamicStriping.dataGrid tr:nth-child(2n+1)').addClass('odd');
 	},
-
 
 	// if the browser isn't supported show a warning
 	showBrowserWarning: function()

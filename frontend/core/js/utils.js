@@ -9,7 +9,6 @@ var utils =
 	debug: false
 }
 
-
 /**
  * Functions related to arrays
  *
@@ -64,7 +63,6 @@ utils.cookies =
 		return cookiesEnabled;
 	},
 
-
 	/**
 	 * Read a cookie
 	 *
@@ -106,7 +104,6 @@ utils.form =
 		return ($('input[name="' + element.attr('name') + '"]:checked').length >= 1);
 	},
 
-
 	/**
 	 * Is the value inside the element a valid emailaddress
 	 *
@@ -119,7 +116,6 @@ utils.form =
 		return regexp.test(element.val());
 	},
 
-
 	/**
 	 * Is the element filled
 	 *
@@ -131,7 +127,6 @@ utils.form =
 		return (utils.string.trim(element.val()) != '');
 	},
 
-
 	/**
 	 * Is the value inside the element a valid number
 	 *
@@ -142,7 +137,6 @@ utils.form =
 	{
 		return (!isNaN(element.val()) && element.val() != '');
 	},
-
 
 	/**
 	 * Is the value inside the element a valid URL
@@ -157,7 +151,6 @@ utils.form =
 	}
 },
 
-
 /**
  * Functions related to strings
  *
@@ -169,7 +162,6 @@ utils.string =
 {
 	// data member
 	div: false,
-
 
 	/**
 	 * Fix a HTML5-chunk, so IE can render it
@@ -218,7 +210,6 @@ utils.string =
 		return returnedFragment;
 	},
 
-
 	/**
 	 * Encode the string as HTML
 	 *
@@ -230,7 +221,6 @@ utils.string =
 		return $('<div/>').text(value).html();
 	},
 
-
 	/**
 	 * Decode the string as HTML
 	 *
@@ -241,7 +231,6 @@ utils.string =
 	{
 		return $('<div/>').html(value).text();
 	},
-
 
 	/**
 	 * Replace all occurences of one string into a string
@@ -256,7 +245,6 @@ utils.string =
 		if(value == undefined) return '';
 		return value.replace(new RegExp(needle, 'g'), replacement);
 	},
-
 
 	/**
 	 * Strip whitespace from the beginning and end of a string
@@ -274,7 +262,6 @@ utils.string =
 		return value.replace(pattern, '');
 	},
 
-
 	/**
 	 * PHP-like urlencode
 	 *
@@ -287,7 +274,6 @@ utils.string =
 		return encodeURIComponent(value).replace(/\%20/g, '+').replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/\~/g, '%7E');
 	},
 
-
 	/**
 	 * PHP-like urlencode
 	 *
@@ -299,7 +285,6 @@ utils.string =
 	{
 		return decodeURIComponent(value.replace(/\+/g, '%20').replace(/\%21/g, '!').replace(/\%27/g, "'").replace(/\%28/g, '(').replace(/\%29/g, ')').replace(/\%2A/g, '*').replace(/\%7E/g, '~'));
 	},
-
 
 	/**
 	 * Urlise a string (cfr. SpoonFilter::urlise)
@@ -342,7 +327,6 @@ utils.string =
 		return utils.string.trim(value, '-');
 	},
 
-
 	/**
 	 * Convert a HTML string to a XHTML string.
 	 *
@@ -372,7 +356,6 @@ utils.string =
 	}
 }
 
-
 /**
  * Functions related to the current url
  *
@@ -397,7 +380,6 @@ utils.url =
 			if(param.indexOf(paramName) === 0) return unescape(param.split('=')[1]);
 		}
 	},
-
 
 	/**
 	 * Get a GET parameter

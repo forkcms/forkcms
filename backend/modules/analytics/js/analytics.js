@@ -24,7 +24,6 @@ jsBackend.analytics =
 	}
 }
 
-
 jsBackend.analytics.charts =
 {
 	init: function()
@@ -51,7 +50,6 @@ jsBackend.analytics.charts =
 		}
 	}
 }
-
 
 jsBackend.analytics.chartPieChart =
 {
@@ -124,7 +122,6 @@ jsBackend.analytics.chartPieChart =
 	}
 }
 
-
 jsBackend.analytics.chartDoubleMetricPerDay =
 {
 	chart: '',
@@ -191,7 +188,6 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 	}
 }
 
-
 jsBackend.analytics.chartSingleMetricPerDay =
 {
 	chart: '',
@@ -251,7 +247,6 @@ jsBackend.analytics.chartSingleMetricPerDay =
 		jsBackend.analytics.chartSingleMetricPerDay.chart.destroy();
 	}
 }
-
 
 jsBackend.analytics.chartWidget =
 {
@@ -317,7 +312,6 @@ jsBackend.analytics.chartWidget =
 		jsBackend.analytics.chartWidget.chart.destroy();
 	}
 }
-
 
 jsBackend.analytics.loading =
 {
@@ -424,7 +418,6 @@ jsBackend.analytics.loading =
 	}
 }
 
-
 jsBackend.analytics.resize =
 {
 	interval: 1000,
@@ -475,6 +468,5 @@ jsBackend.analytics.resize =
 		}
 	}
 }
-
 
 $(jsBackend.analytics.init);

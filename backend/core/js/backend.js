@@ -16,7 +16,6 @@ var jsBackend =
 		language: null
 	},
 
-
 	// init, something like a constructor
 	init: function()
 	{
@@ -55,7 +54,6 @@ var jsBackend =
 		// do not move, should be run as the last item.
 		{option:!SPOON_DEBUG}jsBackend.forms.unloadWarning();{/option:!SPOON_DEBUG}
 	},
-
 
 	// init ajax
 	initAjax: function()
@@ -100,7 +98,6 @@ var jsBackend =
 	}
 }
 
-
 /**
  * Handle form messages (action feedback: success, error, ...)
  *
@@ -134,7 +131,6 @@ jsBackend.balloons =
 		// bind click
 		$toggleBalloon.bind('click', jsBackend.balloons.click);
 	},
-
 
 	// handle the click event (make it appear/disappear)
 	click: function(evt)
@@ -175,7 +171,6 @@ jsBackend.balloons =
 		}
 	},
 
-
 	// position the balloon
 	position: function(clickedElement, element)
 	{
@@ -187,7 +182,6 @@ jsBackend.balloons =
 		element.css('position', 'absolute').css('top', topValue).css('left', leftValue);
 	}
 }
-
 
 /**
  * Handle form functionality
@@ -215,7 +209,6 @@ jsBackend.controls =
 		jsBackend.controls.bindTargetBlank();
 		jsBackend.controls.bindToggleDiv();
 	},
-
 
 	// bind a checkbox dropdown combo
 	bindCheckboxDropdownCombo: function()
@@ -256,7 +249,6 @@ jsBackend.controls =
 		});
 	},
 
-
 	// bind a checkbox textfield combo
 	bindCheckboxTextfieldCombo: function()
 	{
@@ -295,7 +287,6 @@ jsBackend.controls =
 			}
 		});
 	},
-
 
 	// bind a radiobutton field combo
 	bindRadioButtonFieldCombo: function()
@@ -410,7 +401,6 @@ jsBackend.controls =
 		});
 	},
 
-
 	// let the fake dropdown behave nicely, like a real dropdown
 	bindFakeDropdown: function()
 	{
@@ -487,7 +477,6 @@ jsBackend.controls =
 		})
 	},
 
-
 	// toggle between full width and sidebar-layout
 	bindFullWidthSwitch: function()
 	{
@@ -520,7 +509,6 @@ jsBackend.controls =
 			}
 		);
 	},
-
 
 	// bind confirm message
 	bindMassAction: function()
@@ -630,7 +618,6 @@ jsBackend.controls =
 		});
 	},
 
-
 	// check all checkboxes with one checkbox in the tableheader
 	bindMassCheckbox: function()
 	{
@@ -665,7 +652,6 @@ jsBackend.controls =
 		});
 	},
 
-
 	bindPasswordGenerator: function()
 	{
 		// variables
@@ -684,7 +670,6 @@ jsBackend.controls =
 			);
 		}
 	},
-
 
 	// bind the password strength meter to the correct inputfield(s)
 	bindPasswordStrengthMeter: function()
@@ -724,7 +709,6 @@ jsBackend.controls =
 			});
 		}
 	},
-
 
 	// check a string for passwordstrength
 	checkPassword: function(string)
@@ -773,7 +757,6 @@ jsBackend.controls =
 		return 'weak';
 	},
 
-
 	// toggle a div
 	bindToggleDiv: function()
 	{
@@ -794,7 +777,6 @@ jsBackend.controls =
 		});
 	},
 
-
 	// bind checkboxes in a row
 	bindTableCheckbox: function()
 	{
@@ -809,13 +791,11 @@ jsBackend.controls =
 		});
 	},
 
-
 	// bind target blank
 	bindTargetBlank: function()
 	{
 		$('a.targetBlank').attr('target', '_blank');
 	},
-
 
 	// togle between the working languages
 	bindWorkingLanguageSelection: function()
@@ -867,7 +847,6 @@ jsBackend.controls =
 	}
 }
 
-
 /**
  * Backend effects
  *
@@ -882,7 +861,6 @@ jsBackend.effects =
 	{
 		jsBackend.effects.bindHighlight();
 	},
-
 
 	// if a var highlight exists in the url it will be highlighted
 	bindHighlight: function()
@@ -912,7 +890,6 @@ jsBackend.effects =
 	}
 }
 
-
 /**
  * Backend forms
  *
@@ -932,7 +909,6 @@ jsBackend.forms =
 		jsBackend.forms.submitWithLinks();
 		jsBackend.forms.tagBoxes();
 	},
-
 
 	datefields: function()
 	{
@@ -1034,13 +1010,11 @@ jsBackend.forms =
 		});
 	},
 
-
 	// set the focus on the first field
 	focusFirstField: function()
 	{
 		$('form input:visible:not(.noFocus):first').focus();
 	},
-
 
 	// set placeholders
 	placeholders: function()
@@ -1150,7 +1124,6 @@ jsBackend.forms =
 		}
 	},
 
-
 	// add tagbox to the correct input fields
 	tagBoxes: function()
 	{
@@ -1178,7 +1151,6 @@ jsBackend.forms =
 			});
 		}
 	},
-
 
 	// show a warning when people are leaving the
 	unloadWarning: function()
@@ -1254,7 +1226,6 @@ jsBackend.forms =
 	}
 }
 
-
 /**
  * Do custom layout/interaction stuff
  *
@@ -1279,7 +1250,6 @@ jsBackend.layout =
 		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 	},
 
-
 	// dataFilter layout fixes
 	dataFilter: function()
 	{
@@ -1301,7 +1271,6 @@ jsBackend.layout =
 		$('.dataFilter tbody .options').height(tallest);
 	},
 
-
 	// datagrid layout
 	dataGrid: function()
 	{
@@ -1315,7 +1284,6 @@ jsBackend.layout =
 		$('.dynamicStriping.dataGrid tr:nth-child(2n)').addClass('even');
 		$('.dynamicStriping.dataGrid tr:nth-child(2n+1)').addClass('odd');
 	},
-
 
 	// if the browser isn't supported, show a warning
 	showBrowserWarning: function()
@@ -1367,7 +1335,6 @@ jsBackend.layout =
 	},
 }
 
-
 /**
  * Handle form messages (action feedback: success, error, ...)
  *
@@ -1377,7 +1344,6 @@ jsBackend.layout =
 jsBackend.messages =
 {
 	timers: [],
-
 
 	// init, something like a constructor
 	init: function()
@@ -1390,14 +1356,12 @@ jsBackend.messages =
 		});
 	},
 
-
 	// hide a message
 	hide: function(element)
 	{
 		// fade out
 		element.fadeOut();
 	},
-
 
 	// add a new message into the que
 	add: function(type, content)
@@ -1421,7 +1385,6 @@ jsBackend.messages =
 		if(type == 'success') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
 	}
 }
-
 
 /**
  * Apply tabs
@@ -1483,7 +1446,6 @@ jsBackend.tabs =
 	}
 }
 
-
 /**
  * Apply TinyMCE
  *
@@ -1516,7 +1478,6 @@ jsBackend.tinyMCE =
 		});
 	},
 
-
 	// format text (after retrieving it from the editor)
 	afterSave: function(editor, object)
 	{
@@ -1533,7 +1494,6 @@ jsBackend.tinyMCE =
 		editor.setContent(utils.string.xhtml($tmp.html()));
 	},
 
-
 	// format text (before placing it in the editor)
 	loadContent: function(editor, object)
 	{
@@ -1549,7 +1509,6 @@ jsBackend.tinyMCE =
 		// check content
 		jsBackend.tinyMCE.checkContent(editor);
 	},
-
 
 	// custom content checks
 	checkContent: function(editor)
@@ -1578,7 +1537,6 @@ jsBackend.tinyMCE =
 	}
 }
 
-
 /**
  * Apply tooltip
  *
@@ -1600,7 +1558,6 @@ jsBackend.tooltip =
 	}
 }
 
-
 /**
  * Handle browsers with impaired CSS selector support
  *
@@ -1619,7 +1576,6 @@ jsBackend.selectors =
 		}
 	}
 }
-
 
 /**
  * Fix focus/blur events on impaired browsers
@@ -1647,7 +1603,6 @@ jsBackend.focusfix =
 		}
 	}
 }
-
 
 /**
  * Enable setting of sequence by drag & drop
@@ -1743,6 +1698,5 @@ jsBackend.tableSequenceByDragAndDrop =
 		}
 	}
 }
-
 
 $(jsBackend.init);

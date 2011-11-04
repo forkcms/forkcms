@@ -9,7 +9,6 @@ jsFrontend.profiles = {
 		jsFrontend.profiles.showPassword();
 	},
 
-
 	/**
 	 * Make possible to show passwords in clear text
 	 */

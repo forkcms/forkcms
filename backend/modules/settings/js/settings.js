@@ -1,6 +1,5 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-
 /**
  * Interaction for the settings index-action
  *
@@ -24,7 +23,6 @@ jsBackend.settings =
 		if($('#testEmailConnection').length > 0) $('#testEmailConnection').bind('click', jsBackend.settings.testEmailConnection);
 
 	},
-
 
 	testEmailConnection: function(evt)
 	{

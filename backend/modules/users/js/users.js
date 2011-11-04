@@ -12,7 +12,6 @@ jsBackend.users =
 	}
 }
 
-
 jsBackend.users.controls =
 {
 	// init, something like a constructor
@@ -20,7 +19,6 @@ jsBackend.users.controls =
 	{
 		jsBackend.users.controls.nick();
 	},
-
 
 	// set nickname
 	nick: function()
@@ -41,7 +39,6 @@ jsBackend.users.controls =
 			$('#nickname').keyup(function() { change = false; });
 		}
 	},
-
 
 	// calculate the nickname
 	calculateNick: function()

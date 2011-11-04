@@ -12,7 +12,6 @@ var jsFrontend =
 		language: '{$FRONTEND_LANGUAGE}'
 	},
 
-
 	// init, something like a constructor
 	init: function()
 	{
@@ -37,7 +36,6 @@ var jsFrontend =
 		// init twitter
 		jsFrontend.twitter.init();
 	},
-
 
 	// init
 	initAjax: function()
@@ -67,7 +65,6 @@ jsFrontend.controls =
 	{
 		jsFrontend.controls.bindTargetBlank();
 	},
-
 
 	// bind target blank
 	bindTargetBlank: function()
@@ -114,7 +111,6 @@ jsFrontend.forms =
 		jsFrontend.forms.placeholders();
 		jsFrontend.forms.datefields();
 	},
-
 
 	// initialize the datefields
 	datefields: function()
@@ -205,7 +201,6 @@ jsFrontend.forms =
 		});
 	},
 
-
 	// placeholder fallback for browsers that don't support placeholder
 	placeholders: function()
 	{
@@ -267,7 +262,6 @@ jsFrontend.forms =
 	}
 }
 
-
 /**
  * Gravatar related javascript
  *
@@ -307,7 +301,6 @@ jsFrontend.gravatar =
 	}
 }
 
-
 /**
  * Search controls
  *
@@ -327,7 +320,6 @@ jsFrontend.search =
 		// livesuggest (search results page: live feed of matches)
 		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
 	},
-
 
 	// autocomplete (search results page: autocomplete based on known search terms)
 	autocomplete: function()
@@ -387,7 +379,6 @@ jsFrontend.search =
 			});
 		});
 	},
-
 
 	// autosuggest (search widget)
 	autosuggest: function(length)
@@ -459,7 +450,6 @@ jsFrontend.search =
 			.appendTo(ul);
 		};
 	},
-
 
 	// livesuggest (search results page: live feed of matches)
 	livesuggest: function()
@@ -539,7 +529,6 @@ jsFrontend.statistics =
 		jsFrontend.statistics.trackOutboundLinks();
 	},
 
-
 	// track all outbound links
 	trackOutboundLinks: function()
 	{
@@ -565,7 +554,6 @@ jsFrontend.statistics =
 		}
 	}
 }
-
 
 /**
  * Twitter related stuff

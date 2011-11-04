@@ -54,7 +54,6 @@ jsBackend.mailmotor.charts =
 	}
 }
 
-
 jsBackend.mailmotor.chartPieChart =
 {
 	init: function()
@@ -113,7 +112,6 @@ jsBackend.mailmotor.chartPieChart =
 	}
 }
 
-
 jsBackend.mailmotor.changeGroup =
 {
 	init: function()
@@ -130,7 +128,6 @@ jsBackend.mailmotor.changeGroup =
 		});
 	}
 }
-
 
 jsBackend.mailmotor.linkAccount =
 {
@@ -218,7 +215,6 @@ jsBackend.mailmotor.linkAccount =
 			}
 		});
 	},
-
 
 	doCall: function()
 	{
@@ -475,7 +471,6 @@ jsBackend.mailmotor.step4 =
 		});
 	},
 
-
 	saveSendDate: function()
 	{
 		// cache date/time values
@@ -528,7 +523,6 @@ jsBackend.mailmotor.step4 =
 			}
 		});
 	},
-
 
 	sendMail: function()
 	{

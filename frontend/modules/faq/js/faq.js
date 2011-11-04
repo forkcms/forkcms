@@ -1,6 +1,5 @@
 if(!jsFrontend) { var jsFrontend = new Object(); }
 
-
 /**
  * Interaction for the faq module
  *
@@ -15,7 +14,6 @@ jsFrontend.faq =
 		if($('#faqFeedbackForm').length > 0) jsFrontend.faq.feedback.init();
 	}
 }
-
 
 // feedback form
 jsFrontend.faq.feedback =
