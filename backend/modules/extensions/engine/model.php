@@ -976,40 +976,39 @@ class BackendExtensionsModel
 					continue;
 				}
 
-				// check if there are positions
-				if(isset($template['positions']) && $template['positions'])
+				// if there are no positions we should continue with the next item
+				if(!isset($template['positions']) && $template['positions']) continue;
+
+				// loop positions
+				foreach($template['positions'] as $j => $position)
 				{
-					// loop positions
-					foreach($template['positions'] as $j => $position)
+					// check if position is valid
+					if(!isset($position['name']) || !$position['name'])
 					{
-						// check if position is valid
-						if(!isset($position['name']) || !$position['name'])
+						unset($information['templates'][$i]['positions'][$j]);
+						continue;
+					}
+
+					// ensure widgets are well-formed
+					if(!isset($position['widgets']) || !$position['widgets'])
+					{
+						$information['templates'][$i]['positions'][$j]['widgets'] = array();
+					}
+
+					// ensure editors are well-formed
+					if(!isset($position['editors']) || !$position['editors'])
+					{
+						$information['templates'][$i]['positions'][$j]['editors'] = array();
+					}
+
+					// loop widgets
+					foreach($position['widgets'] as $k => $widget)
+					{
+						// check if widget is valid
+						if(!isset($widget['module']) || !$widget['module'] || !isset($widget['action']) || !$widget['action'])
 						{
-							unset($information['templates'][$i]['positions'][$j]);
+							unset($information['templates'][$i]['positions'][$j]['widgets'][$k]);
 							continue;
-						}
-
-						// ensure widgets are well-formed
-						if(!isset($position['widgets']) || !$position['widgets'])
-						{
-							$information['templates'][$i]['positions'][$j]['widgets'] = array();
-						}
-
-						// ensure editors are well-formed
-						if(!isset($position['editors']) || !$position['editors'])
-						{
-							$information['templates'][$i]['positions'][$j]['editors'] = array();
-						}
-
-						// loop widgets
-						foreach($position['widgets'] as $k => $widget)
-						{
-							// check if widget is valid
-							if(!isset($widget['module']) || !$widget['module'] || !isset($widget['action']) || !$widget['action'])
-							{
-								unset($information['templates'][$i]['positions'][$j]['widgets'][$k]);
-								continue;
-							}
 						}
 					}
 				}

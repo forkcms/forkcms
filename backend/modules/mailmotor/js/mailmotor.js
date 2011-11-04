@@ -414,11 +414,6 @@ jsBackend.mailmotor.step3 =
 						}
 						else
 						{
-							// hide all previous errors, and add the new one
-							$('#'+ data.data.element).parent().children('.formError').remove();
-							$('#'+ data.data.element).parent().append('<span class="formError">'+ data.data.element_error +'</span>');
-
-							// show message
 							jsBackend.messages.add('error', data.message);
 						}
 					}

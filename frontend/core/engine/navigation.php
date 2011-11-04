@@ -468,45 +468,40 @@ class FrontendNavigation extends FrontendBaseObject
 				foreach($pages as $pageId => $properties)
 				{
 					// only process pages with extra_blocks
-					if(isset($properties['extra_blocks']))
-					{
-						// loop extras
-						foreach($properties['extra_blocks'] as $extra)
-						{
-							// direct link?
-							if($extra['module'] == $module && $extra['action'] == $action)
-							{
-								// exact page was found, so return
-								return self::getURL($properties['page_id'], $language);
-							}
+					if(!isset($properties['extra_blocks'])) continue;
 
-							// correct module but no action
-							elseif($extra['module'] == $module && $extra['action'] == null)
-							{
-								// store pageId
-								$pageIdForURL = (int) $pageId;
-							}
+					// loop extras
+					foreach($properties['extra_blocks'] as $extra)
+					{
+						// direct link?
+						if($extra['module'] == $module && $extra['action'] == $action)
+						{
+							// exact page was found, so return
+							return self::getURL($properties['page_id'], $language);
+						}
+
+						// correct module but no action
+						elseif($extra['module'] == $module && $extra['action'] == null)
+						{
+							// store pageId
+							$pageIdForURL = (int) $pageId;
 						}
 					}
 				}
 			}
 		}
 
-		// pageId stored?
-		if($pageIdForURL !== null)
-		{
-			// build URL
-			$URL = self::getURL($pageIdForURL, $language);
+		// pageId stull null?
+		if($pageIdForURL === null) return self::getURL(404, $language);
 
-			// append action
-			$URL .= '/' . FL::act(SpoonFilter::toCamelCase($action));
+		// build URL
+		$URL = self::getURL($pageIdForURL, $language);
 
-			// return the URL
-			return $URL;
-		}
+		// append action
+		$URL .= '/' . FL::act(SpoonFilter::toCamelCase($action));
 
-		// fallback
-		return self::getURL(404, $language);
+		// return the URL
+		return $URL;
 	}
 
 	/**
@@ -533,18 +528,17 @@ class FrontendNavigation extends FrontendBaseObject
 				// loop pages
 				foreach($pages as $properties)
 				{
-					// only process pages with extra_blocks
-					if(isset($properties['extra_blocks']))
+					// no extra_blocks available, so skip this item
+					if(isset($properties['extra_blocks'])) continue;
+
+					// loop extras
+					foreach($properties['extra_blocks'] as $extra)
 					{
-						// loop extras
-						foreach($properties['extra_blocks'] as $extra)
+						// direct link?
+						if($extra['id'] == $id)
 						{
-							// direct link?
-							if($extra['id'] == $id)
-							{
-								// exact page was found, so return
-								return self::getURL($properties['page_id'], $language);
-							}
+							// exact page was found, so return
+							return self::getURL($properties['page_id'], $language);
 						}
 					}
 				}

@@ -4,7 +4,9 @@ Improvements:
 
 * Core: Upgraded TinyMCE to 3.4.7
 * Core: TinyMCE now includes all languages that are possible in the interface-language-dropdown.
+* Core: the keys when asking for a locale item now get camelcased so you can add enum values f.e. when using them in a datagrid.
 * Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
+* Pages: added a widget that shows the subpages as blocks with their title and meta description.
 
 Bugfixes:
 

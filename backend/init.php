@@ -109,44 +109,43 @@ class BackendInit
 			$className = func_get_arg(0);
 
 			// split in parts
-			if(preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts))
+			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
+
+
+			// the real matches
+			$parts = $parts[0];
+
+			// get root path constant and see if it exists
+			$rootPath = strtoupper(array_shift($parts)) . '_PATH';
+			if(!defined($rootPath)) return;
+
+			foreach($parts as $i => $part)
 			{
-				// the real matches
-				$parts = $parts[0];
+				// skip the first
+				if($i == 0) continue;
 
-				// get root path constant and see if it exists
-				$rootPath = strtoupper(array_shift($parts)) . '_PATH';
-				if(defined($rootPath))
+				// action
+				$action = strtolower(implode('_', $parts));
+
+				// module
+				$module = '';
+				for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
+
+				// fix action & module
+				$action = substr($action, strlen($module));
+				$module = substr($module, 0, -1);
+
+				// check the actions, engine & widgets directories
+				foreach(array('actions', 'engine', 'widgets') as $dir)
 				{
-					foreach($parts as $i => $part)
+					// file to be loaded
+					$pathToLoad = constant($rootPath) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+
+					// if it exists, load it!
+					if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
 					{
-						// skip the first
-						if($i == 0) continue;
-
-						// action
-						$action = strtolower(implode('_', $parts));
-
-						// module
-						$module = '';
-						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
-
-						// fix action & module
-						$action = substr($action, strlen($module));
-						$module = substr($module, 0, -1);
-
-						// check the actions, engine & widgets directories
-						foreach(array('actions', 'engine', 'widgets') as $dir)
-						{
-							// file to be loaded
-							$pathToLoad = constant($rootPath) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
-
-							// if it exists, load it!
-							if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
-							{
-								require_once $pathToLoad;
-								break 2;
-							}
-						}
+						require_once $pathToLoad;
+						break 2;
 					}
 				}
 			}

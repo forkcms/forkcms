@@ -37,6 +37,15 @@ class PagesInstaller extends ModuleInstaller
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
+		$extras['subpages_widget'] = $this->insertExtra(
+			'pages',
+			'widget',
+			'Subpages',
+			'subpages',
+			serialize(array('template' => 'subpages_default.tpl')),
+			'N',
+			2
+		);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
@@ -150,6 +159,15 @@ class PagesInstaller extends ModuleInstaller
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
+		$extras['subpages_widget'] = $this->insertExtra(
+			'pages',
+			'widget',
+			'Subpages',
+			'subpages',
+			serialize(array('template' => 'subpages_default.tpl')),
+			'N',
+			2
+		);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
@@ -198,6 +216,7 @@ class PagesInstaller extends ModuleInstaller
 					'parent_id' => 1,
 					'language' => $language),
 					null,
+					array('extra_id' => $extras['subpages_widget']),
 					array('extra_id' => $extras['search_form'], 'position' => 'top')
 				);
 

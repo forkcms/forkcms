@@ -30,6 +30,10 @@ jsBackend =
 		jsBackend.current.action = chunks[4];
 		jsBackend.current.language = chunks[2];
 
+		// set defaults
+		if(!jsBackend.current.module) jsBackend.current.module = 'dashboard';
+		if(!jsBackend.current.action) jsBackend.current.action = 'index';
+
 		// init stuff
 		jsBackend.initAjax();
 		jsBackend.balloons.init();

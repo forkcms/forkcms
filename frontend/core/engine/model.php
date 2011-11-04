@@ -441,96 +441,91 @@ class FrontendModel
 		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
 		$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
 
-		// validate keys
-		if($publicKey != '' && $privateKey != '')
+		// no keys, so stop here
+		if($publicKey == '' || $privateKey == '') return;
+
+		// get all apple-device tokens
+		$deviceTokens = (array) FrontendModel::getDB()->getColumn(
+			'SELECT s.value
+			 FROM users AS i
+			 INNER JOIN users_settings AS s
+			 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
+			array('Y', 'N', 'apple_device_token', 'N;')
+		);
+
+		// no devices, so stop here
+		if(empty($deviceTokens)) return;
+
+		// init var
+		$tokens = array();
+
+		// loop devices
+		foreach($deviceTokens as $row)
 		{
-			// get all apple-device tokens
-			$deviceTokens = (array) FrontendModel::getDB()->getColumn(
-				'SELECT s.value
-				 FROM users AS i
-				 INNER JOIN users_settings AS s
-				 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
-				array('Y', 'N', 'apple_device_token', 'N;')
-			);
+			// unserialize
+			$row = unserialize($row);
 
-			// any devices?
-			if(!empty($deviceTokens))
+			// loop and add
+			foreach($row as $item) $tokens[] = $item;
+		}
+
+		// no tokens, so stop here
+		if(empty($tokens)) return;
+
+		// require the class
+		require_once PATH_LIBRARY . '/external/fork_api.php';
+
+		// create instance
+		$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+		try
+		{
+			// push
+			$response = $forkAPI->applePush($tokens, $alert, $badge, $sound, $extraDictionaries);
+
+			if(!empty($response))
 			{
-				// init var
-				$tokens = array();
+				// get db
+				$db = FrontendModel::getDB(true);
 
-				// loop devices
-				foreach($deviceTokens as $row)
+				// loop the failed keys and remove them
+				foreach($response as $deviceToken)
 				{
-					// unserialize
-					$row = unserialize($row);
+					// get setting wherin the token is available
+					$row = $db->getRecord(
+						'SELECT i.*
+						 FROM users_settings AS i
+						 WHERE i.name = ? AND i.value LIKE ?',
+						array('apple_device_token', '%' . $deviceToken . '%')
+					);
 
-					// loop and add
-					foreach($row as $item) $tokens[] = $item;
-				}
-
-				// any tokens?
-				if(!empty($tokens))
-				{
-					// require the class
-					require_once PATH_LIBRARY . '/external/fork_api.php';
-
-					// create instance
-					$forkAPI = new ForkAPI($publicKey, $privateKey);
-
-					try
+					// any rows?
+					if(!empty($row))
 					{
-						// push
-						$response = $forkAPI->applePush($tokens, $alert, $badge, $sound, $extraDictionaries);
+						// reset data
+						$data = unserialize($row['value']);
 
-						if(!empty($response))
+						// loop keys
+						foreach($data as $key => $token)
 						{
-							// get db
-							$db = FrontendModel::getDB(true);
-
-							// loop the failed keys and remove them
-							foreach($response as $deviceToken)
-							{
-								// get setting wherin the token is available
-								$row = $db->getRecord(
-									'SELECT i.*
-									 FROM users_settings AS i
-									 WHERE i.name = ? AND i.value LIKE ?',
-									array('apple_device_token', '%' . $deviceToken . '%')
-								);
-
-								// any rows?
-								if(!empty($row))
-								{
-									// reset data
-									$data = unserialize($row['value']);
-
-									// loop keys
-									foreach($data as $key => $token)
-									{
-										// match and unset if needed.
-										if($token == $deviceToken) unset($data[$key]);
-									}
-
-									// no more tokens left?
-									if(empty($data)) $db->delete('users_settings', 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
-
-									// save
-									else $db->update('users_settings', array('value' => serialize($data)), 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
-								}
-							}
-
+							// match and unset if needed.
+							if($token == $deviceToken) unset($data[$key]);
 						}
-					}
 
-					catch(Exception $e)
-					{
-						if(SPOON_DEBUG) throw $e;
+						// no more tokens left?
+						if(empty($data)) $db->delete('users_settings', 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
+
+						// save
+						else $db->update('users_settings', array('value' => serialize($data)), 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
 					}
 				}
 			}
 		}
 
+		catch(Exception $e)
+		{
+			if(SPOON_DEBUG) throw $e;
+		}
 	}
 
 	/**
