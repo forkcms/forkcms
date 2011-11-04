@@ -40,7 +40,6 @@ jsBackend.dashboard =
 		// prevent default
 		evt.preventDefault();
 
-<<<<<<< HEAD
 		// variables
 		$editDashboardMessage = $('#editDashboardMessage');
 		$editDashboardClose = $('.editDashboardClose');
@@ -56,7 +55,6 @@ jsBackend.dashboard =
 		$(this).hide();
 
 		// show help text
-<<<<<<< HEAD
 		$editDashboardMessage.slideDown();
 
 		// show close buttons
