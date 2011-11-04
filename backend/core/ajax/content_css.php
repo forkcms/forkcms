@@ -53,7 +53,7 @@ class BackendCoreAjaxContentCss extends BackendBaseAJAXAction
 		if($theme !== null)
 		{
 			// add the styles specific for the current theme
-			$styles = array_merge($styles, $this->processFile(FRONTEND_PATH .'/themes/' . $theme . '/core/layout/css/screen.css', true));
+			$styles = array_merge($styles, $this->processFile(FRONTEND_PATH . '/themes/' . $theme . '/core/layout/css/screen.css', true));
 
 			// add the styles that should be overruled in the editor specific for the current theme
 			$styles = array_merge($styles, $this->processFile(FRONTEND_PATH . '/themes/' . $theme . '/core/layout/css/editor_content.css'));
