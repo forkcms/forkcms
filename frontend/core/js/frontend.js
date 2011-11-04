@@ -438,7 +438,7 @@ jsFrontend.search =
 				{
 					fork: { module: 'search', action: 'save' },
 					term: $(this).val()
-				},
+				}
 			});
 		})
 		// and also: alter the autocomplete style: add description!

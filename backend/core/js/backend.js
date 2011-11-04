@@ -305,26 +305,26 @@ jsBackend.controls =
 				// variables
 				$radiobutton = $(this).find('input:radio');
 
-				$radiobutton.bind('change', function(evt)
+				$radiobutton.bind('click', function(evt)
 				{
 					// redefine
 					$this = $(this);
 
 					// disable all
-					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
+					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ $radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
 
 					// get fields that should be enabled
-					$fields = $('input[name=' + radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + radiobutton.attr('name') + ']), select, textarea')
+					$fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
 
 					// enable
 					$fields.removeClass('disabled').prop('disabled', false);
 
 					// set focus
-					$fields[0].focus();
+					if(typeof $fields[0] != 'undefined') $fields[0].focus();
 				});
 
 				// change?
-				$radiobutton[0].change();
+				$radiobutton[0].click();
 			}
 		});
 	},
