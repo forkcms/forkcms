@@ -1,9 +1,5 @@
 	{include:{$BACKEND_CORE_PATH}/layout/templates/messaging.tpl}
 
-	{iteration:javascriptFiles}
-		<script src="{$javascriptFiles.path}"></script>{$CRLF}{$TAB}
-	{/iteration:javascriptFiles}
-
 	<script>
 		//<![CDATA[
 			{option:formError}jsBackend.messages.add('error', "{$errFormError|addslashes}");{/option:formError}

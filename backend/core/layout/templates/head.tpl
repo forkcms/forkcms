@@ -13,5 +13,5 @@
 	<!--[if IE 7]><link rel="stylesheet" href="/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
 	<!--[if IE 8]><link rel="stylesheet" href="/backend/core/layout/css/conditionals/ie8.css" /><![endif]-->
 
-	{iteration:jsFiles}<script type="text/javascript" src="{$jsFiles.path}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
+	{iteration:jsFiles}<script src="{$jsFiles.path}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
 </head>
