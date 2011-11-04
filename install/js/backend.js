@@ -1,5 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
 jsBackend =
 {
 	// datamembers
@@ -15,6 +13,12 @@ jsBackend =
 	}
 }
 
+/**
+ * Handle form functionality
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.controls =
 {
 	// init, something like a constructor
@@ -25,9 +29,12 @@ jsBackend.controls =
 
 	bindPasswordStrengthMeter: function()
 	{
-		if($('.passwordStrength').length > 0)
+		// variables
+		$passwordStrength = $('.passwordStrength');
+
+		if($passwordStrength.length > 0)
 		{
-			$('.passwordStrength').each(function()
+			$passwordStrength.each(function()
 			{
 				// grab id
 				var id = $(this).data('id');
@@ -43,7 +50,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).bind('keyup', function()
+				$('#'+ id).live('keyup', function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -125,7 +132,7 @@ jsBackend.forms =
 	submitWithLinks: function()
 	{
 		// the html for the button that will replace the input[submit]
-		var replaceHTML = '<a class="{class}" href="#"><span>{label}</span></a>';
+		var replaceHTML = '<a class="{class}" href="#{id}"><span>{label}</span></a>';
 
 		// are there any forms that should be submitted with a link?
 		if($('form.submitWithLink').length > 0)
@@ -140,9 +147,9 @@ jsBackend.forms =
 				if(formId != '')
 				{
 					// loop every button to be replaced
-					$('form#'+ formId + '.submitWithLink input:submit').each(function()
+					$('form#'+ formId + '.submitWithLink input[type=submit]').each(function()
 					{
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({ position:'absolute', top:'-9000px', left: '-9000px' }).attr('tabindex', -1);
 					});
 
 					// add onclick event for button (button can't have the name submit)
@@ -152,14 +159,12 @@ jsBackend.forms =
 
 						// is the button disabled?
 						if($(this).prop('disabled')) return false;
-
-						//
 						else $('form#'+ formId).submit();
 					});
 
 					// dont submit the form on certain elements
-					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; });
-					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; });
+					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
+					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
 
 					// hijack the submit event
 					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
@@ -231,45 +236,45 @@ jsBackend.layout =
 		if(jQuery.browser.mozilla)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3).replace(/\./g, ''));
+			var version = parseInt(jQuery.browser.version.substr(0, 3).replace(/\./g, ''));
 
-			// lower then 3?
-			if(version < 19) showWarning = true;
+			// lower than 19?
+			if(version < 19) { showWarning = true; }
 		}
 
 		// check opera
 		if(jQuery.browser.opera)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1));
+			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
-			// lower then 9?
-			if(version < 9) showWarning = true;
+			// lower than 9?
+			if(version < 9) { showWarning = true; }
 		}
 
 		// check safari, should be webkit when using 1.4
 		if(jQuery.browser.safari)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3));
+			var version = parseInt(jQuery.browser.version.substr(0, 3));
 
-			// lower then 9?
-			if(version < 400) showWarning = true;
+			// lower than 1.4?
+			if(version < 400) { showWarning = true; }
 		}
 
 		// check IE
 		if(jQuery.browser.msie)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1));
+			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
-			// lower or equal then 6
-			if(version <= 6) showWarning = true;
+			// lower or equal than 6
+			if(version <= 6) { showWarning = true; }
 		}
 
 		// show warning if needed
-		if(showWarning) $('#showBrowserWarning').show();
+		if(showWarning) { $('#showBrowserWarning').show(); }
 	}
 }
 
-$(document).ready(jsBackend.init);
+$(jsBackend.init);

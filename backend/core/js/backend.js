@@ -1247,28 +1247,27 @@ jsBackend.layout =
 
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
-		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 	},
 
 	// dataFilter layout fixes
 	dataFilter: function()
 	{
 		// add last child and first child for IE
-		$('.dataFilter tbody td:first-child').addClass('firstChild');
-		$('.dataFilter tbody td:last-child').addClass('lastChild');
+		$('.datafilter tbody td:first-child').addClass('firstChild');
+		$('.datafilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;
 
 		// loop group
-		$('.dataFilter tbody .options').each(function()
+		$('.datafilter tbody .options').each(function()
 		{
 			// taller?
 			if($(this).height() > tallest) tallest = $(this).height();
 		});
 
 		// set new height
-		$('.dataFilter tbody .options').height(tallest);
+		$('.datafilter tbody .options').height(tallest);
 	},
 
 	// datagrid layout
@@ -1332,7 +1331,7 @@ jsBackend.layout =
 
 		// show warning if needed
 		if(showWarning) { $('#showBrowserWarning').show(); }
-	},
+	}
 }
 
 /**
