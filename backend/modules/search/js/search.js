@@ -1,5 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
 /**
  * All methods related to the search
  *
@@ -30,4 +28,4 @@ jsBackend.search =
 	}
 }
 
-$(document).ready(jsBackend.search.init);
+$(jsBackend.search.init);

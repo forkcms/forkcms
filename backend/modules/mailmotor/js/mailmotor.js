@@ -1,5 +1,8 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
+/**
+ * Interaction for the mailmotor
+ *
+ * @author	Matthias Mullie <matthias@netlash.com>
+ */
 jsBackend.mailmotor =
 {
 	init: function()
@@ -599,4 +602,4 @@ jsBackend.mailmotor.templateSelection =
 	}
 }
 
-$(document).ready(jsBackend.mailmotor.init);
+$(jsBackend.mailmotor.init);

@@ -1,5 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
 /**
  * Interaction for the faq categories
  *
@@ -49,4 +47,4 @@ jsBackend.faq.edit =
 	}
 }
 
-$(document).ready(jsBackend.faq.edit.init);
+$(jsBackend.faq.edit.init);

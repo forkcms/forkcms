@@ -1,5 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
 /**
  * Interaction for the pages module
  *
@@ -943,4 +941,4 @@ jsBackend.pages.tree =
 	}
 }
 
-$(document).ready(jsBackend.pages.init);
+$(jsBackend.pages.init);

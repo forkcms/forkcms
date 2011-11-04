@@ -1,5 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
 /**
  * Interaction for the pages templates
  *
@@ -144,4 +142,4 @@ jsBackend.template =
 	}
 }
 
-$(document).ready(jsBackend.template.init);
+$(jsBackend.template.init);

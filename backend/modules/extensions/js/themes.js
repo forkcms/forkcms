@@ -1,5 +1,8 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
+/**
+ * Interaction for the pages templates
+ *
+ * @author	Matthias Mullie <matthias@netlash.com>
+ */
 jsBackend.extensions =
 {
 	init: function()
@@ -37,4 +40,4 @@ jsBackend.extensions.themeSelection =
 	}
 }
 
-$(document).ready(jsBackend.extensions.init);
+$(jsBackend.extensions.init);

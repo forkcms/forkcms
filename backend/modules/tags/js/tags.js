@@ -1,5 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
 /**
  * Interaction for the tags module
  *
@@ -18,4 +16,4 @@ jsBackend.tags =
 	}
 }
 
-$(document).ready(jsBackend.tags.init);
+$(jsBackend.tags.init);

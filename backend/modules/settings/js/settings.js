@@ -1,5 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
 /**
  * Interaction for the settings index-action
  *
@@ -63,4 +61,4 @@ jsBackend.settings =
 	}
 }
 
-$(document).ready(jsBackend.settings.init);
+$(jsBackend.settings.init);
