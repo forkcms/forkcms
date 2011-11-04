@@ -14,12 +14,7 @@ jsBackend.ckeditor =
 
 		// layout configuration
 		bodyClass: 'content',
-		contentsCss: [
-						'/frontend/core/layout/css/screen.css',{option:THEME_HAS_CSS}
-						'/frontend/themes/{$THEME}/core/layout/css/screen.css', {/option:THEME_HAS_CSS}
-						'/backend/core/layout/css/editor_content.css'{option:THEME_HAS_EDITOR_CSS},
-						'/frontend/themes/{$THEME}/core/layout/css/editor_content.css'{/option:THEME_HAS_EDITOR_CSS}
-					],
+		contentsCss: '/backend/ajax.php?fork[module]=core&fork[action]=content_css&fork[language]=en',
 		stylesSet: [],
 
 		// language options
@@ -52,8 +47,7 @@ jsBackend.ckeditor =
 		entities_latin: false,
 
 		// load some extra plugins
-		// extraPlugins: 'stylesheetparser,MediaEmbed',
-		extraPlugins: 'MediaEmbed',
+		extraPlugins: 'stylesheetparser,MediaEmbed',
 
 		// remove useless plugins
 		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley',
