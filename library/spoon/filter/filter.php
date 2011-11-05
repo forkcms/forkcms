@@ -811,12 +811,6 @@ class SpoonFilter
 		// trim whitespace and strip HTML tags
 		$string = trim($string);
 
-		// replace html entities that aren't replaced by SpoonFilter::htmlentitiesDecode (should be solved when using a newer Spoon Library)
-		$string = str_replace('&euro;', 'EUR', $string);
-		$string = str_replace('&#8364;', 'EUR', $string);
-		$string = str_replace('&#8211;', '-', $string);
-		$string = str_replace('&#8230;', '...', $string);
-
 		// decode html entities
 		$string = SpoonFilter::htmlentitiesDecode($string);
 

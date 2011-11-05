@@ -93,9 +93,6 @@ class FrontendMailmotorModel
 		// record is empty, stop here
 		if(empty($record)) return array();
 
-		// unserialize data field
-		$record['data'] = unserialize($record['data']);
-
 		// return the record
 		return $record;
 	}
@@ -177,6 +174,43 @@ class FrontendMailmotorModel
 
 		// return the URL
 		return SITE_URL . FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/' . $id . '?type=' . $contentType . (($forCM == 1) ? '&cm=' . $forCM : '');
+	}
+
+	/**
+	 * Get the template record
+	 *
+	 * @param string $language The language.
+	 * @param string $name The name of the template.
+	 * @return array
+	 */
+	public static function getTemplate($language, $name)
+	{
+		// set the path to the template folders for this language
+		$path = PATH_WWW . '/backend/modules/mailmotor/templates/' . $language;
+
+		// load all templates in the 'templates' folder for this language
+		$templates = SpoonDirectory::getList($path, false, array('.svn'));
+
+		// stop here if no directories were found
+		if(empty($templates) || !in_array($name, $templates)) return array();
+
+		// load all templates in the 'templates' folder for this language
+		if(!SpoonFile::exists($path . '/' . $name . '/template.tpl')) throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
+		if(!SpoonFile::exists($path . '/' . $name . '/css/screen.css')) throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+
+		// set template data
+		$record = array();
+		$record['name'] = $name;
+		$record['language'] = $language;
+		$record['path_content'] = $path . '/' . $name . '/template.tpl';
+		$record['path_css'] = $path . '/' . $name . '/css/screen.css';
+		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
+
+		// check if the template file actually exists
+		if(SpoonFile::exists($record['path_content'])) $record['content'] = SpoonFile::getContent($record['path_content']);
+		if(SpoonFile::exists($record['path_css'])) $record['css'] = SpoonFile::getContent($record['path_css']);
+
+		return $record;
 	}
 
 	/**
