@@ -1,1 +1,1 @@
-{$mailingContent}
+{$body}
