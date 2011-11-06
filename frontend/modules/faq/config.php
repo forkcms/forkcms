@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object
  *
- * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
  */
 class FrontendFaqConfig extends FrontendBaseConfig
 {

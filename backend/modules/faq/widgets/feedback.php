@@ -10,7 +10,7 @@
 /**
  * This widget will show the latest feedback
  *
- * @author Jelmer Snoeck <jelmer@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFaqWidgetFeedback extends BackendBaseWidget
 {

@@ -10,8 +10,8 @@
 /**
  * In this file we store all generic functions that we will be using in the faq module
  *
- * @author Lester Lievens <lester@netlash.com>
- * @author Matthias Mullie <matthias@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
+ * @author Matthias Mullie <matthias.mullie@netlash.com>
  * @author Annelies Van Extergem <annelies@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
