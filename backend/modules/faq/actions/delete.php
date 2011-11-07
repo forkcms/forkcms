@@ -10,7 +10,7 @@
 /**
  * This action will delete a question
  *
- * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFaqDelete extends BackendBaseActionDelete

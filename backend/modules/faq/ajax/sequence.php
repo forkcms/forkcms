@@ -10,7 +10,7 @@
 /**
  * Reorder categories
  *
- * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
  */
 class BackendFaqAjaxSequence extends BackendBaseAJAXAction
 {
