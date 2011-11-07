@@ -15,6 +15,7 @@ Bugfixes:
 * Core: fix default module, action, language in JS - was messed up on dashboard.
 * Core: fix issue in template compiler; nested iterations where child ends in name of parent, did not work.
 * Core: removed the guessing of the library path in the installer. When Spoon can't be located a textbox will be shown wherin you can enter the path to Spoon.
+* Core: fixed issue when displaying empty pages without blocks linked.
 * ContentBlocks: fixed a database exception when deleting content blocks, thx to Sam Tubbax.
 * Extensions: fixed typo, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/207 by Bart.
 * Extensions: editing a template without default-data was triggering a notices, as mentioned by Bart on http://forkcms.lighthouseapp.com/projects/61890/tickets/204.
