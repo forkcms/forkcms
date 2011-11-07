@@ -319,7 +319,7 @@ class FrontendNavigation extends FrontendBaseObject
 				$navigation[$type][$parentId][$id]['parent_id'] = $parentId;
 
 				// add depth
-				$navigation[$type][$parentId][$id]['depth'] = $depth;
+				$navigation[$type][$parentId][$id]['depth'] = $depthCounter;
 
 				// set link
 				$navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL($page['page_id']);
