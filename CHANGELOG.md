@@ -25,7 +25,9 @@ Bugfixes:
 * Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.
 * Location: invalid item was used in the template, and the JS should only be excuted after jQuery is loaded, as mentioned by Floris on http://forkcms.lighthouseapp.com/projects/61890/tickets/205.
 * Pages: classname for sitemap was wrong.
+* Pages: navigation now contains valid depth-key in template.
 * Tags: inline editing wasn't working anymore due the new way of using AJAX.
+* Tools: improved whitespace-check in codesniffer.
 
 
 3.0.0 (2011-11-01)
