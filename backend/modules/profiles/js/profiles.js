@@ -1,13 +1,16 @@
-jsBackend = window.jsBackend || {};
-
+/**
+ * Interaction for the mailmotor
+ *
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.profiles =
 {
 	init: function()
 	{
 		jsBackend.profiles.addToGroup.init();
 	},
-	
-	
+
+
 	addToGroup:
 	{
 		init: function()
@@ -36,4 +39,4 @@ jsBackend.profiles =
 	}
 }
 
-$(function() { jsBackend.profiles.init(); });
+$(jsBackend.profiles.init);
