@@ -1,4 +1,4 @@
-3.1.0 (xxxx-xx-xx)
+3.1.0 (2011-11-08)
 --
 Improvements:
 
@@ -28,6 +28,7 @@ Bugfixes:
 * Pages: navigation now contains valid depth-key in template.
 * Tags: inline editing wasn't working anymore due the new way of using AJAX.
 * Tools: improved whitespace-check in codesniffer.
+* Faq: fixed collation of table faq_feedback.
 
 
 3.0.0 (2011-11-01)
