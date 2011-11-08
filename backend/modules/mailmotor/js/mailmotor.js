@@ -120,11 +120,10 @@ jsBackend.mailmotor.changeGroup =
 	init: function()
 	{
 		// cache objects
-		var dropdown = $('#subscriptions');
-		var form = $('#edit');
+		$dropdown = $('#subscriptions');
 
 		// dropdown is changed
-		dropdown.change(function()
+		$dropdown.change(function()
 		{
 			// redirect with the new group
 			window.location = document.location.pathname +'?token=true&email='+ variables['email'] +'&group_id='+ $(this).val();
@@ -137,10 +136,10 @@ jsBackend.mailmotor.linkAccount =
 	init: function()
 	{
 		// cache objects
-		var confirm = $('#linkAccount');
-		var url = $('#url');
-		var username = $('#username');
-		var password = $('#password');
+		$confirm = $('#linkAccount');
+		$url = $('#url');
+		$username = $('#username');
+		$password = $('#password');
 
 		// prevent submit on keyup
 		$('#accountBox input').keypress(function(e)
@@ -151,7 +150,7 @@ jsBackend.mailmotor.linkAccount =
 				e.preventDefault();
 
 				// if all fields are set
-				if(url.val() != '' && username.val() != '' && password.val() != '')
+				if($url.val() != '' && $username.val() != '' && $password.val() != '')
 				{
 					// do the call to link the account
 					jsBackend.mailmotor.linkAccount.doCall();
@@ -160,7 +159,7 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// link account button clicked
-		confirm.live('click', function(e)
+		$confirm.live('click', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -173,13 +172,16 @@ jsBackend.mailmotor.linkAccount =
 		$('#clientId').change(function(e)
 		{
 			var clientId = $(this).val();
+			$companyName = $('#companyName');
+			$contactName = $('#contactName');
+			$contactEmail = $('#contactEmail');
 
 			// '0' is the 'create new client' option, so we have to reset the input
 			if(clientId == '0')
 			{
-				$('#companyName').val('');
-				$('#contactName').val('');
-				$('#contactEmail').val('');
+				$companyName.val('');
+				$contactName.val('');
+				$contactEmail.val('');
 			}
 
 			// an existing client was chosen, so we have to update the info fields with the current details of the client
@@ -210,9 +212,9 @@ jsBackend.mailmotor.linkAccount =
 							}
 						});
 
-						$('#companyName').val(data.data.company);
-						$('#contactName').val(data.data.contact_name);
-						$('#contactEmail').val(data.data.email);
+						$companyName.val(data.data.company);
+						$contactName.val(data.data.contact_name);
+						$contactEmail.val(data.data.email);
 					}
 				});
 			}
@@ -221,9 +223,9 @@ jsBackend.mailmotor.linkAccount =
 
 	doCall: function()
 	{
-		var url = $('#url');
-		var username = $('#username');
-		var password = $('#password');
+		$url = $('#url');
+		$username = $('#username');
+		$password = $('#password');
 
 		// make the call
 		$.ajax(
@@ -231,9 +233,9 @@ jsBackend.mailmotor.linkAccount =
 			data:
 			{
 				fork: { action: 'link_account' },
-				url: url.val(),
-				username: username.val(),
-				password: password.val()
+				url: $url.val(),
+				username: $username.val(),
+				password: $password.val()
 			},
 			success: function(data, textStatus)
 			{
@@ -264,14 +266,14 @@ jsBackend.mailmotor.resizing =
 {
 	init: function()
 	{
-		var iframe = $('#contentBox');
-		var iframeBox = $('#iframeBox');
+		$iframe = $('#contentBox');
+		$iframeBox = $('#iframeBox');
 
 		// make the plain content textarea resizable
 		$('#contentPlain').resizable({ handles: 's' });
 
 		// make the iframe resizable
-		iframeBox.resizable(
+		$iframeBox.resizable(
 		{
 			handles: 's',
 
@@ -286,7 +288,7 @@ jsBackend.mailmotor.resizing =
 				var overlay = $('<div></div>');
 
 				// append the overlay to the iframe box and give it an ID
-				iframeBox.append(overlay);
+				$iframeBox.append(overlay);
 				overlay[0].id = 'iframeOverlay';
 
 				// the overlay should be absolutely positioned with the top value aligned to the top of the iframe
@@ -298,7 +300,7 @@ jsBackend.mailmotor.resizing =
 				});
 
 				// height should be the height of the iframe
-				overlay.height(iframe.height());
+				overlay.height($iframe.height());
 				overlay.width('100%');
 			},
 			stop: function()
@@ -315,20 +317,20 @@ jsBackend.mailmotor.step3 =
 	init: function()
 	{
 		// cache objects
-		var iframe = $('#contentBox');
-		var iframeBox = $('#iframeBox');
-		var form = $('#step3');
+		$iframe = $('#contentBox');
+		$iframeBox = $('#iframeBox');
+		$form = $('#step3');
 
 		// only continue if the iframe is ready
-		iframe.load(function()
+		$iframe.load(function()
 		{
 			// cache objects from inside the iframe
-			var body = iframe.contents().find('body');
+			var body = $iframe.contents().find('body');
 
 			// give the iframebox the height of the body contents
-			iframeBox.height(body.height());
+			$iframeBox.height(body.height());
 
-			form.submit(function(e)
+			$form.submit(function(e)
 			{
 				// prevent the form from submitting
 				e.preventDefault();
@@ -400,8 +402,9 @@ jsBackend.mailmotor.step4 =
 	init: function()
 	{
 		// cache objects
-		var form = $('#step4');
-		var confirmBox = $('#sendMailingConfirmationModal');
+		$form = $('#step4');
+		$confirmBox = $('#sendMailingConfirmationModal');
+		$sendMailing = $('#sendMailing');
 		oSendDate = $('#sendOnDate');
 		oSendTime = $('#sendOnTime');
 
@@ -410,7 +413,7 @@ jsBackend.mailmotor.step4 =
 		var sendTime = oSendTime.val();
 
 		// initalize the confirmation modal
-		confirmBox.dialog(
+		$confirmBox.dialog(
 		{
 			autoOpen: false,
 			draggable: false,
@@ -464,13 +467,13 @@ jsBackend.mailmotor.step4 =
 		});
 
 		// sendMailing is clicked
-		$('#sendMailing').click(function(e)
+		$sendMailing.bind('click', function(e)
 		{
 			// prevent the form from submitting
 			e.preventDefault();
 
 			// open the dialog
-			confirmBox.dialog('open');
+			$confirmBox.dialog('open');
 		});
 	},
 
@@ -498,7 +501,7 @@ jsBackend.mailmotor.step4 =
 					buttonPane.removeClass('loading');
 
 					// destroy the dialog
-					confirmBox.dialog('close');
+					$confirmBox.dialog('close');
 
 					// show message
 					jsBackend.messages.add('error', data.message);
@@ -560,7 +563,7 @@ jsBackend.mailmotor.step4 =
 					buttonPane.removeClass('loading');
 
 					// destroy the dialog
-					confirmBox.dialog('close');
+					$confirmBox.dialog('close');
 
 					// show message
 					jsBackend.messages.add('error', data.message);
@@ -575,10 +578,10 @@ jsBackend.mailmotor.templateSelection =
 	init: function()
 	{
 		// store the list items
-		var listItems = $('#templateSelection li');
+		$listItems = $('#templateSelection li');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		listItems.click(function(evt)
+		$listItems.bind('click', function(evt)
 		{
 			// prevent default
 			evt.preventDefault();
@@ -593,7 +596,7 @@ jsBackend.mailmotor.templateSelection =
 			if(radiobutton.is(':checked'))
 			{
 				// remove the selected state from all other templates
-				listItems.removeClass('selected');
+				$listItems.removeClass('selected');
 
 				// add a selected state to the parent
 				radiobutton.parent('li').addClass('selected');
