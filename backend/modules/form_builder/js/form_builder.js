@@ -31,7 +31,7 @@ jsBackend.formBuilder =
 		if($selectMethod.length > 0)
 		{
 			jsBackend.formBuilder.handleMethodField();
-			$selectMethod.live('change', jsBackend.formBuilder.handleMethodField);
+			$selectMethod.on('change', jsBackend.formBuilder.handleMethodField);
 		}
 
 		$('#email').multipleTextbox(
@@ -100,7 +100,7 @@ jsBackend.formBuilder.fields =
 	bindDelete: function()
 	{
 		// get all delete buttons
-		$('.deleteField').live('click', function(evt)
+		$('.deleteField').on('click', function(evt)
 		{
 			// prevent default
 			evt.preventDefault();
@@ -283,7 +283,7 @@ jsBackend.formBuilder.fields =
 		});
 
 		// bind clicks
-		$('.openFieldDialog').live('click', function(evt)
+		$('.openFieldDialog').on('click', function(evt)
 		{
 			// prevent default
 			evt.preventDefault();
@@ -361,7 +361,7 @@ jsBackend.formBuilder.fields =
 	bindEdit: function()
 	{
 		// get all delete buttons
-		$('.editField').live('click', function(evt)
+		$('.editField').on('click', function(evt)
 		{
 			// prevent default
 			evt.preventDefault();
@@ -622,8 +622,8 @@ jsBackend.formBuilder.fields =
 			jsBackend.formBuilder.fields.handleValidation(wrapper);
 
 			// on change
-			$(wrapper).find('select:first').live('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
-			$(wrapper).find('input:checkbox').live('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
+			$(wrapper).find('select:first').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
+			$(wrapper).find('input:checkbox').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 		});
 	},
 

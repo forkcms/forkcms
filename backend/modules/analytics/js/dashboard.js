@@ -15,7 +15,7 @@ jsBackend.analyticsDashboard =
 		$dataGridKeywords = $('#dataGridKeywords');
 		$trafficSourcesDate = $('#trafficSourcesDate');
 
-		$refreshTrafficSources.bind('click', function()
+		$refreshTrafficSources.on('click', function()
 		{
 			// disable button
 			$refreshTrafficSources.addClass('disabledButton');

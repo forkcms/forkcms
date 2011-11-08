@@ -21,7 +21,7 @@ jsFrontend.faq.feedback =
 	init: function()
 	{
 		// usefull status has been changed
-		$('#usefullY, #usefullN').bind('click', function()
+		$('#usefullY, #usefullN').on('click', function()
 		{
 			// get usefull status
 			var usefull = ($('#usefullY').attr('checked') ? true : false);

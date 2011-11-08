@@ -1,10 +1,16 @@
-$(document).ready(function() 
+/**
+ * Interaction for the installer
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
+$(document).ready(function()
 {
 	/*
 	 * Step 3 - general settings (languages)
 	 */
-	
-	if($('#languageTypeMultiple').is(':checked')) 
+
+	if($('#languageTypeMultiple').is(':checked'))
 	{
 		$('#languages').show();
 		$('#defaultLanguageContainer').show();
@@ -13,9 +19,9 @@ $(document).ready(function()
 	if($('#languageTypeSingle').is(':checked')) $('#language').show();
 
 	// multiple languages
-	$('#languageTypeMultiple').bind('change', function()
+	$('#languageTypeMultiple').on('change', function()
 	{
-		if($('#languageTypeMultiple').is(':checked')) 
+		if($('#languageTypeMultiple').is(':checked'))
 		{
 			$('#languages').show();
 			$('#language').hide();
@@ -26,23 +32,23 @@ $(document).ready(function()
 		setInterfaceDefaultLanguage();
 	});
 
-	$('#languages input:checkbox').bind('change', function()
+	$('#languages input:checkbox').on('change', function()
 	{
 		$('#defaultLanguage option').prop('disabled', true);
 		$('#languages input:checked').each(function() { $('#defaultLanguage option[value='+ $(this).val() +']').removeAttr('disabled'); });
 		if($('#defaultLanguage option[value='+ $('#defaultLanguage').val() +']').length == 0) $('#defaultLanguage').val($('#defaultLanguage option:enabled:first').val());
 		setInterfaceDefaultLanguage();
 	});
-	
-	$('#defaultLanguage').change(function()
+
+	$('#defaultLanguage').on('change', function()
 	{
 		setInterfaceDefaultLanguage();
 	});
 
 	// single languages
-	$('#languageTypeSingle').bind('change', function()
+	$('#languageTypeSingle').on('change', function()
 	{
-		if($('#languageTypeSingle').is(':checked')) 
+		if($('#languageTypeSingle').is(':checked'))
 		{
 			$('#languages').hide();
 			$('#language').show();
@@ -58,7 +64,7 @@ $(document).ready(function()
 		$('#interfaceLanguages').hide();
 		setInterfaceDefaultLanguage();
 	}
-	$('#sameInterfaceLanguage').bind('change', function()
+	$('#sameInterfaceLanguage').on('change', function()
 	{
 		if($('#sameInterfaceLanguage').is(':checked'))
 		{
@@ -72,7 +78,7 @@ $(document).ready(function()
 		}
 		setInterfaceDefaultLanguage();
 	});
-	$('#interfaceLanguages input:checkbox').bind('change', function()
+	$('#interfaceLanguages input:checkbox').on('change', function()
 	{
 		setInterfaceDefaultLanguage();
 	});
@@ -107,7 +113,7 @@ $(document).ready(function()
 		}
 	}
 
-	
+
 	/*
 	 * Step 5 - DB configuration
 	 */
@@ -115,22 +121,22 @@ $(document).ready(function()
 	$('#javascriptDisabled').remove();
 	$('#installerButton').removeAttr('disabled');
 
-	
+
 	/*
 	 * Step 7 - confirmation
 	 */
 
-	$('#showPassword').bind('change', function(evt) 
+	$('#showPassword').on('change', function(evt)
 	{
 		evt.preventDefault();
 
 		// show password
-		if($(this).is(':checked')) 
+		if($(this).is(':checked'))
 		{
 			$('#plainPassword').show();
 			$('#fakePassword').hide();
-		} 
-		else 
+		}
+		else
 		{
 			$('#plainPassword').hide();
 			$('#fakePassword').show();

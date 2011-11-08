@@ -3,7 +3,7 @@ $(function() {
 	{
 		// location of TinyMCE script
 		script_url : '/backend/core/js/tiny_mce/tiny_mce.js',
-		
+
 		// set height, so we don't have a tiny TinyMCE
 		height: '300',
 
@@ -60,7 +60,7 @@ $(function() {
 		paste_strip_class_attributes: 'mso',
 		paste_remove_spans: true,
 		paste_remove_styles: true,
-	
+
 		media_strict: false,
 
 		// hide the "click to edit" label
@@ -74,10 +74,10 @@ $(function() {
 				{
 					$('#' + editor.id + '_external').show();
 				}
-				
+
 				// init var
 				var added = false;
-	
+
 				// hook all events
 				editor.onEvent.add(function(editor, evt)
 				{
@@ -86,7 +86,7 @@ $(function() {
 					{
 						// hide click to edit
 						$(editor.getContainer()).siblings('.clickToEdit').hide();
-	
+
 						// reset var
 						added = true;
 					}

@@ -18,7 +18,7 @@ jsBackend.locale.controls =
 		if($('select#application').length > 0 && $('select#module').length > 0)
 		{
 			// bind
-			$('select#application').bind('change', jsBackend.locale.controls.enableDisableModules);
+			$('select#application').on('change', jsBackend.locale.controls.enableDisableModules);
 
 			// call to start
 			jsBackend.locale.controls.enableDisableModules();

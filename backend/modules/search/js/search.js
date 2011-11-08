@@ -22,7 +22,7 @@ jsBackend.search =
 		}
 
 		// settings enable/disable
-		$('#searchModules input[type=checkbox]').change(function()
+		$('#searchModules input[type=checkbox]').on('change', function()
 		{
 			$this = $(this);
 

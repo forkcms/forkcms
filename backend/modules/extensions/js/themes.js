@@ -19,7 +19,7 @@ jsBackend.extensions.themeSelection =
 		var listItems = $('#installedThemes li');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		listItems.click(function(evt)
+		listItems.on('click', function(evt)
 		{
 			// store the object
 			var radiobutton = $(this).find('input:radio:first');

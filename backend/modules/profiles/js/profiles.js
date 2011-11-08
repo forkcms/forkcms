@@ -10,7 +10,6 @@ jsBackend.profiles =
 		jsBackend.profiles.addToGroup.init();
 	},
 
-
 	addToGroup:
 	{
 		init: function()
@@ -25,7 +24,7 @@ jsBackend.profiles =
 					.removeAttr('id')
 					.attr('name', 'newGroup')
 					.css('width', '90%')
-					.change(function ()
+					.on('change', function()
 					{
 						// update the hidden input for the new group's ID with the current value
 						$txtNewGroup.val(this.value);

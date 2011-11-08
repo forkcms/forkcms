@@ -123,7 +123,7 @@ jsBackend.mailmotor.changeGroup =
 		$dropdown = $('#subscriptions');
 
 		// dropdown is changed
-		$dropdown.change(function()
+		$dropdown.on('change', function()
 		{
 			// redirect with the new group
 			window.location = document.location.pathname +'?token=true&email='+ variables['email'] +'&group_id='+ $(this).val();
@@ -142,7 +142,7 @@ jsBackend.mailmotor.linkAccount =
 		$password = $('#password');
 
 		// prevent submit on keyup
-		$('#accountBox input').keypress(function(e)
+		$('#accountBox input').on('keypress', function(e)
 		{
 			if(e.keyCode == 13)
 			{
@@ -159,7 +159,7 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// link account button clicked
-		$confirm.live('click', function(e)
+		$confirm.on('click', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -169,7 +169,7 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// create client is checked
-		$('#clientId').change(function(e)
+		$('#clientId').on('change', function(e)
 		{
 			var clientId = $(this).val();
 			$companyName = $('#companyName');
@@ -436,7 +436,7 @@ jsBackend.mailmotor.step4 =
 		});
 
 		// value of date/time has changed
-		$(oSendDate.selector +', '+ oSendTime.selector).change(function(e)
+		$(oSendDate.selector +', '+ oSendTime.selector).on('change', function(e)
 		{
 			// check if the send date/time is empty. if they are, reset the dates to the old values
 			if(oSendDate.val() == '') oSendDate.val(sendDate);
@@ -447,7 +447,7 @@ jsBackend.mailmotor.step4 =
 		});
 
 		// enter was pressed
-		$(oSendDate.selector +', '+ oSendTime.selector).keypress(function(e)
+		$(oSendDate.selector +', '+ oSendTime.selector).on('keypress', function(e)
 		{
 			if(e.keyCode == 13)
 			{
@@ -467,7 +467,7 @@ jsBackend.mailmotor.step4 =
 		});
 
 		// sendMailing is clicked
-		$sendMailing.bind('click', function(e)
+		$sendMailing.on('click', function(e)
 		{
 			// prevent the form from submitting
 			e.preventDefault();
@@ -581,7 +581,7 @@ jsBackend.mailmotor.templateSelection =
 		$listItems = $('#templateSelection li');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		$listItems.bind('click', function(evt)
+		$listItems.on('click', function(evt)
 		{
 			// prevent default
 			evt.preventDefault();

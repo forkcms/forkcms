@@ -20,7 +20,7 @@ jsBackend.templates =
 	changeTemplate: function()
 	{
 		// bind change event
-		$('#theme').change(function()
+		$('#theme').on('change', function()
 		{
 			// redirect to page to display template overview of this theme
 			window.location.search = '?theme=' + $(this).val();

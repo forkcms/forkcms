@@ -425,7 +425,7 @@ jsBackend.analytics.resize =
 
 	init: function()
 	{
-		$(window).resize(function()
+		$(window).on('resize', function()
 		{
 			resizeTime = new Date();
 			if(jsBackend.analytics.resize.timeout === false)

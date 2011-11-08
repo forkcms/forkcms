@@ -211,7 +211,7 @@ jsFrontend.forms =
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder], textarea[placeholder]').bind('focus', function()
+			$('input[placeholder], textarea[placeholder]').on('focus', function()
 			{
 				// grab element
 				var input = $(this);
@@ -227,7 +227,7 @@ jsFrontend.forms =
 				}
 			});
 
-			$('input[placeholder], textarea[placeholder]').bind('blur', function()
+			$('input[placeholder], textarea[placeholder]').on('blur', function()
 			{
 				// grab element
 				var input = $(this);
@@ -367,7 +367,7 @@ jsFrontend.search =
 		})
 		// ok, so, when we have been typing in the search textfield and we blur out of it,
 		// I suppose we have entered our full search query and we're ready to save it
-		.bind('blur', function()
+		.on('blur', function()
 		{
 			// ajax call!
 			$.ajax(
@@ -430,7 +430,7 @@ jsFrontend.search =
 		})
 		// ok, so, when we have been typing in the search textfield and we blur out of it,
 		// I suppose we have entered our full search query and we're ready to save it
-		.bind('blur', function()
+		.on('blur', function()
 		{
 			// ajax call!
 			$.ajax(
@@ -462,7 +462,7 @@ jsFrontend.search =
 		var $input = $('input.liveSuggest');
 
 		// change in input = do the dance: live search results completion
-		$input.bind('keyup', function()
+		$input.on('keyup', function()
 		{
 			var $searchContainer = $('#searchContainer');
 
@@ -542,7 +542,7 @@ jsFrontend.statistics =
 			};
 
 			// bind on all links that don't have the class noTracking
-			$('a:external:not(.noTracking)').live('click', function(evt)
+			$('a:external:not(.noTracking)').on('click', function(evt)
 			{
 				var $this = $(this);
 				var link = $this.attr('href');
@@ -569,7 +569,7 @@ jsFrontend.twitter =
 		if(typeof _gaq == 'object' && typeof twttr == 'object')
 		{
 			// bind event, so we can track the tweets
-			twttr.events.bind('tweet', function(event)
+			twttr.events.on('tweet', function(event)
 			{
 				// valid event?
 				if(event)

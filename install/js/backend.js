@@ -50,7 +50,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).live('keyup', function()
+				$('#'+ id).on('keyup', function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -153,7 +153,7 @@ jsBackend.forms =
 					});
 
 					// add onclick event for button (button can't have the name submit)
-					$('form#'+ formId + ' a.submitButton').bind('click', function(evt)
+					$('form#'+ formId + ' a.submitButton').on('click', function(evt)
 					{
 						evt.preventDefault();
 
@@ -163,8 +163,8 @@ jsBackend.forms =
 					});
 
 					// dont submit the form on certain elements
-					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
-					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
+					$('form#'+ formId + ' .dontSubmit').on('focus', function() { dontSubmit = true; })
+					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
 
 					// hijack the submit event
 					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });

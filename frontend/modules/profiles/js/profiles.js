@@ -15,7 +15,7 @@ jsFrontend.profiles = {
 	showPassword: function()
 	{
 		// checkbox showPassword is clicked
-		$('#showPassword').click(function()
+		$('#showPassword').on('click', function()
 		{
 			// checkbox is checked
 			if($(this).is(':checked'))

@@ -20,10 +20,10 @@ jsBackend.template =
 		$('#position1').parent().find('.deletePosition').remove();
 
 		// add handlers
-		$('#addPosition').live('click', jsBackend.template.addPosition);
-		$('.addBlock').live('click', jsBackend.template.addBlock);
-		$('.deletePosition').live('click', jsBackend.template.deletePosition);
-		$('.deleteBlock').live('click', jsBackend.template.deleteBlock);
+		$('#addPosition').on('click', jsBackend.template.addPosition);
+		$('.addBlock').on('click', jsBackend.template.addBlock);
+		$('.deletePosition').on('click', jsBackend.template.deletePosition);
+		$('.deleteBlock').on('click', jsBackend.template.deleteBlock);
 	},
 
 	/**

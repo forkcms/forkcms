@@ -16,9 +16,9 @@ jsBackend.dashboard =
 		$doneEditingDashboard = $('#doneEditingDashboard');
 		$editDashboardClose = $('.editDashboardClose');
 
-		$editDashboard.bind('click', jsBackend.dashboard.load);
-		$doneEditingDashboard.bind('click', jsBackend.dashboard.save);
-		$editDashboardClose.bind('click', jsBackend.dashboard.close);
+		$editDashboard.on('click', jsBackend.dashboard.load);
+		$doneEditingDashboard.on('click', jsBackend.dashboard.save);
+		$editDashboardClose.on('click', jsBackend.dashboard.close);
 	},
 
 	close: function(evt)
@@ -45,7 +45,8 @@ jsBackend.dashboard =
 		$column = $('.column');
 
 		// bind before unload event
-		$(window).bind('beforeunload', function() {
+		$(window).on('beforeunload', function()
+		{
 			return '{$msgValuesAreChanged}';
 		});
 
@@ -118,7 +119,7 @@ jsBackend.dashboard =
 		$sortableWidget = $('.sortableWidget');
 
 		// unbind before unload event
-		$(window).unbind('beforeunload');
+		$(window).off('beforeunload');
 
 		// show edit text
 		$editDashboard.show();
@@ -131,7 +132,7 @@ jsBackend.dashboard =
 
 		// unbind
 		$column.sortable('destroy');
-		$sortableWidget.draggable('destroy').unbind('mouseenter mouseleave');
+		$sortableWidget.draggable('destroy').off('mouseenter mouseleave');
 
 		// build new array
 		var newSequence = new Array();

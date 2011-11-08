@@ -15,7 +15,7 @@ jsBackend.settings =
 			canAddNew: true
 		});
 
-		$('#testEmailConnection').bind('click', jsBackend.settings.testEmailConnection);
+		$('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection);
 	},
 
 	testEmailConnection: function(evt)

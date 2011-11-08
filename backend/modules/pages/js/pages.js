@@ -22,7 +22,7 @@ jsBackend.pages =
 		}
 
 		// button to save to draft
-		$('#saveAsDraft').click(function(evt)
+		$('#saveAsDraft').on('click', function(evt)
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />');
 			$('form').submit();
@@ -46,14 +46,14 @@ jsBackend.pages.extras =
 	init: function()
 	{
 		// bind events
-		$('#extraType').change(jsBackend.pages.extras.populateExtraModules);
-		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
+		$('#extraType').on('change', jsBackend.pages.extras.populateExtraModules);
+		$('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
-		$('a.addBlock').live('click', jsBackend.pages.extras.showAddDialog);
-		$('a.deleteBlock').live('click', jsBackend.pages.extras.showDeleteDialog);
-		$('.showEditor').live('click', jsBackend.pages.extras.editContent);
-		$('.toggleVisibility').live('click', jsBackend.pages.extras.toggleVisibility);
+		$('a.addBlock').on('click', jsBackend.pages.extras.showAddDialog);
+		$('a.deleteBlock').on('click', jsBackend.pages.extras.showDeleteDialog);
+		$('.showEditor').on('click', jsBackend.pages.extras.editContent);
+		$('.toggleVisibility').on('click', jsBackend.pages.extras.toggleVisibility);
 
 		// make the blocks sortable
 		jsBackend.pages.extras.sortable();
@@ -598,7 +598,7 @@ jsBackend.pages.template =
 	init: function()
 	{
 		// bind events
-		$('#changeTemplate').bind('click', jsBackend.pages.template.showTemplateDialog);
+		$('#changeTemplate').on('click', jsBackend.pages.template.showTemplateDialog);
 
 		// load to initialize when adding a page
 		jsBackend.pages.template.changeTemplate();

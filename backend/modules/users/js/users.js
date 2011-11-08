@@ -27,11 +27,11 @@ jsBackend.users =
 			if($nickname.val() != jsBackend.users.calculateNick()) { change = false; }
 
 			// bind events
-			$name.keyup(function() { if(change) { $nickname.val(jsBackend.users.calculateNick()); } });
-			$surname.keyup(function() { if(change) { $nickname.val(jsBackend.users.calculateNick()); } });
+			$name.on('keyup', function() { if(change) { $nickname.val(jsBackend.users.calculateNick()); } });
+			$surname.on('keyup', function() { if(change) { $nickname.val(jsBackend.users.calculateNick()); } });
 
 			// unbind events
-			$nickname.keyup(function() { change = false; });
+			$nickname.on('keyup', function() { change = false; });
 		}
 	},
 

@@ -129,7 +129,7 @@ jsBackend.balloons =
 		});
 
 		// bind click
-		$toggleBalloon.bind('click', jsBackend.balloons.click);
+		$toggleBalloon.on('click', jsBackend.balloons.click);
 	},
 
 	// handle the click event (make it appear/disappear)
@@ -150,7 +150,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeOut(500);
 
 				// unbind
-				$(window).unbind('resize');
+				$(window).off('resize');
 			}
 
 			// not visible
@@ -228,7 +228,7 @@ jsBackend.controls =
 				$checkbox = $this.find('input:checkbox').eq(0);
 				$dropdown = $this.find('select').eq(0);
 
-				$checkbox.bind('change', function(evt)
+				$checkbox.on('change', function(evt)
 				{
 					// variables
 					$combo = $(this).parents().filter($checkboxDropdownCombo);
@@ -267,7 +267,7 @@ jsBackend.controls =
 				$checkbox = $this.find('input:checkbox').eq(0);
 				$textField = $this.find('input:text').eq(0);
 
-				$checkbox.bind('change', function(evt)
+				$checkbox.on('change', function(evt)
 				{
 					// variables
 					$combo = $this.parents().filter($checkboxTextFieldCombo);
@@ -305,7 +305,7 @@ jsBackend.controls =
 				// variables
 				$radiobutton = $(this).find('input:radio');
 
-				$radiobutton.bind('click', function(evt)
+				$radiobutton.on('click', function(evt)
 				{
 					// redefine
 					$this = $(this);
@@ -358,7 +358,7 @@ jsBackend.controls =
 						'{$lblOK|ucfirst}': function()
 						{
 							// unbind the beforeunload event
-							$(window).unbind('beforeunload');
+							$(window).off('beforeunload');
 
 							// close dialog
 							$this.dialog('close');
@@ -381,7 +381,7 @@ jsBackend.controls =
 		});
 
 		// bind clicks
-		$askConfirmation.live('click', function(evt)
+		$askConfirmation.on('click', function(evt)
 		{
 			// prevent default
 			evt.preventDefault();
@@ -407,7 +407,7 @@ jsBackend.controls =
 		// variables
 		$fakeDropdown = $('.fakeDropdown');
 
-		$fakeDropdown.bind('click', function(evt)
+		$fakeDropdown.on('click', function(evt)
 		{
 			// prevent default behaviour
 			evt.preventDefault();
@@ -428,8 +428,8 @@ jsBackend.controls =
 			if($(id).is(':visible'))
 			{
 				// remove events
-				$body.unbind('click');
-				$body.unbind('keyup');
+				$body.off('click');
+				$body.off('keyup');
 
 				// remove class
 				$parent.removeClass('selected');
@@ -440,12 +440,12 @@ jsBackend.controls =
 			else
 			{
 				// bind escape
-				$body.bind('keyup', function(evt)
+				$body.on('keyup', function(evt)
 				{
 					if(evt.keyCode == 27)
 					{
 						// unbind event
-						$body.unbind('keyup');
+						$body.off('keyup');
 
 						// remove class
 						$parent.removeClass('selected');
@@ -456,10 +456,10 @@ jsBackend.controls =
 				});
 
 				// bind click outside
-				$body.bind('click', function(evt)
+				$body.on('click', function(evt)
 				{
 					// unbind event
-					$body.unbind('click');
+					$body.off('click');
 
 					// remove class
 					$parent.removeClass('selected');
@@ -518,7 +518,7 @@ jsBackend.controls =
 		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 
 		// hook change events
-		$('table input:checkbox').change(function(evt)
+		$('table input:checkbox').on('change', function(evt)
 		{
 			// get parent table
 			var table = $(this).parents('table.dataGrid').eq(0);
@@ -580,7 +580,7 @@ jsBackend.controls =
 		});
 
 		// hijack the form
-		$('.tableOptions .massAction .submitButton').live('click', function(evt)
+		$('.tableOptions .massAction .submitButton').on('click', function(evt)
 		{
 			// prevent default action
 			evt.preventDefault();
@@ -622,7 +622,7 @@ jsBackend.controls =
 	bindMassCheckbox: function()
 	{
 		// mass checkbox changed
-		$('th .checkboxHolder input:checkbox').bind('change', function(evt)
+		$('th .checkboxHolder input:checkbox').on('change', function(evt)
 		{
 			// variables
 			$this = $(this);
@@ -636,7 +636,7 @@ jsBackend.controls =
 		});
 
 		// single checkbox changed
-		$('td.checkbox input:checkbox').bind('change', function(evt)
+		$('td.checkbox input:checkbox').on('change', function(evt)
 		{
 			// variables
 			$this = $(this);
@@ -695,7 +695,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).live('keyup', function()
+				$('#'+ id).on('keyup', function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -760,7 +760,7 @@ jsBackend.controls =
 	// toggle a div
 	bindToggleDiv: function()
 	{
-		$('.toggleDiv').live('click', function(evt)
+		$('.toggleDiv').on('click', function(evt)
 		{
 			// prevent default
 			evt.preventDefault();
@@ -784,7 +784,7 @@ jsBackend.controls =
 		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
-		$('tr td input:checkbox').live('change', function(evt)
+		$('tr td input:checkbox').on('change', function(evt)
 		{
 			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
 			else $(this).parents().filter('tr').eq(0).removeClass('selected');
@@ -803,7 +803,7 @@ jsBackend.controls =
 		// variables
 		$workingLanguage = $('#workingLanguage');
 
-		$workingLanguage.bind('change', function(evt)
+		$workingLanguage.on('change', function(evt)
 		{
 			// preventDefault
 			evt.preventDefault();
@@ -881,7 +881,7 @@ jsBackend.effects =
 				if($(selector)[0].tagName.toLowerCase() == 'tr'){ selector += ' td'; }
 
 				// when we hover over the item we stop the effect, otherwise we will mess up background hover styles
-				$(selector).bind('mouseover', function(){ $(selector).stop(true, true); });
+				$(selector).on('mouseover', function(){ $(selector).stop(true, true); });
 
 				// highlight!
 				$(selector).effect("highlight", {}, 5000);
@@ -1028,7 +1028,7 @@ jsBackend.forms =
 			$placeholder = $('input[placeholder]');
 
 			// bind focus
-			$placeholder.focus(function()
+			$placeholder.on('focus', function()
 			{
 				// grab element
 				$input = $(this);
@@ -1104,7 +1104,7 @@ jsBackend.forms =
 					});
 
 					// add onclick event for button (button can't have the name submit)
-					$('form#'+ formId + ' a.submitButton').bind('click', function(evt)
+					$('form#'+ formId + ' a.submitButton').on('click', function(evt)
 					{
 						evt.preventDefault();
 
@@ -1114,8 +1114,8 @@ jsBackend.forms =
 					});
 
 					// dont submit the form on certain elements
-					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
-					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
+					$('form#'+ formId + ' .dontSubmit').on('focus', function() { dontSubmit = true; })
+					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
 
 					// hijack the submit event
 					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
@@ -1171,12 +1171,12 @@ jsBackend.forms =
 			});
 
 			// bind before unload, this will ask the user if he really wants to leave the page
-			$(window).bind('beforeunload', jsBackend.forms.unloadWarningCheck);
+			$(window).on('beforeunload', jsBackend.forms.unloadWarningCheck);
 
 			// if a form is submitted we don't want to ask the user if he wants to leave, we know for sure
-			$('form').bind('submit', function(evt)
+			$('form').on('submit', function(evt)
 			{
-				if(!evt.isDefaultPrevented()) $(window).unbind('beforeunload');
+				if(!evt.isDefaultPrevented()) $(window).off('beforeunload');
 			});
 		}
 	},
@@ -1218,7 +1218,7 @@ jsBackend.forms =
 			if(evt) evt.preventDefault();
 
 			// unbind the event
-			$(window).unbind('beforeunload');
+			$(window).off('beforeunload');
 		}
 
 		// return if needed
@@ -1348,7 +1348,7 @@ jsBackend.messages =
 	init: function()
 	{
 		// bind close button
-		$('#messaging .formMessage .iconClose').live('click', function(evt)
+		$('#messaging .formMessage .iconClose').on('click', function(evt)
 		{
 			evt.preventDefault();
 			jsBackend.messages.hide($(this).parents('.formMessage'));
@@ -1435,7 +1435,7 @@ jsBackend.tabs =
 		// select tab
 		if($('.tabSelect').length > 0)
 		{
-			$('.tabSelect').live('click', function(evt)
+			$('.tabSelect').on('click', function(evt)
 			{
 				// prevent default
 				evt.preventDefault();
@@ -1460,7 +1460,7 @@ jsBackend.tinyMCE =
 		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
 
 		// bind click on the element
-		$('.clickToEdit').live('click', function(evt)
+		$('.clickToEdit').on('click', function(evt)
 		{
 			// get id
 			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
