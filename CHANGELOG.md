@@ -1,3 +1,10 @@
+3.1.1 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
+
+
 3.1.0 (2011-11-08)
 --
 Improvements:
