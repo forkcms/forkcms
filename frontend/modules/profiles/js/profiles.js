@@ -1,5 +1,8 @@
-if(!jsFrontend) { var jsFrontend = new Object(); }
-
+/**
+ * Interaction for the profiles module
+ *
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsFrontend.profiles = {
 	/**
 	 * Kind of constructor
@@ -40,4 +43,4 @@ jsFrontend.profiles = {
 	}
 }
 
-$(document).ready(jsFrontend.profiles.init);
+$(jsFrontend.profiles.init);
