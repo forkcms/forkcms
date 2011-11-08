@@ -752,7 +752,9 @@ class BackendExtensionsModel
 	public static function isThemeInstalled($theme)
 	{
 		return (bool) BackendModeL::getDB()->getVar(
-			'SELECT COUNT(id) FROM themes_templates WHERE theme = ?',
+			'SELECT COUNT(id)
+			 FROM themes_templates
+			 WHERE theme = ?',
 			array($theme)
 		);
 	}

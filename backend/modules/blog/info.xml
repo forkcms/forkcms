@@ -6,7 +6,17 @@
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[The blog module enables you to inform your visitores through articles. They will be able to comment on your articles (if enabled). By default RSS-feeds are generated.]]>
+		<![CDATA[
+			The Blog (you could also call it 'News') module features everything you need to easily post articles on your website. All you need to do is provide the content. Your visitors will be able to discuss your article and share it to friends via social networks.
+			Some of the more advanced features:
+			* scheduled publishing
+			* advanced seo tweaking per article
+			* filter articles on category, tag, year of publication or author
+			* comments with automatic spam detection
+			* visitors can subscribe to comments via e-mai
+			* Facebook like, Google+ and Tweet-button
+			* automatic recommendation of related articles
+		]]>
 	</description>
 	<authors>
 		<author>
