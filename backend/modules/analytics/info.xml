@@ -6,7 +6,11 @@
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[Through this module you can assess the most important statistics that were gathered by Google Analytics. Don't forget to add the tracking code, otherwise this module will be useless.]]>
+		<![CDATA[
+			No need to log into different places to manage your website. Within Fork CMS, you can both manage the content of the site and see statistics of how the site is used.
+			Full integration of Google Analytics, but with a filter. We chose the actionable data the average webmaster uses from Google Analytics, and display it within the back-end of Fork CMS. No clutter or unused statistics: only the essentials.
+			For those that want to dig in deeper, integrated links to Google Analytics are provided.
+		]]>
 	</description>
 	<authors>
 		<author>
