@@ -12,7 +12,6 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		P. Juchtmans <per@dubgeiser.net>
- * @author		Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @since		0.1.1
  */
 
@@ -25,6 +24,7 @@
  *
  *
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @since		1.1.3
  */
 class SpoonFormImage extends SpoonFormFile
@@ -178,14 +178,16 @@ class SpoonFormImage extends SpoonFormFile
 
 	/**
 	 * Checks if the extension is allowed.
+	 * The default allowed extentions are jpg, png, gif and jpeg.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error			The error message to set.
+	 * @param	array[optional] $extensions			The allowed extensions.
+	 * @param	string[optional] $error				The error message to set.
 	 */
 	public function isAllowedExtension($error = null)
 	{
-		// set image extensions
-		$extensions = array('jpg', 'png', 'gif', 'jpeg');
+		// set default image extensions if needed
+		if($extensions === null) $extensions = array('jpg', 'png', 'gif', 'jpeg');
 
 		// call parent
 		return parent::isAllowedExtension($extensions, $error);
@@ -194,15 +196,17 @@ class SpoonFormImage extends SpoonFormFile
 
 	/**
 	 * Checks if the mime-type is allowed.
+	 * The default allowed mime-types are image/jpg, image/png, image/gif and image/jpeg.
 	 * @see	http://www.w3schools.com/media/media_mimeref.asp
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The error message to set.
+	 * @param	array[optional] $allowedTypes		The allowed mime-types.
+	 * @param	string[optional] $error				The error message to set.
 	 */
-	public function isAllowedMimeType($error = null)
+	public function isAllowedMimeType(array $allowedTypes = null, $error = null)
 	{
-		// set image mime types
-		$allowedTypes = array('image/jpg', 'image/png', 'image/gif', 'image/jpeg');
+		// set default image mime types if needed
+		if($allowedTypes === null) $allowedTypes = array('image/jpg', 'image/png', 'image/gif', 'image/jpeg');
 
 		// call parent
 		return parent::isAllowedMimeType($allowedTypes, $error);
