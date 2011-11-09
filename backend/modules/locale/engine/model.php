@@ -27,7 +27,7 @@ class BackendLocaleModel
 	public static function buildCache($language, $application)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = Spoon::get('database');
 
 		// get types
 		$types = $db->getEnumValues('locale', 'type');
@@ -1125,9 +1125,13 @@ class BackendLocaleModel
 	 *
 	 * @param SimpleXMLElement $xml The locale XML.
 	 * @param bool[optional] $overwriteConflicts Should we overwrite when there is a conflict?
+	 * @param array[optional] $frontendLanguages The frontend languages to install locale for.
+	 * @param array[optional] $backendLanguages The backend languages to install locale for.
+	 * @param int[optional] $userId Id of the user these translations should be inserted for.
+	 * @param int[optional] $date The date the translation has been inserted.
 	 * @return array The import statistics
 	 */
-	public static function importXML(SimpleXMLElement $xml, $overwriteConflicts = false)
+	public static function importXML(SimpleXMLElement $xml, $overwriteConflicts = false, $frontendLanguages = null, $backendLanguages = null, $userId = null, $date = null)
 	{
 		$overwriteConflicts = (bool) $overwriteConflicts;
 		$statistics = array(
@@ -1135,23 +1139,35 @@ class BackendLocaleModel
 			'imported' => 0
 		);
 
+		// set defaults if necessary
+		// we can't simply use these right away, because this function is also calles by the installer, which does not have Backend-functions
+		if($frontendLanguages === null) $frontendLanguages = BL::getWorkingLanguages();
+		if($backendLanguages === null) $backendLanguages = BL::getInterfaceLanguages();
+		if($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
+		if($date === null) $date = BackendModel::getUTCDate();
+
+		// get database instance (don't use BackendModel::getDB() here because this function will also be called during install)
+		$db = Spoon::get('database');
+
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
-		$possibleModules = BackendModel::getModules();
-		$possibleTypes = array();
+		$possibleModules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
+
+		// types
+		$typesShort = (array) $db->getEnumValues('locale', 'type');
+		foreach($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
 
 		// install English translations anyhow, they're fallback
 		$possibleLanguages = array(
-			'frontend' => array_unique(array_merge(array('en'), array_keys(BL::getWorkingLanguages()))),
-			'backend' => array_unique(array_merge(array('en'), array_keys(BL::getInterfaceLanguages())))
+			'frontend' => array_unique(array_merge(array('en'), $frontendLanguages)),
+			'backend' => array_unique(array_merge(array('en'), $backendLanguages))
 		);
 
-		// types
-		$typesShort = (array) BackendModel::getDB()->getEnumValues('locale', 'type');
-		foreach($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
-
 		// current locale items (used to check for conflicts)
-		$currentLocale = (array) BackendModel::getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+		$currentLocale = (array) $db->getColumn(
+			'SELECT CONCAT(application, module, type, language, name)
+			 FROM locale'
+		);
 
 		// applications
 		foreach($xml as $application => $modules)
@@ -1196,14 +1212,14 @@ class BackendLocaleModel
 						$translation = (string) $translation;
 
 						// locale item
-						$locale['user_id'] = BackendAuthentication::getUser()->getUserId();
+						$locale['user_id'] = $userId;
 						$locale['language'] = $language;
 						$locale['application'] = $application;
 						$locale['module'] = $module;
 						$locale['type'] = $type;
 						$locale['name'] = $name;
 						$locale['value'] = $translation;
-						$locale['edited_on'] = BackendModel::getUTCDate();
+						$locale['edited_on'] = $date;
 
 						// found a conflict, overwrite it with the imported translation
 						if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
@@ -1212,10 +1228,12 @@ class BackendLocaleModel
 							$statistics['imported']++;
 
 							// overwrite
-							BackendModel::getDB(true)->update('locale',
-																$locale,
-																'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
-																array($application, $module, $type, $language, $name));
+							$db->update(
+								'locale',
+								$locale,
+								'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
+								array($application, $module, $type, $language, $name)
+							);
 						}
 
 						// insert translation that doesnt exists yet
@@ -1225,7 +1243,7 @@ class BackendLocaleModel
 							$statistics['imported']++;
 
 							// insert
-							BackendModel::getDB(true)->insert('locale', $locale);
+							$db->insert('locale', $locale);
 						}
 					}
 				}

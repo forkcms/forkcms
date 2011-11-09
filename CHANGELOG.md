@@ -1,5 +1,9 @@
 3.1.1 (xxxx-xx-xx)
 --
+Improvements:
+
+* Locale: refactored inportXML method to also be used by installer (rather than 2 seperate "different yet the same" functions)
+
 Bugfixes:
 
 * Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
