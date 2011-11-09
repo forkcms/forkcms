@@ -137,6 +137,8 @@ class Spoon
 		$classes['spoonfeedexception'] = 'feed/exception.php';
 		$classes['spoonfeedrss'] = 'feed/rss.php';
 		$classes['spoonfeedrssitem'] = 'feed/rss_item.php';
+		$classes['spoonfeedatomrss'] = 'feed/atom_rss.php';
+		$classes['spoonfeedatomrssitem'] = 'feed/atom_rss_item.php';
 		$classes['spoonfile'] = 'file/file.php';
 		$classes['spoonfilecsv'] = 'file/csv.php';
 		$classes['spoonfilter'] = 'filter/filter.php';
