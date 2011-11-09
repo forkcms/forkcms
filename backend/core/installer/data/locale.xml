@@ -7230,7 +7230,7 @@
         <translation language="de"><![CDATA[Gib einen Titel an.]]></translation>
       </item>
       <item type="error" name="TooManyLoginAttempts">
-        <translation language="nl"><![CDATA[Te veel loginpogingen. Als je je wachtwoord vergeten bent]]></translation>
+        <translation language="nl"><![CDATA[Te veel loginpogingen. Klik op de "wachtwoord vergeten?"-link als je je wachtwoord vergeten bent.]]></translation>
         <translation language="en"><![CDATA[Too many login attempts. Click the forgot password link if you forgot your password.]]></translation>
         <translation language="hu"><![CDATA[Túl sok bejelentkezési kísérlet. Kattints a elfelejtett jelszó linkre, ha elfelejtetted jelszavadat.]]></translation>
         <translation language="it"><![CDATA[Troppi tentativi. Clicca sul link per recuperare la password.]]></translation>
