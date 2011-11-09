@@ -87,6 +87,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 
 		// call the parent, as in create a new datagrid with the created source
 		$this->dataGrid = new BackendDataGrid($source);
+		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics') . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
 
 		// set headers values
 		$headers['link'] = strtoupper(BL::lbl('URL'));
