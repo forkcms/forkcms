@@ -5,6 +5,7 @@ Improvements:
 * Locale: refactored inportXML method to also be used by installer (rather than 2 seperate "different yet the same" functions).
 * Extensions: add cronjobs info to info.xml, informational al well as for checking whether all cronjobs are set.
 * Core: upgraded Highcharts to 2.1.8.
+* Core: major improvements for JS, credits to Thomas.
 
 Bugfixes:
 
