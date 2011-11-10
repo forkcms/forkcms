@@ -6,7 +6,14 @@
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[This module will be used to manage the profiles.]]>
+		<![CDATA[
+			Building a community website requires you to provide a certain interface to your visitors. An interface that allows them to create and maintain a profile on your website. The profiles module contains all the basic functionality to get started:
+			* Registration
+			* Login/Logout
+			* Forgot password
+			* Modifying profile settings
+			* Resending activation mails
+		]]>
 	</description>
 	<authors>
 		<author>

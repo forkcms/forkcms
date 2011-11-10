@@ -6,7 +6,13 @@
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[The search can be used by other modules to make modules searchable.]]>
+		<![CDATA[
+			In the front-end, Search Module is easily integrated all over the site. It uses a full-text search on the database and displays them in a very powerful and impressive Google-like way.
+			In the CMS, webmasters have different options to learn from and manipulate the search results.
+			Every search term is stored and displayed. This way, a webmaster can learn from the search queries, and adapt the content accordingly.
+			The Search Module allows to fill in synonyms. When a user searches for search term X, the module will automatically search for stored synonyms Y and Z. This way, a webmaster can further help his users to find the right content, without knowing the exact words.
+			In the Settings of the Search Module, the webmaster can define which modules will be searchable, and what weight they will get. This way, the webmaster is able to define priorities ("first search results will always be from Blog, and in second place from Knowledge Base").
+		]]>
 	</description>
 	<authors>
 		<author>

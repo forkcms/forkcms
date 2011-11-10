@@ -285,6 +285,9 @@ class FrontendModel
 			array('N', $record['revision_id'], 'active', 'Y')
 		);
 
+		// init positions
+		$record['positions'] = array();
+
 		// loop blocks
 		foreach($blocks as $block)
 		{

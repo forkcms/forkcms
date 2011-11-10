@@ -538,18 +538,6 @@
         <translation language="cn"><![CDATA[消息]]></translation>
         <translation language="de"><![CDATA[Nachricht]]></translation>
       </item>
-      <item type="label" name="More">
-        <translation language="nl"><![CDATA[meer]]></translation>
-        <translation language="en"><![CDATA[more]]></translation>
-        <translation language="pl"><![CDATA[wiecej]]></translation>
-        <translation language="hu"><![CDATA[tovább]]></translation>
-        <translation language="it"><![CDATA[altro]]></translation>
-        <translation language="fr"><![CDATA[plus]]></translation>
-        <translation language="ru"><![CDATA[Далее]]></translation>
-        <translation language="tr"><![CDATA[daha fazla]]></translation>
-        <translation language="cn"><![CDATA[更多]]></translation>
-        <translation language="de"><![CDATA[mehr]]></translation>
-      </item>
       <item type="label" name="Name">
         <translation language="nl"><![CDATA[naam]]></translation>
         <translation language="en"><![CDATA[name]]></translation>
@@ -2943,6 +2931,14 @@
         <translation language="de"><![CDATA[erstellt]]></translation>
         <translation language="fr"><![CDATA[créé]]></translation>
       </item>
+      <item type="label" name="Cronjob">
+        <translation language="en"><![CDATA[cronjob]]></translation>
+        <translation language="nl"><![CDATA[cronjob]]></translation>
+      </item>
+      <item type="label" name="Cronjobs">
+        <translation language="en"><![CDATA[cronjobs]]></translation>
+        <translation language="nl"><![CDATA[cronjobs]]></translation>
+      </item>
       <item type="label" name="CreatedOn">
         <translation language="en"><![CDATA[created on]]></translation>
         <translation language="nl"><![CDATA[aangemaakt op]]></translation>
@@ -4081,6 +4077,18 @@
         <translation language="cn"><![CDATA[模块设置]]></translation>
         <translation language="de"><![CDATA[Modul-Einstellungen]]></translation>
         <translation language="fr"><![CDATA[réglages module]]></translation>
+      </item>
+      <item type="label" name="More">
+        <translation language="nl"><![CDATA[meer]]></translation>
+        <translation language="en"><![CDATA[more]]></translation>
+        <translation language="pl"><![CDATA[wiecej]]></translation>
+        <translation language="hu"><![CDATA[tovább]]></translation>
+        <translation language="it"><![CDATA[altro]]></translation>
+        <translation language="fr"><![CDATA[plus]]></translation>
+        <translation language="ru"><![CDATA[Далее]]></translation>
+        <translation language="tr"><![CDATA[daha fazla]]></translation>
+        <translation language="cn"><![CDATA[更多]]></translation>
+        <translation language="de"><![CDATA[mehr]]></translation>
       </item>
       <item type="label" name="Move">
         <translation language="nl"><![CDATA[verplaats]]></translation>
@@ -7230,7 +7238,7 @@
         <translation language="de"><![CDATA[Gib einen Titel an.]]></translation>
       </item>
       <item type="error" name="TooManyLoginAttempts">
-        <translation language="nl"><![CDATA[Te veel loginpogingen. Als je je wachtwoord vergeten bent]]></translation>
+        <translation language="nl"><![CDATA[Te veel loginpogingen. Klik op de "wachtwoord vergeten?"-link als je je wachtwoord vergeten bent.]]></translation>
         <translation language="en"><![CDATA[Too many login attempts. Click the forgot password link if you forgot your password.]]></translation>
         <translation language="hu"><![CDATA[Túl sok bejelentkezési kísérlet. Kattints a elfelejtett jelszó linkre, ha elfelejtetted jelszavadat.]]></translation>
         <translation language="it"><![CDATA[Troppi tentativi. Clicca sul link per recuperare la password.]]></translation>

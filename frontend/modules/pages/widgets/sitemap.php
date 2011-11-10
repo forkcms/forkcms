@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendPagesWidgetChildren extends FrontendBaseWidget
+class FrontendPagesWidgetSitemap extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra

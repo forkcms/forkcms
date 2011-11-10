@@ -15,7 +15,7 @@
 class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 {
 	// maximum number of items
-	const PAGING_LIMIT = 10;
+	const PAGING_LIMIT = 20;
 
 	/**
 	 * The list with bounces
@@ -74,6 +74,7 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 
 		// call the parent, as in create a new datagrid with the created source
 		$this->dataGrid = new BackendDataGrid($source);
+		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics_bounces') . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id']);
 
 		// hide the following columns
 		$this->dataGrid->setColumnHidden('list_id');

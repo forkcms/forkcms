@@ -14,7 +14,7 @@ jsBackend.tags =
 		if($('.dataGrid td.tag').length > 0)
 		{
 			// bind
-			$('.dataGrid td.tag').inlineTextEdit({ saveParams: 'module=' + jsBackend.current.module + '&action=edit&language=' + jsBackend.current.language, tooltip: '{$msgClickToEdit}' });
+			$('.dataGrid td.tag').inlineTextEdit({ params: { fork: { action: 'edit' } }, tooltip: '{$msgClickToEdit}' });
 		}
 	},
 

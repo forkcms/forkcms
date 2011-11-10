@@ -236,102 +236,12 @@ class ModuleInstaller
 			// load xml
 			$xml = @simplexml_load_file($filename);
 
-			// import if its valid xml
+			// import if it's valid xml
 			if($xml !== false)
 			{
-				// possible values
-				$possibleApplications = array('frontend', 'backend');
-				$possibleModules = (array) $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
-				$possibleTypes = array(
-					'act' => 'action',
-					'err' => 'error',
-					'lbl' => 'label',
-					'msg' => 'message'
-				);
-
-				// install English translations anyhow, they're fallback
-				$possibleLanguages = array(
-					'frontend' => array_unique(array_merge(array('en'), $this->getLanguages())),
-					'backend' => array_unique(array_merge(array('en'), $this->getInterfaceLanguages()))
-				);
-
-				// current locale items (used to check for conflicts)
-				$currentLocale = (array) $this->getDB()->getColumn(
-					'SELECT CONCAT(application, module, type, language, name) FROM locale'
-				);
-
-				// @todo: why no xpath?
-
-				// applications
-				foreach($xml as $application => $modules)
-				{
-					// application does not exist
-					if(!in_array($application, $possibleApplications)) continue;
-
-					// modules
-					foreach($modules as $module => $items)
-					{
-						// module does not exist
-						if(!in_array($module, $possibleModules)) continue;
-
-						// items
-						foreach($items as $item)
-						{
-							// attributes
-							$attributes = $item->attributes();
-							$type = SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
-							$name = SpoonFilter::getValue($attributes['name'], null, '');
-
-							// missing attributes
-							if($type == '' || $name == '') continue;
-
-							// real type (shortened)
-							$type = array_search($type, $possibleTypes);
-
-							// translations
-							foreach($item->translation as $translation)
-							{
-								// attributes
-								$attributes = $translation->attributes();
-								$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages[$application], '');
-
-								// language does not exist
-								if($language == '') continue;
-
-								// the actual translation
-								$translation = (string) $translation;
-
-								// locale item
-								$locale['user_id'] = $this->getDefaultUserID();
-								$locale['language'] = $language;
-								$locale['application'] = $application;
-								$locale['module'] = $module;
-								$locale['type'] = $type;
-								$locale['name'] = $name;
-								$locale['value'] = $translation;
-								$locale['edited_on'] = gmdate('Y-m-d H:i:s');
-
-								// found a conflict, overwrite it with the imported translation
-								if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
-								{
-									// overwrite
-									$this->getDB()->update(
-										'locale',
-										$locale,
-										'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
-										array($application, $module, $type, $language, $name)
-									);
-								}
-
-								// insert translation that doesn't exist yet
-								elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
-								{
-									$this->getDB()->insert('locale', $locale);
-								}
-							}
-						}
-					}
-				}
+				// import locale
+				require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
+				BackendLocaleModel::importXML($xml, $overwriteConflicts, $this->getLanguages(), $this->getInterfaceLanguages(), $this->getDefaultUserID(), gmdate('Y-m-d H:i:s'));
 			}
 		}
 	}

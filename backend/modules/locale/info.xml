@@ -6,7 +6,9 @@
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[Locale can be managed through this module.]]>
+		<![CDATA[
+			Translate all module-generated tidbits of content with this translation module, either through the "point and click" translations overview or via XML export/import.
+		]]>
 	</description>
 	<authors>
 		<author>

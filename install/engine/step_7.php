@@ -180,6 +180,24 @@ class InstallerStep7 extends InstallerStep
 	}
 
 	/**
+	 * Define paths also used in frontend/backend, to be used in installer.
+	 */
+	private function definePaths()
+	{
+		// general paths
+		define('BACKEND_PATH', PATH_WWW . '/backend');
+		define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
+		define('BACKEND_CORE_PATH', BACKEND_PATH . '/core');
+		define('BACKEND_MODULES_PATH', BACKEND_PATH . '/modules');
+
+		define('FRONTEND_PATH', PATH_WWW . '/frontend');
+		define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
+		define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
+		define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
+		define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
+	}
+
+	/**
 	 * Delete the cached data
 	 */
 	private function deleteCachedData()
@@ -239,6 +257,12 @@ class InstallerStep7 extends InstallerStep
 		// create configuration files
 		$this->createConfigurationFiles();
 
+		// init database
+		$this->initDatabase();
+
+		// define paths
+		$this->definePaths();
+
 		// install modules
 		$this->installModules();
 
@@ -259,9 +283,9 @@ class InstallerStep7 extends InstallerStep
 	}
 
 	/**
-	 * Installs the required and optional modules
+	 * Init database.
 	 */
-	private function installModules()
+	public function initDatabase()
 	{
 		// get port
 		$port = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? SpoonSession::get('db_port') : 3306;
@@ -272,6 +296,15 @@ class InstallerStep7 extends InstallerStep
 		// utf8 compliance & MySQL-timezone
 		$this->db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
 
+		// store
+		Spoon::set('database', $this->db);
+	}
+
+	/**
+	 * Installs the required and optional modules
+	 */
+	private function installModules()
+	{
 		/**
 		 * First we need to install the core. All the linked modules, settings and sql tables are
 		 * being installed.

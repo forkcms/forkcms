@@ -91,6 +91,11 @@ class BackendCronjob
 		// set the language
 		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
+		// mark cronjob as run
+		$cronjobs = (array) BackendModel::getModuleSetting('core', 'cronjobs');
+		$cronjobs[] = $this->getModule() . '.' . $this->getAction();
+		BackendModel::setModuleSetting('core', 'cronjobs', array_unique($cronjobs));
+
 		// create new action
 		$action = new BackendCronjobAction($this->getAction(), $this->getModule());
 		$action->execute();
