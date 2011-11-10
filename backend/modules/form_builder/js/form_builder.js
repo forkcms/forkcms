@@ -100,10 +100,10 @@ jsBackend.formBuilder.fields =
 	bindDelete: function()
 	{
 		// get all delete buttons
-		$('.deleteField').on('click', function(evt)
+		$('.deleteField').on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('rel');
@@ -205,7 +205,7 @@ jsBackend.formBuilder.fields =
 					 },
 
 					// set focus on first input field
-					open: function(evt)
+					open: function(e)
 					{
 						// bind special boxes
 						if(id == 'dropdownDialog')
@@ -260,7 +260,7 @@ jsBackend.formBuilder.fields =
 					},
 
 					// before closing the dialog
-					beforeclose: function(evt)
+					beforeclose: function(e)
 					{
 						// no items message
 						jsBackend.formBuilder.fields.toggleNoItems();
@@ -283,10 +283,10 @@ jsBackend.formBuilder.fields =
 		});
 
 		// bind clicks
-		$('.openFieldDialog').on('click', function(evt)
+		$('.openFieldDialog').on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('rel');
@@ -307,7 +307,7 @@ jsBackend.formBuilder.fields =
 			items: 'div.field',
 			handle: 'span.dragAndDropHandle',
 			containment: '#fieldsHolder',
-			stop: function(event, ui)
+			stop: function(e, ui)
 			{
 				// init var
 				var rowIds = $(this).sortable('toArray');
@@ -361,10 +361,10 @@ jsBackend.formBuilder.fields =
 	bindEdit: function()
 	{
 		// get all delete buttons
-		$('.editField').on('click', function(evt)
+		$('.editField').on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('rel');

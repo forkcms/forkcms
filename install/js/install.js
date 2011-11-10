@@ -126,9 +126,9 @@ $(document).ready(function()
 	 * Step 7 - confirmation
 	 */
 
-	$('#showPassword').on('change', function(evt)
+	$('#showPassword').on('change', function(e)
 	{
-		evt.preventDefault();
+		e.preventDefault();
 
 		// show password
 		if($(this).is(':checked'))

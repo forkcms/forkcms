@@ -73,7 +73,7 @@ var jsBackend =
 		});
 
 		// global error handler
-		$(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions)
+		$(document).ajaxError(function(e, XMLHttpRequest, ajaxOptions)
 		{
 			// 403 means we aren't authenticated anymore, so reload the page
 			if(XMLHttpRequest.status == 403) window.location.reload();
@@ -133,7 +133,7 @@ jsBackend.balloons =
 	},
 
 	// handle the click event (make it appear/disappear)
-	click: function(evt)
+	click: function(e)
 	{
 		var clickedElement = $(this);
 
@@ -228,7 +228,7 @@ jsBackend.controls =
 				$checkbox = $this.find('input:checkbox').eq(0);
 				$dropdown = $this.find('select').eq(0);
 
-				$checkbox.on('change', function(evt)
+				$checkbox.on('change', function(e)
 				{
 					// variables
 					$combo = $(this).parents().filter($checkboxDropdownCombo);
@@ -267,7 +267,7 @@ jsBackend.controls =
 				$checkbox = $this.find('input:checkbox').eq(0);
 				$textField = $this.find('input:text').eq(0);
 
-				$checkbox.on('change', function(evt)
+				$checkbox.on('change', function(e)
 				{
 					// variables
 					$combo = $this.parents().filter($checkboxTextFieldCombo);
@@ -305,7 +305,7 @@ jsBackend.controls =
 				// variables
 				$radiobutton = $(this).find('input:radio');
 
-				$radiobutton.on('click', function(evt)
+				$radiobutton.on('click', function(e)
 				{
 					// redefine
 					$this = $(this);
@@ -371,7 +371,7 @@ jsBackend.controls =
 								$this.dialog('close');
 						}
 					},
-					open: function(evt)
+					open: function(e)
 					{
 						// set focus on first button
 						if($this.next().find('button').length > 0) $this.next().find('button')[0].focus();
@@ -381,10 +381,10 @@ jsBackend.controls =
 		});
 
 		// bind clicks
-		$askConfirmation.on('click', function(evt)
+		$askConfirmation.on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).data('messageId');
@@ -407,13 +407,13 @@ jsBackend.controls =
 		// variables
 		$fakeDropdown = $('.fakeDropdown');
 
-		$fakeDropdown.on('click', function(evt)
+		$fakeDropdown.on('click', function(e)
 		{
 			// prevent default behaviour
-			evt.preventDefault();
+			e.preventDefault();
 
 			// stop it
-			evt.stopPropagation();
+			e.stopPropagation();
 
 			// variables
 			$parent = $fakeDropdown.parent();
@@ -440,9 +440,9 @@ jsBackend.controls =
 			else
 			{
 				// bind escape
-				$body.on('keyup', function(evt)
+				$body.on('keyup', function(e)
 				{
-					if(evt.keyCode == 27)
+					if(e.keyCode == 27)
 					{
 						// unbind event
 						$body.off('keyup');
@@ -456,7 +456,7 @@ jsBackend.controls =
 				});
 
 				// bind click outside
-				$body.on('click', function(evt)
+				$body.on('click', function(e)
 				{
 					// unbind event
 					$body.off('click');
@@ -485,10 +485,10 @@ jsBackend.controls =
 		$fullwidthSwitch = $fullwidthSwitchLink.parent();
 
 		$fullwidthSwitchLink.toggle(
-			function(evt)
+			function(e)
 			{
 				// prevent default behaviour
-				evt.preventDefault();
+				e.preventDefault();
 
 				// add class
 				$fullwidthSwitch.addClass('collapsed');
@@ -496,10 +496,10 @@ jsBackend.controls =
 				// toggle
 				$('#subnavigation, #pagesTree').fadeOut(250);
 			},
-			function(evt)
+			function(e)
 			{
 				// Stuff to do every *even* time the element is clicked;
-				evt.preventDefault();
+				e.preventDefault();
 
 				// remove class
 				$fullwidthSwitch.removeClass('collapsed');
@@ -518,7 +518,7 @@ jsBackend.controls =
 		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 
 		// hook change events
-		$('table input:checkbox').on('change', function(evt)
+		$('table input:checkbox').on('change', function(e)
 		{
 			// get parent table
 			var table = $(this).parents('table.dataGrid').eq(0);
@@ -570,7 +570,7 @@ jsBackend.controls =
 							$this.dialog('close');
 						}
 					},
-					open: function(evt)
+					open: function(e)
 					{
 						// set focus on first button
 						if($this.next().find('button').length > 0) { $this.next().find('button')[0].focus(); }
@@ -580,10 +580,10 @@ jsBackend.controls =
 		});
 
 		// hijack the form
-		$('.tableOptions .massAction .submitButton').on('click', function(evt)
+		$('.tableOptions .massAction .submitButton').on('click', function(e)
 		{
 			// prevent default action
-			evt.preventDefault();
+			e.preventDefault();
 
 			// variables
 			$this = $(this);
@@ -622,7 +622,7 @@ jsBackend.controls =
 	bindMassCheckbox: function()
 	{
 		// mass checkbox changed
-		$('th .checkboxHolder input:checkbox').on('change', function(evt)
+		$('th .checkboxHolder input:checkbox').on('change', function(e)
 		{
 			// variables
 			$this = $(this);
@@ -636,7 +636,7 @@ jsBackend.controls =
 		});
 
 		// single checkbox changed
-		$('td.checkbox input:checkbox').on('change', function(evt)
+		$('td.checkbox input:checkbox').on('change', function(e)
 		{
 			// variables
 			$this = $(this);
@@ -760,10 +760,10 @@ jsBackend.controls =
 	// toggle a div
 	bindToggleDiv: function()
 	{
-		$('.toggleDiv').on('click', function(evt)
+		$('.toggleDiv').on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('href');
@@ -784,7 +784,7 @@ jsBackend.controls =
 		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
-		$('tr td input:checkbox').on('change', function(evt)
+		$('tr td input:checkbox').on('change', function(e)
 		{
 			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
 			else $(this).parents().filter('tr').eq(0).removeClass('selected');
@@ -803,10 +803,10 @@ jsBackend.controls =
 		// variables
 		$workingLanguage = $('#workingLanguage');
 
-		$workingLanguage.on('change', function(evt)
+		$workingLanguage.on('change', function(e)
 		{
 			// preventDefault
-			evt.preventDefault();
+			e.preventDefault();
 
 			// break the url int parts
 			var urlChunks = document.location.pathname.split('/');
@@ -1104,9 +1104,9 @@ jsBackend.forms =
 					});
 
 					// add onclick event for button (button can't have the name submit)
-					$('form#'+ formId + ' a.submitButton').on('click', function(evt)
+					$('form#'+ formId + ' a.submitButton').on('click', function(e)
 					{
-						evt.preventDefault();
+						e.preventDefault();
 
 						// is the button disabled?
 						if($(this).prop('disabled')) return false;
@@ -1118,7 +1118,7 @@ jsBackend.forms =
 					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
 
 					// hijack the submit event
-					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
+					$('form#'+ formId).submit(function(e) { return !dontSubmit; });
 				}
 			});
 		}
@@ -1174,9 +1174,9 @@ jsBackend.forms =
 			$(window).on('beforeunload', jsBackend.forms.unloadWarningCheck);
 
 			// if a form is submitted we don't want to ask the user if he wants to leave, we know for sure
-			$('form').on('submit', function(evt)
+			$('form').on('submit', function(e)
 			{
-				if(!evt.isDefaultPrevented()) $(window).off('beforeunload');
+				if(!e.isDefaultPrevented()) $(window).off('beforeunload');
 			});
 		}
 	},
@@ -1215,7 +1215,7 @@ jsBackend.forms =
 		if(!changed)
 		{
 			// prevent default action from being executed
-			if(evt) evt.preventDefault();
+			if(e) e.preventDefault();
 
 			// unbind the event
 			$(window).off('beforeunload');
@@ -1348,9 +1348,9 @@ jsBackend.messages =
 	init: function()
 	{
 		// bind close button
-		$('#messaging .formMessage .iconClose').on('click', function(evt)
+		$('#messaging .formMessage .iconClose').on('click', function(e)
 		{
-			evt.preventDefault();
+			e.preventDefault();
 			jsBackend.messages.hide($(this).parents('.formMessage'));
 		});
 	},
@@ -1435,10 +1435,10 @@ jsBackend.tabs =
 		// select tab
 		if($('.tabSelect').length > 0)
 		{
-			$('.tabSelect').on('click', function(evt)
+			$('.tabSelect').on('click', function(e)
 			{
 				// prevent default
-				evt.preventDefault();
+				e.preventDefault();
 				$('.tabs').tabs('select', $(this).attr('href'));
 			});
 		}
@@ -1460,7 +1460,7 @@ jsBackend.tinyMCE =
 		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
 
 		// bind click on the element
-		$('.clickToEdit').on('click', function(evt)
+		$('.clickToEdit').on('click', function(e)
 		{
 			// get id
 			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
@@ -1624,7 +1624,7 @@ jsBackend.tableSequenceByDragAndDrop =
 				handle: 'td.dragAndDropHandle',
 				placeholder: 'dragAndDropPlaceholder',
 				forcePlaceholderSize: true,
-				stop: function(event, ui)
+				stop: function(e, ui)
 				{
 					// the table
 					$table = $(this);

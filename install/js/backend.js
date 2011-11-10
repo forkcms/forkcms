@@ -153,9 +153,9 @@ jsBackend.forms =
 					});
 
 					// add onclick event for button (button can't have the name submit)
-					$('form#'+ formId + ' a.submitButton').on('click', function(evt)
+					$('form#'+ formId + ' a.submitButton').on('click', function(e)
 					{
-						evt.preventDefault();
+						e.preventDefault();
 
 						// is the button disabled?
 						if($(this).prop('disabled')) return false;
@@ -167,7 +167,7 @@ jsBackend.forms =
 					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
 
 					// hijack the submit event
-					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
+					$('form#'+ formId).submit(function(e) { return !dontSubmit; });
 				}
 			});
 		}

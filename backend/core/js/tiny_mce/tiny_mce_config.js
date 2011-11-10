@@ -89,7 +89,7 @@ tinyMCE.init(
 		editor.onLoadContent.add(jsBackend.tinyMCE.loadContent);
 
 		// add event
-		editor.onKeyUp.add(function(editor, event)
+		editor.onKeyUp.add(function(editor, e)
 		{
 			// show
 			if($('#' + editor.id + '_external').is(':hidden'))
@@ -111,7 +111,7 @@ tinyMCE.init(
 			var added = false;
 
 			// hook all events
-			editor.onEvent.add(function(editor, evt)
+			editor.onEvent.add(function(editor, e)
 			{
 				// class added before?
 				if(!added)

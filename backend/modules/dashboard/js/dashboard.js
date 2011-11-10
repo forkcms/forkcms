@@ -21,10 +21,10 @@ jsBackend.dashboard =
 		$editDashboardClose.on('click', jsBackend.dashboard.close);
 	},
 
-	close: function(evt)
+	close: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
 
 		// get widget
 		$widget = $(this).parents('.sortableWidget').eq(0);
@@ -33,10 +33,10 @@ jsBackend.dashboard =
 		else $widget.find('.options, .footer, .dataGridHolder').hide().addClass('isRemoved');
 	},
 
-	load: function(evt)
+	load: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
 
 		// variables
 		$editDashboardMessage = $('#editDashboardMessage');
@@ -73,7 +73,7 @@ jsBackend.dashboard =
 				forceHelperSize: true,
 				forcePlaceholderSize: true,
 				placeholder: 'dragAndDropPlaceholder',
-				stop: function(event, ui)
+				stop: function(e, ui)
 				{
 					// remove the original item
 					jsBackend.dashboard.itemOnTheMove.hide();
@@ -88,7 +88,7 @@ jsBackend.dashboard =
 				helper: 'clone',
 				opacity: 0.50,
 				revert: 'invalid',
-				start: function(event, ui)
+				start: function(e, ui)
 					{
 						// set placeholders height
 						$('.dragAndDropPlaceholder').css('height', $(this).height().toString() + 'px');
@@ -106,10 +106,10 @@ jsBackend.dashboard =
 	},
 
 	// save the changes
-	save: function(evt)
+	save: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
 
 		// variables
 		$editDashboard = $('#editDashboard');

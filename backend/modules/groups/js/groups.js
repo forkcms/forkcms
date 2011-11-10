@@ -39,10 +39,10 @@ jsBackend.groups =
 	},
 
 	// clickhandler
-	clickHandler: function(evt)
+	clickHandler: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
 
 		// init vars
 		$this = $(this);

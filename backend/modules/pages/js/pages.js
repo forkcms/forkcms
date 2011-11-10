@@ -22,7 +22,7 @@ jsBackend.pages =
 		}
 
 		// button to save to draft
-		$('#saveAsDraft').on('click', function(evt)
+		$('#saveAsDraft').on('click', function(e)
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />');
 			$('form').submit();
@@ -362,10 +362,10 @@ jsBackend.pages.extras =
 	},
 
 	// add a block
-	showAddDialog: function(evt)
+	showAddDialog: function(e)
 	{
 		// prevent the default action
-		evt.preventDefault();
+		e.preventDefault();
 
 		// save the position wherefor we will change the extra
 		position = $(this).parent().parent().data('position');
@@ -453,10 +453,10 @@ jsBackend.pages.extras =
 	},
 
 	// delete a block
-	showDeleteDialog: function(evt)
+	showDeleteDialog: function(e)
 	{
 		// prevent the default action
-		evt.preventDefault();
+		e.preventDefault();
 
 		// save element to variable
 		var element = $(this);
@@ -505,7 +505,7 @@ jsBackend.pages.extras =
 			connectWith: 'div.linkedBlocks',
 			opacity: 0.7,
 			delay: 300,
-			stop: function(event, ui)
+			stop: function(e, ui)
 			{
 				// reorder indexes of existing blocks:
 				jsBackend.pages.extras.resetIndexes();
@@ -519,7 +519,7 @@ jsBackend.pages.extras =
 				// reorder blocks = template is no longer original
 				jsBackend.pages.template.original = false;
 			},
-			start: function(event, ui)
+			start: function(e, ui)
 			{
 				// check if we're moving from template
 				if($(this).parents('#templateVisualLarge').length > 0)
@@ -726,10 +726,10 @@ jsBackend.pages.template =
 	},
 
 	// show the dialog to alter the selected template
-	showTemplateDialog: function(evt)
+	showTemplateDialog: function(e)
 	{
 		// prevent the default action
-		evt.preventDefault();
+		e.preventDefault();
 
 		$('#chooseTemplate').dialog(
 		{

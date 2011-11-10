@@ -230,7 +230,7 @@
 			if(options.isDropdown)
 			{
 				// bind click
-				$this.on('click', function(evt)
+				$this.on('click', function(e)
 				{
 					// toggle menu
 					$this.find('ul.shareMenu').toggle();

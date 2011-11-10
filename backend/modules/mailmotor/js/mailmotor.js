@@ -65,7 +65,7 @@ jsBackend.mailmotor.chartPieChart =
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var pieChartValues = $('#dataChartPieChart ul.data li');
 		var pieChartData = [];
@@ -578,10 +578,10 @@ jsBackend.mailmotor.templateSelection =
 		$listItems = $('#templateSelection li');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		$listItems.on('click', function(evt)
+		$listItems.on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// store the object
 			var radiobutton = $(this).find('input:radio:first');

@@ -35,12 +35,12 @@ jsBackend.blog.controls =
 		$categoryTitleError = $('#categoryTitleError');
 		$categoryId = $('#categoryId');
 
-		$saveAsDraft.on('click', function(evt)
+		$saveAsDraft.on('click', function(e)
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />').submit();
 		});
 
-		$filterCategory.on('change', function(evt)
+		$filterCategory.on('change', function(e)
 		{
 			$filter.submit();
 		});
@@ -97,7 +97,7 @@ jsBackend.blog.controls =
 						$(this).dialog('close');
 					}
 				},
-				close: function(event, ui)
+				close: function(e, ui)
 				{
 					// reset value to previous selected item
 					$categoryId.val(jsBackend.blog.controls.currentCategory);
@@ -105,13 +105,13 @@ jsBackend.blog.controls =
 			});
 
 			// bind change
-			$categoryId.on('change', function(evt)
+			$categoryId.on('change', function(e)
 			{
 				// new category?
 				if($(this).val() == 'new_category')
 				{
 					// prevent default
-					evt.preventDefault();
+					e.preventDefault();
 
 					// open dialog
 					$addCategoryDialog.dialog('open');

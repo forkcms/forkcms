@@ -61,7 +61,7 @@ jsBackend.analytics.chartPieChart =
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		// variables
 		$pieChartValues = $('#dataChartPieChart ul.data li');
@@ -130,7 +130,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var xAxisItems = $('#dataChartDoubleMetricPerDay ul.series li.serie:first-child ul.data li');
 		var xAxisValues = [];
@@ -196,7 +196,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var xAxisItems = $('#dataChartSingleMetricPerDay ul.series li.serie:first-child ul.data li');
 		var xAxisValues = [];
@@ -255,7 +255,7 @@ jsBackend.analytics.chartWidget =
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var xAxisItems = $('#dataChartWidget ul.series li.serie:first-child ul.data li');
 		var xAxisValues = [];

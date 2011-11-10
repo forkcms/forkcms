@@ -67,7 +67,7 @@ $(function() {
 		setup: function(editor)
 		{
 			// add event
-			editor.onKeyUp.add(function(editor, event)
+			editor.onKeyUp.add(function(editor, e)
 			{
 				// show
 				if($('#' + editor.id + '_external').is(':hidden'))
@@ -79,7 +79,7 @@ $(function() {
 				var added = false;
 
 				// hook all events
-				editor.onEvent.add(function(editor, evt)
+				editor.onEvent.add(function(editor, e)
 				{
 					// class added before?
 					if(!added)

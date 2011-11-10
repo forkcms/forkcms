@@ -46,7 +46,7 @@ jsBackend.faq =
 			{
 				// only accept table rows
 				accept: 'table.dataGrid tr',
-				drop: function(event, ui)
+				drop: function(e, ui)
 				{
 					// remove the no questions in category message
 					$(this).find('tr.noQuestions').remove();
@@ -75,7 +75,7 @@ jsBackend.faq =
 				handle: 'td.dragAndDropHandle',			// set the element that user can grab
 				tolerance: 'pointer',					// give a more natural feeling
 				connectWith: 'div.dataGridHolder',		// this is what makes dragging between categories possible
-				stop: function(event, ui)				// on stop sorting
+				stop: function(e, ui)				// on stop sorting
 				{
 					// vars we will need
 					var questionId = ui.item.attr('id');

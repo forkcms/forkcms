@@ -39,7 +39,7 @@
 			// bind change on the checkboxes
 			if($pageTitle.length > 0 && $pageTitleOverwrite.length > 0)
 			{
-				$pageTitleOverwrite.change(function(evt)
+				$pageTitleOverwrite.change(function(e)
 				{
 					if(!$element.is(':checked')) $pageTitle.val($element.val());
 				});
@@ -47,23 +47,23 @@
 
 			if($navigationTitle.length > 0 && $navigationTitleOverwrite.length > 0)
 			{
-				$navigationTitleOverwrite.change(function(evt)
+				$navigationTitleOverwrite.change(function(e)
 				{
 					if(!$element.is(':checked')) $navigationTitle.val($element.val());
 				});
 			}
 
-			$metaDescriptionOverwrite.change(function(evt)
+			$metaDescriptionOverwrite.change(function(e)
 			{
 				if(!$element.is(':checked')) $metaDescription.val($element.val());
 			});
 
-			$metaKeywordsOverwrite.change(function(evt)
+			$metaKeywordsOverwrite.change(function(e)
 			{
 				if(!$element.is(':checked')) $metaKeywords.val($element.val());
 			});
 
-			$urlOverwrite.change(function(evt)
+			$urlOverwrite.change(function(e)
 			{
 				if(!$element.is(':checked')) generateUrl($element.val());
 			});
@@ -101,7 +101,7 @@
 			}
 
 			// calculate meta
-			function calculateMeta(evt, element)
+			function calculateMeta(e, element)
 			{
 				var title = (typeof element != 'undefined') ? element.val() : $(this).val();
 
@@ -163,10 +163,10 @@
 
 			$('.generatePasswordButton').live('click', generatePassword);
 
-			function generatePassword(evt)
+			function generatePassword(e)
 			{
 				// prevent default
-				evt.preventDefault();
+				e.preventDefault();
 
 				var currentElement = $('#' + $(this).data('id'));
 
@@ -362,10 +362,10 @@
 
 				// bind events
 				options.current.element.bind('blur', saveElement);
-				options.current.element.keyup(function(evt)
+				options.current.element.keyup(function(e)
 				{
 					// handle escape
-					if(evt.which == 27)
+					if(e.which == 27)
 					{
 						// reset
 						options.current.element.val(options.current.value);
@@ -375,7 +375,7 @@
 					}
 
 					// save when someone presses enter
-					if(evt.which == 13) saveElement();
+					if(e.which == 13) saveElement();
 				});
 			}
 
@@ -488,7 +488,7 @@
 			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
-			$(this.form).submit(function(evt)
+			$(this.form).submit(function(e)
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
@@ -568,12 +568,12 @@
 			}
 
 			// bind keypress on value-field
-			$('#addValue-' + id).bind('keyup', function(evt)
+			$('#addValue-' + id).bind('keyup', function(e)
 			{
 				blockSubmit = true;
 
 				// grab code
-				var code = evt.which;
+				var code = e.which;
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
@@ -585,8 +585,8 @@
 					$('#errorMessage-'+ id).remove();
 
 					// prevent default behaviour
-					evt.preventDefault();
-					evt.stopPropagation();
+					e.preventDefault();
+					e.stopPropagation();
 
 					// add element
 					add();
@@ -602,22 +602,22 @@
 			});
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).attr('rel'));
@@ -776,7 +776,7 @@
 			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
-			$(this.form).submit(function(evt)
+			$(this.form).submit(function(e)
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
@@ -867,12 +867,12 @@
 			}
 
 			// bind keypress on value-field
-			$('#addValue-' + id).bind('keyup', function(evt)
+			$('#addValue-' + id).bind('keyup', function(e)
 			{
 				blockSubmit = true;
 
 				// grab code
-				var code = evt.which;
+				var code = e.which;
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
@@ -884,8 +884,8 @@
 					$('#errorMessage-'+ id).remove();
 
 					// prevent default behaviour
-					evt.preventDefault();
-					evt.stopPropagation();
+					e.preventDefault();
+					e.stopPropagation();
 
 					// add element
 					add();
@@ -901,22 +901,22 @@
 			});
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).data('id'));
@@ -1112,22 +1112,22 @@
 			build();
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).data('id'));
@@ -1362,20 +1362,20 @@
 			}
 
 			// bind keypress on value-field
-			$('#addValue-' + id).bind('keyup', function(evt)
+			$('#addValue-' + id).bind('keyup', function(e)
 			{
 				// block form submit
 				blockSubmit = true;
 
 				// grab code
-				var code = evt.which;
+				var code = e.which;
 
 				// enter or splitchar should add an element
 				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{
 					// prevent default behaviour
-					evt.preventDefault();
-					evt.stopPropagation();
+					e.preventDefault();
+					e.stopPropagation();
 
 					// add element
 					add();
@@ -1392,32 +1392,32 @@
 			});
 
 			// unblock the submit event when we lose focus
-			$('#addValue-' + id).bind('blur', function(evt) { blockSubmit = false; });
+			$('#addValue-' + id).bind('blur', function(e) { blockSubmit = false; });
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).data('id'));
 			});
 
 			// bind keypress on inputfields (we need to rebuild so new values are saved)
-			$('.inputField-' + id).live('keyup', function(evt)
+			$('.inputField-' + id).live('keyup', function(e)
 			{
 				// clear elements
 				elements = [];

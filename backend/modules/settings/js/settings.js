@@ -18,10 +18,10 @@ jsBackend.settings =
 		$('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection);
 	},
 
-	testEmailConnection: function(evt)
+	testEmailConnection: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
 
 		$spinner = $('#testEmailConnectionSpinner');
 		$error = $('#testEmailConnectionError');

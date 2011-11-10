@@ -17,9 +17,9 @@ jsBackend.faq.edit =
 		$('.container').on('click', jsBackend.faq.edit.clickHandler);
 	},
 
-	clickHandler: function(event)
+	clickHandler: function(e)
 	{
-		event.preventDefault();
+		e.preventDefault();
 
 		var link = $(this).find('a');
 

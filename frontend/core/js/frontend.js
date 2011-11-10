@@ -360,7 +360,7 @@ jsFrontend.search =
 					}
 				});
 			},
-			select: function(evt, ui)
+			select: function(e, ui)
 			{
 				window.location.href = ui.item.url
 			}
@@ -423,7 +423,7 @@ jsFrontend.search =
 					}
 				});
 			},
-			select: function(evt, ui)
+			select: function(e, ui)
 			{
 				window.location.href = ui.item.url
 			}
@@ -542,7 +542,7 @@ jsFrontend.statistics =
 			};
 
 			// bind on all links that don't have the class noTracking
-			$('a:external:not(.noTracking)').on('click', function(evt)
+			$('a:external:not(.noTracking)').on('click', function(e)
 			{
 				var $this = $(this);
 				var link = $this.attr('href');
@@ -569,16 +569,16 @@ jsFrontend.twitter =
 		if(typeof _gaq == 'object' && typeof twttr == 'object')
 		{
 			// bind event, so we can track the tweets
-			twttr.events.on('tweet', function(event)
+			twttr.events.on('tweet', function(e)
 			{
 				// valid event?
-				if(event)
+				if(e)
 				{
 					// init var
 					var targetUrl = null;
 
 					// get url
-					if(event.target && event.target.nodeName == 'IFRAME') targetUrl = utils.url.extractParamFromUri(event.target.src, 'url');
+					if(e.target && e.target.nodeName == 'IFRAME') targetUrl = utils.url.extractParamFromUri(e.target.src, 'url');
 
 					// push to GA
 					_gaq.push(['_trackSocial', 'twitter', 'tweet', targetUrl]);
