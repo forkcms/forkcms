@@ -109,10 +109,7 @@ jsBackend.mailmotor.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: true,
-						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-						color: 'white',
-						style: { display: 'none' }
+						enabled: false,
 					}
 				}
 			},
@@ -365,12 +362,12 @@ jsBackend.mailmotor.step3 =
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
 				var textareaValue = iframe[0].contentWindow.getTinyMCEContent();
-				
+
 				// remove tiny fields added to the body by naughty tinyMCE
 				body.find('.mceListBoxMenu').remove();
 				body.find('.mceEditor').remove();
 				body.find('.clickToEdit').remove();
-				
+
 				/*
 					This may seem strange, but here's why I did it like this:
 					Some templates caused tinymce().getContent() to return the entire TinyMCE codes.
@@ -378,7 +375,7 @@ jsBackend.mailmotor.step3 =
 					run into this problem.
 				*/
 				var textarea = body.find('#contentHtml');
-				
+
 				/*
 					By escaping the textareaValue below, we ensure that entities will remain intact.
 					in mailmotor/detail.php on the frontend, we do a rawurlencode of the contents,
@@ -389,10 +386,10 @@ jsBackend.mailmotor.step3 =
 
 				// set iframe variables
 				var bodyHTML = body.html();
-				
+
 				// we unescape the entire HTML so the user won't panic whilst the ajax is loading
 				body.html(unescape(body.html()));
-				
+
 				// make the call
 				$.ajax(
 				{
