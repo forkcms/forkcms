@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
+* Pages: closing the dialog did not discard the content correctly.
 
 
 3.1.0 (2011-11-08)
