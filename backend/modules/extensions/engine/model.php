@@ -185,6 +185,7 @@ class BackendExtensionsModel
 			{
 				// add warning
 				$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+				break;
 			}
 		}
 
