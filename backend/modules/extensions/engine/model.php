@@ -167,21 +167,25 @@ class BackendExtensionsModel
 		if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => BL::err('AkismetKey'));
+			$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
 		}
 
 		// check if the google maps key is available if there are modules that require it
 		if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => BL::err('GoogleMapsKey'));
+			$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
 		}
 
 		// check if there are cronjobs that are not yet set
 		$modules = BackendExtensionsModel::getModules();
 		foreach($modules as $module)
 		{
-			if(isset($module['cronjobs_active']) && !$module['cronjobs_active']) $warnings[] = array('message' => BL::err('CronjobsNotSet', 'extensions'));
+			if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+			}
 		}
 
 		return $warnings;

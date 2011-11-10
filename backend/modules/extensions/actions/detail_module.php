@@ -99,7 +99,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 				// check if cronjobs are installed already
 				foreach($this->information['cronjobs'] as $cronjob)
 				{
-					if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getMessage('CronjobsNotSet'));
+					if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getError('CronjobsNotSet'));
 					break;
 				}
 			}
