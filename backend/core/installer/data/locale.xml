@@ -6728,14 +6728,14 @@
         <translation language="de"><![CDATA[Füge das Tag hinzu, bevor du den Eintrag speicherst.]]></translation>
       </item>
       <item type="error" name="AkismetKey">
-        <translation language="nl"><![CDATA[Akismet API-key werd nog niet geconfigureerd.]]></translation>
-        <translation language="en"><![CDATA[Akismet API-key is not yet configured.]]></translation>
-        <translation language="hu"><![CDATA[Az Akismet API-kulcs még nincs beállítva.]]></translation>
-        <translation language="it"><![CDATA[La chiave Askimet non è ancora stata configurata.]]></translation>
-        <translation language="ru"><![CDATA[Akismet API-ключ не сконфигурирован.]]></translation>
-        <translation language="cn"><![CDATA[还未设置Akismet API-key。]]></translation>
-        <translation language="fr"><![CDATA[La clef API d'Akismet n'est pas configurée.]]></translation>
-        <translation language="de"><![CDATA[Akismet API-Key ist noch nicht konfiguriert.]]></translation>
+        <translation language="nl"><![CDATA[Akismet API-key werd nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[Akismet API-key is not yet configured. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="hu"><![CDATA[Az Akismet API-kulcs még nincs beállítva. <a href="%1$s">Beállítás</a>]]></translation>
+        <translation language="it"><![CDATA[La chiave Askimet non è ancora stata configurata. <a href="%1$s">Configura</a>]]></translation>
+        <translation language="ru"><![CDATA[Akismet API-ключ не сконфигурирован. <a href="%1$s">Сконфигурировать</a>]]></translation>
+        <translation language="cn"><![CDATA[还未设置Akismet API-key。<a href="%1$s">点此设置</a>]]></translation>
+        <translation language="fr"><![CDATA[La clef API d'Akismet n'est pas configurée. <a href="%1$s">Configurer</a>]]></translation>
+        <translation language="de"><![CDATA[Akismet API-Key ist noch nicht konfiguriert. <a href="%1$s">Konfigurieren</a>]]></translation>
       </item>
       <item type="error" name="AlphaNumericCharactersOnly">
         <translation language="nl"><![CDATA[Enkel alfanumerieke karakters zijn toegestaan.]]></translation>
@@ -6914,14 +6914,14 @@
         <translation language="de"><![CDATA[Etwas lief schief]]></translation>
       </item>
       <item type="error" name="GoogleMapsKey">
-        <translation language="nl"><![CDATA[Google maps API-key werd nog niet geconfigureerd.]]></translation>
-        <translation language="en"><![CDATA[Google maps API-key is not configured.]]></translation>
-        <translation language="hu"><![CDATA[Google maps API-kulcs nincs beállítva.]]></translation>
-        <translation language="ru"><![CDATA[Google Maps API ключ не сконфигурирован.]]></translation>
-        <translation language="it"><![CDATA[La chiave API di Google Maps non è configurata.]]></translation>
-        <translation language="cn"><![CDATA[还没设置谷歌地图的API-key。]]></translation>
-        <translation language="fr"><![CDATA[La clef API GOogle Map n'est pas configurée.]]></translation>
-        <translation language="de"><![CDATA[Google-Maps API-Key ist nicht konfiguriert.]]></translation>
+        <translation language="nl"><![CDATA[Google maps API-key werd nog niet geconfigureerd. <a href="%1$s">Configureren</a>]]></translation>
+        <translation language="en"><![CDATA[Google maps API-key is not configured. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="hu"><![CDATA[Google maps API-kulcs nincs beállítva. <a href="%1$s">Beállítás</a>]]></translation>
+        <translation language="ru"><![CDATA[Google Maps API ключ не сконфигурирован. <a href="%1$s">Configura</a>]]></translation>
+        <translation language="it"><![CDATA[La chiave API di Google Maps non è configurata. <a href="%1$s">Сконфигурировать</a>]]></translation>
+        <translation language="cn"><![CDATA[还没设置谷歌地图的API-key。<a href="%1$s">点此设置</a>]]></translation>
+        <translation language="fr"><![CDATA[La clef API GOogle Map n'est pas configurée. <a href="%1$s">Configurer</a>]]></translation>
+        <translation language="de"><![CDATA[Google-Maps API-Key ist nicht konfiguriert. <a href="%1$s">Konfigurieren</a>]]></translation>
       </item>
       <item type="error" name="InvalidAPIKey">
         <translation language="nl"><![CDATA[Ongeldige API key.]]></translation>
