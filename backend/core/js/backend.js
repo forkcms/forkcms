@@ -186,8 +186,6 @@ jsBackend.balloons =
 
 /**
  * CK Editor related objects
- * @todo	merge this into backend.js after the improvements of Thomas are merged.
- * @todo	cleanup, check Thomas' branch
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
