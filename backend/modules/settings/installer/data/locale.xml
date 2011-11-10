@@ -167,8 +167,8 @@
         <translation language="de"><![CDATA[Dieses Format wird verwendet um Zahlen auf der Website darzustellen.]]></translation>
       </item>
       <item type="message" name="HelpRedirectLanguages">
-        <translation language="nl"><![CDATA[Duid aan in welke talen mensen op basis van hun browser mogen terechtkomen.]]></translation>
-        <translation language="en"><![CDATA[Select the languages that people may automatically be redirect to by their browser.]]></translation>
+        <translation language="nl"><![CDATA[Duid aan op welke talen mensen op basis van hun browsertaal automatisch mogen terechtkomen.]]></translation>
+        <translation language="en"><![CDATA[Select the languages that people may automatically be redirected to based upon their browser language.]]></translation>
         <translation language="it"><![CDATA[Seleziona le lingue alle quali i visitatori possono accedere automaticamente tramite il loro browser.]]></translation>
         <translation language="ru"><![CDATA[Выберите языки, чтобы пользователи могли сразу быть переадресованы.]]></translation>
         <translation language="cn"><![CDATA[请选择用户通过浏览器自动被重新定向的语言。]]></translation>
