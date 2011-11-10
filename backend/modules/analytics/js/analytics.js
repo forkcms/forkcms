@@ -103,11 +103,9 @@ jsBackend.analytics.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: true,
-						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-						color: 'white',
-						style: { display: 'none' }
-					}
+						enabled: false,
+					},
+					showInLegend: true
 				}
 			},
 			legend: { style: { right: '10px' } },
@@ -229,7 +227,6 @@ jsBackend.analytics.chartSingleMetricPerDay =
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
 			yAxis: { min: 0, max: $('#dataChartSingleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartSingleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartSingleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
-			legend: { symbolPadding: 16, symbolWidth: 14 },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
 			plotOptions:
 			{
@@ -293,7 +290,7 @@ jsBackend.analytics.chartWidget =
 			xAxis: { categories: xAxisCategories },
 			yAxis: { min: 0, max: $('#dataChartWidget #maxYAxis').html(), tickInterval: ($('#dataChartWidget #tickInterval').html() == '' ? null : $('#dataChartWidget #tickInterval').html()), title: { enabled: false } },
 			credits: { enabled: false },
-			legend: { layout: 'horizontal' },
+			legend: { layout: 'horizontal', backgroundColor: 'transparent' },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
 			plotOptions:
 			{

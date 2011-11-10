@@ -102,10 +102,7 @@ jsBackend.mailmotor.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: true,
-						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-						color: 'white',
-						style: { display: 'none' }
+						enabled: false,
 					}
 				}
 			},
