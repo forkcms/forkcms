@@ -236,7 +236,6 @@ class BackendForm extends SpoonForm
 		$this->header->addJS('ckeditor/ckeditor.js', 'core', false);
 		$this->header->addJS('ckeditor/adapters/jquery.js', 'core', false);
 		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
-		$this->header->addJS('ckeditor/config.js', 'core', true);
 
 		// add the internal link lists-file
 		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
