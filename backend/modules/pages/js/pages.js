@@ -225,6 +225,9 @@ jsBackend.pages.extras =
 			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
 			close: function(e, ui)
 			{
+				// reset content
+				jsBackend.pages.extras.setContent(index, previousContent);
+
 				// destroy dialog (to get rid of html order problems)
 				$(this).dialog('destroy');
 
