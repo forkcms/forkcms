@@ -84,7 +84,7 @@ class BackendModel
 		// check if the fork API keys are available
 		if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
 		{
-			$warnings[] = array('message' => BL::err('ForkAPIKeys'));
+			$warnings[] = array('message' => sprintf(BL::err('ForkAPIKeys'), BackendModel::createURLForAction('settings', 'index')));
 		}
 
 		// check for extensions warnings

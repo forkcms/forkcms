@@ -56,10 +56,6 @@
       	  ]]>
      	</translation>
       </item>
-      <item type="message" name="CronjobsNotSet">
-        <translation language="nl"><![CDATA[Controleer of alle cronjobs zijn ingesteld.]]></translation>
-        <translation language="en"><![CDATA[Verify that all cronjobs are set.]]></translation>
-      </item>
       <item type="message" name="DeletedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
         <translation language="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
@@ -305,6 +301,10 @@
       <item type="error" name="CorruptedFile">
         <translation language="nl"><![CDATA[Het geüploade bestand is geen geldig ZIP bestand en kon niet worden uitgepakt.]]></translation>
         <translation language="en"><![CDATA[The uploaded file is not a valid ZIP file and could not be extracted.]]></translation>
+      </item>
+      <item type="error" name="CronjobsNotSet">
+        <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[Not all cronjobs are set. <a href="%1$s">Configure</a>]]></translation>
       </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
