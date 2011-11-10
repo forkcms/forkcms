@@ -91,7 +91,7 @@ class MailingBodyBuilder
 		}
 
 		// we replace the editor tags with the content the user gave into the editor in the CMS
-		$body = preg_replace('/<!-- tinymce -->.*?<!-- \/tinymce -->/is', $editorHtml, $templateHtml);
+		$body = preg_replace('/<!-- editor -->.*?<!-- \/editor -->/is', $editorHtml, $templateHtml);
 
 		// we have to do this so we have entities in our body instead
 		$body = mb_convert_encoding($body, 'HTML-ENTITIES', 'UTF-8');

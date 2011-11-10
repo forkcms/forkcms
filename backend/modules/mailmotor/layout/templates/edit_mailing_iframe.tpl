@@ -9,19 +9,19 @@
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/backend/modules/mailmotor/layout/css/iframe.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/imports/tinymce.css" />
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.js"></script>
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.tools.js"></script>
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.backend.js"></script>
-	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=backend.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=utils.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=mailmotor.js&amp;language=nl&amp;m=1272467798"></script>
+	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=backend.js&amp;language=nl"></script>
+	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=utils.js&amp;language=nl"></script>
+	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=mailmotor.js&amp;language=nl"></script>
 	<script type="text/javascript" src="/backend/core/js/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="/backend/core/js/ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="/frontend/cache/navigation/editor_link_list_{$LANGUAGE}.js?m=1320499579"></script>
+	<script type="text/javascript" src="/backend/core/js/ckfinder/ckfinder.js"></script>
+	<script type="text/javascript" src="/frontend/cache/navigation/editor_link_list_{$LANGUAGE}.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 			var variables = new Array();
@@ -39,7 +39,6 @@
 			}
 		//]]>
 	</script>
-	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=ckeditor_config.js&amp;language={$LANGUAGE}"></script>
 </head>
 <body id="content" class="edit addEdit">
 	{$templateHtml}
