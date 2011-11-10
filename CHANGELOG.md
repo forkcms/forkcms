@@ -7,6 +7,7 @@ Improvements:
 * Core: upgraded Highcharts to 2.1.8.
 * Core: major improvements (codestyling, spelling, performance, ...) for JS, credits to Thomas.
 * Core: upgraded jQuery to 1.7
+* Installer: when the form in step 6 (where the actual install happens) is submitted the button will be replaced with a spinner to indicate the installer is running.
 
 Bugfixes:
 

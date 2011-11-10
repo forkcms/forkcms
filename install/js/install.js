@@ -123,6 +123,19 @@ $(document).ready(function()
 
 
 	/*
+	 * Step 6 - before install
+	 */
+	if($('#formStep6').length > 0)
+	{
+		$('form').on('submit', function(e)
+		{
+			$('.buttonHolder a.submitButton').remove();
+			$('#ajaxSpinner').show();
+		});
+	}
+
+
+	/*
 	 * Step 7 - confirmation
 	 */
 
