@@ -37,8 +37,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// get some data
-		$modulesThatRequireAkismet = BackendSettingsModel::getModulesThatRequireAkismet();
-		$modulesThatRequireGoogleMaps = BackendSettingsModel::getModulesThatRequireGoogleMaps();
+		$modulesThatRequireAkismet = BackendExtensionsModel::getModulesThatRequireAkismet();
+		$modulesThatRequireGoogleMaps = BackendExtensionsModel::getModulesThatRequireGoogleMaps();
 
 		// set properties
 		$this->needsAkismet = (!empty($modulesThatRequireAkismet));

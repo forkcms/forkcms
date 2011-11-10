@@ -80,6 +80,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		// call the parent, as in create a new datagrid with the created source
 		$this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $this->id));
 		$this->dataGrid->setColumnsHidden(array('campaign_id', 'campaign_name', 'status'));
+		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics_campaign') . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
 
 		// set headers values
 		$headers['sent'] = ucfirst(BL::lbl('Sent'));

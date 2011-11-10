@@ -66,7 +66,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => ucfirst(BL::getLabel('Name'))));
 
 		// hide some columns
-		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name'));
+		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
 
 		// set colum URLs
 		$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
@@ -91,7 +91,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstalledModules->setSortingColumns(array('name'));
 
 		// hide some columns
-		$this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name'));
+		$this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name', 'cronjobs_active'));
 
 		// set colum URLs
 		$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');

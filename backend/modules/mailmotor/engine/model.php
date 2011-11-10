@@ -80,6 +80,7 @@ class BackendMailmotorModel
 	 */
 	public static function checkSettings()
 	{
+		$warnings = array();
 
 		// analytics session token
 		if(BackendModel::getModuleSetting('mailmotor', 'cm_account') == false)

@@ -1,8 +1,24 @@
-3.1.0 (xxxx-xx-xx)
+3.1.1 (xxxx-xx-xx)
 --
 Improvements:
 
+* Locale: refactored inportXML method to also be used by installer (rather than 2 seperate "different yet the same" functions)
+* Extensions: add cronjobs info to info.xml, informational al well as for checking whether all cronjobs are set.
+
+Bugfixes:
+
+* Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
+
+
+3.1.0 (2011-11-08)
+--
+Improvements:
+
+* Core: Upgraded TinyMCE to 3.4.7
+* Core: TinyMCE now includes all languages that are possible in the interface-language-dropdown.
+* Core: the keys when asking for a locale item now get camelcased so you can add enum values f.e. when using them in a datagrid.
 * Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
+* Pages: added a widget that shows the subpages as blocks with their title and meta description.
 
 Bugfixes:
 
@@ -10,11 +26,21 @@ Bugfixes:
 * Core: when editing non-active languages the files parsed through javascript.php were using the default language, as pointed out by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/200.
 * Core: fix default module, action, language in JS - was messed up on dashboard.
 * Core: fix issue in template compiler; nested iterations where child ends in name of parent, did not work.
-* Core: removed the guessing of the library path in the installer.
+* Core: removed the guessing of the library path in the installer. When Spoon can't be located a textbox will be shown wherin you can enter the path to Spoon.
+* Core: fixed issue when displaying empty pages without blocks linked.
+* ContentBlocks: fixed a database exception when deleting content blocks, thx to Sam Tubbax.
 * Extensions: fixed typo, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/207 by Bart.
+* Extensions: editing a template without default-data was triggering a notices, as mentioned by Bart on http://forkcms.lighthouseapp.com/projects/61890/tickets/204.
+* Extensions: confirmmessages through pure Javascript don't support sprintf through the template-engine, thx to Bart, see http://forkcms.lighthouseapp.com/projects/61890/tickets/203.
+* Extensions: ignore hidden files when validating the uploaded zip-files, thx to Dieter W, see http://forkcms.lighthouseapp.com/projects/61890/tickets/208.
 * Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
 * Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.
 * Location: invalid item was used in the template, and the JS should only be excuted after jQuery is loaded, as mentioned by Floris on http://forkcms.lighthouseapp.com/projects/61890/tickets/205.
+* Pages: classname for sitemap was wrong.
+* Pages: navigation now contains valid depth-key in template.
+* Tags: inline editing wasn't working anymore due the new way of using AJAX.
+* Tools: improved whitespace-check in codesniffer.
+* Faq: fixed collation of table faq_feedback.
 
 
 3.0.0 (2011-11-01)

@@ -50,13 +50,13 @@ class Fork_Sniffs_Styleguide_LanguageConstructsSniff implements PHP_CodeSniffer_
 				if($next['code'] == T_OPEN_PARENTHESIS)
 				{
 					// opening brace whitespaces
-					if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE)
+					if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n")
 					{
-						$phpcsFile->addError('We don\'t allow whitespaces after the opening brace.', $stackPtr);
+						$phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
 					}
 
-					// closing brace whitespaces
-					if(!isset($next['parenthesis_closer']) || $tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE)
+					// no whitespaces before )
+					if(!isset($next['parenthesis_closer']) || ($tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n"))
 					{
 						$phpcsFile->addError('We don\'t allow whitespaces before the closing brace.', $stackPtr);
 					}
@@ -87,13 +87,13 @@ class Fork_Sniffs_Styleguide_LanguageConstructsSniff implements PHP_CodeSniffer_
 				}
 
 				// opening brace whitespaces
-				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE)
+				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n")
 				{
-					$phpcsFile->addError('We don\'t allow whitespaces after the opening brace.', $stackPtr);
+					$phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
 				}
 
-				// closing brace whitespaces
-				if(!isset($next['parenthesis_closer']) || $tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE)
+				// no whitespaces before )
+				if(!isset($next['parenthesis_closer']) || ($tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n"))
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces before the closing brace.', $stackPtr);
 				}
@@ -111,13 +111,13 @@ class Fork_Sniffs_Styleguide_LanguageConstructsSniff implements PHP_CodeSniffer_
 				}
 
 				// opening brace whitespaces
-				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE)
+				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n")
 				{
-					$phpcsFile->addError('We don\'t allow whitespaces after the opening brace.', $stackPtr);
+					$phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
 				}
 
-				// closing brace whitespaces
-				if(!isset($next['parenthesis_closer']) || $tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE)
+				// no whitespaces before )
+				if(!isset($next['parenthesis_closer']) || ($tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n"))
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces before the closing brace.', $stackPtr);
 				}

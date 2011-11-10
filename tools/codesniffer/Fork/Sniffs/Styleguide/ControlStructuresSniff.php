@@ -75,13 +75,13 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 				}
 
 				// no whitespaces after (
-				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE)
+				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n")
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
 				}
 
 				// no whitespaces before )
-				if(!isset($next['parenthesis_closer']) || $tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE)
+				if(!isset($next['parenthesis_closer']) || ($tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n"))
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces before the closing brace.', $stackPtr);
 				}
@@ -218,13 +218,13 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 				}
 
 				// opening brace whitespaces
-				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE)
+				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n")
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
 				}
 
-				// closing brace whitespaces
-				if(!isset($next['parenthesis_closer']) || $tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE)
+				// no whitespaces before )
+				if(!isset($next['parenthesis_closer']) || ($tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n"))
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces before the closing brace.', $stackPtr);
 				}
@@ -295,13 +295,13 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 				}
 
 				// opening brace whitespaces
-				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE)
+				if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n")
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
 				}
 
-				// closing brace whitespaces
-				if(!isset($next['parenthesis_closer']) || $tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE)
+				// no whitespaces before )
+				if(!isset($next['parenthesis_closer']) || ($tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE && substr($tokens[$stackPtr + 2]['content'], 0, 1) != "\n"))
 				{
 					$phpcsFile->addError('We don\'t allow whitespaces before the closing brace.', $stackPtr);
 				}

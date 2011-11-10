@@ -6,7 +6,12 @@
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[The mailmotor is a integration of Campaign Monitor in the backend. The module is an easy-to-use interface wherein mailings can be build and send.]]>
+		<![CDATA[
+			To easily distribute newsletters, one of Fork CMS's core modules is the Mailmotor module. It seamlessly integrates email campaign management using Campaign Monitor into your very own website.
+			After initially linking the module to your Campaign Monitor account, it's possible to manage every aspect of a newsletter campaign through it's very intuitive interface. Subscribers can be divided into specific customizable groups to allow for very targeted compaigns.
+			Creating a newsletter is a very simple process consisting of only a few steps, where one selects the desired language and group(s) to send the newsletter to and chooses which template to use for each newsletter. The content of the newsletter can than be created and edited through a rich text editor.
+			After succesfully creating your newsletter, it's possibly to first send a preview email to yourself or any selected address. If you're happy about the newsletter, just press the final button to have Campaign Monitor deliver it to your contacts. Hereafter, it's possible to view detailed statistics per newsletter: don't we all want to know just how many people opened the email and of those, how many actually clicked through to your website?
+		]]>
 	</description>
 	<authors>
 		<author>

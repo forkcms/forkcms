@@ -29,6 +29,21 @@
 						</div>
 					</div>
 				{/option:information.description}
+
+				{option:dataGridCronjobs}
+					<div class="box">
+						<div class="heading">
+							<h3>{$lblCronjobs|ucfirst}</h3>
+						</div>
+						<div class="options">
+							{$msgCronjobsInfo|sprintf:{$PATH_WWW}:{$SITE_URL}}
+						</div>
+						<div class="dataGridHolder">
+							{$dataGridCronjobs}
+						</div>
+					</div>
+				{/option:dataGridCronjobs}
+
 				{option:dataGridEvents}
 					<div class="box">
 						<div class="heading">
