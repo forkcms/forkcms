@@ -139,14 +139,14 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 					{
 						$phpcsFile->addError('We expect the variablename used in the PHPDoc to be the same as the one used in the parameterlist.', $i);
 					}
-					*/
+
 					if(isset($parameters[$paramCounter]['default']) && $parameters[$paramCounter]['default'] != '')
 					{
 						if(substr_count($type, '[optional]') == 0) $phpcsFile->addError('We expect optional parameters to have "[optional]" just after the type.', $i);
 						if($parameters[$paramCounter]['type_hint'] != '' && $type != $parameters[$paramCounter]['type_hint'] .'[optional]') $phpcsFile->addError('The type in the PHPDoc doesn\'t match the typehinting in the signature.', $i);
 					}
 					elseif(isset($parameters[$paramCounter]['type_hint']) && $parameters[$paramCounter]['type_hint'] != '' && $type != $parameters[$paramCounter]['type_hint']) $phpcsFile->addError('The type in the PHPDoc doesn\'t match the typehinting in the signature.', $i);
-
+					*/
 
 					// increment
 					$paramCounter++;
