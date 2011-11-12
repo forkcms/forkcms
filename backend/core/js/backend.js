@@ -1,13 +1,11 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
  * Backend related objects
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
-jsBackend =
+var jsBackend =
 {
 	// datamembers
 	debug: {option:SPOON_DEBUG}true{/option:SPOON_DEBUG}{option:!SPOON_DEBUG}false{/option:!SPOON_DEBUG},
@@ -18,10 +16,12 @@ jsBackend =
 		language: null
 	},
 
-
 	// init, something like a constructor
 	init: function()
 	{
+		// variables
+		var $body = $('body');
+
 		// get url and split into chunks
 		var chunks = document.location.pathname.split('/');
 
@@ -51,17 +51,16 @@ jsBackend =
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
 
-		// add touch class when touch enabled
-		if(!!window.TouchEvent){ $('body').addClass('touch-enabled'); }
-
 		// do not move, should be run as the last item.
 		{option:!SPOON_DEBUG}jsBackend.forms.unloadWarning();{/option:!SPOON_DEBUG}
 	},
 
-
 	// init ajax
 	initAjax: function()
 	{
+		// variables
+		$ajaxSpinner = $('#ajaxSpinner');
+
 		// set defaults for AJAX
 		$.ajaxSetup(
 		{
@@ -74,7 +73,7 @@ jsBackend =
 		});
 
 		// global error handler
-		$(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions)
+		$(document).ajaxError(function(e, XMLHttpRequest, ajaxOptions)
 		{
 			// 403 means we aren't authenticated anymore, so reload the page
 			if(XMLHttpRequest.status == 403) window.location.reload();
@@ -94,15 +93,10 @@ jsBackend =
 		});
 
 		// spinner stuff
-		$(document).ajaxStart(function() { $('#ajaxSpinner').show(); });
-		$(document).ajaxStop(function() { $('#ajaxSpinner').hide(); });
-	},
-
-
-	// end
-	eoo: true
+		$(document).ajaxStart(function() { $ajaxSpinner.show(); });
+		$(document).ajaxStop(function() { $ajaxSpinner.hide(); });
+	}
 }
-
 
 /**
  * Handle form messages (action feedback: success, error, ...)
@@ -114,6 +108,9 @@ jsBackend.balloons =
 	// init, something like a constructor
 	init: function()
 	{
+		// variables
+		$toggleBalloon = $('.toggleBalloon');
+
 		$('.balloon:visible').each(function()
 		{
 			// search linked element
@@ -122,17 +119,21 @@ jsBackend.balloons =
 			// linked item found?
 			if(linkedElement != null)
 			{
+				// variables
+				var topValue = linkedElement.offset().top + linkedElement.height() + 10;
+				var leftValue = linkedElement.offset().left - 30;
+
 				// position
-				$(this).css('position', 'absolute').css('top', linkedElement.offset().top + linkedElement.height() + 10).css('left', linkedElement.offset().left - 30);
+				$(this).css('position', 'absolute').css('top', topValue).css('left', leftValue);
 			}
 		});
 
-		$('.toggleBalloon').click(jsBackend.balloons.click);
+		// bind click
+		$toggleBalloon.on('click', jsBackend.balloons.click);
 	},
 
-
 	// handle the click event (make it appear/disappear)
-	click: function(evt)
+	click: function(e)
 	{
 		var clickedElement = $(this);
 
@@ -149,7 +150,7 @@ jsBackend.balloons =
 				$('#'+ id).fadeOut(500);
 
 				// unbind
-				$(window).unbind('resize');
+				$(window).off('resize');
 			}
 
 			// not visible
@@ -170,24 +171,23 @@ jsBackend.balloons =
 		}
 	},
 
-
 	// position the balloon
 	position: function(clickedElement, element)
 	{
+		// variables
+		var topValue = clickedElement.offset().top + clickedElement.height() + 10;
+		var leftValue = clickedElement.offset().left - 30;
+
 		// position
-		element.css('position', 'absolute').css('top', clickedElement.offset().top + clickedElement.height() + 10).css('left', clickedElement.offset().left - 30);
-	},
-
-
-	// end
-	eoo: true
+		element.css('position', 'absolute').css('top', topValue).css('left', leftValue);
+	}
 }
-
 
 /**
  * Handle form functionality
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.controls =
 {
@@ -210,101 +210,121 @@ jsBackend.controls =
 		jsBackend.controls.bindToggleDiv();
 	},
 
-
-	// bind a checkbox textfield combo
+	// bind a checkbox dropdown combo
 	bindCheckboxDropdownCombo: function()
 	{
-		$('.checkboxDropdownCombo').each(function()
+		// variables
+		$checkboxDropdownCombo = $('.checkboxDropdownCombo');
+
+		$checkboxDropdownCombo.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			// check if needed element exists
-			if($(this).find('input:checkbox').length > 0 && $(this).find('select').length > 0)
+			if($this.find('input:checkbox').length > 0 && $this.find('select').length > 0)
 			{
-				var checkbox = $(this).find('input:checkbox').eq(0);
-				var dropdown = $(this).find('select').eq(0);
+				// variables
+				$checkbox = $this.find('input:checkbox').eq(0);
+				$dropdown = $this.find('select').eq(0);
 
-				checkbox.bind('change', function(evt)
+				$checkbox.on('change', function(e)
 				{
-					var combo = $(this).parents().filter('.checkboxDropdownCombo');
-					var field = $(combo.find('select')[0]);
+					// variables
+					$combo = $(this).parents().filter($checkboxDropdownCombo);
+					$field = $($combo.find('select')[0]);
+					$this = $(this);
 
-					if($(this).is(':checked'))
+					if($this.is(':checked'))
 					{
-						field.removeClass('disabled').prop('disabled', false);
-						field.focus();
+						$field.removeClass('disabled').prop('disabled', false);
+						$field.focus();
 					}
-
-					else field.addClass('disabled').prop('disabled', true);
+					else $field.addClass('disabled').prop('disabled', true);
 				});
 
-				if(checkbox.is(':checked')) dropdown.removeClass('disabled').prop('disabled', false);
-				else dropdown.addClass('disabled').prop('disabled', true);
+				if($checkbox.is(':checked')) $dropdown.removeClass('disabled').prop('disabled', false);
+				else $dropdown.addClass('disabled').prop('disabled', true);
 			}
 		});
 	},
-
 
 	// bind a checkbox textfield combo
 	bindCheckboxTextfieldCombo: function()
 	{
-		$('.checkboxTextFieldCombo').each(function()
+		// variables
+		$checkboxTextFieldCombo = $('.checkboxTextFieldCombo');
+
+		$checkboxTextFieldCombo.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			// check if needed element exists
-			if($(this).find('input:checkbox').length > 0 && $(this).find('input:text').length > 0)
+			if($this.find('input:checkbox').length > 0 && $this.find('input:text').length > 0)
 			{
-				var checkbox = $(this).find('input:checkbox').eq(0);
-				var textField = $(this).find('input:text').eq(0);
+				// variables
+				$checkbox = $this.find('input:checkbox').eq(0);
+				$textField = $this.find('input:text').eq(0);
 
-				checkbox.bind('change', function(evt)
+				$checkbox.on('change', function(e)
 				{
-					var combo = $(this).parents().filter('.checkboxTextFieldCombo');
-					var field = $(combo.find('input:text')[0]);
+					// variables
+					$combo = $this.parents().filter($checkboxTextFieldCombo);
+					$field = $($combo.find('input:text')[0]);
+					$this = $(this);
 
-					if($(this).is(':checked'))
+					if($this.is(':checked'))
 					{
-						field.removeClass('disabled').prop('disabled', false);
-						field.focus();
+						$field.removeClass('disabled').prop('disabled', false);
+						$field.focus();
 					}
-
-					else field.addClass('disabled').prop('disabled', true);
+					else $field.addClass('disabled').prop('disabled', true);
 				});
 
-				if(checkbox.is(':checked')) textField.removeClass('disabled').prop('disabled', false);
-				else textField.addClass('disabled').prop('disabled', true);
+				if($checkbox.is(':checked')) $textField.removeClass('disabled').prop('disabled', false);
+				else $textField.addClass('disabled').prop('disabled', true);
 			}
 		});
 	},
 
-
 	// bind a radiobutton field combo
 	bindRadioButtonFieldCombo: function()
 	{
-		$('.radiobuttonFieldCombo').each(function()
-		{
-			// check if needed element exists
-			if($(this).find('input:radio').length > 0 && $(this).find('input, select, textarea').length > 0)
-			{
-				var radiobutton = $(this).find('input:radio');
+		// variables
+		$radiobuttonFieldCombo = $('.radiobuttonFieldCombo');
 
-				radiobutton.bind('change', function(evt)
+		$radiobuttonFieldCombo.each(function()
+		{
+			// variables
+			$this = $(this);
+
+			// check if needed element exists
+			if($this.find('input:radio').length > 0 && $this.find('input, select, textarea').length > 0)
+			{
+				// variables
+				$radiobutton = $(this).find('input:radio');
+
+				$radiobutton.on('click', function(e)
 				{
 					// redefine
 					$this = $(this);
 
 					// disable all
-					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
+					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ $radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
 
 					// get fields that should be enabled
-					var fields = $('input[name=' + radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + radiobutton.attr('name') + ']), select, textarea')
+					$fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
 
 					// enable
-					fields.removeClass('disabled').prop('disabled', false);
+					$fields.removeClass('disabled').prop('disabled', false);
 
 					// set focus
-					$(fields[0]).focus();
+					if(typeof $fields[0] != 'undefined') $fields[0].focus();
 				});
 
 				// change?
-				$(radiobutton[0]).change();
+				$radiobutton[0].click();
 			}
 		});
 	},
@@ -312,13 +332,17 @@ jsBackend.controls =
 	// bind confirm message
 	bindConfirm: function()
 	{
+		// variables
+		$askConfirmation = $('.askConfirmation');
+
 		// initialize
-		$('.askConfirmation').each(function()
+		$askConfirmation.each(function()
 		{
 			// get id
-			var id = $(this).data('messageId');
-			var url = $(this).attr('href');
-			if(typeof url == 'undefined') url = $(this).find('a').attr('href');
+			$this = $(this);
+			var id = $this.data('messageId');
+			var url = $this.attr('href');
+			if(typeof url == 'undefined') url = $this.find('a').attr('href');
 
 			if(id != '' && url != '')
 			{
@@ -334,33 +358,33 @@ jsBackend.controls =
 						'{$lblOK|ucfirst}': function()
 						{
 							// unbind the beforeunload event
-							$(window).unbind('beforeunload');
+							$(window).off('beforeunload');
 
 							// close dialog
-							$(this).dialog('close');
+							$this.dialog('close');
 
 							// goto link
 							window.location = url;
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
-								$(this).dialog('close');
+								$this.dialog('close');
 						}
 					},
-					open: function(evt)
+					open: function(e)
 					{
 						// set focus on first button
-						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
+						if($this.next().find('button').length > 0) $this.next().find('button')[0].focus();
 					}
 				});
 			}
 		});
 
 		// bind clicks
-		$('.askConfirmation').live('click', function(evt)
+		$askConfirmation.on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).data('messageId');
@@ -377,20 +401,26 @@ jsBackend.controls =
 		});
 	},
 
-
 	// let the fake dropdown behave nicely, like a real dropdown
 	bindFakeDropdown: function()
 	{
-		$('.fakeDropdown').bind('click', function(evt)
+		// variables
+		$fakeDropdown = $('.fakeDropdown');
+
+		$fakeDropdown.on('click', function(e)
 		{
 			// prevent default behaviour
-			evt.preventDefault();
+			e.preventDefault();
 
 			// stop it
-			evt.stopPropagation();
+			e.stopPropagation();
+
+			// variables
+			$parent = $fakeDropdown.parent();
+			$body = $(body);
 
 			// get id
-			var id = $(this).attr('href');
+			var id = $this.attr('href');
 
 			// IE8 prepends full current url before links to #
 			id = id.substring(id.indexOf('#'));
@@ -398,11 +428,11 @@ jsBackend.controls =
 			if($(id).is(':visible'))
 			{
 				// remove events
-				$('body').unbind('click');
-				$('body').unbind('keyup');
+				$body.off('click');
+				$body.off('keyup');
 
 				// remove class
-				$(this).parent().removeClass('selected');
+				$parent.removeClass('selected');
 
 				// hide
 				$(id).hide('blind', {}, 'fast');
@@ -410,15 +440,15 @@ jsBackend.controls =
 			else
 			{
 				// bind escape
-				$('body').bind('keyup', function(evt)
+				$body.on('keyup', function(e)
 				{
-					if(evt.keyCode == 27)
+					if(e.keyCode == 27)
 					{
 						// unbind event
-						$('body').unbind('keyup');
+						$body.off('keyup');
 
 						// remove class
-						$(this).parent().removeClass('selected');
+						$parent.removeClass('selected');
 
 						// hide
 						$(id).hide('blind', {}, 'fast');
@@ -426,20 +456,20 @@ jsBackend.controls =
 				});
 
 				// bind click outside
-				$('body').bind('click', function(evt)
+				$body.on('click', function(e)
 				{
 					// unbind event
-					$('body').unbind('click');
+					$body.off('click');
 
 					// remove class
-					$(this).parent().removeClass('selected');
+					$parent.removeClass('selected');
 
 					// hide
 					$(id).hide('blind', {}, 'fast');
 				});
 
 				// add class
-				$(this).parent().addClass('selected');
+				$parent.addClass('selected');
 
 				// show
 				$(id).show('blind', {}, 'fast');
@@ -447,36 +477,38 @@ jsBackend.controls =
 		})
 	},
 
-
 	// toggle between full width and sidebar-layout
 	bindFullWidthSwitch: function()
 	{
-		$('#fullwidthSwitch a').toggle(
-			function(evt)
+		// variables
+		$fullwidthSwitchLink = $('#fullwidthSwitch a');
+		$fullwidthSwitch = $fullwidthSwitchLink.parent();
+
+		$fullwidthSwitchLink.toggle(
+			function(e)
 			{
 				// prevent default behaviour
-				evt.preventDefault();
+				e.preventDefault();
 
 				// add class
-				$(this).parent().addClass('collapsed');
+				$fullwidthSwitch.addClass('collapsed');
 
 				// toggle
 				$('#subnavigation, #pagesTree').fadeOut(250);
 			},
-			function(evt)
+			function(e)
 			{
-					// Stuff to do every *even* time the element is clicked;
-					evt.preventDefault();
+				// Stuff to do every *even* time the element is clicked;
+				e.preventDefault();
 
-					// remove class
-					$(this).parent().removeClass('collapsed');
+				// remove class
+				$fullwidthSwitch.removeClass('collapsed');
 
-					// toggle
-					$('#subnavigation, #pagesTree').fadeIn(500);
+				// toggle
+				$('#subnavigation, #pagesTree').fadeIn(500);
 			}
 		);
 	},
-
 
 	// bind confirm message
 	bindMassAction: function()
@@ -486,7 +518,7 @@ jsBackend.controls =
 		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', true);
 
 		// hook change events
-		$('table input:checkbox').change(function(evt)
+		$('table input:checkbox').on('change', function(e)
 		{
 			// get parent table
 			var table = $(this).parents('table.dataGrid').eq(0);
@@ -509,6 +541,9 @@ jsBackend.controls =
 		// initialize
 		$('.tableOptions .massAction option').each(function()
 		{
+			// variables
+			$this = $(this);
+
 			// get id
 			var id = $(this).data('messageId');
 
@@ -525,39 +560,43 @@ jsBackend.controls =
 						'{$lblOK|ucfirst}': function()
 						{
 							// close dialog
-							$(this).dialog('close');
+							$this.dialog('close');
 
 							// submit the form
-							$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
+							$('select:visible option[data-message-id='+ $this.attr('id') +']').parents('form').eq(0).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
-							$(this).dialog('close');
+							$this.dialog('close');
 						}
 					},
-					open: function(evt)
+					open: function(e)
 					{
 						// set focus on first button
-						if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
+						if($this.next().find('button').length > 0) { $this.next().find('button')[0].focus(); }
 					}
 				});
 			}
 		});
 
 		// hijack the form
-		$('.tableOptions .massAction .submitButton').live('click', function(evt)
+		$('.tableOptions .massAction .submitButton').on('click', function(e)
 		{
 			// prevent default action
-			evt.preventDefault();
+			e.preventDefault();
+
+			// variables
+			$this = $(this);
+			$parentForm = $this.parents('form');
 
 			// not disabled
-			if(!$(this).is('.disabledButton'))
+			if(!$this.is('.disabledButton'))
 			{
 				// get the selected element
-				if($(this).parents('.massAction').find('select[name=action] option:selected').length > 0)
+				if($this.parents('.massAction').find('select[name=action] option:selected').length > 0)
 				{
 					// get action element
-					var element = $(this).parents('.massAction').find('select[name=action] option:selected');
+					var element = $this.parents('.massAction').find('select[name=action] option:selected');
 
 					// if the rel-attribute exists we should show the dialog
 					if(typeof element.data('messageId') != 'undefined')
@@ -570,50 +609,57 @@ jsBackend.controls =
 					}
 
 					// no confirm
-					else $(this).parents('form').submit();
+					else $parentForm.submit();
 				}
 
 				// no confirm
-				else $(this).parents('form').submit();
+				else $parentForm.submit();
 			}
 		});
 	},
-
 
 	// check all checkboxes with one checkbox in the tableheader
 	bindMassCheckbox: function()
 	{
 		// mass checkbox changed
-		$('th .checkboxHolder input:checkbox').bind('change', function(evt)
+		$('th .checkboxHolder input:checkbox').on('change', function(e)
 		{
+			// variables
+			$this = $(this);
+
 			// check or uncheck all the checkboxes in this datagrid
-			$(this).closest('table').find('td input:checkbox').prop('checked', $(this).is(':checked'));
+			$this.closest('table').find('td input:checkbox').prop('checked', $this.is(':checked'));
 
 			// set selected class
-			if($(this).is(':checked')) $(this).parents().filter('table').eq(0).find('tbody tr').addClass('selected');
-			else $(this).parents().filter('table').eq(0).find('tbody tr').removeClass('selected');
+			if($this.is(':checked')) $this.parents().filter('table').eq(0).find('tbody tr').addClass('selected');
+			else $this.parents().filter('table').eq(0).find('tbody tr').removeClass('selected');
 		});
 
 		// single checkbox changed
-		$('td.checkbox input:checkbox').bind('change', function(evt)
+		$('td.checkbox input:checkbox').on('change', function(e)
 		{
+			// variables
+			$this = $(this);
+
 			// check mass checkbox
-			if($(this).closest('table').find('td.checkbox input:checkbox').length == $(this).closest('table').find('td.checkbox input:checkbox:checked').length)
+			if($this.closest('table').find('td.checkbox input:checkbox').length == $this.closest('table').find('td.checkbox input:checkbox:checked').length)
 			{
-				$(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', true);
+				$this.closest('table').find('th .checkboxHolder input:checkbox').prop('checked', true);
 			}
 
 			// uncheck mass checkbox
-			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').prop('checked', false); }
+			else $this.closest('table').find('th .checkboxHolder input:checkbox').prop('checked', false);
 		});
 	},
 
-
 	bindPasswordGenerator: function()
 	{
-		if($('.passwordGenerator').length > 0)
+		// variables
+		$passwordGenerator = $('.passwordGenerator');
+
+		if($passwordGenerator.length > 0)
 		{
-			$('.passwordGenerator').passwordGenerator(
+			$passwordGenerator.passwordGenerator(
 				{
 					length: 8,
 					numbers: false,
@@ -625,13 +671,15 @@ jsBackend.controls =
 		}
 	},
 
-
 	// bind the password strength meter to the correct inputfield(s)
 	bindPasswordStrengthMeter: function()
 	{
-		if($('.passwordStrength').length > 0)
+		// variables
+		$passwordStrength = $('.passwordStrength');
+
+		if($passwordStrength.length > 0)
 		{
-			$('.passwordStrength').each(function()
+			$passwordStrength.each(function()
 			{
 				// grab id
 				var id = $(this).data('id');
@@ -647,7 +695,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).live('keyup', function()
+				$('#'+ id).on('keyup', function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -661,7 +709,6 @@ jsBackend.controls =
 			});
 		}
 	},
-
 
 	// check a string for passwordstrength
 	checkPassword: function(string)
@@ -710,14 +757,13 @@ jsBackend.controls =
 		return 'weak';
 	},
 
-
 	// toggle a div
 	bindToggleDiv: function()
 	{
-		$('.toggleDiv').live('click', function(evt)
+		$('.toggleDiv').on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('href');
@@ -731,7 +777,6 @@ jsBackend.controls =
 		});
 	},
 
-
 	// bind checkboxes in a row
 	bindTableCheckbox: function()
 	{
@@ -739,13 +784,12 @@ jsBackend.controls =
 		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
-		$('tr td input:checkbox').live('change', function(evt)
+		$('tr td input:checkbox').on('change', function(e)
 		{
 			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
 			else $(this).parents().filter('tr').eq(0).removeClass('selected');
 		});
 	},
-
 
 	// bind target blank
 	bindTargetBlank: function()
@@ -753,14 +797,16 @@ jsBackend.controls =
 		$('a.targetBlank').attr('target', '_blank');
 	},
 
-
 	// togle between the working languages
 	bindWorkingLanguageSelection: function()
 	{
-		$('#workingLanguage').bind('change', function(evt)
+		// variables
+		$workingLanguage = $('#workingLanguage');
+
+		$workingLanguage.on('change', function(e)
 		{
 			// preventDefault
-			evt.preventDefault();
+			e.preventDefault();
 
 			// break the url int parts
 			var urlChunks = document.location.pathname.split('/');
@@ -798,19 +844,15 @@ jsBackend.controls =
 			// rebuild the url and redirect
 			document.location.href = url;
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Backend effects
  *
  * @author	Dieter Vanden Eynde <dieter@dieterve.be>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.effects =
 {
@@ -819,7 +861,6 @@ jsBackend.effects =
 	{
 		jsBackend.effects.bindHighlight();
 	},
-
 
 	// if a var highlight exists in the url it will be highlighted
 	bindHighlight: function()
@@ -840,24 +881,20 @@ jsBackend.effects =
 				if($(selector)[0].tagName.toLowerCase() == 'tr'){ selector += ' td'; }
 
 				// when we hover over the item we stop the effect, otherwise we will mess up background hover styles
-				$(selector).bind('mouseover', function(){ $(selector).stop(true, true); });
+				$(selector).on('mouseover', function(){ $(selector).stop(true, true); });
 
 				// highlight!
 				$(selector).effect("highlight", {}, 5000);
 			}
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Backend forms
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.forms =
 {
@@ -873,16 +910,20 @@ jsBackend.forms =
 		jsBackend.forms.tagBoxes();
 	},
 
-
 	datefields: function()
 	{
+		// variables
 		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
 		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
 		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
 		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
 		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
+		$inputDatefieldNormal = $('.inputDatefieldNormal');
+		$inputDatefieldFrom = $('.inputDatefieldFrom');
+		$inputDatefieldTill = $('.inputDatefieldTill');
+		$inputDatefieldRange = $('.inputDatefieldRange');
 
-		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+		$($inputDatefieldNormal, $inputDatefieldFrom, $inputDatefieldTill, $inputDatefieldRange).datepicker(
 		{
 			dayNames: dayNames,
 			dayNamesMin: dayNamesMin,
@@ -896,42 +937,51 @@ jsBackend.forms =
 		});
 
 		// the default, nothing special
-		$('.inputDatefieldNormal').each(function()
+		$inputDatefieldNormal.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', {
+			$this.datepicker('option', {
 				dateFormat: data.mask,
 				firstDate: data.firstday
 			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain startdate
-		$('.inputDatefieldFrom').each(function()
+		$inputDatefieldFrom.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option', {
+			$this.datepicker('option', {
 				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 			}).datepicker('setDate', value);
 		});
 
 		// datefields that have a certain enddate
-		$('.inputDatefieldTill').each(function()
+		$inputDatefieldTill.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option',
+			$this.datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -940,14 +990,17 @@ jsBackend.forms =
 		});
 
 		// datefields that have a certain range
-		$('.inputDatefieldRange').each(function()
+		$inputDatefieldRange.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			// get data
 			var data = $(this).data();
 			var value = $(this).val();
 
 			// set options
-			$(this).datepicker('option',
+			$this.datepicker('option',
 			{
 				dateFormat: data.mask,
 				firstDay: data.firstday,
@@ -957,13 +1010,11 @@ jsBackend.forms =
 		});
 	},
 
-
 	// set the focus on the first field
 	focusFirstField: function()
 	{
 		$('form input:visible:not(.noFocus):first').focus();
 	},
-
 
 	// set placeholders
 	placeholders: function()
@@ -973,53 +1024,56 @@ jsBackend.forms =
 
 		if(!jQuery.support.placeholder)
 		{
+			// variables
+			$placeholder = $('input[placeholder]');
+
 			// bind focus
-			$('input[placeholder]').focus(function()
+			$placeholder.on('focus', function()
 			{
 				// grab element
-				var input = $(this);
+				$input = $(this);
 
 				// only do something when the current value and the placeholder are the same
-				if(input.val() == input.attr('placeholder'))
+				if($input.val() == $input.attr('placeholder'))
 				{
 					// clear
-					input.val('');
+					$input.val('');
 
 					// remove class
-					input.removeClass('placeholder');
+					$input.removeClass('placeholder');
 				}
 			});
 
-			$('input[placeholder]').blur(function()
+			$placeholder.blur(function()
 			{
 				// grab element
-				var input = $(this);
+				$input = $(this);
 
 				// only do something when the input is empty or the value is the same as the placeholder
-				if(input.val() == '' || input.val() == input.attr('placeholder'))
+				if($input.val() == '' || $input.val() == $input.attr('placeholder'))
 				{
 					// set placeholder
-					input.val(input.attr('placeholder'));
+					$input.val(input.attr('placeholder'));
 
 					// add class
-					input.addClass('placeholder');
+					$input.addClass('placeholder');
 				}
 			});
 
 			// call blur to initialize
-			$('input[placeholder]').blur();
+			$placeholder.blur();
 
 			// hijack the form so placeholders aren't submitted as values
-			$('input[placeholder]').parents('form').submit(function()
+			$placeholder.parents('form').submit(function()
 			{
 				// find elements with placeholders
 				$(this).find('input[placeholder]').each(function()
 				{
 					// grab element
-					var input = $(this);
+					$input = $(this);
 
 					// if the value and the placeholder are the same reset the value
-					if(input.val() == input.attr('placeholder')) input.val('');
+					if($input.val() == $input.attr('placeholder')) $input.val('');
 				});
 			});
 		}
@@ -1050,9 +1104,9 @@ jsBackend.forms =
 					});
 
 					// add onclick event for button (button can't have the name submit)
-					$('form#'+ formId + ' a.submitButton').bind('click', function(evt)
+					$('form#'+ formId + ' a.submitButton').on('click', function(e)
 					{
-						evt.preventDefault();
+						e.preventDefault();
 
 						// is the button disabled?
 						if($(this).prop('disabled')) return false;
@@ -1060,16 +1114,15 @@ jsBackend.forms =
 					});
 
 					// dont submit the form on certain elements
-					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
-					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
+					$('form#'+ formId + ' .dontSubmit').on('focus', function() { dontSubmit = true; })
+					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
 
 					// hijack the submit event
-					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
+					$('form#'+ formId).submit(function(e) { return !dontSubmit; });
 				}
 			});
 		}
 	},
-
 
 	// add tagbox to the correct input fields
 	tagBoxes: function()
@@ -1099,7 +1152,6 @@ jsBackend.forms =
 		}
 	},
 
-
 	// show a warning when people are leaving the
 	unloadWarning: function()
 	{
@@ -1119,12 +1171,12 @@ jsBackend.forms =
 			});
 
 			// bind before unload, this will ask the user if he really wants to leave the page
-			$(window).bind('beforeunload', jsBackend.forms.unloadWarningCheck);
+			$(window).on('beforeunload', jsBackend.forms.unloadWarningCheck);
 
 			// if a form is submitted we don't want to ask the user if he wants to leave, we know for sure
-			$('form').bind('submit', function(evt)
+			$('form').on('submit', function(e)
 			{
-				if(!evt.isDefaultPrevented()) $(window).unbind('beforeunload');
+				if(!e.isDefaultPrevented()) $(window).off('beforeunload');
 			});
 		}
 	},
@@ -1163,25 +1215,22 @@ jsBackend.forms =
 		if(!changed)
 		{
 			// prevent default action from being executed
-			if(evt) evt.preventDefault();
+			if(e) e.preventDefault();
 
 			// unbind the event
-			$(window).unbind('beforeunload');
+			$(window).off('beforeunload');
 		}
 
 		// return if needed
 		return (changed) ? '{$msgValuesAreChanged}' : null;
-	},
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Do custom layout/interaction stuff
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.layout =
 {
@@ -1198,31 +1247,28 @@ jsBackend.layout =
 
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
-		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 	},
-
 
 	// dataFilter layout fixes
 	dataFilter: function()
 	{
 		// add last child and first child for IE
-		$('.dataFilter tbody td:first-child').addClass('firstChild');
-		$('.dataFilter tbody td:last-child').addClass('lastChild');
+		$('.datafilter tbody td:first-child').addClass('firstChild');
+		$('.datafilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;
 
 		// loop group
-		$('.dataFilter tbody .options').each(function()
+		$('.datafilter tbody .options').each(function()
 		{
 			// taller?
 			if($(this).height() > tallest) tallest = $(this).height();
 		});
 
 		// set new height
-		$('.dataFilter tbody .options').height(tallest);
+		$('.datafilter tbody .options').height(tallest);
 	},
-
 
 	// datagrid layout
 	dataGrid: function()
@@ -1237,7 +1283,6 @@ jsBackend.layout =
 		$('.dynamicStriping.dataGrid tr:nth-child(2n)').addClass('even');
 		$('.dynamicStriping.dataGrid tr:nth-child(2n+1)').addClass('odd');
 	},
-
 
 	// if the browser isn't supported, show a warning
 	showBrowserWarning: function()
@@ -1286,35 +1331,29 @@ jsBackend.layout =
 
 		// show warning if needed
 		if(showWarning) { $('#showBrowserWarning').show(); }
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Handle form messages (action feedback: success, error, ...)
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.messages =
 {
 	timers: [],
 
-
 	// init, something like a constructor
 	init: function()
 	{
 		// bind close button
-		$('#messaging .formMessage .iconClose').live('click', function(evt)
+		$('#messaging .formMessage .iconClose').on('click', function(e)
 		{
-			evt.preventDefault();
+			e.preventDefault();
 			jsBackend.messages.hide($(this).parents('.formMessage'));
 		});
 	},
-
 
 	// hide a message
 	hide: function(element)
@@ -1322,7 +1361,6 @@ jsBackend.messages =
 		// fade out
 		element.fadeOut();
 	},
-
 
 	// add a new message into the que
 	add: function(type, content)
@@ -1344,19 +1382,15 @@ jsBackend.messages =
 		// timeout
 		if(type == 'notice') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
 		if(type == 'success') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Apply tabs
  *
  * @author	Jan Moessen <jan@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.tabs =
 {
@@ -1401,26 +1435,22 @@ jsBackend.tabs =
 		// select tab
 		if($('.tabSelect').length > 0)
 		{
-			$('.tabSelect').live('click', function(evt)
+			$('.tabSelect').on('click', function(e)
 			{
 				// prevent default
-				evt.preventDefault();
+				e.preventDefault();
 				$('.tabs').tabs('select', $(this).attr('href'));
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Apply TinyMCE
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Matthias Mullie <matthias@mullie.eu>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.tinyMCE =
 {
@@ -1430,7 +1460,7 @@ jsBackend.tinyMCE =
 		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
 
 		// bind click on the element
-		$('.clickToEdit').live('click', function(evt)
+		$('.clickToEdit').on('click', function(e)
 		{
 			// get id
 			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
@@ -1446,7 +1476,6 @@ jsBackend.tinyMCE =
 			}
 		});
 	},
-
 
 	// format text (after retrieving it from the editor)
 	afterSave: function(editor, object)
@@ -1464,7 +1493,6 @@ jsBackend.tinyMCE =
 		editor.setContent(utils.string.xhtml($tmp.html()));
 	},
 
-
 	// format text (before placing it in the editor)
 	loadContent: function(editor, object)
 	{
@@ -1480,7 +1508,6 @@ jsBackend.tinyMCE =
 		// check content
 		jsBackend.tinyMCE.checkContent(editor);
 	},
-
 
 	// custom content checks
 	checkContent: function(editor)
@@ -1506,40 +1533,35 @@ jsBackend.tinyMCE =
 			// no warnings
 			else $('#' + editor.id + '_warnings').remove();
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Apply tooltip
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.tooltip =
 {
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.help').length > 0)
+		// variables
+		$help = $('.help');
+
+		if($help.length > 0)
 		{
-			$('.help').tooltip({ effect: 'fade', relative: true }).dynamic();
+			$help.tooltip({ effect: 'fade', relative: true }).dynamic();
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Handle browsers with impaired CSS selector support
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.selectors =
 {
@@ -1551,18 +1573,14 @@ jsBackend.selectors =
 		{
 			// nothing yet
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Fix focus/blur events on impaired browsers
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.focusfix =
 {
@@ -1582,13 +1600,8 @@ jsBackend.focusfix =
 			focusfix('input.inputText', 'focus');
 			focusfix('textarea', 'focus');
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Enable setting of sequence by drag & drop
@@ -1600,29 +1613,35 @@ jsBackend.tableSequenceByDragAndDrop =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.sequenceByDragAndDrop tbody').length > 0)
+		// variables
+		$sequenceBody = $('.sequenceByDragAndDrop tbody');
+
+		if($sequenceBody.length > 0)
 		{
-			$('.sequenceByDragAndDrop tbody').sortable(
+			$sequenceBody.sortable(
 			{
 				items: 'tr',
 				handle: 'td.dragAndDropHandle',
 				placeholder: 'dragAndDropPlaceholder',
 				forcePlaceholderSize: true,
-				stop: function(event, ui)
+				stop: function(e, ui)
 				{
 					// the table
-					var table = $(this);
-					var action = (typeof $(table.parents('table.dataGrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.dataGrid')).data('action').toString();
+					$table = $(this);
+					var action = (typeof $table.parents('table.dataGrid').data('action') == 'undefined') ? 'sequence' : $table.parents('table.dataGrid').data('action').toString();
 
-					// fetch extra parameters
-					if(typeof $(table.parents('table.dataGrid')).data('extra-params') != 'undefined') url += $(table.parents('table.dataGrid')).data('extra-params');
+					// buil ajax-url
+					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
+
+					// append
+					if(typeof $table.parents('table.dataGrid').data('extra-params') != 'undefined') url += $table.parents('table.dataGrid').data('extra-params');
 
 					// init var
-					var rows = $(this).find('tr');
-					var newIdSequence = new Array();
+					$rows = $(this).find('tr');
+					var newIdSequence;
 
 					// loop rowIds
-					rows.each(function() { newIdSequence.push($(this).data('id')); });
+					$rows.each(function() { newIdSequence.push($(this).data('id')); });
 
 					// make the call
 					$.ajax(
@@ -1638,16 +1657,16 @@ jsBackend.tableSequenceByDragAndDrop =
 							if(data.code != 200)
 							{
 								// revert
-								table.sortable('cancel');
+								$table.sortable('cancel');
 
 								// show message
 								jsBackend.messages.add('error', 'alter sequence failed.');
 							}
 
 							// redo odd-even
-							table.find('tr').removeClass('odd').removeClass('even');
-							table.find('tr:even').addClass('odd');
-							table.find('tr:odd').addClass('even');
+							$table.find('tr').removeClass('odd').removeClass('even');
+							$table.find('tr:even').addClass('odd');
+							$table.find('tr:odd').addClass('even');
 
 							// alert the user
 							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
@@ -1667,7 +1686,7 @@ jsBackend.tableSequenceByDragAndDrop =
 							jsBackend.messages.add('error', textStatus);
 
 							// revert
-							table.sortable('cancel');
+							$table.sortable('cancel');
 
 							// alert the user
 							if(jsBackend.debug) alert(textStatus);
@@ -1676,12 +1695,7 @@ jsBackend.tableSequenceByDragAndDrop =
 				}
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.init);
+$(jsBackend.init);

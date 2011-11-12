@@ -109,6 +109,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Default constructor.
 	 *
+	 * @return	void
 	 * @param	string $title			The title for the item.
 	 * @param	string $link			The link for the item.
 	 * @param	string $description		The content for the item.
@@ -125,6 +126,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Add a category for the item.
 	 *
+	 * @return	void
 	 * @param	string $name				The name of the category.
 	 * @param	string[optional] $domain	The domain of the category.
 	 */
@@ -488,6 +490,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the author.
 	 *
+	 * @return	void
 	 * @param	string $author	The author of the item.
 	 */
 	public function setAuthor($author)
@@ -499,6 +502,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the comments link.
 	 *
+	 * @return	void
 	 * @param	string $link	The link where the comments are available.
 	 */
 	public function setCommentsLink($link)
@@ -517,6 +521,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the description.
 	 *
+	 * @return	void
 	 * @param	string $description		The content of the item.
 	 */
 	public function setDescription($description)
@@ -528,6 +533,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the enclosure
 	 *
+	 * @return	void
 	 * @param	string $URL		The URL of the enclosure.
 	 * @param	int $length		The length of the enclosure.
 	 * @param	string $type	The content-type of the enclosure.
@@ -553,6 +559,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the guid.
 	 *
+	 * @return	void
 	 * @param	string $URL						The URL of the item.
 	 * @param	bool[optional] $isPermaLink		Is this the permalink?
 	 */
@@ -576,6 +583,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the link.
 	 *
+	 * @return	void
 	 * @param	string $link	The link of the item.
 	 */
 	public function setLink($link)
@@ -594,6 +602,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the publication date.
 	 *
+	 * @return	void
 	 * @param	int $publicationDate	The publication date as a UNIX-timestamp.
 	 */
 	public function setPublicationDate($publicationDate)
@@ -605,6 +614,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set source.
 	 *
+	 * @return	void
 	 * @param	string $name	The name of the source.
 	 * @param	string $URL		The URL of the source.
 	 */
@@ -628,6 +638,7 @@ class SpoonFeedRSSItem
 	/**
 	 * Set the title.
 	 *
+	 * @return	void
 	 * @param	string $title	The title of the item.
 	 */
 	public function setTitle($title)
@@ -635,3 +646,5 @@ class SpoonFeedRSSItem
 		$this->title = (string) $title;
 	}
 }
+
+?>

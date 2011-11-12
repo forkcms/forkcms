@@ -19,7 +19,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	 *
 	 * @var BackendDataGrid
 	 */
-	private $dataGridEvents;
+	private $dataGridCronjobs, $dataGridEvents;
 
 	/**
 	 * Information fetched from the info.xml.
@@ -52,7 +52,8 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 			// load data
 			$this->loadData();
 
-			// load datagrid
+			// load datagrids
+			$this->loadDataGridCronjobs();
 			$this->loadDataGridEvents();
 
 			// parse
@@ -94,6 +95,13 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 
 				// empty data (nothing useful)
 				if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileIsEmpty'));
+
+				// check if cronjobs are installed already
+				foreach($this->information['cronjobs'] as $cronjob)
+				{
+					if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getError('CronjobsNotSet'));
+					break;
+				}
 			}
 
 			// warning that the information file is corrupt
@@ -108,11 +116,32 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	}
 
 	/**
+	 * Load the data grid which contains the cronjobs.
+	 */
+	private function loadDataGridCronjobs()
+	{
+		// no cronjobs = dont bother
+		if(!isset($this->information['cronjobs'])) return;
+
+		// create data grid
+		$this->dataGridCronjobs = new BackendDataGridArray($this->information['cronjobs']);
+
+		// hide columns
+		$this->dataGridCronjobs->setColumnsHidden(array('minute', 'hour', 'day-of-month', 'month', 'day-of-week', 'action', 'description', 'active'));
+
+		// add cronjob data column
+		$this->dataGridCronjobs->addColumn('cronjob', BL::getLabel('Cronjob'), '[description]<br /><strong>[minute] [hour] [day-of-month] [month] [day-of-week]</strong> php ' . PATH_WWW . '/backend/cronjob.php module=<strong>' . $this->currentModule . '</strong> action=<strong>[action]</strong>', null, null, null, 0);
+
+		// no paging
+		$this->dataGridCronjobs->setPaging(false);
+	}
+
+	/**
 	 * Load the data grid which contains the events.
 	 */
 	private function loadDataGridEvents()
 	{
-		// no hooks so dont bother
+		// no hooks = dont bother
 		if(!isset($this->information['events'])) return;
 
 		// create data grid
@@ -135,5 +164,6 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 
 		// data grids
 		$this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
+		$this->tpl->assign('dataGridCronjobs', (isset($this->dataGridCronjobs) && $this->dataGridCronjobs->getNumResults() > 0) ? $this->dataGridCronjobs->getContent() : false);
 	}
 }

@@ -153,6 +153,46 @@ class BackendExtensionsModel
 	}
 
 	/**
+	 * Checks the settings and optionally returns an array with warnings
+	 *
+	 * @return array
+	 */
+	public static function checkSettings()
+	{
+		$warnings = array();
+		$akismetModules = self::getModulesThatRequireAkismet();
+		$googleMapsModules = self::getModulesThatRequireGoogleMaps();
+
+		// check if the akismet key is available if there are modules that require it
+		if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
+		{
+			// add warning
+			$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
+		}
+
+		// check if the google maps key is available if there are modules that require it
+		if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
+		{
+			// add warning
+			$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
+		}
+
+		// check if there are cronjobs that are not yet set
+		$modules = BackendExtensionsModel::getModules();
+		foreach($modules as $module)
+		{
+			if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+				break;
+			}
+		}
+
+		return $warnings;
+	}
+
+	/**
 	 * Clear all applications cache.
 	 *
 	 * Note: we do not need to rebuild anything, the core will do this when noticing the cache files are missing.
@@ -427,6 +467,7 @@ class BackendExtensionsModel
 			$module['description'] = '';
 			$module['version'] = '';
 			$module['installed'] = false;
+			$module['cronjobs_active'] = true;
 
 			// the module is present in the database, that means its installed
 			if(isset($installedModules[$moduleName])) $module['installed'] = true;
@@ -442,6 +483,20 @@ class BackendExtensionsModel
 				// set fields if they were found in the XML
 				if(isset($info['description'])) $module['description'] = BackendDataGridFunctions::truncate($info['description'], 80);
 				if(isset($info['version'])) $module['version'] = $info['version'];
+
+				// check if cronjobs are set
+				if(isset($info['cronjobs']))
+				{
+					// go search whether or not all or active
+					foreach($info['cronjobs'] as $cronjob)
+					{
+						if(!$cronjob['active'])
+						{
+							$module['cronjobs_active'] = false;
+							break;
+						}
+					}
+				}
 			}
 			catch(Exception $e)
 			{
@@ -453,6 +508,56 @@ class BackendExtensionsModel
 		}
 
 		return $managableModules;
+	}
+
+	/**
+	 * Fetch the list of modules that require Akismet API key
+	 *
+	 * @return array
+	 */
+	public static function getModulesThatRequireAkismet()
+	{
+		// init vars
+		$modules = array();
+		$installedModules = BackendModel::getModules();
+
+		// loop modules
+		foreach($installedModules as $module)
+		{
+			// fetch setting
+			$setting = BackendModel::getModuleSetting($module, 'requires_akismet', false);
+
+			// add to the list
+			if($setting) $modules[] = $module;
+		}
+
+		// return
+		return $modules;
+	}
+
+	/**
+	 * Fetch the list of modules that require Google Maps API key
+	 *
+	 * @return array
+	 */
+	public static function getModulesThatRequireGoogleMaps()
+	{
+		// init vars
+		$modules = array();
+		$installedModules = BackendModel::getModules();
+
+		// loop modules
+		foreach($installedModules as $module)
+		{
+			// fetch setting
+			$setting = BackendModel::getModuleSetting($module, 'requires_google_maps', false);
+
+			// add to the list
+			if($setting) $modules[] = $module;
+		}
+
+		// return
+		return $modules;
 	}
 
 	/**
@@ -626,7 +731,7 @@ class BackendExtensionsModel
 		// possible variables available for the module installers
 		$variables = array();
 
-		// init installer
+		// run installer
 		$installer = new $class(
 			BackendModel::getDB(true),
 			BL::getActiveLanguages(),
@@ -638,7 +743,7 @@ class BackendExtensionsModel
 		// execute installation
 		$installer->install();
 
-		// clear the cache so locale (and so much more) gets rebuilded
+		// clear the cache so locale (and so much more) gets rebuilt
 		self::clearCache();
 	}
 
@@ -752,7 +857,9 @@ class BackendExtensionsModel
 	public static function isThemeInstalled($theme)
 	{
 		return (bool) BackendModeL::getDB()->getVar(
-			'SELECT COUNT(id) FROM themes_templates WHERE theme = ?',
+			'SELECT COUNT(id)
+			 FROM themes_templates
+			 WHERE theme = ?',
 			array($theme)
 		);
 	}
@@ -792,18 +899,47 @@ class BackendExtensionsModel
 	{
 		$information = array();
 
-		// version
-		$version = $xml->xpath('/module/version');
-		if(isset($version[0])) $information['version'] = (string) $version[0];
+		// fetch theme node
+		$module = $xml->xpath('/module');
+		if(isset($module[0])) $module = $module[0];
 
-		// description
-		$description = $xml->xpath('/module/description');
-		if(isset($description[0])) $information['description'] = (string) $description[0];
+		// fetch general module info
+		$information['name'] = (string) $module->name;
+		$information['version'] = (string) $module->version;
+		$information['requirements'] = (array) $module->requirements;
+		$information['description'] = (string) $module->description;
 
 		// authors
 		foreach($xml->xpath('/module/authors/author') as $author)
 		{
 			$information['authors'][] = (array) $author;
+		}
+
+		// cronjobs
+		foreach($xml->xpath('/module/cronjobs/cronjob') as $cronjob)
+		{
+			// attributes
+			$attributes = $cronjob->attributes();
+
+			// cronjob action is required
+			if(!isset($attributes['action'])) continue;
+
+			// build cronjob information
+			$item = array();
+			$item['minute'] = (isset($attributes['minute'])) ? $attributes['minute'] : '*';
+			$item['hour'] = (isset($attributes['hour'])) ? $attributes['hour'] : '*';
+			$item['day-of-month'] = (isset($attributes['day-of-month'])) ? $attributes['day-of-month'] : '*';
+			$item['month'] = (isset($attributes['month'])) ? $attributes['month'] : '*';
+			$item['day-of-week'] = (isset($attributes['day-of-week'])) ? $attributes['day-of-week'] : '*';
+			$item['action'] = $attributes['action'];
+			$item['description'] = $cronjob[0];
+
+			// check if cronjob has already been run
+			$cronjobs = (array) BackendModel::getModuleSetting('core', 'cronjobs');
+			$item['active'] = in_array($information['name'] . '.' . $attributes['action'], $cronjobs);
+
+			// add cronjob to list
+			$information['cronjobs'][] = $item;
 		}
 
 		// events

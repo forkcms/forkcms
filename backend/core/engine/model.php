@@ -77,31 +77,18 @@ class BackendModel
 	public static function checkSettings()
 	{
 		$warnings = array();
-		$akismetModules = BackendSettingsModel::getModulesThatRequireAkismet();
-		$googleMapsModules = BackendSettingsModel::getModulesThatRequireGoogleMaps();
 
-		// check if the akismet key is available if there are modules that require it
-		if(!empty($akismetModules) && self::getModuleSetting('core', 'akismet_key', null) == '')
-		{
-			// add warning
-			$warnings[] = array('message' => BL::err('AkismetKey'));
-		}
-
-		// check if the google maps key is available if there are modules that require it
-		if(!empty($googleMapsModules) && self::getModuleSetting('core', 'google_maps_key', null) == '')
-		{
-			// add warning
-			$warnings[] = array('message' => BL::err('GoogleMapsKey'));
-		}
+		// check if debug-mode is active
+		if(SPOON_DEBUG) $warnings[] = array('message' => BL::err('DebugModeIsActive'));
 
 		// check if the fork API keys are available
 		if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
 		{
-			$warnings[] = array('message' => BL::err('ForkAPIKeys'));
+			$warnings[] = array('message' => sprintf(BL::err('ForkAPIKeys'), BackendModel::createURLForAction('settings', 'index')));
 		}
 
-		// check if debug-mode is active
-		if(SPOON_DEBUG) $warnings[] = array('message' => BL::err('DebugModeIsActive'));
+		// check for extensions warnings
+		$warnings = array_merge($warnings, BackendExtensionsModel::checkSettings());
 
 		return $warnings;
 	}

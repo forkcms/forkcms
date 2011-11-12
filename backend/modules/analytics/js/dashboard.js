@@ -1,13 +1,24 @@
-if(!jsBackend) { jsBackend = new Object; }
-
+/**
+ * Interaction for the dashboard in the analytics module
+ *
+ * @author	Annelies Vanextergem <annelies@netlash.com>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.analyticsDashboard =
 {
 	init: function()
 	{
-		$('#refreshTrafficSources').bind('click', function ()
+		// variables
+		$refreshTrafficSources = $('#refreshTrafficSources');
+		$settingsUrl = $('#settingsUrl');
+		$dataGridReferrers = $('#dataGridReferrers');
+		$dataGridKeywords = $('#dataGridKeywords');
+		$trafficSourcesDate = $('#trafficSourcesDate');
+
+		$refreshTrafficSources.on('click', function()
 		{
 			// disable button
-			$('#refreshTrafficSources').addClass('disabledButton');
+			$refreshTrafficSources.addClass('disabledButton');
 
 			// make the call to check the status
 			$.ajax(
@@ -16,14 +27,14 @@ jsBackend.analyticsDashboard =
 				success: function(data, textStatus)
 				{
 					// redirect
-					if(data.data.status == 'unauthorized') window.location = $('#settingsUrl').html();
+					if(data.data.status == 'unauthorized') window.location = $settingsUrl.html();
 
 					if(data.code == 200)
 					{
 						// show new data
-						$('#dataGridReferrers').html(data.data.referrersHtml);
-						$('#dataGridKeywords').html(data.data.keywordsHtml);
-						$('#trafficSourcesDate').html(data.data.date);
+						$dataGridReferrers.html(data.data.referrersHtml);
+						$dataGridKeywords.html(data.data.keywordsHtml);
+						$trafficSourcesDate.html(data.data.date);
 
 						// show message
 						jsBackend.messages.add('success', data.data.message);
@@ -35,7 +46,7 @@ jsBackend.analyticsDashboard =
 					}
 
 					// enable button
-					$('#refreshTrafficSources').removeClass('disabledButton');
+					$refreshTrafficSources.removeClass('disabledButton');
 
 					// alert the user
 					if(data.code != 200 && jsBackend.debug) { alert(data.message); }
@@ -43,19 +54,14 @@ jsBackend.analyticsDashboard =
 				error: function(XMLHttpRequest, textStatus, errorThrown)
 				{
 					// enable button
-					$('#refreshTrafficSources').removeClass('disabledButton');
+					$refreshTrafficSources.removeClass('disabledButton');
 
 					// alert the user
 					if(jsBackend.debug) alert(textStatus);
 				}
 			});
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.analyticsDashboard.init);
+$(jsBackend.analyticsDashboard.init);

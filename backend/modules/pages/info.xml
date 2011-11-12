@@ -6,7 +6,11 @@
 		<minimum_version>3.0.0</minimum_version>
 	</requirements>
 	<description>
-		<![CDATA[This module will be used to manage the pages for your site.]]>
+		<![CDATA[
+			The heart and soul of Fork CMS.
+			A Fork CMS website is administered through the pages module. Users can easily create, edit or delete a new page, or rearange it in the visual tree of the website.
+			Adding/editing pieces of content as well as modules/widgets to the correct part of the page is simple and straightforward through the simplified visual representation of the webpage's design, that can be altered on each page independently.
+		]]>
 	</description>
 	<authors>
 		<author>

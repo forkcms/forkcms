@@ -10,9 +10,9 @@
 /**
  * In this file we store all generic functions that we will be using in the faq module
  *
- * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Matthias Mullie <matthias.mullie@netlash.com>
- * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFaqModel
@@ -175,7 +175,7 @@ class BackendFaqModel
 	public static function getByTag($tagId)
 	{
 		$items = (array) BackendModel::getDB()->getRecords(
-			'SELECT i.id AS url, i.title, mt.module
+			'SELECT i.id AS url, i.question, mt.module
 			 FROM modules_tags AS mt
 			 INNER JOIN tags AS t ON mt.tag_id = t.id
 			 INNER JOIN faq_questions AS i ON mt.other_id = i.id

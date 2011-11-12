@@ -6,7 +6,7 @@
  * @package	Fork
  *
  * @author	Davy Hellemans <davy@netlash.com>
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Matthias Mullie <matthias@mullie.eu>
  */
 
@@ -27,7 +27,7 @@ define('SPOON_CHARSET', 'utf-8');
  * Fork configuration
  */
 // version of Fork
-define('FORK_VERSION', '3.0.0');
+define('FORK_VERSION', '3.1.0');
 
 
 /**

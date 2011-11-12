@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the faq module
  *
- * @author Lester Lievens <lester.lievens@netlash.com>
+ * @author Lester Lievens <lester@netlash.com>
  */
 class BackendFaqConfig extends BackendBaseConfig
 {

@@ -30,6 +30,32 @@
         <translation language="nl"><![CDATA[Ben je zeker dat je dit thema wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install this theme?]]></translation>
       </item>
+      <item type="message" name="CronjobsInfo">
+        <translation language="nl">
+          <![CDATA[
+            <p>
+              Cronjobs roepen perdiodiek, op bepaalde tijdstippen, een script aan.<br />
+              Cronjobs kunnen ofwel commandline aangeroepen worden, alsook via je webserver.
+            </p>
+            <p>
+              Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />
+              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>
+            </p>
+      	  ]]>
+     	</translation>
+        <translation language="en">
+          <![CDATA[
+            <p>
+              Cronjobs periodically, on a set timeframe, perform a call to script.<br />
+              Cronjobs can be executed either through commandline as well as over your webserver.
+            </p>
+            <p>
+              Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />
+              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>
+            </p>
+      	  ]]>
+     	</translation>
+      </item>
       <item type="message" name="DeletedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
         <translation language="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
@@ -275,6 +301,10 @@
       <item type="error" name="CorruptedFile">
         <translation language="nl"><![CDATA[Het geüploade bestand is geen geldig ZIP bestand en kon niet worden uitgepakt.]]></translation>
         <translation language="en"><![CDATA[The uploaded file is not a valid ZIP file and could not be extracted.]]></translation>
+      </item>
+      <item type="error" name="CronjobsNotSet">
+        <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[Not all cronjobs are set. <a href="%1$s">Configure</a>]]></translation>
       </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>

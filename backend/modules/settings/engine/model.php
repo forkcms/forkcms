@@ -16,56 +16,6 @@
 class BackendSettingsModel
 {
 	/**
-	 * Fetch the list of modules that require Akismet API key
-	 *
-	 * @return array
-	 */
-	public static function getModulesThatRequireAkismet()
-	{
-		// init vars
-		$modules = array();
-		$installedModules = BackendModel::getModules();
-
-		// loop modules
-		foreach($installedModules as $module)
-		{
-			// fetch setting
-			$setting = BackendModel::getModuleSetting($module, 'requires_akismet', false);
-
-			// add to the list
-			if($setting) $modules[] = $module;
-		}
-
-		// return
-		return $modules;
-	}
-
-	/**
-	 * Fetch the list of modules that require Google Maps API key
-	 *
-	 * @return array
-	 */
-	public static function getModulesThatRequireGoogleMaps()
-	{
-		// init vars
-		$modules = array();
-		$installedModules = BackendModel::getModules();
-
-		// loop modules
-		foreach($installedModules as $module)
-		{
-			// fetch setting
-			$setting = BackendModel::getModuleSetting($module, 'requires_google_maps', false);
-
-			// add to the list
-			if($setting) $modules[] = $module;
-		}
-
-		// return
-		return $modules;
-	}
-
-	/**
 	 * Get warnings for active modules
 	 *
 	 * @return array
@@ -75,9 +25,6 @@ class BackendSettingsModel
 		// init vars
 		$warnings = array();
 		$installedModules = BackendModel::getModules();
-
-		// add warnings
-		$warnings = array_merge($warnings, BackendModel::checkSettings());
 
 		// loop modules
 		foreach($installedModules as $module)

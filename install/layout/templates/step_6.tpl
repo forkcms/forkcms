@@ -33,6 +33,7 @@
 	<p class="spacing buttonHolder">
 		<a href="index.php?step=5" class="button">Previous</a>
 		<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish installation" />
+		<img id="ajaxSpinner" src="/backend/core/layout/images/spinner.gif" width="16" height="16" alt="loading" style="float: left; margin-top: 4px; display: none;" />
 	</p>
 {/form:step6}
 

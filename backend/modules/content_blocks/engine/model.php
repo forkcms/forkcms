@@ -54,7 +54,7 @@ class BackendContentBlocksModel
 		$db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', array($item['extra_id']));
 
 		// delete all records
-		$db->delete('content_blocks', 'id = ? AND i.language = ?', array($id, BL::getWorkingLanguage()));
+		$db->delete('content_blocks', 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
 	}
 
 	/**
