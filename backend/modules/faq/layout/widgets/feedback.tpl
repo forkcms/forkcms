@@ -4,23 +4,23 @@
 	</div>
 
 	{option:faqFeedback}
-	<div class="dataGridHolder">
-		<table cellspacing="0" class="dataGrid">
-			<tbody>
-				{iteration:faqFeedback}
-				<tr class="{cycle:'odd':'even'}">
-					<td><a href="{$faqFeedback.full_url}">{$faqFeedback.text|truncate:150}</a></td>
-				</tr>
-				{/iteration:faqFeedback}
-			</tbody>
-		</table>
-	</div>
+		<div class="dataGridHolder">
+			<table cellspacing="0" class="dataGrid">
+				<tbody>
+					{iteration:faqFeedback}
+					<tr class="{cycle:'odd':'even'}">
+						<td><a href="{$faqFeedback.full_url}">{$faqFeedback.text|truncate:150}</a></td>
+					</tr>
+					{/iteration:faqFeedback}
+				</tbody>
+			</table>
+		</div>
 	{/option:faqFeedback}
 
 	{option:!faqFeedback}
-	<div class="options content">
-		<p>{$msgNoFeedback}</p>
-	</div>
+		<div class="options content">
+			<p>{$msgNoFeedback}</p>
+		</div>
 	{/option:!faqFeedback}
 
 	<div class="footer">
