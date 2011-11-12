@@ -131,7 +131,7 @@ class FrontendMailToFriend
 				$ownEmail = $this->frm->getField('own_email')->getValue();
 
 				$mailParameters['message'] = sprintf(FL::msg('MailShareMessage'), $friendName, $ownName, $this->getPageUrl());
-				$mailParameters['website'] = SITE_DEFAULT_TITLE;
+				$mailParameters['website'] = FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE);
 				$mailParameters['mail_message'] = $this->frm->getField('mail_message')->getValue();
 				FrontendMailer::addEmail(sprintf(FL::lbl('SharedLink'), $ownName), FRONTEND_CORE_PATH . '/layout/templates/mails/mail_to_friend.tpl', $mailParameters, $friendEmail, $friendName, $ownEmail, $ownName);
 

@@ -12,7 +12,7 @@
  *
  * @author Jelmer Snoeck <jelmer@netlash.com>
  */
-class MailToFriendInstall extends ModuleInstaller
+class MailToFriendInstaller extends ModuleInstaller
 {
 	/**
 	 * Execute the installer
