@@ -12,6 +12,8 @@ Improvements:
 Bugfixes:
 
 * Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
+* Missing label, as reported by Wouter Hechtermans on http://forkcms.lighthouseapp.com/projects/61890/tickets/212.
+* Pages: closing the dialog did not discard the content correctly.
 
 
 3.1.0 (2011-11-08)
