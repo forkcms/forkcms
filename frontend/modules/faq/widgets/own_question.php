@@ -102,7 +102,6 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 				}
 
 				$this->status = 'success';
-				$this->frm->trackData(array('form', 'own_question', 'form_token', '_utf8', 'message'));
 				FrontendMailer::addEmail(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']), FRONTEND_MODULES_PATH . '/faq/layout/templates/mails/own_question.tpl', $variables, $variables['email'], $variables['name']);
 			}
 		}
