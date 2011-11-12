@@ -103,7 +103,7 @@ jsBackend.analytics.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: false,
+						enabled: false
 					},
 					showInLegend: true
 				}
