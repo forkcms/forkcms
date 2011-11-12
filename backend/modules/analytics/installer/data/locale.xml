@@ -603,5 +603,17 @@
         <translation language="de"><![CDATA[Entferne die Verbindung mit deinem Analytics-Website-Profil.]]></translation>
       </item>
     </analytics>
+    <core>
+      <item type="message" name="NoKeywords">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van zoekwoorden.]]></translation>
+        <translation language="en"><![CDATA[There are no keywords yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora keyword.]]></translation>
+        <translation language="ru"><![CDATA[Нет ключевых слов.]]></translation>
+        <translation language="cn"><![CDATA[尚无关键词结果。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még keresőszavak.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Keywords.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de mots-clefs.]]></translation>
+      </item>
+    </core>
   </backend>
 </locale>

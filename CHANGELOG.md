@@ -12,6 +12,7 @@ Improvements:
 Bugfixes:
 
 * Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
+* Missing label, as reported by Wouter Hechtermans on http://forkcms.lighthouseapp.com/projects/61890/tickets/212.
 
 
 3.1.0 (2011-11-08)
