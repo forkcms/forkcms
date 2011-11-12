@@ -1,7 +1,7 @@
 /**
  * Interaction for the faq categories
  *
- * @author	Lester Lievens <lester@netlash.com>
+ * @author	Lester Lievens <lester.lievens@netlash.com>
  * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  * @author	Annelies Van Extergem <annelies@netlash.com>
  * @author	Davy Van Vooren <davy.vanvooren@netlash.com>

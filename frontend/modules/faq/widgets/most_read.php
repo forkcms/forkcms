@@ -22,8 +22,6 @@ class FrontendFaqWidgetMostRead extends FrontendBaseWidget
 		// call parent
 		parent::execute();
 
-		if(!strpos(FrontendNavigation::getURLForBlock('faq'), $this->URL->getQueryString())) return;
-
 		$this->loadTemplate();
 		$this->parse();
 	}
