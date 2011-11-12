@@ -19,7 +19,7 @@ class BackendFaqWidgetFeedback extends BackendBaseWidget
 	 *
 	 * @var	array
 	 */
-	private $feedback;
+	private $feedback = array();
 
 	/**
 	 * Execute the widget
