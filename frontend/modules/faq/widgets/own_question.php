@@ -37,9 +37,6 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 
 		$this->loadTemplate();
 
-		// only show on the default action and if allowed
-		if($this->URL->getQueryString() == '') return;
-		if(!strpos(FrontendNavigation::getURLForBlock('faq'), $this->URL->getQueryString())) return;
 		if(!FrontendModel::getModuleSetting('faq', 'allow_own_question', false)) return;
 
 		$this->loadForm();
