@@ -14,7 +14,6 @@
 	/* Core modules */
 	@import url("imports/dashboard.css");
 	@import url("imports/core_modules.css");
-	@import url("imports/faq.css");
 
 	/* UI core */
 	@import url("imports/ui_constructs.css");
