@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
@@ -8,51 +15,34 @@
  * 	- it will assign a lot of constants
  * 	- ...
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendTemplate extends SpoonTemplate
 {
 	/**
-	 * Class constructor
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
-	 * @return	void
-	 * @param	bool[optional] $addToReference	Should the instance be added into the reference.
+	 * @param bool[optional] $addToReference Should the instance be added into the reference.
 	 */
 	public function __construct($addToReference = true)
 	{
-		// parent constructor
 		parent::__construct();
 
-		// store in reference so we can access it from everywhere
 		if($addToReference) Spoon::set('template', $this);
 
-		// set cache directory
 		$this->setCacheDirectory(FRONTEND_CACHE_PATH . '/cached_templates');
-
-		// set compile directory
 		$this->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
-
-		// when debugging the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
-
-		// map custom modifiers
 		$this->mapCustomModifiers();
 	}
-
 
 	/**
 	 * Compile a given template.
 	 *
-	 * @return	void
-	 * @param	string $path		The path to the template, excluding the template filename.
-	 * @param 	string $template	The filename of the template within the path.
+	 * @param string $path The path to the template, excluding the template filename.
+	 * @param  string $template The filename of the template within the path.
 	 */
 	public function compile($path, $template)
 	{
@@ -78,16 +68,14 @@ class FrontendTemplate extends SpoonTemplate
 		return true;
 	}
 
-
 	/**
 	 * Output the template into the browser
 	 * Will also assign the labels and all user-defined constants.
 	 * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
 	 *
-	 * @return	void
-	 * @param	string $template				The path of the template to use.
-	 * @param	bool[optional] $customHeaders	Are custom headers already set?
-	 * @param	bool[optional] $parseCustom		Parse custom template.
+	 * @param string $template The path of the template to use.
+	 * @param bool[optional] $customHeaders Are custom headers already set?
+	 * @param bool[optional] $parseCustom Parse custom template.
 	 */
 	public function display($template, $customHeaders = false, $parseCustom = false)
 	{
@@ -152,44 +140,36 @@ class FrontendTemplate extends SpoonTemplate
 		require $this->compileDirectory . '/' . $compileName;
 	}
 
-
 	/**
 	 * Retrives the already assigned variables.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getAssignedVariables()
 	{
 		return $this->variables;
 	}
 
-
 	/**
 	 * Fetch the parsed content from this template.
 	 *
-	 * @return	string							The actual parsed content after executing this template.
-	 * @param	string $template				The location of the template file, used to display this template.
-	 * @param	bool[optional] $customHeaders	Are custom headers already set?
-	 * @param	bool[optional] $parseCustom		Parse custom template.
+	 * @param string $template The location of the template file, used to display this template.
+	 * @param bool[optional] $customHeaders Are custom headers already set?
+	 * @param bool[optional] $parseCustom Parse custom template.
+	 * @return string The actual parsed content after executing this template.
 	 */
 	public function getContent($template, $customHeaders = false, $parseCustom = false)
 	{
-		// turn on output buffering
 		ob_start();
-
-		// show output
 		$this->display($template, $customHeaders, $parseCustom);
-
-		// return template content
 		return ob_get_clean();
 	}
-
 
 	/**
 	 * Is the cache for this item still valid.
 	 *
-	 * @return	bool			Is this template block cached?
-	 * @param	string $name	The name of the cached block.
+	 * @param string $name The name of the cached block.
+	 * @return bool
 	 */
 	public function isCached($name)
 	{
@@ -200,11 +180,8 @@ class FrontendTemplate extends SpoonTemplate
 		else return parent::isCached($name);
 	}
 
-
 	/**
 	 * Map the frontend-specific modifiers
-	 *
-	 * @return	void
 	 */
 	private function mapCustomModifiers()
 	{
@@ -257,11 +234,8 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));
 	}
 
-
 	/**
 	 * Parse all user-defined constants
-	 *
-	 * @return	void
 	 */
 	private function parseConstants()
 	{
@@ -304,11 +278,8 @@ class FrontendTemplate extends SpoonTemplate
 		}
 	}
 
-
 	/**
 	 * Parses the general date and time formats
-	 *
-	 * @return	void
 	 */
 	private function parseDateTimeFormats()
 	{
@@ -320,22 +291,16 @@ class FrontendTemplate extends SpoonTemplate
 		$this->assign('dateFormatLong', FrontendModel::getModuleSetting('core', 'date_format_long'));
 	}
 
-
 	/**
 	 * Assigns an option if we are in debug-mode
-	 *
-	 * @return	void
 	 */
 	private function parseDebug()
 	{
 		if(SPOON_DEBUG) $this->assign('debug', true);
 	}
 
-
 	/**
 	 * Assign the labels
-	 *
-	 * @return	void
 	 */
 	private function parseLabels()
 	{
@@ -352,11 +317,8 @@ class FrontendTemplate extends SpoonTemplate
 		$this->assignArray(FrontendLanguage::getMessages(), 'msg');
 	}
 
-
 	/**
 	 * Parse the locale (things like months, days, ...)
-	 *
-	 * @return	void
 	 */
 	private function parseLocale()
 	{
@@ -381,11 +343,8 @@ class FrontendTemplate extends SpoonTemplate
 		$this->assignArray($locale);
 	}
 
-
 	/**
 	 * Assign some default vars
-	 *
-	 * @return	void
 	 */
 	private function parseVars()
 	{
@@ -397,15 +356,10 @@ class FrontendTemplate extends SpoonTemplate
 	}
 }
 
-
 /**
  * Contains all Frontend-related custom modifiers
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendTemplateModifiers
 {
@@ -413,8 +367,8 @@ class FrontendTemplateModifiers
 	 * Formats plain text as HTML, links will be detected, paragraphs will be inserted
 	 * 	syntax: {$var|cleanupPlainText}
 	 *
-	 * @return	string
-	 * @param	string $var		The text to cleanup.
+	 * @param string $var The text to cleanup.
+	 * @return string
 	 */
 	public static function cleanupPlainText($var)
 	{
@@ -439,28 +393,26 @@ class FrontendTemplateModifiers
 		return $var;
 	}
 
-
 	/**
 	 * Dumps the data
 	 * 	syntax: {$var|dump}
 	 *
-	 * @return	string
-	 * @param	string $var		The variable to dump.
+	 * @param string $var The variable to dump.
+	 * @return string
 	 */
 	public static function dump($var)
 	{
 		Spoon::dump($var, false);
 	}
 
-
 	/**
 	 * Format a number as currency
 	 * 	syntax: {$var|formatcurrency[:<currency>][:<decimals>]}
 	 *
-	 * @return	string
-	 * @param	string $var						The string to form.
-	 * @param	string[optional] $currency		The currency to will be used to format the number.
-	 * @param	int[optional] $decimals			The number of decimals to show.
+	 * @param string $var The string to form.
+	 * @param string[optional] $currency The currency to will be used to format the number.
+	 * @param int[optional] $decimals The number of decimals to show.
+	 * @return string
 	 */
 	public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
 	{
@@ -472,35 +424,29 @@ class FrontendTemplateModifiers
 
 				// format as Euro
 				return '€ ' . number_format((float) $var, $decimals, ',', ' ');
-			break;
+				break;
 		}
 	}
-
 
 	/**
 	 * Format a number as a float
 	 * @later	grab settings from database
 	 *
-	 * @return	string
-	 * @param	float $number				The number to format.
-	 * @param	int[optional] $decimals		The number of decimals.
+	 * @param float $number The number to format.
+	 * @param int[optional] $decimals The number of decimals.
+	 * @return string
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
-		// redefine
-		$number = (float) $number;
-		$decimals = (int) $decimals;
-
-		return number_format($number, $decimals, '.', ' ');
+		return number_format((float) $number, (int) $decimals, '.', ' ');
 	}
-
 
 	/**
 	 * Format a number
 	 * 	syntax: {$var|formatnumber}
 	 *
-	 * @return	string
-	 * @param	float $var		The number to format.
+	 * @param float $var The number to format.
+	 * @return string
 	 */
 	public static function formatNumber($var)
 	{
@@ -523,17 +469,16 @@ class FrontendTemplateModifiers
 		return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
 	}
 
-
 	/**
 	 * Get the navigation html
 	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>]}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var			The variable.
-	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer.
-	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build.
-	 * @param	int[optional] $depth			The maximum depth that has to be build.
-	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -).
+	 * @param string[optional] $var The variable.
+	 * @param string[optional] $type The type of navigation, possible values are: page, footer.
+	 * @param int[optional] $parentId The parent wherefore the navigation should be build.
+	 * @param int[optional] $depth The maximum depth that has to be build.
+	 * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
+	 * @return string
 	 */
 	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
 	{
@@ -550,16 +495,15 @@ class FrontendTemplateModifiers
 		return $var;
 	}
 
-
 	/**
 	 * Get a given field for a page-record
 	 * 	syntax: {$var|getpageinfo:404:'title'}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var			The string passed from the template.
-	 * @param	int $pageId						The id of the page to build the URL for.
-	 * @param	string[optional] $field			The field to get.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
+	 * @param string[optional] $var The string passed from the template.
+	 * @param int $pageId The id of the page to build the URL for.
+	 * @param string[optional] $field The field to get.
+	 * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+	 * @return string
 	 */
 	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
 	{
@@ -580,13 +524,12 @@ class FrontendTemplateModifiers
 		return $page[$field];
 	}
 
-
 	/**
 	 * Fetch the path for an include (theme file if available, core file otherwise)
 	 *
-	 * @return	string
-	 * @param	string $var		The variable.
-	 * @param	string $file	The base path.
+	 * @param string $var The variable.
+	 * @param string $file The base path.
+	 * @return string
 	 */
 	public static function getPath($var, $file)
 	{
@@ -596,20 +539,19 @@ class FrontendTemplateModifiers
 		return FrontendTheme::getPath($file);
 	}
 
-
 	/**
 	 * Get the subnavigation html
 	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:'<excludeIds-splitted-by-dash>']}
 	 *
 	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *
-	 * @return	string
-	 * @param	string[optional] $var			The variable.
-	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer.
-	 * @param	int[optional] $pageId			The parent wherefore the navigation should be build.
-	 * @param	int[optional] $startDepth		The depth to strat from.
-	 * @param	int[optional] $endDepth			The maximum depth that has to be build.
-	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -).
+	 * @param string[optional] $var The variable.
+	 * @param string[optional] $type The type of navigation, possible values are: page, footer.
+	 * @param int[optional] $pageId The parent wherefore the navigation should be build.
+	 * @param int[optional] $startDepth The depth to strat from.
+	 * @param int[optional] $endDepth The maximum depth that has to be build.
+	 * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
+	 * @return string
 	 */
 	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
 	{
@@ -653,15 +595,14 @@ class FrontendTemplateModifiers
 		return $var;
 	}
 
-
 	/**
 	 * Get the URL for a given pageId & language
 	 * 	syntax: {$var|geturl:404}
 	 *
-	 * @return	string
-	 * @param	string $var						The string passed from the template.
-	 * @param	int $pageId						The id of the page to build the URL for.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
+	 * @param string $var The string passed from the template.
+	 * @param int $pageId The id of the page to build the URL for.
+	 * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+	 * @return string
 	 */
 	public static function getURL($var, $pageId, $language = null)
 	{
@@ -674,16 +615,15 @@ class FrontendTemplateModifiers
 		return FrontendNavigation::getURL($pageId, $language);
 	}
 
-
 	/**
 	 * Get the URL for a give module & action combination
 	 * 	syntax: {$var|geturlforblock:<module>:<action>:<language>}
 	 *
-	 * @return	string
-	 * @param	string $var						The string passed from the template.
-	 * @param	string $module					The module wherefor the URL should be build.
-	 * @param	string[optional] $action		A specific action wherefor the URL should be build, otherwise the default will be used.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
+	 * @param string $var The string passed from the template.
+	 * @param string $module The module wherefor the URL should be build.
+	 * @param string[optional] $action A specific action wherefor the URL should be build, otherwise the default will be used.
+	 * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+	 * @return string
 	 */
 	public static function getURLForBlock($var, $module, $action = null, $language = null)
 	{
@@ -697,18 +637,16 @@ class FrontendTemplateModifiers
 		return FrontendNavigation::getURLForBlock($module, $action, $language);
 	}
 
-
 	/**
 	 * Fetch an URL based on an extraId
 	 *
-	 * @return	string
-	 * @param	string $var						The string passed from the template.
-	 * @param	int $extraId					The id of the extra.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
+	 * @param string $var The string passed from the template.
+	 * @param int $extraId The id of the extra.
+	 * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+	 * @return string
 	 */
 	public static function getURLForExtraId($var, $extraId, $language = null)
 	{
-		// redefine
 		$var = (string) $var;
 		$extraId = (int) $extraId;
 		$language = ($language !== null) ? (string) $language : null;
@@ -717,12 +655,11 @@ class FrontendTemplateModifiers
 		return FrontendNavigation::getURLForExtraId($extraId, $language);
 	}
 
-
 	/**
 	 * Highlights all strings in <code> tags.
 	 *
-	 * @return	string
-	 * @param	string $var		The string passed from the template.
+	 * @param string $var The string passed from the template.
+	 * @return string
 	 */
 	public static function highlightCode($var)
 	{
@@ -743,22 +680,19 @@ class FrontendTemplateModifiers
 			}
 		}
 
-		// return content
 		return $var;
 	}
-
 
 	/**
 	 * Get a random var between a min and max
 	 *
-	 * @return	int
-	 * @param	string[optional] $var	The string passed from the template.
-	 * @param	int $min				The miminum random number.
-	 * @param	int $max				The maximum random number.
+	 * @param string[optional] $var The string passed from the template.
+	 * @param int $min The miminum random number.
+	 * @param int $max The maximum random number.
+	 * @return int
 	 */
 	public static function random($var = null, $min, $max)
 	{
-		// redefine
 		$var = (string) $var;
 		$min = (int) $min;
 		$max = (int) $max;
@@ -766,17 +700,15 @@ class FrontendTemplateModifiers
 		return rand($min, $max);
 	}
 
-
 	/**
 	 * Formats a timestamp as a string that indicates the time ago
 	 * 	syntax: {$var|timeAgo}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var		A UNIX-timestamp that will be formated as a time-ago-string.
+	 * @param string[optional] $var A UNIX-timestamp that will be formated as a time-ago-string.
+	 * @return string
 	 */
 	public static function timeAgo($var = null)
 	{
-		// redefine
 		$var = (int) $var;
 
 		// invalid timestamp
@@ -786,15 +718,14 @@ class FrontendTemplateModifiers
 		return '<abbr title="' . SpoonDate::getDate(FrontendModel::getModuleSetting('core', 'date_format_long') . ', ' . FrontendModel::getModuleSetting('core', 'time_format'), $var, FRONTEND_LANGUAGE) . '">' . SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) . '</abbr>';
 	}
 
-
 	/**
 	 * Truncate a string
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var		The string passed from the template.
-	 * @param	int $length					The maximum length of the truncated string.
-	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
+	 * @param string[optional] $var The string passed from the template.
+	 * @param int $length The maximum length of the truncated string.
+	 * @param bool[optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
+	 * @return string
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
@@ -814,7 +745,7 @@ class FrontendTemplateModifiers
 			if($useHellip) $length = $length - 1;
 
 			// get the amount of requested characters
-			$var = mb_substr($var, 0, $length);
+			$var = mb_substr($var, 0, $length, SPOON_CHARSET);
 
 			// add hellip
 			if($useHellip) $var .= '…';
@@ -824,19 +755,17 @@ class FrontendTemplateModifiers
 		}
 	}
 
-
 	/**
 	 * Get the value for a user-setting
 	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
 	 *
-	 * @return	string
-	 * @param	string[optional] $var	The string passed from the template.
-	 * @param	string $setting			The name of the setting you want.
-	 * @param	int[optional] $userId	The userId, if not set by $var.
+	 * @param string[optional] $var The string passed from the template.
+	 * @param string $setting The name of the setting you want.
+	 * @param int[optional] $userId The userId, if not set by $var.
+	 * @return string
 	 */
 	public static function userSetting($var = null, $setting, $userId = null)
 	{
-		// redefine
 		$userId = ($var !== null) ? (int) $var : (int) $userId;
 		$setting = (string) $setting;
 
@@ -850,5 +779,3 @@ class FrontendTemplateModifiers
 		return (string) $user->getSetting($setting);
 	}
 }
-
-?>

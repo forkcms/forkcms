@@ -284,7 +284,7 @@
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>Tags</h3>
+					<h3>{$lblTags|ucfirst}</h3>
 				</div>
 				<div class="options">
 					{$txtTags} {$txtTagsError}
@@ -408,7 +408,7 @@
 		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
 
 		// fix selected state in the tree
-		$('#page-'+ pageID).addClass('selected');
+		var selectedId = 'page-'+ pageID;
 	//]]>
 </script>
 

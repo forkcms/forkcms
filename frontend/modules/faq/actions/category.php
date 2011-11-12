@@ -1,44 +1,71 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the category-action
  *
- * @package		frontend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester.lievens@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendFaqCategory extends FrontendBaseBlock
 {
 	/**
+	 * @var	array
+	 */
+	private $questions;
+
+	/**
+	 * @var	array
+	 */
+	private $record;
+
+	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
 
-		// load template
+		$this->tpl->assign('hideContentTitle', true);
+		$this->getData();
 		$this->loadTemplate();
-
-		// parse
 		$this->parse();
 	}
 
+	/**
+	 * Load the data, don't forget to validate the incoming data
+	 */
+	private function getData()
+	{
+		// validate incoming parameters
+		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+
+		// get by URL
+		$this->record = FrontendFaqModel::getCategory($this->URL->getParameter(1));
+
+		// anything found?
+		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+
+		$this->record['full_url'] = FrontendNavigation::getURLForBlock('faq', 'category') . '/' . $this->record['url'];
+		$this->questions = FrontendFaqModel::getAllForCategory($this->record['id']);
+	}
 
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// assign questions
-		$this->tpl->assign('faqQuestions', FrontendFaqModel::getQuestions((int) $this->data['id']));
+		$this->breadcrumb->addElement($this->record['title']);
+		$this->header->setPageTitle($this->record['title']);
+
+		// assign category and questions
+		$this->tpl->assign('category', $this->record);
+		$this->tpl->assign('questions', $this->questions);
 	}
 }
-
-?>

@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the location module
  *
- * @package		backend
- * @subpackage	location
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
-final class BackendLocationConfig extends BackendBaseConfig
+class BackendLocationConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -18,7 +21,6 @@ final class BackendLocationConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,5 +28,3 @@ final class BackendLocationConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

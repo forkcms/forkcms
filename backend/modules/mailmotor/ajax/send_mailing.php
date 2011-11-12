@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This sends a mailing
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -50,41 +50,8 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		}
 		catch(Exception $e)
 		{
-			// fetch campaign ID in CM
-			$cmId = BackendMailmotorCMHelper::getCampaignMonitorID('campaign', $id);
-
-			// check if the CM ID isn't false
-			if($cmId !== false)
-			{
-				// delete the mailing in CM
-				BackendMailmotorCMHelper::getCM()->deleteCampaign($cmId);
-
-				// delete the reference
-				BackendModel::getDB(true)->delete('mailmotor_campaignmonitor_ids', 'cm_id = ?', $cmId);
-			}
-
-			// check what error we have
-			switch($e->getMessage())
-			{
-				case 'HTML Content URL Required':
-					$message = BL::err('HTMLContentURLRequired', $this->getModule());
-				break;
-
-				case 'Payment details required':
-					$message = sprintf(BL::err('PaymentDetailsRequired', $this->getModule()), BackendModel::getModuleSetting($this->getModule(), 'cm_username'));
-				break;
-
-				case 'Duplicate Campaign Name':
-					$message = BL::err('DuplicateCampaignName', $this->getModule());
-				break;
-
-				default:
-					$message = $e->getMessage();
-				break;
-			}
-
 			// stop the script and show our error
-			$this->output(902, null, $message);
+			$this->output(902, null, $e->getMessage());
 		}
 
 		// set status to 'sent'
@@ -101,5 +68,3 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		$this->output(self::OK, array('mailing_id' => $item['id']), BL::msg('MailingSent', $this->getModule()));
 	}
 }
-
-?>

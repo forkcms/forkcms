@@ -19,7 +19,7 @@
 </table>
 
 <div class="buttonHolder">
-	<a class="button" href="/">View your new website</a>
+	<a class="button" href="../">View your new website</a>
 	<a class="button" href="../private">Log in to Fork CMS</a>
 </div>
 

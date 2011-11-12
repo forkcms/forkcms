@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will handle all stuff related to blocks
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendBlockExtra extends FrontendBaseObject
 {
@@ -20,14 +23,12 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 */
 	private $action;
 
-
 	/**
 	 * The configfile
 	 *
 	 * @var	FrontendBaseConfig
 	 */
 	private $config;
-
 
 	/**
 	 * The data that was passed by the extra
@@ -36,14 +37,12 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 */
 	private $data;
 
-
 	/**
 	 * The current module
 	 *
 	 * @var	string
 	 */
 	private $module;
-
 
 	/**
 	 * The extra object
@@ -59,14 +58,12 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 */
 	private $output;
 
-
 	/**
 	 * Should the template overwrite the current one
 	 *
 	 * @var	bool
 	 */
 	protected $overwrite = false;
-
 
 	/**
 	 * The path for the template
@@ -75,18 +72,13 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 */
 	protected $templatePath = '';
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $module			The module to load.
-	 * @param	string $action			The action to load.
-	 * @param	mixed[optional] $data	The data that was passed from the database.
+	 * @param string $module The module to load.
+	 * @param string $action The action to load.
+	 * @param mixed[optional] $data The data that was passed from the database.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
-		// call the parent
 		parent::__construct();
 
 		// set properties
@@ -101,12 +93,9 @@ class FrontendBlockExtra extends FrontendBaseObject
 		if(!in_array($this->getAction(), $this->config->getPossibleActions())) $this->setAction($this->config->getDefaultAction());
 	}
 
-
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -133,12 +122,11 @@ class FrontendBlockExtra extends FrontendBaseObject
 		if($this->object->getTemplatePath() !== null) $this->setTemplatePath($this->object->getTemplatePath());
 	}
 
-
 	/**
 	 * Get the current action
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
@@ -158,7 +146,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 				foreach($this->config->getPossibleActions() as $actionName)
 				{
 					// get action that should be passed as parameter
-					$actionURL = FL::act(SpoonFilter::toCamelCase($actionName));
+					$actionURL = urlencode(FL::act(SpoonFilter::toCamelCase($actionName)));
 
 					// the action is the requested one
 					if($actionURL == $actionParameter)
@@ -173,15 +161,13 @@ class FrontendBlockExtra extends FrontendBaseObject
 			}
 		}
 
-		// return
 		return $this->action;
 	}
-
 
 	/**
 	 * Get the block content
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getContent()
 	{
@@ -192,80 +178,71 @@ class FrontendBlockExtra extends FrontendBaseObject
 		return $this->output;
 	}
 
-
 	/**
 	 * Get the data
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getData()
 	{
 		return $this->data;
 	}
 
-
 	/**
 	 * Get the current module
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get overwrite mode
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public function getOverwrite()
 	{
 		return $this->overwrite;
 	}
 
-
 	/**
 	 * Get the assigned template.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getTemplate()
 	{
 		return $this->object->getTemplate();
 	}
 
-
 	/**
 	 * Get path for the template
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getTemplatePath()
 	{
 		return $this->templatePath;
 	}
 
-
 	/**
 	 * Get the assigned variables for this block.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getVariables()
 	{
 		return (array) $this->tpl->getAssignedVariables();
 	}
 
-
 	/**
 	 * Load the config file for the requested block.
 	 * In the config file we have to find dissabled actions, the constructor will read the folder and set possible actions
-	 * Other configurations will be stored in it also.
-	 *
-	 * @return	void
+	 * Other configurations will also be stored in it.
 	 */
 	public function loadConfig()
 	{
@@ -291,60 +268,50 @@ class FrontendBlockExtra extends FrontendBaseObject
 		$this->config = new $configClassName($this->getModule());
 	}
 
-
 	/**
 	 * Set the action
 	 *
-	 * @return	void
-	 * @param	string[optional] $action	The action to load.
+	 * @param string[optional] $action The action to load.
 	 */
 	private function setAction($action = null)
 	{
 		if($action !== null) $this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the data
 	 *
-	 * @return	void
-	 * @param	mixed $data		The data that should be set.
+	 * @param mixed $data The data that should be set.
 	 */
 	private function setData($data)
 	{
 		$this->data = $data;
 	}
 
-
 	/**
 	 * Set the module
 	 *
-	 * @return	void
-	 * @param	string $module	The module to load.
+	 * @param string $module The module to load.
 	 */
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 
-
 	/**
 	 * Set overwrite mode
 	 *
-	 * @return	void
-	 * @param	bool $overwrite		Should the template overwrite the already loaded template.
+	 * @param bool $overwrite Should the template overwrite the already loaded template.
 	 */
 	private function setOverwrite($overwrite)
 	{
 		$this->overwrite = (bool) $overwrite;
 	}
 
-
 	/**
 	 * Set the path for the template
 	 *
-	 * @return	void
-	 * @param	string $path	The path to set.
+	 * @param string $path The path to set.
 	 */
 	private function setTemplatePath($path)
 	{
@@ -352,18 +319,12 @@ class FrontendBlockExtra extends FrontendBaseObject
 	}
 }
 
-
 /**
- * FrontendBlockWidget
  * This class will handle all stuff related to widgets
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendBlockWidget extends FrontendBaseObject
 {
@@ -374,14 +335,12 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 */
 	private $action;
 
-
 	/**
 	 * The configfile
 	 *
 	 * @var	FrontendBaseConfig
 	 */
 	private $config;
-
 
 	/**
 	 * The data that was passed by the extra
@@ -390,14 +349,12 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 */
 	private $data;
 
-
 	/**
 	 * The current module
 	 *
 	 * @var	string
 	 */
 	private $module;
-
 
 	/**
 	 * The extra object
@@ -413,18 +370,13 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 */
 	private $output;
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $module			The module to load.
-	 * @param	string $action			The action to load.
-	 * @param	mixed[optional] $data	The data that was passed from the database.
+	 * @param string $module The module to load.
+	 * @param string $action The action to load.
+	 * @param mixed[optional] $data The data that was passed from the database.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
-		// call the parent
 		parent::__construct();
 
 		// set properties
@@ -436,12 +388,9 @@ class FrontendBlockWidget extends FrontendBaseObject
 		$this->loadConfig();
 	}
 
-
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -467,12 +416,11 @@ class FrontendBlockWidget extends FrontendBaseObject
 		$this->output = $this->object->execute();
 	}
 
-
 	/**
 	 * Get the current action
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
@@ -483,11 +431,10 @@ class FrontendBlockWidget extends FrontendBaseObject
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the block content
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getContent()
 	{
@@ -498,47 +445,41 @@ class FrontendBlockWidget extends FrontendBaseObject
 		return $this->output;
 	}
 
-
 	/**
 	 * Get the data
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getData()
 	{
 		return $this->data;
 	}
 
-
 	/**
 	 * Get the current module
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get the assigned template.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getTemplate()
 	{
 		return $this->object->getTemplate();
 	}
 
-
 	/**
 	 * Load the config file for the requested block.
 	 * In the config file we have to find dissabled actions, the constructor will read the folder and set possible actions
 	 * Other configurations will be stored in it also.
-	 *
-	 * @return	void
 	 */
 	public function loadConfig()
 	{
@@ -564,41 +505,33 @@ class FrontendBlockWidget extends FrontendBaseObject
 		$this->config = new $configClassName($this->getModule());
 	}
 
-
 	/**
 	 * Set the action
 	 *
-	 * @return	void
-	 * @param	string[optional] $action		The action to load.
+	 * @param string[optional] $action The action to load.
 	 */
 	private function setAction($action = null)
 	{
 		if($action !== null) $this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the data
 	 *
-	 * @return	void
-	 * @param	mixed $data		The data that should be set.
+	 * @param mixed $data The data that should be set.
 	 */
 	private function setData($data)
 	{
 		$this->data = $data;
 	}
 
-
 	/**
 	 * Set the module
 	 *
-	 * @return	void
-	 * @param	string $module		The module to load.
+	 * @param string $module The module to load.
 	 */
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 }
-
-?>

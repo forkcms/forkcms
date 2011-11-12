@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit category action, it will display a form to edit an existing category.
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendBlogEditCategory extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -25,22 +26,11 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendBlogModel::existsCategory($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -48,22 +38,16 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->record = BackendBlogModel::getCategory($this->id);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -80,33 +64,23 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		$this->meta->setUrlCallback('BackendBlogModel', 'getURLForCategory', array($this->record['id']));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
-
-		// assign
 		$this->tpl->assign('item', $this->record);
 
 		// delete allowed?
 		$this->tpl->assign('deleteAllowed', BackendBlogModel::deleteCategoryAllowed($this->id));
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
 			// cleanup the submitted fields, ignore fields that were added by hackers
@@ -118,7 +92,6 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 			// validate meta
 			$this->meta->validate();
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -138,5 +111,3 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

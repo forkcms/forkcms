@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will be the base of the objects used in onsite
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendBaseObject
 {
@@ -18,7 +21,6 @@ class FrontendBaseObject
 	 */
 	protected $tpl;
 
-
 	/**
 	 * URL instance
 	 *
@@ -26,12 +28,8 @@ class FrontendBaseObject
 	 */
 	protected $URL;
 
-
 	/**
-	 * Default constructor.
 	 * It will grab stuff from the reference.
-	 *
-	 * @return	void
 	 */
 	public function __construct()
 	{
@@ -43,15 +41,10 @@ class FrontendBaseObject
 	}
 }
 
-
 /**
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendBaseConfig
 {
@@ -62,14 +55,12 @@ class FrontendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
 	 * @var	array
 	 */
 	protected $disabledActions = array();
-
 
 	/**
 	 * The disabled AJAX-actions
@@ -78,14 +69,12 @@ class FrontendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 
-
 	/**
 	 * The current loaded module
 	 *
 	 * @var	string
 	 */
 	protected $module;
-
 
 	/**
 	 * All the possible actions
@@ -94,7 +83,6 @@ class FrontendBaseConfig
 	 */
 	protected $possibleActions = array();
 
-
 	/**
 	 * All the possible AJAX actions
 	 *
@@ -102,16 +90,11 @@ class FrontendBaseConfig
 	 */
 	protected $possibleAJAXActions = array();
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $module	The module wherefor this is the configuration-file.
+	 * @param string $module The module wherefor this is the configuration-file.
 	 */
 	public function __construct($module)
 	{
-		// set module
 		$this->module = (string) $module;
 
 		// check if model exists
@@ -125,56 +108,49 @@ class FrontendBaseConfig
 		$this->setPossibleActions();
 	}
 
-
 	/**
 	 * Get the default action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getDefaultAction()
 	{
 		return $this->defaultAction;
 	}
 
-
 	/**
 	 * Get the current loaded module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get the possible actions
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getPossibleActions()
 	{
 		return $this->possibleActions;
 	}
 
-
 	/**
 	 * Get the possible AJAX actions
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getPossibleAJAXActions()
 	{
 		return $this->possibleAJAXActions;
 	}
 
-
 	/**
 	 * Set the possible actions, based on files in folder.
 	 * You can disable action in the config file. (Populate $disabledActions)
-	 *
-	 * @return	void
 	 */
 	protected function setPossibleActions()
 	{
@@ -209,18 +185,13 @@ class FrontendBaseConfig
 	}
 }
 
-
 /**
  * This class implements a lot of functionality that can be extended by a specific block
  * @later Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendBaseBlock
 {
@@ -231,14 +202,12 @@ class FrontendBaseBlock
 	 */
 	protected $action;
 
-
 	/**
 	 * The breadcrumb object
 	 *
 	 * @var	FrontendBreadcrumb
 	 */
 	protected $breadcrumb;
-
 
 	/**
 	 * The data
@@ -247,14 +216,12 @@ class FrontendBaseBlock
 	 */
 	protected $data;
 
-
 	/**
 	 * The header object
 	 *
 	 * @var	FrontendHeader
 	 */
 	protected $header;
-
 
 	/**
 	 * The current module
@@ -263,14 +230,12 @@ class FrontendBaseBlock
 	 */
 	protected $module;
 
-
 	/**
 	 * Should the current template be replaced with the blocks one?
 	 *
 	 * @var	bool
 	 */
 	private $overwrite;
-
 
 	/**
 	 * Pagination array
@@ -279,14 +244,12 @@ class FrontendBaseBlock
 	 */
 	protected $pagination;
 
-
 	/**
 	 * The path of the template to include, or that replaced the current one
 	 *
 	 * @var	string
 	 */
 	private $templatePath;
-
 
 	/**
 	 * A reference to the current template
@@ -295,7 +258,6 @@ class FrontendBaseBlock
 	 */
 	public $tpl;
 
-
 	/**
 	 * A reference to the URL-instance
 	 *
@@ -303,14 +265,10 @@ class FrontendBaseBlock
 	 */
 	public $URL;
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $module				The name of the module.
-	 * @param	string $action				The name of the action.
-	 * @param	string[optional] $data		The data that should be available in this block.
+	 * @param string $module The name of the module.
+	 * @param string $action The name of the action.
+	 * @param string[optional] $data The data that should be available in this block.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -326,15 +284,13 @@ class FrontendBaseBlock
 		$this->setData($data);
 	}
 
-
 	/**
 	 * Add a CSS file into the array
 	 *
-	 * @return	void
-	 * @param 	string $file					The path for the CSS-file that should be loaded.
-	 * @param	bool[optional] $overwritePath	Whether or not to add the module to this path. Module path is added by default.
-	 * @param	bool[optional] $minify			Should the CSS be minified?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
+	 * @param  string $file The path for the CSS-file that should be loaded.
+	 * @param bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
+	 * @param bool[optional] $minify Should the CSS be minified?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
 	{
@@ -349,20 +305,17 @@ class FrontendBaseBlock
 		$this->header->addCSS($file, $minify, $addTimestamp);
 	}
 
-
 	/**
 	 * Add a javascript file into the array
 	 *
-	 * @return	void
-	 * @param 	string $file						The path to the javascript-file that should be loaded.
-	 * @param 	bool[optional] $overwritePath		Whether or not to add the module to this path. Module path is added by default.
-	 * @param	bool[optional] $minify				Should the file be minified?
-	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
-	 * @param	bool[optional] $addTimestamp		May we add a timestamp for caching purposes?
+	 * @param  string $file The path to the javascript-file that should be loaded.
+	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
+	 * @param bool[optional] $minify Should the file be minified?
+	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
 	{
-		// redefine
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
 
@@ -373,12 +326,9 @@ class FrontendBaseBlock
 		$this->header->addJS($file, $minify, $parseThroughPHP, $addTimestamp);
 	}
 
-
 	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -395,83 +345,74 @@ class FrontendBaseBlock
 		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
 	}
 
-
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get parsed template content.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getContent()
 	{
 		return $this->tpl->getContent($this->templatePath, false, true);
 	}
 
-
 	/**
 	 * Get the module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get overwrite mode
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public function getOverwrite()
 	{
 		return $this->overwrite;
 	}
 
-
 	/**
 	 * Get template
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getTemplate()
 	{
 		return $this->tpl;
 	}
 
-
 	/**
 	 * Get template path
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getTemplatePath()
 	{
 		return $this->templatePath;
 	}
 
-
 	/**
 	 * Load the template
 	 *
-	 * @return	void
-	 * @param	string[optional] $path			The path for the template to use.
-	 * @param	bool[optional] $overwrite		Should the template overwrite the default?
+	 * @param string[optional] $path The path for the template to use.
+	 * @param bool[optional] $overwrite Should the template overwrite the default?
 	 */
 	protected function loadTemplate($path = null, $overwrite = false)
 	{
-		// redefine
 		$overwrite = (bool) $overwrite;
 
 		// no template given, so we should build the path
@@ -492,15 +433,11 @@ class FrontendBaseBlock
 		$this->setTemplatePath($path);
 	}
 
-
 	/**
 	 * Parse pagination
-	 *
-	 * @return	void
 	 */
 	protected function parsePagination()
 	{
-		// init var
 		$pagination = null;
 		$showFirstPages = false;
 		$showLastPages = false;
@@ -639,37 +576,31 @@ class FrontendBaseBlock
 		$this->tpl->assign('pagination', $pagination);
 	}
 
-
 	/**
 	 * Redirect to a given URL
 	 *
-	 * @return	void
-	 * @param	string $URL				The URL whereto will be redirected.
-	 * @param	int[optional] $code		The redirect code, default is 307 which means this is a temporary redirect.
+	 * @param string $URL The URL whereto will be redirected.
+	 * @param int[optional] $code The redirect code, default is 307 which means this is a temporary redirect.
 	 */
 	public function redirect($URL, $code = 302)
 	{
 		SpoonHTTP::redirect((string) $URL, (int) $code);
 	}
 
-
 	/**
 	 * Set the action, for later use
 	 *
-	 * @return	void
-	 * @param	string $action		The action to set.
+	 * @param string $action The action to set.
 	 */
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the data, for later use
 	 *
-	 * @return	void
-	 * @param	string[optional] $data	The data that should be available.
+	 * @param string[optional] $data The data that should be available.
 	 */
 	private function setData($data = null)
 	{
@@ -684,36 +615,30 @@ class FrontendBaseBlock
 		}
 	}
 
-
 	/**
 	 * Set the module, for later use
 	 *
-	 * @return	void
-	 * @param	string $module	The module that should be used.
+	 * @param string $module The module that should be used.
 	 */
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 
-
 	/**
 	 * Set overwrite mode
 	 *
-	 * @return	void
-	 * @param	bool $overwrite		true if the template should overwrite the current template, false if not.
+	 * @param bool $overwrite true if the template should overwrite the current template, false if not.
 	 */
 	protected function setOverwrite($overwrite)
 	{
 		$this->overwrite = (bool) $overwrite;
 	}
 
-
 	/**
 	 * Set the path for the template to include or to replace the current one
 	 *
-	 * @return	void
-	 * @param	string $path	The path to the template that should be loaded.
+	 * @param string $path The path to the template that should be loaded.
 	 */
 	protected function setTemplatePath($path)
 	{
@@ -721,18 +646,13 @@ class FrontendBaseBlock
 	}
 }
 
-
 /**
  * This class implements a lot of functionality that can be extended by a specific widget
  * @later Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendBaseWidget
 {
@@ -743,14 +663,12 @@ class FrontendBaseWidget
 	 */
 	protected $action;
 
-
 	/**
 	 * The data
 	 *
 	 * @var	mixed
 	 */
 	protected $data;
-
 
 	/**
 	 * The header object
@@ -759,14 +677,12 @@ class FrontendBaseWidget
 	 */
 	protected $header;
 
-
 	/**
 	 * The current module
 	 *
 	 * @var	string
 	 */
 	protected $module;
-
 
 	/**
 	 * Path to the template
@@ -775,14 +691,12 @@ class FrontendBaseWidget
 	 */
 	protected $templatePath;
 
-
 	/**
 	 * A reference to the current template
 	 *
 	 * @var	FrontendTemplate
 	 */
 	public $tpl;
-
 
 	/**
 	 * A reference to the URL-instance
@@ -791,15 +705,10 @@ class FrontendBaseWidget
 	 */
 	public $URL;
 
-
 	/**
-	 * Default constructor
-	 * The constructor will set some properties.
-	 *
-	 * @return	void
-	 * @param	string $module				The module to use.
-	 * @param	string $action				The action to use.
-	 * @param	string[optional] $data		The data that should be available.
+	 * @param string $module The module to use.
+	 * @param string $action The action to use.
+	 * @param string[optional] $data The data that should be available.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -814,15 +723,13 @@ class FrontendBaseWidget
 		$this->setData($data);
 	}
 
-
 	/**
 	 * Add a CSS file into the array
 	 *
-	 * @return	void
-	 * @param 	string $file					The path for the CSS-file that should be loaded.
-	 * @param	bool[optional] $overwritePath	Whether or not to add the module to this path. Module path is added by default.
-	 * @param	bool[optional] $minify			Should the CSS be minified?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
+	 * @param  string $file The path for the CSS-file that should be loaded.
+	 * @param bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
+	 * @param bool[optional] $minify Should the CSS be minified?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
 	{
@@ -837,19 +744,16 @@ class FrontendBaseWidget
 		$this->header->addCSS($file, $minify, $addTimestamp);
 	}
 
-
 	/**
 	 * Add a javascript file into the array
 	 *
-	 * @return	void
-	 * @param 	string $file						The path to the javascript-file that should be loaded.
-	 * @param 	bool[optional] $overwritePath		Whether or not to add the module to this path. Module path is added by default.
-	 * @param	bool[optional] $minify				Should the file be minified?
-	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 * @param  string $file The path to the javascript-file that should be loaded.
+	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
+	 * @param bool[optional] $minify Should the file be minified?
+	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 */
 	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
 	{
-		// redefine
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
 
@@ -860,12 +764,9 @@ class FrontendBaseWidget
 		$this->header->addJS($file, $minify, $parseThroughPHP);
 	}
 
-
 	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -882,56 +783,50 @@ class FrontendBaseWidget
 		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
 	}
 
-
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get parsed template content
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getContent()
 	{
 		return $this->tpl->getContent($this->templatePath, false, true);
 	}
 
-
 	/**
 	 * Get the module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Get template
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getTemplate()
 	{
 		return $this->tpl;
 	}
 
-
 	/**
 	 * Load the template
 	 *
-	 * @return	void
-	 * @param	string[optional] $path		The path for the template to use.
+	 * @param string[optional] $path The path for the template to use.
 	 */
 	protected function loadTemplate($path = null)
 	{
@@ -952,24 +847,20 @@ class FrontendBaseWidget
 		$this->setTemplatePath($path);
 	}
 
-
 	/**
 	 * Set the action, for later use
 	 *
-	 * @return	void
-	 * @param	string $action		The action to use.
+	 * @param string $action The action to use.
 	 */
 	private function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the data, for later use
 	 *
-	 * @return	void
-	 * @param	string[optional] $data	The data that should available.
+	 * @param string[optional] $data The data that should available.
 	 */
 	private function setData($data = null)
 	{
@@ -984,24 +875,20 @@ class FrontendBaseWidget
 		}
 	}
 
-
 	/**
 	 * Set the module, for later use
 	 *
-	 * @return	void
-	 * @param	string $module	The module to use.
+	 * @param string $module The module to use.
 	 */
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 
-
 	/**
 	 * Set the path for the template to include or to replace the current one
 	 *
-	 * @return	void
-	 * @param	string $path	The path to the template that should be loaded.
+	 * @param string $path The path to the template that should be loaded.
 	 */
 	protected function setTemplatePath($path)
 	{
@@ -1009,24 +896,17 @@ class FrontendBaseWidget
 	}
 }
 
-
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendBaseAJAXAction
 {
-	// status codes
 	const OK = 200;
 	const BAD_REQUEST = 400;
 	const FORBIDDEN = 403;
 	const ERROR = 500;
-
 
 	/**
 	 * The current action
@@ -1035,7 +915,6 @@ class FrontendBaseAJAXAction
 	 */
 	protected $action;
 
-
 	/**
 	 * The current module
 	 *
@@ -1043,14 +922,9 @@ class FrontendBaseAJAXAction
 	 */
 	protected $module;
 
-
 	/**
-	 * Default constructor
-	 * The constructor will set some properties
-	 *
-	 * @return	void
-	 * @param	string $action		The action to use.
-	 * @param	string $module		The module to use.
+	 * @param string $action The action to use.
+	 * @param string $module The module to use.
 	 */
 	public function __construct($action, $module)
 	{
@@ -1059,47 +933,40 @@ class FrontendBaseAJAXAction
 		$this->setAction($action);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
 		// this method will be overwritten by the children
 	}
 
-
 	/**
 	 * Get the action
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getAction()
 	{
 		return $this->action;
 	}
 
-
 	/**
 	 * Get the module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
-	 * Output an answer to the browser
+	 * Outputs an answer to the browser
 	 *
-	 * @return	void
-	 * @param	int $statusCode				The status code to use, use one of the available constants (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
-	 * @param	mixed[optional] $data		The data to be returned (will be encoded as JSON).
-	 * @param	string[optional] $message	A text-message.
+	 * @param int $statusCode The status code to use, use one of the available constants (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
+	 * @param mixed[optional] $data The data to be returned (will be encoded as JSON).
+	 * @param string[optional] $message A text-message.
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
@@ -1121,29 +988,23 @@ class FrontendBaseAJAXAction
 		exit;
 	}
 
-
 	/**
 	 * Set the action, for later use
 	 *
-	 * @return	void
-	 * @param	string $action	The action to use.
+	 * @param string $action The action to use.
 	 */
 	protected function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
 
-
 	/**
 	 * Set the module, for later use
 	 *
-	 * @return	void
-	 * @param	string $module	The module to use.
+	 * @param string $module The module to use.
 	 */
 	protected function setModule($module)
 	{
 		$this->module = (string) $module;
 	}
 }
-
-?>

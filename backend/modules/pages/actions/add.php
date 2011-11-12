@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendPagesAdd extends BackendBaseActionAdd
 {
@@ -20,14 +23,12 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	private $blocksContent = array();
 
-
 	/**
 	 * The positions
 	 *
 	 * @var	array
 	 */
 	private $positions = array();
-
 
 	/**
 	 * The extras
@@ -36,7 +37,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	private $extras = array();
 
-
 	/**
 	 * The template data
 	 *
@@ -44,11 +44,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	private $templates = array();
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -66,7 +63,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
 		// get the templates
-		$this->templates = BackendPagesModel::getTemplates();
+		$this->templates = BackendExtensionsModel::getTemplates();
 
 		// init var
 		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', false);
@@ -85,26 +82,16 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->templates[$defaultTemplateId]['checked'] = true;
 
 		// get the extras
-		$this->extras = BackendPagesModel::getExtras();
+		$this->extras = BackendExtensionsModel::getExtras();
 
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -237,19 +224,16 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('positions', $this->positions);
-		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
-		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
+		$this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+		$this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
 		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
@@ -266,11 +250,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -285,9 +266,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			if($redirectValue == 'internal') $this->frm->getField('internal_redirect')->isFilled(BL::err('FieldIsRequired'));
 			if($redirectValue == 'external') $this->frm->getField('external_redirect')->isURL(BL::err('InvalidURL'));
 
-			// id of the selected template
-			$templateId = (int) $this->frm->getField('template_id')->getValue();
-
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, $this->frm->getField('is_action')->getChecked()));
 
@@ -296,34 +274,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-
-			// validate that we are not trying to link 2 modules
-			$hasBlock = false;
-
-			// loop blocks in template
-			for($i = 0; $i < $this->templates[$templateId]['num_blocks']; $i++)
-			{
-				// get the extra id
-				$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
-
-				// reset some stuff
-				if($extraId <= 0) $extraId = null;
-
-				// extra-type is not HTML
-				if($extraId !== null)
-				{
-					// type of block
-					if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
-					{
-						// set error
-						if($hasBlock) $this->frm->getField('block_html_' . $i)->addError(BL::err('CantAdd2Modules'));
-
-						// reset var
-						$hasBlock = true;
-					}
-				}
-			}
-
 
 			// validate meta
 			$this->meta->validate();
@@ -344,7 +294,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['id'] = BackendPagesModel::getMaximumPageId() + 1;
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $parentId;
-				$page['template_id'] = $templateId;
+				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
 				$page['meta_id'] = (int) $this->meta->save();
 				$page['language'] = BackendLanguage::getWorkingLanguage();
 				$page['type'] = 'root';
@@ -421,5 +371,3 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

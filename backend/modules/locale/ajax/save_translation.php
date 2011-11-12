@@ -1,28 +1,26 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will update a translation using AJAX
  *
- * @package		backend
- * @subpackage	locale
- *
- * @author		Lowie Benoot <lowie@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// user is god?
 		$isGod = BackendAuthentication::getUser()->isGod();
 
 		// get possible languages
@@ -31,7 +29,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 
 		// get parameters
 		$language = SpoonFilter::getPostValue('language', array_keys($possibleLanguages), null, 'string');
-		$module = SpoonFilter::getPostValue('module', BackendModel::getModules(false), null, 'string');
+		$module = SpoonFilter::getPostValue('module', BackendModel::getModules(), null, 'string');
 		$name = SpoonFilter::getPostValue('name', null, null, 'string');
 		$type = SpoonFilter::getPostValue('type', BackendModel::getDB()->getEnumValues('locale', 'type'), null, 'string');
 		$application = SpoonFilter::getPostValue('application', array('backend', 'frontend'), null, 'string');
@@ -81,5 +79,3 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		else $this->output(self::ERROR, null, $error);
 	}
 }
-
-?>

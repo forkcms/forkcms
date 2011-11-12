@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic data communication functions
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @author		Dieter Van den Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Dieter Van den Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendAnalyticsModel
 {
@@ -20,14 +23,12 @@ class BackendAnalyticsModel
 	const GOOGLE_ACCOUNT_AUTHENTICATION_URL = 'https://www.google.com/accounts/AuthSubRequest?next=%1$s&amp;scope=%2$s&amp;secure=0&amp;session=1';
 	const GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE = 'https://www.google.com/analytics/feeds/';
 
-
 	/**
 	 * Google analytics url
 	 *
 	 * @var	string
 	 */
 	const GOOGLE_ANALYTICS_URL = 'https://www.google.com/analytics/reporting';
-
 
 	/**
 	 * Cached data
@@ -36,15 +37,13 @@ class BackendAnalyticsModel
 	 */
 	private static $data = array(), $dashboardData = array();
 
-
 	/**
 	 * Checks the settings and optionally returns an array with warnings
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function checkSettings()
 	{
-		// init var
 		$warnings = array();
 
 		// analytics session token
@@ -61,83 +60,75 @@ class BackendAnalyticsModel
 			$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
 		}
 
-		// return
 		return $warnings;
 	}
 
-
 	/**
 	 * Clear tables
-	 *
-	 * @return	void
 	 */
 	public static function clearTables()
 	{
-		BackendModel::getDB(true)->truncate(array('analytics_keywords',
-													'analytics_landing_pages',
-													'analytics_pages',
-													'analytics_referrers'));
+		BackendModel::getDB(true)->truncate(
+			array(
+				'analytics_keywords',
+				'analytics_landing_pages',
+				'analytics_pages',
+				'analytics_referrers'
+			)
+		);
 	}
-
 
 	/**
 	 * Delete one or more landing pages
 	 *
-	 * @return	void
-	 * @param	mixed $ids	The ids to delete.
+	 * @param mixed $ids The ids to delete.
 	 */
 	public static function deleteLandingPage($ids)
 	{
-		// make sure $ids is an array
-		$ids = (array) $ids;
-
-		// delete data
-		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', $ids) . ')');
+		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
 	}
-
 
 	/**
 	 * Checks if a landing page exists
 	 *
-	 * @return	int
-	 * @param	int $id		The id of the landing page to check for existence.
+	 * @param int $id The id of the landing page to check for existence.
+	 * @return bool
 	 */
 	public static function existsLandingPage($id)
 	{
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
-														FROM analytics_landing_pages
-														WHERE id = ?',
-														array((int) $id));
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM analytics_landing_pages
+			 WHERE id = ?',
+			array((int) $id)
+		);
 	}
-
 
 	/**
 	 * Get an aggregate
 	 *
-	 * @return	string
-	 * @param	string $name			The name of the aggregate to look for.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param string $name The name of the aggregate to look for.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return string
 	 */
 	public static function getAggregate($name, $startTimestamp, $endTimestamp)
 	{
-		// get all aggregates
 		$aggregates = self::getAggregates($startTimestamp, $endTimestamp);
 
 		// aggregate exists
 		if(isset($aggregates[$name])) return $aggregates[$name];
 
-		// doesnt exist
+		// doesn't exist
 		return '';
 	}
-
 
 	/**
 	 * Get the aggregates between 2 dates
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getAggregates($startTimestamp, $endTimestamp)
 	{
@@ -153,18 +144,16 @@ class BackendAnalyticsModel
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action . 'Loop', null);
 
-		// return data
 		return $aggregates;
 	}
-
 
 	/**
 	 * Get data by type from the cache
 	 *
-	 * @return	array
-	 * @param	string $type			The type of data to get.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param string $type The type of data to get.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getAggregatesFromCacheByType($type, $startTimestamp, $endTimestamp)
 	{
@@ -175,16 +164,15 @@ class BackendAnalyticsModel
 		return (isset(self::$data[$type]['aggregates']) ? self::$data[$type]['aggregates'] : false);
 	}
 
-
 	/**
 	 * Get the sites total aggregates
 	 *
 	 * startTimestamp and endTimestamp are needed so we can fetch the correct cache file
 	 * They are not used when fetching the data from google.
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getAggregatesTotal($startTimestamp, $endTimestamp)
 	{
@@ -200,22 +188,20 @@ class BackendAnalyticsModel
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action . 'Loop', null);
 
-		// return data
 		return $aggregates;
 	}
-
 
 	/**
 	 * Get attributes by type from the cache
 	 *
-	 * @return	array
-	 * @param	string $type			The type of data of which to get the attributes.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param string $type The type of data of which to get the attributes.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	private static function getAttributesFromCache($type, $startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache
+		// doesn't exist in cache
 		if(!isset(self::$data[$type]['attributes']))
 		{
 			// load cache xml file
@@ -225,21 +211,18 @@ class BackendAnalyticsModel
 			if(!isset(self::$data[$type]['attributes'])) self::$data[$type]['attributes'] = array();
 		}
 
-		// return data
 		return self::$data[$type]['attributes'];
 	}
-
 
 	/**
 	 * Get cache file
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	private static function getCacheFile($startTimestamp, $endTimestamp)
 	{
-		// get filename
 		$filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
 		// file exists
@@ -252,19 +235,18 @@ class BackendAnalyticsModel
 			return self::parseXMLToArray($xml);
 		}
 
-		// fallback (cache file doesnt exists)
+		// fallback (cache file doesn't exist)
 		return array();
 	}
-
 
 	/**
 	 * Fetch dashboard data grouped by day
 	 *
-	 * @return	array
-	 * @param	array $metrics					The metrics to collect.
-	 * @param	int $startTimestamp				The start timestamp for the cache file.
-	 * @param	int $endTimestamp				The end timestamp for the cache file.
-	 * @param	bool[optional] $forceCache		Should the data be forced from cache.
+	 * @param array $metrics The metrics to collect.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @param bool[optional] $forceCache Should the data be forced from cache.
+	 * @return array
 	 */
 	public static function getDashboardData(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
 	{
@@ -274,42 +256,43 @@ class BackendAnalyticsModel
 		return self::getDataFromCacheByType('dashboard_data', $startTimestamp, $endTimestamp);
 	}
 
-
 	/**
 	 * Get dashboard data from the cache
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getDashboardDataFromCache($startTimestamp, $endTimestamp)
 	{
 		// doesnt exist in cache - load cache xml file
-		if(!isset(self::$dashboardData) || empty(self::$dashboardData)) self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
+		if(!isset(self::$dashboardData) || empty(self::$dashboardData))
+		{
+			self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
+		}
 
-		// return data
 		return self::$dashboardData;
 	}
-
 
 	/**
 	 * Get the top exit pages
 	 *
-	 * @return	array
-	 * @param	string $page			The page.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param string $page The page.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getDataForPage($page, $startTimestamp, $endTimestamp)
 	{
-		// get database
 		$db = BackendModel::getDB();
 
 		// get id for this page
-		$id = (int) $db->getVar('SELECT id
-									FROM analytics_pages
-									WHERE page = ?',
-									array((string) $page));
+		$id = (int) $db->getVar(
+			'SELECT id
+			 FROM analytics_pages
+			 WHERE page = ?',
+			array((string) $page)
+		);
 
 		// no id? insert this page
 		if($id === 0) $id = $db->insert('analytics_pages', array('page' => (string) $page));
@@ -331,35 +314,31 @@ class BackendAnalyticsModel
 		// update date_viewed for this page
 		BackendAnalyticsModel::updatePageDateViewed($id);
 
-		// return results
 		return $items;
 	}
-
 
 	/**
 	 * Get data from the cache
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getDataFromCache($startTimestamp, $endTimestamp)
 	{
 		// doesnt exist in cache - load cache xml file
 		if(!isset(self::$data) || empty(self::$data)) self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-		// return data
 		return self::$data;
 	}
-
 
 	/**
 	 * Get data by type from the cache
 	 *
-	 * @return	array
-	 * @param	string $type			The type of data to get.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param string $type The type of data to get.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getDataFromCacheByType($type, $startTimestamp, $endTimestamp)
 	{
@@ -373,17 +352,15 @@ class BackendAnalyticsModel
 			if(!isset(self::$data[$type])) return false;
 		}
 
-		// return data
 		return (isset(self::$data[$type]['entries']) ? self::$data[$type]['entries'] : self::$data[$type]);
 	}
-
 
 	/**
 	 * Get the exit pages
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end Timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end Timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getExitPages($startTimestamp, $endTimestamp)
 	{
@@ -414,40 +391,39 @@ class BackendAnalyticsModel
 			$results[$i]['exit_rate'] = ($pageData['pageviews'] == 0 ? 0 : number_format(((int) $pageData['exits'] / $pageData['pageviews']) * 100, 2)) . '%';
 		}
 
-		// return results
 		return $results;
 	}
-
 
 	/**
 	 * Fetch landing pages
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp			The start timestamp for the cache file.
-	 * @param	int $endTimestamp			The end timestamp for the cache file.
-	 * @param	int[optional] $limit		An optional limit of the number of landing pages to get.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @param int[optional] $limit An optional limit of the number of landing pages to get.
+	 * @return array
 	 */
 	public static function getLandingPages($startTimestamp, $endTimestamp, $limit = null)
 	{
-		// init vars
 		$results = array();
 		$db = BackendModel::getDB();
 
 		// get data from database
-		if($limit === null) $items = (array) $db->getRecords('SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
-																FROM analytics_landing_pages
-																ORDER BY entrances DESC');
+		if($limit === null) $items = (array) $db->getRecords(
+			'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+			 FROM analytics_landing_pages
+			 ORDER BY entrances DESC'
+		);
 
-		else $items = (array) $db->getRecords('SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
-												FROM analytics_landing_pages
-												ORDER BY entrances DESC
-												LIMIT ?',
-												array((int) $limit));
+		else $items = (array) $db->getRecords(
+			'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+			 FROM analytics_landing_pages
+			 ORDER BY entrances DESC
+			 LIMIT ?',
+			array((int) $limit)
+		);
 
-		// loop items
 		foreach($items as $item)
 		{
-			// init var
 			$result = array();
 			$startDate = date('Y-m-d', $startTimestamp) . ' 00:00:00';
 			$endDate = date('Y-m-d', $endTimestamp) . ' 00:00:00';
@@ -481,20 +457,17 @@ class BackendAnalyticsModel
 			$results[] = $result;
 		}
 
-		// return results
 		return $results;
 	}
-
 
 	/**
 	 * Get all data for a given revision.
 	 *
-	 * @return	array
-	 * @param	string[optional] $language	The language to use.
+	 * @param string[optional] $language The language to use.
+	 * @return array
 	 */
 	public static function getLinkList($language = null)
 	{
-		// redefine
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// there is no cache file
@@ -525,23 +498,20 @@ class BackendAnalyticsModel
 			$cacheList[$item[1]] = $item[0];
 		}
 
-		// return cache list
 		return $cacheList;
 	}
-
 
 	/**
 	 * Fetch metrics grouped by day
 	 *
-	 * @return	array
-	 * @param	array $metrics					The metrics to collect.
-	 * @param	int $startTimestamp				The start timestamp for the cache file.
-	 * @param	int $endTimestamp				The end timestamp for the cache file.
-	 * @param	string[optional] $forceCache	Should the data be forced from cache.
+	 * @param array $metrics The metrics to collect.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @param string[optional] $forceCache Should the data be forced from cache.
+	 * @return array
 	 */
 	public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
 	{
-		// redefine
 		$metrics = (array) $metrics;
 
 		// get data from cache
@@ -559,47 +529,47 @@ class BackendAnalyticsModel
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action . 'Loop', null);
 
-		// return data
 		return $items;
 	}
-
 
 	/**
 	 * Fetch page by its path
 	 *
-	 * @return	array
-	 * @param	string $path	The path of the page.
+	 * @param string $path The path of the page.
+	 * @return array
 	 */
 	public static function getPageByPath($path)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT *
-															FROM analytics_pages
-															WHERE page = ?',
-															array((string) $path));
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT *
+			 FROM analytics_pages
+			 WHERE page = ?',
+			array((string) $path)
+		);
 	}
-
 
 	/**
 	 * Get the page for a certain id
 	 *
-	 * @return	string
-	 * @param	int $pageId		The page id to get the page for.
+	 * @param int $pageId The page id to get the page for.
+	 * @return string
 	 */
 	public static function getPageForId($pageId)
 	{
-		return (string) BackendModel::getDB()->getVar('SELECT page
-														FROM analytics_pages
-														WHERE id = ?',
-														array((int) $pageId));
+		return (string) BackendModel::getDB()->getVar(
+			'SELECT page
+			 FROM analytics_pages
+			 WHERE id = ?',
+			array((int) $pageId)
+		);
 	}
-
 
 	/**
 	 * Get pages
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getPages($startTimestamp, $endTimestamp)
 	{
@@ -632,37 +602,36 @@ class BackendAnalyticsModel
 			$results[$i]['bounce_rate'] = ($item['entrances'] == 0 ? 0 : number_format(((int) $item['bounces'] / $item['entrances']) * 100, 2)) . '%';
 		}
 
-		// return results
 		return $results;
 	}
-
 
 	/**
 	 * Get the most recent keywords
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getRecentKeywords()
 	{
-		return (array) BackendModel::getDB()->getRecords('SELECT *
-															FROM analytics_keywords
-															ORDER BY entrances DESC, id');
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT *
+			 FROM analytics_keywords
+			 ORDER BY entrances DESC, id'
+		);
 	}
-
 
 	/**
 	 * Get the most recent referrers
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getRecentReferrers()
 	{
-		// get items
-		$items = (array) BackendModel::getDB()->getRecords('SELECT *
-															FROM analytics_referrers
-															ORDER BY entrances DESC, id');
+		$items = (array) BackendModel::getDB()->getRecords(
+			'SELECT *
+			 FROM analytics_referrers
+			 ORDER BY entrances DESC, id'
+		);
 
-		// loop items
 		foreach($items as $key => $item)
 		{
 			// assign URL
@@ -675,27 +644,24 @@ class BackendAnalyticsModel
 		return $items;
 	}
 
-
 	/**
 	 * Get the selected table id
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public static function getTableId()
 	{
 		return (string) BackendAnalyticsHelper::getGoogleAnalyticsInstance()->getTableId();
 	}
 
-
 	/**
 	 * Get time from seconds
 	 *
-	 * @return	string			H:i:s
-	 * @param	int $seconds	The seconds to format.
+	 * @param int $seconds The seconds to format.
+	 * @return string H:i:s
 	 */
 	public static function getTimeFromSeconds($seconds)
 	{
-		// redefine
 		$seconds = (int) ceil($seconds);
 
 		// get seconds
@@ -707,14 +673,13 @@ class BackendAnalyticsModel
 		return str_pad($timeHours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($timeMinutes, 2, '0', STR_PAD_LEFT) . ':' . str_pad($timeSeconds, 2, '0', STR_PAD_LEFT);
 	}
 
-
 	/**
 	 * Get the top exit pages
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
-	 * @param	int[optional] $limit	An optional limit of the number of exit pages to get.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @param int[optional] $limit An optional limit of the number of exit pages to get.
+	 * @return array
 	 */
 	public static function getTopExitPages($startTimestamp, $endTimestamp, $limit = 5)
 	{
@@ -747,18 +712,16 @@ class BackendAnalyticsModel
 			$results[$i]['pageviews'] = (int) $pageData['pageviews'];
 		}
 
-		// return results
 		return $results;
 	}
-
 
 	/**
 	 * Get the top keywords
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
-	 * @param	int[optional] $limit	An optional limit of the number of keywords to get.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @param int[optional] $limit An optional limit of the number of keywords to get.
+	 * @return array
 	 */
 	public static function getTopKeywords($startTimestamp, $endTimestamp, $limit = 5)
 	{
@@ -777,7 +740,6 @@ class BackendAnalyticsModel
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action . 'Loop', null);
 
-		// init
 		$results = array();
 
 		// get total pageviews
@@ -793,18 +755,16 @@ class BackendAnalyticsModel
 			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $keywordData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
 		}
 
-		// return results
 		return $results;
 	}
-
 
 	/**
 	 * Get the top pages
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
-	 * @param	int[optional] $limit	An optional limit of the number of pages to get.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @param int[optional] $limit An optional limit of the number of pages to get.
+	 * @return array
 	 */
 	public static function getTopPages($startTimestamp, $endTimestamp, $limit = 5)
 	{
@@ -840,18 +800,16 @@ class BackendAnalyticsModel
 			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(($pageData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
 		}
 
-		// return results
 		return $results;
 	}
-
 
 	/**
 	 * Get the top referrals
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
-	 * @param	int[optional] $limit	An optional limit of the number of referrals to get.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @param int[optional] $limit An optional limit of the number of referrals to get.
+	 * @return array
 	 */
 	public static function getTopReferrals($startTimestamp, $endTimestamp, $limit = 5)
 	{
@@ -887,17 +845,15 @@ class BackendAnalyticsModel
 			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $referrerData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
 		}
 
-		// return items
 		return $results;
 	}
-
 
 	/**
 	 * Get the traffic sources grouped by medium
 	 *
-	 * @return	array
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
+	 * @return array
 	 */
 	public static function getTrafficSourcesGrouped($startTimestamp, $endTimestamp)
 	{
@@ -913,41 +869,34 @@ class BackendAnalyticsModel
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action . 'Loop', null);
 
-		// return items
 		return $items;
 	}
-
 
 	/**
 	 * Inserts a landingpage into the database
 	 *
-	 * @return	int
-	 * @param	array $item		The data to insert.
+	 * @param array $item The data to insert.
+	 * @return int
 	 */
 	public static function insertLandingPage(array $item)
 	{
 		return (int) BackendModel::getDB(true)->insert('analytics_landing_pages', $item);
 	}
 
-
 	/**
 	 * Parse a XML object to an array and cast all fields to their corresponding types
 	 *
-	 * @return	array
-	 * @param	SimpleXMLElement $xml	The simpleXML to convert to an array.
+	 * @param SimpleXMLElement $xml The simpleXML to convert to an array.
+	 * @return array
 	 */
 	private static function parseXMLToArray(SimpleXMLElement $xml)
 	{
-		// init
 		$data = array();
-
-		// cast to array
 		$xml = (array) $xml;
 
 		// loop children
 		foreach($xml as $name => $children)
 		{
-			// cast children to array
 			$children = (array) $children;
 
 			// skip attributes
@@ -958,8 +907,6 @@ class BackendAnalyticsModel
 			{
 				// save empty array
 				$data[$name] = array();
-
-				// continue
 				continue;
 			}
 
@@ -1059,17 +1006,14 @@ class BackendAnalyticsModel
 			}
 		}
 
-		// return created array
 		return $data;
 	}
-
 
 	/**
 	 * Redirect to the loading page after checking for infinite loops.
 	 *
-	 * @return	void
-	 * @param	string $action							The action to check for infinite loops.
-	 * @param	array[optional] $extraParameters		The extra parameters to append to the redirect url.
+	 * @param string $action The action to check for infinite loops.
+	 * @param array[optional] $extraParameters The extra parameters to append to the redirect url.
 	 */
 	public static function redirectToLoadingPage($action, array $extraParameters = array())
 	{
@@ -1089,53 +1033,50 @@ class BackendAnalyticsModel
 		SpoonHTTP::redirect(BackendModel::createURLForAction('loading') . '&redirect_action=' . $action . $extraParameters);
 	}
 
-
 	/**
 	 * Remove all cache files
-	 *
-	 * @return	void
 	 */
 	public static function removeCacheFiles()
 	{
-		// get path
 		$cachePath = BACKEND_CACHE_PATH . '/analytics';
 
-		// loop all cache files
-		foreach(SpoonFile::getList($cachePath) as $file) SpoonFile::delete($cachePath . '/' . $file);
+		// delete all cache files
+		foreach(SpoonFile::getList($cachePath) as $file)
+		{
+			SpoonFile::delete($cachePath . '/' . $file);
+		}
 	}
-
 
 	/**
 	 * Updates the date viewed for a certain page.
 	 *
-	 * @return	void
-	 * @param	int $pageId		The id of the page to update.
+	 * @param int $pageId The id of the page to update.
 	 */
 	public static function updatePageDateViewed($pageId)
 	{
-		// update the page
-		BackendModel::getDB(true)->update('analytics_pages', array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')), 'id = ?', array((int) $pageId));
+		BackendModel::getDB(true)->update(
+			'analytics_pages',
+			array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')),
+			'id = ?',
+			array((int) $pageId)
+		);
 	}
-
 
 	/**
 	 * Write data to cache file
 	 *
-	 * @return	void
-	 * @param	array $data			The data to write to the cache file.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 * @param array $data The data to write to the cache file.
+	 * @param int $startTimestamp The start timestamp for the cache file.
+	 * @param int $endTimestamp The end timestamp for the cache file.
 	 */
 	public static function writeCacheFile(array $data, $startTimestamp, $endTimestamp)
 	{
-		// build xml string from data
 		$xml = "<?xml version='1.0' encoding='UTF-8'?>\n";
 		$xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
 
 		// loop data
 		foreach($data as $type => $records)
 		{
-			// init vars
 			$attributes = array();
 
 			// there are some attributes
@@ -1149,7 +1090,6 @@ class BackendAnalyticsModel
 				}
 			}
 
-			// build xml
 			$xml .= "\t<" . $type . (!empty($attributes) ? ' ' . implode(' ', $attributes) : '') . ">\n";
 
 			// we're not dealing with a page detail
@@ -1253,12 +1193,7 @@ class BackendAnalyticsModel
 		$simpleXml = @simplexml_load_string($xml);
 		if($simpleXml === false) throw new BackendException('The xml of the cache file is invalid.');
 
-		// get filename
 		$filename = $startTimestamp . '_' . $endTimestamp . '.xml';
-
-		// all is well
 		SpoonFile::setContent(BACKEND_CACHE_PATH . '/analytics/' . $filename, $xml);
 	}
 }
-
-?>

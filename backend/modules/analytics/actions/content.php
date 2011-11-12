@@ -1,61 +1,42 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the content-action, it will display the overview of analytics posts
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsContent extends BackendAnalyticsBase
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Parse this page
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent parse
 		parent::parse();
-
-		// get and parse overview data
 		$this->parseOverviewData();
-
-		// get and parse data for chart
 		$this->parseChartData();
-
-		// get and parse important pages
 		$this->parseImportantPages();
-
-		// get and parse important exit pages
 		$this->parseImportantExitPages();
-
-		// get and parse important entry pages
 		$this->parseImportantLandingPages();
 
-		// init google url
 		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
 		$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
@@ -67,15 +48,11 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		$this->tpl->assign('googleContentURL', sprintf($googleURL, 'content', $googleTableId, $googleDate));
 	}
 
-
 	/**
 	 * Parses the data to make the chart with
-	 *
-	 * @return	void
 	 */
 	private function parseChartData()
 	{
-		// init vars
 		$maxYAxis = 2;
 		$metrics = array('visitors', 'pageviews');
 		$graphData = array();
@@ -83,7 +60,6 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		// get metrics per day
 		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-		// loop metrics
 		foreach($metrics as $i => $metric)
 		{
 			// build graph data array
@@ -108,7 +84,6 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		// loop the metrics
 		foreach($graphData as $metric)
 		{
-			// loop the data
 			foreach($metric['data'] as $data)
 			{
 				// get the maximum value
@@ -116,33 +91,21 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			}
 		}
 
-		// parse
 		$this->tpl->assign('maxYAxis', $maxYAxis);
 		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
 		$this->tpl->assign('graphData', $graphData);
 	}
 
-
 	/**
 	 * Parses the most important exit pages
-	 *
-	 * @return	void
 	 */
 	private function parseImportantExitPages()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getTopExitPages($this->startTimestamp, $this->endTimestamp);
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// hide columns
 			$dataGrid->setColumnHidden('page_encoded');
-
-			// set url
 			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
@@ -150,86 +113,57 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		}
 	}
 
-
 	/**
 	 * Parse the most important landing pages
-	 *
-	 * @return	void
 	 */
 	private function parseImportantLandingPages()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getLandingPages($this->startTimestamp, $this->endTimestamp, 5);
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// hide columns
 			$dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
-
-			// set headers values
-			$headers['page_path'] = ucfirst(BL::lbl('Page'));
+			$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// set headers
-			$dataGrid->setHeaderLabels($headers);
-
-			// set url
-			$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			$dataGrid->setHeaderLabels(
+				array('page_path' => ucfirst(BL::lbl('Page')))
+			);
 
 			// parse the datagrid
 			$this->tpl->assign('dgLandingPages', $dataGrid->getContent());
 		}
 	}
 
-
 	/**
 	 * Parses the most important pages
-	 *
-	 * @return	void
 	 */
 	private function parseImportantPages()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getTopPages($this->startTimestamp, $this->endTimestamp);
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// hide columns
 			$dataGrid->setColumnHidden('page_encoded');
-
-			// set headers values
-			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Pageviews'));
+			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// set headers
-			$dataGrid->setHeaderLabels($headers);
-
-			// set url
-			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			$dataGrid->setHeaderLabels(
+				array('pageviews_percentage' => '% ' . ucfirst(BL::lbl('Pageviews')))
+			);
 
 			// parse the datagrid
 			$this->tpl->assign('dgContent', $dataGrid->getContent());
 		}
 	}
 
-
 	/**
 	 * Parses the overview data
-	 *
-	 * @return	void
 	 */
 	private function parseOverviewData()
 	{
 		// get aggregates
 		$results = BackendAnalyticsModel::getAggregates($this->startTimestamp, $this->endTimestamp);
-
-		// get total aggregates
 		$resultsTotal = BackendAnalyticsModel::getAggregatesTotal($this->startTimestamp, $this->endTimestamp);
 
 		// are there some values?
@@ -239,7 +173,6 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		// show message if there is no data
 		$this->tpl->assign('dataAvailable', $dataAvailable);
 
-		// there are some results
 		if(!empty($results))
 		{
 			// new visitors
@@ -254,7 +187,6 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
 			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
-			// parse data
 			$this->tpl->assign('pageviews', $results['pageviews']);
 			$this->tpl->assign('pageviewsTotal', $resultsTotal['pageviews']);
 			$this->tpl->assign('uniquePageviews', $results['uniquePageviews']);
@@ -268,5 +200,3 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		}
 	}
 }
-
-?>

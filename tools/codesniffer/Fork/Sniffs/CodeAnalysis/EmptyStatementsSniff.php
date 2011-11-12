@@ -1,21 +1,20 @@
 <?php
-/*
+
+/**
  * This sniff class detected empty statement.
  *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- *
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Fork_Sniffs_CodeAnalysis_EmptyStatementsSniff implements PHP_CodeSniffer_Sniff
 {
-	public function register()
-	{
-		return array(T_CATCH, T_DO, T_ELSE, T_ELSEIF, T_FOR, T_FOREACH, T_IF, T_SWITCH, T_TRY, T_WHILE);
-	}
-
-
+	/**
+	 * Process the code.
+	 *
+	 * @param PHP_CodeSniffer_File $phpcsFile
+	 * @param int $stackPtr
+	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
-		// get tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];
 
@@ -27,7 +26,6 @@ class Fork_Sniffs_CodeAnalysis_EmptyStatementsSniff implements PHP_CodeSniffer_S
 		$end = --$current['scope_closer'];
 
 		$emptyBody = true;
-
 		for(; $next <= $end; ++$next)
 		{
 			if(in_array($tokens[$next]['code'], array(T_WHITESPACE)) === false)
@@ -37,9 +35,8 @@ class Fork_Sniffs_CodeAnalysis_EmptyStatementsSniff implements PHP_CodeSniffer_S
 			}
 		}
 
-		if ($emptyBody === true)
+		if($emptyBody === true)
 		{
-			// Get token identifier.
 			$name = $phpcsFile->getTokensAsString($stackPtr, 1);
 			$error = sprintf('Empty %s statement detected', strtoupper($name));
 			$phpcsFile->addWarning($error, $stackPtr);
@@ -52,6 +49,13 @@ class Fork_Sniffs_CodeAnalysis_EmptyStatementsSniff implements PHP_CodeSniffer_S
 		unset($end);
 	}
 
+	/**
+	 * Register on control structures.
+	 *
+	 * @return array
+	 */
+	public function register()
+	{
+		return array(T_CATCH, T_DO, T_ELSE, T_ELSEIF, T_FOR, T_FOREACH, T_IF, T_SWITCH, T_TRY, T_WHILE);
+	}
 }
-
-?>

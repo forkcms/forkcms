@@ -1,52 +1,40 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogAdd extends BackendBaseActionAdd
 {
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
@@ -69,20 +57,17 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
+		$this->frm->addImage('image');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// get url
@@ -93,11 +78,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -118,10 +100,17 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 			if($this->frm->getField('category_id')->getValue() == 'new_category') $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
 
+			// validate the image
+			if($this->frm->getField('image')->isFilled())
+			{
+				// image extension and mime type
+				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
+				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
+			}
+
 			// validate meta
 			$this->meta->validate();
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -140,6 +129,19 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;
 				$item['status'] = $status;
+
+				// the image path
+				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
+
+				// validate the image
+				if($this->frm->getField('image')->isFilled())
+				{
+					// build the image name
+					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+
+					// upload the image
+					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+				}
 
 				// insert the item
 				$item['revision_id'] = BackendBlogModel::insert($item);
@@ -173,5 +175,3 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

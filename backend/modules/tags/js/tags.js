@@ -1,6 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
  * Interaction for the tags module
  *
@@ -11,20 +8,10 @@ jsBackend.tags =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.dataGrid td.tag').length > 0)
-		{
-			// build ajax-url
-			var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=edit&language=' + jsBackend.current.language;
+		$dataGridTag = $('.dataGrid td.tag');
 
-			// bind
-			$('.dataGrid td.tag').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
-		}
-	},
-
-
-	// end
-	eoo: true
+		if($dataGridTag.length > 0) $dataGridTag.inlineTextEdit({ params: { fork: { action: 'edit' } }, tooltip: '{$msgClickToEdit}' });
+	}
 }
 
-
-$(document).ready(jsBackend.tags.init);
+$(jsBackend.tags.init);

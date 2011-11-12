@@ -1,30 +1,36 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This checks if a CampaignMonitor account exists or not, and links it if it does
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
-		$url = ltrim(SpoonFilter::getPostValue('url', null, ''), 'http://');
+		$url = SpoonFilter::getPostValue('url', null, '');
 		$username = SpoonFilter::getPostValue('username', null, '');
 		$password = SpoonFilter::getPostValue('password', null, '');
+
+		// filter out the 'http://' from the URL
+		if(strpos($url, 'http://') !== false)
+		{
+			$url = str_replace('http://', '', $url);
+		}
 
 		// check input
 		if(empty($url)) $this->output(self::BAD_REQUEST, array('field' => 'url'), BL::err('NoCMAccountCredentials'));
@@ -71,5 +77,3 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 		$this->output(self::OK, array('message' => 'account-linked'), BL::msg('AccountLinked', $this->getModule()));
 	}
 }
-
-?>

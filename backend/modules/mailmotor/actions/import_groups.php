@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the import-action, it will import groups and their subscribers from CampaignMonitor
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorImportGroups extends BackendBaseActionAdd
 {
@@ -18,7 +21,6 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 	 */
 	private $cm;
 
-
 	/**
 	 * All external groups
 	 *
@@ -26,42 +28,24 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 	 */
 	private $externalGroups = array();
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// store CM object
 		$this->cm = BackendMailmotorCMHelper::getCM();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('import');
 
 		// fetch the groups
@@ -97,11 +81,8 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 		$this->tpl->assign('groups', $this->externalGroups);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -161,5 +142,3 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

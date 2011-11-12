@@ -1,85 +1,33 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the settings module.
  *
- * @package		backend
- * @subpackage	settings
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendSettingsModel
 {
 	/**
-	 * Fetch the list of modules that require Akismet API key
-	 *
-	 * @return	array
-	 */
-	public static function getModulesThatRequireAkismet()
-	{
-		// init vars
-		$modules = array();
-		$activeModules = BackendModel::getModules(true);
-
-		// loop active modules
-		foreach($activeModules as $module)
-		{
-			// fetch setting
-			$setting = BackendModel::getModuleSetting($module, 'requires_akismet', false);
-
-			// add to the list
-			if($setting) $modules[] = $module;
-		}
-
-		// return
-		return $modules;
-	}
-
-
-	/**
-	 * Fetch the list of modules that require Google Maps API key
-	 *
-	 * @return	array
-	 */
-	public static function getModulesThatRequireGoogleMaps()
-	{
-		// init vars
-		$modules = array();
-		$activeModules = BackendModel::getModules(true);
-
-		// loop active modules
-		foreach($activeModules as $module)
-		{
-			// fetch setting
-			$setting = BackendModel::getModuleSetting($module, 'requires_google_maps', false);
-
-			// add to the list
-			if($setting) $modules[] = $module;
-		}
-
-		// return
-		return $modules;
-	}
-
-
-	/**
 	 * Get warnings for active modules
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getWarnings()
 	{
 		// init vars
 		$warnings = array();
-		$activeModules = BackendModel::getModules(true);
+		$installedModules = BackendModel::getModules();
 
-		// add warnings
-		$warnings = array_merge($warnings, BackendModel::checkSettings());
-
-		// loop active modules
-		foreach($activeModules as $module)
+		// loop modules
+		foreach($installedModules as $module)
 		{
 			// model class
 			$class = 'Backend' . SpoonFilter::toCamelCase($module) . 'Model';
@@ -99,9 +47,6 @@ class BackendSettingsModel
 			}
 		}
 
-		// return
 		return (array) $warnings;
 	}
 }
-
-?>

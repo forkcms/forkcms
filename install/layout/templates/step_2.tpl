@@ -98,22 +98,32 @@
 				<h3>Webserver</h3>
 				<h4><span class="{$modRewrite}">{$modRewrite}</span> mod_rewrite</h4>
 				<p>
-					Fork CMS will not be able to run if mod_rewrite can not be applied. Please make sure that .htaccess is present (the file starts with
-					a dot, so it may be hidden on your filesystem), being read (AllowOverride directive) and the mod_rewrite module is enabled in Apache.
-					If you are installing Fork CMS on another webserver than Apache, make sure you have manually configured your webserver to properly
-					rewrite urls. More information can be found in our
+					Fork CMS will not be able to run if mod_rewrite can not be applied. Please make sure that the .htaccess file is present (the file
+					starts with a dot, so it may be hidden on your filesystem), being read (AllowOverride directive) and the mod_rewrite module is
+					enabled in Apache. If you are installing Fork CMS on another webserver than Apache, make sure you have manually configured your
+					webserver to properly rewrite urls. More information can be found in our
 					<a href="http://www.fork-cms.com/knowledge-base/detail/fork-cms-and-webservers" title="Fork CMS and webservers">knowledge base</a>.
+					If you are certain that your server is well configured, you may proceed the installation despite this warning.
 				</p>
 
 				<h3>Required permissions and/or files</h3>
 				<h4><span class="{$fileSystemBackendCache}">{$fileSystemBackendCache}</span> {$PATH_WWW}/backend/cache/*</h4>
 				<p>In this location all files created by the backend will be stored. This location and all subdirectories must be writable.</p>
 
+				<h4><span class="{$fileSystemBackendModules}">{$fileSystemBackendModules}</span> {$PATH_WWW}/backend/modules/</h4>
+				<p>In this location modules will be installed. You can continue the installation, but installing a module will then require a manual upload.</p>
+
 				<h4><span class="{$fileSystemFrontendCache}">{$fileSystemFrontendCache}</span> {$PATH_WWW}/frontend/cache/*</h4>
 				<p>In this location all files created by the frontend will be stored. This location and all subdirectories must be writable.</p>
 
 				<h4><span class="{$fileSystemFrontendFiles}">{$fileSystemFrontendFiles}</span> {$PATH_WWW}/frontend/files/*</h4>
 				<p>In this location all files uploaded by the user/modules will be stored. This location and all subdirectories must be writable.</p>
+
+				<h4><span class="{$fileSystemFrontendModules}">{$fileSystemFrontendModules}</span> {$PATH_WWW}/frontend/modules/</h4>
+				<p>In this location modules will be installed. You can continue the installation, but installing a module will then require a manual upload.</p>
+
+				<h4><span class="{$fileSystemFrontendThemes}">{$fileSystemFrontendThemes}</span> {$PATH_WWW}/frontend/themes/</h4>
+				<p>In this location themes will be installed. You can continue the installation, but installing a theme will then require a manual upload.</p>
 
 				<h4><span class="{$fileSystemLibrary}">{$fileSystemLibrary}</span> {$PATH_LIBRARY}</h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>

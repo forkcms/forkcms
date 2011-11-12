@@ -3,16 +3,11 @@
 /**
  * This is the index-action
  *
- * @package		frontend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendMailmotorIndex extends FrontendBaseBlock
 {
 	const MAILINGS_PAGING_LIMIT = 10;
-
 
 	/**
 	 * The datagrid object
@@ -21,36 +16,21 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	 */
 	private $datagrid;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// hide contenTitle, in the template the title is wrapped with an inverse-option
 		$this->tpl->assign('hideContentTitle', true);
-
-		// load template
 		$this->loadTemplate();
-
-		// load the datagrid
 		$this->loadDataGrid();
-
-		// parse datagrid
 		$this->parseDataGrid();
 
 	}
 
-
 	/**
 	 * Load the datagrid
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -88,11 +68,8 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 		$this->dataGrid->setPagingLimit(self::MAILINGS_PAGING_LIMIT);
 	}
 
-
 	/**
 	 * parse the datagrid
-	 *
-	 * @return	void
 	 */
 	private function parseDataGrid()
 	{
@@ -100,5 +77,3 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }
-
-?>

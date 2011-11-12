@@ -44,7 +44,7 @@
 					{option:!dgAnalyticsKeywords}
 						<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
 							<tr>
-								<td>{$msgAnalyticsNoKeywords}</td>
+								<td>{$msgNoKeywords}</td>
 							</tr>
 						</table>
 					{/option:!dgAnalyticsKeywords}

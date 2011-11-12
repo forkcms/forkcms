@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the profiles module.
  *
- * @package		backend
- * @subpackage	profiles
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-final class BackendProfilesConfig extends BackendBaseConfig
+class BackendProfilesConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action.
@@ -18,7 +21,6 @@ final class BackendProfilesConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions.
 	 *
@@ -26,5 +28,3 @@ final class BackendProfilesConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

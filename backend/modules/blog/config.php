@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the blog module
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-final class BackendBlogConfig extends BackendBaseConfig
+class BackendBlogConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -18,7 +21,6 @@ final class BackendBlogConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,5 +28,3 @@ final class BackendBlogConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
-
-?>

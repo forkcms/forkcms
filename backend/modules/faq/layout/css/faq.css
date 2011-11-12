@@ -1,0 +1,14 @@
+/*
+		Faq
+		
+		@author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ */
+	/*
+		Feedback
+	*/
+	#faq span.positiveFeedback {
+		color: green;
+	}
+	#faq span.negativeFeedback {
+		color: red;
+	}

@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit synonym action, it will display a form to edit an existing synonym.
  *
- * @package		backend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendSearchEditSynonym extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -24,22 +25,11 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendSearchModel::existsSynonymById($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -47,22 +37,16 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->record = BackendSearchModel::getSynonym($this->id);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -74,11 +58,8 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		$this->frm->addText('synonym', $this->record['synonym'], null, 'inputText synonymBox', 'inputTextError synonymBox');
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -90,11 +71,8 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		$this->tpl->assign('term', $this->record['term']);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -130,5 +108,3 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

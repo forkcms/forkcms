@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the comments-action , it will display the overview of blog comments
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogComments extends BackendBaseActionIndex
 {
@@ -19,15 +22,14 @@ class BackendBlogComments extends BackendBaseActionIndex
 	 */
 	private $dgPublished, $dgModeration, $dgSpam;
 
-
 	/**
 	 * Add postdata into the comment
 	 *
-	 * @return	string
-	 * @param 	string $text	The comment.
-	 * @param	string $title	The title for the blogarticle.
-	 * @param	string $URL		The URL for the blogarticle.
-	 * @param	int $id			The id of the comment.
+	 * @param  string $text The comment.
+	 * @param string $title The title for the blogarticle.
+	 * @param string $URL The URL for the blogarticle.
+	 * @param int $id The id of the comment.
+	 * @return string
 	 */
 	public static function addPostData($text, $title, $URL, $id)
 	{
@@ -38,32 +40,19 @@ class BackendBlogComments extends BackendBaseActionIndex
 		return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $URL, $title) . '</em></p>' . "\n" . (string) $text;
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load datagrids
 		$this->loadDataGrids();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
@@ -184,11 +173,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -205,5 +191,3 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->tpl->assign('numSpam', $this->dgSpam->getNumResults());
 	}
 }
-
-?>

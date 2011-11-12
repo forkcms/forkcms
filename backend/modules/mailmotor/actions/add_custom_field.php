@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new custom field
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 {
@@ -18,38 +21,21 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 	 */
 	private $group;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get data related to custom fields
 		$this->getData();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Gets data related to custom fields
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -63,26 +49,17 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('add');
-
-		// create elements
 		$this->frm->addText('name');
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -139,5 +116,3 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the data-action it will display the details of a sent data item
  *
- * @package		backend
- * @subpackage	form_builder
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 {
@@ -18,11 +21,8 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 	 */
 	private $filter;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -32,19 +32,10 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 		// does the item exist
 		if($this->id !== null && BackendFormBuilderModel::existsData($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// set filter
 			$this->setFilter();
-
-			// get data
 			$this->getData();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -52,26 +43,17 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// fetch data
 		$this->data = BackendFormBuilderModel::getData($this->id);
-
-		// fetch record
 		$this->record = BackendFormBuilderModel::get($this->data['form_id']);
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -104,11 +86,8 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 		$this->tpl->assign('filter', $this->filter);
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
@@ -151,5 +130,3 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 		else $this->filter['end_date'] = '';
 	}
 }
-
-?>

@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendHeader
 {
@@ -19,14 +22,12 @@ class BackendHeader
 	 */
 	private $cssFiles = array();
 
-
 	/**
 	 * All added JS-files
 	 *
 	 * @var	array
 	 */
-	private $javascriptFiles = array();
-
+	private $jsFiles = array();
 
 	/**
 	 * Template instance
@@ -35,7 +36,6 @@ class BackendHeader
 	 */
 	private $tpl;
 
-
 	/**
 	 * URL-instance
 	 *
@@ -43,12 +43,6 @@ class BackendHeader
 	 */
 	private $URL;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// store in reference so we can access it from everywhere
@@ -59,21 +53,18 @@ class BackendHeader
 		$this->tpl = Spoon::get('template');
 	}
 
-
 	/**
 	 * Add a CSS-file.
 	 * If you don't specify a module, the current one will be used
 	 * If you set overwritePath to true we expect a full path (It has to start with a slash '/')
 	 *
-	 * @return	void
-	 * @param	string $fileName				The name of the file to load.
-	 * @param	string[optional] $module		The module wherin the file is located.
-	 * @param	bool[optional] $overwritePath	Should we overwrite the full path?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
+	 * @param string $fileName The name of the file to load.
+	 * @param string[optional] $module The module wherin the file is located.
+	 * @param bool[optional] $overwritePath Should we overwrite the full path?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addCSS($fileName, $module = null, $overwritePath = false, $addTimestamp = null)
 	{
-		// redefine
 		$fileName = (string) $fileName;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$overwritePath = (bool) $overwritePath;
@@ -94,23 +85,20 @@ class BackendHeader
 		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
-
 	/**
 	 * Add a JS-file.
 	 * If you don't specify a module, the current one will be used
 	 * If you set parseThroughPHP to true, the JS will be parsed by PHP (labels and vars will be assignes)
 	 * If you set overwritePath to true we expect a full path (It has to start with a /)
 	 *
-	 * @return	void
-	 * @param	string $fileName					The file to load.
-	 * @param	string[optional] $module			The module wherin the file is located.
-	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed by PHP?
-	 * @param	bool[optional] $overwritePath		Should we overwrite the full path?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
+	 * @param string $fileName The file to load.
+	 * @param string[optional] $module The module wherin the file is located.
+	 * @param bool[optional] $parseThroughPHP Should the file be parsed by PHP?
+	 * @param bool[optional] $overwritePath Should we overwrite the full path?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addJS($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
 	{
-		// redefine
 		$fileName = (string) $fileName;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$parseThroughPHP = (bool) $parseThroughPHP;
@@ -135,20 +123,16 @@ class BackendHeader
 		else $realPath = '/backend/core/js/' . $fileName;
 
 		// add if not already added
-		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->javascriptFiles)) $this->javascriptFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
+		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->jsFiles)) $this->jsFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
-
 
 	/**
 	 * Parse the JS, CSS files and meta-info into the head of the HTML-document
-	 *
-	 * @return	void
 	 */
 	public function parse()
 	{
-		// init vars
 		$cssFiles = array();
-		$javascriptFiles = array();
+		$jsFiles = array();
 
 		// get last modified time for the header template
 		$lastModifiedTime = @filemtime($this->tpl->getCompileDirectory() . '/' . md5(realpath(BACKEND_CORE_PATH . '/layout/templates/header.tpl')) . '_header.tpl.php');
@@ -174,36 +158,35 @@ class BackendHeader
 		$this->tpl->assign('cssFiles', $cssFiles);
 
 		// if there aren't any JS-files added we don't need to do something
-		if(!empty($this->javascriptFiles))
+		if(!empty($this->jsFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
-			$ignoreCache = array('/backend/core/js/jquery/jquery.js',
-									'/backend/core/js/jquery/jquery.ui.js',
-									'/backend/core/js/jquery/jquery.tools.js',
-									'/backend/core/js/jquery/jquery.backend.js',
-									'/backend/core/js/tiny_mce/tiny_mce.js');
+			$ignoreCache = array(
+				'/backend/core/js/jquery/jquery.js',
+				'/backend/core/js/jquery/jquery.ui.js',
+				'/backend/core/js/jquery/jquery.tools.js',
+				'/backend/core/js/jquery/jquery.backend.js',
+				'/backend/core/js/tiny_mce/tiny_mce.js'
+			);
 
-			// loop the JS-files
-			foreach($this->javascriptFiles as $file)
+			foreach($this->jsFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('path' => $file['path']);
+				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $jsFiles[] = array('path' => $file['path']);
 
 				// make the file uncacheble
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['path'], 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
+					if(substr($file['path'], 0, 11) == '/backend/js') $jsFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
 
 					// add lastmodified time
-					else $javascriptFiles[] = array('path' => $file['path'] . '?m=' . $lastModifiedTime);
+					else $jsFiles[] = array('path' => $file['path'] . '?m=' . $lastModifiedTime);
 				}
 			}
 		}
 
 		// assign JS-files
-		$this->tpl->assign('javascriptFiles', $javascriptFiles);
+		$this->tpl->assign('jsFiles', $jsFiles);
 	}
 }
-
-?>

@@ -1,19 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This page will display the statistical overview of bounces for a specified mailing
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 {
 	// maximum number of items
-	const PAGING_LIMIT = 10;
-
+	const PAGING_LIMIT = 20;
 
 	/**
 	 * The list with bounces
@@ -22,7 +24,6 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 	 */
 	private $bounces;
 
-
 	/**
 	 * The given mailing record
 	 *
@@ -30,35 +31,20 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 	 */
 	private $mailing;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get the data
 		$this->getData();
-
-		// load datagrid
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Gets all data needed for this page
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -78,11 +64,8 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 		if(empty($this->bounces)) $this->redirect(BackendModel::createURLForAction('statistics') . '&id=' . $this->mailing['id'] . '&error=no-bounces');
 	}
 
-
 	/**
 	 * Loads the datagrid with the clicked link
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -91,6 +74,7 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 
 		// call the parent, as in create a new datagrid with the created source
 		$this->dataGrid = new BackendDataGrid($source);
+		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics_bounces') . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id']);
 
 		// hide the following columns
 		$this->dataGrid->setColumnHidden('list_id');
@@ -102,11 +86,8 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -117,5 +98,3 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 		$this->tpl->assign('mailing', $this->mailing);
 	}
 }
-
-?>

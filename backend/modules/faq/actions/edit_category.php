@@ -1,134 +1,105 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit category action, it will display a form to edit an existing category.
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester.lievens@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFaqEditCategory extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exists?
+		// does the item exist?
 		if($this->id !== null && BackendFaqModel::existsCategory($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
 
-			// parse the form
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
-
-		// no item found, throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->record = BackendFaqModel::getCategory($this->id);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('edit_category');
+		$this->frm = new BackendForm('editCategory');
+		$this->frm->addText('title', $this->record['title']);
 
-		// create elements
-		$this->frm->addText('name', $this->record['name']);
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
-
 
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
-		// assign id, name
-		$this->tpl->assign('id', $this->record['id']);
-		$this->tpl->assign('name', $this->record['name']);
-
-		// can the category be deleted?
-		if(BackendFaqModel::isCategoryAllowedToBeDeleted($this->id)) $this->tpl->assign('showDelete', true);
+		// assign the data
+		$this->tpl->assign('item', $this->record);
+		$this->tpl->assign('deleteAllowed', BackendFaqModel::deleteCategoryAllowed($this->id));
 	}
-
 
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
+			$this->meta->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']));
+
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->meta->validate();
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
 				$item['id'] = $this->id;
-				$item['name'] = $this->frm->getField('name')->getValue();
-				$item['language'] = BL::getWorkingLanguage();
-				$item['extra_id'] = $this->record['extra_id'];
+				$item['language'] = $this->record['language'];
+				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['meta_id'] = $this->meta->save(true);
 
 				// update the item
 				BackendFaqModel::updateCategory($item);
-
-				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'after_edite_category', array('item' => $item));
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}
 }
-
-?>

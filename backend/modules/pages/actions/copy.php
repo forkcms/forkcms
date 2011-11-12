@@ -1,22 +1,23 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * BackendPagesCopy
  * This is the copy-action, it will copy pages from one language to another
  * @remark:	IMPORTANT existing data will be removed, this feature is also expiremental!
  *
- * @package		backend
- * @subpackage	pages
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.6.2
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendPagesCopy extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -35,10 +36,12 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		$db = BackendModel::getDB(true);
 
 		// get all old pages
-		$ids = $db->getColumn('SELECT id
-								FROM pages AS i
-								WHERE i.language = ? AND i.status = ?',
-								array($to, 'active'));
+		$ids = $db->getColumn(
+			'SELECT id
+			 FROM pages AS i
+			 WHERE i.language = ? AND i.status = ?',
+			array($to, 'active')
+		);
 
 		// any old pages
 		if(!empty($ids))
@@ -50,16 +53,20 @@ class BackendPagesCopy extends BackendBaseActionDelete
 				$id = (int) $id;
 
 				// get revision ids
-				$revisionIDs = (array) $db->getColumn('SELECT i.revision_id
-														FROM pages AS i
-														WHERE i.id = ? AND i.language = ?',
-														array($id, $to));
+				$revisionIDs = (array) $db->getColumn(
+					'SELECT i.revision_id
+					 FROM pages AS i
+					 WHERE i.id = ? AND i.language = ?',
+					array($id, $to)
+				);
 
 				// get meta ids
-				$metaIDs = (array) $db->getColumn('SELECT i.meta_id
-													FROM pages AS i
-													WHERE i.id = ? AND i.language = ?',
-													array($id, $to));
+				$metaIDs = (array) $db->getColumn(
+					'SELECT i.meta_id
+					 FROM pages AS i
+					 WHERE i.id = ? AND i.language = ?',
+					array($id, $to)
+				);
 
 				// delete meta records
 				if(!empty($metaIDs)) $db->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
@@ -76,10 +83,12 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		$db->delete('search_index', 'module = ? AND language = ?', array('pages', $to));
 
 		// get all active pages
-		$ids = BackendModel::getDB()->getColumn('SELECT id
-													FROM pages AS i
-													WHERE i.language = ? AND i.status = ?',
-													array($from, 'active'));
+		$ids = BackendModel::getDB()->getColumn(
+			'SELECT id
+			 FROM pages AS i
+			 WHERE i.language = ? AND i.status = ?',
+			array($from, 'active')
+		);
 
 		// loop
 		foreach($ids as $id)
@@ -88,14 +97,15 @@ class BackendPagesCopy extends BackendBaseActionDelete
 			$sourceData = BackendPagesModel::get($id, null, $from);
 
 			// get and build meta
-			$meta = $db->getRecord('SELECT *
-									FROM meta
-									WHERE id = ?',
-									array($sourceData['meta_id']));
+			$meta = $db->getRecord(
+				'SELECT *
+				 FROM meta
+				 WHERE id = ?',
+				array($sourceData['meta_id'])
+			);
 
 			// remove id
 			unset($meta['id']);
-
 
 			// build page record
 			$page = array();
@@ -171,5 +181,3 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		BackendPagesModel::buildCache($to);
 	}
 }
-
-?>

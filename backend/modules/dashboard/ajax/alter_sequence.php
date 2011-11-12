@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This will alter the sequence of the widgets
  *
- * @package		backend
- * @subpackage	dashboard
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendDashboardAjaxAlterSequence extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -82,5 +82,3 @@ class BackendDashboardAjaxAlterSequence extends BackendBaseAJAXAction
 		$this->output(self::OK, $data, BL::msg('Saved'));
 	}
 }
-
-?>

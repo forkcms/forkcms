@@ -1,32 +1,28 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the logout-action, it will logout the current user
  *
- * @package		backend
- * @subpackage	authentication
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendAuthenticationLogout extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// log out the current user
 		BackendAuthentication::logout();
 
 		// redirect to login-screen
 		$this->redirect(BackendModel::createUrlForAction('index', $this->getModule()));
 	}
 }
-
-?>

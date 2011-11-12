@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete a blogpost
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Dave Lens <dave@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendBlogDelete extends BackendBaseActionDelete
 {
@@ -20,11 +23,8 @@ class BackendBlogDelete extends BackendBaseActionDelete
 	 */
 	private $categoryId;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -47,6 +47,9 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			// delete item
 			BackendBlogModel::delete($this->id);
 
+			// delete the image
+			SpoonFile::delete(FRONTEND_FILES_PATH . '/blog/images/source/' . $this->record['image']);
+
 			// trigger event
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
@@ -67,5 +70,3 @@ class BackendBlogDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

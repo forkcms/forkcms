@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This widget will show the latest visitors
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 {
 	/**
 	 * Execute the widget
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -25,10 +26,7 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		// settings are ok, set option
 		$this->tpl->assign('analyticsValidSettings', true);
 
-		// set column
 		$this->setColumn('right');
-
-		// set position
 		$this->setPosition(0);
 
 		// add css
@@ -38,22 +36,15 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		$this->header->addJS('highcharts.js', 'analytics');
 		$this->header->addJS('analytics.js', 'analytics');
 
-		// parse
 		$this->parse();
-
-		// display
 		$this->display();
 	}
 
-
 	/**
 	 * Parse into template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// init vars
 		$maxYAxis = 2;
 		$metrics = array('visitors', 'pageviews');
 		$graphData = array();
@@ -89,10 +80,8 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 			}
 		}
 
-		// loop the metrics
 		foreach($graphData as $metric)
 		{
-			// loop the data
 			foreach($metric['data'] as $data)
 			{
 				// get the maximum value
@@ -100,7 +89,6 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 			}
 		}
 
-		// parse
 		$this->tpl->assign('analyticsRecentVisitsStartDate', $startTimestamp);
 		$this->tpl->assign('analyticsRecentVisitsEndDate', $endTimestamp);
 		$this->tpl->assign('analyticsMaxYAxis', $maxYAxis);
@@ -109,5 +97,3 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		$this->tpl->assign('analyticsGraphData', $graphData);
 	}
 }
-
-?>

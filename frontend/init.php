@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will initiate the frontend-application
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendInit
 {
@@ -20,23 +23,16 @@ class FrontendInit
 	 */
 	private $type;
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	string $type	The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
+	 * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
 	 */
 	public function __construct($type)
 	{
-		// init vars
 		$allowedTypes = array('frontend', 'frontend_ajax', 'frontend_js');
 		$type = (string) $type;
 
 		// check if this is a valid type
 		if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
-
-		// set type
 		$this->type = $type;
 
 		// register the autoloader
@@ -58,7 +54,6 @@ class FrontendInit
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		// require globals
 		$this->requireGlobals();
 
 		// get last modified time for globals
@@ -70,32 +65,22 @@ class FrontendInit
 		// define as a constant
 		define('LAST_MODIFIED_TIME', $lastModifiedTime);
 
-		// define constants
 		$this->definePaths();
 		$this->defineURLs();
-
-		// set include path
 		$this->setIncludePath();
-
-		// set debugging
 		$this->setDebugging();
 
 		// require spoon
 		require_once 'spoon/spoon.php';
 
-		// require frontend-classes
 		$this->requireFrontendClasses();
-
-		// disable magic quotes
 		SpoonFilter::disableMagicQuotes();
 	}
-
 
 	/**
 	 * Autoloader for the frontend
 	 *
-	 * @return	void
-	 * @param	string $className	The name of the class to require.
+	 * @param string $className The name of the class to require.
 	 */
 	public static function autoLoader($className)
 	{
@@ -131,56 +116,51 @@ class FrontendInit
 			// we'll need the original class name again, with the uppercases
 			$className = func_get_arg(0);
 
-			// split in parts
-			if(preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts))
+			// split in parts, if nothing is found we stop processing
+			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
+
+			// the real matches
+			$parts = $parts[0];
+
+			// doublecheck that we are looking for a frontend class, of that isn't the case we should stop.
+			$root = array_shift($parts);
+			if(strtolower($root) != 'frontend') return;
+
+			foreach($parts as $i => $part)
 			{
-				// the real matches
-				$parts = $parts[0];
+				// skip the first
+				if($i == 0) continue;
 
-				// doublecheck that we are looking for a frontend class
-				$root = array_shift($parts);
-				if(strtolower($root) == 'frontend')
+				// action
+				$action = strtolower(implode('_', $parts));
+
+				// module
+				$module = '';
+				for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
+
+				// fix action & module
+				$action = substr($action, strlen($module));
+				$module = substr($module, 0, -1);
+
+				// check the actions, engine & widgets directories
+				foreach(array('actions', 'engine', 'widgets') as $dir)
 				{
-					foreach($parts as $i => $part)
+					// file to be loaded
+					$pathToLoad = FRONTEND_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+
+					// if it exists, load it!
+					if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
 					{
-						// skip the first
-						if($i == 0) continue;
-
-						// action
-						$action = strtolower(implode('_', $parts));
-
-						// module
-						$module = '';
-						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
-
-						// fix action & module
-						$action = substr($action, strlen($module));
-						$module = substr($module, 0, -1);
-
-						// check the actions, engine & widgets directories
-						foreach(array('actions', 'engine', 'widgets') as $dir)
-						{
-							// file to be loaded
-							$pathToLoad = FRONTEND_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
-
-							// if it exists, load it!
-							if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
-							{
-								require_once $pathToLoad;
-								break;
-							}
-						}
+						require_once $pathToLoad;
+						break;
 					}
 				}
 			}
 		}
 	}
 
-
 	/**
 	 * Define paths
-	 *
-	 * @return	void
 	 */
 	private function definePaths()
 	{
@@ -196,26 +176,22 @@ class FrontendInit
 		define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
 	}
 
-
 	/**
 	 * Define URLs
-	 *
-	 * @return	void
 	 */
 	private function defineURLs()
 	{
 		define('FRONTEND_CORE_URL', '/' . APPLICATION . '/core');
 		define('FRONTEND_CACHE_URL', '/' . APPLICATION . '/cache');
-		define('FRONTEND_FILES_URL', '/frontend/files');
+		define('FRONTEND_FILES_URL', '/' . APPLICATION . '/files');
 	}
-
 
 	/**
 	 * A custom error-handler so we can handle warnings about undefined labels
 	 *
-	 * @return	bool
-	 * @param	int $errorNumber		The level of the error raised, as an integer.
-	 * @param	string $errorString		The error message, as a string.
+	 * @param int $errorNumber The level of the error raised, as an integer.
+	 * @param string $errorString The error message, as a string.
+	 * @return bool
 	 */
 	public static function errorHandler($errorNumber, $errorString)
 	{
@@ -243,13 +219,11 @@ class FrontendInit
 		else return false;
 	}
 
-
 	/**
 	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
 	 *
-	 * @return	void
-	 * @param	object $exception	The exception that was thrown.
-	 * @param	string $output		The output that should be mailed.
+	 * @param object $exception The exception that was thrown.
+	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
@@ -269,17 +243,14 @@ class FrontendInit
 		exit;
 	}
 
-
 	/**
 	 * This method will be called by the Spoon Exceptionhandler
 	 *
-	 * @return	void
-	 * @param	object $exception	The exception that was thrown.
-	 * @param	string $output		The output that should be mailed.
+	 * @param object $exception The exception that was thrown.
+	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionHandler($exception, $output)
 	{
-		// redefine
 		$exception = $exception;
 		$output = (string) $output;
 
@@ -303,18 +274,14 @@ class FrontendInit
 
 		// output
 		echo $html;
-
-		// stop script execution
 		exit;
 	}
-
 
 	/**
 	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in JS-files parsed through PHP
 	 *
-	 * @return	void
-	 * @param	object $exception	The exception that was thrown.
-	 * @param	string $output		The output that should be mailed.
+	 * @param object $exception The exception that was thrown.
+	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
@@ -326,35 +293,26 @@ class FrontendInit
 
 		// output
 		echo '// ' . $exception->getMessage();
-
-		// stop script execution
 		exit;
 	}
 
-
 	/**
 	 * Require all needed classes
-	 *
-	 * @return	void
 	 */
 	private function requireFrontendClasses()
 	{
-		// based on the type
 		switch($this->type)
 		{
 			case 'frontend':
 			case 'frontend_ajax':
 				require_once FRONTEND_CORE_PATH . '/engine/template_custom.php';
 				require_once FRONTEND_PATH . '/modules/tags/engine/model.php';
-			break;
+				break;
 		}
 	}
 
-
 	/**
 	 * Require globals-file
-	 *
-	 * @return	void
 	 */
 	private function requireGlobals()
 	{
@@ -381,17 +339,12 @@ class FrontendInit
 
 			// we can nog load configuration file, however we can not run installer
 			echo 'Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.';
-
-			// stop script execution
 			exit;
 		}
 	}
 
-
 	/**
 	 * Set debugging
-	 *
-	 * @return	void
 	 */
 	private function setDebugging()
 	{
@@ -422,24 +375,20 @@ class FrontendInit
 			{
 				case 'backend_ajax':
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-				break;
+					break;
 
 				case 'backend_js':
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-				break;
+					break;
 
 				default:
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
-				break;
 			}
 		}
 	}
 
-
 	/**
 	 * Set include path
-	 *
-	 * @return	void
 	 */
 	private function setIncludePath()
 	{
@@ -447,5 +396,3 @@ class FrontendInit
 		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }
-
-?>

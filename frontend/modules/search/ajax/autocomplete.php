@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the autocomplete-action, it will output a list of searches that start with a certain string.
  *
- * @package		frontend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -22,7 +23,7 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$term = SpoonFilter::getGetValue('term', null, '');
+		$term = SpoonFilter::getPostValue('term', null, '');
 		$limit = (int) FrontendModel::getModuleSetting('search', 'autocomplete_num_items', 10);
 
 		// validate
@@ -41,5 +42,3 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
 		$this->output(self::OK, $matches);
 	}
 }
-
-?>

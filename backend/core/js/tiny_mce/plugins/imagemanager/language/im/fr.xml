@@ -33,9 +33,6 @@
 		<item name="prev">préc.</item>
 		<item name="next">suiv.</item>
 		<item name="image_data">Récupération des informations de l&#039;image, veuillez patienter...</item>
-		<item name="page">Page</item>
-		<item name="of">of</item>
-		<item name="download">Download</item>
 	</group>
 	<group target="button">
 		<item name="create">Créer</item>

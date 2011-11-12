@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the export-action, it will create a XML with locale items.
  *
- * @package		backend
- * @subpackage	locale
- *
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Lowie Benoot <lowie@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
 class BackendLocaleExport extends BackendBaseActionIndex
 {
@@ -19,7 +22,6 @@ class BackendLocaleExport extends BackendBaseActionIndex
 	 */
 	private $filter;
 
-
 	/**
 	 * Locale items.
 	 *
@@ -27,26 +29,25 @@ class BackendLocaleExport extends BackendBaseActionIndex
 	 */
 	private $locale;
 
-
 	/**
 	 * Builds the query for this datagrid.
 	 *
-	 * @return	array		An array with two arguments containing the query and its parameters.
+	 * @return array		An array with two arguments containing the query and its parameters.
 	 */
 	private function buildQuery()
 	{
-		// init var
 		$parameters = array();
 
 		// start of query
-		$query = 'SELECT l.id, l.language, l.application, l.module, l.type, l.name, l.value
-					FROM locale AS l
-					WHERE 1';
+		$query =
+			'SELECT l.id, l.language, l.application, l.module, l.type, l.name, l.value
+			 FROM locale AS l
+			 WHERE 1';
 
 		// add language
 		if($this->filter['language'] !== null)
 		{
-			// create an array for the languages, surrounded by quotes (example: 'nl')
+			// create an array for the languages, surrounded by quotes (example: 'en')
 			$languages = array();
 			foreach($this->filter['language'] as $key => $val) $languages[$key] = '\'' . $val . '\'';
 
@@ -98,11 +99,8 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		return array($query, $parameters);
 	}
 
-
 	/**
 	 * Create the XML based on the locale items.
-	 *
-	 * @return	void
 	 */
 	private function createXML()
 	{
@@ -119,37 +117,22 @@ class BackendLocaleExport extends BackendBaseActionIndex
 
 		// output XML
 		echo $xmlOutput;
-
-		// stop script
 		exit;
 	}
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// set filter
 		$this->setFilter();
-
-		// set items
 		$this->setItems();
-
-		// create XML
 		$this->createXML();
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
@@ -161,15 +144,11 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		$this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
 	}
 
-
 	/**
 	 * Build items array and group all items by application, module, type and name.
-	 *
-	 * @return	void
 	 */
 	private function setItems()
 	{
-		// build our query
 		list($query, $parameters) = $this->buildQuery();
 
 		// get locale from the database
@@ -188,5 +167,3 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		unset($items);
 	}
 }
-
-?>

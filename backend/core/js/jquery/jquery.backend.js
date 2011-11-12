@@ -2,11 +2,11 @@
  * jQuery Fork stuff
  */
 
-
 /**
  * Meta-handler
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 (function($)
 {
@@ -21,73 +21,70 @@
 		// loop all elements
 		return this.each(function()
 		{
-			// init var
-			var element = $(this);
+			// variables
+			$element = $(this);
+			$pageTitle = $('#pageTitle');
+			$pageTitleOverwrite = $('#pageTitleOverwrite');
+			$navigationTitle = $('#navigationTitle');
+			$navigationTitleOverwrite = $('#navigationTitleOverwrite');
+			$metaDescription = $('#metaDescription');
+			$metaDescriptionOverwrite = $('#metaDescriptionOverwrite');
+			$metaKeywords = $('#metaKeywords');
+			$metaKeywordsOverwrite = $('#metaKeywordsOverwrite');
+			$urlOverwrite = $('#urlOverwrite');
 
 			// bind keypress
-			$(this).bind('keyup', calculateMeta);
+			$element.bind('keyup', calculateMeta);
 
 			// bind change on the checkboxes
-			if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+			if($pageTitle.length > 0 && $pageTitleOverwrite.length > 0)
 			{
-				$('#pageTitleOverwrite').change(function(evt)
+				$pageTitleOverwrite.change(function(e)
 				{
-					if(!$(this).is(':checked'))
-					{
-						$('#pageTitle').val(element.val());
-					}
+					if(!$element.is(':checked')) $pageTitle.val($element.val());
 				});
 			}
 
-			if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+			if($navigationTitle.length > 0 && $navigationTitleOverwrite.length > 0)
 			{
-				$('#navigationTitleOverwrite').change(function(evt)
+				$navigationTitleOverwrite.change(function(e)
 				{
-					if(!$(this).is(':checked'))
-					{
-						$('#navigationTitle').val(element.val());
-					}
+					if(!$element.is(':checked')) $navigationTitle.val($element.val());
 				});
 			}
 
-			$('#metaDescriptionOverwrite').change(function(evt)
+			$metaDescriptionOverwrite.change(function(e)
 			{
-				if(!$(this).is(':checked'))
-				{
-					$('#metaDescription').val(element.val());
-				}
+				if(!$element.is(':checked')) $metaDescription.val($element.val());
 			});
 
-			$('#metaKeywordsOverwrite').change(function(evt)
+			$metaKeywordsOverwrite.change(function(e)
 			{
-				if(!$(this).is(':checked'))
-				{
-					$('#metaKeywords').val(element.val());
-				}
+				if(!$element.is(':checked')) $metaKeywords.val($element.val());
 			});
 
-			$('#urlOverwrite').change(function(evt)
+			$urlOverwrite.change(function(e)
 			{
-				if(!$(this).is(':checked'))
-				{
-					generateUrl(element.val());
-				}
+				if(!$element.is(':checked')) generateUrl($element.val());
 			});
 
+			// generate url
 			function generateUrl(url)
 			{
 				// make the call
 				$.ajax(
 				{
-					url: '/backend/ajax.php?module=core&action=generate_url&language=' + jsBackend.current.language,
-					data: 'url=' + url +
-							'&metaId=' + $('#metaId').val() +
-							'&baseFieldName=' + $('#baseFieldName').val() +
-							'&custom=' + $('#custom').val() +
-							'&className=' + $('#className').val() +
-							'&methodName=' + $('#methodName').val() +
-							'&parameters=' + $('#parameters').val(),
-					type: 'POST',
+					data:
+					{
+						fork: { module: 'core', action: 'generate_url' },
+						url: url,
+						metaId: $('#metaId').val(),
+						baseFieldName: $('#baseFieldName').val(),
+						custom: $('#custom').val(),
+						className: $('#className').val(),
+						methodName: $('#methodName').val(),
+						parameters: $('#parameters').val()
+					},
 					success: function(data, textStatus)
 					{
 						url = data.data;
@@ -102,38 +99,27 @@
 					}
 				});
 			}
+
 			// calculate meta
-			function calculateMeta(evt, element)
+			function calculateMeta(e, element)
 			{
 				var title = (typeof element != 'undefined') ? element.val() : $(this).val();
 
-				if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+				if($pageTitle.length > 0 && $pageTitleOverwrite.length > 0)
 				{
-					if(!$('#pageTitleOverwrite').is(':checked'))
-					{
-						$('#pageTitle').val(title);
-					}
+					if(!$pageTitleOverwrite.is(':checked')) $pageTitle.val(title);
 				}
 
-				if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+				if($navigationTitle.length > 0 && $navigationTitleOverwrite.length > 0)
 				{
-					if(!$('#navigationTitleOverwrite').is(':checked'))
-					{
-						$('#navigationTitle').val(title);
-					}
+					if(!$navigationTitleOverwrite.is(':checked')) $navigationTitle.val(title);
 				}
 
-				if(!$('#metaDescriptionOverwrite').is(':checked'))
-				{
-					$('#metaDescription').val(title);
-				}
+				if(!$metaDescriptionOverwrite.is(':checked')) $metaDescription.val(title);
 
-				if(!$('#metaKeywordsOverwrite').is(':checked'))
-				{
-					$('#metaKeywords').val(title);
-				}
+				if(!$metaKeywordsOverwrite.is(':checked')) $metaKeywords.val(title);
 
-				if(!$('#urlOverwrite').is(':checked'))
+				if(!$urlOverwrite.is(':checked'))
 				{
 					if(typeof pageID == 'undefined' || pageID != 1)
 					{
@@ -144,7 +130,6 @@
 		});
 	};
 })(jQuery);
-
 
 /**
  * Password generator
@@ -178,10 +163,10 @@
 
 			$('.generatePasswordButton').live('click', generatePassword);
 
-			function generatePassword(evt)
+			function generatePassword(e)
 			{
 				// prevent default
-				evt.preventDefault();
+				e.preventDefault();
 
 				var currentElement = $('#' + $(this).data('id'));
 
@@ -276,7 +261,6 @@
 	};
 })(jQuery);
 
-
 /**
  * Inline editing
  *
@@ -290,13 +274,13 @@
 		// define defaults
 		var defaults =
 		{
-			saveUrl: null,
+			params: {},
 			current: {},
 			extraParams: {},
 			inputClasses: 'inputText',
 			allowEmpty: false,
 			tooltip: 'click to edit',
-			after_save: null
+			afterSave: null
 		};
 
 		// extend options
@@ -315,9 +299,9 @@
 			$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
 
 			// grab element
-			var span = $this.find('span');
-			var element = span.eq(0);
-			var tooltip = span.eq(1);
+			$span = $this.find('span');
+			var element = $span.eq(0);
+			var tooltip = $span.eq(1);
 
 			// bind events
 			element.bind('click focus', createElement);
@@ -378,10 +362,10 @@
 
 				// bind events
 				options.current.element.bind('blur', saveElement);
-				options.current.element.keyup(function(evt)
+				options.current.element.keyup(function(e)
 				{
 					// handle escape
-					if(evt.which == 27)
+					if(e.which == 27)
 					{
 						// reset
 						options.current.element.val(options.current.value);
@@ -391,10 +375,9 @@
 					}
 
 					// save when someone presses enter
-					if(evt.which == 13) saveElement();
+					if(e.which == 13) saveElement();
 				});
 			}
-
 
 			// destroy the element
 			function destroyElement()
@@ -418,7 +401,6 @@
 				editing = false;
 			}
 
-
 			// save the element
 			function saveElement()
 			{
@@ -437,12 +419,11 @@
 					// make the call
 					$.ajax(
 					{
-						url: options.saveUrl,
-						data: options.current.extraParams,
+						data: $.extend(options.params, options.current.extraParams),
 						success: function(data, textStatus)
 						{
 							// call callback if it is a valid callback
-							if(typeof options.after_save == 'function') eval(options.after_save)($this);
+							if(typeof options.afterSave == 'function') eval(options.afterSave)($this);
 
 							// destroy the element
 							destroyElement();
@@ -468,7 +449,6 @@
 	};
 })(jQuery);
 
-
 /**
  * key-value-box
  *
@@ -487,7 +467,7 @@
 			errorMessage: 'Add the item before submitting',
 			addLabel: 'add',
 			removeLabel: 'delete',
-			autoCompleteUrl: '',
+			params: {},
 			showIconOnly: true,
 			multiple: true
 		};
@@ -508,7 +488,7 @@
 			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
-			$(this.form).submit(function(evt)
+			$(this.form).submit(function(e)
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
@@ -538,61 +518,62 @@
 			// hide current element
 			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
 
-
 			// prepend html
 			$(this).before(html);
 
 			// add elements list
 			build();
 
-			$('#addValue-' + id).autocomplete(
+			// bind autocomplete if needed
+			if(options.params.length)
 			{
-				delay: 200,
-				minLength: 2,
-				source: function(request, response)
+				$('#addValue-' + id).autocomplete(
 				{
-					$.ajax(
+					delay: 200,
+					minLength: 2,
+					source: function(request, response)
 					{
-						url: options.autoCompleteUrl,
-						type: 'GET',
-						data: 'term=' + request.term,
-						success: function(data, textStatus)
+						$.ajax(
 						{
-							// init var
-							var realData = [];
-
-							// alert the user
-							if(data.code != 200 && jsBackend.debug)
+							data: $.extend(options.params, { term: request.term }),
+							success: function(data, textStatus)
 							{
-								alert(data.message);
-							}
+								// init var
+								var realData = [];
 
-							if(data.code == 200)
-							{
-								for(var i in data.data)
+								// alert the user
+								if(data.code != 200 && jsBackend.debug)
 								{
-									realData.push(
-									{
-										label: data.data[i].name,
-										value: data.data[i].value + options.secondSplitChar + data.data[i].name
-									});
+									alert(data.message);
 								}
-							}
 
-							// set response
-							response(realData);
-						}
-					});
-				}
-			});
+								if(data.code == 200)
+								{
+									for(var i in data.data)
+									{
+										realData.push(
+										{
+											label: data.data[i].name,
+											value: data.data[i].value + options.secondSplitChar + data.data[i].name
+										});
+									}
+								}
+
+								// set response
+								response(realData);
+							}
+						});
+					}
+				});
+			}
 
 			// bind keypress on value-field
-			$('#addValue-' + id).bind('keyup', function(evt)
+			$('#addValue-' + id).bind('keyup', function(e)
 			{
 				blockSubmit = true;
 
 				// grab code
-				var code = evt.which;
+				var code = e.which;
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
@@ -604,8 +585,8 @@
 					$('#errorMessage-'+ id).remove();
 
 					// prevent default behaviour
-					evt.preventDefault();
-					evt.stopPropagation();
+					e.preventDefault();
+					e.stopPropagation();
 
 					// add element
 					add();
@@ -621,22 +602,22 @@
 			});
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).attr('rel'));
@@ -719,7 +700,6 @@
 				$('#elementList-' + id).html(html);
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -736,7 +716,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -757,11 +736,10 @@
 	};
 })(jQuery);
 
-
 /**
  * Tag-box
  *
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
@@ -776,7 +754,7 @@
 			errorMessage: 'Add the tag before submitting',
 			addLabel: 'add',
 			removeLabel: 'delete',
-			autoCompleteUrl: '',
+			params: {},
 			canAddNew: false,
 			showIconOnly: true,
 			multiple: true
@@ -798,7 +776,7 @@
 			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
-			$(this.form).submit(function(evt)
+			$(this.form).submit(function(e)
 			{
 				// hide before..
 				$('#errorMessage-'+ id).remove();
@@ -846,7 +824,7 @@
 			build();
 
 			// bind autocomplete if needed
-			if(options.autoCompleteUrl != '')
+			if(options.params.length)
 			{
 				$('#addValue-' + id).autocomplete(
 				{
@@ -856,9 +834,7 @@
 					{
 						$.ajax(
 						{
-							url: options.autoCompleteUrl,
-							type: 'GET',
-							data: 'term=' + request.term,
+							data: $.extend(options.params, { term: request.term }),
 							success: function(data, textStatus)
 							{
 								// init var
@@ -891,12 +867,12 @@
 			}
 
 			// bind keypress on value-field
-			$('#addValue-' + id).bind('keyup', function(evt)
+			$('#addValue-' + id).bind('keyup', function(e)
 			{
 				blockSubmit = true;
 
 				// grab code
-				var code = evt.which;
+				var code = e.which;
 
 				// remove error message
 				$('#errorMessage-'+ id).remove();
@@ -908,8 +884,8 @@
 					$('#errorMessage-'+ id).remove();
 
 					// prevent default behaviour
-					evt.preventDefault();
-					evt.stopPropagation();
+					e.preventDefault();
+					e.stopPropagation();
 
 					// add element
 					add();
@@ -925,22 +901,22 @@
 			});
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).data('id'));
@@ -1020,7 +996,6 @@
 				$('#elementList-' + id).html(html);
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1037,7 +1012,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -1057,7 +1031,6 @@
 		});
 	};
 })(jQuery);
-
 
 /**
  * Multiple select box
@@ -1110,7 +1083,6 @@
 						'		<p>' +
 						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
 
-
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
 				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
@@ -1140,22 +1112,22 @@
 			build();
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).data('id'));
@@ -1196,7 +1168,6 @@
 					}
 				}
 			}
-
 
 			// build the list
 			function build()
@@ -1248,7 +1219,6 @@
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1265,7 +1235,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)
@@ -1288,7 +1257,6 @@
 	};
 })(jQuery);
 
-
 /**
  * Multiple text box
  *
@@ -1305,7 +1273,7 @@
 			emptyMessage: '',
 			addLabel: 'add',
 			removeLabel: 'delete',
-			autoCompleteUrl: '',
+			params: {},
 			canAddNew: false,
 			showIconOnly: false,
 			afterBuild: null
@@ -1351,7 +1319,7 @@
 			build();
 
 			// bind autocomplete if needed
-			if(options.autoCompleteUrl != '')
+			if(options.params.length)
 			{
 				$('#addValue-' + id).autocomplete(
 				{
@@ -1361,9 +1329,7 @@
 					{
 						$.ajax(
 						{
-							url: options.autoCompleteUrl,
-							type: 'GET',
-							data: 'term=' + request.term,
+							data: $.extend(options.params, { term: request.term }),
 							success: function(data, textStatus)
 							{
 								// init var
@@ -1396,20 +1362,20 @@
 			}
 
 			// bind keypress on value-field
-			$('#addValue-' + id).bind('keyup', function(evt)
+			$('#addValue-' + id).bind('keyup', function(e)
 			{
 				// block form submit
 				blockSubmit = true;
 
 				// grab code
-				var code = evt.which;
+				var code = e.which;
 
 				// enter or splitchar should add an element
 				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{
 					// prevent default behaviour
-					evt.preventDefault();
-					evt.stopPropagation();
+					e.preventDefault();
+					e.stopPropagation();
 
 					// add element
 					add();
@@ -1426,32 +1392,32 @@
 			});
 
 			// unblock the submit event when we lose focus
-			$('#addValue-' + id).bind('blur', function(evt) { blockSubmit = false; });
+			$('#addValue-' + id).bind('blur', function(e) { blockSubmit = false; });
 
 			// bind click on add-button
-			$('#addButton-' + id).bind('click', function(evt)
+			$('#addButton-' + id).bind('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// add element
 				add();
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(evt)
+			$('.deleteButton-' + id).live('click', function(e)
 			{
 				// dont submit
-				evt.preventDefault();
-				evt.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 
 				// remove element
 				remove($(this).data('id'));
 			});
 
 			// bind keypress on inputfields (we need to rebuild so new values are saved)
-			$('.inputField-' + id).live('keyup', function(evt)
+			$('.inputField-' + id).live('keyup', function(e)
 			{
 				// clear elements
 				elements = [];
@@ -1514,7 +1480,6 @@
 				}
 			}
 
-
 			// build the list
 			function build()
 			{
@@ -1552,7 +1517,6 @@
 				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
-
 			// get all items
 			function get()
 			{
@@ -1569,7 +1533,6 @@
 
 				return elements;
 			}
-
 
 			// remove an item
 			function remove(value)

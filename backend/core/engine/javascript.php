@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will handle files JS-files that have to be parsed by PHP
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendJavascript
 {
@@ -19,14 +22,12 @@ class BackendJavascript
 	 */
 	private $filename;
 
-
 	/**
 	 * The working language
 	 *
 	 * @var	string
 	 */
 	private $language;
-
 
 	/**
 	 * The module
@@ -35,12 +36,6 @@ class BackendJavascript
 	 */
 	private $module;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// define the Named Application
@@ -53,7 +48,7 @@ class BackendJavascript
 		$this->setFile(SpoonFilter::getGetValue('file', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', BackendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', array_keys(BackendLanguage::getWorkingLanguages()), SITE_DEFAULT_LANGUAGE));
 
 		// build the path
 		if($this->module == 'core') $path = BACKEND_CORE_PATH . '/js/' . $this->getFile();
@@ -69,45 +64,40 @@ class BackendJavascript
 		$tpl->display($path, true);
 	}
 
-
 	/**
 	 * Get file
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getFile()
 	{
 		return $this->filename;
 	}
 
-
 	/**
 	 * Get language
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getLanguage()
 	{
 		return $this->language;
 	}
 
-
 	/**
 	 * Get module
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getModule()
 	{
 		return $this->module;
 	}
 
-
 	/**
 	 * Set file
 	 *
-	 * @return	void
-	 * @param	string $value	The file to load.
+	 * @param string $value The file to load.
 	 */
 	private function setFile($value)
 	{
@@ -163,7 +153,6 @@ class BackendJavascript
 			else exit(SPOON_DEBUG_MESSAGE);
 		}
 
-
 		// check if the path exists, if not whe should given an error
 		if(!SpoonFile::exists($path))
 		{
@@ -178,12 +167,10 @@ class BackendJavascript
 		}
 	}
 
-
 	/**
 	 * Set language
 	 *
-	 * @return	void
-	 * @param	string $value	The language to load.
+	 * @param string $value The language to load.
 	 */
 	private function setLanguage($value)
 	{
@@ -191,7 +178,10 @@ class BackendJavascript
 		$this->language = (string) $value;
 
 		// is this a authenticated user?
-		if(BackendAuthentication::isLoggedIn()) $language = BackendAuthentication::getUser()->getSetting('interface_language');
+		if(BackendAuthentication::isLoggedIn())
+		{
+			$language = BackendAuthentication::getUser()->getSetting('interface_language');
+		}
 
 		// unknown user (fallback to default language)
 		else $language = BackendModel::getModuleSetting('core', 'default_interface_language');
@@ -203,12 +193,10 @@ class BackendJavascript
 		BackendLanguage::setWorkingLanguage($this->language);
 	}
 
-
 	/**
 	 * Set module
 	 *
-	 * @return	void
-	 * @param	string $value	The module to use.
+	 * @param string $value The module to use.
 	 */
 	private function setModule($value)
 	{
@@ -236,5 +224,3 @@ class BackendJavascript
 		$URL->setModule($this->module);
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Add all custom stuff here.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendTemplateCustom
 {
@@ -18,32 +21,20 @@ class FrontendTemplateCustom
 	 */
 	private $tpl;
 
-
 	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	FrontendTemplate $tpl	The template instance.
+	 * @param FrontendTemplate $tpl The template instance.
 	 */
 	public function __construct($tpl)
 	{
-		// set property
 		$this->tpl = $tpl;
-
-		// call parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Parse the custom stuff
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
 		// insert your custom stuff here...
 	}
 }
-
-?>

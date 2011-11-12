@@ -1,6 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
  * Interaction for the pages module
  *
@@ -25,7 +22,7 @@ jsBackend.pages =
 		}
 
 		// button to save to draft
-		$('#saveAsDraft').click(function(evt)
+		$('#saveAsDraft').on('click', function(e)
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />');
 			$('form').submit();
@@ -33,13 +30,8 @@ jsBackend.pages =
 
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * All methods related to the controls (buttons, ...)
@@ -54,19 +46,18 @@ jsBackend.pages.extras =
 	init: function()
 	{
 		// bind events
-		$('#extraType').change(jsBackend.pages.extras.populateExtraModules);
-		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
+		$('#extraType').on('change', jsBackend.pages.extras.populateExtraModules);
+		$('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
-		$('a.addBlock').live('click', jsBackend.pages.extras.showAddDialog);
-		$('a.deleteBlock').live('click', jsBackend.pages.extras.showDeleteDialog);
-		$('.showEditor').live('click', jsBackend.pages.extras.editContent);
-		$('.toggleVisibility').live('click', jsBackend.pages.extras.toggleVisibility);
+		$('a.addBlock').on('click', jsBackend.pages.extras.showAddDialog);
+		$('a.deleteBlock').on('click', jsBackend.pages.extras.showDeleteDialog);
+		$('.showEditor').on('click', jsBackend.pages.extras.editContent);
+		$('.toggleVisibility').on('click', jsBackend.pages.extras.toggleVisibility);
 
 		// make the blocks sortable
 		jsBackend.pages.extras.sortable();
 	},
-
 
 	// store the extra for real
 	addBlock: function(selectedExtraId, selectedPosition)
@@ -114,7 +105,6 @@ jsBackend.pages.extras =
 //		jsBackend.pages.extras.resetIndexes();
 	},
 
-
 	// add block visual on template
 	addBlockVisual: function(position, index, extraId, visible)
 	{
@@ -158,7 +148,6 @@ jsBackend.pages.extras =
 		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
 	},
 
-
 	// delete a linked block
 	deleteBlock: function(index)
 	{
@@ -174,7 +163,6 @@ jsBackend.pages.extras =
 		// reset indexes (sequence)
 		jsBackend.pages.extras.resetIndexes();
 	},
-
 
 	// edit content
 	editContent: function(e)
@@ -225,6 +213,9 @@ jsBackend.pages.extras =
 			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
 			close: function(e, ui)
 			{
+				// reset content
+				jsBackend.pages.extras.setContent(index, previousContent);
+
 				// destroy dialog (to get rid of html order problems)
 				$(this).dialog('destroy');
 
@@ -243,14 +234,12 @@ jsBackend.pages.extras =
 		tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
 	},
 
-
 	// hide fallback
 	hideFallback: function()
 	{
 		// after removing all from fallback; hide fallback
 		if($('#templateVisualFallback .templatePositionCurrentType').length == 0) $('#templateVisualFallback').hide();
 	},
-
 
 	// populate the dropdown with the modules
 	populateExtraModules: function()
@@ -278,7 +267,6 @@ jsBackend.pages.extras =
 			$('#extraModuleHolder').show();
 		}
 	},
-
 
 	// populates the dropdown with the extra's
 	populateExtraIds: function()
@@ -313,7 +301,6 @@ jsBackend.pages.extras =
 			}
 		}
 	},
-
 
 	// reset all indexes to keep all items in proper order
 	resetIndexes: function()
@@ -356,7 +343,6 @@ jsBackend.pages.extras =
 		$('.contentBlock').removeClass('reset');
 	},
 
-
 	// save/reset the content
 	setContent: function(index, previousContent)
 	{
@@ -378,12 +364,11 @@ jsBackend.pages.extras =
 		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
 	},
 
-
 	// add a block
-	showAddDialog: function(evt)
+	showAddDialog: function(e)
 	{
 		// prevent the default action
-		evt.preventDefault();
+		e.preventDefault();
 
 		// save the position wherefor we will change the extra
 		position = $(this).parent().parent().data('position');
@@ -470,12 +455,11 @@ jsBackend.pages.extras =
 		}
 	},
 
-
 	// delete a block
-	showDeleteDialog: function(evt)
+	showDeleteDialog: function(e)
 	{
 		// prevent the default action
-		evt.preventDefault();
+		e.preventDefault();
 
 		// save element to variable
 		var element = $(this);
@@ -511,7 +495,6 @@ jsBackend.pages.extras =
 		}
 	},
 
-
 	// re-order blocks
 	sortable: function()
 	{
@@ -525,7 +508,7 @@ jsBackend.pages.extras =
 			connectWith: 'div.linkedBlocks',
 			opacity: 0.7,
 			delay: 300,
-			stop: function(event, ui)
+			stop: function(e, ui)
 			{
 				// reorder indexes of existing blocks:
 				jsBackend.pages.extras.resetIndexes();
@@ -539,7 +522,7 @@ jsBackend.pages.extras =
 				// reorder blocks = template is no longer original
 				jsBackend.pages.template.original = false;
 			},
-			start: function(event, ui)
+			start: function(e, ui)
 			{
 				// check if we're moving from template
 				if($(this).parents('#templateVisualLarge').length > 0)
@@ -558,7 +541,6 @@ jsBackend.pages.extras =
 			}
 		});
 	},
-
 
 	// toggle block visibility
 	toggleVisibility: function(e)
@@ -597,18 +579,12 @@ jsBackend.pages.extras =
 		}
 	},
 
-
 	// display an effect on updated items
 	updatedBlock: function(element)
 	{
 		element.effect('highlight');
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * All methods related to the templates
@@ -621,17 +597,15 @@ jsBackend.pages.template =
 	// indicates whether or not the page content is original or has been altered already
 	original: true,
 
-
 	// init, something like a constructor
 	init: function()
 	{
 		// bind events
-		$('#changeTemplate').bind('click', jsBackend.pages.template.showTemplateDialog);
+		$('#changeTemplate').on('click', jsBackend.pages.template.showTemplateDialog);
 
 		// load to initialize when adding a page
 		jsBackend.pages.template.changeTemplate();
 	},
-
 
 	// method to change a template
 	changeTemplate: function()
@@ -754,12 +728,11 @@ jsBackend.pages.template =
 		jsBackend.pages.extras.sortable();
 	},
 
-
 	// show the dialog to alter the selected template
-	showTemplateDialog: function(evt)
+	showTemplateDialog: function(e)
 	{
 		// prevent the default action
-		evt.preventDefault();
+		e.preventDefault();
 
 		$('#chooseTemplate').dialog(
 		{
@@ -787,13 +760,8 @@ jsBackend.pages.template =
 				}
 			 }
 		 });
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * All methods related to the tree
@@ -871,8 +839,10 @@ jsBackend.pages.tree =
 			// if the so-called open-element doesn't have any childs we should replace the open-class.
 			if($(this).find('ul').length == 0) $(this).removeClass('open').addClass('leaf');
 		});
-	},
 
+		// set the item selected
+		if(typeof selectedId != 'undefined') $('#' + selectedId).addClass('selected');
+	},
 
 	// before an item will be moved we have to do some checks
 	beforeMove: function(node, refNode, type, tree)
@@ -896,8 +866,11 @@ jsBackend.pages.tree =
 		$.ajax(
 		{
 			async: false, // important that this isn't asynchronous
-			url: '/backend/ajax.php?module=pages&action=get_info&language='+ jsBackend.current.language,
-			data: 'id=' + currentPageID,
+			data:
+			{
+				fork: { action: 'get_info' },
+				id: currentPageID
+			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
 				if(jsBackend.debug) alert(textStatus);
@@ -921,7 +894,6 @@ jsBackend.pages.tree =
 		return result;
 	},
 
-
 	// when an item is selected
 	onSelect: function(node, tree)
 	{
@@ -932,7 +904,6 @@ jsBackend.pages.tree =
 		// only redirect if destination isn't the current one.
 		if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
 	},
-
 
 	// when an item is moved
 	onMove: function(node, refNode, type, tree, rollback)
@@ -947,8 +918,13 @@ jsBackend.pages.tree =
 		// make the call
 		$.ajax(
 		{
-			url: '/backend/ajax.php?module=pages&action=move&language='+ jsBackend.current.language,
-			data: 'id=' + currentPageID + '&dropped_on='+ droppedOnPageID +'&type='+ type,
+			data:
+			{
+				fork: { action: 'move' },
+				id: currentPageID,
+				dropped_on: droppedOnPageID,
+				type: type
+			},
 			success: function(json, textStatus)
 			{
 				if(json.code != 200)
@@ -968,12 +944,7 @@ jsBackend.pages.tree =
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.pages.init);
+$(jsBackend.pages.init);

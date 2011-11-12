@@ -1,17 +1,15 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
+/**
+ * Interaction for the locale module
+ *
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.locale =
 {
 	init: function()
 	{
 		jsBackend.locale.controls.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.locale.controls =
 {
@@ -20,7 +18,7 @@ jsBackend.locale.controls =
 		if($('select#application').length > 0 && $('select#module').length > 0)
 		{
 			// bind
-			$('select#application').bind('change', jsBackend.locale.controls.enableDisableModules);
+			$('select#application').on('change', jsBackend.locale.controls.enableDisableModules);
 
 			// call to start
 			jsBackend.locale.controls.enableDisableModules();
@@ -28,15 +26,13 @@ jsBackend.locale.controls =
 
 		if($('.dataGrid td.translationValue').length > 0)
 		{
-			// buil ajax-url
-			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=save_translation&language='+ jsBackend.current.language;
-
 			// bind
 			$('.dataGrid td.translationValue').inlineTextEdit(
 			{
-				saveUrl: url,
+				params: { fork: { action: 'save_translation' } },
 				tooltip: '{$msgClickToEdit}',
-				after_save: function(item) {
+				afterSave: function(item)
+				{
 					if(item.find('span:empty').length == 1) item.addClass('highlighted');
 					else item.removeClass('highlighted');
 				}
@@ -64,12 +60,7 @@ jsBackend.locale.controls =
 		{
 			$('select#module option').prop('disabled', false);
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.locale.init);
+$(jsBackend.locale.init);
