@@ -10,7 +10,7 @@
 /**
  * This is the categories-action, it will display the overview of faq categories
  *
- * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */

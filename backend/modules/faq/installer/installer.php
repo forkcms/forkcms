@@ -56,6 +56,21 @@ class FaqInstaller extends ModuleInstaller
 	}
 
 	/**
+	 * Insert an empty admin dashboard sequence
+	 */
+	private function insertWidget()
+	{
+		$feedback = array(
+			'column' => 'right',
+			'position' => 1,
+			'hidden' => false,
+			'present' => true
+		);
+
+		$this->insertDashboardWidget('faq', 'feedback', $feedback);
+	}
+
+	/**
 	 * Install the module
 	 */
 	public function install()
@@ -83,7 +98,6 @@ class FaqInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'faq', 'settings');
 
 		$faqId = $this->insertExtra('faq', 'block', 'Faq');
-		$this->insertExtra('faq', 'block', 'Category', 'category');
 		$this->insertExtra('faq', 'widget', 'MostReadQuestions', 'most_read');
 		$this->insertExtra('faq', 'widget', 'AskOwnQuestion', 'own_question');
 
@@ -120,6 +134,8 @@ class FaqInstaller extends ModuleInstaller
 									array('extra_id' => $faqId));
 			}
 		}
+
+		$this->insertWidget();
 
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
