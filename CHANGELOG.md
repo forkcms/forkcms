@@ -9,6 +9,7 @@ Improvements:
 * Core: upgraded jQuery to 1.7
 * Installer: when the form in step 6 (where the actual install happens) is submitted the button will be replaced with a spinner to indicate the installer is running.
 * Analytics: added a warning when trying to link a profile when no profile was selected.
+* Blog: when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb.
 
 Bugfixes:
 

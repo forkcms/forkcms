@@ -157,6 +157,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			$this->header->addOpenGraphData('description', $this->record['title'], true);
 		}
 
+		// when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb
+		if(count(FrontendBlogModel::getAllCategories()) > 1) $this->breadcrumb->addElement($this->record['category_title'], FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url']);
+
 		// add into breadcrumb
 		$this->breadcrumb->addElement($this->record['title']);
 
