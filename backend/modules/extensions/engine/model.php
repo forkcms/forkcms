@@ -908,6 +908,7 @@ class BackendExtensionsModel
 		$information['version'] = (string) $module->version;
 		$information['requirements'] = (array) $module->requirements;
 		$information['description'] = (string) $module->description;
+		$information['cronjobs'] = array();
 
 		// authors
 		foreach($xml->xpath('/module/authors/author') as $author)
