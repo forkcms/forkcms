@@ -10,7 +10,7 @@
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
@@ -21,7 +21,6 @@ class BackendFaqEdit extends BackendBaseActionEdit
 	 * @var	array
 	 */
 	private $feedback;
-
 
 	/**
 	 * Execute the action
@@ -51,7 +50,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 	private function getData()
 	{
 		$this->record = (array) BackendFaqModel::get($this->id);
-		$this->feedback = BackendFaqModel::getAllFeedback($this->id);
+		$this->feedback = BackendFaqModel::getAllFeedbackForQuestion($this->id);
 	}
 
 	/**

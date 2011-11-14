@@ -1,17 +1,15 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
+/**
+ * Interaction for the pages templates
+ *
+ * @author	Matthias Mullie <matthias@netlash.com>
+ */
 jsBackend.extensions =
 {
 	init: function()
 	{
 		jsBackend.extensions.themeSelection.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.extensions.themeSelection =
 {
@@ -21,11 +19,11 @@ jsBackend.extensions.themeSelection =
 		var listItems = $('#installedThemes li');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		listItems.click(function(evt)
+		listItems.on('click', function(e)
 		{
 			// store the object
 			var radiobutton = $(this).find('input:radio:first');
-			
+
 			// set checked
 			radiobutton.prop('checked', true);
 
@@ -39,12 +37,7 @@ jsBackend.extensions.themeSelection =
 				radiobutton.parent('li').addClass('selected');
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.extensions.init);
+$(jsBackend.extensions.init);

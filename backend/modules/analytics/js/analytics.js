@@ -1,10 +1,19 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
+/**
+ * Interaction for the analytics module
+ *
+ * @author	Annelies Vanextergem <annelies@netlash.com>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.analytics =
 {
 	init: function()
 	{
+		// variables
+		$chartPieChart = $('#chartPieChart');
+		$chartWidget = $('#chartWidget');
+		$chartDoubleMetricPerDay = $('#chartDoubleMetricPerDay');
+		$chartSingleMetricPerDay = $('#chartSingleMetricPerDay');
+
 		jsBackend.analytics.charts.init();
 		jsBackend.analytics.chartDoubleMetricPerDay.init();
 		jsBackend.analytics.chartPieChart.init();
@@ -12,19 +21,14 @@ jsBackend.analytics =
 		jsBackend.analytics.chartWidget.init();
 		jsBackend.analytics.loading.init();
 		jsBackend.analytics.resize.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.analytics.charts =
 {
 	init: function()
 	{
-		if($('#chartPieChart').length > 0 || $('#chartDoubleMetricPerDay').length > 0 || $('#chartSingleMetricPerDay').length > 0 || $('#chartWidget').length > 0)
+		if($chartPieChart.length > 0 || $chartDoubleMetricPerDay.length > 0 || $chartSingleMetricPerDay.length > 0 || $chartWidget.length > 0)
 		{
 			Highcharts.setOptions(
 			{
@@ -44,40 +48,39 @@ jsBackend.analytics.charts =
 				}
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-jsBackend.analytics.chartPieChart = 
+jsBackend.analytics.chartPieChart =
 {
 	chart: '',
 
 	init: function()
 	{
-		if($('#chartPieChart').length > 0) { jsBackend.analytics.chartPieChart.create(); }
+		if($chartPieChart.length > 0) { jsBackend.analytics.chartPieChart.create(); }
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
-		var pieChartValues = $('#dataChartPieChart ul.data li');
+		// variables
+		$pieChartValues = $('#dataChartPieChart ul.data li');
 		var pieChartData = [];
 
-		pieChartValues.each(function()
+		$pieChartValues.each(function()
 		{
+			// variables
+			$this = $(this);
+
 			pieChartData.push(
 			{
-				'name': $(this).children('span.label').html(),
-				'y': parseInt($(this).children('span.value').html()),
-				'percentage': parseInt($(this).children('span.percentage').html())
+				'name': $this.children('span.label').html(),
+				'y': parseInt($this.children('span.value').html()),
+				'percentage': parseInt($this.children('span.percentage').html())
 			});
 		});
 
-		var containerWidth = $('#chartPieChart').width();
+		var containerWidth = $chartPieChart.width();
 
 		jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart(
 		{
@@ -100,11 +103,9 @@ jsBackend.analytics.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: true,
-						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-						color: 'white',
-						style: { display: 'none' }
-					}
+						enabled: false
+					},
+					showInLegend: true
 				}
 			},
 			legend: { style: { right: '10px' } },
@@ -116,13 +117,8 @@ jsBackend.analytics.chartPieChart =
 	destroy: function()
 	{
 		jsBackend.analytics.chartPieChart.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.analytics.chartDoubleMetricPerDay =
 {
@@ -130,11 +126,11 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
 	init: function()
 	{
-		if($('#chartDoubleMetricPerDay').length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
+		if($chartDoubleMetricPerDay.length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var xAxisItems = $('#dataChartDoubleMetricPerDay ul.series li.serie:first-child ul.data li');
 		var xAxisValues = [];
@@ -187,13 +183,8 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 	destroy: function()
 	{
 		jsBackend.analytics.chartDoubleMetricPerDay.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.analytics.chartSingleMetricPerDay =
 {
@@ -201,11 +192,11 @@ jsBackend.analytics.chartSingleMetricPerDay =
 
 	init: function()
 	{
-		if($('#chartSingleMetricPerDay').length > 0) { jsBackend.analytics.chartSingleMetricPerDay.create(); }
+		if($chartSingleMetricPerDay.length > 0) { jsBackend.analytics.chartSingleMetricPerDay.create(); }
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var xAxisItems = $('#dataChartSingleMetricPerDay ul.series li.serie:first-child ul.data li');
 		var xAxisValues = [];
@@ -236,7 +227,6 @@ jsBackend.analytics.chartSingleMetricPerDay =
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
 			yAxis: { min: 0, max: $('#dataChartSingleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartSingleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartSingleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
-			legend: { symbolPadding: 16, symbolWidth: 14 },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
 			plotOptions:
 			{
@@ -252,13 +242,8 @@ jsBackend.analytics.chartSingleMetricPerDay =
 	destroy: function()
 	{
 		jsBackend.analytics.chartSingleMetricPerDay.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.analytics.chartWidget =
 {
@@ -266,11 +251,11 @@ jsBackend.analytics.chartWidget =
 
 	init: function()
 	{
-		if($('#chartWidget').length > 0) { jsBackend.analytics.chartWidget.create(); }
+		if($chartWidget.length > 0) { jsBackend.analytics.chartWidget.create(); }
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var xAxisItems = $('#dataChartWidget ul.series li.serie:first-child ul.data li');
 		var xAxisValues = [];
@@ -305,7 +290,7 @@ jsBackend.analytics.chartWidget =
 			xAxis: { categories: xAxisCategories },
 			yAxis: { min: 0, max: $('#dataChartWidget #maxYAxis').html(), tickInterval: ($('#dataChartWidget #tickInterval').html() == '' ? null : $('#dataChartWidget #tickInterval').html()), title: { enabled: false } },
 			credits: { enabled: false },
-			legend: { layout: 'horizontal' },
+			legend: { layout: 'horizontal', backgroundColor: 'transparent' },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
 			plotOptions:
 			{
@@ -322,13 +307,8 @@ jsBackend.analytics.chartWidget =
 	destroy: function()
 	{
 		jsBackend.analytics.chartWidget.chart.destroy();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.analytics.loading =
 {
@@ -338,10 +318,13 @@ jsBackend.analytics.loading =
 
 	init: function()
 	{
-		if($('#longLoader').length > 0)
+		// variables
+		$longLoader = $('#longLoader');
+
+		if($longLoader.length > 0)
 		{
 			// loading bar stuff
-			$('#longLoader').show();
+			$longLoader.show();
 
 			// get the page to get data for
 			var page = $('#page').html();
@@ -361,6 +344,9 @@ jsBackend.analytics.loading =
 		// get data
 		var page = jsBackend.analytics.loading.page;
 		var identifier = jsBackend.analytics.loading.identifier;
+		$longLoader = $('#longLoader');
+		$statusError = $('#statusError');
+		$loading = $('#loading');
 
 		// make the call to check the status
 		$.ajax(
@@ -393,11 +379,11 @@ jsBackend.analytics.loading =
 					clearInterval(jsBackend.analytics.loading.interval);
 
 					// loading bar stuff
-					$('#longLoader').show();
+					$longLoader.show();
 
 					// show box
-					$('#statusError').show();
-					$('#loading').hide();
+					$statusError.show();
+					$loading.hide();
 
 					// show message
 					jsBackend.messages.add('error', textStatus);
@@ -415,9 +401,9 @@ jsBackend.analytics.loading =
 				clearInterval(jsBackend.analytics.loading.interval);
 
 				// show box and hide loading bar
-				$('#statusError').show();
-				$('#loading').hide();
-				$('#longLoader').hide();
+				$statusError.show();
+				$loading.hide();
+				$longLoader.hide();
 
 				// show message
 				jsBackend.messages.add('error', textStatus);
@@ -426,22 +412,17 @@ jsBackend.analytics.loading =
 				if(jsBackend.debug) alert(textStatus);
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.analytics.resize =
 {
 	interval: 1000,
 	timeout: false,
-		
+
 	init: function()
 	{
-		$(window).resize(function()
+		$(window).on('resize', function()
 		{
 			resizeTime = new Date();
 			if(jsBackend.analytics.resize.timeout === false)
@@ -451,7 +432,7 @@ jsBackend.analytics.resize =
 			}
 		});
 	},
-		
+
 	resizeEnd: function()
 	{
 		if(new Date() - resizeTime < jsBackend.analytics.resize.interval)
@@ -461,33 +442,28 @@ jsBackend.analytics.resize =
 		else
 		{
 			timeout = false;
-			if($('#chartPieChart').length > 0)
+			if($chartPieChart.length > 0)
 			{
-				$('#chartPieChart').html('&nbsp;');
+				$chartPieChart.html('&nbsp;');
 				jsBackend.analytics.chartPieChart.create();
 			}
-			if($('#chartDoubleMetricPerDay').length > 0)
+			if($chartDoubleMetricPerDay.length > 0)
 			{
-				$('#chartDoubleMetricPerDay').html('&nbsp;');
+				$chartDoubleMetricPerDay.html('&nbsp;');
 				jsBackend.analytics.chartDoubleMetricPerDay.create();
 			}
-			if($('#chartSingleMetricPerDay').length > 0)
+			if($chartSingleMetricPerDay.length > 0)
 			{
-				$('#chartSingleMetricPerDay').html('&nbsp;');
+				$chartSingleMetricPerDay.html('&nbsp;');
 				jsBackend.analytics.chartSingleMetricPerDay.create();
 			}
-			if($('#chartWidget').length > 0)
+			if($chartWidget.length > 0)
 			{
-				$('#chartWidget').html('&nbsp;');
+				$chartWidget.html('&nbsp;');
 				jsBackend.analytics.chartWidget.create();
 			}
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.analytics.init);
+$(jsBackend.analytics.init);

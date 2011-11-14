@@ -408,7 +408,7 @@
 		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
 
 		// fix selected state in the tree
-		$('#page-'+ pageID).addClass('selected');
+		var selectedId = 'page-'+ pageID;
 	//]]>
 </script>
 

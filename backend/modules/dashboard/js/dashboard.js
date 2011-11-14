@@ -1,10 +1,8 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
  * Interaction for the dashboard module
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 jsBackend.dashboard =
 {
@@ -13,123 +11,134 @@ jsBackend.dashboard =
 	// init, something like a constructor
 	init: function()
 	{
-		$('#editDashboard').click(jsBackend.dashboard.load);
-		$('#doneEditingDashboard').click(jsBackend.dashboard.save);
-		$('.editDashboardClose').click(jsBackend.dashboard.close);
+		// variables
+		$editDashboard = $('#editDashboard');
+		$doneEditingDashboard = $('#doneEditingDashboard');
+		$editDashboardClose = $('.editDashboardClose');
+
+		$editDashboard.on('click', jsBackend.dashboard.load);
+		$doneEditingDashboard.on('click', jsBackend.dashboard.save);
+		$editDashboardClose.on('click', jsBackend.dashboard.close);
 	},
 
-
-	close: function(evt)
+	close: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
 
 		// get widget
-		var widget = $(this).parents('.sortableWidget').eq(0);
+		$widget = $(this).parents('.sortableWidget').eq(0);
 
-		if(widget.hasClass('isRemoved'))
-		{
-			$(widget.find('.options, .footer, .dataGridHolder')).show();
-			widget.removeClass('isRemoved');
-		}
-		else
-		{
-			$(widget.find('.options, .footer, .dataGridHolder')).hide();
-			widget.addClass('isRemoved');
-		}
+		if($widget.hasClass('isRemoved')) $widget.find('.options, .footer, .dataGridHolder').show().removeClass('isRemoved');
+		else $widget.find('.options, .footer, .dataGridHolder').hide().addClass('isRemoved');
 	},
 
-
-	load: function(evt)
+	load: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
+
+		// variables
+		$editDashboardMessage = $('#editDashboardMessage');
+		$editDashboardClose = $('.editDashboardClose');
+		$sortableWidget = $('.sortableWidget');
+		$column = $('.column');
 
 		// bind before unload event
-		$(window).bind('beforeunload', function() { return '{$msgValuesAreChanged}'; });
+		$(window).on('beforeunload', function()
+		{
+			return '{$msgValuesAreChanged}';
+		});
 
 		// hide edit text
 		$(this).hide();
 
 		// show help text
-		$('#editDashboardMessage').slideDown();
+		$editDashboardMessage.slideDown();
 
 		// show close buttons
-		$('.editDashboardClose').show();
+		$editDashboardClose.show();
 
 		// show removed items
 		$('.sortableWidget.isRemoved').show();
 
-		// remove removed items
-		$('.sortableWidget').each(function() { if($(this).find('.box').length == 0) $(this).remove(); })
+		$sortableWidget.each(function() {
+			if($(this).find('.box').length == 0) $(this).remove();
+		})
 
 		// make them sortable
-		$('.column').sortable(
-		{
-			connectWith: '.column',
-			forceHelperSize: true,
-			forcePlaceholderSize: true,
-			placeholder: 'dragAndDropPlaceholder',
-			stop: function(event, ui)
+		$column.sortable(
 			{
-				// remove the original item
-				jsBackend.dashboard.itemOnTheMove.hide();
+				connectWith: '.column',
+				forceHelperSize: true,
+				forcePlaceholderSize: true,
+				placeholder: 'dragAndDropPlaceholder',
+				stop: function(e, ui)
+				{
+					// remove the original item
+					jsBackend.dashboard.itemOnTheMove.hide();
+				}
 			}
-		});
+		);
 
-		$('.sortableWidget').draggable(
-		{
-			cursor: 'move',
-			connectToSortable: '.column',
-			helper: 'clone',
-			opacity: 0.50,
-			revert: 'invalid',
-			start: function(event, ui)
+		$sortableWidget.draggable(
 			{
-				// set placeholders height
-				$('.dragAndDropPlaceholder').css('height', $(this).height().toString() + 'px');
+				cursor: 'move',
+				connectToSortable: '.column',
+				helper: 'clone',
+				opacity: 0.50,
+				revert: 'invalid',
+				start: function(e, ui)
+					{
+						// set placeholders height
+						$('.dragAndDropPlaceholder').css('height', $(this).height().toString() + 'px');
 
-				// store
-				jsBackend.dashboard.itemOnTheMove = $(this);
+						// store
+						jsBackend.dashboard.itemOnTheMove = $(this);
+					}
 			}
-		});
+		);
 
-		$('.sortableWidget').hover(
+		$sortableWidget.hover(
 			function() { $(this).addClass('isDraggable'); },
 			function() { $(this).removeClass('isDraggable'); }
 		);
 	},
 
-
 	// save the changes
-	save: function(evt)
+	save: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
+
+		// variables
+		$editDashboard = $('#editDashboard');
+		$editDashboardMessage = $('#editDashboardMessage');
+		$editDashboardClose = $('.editDashboardClose');
+		$column = $('.column');
+		$sortableWidget = $('.sortableWidget');
 
 		// unbind before unload event
-		$(window).unbind('beforeunload');
+		$(window).off('beforeunload');
 
 		// show edit text
-		$('#editDashboard').show();
+		$editDashboard.show();
 
 		// hide help text
-		$('#editDashboardMessage').slideUp();
+		$editDashboardMessage.slideUp();
 
 		// hide close buttons
-		$('.editDashboardClose').hide();
+		$editDashboardClose.hide();
 
 		// unbind
-		$('.column').sortable('destroy');
-		$('.sortableWidget').draggable('destroy');
-		$('.sortableWidget').unbind('mouseenter mouseleave');
+		$column.sortable('destroy');
+		$sortableWidget.draggable('destroy').off('mouseenter mouseleave');
 
 		// build new array
 		var newSequence = new Array();
 
 		// loop columns
-		$('.column').each(function()
-		{
+		$column.each(function() {
 			var items = new Array();
 
 			// loop widgets
@@ -141,7 +150,7 @@ jsBackend.dashboard =
 
 			// add to all
 			newSequence.push(items);
-		})
+		});
 
 		// hide removed
 		$('.sortableWidget.isRemoved').hide();
@@ -184,12 +193,7 @@ jsBackend.dashboard =
 				if(jsBackend.debug) alert(textStatus);
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.dashboard.init);
+$(jsBackend.dashboard.init);

@@ -1,6 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
  * Interaction for the settings index-action
  *
@@ -8,9 +5,6 @@ if(!jsBackend) { var jsBackend = new Object(); }
  */
 jsBackend.settings =
 {
-	/**
-	 * Kind of constructor
-	 */
 	init: function()
 	{
 		$('#facebookAdminIds').multipleTextbox(
@@ -21,24 +15,29 @@ jsBackend.settings =
 			canAddNew: true
 		});
 
-		if($('#testEmailConnection').length > 0) $('#testEmailConnection').bind('click', jsBackend.settings.testEmailConnection);
-
+		$('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection);
 	},
 
-
-	testEmailConnection: function(evt)
+	testEmailConnection: function(e)
 	{
 		// prevent default
-		evt.preventDefault();
+		e.preventDefault();
+
+		$spinner = $('#testEmailConnectionSpinner');
+		$error = $('#testEmailConnectionError');
+		$success = $('#testEmailConnectionSuccess');
+		$email = $('#settingsEmail');
 
 		// show spinner
-		$('#testEmailConnectionSpinner').show();
-		$('#testEmailConnectionError').hide();
-		$('#testEmailConnectionSuccess').hide();
+		$spinner.show();
+
+		// hide previous results
+		$error.hide();
+		$success.hide();
 
 		// fetch email parameters
 		var settings = new Object();
-		$.each($('#settingsEmail').serializeArray(), function() { settings[this.name] = this.value; });
+		$.each($email.serializeArray(), function() { settings[this.name] = this.value; });
 
 		// make the call
 		$.ajax(
@@ -47,26 +46,22 @@ jsBackend.settings =
 			success: function(data, textStatus)
 			{
 				// hide spinner
-				$('#testEmailConnectionSpinner').hide();
+				$spinner.hide();
 
 				// show success
-				if(data.code == 200) $('#testEmailConnectionSuccess').show();
-				else $('#testEmailConnectionsError').show();
+				if(data.code == 200) $success.show();
+				else $error.show();
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
 				// hide spinner
-				$('#testEmailConnectionSpinner').hide();
+				$spinner.hide();
 
 				// show error
-				$('#testEmailConnectionError').show();
+				$error.show();
 			}
 		});
-	},
-
-
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.settings.init);
+$(jsBackend.settings.init);
