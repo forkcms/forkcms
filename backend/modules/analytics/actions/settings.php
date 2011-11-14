@@ -217,6 +217,11 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 					$frm->addDropdown('table_id', $accounts);
 					$frm->parse($this->tpl);
 
+					if($frm->isSubmitted())
+					{
+						if($frm->getField('table_id')->getValue() == '0') $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
+					}
+
 					// parse accounts
 					$this->tpl->assign('accounts', true);
 				}

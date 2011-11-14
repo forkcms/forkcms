@@ -8,6 +8,7 @@ Improvements:
 * Core: major improvements (codestyling, spelling, performance, ...) for JS, credits to Thomas.
 * Core: upgraded jQuery to 1.7
 * Installer: when the form in step 6 (where the actual install happens) is submitted the button will be replaced with a spinner to indicate the installer is running.
+* Analytics: added a warning when trying to link a profile when no profile was selected.
 
 Bugfixes:
 
