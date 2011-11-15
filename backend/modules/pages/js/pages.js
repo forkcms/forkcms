@@ -155,7 +155,7 @@ jsBackend.pages.extras =
 		$('.templatePositionCurrentType[data-block-id=' + index + ']').remove();
 
 		// remove block
-		$('#blockExtraId' + index).parent().remove();
+		$('[name=block_extra_id_' + index + ']').parent('.contentBlock').remove();
 
 		// after removing all from fallback; hide fallback
 		jsBackend.pages.extras.hideFallback();
@@ -171,7 +171,7 @@ jsBackend.pages.extras =
 		e.preventDefault();
 
 		// fetch block index
-		var index = $(this).parent().parent().data('blockId');
+		var index = $(this).parent().parent().attr('data-block-id');
 
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
@@ -213,9 +213,6 @@ jsBackend.pages.extras =
 			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
 			close: function(e, ui)
 			{
-				// reset content
-				jsBackend.pages.extras.setContent(index, previousContent);
-
 				// destroy dialog (to get rid of html order problems)
 				$(this).dialog('destroy');
 
@@ -314,12 +311,11 @@ jsBackend.pages.extras =
 		$('.templatePositionCurrentType').each(function(i)
 		{
 			// fetch block id
-			var oldIndex = $(this).data('blockId');
+			var oldIndex = $(this).attr('data-block-id');
 			var newIndex = i + 1;
 
 			// update index of entry in template-view
-			$(this).data('blockId', newIndex);
-			$(this).prop('data-block-id', newIndex);
+			$(this).attr('data-block-id', newIndex);
 
 			// update index occurences in the hidden data
 			var blockHtml = $('.reset [name=block_html_' + oldIndex + ']');
@@ -336,7 +332,7 @@ jsBackend.pages.extras =
 			blockExtraId.parent('.contentBlock').removeClass('reset');
 
 			// while we're at it, make sure the position is also correct
-			blockPosition.val($(this).parent().parent().data('position'));
+			blockPosition.val($(this).parent().parent().attr('data-position'));
 		});
 
 		// mark all as having been reset
@@ -346,6 +342,10 @@ jsBackend.pages.extras =
 	// save/reset the content
 	setContent: function(index, previousContent)
 	{
+console.log(index);
+console.log($('#blockHtml' + index).length);
+console.log($('#blockHtml' + index));
+
 		// content does not need to be saved
 		if(previousContent != null)
 		{
@@ -371,7 +371,7 @@ jsBackend.pages.extras =
 		e.preventDefault();
 
 		// save the position wherefor we will change the extra
-		position = $(this).parent().parent().data('position');
+		position = $(this).parent().parent().attr('data-position');
 
 		// init var
 		var hasModules = false;
@@ -477,7 +477,7 @@ jsBackend.pages.extras =
 					'{$lblOK|ucfirst}': function()
 					{
 						// delete this block
-						jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').data('blockId'));
+						jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
 
 						// delete a block = template is no longer original
 						jsBackend.pages.template.original = false;
@@ -552,7 +552,7 @@ jsBackend.pages.extras =
 		jsBackend.pages.template.original = false;
 
 		// get index of block
-		var index = $(this).parent().parent().data('blockId');
+		var index = $(this).parent().parent().attr('data-block-id');
 
 		// get visibility checbox
 		var checkbox = $('#blockVisible' + index);

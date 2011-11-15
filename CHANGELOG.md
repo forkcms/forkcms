@@ -1,8 +1,9 @@
-3.1.2 (xxxx-xx-xx)
+3.1.2 (2011-11-15)
 --
 Bugfixes:
 
 * Core: fixed an issue with items that used .live().
+* Pages: fixed an issue with dynamically added elements using .data().
 
 
 3.1.1 (2011-11-15)
