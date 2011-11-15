@@ -1,3 +1,10 @@
+3.1.2 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Core: fixed an issue with items that used .live().
+
+
 3.1.1 (2011-11-15)
 --
 Improvements:

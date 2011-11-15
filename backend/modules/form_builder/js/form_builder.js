@@ -31,7 +31,7 @@ jsBackend.formBuilder =
 		if($selectMethod.length > 0)
 		{
 			jsBackend.formBuilder.handleMethodField();
-			$selectMethod.on('change', jsBackend.formBuilder.handleMethodField);
+			$(document).on('change', 'select#method', jsBackend.formBuilder.handleMethodField);
 		}
 
 		$('#email').multipleTextbox(
@@ -100,7 +100,7 @@ jsBackend.formBuilder.fields =
 	bindDelete: function()
 	{
 		// get all delete buttons
-		$('.deleteField').on('click', function(e)
+		$(document).on('click', '.deleteField', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -283,7 +283,7 @@ jsBackend.formBuilder.fields =
 		});
 
 		// bind clicks
-		$('.openFieldDialog').on('click', function(e)
+		$(document).on('click', '.openFieldDialog', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -361,7 +361,7 @@ jsBackend.formBuilder.fields =
 	bindEdit: function()
 	{
 		// get all delete buttons
-		$('.editField').on('click', function(e)
+		$(document).on('click', '.editField', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -621,7 +621,7 @@ jsBackend.formBuilder.fields =
 			// init
 			jsBackend.formBuilder.fields.handleValidation(wrapper);
 
-			// on change
+			// on change	@todo	test me plz.
 			$(wrapper).find('select:first').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 			$(wrapper).find('input:checkbox').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 		});

@@ -381,7 +381,7 @@ jsBackend.controls =
 		});
 
 		// bind clicks
-		$askConfirmation.on('click', function(e)
+		$(document).on('click', '.askConfirmation', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -580,7 +580,7 @@ jsBackend.controls =
 		});
 
 		// hijack the form
-		$('.tableOptions .massAction .submitButton').on('click', function(e)
+		$(document).on('click', '.tableOptions .massAction .submitButton', function(e)
 		{
 			// prevent default action
 			e.preventDefault();
@@ -695,7 +695,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).on('keyup', function()
+				$(document).on('keyup', '#'+ id, function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -760,7 +760,7 @@ jsBackend.controls =
 	// toggle a div
 	bindToggleDiv: function()
 	{
-		$('.toggleDiv').on('click', function(e)
+		$(document).on('click', '.toggleDiv', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -784,7 +784,7 @@ jsBackend.controls =
 		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
-		$('tr td input:checkbox').on('change', function(e)
+		$(document).on('change', 'tr td input:checkbox', function(e)
 		{
 			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
 			else $(this).parents().filter('tr').eq(0).removeClass('selected');
@@ -1348,7 +1348,7 @@ jsBackend.messages =
 	init: function()
 	{
 		// bind close button
-		$('#messaging .formMessage .iconClose').on('click', function(e)
+		$(document).on('click', '#messaging .formMessage .iconClose', function(e)
 		{
 			e.preventDefault();
 			jsBackend.messages.hide($(this).parents('.formMessage'));
@@ -1435,7 +1435,7 @@ jsBackend.tabs =
 		// select tab
 		if($('.tabSelect').length > 0)
 		{
-			$('.tabSelect').on('click', function(e)
+			$(document).on('click', '.tabSelect', function(e)
 			{
 				// prevent default
 				e.preventDefault();
@@ -1460,7 +1460,7 @@ jsBackend.tinyMCE =
 		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
 
 		// bind click on the element
-		$('.clickToEdit').on('click', function(e)
+		$(document).on('click', '.clickToEdit', function(e)
 		{
 			// get id
 			var id = $(this).siblings('textarea.inputEditor:first').attr('id');

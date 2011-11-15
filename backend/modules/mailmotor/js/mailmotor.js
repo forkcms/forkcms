@@ -156,7 +156,7 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// link account button clicked
-		$confirm.on('click', function(e)
+		$(document).on('click', '#linkAccount', function(e)
 		{
 			// prevent default
 			e.preventDefault();

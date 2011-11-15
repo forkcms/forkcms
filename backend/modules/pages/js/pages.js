@@ -50,10 +50,10 @@ jsBackend.pages.extras =
 		$('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
-		$('a.addBlock').on('click', jsBackend.pages.extras.showAddDialog);
-		$('a.deleteBlock').on('click', jsBackend.pages.extras.showDeleteDialog);
-		$('.showEditor').on('click', jsBackend.pages.extras.editContent);
-		$('.toggleVisibility').on('click', jsBackend.pages.extras.toggleVisibility);
+		$(document).on('click', 'a.addBlock', jsBackend.pages.extras.showAddDialog);
+		$(document).on('click', 'a.deleteBlock', jsBackend.pages.extras.showDeleteDialog);
+		$(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
+		$(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
 
 		// make the blocks sortable
 		jsBackend.pages.extras.sortable();
