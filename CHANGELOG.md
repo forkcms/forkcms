@@ -1,4 +1,4 @@
-3.1.1 (xxxx-xx-xx)
+3.1.1 (2011-11-15)
 --
 Improvements:
 
