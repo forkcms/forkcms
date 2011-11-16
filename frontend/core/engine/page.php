@@ -75,6 +75,9 @@ class FrontendPage extends FrontendBaseObject
 	{
 		parent::__construct();
 
+		// add reference
+		Spoon::set('page', $this);
+
 		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
@@ -229,6 +232,16 @@ class FrontendPage extends FrontendBaseObject
 				SpoonHTTP::redirect($URL, 301);
 			}
 		}
+	}
+
+	/**
+	 * Fetch the statuscode for the current page.
+	 *
+	 * @return int
+	 */
+	public function getStatusCode()
+	{
+		return $this->statusCode;
 	}
 
 	/**
