@@ -1,10 +1,11 @@
-x.x.x (xxxx-xx-xx)
+3.1.3 (xxxx-xx-xx)
 --
 Bugfixes:
 
 * Extensions: prevented PHP warnings when no info.xml is available.
 * Core: fixed an issue with drag and drop in the backend.
 * Locale: importing other languages then EN is possible again.
+* Core: fixed an issue with the user-dropdown. 
 
 
 3.1.2 (2011-11-15)

@@ -417,10 +417,10 @@ jsBackend.controls =
 
 			// variables
 			$parent = $fakeDropdown.parent();
-			$body = $(body);
+			$body = $('body');
 
 			// get id
-			var id = $this.attr('href');
+			var id = $(this).attr('href');
 
 			// IE8 prepends full current url before links to #
 			id = id.substring(id.indexOf('#'));
