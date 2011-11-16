@@ -6,6 +6,7 @@ Bugfixes:
 * Core: fixed an issue with drag and drop in the backend.
 * Locale: importing other languages then EN is possible again.
 * Core: fixed an issue with the user-dropdown. 
+* Formbuilder: fixed an issues with the default error messages.
 
 
 3.1.2 (2011-11-15)
