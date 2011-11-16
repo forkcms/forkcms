@@ -1638,7 +1638,7 @@ jsBackend.tableSequenceByDragAndDrop =
 
 					// init var
 					$rows = $(this).find('tr');
-					var newIdSequence;
+					var newIdSequence = [];
 
 					// loop rowIds
 					$rows.each(function() { newIdSequence.push($(this).data('id')); });

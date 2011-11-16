@@ -3,6 +3,7 @@ x.x.x (xxxx-xx-xx)
 Bugfixes:
 
 * Extensions: prevented PHP warnings when no info.xml is available.
+* Core: fixed an issue with drag and drop in the backend.
 
 
 3.1.2 (2011-11-15)
