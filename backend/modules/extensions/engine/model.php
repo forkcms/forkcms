@@ -475,7 +475,7 @@ class BackendExtensionsModel
 			// get extra info from the info.xml
 			try
 			{
-				$infoXml = new SimpleXMLElement(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', LIBXML_NOCDATA, true);
+				$infoXml = @new SimpleXMLElement(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', LIBXML_NOCDATA, true);
 
 				// process XML to a clean array
 				$info = self::processModuleXml($infoXml);
@@ -664,7 +664,7 @@ class BackendExtensionsModel
 				$pathInfoXml = PATH_WWW . '/frontend/themes/' . $record . '/info.xml';
 
 				// load info.xml
-				$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 				// convert xml to useful array
 				$information = BackendExtensionsModel::processThemeXml($infoXml);

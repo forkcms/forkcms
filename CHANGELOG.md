@@ -1,3 +1,10 @@
+x.x.x (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Extensions: prevented PHP warnings when no info.xml is available.
+
+
 3.1.2 (2011-11-15)
 --
 Bugfixes:
