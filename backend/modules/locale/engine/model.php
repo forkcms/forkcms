@@ -1141,8 +1141,8 @@ class BackendLocaleModel
 
 		// set defaults if necessary
 		// we can't simply use these right away, because this function is also calles by the installer, which does not have Backend-functions
-		if($frontendLanguages === null) $frontendLanguages = BL::getWorkingLanguages();
-		if($backendLanguages === null) $backendLanguages = BL::getInterfaceLanguages();
+		if($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
+		if($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
 		if($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
 		if($date === null) $date = BackendModel::getUTCDate();
 
