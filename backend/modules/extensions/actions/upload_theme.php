@@ -106,7 +106,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 								try
 								{
 									// load info.xml
-									$infoXml = new SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
+									$infoXml = @new SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
 
 									// convert xml to useful array
 									$this->information = BackendExtensionsModel::processThemeXml($infoXml);

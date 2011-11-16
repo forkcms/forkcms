@@ -758,7 +758,7 @@ class BackendExtensionsModel
 		$pathInfoXml = FRONTEND_PATH . '/themes/' . $theme . '/info.xml';
 
 		// load info.xml
-		$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+		$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 		// convert xml to useful array
 		$information = BackendExtensionsModel::processThemeXml($infoXml);
