@@ -2,6 +2,7 @@
 --
 Bugfixes:
 
+* Core: fixed an issue with the checkboxTextfieldCombo function.
 * Extensions: prevented PHP warnings when no info.xml is available.
 * Core: fixed an issue with drag and drop in the backend.
 * Locale: importing other languages then EN is possible again.
