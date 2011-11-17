@@ -339,25 +339,30 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords(
-			'SELECT pe.id AS extra_id, pb.html,
+		$blocks = (array) $db->getRecords(
+			'SELECT pe.id AS extra_id, pb.html, pb.position,
 			 pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 			 FROM pages_blocks AS pb
 			 INNER JOIN pages AS p ON p.revision_id = pb.revision_id
 			 LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-			 WHERE pb.revision_id = ? AND p.status = ?
-			 ORDER BY pb.id',
-			array('N', $record['revision_id'], 'active')
+			 WHERE pb.revision_id = ?
+			 ORDER BY pb.position, pb.sequence',
+			array('N', $record['revision_id'])
 		);
 
+		// init positions
+		$record['positions'] = array();
+
 		// loop blocks
-		foreach($record['blocks'] as $index => $row)
+		foreach($blocks as $block)
 		{
 			// unserialize data if it is available
-			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
+			if(isset($block['data'])) $block['data'] = unserialize($block['data']);
+
+			// save to position
+			$record['positions'][$block['position']][] = $block;
 		}
 
-		// return page record
 		return $record;
 	}
 
