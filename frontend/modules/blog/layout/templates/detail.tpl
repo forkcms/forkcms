@@ -38,7 +38,7 @@
 						{/option:comments}
 					</li>
 					<li>
-						<a href="{$item.full_url}" class="share">Share</a>
+						<a href="{$item.full_url}" class="share">{$lblShare|ucfirst}</a>
 					</li>
 				</ul>
 			</header>
