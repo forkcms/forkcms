@@ -11,10 +11,10 @@ jsBackend.faq.edit =
 	init: function()
 	{
 		// hide the data
-
 		$('.longFeedback').hide();
+
 		// add the click handler
-		$('.container').on('click', jsBackend.faq.edit.clickHandler);
+		$(document).on('click', '.container', jsBackend.faq.edit.clickHandler);
 	},
 
 	clickHandler: function(e)

@@ -97,10 +97,13 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 				if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileIsEmpty'));
 
 				// check if cronjobs are installed already
-				foreach($this->information['cronjobs'] as $cronjob)
+				if(isset($this->information['cronjobs']))
 				{
-					if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getError('CronjobsNotSet'));
-					break;
+					foreach($this->information['cronjobs'] as $cronjob)
+					{
+						if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getError('CronjobsNotSet'));
+						break;
+					}
 				}
 			}
 

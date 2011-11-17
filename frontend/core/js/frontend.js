@@ -542,7 +542,7 @@ jsFrontend.statistics =
 			};
 
 			// bind on all links that don't have the class noTracking
-			$('a:external:not(.noTracking)').on('click', function(e)
+			$(document).on('click', 'a:external:not(.noTracking)', function(e)
 			{
 				var $this = $(this);
 				var link = $this.attr('href');

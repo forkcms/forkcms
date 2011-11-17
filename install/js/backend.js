@@ -50,7 +50,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).on('keyup', function()
+				$(document).on('keyup', '#'+ id, function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
