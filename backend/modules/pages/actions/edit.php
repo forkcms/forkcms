@@ -38,6 +38,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	private $extras = array();
 
 	/**
+	 * Is the current user a god user?
+	 *
+	 * @var bool
+	 */
+	private $isGod = false;
+
+	/**
 	 * The positions
 	 *
 	 * @var	array
@@ -102,6 +109,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	{
 		// get record
 		$this->id = $this->getParameter('id', 'int');
+		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// check if something went wrong
 		if($this->id === null || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
@@ -198,6 +206,15 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addHidden('template_id', $this->record['template_id']);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
+
+		// a god user should be able to adjust the detailed settings for a page easily
+		if($this->isGod)
+		{
+			$this->frm->addCheckbox('allow_move', ($this->record['allow_move'] == 'Y'));
+			$this->frm->addCheckbox('allow_children', ($this->record['allow_children'] == 'Y'));
+			$this->frm->addCheckbox('allow_edit', ($this->record['allow_edit'] == 'Y'));
+			$this->frm->addCheckbox('allow_delete', ($this->record['allow_delete'] == 'Y'));
+		}
 
 		// build prototype block
 		$block['index'] = 0;
@@ -360,6 +377,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// parse some variables
 		$this->tpl->assign('item', $this->record);
+		$this->tpl->assign('isGod', $this->isGod);
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('positions', $this->positions);
 		$this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
@@ -452,6 +470,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['allow_delete'] = $this->record['allow_delete'];
 				$page['sequence'] = $this->record['sequence'];
 				$page['data'] = ($data !== null) ? serialize($data) : null;
+
+				if($this->isGod)
+				{
+					$page['allow_move'] = ($this->frm->getField('allow_move')->isChecked()) ? 'Y' : 'N';
+					$page['allow_children'] = ($this->frm->getField('allow_children')->isChecked()) ? 'Y' : 'N';
+					$page['allow_edit'] = ($this->frm->getField('allow_edit')->isChecked()) ? 'Y' : 'N';
+					$page['allow_delete'] = ($this->frm->getField('allow_delete')->isChecked()) ? 'Y' : 'N';
+				}
 
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];

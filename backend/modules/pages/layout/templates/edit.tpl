@@ -303,6 +303,20 @@
 			<p>
 				<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
 			</p>
+			{option:isGod}
+			<p>
+				<label for="allowMove">{$chkAllowMove} {$msgAllowMove}</label>
+			</p>
+			<p>
+				<label for="allowChildren">{$chkAllowChildren} {$msgAllowChildren}</label>
+			</p>
+			<p>
+				<label for="allowEdit">{$chkAllowEdit} {$msgAllowEdit}</label>
+			</p>
+			<p>
+				<label for="allowDelete">{$chkAllowDelete} {$msgAllowDelete}</label>
+			</p>
+			{/option:isGod}
 		</div>
 	</div>
 

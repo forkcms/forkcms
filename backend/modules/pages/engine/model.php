@@ -549,7 +549,8 @@ class BackendPagesModel
 
 		// get page (active version)
 		$return = (array) BackendModel::getDB()->getRecord(
-			'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
+			'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on,
+			 UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.allow_move, i.allow_children, i.allow_edit, i.allow_delete,
 			 IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
 			 GROUP_CONCAT(b.extra_id) AS extra_ids
 			 FROM pages AS i
