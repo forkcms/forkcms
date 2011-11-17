@@ -86,6 +86,9 @@ jsBackend.formBuilder.fields =
 		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'save_field' } };
 		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
 
+		// init errors
+		jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
+
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
 		jsBackend.formBuilder.fields.bindValidation();

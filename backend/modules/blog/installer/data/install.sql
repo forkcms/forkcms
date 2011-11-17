@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `blog_posts` (
  `title` varchar(255) NOT NULL,
  `introduction` text,
  `text` text,
- `image` varchar(255) NOT NULL,
+ `image` varchar(255),
  `status` enum('active','archived','draft') NOT NULL,
  `publish_on` datetime NOT NULL,
  `created_on` datetime NOT NULL,

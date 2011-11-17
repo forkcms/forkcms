@@ -1,10 +1,14 @@
-x.x.x (xxxx-xx-xx)
+3.1.3 (xxxx-xx-xx)
 --
 Bugfixes:
 
+* Core: fixed an issue with the checkboxTextfieldCombo function.
 * Extensions: prevented PHP warnings when no info.xml is available.
 * Core: fixed an issue with drag and drop in the backend.
 * Locale: importing other languages then EN is possible again.
+* Core: fixed an issue with the user-dropdown. 
+* Formbuilder: fixed an issues with the default error messages.
+* Blog: deleting a blog image caused a SQL error.
 
 
 3.1.2 (2011-11-15)
