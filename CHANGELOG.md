@@ -8,6 +8,7 @@ Bugfixes:
 * Locale: importing other languages then EN is possible again.
 * Core: fixed an issue with the user-dropdown. 
 * Formbuilder: fixed an issues with the default error messages.
+* Blog: deleting a blog image caused a SQL error.
 
 
 3.1.2 (2011-11-15)
