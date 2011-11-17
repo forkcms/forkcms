@@ -1,5 +1,9 @@
 3.1.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Added the possibility to easily adjust detailed page settings when you are a god user.
+
 Bugfixes:
 
 * Core: fixed an issue with the checkboxTextfieldCombo function.
