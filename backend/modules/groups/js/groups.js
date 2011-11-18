@@ -181,8 +181,7 @@ jsBackend.groups =
 			$this.next('a').next('div').find('table tbody tr td input').each(function()
 			{
 				// check boxes
-				$(this).attr('checked', 'checked');
-				$(this).parent('span').parent('td').parent('tr').addClass('selected');
+				$(this).attr('checked', 'checked').parents('tr').addClass('selected');
 			});
 		}
 
@@ -193,8 +192,7 @@ jsBackend.groups =
 			$this.next('a').next('div').find('table tbody tr td input').each(function()
 			{
 				// uncheck boxes
-				$(this).removeAttr('checked');
-				$(this).parent('span').parent('td').parent('tr').removeClass('selected');
+				$(this).removeAttr('checked').parents('tr').removeClass('selected');
 			});
 		}
 	}
