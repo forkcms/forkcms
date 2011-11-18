@@ -893,6 +893,11 @@
         <translation language="cn"><![CDATA[发送于]]></translation>
         <translation language="de"><![CDATA[verschickt am]]></translation>
       </item>
+      <item type="label" name="Share">
+        <translation language="nl"><![CDATA[delen]]></translation>
+        <translation language="en"><![CDATA[share]]></translation>
+        <translation language="fr"><![CDATA[partager]]></translation>
+      </item>
       <item type="label" name="ShowPassword">
         <translation language="nl"><![CDATA[toon wachtwoord]]></translation>
         <translation language="en"><![CDATA[show password]]></translation>

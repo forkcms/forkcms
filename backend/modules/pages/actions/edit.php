@@ -460,10 +460,10 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['revision_id'] = BackendPagesModel::update($page);
 
 				// loop blocks
-				foreach($this->blocksContent as $i => &$block)
+				foreach($this->blocksContent as $i => $block)
 				{
 					// add page revision id to blocks
-					$block['revision_id'] = $page['revision_id'];
+					$this->blocksContent[$i]['revision_id'] = $page['revision_id'];
 
 					// validate blocks, only save blocks for valid positions
 					if(!in_array($block['position'], $this->templates[$this->frm->getField('template_id')->getValue()]['data']['names'])) unset($this->blocksContent[$i]);
