@@ -10,6 +10,7 @@ Bugfixes:
 * Core: fixed an issue with the user-dropdown. 
 * Formbuilder: fixed an issues with the default error messages.
 * Blog: deleting a blog image caused a SQL error.
+* Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
 
 
 3.1.2 (2011-11-15)
