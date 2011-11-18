@@ -4,6 +4,7 @@ Bugfixes:
 
 * Core: fixed an issue with the checkboxTextfieldCombo function.
 * Core: fixed minified media queries in the backend CSS manually, the minify script itself has to be adjusted though.
+* Core: fixed inputCheckbox positioning inside datagrids.
 * Extensions: prevented PHP warnings when no info.xml is available.
 * Core: fixed an issue with drag and drop in the backend.
 * Locale: importing other languages then EN is possible again.
