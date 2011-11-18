@@ -389,7 +389,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 					if(!in_array($action['group'], $addedBundles))
 					{
 						// assign bundled action boxes
-						$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']), in_array($action['value'], $selectedActions))->parse() . '</span>';
+						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']), in_array($action['value'], $selectedActions))->parse();
 						$actionBoxes[$key]['actions'][$i]['action'] = ucfirst($action['group']);
 						$actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
@@ -402,7 +402,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 				else
 				{
 					// assign action boxes
-					$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'], in_array($action['value'], $selectedActions))->parse() . '</span>';
+					$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'], in_array($action['value'], $selectedActions))->parse();
 					$actionBoxes[$key]['actions'][$i]['action'] = $action['label'];
 					$actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
 				}

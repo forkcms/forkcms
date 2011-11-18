@@ -358,7 +358,7 @@ class BackendDataGrid extends SpoonDataGrid
 	{
 		// build label and value
 		$label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>';
-		$value = '<span><input type="checkbox" name="id[]" value="' . $value . '" class="inputCheckbox" /></span>';
+		$value = '<input type="checkbox" name="id[]" value="' . $value . '" class="inputCheckbox" />';
 
 		// add the column
 		$this->addColumn($column, $label, $value);
