@@ -177,9 +177,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 		// add fields for comments
 		$this->frmClient->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
-
-		// price per email
-		if(BackendAuthentication::getUser()->isGod()) $this->frmClient->addText('price_per_email', $this->settings['price_per_email']);
 	}
 
 	/**
@@ -200,8 +197,15 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// add fields for comments
 		$this->frmGeneral->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
 
-		// price per email
-		if(BackendAuthentication::getUser()->isGod()) $this->frmGeneral->addText('price_per_email', $this->settings['price_per_email']);
+		// user is god
+		if(BackendAuthentication::getUser()->isGod())
+		{
+			// price per email
+			$this->frmGeneral->addText('price_per_email', $this->settings['price_per_email']);
+
+			// price per campaign
+			$this->frmGeneral->addText('price_per_campaign', $this->settings['price_per_campaign']);
+		}
 	}
 
 	/**
@@ -373,7 +377,15 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			// user is god
 			if(BackendAuthentication::getUser()->isGod())
 			{
-				$this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'));
+				if($this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired')))
+				{
+					$this->frmGeneral->getField('price_per_email')->isFloat(BL::err('InvalidPrice'));
+				}
+
+				if($this->frmGeneral->getField('price_per_campaign')->isFilled(BL::err('FieldIsRequired')))
+				{
+					$this->frmGeneral->getField('price_per_campaign')->isFloat(BL::err('InvalidPrice'));
+				}
 			}
 
 			// form is validated
@@ -385,13 +397,21 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->getModule(), 'reply_to_email', $this->frmGeneral->getField('reply_to_email')->getValue());
 				BackendModel::setModuleSetting($this->getModule(), 'plain_text_editable', $this->frmGeneral->getField('plain_text_editable')->getValue());
 
-				// set price per email
+				// user is god?
 				if(BackendAuthentication::getUser()->isGod())
 				{
+					// set price per email
 					BackendModel::setModuleSetting(
 						$this->getModule(),
 						'price_per_email',
 						$this->frmGeneral->getField('price_per_email')->getValue()
+					);
+
+					// set price per campaign
+					BackendModel::setModuleSetting(
+						$this->getModule(),
+						'price_per_campaign',
+						$this->frmGeneral->getField('price_per_campaign')->getValue()
 					);
 				}
 

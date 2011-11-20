@@ -292,6 +292,10 @@
         <translation language="fr"><![CDATA[Les champs personnalisés sont des variables contenant une valeur unique pour chaque adresse e-mail dans un groupe. De cette façon, vous pouvez envoyer des mailings personnalisés.]]></translation>
         <translation language="de"><![CDATA[Benutzerdefinierte Felder sind Variablen die einen einzigartigen Wert für jede E-Mail-Adresse einer Gruppe enthalten. Auf diese Art können personalisierte Newsletter verschickt werden.]]></translation>
       </item>
+      <item type="message" name="HelpPrice">
+        <translation language="en"><![CDATA[eg. 0.01]]></translation>
+        <translation language="nl"><![CDATA[vb 0.01]]></translation>
+      </item>
       <item type="message" name="ImportedAddresses">
         <translation language="en"><![CDATA[%1$s addresses are imported in %2$s group(s).]]></translation>
         <translation language="nl"><![CDATA[%1$s adressen zijn ge&iuml;mporteerd in %2$s doelgroep(en).]]></translation>
@@ -1132,6 +1136,10 @@
         <translation language="de"><![CDATA[Plain-Text-Version]]></translation>
         <translation language="hu"><![CDATA[egyszerű szöveg verzió]]></translation>
       </item>
+      <item type="label" name="PricePerCampaign">
+        <translation language="en"><![CDATA[price per campaign]]></translation>
+        <translation language="nl"><![CDATA[prijs per campagne]]></translation>
+      </item>
       <item type="label" name="PricePerSentMailing">
         <translation language="en"><![CDATA[price per sent mailing]]></translation>
         <translation language="nl"><![CDATA[prijs per verzonden e-mail]]></translation>
@@ -1675,6 +1683,10 @@
         <translation language="fr"><![CDATA[Le fichier CSV est vide]]></translation>
         <translation language="de"><![CDATA[Die CSV Datei ist leer.]]></translation>
         <translation language="hu"><![CDATA[A CSV fájl üres]]></translation>
+      </item>
+      <item type="error" name="InvalidPrice">
+        <translation language="en"><![CDATA[Invalid price.]]></translation>
+        <translation language="nl"><![CDATA[Ongeldige prijs.]]></translation>
       </item>
       <item type="error" name="LinkDoesNotExist">
         <translation language="en"><![CDATA[This link doesn't exists.]]></translation>
