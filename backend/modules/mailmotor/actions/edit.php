@@ -137,7 +137,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$pricePerCampaign = BackendModel::getModuleSetting($this->getModule(), 'price_per_campaign');
 
 		// parse the price total
-		$this->tpl->assign('price', $stats['recipients'] * $pricePerEmail + $pricePerCampaign);
+		$this->tpl->assign('price', ($stats['recipients'] * $pricePerEmail) + $pricePerCampaign);
 	}
 
 	/**

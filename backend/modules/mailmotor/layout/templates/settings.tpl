@@ -71,27 +71,18 @@
 			{option:userIsGod}
 			<div class="box horizontal">
 				<div class="heading">
-					<h3>{$lblPricePerSentMailing|ucfirst}</h3>
+					<h3>{$lblPrices|ucfirst}</h3>
 				</div>
 
 				<div class="options">
 					<p>
-						<label for="pricePerEmail">{$lblPrice|ucfirst} in &euro; <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-						{$txtPricePerEmail} {$txtPricePerEmailError}
+						<label for="pricePerEmail">{$lblPerSentMailing|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						€ {$txtPricePerEmail} {$txtPricePerEmailError}
 						<span class="helpTxt">{$msgHelpPrice}</span>
 					</p>
-				</div>
-			</div>
-
-			<div class="box horizontal">
-				<div class="heading">
-					<h3>{$lblPricePerCampaign|ucfirst}</h3>
-				</div>
-
-				<div class="options">
 					<p>
-						<label for="pricePerEmail">{$lblPrice|ucfirst} in &euro; <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-						{$txtPricePerCampaign} {$txtPricePerCampaignError}
+						<label for="pricePerEmail">{$lblPerCampaign|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						€ {$txtPricePerCampaign} {$txtPricePerCampaignError}
 						<span class="helpTxt">{$msgHelpPrice}</span>
 					</p>
 				</div>

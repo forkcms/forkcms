@@ -1136,19 +1136,23 @@
         <translation language="de"><![CDATA[Plain-Text-Version]]></translation>
         <translation language="hu"><![CDATA[egyszerű szöveg verzió]]></translation>
       </item>
-      <item type="label" name="PricePerCampaign">
-        <translation language="en"><![CDATA[price per campaign]]></translation>
-        <translation language="nl"><![CDATA[prijs per campagne]]></translation>
+      <item type="label" name="PerCampaign">
+        <translation language="en"><![CDATA[per campaign]]></translation>
+        <translation language="nl"><![CDATA[per campagne]]></translation>
       </item>
-      <item type="label" name="PricePerSentMailing">
-        <translation language="en"><![CDATA[price per sent mailing]]></translation>
-        <translation language="nl"><![CDATA[prijs per verzonden e-mail]]></translation>
-        <translation language="it"><![CDATA[prezzo per mailing inviate]]></translation>
+      <item type="label" name="PerSentMailing">
+        <translation language="en"><![CDATA[per sent mailing]]></translation>
+        <translation language="nl"><![CDATA[per verzonden e-mail]]></translation>
+        <translation language="it"><![CDATA[per mailing inviate]]></translation>
         <translation language="ru"><![CDATA[Цена за рассылку]]></translation>
         <translation language="cn"><![CDATA[每次发送邮件的价格]]></translation>
-        <translation language="fr"><![CDATA[prix par mailing envoyé]]></translation>
-        <translation language="hu"><![CDATA[ár per küldött levél]]></translation>
-        <translation language="de"><![CDATA[Preis pro versandtem Newsletter]]></translation>
+        <translation language="fr"><![CDATA[par mailing envoyé]]></translation>
+        <translation language="hu"><![CDATA[per küldött levél]]></translation>
+        <translation language="de"><![CDATA[pro versandtem Newsletter]]></translation>
+      </item>
+      <item type="label" name="Prices">
+        <translation language="en"><![CDATA[prices]></translation>
+        <translation language="nl"><![CDATA[prijzen]]></translation>
       </item>
       <item type="label" name="QueuedMailings">
         <translation language="en"><![CDATA[queued mailings]]></translation>
