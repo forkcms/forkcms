@@ -80,7 +80,7 @@ class BackendDataGrid extends SpoonDataGrid
 	public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
 		// known actions that should have a button
-		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam')))
+		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam', 'install')))
 		{
 			// rebuild value, it should have special markup
 			$value = '<a href="' . $URL . '" class="button icon icon' . SpoonFilter::toCamelCase($name) . ' linkButton">
@@ -100,14 +100,13 @@ class BackendDataGrid extends SpoonDataGrid
 
 			// reset URL
 			$URL = null;
-
 		}
 
 		// add the column
 		parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
 		// known actions
-		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam', 'use_revision', 'use_draft')))
+		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam', 'install', 'use_revision', 'use_draft')))
 		{
 			// add special attributes for actions we know
 			$this->setColumnAttributes($name, array('class' => 'action action' . SpoonFilter::toCamelCase($name)));
