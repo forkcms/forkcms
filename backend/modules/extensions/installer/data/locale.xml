@@ -150,6 +150,14 @@
         <translation language="nl"><![CDATA[Dit thema is nog niet geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[This theme is not yet installed.]]></translation>
       </item>
+      <item type="message" name="NoModulesInstalled">
+        <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[No modules installed.]]></translation>
+      </item>
+      <item type="message" name="NoThemes">
+        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
+        <translation language="en"><![CDATA[No themes available.]]></translation>
+      </item>
       <item type="message" name="Module">
         <translation language="nl"><![CDATA[module "%1$s"]]></translation>
         <translation language="en"><![CDATA[module "%1$s"]]></translation>

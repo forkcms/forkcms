@@ -538,6 +538,18 @@
         <translation language="cn"><![CDATA[消息]]></translation>
         <translation language="de"><![CDATA[Nachricht]]></translation>
       </item>
+      <item type="label" name="More">
+        <translation language="nl"><![CDATA[meer]]></translation>
+        <translation language="en"><![CDATA[more]]></translation>
+        <translation language="pl"><![CDATA[wiecej]]></translation>
+        <translation language="hu"><![CDATA[tovább]]></translation>
+        <translation language="it"><![CDATA[altro]]></translation>
+        <translation language="fr"><![CDATA[plus]]></translation>
+        <translation language="ru"><![CDATA[Далее]]></translation>
+        <translation language="tr"><![CDATA[daha fazla]]></translation>
+        <translation language="cn"><![CDATA[更多]]></translation>
+        <translation language="de"><![CDATA[mehr]]></translation>
+      </item>
       <item type="label" name="Name">
         <translation language="nl"><![CDATA[naam]]></translation>
         <translation language="en"><![CDATA[name]]></translation>

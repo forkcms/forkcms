@@ -115,7 +115,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 									if(empty($this->information)) $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
 
 									// check if theme name in info.xml matches folder name
-									if($this->information['name'] != $themeName) $fileFile->addError(BL::getMessage('ThemeNameDoesntMatch'));
+									if($this->information['name'] != $themeName) $fileFile->addError(BL::err('ThemeNameDoesntMatch'));
 								}
 
 								// warning that the information file is corrupt
