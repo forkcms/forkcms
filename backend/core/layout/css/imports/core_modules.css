@@ -744,7 +744,7 @@
 	#locale.localeIndex #name { width: 260px; }
 	#locale.localeIndex select { width: 140px; }
 
-	#locale.localeIndex .datafilter .help {
+	#locale.localeIndex .dataFilter .help {
 		top: 5px;
 		margin-left: 0;
 	}
