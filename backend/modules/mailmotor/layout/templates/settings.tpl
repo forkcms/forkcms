@@ -32,12 +32,12 @@
 
 				<div class="options">
 					<p>
-						<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						<label for="fromName">{$lblName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtFromName} {$txtFromNameError}
 					</p>
 
 					<p>
-						<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						<label for="fromEmail">{$lblEmailAddress|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtFromEmail} {$txtFromEmailError}
 					</p>
 				</div>
@@ -50,7 +50,7 @@
 
 				<div class="options">
 					<p>
-						<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						<label for="replyToEmail">{$lblEmailAddress|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtReplyToEmail} {$txtReplyToEmailError}
 					</p>
 				</div>
@@ -106,16 +106,16 @@
 			</div>
 			<div class="options">
 				<p>
-					<label for="url">{$lblURL|uppercase} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					<label for="url">{$lblURL|uppercase}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtUrl} {$txtUrlError}
 					<span class="helpTxt">{$msgHelpCMURL}</span>
 				</p>
 				<p>
-					<label for="username">{$lblUsername|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					<label for="username">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtUsername} {$txtUsernameError}
 				</p>
 				<p>
-					<label for="password">{$lblPassword|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtPassword} {$txtPasswordError}
 				</p>
 				<div class="buttonHolder">
@@ -147,15 +147,15 @@
 
 			<div class="options generate">
 				<p>
-					<label for="companyName">{$lblCompanyName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					<label for="companyName">{$lblCompanyName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtCompanyName} {$txtCompanyNameError}
 				</p>
 				<p>
-					<label for="contactName">{$lblContactName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					<label for="contactName">{$lblContactName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtContactName} {$txtContactNameError}
 				</p>
 				<p>
-					<label for="contactEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					<label for="contactEmail">{$lblEmailAddress|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtContactEmail} {$txtContactEmailError}
 				</p>
 				<p>
