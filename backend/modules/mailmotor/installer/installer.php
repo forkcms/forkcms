@@ -213,6 +213,7 @@ class MailmotorInstaller extends ModuleInstaller
 		$this->setSetting('mailmotor', 'plain_text_editable', true);
 		$this->setSetting('mailmotor', 'reply_to_email', $replyTo['email']);
 		$this->setSetting('mailmotor', 'price_per_email', 0);
+		$this->setSetting('mailmotor', 'price_per_campaign', 0);
 
 		// pre-load these CM settings - these are used to obtain a client ID after the CampaignMonitor account is linked.
 		$this->setSetting('mailmotor', 'cm_url', '');
