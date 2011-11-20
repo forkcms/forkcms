@@ -15,6 +15,7 @@ Bugfixes:
 * Blog: deleting a blog image caused a SQL error.
 * Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
 * Core: javascript error fixed when no href is provided in the share widget.
+* Core: fixed confirmation-dialog, wasn't closing when the cancel-button was clicked.
 
 
 3.1.2 (2011-11-15)

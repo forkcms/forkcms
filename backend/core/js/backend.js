@@ -361,21 +361,18 @@ jsBackend.controls =
 							// unbind the beforeunload event
 							$(window).off('beforeunload');
 
-							// close dialog
-							$this.dialog('close');
-
 							// goto link
 							window.location = url;
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
-								$this.dialog('close');
+							$(this).dialog('close');
 						}
 					},
 					open: function(e)
 					{
 						// set focus on first button
-						if($this.next().find('button').length > 0) $this.next().find('button')[0].focus();
+						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
 					}
 				});
 			}
