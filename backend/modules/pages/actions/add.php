@@ -121,10 +121,18 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// a god user should be able to adjust the detailed settings for a page easily
 		if($this->isGod)
 		{
-			$this->frm->addCheckbox('allow_move', true);
-			$this->frm->addCheckbox('allow_children', true);
-			$this->frm->addCheckbox('allow_edit', true);
-			$this->frm->addCheckbox('allow_delete', true);
+			// init some vars
+			$items = array('move', 'children', 'edit', 'delete');
+			$checked = array();
+			$values = array();
+
+			foreach($items as $value)
+			{
+				$values[] = array('label' => BL::msg(SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+				$checked[] = $value;
+			}
+
+			$this->frm->addMultiCheckbox('allow', $values, $checked);
 		}
 
 		// build prototype block
@@ -334,10 +342,10 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 				if($this->isGod)
 				{
-					$page['allow_move'] = ($this->frm->getField('allow_move')->isChecked()) ? 'Y' : 'N';
-					$page['allow_children'] = ($this->frm->getField('allow_children')->isChecked()) ? 'Y' : 'N';
-					$page['allow_edit'] = ($this->frm->getField('allow_edit')->isChecked()) ? 'Y' : 'N';
-					$page['allow_delete'] = ($this->frm->getField('allow_delete')->isChecked()) ? 'Y' : 'N';
+					$page['allow_move'] = (in_array('move', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_children'] = (in_array('children', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_edit'] = (in_array('edit', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_delete'] = (in_array('delete', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
 				}
 
 				// set navigation title
