@@ -21,6 +21,7 @@ Bugfixes:
 * Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
 * Core: javascript error fixed when no href is provided in the share widget.
 * Core: fixed confirmation-dialog, wasn't closing when the cancel-button was clicked.
+* Tools: frontend and backend globals were not deleted when running prepare_for_reinstall.
 
 
 3.1.2 (2011-11-15)

@@ -27,7 +27,7 @@ rm -f `find ../backend/cache/compiled_templates/ ! -name ".gitignore" -type f ! 
 rm -f `find ../backend/cache/logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
 rm -f ../library/globals.php
-rm -f ../library/globals.frontend.php
-rm -f ../library/globals.backend.php
+rm -f ../library/globals_frontend.php
+rm -f ../library/globals_backend.php
 
 echo 'All done! Ready for reinstall.'
