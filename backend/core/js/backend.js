@@ -269,15 +269,16 @@ jsBackend.controls =
 
 				$checkbox.on('change', function(e)
 				{
+					// redefine
+					$this = $(this);
+
 					// variables
 					$combo = $this.parents().filter($checkboxTextFieldCombo);
 					$field = $($combo.find('input:text')[0]);
-					$this = $(this);
 
 					if($this.is(':checked'))
 					{
-						$field.removeClass('disabled').prop('disabled', false);
-						$field.focus();
+						$field.removeClass('disabled').prop('disabled', false).focus();
 					}
 					else $field.addClass('disabled').prop('disabled', true);
 				});
@@ -360,21 +361,18 @@ jsBackend.controls =
 							// unbind the beforeunload event
 							$(window).off('beforeunload');
 
-							// close dialog
-							$this.dialog('close');
-
 							// goto link
 							window.location = url;
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
-								$this.dialog('close');
+							$(this).dialog('close');
 						}
 					},
 					open: function(e)
 					{
 						// set focus on first button
-						if($this.next().find('button').length > 0) $this.next().find('button')[0].focus();
+						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
 					}
 				});
 			}
@@ -417,10 +415,10 @@ jsBackend.controls =
 
 			// variables
 			$parent = $fakeDropdown.parent();
-			$body = $(body);
+			$body = $('body');
 
 			// get id
-			var id = $this.attr('href');
+			var id = $(this).attr('href');
 
 			// IE8 prepends full current url before links to #
 			id = id.substring(id.indexOf('#'));
@@ -1243,7 +1241,8 @@ jsBackend.layout =
 
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.dataGrid();
-		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
+
+		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
@@ -1253,21 +1252,21 @@ jsBackend.layout =
 	dataFilter: function()
 	{
 		// add last child and first child for IE
-		$('.datafilter tbody td:first-child').addClass('firstChild');
-		$('.datafilter tbody td:last-child').addClass('lastChild');
+		$('.dataFilter tbody td:first-child').addClass('firstChild');
+		$('.dataFilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;
 
 		// loop group
-		$('.datafilter tbody .options').each(function()
+		$('.dataFilter tbody .options').each(function()
 		{
 			// taller?
 			if($(this).height() > tallest) tallest = $(this).height();
 		});
 
 		// set new height
-		$('.datafilter tbody .options').height(tallest);
+		$('.dataFilter tbody .options').height(tallest);
 	},
 
 	// datagrid layout

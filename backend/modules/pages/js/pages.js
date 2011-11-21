@@ -342,10 +342,6 @@ jsBackend.pages.extras =
 	// save/reset the content
 	setContent: function(index, previousContent)
 	{
-console.log(index);
-console.log($('#blockHtml' + index).length);
-console.log($('#blockHtml' + index));
-
 		// content does not need to be saved
 		if(previousContent != null)
 		{

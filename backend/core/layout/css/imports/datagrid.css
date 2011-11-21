@@ -209,17 +209,12 @@ td.num_tags {
 	}
 
 	/* Checkbox */
-	.dataGrid td.checkbox span {
-		position: relative;
-		display: block;
-		width: 100%;
-		height: 100%;
+	.dataGrid td.checkbox {
+		vertical-align: middle;
+		text-align: center;
 	}
 
-		.dataGrid td.checkbox span .inputCheckbox {
-			position: absolute;
-			top: 5px;
-			left: 10px;
+		.dataGrid td.checkbox .inputCheckbox {
 			margin: 0;
 		}
 
