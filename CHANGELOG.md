@@ -3,6 +3,7 @@
 Improvements:
 
 * Added the possibility to easily adjust detailed page settings when you are a god user.
+* SVN folders will now be skipped when running the remove_cache script.
 
 Bugfixes:
 
