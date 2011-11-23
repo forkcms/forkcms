@@ -35,7 +35,7 @@
 					{form:linkProfile}
 					<div class="oneLiner fakeP">
 						<p>
-							{$ddmTableId}
+							{$ddmTableId} {option:tableIdError}<br /><span class="formerror">{$tableIdError}</span>{/option:tableIdError}
 						</p>
 						<div class="buttonHolder">
 							<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$lblLinkThisProfile|ucfirst}" />

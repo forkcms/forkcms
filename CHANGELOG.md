@@ -1,13 +1,64 @@
-3.1.1 (xxxx-xx-xx)
+3.1.4 (xxxx-xx-xx)
 --
 Improvements:
 
-* Locale: refactored inportXML method to also be used by installer (rather than 2 seperate "different yet the same" functions)
+* Core: upgraded jQuery to 1.7.1  
+* Core: upgraded jQuery Tools to 1.2.6 
+
+
+3.1.3 (2011-11-22)
+--
+Improvements:
+
+* Added the possibility to easily adjust detailed page settings when you are a god user.
+* SVN folders will now be skipped when running the remove_cache script.
+
+Bugfixes:
+
+* Core: fixed an issue with the checkboxTextfieldCombo function.
+* Core: fixed minified media queries in the backend CSS manually, the minify script itself has to be adjusted though.
+* Core: fixed inputCheckbox positioning inside datagrids.
+* Core: fixed the row selected state in the datagrid when the selectAll checkbox was clicked.
+* Core: fixed the layout dataFilter function since it scoped the wrong, lowercased class of the dataFilter.
+* Extensions: prevented PHP warnings when no info.xml is available.
+* Core: fixed an issue with drag and drop in the backend.
+* Locale: importing other languages then EN is possible again.
+* Core: fixed an issue with the user-dropdown. 
+* Formbuilder: fixed an issues with the default error messages.
+* Blog: deleting a blog image caused a SQL error.
+* Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
+* Core: javascript error fixed when no href is provided in the share widget.
+* Core: fixed confirmation-dialog, wasn't closing when the cancel-button was clicked.
+* Tools: frontend and backend globals were not deleted when running prepare_for_reinstall.
+
+
+3.1.2 (2011-11-15)
+--
+Bugfixes:
+
+* Core: fixed an issue with items that used .live().
+* Pages: fixed an issue with dynamically added elements using .data().
+
+
+3.1.1 (2011-11-15)
+--
+Improvements:
+
+* Locale: refactored inportXML method to also be used by installer (rather than 2 seperate "different yet the same" functions).
 * Extensions: add cronjobs info to info.xml, informational al well as for checking whether all cronjobs are set.
+* Core: upgraded Highcharts to 2.1.8.
+* Core: major improvements (codestyling, spelling, performance, ...) for JS, credits to Thomas.
+* Core: upgraded jQuery to 1.7
+* Installer: when the form in step 6 (where the actual install happens) is submitted the button will be replaced with a spinner to indicate the installer is running.
+* Analytics: added a warning when trying to link a profile when no profile was selected.
+* Blog: when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb.
 
 Bugfixes:
 
 * Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
+* Missing label, as reported by Wouter Hechtermans on http://forkcms.lighthouseapp.com/projects/61890/tickets/212.
+* Pages: closing the dialog did not discard the content correctly.
+* Core: autocomplete on tags wasn't working due the change of the AJAX-calls.
 
 
 3.1.0 (2011-11-08)

@@ -37,8 +37,6 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 
 		$this->loadTemplate();
 
-		// only show on the default action and if allowed
-		if(!strpos(FrontendNavigation::getURLForBlock('faq'), $this->URL->getQueryString())) return;
 		if(!FrontendModel::getModuleSetting('faq', 'allow_own_question', false)) return;
 
 		$this->loadForm();
@@ -104,7 +102,6 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 				}
 
 				$this->status = 'success';
-				$this->frm->trackData(array('form', 'own_question', 'form_token', '_utf8', 'message'));
 				FrontendMailer::addEmail(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']), FRONTEND_MODULES_PATH . '/faq/layout/templates/mails/own_question.tpl', $variables, $variables['email'], $variables['name']);
 			}
 		}

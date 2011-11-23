@@ -1,6 +1,3 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
  * Interaction for the tags module
  *
@@ -11,17 +8,10 @@ jsBackend.tags =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.dataGrid td.tag').length > 0)
-		{
-			// bind
-			$('.dataGrid td.tag').inlineTextEdit({ params: { fork: { action: 'edit' } }, tooltip: '{$msgClickToEdit}' });
-		}
-	},
+		$dataGridTag = $('.dataGrid td.tag');
 
-
-	// end
-	eoo: true
+		if($dataGridTag.length > 0) $dataGridTag.inlineTextEdit({ params: { fork: { action: 'edit' } }, tooltip: '{$msgClickToEdit}' });
+	}
 }
 
-
-$(document).ready(jsBackend.tags.init);
+$(jsBackend.tags.init);

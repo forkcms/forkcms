@@ -182,6 +182,12 @@ input[type="submit"] {
 		*top: -1px; /* IE7 */
 	}
 
+	/* Don't use position absolute when these inputs are used in a datagridHolder inside an inputList */
+	.forkForms .inputList .datagridHolder .inputRadio,
+	.forkForms .inputList .datagridHolder .inputCheckbox {
+		position: static;
+	}
+
 	#urlManager ul {
 		margin: 0 0 8px;
 	}

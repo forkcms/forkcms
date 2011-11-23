@@ -254,33 +254,7 @@ class BackendURL
 						// set the working language, this is not the interface language
 						BackendLanguage::setWorkingLanguage($language);
 
-						// is the user authenticated
-						if(BackendAuthentication::getUser()->isAuthenticated())
-						{
-							// set interface language based on the user preferences
-							BackendLanguage::setLocale(
-								BackendAuthentication::getUser()->getSetting('interface_language', 'en')
-							);
-						}
-
-						// no authenticated user
-						else
-						{
-							// init var
-							$interfaceLanguage = BackendModel::getModuleSetting('core', 'default_interface_language');
-
-							// override with cookie value if that exists
-							if(SpoonCookie::exists('interface_language') && in_array(SpoonCookie::get('interface_language'), array_keys(BackendLanguage::getInterfaceLanguages())))
-							{
-								// set interface language based on the perons' cookies
-								$interfaceLanguage = SpoonCookie::get('interface_language');
-							}
-
-							// set interface language
-							BackendLanguage::setLocale($interfaceLanguage);
-						}
-
-						// set current module
+						$this->setLocale();
 						$this->setModule($module);
 						$this->setAction($action);
 					}
@@ -307,6 +281,33 @@ class BackendURL
 	private function setHost($host)
 	{
 		$this->host = (string) $host;
+	}
+
+	/**
+	 * Set the locale
+	 */
+	private function setLocale()
+	{
+		$default = BackendModel::getModuleSetting('core', 'default_interface_language');
+		$locale = $default;
+		$possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
+
+		// is the user authenticated
+		if(BackendAuthentication::getUser()->isAuthenticated())
+		{
+			$locale = BackendAuthentication::getUser()->getSetting('interface_language', $default);
+		}
+
+		// no authenticated user, but available from a cookie
+		elseif(SpoonCookie::exists('interface_language'))
+		{
+			$locale = SpoonCookie::get('interface_language');
+		}
+
+		// validate if the requested locale is possible
+		if(!in_array($locale, $possibleLocale)) $locale = $default;
+
+		BackendLanguage::setLocale($locale);
 	}
 
 	/**

@@ -1,10 +1,7 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
-
 /**
  * Interaction for the faq categories
  *
- * @author	Lester Lievens <lester@netlash.com>
+ * @author	Lester Lievens <lester.lievens@netlash.com>
  * @author	Annelies Van Extergem <annelies@netlash.com>
  * @author	Davy Van Vooren <davy.vanvooren@netlash.com>
  */
@@ -14,16 +11,15 @@ jsBackend.faq.edit =
 	init: function()
 	{
 		// hide the data
-		
 		$('.longFeedback').hide();
+
 		// add the click handler
-		$('.container').live('click', jsBackend.faq.edit.clickHandler);
+		$(document).on('click', '.container', jsBackend.faq.edit.clickHandler);
 	},
 
-
-	clickHandler: function(event) 
+	clickHandler: function(e)
 	{
-		event.preventDefault();
+		e.preventDefault();
 
 		var link = $(this).find('a');
 
@@ -33,7 +29,7 @@ jsBackend.faq.edit =
 			// change css
 			link.removeClass('iconCollapsed');
 			link.addClass('iconExpanded');
-			
+
 			// show the feedback
 			$(this).next('.longFeedback').show();
 		}
@@ -44,15 +40,11 @@ jsBackend.faq.edit =
 			// change css
 			link.addClass('iconCollapsed');
 			link.removeClass('iconExpanded');
-			
+
 			// hide the feedback
 			$(this).next('.longFeedback').hide();
-		}	
-	},
-
-
-	eoo: true
+		}
+	}
 }
 
-
-$(document).ready(jsBackend.faq.edit.init);
+$(jsBackend.faq.edit.init);

@@ -2,6 +2,7 @@
  * Frontend related objects
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
 var jsFrontend =
 {
@@ -11,7 +12,6 @@ var jsFrontend =
 	{
 		language: '{$FRONTEND_LANGUAGE}'
 	},
-
 
 	// init, something like a constructor
 	init: function()
@@ -38,7 +38,6 @@ var jsFrontend =
 		jsFrontend.twitter.init();
 	},
 
-
 	// init
 	initAjax: function()
 	{
@@ -52,13 +51,8 @@ var jsFrontend =
 			timeout: 10000,
 			data: { fork: { module: null, action: null, language: jsFrontend.current.language } }
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Controls related javascript
@@ -73,18 +67,12 @@ jsFrontend.controls =
 		jsFrontend.controls.bindTargetBlank();
 	},
 
-
 	// bind target blank
 	bindTargetBlank: function()
 	{
 		$('a.targetBlank').attr('target', '_blank');
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 /**
  * Facebook related
@@ -108,13 +96,8 @@ jsFrontend.facebook =
 			// subscribe and track message
 			FB.Event.subscribe('message.send', function(targetUrl) { _gaq.push(['_trackSocial', 'facebook', 'send', targetUrl]); });
 		}
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Form related javascript
@@ -129,7 +112,6 @@ jsFrontend.forms =
 		jsFrontend.forms.placeholders();
 		jsFrontend.forms.datefields();
 	},
-
 
 	// initialize the datefields
 	datefields: function()
@@ -220,7 +202,6 @@ jsFrontend.forms =
 		});
 	},
 
-
 	// placeholder fallback for browsers that don't support placeholder
 	placeholders: function()
 	{
@@ -230,7 +211,7 @@ jsFrontend.forms =
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder], textarea[placeholder]').bind('focus', function()
+			$('input[placeholder], textarea[placeholder]').on('focus', function()
 			{
 				// grab element
 				var input = $(this);
@@ -246,7 +227,7 @@ jsFrontend.forms =
 				}
 			});
 
-			$('input[placeholder], textarea[placeholder]').bind('blur', function()
+			$('input[placeholder], textarea[placeholder]').on('blur', function()
 			{
 				// grab element
 				var input = $(this);
@@ -279,13 +260,8 @@ jsFrontend.forms =
 				});
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Gravatar related javascript
@@ -323,13 +299,8 @@ jsFrontend.gravatar =
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Search controls
@@ -350,7 +321,6 @@ jsFrontend.search =
 		// livesuggest (search results page: live feed of matches)
 		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
 	},
-
 
 	// autocomplete (search results page: autocomplete based on known search terms)
 	autocomplete: function()
@@ -390,14 +360,14 @@ jsFrontend.search =
 					}
 				});
 			},
-			select: function(evt, ui)
+			select: function(e, ui)
 			{
 				window.location.href = ui.item.url
 			}
 		})
 		// ok, so, when we have been typing in the search textfield and we blur out of it,
 		// I suppose we have entered our full search query and we're ready to save it
-		.bind('blur', function()
+		.on('blur', function()
 		{
 			// ajax call!
 			$.ajax(
@@ -410,7 +380,6 @@ jsFrontend.search =
 			});
 		});
 	},
-
 
 	// autosuggest (search widget)
 	autosuggest: function(length)
@@ -454,14 +423,14 @@ jsFrontend.search =
 					}
 				});
 			},
-			select: function(evt, ui)
+			select: function(e, ui)
 			{
 				window.location.href = ui.item.url
 			}
 		})
 		// ok, so, when we have been typing in the search textfield and we blur out of it,
 		// I suppose we have entered our full search query and we're ready to save it
-		.bind('blur', function()
+		.on('blur', function()
 		{
 			// ajax call!
 			$.ajax(
@@ -470,7 +439,7 @@ jsFrontend.search =
 				{
 					fork: { module: 'search', action: 'save' },
 					term: $(this).val()
-				},
+				}
 			});
 		})
 		// and also: alter the autocomplete style: add description!
@@ -483,7 +452,6 @@ jsFrontend.search =
 		};
 	},
 
-
 	// livesuggest (search results page: live feed of matches)
 	livesuggest: function()
 	{
@@ -494,7 +462,7 @@ jsFrontend.search =
 		var $input = $('input.liveSuggest');
 
 		// change in input = do the dance: live search results completion
-		$input.bind('keyup', function()
+		$input.on('keyup', function()
 		{
 			var $searchContainer = $('#searchContainer');
 
@@ -546,13 +514,8 @@ jsFrontend.search =
 				});
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Gravatar related javascript
@@ -567,7 +530,6 @@ jsFrontend.statistics =
 		jsFrontend.statistics.trackOutboundLinks();
 	},
 
-
 	// track all outbound links
 	trackOutboundLinks: function()
 	{
@@ -580,7 +542,7 @@ jsFrontend.statistics =
 			};
 
 			// bind on all links that don't have the class noTracking
-			$('a:external:not(.noTracking)').live('click', function(evt)
+			$(document).on('click', 'a:external:not(.noTracking)', function(e)
 			{
 				var $this = $(this);
 				var link = $this.attr('href');
@@ -591,13 +553,8 @@ jsFrontend.statistics =
 				_gaq.push(['_trackEvent', 'Outbound Links', link, title]);
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
-},
-
+	}
+}
 
 /**
  * Twitter related stuff
@@ -612,28 +569,23 @@ jsFrontend.twitter =
 		if(typeof _gaq == 'object' && typeof twttr == 'object')
 		{
 			// bind event, so we can track the tweets
-			twttr.events.bind('tweet', function(event)
+			twttr.events.on('tweet', function(e)
 			{
 				// valid event?
-				if(event)
+				if(e)
 				{
 					// init var
 					var targetUrl = null;
 
 					// get url
-					if(event.target && event.target.nodeName == 'IFRAME') targetUrl = utils.url.extractParamFromUri(event.target.src, 'url');
+					if(e.target && e.target.nodeName == 'IFRAME') targetUrl = utils.url.extractParamFromUri(e.target.src, 'url');
 
 					// push to GA
 					_gaq.push(['_trackSocial', 'twitter', 'tweet', targetUrl]);
 				}
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 $(jsFrontend.init);

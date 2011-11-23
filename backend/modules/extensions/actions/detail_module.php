@@ -88,7 +88,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 			try
 			{
 				// load info.xml
-				$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 				// convert xml to useful array
 				$this->information = BackendExtensionsModel::processModuleXml($infoXml);
@@ -97,10 +97,13 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 				if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileIsEmpty'));
 
 				// check if cronjobs are installed already
-				foreach($this->information['cronjobs'] as $cronjob)
+				if(isset($this->information['cronjobs']))
 				{
-					if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getError('CronjobsNotSet'));
-					break;
+					foreach($this->information['cronjobs'] as $cronjob)
+					{
+						if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getError('CronjobsNotSet'));
+						break;
+					}
 				}
 			}
 
