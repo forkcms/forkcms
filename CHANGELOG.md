@@ -5,6 +5,10 @@ Improvements:
 * Core: upgraded jQuery to 1.7.1  
 * Core: upgraded jQuery Tools to 1.2.6 
 
+Bugfixes:
+
+* Profiles: display name was not being urilized.
+
 
 3.1.3 (2011-11-22)
 --
