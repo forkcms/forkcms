@@ -9,6 +9,8 @@ Improvements:
 Bugfixes:
 
 * Profiles: display name was not being urilized.
+* Tags: it is no longer impossible to fetch related items with the same id as your source item.
+* Core: fixed js issue in triton.
 
 
 3.1.3 (2011-11-22)
@@ -35,8 +37,6 @@ Bugfixes:
 * Core: javascript error fixed when no href is provided in the share widget.
 * Core: fixed confirmation-dialog, wasn't closing when the cancel-button was clicked.
 * Tools: frontend and backend globals were not deleted when running prepare_for_reinstall.
-* Tags: it is no longer impossible to fetch related items with the same id as your source item.
-* Core: fixed js issue in triton.
 
 
 3.1.2 (2011-11-15)
