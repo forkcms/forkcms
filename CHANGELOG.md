@@ -13,6 +13,7 @@ Bugfixes:
 * Tags: it is no longer impossible to fetch related items with the same id as your source item.
 * Core: fixed js issue in triton.
 * Core: fixed a typo, thx to Danny Korpan.
+* Extensions: when using spaces in the format-part of the template XML, the templates weren't build correctly.
 
 
 3.1.3 (2011-11-22)
