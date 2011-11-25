@@ -5,6 +5,7 @@ Improvements:
 * Core: upgraded jQuery to 1.7.1  
 * Core: upgraded jQuery Tools to 1.2.6
 * Core: direct action pages get prefilled meta information again.
+* Users: when adding a user and there is only one group it will be checked by default.
 
 Bugfixes:
 

@@ -35,6 +35,12 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		// create form
 		$this->frm = new BackendForm('add');
 
+		// get the groups
+		$groups = BackendGroupsModel::getAll();
+
+		// if there is only one group we can check it so the user isn't bothered with an error for not selecting one
+		$checkedGroups = (count($groups) == 1) ? $groups[0]['value'] : null;
+
 		// create elements
 		$this->frm->addText('email', null, 255);
 		$this->frm->addPassword('password', null, 75, 'inputText inputPassword passwordGenerator', 'inputTextError inputPasswordError passwordGenerator');
@@ -49,7 +55,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
-		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll());
+		$this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
 
 		// disable autocomplete
 		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));
