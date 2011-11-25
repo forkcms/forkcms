@@ -12,6 +12,7 @@ Bugfixes:
 * Profiles: display name was not being urilized.
 * Tags: it is no longer impossible to fetch related items with the same id as your source item.
 * Core: fixed js issue in triton.
+* Core: fixed a typo, thx to Danny Korpan.
 
 
 3.1.3 (2011-11-22)
