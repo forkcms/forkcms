@@ -532,6 +532,69 @@ class FrontendModel
 	}
 
 	/**
+	 * Push a notification to Microsoft's notifications-server
+	 *
+	 * @param mixed $alert The message/dictonary to send.
+	 * @param int[optional] $badge The number for the badge.
+	 * @param string[optional] $sound The sound that should be played.
+	 * @param array[optional] $extraDictionaries Extra dictionaries.
+	 */
+	public static function pushToMicrosoftApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
+	{
+		// get ForkAPI-keys
+		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
+		$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+
+		// no keys, so stop here
+		if($publicKey == '' || $privateKey == '') return;
+
+		// get all microsoft channel uri's
+		$channelUris = (array) FrontendModel::getDB()->getColumn(
+			'SELECT s.value
+			 FROM users AS i
+			 INNER JOIN users_settings AS s
+			 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
+			array('Y', 'N', 'microsoft_channel_uri', 'N;')
+		);
+
+		// no devices, so stop here
+		if(empty($channelUris)) return;
+
+		// init var
+		$uris = array();
+
+		// loop devices
+		foreach($channelUris as $row)
+		{
+			// unserialize
+			$row = unserialize($row);
+
+			// loop and add
+			foreach($row as $item) $uris[] = $item;
+		}
+
+		// no channel uri's, so stop here
+		if(empty($uris)) return;
+
+		// require the class
+		require_once PATH_LIBRARY . '/external/fork_api.php';
+
+		// create instance
+		$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+		try
+		{
+			// push
+			$forkAPI->microsoftPush($uris, $alert, $badge);
+		}
+
+		catch(Exception $e)
+		{
+			if(SPOON_DEBUG) throw $e;
+		}
+	}
+
+	/**
 	 * Store a modulesetting
 	 *
 	 * @param string $module The module wherefor a setting has to be stored.
