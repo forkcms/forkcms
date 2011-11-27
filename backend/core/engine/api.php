@@ -211,22 +211,38 @@ class BackendCoreAPI
 			if($uri == '') API::output(API::BAD_REQUEST, array('message' => 'No uri-parameter provided.'));
 			if($email == '') API::output(API::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
 
+			// we should tell the ForkAPI that we registered a device
+			$publicKey = BackendModel::getModuleSetting('core', 'fork_api_public_key', '');
+			$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+
+			// validate keys
+			if($publicKey == '' || $privateKey == '')
+			{
+				API::output(API::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configure them in the backend.'));
+			}
+
 			try
 			{
 				// load user
 				$user = new BackendUser(null, $email);
 
 				// get current uris
-				$uris = (array) $user->getSetting('microsoft_device_uri');
+				$uris = (array) $user->getSetting('microsoft_channel_uri');
 
 				// not already in array?
 				if(!in_array($uri, $uris)) $uris[] = $uri;
 
-				// no need to register the device with ForkAPI - there's no feedback server that may have rendered
-				// devices unable to receive push requests
+				// require the class
+				require_once PATH_LIBRARY . '/external/fork_api.php';
+
+				// create instance
+				$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+				// make the call
+				$forkAPI->microsoftRegisterDevice($uris);
 
 				// store
-				if(!empty($uris)) $user->setSetting('microsoft_device_uri', $uris);
+				if(!empty($uris)) $user->setSetting('microsoft_channel_uri', $uris);
 			}
 
 			catch(Exception $e)
@@ -259,7 +275,7 @@ class BackendCoreAPI
 				$user = new BackendUser(null, $email);
 
 				// get current uris
-				$uris = (array) $user->getSetting('microsoft_device_uri');
+				$uris = (array) $user->getSetting('microsoft_channel_uri');
 
 				// not already in array?
 				$index = array_search($uri, $uris);
@@ -270,7 +286,7 @@ class BackendCoreAPI
 					unset($uris[$index]);
 
 					// save it
-					$user->setSetting('microsoft_device_uri', $uris);
+					$user->setSetting('microsoft_channel_uri', $uris);
 				}
 			}
 

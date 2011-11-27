@@ -541,10 +541,15 @@ class FrontendModel
 	 *
 	 * @param mixed $alert The message/dictonary to send.
 	 * @param int[optional] $badge The number for the badge.
-	 * @param string[optional] $sound The sound that should be played.
-	 * @param array[optional] $extraDictionaries Extra dictionaries.
+	 * @param string $title The title for the tile to send.
+	 * @param string[optional] $count The count for the tile to send.
+	 * @param string[optional] $image The image for the tile to send.
+	 * @param string[optional] $backTitle The title for the tile backtround to send.
+	 * @param string[optional] $backText The text for the tile background to send.
+	 * @param string[optional] $backImage The image for the tile background to send.
+	 * @param string[optional] $uri The application uri to navigate to.
 	 */
-	public static function pushToMicrosoftApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
+	public static function pushToMicrosoftApp($title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $uri = null)
 	{
 		// get ForkAPI-keys
 		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
@@ -590,7 +595,7 @@ class FrontendModel
 		try
 		{
 			// push
-			$forkAPI->microsoftPush($uris, $alert, $badge);
+			$forkAPI->microsoftPush($uris, $title, $count, $image, $backTitle, $backText, $backImage, $uri);
 		}
 
 		catch(Exception $e)

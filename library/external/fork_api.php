@@ -439,9 +439,9 @@ class ForkAPI
 		$parameters['title'] = (string) $title;
 		if($count !== null) $parameters['count'] = (int) $count;
 		if($image !== null) $parameters['image'] = (string) $image;
-		if($backTitle !== null) $parameters['backTitle'] = (string) $backTitle;
-		if($backText !== null) $parameters['backText'] = (string) $backText;
-		if($backImage !== null) $parameters['backImage'] = (string) $backImage;
+		if($backTitle !== null) $parameters['back_title'] = (string) $backTitle;
+		if($backText !== null) $parameters['back_text'] = (string) $backText;
+		if($backImage !== null) $parameters['back_image'] = (string) $backImage;
 		if($uri !== null) $parameters['uri'] = (string) $uri;
 
 		// make the call
