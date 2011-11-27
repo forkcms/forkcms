@@ -19,7 +19,7 @@
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
-			{option:feedback}<li><a href="#tabFeedback">{$lblFeedback|ucfirst}</a>{/option:feedback}
+			<li><a href="#tabFeedback">{$lblFeedback|ucfirst} <span class="positiveFeedback">({$item.num_usefull_yes})</span> <span class="negativeFeedback">({$item.num_usefull_no})</span></a>
 		</ul>
 
 		<div id="tabContent">
@@ -74,8 +74,11 @@
 			</table>
 		</div>
 
-		{option:feedback}
 		<div id="tabFeedback">
+		{option:feedback}
+			<p>
+				{$msgFeedbackInfo}
+			</p>
 			{iteration:feedback}
 			<div class="box feedback">
 				<div class="heading shortFeedback container">
@@ -97,8 +100,14 @@
 				</div>
 			</div>
 			{/iteration:feedback}
-		</div>
 		{/option:feedback}
+
+		{option:!feedback}
+			<p>
+				{$msgNoFeedbackItems}
+			</p>
+		{/option:!feedback}
+		</div>
 
 		<div id="tabSEO">
 			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}

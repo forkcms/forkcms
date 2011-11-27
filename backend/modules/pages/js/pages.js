@@ -50,10 +50,10 @@ jsBackend.pages.extras =
 		$('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
-		$('a.addBlock').on('click', jsBackend.pages.extras.showAddDialog);
-		$('a.deleteBlock').on('click', jsBackend.pages.extras.showDeleteDialog);
-		$('.showEditor').on('click', jsBackend.pages.extras.editContent);
-		$('.toggleVisibility').on('click', jsBackend.pages.extras.toggleVisibility);
+		$(document).on('click', 'a.addBlock', jsBackend.pages.extras.showAddDialog);
+		$(document).on('click', 'a.deleteBlock', jsBackend.pages.extras.showDeleteDialog);
+		$(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
+		$(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
 
 		// make the blocks sortable
 		jsBackend.pages.extras.sortable();
@@ -155,7 +155,7 @@ jsBackend.pages.extras =
 		$('.templatePositionCurrentType[data-block-id=' + index + ']').remove();
 
 		// remove block
-		$('#blockExtraId' + index).parent().remove();
+		$('[name=block_extra_id_' + index + ']').parent('.contentBlock').remove();
 
 		// after removing all from fallback; hide fallback
 		jsBackend.pages.extras.hideFallback();
@@ -171,7 +171,7 @@ jsBackend.pages.extras =
 		e.preventDefault();
 
 		// fetch block index
-		var index = $(this).parent().parent().data('blockId');
+		var index = $(this).parent().parent().attr('data-block-id');
 
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
@@ -311,12 +311,11 @@ jsBackend.pages.extras =
 		$('.templatePositionCurrentType').each(function(i)
 		{
 			// fetch block id
-			var oldIndex = $(this).data('blockId');
+			var oldIndex = $(this).attr('data-block-id');
 			var newIndex = i + 1;
 
 			// update index of entry in template-view
-			$(this).data('blockId', newIndex);
-			$(this).prop('data-block-id', newIndex);
+			$(this).attr('data-block-id', newIndex);
 
 			// update index occurences in the hidden data
 			var blockHtml = $('.reset [name=block_html_' + oldIndex + ']');
@@ -333,7 +332,7 @@ jsBackend.pages.extras =
 			blockExtraId.parent('.contentBlock').removeClass('reset');
 
 			// while we're at it, make sure the position is also correct
-			blockPosition.val($(this).parent().parent().data('position'));
+			blockPosition.val($(this).parent().parent().attr('data-position'));
 		});
 
 		// mark all as having been reset
@@ -368,7 +367,7 @@ jsBackend.pages.extras =
 		e.preventDefault();
 
 		// save the position wherefor we will change the extra
-		position = $(this).parent().parent().data('position');
+		position = $(this).parent().parent().attr('data-position');
 
 		// init var
 		var hasModules = false;
@@ -474,7 +473,7 @@ jsBackend.pages.extras =
 					'{$lblOK|ucfirst}': function()
 					{
 						// delete this block
-						jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').data('blockId'));
+						jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
 
 						// delete a block = template is no longer original
 						jsBackend.pages.template.original = false;
@@ -549,7 +548,7 @@ jsBackend.pages.extras =
 		jsBackend.pages.template.original = false;
 
 		// get index of block
-		var index = $(this).parent().parent().data('blockId');
+		var index = $(this).parent().parent().attr('data-block-id');
 
 		// get visibility checbox
 		var checkbox = $('#blockVisible' + index);

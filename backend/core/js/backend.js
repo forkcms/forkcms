@@ -269,15 +269,16 @@ jsBackend.controls =
 
 				$checkbox.on('change', function(e)
 				{
+					// redefine
+					$this = $(this);
+
 					// variables
 					$combo = $this.parents().filter($checkboxTextFieldCombo);
 					$field = $($combo.find('input:text')[0]);
-					$this = $(this);
 
 					if($this.is(':checked'))
 					{
-						$field.removeClass('disabled').prop('disabled', false);
-						$field.focus();
+						$field.removeClass('disabled').prop('disabled', false).focus();
 					}
 					else $field.addClass('disabled').prop('disabled', true);
 				});
@@ -360,28 +361,25 @@ jsBackend.controls =
 							// unbind the beforeunload event
 							$(window).off('beforeunload');
 
-							// close dialog
-							$this.dialog('close');
-
 							// goto link
 							window.location = url;
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
-								$this.dialog('close');
+							$(this).dialog('close');
 						}
 					},
 					open: function(e)
 					{
 						// set focus on first button
-						if($this.next().find('button').length > 0) $this.next().find('button')[0].focus();
+						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
 					}
 				});
 			}
 		});
 
 		// bind clicks
-		$askConfirmation.on('click', function(e)
+		$(document).on('click', '.askConfirmation', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -417,10 +415,10 @@ jsBackend.controls =
 
 			// variables
 			$parent = $fakeDropdown.parent();
-			$body = $(body);
+			$body = $('body');
 
 			// get id
-			var id = $this.attr('href');
+			var id = $(this).attr('href');
 
 			// IE8 prepends full current url before links to #
 			id = id.substring(id.indexOf('#'));
@@ -580,7 +578,7 @@ jsBackend.controls =
 		});
 
 		// hijack the form
-		$('.tableOptions .massAction .submitButton').on('click', function(e)
+		$(document).on('click', '.tableOptions .massAction .submitButton', function(e)
 		{
 			// prevent default action
 			e.preventDefault();
@@ -695,7 +693,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).on('keyup', function()
+				$(document).on('keyup', '#'+ id, function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -760,7 +758,7 @@ jsBackend.controls =
 	// toggle a div
 	bindToggleDiv: function()
 	{
-		$('.toggleDiv').on('click', function(e)
+		$(document).on('click', '.toggleDiv', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -784,7 +782,7 @@ jsBackend.controls =
 		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
-		$('tr td input:checkbox').on('change', function(e)
+		$(document).on('change', 'tr td input:checkbox', function(e)
 		{
 			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
 			else $(this).parents().filter('tr').eq(0).removeClass('selected');
@@ -1243,7 +1241,8 @@ jsBackend.layout =
 
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.dataGrid();
-		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
+
+		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
@@ -1253,21 +1252,21 @@ jsBackend.layout =
 	dataFilter: function()
 	{
 		// add last child and first child for IE
-		$('.datafilter tbody td:first-child').addClass('firstChild');
-		$('.datafilter tbody td:last-child').addClass('lastChild');
+		$('.dataFilter tbody td:first-child').addClass('firstChild');
+		$('.dataFilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;
 
 		// loop group
-		$('.datafilter tbody .options').each(function()
+		$('.dataFilter tbody .options').each(function()
 		{
 			// taller?
 			if($(this).height() > tallest) tallest = $(this).height();
 		});
 
 		// set new height
-		$('.datafilter tbody .options').height(tallest);
+		$('.dataFilter tbody .options').height(tallest);
 	},
 
 	// datagrid layout
@@ -1348,7 +1347,7 @@ jsBackend.messages =
 	init: function()
 	{
 		// bind close button
-		$('#messaging .formMessage .iconClose').on('click', function(e)
+		$(document).on('click', '#messaging .formMessage .iconClose', function(e)
 		{
 			e.preventDefault();
 			jsBackend.messages.hide($(this).parents('.formMessage'));
@@ -1435,7 +1434,7 @@ jsBackend.tabs =
 		// select tab
 		if($('.tabSelect').length > 0)
 		{
-			$('.tabSelect').on('click', function(e)
+			$(document).on('click', '.tabSelect', function(e)
 			{
 				// prevent default
 				e.preventDefault();
@@ -1460,7 +1459,7 @@ jsBackend.tinyMCE =
 		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
 
 		// bind click on the element
-		$('.clickToEdit').on('click', function(e)
+		$(document).on('click', '.clickToEdit', function(e)
 		{
 			// get id
 			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
@@ -1638,7 +1637,7 @@ jsBackend.tableSequenceByDragAndDrop =
 
 					// init var
 					$rows = $(this).find('tr');
-					var newIdSequence;
+					var newIdSequence = [];
 
 					// loop rowIds
 					$rows.each(function() { newIdSequence.push($(this).data('id')); });

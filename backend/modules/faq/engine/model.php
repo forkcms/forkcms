@@ -10,7 +10,7 @@
 /**
  * In this file we store all generic functions that we will be using in the faq module
  *
- * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
@@ -85,7 +85,7 @@ class BackendFaqModel
 	 */
 	public static function deleteFeedback($itemId)
 	{
-		BackendModel::getDB(true)->delete('faq_feedback', 'id = ?', (int) $itemId);
+		BackendModel::getDB(true)->update('faq_feedback', array('processed' => 'Y'), 'id = ?', (int) $itemId);
 	}
 
 	/**
@@ -135,18 +135,35 @@ class BackendFaqModel
 	}
 
 	/**
+	 * Fetches all the feedback that is available
+	 *
+	 * @param int $limit
+	 * @return array
+	 */
+	public static function getAllFeedback($limit = 5)
+	{
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT f.*
+			 FROM faq_feedback AS f
+			 WHERE f.processed = ?
+			 LIMIT ?',
+			array('N', (int) $limit)
+		);
+	}
+
+	/**
 	 * Fetches all the feedback for a question
 	 *
 	 * @param int $id The question id.
 	 * @return array
 	 */
-	public static function getAllFeedback($id)
+	public static function getAllFeedbackForQuestion($id)
 	{
 		return (array) BackendModel::getDB()->getRecords(
 			'SELECT f.*
 			 FROM faq_feedback AS f
-			 WHERE f.question_id = ?',
-			 array((int) $id));
+			 WHERE f.question_id = ? AND f.processed = ?',
+			 array((int) $id, 'N'));
 	}
 
 	/**

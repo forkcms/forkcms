@@ -162,6 +162,74 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 	}
 
 	/**
+	 * Process the XML
+	 */
+	private function processXML()
+	{
+		// init object
+		$reader = new XMLReader();
+
+		// open the file
+		$reader->open(FRONTEND_FILES_PATH . '/blogger.xml');
+
+		// start reading
+		$reader->read();
+
+		// loop through the document
+		while(true)
+		{
+			// start tag for entry?
+			if($reader->name != 'entry') continue;
+
+			// end tag?
+			if($reader->nodeType == XMLReader::END_ELEMENT) $reader->next();
+
+			// get the raw XML
+			$xmlString = $reader->readOuterXml();
+
+			// is it really an entry?
+			if(substr($xmlString, 0, 6) == '<entry')
+			{
+				// read the XML as an SimpleXML-object
+				$xml = @simplexml_load_string($reader->readOuterXml());
+
+				// skip element if it isn't a valid SimpleXML-object
+				if($xml === false) continue;
+
+				// loop the categories
+				foreach($xml->category as $category)
+				{
+					// post
+					if($category['term'] == 'http://schemas.google.com/blogger/2008/kind#post')
+					{
+						// process the post
+						$this->processXMLAsPost($xml);
+
+						// stop looping
+						break;
+					}
+
+					// comment
+					if($category['term'] == 'http://schemas.google.com/blogger/2008/kind#comment')
+					{
+						// process the post
+						$this->processXMLAsComment($xml);
+
+						// stop looping
+						break;
+					}
+				}
+			}
+
+			// end
+			if(!$reader->read()) break;
+		}
+
+		// close
+		$reader->close();
+	}
+
+	/**
 	 * Process the XML and treat it as a comment
 	 *
 	 * @param SimpleXMLElement $xml The XML to process.
@@ -418,69 +486,8 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 				// move the file
 				$this->frm->getField('blogger')->moveFile(FRONTEND_FILES_PATH . '/blogger.xml');
 
-				// init object
-				$reader = new XMLReader();
-
-				// open the file
-				$reader->open(FRONTEND_FILES_PATH . '/blogger.xml');
-
-				// start reading
-				$reader->read();
-
-				// loop through the document
-				while(true)
-				{
-					// start tag for entry?
-					if($reader->name == 'entry')
-					{
-						// end tag?
-						if($reader->nodeType == XMLReader::END_ELEMENT) $reader->next();
-
-						// get the raw XML
-						$xmlString = $reader->readOuterXml();
-
-						// is it really an entry?
-						if(substr($xmlString, 0, 6) == '<entry')
-						{
-							// read the XML as an SimpleXML-object
-							$xml = @simplexml_load_string($reader->readOuterXml());
-
-							// validate
-							if($xml !== false)
-							{
-								// loop the categories
-								foreach($xml->category as $category)
-								{
-									// post
-									if($category['term'] == 'http://schemas.google.com/blogger/2008/kind#post')
-									{
-										// process the post
-										$this->processXMLAsPost($xml);
-
-										// stop looping
-										break;
-									}
-
-									// comment
-									if($category['term'] == 'http://schemas.google.com/blogger/2008/kind#comment')
-									{
-										// process the post
-										$this->processXMLAsComment($xml);
-
-										// stop looping
-										break;
-									}
-								}
-							}
-						}
-					}
-
-					// end
-					if(!$reader->read()) break;
-				}
-
-				// close
-				$reader->close();
+				// process the XML
+				$this->processXML();
 
 				// recalculate the comments
 				BackendBlogModel::reCalculateCommentCount($this->newIds);

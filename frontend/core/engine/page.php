@@ -75,6 +75,9 @@ class FrontendPage extends FrontendBaseObject
 	{
 		parent::__construct();
 
+		// add reference
+		Spoon::set('page', $this);
+
 		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
@@ -232,6 +235,16 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
+	 * Fetch the statuscode for the current page.
+	 *
+	 * @return int
+	 */
+	public function getStatusCode()
+	{
+		return $this->statusCode;
+	}
+
+	/**
 	 * Parse the languages
 	 */
 	private function parseLanguages()
@@ -269,20 +282,13 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private function processPage()
 	{
-		// is this an action?
-		$isAction = (isset($this->record['data']['is_action']) && $this->record['data']['is_action']);
+		// set pageTitle
+		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
 
-		// only set title and meta-stuff if this isn't an action
-		if(!$isAction)
-		{
-			// set pageTitle
-			$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
-
-			// set meta-data
-			$this->header->addMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
-			$this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
-			$this->header->setMetaCustom($this->record['meta_custom']);
-		}
+		// set meta-data
+		$this->header->addMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+		$this->header->setMetaCustom($this->record['meta_custom']);
 
 		// advanced SEO-attributes
 		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
@@ -357,8 +363,10 @@ class FrontendPage extends FrontendBaseObject
 				// the block only contains HTML
 				else
 				{
-					$block = array('blockIsHTML' => true,
-									'blockContent' => $block['html']);
+					$block = array(
+						'blockIsHTML' => true,
+						'blockContent' => $block['html']
+					);
 				}
 			}
 		}

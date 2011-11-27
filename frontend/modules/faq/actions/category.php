@@ -10,7 +10,7 @@
 /**
  * This is the category-action
  *
- * @author Lester Lievens <lester@netlash.com>
+ * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendFaqCategory extends FrontendBaseBlock

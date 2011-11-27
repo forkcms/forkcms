@@ -13,6 +13,7 @@
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendPagesEdit extends BackendBaseActionEdit
 {
@@ -36,6 +37,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 * @var	array
 	 */
 	private $extras = array();
+
+	/**
+	 * Is the current user a god user?
+	 *
+	 * @var bool
+	 */
+	private $isGod = false;
 
 	/**
 	 * The positions
@@ -102,6 +110,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	{
 		// get record
 		$this->id = $this->getParameter('id', 'int');
+		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// check if something went wrong
 		if($this->id === null || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
@@ -198,6 +207,23 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addHidden('template_id', $this->record['template_id']);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
+
+		// a god user should be able to adjust the detailed settings for a page easily
+		if($this->isGod)
+		{
+			// init some vars
+			$items = array('move', 'children', 'edit', 'delete');
+			$checked = array();
+			$values = array();
+
+			foreach($items as $value)
+			{
+				$values[] = array('label' => BL::msg(SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+				if(isset($this->record['allow_' . $value]) && $this->record['allow_' . $value] == 'Y') $checked[] = $value;
+			}
+
+			$this->frm->addMultiCheckbox('allow', $values, $checked);
+		}
 
 		// build prototype block
 		$block['index'] = 0;
@@ -360,6 +386,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// parse some variables
 		$this->tpl->assign('item', $this->record);
+		$this->tpl->assign('isGod', $this->isGod);
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('positions', $this->positions);
 		$this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
@@ -453,6 +480,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['sequence'] = $this->record['sequence'];
 				$page['data'] = ($data !== null) ? serialize($data) : null;
 
+				if($this->isGod)
+				{
+					$page['allow_move'] = (in_array('move', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_children'] = (in_array('children', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_edit'] = (in_array('edit', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_delete'] = (in_array('delete', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+				}
+
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
 
@@ -460,10 +495,10 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['revision_id'] = BackendPagesModel::update($page);
 
 				// loop blocks
-				foreach($this->blocksContent as $i => &$block)
+				foreach($this->blocksContent as $i => $block)
 				{
 					// add page revision id to blocks
-					$block['revision_id'] = $page['revision_id'];
+					$this->blocksContent[$i]['revision_id'] = $page['revision_id'];
 
 					// validate blocks, only save blocks for valid positions
 					if(!in_array($block['position'], $this->templates[$this->frm->getField('template_id')->getValue()]['data']['names'])) unset($this->blocksContent[$i]);
