@@ -539,10 +539,8 @@ class FrontendModel
 	/**
 	 * Push a notification to Microsoft's notifications-server
 	 *
-	 * @param mixed $alert The message/dictonary to send.
-	 * @param int[optional] $badge The number for the badge.
-	 * @param string $title The title for the tile to send.
-	 * @param string[optional] $count The count for the tile to send.
+	 * @param mixed $title The message/dictonary to send.
+	 * @param int[optional] $count The number for the badge.
 	 * @param string[optional] $image The image for the tile to send.
 	 * @param string[optional] $backTitle The title for the tile backtround to send.
 	 * @param string[optional] $backText The text for the tile background to send.
