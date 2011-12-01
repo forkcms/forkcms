@@ -88,7 +88,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 			try
 			{
 				// load info.xml
-				$infoXml = new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 				// convert xml to useful array
 				$this->information = BackendExtensionsModel::processModuleXml($infoXml);

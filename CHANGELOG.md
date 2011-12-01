@@ -1,12 +1,45 @@
-3.1.3 (xxxx-xx-xx)
+3.1.4 (2011-11-29)
 --
+Improvements:
+
+* Core: upgraded jQuery to 1.7.1  
+* Core: upgraded jQuery Tools to 1.2.6
+* Core: direct action pages get prefilled meta information again.
+* Users: when adding a user and there is only one group it will be checked by default.
+
 Bugfixes:
 
+* Profiles: display name was not being urilized.
+* Tags: it is no longer impossible to fetch related items with the same id as your source item.
+* Core: fixed js issue in triton.
+* Core: fixed a typo, thx to Danny Korpan.
+* Extensions: when using spaces in the format-part of the template XML, the templates weren't build correctly.
+
+
+3.1.3 (2011-11-22)
+--
+Improvements:
+
+* Added the possibility to easily adjust detailed page settings when you are a god user.
+* SVN folders will now be skipped when running the remove_cache script.
+
+Bugfixes:
+
+* Core: fixed an issue with the checkboxTextfieldCombo function.
+* Core: fixed minified media queries in the backend CSS manually, the minify script itself has to be adjusted though.
+* Core: fixed inputCheckbox positioning inside datagrids.
+* Core: fixed the row selected state in the datagrid when the selectAll checkbox was clicked.
+* Core: fixed the layout dataFilter function since it scoped the wrong, lowercased class of the dataFilter.
 * Extensions: prevented PHP warnings when no info.xml is available.
 * Core: fixed an issue with drag and drop in the backend.
 * Locale: importing other languages then EN is possible again.
 * Core: fixed an issue with the user-dropdown. 
 * Formbuilder: fixed an issues with the default error messages.
+* Blog: deleting a blog image caused a SQL error.
+* Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
+* Core: javascript error fixed when no href is provided in the share widget.
+* Core: fixed confirmation-dialog, wasn't closing when the cancel-button was clicked.
+* Tools: frontend and backend globals were not deleted when running prepare_for_reinstall.
 
 
 3.1.2 (2011-11-15)

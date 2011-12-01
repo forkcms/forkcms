@@ -21,7 +21,7 @@
 						{* Category*}
 						{$lblIn} {$lblThe} {$lblCategory} <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
 
-						{* Tags*}
+						{* Tags *}
 						{option:item.tags}
 							{$lblWith} {$lblThe} {$lblTags}
 							{iteration:item.tags}
@@ -31,14 +31,14 @@
 					</li>
 					<li>
 						{* Comments *}
-						{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
+						{option:!comments}<a href="#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
 						{option:comments}
-							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
-							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
+							{option:blogCommentsMultiple}<a href="#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+							{option:!blogCommentsMultiple}<a href="{#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
 					<li>
-						<a href="{$item.full_url}" class="share">Share</a>
+						<a href="{$item.full_url}" class="share">{$lblShare|ucfirst}</a>
 					</li>
 				</ul>
 			</header>

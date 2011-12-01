@@ -81,13 +81,15 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 		foreach($themes as &$record)
 		{
 			// reformat custom variables
-			$record['variables'] = array('thumbnail' => $record['thumbnail']);
+			$record['variables']['thumbnail'] = $record['thumbnail'];
+			$record['variables']['installed'] = $record['installed'];
+			$record['variables']['installable'] = $record['installable'];
 
 			// set selected template
 			if($record['value'] == $selected) $record['variables']['selected'] = true;
 
-			// unset the language field
-			unset($record['thumbnail']);
+			// unset the variable field
+			unset($record['thumbnail'], $record['installed'], $record['installable']);
 		}
 
 		// templates
