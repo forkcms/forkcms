@@ -544,6 +544,7 @@ class CampaignMonitor
 		}
 
 		// redefine
+		$url = (string) $url .'.'. $this->responseFormat;
 		$parameters = (array) $parameters;
 		$method = (string) $method;
 		$expectJSON = (bool) $expectJSON;
