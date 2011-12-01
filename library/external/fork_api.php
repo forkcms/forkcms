@@ -435,7 +435,7 @@ class ForkAPI
 	public function microsoftPush($channelUris, $title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $uri = null)
 	{
 		// build parameters
-		$parameters['channel_uri'] = (array) $channelUri;
+		$parameters['channel_uri'] = (array) $channelUris;
 		$parameters['title'] = (string) $title;
 		if($count !== null) $parameters['count'] = (int) $count;
 		if($image !== null) $parameters['image'] = (string) $image;
