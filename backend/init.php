@@ -246,7 +246,6 @@ class BackendInit
 	 */
 	public static function exceptionHandler($exception, $output)
 	{
-		$exception = $exception;
 		$output = (string) $output;
 
 		// mail it?
