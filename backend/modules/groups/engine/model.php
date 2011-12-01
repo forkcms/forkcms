@@ -325,10 +325,8 @@ class BackendGroupsModel
 	 *
 	 * @param  int $userId The id of the user.
 	 * @param  array $groups The groups.
-	 *
-	 * @todo why no type casting 'array' for $groups?
 	 */
-	public static function insertMultipleGroups($userId, $groups)
+	public static function insertMultipleGroups($userId, array $groups)
 	{
 		$userId = (int) $userId;
 		$groups = (array) $groups;
