@@ -331,17 +331,17 @@ class ForkAPI
 	 * Push a notification to apple
 	 *
 	 * @return	array								The device tokens that aren't valid.
-	 * @param	string $deviceToken					The device token for the receiver.
+	 * @param	mixed $deviceTokens					The device token(s) for the receiver.
 	 * @param	mixed $alert						The message/dictonary to send.
 	 * @param	int[optional] $badge				The number for the badge.
 	 * @param	string[optional] $sound				The sound that should be played.
 	 * @param 	array[optional] $extraDictionaries	Extra dictionaries.
 	 */
-	public function applePush($deviceToken, $alert, $badge = null, $sound = null, array $extraDictionaries = null)
+	public function applePush($deviceTokens, $alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{
 		// build parameters
-		$parameters['device_token'] = $deviceToken;
-		$parameters['alert'] = $alert;
+		$parameters['device_token'] = (array) $deviceTokens;
+		$parameters['alert'] = (string) $alert;
 		if($badge !== null) $parameters['badge'] = (int) $badge;
 		if($sound !== null) $parameters['sound'] = (string) $sound;
 		if($extraDictionaries !== null) $parameters['extra_dictionaries'] = $extraDictionaries;
@@ -368,7 +368,7 @@ class ForkAPI
 
 
 	/**
-	 * Register a new/old device within the Fork API
+	 * Register a new/old Apple device within the Fork API
 	 *
 	 * @return	bool
 	 * @param	string $deviceToken		The device token to register.
@@ -407,11 +407,10 @@ class ForkAPI
 		foreach($response->messages->message as $message)
 		{
 			// add into array
-			$return[] = array(	'id' => (string) $message['id'],
+			$return[] = array('id' => (string) $message['id'],
 								'sent_on' => (int) strtotime((string) $message['sent_on']),
 								'subject' => (string) $message->subject,
-								'body' => (string) $message->body
-							);
+								'body' => (string) $message->body);
 		}
 
 		// return
@@ -419,8 +418,59 @@ class ForkAPI
 	}
 
 
-// ping methods
+// microsoft methods
+	/**
+	 * Push a notification to microsoft
+	 *
+	 * @return	array								The device tokens that aren't valid.
+	 * @param	mixed $channelUri					The channel URI(s) for the receiver.
+	 * @param	string $title						The title for the tile to send.
+	 * @param	string[optional] $count				The count for the tile to send.
+	 * @param	string[optional] $image				The image for the tile to send.
+	 * @param	string[optional] $backTitle			The title for the tile backtround to send.
+	 * @param	string[optional] $backText			The text for the tile background to send.
+	 * @param	string[optional] $backImage			The image for the tile background to send.
+	 * @param	string[optional] $tile The secondary tile to update.
+	 * @param	string[optional] $uri				The application uri to navigate to.
+	 */
+	public function microsoftPush($channelUri, $title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $tile = null, $uri = null)
+	{
+		// build parameters
+		$parameters['channel_uri'] = (array) $channelUri;
+		$parameters['title'] = (string) $title;
+		if($count !== null) $parameters['count'] = (int) $count;
+		if($image !== null) $parameters['image'] = (string) $image;
+		if($backTitle !== null) $parameters['back_title'] = (string) $backTitle;
+		if($backText !== null) $parameters['back_text'] = (string) $backText;
+		if($backImage !== null) $parameters['back_image'] = (string) $backImage;
+		if($tile !== null) $parameters['tile'] = (string) $tile;
+		if($uri !== null) $parameters['uri'] = (string) $uri;
 
+		// make the call
+		$this->doCall('microsoft.push', $parameters, true, true);
+	}
+
+
+	/**
+	 * Register a new/old Microsoft device within the Fork API
+	 *
+	 * @return	bool
+	 * @param	string $channelUri		The channel uri to register.
+	 */
+	public function microsoftRegisterDevice($channelUri)
+	{
+		// build parameters
+		$parameters['channel_uri'] = (string) $channelUri;
+
+		// make the call
+		$this->doCall('microsoft.registerDevice', $parameters, true, true);
+
+		// return
+		return true;
+	}
+
+
+// ping methods
 	/**
 	 * Get the ping services
 	 *

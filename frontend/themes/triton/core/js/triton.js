@@ -10,7 +10,7 @@ $(document).ready(function()
 		var parent = $(this).parents('p').get(0);
 
 		// copy of parent
-		parentCopy = parent.clone();
+		parentCopy = $(parent).clone();
 
 		// get all images inside parent
 		parentCopy.find('img').each(function()

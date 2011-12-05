@@ -5,13 +5,13 @@
 <!--[if IE 9 ]> <html lang="{$LANGUAGE}" class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="{$LANGUAGE}"> <!--<![endif]-->
 <head>
-	<title>{$pageTitle}</title>
-
 	{* Meta *}
 	<meta charset="utf-8" />
 	<meta name="generator" content="Fork CMS" />
 	{$meta}
 	{$metaCustom}
+
+	<title>{$pageTitle}</title>
 
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />

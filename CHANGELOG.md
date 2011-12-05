@@ -1,14 +1,26 @@
-3.1.4 (xxxx-xx-xx)
+3.1.5 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Analytics: when refreshing the traffic sources a parseerror was thrown, as reported by Wouter H. on http://forkcms.lighthouseapp.com/projects/61890/tickets/231 
+
+
+3.1.4 (2011-11-29)
 --
 Improvements:
 
 * Core: upgraded jQuery to 1.7.1  
 * Core: upgraded jQuery Tools to 1.2.6
 * Core: direct action pages get prefilled meta information again.
+* Users: when adding a user and there is only one group it will be checked by default.
 
 Bugfixes:
 
 * Profiles: display name was not being urilized.
+* Tags: it is no longer impossible to fetch related items with the same id as your source item.
+* Core: fixed js issue in triton.
+* Core: fixed a typo, thx to Danny Korpan.
+* Extensions: when using spaces in the format-part of the template XML, the templates weren't build correctly.
 
 
 3.1.3 (2011-11-22)

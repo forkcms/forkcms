@@ -32,7 +32,7 @@
 								{* Category*}
 								{$lblIn} {$lblThe} {$lblCategory} <a href="{$items.category_full_url}" title="{$items.category_title}">{$items.category_title}</a>{option:!items.tags}.{/option:!items.tags}
 
-								{* Tags*}
+								{* Tags *}
 								{option:items.tags}
 									{$lblWith} {$lblThe} {$lblTags}
 									{iteration:items.tags}

@@ -4413,7 +4413,7 @@
         <translation language="it"><![CDATA[password]]></translation>
         <translation language="tr"><![CDATA[şifre]]></translation>
         <translation language="cn"><![CDATA[密码]]></translation>
-        <translation language="de"><![CDATA[Password]]></translation>
+        <translation language="de"><![CDATA[Passwort]]></translation>
         <translation language="fr"><![CDATA[mot de passe]]></translation>
       </item>
       <item type="label" name="PerDay">

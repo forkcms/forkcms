@@ -231,7 +231,7 @@ class FrontendTagsModel
 			'SELECT t2.other_id
 			 FROM modules_tags AS t
 			 INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-			 WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND t2.other_id != t.other_id
+			 WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND (t2.module != t.module OR t2.other_id != t.other_id)
 			 GROUP BY t2.other_id
 			 ORDER BY COUNT(t2.tag_id) DESC
 			 LIMIT ?',

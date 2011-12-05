@@ -45,7 +45,8 @@ jsBackend.blog.controls =
 			$filter.submit();
 		});
 
-		if($addCategoryDialog.length > 0) {
+		if($addCategoryDialog.length > 0)
+		{
 			$addCategoryDialog.dialog(
 			{
 				autoOpen: false,

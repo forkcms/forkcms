@@ -23,7 +23,7 @@ jsBackend.analyticsDashboard =
 			// make the call to check the status
 			$.ajax(
 			{
-				data: { fork: { action: 'refresh_traffic_sources' } },
+				data: { fork: { module: 'analytics', action: 'refresh_traffic_sources' } },
 				success: function(data, textStatus)
 				{
 					// redirect

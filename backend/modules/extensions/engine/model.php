@@ -1003,7 +1003,7 @@ class BackendExtensionsModel
 			// template data
 			$template['label'] = (string) $templateXML['label'];
 			$template['path'] = (string) $templateXML['path'];
-			$template['format'] = (string) trim($templateXML->format);
+			$template['format'] = trim(str_replace(array("\n", "\r", ' '), '', (string) $templateXML->format));
 
 			// loop positions
 			foreach($templateXML->positions->position as $positionXML)
@@ -1058,7 +1058,7 @@ class BackendExtensionsModel
 		$syntax = (string) $syntax;
 
 		// cleanup
-		$syntax = trim(str_replace(array("\n", "\r"), '', $syntax));
+		$syntax = trim(str_replace(array("\n", "\r", ' '), '', $syntax));
 
 		// init var
 		$table = array();
