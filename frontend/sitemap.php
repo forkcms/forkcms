@@ -26,7 +26,7 @@ class FrontendSitemap
 	 *
 	 * @var int
 	 */
-	protected $sitemapPage = 0;
+	protected $sitemapPage = null;
 
 	/**
 	 * The sitemap page limit
@@ -64,17 +64,21 @@ class FrontendSitemap
 
 		// set the sitemap data
 		$this->sitemapAction = (isset($this->urlData[0]) && $this->urlData[0] != '') ? $this->urlData[0] : null;
-		$this->loadPagination($this->urlData[1]);
-		if(isset($this->urlData[1]) && $this->urlData[1] != '')
-		{
 
-			// get the current page
-			$page = (int) ltrim($this->urlData[1], '-');
-			if($page > 0) $page--;
-			if($page > $this->numPages) $page = $this->numPages;
-			$this->sitemapPage = $page;
+		if(isset($this->urlData[1]))
+		{
+			// load the pagination data
+			$this->loadPagination($this->urlData[1]);
+
+			if($this->urlData[1] != '')
+			{
+				// get the current page
+				$page = (int) ltrim($this->urlData[1], '-');
+				if($page > 0) $page--;
+				if($page > $this->numPages) $page = $this->numPages;
+				$this->sitemapPage = $page;
+			}
 		}
-		else $this->sitemapPage = null;
 	}
 
 	/**
