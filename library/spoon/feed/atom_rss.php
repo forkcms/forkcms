@@ -192,11 +192,11 @@ class SpoonFeedAtomRSS
 	{
 		// create array
 		$contributor['name'] = (string) $name;
-		if($scheme != null) $contributor['email'] = (string) $email;
-		if($label != null) $contributor['uri'] = (string) $uri;
+		if($email != null) $contributor['email'] = (string) $email;
+		if($uri != null) $contributor['uri'] = (string) $uri;
 
 		// add property
-		$this->contributors[] = $category;
+		$this->contributors[] = $contributor;
 	}
 
 

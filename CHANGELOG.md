@@ -1,3 +1,10 @@
+3.1.5 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Analytics: when refreshing the traffic sources a parseerror was thrown, as reported by Wouter H. on http://forkcms.lighthouseapp.com/projects/61890/tickets/231 
+
+
 3.1.4 (2011-11-29)
 --
 Improvements:

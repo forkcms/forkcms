@@ -728,6 +728,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// push it
 		FrontendModel::pushToAppleApp($alert, $badge, null, $data);
+		FrontendModel::pushToMicrosoftApp('NEW_COMMENT', $badge, null, null, null, null, '/MainPage.xaml?website=' . SITE_URL, null); // @todo: clean this up
 
 		// get settings
 		$notifyByMailOnComment = FrontendModel::getModuleSetting('blog', 'notify_by_email_on_new_comment', false);

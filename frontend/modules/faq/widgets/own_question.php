@@ -94,7 +94,7 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 				if($spamFilterEnabled)
 				{
 					// if the comment is spam alter the comment status so it will appear in the spam queue
-					if(FrontendModel::isSpam($variables['message'], SITE_URL . $faqLink, $variables['name'], $variables['email']))
+					if(FrontendModel::isSpam($variables['message'], SITE_URL . FrontendNavigation::getURLForBlock('faq'), $variables['name'], $variables['email']))
 					{
 						$this->status = 'errorSpam';
 						return;
