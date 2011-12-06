@@ -199,6 +199,8 @@ class BlogInstaller extends ModuleInstaller
 		// check if blogposts already exist in this language
 		if(!(bool) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)))
 		{
+			$this->setSitemapAction('detail');
+
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array(
 				'id' => 1,

@@ -19,7 +19,7 @@ class FrontendSitemap
 	 *
 	 * @var string
 	 */
-	protected $sitemapAction, $sitemapUrl;
+	protected $sitemapAction, $sitemapType, $sitemapUrl;
 
 	/**
 	 * The sitemap data from the url
@@ -33,7 +33,7 @@ class FrontendSitemap
 	 *
 	 * @var int
 	 */
-	protected $pageLimit = 10;
+	protected $pageLimit = 10, $numPages = 1;
 
 	/**
 	 * The url data
@@ -58,16 +58,23 @@ class FrontendSitemap
 	 */
 	protected function filterData()
 	{
+		// seperate the url data
 		$url = str_replace('.xml', '', $this->sitemapUrl);
 		$this->urlData = explode('sitemap', $url);
 
+		// set the sitemap data
 		$this->sitemapAction = (isset($this->urlData[0]) && $this->urlData[0] != '') ? $this->urlData[0] : null;
+		$this->loadPagination($this->urlData[1]);
 		if(isset($this->urlData[1]) && $this->urlData[1] != '')
 		{
+
+			// get the current page
 			$page = (int) ltrim($this->urlData[1], '-');
 			if($page > 0) $page--;
+			if($page > $this->numPages) $page = $this->numPages;
 			$this->sitemapPage = $page;
 		}
+		else $this->sitemapPage = null;
 	}
 
 	/**
@@ -102,13 +109,21 @@ class FrontendSitemap
 	 */
 	protected function getMetaData($limit = 200, $offset = 0)
 	{
-		return (array) FrontendModel::getDB()->getRecords(
+		$data = (array) FrontendModel::getDB()->getRecords(
 			'SELECT s.*
 			 FROM meta_sitemap AS s
 			 WHERE s.visible = ?
 			 LIMIT ?, ?',
 			array('Y', (int) $offset, (int) $limit)
 		);
+
+		$defaultLanguage = FrontendModel::getModuleSetting('core', 'default_language');
+		foreach($data as $key => $sitemap)
+		{
+			$baseUrl = SITE_URL . FrontendNavigation::getURLForBlock($sitemap['module'], $sitemap['action'], $defaultLanguage);
+			$data[$key]['full_url'] =  $baseUrl . '/' . $sitemap['url'];
+		}
+		return $data;
 	}
 
 	/**
@@ -131,13 +146,41 @@ class FrontendSitemap
 	 */
 	protected function loadData()
 	{
+
 		$this->filterData();
 
-		if($this->sitemapAction == 'page')
+		switch($this->sitemapAction)
 		{
-			$this->pageLimit = FrontendModel::getModuleSetting('core', 'sitemap_page_num_items', 1);
-			$this->metaData = $this->getMetaData($this->pageLimit, $this->sitemapPage);
+			case 'page':
+				$this->metaData = $this->getMetaData($this->pageLimit, $this->sitemapPage);
+			break;
+			case '':
+				// do nothing
+			break;
+			default:
+				SpoonHTTP::redirect(SITE_URL);
+			break;
 		}
+	}
+
+	/**
+	 * Load the pagination
+	 *
+	 * @param string $action
+	 */
+	protected function loadPagination($action)
+	{
+		$action = strtolower((string) $action);
+		switch($action)
+		{
+			case 'page':
+				$this->pageLimit = FrontendModel::getModuleSetting('core', 'sitemap_page_num_items', 10);
+			break;
+			default:
+				// do nothing
+			break;
+		}
+		$this->numPages = ceil($this->getMetaDataCount() / $this->pageLimit) - 1;
 	}
 
 	/**
@@ -148,15 +191,17 @@ class FrontendSitemap
 		// the search engines expect a xml file, so act like one
 		SpoonHTTP::setHeaders(array('Content-Type: application/xml'));
 
-		$sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
+		// get the parsed data to show
+		$parsedData = '';
+		$this->sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
+		if($this->sitemapAction == 'page') $parsedData .= $this->parsePage();
+		if($this->sitemapAction === null) $parsedData .= $this->parseIndex();
 
+		// build the output
 		$output = '<?xml version="1.0" encoding="UTF-8"?>';
-		$output .= '<' . $sitemapType . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-
-		if($this->sitemapAction == 'page') $output .= $this->parsePage();
-		if($this->sitemapAction === null) $output .= $this->parseIndex();
-
-		$output .= '</' . $sitemapType . '>';
+		$output .= '<' . $this->sitemapType . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		$output .= $parsedData;
+		$output .= '</' . $this->sitemapType . '>';
 		echo $output;
 	}
 
@@ -174,7 +219,7 @@ class FrontendSitemap
 		 */
 		$output .= "\t" . '<sitemap>';
 		$output .= "\t\t" . '<loc>' . SITE_URL . '/pagesitemap.xml</loc>';
-		$output .= "\t\t" . '<lastmod>' . $this->getLastModificationDate($this->getMetaDataCount(), 0) . '</lastmod>';
+		$output .= "\t\t" . '<lastmod>' . $this->getLastModificationDate($this->numPages, 0) . '</lastmod>';
 		$output .= "\t" . '</sitemap>';
 
 		return $output;
@@ -190,11 +235,11 @@ class FrontendSitemap
 		$output = '';
 
 		// if we exceed the maximum, we should show some sort of pagination
-		if($this->getMetaDataCount() > $this->pageLimit)
+		if($this->numPages > 0 && $this->sitemapPage === null)
 		{
-			$numPages = ceil($this->getMetaDataCount() / $this->pageLimit);
+			$this->sitemapType = 'sitemapindex';
 
-			for($i = 1; $i <= $numPages; $i++)
+			for($i = 1; $i <= $this->numPages; $i++)
 			{
 				$output .= "\t" . '<sitemap>';
 				$output .= "\t\t" . '<loc>' . SITE_URL . '/pagesitemap-' . $i . '.xml</loc>';

@@ -14,6 +14,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class ModuleInstaller
 {
@@ -37,6 +38,20 @@ class ModuleInstaller
 	 * @var array
 	 */
 	private $interfaceLanguages = array();
+
+	/**
+	 * The sitemap action
+	 *
+	 * @var string
+	 */
+	private $sitemapAction;
+
+	/**
+	 * The installed modulename
+	 *
+	 * @var string
+	 */
+	private $module;
 
 	/**
 	 * The variables passed by the installer
@@ -84,6 +99,9 @@ class ModuleInstaller
 
 		// activate and update description
 		else $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
+
+		// store the module name for later usage
+		$this->module = $name;
 	}
 
 	/**
@@ -407,7 +425,17 @@ class ModuleInstaller
 	 */
 	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
 	{
+		$sitemapData = array(
+			'module' => $this->module,
+			'action' => $this->sitemapAction,
+			'url' => $url,
+			'priority' => 0.8,
+			'edited_on' => gmdate('Y-m-d H:i:s')
+		);
+		$sitemapId = $this->getDB()->insert('meta_sitemap', $sitemapData);
+
 		$item = array(
+			'sitemap_id' => $sitemapId,
 			'keywords' => (string) $keywords,
 			'keywords_overwrite' => ($keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N'),
 			'description' => (string) $description,
@@ -699,6 +727,16 @@ class ModuleInstaller
 
 			$this->getDB()->insert('modules_settings', $item);
 		}
+	}
+
+	/**
+	 * Set the sitemap action. This will be used when you save meta data.
+	 *
+	 * @param string $name
+	 */
+	protected function setSitemapAction($name)
+	{
+		$this->sitemapAction = (string) $name;
 	}
 }
 
