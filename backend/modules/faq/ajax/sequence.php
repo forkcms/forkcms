@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Reorder categories
  *
- * @package		backend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester.lievens@netlash.com>
  */
 class BackendFaqAjaxSequence extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -31,7 +31,7 @@ class BackendFaqAjaxSequence extends BackendBaseAJAXAction
 		foreach($ids as $i => $id)
 		{
 			// build item
-			$item = BackendFaqModel::getCategory((int) $id);
+			$item['id'] = (int) $id;
 
 			// change sequence
 			$item['sequence'] = $i + 1;
@@ -45,4 +45,3 @@ class BackendFaqAjaxSequence extends BackendBaseAJAXAction
 	}
 }
 
-?>

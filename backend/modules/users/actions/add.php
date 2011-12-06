@@ -1,50 +1,45 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new user
  *
- * @package		backend
- * @subpackage	users
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendUsersAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
 		// create form
 		$this->frm = new BackendForm('add');
+
+		// get the groups
+		$groups = BackendGroupsModel::getAll();
+
+		// if there is only one group we can check it so the user isn't bothered with an error for not selecting one
+		$checkedGroups = (count($groups) == 1) ? $groups[0]['value'] : null;
 
 		// create elements
 		$this->frm->addText('email', null, 255);
@@ -53,25 +48,22 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addText('nickname', null, 24);
 		$this->frm->addText('name', null, 255);
 		$this->frm->addText('surname', null, 255);
-		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
+		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), BackendModel::getModuleSetting('core', 'default_interface_language'));
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
 		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
-		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll());
+		$this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
 
 		// disable autocomplete
 		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));
 		$this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -208,5 +200,3 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the analytics module
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-final class BackendAnalyticsConfig extends BackendBaseConfig
+class BackendAnalyticsConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -18,7 +21,6 @@ final class BackendAnalyticsConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,19 +28,15 @@ final class BackendAnalyticsConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 
-
 	/**
 	 * Check if all required settings have been set
 	 *
-	 * @return	void
-	 * @param	string $module		The module.
+	 * @param string $module The module.
 	 */
 	public function __construct($module)
 	{
-		// parent construct
 		parent::__construct($module);
 
-		// init
 		$error = false;
 		$action = Spoon::exists('url') ? Spoon::get('url')->getAction() : null;
 
@@ -49,8 +47,9 @@ final class BackendAnalyticsConfig extends BackendBaseConfig
 		if(BackendModel::getModuleSetting('analytics', 'table_id') === null) $error = true;
 
 		// missing settings, so redirect to the index-page to show a message (except on the index- and settings-page)
-		if($error && $action != 'settings' && $action != 'index') SpoonHTTP::redirect(BackendModel::createURLForAction('index'));
+		if($error && $action != 'settings' && $action != 'index')
+		{
+			SpoonHTTP::redirect(BackendModel::createURLForAction('index'));
+		}
 	}
 }
-
-?>

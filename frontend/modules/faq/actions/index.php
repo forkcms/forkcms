@@ -1,74 +1,63 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action
  *
- * @package		frontend
- * @subpackage	faq
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @since		2.1
+ * @author Lester Lievens <lester.lievens@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendFaqIndex extends FrontendBaseBlock
 {
 	/**
-	 * The questions
-	 *
 	 * @var	array
 	 */
-	private $items;
-
+	private $items = array();
 
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
 
-		// load template
-		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// parse
+		$this->loadTemplate();
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get questions
-		$this->items = FrontendFaqModel::getCategories();
+		$categories = FrontendFaqModel::getCategories();
+		$limit = FrontendModel::getModuleSetting('faq', 'overview_num_items_per_category', 10);
 
-		// go over categories
-		foreach($this->items as &$item)
+		foreach($categories as $item)
 		{
-			// add questions info to array
-			$item['questions'] = FrontendFaqModel::getQuestions($item['id']);
+			$item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
+
+			// no questions? next!
+			if(empty($item['questions'])) continue;
+
+			// add the category item including the questions
+			$this->items[] = $item;
 		}
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
-		// assign questions
 		$this->tpl->assign('faqCategories', (array) $this->items);
 	}
 }
-
-?>

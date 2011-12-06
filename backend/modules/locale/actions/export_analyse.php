@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the export-action, it will create a XML with missing locale items.
  *
- * @package		backend
- * @subpackage	locale
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendLocaleExportAnalyse extends BackendBaseActionIndex
 {
@@ -17,7 +20,6 @@ class BackendLocaleExportAnalyse extends BackendBaseActionIndex
 	 */
 	private $filter;
 
-
 	/**
 	 * Locale items.
 	 *
@@ -25,11 +27,8 @@ class BackendLocaleExportAnalyse extends BackendBaseActionIndex
 	 */
 	private $locale;
 
-
 	/**
 	 * Create the XML based on the locale items.
-	 *
-	 * @return	void
 	 */
 	private function createXML()
 	{
@@ -46,52 +45,33 @@ class BackendLocaleExportAnalyse extends BackendBaseActionIndex
 
 		// output XML
 		echo $xmlOutput;
-
-		// stop script
 		exit;
 	}
 
-
 	/**
 	 * Execute the action.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// set filter
 		$this->setFilter();
-
-		// set items
 		$this->setItems();
-
-		// create XML
 		$this->createXML();
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
 		$this->filter['language'] = (isset($_GET['language'])) ? $this->getParameter('language') : BL::getWorkingLanguage();
 	}
 
-
 	/**
 	 * Build items array and group all items by application, module, type and name.
-	 *
-	 * @return	void
 	 */
 	private function setItems()
 	{
-		// init
 		$this->locale = array();
 
 		// get items
@@ -123,5 +103,3 @@ class BackendLocaleExportAnalyse extends BackendBaseActionIndex
 		unset($backend);
 	}
 }
-
-?>

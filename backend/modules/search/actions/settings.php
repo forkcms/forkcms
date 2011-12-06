@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the settings-action, it will display a form to set general search settings
  *
- * @package		backend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendSearchSettings extends BackendBaseActionEdit
 {
@@ -18,7 +21,6 @@ class BackendSearchSettings extends BackendBaseActionEdit
 	 */
 	private $modules = array();
 
-
 	/**
 	 * Settings per module
 	 *
@@ -26,35 +28,20 @@ class BackendSearchSettings extends BackendBaseActionEdit
 	 */
 	private $settings = array();
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load form
 		$this->loadForm();
-
-		// validates the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the settings form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -97,11 +84,8 @@ class BackendSearchSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -112,11 +96,8 @@ class BackendSearchSettings extends BackendBaseActionEdit
 		$this->tpl->assign(array('modules' => $this->modules));
 	}
 
-
 	/**
 	 * Validates the settings form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -156,12 +137,9 @@ class BackendSearchSettings extends BackendBaseActionEdit
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_changed_settings');
 
-
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}
 		}
 	}
 }
-
-?>

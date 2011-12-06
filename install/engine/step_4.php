@@ -1,62 +1,45 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Step 4 of the Fork installer
  *
- * @package		install
- * @subpackage	installer
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class InstallerStep4 extends InstallerStep
 {
 	/**
 	 * Executes this step.
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// loads the modules array
 		$this->loadModules();
-
-		// load form
 		$this->loadForm();
-
-		// validate form
 		$this->validateForm();
-
-		// parse form
 		$this->parseForm();
-
-		// show output
 		$this->tpl->display('layout/templates/step_4.tpl');
 	}
-
 
 	/**
 	 * Is this step allowed.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep3::isAllowed() &&
-				isset($_SESSION['default_language']) &&
-				isset($_SESSION['default_interface_language']) &&
-				isset($_SESSION['multiple_languages']) &&
-				isset($_SESSION['languages']) &&
-				isset($_SESSION['interface_languages']);
+		return InstallerStep3::isAllowed() && isset($_SESSION['default_language']) && isset($_SESSION['default_interface_language']) && isset($_SESSION['multiple_languages']) && isset($_SESSION['languages']) && isset($_SESSION['interface_languages']);
 	}
-
 
 	/**
 	 * Loads the form.
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -86,13 +69,13 @@ class InstallerStep4 extends InstallerStep
 
 		// example data
 		$this->frm->addCheckbox('example_data', (SpoonSession::exists('example_data') ? SpoonSession::get('example_data') : true));
-	}
 
+		// debug mode
+		$this->frm->addCheckbox('debug_mode', (SpoonSession::exists('debug_mode') ? SpoonSession::get('debug_mode') : false));
+	}
 
 	/**
 	 * Scans the directory structure for modules and adds them to the list of optional modules
-	 *
-	 * @return	void
 	 */
 	private function loadModules()
 	{
@@ -111,11 +94,8 @@ class InstallerStep4 extends InstallerStep
 		}
 	}
 
-
 	/**
 	 * Validate the form based on the variables in $_POST
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -137,11 +117,12 @@ class InstallerStep4 extends InstallerStep
 				// example data
 				SpoonSession::set('example_data', $this->frm->getField('example_data')->getChecked());
 
+				// debug mode
+				SpoonSession::set('debug_mode', $this->frm->getField('debug_mode')->getChecked());
+
 				// redirect
 				SpoonHTTP::redirect('index.php?step=5');
 			}
 		}
 	}
 }
-
-?>

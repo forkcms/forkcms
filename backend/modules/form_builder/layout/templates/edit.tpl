@@ -8,9 +8,11 @@
 
 	<script type="text/javascript">
 		//<![CDATA[
+			var defaultErrorMessages = {};
+
 			{option:errors}
 				{iteration:errors}
-					jsBackend.formBuilder.fields.defaultErrorMessages.{$errors.type} = '{$errors.message}';
+					defaultErrorMessages.{$errors.type} = '{$errors.message}';
 				{/iteration:errors}
 			{/option:errors}
 		//]]>

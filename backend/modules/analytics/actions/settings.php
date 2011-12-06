@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the settings-action, it will display a form to set general analytics settings
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendAnalyticsSettings extends BackendBaseActionEdit
 {
@@ -19,14 +22,12 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 */
 	private $accountName;
 
-
 	/**
 	 * All website profiles
 	 *
 	 * @var	array
 	 */
 	private $profiles = array();
-
 
 	/**
 	 * The title of the selected profile
@@ -35,14 +36,12 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 */
 	private $profileTitle;
 
-
 	/**
 	 * The session token
 	 *
 	 * @var	string
 	 */
 	private $sessionToken;
-
 
 	/**
 	 * The table id
@@ -51,36 +50,22 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 */
 	private $tableId;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// gets all needed parameters
 		$this->getAnalyticsParameters();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Gets all the needed parameters to link a google analytics account to fork
-	 *
-	 * @return	void
 	 */
 	private function getAnalyticsParameters()
 	{
-		// get the value
 		$remove = SpoonFilter::getGetValue('remove', array('session_token', 'table_id'), null);
 
 		// something has to be removed before proceeding
@@ -114,7 +99,6 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		// no session token
 		if(!isset($this->sessionToken))
 		{
-			// get token
 			$token = SpoonFilter::getGetValue('token', null, null);
 
 			// a one time token is given in the get parameters
@@ -153,13 +137,11 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			// everything went fine
 			elseif(is_array($this->profiles))
 			{
-				// get table id
 				$tableId = SpoonFilter::getGetValue('table_id', null, null);
 
 				// a table id is given in the get parameters
 				if(!empty($tableId))
 				{
-					// init vars
 					$profiles = array();
 
 					// set the table ids as keys
@@ -185,15 +167,11 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// no session token
 		if(!isset($this->sessionToken))
 		{
 			// show the link to the google account authentication form
@@ -215,19 +193,16 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$this->tpl->assign('NoTableId', true);
 			$this->tpl->assign('Wizard', true);
 
-			// init vars
 			$accounts = array();
 
-			// no profiles? Or not authorized
+			// no profiles or not authorized
 			if(!empty($this->profiles) && $this->profiles !== 'UNAUTHORIZED')
 			{
-				// init var
 				$accounts[''][0] = BL::msg('ChooseWebsiteProfile');
 
 				// prepare accounts array
 				foreach((array) $this->profiles as $profile)
 				{
-					// put profiles under their account
 					$accounts[$profile['accountName']][$profile['tableId']] = $profile['title'];
 				}
 
@@ -239,12 +214,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 
 					// create form
 					$frm = new BackendForm('linkProfile', BackendModel::createURLForAction(), 'get');
-
-					// create elements
 					$frm->addDropdown('table_id', $accounts);
-
-					// parse form
 					$frm->parse($this->tpl);
+
+					if($frm->isSubmitted())
+					{
+						if($frm->getField('table_id')->getValue() == '0') $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
+					}
 
 					// parse accounts
 					$this->tpl->assign('accounts', true);
@@ -264,13 +240,12 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Helper function to sort accounts
 	 *
-	 * @return	int
-	 * @param	array $account1		First account for comparison.
-	 * @param	array $account2		Second account for comparison.
+	 * @param array $account1 First account for comparison.
+	 * @param array $account2 Second account for comparison.
+	 * @return int
 	 */
 	public static function sortAccounts($account1, $account2)
 	{
@@ -279,5 +254,3 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		return 0;
 	}
 }
-
-?>

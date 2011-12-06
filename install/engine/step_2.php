@@ -1,28 +1,28 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Step 2 of the Fork installer
  *
- * @package		install
- * @subpackage	installer
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @since		2.0
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
 class InstallerStep2 extends InstallerStep
 {
 	/**
-	 * Error statusses for the requirements.
-	 *
-	 * @var	string
+	 * Requirements error statuses
 	 */
-	const STATUS_OK = 'ok',
-			STATUS_WARNING = 'warning',
-			STATUS_ERROR = 'error';
-
+	const STATUS_OK = 'ok';
+	const STATUS_WARNING = 'warning';
+	const STATUS_ERROR = 'error';
 
 	/**
 	 * Array containing all variables to be parsed in the template.
@@ -31,14 +31,13 @@ class InstallerStep2 extends InstallerStep
 	 */
 	private static $variables = array();
 
-
 	/**
 	 * Check if a specific requirement is satisfied
 	 *
-	 * @return	boolean
-	 * @param	string $variable				The "name" of the check.
-	 * @param	bool $requirement				The result of the check.
-	 * @param	string $severity					The severity of the requirement.
+	 * @param string $variable The "name" of the check.
+	 * @param bool $requirement The result of the check.
+	 * @param string $severity The severity of the requirement.
+	 * @return bool
 	 */
 	public static function checkRequirement($variable, $requirement, $severity = self::STATUS_ERROR)
 	{
@@ -47,11 +46,10 @@ class InstallerStep2 extends InstallerStep
 		return self::$variables[$variable] == self::STATUS_OK;
 	}
 
-
 	/**
 	 * Checks the requirements
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function checkRequirements()
 	{
@@ -125,11 +123,20 @@ class InstallerStep2 extends InstallerStep
 		// check if the backend-cache-directory is writable
 		self::checkRequirement('fileSystemBackendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/'), self::STATUS_ERROR);
 
+		// check if the backend-modules-directory is writable
+		self::checkRequirement('fileSystemBackendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/backend/modules/'), self::STATUS_WARNING);
+
 		// check if the frontend-cache-directory is writable
 		self::checkRequirement('fileSystemFrontendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/'), self::STATUS_ERROR);
 
 		// check if the frontend-files-directory is writable
 		self::checkRequirement('fileSystemFrontendFiles', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/'), self::STATUS_ERROR);
+
+		// check if the frontend-modules-directory is writable
+		self::checkRequirement('fileSystemFrontendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/modules/'), self::STATUS_WARNING);
+
+		// check if the frontend-themes-directory is writable
+		self::checkRequirement('fileSystemFrontendThemes', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/themes/'), self::STATUS_WARNING);
 
 		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);
@@ -164,12 +171,10 @@ class InstallerStep2 extends InstallerStep
 		return !in_array(self::STATUS_ERROR, self::$variables);
 	}
 
-
 	/**
 	 * Define path constants
 	 *
-	 * @return	void
-	 * @param	int $step	The step wherefor the constant should be defined.
+	 * @param int $step The step wherefor the constant should be defined.
 	 */
 	private static function defineConstants($step)
 	{
@@ -182,11 +187,8 @@ class InstallerStep2 extends InstallerStep
 		if(!isset($_SESSION['path_www'])) $_SESSION['path_www'] = PATH_WWW;
 	}
 
-
 	/**
 	 * Execute this step
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -252,28 +254,24 @@ class InstallerStep2 extends InstallerStep
 		exit;
 	}
 
-
 	/**
 	 * This step is only allowed if the library path is known.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep1::isAllowed() &&
-				isset($_SESSION['path_library']);
+		return InstallerStep1::isAllowed() && isset($_SESSION['path_library']);
 	}
-
 
 	/**
 	 * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
 	 *
-	 * @return	bool
-	 * @param	string $path	The path to check.
+	 * @param string $path The path to check.
+	 * @return bool
 	 */
 	private static function isRecursivelyWritable($path)
 	{
-		// redefine argument
 		$path = rtrim((string) $path, '/');
 
 		// check if path is writable
@@ -298,13 +296,12 @@ class InstallerStep2 extends InstallerStep
 		return true;
 	}
 
-
 	/**
 	 * Check if a directory is writable.
 	 * The default is_writable function has problems due to Windows ACLs "bug"
 	 *
-	 * @return	bool
-	 * @param	string $path	The path to check.
+	 * @param string $path The path to check.
+	 * @return bool
 	 */
 	private static function isWritable($path)
 	{
@@ -325,5 +322,3 @@ class InstallerStep2 extends InstallerStep
 		return true;
 	}
 }
-
-?>

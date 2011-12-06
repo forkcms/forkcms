@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the delete-action, it will deactivate and mark the user as deleted
  *
- * @package		backend
- * @subpackage	users
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class BackendUsersDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -25,7 +26,6 @@ class BackendUsersDelete extends BackendBaseActionDelete
 		// does the user exist
 		if($this->id !== null && BackendUsersModel::exists($this->id) && BackendAuthentication::getUser()->getUserId() != $this->id)
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// get data
@@ -48,5 +48,3 @@ class BackendUsersDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

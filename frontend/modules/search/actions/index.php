@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will display a form to search
  *
- * @package		frontend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendSearchIndex extends FrontendBaseBlock
 {
@@ -18,14 +21,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $cacheFile;
 
-
 	/**
 	 * The items
 	 *
 	 * @var	array
 	 */
 	private $items;
-
 
 	/**
 	 * Limit of data to fetch
@@ -34,14 +35,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $limit;
 
-
 	/**
 	 * Offset of data to fetch
 	 *
 	 * @var	int
 	 */
 	private $offset;
-
 
 	/**
 	 * The pagination array
@@ -51,14 +50,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	protected $pagination = array('limit' => 20, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * The requested page
 	 *
 	 * @var	int
 	 */
 	private $requestedPage;
-
 
 	/**
 	 * The search term
@@ -67,7 +64,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $term = '';
 
-
 	/**
 	 * Search statistics
 	 *
@@ -75,11 +71,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private $statistics;
 
-
 	/**
 	 * Display
-	 *
-	 * @return	void
 	 */
 	private function display()
 	{
@@ -100,38 +93,23 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// load template
 		$this->loadTemplate();
-
-		// load form
 		$this->loadForm();
-
-		// validate form
 		$this->validateForm();
-
-		// display
 		$this->display();
-
-		// save statistics
 		$this->saveStatistics();
 	}
-
 
 	/**
 	 * Load the cached data
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	private function getCachedData()
 	{
@@ -160,11 +138,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		return true;
 	}
 
-
 	/**
 	 * Load the data
-	 *
-	 * @return	void
 	 */
 	private function getRealData()
 	{
@@ -201,11 +176,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		}
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -219,11 +191,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -260,11 +229,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->parsePagination();
 	}
 
-
 	/**
 	 * Save statistics
-	 *
-	 * @return	void
 	 */
 	private function saveStatistics()
 	{
@@ -294,11 +260,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		SpoonSession::set('searchTerm', $this->term);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -320,5 +283,3 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

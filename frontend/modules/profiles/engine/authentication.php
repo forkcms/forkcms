@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Profile authentication functions.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Jan Moesen <jan@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class FrontendProfilesAuthentication
 {
@@ -20,14 +23,12 @@ class FrontendProfilesAuthentication
 	 */
 	const LOGIN_ACTIVE = 'active';
 
-
 	/**
 	 * The login credentials are correct, but the profile is inactive.
 	 *
 	 * @var	string
 	 */
 	const LOGIN_INACTIVE = 'inactive';
-
 
 	/**
 	 * The login credentials are correct, but the profile has been deleted.
@@ -36,14 +37,12 @@ class FrontendProfilesAuthentication
 	 */
 	const LOGIN_DELETED = 'deleted';
 
-
 	/**
 	 * The login credentials are correct, but the profile has been blocked.
 	 *
 	 * @var	string
 	 */
 	const LOGIN_BLOCKED = 'blocked';
-
 
 	/**
 	 * The login credentials are incorrect or the profile does not exist.
@@ -52,7 +51,6 @@ class FrontendProfilesAuthentication
 	 */
 	const LOGIN_INVALID = 'invalid';
 
-
 	/**
 	 * The current logged in profile.
 	 *
@@ -60,11 +58,8 @@ class FrontendProfilesAuthentication
 	 */
 	private static $profile;
 
-
 	/**
 	 * Cleanup old session records in the database.
-	 *
-	 * @return	void
 	 */
 	public static function cleanupOldSessions()
 	{
@@ -72,17 +67,15 @@ class FrontendProfilesAuthentication
 		FrontendModel::getDB(true)->delete('profiles_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 1 MONTH)');
 	}
 
-
 	/**
 	 * Get the login/profile status for the given e-mail and password.
 	 *
-	 * @return	string 				One of the FrontendProfilesAuthentication::LOGIN_* constants.
-	 * @param	string $email		Profile email address.
-	 * @param	string $password		Profile password.
+	 * @param string $email Profile email address.
+	 * @param string $password Profile password.
+	 * @return string One of the FrontendProfilesAuthentication::LOGIN_* constants.
 	 */
 	public static function getLoginStatus($email, $password)
 	{
-		// redefine
 		$email = (string) $email;
 		$password = (string) $password;
 
@@ -93,31 +86,30 @@ class FrontendProfilesAuthentication
 		$encryptedPassword = FrontendProfilesModel::getEncryptedString($password, FrontendProfilesModel::getSetting($profileId, 'salt'));
 
 		// get the status
-		$loginStatus = FrontendModel::getDB()->getVar('SELECT p.status
-														FROM profiles AS p
-														WHERE p.email = ? AND p.password = ?',
-														array($email, $encryptedPassword));
+		$loginStatus = FrontendModel::getDB()->getVar(
+			'SELECT p.status
+			 FROM profiles AS p
+			 WHERE p.email = ? AND p.password = ?',
+			array($email, $encryptedPassword)
+		);
 
-		// return
 		return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;
 	}
-
 
 	/**
 	 * Get a profile object with information about a profile.
 	 *
-	 * @return	FrontendProfilesProfile
+	 * @return FrontendProfilesProfile
 	 */
 	public static function getProfile()
 	{
 		return self::$profile;
 	}
 
-
 	/**
 	 * Check if a profile is loggedin.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public static function isLoggedIn()
 	{
@@ -131,11 +123,13 @@ class FrontendProfilesAuthentication
 			$sessionId = SpoonSession::getSessionId();
 
 			// get profile id
-			$profileId = (int) FrontendModel::getDB()->getVar('SELECT p.id
-																FROM profiles AS p
-																INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
-																WHERE ps.session_id = ?',
-																(string) $sessionId);
+			$profileId = (int) FrontendModel::getDB()->getVar(
+				'SELECT p.id
+				 FROM profiles AS p
+				 INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
+				 WHERE ps.session_id = ?',
+				(string) $sessionId
+			);
 
 			// valid profile id
 			if($profileId !== 0)
@@ -161,11 +155,13 @@ class FrontendProfilesAuthentication
 			$secret = (string) SpoonCookie::get('frontend_profile_secret_key');
 
 			// get profile id
-			$profileId = (int) FrontendModel::getDB()->getVar('SELECT p.id
-																FROM profiles AS p
-																INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
-																WHERE ps.secret_key = ?',
-																$secret);
+			$profileId = (int) FrontendModel::getDB()->getVar(
+				'SELECT p.id
+				 FROM profiles AS p
+				 INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
+				 WHERE ps.secret_key = ?',
+				$secret
+			);
 
 			// valid profile id
 			if($profileId !== 0)
@@ -174,13 +170,16 @@ class FrontendProfilesAuthentication
 				$profileSecret = FrontendProfilesModel::getEncryptedString(SpoonSession::getSessionId(), FrontendProfilesModel::getRandomString());
 
 				// update session record
-				FrontendModel::getDB(true)->update('profiles_sessions',
-													array(
-														'session_id' => SpoonSession::getSessionId(),
-														'secret_key' => $profileSecret,
-														'date' => FrontendModel::getUTCDate()
-													),
-													'secret_key = ?', $secret);
+				FrontendModel::getDB(true)->update(
+					'profiles_sessions',
+					array(
+						'session_id' => SpoonSession::getSessionId(),
+						'secret_key' => $profileSecret,
+						'date' => FrontendModel::getUTCDate()
+					),
+					'secret_key = ?',
+					$secret
+				);
 
 				// set new cookie
 				SpoonCookie::set('frontend_profile_secret_key', $profileSecret, (60 * 60 * 24 * 31));
@@ -206,13 +205,12 @@ class FrontendProfilesAuthentication
 		return false;
 	}
 
-
 	/**
 	 * Login a profile.
 	 *
-	 * @return	bool
-	 * @param	int $profileId				Login the profile with this id in.
-	 * @param	bool[optional] $remember	Should we set a cookie for later?
+	 * @param int $profileId Login the profile with this id in.
+	 * @param bool[optional] $remember Should we set a cookie for later?
+	 * @return bool
 	 */
 	public static function login($profileId, $remember = false)
 	{
@@ -241,10 +239,15 @@ class FrontendProfilesAuthentication
 		FrontendModel::getDB(true)->delete('profiles_sessions', 'session_id = ?', SpoonSession::getSessionId());
 
 		// insert new session record
-		FrontendModel::getDB(true)->insert('profiles_sessions', array('profile_id' => $profileId,
-																		'session_id' => SpoonSession::getSessionId(),
-			 															'secret_key' => $secretKey,
-			 															'date' => FrontendModel::getUTCDate()));
+		FrontendModel::getDB(true)->insert(
+			'profiles_sessions',
+			array(
+				'profile_id' => $profileId,
+				'session_id' => SpoonSession::getSessionId(),
+				'secret_key' => $secretKey,
+				'date' => FrontendModel::getUTCDate()
+			)
+		);
 
 		// update last login
 		FrontendProfilesModel::update($profileId, array('last_login' => FrontendModel::getUTCDate()));
@@ -253,11 +256,8 @@ class FrontendProfilesAuthentication
 		self::$profile = new FrontendProfilesProfile($profileId);
 	}
 
-
 	/**
 	 * Logout a profile.
-	 *
-	 * @return	void
 	 */
 	public static function logout()
 	{
@@ -271,17 +271,14 @@ class FrontendProfilesAuthentication
 		SpoonCookie::delete('frontend_profile_secret_key');
 	}
 
-
 	/**
 	 * Update profile password and salt.
 	 *
-	 * @return	void
-	 * @param	int $profileId			Profile id for which we are changing the password.
-	 * @param	string $password		New password.
+	 * @param int $profileId Profile id for which we are changing the password.
+	 * @param string $password New password.
 	 */
 	public static function updatePassword($profileId, $password)
 	{
-		// redefine
 		$profileId = (int) $profileId;
 		$password = (string) $password;
 
@@ -298,5 +295,3 @@ class FrontendProfilesAuthentication
 		FrontendProfilesModel::update($profileId, array('password' => $encryptedPassword));
 	}
 }
-
-?>

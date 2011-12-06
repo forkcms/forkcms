@@ -1,24 +1,32 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the add-action, it will display a form to create a new group
  *
- * @package		backend
- * @subpackage	groups
- * @actiongroup	management	This is the all-around management action.
- *
- * @author		Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
- * @since		2.0
+ * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
 class BackendGroupsAdd extends BackendBaseActionAdd
 {
+	/**
+	 * The action groups
+	 *
+	 * @var array
+	 */
+	private $actionGroups = array();
+
 	/**
 	 * The actions
 	 *
 	 * @var	array
 	 */
 	private $actions = array();
-
 
 	/**
 	 * The dashboard sequence
@@ -27,14 +35,12 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	private $dashboardSequence;
 
-
 	/**
 	 * The id of the new group
 	 *
 	 * @var	int
 	 */
 	private $id;
-
 
 	/**
 	 * The modules
@@ -43,14 +49,12 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	private $modules;
 
-
 	/**
 	 * The widgets
 	 *
 	 * @var	array
 	 */
 	private $widgets;
-
 
 	/**
 	 * The widget instances
@@ -59,15 +63,11 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	private $widgetInstances;
 
-
 	/**
 	 * Bundle all actions that need to be bundled
-	 *
-	 * @return	void
 	 */
 	private function bundleActions()
 	{
-		// loop through modules
 		foreach($this->modules as $module)
 		{
 			// loop through actions and add all classnames
@@ -107,46 +107,29 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		}
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get the data
 		$this->getData();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse the form
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Get the actions
-	 *
-	 * @return	void
 	 */
 	private function getActions()
 	{
 		// create filter with modules which may not be displayed
 		$filter = array('authentication', 'error', 'core');
 
-		// get all active filtered modules
-		$modules = array_diff(BackendModel::getModules(true), $filter);
+		// get all modules
+		$modules = array_diff(BackendModel::getModules(), $filter);
 
 		// loop all modules
 		foreach($modules as $module)
@@ -220,36 +203,24 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		}
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// get the widgets
 		$this->getWidgets();
-
-		// get the actions
 		$this->getActions();
-
-		// bundle actions
 		$this->bundleActions();
 	}
 
-
 	/**
 	 * Get the widgets
-	 *
-	 * @return	void
 	 */
 	private function getWidgets()
 	{
-		// get all active modules
-		$modules = BackendModel::getModules(true);
+		// get all modules
+		$modules = BackendModel::getModules();
 
-		// loop all modules
 		foreach($modules as $module)
 		{
 			// you have sufficient rights?
@@ -318,13 +289,11 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		}
 	}
 
-
 	/**
 	 * Insert the permissions
 	 *
-	 * @return	void
-	 * @param	array $actionPermissions			The action permissions.
-	 * @param	array $bundledActionPermissions		The bundled action permissions.
+	 * @param array $actionPermissions The action permissions.
+	 * @param array $bundledActionPermissions The bundled action permissions.
 	 */
 	private function insertPermissions($actionPermissions, $bundledActionPermissions)
 	{
@@ -420,12 +389,10 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		BackendGroupsModel::deleteActionPermissions($actionsDenied);
 	}
 
-
 	/**
 	 * Insert the widgets
 	 *
-	 * @return	void
-	 * @param	array $widgetPresets	The widgets presets.
+	 * @param array $widgetPresets The widgets presets.
 	 */
 	private function insertWidgets($widgetPresets)
 	{
@@ -443,18 +410,16 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 
 			// create dashboard sequence
 			$this->dashboardSequence[$widget['module']] += array(
-																$widget['widget'] => array(
-																						'column' => $instance->getColumn(),
-																						'position' => (int) $instance->getPosition(),
-																						'hidden' => false,
-																						'present' => false
-																					)
-															);
+				$widget['widget'] => array(
+					'column' => $instance->getColumn(),
+					'position' => (int) $instance->getPosition(),
+					'hidden' => false,
+					'present' => false
+				)
+			);
 
-			// loop through presets
 			foreach($widgetPresets as $preset)
 			{
-				// if selected
 				if($preset->getChecked())
 				{
 					// convert camelcasing to underscore notation
@@ -476,15 +441,11 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		// insert group and settings
 		$group['id'] = BackendGroupsModel::insert($group, $setting);
 
-		// return the group
 		return $group;
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -523,7 +484,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 					if(!in_array($action['group'], $addedBundles))
 					{
 						// assign bundled action boxes
-						$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']))->parse() . '</span>';
+						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']))->parse();
 						$actionBoxes[$key]['actions'][$i]['action'] = ucfirst($action['group']);
 						$actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
@@ -536,7 +497,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				else
 				{
 					// assign action boxes
-					$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse() . '</span>';
+					$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
 					$actionBoxes[$key]['actions'][$i]['action'] = $action['label'];
 					$actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
 				}
@@ -572,11 +533,10 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		$this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
 	}
 
-
 	/**
 	 * Parse the form
 	 *
-	 * @return	void
+	 * @todo method is not necessary see the content...
 	 */
 	protected function parse()
 	{
@@ -584,18 +544,13 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		parent::parse();
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// init
 			$bundledActionPermissions = array();
 
 			// cleanup the submitted fields, ignore fields that were added by hackers
@@ -604,7 +559,6 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			// get fields
 			$nameField = $this->frm->getField('name');
 
-			// loop through modules
 			foreach($this->modules as $module)
 			{
 				// loop through actions
@@ -660,5 +614,3 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 		}
 	}
 }
-
-?>

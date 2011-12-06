@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is a widget with the related items based on tags
  *
- * @package		frontend
- * @subpackage	tags
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FrontendTagsWidgetRelated extends FrontendBaseWidget
 {
@@ -19,14 +22,12 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	 */
 	private $exclude = array();
 
-
 	/**
 	 * Tags on this page
 	 *
 	 * @var		array
 	 */
 	private $tags = array();
-
 
 	/**
 	 * Related records
@@ -35,35 +36,20 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	 */
 	private $related = array();
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent
 		parent::execute();
-
-		// get tags
 		$this->getTags();
-
-		// get related "things" based on tags
 		$this->getRelated();
-
-		// load template
 		$this->loadTemplate();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Get related "things" based on tags
-	 *
-	 * @return	void
 	 */
 	private function getRelated()
 	{
@@ -71,10 +57,13 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		foreach($this->tags as $tag)
 		{
 			// fetch entries
-			$items = FrontendModel::getDB()->getRecords('SELECT mt.module, mt.other_id
-															FROM modules_tags AS mt
-															INNER JOIN tags AS t ON t.id = mt.tag_id
-															WHERE t.tag = ?', array($tag));
+			$items = FrontendModel::getDB()->getRecords(
+				'SELECT mt.module, mt.other_id
+				 FROM modules_tags AS mt
+				 INNER JOIN tags AS t ON t.id = mt.tag_id
+				 WHERE t.tag = ?',
+				array($tag)
+			);
 
 			// loop items
 			foreach($items as $item)
@@ -120,11 +109,8 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		$this->related = array_splice($this->related, 0, 3);
 	}
 
-
 	/**
 	 * Get tags for current "page"
-	 *
-	 * @return	void
 	 */
 	private function getTags()
 	{
@@ -162,11 +148,8 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		}
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -174,5 +157,3 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		$this->tpl->assign('widgetTagsRelated', $this->related);
 	}
 }
-
-?>

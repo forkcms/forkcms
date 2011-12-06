@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the overview of mailings
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorIndex extends BackendBaseActionIndex
 {
@@ -16,14 +19,12 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	const SENT_MAILINGS_PAGING_LIMIT = 10;
 	const UNSENT_MAILINGS_PAGING_LIMIT = 10;
 
-
 	/**
 	 * The active campaign
 	 *
 	 * @var	array
 	 */
 	private $campaign = array();
-
 
 	/**
 	 * DataGrids
@@ -32,15 +33,11 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 */
 	private $dgQueuedMailings, $dgSentMailings, $dgUnsentMailings;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// update the queued mailings with 'sent' status if their time has come already
@@ -59,11 +56,8 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->display();
 	}
 
-
 	/**
 	 * Fetches the campaign ID and sets its record
-	 *
-	 * @return	void
 	 */
 	private function getCampaign()
 	{
@@ -74,11 +68,8 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->campaign = BackendMailmotorModel::getCampaign($id);
 	}
 
-
 	/**
 	 * Loads the datagrid with the unsent mailings
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridQueuedMailings()
 	{
@@ -135,11 +126,8 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->dgQueuedMailings->setPagingLimit(self::SENT_MAILINGS_PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Loads the datagrids for mailings
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
@@ -153,11 +141,8 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->loadDataGridSentMailings();
 	}
 
-
 	/**
 	 * Loads the datagrid with the unsent mailings
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridSentMailings()
 	{
@@ -208,11 +193,8 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->dgSentMailings->setPagingLimit(self::SENT_MAILINGS_PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Loads the datagrid with the unsent mailings
-	 *
-	 * @return	void
 	 */
 	private function loadDataGridUnsentMailings()
 	{
@@ -264,11 +246,8 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->dgUnsentMailings->setPagingLimit(self::UNSENT_MAILINGS_PAGING_LIMIT);
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -285,18 +264,15 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->tpl->assign('dgQueuedMailings', ($this->dgQueuedMailings->getNumResults() != 0) ? $this->dgQueuedMailings->getContent() : false);
 	}
 
-
 	/**
 	 * Sets the correct campaign link in the datagrid
 	 *
-	 * @return	string
-	 * @param	int $id			The ID of the campaign.
-	 * @param	string $name	The name of the campaign.
+	 * @param int $id The ID of the campaign.
+	 * @param string $name The name of the campaign.
+	 * @return string
 	 */
 	public static function setCampaignLink($id, $name)
 	{
 		return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : ucfirst(BL::lbl('NoCampaign'));
 	}
 }
-
-?>

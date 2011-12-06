@@ -18,7 +18,6 @@
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.backend.js"></script>
 	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=backend.js&amp;language=nl&amp;m=1272467798"></script>
 	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=utils.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=mailmotor.js&amp;language=nl&amp;m=1272467798"></script>
 	<script type="text/javascript" src="/backend/core/js/tiny_mce/jquery.tinymce.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
@@ -32,7 +31,11 @@
 
 			function getTinyMCEContent()
 			{
-				// this cleans the tinyMCE and moves the current content to the textarea
+				/*
+					this cleans the tinyMCE and moves the current content to the textarea
+					first parameter determines whether or not to skip cleanup, second
+					if we should skip the callback method
+				*/
 				tinyMCE.triggerSave(false, true);
 
 				// return the content

@@ -13,7 +13,7 @@
 						</a>
 					</li>
 				{/iteration:footerLinks}
-				<li><a href="http://www.fork-cms.be" title="Fork CMS">Fork CMS</a></li>
+				<li><a href="http://www.fork-cms.com" title="Fork CMS">Fork CMS</a></li>
 			</ul>
 		</nav>
 	</div>

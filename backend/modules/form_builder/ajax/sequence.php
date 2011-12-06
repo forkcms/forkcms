@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Resequence the fields via ajax.
  *
- * @package		backend
- * @subpackage	form_builder
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
@@ -34,7 +34,6 @@ class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
 		// loop id's and set new sequence
 		foreach($ids as $i => $id)
 		{
-			// redefine
 			$id = (int) $id;
 
 			// get field
@@ -44,9 +43,6 @@ class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
 			if(!empty($field) && $field['form_id'] == $formId && $field['type'] != 'submit') BackendFormBuilderModel::updateField($id, array('sequence' => ($i + 1)));
 		}
 
-		// success output
 		$this->output(self::OK, null, 'sequence updated');
 	}
 }
-
-?>

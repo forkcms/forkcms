@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete an item
  *
- * @package		backend
- * @subpackage	location
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.1
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendLocationDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -24,7 +25,6 @@ class BackendLocationDelete extends BackendBaseActionDelete
 		// does the item exist
 		if($this->id !== null && BackendLocationModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// get all data for the item we want to edit
@@ -34,6 +34,7 @@ class BackendLocationDelete extends BackendBaseActionDelete
 			BackendLocationModel::delete($this->id);
 
 			// delete search indexes
+			// @todo why is this commented out
 			// if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
 			// trigger event
@@ -47,5 +48,3 @@ class BackendLocationDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

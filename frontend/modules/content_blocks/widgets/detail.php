@@ -3,13 +3,9 @@
 /**
  * This is the detail widget.
  *
- * @package		frontend
- * @subpackage	content_blocks
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 {
@@ -20,18 +16,12 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 	 */
 	private $item;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// parent execute
 		parent::execute();
-
-		// load data
 		$this->loadData();
 
 		// check if the given template exists
@@ -46,30 +36,20 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 			$template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/default.tpl');
 		}
 
-		// load template
 		$this->loadTemplate($template);
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
-		// fetch the item
 		$this->item = FrontendContentBlocksModel::get((int) $this->data['id']);
 	}
 
-
 	/**
 	 * Parse into template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -77,5 +57,3 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 		$this->tpl->assign('widgetContentBlocks', $this->item);
 	}
 }
-
-?>

@@ -20,6 +20,15 @@
 					<span class="helpTxt">(The blog-module is required and will be installed)</span>
 				</li>
 			</ul>
+
+			<h3>Debug mode</h3>
+			<p>Warning: debug mode is only usefull when developing on Fork CMS.</p>
+			<ul class="inputList noPadding">
+				<li>
+					{$chkDebugMode} <label for="debugMode">Enable debug mode </label>
+					<span class="helpTxt">(Leave this checkbox unticked for better security and performance)</span>
+				</li>
+			</ul>
 		</div>
 		<div class="fullwidthOptions">
 			<div class="buttonHolder">

@@ -32,7 +32,7 @@
 								{* Category*}
 								{$lblIn} {$lblThe} {$lblCategory} <a href="{$items.category_full_url}" title="{$items.category_title}">{$items.category_title}</a>{option:!items.tags}.{/option:!items.tags}
 
-								{* Tags*}
+								{* Tags *}
 								{option:items.tags}
 									{$lblWith} {$lblThe} {$lblTags}
 									{iteration:items.tags}
@@ -51,6 +51,7 @@
 						</ul>
 					</header>
 					<div class="bd content">
+						{option:items.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$items.image}" alt="{$items.title}" />{/option:items.image}
 						{option:!items.introduction}{$items.text}{/option:!items.introduction}
 						{option:items.introduction}{$items.introduction}{/option:items.introduction}
 					</div>

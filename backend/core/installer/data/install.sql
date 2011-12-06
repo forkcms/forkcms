@@ -48,10 +48,9 @@ CREATE TABLE `meta_sitemap` (
 
 CREATE TABLE IF NOT EXISTS `modules` (
  `name` varchar(255) NOT NULL COMMENT 'unique module name',
- `description` text,
- `active` enum('N','Y') NOT NULL default 'Y',
+ `installed_on` datetime NOT NULL,
  PRIMARY KEY (`name`),
- KEY `idx_active_name` (`active`,`name`)
+ KEY `idx_name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

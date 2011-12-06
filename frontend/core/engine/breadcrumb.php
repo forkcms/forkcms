@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will be used to manage the breadcrumb
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Davy Hellemans <davy@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
 class FrontendBreadcrumb extends FrontendBaseObject
 {
@@ -19,15 +22,11 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 */
 	private $items = array();
 
-
 	/**
 	 * Default constructor
-	 *
-	 * @return	void
 	 */
 	public function __construct()
 	{
-		// call parent
 		parent::__construct();
 
 		// add into the reference
@@ -82,25 +81,21 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		foreach($items as $row) $this->addElement($row['title'], $row['url']);
 	}
 
-
 	/**
 	 * Add an element
 	 *
-	 * @return	void
-	 * @param	string $title			The label that will be used in the breadcrumb.
-	 * @param	string[optional] $URL	The URL for this item.
+	 * @param string $title The label that will be used in the breadcrumb.
+	 * @param string[optional] $URL The URL for this item.
 	 */
 	public function addElement($title, $URL = null)
 	{
 		$this->items[] = array('title' => (string) $title, 'url' => $URL);
 	}
 
-
 	/**
 	 * Clear all (or a specific) elements in the breadcrumb
 	 *
-	 * @return	void
-	 * @param	int[optional] $key	If the key is provided it will be removed from the array, otherwise the whole array will be cleared.
+	 * @param int[optional] $key If the key is provided it will be removed from the array, otherwise the whole array will be cleared.
 	 */
 	public function clear($key = null)
 	{
@@ -118,22 +113,18 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		else $this->items = array();
 	}
 
-
 	/**
 	 * Get all elements
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function get()
 	{
 		return $this->items;
 	}
 
-
 	/**
 	 * Parse the breadcrumb into the template
-	 *
-	 * @return	void
 	 */
 	public function parse()
 	{
@@ -159,5 +150,3 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		$this->tpl->assign('breadcrumb', $items);
 	}
 }
-
-?>

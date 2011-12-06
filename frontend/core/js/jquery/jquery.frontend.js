@@ -62,14 +62,14 @@
 			var $this = $(this);
 
 			// init vars
-			var link = document.location;
+			var link = document.location.href;
 			var title = $('title').html();
 			var description = '';
 			var image = '';
 
 			// get the link
 			if($this.attr('href') != undefined) link = $this.attr('href');
-			if(link.substr(0, 1) == '#') link = document.location;
+			if(link.substr(0, 1) == '#') link = document.location.href;
 			if(link.substr(0, 4) != 'http') link = document.location.protocol + '//' + document.location.host + link;
 
 			// get the title
@@ -230,7 +230,7 @@
 			if(options.isDropdown)
 			{
 				// bind click
-				$this.click(function(evt)
+				$this.on('click', function(e)
 				{
 					// toggle menu
 					$this.find('ul.shareMenu').toggle();

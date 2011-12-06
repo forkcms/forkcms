@@ -511,7 +511,9 @@ class SpoonTemplateCompiler
 				$innerContent = $match[10];
 
 				// alter inner iterations, options & variables to indicate where the iteration starting point is
-				$innerContent = str_replace($match[3] . $match[4] . str_replace('->', '.', $match[6]) . '.', $match[3] . $match[4] . str_replace('->', '.', $match[6]) . '->', $innerContent);
+				$search = $match[3] . $match[4] . str_replace('->', '.', $match[6]) . '.';
+				$replace = $match[3] . $match[4] . str_replace('->', '.', $match[6]) . '->';
+				$innerContent = preg_replace('/\{(.*?)' . preg_quote($search, '/') . '(.*?)\}/is', '{\\1' . $replace . '\\2}', $innerContent);
 
 				// parse inner iterations (recursively)
 				$innerContent = $this->parseIterations($innerContent);

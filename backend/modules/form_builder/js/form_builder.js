@@ -2,9 +2,9 @@
  * Javascript for building forms
  *
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
-if(!jsBackend) { var jsBackend = new Object(); }
-
 jsBackend.formBuilder =
 {
 	/**
@@ -17,18 +17,30 @@ jsBackend.formBuilder =
 	 */
 	init: function()
 	{
+		// variables
+		$selectMethod = $('select#method');
+		$formId = $('#formId');
+
 		// fields handler
 		jsBackend.formBuilder.fields.init();
 
 		// get form id
-		jsBackend.formBuilder.formId = $('#formId').val();
+		jsBackend.formBuilder.formId = $formId.val();
 
 		// hide or show the email based on the method
-		if($('select#method').length > 0)
+		if($selectMethod.length > 0)
 		{
 			jsBackend.formBuilder.handleMethodField();
-			$('select#method').live('change', jsBackend.formBuilder.handleMethodField);
+			$(document).on('change', 'select#method', jsBackend.formBuilder.handleMethodField);
 		}
+
+		$('#email').multipleTextbox(
+		{
+			emptyMessage: '{$msgNoEmailaddresses}',
+			addLabel: '{$lblCoreAdd|ucfirst}',
+			removeLabel: '{$lblDelete|ucfirst}',
+			canAddNew: true
+		});
 	},
 
 	/**
@@ -36,17 +48,16 @@ jsBackend.formBuilder =
 	 */
 	handleMethodField: function()
 	{
+		// variables
+		$selectMethod = $('select#method');
+		$emailWrapper = $('#emailWrapper');
+
 		// show email field
-		if($('select#method').val() == 'database_email') { $('#emailWrapper').slideDown(); }
+		if($selectMethod.val() == 'database_email') $emailWrapper.slideDown();
 
 		// hide email field
-		else{ $('#emailWrapper').slideUp(); }
-	},
-
-	/**
-	 * End of object
-	 */
-	eoo: true
+		else $emailWrapper.slideUp();
+	}
 }
 
 jsBackend.formBuilder.fields =
@@ -70,10 +81,13 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.paramsDelete = { fork: { module: jsBackend.current.module, action: 'delete_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsGet = { fork: { module: jsBackend.current.module, action: 'get_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsSave = { fork: { module: jsBackend.current.module, action: 'save_field', language: jsBackend.current.language } };
-		jsBackend.formBuilder.fields.paramsSequence = { fork: { module: jsBackend.current.module, action: 'sequence', language: jsBackend.current.language } };
+		jsBackend.formBuilder.fields.paramsDelete = { fork: { action: 'delete_field' } };
+		jsBackend.formBuilder.fields.paramsGet = { fork: { action: 'get_field' } };
+		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'save_field' } };
+		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
+
+		// init errors
+		jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
@@ -89,10 +103,10 @@ jsBackend.formBuilder.fields =
 	bindDelete: function()
 	{
 		// get all delete buttons
-		$('.deleteField').live('click', function(evt)
+		$(document).on('click', '.deleteField', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('rel');
@@ -125,7 +139,7 @@ jsBackend.formBuilder.fields =
 						}
 
 						// show error message
-						else { jsBackend.messages.add('error', textStatus); }
+						else jsBackend.messages.add('error', textStatus);
 
 						// alert the user
 						if(data.code != 200 && jsBackend.debug) { alert(data.message); }
@@ -194,7 +208,7 @@ jsBackend.formBuilder.fields =
 					 },
 
 					// set focus on first input field
-					open: function(evt)
+					open: function(e)
 					{
 						// bind special boxes
 						if(id == 'dropdownDialog')
@@ -249,7 +263,7 @@ jsBackend.formBuilder.fields =
 					},
 
 					// before closing the dialog
-					beforeclose: function(evt)
+					beforeclose: function(e)
 					{
 						// no items message
 						jsBackend.formBuilder.fields.toggleNoItems();
@@ -272,10 +286,10 @@ jsBackend.formBuilder.fields =
 		});
 
 		// bind clicks
-		$('.openFieldDialog').live('click', function(evt)
+		$(document).on('click', '.openFieldDialog', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('rel');
@@ -296,7 +310,7 @@ jsBackend.formBuilder.fields =
 			items: 'div.field',
 			handle: 'span.dragAndDropHandle',
 			containment: '#fieldsHolder',
-			stop: function(event, ui)
+			stop: function(e, ui)
 			{
 				// init var
 				var rowIds = $(this).sortable('toArray');
@@ -344,17 +358,16 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Bind edit actions
 	 */
 	bindEdit: function()
 	{
 		// get all delete buttons
-		$('.editField').live('click', function(evt)
+		$(document).on('click', '.editField', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// get id
 			var id = $(this).attr('rel');
@@ -597,7 +610,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Bind validation dropdown
 	 */
@@ -612,12 +624,11 @@ jsBackend.formBuilder.fields =
 			// init
 			jsBackend.formBuilder.fields.handleValidation(wrapper);
 
-			// on change
-			$(wrapper).find('select:first').live('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
-			$(wrapper).find('input:checkbox').live('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
+			// on change	@todo	test me plz.
+			$(wrapper).find('select:first').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
+			$(wrapper).find('input:checkbox').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 		});
 	},
-
 
 	/**
 	 * Handle validation status
@@ -654,7 +665,6 @@ jsBackend.formBuilder.fields =
 		else $(wrapper).find('.validationErrorMessage').slideUp();
 	},
 
-
 	/**
 	 * Fill up the default values dropdown after rebuilding the multipleTextbox
 	 */
@@ -685,7 +695,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Reset a dialog by emptying the form fields and removing errors
 	 */
@@ -703,7 +712,6 @@ jsBackend.formBuilder.fields =
 		// select first tab
 		$('#'+ id +' .tabs').tabs('select', 0);
 	},
-
 
 	/**
 	 * Handle checkbox save
@@ -774,7 +782,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle dropdown save
 	 */
@@ -844,7 +851,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle heading save
 	 */
@@ -902,7 +908,6 @@ jsBackend.formBuilder.fields =
 			}
 		});
 	},
-
 
 	/**
 	 * Handle paragraph save
@@ -964,7 +969,6 @@ jsBackend.formBuilder.fields =
 			}
 		});
 	},
-
 
 	/**
 	 * Handle radiobutton save
@@ -1035,7 +1039,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle submit save
 	 */
@@ -1093,7 +1096,6 @@ jsBackend.formBuilder.fields =
 			}
 		});
 	},
-
 
 	/**
 	 * Handle textarea save
@@ -1168,7 +1170,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Handle textbox save
 	 */
@@ -1242,7 +1243,6 @@ jsBackend.formBuilder.fields =
 		});
 	},
 
-
 	/**
 	 * Append the field to the form or update it on its current location
 	 */
@@ -1272,7 +1272,6 @@ jsBackend.formBuilder.fields =
 		$('#fieldHolder-'+ fieldId).effect("highlight", {}, 3000);
 	},
 
-
 	/**
 	 * Toggle the no items message based on the amount of rows
 	 */
@@ -1287,7 +1286,6 @@ jsBackend.formBuilder.fields =
 		// no items
 		else $('#noFields').show();
 	},
-
 
 	/**
 	 * Toggle validation errors
@@ -1320,13 +1318,7 @@ jsBackend.formBuilder.fields =
 			// no message
 			else $(this).hide();
 		});
-	},
-
-
-	/**
-	 * End of object
-	 */
-	eoo: true
+	}
 }
 
-$(document).ready(jsBackend.formBuilder.init);
+$(jsBackend.formBuilder.init);

@@ -85,7 +85,7 @@
 .selectThumbList li {
 	float: left;
 	width: 172px;
-	height: 129px;
+	height: auto;
 	position: relative;
 	border: 1px solid #ddd;
 	padding: 6px;
@@ -119,14 +119,14 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c93d5', endColorstr='#1a57ad',GradientType=0 );
 }
 
-	.selectThumbList li span {
+	.selectThumbList li label span {
+		color: #5d6064;
 		display: block;
 		position: absolute;
 		padding: 100px 0 12px 0;
 		top: 6px;
 		left: 6px;
 		width: 172px;
-		color: #5d6064;
 		line-height: 18px;
 		font-size: 11px;
 		text-align: center;
@@ -136,22 +136,28 @@
 		cursor: pointer;
 	}
 
-	.selectThumbList li:hover span,
-	.selectThumbList li:active span {
-		color: #000;
+	.selectThumbList li:hover label span,
+	.selectThumbList li:active label span {
+		color: #000 !important;
 		background: url(/backend/core/layout/images/newsletter_active.png);
 	}
 
-	.selectThumbList li.selected span,
-	.selectThumbList li.selected span {
-		color: #fff;
+	.selectThumbList li.selected label span {
 		background: url(/backend/core/layout/images/newsletter_hover.png);
+	}
+
+	.selectThumbList li.selected:hover label span,
+	.selectThumbList li.selected:active label span {
+		background: url(/backend/core/layout/images/newsletter_hover.png);
+	}
+
+	.selectThumbList li.selected span {
+		color: #fff !important;
 	}
 
 	.selectThumbList li.selected:hover span,
 	.selectThumbList li.selected:active span {
-		color: #fff;
-		background: url(/backend/core/layout/images/newsletter_hover.png);
+		color: #fff !important;
 	}
 
 		.selectThumbList li img {

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the tags module
  *
- * @package		backend
- * @subpackage	tags
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 final class BackendTagsConfig extends BackendBaseConfig
 {
@@ -18,14 +21,12 @@ final class BackendTagsConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
 	 * @var	array
 	 */
 	protected $disabledActions = array();
-
 
 	/**
 	 * The disabled AJAX-actions
@@ -34,5 +35,3 @@ final class BackendTagsConfig extends BackendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 }
-
-?>

@@ -1,42 +1,31 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class Frontend
 {
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
-		// initialize Facebook
 		$this->initializeFacebook();
 
-		// create URL-object
 		new FrontendURL();
-
-		// create and set template reference
 		new FrontendTemplate();
-
-		// create and set page reference
 		new FrontendPage();
 	}
 
-
 	/**
 	 * Initialize Facebook
-	 *
-	 * @return	void
 	 */
 	private function initializeFacebook()
 	{
@@ -64,5 +53,3 @@ class Frontend
 		}
 	}
 }
-
-?>

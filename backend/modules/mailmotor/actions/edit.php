@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit a mailing
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorEdit extends BackendBaseActionEdit
 {
@@ -18,7 +21,6 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	 */
 	private $showPlainTextBox = true;
 
-
 	/**
 	 * The step ID
 	 *
@@ -26,11 +28,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	 */
 	private $stepId;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -48,23 +47,11 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// load jquery tiny
 			$this->header->addJS('tiny_mce/jquery.tinymce.js', 'core');
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the wizard steps
 			$this->loadWizardSteps();
-
-			// load the appropriate step
 			$this->{'loadStep' . $this->stepId}();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -72,12 +59,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
 	 * If a revision-id was specified in the URL we load the revision and not the actual data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -88,11 +72,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
 	}
 
-
 	/**
 	 * Load the confirmation dialog
-	 *
-	 * @return	void
 	 */
 	private function loadConfirmationDialog()
 	{
@@ -151,18 +132,16 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		// assign the template language
 		$this->tpl->assign('templateLanguage', ucfirst(BL::lbl(strtoupper($template['language']))));
 
-		// get the price setting
-		$price = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');
+		// get the price settings
+		$pricePerEmail = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');
+		$pricePerCampaign = BackendModel::getModuleSetting($this->getModule(), 'price_per_campaign');
 
 		// parse the price total
-		$this->tpl->assign('price', $stats['recipients'] * $price);
+		$this->tpl->assign('price', ($stats['recipients'] * $pricePerEmail) + $pricePerCampaign);
 	}
-
 
 	/**
 	 * Load the form for step 1
-	 *
-	 * @return	void
 	 */
 	private function loadFormForStep1()
 	{
@@ -199,11 +178,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('step1', true);
 	}
 
-
 	/**
 	 * Load the form for step 2
-	 *
-	 * @return	void
 	 */
 	private function loadFormForStep2()
 	{
@@ -236,11 +212,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('step2', true);
 	}
 
-
 	/**
 	 * Load the form for step 3
-	 *
-	 * @return	void
 	 */
 	private function loadFormForStep3()
 	{
@@ -266,11 +239,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('step3', true);
 	}
 
-
 	/**
 	 * Load the form for step 4
-	 *
-	 * @return	void
 	 */
 	private function loadFormForStep4()
 	{
@@ -278,7 +248,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=3&amp;error=complete-step-3');
 
 		// get preview URL
-		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
+		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id'], 'html', true);
 
 		// check if the mailmotor is linked
 		if(BackendModel::getURLForBlock($this->getModule(), 'detail') == BackendModel::getURL(404)) $previewURL = false;
@@ -298,11 +268,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('step4', true);
 	}
 
-
 	/**
 	 * Loads step one
-	 *
-	 * @return	void
 	 */
 	private function loadStep1()
 	{
@@ -313,11 +280,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->validateFormForStep1();
 	}
 
-
 	/**
 	 * Loads step two
-	 *
-	 * @return	void
 	 */
 	private function loadStep2()
 	{
@@ -328,11 +292,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->validateFormForStep2();
 	}
 
-
 	/**
 	 * Loads step three
-	 *
-	 * @return	void
 	 */
 	private function loadStep3()
 	{
@@ -340,11 +301,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->loadFormForStep3();
 	}
 
-
 	/**
 	 * Loads step four
-	 *
-	 * @return	void
 	 */
 	private function loadStep4()
 	{
@@ -358,11 +316,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->validateFormForStep4();
 	}
 
-
 	/**
 	 * Loads the wizard
-	 *
-	 * @return	void
 	 */
 	private function loadWizardSteps()
 	{
@@ -402,26 +357,19 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('wizard', $wizard);
 	}
 
-
 	/**
 	 * Parse the active step's form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign the active record and additional variables
 		$this->tpl->assign('mailing', $this->record);
 	}
 
-
 	/**
 	 * Validate the form for step 1
-	 *
-	 * @return	void
 	 */
 	private function validateFormForStep1()
 	{
@@ -487,18 +435,14 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step1', array('item' => $item));
 
-
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=2');
 			}
 		}
 	}
 
-
 	/**
 	 * Validate the form for step 2
-	 *
-	 * @return	void
 	 */
 	private function validateFormForStep2()
 	{
@@ -537,11 +481,8 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		}
 	}
 
-
 	/**
 	 * Validate the form for step 4
-	 *
-	 * @return	void
 	 */
 	private function validateFormForStep4()
 	{
@@ -572,20 +513,10 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 					This, however, is the point where a preview is sent to a specific address.
 				*/
 
-				// set from email
-				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting($this->getModule(), 'from_email') : $this->record['from_email'];
-				$fromName = empty($this->record['from_name']) ? BackendModel::getModuleSetting($this->getModule(), 'from_name') : $this->record['from_name'];
-				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting($this->getModule(), 'reply_to_email') : $this->record['reply_to_email'];
+				BackendMailmotorCMHelper::sendPreviewMailing($this->id, $txtEmail->getValue());
 
 				// build URL
 				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';
-
-				$subject = '[TEST] ' . $this->record['subject'];
-				$HTML = $this->record['data']['full_content_html'];
-				$plainText = (!empty($this->record['content_plain'])) ? $this->record['content_plain'] : null;
-
-				// send mail
-				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true, $plainText);
 
 				// send the preview
 				$this->redirect($url . '&amp;report=preview-sent&amp;var=' . $txtEmail->getValue());
@@ -593,5 +524,3 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

@@ -1,24 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This edit-action will refresh the traffic sources using Ajax
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// fork is no longer authorized to collect analytics data
@@ -30,17 +30,12 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 			BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
 			BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
 
-			// remove cache files
 			BackendAnalyticsModel::removeCacheFiles();
-
-			// clear tables
 			BackendAnalyticsModel::clearTables();
 
-			// return status
 			$this->output(self::OK, array('status' => 'unauthorized', 'message' => BL::msg('Redirecting')), 'No longer authorized.');
 		}
 
-		// get data
 		$this->getData();
 
 		// get html
@@ -48,56 +43,46 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		$keywordsHtml = $this->parseKeywords();
 
 		// return status
-		$this->output(self::OK, array('status' => 'success', 'referrersHtml' => $referrersHtml, 'keywordsHtml' => $keywordsHtml, 'date' => BL::lbl('Today'), 'message' => BL::msg('RefreshedTrafficSources')), 'Data has been retrieved.');
+		$this->output(
+			self::OK,
+			array(
+				'status' => 'success',
+				'referrersHtml' => $referrersHtml,
+				'keywordsHtml' => $keywordsHtml,
+				'date' => BL::lbl('Today'),
+				'message' => BL::msg('RefreshedTrafficSources')
+			),
+			'Data has been retrieved.'
+		);
 	}
-
 
 	/**
 	 * Get data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
-		// try
 		try
 		{
-			// fetch from google and save in db
 			BackendAnalyticsHelper::getRecentReferrers();
-
-			// fetch from google and save in db
 			BackendAnalyticsHelper::getRecentKeywords();
 		}
 
-		// something went wrong
 		catch(Exception $e)
 		{
-			// return status
-			$this->output(self::OK, array('status' => 'error'), 'Something went wrong while getting the traffic sources.');
+			$this->output(self::OK, array('status' => 'error'), 'Something went wrong while getting traffic sources.');
 		}
 	}
 
-
 	/**
 	 * Parse into template
-	 *
-	 * @return	void
 	 */
 	private function parseKeywords()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getRecentKeywords();
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// no pagination
-			$dataGrid->setPaging();
-
-			// hide columns
+			$dataGrid->setPaging(false);
 			$dataGrid->setColumnsHidden('id', 'date');
 		}
 
@@ -105,30 +90,17 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		return (!empty($results) ? $dataGrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="dataGrid"><tr><td>' . BL::msg('NoReferrers') . '</td></tr></table>');
 	}
 
-
 	/**
 	 * Parse into template
-	 *
-	 * @return	void
 	 */
 	private function parseReferrers()
 	{
-		// get results
 		$results = BackendAnalyticsModel::getRecentReferrers();
-
-		// there are some results
 		if(!empty($results))
 		{
-			// get the datagrid
 			$dataGrid = new BackendDataGridArray($results);
-
-			// no pagination
 			$dataGrid->setPaging();
-
-			// hide columns
 			$dataGrid->setColumnsHidden('id', 'date', 'url');
-
-			// set url
 			$dataGrid->setColumnURL('referrer', '[url]');
 		}
 
@@ -136,5 +108,3 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		return (!empty($results) ? $dataGrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="dataGrid"><tr><td>' . BL::msg('NoKeywords') . '</td></tr></table>');
 	}
 }
-
-?>

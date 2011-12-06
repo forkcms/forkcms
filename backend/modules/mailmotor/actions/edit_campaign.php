@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit a campaign
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -24,22 +25,11 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 		// does the item exist
 		if(BackendMailmotorModel::existsCampaign($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -47,11 +37,8 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -62,11 +49,8 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -77,11 +61,8 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 		$this->frm->addText('name', $this->record['name']);
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -92,11 +73,8 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 		$this->tpl->assign('campaign', $this->record);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -135,5 +113,3 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

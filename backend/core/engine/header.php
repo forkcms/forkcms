@@ -1,14 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
- * @package		backend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendHeader
 {
@@ -19,14 +22,12 @@ class BackendHeader
 	 */
 	private $cssFiles = array();
 
-
 	/**
 	 * All added JS-files
 	 *
 	 * @var	array
 	 */
 	private $jsFiles = array();
-
 
 	/**
 	 * Template instance
@@ -35,7 +36,6 @@ class BackendHeader
 	 */
 	private $tpl;
 
-
 	/**
 	 * URL-instance
 	 *
@@ -43,12 +43,6 @@ class BackendHeader
 	 */
 	private $URL;
 
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 */
 	public function __construct()
 	{
 		// store in reference so we can access it from everywhere
@@ -59,21 +53,18 @@ class BackendHeader
 		$this->tpl = Spoon::get('template');
 	}
 
-
 	/**
 	 * Add a CSS-file.
 	 * If you don't specify a module, the current one will be used
 	 * If you set overwritePath to true we expect a full path (It has to start with a slash '/')
 	 *
-	 * @return	void
-	 * @param	string $fileName				The name of the file to load.
-	 * @param	string[optional] $module		The module wherin the file is located.
-	 * @param	bool[optional] $overwritePath	Should we overwrite the full path?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
+	 * @param string $fileName The name of the file to load.
+	 * @param string[optional] $module The module wherin the file is located.
+	 * @param bool[optional] $overwritePath Should we overwrite the full path?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addCSS($fileName, $module = null, $overwritePath = false, $addTimestamp = null)
 	{
-		// redefine
 		$fileName = (string) $fileName;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$overwritePath = (bool) $overwritePath;
@@ -94,23 +85,20 @@ class BackendHeader
 		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
-
 	/**
 	 * Add a JS-file.
 	 * If you don't specify a module, the current one will be used
 	 * If you set parseThroughPHP to true, the JS will be parsed by PHP (labels and vars will be assignes)
 	 * If you set overwritePath to true we expect a full path (It has to start with a /)
 	 *
-	 * @return	void
-	 * @param	string $fileName					The file to load.
-	 * @param	string[optional] $module			The module wherin the file is located.
-	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed by PHP?
-	 * @param	bool[optional] $overwritePath		Should we overwrite the full path?
-	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
+	 * @param string $fileName The file to load.
+	 * @param string[optional] $module The module wherin the file is located.
+	 * @param bool[optional] $parseThroughPHP Should the file be parsed by PHP?
+	 * @param bool[optional] $overwritePath Should we overwrite the full path?
+	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
 	public function addJS($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
 	{
-		// redefine
 		$fileName = (string) $fileName;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$parseThroughPHP = (bool) $parseThroughPHP;
@@ -138,15 +126,11 @@ class BackendHeader
 		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->jsFiles)) $this->jsFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
-
 	/**
 	 * Parse the JS, CSS files and meta-info into the head of the HTML-document
-	 *
-	 * @return	void
 	 */
 	public function parse()
 	{
-		// init vars
 		$cssFiles = array();
 		$jsFiles = array();
 
@@ -177,13 +161,14 @@ class BackendHeader
 		if(!empty($this->jsFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
-			$ignoreCache = array('/backend/core/js/jquery/jquery.js',
-									'/backend/core/js/jquery/jquery.ui.js',
-									'/backend/core/js/jquery/jquery.tools.js',
-									'/backend/core/js/jquery/jquery.backend.js',
-									'/backend/core/js/tiny_mce/tiny_mce.js');
+			$ignoreCache = array(
+				'/backend/core/js/jquery/jquery.js',
+				'/backend/core/js/jquery/jquery.ui.js',
+				'/backend/core/js/jquery/jquery.tools.js',
+				'/backend/core/js/jquery/jquery.backend.js',
+				'/backend/core/js/tiny_mce/tiny_mce.js'
+			);
 
-			// loop the JS-files
 			foreach($this->jsFiles as $file)
 			{
 				// some files shouldn't be uncachable
@@ -205,5 +190,3 @@ class BackendHeader
 		$this->tpl->assign('jsFiles', $jsFiles);
 	}
 }
-
-?>

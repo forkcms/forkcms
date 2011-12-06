@@ -1,63 +1,53 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the detail-page-action, it will display the overview of analytics posts
  *
- * @package		backend
- * @subpackage	analytics
- *
- * @author		Annelies Van Extergem <annelies@netlash.com>
- * @since		2.0
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
 		// get parameters
 		$this->pagePath = $this->getParameter('page', 'string');
+		if($this->pagePath === null)
+		{
+			$this->redirect(BackendModel::createURLForAction('content'));
+		}
 
-		// no parameter
-		if($this->pagePath === null) $this->redirect(BackendModel::createURLForAction('content'));
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Parse this page
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent parse
 		parent::parse();
 
 		// get data
 		$data = BackendAnalyticsModel::getDataForPage($this->pagePath, $this->startTimestamp, $this->endTimestamp);
 
-		// overview data
 		$this->parseOverviewData($data['aggregates']);
-
-		// get and parse data for chart
 		$this->parseLineChartData($data['entries']['metrics_per_day']);
 
 		// parse the page path
 		$this->tpl->assign('pagePath', 'http://' . $data['entries']['hostname'] . $this->pagePath);
 
-		// init google url
 		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
 		$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
@@ -66,21 +56,17 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		$this->tpl->assign('googleContentDetailURL', sprintf($googleURL, 'content_detail', $googleTableId, $googleDate) . '&amp;d1=' . urlencode($this->pagePath));
 	}
 
-
 	/**
 	 * Parses the data to make the line chart
 	 *
-	 * @return	void
-	 * @param	array $metricsPerDay	All needed metrics grouped by day.
+	 * @param array $metricsPerDay All needed metrics grouped by day.
 	 */
 	private function parseLineChartData($metricsPerDay)
 	{
-		// init vars
 		$maxYAxis = 2;
 		$metrics = array('pageviews');
 		$graphData = array();
 
-		// loop metrics
 		foreach($metrics as $i => $metric)
 		{
 			// build graph data array
@@ -89,13 +75,11 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['data'] = array();
 
-			// loop metrics per day
 			foreach($metricsPerDay as $j => $data)
 			{
 				// cast SimpleXMLElement to array
 				$data = (array) $data;
 
-				// build array
 				$graphData[$i]['data'][$j]['date'] = (int) $data['timestamp'];
 				$graphData[$i]['data'][$j]['value'] = (string) $data[$metric];
 			}
@@ -104,7 +88,6 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		// loop the metrics
 		foreach($graphData as $metric)
 		{
-			// loop the data
 			foreach($metric['data'] as $data)
 			{
 				// get the maximum value
@@ -112,18 +95,15 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			}
 		}
 
-		// parse
 		$this->tpl->assign('maxYAxis', $maxYAxis);
 		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
 		$this->tpl->assign('lineGraphData', $graphData);
 	}
 
-
 	/**
 	 * Parses the overview data
 	 *
-	 * @return	void
-	 * @param	array $results	The aggregates for the selected period.
+	 * @param array $results The aggregates for the selected period.
 	 */
 	private function parseOverviewData($results)
 	{
@@ -137,7 +117,6 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		// show message if there is no data
 		$this->tpl->assign('dataAvailable', $dataAvailable);
 
-		// there are some results
 		if(!empty($results))
 		{
 			// time on page values
@@ -164,7 +143,6 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
 			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
-			// parse data
 			$this->tpl->assign('pageviews', $results['pageviews']);
 			$this->tpl->assign('visits', $results['visits']);
 			$this->tpl->assign('pagesPerVisit', $pagesPerVisit);
@@ -179,5 +157,3 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		}
 	}
 }
-
-?>

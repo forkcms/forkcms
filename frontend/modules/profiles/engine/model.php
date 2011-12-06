@@ -1,133 +1,129 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using with profiles.
  *
- * @package		frontend
- * @subpackage	profiles
- *
- * @author		Lester Lievens <lester@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @author		Jan Moesen <jan@netlash.com>
- * @since		2.0
+ * @author Lester Lievens <lester@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jan Moesen <jan.moesen@netlash.com>
  */
 class FrontendProfilesModel
 {
-	/**
-	 * Maximum amount of times we can change our display name.
-	 *
-	 * @var	int
-	 */
 	const MAX_DISPLAY_NAME_CHANGES = 2;
-
 
 	/**
 	 * Delete a setting.
 	 *
-	 * @return	int
-	 * @param	int $id			Profile id.
-	 * @param	string $name	Setting name.
+	 * @param int $id Profile id.
+	 * @param string $name Setting name.
+	 * @return int
 	 */
 	public static function deleteSetting($id, $name)
 	{
 		return (int) FrontendModel::getDB(true)->delete('profiles_settings', 'profile_id = ? AND name = ?', array((int) $id, (string) $name));
 	}
 
-
 	/**
 	 * Check if a profile exists by email address.
 	 *
-	 * @return	bool
-	 * @param	string $email				Email to check for existence.
-	 * @param	int[optional] $ignoreId		Profile id to ignore.
+	 * @param string $email Email to check for existence.
+	 * @param int[optional] $ignoreId Profile id to ignore.
+	 * @return bool
 	 */
 	public static function existsByEmail($email, $ignoreId = null)
 	{
-		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(p.id)
-														FROM profiles AS p
-														WHERE p.email = ? AND p.id != ?',
-														array((string) $email, (int) $ignoreId));
+		return (bool) FrontendModel::getDB()->getVar(
+			'SELECT COUNT(p.id)
+			 FROM profiles AS p
+			 WHERE p.email = ? AND p.id != ?',
+			array((string) $email, (int) $ignoreId)
+		);
 	}
-
 
 	/**
 	 * Check if a display name exists.
 	 *
-	 * @return	bool
-	 * @param	string $displayName		Display name to check for existence.
-	 * @param	int[optional] $id		Profile id to ignore.
+	 * @param string $displayName Display name to check for existence.
+	 * @param int[optional] $id Profile id to ignore.
+	 * @return bool
 	 */
 	public static function existsDisplayName($displayName, $id = null)
 	{
-		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(p.id)
-														FROM profiles AS p
-														WHERE p.id != ? AND p.display_name = ?',
-														array((int) $id, (string) $displayName));
+		return (bool) FrontendModel::getDB()->getVar(
+			'SELECT COUNT(p.id)
+			 FROM profiles AS p
+			 WHERE p.id != ? AND p.display_name = ?',
+			array((int) $id, (string) $displayName)
+		);
 	}
-
 
 	/**
 	 * Get profile by its id.
 	 *
-	 * @return	FrontendProfilesProfile
-	 * @param	int $profileId				Id of the wanted profile.
+	 * @param int $profileId Id of the wanted profile.
+	 * @return FrontendProfilesProfile
 	 */
 	public static function get($profileId)
 	{
 		return new FrontendProfilesProfile((int) $profileId);
 	}
 
-
 	/**
 	 * Get an encrypted string.
 	 *
-	 * @return	string
-	 * @param	string $string		String to encrypt.
-	 * @param	string $salt		Salt to add to the string.
+	 * @param string $string String to encrypt.
+	 * @param string $salt Salt to add to the string.
+	 * @return string
 	 */
 	public static function getEncryptedString($string, $salt)
 	{
 		return md5(sha1(md5((string) $string)) . sha1(md5((string) $salt)));
 	}
 
-
 	/**
 	 * Get profile id by email.
 	 *
-	 * @return	int
-	 * @param	string $email		Email address.
+	 * @param string $email Email address.
+	 * @return int
 	 */
 	public static function getIdByEmail($email)
 	{
 		return (int) FrontendModel::getDB()->getVar('SELECT p.id FROM profiles AS p WHERE p.email = ?', (string) $email);
 	}
 
-
 	/**
 	 * Get profile id by setting.
 	 *
-	 * @return	int
-	 * @param	string $name		Setting name.
-	 * @param	string $value		Value of the setting.
+	 * @param string $name Setting name.
+	 * @param string $value Value of the setting.
+	 * @return int
 	 */
 	public static function getIdBySetting($name, $value)
 	{
-		return (int) FrontendModel::getDB()->getVar('SELECT ps.profile_id
-														FROM profiles_settings AS ps
-														WHERE ps.name = ? AND ps.value = ?',
-														array((string) $name, serialize((string) $value)));
+		return (int) FrontendModel::getDB()->getVar(
+			'SELECT ps.profile_id
+			 FROM profiles_settings AS ps
+			 WHERE ps.name = ? AND ps.value = ?',
+			array((string) $name, serialize((string) $value))
+		);
 	}
-
 
 	/**
 	 * Generate a random string.
 	 *
-	 * @return	string
-	 * @param	int[optional] $length			Length of random string.
-	 * @param	bool[optional] $numeric			Use numeric characters.
-	 * @param	bool[optional] $lowercase		Use alphanumeric lowercase characters.
-	 * @param	bool[optional] $uppercase		Use alphanumeric uppercase characters.
-	 * @param	bool[optional] $special			Use special characters.
+	 * @param int[optional] $length Length of random string.
+	 * @param bool[optional] $numeric Use numeric characters.
+	 * @param bool[optional] $lowercase Use alphanumeric lowercase characters.
+	 * @param bool[optional] $uppercase Use alphanumeric uppercase characters.
+	 * @param bool[optional] $special Use special characters.
+	 * @return string
 	 */
 	public static function getRandomString($length = 15, $numeric = true, $lowercase = true, $uppercase = true, $special = true)
 	{
@@ -151,40 +147,41 @@ class FrontendProfilesModel
 			$string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
 		}
 
-		// cough up
 		return $string;
 	}
-
 
 	/**
 	 * Get a setting for a profile.
 	 *
-	 * @return	string
-	 * @param	int $id			Profile id.
-	 * @param	string $name	Setting name.
+	 * @param int $id Profile id.
+	 * @param string $name Setting name.
+	 * @return string
 	 */
 	public static function getSetting($id, $name)
 	{
-		return unserialize((string) FrontendModel::getDB()->getVar('SELECT ps.value
-																	FROM profiles_settings AS ps
-																	WHERE ps.profile_id = ? AND ps.name = ?',
-																	array((int) $id, (string) $name)));
+		return unserialize((string) FrontendModel::getDB()->getVar(
+			'SELECT ps.value
+			 FROM profiles_settings AS ps
+			 WHERE ps.profile_id = ? AND ps.name = ?',
+			array((int) $id, (string) $name))
+		);
 	}
-
 
 	/**
 	 * Get all settings for a profile.
 	 *
-	 * @return	array
-	 * @param	int $id		Profile id.
+	 * @param int $id Profile id.
+	 * @return array
 	 */
 	public static function getSettings($id)
 	{
 		// get settings
-		$settings = (array) FrontendModel::getDB()->getPairs('SELECT ps.name, ps.value
-																FROM profiles_settings AS ps
-																WHERE ps.profile_id = ?',
-																(int) $id);
+		$settings = (array) FrontendModel::getDB()->getPairs(
+			'SELECT ps.name, ps.value
+			 FROM profiles_settings AS ps
+			 WHERE ps.profile_id = ?',
+			(int) $id
+		);
 
 		// unserialize values
 		foreach($settings as $key => &$value) $value = unserialize($value);
@@ -193,13 +190,12 @@ class FrontendProfilesModel
 		return $settings;
 	}
 
-
 	/**
 	 * Retrieve a unique URL for a profile based on the display name.
 	 *
-	 * @return	string						The unique URL.
-	 * @param	string $displayName			The display name to base on.
-	 * @param	int[optional] $id			The id of the profile to ignore.
+	 * @param string $displayName The display name to base on.
+	 * @param int[optional] $id The id of the profile to ignore.
+	 * @return string
 	 */
 	public static function getUrl($displayName, $id = null)
 	{
@@ -207,7 +203,7 @@ class FrontendProfilesModel
 		$displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
 		// urlise
-		$url = (string) $displayName;
+		$url = (string) SpoonFilter::urlise($displayName);
 
 		// get db
 		$db = FrontendModel::getDB();
@@ -216,10 +212,12 @@ class FrontendProfilesModel
 		if($id === null)
 		{
 			// get number of profiles with this URL
-			$number = (int) $db->getVar('SELECT COUNT(p.id)
-											FROM profiles AS p
-											WHERE p.url = ?',
-											(string) $url);
+			$number = (int) $db->getVar(
+				'SELECT COUNT(p.id)
+				 FROM profiles AS p
+				 WHERE p.url = ?',
+				(string) $url
+			);
 
 			// already exists
 			if($number != 0)
@@ -236,10 +234,12 @@ class FrontendProfilesModel
 		else
 		{
 			// get number of profiles with this URL
-			$number = (int) $db->getVar('SELECT COUNT(p.id)
-											FROM profiles AS p
-											WHERE p.url = ? AND p.id != ?',
-											array((string) $url, (int) $id));
+			$number = (int) $db->getVar(
+				'SELECT COUNT(p.id)
+				 FROM profiles AS p
+				 WHERE p.url = ? AND p.id != ?',
+				array((string) $url, (int) $id)
+			);
 
 			// already exists
 			if($number != 0)
@@ -252,27 +252,22 @@ class FrontendProfilesModel
 			}
 		}
 
-		// cough up new url
 		return $url;
 	}
-
 
 	/**
 	 * Insert a new profile.
 	 *
-	 * @return	int
-	 * @param	array $values		Profile data.
+	 * @param array $values Profile data.
+	 * @return int
 	 */
 	public static function insert(array $values)
 	{
 		return (int) FrontendModel::getDB(true)->insert('profiles', $values);
 	}
 
-
 	/**
 	 * Parse the general profiles info into the template.
-	 *
-	 * @return	void
 	 */
 	public static function parse()
 	{
@@ -325,31 +320,29 @@ class FrontendProfilesModel
 		$tpl->assign('forgotPasswordUrl', FrontendNavigation::getURLForBlock('profiles', 'forgot_password'));
 	}
 
-
 	/**
 	 * Insert or update a single profile setting.
 	 *
-	 * @return	void
-	 * @param	int $id			Profile id.
-	 * @param	string $name	Setting name.
-	 * @param	mixed $value	New setting value.
+	 * @param int $id Profile id.
+	 * @param string $name Setting name.
+	 * @param mixed $value New setting value.
 	 */
 	public static function setSetting($id, $name, $value)
 	{
 		// insert or update
-		FrontendModel::getDB(true)->execute('INSERT INTO profiles_settings(profile_id, name, value)
-												VALUES(?, ?, ?)
-												ON DUPLICATE KEY UPDATE value = ?',
-												array((int) $id, $name, serialize($value), serialize($value)));
+		FrontendModel::getDB(true)->execute(
+			'INSERT INTO profiles_settings(profile_id, name, value)
+			 VALUES(?, ?, ?)
+			 ON DUPLICATE KEY UPDATE value = ?',
+			array((int) $id, $name, serialize($value), serialize($value))
+		);
 	}
-
 
 	/**
 	 * Insert or update multiple profile settings.
 	 *
-	 * @return	void
-	 * @param	int $id			Profile id.
-	 * @param	array $values	Settings in key=>valye form.
+	 * @param int $id Profile id.
+	 * @param array $values Settings in key=>valye form.
 	 */
 	public static function setSettings($id, array $values)
 	{
@@ -357,18 +350,15 @@ class FrontendProfilesModel
 		foreach($values as $key => $value) self::setSetting($id, $key, $value);
 	}
 
-
 	/**
 	 * Update a profile.
 	 *
-	 * @return	int
-	 * @param	int $id			The profile id.
-	 * @param	array $values	The values to update.
+	 * @param int $id The profile id.
+	 * @param array $values The values to update.
+	 * @return int
 	 */
 	public static function update($id, array $values)
 	{
 		return (int) FrontendModel::getDB(true)->update('profiles', $values, 'id = ?', (int) $id);
 	}
 }
-
-?>

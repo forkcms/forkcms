@@ -215,7 +215,7 @@
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>Tags</h3>
+					<h3>{$lblTags|ucfirst}</h3>
 				</div>
 				<div class="options">
 					{$txtTags} {$txtTagsError}
@@ -258,14 +258,19 @@
 				<div class="options">
 					<ul class="inputList">
 						{iteration:hidden}
-						<li>
-							{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label>
-						</li>
+							<li>{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label></li>
 						{/iteration:hidden}
 					</ul>
 					<p>
 						<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
 					</p>
+					{option:isGod}
+						<ul class="inputList">
+							{iteration:allow}
+								<li>{$allow.chkAllow} <label for="{$allow.id}">{$allow.label}</label></li>
+							{/iteration:allow}
+						</ul>
+					{/option:isGod}
 				</div>
 			</div>
 		</div>

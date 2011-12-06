@@ -1,5 +1,8 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
+/**
+ * Interaction for the mailmotor
+ *
+ * @author	Matthias Mullie <matthias@netlash.com>
+ */
 jsBackend.mailmotor =
 {
 	init: function()
@@ -24,13 +27,8 @@ jsBackend.mailmotor =
 				canAddNew: true
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.charts =
 {
@@ -56,13 +54,8 @@ jsBackend.mailmotor.charts =
 				}
 			});
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.chartPieChart =
 {
@@ -72,7 +65,7 @@ jsBackend.mailmotor.chartPieChart =
 	},
 
 	// add new chart
-	create: function(evt)
+	create: function()
 	{
 		var pieChartValues = $('#dataChartPieChart ul.data li');
 		var pieChartData = [];
@@ -109,58 +102,44 @@ jsBackend.mailmotor.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: true,
-						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-						color: 'white',
-						style: { display: 'none' }
+						enabled: false,
 					}
 				}
 			},
 			legend: { style: { right: '10px' } },
 			series: [ { type: 'pie', data: pieChartData } ]
 		});
-	},
-
-
-	// end
-	eoo: true
-};
-
+	}
+}
 
 jsBackend.mailmotor.changeGroup =
 {
 	init: function()
 	{
 		// cache objects
-		var dropdown = $('#subscriptions');
-		var form = $('#edit');
+		$dropdown = $('#subscriptions');
 
 		// dropdown is changed
-		dropdown.change(function()
+		$dropdown.on('change', function()
 		{
 			// redirect with the new group
 			window.location = document.location.pathname +'?token=true&email='+ variables['email'] +'&group_id='+ $(this).val();
 		});
-	},
-
-
-	// end
-	eoo: true
-};
-
+	}
+}
 
 jsBackend.mailmotor.linkAccount =
 {
 	init: function()
 	{
 		// cache objects
-		var confirm = $('#linkAccount');
-		var url = $('#url');
-		var username = $('#username');
-		var password = $('#password');
+		$confirm = $('#linkAccount');
+		$url = $('#url');
+		$username = $('#username');
+		$password = $('#password');
 
 		// prevent submit on keyup
-		$('#accountBox input').keypress(function(e)
+		$('#accountBox input').on('keypress', function(e)
 		{
 			if(e.keyCode == 13)
 			{
@@ -168,7 +147,7 @@ jsBackend.mailmotor.linkAccount =
 				e.preventDefault();
 
 				// if all fields are set
-				if(url.val() != '' && username.val() != '' && password.val() != '')
+				if($url.val() != '' && $username.val() != '' && $password.val() != '')
 				{
 					// do the call to link the account
 					jsBackend.mailmotor.linkAccount.doCall();
@@ -177,7 +156,7 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// link account button clicked
-		confirm.live('click', function(e)
+		$(document).on('click', '#linkAccount', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -187,16 +166,19 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// create client is checked
-		$('#clientId').change(function(e)
+		$('#clientId').on('change', function(e)
 		{
 			var clientId = $(this).val();
+			$companyName = $('#companyName');
+			$contactName = $('#contactName');
+			$contactEmail = $('#contactEmail');
 
 			// '0' is the 'create new client' option, so we have to reset the input
 			if(clientId == '0')
 			{
-				$('#companyName').val('');
-				$('#contactName').val('');
-				$('#contactEmail').val('');
+				$companyName.val('');
+				$contactName.val('');
+				$contactEmail.val('');
 			}
 
 			// an existing client was chosen, so we have to update the info fields with the current details of the client
@@ -206,7 +188,7 @@ jsBackend.mailmotor.linkAccount =
 				{
 					data:
 					{
-						fork: { module: jsBackend.current.module, action: 'load_client_info', language: jsBackend.current.language },
+						fork: { action: 'load_client_info' },
 						client_id: clientId
 					},
 					success: function(data, textStatus)
@@ -227,31 +209,30 @@ jsBackend.mailmotor.linkAccount =
 							}
 						});
 
-						$('#companyName').val(data.data.company);
-						$('#contactName').val(data.data.contact_name);
-						$('#contactEmail').val(data.data.email);
+						$companyName.val(data.data.company);
+						$contactName.val(data.data.contact_name);
+						$contactEmail.val(data.data.email);
 					}
 				});
 			}
 		});
 	},
 
-
 	doCall: function()
 	{
-		var url = $('#url');
-		var username = $('#username');
-		var password = $('#password');
+		$url = $('#url');
+		$username = $('#username');
+		$password = $('#password');
 
 		// make the call
 		$.ajax(
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'link_account', language: jsBackend.current.language },
-				url: url.val(),
-				username: username.val(),
-				password: password.val()
+				fork: { action: 'link_account' },
+				url: $url.val(),
+				username: $username.val(),
+				password: $password.val()
 			},
 			success: function(data, textStatus)
 			{
@@ -275,26 +256,21 @@ jsBackend.mailmotor.linkAccount =
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
-};
-
+	}
+}
 
 jsBackend.mailmotor.resizing =
 {
 	init: function()
 	{
-		var iframe = $('#contentBox');
-		var iframeBox = $('#iframeBox');
+		$iframe = $('#contentBox');
+		$iframeBox = $('#iframeBox');
 
 		// make the plain content textarea resizable
 		$('#contentPlain').resizable({ handles: 's' });
 
 		// make the iframe resizable
-		iframeBox.resizable(
+		$iframeBox.resizable(
 		{
 			handles: 's',
 
@@ -309,7 +285,7 @@ jsBackend.mailmotor.resizing =
 				var overlay = $('<div></div>');
 
 				// append the overlay to the iframe box and give it an ID
-				iframeBox.append(overlay);
+				$iframeBox.append(overlay);
 				overlay[0].id = 'iframeOverlay';
 
 				// the overlay should be absolutely positioned with the top value aligned to the top of the iframe
@@ -317,11 +293,11 @@ jsBackend.mailmotor.resizing =
 				{
 					left: 0,
 					position:'absolute',
-					top: iframe.position().top
+					top: $iframe.position().top
 				});
 
 				// height should be the height of the iframe
-				overlay.height(iframe.height());
+				overlay.height($iframe.height());
 				overlay.width('100%');
 			},
 			stop: function()
@@ -330,33 +306,28 @@ jsBackend.mailmotor.resizing =
 				$('#iframeOverlay').remove();
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.step3 =
 {
 	init: function()
 	{
 		// cache objects
-		var iframe = $('#contentBox');
-		var iframeBox = $('#iframeBox');
-		var form = $('#step3');
+		var $iframe = $('#contentBox');
+		var $iframeBox = $('#iframeBox');
+		var $form = $('#step3');
 
 		// only continue if the iframe is ready
-		iframe.load(function()
+		$iframe.load(function()
 		{
 			// cache objects from inside the iframe
-			var body = iframe.contents().find('body');
+			var body = $iframe.contents().find('body');
 
 			// give the iframebox the height of the body contents
-			iframeBox.height(body.height());
-
-			form.submit(function(e)
+			$iframeBox.height(body.height());
+			
+			$form.on('submit', function(e)
 			{
 				// prevent the form from submitting
 				e.preventDefault();
@@ -364,20 +335,41 @@ jsBackend.mailmotor.step3 =
 				// set variables
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
+				var textareaValue = $iframe[0].contentWindow.getTinyMCEContent();
 
 				// remove tiny fields added to the body by naughty tinyMCE
-				body.find('div.mceListBoxMenu').remove();
+				body.find('.mceListBoxMenu').remove();
+				body.find('.mceEditor').remove();
+				body.find('.clickToEdit').remove();
+
+				/*
+					This may seem strange, but here's why I did it like this:
+					Some templates caused tinymce().getContent() to return the entire TinyMCE codes.
+					If we add the textarea's value after the textarea, and then remove it, we don't
+					run into this problem.
+				*/
+				var textarea = body.find('#contentHtml');
+
+				/*
+					By escaping the textareaValue below, we ensure that entities will remain intact.
+					in mailmotor/detail.php on the frontend, we do a rawurlencode of the contents,
+					so CampaignMonitor receives the HTML contents with parsed entities.
+				*/
+				textarea.after(escape(textareaValue));
+				textarea.remove();
 
 				// set iframe variables
-				var textareaValue = iframe[0].contentWindow.getTinyMCEContent();
 				var bodyHTML = body.html();
+
+				// we unescape the entire HTML so the user won't panic whilst the ajax is loading
+				body.html(unescape(body.html()));
 
 				// make the call
 				$.ajax(
 				{
 					data:
 					{
-						fork: { module: jsBackend.current.module, action: 'save_content', language: jsBackend.current.language },
+						fork: { action: 'save_content' },
 						mailing_id: variables.mailingId,
 						subject: subject,
 						content_plain: plainText,
@@ -393,32 +385,23 @@ jsBackend.mailmotor.step3 =
 						}
 						else
 						{
-							// hide all previous errors, and add the new one
-							$('#'+ data.data.element).parent().children('.formError').remove();
-							$('#'+ data.data.element).parent().append('<span class="formError">'+ data.data.element_error +'</span>');
-
-							// show message
 							jsBackend.messages.add('error', data.message);
 						}
 					}
 				});
 			});
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.step4 =
 {
 	init: function()
 	{
 		// cache objects
-		var form = $('#step4');
-		var confirmBox = $('#sendMailingConfirmationModal');
+		$form = $('#step4');
+		$confirmBox = $('#sendMailingConfirmationModal');
+		$sendMailing = $('#sendMailing');
 		oSendDate = $('#sendOnDate');
 		oSendTime = $('#sendOnTime');
 
@@ -427,7 +410,7 @@ jsBackend.mailmotor.step4 =
 		var sendTime = oSendTime.val();
 
 		// initalize the confirmation modal
-		confirmBox.dialog(
+		$confirmBox.dialog(
 		{
 			autoOpen: false,
 			draggable: false,
@@ -450,7 +433,7 @@ jsBackend.mailmotor.step4 =
 		});
 
 		// value of date/time has changed
-		$(oSendDate.selector +', '+ oSendTime.selector).change(function(e)
+		$(oSendDate.selector +', '+ oSendTime.selector).on('change', function(e)
 		{
 			// check if the send date/time is empty. if they are, reset the dates to the old values
 			if(oSendDate.val() == '') oSendDate.val(sendDate);
@@ -461,7 +444,7 @@ jsBackend.mailmotor.step4 =
 		});
 
 		// enter was pressed
-		$(oSendDate.selector +', '+ oSendTime.selector).keypress(function(e)
+		$(oSendDate.selector +', '+ oSendTime.selector).on('keypress', function(e)
 		{
 			if(e.keyCode == 13)
 			{
@@ -481,16 +464,15 @@ jsBackend.mailmotor.step4 =
 		});
 
 		// sendMailing is clicked
-		$('#sendMailing').click(function(e)
+		$sendMailing.on('click', function(e)
 		{
 			// prevent the form from submitting
 			e.preventDefault();
 
 			// open the dialog
-			confirmBox.dialog('open');
+			$confirmBox.dialog('open');
 		});
 	},
-
 
 	saveSendDate: function()
 	{
@@ -503,7 +485,7 @@ jsBackend.mailmotor.step4 =
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'save_send_date', language: jsBackend.current.language },
+				fork: { action: 'save_send_date' },
 				mailing_id: variables.mailingId,
 				send_on_date: sendOnDate,
 				send_on_time: sendOnTime
@@ -516,7 +498,7 @@ jsBackend.mailmotor.step4 =
 					buttonPane.removeClass('loading');
 
 					// destroy the dialog
-					confirmBox.dialog('close');
+					$confirmBox.dialog('close');
 
 					// show message
 					jsBackend.messages.add('error', data.message);
@@ -545,7 +527,6 @@ jsBackend.mailmotor.step4 =
 		});
 	},
 
-
 	sendMail: function()
 	{
 		// save the send date
@@ -563,7 +544,7 @@ jsBackend.mailmotor.step4 =
 		{
 			data:
 			{
-				fork: { module: jsBackend.current.module, action: 'send_mailing', language: jsBackend.current.language },
+				fork: { action: 'send_mailing' },
 				id: variables.mailingId
 			},
 			success: function(data, textStatus)
@@ -579,33 +560,28 @@ jsBackend.mailmotor.step4 =
 					buttonPane.removeClass('loading');
 
 					// destroy the dialog
-					confirmBox.dialog('close');
+					$confirmBox.dialog('close');
 
 					// show message
 					jsBackend.messages.add('error', data.message);
 				}
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.mailmotor.templateSelection =
 {
 	init: function()
 	{
 		// store the list items
-		var listItems = $('#templateSelection li');
+		$listItems = $('#templateSelection li');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		listItems.click(function(evt)
+		$listItems.on('click', function(e)
 		{
 			// prevent default
-			evt.preventDefault();
+			e.preventDefault();
 
 			// store the object
 			var radiobutton = $(this).find('input:radio:first');
@@ -617,18 +593,13 @@ jsBackend.mailmotor.templateSelection =
 			if(radiobutton.is(':checked'))
 			{
 				// remove the selected state from all other templates
-				listItems.removeClass('selected');
+				$listItems.removeClass('selected');
 
 				// add a selected state to the parent
 				radiobutton.parent('li').addClass('selected');
 			}
 		});
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.mailmotor.init);
+$(jsBackend.mailmotor.init);

@@ -1,17 +1,15 @@
-if(!jsBackend) { var jsBackend = new Object(); }
-
+/**
+ * Interaction for the locale module
+ *
+ * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ */
 jsBackend.locale =
 {
 	init: function()
 	{
 		jsBackend.locale.controls.init();
-	},
-
-
-	// end
-	eoo: true
+	}
 }
-
 
 jsBackend.locale.controls =
 {
@@ -20,7 +18,7 @@ jsBackend.locale.controls =
 		if($('select#application').length > 0 && $('select#module').length > 0)
 		{
 			// bind
-			$('select#application').bind('change', jsBackend.locale.controls.enableDisableModules);
+			$('select#application').on('change', jsBackend.locale.controls.enableDisableModules);
 
 			// call to start
 			jsBackend.locale.controls.enableDisableModules();
@@ -31,7 +29,7 @@ jsBackend.locale.controls =
 			// bind
 			$('.dataGrid td.translationValue').inlineTextEdit(
 			{
-				params: { fork: { module: jsBackend.current.module, action: 'save_translation', language: jsBackend.current.language } },
+				params: { fork: { action: 'save_translation' } },
 				tooltip: '{$msgClickToEdit}',
 				afterSave: function(item)
 				{
@@ -62,12 +60,7 @@ jsBackend.locale.controls =
 		{
 			$('select#module option').prop('disabled', false);
 		}
-	},
-
-
-	// end
-	eoo: true
+	}
 }
 
-
-$(document).ready(jsBackend.locale.init);
+$(jsBackend.locale.init);

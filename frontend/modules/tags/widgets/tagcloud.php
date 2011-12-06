@@ -1,38 +1,31 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is a widget with the tags
  *
- * @package		frontend
- * @subpackage	tags
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent
 		parent::execute();
-
-		// load template
 		$this->loadTemplate();
-
-		// parse
 		$this->parse();
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -56,5 +49,3 @@ class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
 		$this->tpl->assign('widgetTagsTagCloud', $tags);
 	}
 }
-
-?>

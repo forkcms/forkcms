@@ -1,30 +1,29 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the undo-delete-action, it will restore a deleted user
  *
- * @package		backend
- * @subpackage	users
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendUsersUndoDelete extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$email = $this->getParameter('email', 'string');
 
 		// does the user exist
 		if($email !== null)
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// delete item
@@ -45,5 +44,3 @@ class BackendUsersUndoDelete extends BackendBaseAction
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the autosuggest-action, it will output a list of results for a certain search
  *
- * @package		frontend
- * @subpackage	search
- *
- * @author		Matthias Mullie <matthias@mullie.eu>
- * @since		2.0
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 {
@@ -18,14 +21,12 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 	 */
 	private $cacheFile;
 
-
 	/**
 	 * The items
 	 *
 	 * @var	array
 	 */
 	private $items;
-
 
 	/**
 	 * Limit of data to fetch
@@ -34,14 +35,12 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 	 */
 	private $limit;
 
-
 	/**
 	 * Offset of data to fetch
 	 *
 	 * @var	int
 	 */
 	private $offset;
-
 
 	/**
 	 * The pagination array
@@ -51,14 +50,12 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 	 */
 	protected $pagination = array('limit' => 20, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * The requested page
 	 *
 	 * @var	int
 	 */
 	private $requestedPage;
-
 
 	/**
 	 * The search term
@@ -67,11 +64,8 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 	 */
 	private $term = '';
 
-
 	/**
 	 * Display
-	 *
-	 * @return	void
 	 */
 	private function display()
 	{
@@ -92,29 +86,20 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		$this->parse();
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// validate form
 		$this->validateForm();
-
-		// display
 		$this->display();
 	}
-
 
 	/**
 	 * Load the cached data
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	private function getCachedData()
 	{
@@ -143,11 +128,8 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		return true;
 	}
 
-
 	/**
 	 * Load the data
-	 *
-	 * @return	void
 	 */
 	private function getRealData()
 	{
@@ -184,7 +166,6 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		}
 	}
 
-
 	public function parse()
 	{
 		// more matches to be found than?
@@ -194,9 +175,11 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 			array_pop($this->items);
 
 			// add reference to full search results page
-			$this->items[] = array('title' => FL::lbl('More'),
-									'text' => FL::msg('MoreResults'),
-									'full_url' => FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term);
+			$this->items[] = array(
+				'title' => FL::lbl('More'),
+				'text' => FL::msg('MoreResults'),
+				'full_url' => FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term
+			);
 		}
 
 		// format data
@@ -218,18 +201,15 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 			$item['full_url'] .= $glue . http_build_query($utm, '', '&');
 
 			// format description
-			$item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? substr(strip_tags($item['text']), 0, $this->length) . '…' : $item['text']) : '';
+			$item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? mb_substr(strip_tags($item['text']), 0, $this->length, SPOON_CHARSET) . '…' : $item['text']) : '';
 		}
 
 		// output
 		$this->output(self::OK, $this->items);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -241,5 +221,3 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		if($this->term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
 	}
 }
-
-?>

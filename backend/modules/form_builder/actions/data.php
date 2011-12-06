@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the data-action it will display the overview of sent data
  *
- * @package		backend
- * @subpackage	form_builder
- *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
- * @since		2.0
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendFormBuilderData extends BackendBaseActionIndex
 {
@@ -18,7 +21,6 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	 */
 	private $filter;
 
-
 	/**
 	 * Form id.
 	 *
@@ -26,22 +28,21 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	 */
 	private $id;
 
-
 	/**
 	 * Builds the query for this datagrid
 	 *
-	 * @return	array		An array with two arguments containing the query and its parameters.
+	 * @return array An array with two arguments containing the query and its parameters.
 	 */
 	private function buildQuery()
 	{
-		// init var
 		$parameters = array($this->id);
 
 		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
 		// wherin we allow the query to be in the actionfile itself
-		$query = 'SELECT i.id, UNIX_TIMESTAMP(i.sent_on) AS sent_on
-					FROM forms_data AS i
-					WHERE i.form_id = ?';
+		$query =
+			'SELECT i.id, UNIX_TIMESTAMP(i.sent_on) AS sent_on
+			 FROM forms_data AS i
+			 WHERE i.form_id = ?';
 
 		// add start date
 		if($this->filter['start_date'] !== '')
@@ -69,11 +70,8 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		return array($query, $parameters);
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -83,25 +81,12 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		// does the item exist
 		if($this->id !== null && BackendFormBuilderModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// set filter
 			$this->setFilter();
-
-			// load form
 			$this->loadForm();
-
-			// get data
 			$this->getData();
-
-			// load the datagrid
 			$this->loadDataGrid();
-
-			// parse the datagrid
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -109,26 +94,19 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
 		$this->record = BackendFormBuilderModel::get($this->id);
 	}
 
-
 	/**
 	 * Load the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
-		// fetch query and parameters
 		list($query, $parameters) = $this->buildQuery();
 
 		// create datagrid
@@ -160,18 +138,12 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		$this->dataGrid->setMassAction($ddmMassAction);
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// create form
 		$this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
-
-		// add fields
 		$this->frm->addDate('start_date', $this->filter['start_date']);
 		$this->frm->addDate('end_date', $this->filter['end_date']);
 
@@ -179,11 +151,8 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		$this->frm->parse($this->tpl);
 	}
 
-
 	/**
 	 * Parse the datagrid and the reports
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -196,11 +165,8 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		$this->tpl->assignArray($this->filter);
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
@@ -243,5 +209,3 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		else $this->filter['end_date'] = '';
 	}
 }
-
-?>

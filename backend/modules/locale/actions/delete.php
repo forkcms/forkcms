@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action will delete a translation
  *
- * @package		backend
- * @subpackage	locale
- *
- * @author		Lowie Benoot <lowiebenoot@netlash.com>
- * @since		2.2
+ * @author Lowie Benoot <lowiebenoot@netlash.com>
  */
 class BackendLocaleDelete extends BackendBaseActionDelete
 {
@@ -18,21 +21,16 @@ class BackendLocaleDelete extends BackendBaseActionDelete
 	 */
 	private $filter;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
 		if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod())
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// filter options
@@ -58,15 +56,11 @@ class BackendLocaleDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Sets the filter based on the $_GET array.
-	 *
-	 * @return	void
 	 */
 	private function setFilter()
 	{
-		// get filter values
 		$this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
@@ -74,9 +68,6 @@ class BackendLocaleDelete extends BackendBaseActionDelete
 		$this->filter['name'] = $this->getParameter('name');
 		$this->filter['value'] = $this->getParameter('value');
 
-		// build query for filter
 		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
 	}
 }
-
-?>

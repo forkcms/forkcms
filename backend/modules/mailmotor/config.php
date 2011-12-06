@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the configuration-object for the mailmotor module
  *
- * @package		backend
- * @subpackage	mailmotor
- *
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Dave Lens <dave.lens@netlash.com>
  */
-final class BackendMailmotorConfig extends BackendBaseConfig
+class BackendMailmotorConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -18,7 +21,6 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 	 */
 	protected $defaultAction = 'index';
 
-
 	/**
 	 * The disabled actions
 	 *
@@ -26,43 +28,29 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 
-
 	/**
 	 * Check if all required settings have been set
 	 *
-	 * @return	void
-	 * @param	string $module	The module.
+	 * @param string $module The module.
 	 */
 	public function __construct($module)
 	{
-		// parent construct
 		parent::__construct($module);
 
-		// load additional engine files
 		$this->loadEngineFiles();
-
-		// get url object reference
 		$url = Spoon::exists('url') ? Spoon::get('url') : null;
 
 		// do the client ID check if we're not in the settings page
 		if($url != null && !in_array($url->getAction(), array('settings', 'import_groups', 'link_account', 'load_client_info')))
 		{
-			// check for CM account
 			$this->checkForAccount();
-
-			// check for client ID
 			$this->checkForClientID();
-
-			// check for groups
 			$this->checkForGroups();
 		}
 	}
 
-
 	/**
 	 * Checks if a general CM account is made or not
-	 *
-	 * @return	void
 	 */
 	private function checkForAccount()
 	{
@@ -80,11 +68,8 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		else SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '#tabSettingsAccount');
 	}
 
-
 	/**
 	 * Checks if a client ID was already set or not
-	 *
-	 * @return	void
 	 */
 	private function checkForClientID()
 	{
@@ -101,11 +86,10 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '&error=no-price-per-email');
 	}
 
-
 	/**
 	 * Checks for external groups, and parses a message to import them.
 	 *
-	 * @return	mixed	Returns false if the user already made groups.
+	 * @return mixed Returns false if the user already made groups.
 	 */
 	private function checkForExternalGroups()
 	{
@@ -116,12 +100,10 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		return (!empty($externalGroups));
 	}
 
-
 	/**
-	 * Checks if any groups are made yet. Depending on the client that is linked to Fork, it will creates default groups if none were found in CampaignMonitor.
-	 * If they were, the user is presented with an overview to import all groups and their subscribers in Fork.
-	 *
-	 * @return	void
+	 * Checks if any groups are made yet. Depending on the client that is linked to Fork, it will
+	 * create default groups if none were found in CampaignMonitor. If they were, the user is
+	 * presented with an overview to import all groups and their subscribers in Fork.
 	 */
 	private function checkForGroups()
 	{
@@ -170,11 +152,8 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		BackendModel::setModuleSetting('mailmotor', 'cm_groups_defaults_set', true);
 	}
 
-
 	/**
 	 * Checks if all necessary settings were set.
-	 *
-	 * @return	void
 	 */
 	private function checkForSettings()
 	{
@@ -186,16 +165,11 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		return (!empty($url) && !empty($username) && !empty($password) && !empty($clientID));
 	}
 
-
 	/**
 	 * Loads additional engine files
-	 *
-	 * @return	void
 	 */
 	private function loadEngineFiles()
 	{
 		require_once 'engine/helper.php';
 	}
 }
-
-?>

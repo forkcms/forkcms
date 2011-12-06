@@ -1,17 +1,124 @@
-3.0.0 (xxxx-xx-xx)
+3.1.4 (2011-11-29)
 --
 Improvements:
-* Core: Completely re-invented the blocks system; it's now position-driven.
-* Core: Introduce the concept of positions that can contain an arbitrary number of blocks.
-* Pages: Merged tabs "Content" & "Template" to present a more straightforward UI.
-* Pages: Added ability to order blocks on a page.
-* Pages: Created fallback-system for blocks that were assigned to no-longer-existing positions.
-* Pages: Added the posibility to show/hide a block.
-* Pages: Edit HTML content in TinyMCE in a dialog.
-* Core: Updated installer.
-* Core: Updated template creation in backend.
-* Core: Updated theme Triton to be position-based.
-* Pages: Added the possibility to either completely overwrite or re-use existing blocks when updating a template.
+
+* Core: upgraded jQuery to 1.7.1  
+* Core: upgraded jQuery Tools to 1.2.6
+* Core: direct action pages get prefilled meta information again.
+* Users: when adding a user and there is only one group it will be checked by default.
+
+Bugfixes:
+
+* Profiles: display name was not being urilized.
+* Tags: it is no longer impossible to fetch related items with the same id as your source item.
+* Core: fixed js issue in triton.
+* Core: fixed a typo, thx to Danny Korpan.
+* Extensions: when using spaces in the format-part of the template XML, the templates weren't build correctly.
+
+
+3.1.3 (2011-11-22)
+--
+Improvements:
+
+* Added the possibility to easily adjust detailed page settings when you are a god user.
+* SVN folders will now be skipped when running the remove_cache script.
+
+Bugfixes:
+
+* Core: fixed an issue with the checkboxTextfieldCombo function.
+* Core: fixed minified media queries in the backend CSS manually, the minify script itself has to be adjusted though.
+* Core: fixed inputCheckbox positioning inside datagrids.
+* Core: fixed the row selected state in the datagrid when the selectAll checkbox was clicked.
+* Core: fixed the layout dataFilter function since it scoped the wrong, lowercased class of the dataFilter.
+* Extensions: prevented PHP warnings when no info.xml is available.
+* Core: fixed an issue with drag and drop in the backend.
+* Locale: importing other languages then EN is possible again.
+* Core: fixed an issue with the user-dropdown. 
+* Formbuilder: fixed an issues with the default error messages.
+* Blog: deleting a blog image caused a SQL error.
+* Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
+* Core: javascript error fixed when no href is provided in the share widget.
+* Core: fixed confirmation-dialog, wasn't closing when the cancel-button was clicked.
+* Tools: frontend and backend globals were not deleted when running prepare_for_reinstall.
+
+
+3.1.2 (2011-11-15)
+--
+Bugfixes:
+
+* Core: fixed an issue with items that used .live().
+* Pages: fixed an issue with dynamically added elements using .data().
+
+
+3.1.1 (2011-11-15)
+--
+Improvements:
+
+* Locale: refactored inportXML method to also be used by installer (rather than 2 seperate "different yet the same" functions).
+* Extensions: add cronjobs info to info.xml, informational al well as for checking whether all cronjobs are set.
+* Core: upgraded Highcharts to 2.1.8.
+* Core: major improvements (codestyling, spelling, performance, ...) for JS, credits to Thomas.
+* Core: upgraded jQuery to 1.7
+* Installer: when the form in step 6 (where the actual install happens) is submitted the button will be replaced with a spinner to indicate the installer is running.
+* Analytics: added a warning when trying to link a profile when no profile was selected.
+* Blog: when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb.
+
+Bugfixes:
+
+* Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
+* Missing label, as reported by Wouter Hechtermans on http://forkcms.lighthouseapp.com/projects/61890/tickets/212.
+* Pages: closing the dialog did not discard the content correctly.
+* Core: autocomplete on tags wasn't working due the change of the AJAX-calls.
+
+
+3.1.0 (2011-11-08)
+--
+Improvements:
+
+* Core: Upgraded TinyMCE to 3.4.7
+* Core: TinyMCE now includes all languages that are possible in the interface-language-dropdown.
+* Core: the keys when asking for a locale item now get camelcased so you can add enum values f.e. when using them in a datagrid.
+* Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
+* Pages: added a widget that shows the subpages as blocks with their title and meta description.
+
+Bugfixes:
+
+* Core: when requesting the meta-navigation while there are no items an exceptions was thrown, mentioned by Niels on http://forkcms.lighthouseapp.com/projects/61890/tickets/195.
+* Core: when editing non-active languages the files parsed through javascript.php were using the default language, as pointed out by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/200.
+* Core: fix default module, action, language in JS - was messed up on dashboard.
+* Core: fix issue in template compiler; nested iterations where child ends in name of parent, did not work.
+* Core: removed the guessing of the library path in the installer. When Spoon can't be located a textbox will be shown wherin you can enter the path to Spoon.
+* Core: fixed issue when displaying empty pages without blocks linked.
+* ContentBlocks: fixed a database exception when deleting content blocks, thx to Sam Tubbax.
+* Extensions: fixed typo, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/207 by Bart.
+* Extensions: editing a template without default-data was triggering a notices, as mentioned by Bart on http://forkcms.lighthouseapp.com/projects/61890/tickets/204.
+* Extensions: confirmmessages through pure Javascript don't support sprintf through the template-engine, thx to Bart, see http://forkcms.lighthouseapp.com/projects/61890/tickets/203.
+* Extensions: ignore hidden files when validating the uploaded zip-files, thx to Dieter W, see http://forkcms.lighthouseapp.com/projects/61890/tickets/208.
+* Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
+* Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.
+* Location: invalid item was used in the template, and the JS should only be excuted after jQuery is loaded, as mentioned by Floris on http://forkcms.lighthouseapp.com/projects/61890/tickets/205.
+* Pages: classname for sitemap was wrong.
+* Pages: navigation now contains valid depth-key in template.
+* Tags: inline editing wasn't working anymore due the new way of using AJAX.
+* Tools: improved whitespace-check in codesniffer.
+* Faq: fixed collation of table faq_feedback.
+
+
+3.0.0 (2011-11-01)
+--
+Improvements:
+
+* Core: completely re-invented the blocks system; it's now position-driven.
+* Core: introduce the concept of positions that can contain an arbitrary number of blocks.
+* Pages: merged tabs "Content" & "Template" to present a more straightforward UI.
+* Pages: added ability to order blocks on a page.
+* Pages: created fallback-system for blocks that were assigned to no-longer-existing positions.
+* Pages: added the posibility to show/hide a block.
+* Pages: edit HTML content in TinyMCE in a dialog.
+* Core: updated installer.
+* Core: updated template creation in backend.
+* Core: updated theme Triton to be position-based.
+* Pages: added the possibility to either completely overwrite or re-use existing blocks when updating a template.
 * Core: removed has_extra and extra_ids from pages database and replaced it with joins resulting in the same result but based upon real data (rather than just relying on the existing scripts.)
 * Installer: added 'getTemplateId' function to easily fetch a template id.
 * Installer: added 'warnings' to warn for less optimal systems but allow installation anyway.
@@ -24,6 +131,24 @@ Improvements:
 * Core: updated default favicon.
 * Pages: updated pages getNavigation; the 'includeChildren' parameter was useless.
 * Core: refactored javascript ajax-calls.
+* Installer: refactored installation of dashboard widgets.
+* Analytics: dashboard widgets are now added for all users upon installation.
+* Profiles: refactored action names to better represent their purpose.
+* Extensions: uploaded modules can be installed.
+* Extensions: uploaded themes can be installed.
+* Extensions: it is now possible to install modules via ZIP upload in the CMS.
+* Extensions: it is now possible to install themes via ZIP upload in the CMS.
+* Core: the active state of modules has been stripped. This is no longer useful.
+* Core: new coding standards have been applied.
+* Locale: added translations for Chinese (by Millie Lin - http://www.witmin.com)
+* Locale: added translations for French (by Matthias Budde - http://www.flocoon.com & Jeremy Swinnen - http://blog.stratos42.com)
+* Locale: added translations for German (by Philipp Kruft - http://www.novacore.de)
+* Locale: added translations for Hungarian (by Bota David - http://kukac7.hu)
+* Locale: added translations for Italian (by NebuLab - http://nebulab.it)
+* Locale: added translations for Russian (by Медведев Илья - http://iam-medvedev.ru)
+* Locale: added partial translations for Turkish (by Serkan Yildiz - http://twitter.com/#!/GeekOfWeb)
+* Locale: added partial translations for Polish (by Pawel Frankowski - http://www.blog.elimu.pl & Konrad Confue Przydział - http://confue.xaa.pl)
+* Blog: the blog module now standard has an image field.
 
 
 2.6.13 (2011-10-18)
@@ -252,7 +377,7 @@ Bugfixes:
 Bugfixes:
 
 * Pages: Don't show hidden extras in the widget- and block-dropdowns.
-* Pages: hidden pages_extras don't get shown in the template anymore.
+* Pages: hidden modules_extras don't get shown in the template anymore.
 * Pages: when editing a page with a external redirect there was an error because of the disabled field, fixed the JS, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/169.
 
 Improvements

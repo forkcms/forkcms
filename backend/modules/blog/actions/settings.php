@@ -1,49 +1,37 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the settings-action, it will display a form to set general blog settings
  *
- * @package		backend
- * @subpackage	blog
- *
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class BackendBlogSettings extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load form
 		$this->loadForm();
-
-		// validates the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the settings form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
-		// init settings form
 		$this->frm = new BackendForm('settings');
 
 		// add fields for pagination
@@ -79,30 +67,22 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// parse additional variables
 		$this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'comments_rss'));
 	}
 
-
 	/**
 	 * Validates the settings form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
-		// form is submitted
 		if($this->frm->isSubmitted())
 		{
 			// shorten fields
@@ -124,7 +104,6 @@ class BackendBlogSettings extends BackendBaseActionEdit
 			// init variable
 			else $feedburner = null;
 
-			// form is validated
 			if($this->frm->isCorrect())
 			{
 				// set our settings
@@ -152,5 +131,3 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

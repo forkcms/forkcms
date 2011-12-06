@@ -6,7 +6,7 @@
  * @package	Frontend
  *
  * @author	Davy Hellemans <davy@netlash.com>
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 
 /**
@@ -18,5 +18,3 @@ define('SITE_TITLE_SEPERATOR', ' - ');
 define('SITE_RSS_GENERATOR', 'Fork CMS');
 // the default language
 define('SITE_DEFAULT_LANGUAGE', '<site-default-language>');
-
-?>
