@@ -20,6 +20,13 @@
 class BackendMeta
 {
 	/**
+	 * The default sitemap priority
+	 *
+	 * @var int
+	 */
+	const DEFAULT_PRIORITY = 0.8;
+
+	/**
 	 * The action to use for the sitemap
 	 *
 	 * @var	string
@@ -304,10 +311,9 @@ class BackendMeta
 		$this->form->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
 
 		// sitemap enabled
-		$defaultSitemapPriority = 0.8;
 		$this->form->addCheckbox('use_sitemap', (!isset($this->data['sitemap_use_sitemap']) || (isset($this->data['sitemap_use_sitemap']) && $this->data['sitemap_use_sitemap'] == 'Y')));
-		$this->form->addCheckbox('sitemap_priority_overwrite', (isset($this->data['sitemap_priority']) && $this->data['sitemap_priority'] != $defaultSitemapPriority));
-		$this->form->addText('sitemap_priority', (isset($this->data['sitemap_priority'])) ? urldecode($this->data['sitemap_priority']) : $defaultSitemapPriority);
+		$this->form->addCheckbox('sitemap_priority_overwrite', (isset($this->data['sitemap_priority']) && $this->data['sitemap_priority'] != self::DEFAULT_PRIORITY));
+		$this->form->addText('sitemap_priority', (isset($this->data['sitemap_priority'])) ? urldecode($this->data['sitemap_priority']) : self::DEFAULT_PRIORITY);
 
 		// the values for the change frequency
 		$changeFrequency = array(
@@ -360,8 +366,11 @@ class BackendMeta
 		$this->id = (int) $id;
 
 		$this->data = (array) BackendModel::getDB()->getRecord(
-			'SELECT *
+			'SELECT
+			 	m.*, s.id AS sitemap_id, s.module, s.action, s.priority AS sitemap_priority,
+			 	s.change_frequency AS sitemap_change_frequency, s.visible AS sitemap_use_sitemap
 			 FROM meta AS m
+			 LEFT OUTER JOIN meta_sitemap AS s ON s.id = m.sitemap_id
 			 WHERE m.id = ?',
 			array($this->id)
 		);
@@ -428,10 +437,11 @@ class BackendMeta
 		// get db
 		$db = BackendModel::getDB(true);
 
+		$sitemapPriority = $this->form->getField('sitemap_priority')->getValue();
 		$sitemap['visible'] = ($this->form->getField('use_sitemap')->isChecked()) ? 'Y' : 'N';
 		$sitemap['module'] = $this->module;
 		$sitemap['action'] = $this->action;
-		$sitemap['priority'] = $this->form->getField('sitemap_priority')->getValue();
+		$sitemap['priority'] = ($sitemapPriority == '') ? self::DEFAULT_PRIORITY : $sitemapPriority;
 		$sitemap['change_frequency'] = $this->form->getField('sitemap_change_frequency')->getValue();
 		$sitemap['full_url'] = $this->getFullUrl() . '/' . $this->getURL();
 		$sitemap['edited_on'] = BackendModel::getUTCDate();
@@ -440,7 +450,6 @@ class BackendMeta
 		if($update)
 		{
 			if($this->id === null) throw new BackendException('No metaID specified.');
-
 			$meta['sitemap_id'] = $this->saveSitemap($sitemap);
 
 			$db->update('meta', $meta, 'id = ?', (int) $this->id);
@@ -449,8 +458,6 @@ class BackendMeta
 		{
 			// when working with revisions, a sitemap will already provided
 			if(isset($this->data['sitemap_id'])) $meta['sitemap_id'] = $this->saveSitemap($sitemap);
-
-			// there is no sitemap id yet, create a new one
 			else $meta['sitemap_id'] = $this->saveSitemap($sitemap);
 
 			$this->id = (int) $db->insert('meta', $meta);
@@ -460,17 +467,18 @@ class BackendMeta
 		return $this->id;
 	}
 
-
 	/**
-	 * @param	array $data			The data to store in the database.
-	 * @return	int
+	 * Save the sitemap data
+	 *
+	 * @param array $data
+	 * @return int
 	 */
 	public function saveSitemap(array $data)
 	{
 		$db = BackendModel::getDB(true);
 
 		// if there is an id given, we should update the record
-		if(isset($data['id']))
+		if(isset($data['id']) && $data['id'] != 0)
 		{
 			$itemId = $data['id'];
 			unset($data['id']);
@@ -483,7 +491,6 @@ class BackendMeta
 		return $itemId;
 	}
 
-
 	/**
 	 * Sets the action to use
 	 *
@@ -494,7 +501,6 @@ class BackendMeta
 	{
 		$this->action = (string) $action;
 	}
-
 
 	/**
 	 * Sets the module to use

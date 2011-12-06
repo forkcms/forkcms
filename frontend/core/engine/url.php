@@ -203,9 +203,9 @@ class FrontendURL
 		$chunks = (array) explode('/', $queryString);
 
 		// this is used for dynamicly generating the sitemap
-		if(isset($chunks[0]) && $chunks[0] == 'sitemap.xml')
+		if(isset($chunks[0]) && preg_match('/(.*)sitemap(.*).xml/', $chunks[0]))
 		{
-			$sitemap = new FrontendSitemap();
+			$sitemap = new FrontendSitemap($chunks[0]);
 
 			$sitemap->parse();
 			exit;

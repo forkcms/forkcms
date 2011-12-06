@@ -166,6 +166,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+		$this->meta->setModule($this->URL->getModule());
+		$this->meta->setAction('detail');
 
 		// set callback for generating a unique URL
 		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
