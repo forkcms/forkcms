@@ -1,3 +1,10 @@
+3.1.6 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
+
+
 3.1.5 (2011-12-06)
 --
 Bugfixes:
