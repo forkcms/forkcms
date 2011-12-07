@@ -15,7 +15,14 @@
 class FrontendModel
 {
 	/**
-	 * cached module-settings
+	 * Cached modules
+	 *
+	 * @var	array
+	 */
+	private static $modules = array();
+
+	/**
+	 * Cached module-settings
 	 *
 	 * @var	array
 	 */
@@ -163,6 +170,26 @@ class FrontendModel
 
 		// return db-object
 		return Spoon::get('database');
+	}
+
+	/**
+	 * Get the modules
+	 *
+	 * @return array
+	 */
+	public static function getModules()
+	{
+		// validate cache
+		if(empty(self::$modules))
+		{
+			// get all modules
+			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
+
+			// add modules to the cache
+			foreach($modules as $module) self::$modules[] = $module;
+		}
+
+		return self::$modules;
 	}
 
 	/**
