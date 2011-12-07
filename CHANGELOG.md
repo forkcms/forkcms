@@ -1,3 +1,10 @@
+3.1.6 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Contentblocks: Fixed a bug where a hidden content block assigned to a page would trigger a PHP Notice.
+
+
 3.1.5 (2011-12-06)
 --
 Bugfixes:
