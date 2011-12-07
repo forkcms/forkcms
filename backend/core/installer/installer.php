@@ -547,6 +547,39 @@ class ModuleInstaller
 	}
 
 	/**
+	 * Move a file to the external folder.
+	 *
+	 * @param string $module The module to make searchable.
+	 * @param bool[optional] $searchable Enable/disable search for this module by default?
+	 * @param int[optional] $weight Set default search weight for this module.
+	 */
+	protected function moveToExternal($file)
+	{
+		$file = (string) $file;
+
+		// no such file
+		if(!SpoonFile::exists($file)) throw new SpoonException('No such file (' . $file .').');
+
+		$fileInfo = SpoonFile::getInfo($file);
+		$filename = $fileInfo['basename'];
+
+		// the file already exits in external
+		if(SpoonFile::exists(PATH_LIBRARY . '/external/' . $filename))
+		{
+			$newFileChecksum = md5_file($file);
+			$oldFileChecksum = md5_file(PATH_LIBRARY . '/external/facebook.php');// . $filename);
+
+			if($newFileChecksum != $oldFileChecksum)
+			{
+				$this->addWarning('An external file with filename "' . $filename . '" already exists.');
+			}
+		}
+
+		else SpoonFile::setContent(PATH_LIBRARY . '/external/' . $filename, SpoonFile::getContent($file));
+	}
+
+
+	/**
 	 * Set the rights for an action
 	 *
 	 * @param int $groupId The group wherefor the rights will be set.
