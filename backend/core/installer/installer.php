@@ -46,6 +46,13 @@ class ModuleInstaller
 	private $variables = array();
 
 	/**
+	 * The warnings thrown during the install
+	 *
+	 * @var array
+	 */
+	private $warnings = array();
+
+	/**
 	 * @param SpoonDatabase $db The database-connection.
 	 * @param array $languages The selected frontend languages.
 	 * @param array $interfaceLanguages The selected backend languages.
@@ -84,6 +91,16 @@ class ModuleInstaller
 
 		// activate and update description
 		else $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
+	}
+
+	/**
+	 * Adds a warning to the stack of warnings
+	 *
+	 * @param string $message The message that needs to be displayed.
+	 */
+	protected function addWarning($message)
+	{
+		$this->warnings[] = array('message' => $message);
 	}
 
 	/**
@@ -214,6 +231,16 @@ class ModuleInstaller
 	protected function getVariable($name)
 	{
 		return (!isset($this->variables[$name])) ? null : $this->variables[$name];
+	}
+
+	/**
+	 * Get all warnings
+	 *
+	 * @return array
+	 */
+	public function getWarnings()
+	{
+		return $this->warnings;
 	}
 
 	/**
