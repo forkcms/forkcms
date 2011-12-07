@@ -443,7 +443,7 @@ class BackendMeta
 		$sitemap['action'] = $this->action;
 		$sitemap['priority'] = ($sitemapPriority == '') ? self::DEFAULT_PRIORITY : $sitemapPriority;
 		$sitemap['change_frequency'] = $this->form->getField('sitemap_change_frequency')->getValue();
-		$sitemap['full_url'] = $this->getFullUrl() . '/' . $this->getURL();
+		$sitemap['url'] = $this->getFullUrl() . '/' . $this->getURL();
 		$sitemap['edited_on'] = BackendModel::getUTCDate();
 		if(isset($this->data['sitemap_id'])) $sitemap['id'] = (int) $this->data['sitemap_id'];
 
