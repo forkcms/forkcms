@@ -156,7 +156,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				if($item['status'] == 'active')
 				{
 					// add search index
-					if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+					BackendSearchModel::addIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
 					if(BackendModel::getModuleSetting($this->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->meta->getURL());

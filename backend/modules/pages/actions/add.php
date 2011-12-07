@@ -379,18 +379,14 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// active
 				if($page['status'] == 'active')
 				{
-					// add search index
-					if(is_callable(array('BackendSearchModel', 'addIndex')))
-					{
-						// init var
-						$text = '';
+					// init var
+					$text = '';
 
-						// build search-text
-						foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
+					// build search-text
+					foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
-						// add
-						BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
-					}
+					// add to search index
+					BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);
