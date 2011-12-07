@@ -40,6 +40,10 @@ class BackendErrorIndex extends BackendBaseActionIndex
 			case 'action-not-allowed':
 				SpoonHTTP::setHeadersByCode(403);
 				break;
+
+			case 'not-found':
+				SpoonHTTP::setHeadersByCode(404);
+				break;
 		}
 
 		// querystring provided?

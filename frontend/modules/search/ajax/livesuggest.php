@@ -102,6 +102,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 
 	/**
 	 * Load the cached data
+	 * @todo	refactor me
 	 *
 	 * @return bool
 	 */

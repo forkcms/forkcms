@@ -1,3 +1,21 @@
+3.1.6 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
+
+Bugfixes:
+* Pages: default blocks now apply correctly on new pages.
+* Pages: removed extras still linked to page now no longer trigger an error.
+
+
+3.1.5 (2011-12-06)
+--
+Bugfixes:
+
+* Analytics: when refreshing the traffic sources a parseerror was thrown, as reported by Wouter H. on http://forkcms.lighthouseapp.com/projects/61890/tickets/231 
+
+
 3.1.4 (2011-11-29)
 --
 Improvements:

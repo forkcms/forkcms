@@ -423,16 +423,17 @@ class ForkAPI
 	 * Push a notification to microsoft
 	 *
 	 * @return	array								The device tokens that aren't valid.
-	 * @param	mixed $channelUris					The channel URI(s) for the receiver.
+	 * @param	mixed $channelUri					The channel URI(s) for the receiver.
 	 * @param	string $title						The title for the tile to send.
 	 * @param	string[optional] $count				The count for the tile to send.
 	 * @param	string[optional] $image				The image for the tile to send.
 	 * @param	string[optional] $backTitle			The title for the tile backtround to send.
 	 * @param	string[optional] $backText			The text for the tile background to send.
 	 * @param	string[optional] $backImage			The image for the tile background to send.
+	 * @param	string[optional] $tile The secondary tile to update.
 	 * @param	string[optional] $uri				The application uri to navigate to.
 	 */
-	public function microsoftPush($channelUris, $title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $uri = null)
+	public function microsoftPush($channelUri, $title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $tile = null, $uri = null)
 	{
 		// build parameters
 		$parameters['channel_uri'] = (array) $channelUri;
@@ -442,6 +443,7 @@ class ForkAPI
 		if($backTitle !== null) $parameters['back_title'] = (string) $backTitle;
 		if($backText !== null) $parameters['back_text'] = (string) $backText;
 		if($backImage !== null) $parameters['back_image'] = (string) $backImage;
+		if($tile !== null) $parameters['tile'] = (string) $tile;
 		if($uri !== null) $parameters['uri'] = (string) $uri;
 
 		// make the call

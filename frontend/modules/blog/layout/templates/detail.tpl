@@ -31,10 +31,10 @@
 					</li>
 					<li>
 						{* Comments *}
-						{option:!comments}<a href="#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
+						{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
 						{option:comments}
-							{option:blogCommentsMultiple}<a href="#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
-							{option:!blogCommentsMultiple}<a href="{#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
+							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
 					<li>
