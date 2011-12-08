@@ -63,6 +63,37 @@ class FrontendSitemap
 	}
 
 	/**
+	 * Converts an array to an xml string
+	 *
+	 * @param array $xmlData
+	 * @param int $tab How much tabs do we need at this point?
+	 * @return string
+	 */
+	protected function arrayToXml(array $xmlData, $tab = 0)
+	{
+		$returnString = '';
+		// go trough the elements to parse them into an xml node
+		foreach($xmlData as $nodeName => $nodeData)
+		{
+			if(is_int($nodeName)) $returnString .= $this->arrayToXml($nodeData);
+			else
+			{
+				// add tabs
+				for($i = 0; $i <= $tab; $i++) $returnString .= "\t";
+
+				$returnString .= '<' . $nodeName . '>';
+
+				if(is_array($nodeData)) $returnString .= $this->arrayToXml($nodeData, $tab + 1);
+				else $returnString .= $nodeData;
+
+				$returnString .= '</' . $nodeName . '>' . "\n";
+			}
+		}
+
+		return $returnString;
+	}
+
+	/**
 	 * Filter the data
 	 */
 	protected function filterData()
@@ -216,13 +247,13 @@ class FrontendSitemap
 		// get the parsed data to show
 		$parsedData = '';
 		$this->sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
-		if($this->sitemapAction == 'page') $parsedData .= $this->parsePage();
-		if($this->sitemapAction === null) $parsedData .= $this->parseIndex();
+		if($this->sitemapAction == 'page') $parsedData = $this->parsePage();
+		if($this->sitemapAction === null) $parsedData = $this->parseIndex();
 
 		// build the output
 		$output = '<?xml version="1.0" encoding="UTF-8"?>';
 		$output .= '<' . $this->sitemapType . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-		$output .= $parsedData;
+		$output .= $this->arrayToXml($parsedData);
 		$output .= '</' . $this->sitemapType . '>';
 		echo $output;
 	}
@@ -234,16 +265,15 @@ class FrontendSitemap
 	 */
 	public function parseIndex()
 	{
-		$output = '';
+		$output = array();
 
 		/*
 		 * Parse the pages sitemap
 		 */
-		$output .= "\t" . '<sitemap>';
-		$output .= "\t\t" . '<loc>' . SITE_URL . '/pagesitemap.xml</loc>';
-		$output .= "\t\t" . '<lastmod>' . $this->getLastModificationDate($this->numPages, 0) . '</lastmod>';
-		$output .= "\t" . '</sitemap>';
-
+		$output[]['sitemap'] = array(
+			'loc' => SITE_URL . '/pagesitemap.xml',
+			'lastmod' => $this->getLastModificationDate($this->numPages, 0)
+		);
 		return $output;
 	}
 
@@ -254,7 +284,7 @@ class FrontendSitemap
 	 */
 	public function parsePage()
 	{
-		$output = '';
+		$output = array();
 
 		// if we exceed the maximum, we should show some sort of pagination
 		if($this->numPages > 0 && $this->sitemapPage === null)
@@ -263,22 +293,22 @@ class FrontendSitemap
 
 			for($i = 1; $i <= $this->numPages; $i++)
 			{
-				$output .= "\t" . '<sitemap>';
-				$output .= "\t\t" . '<loc>' . SITE_URL . '/pagesitemap-' . $i . '.xml</loc>';
-				$output .= "\t\t" . '<lastmod>' . $this->getLastModificationDate($this->pageLimit, $i - 1) . '</lastmod>';
-				$output .= "\t" . '</sitemap>';
+				$output[]['sitemap'] = array(
+					'loc' => SITE_URL . '/pagesitemap-' . $i . '.xml',
+					'lastmod' => $this->getLastModificationDate($this->pageLimit, $i - 1)
+				);
 			}
 		}
 		else
 		{
 			foreach($this->metaData as $page)
 			{
-				$output .= "\t" . '<url>';
-				$output .= "\t\t" . '<loc>' . $page['full_url'] . '</loc>';
-				$output .= "\t\t" . '<lastmod>' . $page['edited_on'] . '</lastmod>';
-				$output .= "\t\t" . '<changefreq>' . $page['change_frequency'] . '</changefreq>';
-				$output .= "\t\t" . '<priority>' . $page['priority'] . '</priority>';
-				$output .= "\t" . '</url>';
+				$output[]['url'] = array(
+					'loc' => $page['full_url'],
+					'lastmod' => $page['edited_on'],
+					'changefreq' => $page['change_frequency'],
+					'priority' => $page['priority']
+				);
 			}
 		}
 		return $output;
