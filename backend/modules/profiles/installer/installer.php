@@ -11,6 +11,7 @@
  * Installer for the profiles module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class ProfilesInstaller extends ModuleInstaller
 {
@@ -77,13 +78,19 @@ class ProfilesInstaller extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			// only add pages if profiles isnt linked anywhere
-			// @todo refactor me, syntax sucks atm
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
-												FROM pages AS p
-												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												INNER JOIN modules_extras AS e ON e.id = b.extra_id
-												WHERE e.module = ? AND p.language = ?', array('profiles', $language)) == 0)
+			$existsPage = (bool) $this->getDB()->getVar(
+				'SELECT COUNT(p.id)
+				 FROM pages AS p
+				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+				 INNER JOIN modules_extras AS e ON e.id = b.extra_id
+				 WHERE e.module = ? AND p.language = ?',
+				array('profiles', $language)
+			);
+
+			if(!$existsPage)
 			{
 				// activate page
 				$this->insertPage(

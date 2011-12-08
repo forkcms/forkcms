@@ -111,6 +111,7 @@ class FaqInstaller extends ModuleInstaller
 
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
 			$this->defaultCategoryId = $this->getCategory($language);
 
 			// no category exists
@@ -120,18 +121,23 @@ class FaqInstaller extends ModuleInstaller
 			}
 
 			// check if a page for blog already exists in this language
-			if(!(bool) $this->getDB()->getVar(
+			$existsPage = (bool) $this->getDB()->getVar(
 				'SELECT COUNT(p.id)
 				 FROM pages AS p
 				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
 				 WHERE b.extra_id = ? AND p.language = ?',
-				 array($faqId, $language)))
+				array($faqId, $language)
+			);
+
+			if(!$existsPage)
 			{
 				// insert page
-				$this->insertPage(array('title' => 'FAQ',
-										'language' => $language),
-									null,
-									array('extra_id' => $faqId));
+				$this->insertPage(array(
+					'title' => 'FAQ',
+					'language' => $language),
+					null,
+					array('extra_id' => $faqId)
+				);
 			}
 		}
 

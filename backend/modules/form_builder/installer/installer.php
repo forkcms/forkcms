@@ -12,6 +12,7 @@
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FormBuilderInstaller extends ModuleInstaller
 {
@@ -56,11 +57,18 @@ class FormBuilderInstaller extends ModuleInstaller
 		));
 
 		// get search extra id
-		$searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+		$searchId = (int) $this->getDB()->getVar(
+			'SELECT id
+			 FROM modules_extras
+			 WHERE module = ? AND type = ? AND action = ?',
+			array('search', 'widget', 'form')
+		);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			// create form
 			$form = array();
 			$form['language'] = $language;
@@ -117,7 +125,14 @@ class FormBuilderInstaller extends ModuleInstaller
 			$this->getDB()->insert('forms_fields_validation', $validate);
 
 			// insert extra
-			$extraId = $this->insertExtra('form_builder', 'widget', 'FormBuilder', 'form', serialize(array('language' => $form['language'], 'extra_label' => $form['name'], 'id' => $formId)), 'N', '400' . $formId);
+			$extraId = $this->insertExtra(
+				'form_builder', 'widget', 'FormBuilder', 'form',
+				serialize(array(
+					'language' => $form['language'],
+					'extra_label' => $form['name'],
+					'id' => $formId
+				)), 'N', '400' . $formId
+			);
 
 			// insert contact page
 			$this->insertPage(

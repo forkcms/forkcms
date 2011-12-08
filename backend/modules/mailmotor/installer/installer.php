@@ -12,6 +12,7 @@
  *
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class MailmotorInstaller extends ModuleInstaller
 {
@@ -159,6 +160,8 @@ class MailmotorInstaller extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			$parentID = $this->insertPage(
 				array('title' => ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
 				'type' => 'root',

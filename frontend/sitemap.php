@@ -124,7 +124,11 @@ class FrontendSitemap
 		$defaultLanguage = FrontendModel::getModuleSetting('core', 'default_language');
 		foreach($data as $key => $sitemap)
 		{
-			$baseUrl = SITE_URL . FrontendNavigation::getURLForBlock($sitemap['module'], $sitemap['action'], $defaultLanguage);
+			if($sitemap['module'] !== 'pages')
+			{
+				$baseUrl = SITE_URL . FrontendNavigation::getURLForBlock($sitemap['module'], $sitemap['action'], $defaultLanguage);
+			}
+			else $baseUrl = SITE_URL . '/' . $defaultLanguage;
 			$data[$key]['full_url'] =  $baseUrl . '/' . $sitemap['url'];
 		}
 		return $data;

@@ -13,6 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class PagesInstaller extends ModuleInstaller
 {
@@ -172,8 +173,17 @@ class PagesInstaller extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			// check if pages already exist for this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ? AND id > ?', array($language, 404)))
+			$existsPage = (bool) $this->getDB()->getVar(
+				'SELECT COUNT(id)
+				 FROM pages
+				 WHERE language = ? AND id > ?',
+				array($language, 404)
+			);
+
+			if(!$existsPage)
 			{
 				// re-insert homepage
 				$this->insertPage(

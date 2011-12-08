@@ -40,11 +40,11 @@ class ModuleInstaller
 	private $interfaceLanguages = array();
 
 	/**
-	 * The sitemap action
+	 * The sitemap data
 	 *
 	 * @var string
 	 */
-	private $sitemapAction;
+	private $sitemapAction, $sitemapLanguage;
 
 	/**
 	 * The installed modulename
@@ -200,6 +200,17 @@ class ModuleInstaller
 			 WHERE module = ? AND name = ?',
 			array((string) $module, (string) $name))
 		);
+	}
+
+	/**
+	 * Fetch the sitemap language
+	 *
+	 * @return string
+	 */
+	protected function getSitemapLanguage()
+	{
+		if(!isset($this->sitemapLanguage)) $this->sitemapLanguage = $this->getInterfaceLanguages();
+		return $this->sitemapLanguage;
 	}
 
 	/**
@@ -428,7 +439,8 @@ class ModuleInstaller
 		$sitemapData = array(
 			'module' => $this->module,
 			'action' => $this->sitemapAction,
-			'url' => $url,
+			'language' => $this->getSitemapLanguage(),
+			'url' => SpoonFilter::urlise((string) $url, 'utf-8'),
 			'priority' => 0.8,
 			'edited_on' => gmdate('Y-m-d H:i:s')
 		);
@@ -737,6 +749,16 @@ class ModuleInstaller
 	protected function setSitemapAction($name)
 	{
 		$this->sitemapAction = (string) $name;
+	}
+
+	/**
+	 * Set the current language we're installing data for. This is used for the sitemap
+	 *
+	 * @param string $language
+	 */
+	protected function setSitemapLanguage($language)
+	{
+		$this->sitemapLanguage = (string) $language;
 	}
 }
 
