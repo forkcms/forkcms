@@ -58,7 +58,7 @@ class FrontendSitemap
 	 */
 	public function __construct($sitemapUrl)
 	{
-		$this->sitemapUrl = $sitemapUrl;
+		$this->filterData($sitemapUrl);
 		$this->loadData();
 	}
 
@@ -100,9 +100,14 @@ class FrontendSitemap
 
 	/**
 	 * Filter the data
+	 *
+	 * @param $sitemapUrl
 	 */
-	protected function filterData()
+	protected function filterData($sitemapUrl)
 	{
+		// store the url
+		$this->sitemapUrl = (string) $sitemapUrl;
+
 		// seperate the url data
 		$url = str_replace('.xml', '', $this->sitemapUrl);
 		$this->urlData = explode('sitemap', $url);
@@ -205,9 +210,7 @@ class FrontendSitemap
 	 */
 	protected function loadData()
 	{
-		// filter the data via the url
-		$this->filterData();
-
+		// load the data according to the provided action
 		switch($this->sitemapAction)
 		{
 			case 'page':
