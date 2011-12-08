@@ -37,6 +37,10 @@ class BackendPagesSettings extends BackendBaseActionEdit
 
 		// add fields for meta navigation
 		$this->frm->addCheckbox('meta_navigation', BackendModel::getModuleSetting($this->getModule(), 'meta_navigation', false));
+
+		$itemsNumber = range(25, 500, 25);
+		$itemsNumber = array_combine($itemsNumber, $itemsNumber);
+		$this->frm->addDropdown('sitemap_pages_items', $itemsNumber, BackendModel::getModuleSetting($this->getModule(), 'sitemap_pages_items', 100));
 	}
 
 	/**
@@ -52,6 +56,7 @@ class BackendPagesSettings extends BackendBaseActionEdit
 			{
 				// set our settings
 				BackendModel::setModuleSetting($this->getModule(), 'meta_navigation', (bool) $this->frm->getField('meta_navigation')->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'sitemap_pages_items', (int) $this->frm->getField('sitemap_pages_items')->getValue());
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');

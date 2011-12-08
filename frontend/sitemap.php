@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+require_once FRONTEND_CORE_PATH . '/engine/language.php';
+
 /**
  * This class will handle the sitemap for Fork. It will dynamicly create a sitemap
  *
@@ -68,7 +77,7 @@ class FrontendSitemap
 		if(isset($this->urlData[1]))
 		{
 			// load the pagination data
-			$this->loadPagination($this->urlData[1]);
+			$this->loadPagination($this->urlData[0]);
 
 			if($this->urlData[1] != '')
 			{
@@ -121,14 +130,19 @@ class FrontendSitemap
 			array('Y', (int) $offset, (int) $limit)
 		);
 
-		$defaultLanguage = FrontendModel::getModuleSetting('core', 'default_language');
+		// go trough the data to assign the url
 		foreach($data as $key => $sitemap)
 		{
+			$language = $sitemap['language'];
+			$module = $sitemap['module'];
+			$action = $sitemap['action'];
+
 			if($sitemap['module'] !== 'pages')
 			{
-				$baseUrl = SITE_URL . FrontendNavigation::getURLForBlock($sitemap['module'], $sitemap['action'], $defaultLanguage);
+				$baseUrl = SITE_URL . FrontendNavigation::getURLForBlock($module, $action, $language);
 			}
-			else $baseUrl = SITE_URL . '/' . $defaultLanguage;
+			else $baseUrl = SITE_URL . '/' . $language;
+
 			$data[$key]['full_url'] =  $baseUrl . '/' . $sitemap['url'];
 		}
 		return $data;
@@ -182,7 +196,7 @@ class FrontendSitemap
 		switch($action)
 		{
 			case 'page':
-				$this->pageLimit = FrontendModel::getModuleSetting('core', 'sitemap_page_num_items', 10);
+				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_pages_items', 100);
 			break;
 			default:
 				// do nothing
