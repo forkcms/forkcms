@@ -326,7 +326,8 @@ jsBackend.controls =
 				});
 
 				// change?
-				$selectedRadiobutton.click();
+				if($selectedRadiobutton.length > 0) $selectedRadiobutton.click();
+				else $radiobutton[0].click();
 			}
 		});
 	},
