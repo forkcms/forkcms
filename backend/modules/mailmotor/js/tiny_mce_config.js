@@ -1,3 +1,4 @@
+// @todo que?
 $(function() {
 	$('textarea.inputEditor').tinymce(
 	{

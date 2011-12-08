@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS `mailmotor_mailings` (
  `subject` varchar(255) default NULL,
  `content_html` text,
  `content_plain` text,
- `data` text,
  `send_on` datetime default NULL,
  `status` enum('concept','queued','sent') default NULL,
  `created_on` datetime default NULL,

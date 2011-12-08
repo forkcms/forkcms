@@ -1101,7 +1101,6 @@ class BackendMailmotorModel
 		// get groups for this mailing ID
 		$record['groups'] = self::getGroupIDsByMailingID($id);
 		$record['recipients'] = self::getAddressesByGroupID($record['groups']);
-		$record['data'] = unserialize($record['data']);
 
 		// fetch CM id for this mailing
 		$record['cm_id'] = BackendMailmotorCMHelper::getCampaignMonitorID('campaign', $record['id']);

@@ -152,6 +152,32 @@
 
 	<div class="box horizontal">
 		<div class="heading">
+			<h3>CK Finder</h3>
+		</div>
+		<div class="options labelWidthLong">
+			<p>
+				<label for="ckfinderLicenseName">{$lblLicenseName|ucfirst}</label>
+				{$txtCkfinderLicenseName} {$txtCkfinderLicenseNameError}
+			</p>
+			<p>
+				<label for="ckfinderLicenseKey">{$lblLicenseKey|ucfirst}</label>
+				{$txtCkfinderLicenseKey} {$txtCkfinderLicenseKeyError}
+			</p>
+			<p>
+				<label for="ckfinderImageMaxWidth">{$lblMaximumWidth|ucfirst}</label>
+				{$txtCkfinderImageMaxWidth} {$txtCkfinderImageMaxWidthError}
+				<span class="helpTxt">{$msgHelpCkfinderMaximumWidth}</span>
+			</p>
+			<p>
+				<label for="ckfinderImageMaxHeight">{$lblMaximumHeight|ucfirst}</label>
+				{$txtCkfinderImageMaxHeight} {$txtCkfinderImageMaxHeightError}
+				<span class="helpTxt">{$msgHelpCkfinderMaximumHeight}</span>
+			</p>
+		</div>
+	</div>
+	
+	<div class="box horizontal">
+		<div class="heading">
 			<h3>Facebook</h3>
 		</div>
 		<div class="options labelWidthLong">

@@ -13,19 +13,19 @@ mkdir -p reports
 echo "* Running PHP Code Sniffer (will take a while)"
 
 # run PHP Code Sniffer
-phpcs --standard=./codesniffer/Fork --ignore=../backend/core/js/tiny_mce,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external --extensions=php --report=xml ../ > ./reports/phpcs.xml
+phpcs --standard=./codesniffer/Fork --ignore=../backend/core/js/ckeditor,../backend/core/js/ckfinder,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external --extensions=php --report=xml ../ > ./reports/phpcs.xml
 
 # tell user
 echo "* Running PHP Mess Detection (will take a while)"
 
 # run PHP Mess Detection
-phpmd ../ xml codesize,unusedcode,naming --exclude ../backend/core/js/tiny_mce,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external --reportfile ./reports/phpmd.xml
+phpmd ../ xml codesize,unusedcode,naming --exclude ../backend/core/js/ckeditor,../backend/core/js/ckfinder,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external --reportfile ./reports/phpmd.xml
 
 # tell user
 echo "* Running PHP Depend (will take a while)"
 
 # run PHP Depend
-pdepend --jdepend-chart=./reports/pdepend_chart.svg --overview-pyramid=./reports/pdepend_pyramid.svg --summary-xml=./reports/pdepend.xml --suffix=php --ignore=../backend/core/js/tiny_mce,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external ../ > /dev/null
+pdepend --jdepend-chart=./reports/pdepend_chart.svg --overview-pyramid=./reports/pdepend_pyramid.svg --summary-xml=./reports/pdepend.xml --suffix=php --ignore=../backend/core/js/ckeditor,../backend/core/js/ckfinder,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external ../ > /dev/null
 
 # tell user
 echo "* Running PHP Loc"

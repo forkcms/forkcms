@@ -396,6 +396,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a number as a float
+	 * syntax: {$var|formatfloat}
 	 *
 	 * @param float $number The number to format.
 	 * @param int[optional] $decimals The number of decimals.
@@ -517,6 +518,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Get a random var between a min and max
+	 * syntax: {$var|rand:min:max}
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param int $min The minimum number.
@@ -531,6 +533,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Convert this string into a well formed label.
+	 * 	syntax: {$var|tolabel}
 	 *
 	 * @param string $value The value to convert to a label.
 	 * @return string
@@ -542,7 +545,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Truncate a string
-	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
+	 * 	syntax: {$var|truncate:max-length[:append-hellip]}
 	 *
 	 * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
 	 * @param int $length The maximum length of the truncated string.
