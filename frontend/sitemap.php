@@ -165,7 +165,7 @@ class FrontendSitemap
 	protected function getMetaData($limit = 200, $offset = 0)
 	{
 		$data = (array) FrontendModel::getDB()->getRecords(
-			'SELECT s.*
+			'SELECT s.*, UNIX_TIMESTAMP(s.edited_on) AS edited_on
 			 FROM meta_sitemap AS s
 			 WHERE s.visible = ?
 			 LIMIT ?, ?',
@@ -189,6 +189,7 @@ class FrontendSitemap
 			else $baseUrl = SITE_URL . '/' . $language;
 
 			$data[$key]['full_url'] =  $baseUrl . '/' . $sitemap['url'];
+			$data[$key]['edited_on'] = FrontendModel::getUTCDate('Y-m-d\TH:i:sP', $sitemap['edited_on']);
 		}
 		return $data;
 	}
@@ -302,7 +303,7 @@ class FrontendSitemap
 		$output = array();
 
 		// if we exceed the maximum, we should show some sort of pagination
-		if($this->numPages > 0 && $this->sitemapPage === null)
+		if($this->numPages > 1 && $this->sitemapPage === null)
 		{
 			$this->sitemapType = 'sitemapindex';
 
