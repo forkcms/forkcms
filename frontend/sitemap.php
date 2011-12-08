@@ -72,20 +72,25 @@ class FrontendSitemap
 	protected function arrayToXml(array $xmlData, $tab = 0)
 	{
 		$returnString = '';
+
 		// go trough the elements to parse them into an xml node
 		foreach($xmlData as $nodeName => $nodeData)
 		{
+			// this should be cleaned up with an array match, jadajada
 			if(is_int($nodeName)) $returnString .= $this->arrayToXml($nodeData);
 			else
 			{
 				// add tabs
 				for($i = 0; $i <= $tab; $i++) $returnString .= "\t";
 
+				// start of the new node
 				$returnString .= '<' . $nodeName . '>';
 
+				// the node data
 				if(is_array($nodeData)) $returnString .= $this->arrayToXml($nodeData, $tab + 1);
 				else $returnString .= $nodeData;
 
+				// end of th enew node
 				$returnString .= '</' . $nodeName . '>' . "\n";
 			}
 		}
@@ -138,6 +143,7 @@ class FrontendSitemap
 			array('Y', (int) $offset, (int) $limit)
 		);
 
+		// get the latest modification
 		$lastModDate = 0;
 		foreach($data as $sitemap) if($sitemap > $lastModDate) $lastModDate = (int) $sitemap;
 
@@ -199,12 +205,13 @@ class FrontendSitemap
 	 */
 	protected function loadData()
 	{
-
+		// filter the data via the url
 		$this->filterData();
 
 		switch($this->sitemapAction)
 		{
 			case 'page':
+				// show the page items
 				$this->metaData = $this->getMetaData($this->pageLimit, $this->sitemapPage);
 			break;
 			case '':
@@ -227,12 +234,15 @@ class FrontendSitemap
 		switch($action)
 		{
 			case 'page':
+				// get the page limit for the pages sitemap
 				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_pages_items', 100);
 			break;
 			default:
 				// do nothing
 			break;
 		}
+
+		// set the number of pages
 		$this->numPages = ceil($this->getMetaDataCount() / $this->pageLimit) - 1;
 	}
 
@@ -267,13 +277,12 @@ class FrontendSitemap
 	{
 		$output = array();
 
-		/*
-		 * Parse the pages sitemap
-		 */
+		// build the pages sitemap
 		$output[]['sitemap'] = array(
 			'loc' => SITE_URL . '/pagesitemap.xml',
 			'lastmod' => $this->getLastModificationDate($this->numPages, 0)
 		);
+
 		return $output;
 	}
 
@@ -291,6 +300,7 @@ class FrontendSitemap
 		{
 			$this->sitemapType = 'sitemapindex';
 
+			// build the number of sitemaps equal to the number of pages
 			for($i = 1; $i <= $this->numPages; $i++)
 			{
 				$output[]['sitemap'] = array(
@@ -301,6 +311,7 @@ class FrontendSitemap
 		}
 		else
 		{
+			// parse all the elements into a decent array
 			foreach($this->metaData as $page)
 			{
 				$output[]['url'] = array(
