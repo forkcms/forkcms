@@ -3,6 +3,9 @@
 Improvements:
 
 * Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
+* Core: added an getModules method to FrontendModule, analog to the backend method.
+* Core: the direct actions are no longer shown in the navigation.
+* Locale: the missing items are now sorted by application, type, module and name.
 
 Bugfixes:
 * Pages: default blocks now apply correctly on new pages.

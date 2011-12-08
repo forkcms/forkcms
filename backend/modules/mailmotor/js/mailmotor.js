@@ -1,7 +1,7 @@
 /**
  * Interaction for the mailmotor
  *
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Dave Lens <dave@netlash.com>
  */
 jsBackend.mailmotor =
 {
