@@ -14,6 +14,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
@@ -166,11 +167,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-		$this->meta->setModule($this->URL->getModule());
-		$this->meta->setAction('detail');
-
-		// set callback for generating a unique URL
 		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
+		$this->meta->setAction('detail');
 	}
 
 	/**

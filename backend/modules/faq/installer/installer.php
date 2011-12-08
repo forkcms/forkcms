@@ -31,6 +31,8 @@ class FaqInstaller extends ModuleInstaller
 	 */
 	private function addCategory($language, $title, $url)
 	{
+		$this->setSitemapAction('category');
+
 		// build array
 		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
 		$item['language'] = (string) $language;
@@ -131,6 +133,7 @@ class FaqInstaller extends ModuleInstaller
 
 			if(!$existsPage)
 			{
+				$this->setSitemapAction(null);
 				// insert page
 				$this->insertPage(array(
 					'title' => 'FAQ',

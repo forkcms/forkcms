@@ -753,7 +753,7 @@ class ModuleInstaller
 	 */
 	protected function setSitemapAction($name)
 	{
-		$this->sitemapAction = (string) $name;
+		$this->sitemapAction = $name;
 	}
 
 	/**

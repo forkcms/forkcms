@@ -179,6 +179,9 @@ class FrontendSitemap
 			$module = $sitemap['module'];
 			$action = $sitemap['action'];
 
+			// load the locale for the current language
+			FL::setLocale($language);
+
 			if($sitemap['module'] !== 'pages')
 			{
 				$baseUrl = SITE_URL . FrontendNavigation::getURLForBlock($module, $action, $language);
@@ -246,7 +249,7 @@ class FrontendSitemap
 		}
 
 		// set the number of pages
-		$this->numPages = ceil($this->getMetaDataCount() / $this->pageLimit) - 1;
+		$this->numPages = ceil($this->getMetaDataCount() / $this->pageLimit);
 	}
 
 	/**

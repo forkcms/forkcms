@@ -98,6 +98,7 @@ class BackendMeta
 
 		// get BackendURL instance
 		$this->url = Spoon::get('url');
+		$this->setModule();
 
 		// should we use meta-custom
 		$this->custom = (bool) $custom;
@@ -167,7 +168,7 @@ class BackendMeta
 		if(!isset($this->module)) return false;
 
 		if($this->module == 'pages') $fullUrl = (SITE_MULTILANGUAGE) ? '/' . BL::getWorkingLanguage() : '';
-		else $fullUrl = BackendModel::getURLForBlock('blog', 'detail');
+		else $fullUrl = BackendModel::getURLForBlock($this->module, $this->action);
 
 		// 404 url?
 		if($fullUrl == BackendModel::getURL(404)) return false;
@@ -506,13 +507,15 @@ class BackendMeta
 	/**
 	 * Sets the module to use
 	 *
-	 * @return	void
-	 * @param	string $module		The module to set.
+	 * @param string[optional] $module
 	 */
-	public function setModule($module)
+	public function setModule($module = null)
 	{
-		// set the url
-		$this->module = (string) $module;
+		if($module === null)
+		{
+			$this->module = $this->url->getModule();
+		}
+		else $this->module = (string) $module;
 	}
 
 	/**

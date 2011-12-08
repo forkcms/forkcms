@@ -55,8 +55,7 @@ class BackendFaqAdd extends BackendBaseActionAdd
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
-		$this->meta->setModule($this->URL->getModule());
-		$this->meta->setAction('category');
+		$this->meta->setAction('detail');
 	}
 
 	/**

@@ -33,6 +33,7 @@ class BlogInstaller extends ModuleInstaller
 	 */
 	private function addCategory($language, $title, $url)
 	{
+		$this->setSitemapAction('category');
 		$item = array();
 		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
 		$item['language'] = (string) $language;

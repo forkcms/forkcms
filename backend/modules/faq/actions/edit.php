@@ -73,8 +73,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 		$this->meta->setUrlCallback('BackendFaqModel', 'getURL', array($this->record['id']));
-		$this->meta->setModule($this->URL->getModule());
-		$this->meta->setAction('category');
+		$this->meta->setAction('detail');
 	}
 
 	/**
