@@ -47,3 +47,13 @@ acronym { border-bottom: 1px dotted #CCC; cursor:help; }
 abbr { border-bottom: 1px dashed #CCC; cursor: help; }
 img:-moz-broken { -moz-force-broken-image-icon:1; width: 24px; height: 24px; }
 font[face=mceinline] { font-family: inherit !important; }
+
+.mceItemMedia { border: 1px dotted #cc0000; background-position: center; background-repeat: no-repeat; background-color:#FFC; }
+	.mceItemShockWave { background-image:url(../images/tiny_mce/shockwave.gif); }
+	.mceItemFlash { background-image:url(../images/tiny_mce/flash.gif); }
+	.mceItemQuickTime { background-image:url(../images/tiny_mce/quicktime.gif); }
+	.mceItemWindowsMedia { background-image:url(../images/tiny_mce/windowsmedia.gif); }
+	.mceItemRealMedia { background-image:url(../images/tiny_mce/realmedia.gif); }
+	.mceItemVideo, .mceItemAudio, .mceItemEmbeddedAudio { background-image:url(../images/tiny_mce/video.gif); }
+	.mceItemIframe { background-image:url(../images/tiny_mce/iframe.gif); }
+.mcePageBreak { display: block; border: 0; width: 100%; height: 12px; border-top: 1px dotted #ccc; margin-top: 15px; background: #FFF url(../images/tiny_mce/pagebreak.gif) no-repeat center top; }
