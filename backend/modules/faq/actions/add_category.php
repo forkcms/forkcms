@@ -39,6 +39,9 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 		$this->frm->addText('title');
 
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+		$this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
+		$this->meta->setModule($this->URL->getModule());
+		$this->meta->setAction('category');
 	}
 
 	/**
@@ -48,8 +51,6 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	{
 		if($this->frm->isSubmitted())
 		{
-			$this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
-
 			$this->frm->cleanupFields();
 
 			// validate fields

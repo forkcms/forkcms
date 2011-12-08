@@ -438,12 +438,13 @@ class BackendMeta
 		$db = BackendModel::getDB(true);
 
 		$sitemapPriority = $this->form->getField('sitemap_priority')->getValue();
-		$sitemap['visible'] = ($this->form->getField('use_sitemap')->isChecked()) ? 'Y' : 'N';
 		$sitemap['module'] = $this->module;
 		$sitemap['action'] = $this->action;
+		$sitemap['language'] = BL::getWorkingLanguage();
+		$sitemap['url'] = $this->getURL();
 		$sitemap['priority'] = ($sitemapPriority == '') ? self::DEFAULT_PRIORITY : $sitemapPriority;
 		$sitemap['change_frequency'] = $this->form->getField('sitemap_change_frequency')->getValue();
-		$sitemap['url'] = $this->getURL();
+		$sitemap['visible'] = ($this->form->getField('use_sitemap')->isChecked()) ? 'Y' : 'N';
 		$sitemap['edited_on'] = BackendModel::getUTCDate();
 		if(isset($this->data['sitemap_id'])) $sitemap['id'] = (int) $this->data['sitemap_id'];
 

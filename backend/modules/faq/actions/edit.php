@@ -72,6 +72,9 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
 
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+		$this->meta->setUrlCallback('BackendFaqModel', 'getURL', array($this->record['id']));
+		$this->meta->setModule($this->URL->getModule());
+		$this->meta->setAction('category');
 	}
 
 	/**
@@ -98,8 +101,6 @@ class BackendFaqEdit extends BackendBaseActionEdit
 	{
 		if($this->frm->isSubmitted())
 		{
-			$this->meta->setUrlCallback('BackendFaqModel', 'getURL', array($this->record['id']));
-
 			$this->frm->cleanupFields();
 
 			// validate fields

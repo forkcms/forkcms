@@ -90,7 +90,7 @@ class FrontendSitemap
 				if(is_array($nodeData)) $returnString .= $this->arrayToXml($nodeData, $tab + 1);
 				else $returnString .= $nodeData;
 
-				// end of th enew node
+				// end of the new node
 				$returnString .= '</' . $nodeName . '>' . "\n";
 			}
 		}
