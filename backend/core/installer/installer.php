@@ -209,7 +209,12 @@ class ModuleInstaller
 	 */
 	protected function getSitemapLanguage()
 	{
-		if(!isset($this->sitemapLanguage)) $this->sitemapLanguage = $this->getInterfaceLanguages();
+		if(!isset($this->sitemapLanguage))
+		{
+			$languages = $this->getInterfaceLanguages();
+			$this->sitemapLanguage = current($languages);
+		}
+
 		return $this->sitemapLanguage;
 	}
 

@@ -51,8 +51,17 @@ class PagesInstaller extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			// check if pages already exist for this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)))
+			$existsPage = (bool) $this->getDB()->getVar(
+				'SELECT COUNT(id)
+				 FROM pages
+				 WHERE language = ?',
+				array($language)
+			);
+
+			if(!$existsPage)
 			{
 				// insert homepage
 				$this->insertPage(

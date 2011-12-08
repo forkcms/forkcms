@@ -146,6 +146,8 @@ class BlogInstaller extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			// fetch current categoryId
 			$this->defaultCategoryId = $this->getCategory($language);
 
@@ -204,7 +206,6 @@ class BlogInstaller extends ModuleInstaller
 		if(!(bool) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)))
 		{
 			$this->setSitemapAction('detail');
-			$this->setSitemapLanguage($language);
 
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array(
