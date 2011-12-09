@@ -111,6 +111,7 @@ class FrontendSitemap
 	 *
 	 * @param int $limit
 	 * @param int $offset
+	 * @param string[optional] $language
 	 * @return string
 	 */
 	protected function getLastModificationDate($limit, $offset, $language = null)
@@ -187,6 +188,7 @@ class FrontendSitemap
 	 *
 	 * @param int[optional] $limit
 	 * @param int[optional] $offset
+	 * @param string[optional] $language
 	 * @return array
 	 */
 	protected function getRawData($limit = 200, $offset = 0, $language = null)
