@@ -15,6 +15,7 @@ Bugfixes:
 * Pages: removed extras still linked to page now no longer trigger an error.
 * Core: settings exclude & checked values on setMassActionCheckboxes now works again.
 * Formbuilder: fixed a typo, as mentioned by Tommy Van de Velde on http://forkcms.lighthouseapp.com/projects/61890/tickets/239.
+* Core: when adding a JS-file with an ? in it the timestamp was appended with a ?.
 
 
 3.1.5 (2011-12-06)
