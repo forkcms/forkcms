@@ -60,7 +60,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addImage('image');
 
 		// meta
-		$this->meta = new BackendMeta(null, 'title', true);
+		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 		$this->meta->setForm($this->frm)->setAction('detail');
 	}
 

@@ -17,6 +17,13 @@ require_once FRONTEND_CORE_PATH . '/engine/language.php';
 class FrontendSitemap
 {
 	/**
+	 * The active language
+	 *
+	 * @var string
+	 */
+	protected $activeLanguage;
+
+	/**
 	 * The meta data that will be used to process the xml
 	 *
 	 * @var array
@@ -113,12 +120,36 @@ class FrontendSitemap
 		$this->urlData = explode('sitemap', $url);
 
 		// set the sitemap data
-		$this->sitemapAction = (isset($this->urlData[0]) && $this->urlData[0] != '') ? $this->urlData[0] : null;
+		if(isset($this->urlData[0]) && $this->urlData[0] != '')
+		{
+			// check if we have a language specified
+			$prefixChunks = explode('-', $this->urlData[0]);
+			$activeLanguages = FL::getActiveLanguages();
+
+			// we have selected a language
+			if(count($prefixChunks) > 1)
+			{
+				$action = $prefixChunks[1];
+
+				// set the active language
+				if(in_array($prefixChunks[0], $activeLanguages)) $this->activeLanguage = $prefixChunks[0];
+				else throw new Exception('This is an invalid language');
+			}
+			else
+			{
+				$action = $prefixChunks[0];
+
+				// set the active language
+				if(count($activeLanguages) > 1) $this->activeLanguage = current($activeLanguages);
+				else $this->activeLanguage = $activeLanguages;
+			}
+			$this->sitemapAction = $action;
+		}
 
 		if(isset($this->urlData[1]))
 		{
 			// load the pagination data
-			$this->loadPagination($this->urlData[0]);
+			$this->loadPagination($this->sitemapAction);
 
 			if($this->urlData[1] != '')
 			{
@@ -167,9 +198,9 @@ class FrontendSitemap
 		$data = (array) FrontendModel::getDB()->getRecords(
 			'SELECT s.*, UNIX_TIMESTAMP(s.edited_on) AS edited_on
 			 FROM meta_sitemap AS s
-			 WHERE s.visible = ?
+			 WHERE s.visible = ? AND s.language = ?
 			 LIMIT ?, ?',
-			array('Y', (int) $offset, (int) $limit)
+			array('Y', $this->activeLanguage, (int) $offset, (int) $limit)
 		);
 
 		// go trough the data to assign the url
@@ -290,10 +321,23 @@ class FrontendSitemap
 		$output = array();
 
 		// build the pages sitemap
-		$output[]['sitemap'] = array(
-			'loc' => SITE_URL . '/pagesitemap.xml',
-			'lastmod' => $this->getLastModificationDate($this->numPages, 0)
-		);
+		if(SITE_MULTILANGUAGE)
+		{
+			foreach(FL::getActiveLanguages() as $language)
+			{
+				$output[]['sitemap'] = array(
+					'loc' => SITE_URL . '/' . $language . '-pagesitemap.xml',
+					'lastmod' => $this->getLastModificationDate($this->numPages, 0)
+				);
+			}
+		}
+		else
+		{
+			$output[]['sitemap'] = array(
+				'loc' => SITE_URL . '/' . $this->activeLanguage . '-pagesitemap.xml',
+				'lastmod' => $this->getLastModificationDate($this->numPages, 0)
+			);
+		}
 
 		return $output;
 	}
@@ -316,7 +360,7 @@ class FrontendSitemap
 			for($i = 1; $i <= $this->numPages; $i++)
 			{
 				$output[]['sitemap'] = array(
-					'loc' => SITE_URL . '/pagesitemap-' . $i . '.xml',
+					'loc' => SITE_URL . '/' . $this->activeLanguage . '-pagesitemap-' . $i . '.xml',
 					'lastmod' => $this->getLastModificationDate($this->pageLimit, $i - 1)
 				);
 			}
