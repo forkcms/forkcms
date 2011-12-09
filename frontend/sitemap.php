@@ -136,7 +136,7 @@ class FrontendSitemap
 
 				// set the active language
 				if(in_array($prefixChunks[0], $activeLanguages)) $this->activeLanguage = $prefixChunks[0];
-				else throw new Exception('This is an invalid language');
+				else throw new Exception('This(' . $prefixChunks[0] . ') is an invalid language');
 			}
 			else $action = $prefixChunks[0];
 			$this->sitemapAction = $action;
@@ -257,7 +257,7 @@ class FrontendSitemap
 				// do nothing
 			break;
 			default:
-				SpoonHTTP::redirect(SITE_URL);
+				SpoonHTTP::redirect(FrontendNavigation::getURL(404, $this->activeLanguage));
 			break;
 		}
 	}
