@@ -130,13 +130,39 @@ class FrontendSitemap
 	}
 
 	/**
+	 * Fetches all the required images for the sitemap.
+	 *
+	 * @param int[optional] $limit
+	 * @param int[optional] $offset
+	 * @return array
+	 */
+	protected function getImageData($limit = 200, $offset = 0)
+	{
+		$allModules = FrontendModel::getModules();
+
+		// go trough all the modules to see where we can find some images
+		foreach($allModules as $module)
+		{
+			// the main priority
+			$modelClass = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
+			$configClass = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Config';
+			$configParameters = call_user_func(array($configClass, 'getSitemapSearchFields'));
+			if(!is_callable(array($modelClass, 'sitemapImages')) && empty($configParameters)) continue;
+
+			Spoon::dump($module);
+		}
+
+
+	}
+
+	/**
 	 * Fetch the meta data so we can display the right information.
 	 *
 	 * @param int[optional] $limit
 	 * @param int[optional] $offset
 	 * @return array
 	 */
-	protected function getMetaData($limit = 200, $offset = 0)
+	protected function getPageData($limit = 200, $offset = 0)
 	{
 		$data = $this->getRawData($limit, $offset);
 
@@ -172,7 +198,7 @@ class FrontendSitemap
 	 *
 	 * @return int
 	 */
-	protected function getMetaDataCount()
+	protected function getPageDataCount()
 	{
 		return (int) FrontendModel::getDB()->getNumRows(
 			'SELECT s.id
@@ -216,7 +242,10 @@ class FrontendSitemap
 		{
 			case 'page':
 				// show the page items
-				$this->metaData = $this->getMetaData($this->pageLimit, $this->sitemapPage);
+				$this->metaData = $this->getPageData($this->pageLimit, $this->sitemapPage);
+			break;
+			case 'image':
+				$this->metaData = $this->getImageData($this->pageLimit, $this->sitemapPage);
 			break;
 			case '':
 				// do nothing
@@ -238,8 +267,12 @@ class FrontendSitemap
 		switch($action)
 		{
 			case 'page':
-				// get the page limit for the pages sitemap
+				// get the page limit for the page sitemap
 				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_pages_items', 100);
+			break;
+			case 'image':
+				// get the page limit for the image sitemap
+				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_images_items', 100);
 			break;
 			default:
 				// do nothing
@@ -247,7 +280,7 @@ class FrontendSitemap
 		}
 
 		// set the number of pages
-		$this->numPages = ceil($this->getMetaDataCount() / $this->pageLimit);
+		$this->numPages = ceil($this->getPageDataCount() / $this->pageLimit);
 	}
 
 	/**
@@ -273,6 +306,18 @@ class FrontendSitemap
 	}
 
 	/**
+	 * Parse the images. This will load parse the images into a sexy sitemap.
+	 *
+	 * @return array
+	 */
+	public function parseImages()
+	{
+		$output = array();
+
+		return $output;
+	}
+
+	/**
 	 * Parse the sitemapindex. This will show an overview with sitemaps available.
 	 *
 	 * @return array
@@ -290,7 +335,7 @@ class FrontendSitemap
 				// add the data so we can parse this in the sitemap
 				$output[]['sitemap'] = array(
 					'loc' => SITE_URL . '/' . $language . '-pagesitemap.xml',
-					'lastmod' => $this->getLastModificationDate($this->getMetaDataCount(), 0, $language)
+					'lastmod' => $this->getLastModificationDate($this->getPageDataCount(), 0, $language)
 				);
 			}
 		}
@@ -299,7 +344,7 @@ class FrontendSitemap
 			// add the data so we can parse this in the sitemap
 			$output[]['sitemap'] = array(
 				'loc' => SITE_URL . '/' . $this->activeLanguage . '-pagesitemap.xml',
-				'lastmod' => $this->getLastModificationDate($this->getMetaDataCount(), 0)
+				'lastmod' => $this->getLastModificationDate($this->getPageDataCount(), 0)
 			);
 		}
 

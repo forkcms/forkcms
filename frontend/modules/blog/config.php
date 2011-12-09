@@ -27,4 +27,15 @@ class FrontendBlogConfig extends FrontendBaseConfig
 	 * @var	array
 	 */
 	protected $disabledActions = array();
+
+	/**
+	 * The database fields and columns to search images and videos for the sitemap
+	 *
+	 * @var array
+	 */
+	protected $sitemapSearchFields = array(
+		'blog_posts' => array(
+				'text', 'introduction'
+			)
+	);
 }
