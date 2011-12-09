@@ -117,7 +117,7 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.ParamsDelete,
+					data: $.extend(jsBackend.formBuilder.fields.paramsDelete,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						field_id: id

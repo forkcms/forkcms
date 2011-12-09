@@ -5,6 +5,10 @@ Improvements:
 * Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
 * Core: don't add a timestamp to the urls of well known libraries in the backend.
 
+Bugfixes:
+
+* Formbuilder: fixed a type, as mentioned by Tommy Van de Velde on http://forkcms.lighthouseapp.com/projects/61890/tickets/239.
+
 
 3.1.5 (2011-12-06)
 --
