@@ -102,7 +102,7 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		$this->frm = new FrontendForm('feedback');
 		$this->frm->addHidden('question_id', $this->record['id']);
 		$this->frm->addTextarea('message');
-		$this->frm->addRadiobutton('usefull', array(
+		$this->frm->addRadiobutton('useful', array(
 			array('label' => FL::lbl('Yes'), 'value' => 'Y'),
 			array('label' => FL::lbl('No'), 'value' => 'N')
 		));
@@ -164,16 +164,16 @@ class FrontendFaqDetail extends FrontendBaseBlock
 		if($this->frm->isSubmitted())
 		{
 			// reformat data
-			$usefull = ($this->frm->getField('usefull')->getValue() == 'Y');
+			$useful = ($this->frm->getField('useful')->getValue() == 'Y');
 
 			// the form has been sent
-			$this->tpl->assign('hideFeedbackNoInfo', $usefull);
+			$this->tpl->assign('hideFeedbackNoInfo', $useful);
 
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate required fields
-			if(!$usefull) $this->frm->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
+			if(!$useful) $this->frm->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
 
 			if($this->frm->isCorrect())
 			{
@@ -184,13 +184,13 @@ class FrontendFaqDetail extends FrontendBaseBlock
 				$previousFeedback = (SpoonSession::exists('faq_feedback_' . $this->record['id']) ? SpoonSession::get('faq_feedback_' . $this->record['id']) : null);
 
 				// update counters
-				FrontendFaqModel::updateFeedback($this->record['id'], $usefull, $previousFeedback);
+				FrontendFaqModel::updateFeedback($this->record['id'], $useful, $previousFeedback);
 
 				// save feedback in session
-				SpoonSession::set('faq_feedback_' . $this->record['id'], $usefull);
+				SpoonSession::set('faq_feedback_' . $this->record['id'], $useful);
 
 				// answer is yes so there's no feedback
-				if(!$usefull)
+				if(!$useful)
 				{
 					// get module setting
 					$spamFilterEnabled = (isset($this->settings['spamfilter']) && $this->settings['spamfilter']);
