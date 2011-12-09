@@ -36,7 +36,7 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		$this->frm = new BackendForm('addCategory');
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, 255, 'inputText title', 'inputTextError title');
 
 		$this->meta = new BackendMeta(null, 'title', true);
 		$this->meta->setForm($this->frm)
