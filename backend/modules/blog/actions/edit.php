@@ -166,7 +166,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('delete_image');
 
 		// meta object
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
+		$this->meta->setForm($this->frm);
 		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
 		$this->meta->setAction('detail');
 	}

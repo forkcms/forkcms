@@ -39,7 +39,8 @@ class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 		$parameters = @unserialize($parameters);
 
 		// meta object
-		$this->meta = new BackendMeta($frm, $metaId, $baseFieldName, $custom);
+		$this->meta = new BackendMeta($metaId, $baseFieldName, $custom);
+		$this->meta->setForm($frm);
 
 		// set callback for generating an unique URL
 		$this->meta->setUrlCallback($className, $methodName, $parameters);

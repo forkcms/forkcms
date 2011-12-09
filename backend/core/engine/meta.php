@@ -90,8 +90,9 @@ class BackendMeta
 	 * @param int[optional] $metaId The metaID to load.
 	 * @param string[optional] $baseFieldName The field where the URL should be based on.
 	 * @param bool[optional] $custom Add/show custom-meta.
+	 * @return BackendMeta
 	 */
-	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
+	public function __construct($metaId = null, $baseFieldName = 'title', $custom = false)
 	{
 		// check if URL is available from the referene
 		if(!Spoon::exists('url')) throw new BackendException('URL should be available in the reference.');
@@ -103,20 +104,30 @@ class BackendMeta
 		// should we use meta-custom
 		$this->custom = (bool) $custom;
 
-		// set form instance
-		$this->form = $form;
-
 		// set base field name
 		$this->baseFieldName = (string) $baseFieldName;
 
 		// metaId was specified, so we should load the item
 		if($metaId !== null) $this->loadMeta($metaId);
 
-		// set default callback
-		$this->setUrlCallback('Backend' . SpoonFilter::toCamelCase($this->url->getModule()) . 'Model', 'getURL');
+		return $this;
+	}
 
-		// load the form
-		$this->loadForm();
+	/**
+	 * Delete the meta record
+	 *
+	 * @param int[optional] $metaId
+	 */
+	public function delete($metaId = null)
+	{
+		if($metaId === null && $this->id === null) throw new Exception('You must provide a meta-id to delete');
+
+		if($metaId !== null) $this->loadMeta($metaId);
+
+		// delete the meta data
+		$db = FrontendModel::getDB(true);
+		$db->delete('meta', 'id = ?', (int) $this->id);
+		$db->delete('meta_sitemap', 'id = ?', (int) $this->data['sitemap_id']);
 	}
 
 	/**
@@ -502,6 +513,22 @@ class BackendMeta
 	public function setAction($action)
 	{
 		$this->action = (string) $action;
+	}
+
+	/**
+	 * Set the form
+	 *
+	 * @param BackendForm $form
+	 */
+	public function setForm(BackendForm $form)
+	{
+		$this->form = $form;
+
+		// set default callback
+		$this->setUrlCallback('Backend' . SpoonFilter::toCamelCase($this->url->getModule()) . 'Model', 'getURL');
+
+		// load the form
+		$this->loadForm();
 	}
 
 	/**

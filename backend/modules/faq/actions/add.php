@@ -54,7 +54,8 @@ class BackendFaqAdd extends BackendBaseActionAdd
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 
 		// meta
-		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+		$this->meta = new BackendMeta(null, 'title', true);
+		$this->meta->setForm($this->frm);
 		$this->meta->setAction('detail');
 	}
 

@@ -55,7 +55,8 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 		$this->frm = new BackendForm('editCategory');
 		$this->frm->addText('title', $this->record['title']);
 
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
+		$this->meta->setForm($this->frm);
 		$this->meta->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']));
 		$this->meta->setAction('category');
 	}
