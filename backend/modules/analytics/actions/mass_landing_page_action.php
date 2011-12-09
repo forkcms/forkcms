@@ -32,7 +32,7 @@ class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
 		else
 		{
 			// delete items
-			if($action == 'delete') BackendAnalyticsModel::deleteLandingPage((array) $ids);
+			if($action == 'delete') BackendAnalyticsModel::deleteLandingPage((array) $_GET['id']);
 		}
 
 		// redirect

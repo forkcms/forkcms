@@ -538,6 +538,18 @@
         <translation language="cn"><![CDATA[消息]]></translation>
         <translation language="de"><![CDATA[Nachricht]]></translation>
       </item>
+      <item type="label" name="More">
+        <translation language="nl"><![CDATA[meer]]></translation>
+        <translation language="en"><![CDATA[more]]></translation>
+        <translation language="pl"><![CDATA[wiecej]]></translation>
+        <translation language="hu"><![CDATA[tovább]]></translation>
+        <translation language="it"><![CDATA[altro]]></translation>
+        <translation language="fr"><![CDATA[plus]]></translation>
+        <translation language="ru"><![CDATA[Далее]]></translation>
+        <translation language="tr"><![CDATA[daha fazla]]></translation>
+        <translation language="cn"><![CDATA[更多]]></translation>
+        <translation language="de"><![CDATA[mehr]]></translation>
+      </item>
       <item type="label" name="Name">
         <translation language="nl"><![CDATA[naam]]></translation>
         <translation language="en"><![CDATA[name]]></translation>
@@ -892,6 +904,11 @@
         <translation language="tr"><![CDATA['de gönderildi]]></translation>
         <translation language="cn"><![CDATA[发送于]]></translation>
         <translation language="de"><![CDATA[verschickt am]]></translation>
+      </item>
+      <item type="label" name="Share">
+        <translation language="nl"><![CDATA[delen]]></translation>
+        <translation language="en"><![CDATA[share]]></translation>
+        <translation language="fr"><![CDATA[partager]]></translation>
       </item>
       <item type="label" name="ShowPassword">
         <translation language="nl"><![CDATA[toon wachtwoord]]></translation>
@@ -4396,7 +4413,7 @@
         <translation language="it"><![CDATA[password]]></translation>
         <translation language="tr"><![CDATA[şifre]]></translation>
         <translation language="cn"><![CDATA[密码]]></translation>
-        <translation language="de"><![CDATA[Password]]></translation>
+        <translation language="de"><![CDATA[Passwort]]></translation>
         <translation language="fr"><![CDATA[mot de passe]]></translation>
       </item>
       <item type="label" name="PerDay">
@@ -6241,14 +6258,14 @@
         <translation language="fr"><![CDATA[Seuls les fichiers jp(e)g, gif ou png sont acceptés. taille maximale: %1$s.]]></translation>
       </item>
       <item type="message" name="HelpMaxFileSize">
-        <translation language="nl"><![CDATA[(maximum bestandsgrootte: %1$s)]]></translation>
-        <translation language="en"><![CDATA[(maximum filesize: %1$s)]]></translation>
-        <translation language="hu"><![CDATA[(maximális fájlméret: %1$s)]]></translation>
-        <translation language="it"><![CDATA[(dimensione massima: %1$s)]]></translation>
-        <translation language="ru"><![CDATA[(максимальный размер: %1$s)]]></translation>
-        <translation language="cn"><![CDATA[（不大于%1$s)]]></translation>
-        <translation language="de"><![CDATA[(maximale Dateigröße: %1$s)]]></translation>
-        <translation language="fr"><![CDATA[(taille de fichier maximale: %1$s)]]></translation>
+        <translation language="nl"><![CDATA[maximum bestandsgrootte: %1$s]]></translation>
+        <translation language="en"><![CDATA[maximum filesize: %1$s]]></translation>
+        <translation language="hu"><![CDATA[maximális fájlméret: %1$s]]></translation>
+        <translation language="it"><![CDATA[dimensione massima: %1$s]]></translation>
+        <translation language="ru"><![CDATA[максимальный размер: %1$s]]></translation>
+        <translation language="cn"><![CDATA[不大于%1$s]]></translation>
+        <translation language="de"><![CDATA[maximale Dateigröße: %1$s]]></translation>
+        <translation language="fr"><![CDATA[taille de fichier maximale: %1$s]]></translation>
       </item>
       <item type="message" name="HelpMetaCustom">
         <translation language="nl"><![CDATA[Deze extra metatags worden in de <code>&lt;head&gt;</code> sectie van de pagina gezet.]]></translation>

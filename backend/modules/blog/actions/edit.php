@@ -343,7 +343,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				if($item['status'] == 'active')
 				{
 					// edit search index
-					if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+					BackendSearchModel::editIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
 					if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') . '/' . $this->meta->getURL());

@@ -182,6 +182,22 @@
         <translation language="fr"><![CDATA[La page "%1$s" a été ajoutée.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" oldal hozzáadva.]]></translation>
       </item>
+      <item type="message" name="AllowChildren">
+        <translation language="nl"><![CDATA[Deze pagina mag subpagina's bevatten.]]></translation>
+        <translation language="en"><![CDATA[This page can have subpages.]]></translation>
+      </item>
+      <item type="message" name="AllowDelete">
+        <translation language="nl"><![CDATA[Deze pagina mag verwijderd worden.]]></translation>
+        <translation language="en"><![CDATA[This page can be deleted.]]></translation>
+      </item>
+      <item type="message" name="AllowEdit">
+        <translation language="nl"><![CDATA[Deze pagina mag bewerkt worden.]]></translation>
+        <translation language="en"><![CDATA[This page can be edited.]]></translation>
+      </item>
+      <item type="message" name="AllowMove">
+        <translation language="nl"><![CDATA[Deze pagina mag verplaatst worden naar een andere positie.]]></translation>
+        <translation language="en"><![CDATA[The position of this page can be changed.]]></translation>
+      </item>
       <item type="message" name="BlockAttached">
         <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
         <translation language="en"><![CDATA[The module <strong>%1$s</strong> is attached to this section.]]></translation>

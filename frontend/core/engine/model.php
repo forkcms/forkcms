@@ -15,7 +15,14 @@
 class FrontendModel
 {
 	/**
-	 * cached module-settings
+	 * Cached modules
+	 *
+	 * @var	array
+	 */
+	private static $modules = array();
+
+	/**
+	 * Cached module-settings
 	 *
 	 * @var	array
 	 */
@@ -163,6 +170,26 @@ class FrontendModel
 
 		// return db-object
 		return Spoon::get('database');
+	}
+
+	/**
+	 * Get the modules
+	 *
+	 * @return array
+	 */
+	public static function getModules()
+	{
+		// validate cache
+		if(empty(self::$modules))
+		{
+			// get all modules
+			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
+
+			// add modules to the cache
+			foreach($modules as $module) self::$modules[] = $module;
+		}
+
+		return self::$modules;
 	}
 
 	/**
@@ -339,25 +366,30 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords(
-			'SELECT pe.id AS extra_id, pb.html,
+		$blocks = (array) $db->getRecords(
+			'SELECT pe.id AS extra_id, pb.html, pb.position,
 			 pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 			 FROM pages_blocks AS pb
 			 INNER JOIN pages AS p ON p.revision_id = pb.revision_id
 			 LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-			 WHERE pb.revision_id = ? AND p.status = ?
-			 ORDER BY pb.id',
-			array('N', $record['revision_id'], 'active')
+			 WHERE pb.revision_id = ?
+			 ORDER BY pb.position, pb.sequence',
+			array('N', $record['revision_id'])
 		);
 
+		// init positions
+		$record['positions'] = array();
+
 		// loop blocks
-		foreach($record['blocks'] as $index => $row)
+		foreach($blocks as $block)
 		{
 			// unserialize data if it is available
-			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
+			if(isset($block['data'])) $block['data'] = unserialize($block['data']);
+
+			// save to position
+			$record['positions'][$block['position']][] = $block;
 		}
 
-		// return page record
 		return $record;
 	}
 
@@ -523,6 +555,73 @@ class FrontendModel
 					}
 				}
 			}
+		}
+
+		catch(Exception $e)
+		{
+			if(SPOON_DEBUG) throw $e;
+		}
+	}
+
+	/**
+	 * Push a notification to Microsoft's notifications-server
+	 *
+	 * @param string $title The title for the tile to send.
+	 * @param string[optional] $count The count for the tile to send.
+	 * @param string[optional] $image The image for the tile to send.
+	 * @param string[optional] $backTitle The title for the tile backtround to send.
+	 * @param string[optional] $backText The text for the tile background to send.
+	 * @param string[optional] $backImage The image for the tile background to send.
+	 * @param string[optional] $tile The secondary tile to update.
+	 * @param string[optional] $uri The application uri to navigate to.
+	 */
+	public static function pushToMicrosoftApp($title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $tile = null, $uri = null)
+	{
+		// get ForkAPI-keys
+		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
+		$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+
+		// no keys, so stop here
+		if($publicKey == '' || $privateKey == '') return;
+
+		// get all microsoft channel uri's
+		$channelUris = (array) FrontendModel::getDB()->getColumn(
+			'SELECT s.value
+			 FROM users AS i
+			 INNER JOIN users_settings AS s
+			 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
+			array('Y', 'N', 'microsoft_channel_uri', 'N;')
+		);
+
+		// no devices, so stop here
+		if(empty($channelUris)) return;
+
+		// init var
+		$uris = array();
+
+		// loop devices
+		foreach($channelUris as $row)
+		{
+			// unserialize
+			$row = unserialize($row);
+
+			// loop and add
+			foreach($row as $item) $uris[] = $item;
+		}
+
+		// no channel uri's, so stop here
+		if(empty($uris)) return;
+
+		// require the class
+		require_once PATH_LIBRARY . '/external/fork_api.php';
+
+		// create instance
+		$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+		try
+		{
+			// push
+			$forkAPI->microsoftPush($uris, $title, $count, $image, $backTitle, $backText, $backImage, $tile, $uri);
 		}
 
 		catch(Exception $e)

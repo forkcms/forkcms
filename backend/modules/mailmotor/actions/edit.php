@@ -132,11 +132,12 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		// assign the template language
 		$this->tpl->assign('templateLanguage', ucfirst(BL::lbl(strtoupper($template['language']))));
 
-		// get the price setting
-		$price = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');
+		// get the price settings
+		$pricePerEmail = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');
+		$pricePerCampaign = BackendModel::getModuleSetting($this->getModule(), 'price_per_campaign');
 
 		// parse the price total
-		$this->tpl->assign('price', $stats['recipients'] * $price);
+		$this->tpl->assign('price', ($stats['recipients'] * $pricePerEmail) + $pricePerCampaign);
 	}
 
 	/**

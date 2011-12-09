@@ -1,7 +1,7 @@
 /**
  * Interaction for the mailmotor
  *
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Dave Lens <dave@netlash.com>
  */
 jsBackend.mailmotor =
 {
@@ -102,7 +102,7 @@ jsBackend.mailmotor.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: false,
+						enabled: false
 					}
 				}
 			},
@@ -156,7 +156,7 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// link account button clicked
-		$confirm.on('click', function(e)
+		$(document).on('click', '#linkAccount', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -293,7 +293,7 @@ jsBackend.mailmotor.resizing =
 				{
 					left: 0,
 					position:'absolute',
-					top: iframe.position().top
+					top: $iframe.position().top
 				});
 
 				// height should be the height of the iframe
@@ -314,9 +314,9 @@ jsBackend.mailmotor.step3 =
 	init: function()
 	{
 		// cache objects
-		$iframe = $('#contentBox');
-		$iframeBox = $('#iframeBox');
-		$form = $('#step3');
+		var $iframe = $('#contentBox');
+		var $iframeBox = $('#iframeBox');
+		var $form = $('#step3');
 
 		// only continue if the iframe is ready
 		$iframe.load(function()
@@ -326,8 +326,8 @@ jsBackend.mailmotor.step3 =
 
 			// give the iframebox the height of the body contents
 			$iframeBox.height(body.height());
-
-			$form.submit(function(e)
+			
+			$form.on('submit', function(e)
 			{
 				// prevent the form from submitting
 				e.preventDefault();
@@ -335,7 +335,7 @@ jsBackend.mailmotor.step3 =
 				// set variables
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
-				var textareaValue = iframe[0].contentWindow.getTinyMCEContent();
+				var textareaValue = $iframe[0].contentWindow.getTinyMCEContent();
 
 				// remove tiny fields added to the body by naughty tinyMCE
 				body.find('.mceListBoxMenu').remove();

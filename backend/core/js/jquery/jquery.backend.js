@@ -525,7 +525,7 @@
 			build();
 
 			// bind autocomplete if needed
-			if(options.params.length)
+			if(!$.isEmptyObject(options.params))
 			{
 				$('#addValue-' + id).autocomplete(
 				{
@@ -824,7 +824,7 @@
 			build();
 
 			// bind autocomplete if needed
-			if(options.params.length)
+			if(!$.isEmptyObject(options.params))
 			{
 				$('#addValue-' + id).autocomplete(
 				{
@@ -1319,7 +1319,7 @@
 			build();
 
 			// bind autocomplete if needed
-			if(options.params.length)
+			if(!$.isEmptyObject(options.params))
 			{
 				$('#addValue-' + id).autocomplete(
 				{

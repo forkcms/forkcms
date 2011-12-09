@@ -55,8 +55,8 @@
 									<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" width="500" alt="{$lblImage|ucfirst}" />
 								</p>
 								<p>
-									<label for="deleteImage">{$lblDelete|ucfirst}</label>
-									{$chkDeleteImage} {$chkDeleteImageError}
+									<label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
+									{$chkDeleteImageError}
 								</p>
 								{/option:item.image}
 								<p>

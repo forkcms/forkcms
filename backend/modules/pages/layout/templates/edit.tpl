@@ -295,14 +295,19 @@
 		<div id="tabSettings">
 			<ul class="inputList">
 				{iteration:hidden}
-				<li>
-					{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label>
-				</li>
+					<li>{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label></li>
 				{/iteration:hidden}
 			</ul>
 			<p>
 				<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
 			</p>
+			{option:isGod}
+				<ul class="inputList">
+					{iteration:allow}
+						<li>{$allow.chkAllow} <label for="{$allow.id}">{$allow.label}</label></li>
+					{/iteration:allow}
+				</ul>
+			{/option:isGod}
 		</div>
 	</div>
 
@@ -392,7 +397,7 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-		// the ID of the page
+		//the ID of the page
 		var pageID = {$item.id};
 
 		// all the possible templates
@@ -406,6 +411,9 @@
 		// the extra's, but in a way we can access them based on their ID
 		var extrasById = {};
 		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+
+		// indicator that the default blocks may not be set on pageload
+		var initDefaults = false;
 
 		// fix selected state in the tree
 		var selectedId = 'page-'+ pageID;

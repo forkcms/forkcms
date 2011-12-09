@@ -313,7 +313,7 @@ class BackendTagsModel
 		}
 
 		// add to search index
-		if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
+		BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
 
 		// decrement number
 		foreach($currentTags as $tag => $tagId)

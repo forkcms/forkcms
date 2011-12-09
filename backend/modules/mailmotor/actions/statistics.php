@@ -44,7 +44,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 	public function execute()
 	{
 		parent::execute();
-		$this->header->addJS('highcharts.js');
+		$this->header->addJS('highcharts.js', null, false, false, false);
 		$this->getData();
 		$this->loadDataGrid();
 		$this->parse();

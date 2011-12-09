@@ -1,4 +1,81 @@
-3.1.1 (xxxx-xx-xx)
+3.1.6 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
+* Core: added an getModules method to FrontendModule, analog to the backend method.
+* Core: the direct actions are no longer shown in the navigation.
+* Locale: the missing items are now sorted by application, type, module and name.
+* Core: don't add a timestamp to the urls of well known libraries in the backend.
+* Core: automagic canonical-urls.
+
+Bugfixes:
+* Pages: default blocks now apply correctly on new pages.
+* Pages: removed extras still linked to page now no longer trigger an error.
+* Core: settings exclude & checked values on setMassActionCheckboxes now works again.
+* Formbuilder: fixed a typo, as mentioned by Tommy Van de Velde on http://forkcms.lighthouseapp.com/projects/61890/tickets/239.
+
+
+3.1.5 (2011-12-06)
+--
+Bugfixes:
+
+* Analytics: when refreshing the traffic sources a parseerror was thrown, as reported by Wouter H. on http://forkcms.lighthouseapp.com/projects/61890/tickets/231 
+
+
+3.1.4 (2011-11-29)
+--
+Improvements:
+
+* Core: upgraded jQuery to 1.7.1  
+* Core: upgraded jQuery Tools to 1.2.6
+* Core: direct action pages get prefilled meta information again.
+* Users: when adding a user and there is only one group it will be checked by default.
+
+Bugfixes:
+
+* Profiles: display name was not being urilized.
+* Tags: it is no longer impossible to fetch related items with the same id as your source item.
+* Core: fixed js issue in triton.
+* Core: fixed a typo, thx to Danny Korpan.
+* Extensions: when using spaces in the format-part of the template XML, the templates weren't build correctly.
+
+
+3.1.3 (2011-11-22)
+--
+Improvements:
+
+* Added the possibility to easily adjust detailed page settings when you are a god user.
+* SVN folders will now be skipped when running the remove_cache script.
+
+Bugfixes:
+
+* Core: fixed an issue with the checkboxTextfieldCombo function.
+* Core: fixed minified media queries in the backend CSS manually, the minify script itself has to be adjusted though.
+* Core: fixed inputCheckbox positioning inside datagrids.
+* Core: fixed the row selected state in the datagrid when the selectAll checkbox was clicked.
+* Core: fixed the layout dataFilter function since it scoped the wrong, lowercased class of the dataFilter.
+* Extensions: prevented PHP warnings when no info.xml is available.
+* Core: fixed an issue with drag and drop in the backend.
+* Locale: importing other languages then EN is possible again.
+* Core: fixed an issue with the user-dropdown. 
+* Formbuilder: fixed an issues with the default error messages.
+* Blog: deleting a blog image caused a SQL error.
+* Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
+* Core: javascript error fixed when no href is provided in the share widget.
+* Core: fixed confirmation-dialog, wasn't closing when the cancel-button was clicked.
+* Tools: frontend and backend globals were not deleted when running prepare_for_reinstall.
+
+
+3.1.2 (2011-11-15)
+--
+Bugfixes:
+
+* Core: fixed an issue with items that used .live().
+* Pages: fixed an issue with dynamically added elements using .data().
+
+
+3.1.1 (2011-11-15)
 --
 Improvements:
 
@@ -9,13 +86,14 @@ Improvements:
 * Core: upgraded jQuery to 1.7
 * Installer: when the form in step 6 (where the actual install happens) is submitted the button will be replaced with a spinner to indicate the installer is running.
 * Analytics: added a warning when trying to link a profile when no profile was selected.
-* Core: automagic canonical-urls
+* Blog: when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb.
 
 Bugfixes:
 
 * Editing tags wasn't working because of an error in the SQL-statement in the FAQ-module.
 * Missing label, as reported by Wouter Hechtermans on http://forkcms.lighthouseapp.com/projects/61890/tickets/212.
 * Pages: closing the dialog did not discard the content correctly.
+* Core: autocomplete on tags wasn't working due the change of the AJAX-calls.
 
 
 3.1.0 (2011-11-08)
