@@ -6,11 +6,14 @@ Improvements:
 * Core: added an getModules method to FrontendModule, analog to the backend method.
 * Core: the direct actions are no longer shown in the navigation.
 * Locale: the missing items are now sorted by application, type, module and name.
+* Core: don't add a timestamp to the urls of well known libraries in the backend.
+* Core: automagic canonical-urls.
 
 Bugfixes:
 * Pages: default blocks now apply correctly on new pages.
 * Pages: removed extras still linked to page now no longer trigger an error.
 * Core: settings exclude & checked values on setMassActionCheckboxes now works again.
+* Formbuilder: fixed a typo, as mentioned by Tommy Van de Velde on http://forkcms.lighthouseapp.com/projects/61890/tickets/239.
 
 
 3.1.5 (2011-12-06)

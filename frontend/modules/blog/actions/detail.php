@@ -172,6 +172,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
 		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
+		$this->header->setCanonicalUrl(FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url']);
+
 		// assign article
 		$this->tpl->assign('item', $this->record);
 
