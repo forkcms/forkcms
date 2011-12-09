@@ -218,7 +218,7 @@
       </item>
       <item type="message" name="HelpSendingEmails">
         <translation language="nl"><![CDATA[Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken]]></translation>
-        <translation language="en"><![CDATA[You can send emails in 2 ways. By using PHP's built-in mail method or via SMTP. We advice you to use SMTP]]></translation>
+        <translation language="en"><![CDATA[You can send emails in 2 ways. By using PHP's built-in mail method or via SMTP. We advise you to use SMTP]]></translation>
         <translation language="it"><![CDATA[Puoi inviare email in 2 modi. Usando il metodo mail built-in di PHP o attraverso un server SMTP. Noi consigliamo di usare SMTP.]]></translation>
         <translation language="ru"><![CDATA[Вы можете отправлять сообщения 2 способами. Встроенным PHP Mail, или через внешний SMTP. Мы советуем использовать SMTP.]]></translation>
         <translation language="cn"><![CDATA[你可以用两种方法发送电子邮件，一是使用基于PHP的内置邮件方法，二是通过SMTP。我们建议你使用SMTP]]></translation>
