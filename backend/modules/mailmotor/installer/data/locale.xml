@@ -1151,7 +1151,7 @@
         <translation language="de"><![CDATA[pro versandtem Newsletter]]></translation>
       </item>
       <item type="label" name="Prices">
-        <translation language="en"><![CDATA[prices]></translation>
+        <translation language="en"><![CDATA[prices]]></translation>
         <translation language="nl"><![CDATA[prijzen]]></translation>
       </item>
       <item type="label" name="QueuedMailings">
