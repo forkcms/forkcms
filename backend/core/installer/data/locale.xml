@@ -6258,14 +6258,14 @@
         <translation language="fr"><![CDATA[Seuls les fichiers jp(e)g, gif ou png sont acceptés. taille maximale: %1$s.]]></translation>
       </item>
       <item type="message" name="HelpMaxFileSize">
-        <translation language="nl"><![CDATA[(maximum bestandsgrootte: %1$s)]]></translation>
-        <translation language="en"><![CDATA[(maximum filesize: %1$s)]]></translation>
-        <translation language="hu"><![CDATA[(maximális fájlméret: %1$s)]]></translation>
-        <translation language="it"><![CDATA[(dimensione massima: %1$s)]]></translation>
-        <translation language="ru"><![CDATA[(максимальный размер: %1$s)]]></translation>
-        <translation language="cn"><![CDATA[（不大于%1$s)]]></translation>
-        <translation language="de"><![CDATA[(maximale Dateigröße: %1$s)]]></translation>
-        <translation language="fr"><![CDATA[(taille de fichier maximale: %1$s)]]></translation>
+        <translation language="nl"><![CDATA[maximum bestandsgrootte: %1$s]]></translation>
+        <translation language="en"><![CDATA[maximum filesize: %1$s]]></translation>
+        <translation language="hu"><![CDATA[maximális fájlméret: %1$s]]></translation>
+        <translation language="it"><![CDATA[dimensione massima: %1$s]]></translation>
+        <translation language="ru"><![CDATA[максимальный размер: %1$s]]></translation>
+        <translation language="cn"><![CDATA[不大于%1$s]]></translation>
+        <translation language="de"><![CDATA[maximale Dateigröße: %1$s]]></translation>
+        <translation language="fr"><![CDATA[taille de fichier maximale: %1$s]]></translation>
       </item>
       <item type="message" name="HelpMetaCustom">
         <translation language="nl"><![CDATA[Deze extra metatags worden in de <code>&lt;head&gt;</code> sectie van de pagina gezet.]]></translation>

@@ -289,8 +289,8 @@ class FrontendNavigation extends FrontendBaseObject
 					continue 2;
 				}
 
-				// not hidden
-				if($page['hidden'])
+				// not hidden and not an action
+				if($page['hidden'] || $page['tree_type'] == 'direct_action')
 				{
 					unset($navigation[$type][$parentId][$id]);
 					continue;
