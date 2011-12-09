@@ -17,9 +17,10 @@
 		</div>
 		<div class="options">
 			{option:item.lat}
-			{option:item.lng}
-				<div id="map" style="height: {$settings.height_widget}px; width: 100%;"></div>
-			{/option:item.lat}
+				{option:item.lng}
+					<div id="map" style="height: {$settings.height_widget}px; width: 100%;">
+					</div>
+				{/option:item.lat}
 			{/option:item.lng}
 		</div>
 	</div>
@@ -63,58 +64,6 @@
 		</div>
 	</div>
 
-	<div id="itemText" style="display: none;">{$item.text}</div>
-
-	{option:item.lat}
-	{option:item.lng}
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		<script type="text/javascript">
-			// create position
-			var position = new google.maps.LatLng({$item.lat}, {$item.lng});
-
-			// create boundaries and add position
-			var latlngBounds = new google.maps.LatLngBounds(position);
-
-			// set options
-			var options =
-			{
-				// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
-				zoom: 15,
-				// set default center as first item's location
-				center: new google.maps.LatLng({$item.lat}, {$item.lng}),
-				// no interface, just the map
-				disableDefaultUI: true,
-				// no dragging the map around
-				draggable: false,
-				// no zooming in/out using scrollwheel
-				scrollwheel: false,
-				// no double click zoom
-				disableDoubleClickZoom: true,
-				// set map type
-				mapTypeId: google.maps.MapTypeId.{$settings.map_type_widget}
-			};
-
-			// create map
-			var map = new google.maps.Map(document.getElementById('map'), options);
-
-			// add marker
-			var marker = new google.maps.Marker(
-			{
-				position: position,
-				map: map,
-				title: '{$item.title}'
-			});
-
-			// add click event on marker
-			google.maps.event.addListener(marker, 'click', function()
-			{
-				// create infowindow
-				new google.maps.InfoWindow({ content: '<h1>{$item.title}</h1>' + $('#itemText').html() }).open(map, marker);
-			});
-		</script>
-	{/option:item.lng}
-	{/option:item.lat}
-
 	<div class="fullwidthOptions">
 		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
@@ -130,6 +79,28 @@
 		</p>
 	</div>
 {/form:edit}
+
+<script type="text/javascript">
+	var mapOptions = {
+		zoom: 15,
+		type: '{$settings.map_type}',
+		center: {
+			lat: {$item.lat},
+			lng: {$item.lng}
+		}
+	};
+	var markers = [];
+	{option:item.lat}
+		{option:item.lng}
+			markers.push({
+				lat: {$item.lat},
+				lng: {$item.lng},
+				title: '{$item.title}',
+				text: '{$item.text|stripnewlines}' 
+			});
+		{/option:item.lng}
+	{/option:item.lat}
+</script>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

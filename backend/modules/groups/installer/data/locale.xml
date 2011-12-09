@@ -12,6 +12,16 @@
         <translation language="hu"><![CDATA[használ]]></translation>
         <translation language="de"><![CDATA[Aktion]]></translation>
       </item>
+      <item type="label" name="AddGroup">
+        <translation language="nl"><![CDATA[groep toevoegen]]></translation>
+        <translation language="en"><![CDATA[add group]]></translation>
+        <translation language="it"><![CDATA[aggiungi gruppo]]></translation>
+        <translation language="ru"><![CDATA[Добавить группу]]></translation>
+        <translation language="cn"><![CDATA[添加用户组]]></translation>
+        <translation language="de"><![CDATA[Gruppe hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
+      </item>
       <item type="label" name="Checkbox">
         <translation language="nl"><![CDATA[&nbsp;]]></translation>
         <translation language="en"><![CDATA[&nbsp;]]></translation>

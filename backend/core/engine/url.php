@@ -169,7 +169,7 @@ class BackendURL
 					// @todo	don't use redirects for error, we should have something like an invoke method.
 
 					// build the url
-					$errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed'.
+					$errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed';
 
 					// add the querystring, it will be processed by the error-handler
 					$errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());

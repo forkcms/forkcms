@@ -183,7 +183,13 @@ class BackendHeader
 					if(substr($file['path'], 0, 11) == '/backend/js') $jsFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
 
 					// add lastmodified time
-					else $jsFiles[] = array('path' => $file['path'] . '?m=' . $lastModifiedTime);
+					else
+					{
+						if(strpos($file['path'], '?') !== false) $path = $file['path'] . '&m=' . $lastModifiedTime;
+						else $path = $file['path'] . '?m=' . $lastModifiedTime ;
+
+						$jsFiles[] = array('path' => $path);
+					}
 				}
 			}
 		}

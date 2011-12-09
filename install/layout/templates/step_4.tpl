@@ -22,7 +22,7 @@
 			</ul>
 
 			<h3>Debug mode</h3>
-			<p>Warning: debug mode is only usefull when developing on Fork CMS.</p>
+			<p>Warning: debug mode is only useful when developing on Fork CMS.</p>
 			<ul class="inputList noPadding">
 				<li>
 					{$chkDebugMode} <label for="debugMode">Enable debug mode </label>

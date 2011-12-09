@@ -1,5 +1,5 @@
 /**
- * Utilities; usefull scripts
+ * Utilities; useful scripts
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>

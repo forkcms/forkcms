@@ -17,79 +17,8 @@
 		</div>
 		<div class="options">
 			{option:items}
-				<div id="map" style="height: {$settings.height}px; width: 100%;"></div>
-
-				{* Store item text in a div because JS goes bananas with multiline HTML *}
-				{iteration:items}
-					<div id="markerText{$items.id}" style="display:none;">{$items.text}</div>
-				{/iteration:items}
-
-				<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-				<script type="text/javascript">
-					// create boundaries
-					var latlngBounds = new google.maps.LatLngBounds();
-
-					// set options
-					var options =
-					{
-						// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
-						zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
-						// set default center as first item's location
-						center: new google.maps.LatLng({$items.0.lat}, {$items.0.lng}),
-						// no interface, just the map
-						disableDefaultUI: true,
-						// no dragging the map around
-						draggable: false,
-						// no zooming in/out using scrollwheel
-						scrollwheel: false,
-						// no double click zoom
-						disableDoubleClickZoom: true,
-						// set map type
-						mapTypeId: google.maps.MapTypeId.{$settings.map_type}
-					};
-
-					// create map
-					var map = new google.maps.Map(document.getElementById('map'), options);
-
-					// function to add markers to the map
-					function addMarker(lat, lng, title, text)
-					{
-						// create position
-						position = new google.maps.LatLng(lat, lng);
-
-						// add to boundaries
-						latlngBounds.extend(position);
-
-						// add marker
-						var marker = new google.maps.Marker(
-						{
-							// set position
-							position: position,
-							// add to map
-							map: map,
-							// set title
-							title: title
-						});
-
-						// add click event on marker
-						google.maps.event.addListener(marker, 'click', function()
-						{
-							// create infowindow
-							new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker);
-						});
-					}
-
-					// loop items and add to map
-					{iteration:items}
-						{option:items.lat}{option:items.lng}addMarker({$items.lat}, {$items.lng}, '{$items.title}', $('#markerText' + {$items.id}).html());{/option:items.lat}{/option:items.lng}
-					{/iteration:items}
-
-					// set center to the middle of our boundaries
-					map.setCenter(latlngBounds.getCenter());
-
-					// set zoom automatically, defined by points (if allowed)
-					if('{$settings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
-				</script>
+				<div id="map" style="height: {$settings.height}px; width: 100%;">
+				</div>
 			{/option:items}
 		</div>
 	</div>
@@ -100,6 +29,30 @@
 {/option:dataGrid}
 
 {option:!dataGrid}<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>{/option:!dataGrid}
+
+<script type="text/javascript">
+	var mapOptions = {
+		zoom: '{$settings.zoom_level}',
+		type: '{$settings.map_type}',
+		center: {
+			lat: {$items.0.lat},
+			lng: {$items.0.lng}
+		}
+	};
+	var markers = [];
+	{iteration:items}
+		{option:items.lat}
+			{option:items.lng}
+				markers.push({
+					lat: {$items.lat},
+					lng: {$items.lng},
+					title: '{$items.title}',
+					text: '{$items.text|stripnewlines}' 
+				});
+			{/option:items.lng}
+		{/option:items.lat}
+	{/iteration:items}
+</script>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
