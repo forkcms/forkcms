@@ -119,6 +119,9 @@ class FrontendSitemap
 		$url = str_replace('.xml', '', $this->sitemapUrl);
 		$this->urlData = explode('sitemap', $url);
 
+		// set the default active language
+		$this->activeLanguage = FrontendModel::getModuleSetting('core', 'default_language');
+
 		// set the sitemap data
 		if(isset($this->urlData[0]) && $this->urlData[0] != '')
 		{
@@ -135,14 +138,7 @@ class FrontendSitemap
 				if(in_array($prefixChunks[0], $activeLanguages)) $this->activeLanguage = $prefixChunks[0];
 				else throw new Exception('This is an invalid language');
 			}
-			else
-			{
-				$action = $prefixChunks[0];
-
-				// set the active language
-				if(count($activeLanguages) > 1) $this->activeLanguage = current($activeLanguages);
-				else $this->activeLanguage = $activeLanguages;
-			}
+			else $action = $prefixChunks[0];
 			$this->sitemapAction = $action;
 		}
 
