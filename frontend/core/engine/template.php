@@ -214,6 +214,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
 		$this->mapModifier('camelcase', array('SpoonFilter', 'toCamelCase'));
+		$this->mapModifier('stripnewlines', array('FrontendTemplateModifiers', 'stripNewlines'));
 
 		// dates
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
@@ -698,6 +699,18 @@ class FrontendTemplateModifiers
 		$max = (int) $max;
 
 		return rand($min, $max);
+	}
+
+	/**
+	 * Convert a multiline string into a string without newlines so it can be handles by JS
+	 * syntax: {$var|stripnewlines}
+	 *
+	 * @param string $var The variable that should be processed.
+	 * @return string
+	 */
+	public static function stripNewlines($var)
+	{
+		return str_replace(array("\n", "\r"), '', $var);
 	}
 
 	/**
