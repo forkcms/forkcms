@@ -137,10 +137,6 @@ class BackendBlogModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// delete records
-		$db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
-		$db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
-
 		// get used meta ids
 		$metaIds = (array) $db->getColumn(
 			'SELECT meta_id
@@ -152,6 +148,10 @@ class BackendBlogModel
 		// delete meta
 		$meta = new BackendMeta();
 		foreach($metaIds as $metaId) $meta->delete($metaId);
+
+		// delete records
+		$db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
+		$db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
 		// delete tags
 		foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'blog');
