@@ -25,6 +25,10 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		if($this->id !== null && BackendLocationModel::exists($this->id))
 		{
 			parent::execute();
+
+			// add js
+			$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, null, true, false);
+
 			$this->getData();
 			$this->loadForm();
 			$this->validateForm();

@@ -8,12 +8,15 @@ Improvements:
 * Locale: the missing items are now sorted by application, type, module and name.
 * Core: don't add a timestamp to the urls of well known libraries in the backend.
 * Core: automagic canonical-urls.
+* Core: added a new modifier stripnewlines which will remove all newlines in a string, so JS can handle it. 
+* Location: rewrote most of the JS, because the map wasn't showing the markers correctly, as mentioned by Wouter H on http://forkcms.lighthouseapp.com/projects/61890/tickets/238
 
 Bugfixes:
 * Pages: default blocks now apply correctly on new pages.
 * Pages: removed extras still linked to page now no longer trigger an error.
 * Core: settings exclude & checked values on setMassActionCheckboxes now works again.
 * Formbuilder: fixed a typo, as mentioned by Tommy Van de Velde on http://forkcms.lighthouseapp.com/projects/61890/tickets/239.
+* Core: when adding a JS-file with an ? in it the timestamp was appended with a ?.
 
 
 3.1.5 (2011-12-06)
