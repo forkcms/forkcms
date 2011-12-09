@@ -114,7 +114,7 @@
       </item>
       <item type="message" name="FeedbackInfo">
         <translation language="nl"><![CDATA[Dit zijn alle berichten achtergelaten door bezoekers die dit antwoord niet nuttig vonden.]]></translation>
-        <translation language="en"><![CDATA[These are all the messages from visitors who did't find this answer usefull.]]></translation>
+        <translation language="en"><![CDATA[These are all the messages from visitors who did't find this answer useful.]]></translation>
       </item>
       <item type="message" name="HelpSpamFilter">
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in feedback en gebruikersvragen te vermijden.]]></translation>
