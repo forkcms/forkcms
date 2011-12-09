@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
+* Core: don't add a timestamp to the urls of well known libraries in the backend.
 
 
 3.1.5 (2011-12-06)
