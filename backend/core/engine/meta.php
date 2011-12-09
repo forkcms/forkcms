@@ -120,7 +120,6 @@ class BackendMeta
 	public function delete($metaId = null)
 	{
 		if($metaId === null && $this->id === null) throw new Exception('You must provide a meta-id to delete');
-
 		if($metaId !== null) $this->loadMeta($metaId);
 
 		// delete the meta data

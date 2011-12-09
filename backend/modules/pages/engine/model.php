@@ -500,7 +500,11 @@ class BackendPagesModel
 		);
 
 		// delete meta records
-		if(!empty($metaIDs)) $db->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
+		if(!empty($metaIDs))
+		{
+			$meta = new BackendMeta();
+			foreach($metaIDs as $metaId) $meta->delete($metaId);
+		}
 
 		// delete blocks and their revisions
 		if(!empty($revisionIDs)) $db->delete('pages_blocks', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
