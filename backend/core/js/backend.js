@@ -229,8 +229,9 @@ jsBackend.ckeditor =
    			{ name: 'styles', items : ['Format']}
    		],
 
-		// layout
-		skin: 'kama',
+		// skin by Chris Herberte (http://www.chrisherberte.com/blog/ckeditor-skin)
+		skin: 'chris',
+
 		uiColor: '#E7F0F8',
 		toolbar: 'Full',
 		toolbarStartupExpanded: false,
@@ -244,7 +245,7 @@ jsBackend.ckeditor =
 		extraPlugins: 'stylesheetparser,MediaEmbed',
 
 		// remove useless plugins
-		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley',
+		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
 		// custom vars
 		editorType: 'default',

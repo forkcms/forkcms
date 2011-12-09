@@ -23,11 +23,17 @@ class BackendCoreAjaxContentCss extends BackendBaseAJAXAction
 	private function cleanupStyle($style)
 	{
 		// remove comments
- 		$style = preg_replace('|/\*(.*)\*/|iUms', '', $style);
+ 		$style = preg_replace('/\/\*(.*?)\*\//ims', '', $style);
 
-		// remove whitespace characters
+		// tone down whitespace characters
  		$style = preg_replace('/\s+/', ' ', $style);
  		$style = trim($style);
+
+ 		// ignore form element's styles
+ 		$style = preg_replace('/([,\}]) ?(input|button|textarea|select)\.[^,\{]*/', '$1', $style);
+
+ 		// apart from .content, we don't want any inline styles
+ 		$style = preg_replace('/([,\}]) ?\.(?!content)[^,\{]*/', '$1', $style);
 
 		return $style;
 	}
@@ -40,30 +46,38 @@ class BackendCoreAjaxContentCss extends BackendBaseAJAXAction
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		$styles = array();
+		// init vars
+		$styles = '';
 		$theme = BackendModel::getModuleSetting('core', 'theme');
+		$coreCssPath = FRONTEND_PATH . '/core/layout/css/';
+		$cssPath = ($theme ? FRONTEND_PATH . '/themes/' . $theme . '/core/layout/css/' : $coreCssPath);
 
-		// add the styles from the default frontend stylesheet
-		$styles = array_merge($styles, $this->processFile(FRONTEND_PATH . '/core/layout/css/screen.css', true));
+		// grab all of the css files
+		$files = (array) SpoonFile::getList($cssPath);
 
-		// add the styles that should be overruled in the editor
-		$styles = array_merge($styles, $this->processFile(BACKEND_PATH . '/core/layout/css/editor_content.css'));
+		// editor_content is a special one, we'll get to that later
+		$pos = array_search('editor_content.css', $files);
+		if($pos !== false) array_splice($files, $pos, 1);
 
-		// theme
-		if($theme !== null)
+		// prepend files with full path
+		foreach($files as $i => $file) $files[$i] = $cssPath . $file;
+
+		// editor content overrides some previous site defaults for better presentation in the editor
+		if(SpoonFile::exists($cssPath . 'editor_content.css')) array_push($files, $cssPath . 'editor_content.css');
+		else array_push($files, $coreCssPath . 'editor_content.css');
+
+		// loop all css files
+		foreach($files as $file)
 		{
-			// add the styles specific for the current theme
-			$styles = array_merge($styles, $this->processFile(FRONTEND_PATH . '/themes/' . $theme . '/core/layout/css/screen.css', true));
-
-			// add the styles that should be overruled in the editor specific for the current theme
-			$styles = array_merge($styles, $this->processFile(FRONTEND_PATH . '/themes/' . $theme . '/core/layout/css/editor_content.css'));
+			// process file
+			$styles .= $this->processFile($file);
 		}
 
 		// set headers
 		SpoonHTTP::setHeaders('Content-type: text/css');
 
 		// output
-		if(!empty($styles)) echo implode("\n", $styles);
+		echo $styles;
 		exit;
 	}
 
@@ -74,29 +88,17 @@ class BackendCoreAjaxContentCss extends BackendBaseAJAXAction
 	 * @param bool[optional] $isContent If true, only styles that are scoped inside the .content class will be returned.
 	 * @return array
 	 */
-	private function processFile($file, $isContent = false)
+	private function processFile($file)
 	{
 		// if the files doesn't exists we can stop here and just return an empty array
 		if(!SpoonFile::exists($file)) return array();
 
+		// fetch content from file
 		$content = SpoonFile::getContent($file);
-		$matches = array();
 
-		if($isContent)
-		{
-			// get all CSS that is scoped in .content, if we no items are found we return just an empty array
-			if((int) preg_match_all('|^\s?\.content.*\{.*\}|imsU', $content, $matches) <= 0) return array();
-		}
+		// cleanup content
+		$content = $this->cleanupStyle($content);
 
-		else
-		{
-			// get all CSS that is scoped in .content, if we no items are found we return just an empty array
-			if((int) preg_match_all('|(.*{.*})|imsU', $content, $matches) <= 0) return array();
-		}
-
-		// loop the matches and clean them up
-		foreach($matches[0] as &$match) $match = $this->cleanupStyle($match);
-
-		return $matches[0];
+		return $content;
 	}
 }
