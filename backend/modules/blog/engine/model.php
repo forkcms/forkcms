@@ -150,7 +150,8 @@ class BackendBlogModel
 		);
 
 		// delete meta
-		if(!empty($metaIds)) $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
+		$meta = new BackendMeta();
+		foreach($metaIds as $metaId) $meta->delete($metaId);
 
 		// delete tags
 		foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'blog');
@@ -175,7 +176,8 @@ class BackendBlogModel
 		if(!empty($item))
 		{
 			// delete meta
-			$db->delete('meta', 'id = ?', array($item['meta_id']));
+			$meta = new BackendMeta($item['meta_id']);
+			$meta->delete();
 
 			// delete category
 			$db->delete('blog_categories', 'id = ?', array($id));
