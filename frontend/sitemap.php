@@ -10,7 +10,8 @@
 require_once FRONTEND_CORE_PATH . '/engine/language.php';
 
 /**
- * This class will handle the sitemap for Fork. It will dynamicly create a sitemap
+ * This class will handle the sitemap for Fork. It will dynamicly create a sitemap for the pages
+ * and images. It will also create sitemaps with pagination.
  *
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
@@ -65,18 +66,18 @@ class FrontendSitemap
 	 */
 	public function __construct($sitemapUrl)
 	{
-		$this->filterData($sitemapUrl);
+		$this->routeData($sitemapUrl);
 		$this->loadData();
 	}
 
 	/**
-	 * Converts an array to an xml string
+	 * Converts an array to a valid xml string.
 	 *
 	 * @param array $xmlData
 	 * @param int $tab How much tabs do we need at this point?
 	 * @return string
 	 */
-	protected function arrayToXml(array $xmlData, $tab = 0)
+	protected function arrayToXml(array $xmlData, $indent = 0)
 	{
 		$returnString = '';
 
@@ -88,13 +89,13 @@ class FrontendSitemap
 			else
 			{
 				// add tabs
-				for($i = 0; $i <= $tab; $i++) $returnString .= "\t";
+				for($i = 0; $i <= $indent; $i++) $returnString .= "\t";
 
 				// start of the new node
 				$returnString .= '<' . $nodeName . '>';
 
 				// the node data
-				if(is_array($nodeData)) $returnString .= $this->arrayToXml($nodeData, $tab + 1);
+				if(is_array($nodeData)) $returnString .= $this->arrayToXml($nodeData, $indent + 1);
 				else $returnString .= $nodeData;
 
 				// end of the new node
@@ -106,84 +107,29 @@ class FrontendSitemap
 	}
 
 	/**
-	 * Filter the data
-	 *
-	 * @param string $sitemapUrl
-	 */
-	protected function filterData($sitemapUrl)
-	{
-		// store the url
-		$this->sitemapUrl = (string) $sitemapUrl;
-
-		// seperate the url data
-		$url = str_replace('.xml', '', $this->sitemapUrl);
-		$this->urlData = explode('sitemap', $url);
-
-		// set the default active language
-		$this->activeLanguage = FrontendModel::getModuleSetting('core', 'default_language');
-
-		// set the sitemap data
-		if(isset($this->urlData[0]) && $this->urlData[0] != '')
-		{
-			// check if we have a language specified
-			$prefixChunks = explode('-', $this->urlData[0]);
-			$activeLanguages = FL::getActiveLanguages();
-
-			// we have selected a language
-			if(count($prefixChunks) > 1)
-			{
-				$action = $prefixChunks[1];
-
-				// set the active language
-				if(in_array($prefixChunks[0], $activeLanguages)) $this->activeLanguage = $prefixChunks[0];
-				else throw new Exception('This(' . $prefixChunks[0] . ') is an invalid language');
-			}
-			else $action = $prefixChunks[0];
-			$this->sitemapAction = $action;
-		}
-
-		if(isset($this->urlData[1]))
-		{
-			// load the pagination data
-			$this->loadPagination($this->sitemapAction);
-
-			if($this->urlData[1] != '')
-			{
-				// get the current page
-				$page = (int) ltrim($this->urlData[1], '-');
-				if($page > 0) $page--;
-				if($page > $this->numPages) $page = $this->numPages;
-				$this->sitemapPage = $page;
-			}
-		}
-	}
-
-	/**
 	 * Fetch the last modification date for a range of items
 	 *
 	 * @param int $limit
 	 * @param int $offset
 	 * @return string
 	 */
-	protected function getLastModificationDate($limit, $offset)
+	protected function getLastModificationDate($limit, $offset, $language = null)
 	{
-		$data = (array) FrontendModel::getDB()->getPairs(
-			'SELECT s.id, UNIX_TIMESTAMP(s.edited_on)
-			 FROM meta_sitemap AS s
-			 WHERE s.visible = ?
-			 LIMIT ?, ?',
-			array('Y', (int) $offset, (int) $limit)
-		);
+		$language = ($language === null) ? $this->activeLanguage : $language;
+		$data = $this->getRawData($limit, $offset, $language);
 
 		// get the latest modification
 		$lastModDate = 0;
-		foreach($data as $sitemap) if($sitemap > $lastModDate) $lastModDate = (int) $sitemap;
+		foreach($data as $sitemap)
+		{
+			if($sitemap['edited_on'] > $lastModDate) $lastModDate = (int) $sitemap['edited_on'];
+		}
 
 		return FrontendModel::getUTCDate('Y-m-d\TH:i:sP', $lastModDate);
 	}
 
 	/**
-	 * Fetch the meta data
+	 * Fetch the meta data so we can display the right information.
 	 *
 	 * @param int[optional] $limit
 	 * @param int[optional] $offset
@@ -191,13 +137,7 @@ class FrontendSitemap
 	 */
 	protected function getMetaData($limit = 200, $offset = 0)
 	{
-		$data = (array) FrontendModel::getDB()->getRecords(
-			'SELECT s.*, UNIX_TIMESTAMP(s.edited_on) AS edited_on
-			 FROM meta_sitemap AS s
-			 WHERE s.visible = ? AND s.language = ?
-			 LIMIT ?, ?',
-			array('Y', $this->activeLanguage, (int) $offset, (int) $limit)
-		);
+		$data = $this->getRawData($limit, $offset);
 
 		// go trough the data to assign the url
 		foreach($data as $key => $sitemap)
@@ -227,7 +167,7 @@ class FrontendSitemap
 	}
 
 	/**
-	 * Count the number of records
+	 * Count the number of records that should be shown for a specific language.
 	 *
 	 * @return int
 	 */
@@ -236,13 +176,36 @@ class FrontendSitemap
 		return (int) FrontendModel::getDB()->getNumRows(
 			'SELECT s.id
 			 FROM meta_sitemap AS s
-			 WHERE s.visible = ?',
-			array('Y')
+			 WHERE s.visible = ? AND s.language = ?',
+			array('Y', $this->activeLanguage)
 		);
 	}
 
 	/**
-	 * This function will fetch all the meta data that is used to generate a sitemap.
+	 * This will fetch the raw sitemap data for a specific range. This has a seperate function
+	 * so we can easily adjust this without overhead.
+	 *
+	 * @param int[optional] $limit
+	 * @param int[optional] $offset
+	 * @return array
+	 */
+	protected function getRawData($limit = 200, $offset = 0, $language = null)
+	{
+		$language = ($language === null) ? $this->activeLanguage : $language;
+
+		return (array) FrontendModel::getDB()->getRecords(
+			'SELECT s.*, UNIX_TIMESTAMP(s.edited_on) AS edited_on
+			 FROM meta_sitemap AS s
+			 WHERE s.visible = ? AND s.language = ?
+			 ORDER BY s.priority DESC
+			 LIMIT ?, ?',
+			array('Y', $language, (int) $offset, (int) $limit)
+		);
+	}
+
+	/**
+	 * This function will fetch all the meta data that is used to generate a sitemap according to
+	 * chosen action.
 	 */
 	protected function loadData()
 	{
@@ -263,7 +226,7 @@ class FrontendSitemap
 	}
 
 	/**
-	 * Load the pagination
+	 * Load the pagination according to the selected action.
 	 *
 	 * @param string $action
 	 */
@@ -286,20 +249,20 @@ class FrontendSitemap
 	}
 
 	/**
-	 * Parse the sitemap contents and ouptut is as an xml file
+	 * Parse the sitemap content and ouptut is as an xml document.
 	 */
 	public function parse()
 	{
 		// the search engines expect a xml file, so act like one
 		SpoonHTTP::setHeaders(array('Content-Type: application/xml'));
 
-		// get the parsed data to show
+		// get the data to display
 		$parsedData = '';
 		$this->sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
 		if($this->sitemapAction == 'page') $parsedData = $this->parsePage();
 		if($this->sitemapAction === null) $parsedData = $this->parseIndex();
 
-		// build the output
+		// build and parse the output
 		$output = '<?xml version="1.0" encoding="UTF-8"?>';
 		$output .= '<' . $this->sitemapType . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 		$output .= $this->arrayToXml($parsedData);
@@ -308,9 +271,9 @@ class FrontendSitemap
 	}
 
 	/**
-	 * Parse the index
+	 * Parse the sitemapindex. This will show an overview with sitemaps available.
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function parseIndex()
 	{
@@ -319,19 +282,22 @@ class FrontendSitemap
 		// build the pages sitemap
 		if(SITE_MULTILANGUAGE)
 		{
+			// create a sitemap for each language
 			foreach(FL::getActiveLanguages() as $language)
 			{
+				// add the data so we can parse this in the sitemap
 				$output[]['sitemap'] = array(
 					'loc' => SITE_URL . '/' . $language . '-pagesitemap.xml',
-					'lastmod' => $this->getLastModificationDate($this->numPages, 0)
+					'lastmod' => $this->getLastModificationDate($this->getMetaDataCount(), 0, $language)
 				);
 			}
 		}
 		else
 		{
+			// add the data so we can parse this in the sitemap
 			$output[]['sitemap'] = array(
 				'loc' => SITE_URL . '/' . $this->activeLanguage . '-pagesitemap.xml',
-				'lastmod' => $this->getLastModificationDate($this->numPages, 0)
+				'lastmod' => $this->getLastModificationDate($this->getMetaDataCount(), 0)
 			);
 		}
 
@@ -339,9 +305,9 @@ class FrontendSitemap
 	}
 
 	/**
-	 * Parse the page data
+	 * Parse the page data. This will create either another sitemap or a urlset.
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function parsePage()
 	{
@@ -355,6 +321,7 @@ class FrontendSitemap
 			// build the number of sitemaps equal to the number of pages
 			for($i = 1; $i <= $this->numPages; $i++)
 			{
+				// add the data so we can parse this in the sitemap
 				$output[]['sitemap'] = array(
 					'loc' => SITE_URL . '/' . $this->activeLanguage . '-pagesitemap-' . $i . '.xml',
 					'lastmod' => $this->getLastModificationDate($this->pageLimit, $i - 1)
@@ -366,6 +333,7 @@ class FrontendSitemap
 			// parse all the elements into a decent array
 			foreach($this->metaData as $page)
 			{
+				// add the data so we can parse this in the sitemap
 				$output[]['url'] = array(
 					'loc' => $page['full_url'],
 					'lastmod' => $page['edited_on'],
@@ -375,5 +343,57 @@ class FrontendSitemap
 			}
 		}
 		return $output;
+	}
+
+	/**
+	 * This is the router for the sitemap.
+	 *
+	 * @param string $sitemapUrl
+	 */
+	protected function routeData($sitemapUrl)
+	{
+		// store the url
+		$this->sitemapUrl = (string) $sitemapUrl;
+
+		// seperate the url data
+		$url = str_replace('.xml', '', $this->sitemapUrl);
+		$this->urlData = explode('sitemap', $url);
+
+		// set the default active language
+		$this->activeLanguage = FrontendModel::getModuleSetting('core', 'default_language');
+
+		// set the sitemap data
+		if($this->urlData[0] != '')
+		{
+			// check if we have a language specified
+			$prefixChunks = explode('-', $this->urlData[0]);
+			$activeLanguages = FL::getActiveLanguages();
+
+			// we have selected a language
+			if(count($prefixChunks) > 1)
+			{
+				$this->sitemapAction = $prefixChunks[1];
+
+				// set the active language
+				if(in_array($prefixChunks[0], $activeLanguages)) $this->activeLanguage = $prefixChunks[0];
+				else throw new Exception('This(' . $prefixChunks[0] . ') is an invalid language');
+			}
+			// no language selected so take the first chunk as action
+			else $this->sitemapAction = $prefixChunks[0];
+		}
+
+		// load the pagination data
+		$this->loadPagination($this->sitemapAction);
+
+		// there is pagination data
+		if($this->urlData[1] != '')
+		{
+			// get the current page
+			$page = (int) ltrim($this->urlData[1], '-');
+			if($page > 0) $page--;
+			if($page > $this->numPages) $page = $this->numPages;
+
+			$this->sitemapPage = $page;
+		}
 	}
 }
