@@ -10,6 +10,7 @@ Improvements:
 * Core: automagic canonical-urls.
 * Core: added a new modifier stripnewlines which will remove all newlines in a string, so JS can handle it. 
 * Location: rewrote most of the JS, because the map wasn't showing the markers correctly, as mentioned by Wouter H on http://forkcms.lighthouseapp.com/projects/61890/tickets/238
+* Added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
 
 Bugfixes:
 * Pages: default blocks now apply correctly on new pages.
