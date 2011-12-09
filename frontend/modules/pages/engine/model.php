@@ -128,4 +128,26 @@ class FrontendPagesModel implements FrontendTagsInterface
 
 		return $items;
 	}
+
+	/**
+	 * This will output the right url for the sitemap.
+	 *
+	 * @param array $data This is the data provided by the sitemap
+	 * @param string $language
+	 * @return array
+	 */
+	public static function sitemap(array $data, $language)
+	{
+		$pageUrl = (string) $data['url'];
+		$pageId = (int) FrontendModel::getDB()->getVar(
+			'SELECT p.id
+			 FROM pages AS p
+			 INNER JOIN meta AS m ON m.id = p.meta_id
+			 WHERE m.url = ? AND m.sitemap_id = ? AND p.language = ?',
+			array($pageUrl, (int) $data['id'], (string) $language)
+		);
+
+		$data['full_url'] = SITE_URL . FrontendNavigation::getURL($pageId, $language);
+		return $data;
+	}
 }

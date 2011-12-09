@@ -182,13 +182,18 @@ class FrontendSitemap
 			// load the locale for the current language
 			FL::setLocale($language);
 
-			if($sitemap['module'] !== 'pages')
+			// check if the module  has the sitemap function
+			$callbackClass = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
+			if(is_callable(array($callbackClass, 'sitemap')))
+			{
+				$data[$key] = call_user_func(array($callbackClass, 'sitemap'), $sitemap, $language);
+			}
+			else
 			{
 				$baseUrl = SITE_URL . FrontendNavigation::getURLForBlock($module, $action, $language);
+				$data[$key]['full_url'] =  $baseUrl . '/' . $sitemap['url'];
 			}
-			else $baseUrl = SITE_URL . '/' . $language;
 
-			$data[$key]['full_url'] =  $baseUrl . '/' . $sitemap['url'];
 			$data[$key]['edited_on'] = FrontendModel::getUTCDate('Y-m-d\TH:i:sP', $sitemap['edited_on']);
 		}
 		return $data;
