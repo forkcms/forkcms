@@ -16,8 +16,11 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// zip extension is required for module upload
+		// zip extension is required for theme upload
 		if(!extension_loaded('zlib')) $this->tpl->assign('zlibIsMissing', true);
+
+		// ZipArchive class is required for theme upload
+		if(!class_exists('ZipArchive')) $this->tpl->assign('ZipArchiveIsMissing', true);
 
 		// we need write rights to upload files
 		elseif(!$this->isWritable()) $this->tpl->assign('notWritable', true);
