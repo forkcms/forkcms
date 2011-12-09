@@ -245,8 +245,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// meta
 		$this->meta = new BackendMeta(null, 'title', true);
-		$this->meta->setForm($this->frm);
-		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
 	}
 
 	/**

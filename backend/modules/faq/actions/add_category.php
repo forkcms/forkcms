@@ -39,9 +39,9 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 		$this->frm->addText('title');
 
 		$this->meta = new BackendMeta(null, 'title', true);
-		$this->meta->setForm($this->frm);
-		$this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
-		$this->meta->setAction('category');
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendFaqModel', 'getURLForCategory')
+			->setAction('category');
 	}
 
 	/**

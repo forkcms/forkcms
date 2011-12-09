@@ -342,8 +342,12 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// meta
 		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
-		$this->meta->setForm($this->frm);
-		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $isAction));
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendPagesModel', 'getURL', array(
+				$this->record['id'],
+				$this->record['parent_id'],
+				$isAction)
+			);
 	}
 
 	/**

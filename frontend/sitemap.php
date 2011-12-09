@@ -101,7 +101,7 @@ class FrontendSitemap
 	/**
 	 * Filter the data
 	 *
-	 * @param $sitemapUrl
+	 * @param string $sitemapUrl
 	 */
 	protected function filterData($sitemapUrl)
 	{

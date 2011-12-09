@@ -60,9 +60,9 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 
 		// meta object
 		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
-		$this->meta->setForm($this->frm);
-		$this->meta->setUrlCallback('BackendBlogModel', 'getURLForCategory', array($this->record['id']));
-		$this->meta->setAction('category');
+		$this->meta->setForm($this->frm)
+			->setUrlCallback('BackendBlogModel', 'getURLForCategory', array($this->record['id']))
+			->setAction('category');
 	}
 
 	/**

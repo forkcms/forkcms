@@ -86,7 +86,6 @@ class BackendMeta
 	protected $url;
 
 	/**
-	 * @param BackendForm $form An instance of Backendform, the elements will be parsed in here.
 	 * @param int[optional] $metaId The metaID to load.
 	 * @param string[optional] $baseFieldName The field where the URL should be based on.
 	 * @param bool[optional] $custom Add/show custom-meta.
@@ -507,8 +506,7 @@ class BackendMeta
 	/**
 	 * Sets the action to use
 	 *
-	 * @return	void
-	 * @param	string $action		The action to set.
+	 * @param string $action
 	 */
 	public function setAction($action)
 	{
@@ -519,6 +517,7 @@ class BackendMeta
 	 * Set the form
 	 *
 	 * @param BackendForm $form
+	 * @return BackendMeta
 	 */
 	public function setForm(BackendForm $form)
 	{
@@ -529,20 +528,23 @@ class BackendMeta
 
 		// load the form
 		$this->loadForm();
+
+		return $this;
 	}
 
 	/**
 	 * Sets the module to use
 	 *
 	 * @param string[optional] $module
+	 * @return BackendMeta
 	 */
 	public function setModule($module = null)
 	{
-		if($module === null)
-		{
-			$this->module = $this->url->getModule();
-		}
+		// we should use the module given in the url
+		if($module === null) $this->module = $this->url->getModule();
 		else $this->module = (string) $module;
+
+		return $this;
 	}
 
 	/**
@@ -553,6 +555,7 @@ class BackendMeta
 	 * @param string $className Name of the class to use.
 	 * @param string $methodName Name of the method to use.
 	 * @param array[optional] $parameters Parameters to parse, they will be passed after ours.
+	 * @return BackendMeta
 	 */
 	public function setURLCallback($className, $methodName, $parameters = array())
 	{
@@ -565,6 +568,8 @@ class BackendMeta
 
 		// re-load the form
 		$this->loadForm();
+
+		return $this;
 	}
 
 	/**

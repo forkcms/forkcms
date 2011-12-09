@@ -37,9 +37,9 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 
 		// meta
 		$this->meta = new BackendMeta(null, 'title', true);
-		$this->meta->setForm($this->frm);
-		$this->meta->setURLCallback('BackendBlogModel', 'getURLForCategory');
-		$this->meta->setAction('category');
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendBlogModel', 'getURLForCategory')
+			->setAction('category');
 	}
 
 	/**
