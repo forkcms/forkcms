@@ -32,10 +32,10 @@
 				templateCSSURL: '{$template.url_css}'
 			};
 
-			// we need this method so we can easily access the editors contents outside the iframe.
+			// we need this method so we can easily access the editor's contents outside the iframe.
 			function getEditorContent()
 			{
-				return $('.inputEditor').val();
+				return $('.inputEditorNewsletter').val();
 			}
 		//]]>
 	</script>
