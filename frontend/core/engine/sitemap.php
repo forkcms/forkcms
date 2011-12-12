@@ -126,11 +126,9 @@ class FrontendSitemap
 	/**
 	 * Fetches all the required images for the sitemap.
 	 *
-	 * @param int[optional] $limit
-	 * @param int[optional] $offset
 	 * @return array
 	 */
-	protected function getImageData($limit = 200, $offset = 0)
+	protected function getImageData()
 	{
 		$allModules = FrontendModel::getModules();
 		$returnData = array();
@@ -183,10 +181,8 @@ class FrontendSitemap
 					$tmpData[]['image:image'] = $imageData;
 				}
 
-				$parsedData[]['url'] = $tmpData;
+				$returnData[]['url'] = $tmpData;
 			}
-
-			$returnData[$module] = $parsedData;
 		}
 
 		return $returnData;
@@ -306,6 +302,10 @@ class FrontendSitemap
 			break;
 			case 'image':
 				$this->metaData = $this->getImageData($this->pageLimit, $this->sitemapPage);
+
+				// pagination
+				$this->numPages = ceil(count($this->metaData) / $this->pageLimit);
+				$this->setPage();
 			break;
 			case '':
 				// do nothing
@@ -344,6 +344,22 @@ class FrontendSitemap
 	}
 
 	/**
+	 * This will set the current page for the pagination
+	 */
+	protected function setPage()
+	{
+		if($this->urlData[1] != '')
+		{
+			// get the current page
+			$page = (int) ltrim($this->urlData[1], '-');
+			if($page > 0) $page--;
+			if($page > $this->numPages) $page = $this->numPages;
+
+			$this->sitemapPage = $page;
+		}
+	}
+
+	/**
 	 * Parse the sitemap content and ouptut is as an xml document.
 	 */
 	public function parse()
@@ -376,9 +392,25 @@ class FrontendSitemap
 	public function parseImage()
 	{
 		$output = array();
-		$this->addExtraNamespace('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"');
 
-		foreach($this->metaData as $module => $data) $output[] = $data;
+		if($this->numPages > 1 && $this->sitemapPage === null)
+		{
+			$this->sitemapType = 'sitemapindex';
+
+			// build the number of sitemaps equal to the number of image pages
+			for($i = 1; $i <= $this->numPages; $i++)
+			{
+				$output[]['sitemap'] = array(
+					'loc' => SITE_URL . '/imagesitemap-' . $i . '.xml'
+				);
+			}
+		}
+		else
+		{
+			// since we want multiple images we should use the namespace from google schematics
+			$this->addExtraNamespace('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"');
+			$output = array_slice($this->metaData, $this->sitemapPage, $this->pageLimit);
+		}
 
 		return $output;
 	}
@@ -502,16 +534,6 @@ class FrontendSitemap
 
 		// load the pagination data
 		$this->loadPagination($this->sitemapAction);
-
-		// there is pagination data
-		if($this->urlData[1] != '')
-		{
-			// get the current page
-			$page = (int) ltrim($this->urlData[1], '-');
-			if($page > 0) $page--;
-			if($page > $this->numPages) $page = $this->numPages;
-
-			$this->sitemapPage = $page;
-		}
+		$this->setPage();
 	}
 }
