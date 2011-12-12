@@ -11,6 +11,7 @@
         <translation language="cn"><![CDATA[添加目标页面]]></translation>
         <translation language="de"><![CDATA[Eintrittsseite hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter une page d'accueil ]]></translation>
+        <translation language="es"><![CDATA[agregar página de destino]]></translation>
       </item>
       <item type="label" name="AllStatistics">
         <translation language="nl"><![CDATA[alle statistieken]]></translation>
@@ -21,6 +22,7 @@
         <translation language="cn"><![CDATA[全部统计数据]]></translation>
         <translation language="de"><![CDATA[alle Statistiken]]></translation>
         <translation language="fr"><![CDATA[toutes les statistiques]]></translation>
+        <translation language="es"><![CDATA[todas las estadisticas]]></translation>
       </item>
       <item type="label" name="AverageTimeOnPage">
         <translation language="nl"><![CDATA[gemiddelde tijd op pagina]]></translation>
@@ -31,6 +33,7 @@
         <translation language="cn"><![CDATA[页面平均访问次数]]></translation>
         <translation language="de"><![CDATA[durchschnittliche Verweildauer auf der Seite]]></translation>
         <translation language="fr"><![CDATA[temps moyen passé sur une page]]></translation>
+        <translation language="es"><![CDATA[tiempo promedio en la página]]></translation>
       </item>
       <item type="label" name="AverageTimeOnSite">
         <translation language="nl"><![CDATA[gemiddelde tijd op site]]></translation>
@@ -41,6 +44,7 @@
         <translation language="de"><![CDATA[durchschnittliche Verweildauer auf der Webseite]]></translation>
         <translation language="hu"><![CDATA[átlagos idő a site-on]]></translation>
         <translation language="fr"><![CDATA[temps moyen passé sur le site]]></translation>
+        <translation language="es"><![CDATA[tiempo promedio en el sitio]]></translation>
       </item>
       <item type="label" name="BounceRate">
         <translation language="nl"><![CDATA[weigeringspercentage]]></translation>
@@ -51,6 +55,7 @@
         <translation language="de"><![CDATA[Bounce Rate]]></translation>
         <translation language="hu"><![CDATA[bounce rate]]></translation>
         <translation language="fr"><![CDATA[taux de rebond]]></translation>
+        <translation language="es"><![CDATA[porcentaje de rebote]]></translation>
       </item>
       <item type="label" name="Bounces">
         <translation language="nl"><![CDATA[weigeringen]]></translation>
@@ -61,6 +66,7 @@
         <translation language="de"><![CDATA[Bounces]]></translation>
         <translation language="hu"><![CDATA[bounces]]></translation>
         <translation language="fr"><![CDATA[rebonds]]></translation>
+        <translation language="es"><![CDATA[rebotes]]></translation>
       </item>
       <item type="label" name="ChangePeriod">
         <translation language="nl"><![CDATA[periode aanpassen]]></translation>
@@ -71,6 +77,7 @@
         <translation language="de"><![CDATA[Zeitraum ändern]]></translation>
         <translation language="hu"><![CDATA[időszak változtatás]]></translation>
         <translation language="fr"><![CDATA[changer de période]]></translation>
+        <translation language="es"><![CDATA[cambiar periodo]]></translation>
       </item>
       <item type="label" name="ChooseThisAccount">
         <translation language="nl"><![CDATA[kies deze account]]></translation>
@@ -81,6 +88,7 @@
         <translation language="de"><![CDATA[diesen Account auswählen]]></translation>
         <translation language="hu"><![CDATA[fiók választás]]></translation>
         <translation language="fr"><![CDATA[choisir ce compte]]></translation>
+        <translation language="es"><![CDATA[elegir esta cuenta]]></translation>
       </item>
       <item type="label" name="DirectTraffic">
         <translation language="nl"><![CDATA[direct verkeer]]></translation>
@@ -91,6 +99,7 @@
         <translation language="hu"><![CDATA[direct traffic]]></translation>
         <translation language="fr"><![CDATA[traffic direct]]></translation>
         <translation language="de"><![CDATA[direkte Zugriffe]]></translation>
+        <translation language="es"><![CDATA[tráfico directo]]></translation>
       </item>
       <item type="label" name="Entrances">
         <translation language="nl"><![CDATA[instappunten]]></translation>
@@ -101,6 +110,7 @@
         <translation language="hu"><![CDATA[entrances]]></translation>
         <translation language="fr"><![CDATA[entrées]]></translation>
         <translation language="de"><![CDATA[Eintrittsseiten]]></translation>
+        <translation language="es"><![CDATA[entradas]]></translation>
       </item>
       <item type="label" name="ExitRate">
         <translation language="nl"><![CDATA[uitstappercentage]]></translation>
@@ -111,6 +121,7 @@
         <translation language="hu"><![CDATA[exit rate]]></translation>
         <translation language="fr"><![CDATA[taux de sortie]]></translation>
         <translation language="de"><![CDATA[Ausstiegsrate]]></translation>
+        <translation language="es"><![CDATA[promedio de salida]]></translation>
       </item>
       <item type="label" name="Exits">
         <translation language="nl"><![CDATA[uitstappunten]]></translation>
@@ -121,6 +132,7 @@
         <translation language="hu"><![CDATA[exits]]></translation>
         <translation language="fr"><![CDATA[sorties]]></translation>
         <translation language="de"><![CDATA[Ausstiegsseiten]]></translation>
+        <translation language="es"><![CDATA[salidas]]></translation>
       </item>
       <item type="label" name="GetLiveData">
         <translation language="nl"><![CDATA[haal live gegevens op]]></translation>
@@ -131,6 +143,7 @@
         <translation language="hu"><![CDATA[collect live data]]></translation>
         <translation language="fr"><![CDATA[collecter des données en temps réel]]></translation>
         <translation language="de"><![CDATA[sammle Live-Daten]]></translation>
+        <translation language="es"><![CDATA[recoger datos en tiempo real]]></translation>
       </item>
       <item type="label" name="GoogleAnalyticsLink">
         <translation language="nl"><![CDATA[koppeling met Google Analytics]]></translation>
@@ -141,6 +154,7 @@
         <translation language="hu"><![CDATA[összekötés Google Analytics-szel]]></translation>
         <translation language="fr"><![CDATA[lien Google Analytics]]></translation>
         <translation language="de"><![CDATA[Link zu Google-Analytics]]></translation>
+        <translation language="es"><![CDATA[enlace a Google Analytics]]></translation>
       </item>
       <item type="label" name="LinkedAccount">
         <translation language="nl"><![CDATA[gekoppelde account]]></translation>
@@ -151,6 +165,7 @@
         <translation language="de"><![CDATA[verlinktes Konto]]></translation>
         <translation language="hu"><![CDATA[összekötött fiók]]></translation>
         <translation language="fr"><![CDATA[compte lié]]></translation>
+        <translation language="es"><![CDATA[cuenta vinculada]]></translation>
       </item>
       <item type="label" name="LinkedProfile">
         <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
@@ -161,6 +176,7 @@
         <translation language="de"><![CDATA[verlinktes Profil]]></translation>
         <translation language="hu"><![CDATA[összekötött profil]]></translation>
         <translation language="fr"><![CDATA[profil lié]]></translation>
+        <translation language="es"><![CDATA[perfil vinculado]]></translation>
       </item>
       <item type="label" name="LinkThisProfile">
         <translation language="nl"><![CDATA[koppel dit profiel]]></translation>
@@ -171,6 +187,7 @@
         <translation language="de"><![CDATA[Profil verlinken]]></translation>
         <translation language="hu"><![CDATA[összekötés ezzel a profillal]]></translation>
         <translation language="fr"><![CDATA[lier ce profile]]></translation>
+        <translation language="es"><![CDATA[enlazar este perfil]]></translation>
       </item>
       <item type="label" name="NewVisitsPercentage">
         <translation language="nl"><![CDATA[nieuw bezoekpercentage]]></translation>
@@ -181,6 +198,7 @@
         <translation language="hu"><![CDATA[új látogatók aránya]]></translation>
         <translation language="fr"><![CDATA[pourcentage de nouvelles visites]]></translation>
         <translation language="de"><![CDATA[Anteil neuer Besucher]]></translation>
+        <translation language="es"><![CDATA[porcertaje de nuevas visitas]]></translation>
       </item>
       <item type="label" name="PagesPerVisit">
         <translation language="nl"><![CDATA[pagina's per bezoek]]></translation>
@@ -191,6 +209,7 @@
         <translation language="de"><![CDATA[Seiten pro Besuch]]></translation>
         <translation language="hu"><![CDATA[oldal per látogatás]]></translation>
         <translation language="fr"><![CDATA[pages par visite]]></translation>
+        <translation language="es"><![CDATA[páginaes por visita]]></translation>
       </item>
       <item type="label" name="Pageviews">
         <translation language="nl"><![CDATA[paginaweergaves]]></translation>
@@ -201,6 +220,7 @@
         <translation language="de"><![CDATA[Seitenaufrufe]]></translation>
         <translation language="hu"><![CDATA[oldalmegtekintés]]></translation>
         <translation language="fr"><![CDATA[vues de page]]></translation>
+        <translation language="es"><![CDATA[vista de páginas]]></translation>
       </item>
       <item type="label" name="PageviewsByTrafficSources">
         <translation language="nl"><![CDATA[paginaweergaves per verkeersbron]]></translation>
@@ -211,6 +231,7 @@
         <translation language="hu"><![CDATA[oldalmegtekintés per forgalom forrás]]></translation>
         <translation language="fr"><![CDATA[vues de page par source de traffic]]></translation>
         <translation language="de"><![CDATA[Seitenaufrufe nach Traffic-Quelle]]></translation>
+        <translation language="es"><![CDATA[vista de páginas por origen de tráfico]]></translation>
       </item>
       <item type="label" name="PercentageOfSiteTotal">
         <translation language="nl"><![CDATA[percentage van sitetotaal]]></translation>
@@ -221,6 +242,7 @@
         <translation language="hu"><![CDATA[percentage of site total]]></translation>
         <translation language="fr"><![CDATA[pourcentage du total du site]]></translation>
         <translation language="de"><![CDATA[prozentualer Anteil an der kompletten Website]]></translation>
+        <translation language="es"><![CDATA[Porcentaje total del sitio]]></translation>
       </item>
       <item type="label" name="PeriodStatistics">
         <translation language="nl"><![CDATA[periode statistieken]]></translation>
@@ -231,6 +253,7 @@
         <translation language="hu"><![CDATA[időszak statisztika]]></translation>
         <translation language="fr"><![CDATA[statistiques de période]]></translation>
         <translation language="de"><![CDATA[Zeitraumstatistik]]></translation>
+        <translation language="es"><![CDATA[estadisticas del periodo]]></translation>
       </item>
       <item type="label" name="Referral">
         <translation language="nl"><![CDATA[verwijzende site]]></translation>
@@ -241,6 +264,7 @@
         <translation language="de"><![CDATA[verweisende Seite]]></translation>
         <translation language="hu"><![CDATA[referring site]]></translation>
         <translation language="fr"><![CDATA[site de référent]]></translation>
+        <translation language="es"><![CDATA[sitio de referencia]]></translation>
       </item>
       <item type="label" name="SearchEngines">
         <translation language="nl"><![CDATA[zoekmachines]]></translation>
@@ -251,6 +275,7 @@
         <translation language="de"><![CDATA[Suchmaschinen]]></translation>
         <translation language="hu"><![CDATA[kereső motorok]]></translation>
         <translation language="fr"><![CDATA[moteurs de recherche]]></translation>
+        <translation language="es"><![CDATA[motores de busqueda]]></translation>
       </item>
       <item type="label" name="SiteAverage">
         <translation language="nl"><![CDATA[sitegemidddelde]]></translation>
@@ -261,6 +286,7 @@
         <translation language="de"><![CDATA[Seitendurchschnitt]]></translation>
         <translation language="hu"><![CDATA[site átlag]]></translation>
         <translation language="fr"><![CDATA[moyenne du site]]></translation>
+        <translation language="es"><![CDATA[media del sitio]]></translation>
       </item>
       <item type="label" name="TimeOnSite">
         <translation language="nl"><![CDATA[bezoekduur]]></translation>
@@ -271,6 +297,7 @@
         <translation language="de"><![CDATA[Besuchsdauer]]></translation>
         <translation language="hu"><![CDATA[time on site]]></translation>
         <translation language="fr"><![CDATA[temps passé sur le site]]></translation>
+        <translation language="es"><![CDATA[tiempo en el sitio]]></translation>
       </item>
       <item type="label" name="TopContent">
         <translation language="nl"><![CDATA[belangrijkste inhoud]]></translation>
@@ -281,6 +308,7 @@
         <translation language="de"><![CDATA[wichtigster Inhalt]]></translation>
         <translation language="hu"><![CDATA[legnépszerűbb tartalom]]></translation>
         <translation language="fr"><![CDATA[meilleur contenu]]></translation>
+        <translation language="es"><![CDATA[top contenido]]></translation>
       </item>
       <item type="label" name="TopExitPages">
         <translation language="nl"><![CDATA[belangrijkste uitstappagina's]]></translation>
@@ -291,6 +319,7 @@
         <translation language="de"><![CDATA[häufigste Ausstiegsseiten]]></translation>
         <translation language="hu"><![CDATA[legnépszerűbb kilépő oldal]]></translation>
         <translation language="fr"><![CDATA[meilleures pages de sortie]]></translation>
+        <translation language="es"><![CDATA[top páginas de salidas]]></translation>
       </item>
       <item type="label" name="TopKeywords">
         <translation language="nl"><![CDATA[belangrijkste zoekwoorden]]></translation>
@@ -301,6 +330,7 @@
         <translation language="de"><![CDATA[wichtigste Keywords]]></translation>
         <translation language="hu"><![CDATA[legnépszerűbb keresőszavak]]></translation>
         <translation language="fr"><![CDATA[meilleurs mots-clefs]]></translation>
+        <translation language="es"><![CDATA[top palabras clave]]></translation>
       </item>
       <item type="label" name="TopLandingPages">
         <translation language="nl"><![CDATA[belangrijkste landingspagina's]]></translation>
@@ -311,6 +341,7 @@
         <translation language="de"><![CDATA[häufigste Eintrittsseiten]]></translation>
         <translation language="hu"><![CDATA[legnépszerűbb céloldalak]]></translation>
         <translation language="fr"><![CDATA[meilleures pages d'aterrissage]]></translation>
+        <translation language="es"><![CDATA[top páginas de destino]]></translation>
       </item>
       <item type="label" name="TopPages">
         <translation language="nl"><![CDATA[belangrijkste pagina's]]></translation>
@@ -321,6 +352,7 @@
         <translation language="de"><![CDATA[beste Seiten]]></translation>
         <translation language="hu"><![CDATA[legnépszerűbb oldal]]></translation>
         <translation language="fr"><![CDATA[meilleures pages]]></translation>
+        <translation language="es"><![CDATA[top páginas]]></translation>
       </item>
       <item type="label" name="TopReferrers">
         <translation language="nl"><![CDATA[belangrijkste verwijzende sites]]></translation>
@@ -331,6 +363,7 @@
         <translation language="de"><![CDATA[beste verweisende Seiten]]></translation>
         <translation language="hu"><![CDATA[legnépszerűbb referrerek]]></translation>
         <translation language="fr"><![CDATA[meilleurs référents]]></translation>
+        <translation language="es"><![CDATA[top referentes]]></translation>
       </item>
       <item type="label" name="UniquePageviews">
         <translation language="nl"><![CDATA[unieke paginaweergaves]]></translation>
@@ -341,6 +374,7 @@
         <translation language="hu"><![CDATA[egyéni oldalmegtekintés]]></translation>
         <translation language="fr"><![CDATA[vues de pages uniques]]></translation>
         <translation language="de"><![CDATA[einzigartige Seitenaufrufe]]></translation>
+        <translation language="es"><![CDATA[bistas únicas]]></translation>
       </item>
       <item type="label" name="Views">
         <translation language="nl"><![CDATA[weergaves]]></translation>
@@ -351,6 +385,7 @@
         <translation language="de"><![CDATA[Aufrufe]]></translation>
         <translation language="hu"><![CDATA[megtekintések]]></translation>
         <translation language="fr"><![CDATA[vues]]></translation>
+        <translation language="es"><![CDATA[vistas]]></translation>
       </item>
       <item type="label" name="ViewStatistics">
         <translation language="nl"><![CDATA[bekijk de statistieken]]></translation>
@@ -371,6 +406,7 @@
         <translation language="de"><![CDATA[Besuche]]></translation>
         <translation language="hu"><![CDATA[látogatások]]></translation>
         <translation language="fr"><![CDATA[visites]]></translation>
+        <translation language="es"><![CDATA[visitas]]></translation>
       </item>
       <item type="error" name="AnalyseNoSessionToken">
         <translation language="nl"><![CDATA[Er is nog geen Google analytics account gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
@@ -381,6 +417,7 @@
         <translation language="hu"><![CDATA[Nincs még összekapcsolva a Google Analytics fiókkal. <a href="%1$s">Beállítás</a>]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de lien avec un compte Google. <a href="%1$s">Configurer</a>]]></translation>
         <translation language="de"><![CDATA[Es wurde noch keine Verbindung zu einem Google-Analytics-Konto hergestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
+        <translation language="es"><![CDATA[No hay ninguna cuenta Google analytics vinculada aun. <a href="%1$s">Configurar</a>]]></translation>
       </item>
       <item type="error" name="AnalyseNoTableId">
         <translation language="nl"><![CDATA[Er is nog geen analytics website profiel gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
@@ -391,6 +428,7 @@
         <translation language="hu"><![CDATA[Nincs még összekapcsolva az Analytics weboldal profillal. <a href="%1$s">Beállítás</a>]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de lien avec un site de profil Analytics <a href="%1$s">Configurer</a>]]></translation>
         <translation language="de"><![CDATA[Es wurde noch keine Verbindung zu einem Analytics-Website-Profil hergestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
+        <translation language="es"><![CDATA[No hay ningun perfil de sitio web analytics vinculado aun. <a href="%1$s">Configurar</a>]]></translation>
       </item>
       <item type="error" name="NoSessionToken">
         <translation language="nl"><![CDATA[Er is nog geen Google account gekoppeld.]]></translation>
@@ -401,6 +439,7 @@
         <translation language="fr"><![CDATA[Il n'y a pas encore de lien avec un compte Google Analytics]]></translation>
         <translation language="hu"><![CDATA[Nincs még összekapcsolva a Google Analytics fiókkal.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Verbindung zu einem Google-Analytics Konto.]]></translation>
+        <translation language="es"><![CDATA[No hay ninguna cuenta Google analytics vinculada aun.]]></translation>
       </item>
       <item type="error" name="NoTableId">
         <translation language="nl"><![CDATA[Er is nog geen website profiel gekoppeld.]]></translation>
@@ -411,6 +450,7 @@
         <translation language="fr"><![CDATA[Aucun site d'analyse n'est lié pour l'instant.]]></translation>
         <translation language="hu"><![CDATA[Nincs még összekapcsolva az Analytics weboldal profillal.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Verbindung zu einem Analytics-Website-Profil.]]></translation>
+        <translation language="es"><![CDATA[No hay ningun perfil de sitio web analytics vinculado aun.]]></translation>
       </item>
       <item type="message" name="AuthenticateAtGoogle">
         <translation language="nl"><![CDATA[Koppel uw Google account]]></translation>
@@ -421,6 +461,7 @@
         <translation language="de"><![CDATA[Verbinde dein Google-Konto]]></translation>
         <translation language="hu"><![CDATA[Összeköttetés a Google fiókoddal.]]></translation>
         <translation language="fr"><![CDATA[lier votre compte Google]]></translation>
+        <translation language="es"><![CDATA[Vincular tu cuenta Google]]></translation>
       </item>
       <item type="message" name="ChooseWebsiteProfile">
         <translation language="nl"><![CDATA[Kies een Analytics website profiel...]]></translation>
@@ -431,6 +472,7 @@
         <translation language="hu"><![CDATA[Analytics weboldal profil választás...]]></translation>
         <translation language="fr"><![CDATA[Choisissez un profil de site Analytics...]]></translation>
         <translation language="de"><![CDATA[Wähle ein Analytics-Website-Profil ...]]></translation>
+        <translation language="es"><![CDATA[Elegir un perfil de sitio web Analytics...]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteLinkAccount">
         <translation language="nl"><![CDATA[Weet u zeker dat u de koppeling met de account "%1$s" wil verwijderen?<br />Alle opgeslagen statistieken worden dan verwijderd uit het CMS.]]></translation>
@@ -441,6 +483,7 @@
         <translation language="hu"><![CDATA[Biztos meg akarod szüntetni az összekötést a "%1$s" fiókoddal?<br />Minden mentett statisztika törlődni fog a CMS-ből.]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir supprimer le lien avec le compte "%1$s"?<br /> Toute les statistiques sauvegardées seront effacés du CMS Fork.]]></translation>
         <translation language="de"><![CDATA[Bist du sicher, dass du die Verbindung zum Konto "%1$s" wirklich entfernen möchtest? <br /> Alle gespeicherten Statistiken werden dadurch bei Fork gelöscht werden.]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de eliminar el vinculo con la cuenta "%1$s"?<br />All saves statistics will be deleted from the CMS.]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteLinkGoogleAccount">
         <translation language="nl"><![CDATA[Weet u zeker dat u de koppeling met uw Google account wilt verwijderen?]]></translation>
@@ -451,6 +494,7 @@
         <translation language="hu"><![CDATA[Biztos meg akarod szüntetni az összekötést a Google fiókoddal?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir supprimer le lien avec votre compte Google?]]></translation>
         <translation language="de"><![CDATA[Willst du die Verbdindung zu deinem Google-Konto wirklich trennen?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de eliminar el vinculo con tu cuenta Google?]]></translation>
       </item>
       <item type="message" name="GetDataError">
         <translation language="nl"><![CDATA[Er liep iets mis bij het ophalen van de gegevens via Google Analytics. Onze excuses voor het ongemak. Probeer het later nog eens.]]></translation>
@@ -461,6 +505,7 @@
         <translation language="hu"><![CDATA[Valami hiba lépett fel a Google Analytics adatok összegyűjtése közben. Elnézést a kellemetlenségért. Kérlek próbálkozz később.]]></translation>
         <translation language="de"><![CDATA[Beim Abrufen der Daten von Google-Analytics ist etwas schief gelaufen. Wir entschuldigen uns für die Umstände. Bitte versuch es später noch einmal.]]></translation>
         <translation language="fr"><![CDATA[Une erreur est survenue pendant la tentative de récupération de données de Google Analytics. Nous nous excusons pour le désagrément. Veuillez réessayer plus tard.]]></translation>
+        <translation language="es"><![CDATA[Algo salió mal mientras se recogian los datos de Google Analytics. Disculpe las molestias. Por favor intentalo de nuevo.]]></translation>
       </item>
       <item type="message" name="LinkGoogleAccount">
         <translation language="nl"><![CDATA[Koppel uw Google account aan Fork CMS.]]></translation>
@@ -471,6 +516,7 @@
         <translation language="hu"><![CDATA[Google fiók összekötése a Fork CMS-ből.]]></translation>
         <translation language="fr"><![CDATA[Lier votre compte Google à Fork CMS.]]></translation>
         <translation language="de"><![CDATA[Verbinde dein Google-Konto mit Fork CMS.]]></translation>
+        <translation language="es"><![CDATA[Vincula tu cuenta Google a Fork CMS.]]></translation>
       </item>
       <item type="message" name="LinkWebsiteProfile">
         <translation language="nl"><![CDATA[Koppel een Google Analytics website profiel aan Fork CMS.]]></translation>
@@ -481,6 +527,7 @@
         <translation language="hu"><![CDATA[Google Analytics weboldal profil összekötése Fork CMS-ből.]]></translation>
         <translation language="fr"><![CDATA[Lier votre profil Google Analytics à Fork CMS.]]></translation>
         <translation language="de"><![CDATA[Verbinde dein Google-Analytics Website-Profil mit Fork CMS.]]></translation>
+        <translation language="es"><![CDATA[Vincula tu perfil de web Google Analytics a Fork CMS.]]></translation>
       </item>
       <item type="message" name="LoadingData">
         <translation language="nl"><![CDATA[Fork haalt momenteel de gegevens binnen via Google Analytics.]]></translation>
@@ -491,6 +538,7 @@
         <translation language="hu"><![CDATA[Fork gyűjti az adatokat a Google Analytics-ből.]]></translation>
         <translation language="de"><![CDATA[Fork ruft die Daten von Google-Analytics ab.]]></translation>
         <translation language="fr"><![CDATA[Fork collecte des données de Google Analytics.]]></translation>
+        <translation language="es"><![CDATA[Fork está recogiendo los datos de Google Analytics.]]></translation>
       </item>
       <item type="message" name="NoAccounts">
         <translation language="nl"><![CDATA[Er hangen geen website profielen aan deze Google account. Meld je af bij Google en probeer het met een andere account.]]></translation>
@@ -501,6 +549,7 @@
         <translation language="hu"><![CDATA[Nincs weboldal profil összekötve a Google fiókoddal. Lépj ki a Googleból, majd próbáld egy másik fiókkal.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas de profils de site liés à ce compte Google. Déconnectez-vous de Google et essayer avec un compte différent.]]></translation>
         <translation language="de"><![CDATA[Mit diesem Google-Konto sind keine Website-Profile verbunden. Melde dich bei Google ab und versuche es mit einem anderen Konto.]]></translation>
+        <translation language="es"><![CDATA[No hay ningún perfil de web vinculado a esta cuenta Google. Desconecta de Google e intenta con una cuenta diferente.]]></translation>
       </item>
       <item type="message" name="NoContent">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken van inhoud.]]></translation>
@@ -511,6 +560,7 @@
         <translation language="hu"><![CDATA[Nincs még tartalom.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keinen Inhalt.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de contenu.]]></translation>
+        <translation language="es"><![CDATA[No hay contenido aun.]]></translation>
       </item>
       <item type="message" name="NoData">
         <translation language="nl"><![CDATA[Google heeft nog geen Analytics gegevens van uw website. Dit kan enkele dagen duren. Kijk zeker ook na of al uw instellingen bij Google goedstaan.]]></translation>
@@ -521,6 +571,7 @@
         <translation language="hu"><![CDATA[A Google-nak nincs még Analytics adata az oldaladról. Ez eltarthat néhány napig. Azért ellenőrid a Google Analytics fiókodat, hogy minden beállítás jó e.]]></translation>
         <translation language="de"><![CDATA[Google hat noch keine Analytics-Daten für deine Website. Es könnte ein paar Tage dauern. Bitte überprüf auch deinen Google-Analytics-Konto um sicherzugehen, dass du alle Einstellungen korrekt gesetzt hast.]]></translation>
         <translation language="fr"><![CDATA[Google n'a pas encore de données Analytics pour votre site. Ceci peut prendre plusieurs jours. Vérifiez également que tous vos paramètres sont corrects dans votre compte Analytics.]]></translation>
+        <translation language="es"><![CDATA[Google no tiene datos de Analytics aun para tu sitio web. Esto podría tomar unos dias. Tambien comprueba tu cuenta Google Analytics para asegurarte de que esta configuradao correctamente.]]></translation>
       </item>
       <item type="message" name="NoExitPages">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken van uitstappagina's]]></translation>
@@ -531,6 +582,7 @@
         <translation language="hu"><![CDATA[Nincsenek még kilépő oldalak.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de pages de sortie.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Ausstiegsseiten.]]></translation>
+        <translation language="es"><![CDATA[No hay páginas de salida aun.]]></translation>
       </item>
       <item type="message" name="NoKeywords">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken van zoekwoorden.]]></translation>
@@ -541,6 +593,7 @@
         <translation language="hu"><![CDATA[Nincsenek még keresőszavak.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Keywords.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de mots-clefs.]]></translation>
+        <translation language="es"><![CDATA[No hay palabras clave aun.]]></translation>
       </item>
       <item type="message" name="NoLandingPages">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken van landingpagina's.]]></translation>
@@ -551,6 +604,7 @@
         <translation language="hu"><![CDATA[Nincsenek még céloldalak.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de page d'atterrissage.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Einstiegseiten.]]></translation>
+        <translation language="es"><![CDATA[No hay páginas de destino aun.]]></translation>
       </item>
       <item type="message" name="NoPages">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken van pagina's.]]></translation>
@@ -561,6 +615,7 @@
         <translation language="hu"><![CDATA[Nincsenek még statisztikák az oldalakon.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas de statistiques pour les pages.]]></translation>
         <translation language="de"><![CDATA[Es gibt keine Statistiken für eine Seite.]]></translation>
+        <translation language="es"><![CDATA[No hay estadisticas para ninguna página.]]></translation>
       </item>
       <item type="message" name="PagesHaveBeenViewedTimes">
         <translation language="nl"><![CDATA[Pagina's op deze site zijn in totaal %1$s keer bekeken.]]></translation>
@@ -571,6 +626,7 @@
         <translation language="hu"><![CDATA[Ezt az oldalt %1$s alkalommal látogatták meg.]]></translation>
         <translation language="de"><![CDATA[Seiten dieser Website wurden %1$s mal angesehen.]]></translation>
         <translation language="fr"><![CDATA[Les pages de ce site ont été vues %1$s fois.]]></translation>
+        <translation language="es"><![CDATA[Páginas del sitio que han sido vistas %1$s veces.]]></translation>
       </item>
       <item type="message" name="RefreshedTrafficSources">
         <translation language="nl"><![CDATA[De verkeersbronnen werden vernieuwd.]]></translation>
@@ -581,6 +637,7 @@
         <translation language="hu"><![CDATA[A forgalom források frissültek.]]></translation>
         <translation language="fr"><![CDATA[Les sources de traffic ont été rafraîchies.]]></translation>
         <translation language="de"><![CDATA[Die Traffic-Quellen wurden neu geladen.]]></translation>
+        <translation language="es"><![CDATA[La fuente del tráfico ha sido refrescada.]]></translation>
       </item>
       <item type="message" name="RemoveAccountLink">
         <translation language="nl"><![CDATA[Verwijder de koppeling met uw Google account]]></translation>
@@ -591,6 +648,7 @@
         <translation language="hu"><![CDATA[Kapcsolat törlése a Google fiókoddal]]></translation>
         <translation language="fr"><![CDATA[Retirer le lien avec votre compte Google]]></translation>
         <translation language="de"><![CDATA[Entferne die Verbindung zu deinem Google-Konto.]]></translation>
+        <translation language="es"><![CDATA[Eliminar el vinculo con tu cuenta Google]]></translation>
       </item>
       <item type="message" name="RemoveProfileLink">
         <translation language="nl"><![CDATA[Verwijder de koppeling met uw Analytics website profiel]]></translation>
@@ -601,19 +659,8 @@
         <translation language="hu"><![CDATA[Kapcsolat törlése az Analytics weboldal profillal]]></translation>
         <translation language="fr"><![CDATA[Retirer le lien avec votre profil Analytics]]></translation>
         <translation language="de"><![CDATA[Entferne die Verbindung mit deinem Analytics-Website-Profil.]]></translation>
+        <translation language="es"><![CDATA[Eliminar el vinculo con el perfil web de Analytics]]></translation>
       </item>
     </analytics>
-    <core>
-      <item type="message" name="NoKeywords">
-        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van zoekwoorden.]]></translation>
-        <translation language="en"><![CDATA[There are no keywords yet.]]></translation>
-        <translation language="it"><![CDATA[Non ci sono ancora keyword.]]></translation>
-        <translation language="ru"><![CDATA[Нет ключевых слов.]]></translation>
-        <translation language="cn"><![CDATA[尚无关键词结果。]]></translation>
-        <translation language="hu"><![CDATA[Nincsenek még keresőszavak.]]></translation>
-        <translation language="de"><![CDATA[Es gibt noch keine Keywords.]]></translation>
-        <translation language="fr"><![CDATA[Il n'y a pas encore de mots-clefs.]]></translation>
-      </item>
-    </core>
   </backend>
 </locale>

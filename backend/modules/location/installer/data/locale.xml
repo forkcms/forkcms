@@ -11,6 +11,7 @@
         <translation language="de"><![CDATA[Diese Adresse konnte leider nicht in Koordinaten übertragen werden.]]></translation>
         <translation language="hu"><![CDATA[A címet nem lehet átalakítani koordinátákká.]]></translation>
         <translation language="fr"><![CDATA[L'adresse n'a pas pu être convertie en coordonnées.]]></translation>
+        <translation language="es"><![CDATA[La dirección no ha podido convertir en coordenadas.]]></translation>
       </item>
       <item type="label" name="Auto">
         <translation language="nl"><![CDATA[automatisch]]></translation>
@@ -21,6 +22,7 @@
         <translation language="de"><![CDATA[automatisch]]></translation>
         <translation language="fr"><![CDATA[automatique]]></translation>
         <translation language="hu"><![CDATA[autómatikus]]></translation>
+        <translation language="es"><![CDATA[automatico]]></translation>
       </item>
       <item type="label" name="Hybrid">
         <translation language="nl"><![CDATA[hybride]]></translation>
@@ -31,6 +33,7 @@
         <translation language="de"><![CDATA[hybrid]]></translation>
         <translation language="fr"><![CDATA[hybride]]></translation>
         <translation language="hu"><![CDATA[hibrid]]></translation>
+        <translation language="es"><![CDATA[híbrido]]></translation>
       </item>
       <item type="label" name="Map">
         <translation language="nl"><![CDATA[kaart]]></translation>
@@ -41,6 +44,7 @@
         <translation language="de"><![CDATA[Karte]]></translation>
         <translation language="fr"><![CDATA[carte]]></translation>
         <translation language="hu"><![CDATA[térkép]]></translation>
+        <translation language="es"><![CDATA[mapa]]></translation>
       </item>
       <item type="label" name="MapType">
         <translation language="nl"><![CDATA[kaarttype]]></translation>
@@ -51,6 +55,7 @@
         <translation language="de"><![CDATA[Kartenart]]></translation>
         <translation language="fr"><![CDATA[type de carte]]></translation>
         <translation language="hu"><![CDATA[térkép típusa]]></translation>
+        <translation language="es"><![CDATA[tipo de mapa]]></translation>
       </item>
       <item type="label" name="Roadmap">
         <translation language="nl"><![CDATA[wegenkaart]]></translation>
@@ -61,6 +66,7 @@
         <translation language="de"><![CDATA[Straßenkarte]]></translation>
         <translation language="fr"><![CDATA[carte routière]]></translation>
         <translation language="hu"><![CDATA[road map]]></translation>
+        <translation language="es"><![CDATA[ruta]]></translation>
       </item>
       <item type="label" name="Satellite">
         <translation language="nl"><![CDATA[satelliet]]></translation>
@@ -71,6 +77,7 @@
         <translation language="de"><![CDATA[Satellit]]></translation>
         <translation language="fr"><![CDATA[satellite]]></translation>
         <translation language="hu"><![CDATA[satellite]]></translation>
+        <translation language="es"><![CDATA[satelite]]></translation>
       </item>
       <item type="label" name="Terrain">
         <translation language="nl"><![CDATA[terrein]]></translation>
@@ -81,6 +88,7 @@
         <translation language="de"><![CDATA[Terrain]]></translation>
         <translation language="fr"><![CDATA[terrain]]></translation>
         <translation language="hu"><![CDATA[terrain]]></translation>
+        <translation language="es"><![CDATA[terreno]]></translation>
       </item>
       <item type="label" name="ZoomLevel">
         <translation language="nl"><![CDATA[zoom niveau]]></translation>
@@ -91,6 +99,7 @@
         <translation language="de"><![CDATA[Zoomstufe]]></translation>
         <translation language="fr"><![CDATA[niveau de zoom]]></translation>
         <translation language="hu"><![CDATA[nagyítási szint]]></translation>
+        <translation language="es"><![CDATA[nivel de zoom]]></translation>
       </item>
     </location>
   </backend>

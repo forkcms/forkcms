@@ -11,6 +11,7 @@
         <translation language="de"><![CDATA[Aktionen]]></translation>
         <translation language="hu"><![CDATA[használ]]></translation>
         <translation language="fr"><![CDATA[actions]]></translation>
+        <translation language="es"><![CDATA[acciones]]></translation>
       </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[vertaling toevoegen]]></translation>
@@ -21,6 +22,7 @@
         <translation language="cn"><![CDATA[添加翻译语言]]></translation>
         <translation language="de"><![CDATA[Übersetzung hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter une traduction]]></translation>
+        <translation language="es"><![CDATA[agregar traducción]]></translation>
       </item>
       <item type="label" name="Copy">
         <translation language="nl"><![CDATA[kopieer]]></translation>
@@ -31,6 +33,7 @@
         <translation language="cn"><![CDATA[复制]]></translation>
         <translation language="de"><![CDATA[kopieren]]></translation>
         <translation language="fr"><![CDATA[copier]]></translation>
+        <translation language="es"><![CDATA[copiar]]></translation>
       </item>
       <item type="label" name="EN">
         <translation language="nl"><![CDATA[engels]]></translation>
@@ -41,6 +44,7 @@
         <translation language="cn"><![CDATA[英语]]></translation>
         <translation language="de"><![CDATA[englisch]]></translation>
         <translation language="fr"><![CDATA[anglais]]></translation>
+        <translation language="es"><![CDATA[inglés]]></translation>
       </item>
       <item type="label" name="Errors">
         <translation language="nl"><![CDATA[foutberichten]]></translation>
@@ -51,6 +55,7 @@
         <translation language="cn"><![CDATA[错误]]></translation>
         <translation language="de"><![CDATA[Fehler]]></translation>
         <translation language="fr"><![CDATA[erreurs]]></translation>
+        <translation language="es"><![CDATA[errores]]></translation>
       </item>
       <item type="label" name="FR">
         <translation language="nl"><![CDATA[frans]]></translation>
@@ -61,6 +66,7 @@
         <translation language="cn"><![CDATA[法语]]></translation>
         <translation language="de"><![CDATA[französisch]]></translation>
         <translation language="fr"><![CDATA[français]]></translation>
+        <translation language="es"><![CDATA[frances]]></translation>
       </item>
       <item type="label" name="Labels">
         <translation language="nl"><![CDATA[labels]]></translation>
@@ -71,6 +77,7 @@
         <translation language="cn"><![CDATA[标签]]></translation>
         <translation language="de"><![CDATA[Labels]]></translation>
         <translation language="fr"><![CDATA[labels]]></translation>
+        <translation language="es"><![CDATA[etiquetas]]></translation>
       </item>
       <item type="label" name="Messages">
         <translation language="nl"><![CDATA[berichten]]></translation>
@@ -81,6 +88,7 @@
         <translation language="cn"><![CDATA[消息]]></translation>
         <translation language="de"><![CDATA[Nachrichten]]></translation>
         <translation language="fr"><![CDATA[messages]]></translation>
+        <translation language="es"><![CDATA[mensajes]]></translation>
       </item>
       <item type="label" name="NL">
         <translation language="nl"><![CDATA[nederlands]]></translation>
@@ -91,6 +99,7 @@
         <translation language="cn"><![CDATA[荷兰语]]></translation>
         <translation language="de"><![CDATA[niederländisch]]></translation>
         <translation language="fr"><![CDATA[néerlandais]]></translation>
+        <translation language="es"><![CDATA[holandes]]></translation>
       </item>
       <item type="label" name="Types">
         <translation language="nl"><![CDATA[types]]></translation>
@@ -101,6 +110,7 @@
         <translation language="cn"><![CDATA[类型]]></translation>
         <translation language="de"><![CDATA[Typen]]></translation>
         <translation language="fr"><![CDATA[types]]></translation>
+        <translation language="es"><![CDATA[tipos]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd toegevoegd.]]></translation>
@@ -111,6 +121,7 @@
         <translation language="de"><![CDATA[Die Übersetzung "%1$s" wurde hinzugefügt.]]></translation>
         <translation language="hu"><![CDATA[A "%1$s" fordítás hozzáadva.]]></translation>
         <translation language="fr"><![CDATA[La traduction "%1$s"  a été ajoutée.]]></translation>
+        <translation language="es"><![CDATA[La traducción "%1$s" fue agregada.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je deze vertaling wil verwijderen?]]></translation>
@@ -121,6 +132,7 @@
         <translation language="de"><![CDATA[Soll diese Übersetzung wirklich gelöscht werden?]]></translation>
         <translation language="hu"><![CDATA[Biztos vagy benne, hogy törölni akarod ezt a fordítást?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer cette traduction ?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar esta traducción?]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd verwijderd.]]></translation>
@@ -131,6 +143,7 @@
         <translation language="de"><![CDATA[Die Übersetzung "%1$s" wurde gelöscht.]]></translation>
         <translation language="hu"><![CDATA[A "%1$s" fordítás törölve.]]></translation>
         <translation language="fr"><![CDATA[La traduction "%1$s" a été effacée.]]></translation>
+        <translation language="es"><![CDATA[La traducción "%1$s" fue eliminada.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd opgeslagen.]]></translation>
@@ -141,6 +154,7 @@
         <translation language="de"><![CDATA[Die Übersetzung Die englische Referenz für diese Übersetzung wurde gespeichert.]]></translation>
         <translation language="hu"><![CDATA[A "%1$s" fordítás elmentve.]]></translation>
         <translation language="fr"><![CDATA[La traduction "%1$s" a été enregistrée.]]></translation>
+        <translation language="es"><![CDATA[La traducción "%1$s" fue guardada.]]></translation>
       </item>
       <item type="message" name="EditTranslation">
         <translation language="nl"><![CDATA[bewerk vertaling "%1$s"]]></translation>
@@ -151,6 +165,7 @@
         <translation language="de"><![CDATA[bearbeite die Übersetzung "%1$s"]]></translation>
         <translation language="hu"><![CDATA["%1$s" fordítás szerkesztése]]></translation>
         <translation language="fr"><![CDATA[éditer la traduction "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar traducción "%1$s"]]></translation>
       </item>
       <item type="message" name="HelpActionValue">
         <translation language="nl"><![CDATA[Gebruik enkel alfanumerieke karakters (geen hoofdletters), - en _ bij deze vertalingen, ze zullen namelijk gebruikt worden in URL's.]]></translation>
@@ -161,6 +176,7 @@
         <translation language="hu"><![CDATA[Csak betűk (nem nagyok), - és _ használható, mert URL-ben fognak szerepelni.]]></translation>
         <translation language="de"><![CDATA[Benutze nur alphanumerische Zeichen (keine Großbuchstaben), - und _ für diese Übersetzungen, da sie in URLs verwendet werden. Benutze keine Leerzeichen.]]></translation>
         <translation language="fr"><![CDATA[Utilisez seulement des caractères alpha-numériques (sans majuscules), - et _ pour ces traductions, car elles seront utilisées dans les URL.]]></translation>
+        <translation language="es"><![CDATA[Usa solo carácteres alfanumericos (no mayusculas), - y _ para estas traducciones, porque serán usadas en URLs.]]></translation>
       </item>
       <item type="message" name="HelpAddName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
@@ -171,6 +187,7 @@
         <translation language="de"><![CDATA[Die englische Referenz für diese Übersetzung]]></translation>
         <translation language="hu"><![CDATA[Az angol fordítás a referencia.]]></translation>
         <translation language="fr"><![CDATA[La référence anglaise pour la traduction.]]></translation>
+        <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
       </item>
       <item type="message" name="HelpAddValue">
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
@@ -181,6 +198,7 @@
         <translation language="hu"><![CDATA[A fordítás]]></translation>
         <translation language="fr"><![CDATA[La traduction]]></translation>
         <translation language="de"><![CDATA[Die Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La traducción]]></translation>
       </item>
       <item type="message" name="HelpDateField">
         <translation language="nl"><![CDATA[vb. 20/06/2011]]></translation>
@@ -191,6 +209,7 @@
         <translation language="de"><![CDATA[z.B. 20/06/2011]]></translation>
         <translation language="hu"><![CDATA[pl. 20/06/2011]]></translation>
         <translation language="fr"><![CDATA[ex. 20/06/2011]]></translation>
+        <translation language="es"><![CDATA[ej. 20/06/2011]]></translation>
       </item>
       <item type="message" name="HelpEditName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
@@ -201,6 +220,7 @@
         <translation language="hu"><![CDATA[Az angol fordítás a referencia.]]></translation>
         <translation language="fr"><![CDATA[La référence anglaise pour cette traduction]]></translation>
         <translation language="de"><![CDATA[Die englische Referenz für diese Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
       </item>
       <item type="message" name="HelpEditValue">
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
@@ -211,6 +231,7 @@
         <translation language="hu"><![CDATA[A fordítás]]></translation>
         <translation language="fr"><![CDATA[La traduction]]></translation>
         <translation language="de"><![CDATA[Die Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La traducción]]></translation>
       </item>
       <item type="message" name="HelpImageField">
         <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten.]]></translation>
@@ -221,6 +242,7 @@
         <translation language="hu"><![CDATA[Csak a jp(e)g, gif vagy png fájlok használhatók.]]></translation>
         <translation language="de"><![CDATA[Nur jp(e)g, gif oder png-Dateien sind erlaubt.]]></translation>
         <translation language="fr"><![CDATA[Seuls les fichiers jp(e)g, gif ou png sont acceptés.]]></translation>
+        <translation language="es"><![CDATA[Solo jp(e)g, gif o png son aceptados.]]></translation>
       </item>
       <item type="message" name="HelpName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
@@ -231,6 +253,7 @@
         <translation language="de"><![CDATA[Die englische Referenz für diese Übersetzung]]></translation>
         <translation language="hu"><![CDATA[Az angol fordítás a referencia.]]></translation>
         <translation language="fr"><![CDATA[La référence anglaise pour cette traduction.]]></translation>
+        <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
       </item>
       <item type="message" name="HelpTimeField">
         <translation language="nl"><![CDATA[vb. 14:35]]></translation>
@@ -241,6 +264,7 @@
         <translation language="de"><![CDATA[z.B. 13:37]]></translation>
         <translation language="hu"><![CDATA[pl. 14:35]]></translation>
         <translation language="fr"><![CDATA[ex. 14:35]]></translation>
+        <translation language="es"><![CDATA[ej. 14:35]]></translation>
       </item>
       <item type="message" name="HelpValue">
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
@@ -251,6 +275,7 @@
         <translation language="hu"><![CDATA[A fordítás]]></translation>
         <translation language="fr"><![CDATA[La traduction]]></translation>
         <translation language="de"><![CDATA[Die Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La traducción]]></translation>
       </item>
       <item type="message" name="Imported">
         <translation language="nl"><![CDATA[%1$s vertalingen werden geimporteerd.]]></translation>
@@ -261,6 +286,7 @@
         <translation language="hu"><![CDATA[%1$s fordítás importálva.]]></translation>
         <translation language="de"><![CDATA[%1$s Übersetzungen wurden importiert.]]></translation>
         <translation language="fr"><![CDATA[%1$s traductions ont été importées.]]></translation>
+        <translation language="es"><![CDATA[%1$s traducciones fueron importadas.]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen vertalingen. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
@@ -271,6 +297,7 @@
         <translation language="hu"><![CDATA[Még nincsenek fordítások. <a href="%1$s">Első fordítás hozzáadása</a>.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de traduction. <a href="%1$s">Ajouter la première</a>.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Übersetzungen <a href="%1$s">Schreibe die erste Übersetzung</a>.]]></translation>
+        <translation language="es"><![CDATA[No hay traducción aun. <a href="%1$s">Agrega la primera traducción</a>.]]></translation>
       </item>
       <item type="message" name="NoItemsAnalyse">
         <translation language="nl"><![CDATA[Er werden geen ontbrekende vertalingen gevonden.]]></translation>
@@ -281,6 +308,7 @@
         <translation language="hu"><![CDATA[Nincsenek hianyzó fordítások.]]></translation>
         <translation language="de"><![CDATA[Es wurden keine fehlenden Übersetzungen gefunden.]]></translation>
         <translation language="fr"><![CDATA[Aucun traduction manquante.]]></translation>
+        <translation language="es"><![CDATA[No se encontraron traducciones]]></translation>
       </item>
       <item type="message" name="NoItemsFilter">
         <translation language="nl"><![CDATA[Er zijn geen vertalingen voor deze filter. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
@@ -291,6 +319,7 @@
         <translation language="hu"><![CDATA[Még nincsenek fordítások ebben a szűrőben. <a href="%1$s">Első fordítás hozzáadása</a>.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de traduction pour ce filtre <a href="%1$s">Ajouter la première</a>.]]></translation>
         <translation language="de"><![CDATA[Mit diesem Filter konnten keine Übersetzungen gefunden werden. <a href="%1$s"> Füge die erste Übersetzung hinzu</a>.]]></translation>
+        <translation language="es"><![CDATA[No hay traducción apra este filtro aun. <a href="%1$s">Agrega la primera traducción</a>.]]></translation>
       </item>
       <item type="message" name="OverwriteConflicts">
         <translation language="nl"><![CDATA[Overschrijf indien de vertaling bestaat.]]></translation>
@@ -301,6 +330,7 @@
         <translation language="hu"><![CDATA[Létező fordítás felülírása.]]></translation>
         <translation language="fr"><![CDATA[Ecraser si la traduction existe déjà.]]></translation>
         <translation language="de"><![CDATA[Überschreiben, falls die Übersetzung bereits existiert.]]></translation>
+        <translation language="es"><![CDATA[Sobreescribir si la traducción existe.]]></translation>
       </item>
       <item type="error" name="AlreadyExists">
         <translation language="nl"><![CDATA[Deze vertaling bestaat reeds.]]></translation>
@@ -311,6 +341,7 @@
         <translation language="de"><![CDATA[Diese Übersetzung gibt es bereits.]]></translation>
         <translation language="hu"><![CDATA[Ez a fordítás létezik.]]></translation>
         <translation language="fr"><![CDATA[Cette traduction existe déjà.]]></translation>
+        <translation language="es"><![CDATA[Esta traducción existe actualmente.]]></translation>
       </item>
       <item type="error" name="InvalidActionValue">
         <translation language="nl"><![CDATA[De actienaam bevat ongeldige karakters.]]></translation>
@@ -321,6 +352,7 @@
         <translation language="hu"><![CDATA[A használt név érvénytelen karaktert tartalmaz.]]></translation>
         <translation language="fr"><![CDATA[Le nom de l'action contient des caractères non valides.]]></translation>
         <translation language="de"><![CDATA[Der Aktionsname beinhaltet ungültige Zeichen.]]></translation>
+        <translation language="es"><![CDATA[El nombre de la acción contiene carácteres invalidos.]]></translation>
       </item>
       <item type="error" name="InvalidXML">
         <translation language="nl"><![CDATA[Het opgegeven XML-bestand bevat foute XML-data.]]></translation>
@@ -331,6 +363,7 @@
         <translation language="hu"><![CDATA[Ez egy érvénytelen XML-fájl.]]></translation>
         <translation language="fr"><![CDATA[Fichier XML non valide]]></translation>
         <translation language="de"><![CDATA[Die XMl-Datei beinhalte fehlerhafte Daten.]]></translation>
+        <translation language="es"><![CDATA[Este es un archivo XML no válido.]]></translation>
       </item>
       <item type="error" name="ModuleHasToBeCore">
         <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
@@ -341,6 +374,7 @@
         <translation language="hu"><![CDATA[A modulnak kell frontend core fordítás.]]></translation>
         <translation language="fr"><![CDATA[Le modul doit être coeur pour les traduction du frontend.]]></translation>
         <translation language="de"><![CDATA[Für Frontend-Übersetzungen muss Core als Modul ausgewählt sein.]]></translation>
+        <translation language="es"><![CDATA[Este módulo requiere una  traducción del frontend.]]></translation>
       </item>
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen vertalingen geselecteerd.]]></translation>
@@ -351,6 +385,7 @@
         <translation language="de"><![CDATA[Es sind keine Übersetzungen ausgewählt.]]></translation>
         <translation language="hu"><![CDATA[Nincs fordítás kiválasztva.]]></translation>
         <translation language="fr"><![CDATA[Aucune traduction n'a été sélectionnée.]]></translation>
+        <translation language="es"><![CDATA[No han sido seleccionadas traducciones.]]></translation>
       </item>
     </locale>
   </backend>

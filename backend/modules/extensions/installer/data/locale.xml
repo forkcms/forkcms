@@ -11,6 +11,7 @@
         <translation language="de"><![CDATA[Das Template "%1$s" wurde hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA[Le template "%1$s" a été ajouté.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[El template "%1$s" fue agregado.]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteTemplate">
         <translation language="nl"><![CDATA[Ben je zeker dat je de template "%1$s" wil verwijderen?]]></translation>
@@ -21,18 +22,23 @@
         <translation language="de"><![CDATA[Soll das Template "%1$s" wirklich gelöscht werden?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le template "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos törlöd a(z) "%1$s" sablont?]]></translation>
+        <translation language="es"><![CDATA[¿Está seguro de eliminar el template "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmModuleInstall">
         <translation language="nl"><![CDATA[Ben je zeker dat je de module "%1$s" wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de instalar el módulo "%1$s"?]]></translation>
+        <translation language="de"><![CDATA[Möchtest du das Modul "%1$s" wirklich installieren?]]></translation>
       </item>
       <item type="message" name="ConfirmThemeInstall">
         <translation language="nl"><![CDATA[Ben je zeker dat je dit thema wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install this theme?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de instalar el tema "%1$s"?]]></translation>
+        <translation language="de"><![CDATA[Möchtest du dieses Theme wirklich installieren?]]></translation>
       </item>
       <item type="message" name="CronjobsInfo">
-        <translation language="nl">
-          <![CDATA[
+        <translation language="nl"><![CDATA[
+          
             <p>
               Cronjobs roepen perdiodiek, op bepaalde tijdstippen, een script aan.<br />
               Cronjobs kunnen ofwel commandline aangeroepen worden, alsook via je webserver.
@@ -41,10 +47,10 @@
               Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />
               Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>
             </p>
-      	  ]]>
-     	</translation>
-        <translation language="en">
-          <![CDATA[
+      	  
+     	]]></translation>
+        <translation language="en"><![CDATA[
+          
             <p>
               Cronjobs periodically, on a set timeframe, perform a call to script.<br />
               Cronjobs can be executed either through commandline as well as over your webserver.
@@ -53,8 +59,9 @@
               Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />
               Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>
             </p>
-      	  ]]>
-     	</translation>
+      	  
+     	]]></translation>
+        <translation language="de"><![CDATA[                      <p>              Cronjobs senden periodisch, nach einem gesetzten Zeitintervall, einen Aufruf an einen Skript.<br />              Cronjobs können über die Commandline und über den Webserver direkt ausgeführt werden.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
       </item>
       <item type="message" name="DeletedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
@@ -65,6 +72,7 @@
         <translation language="de"><![CDATA[Das Template "%1$s" wurde gelöscht.]]></translation>
         <translation language="fr"><![CDATA[Le template "%1$s" a été effacé.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon törölve.]]></translation>
+        <translation language="es"><![CDATA[El template "%1$s" fue eliminado.]]></translation>
       </item>
       <item type="message" name="EditedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
@@ -75,10 +83,13 @@
         <translation language="de"><![CDATA[Das Template "%1$s" wurde gespeichert.]]></translation>
         <translation language="fr"><![CDATA[Le template "%1$s" a été enregistré.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon elmentve.]]></translation>
+        <translation language="es"><![CDATA[El template "%1$s" fue guardado.]]></translation>
       </item>
       <item type="message" name="HelpInstallableThemes">
         <translation language="nl"><![CDATA[Klik op een thema om het te installeren.]]></translation>
         <translation language="en"><![CDATA[Click a theme to install it.]]></translation>
+        <translation language="es"><![CDATA[Click en un tema para instalarlo.]]></translation>
+        <translation language="de"><![CDATA[Klick ein Theme an, um es zu installieren.]]></translation>
       </item>
       <item type="message" name="HelpOverwrite">
         <translation language="nl"><![CDATA[<strong>Opgelet!</strong>Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!]]></translation>
@@ -89,6 +100,7 @@
         <translation language="de"><![CDATA[<strong>Aufpassen!</strong> Das aktivieren dieser Checkbox führt dazu, dass die Inhalte aller Seiten auf die oberhalb gewählten Standardwerte zurückgesetzt werden.]]></translation>
         <translation language="fr"><![CDATA[<strong>Attention!</strong> Cocher cette case entrainera une réinitialisation du contenu de chaque page aux valeurs par défaut.]]></translation>
         <translation language="hu"><![CDATA[<strong>Figyelem!</strong> Ha bejelölöd ezt az opciót, akkor minden oldal tartalma visszaáll a fenti alapértelmezettre.]]></translation>
+        <translation language="es"><![CDATA[<strong>¡Atención!</strong> Seleccionado esta casilla el contenido de la página sera reseteado al valor pod defecto elegido aquí.]]></translation>
       </item>
       <item type="message" name="HelpPositionsLayout">
         <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rijs toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
@@ -99,6 +111,7 @@
         <translation language="fr"><![CDATA[<strong>Une représentation visuelle utilisée sur la page de modules</strong><ul><li>Ajouter un rang: utiliser <strong>[]</strong></li><li>Spécifier une position: utiliser <strong>nom de la position</strong></li><li>Spécifier une zone non-éditable: utiliser <strong>/</strong></li></ul><p>Si vous voulez qu'une position s'affiche de façon plus large ou plus grande dans sa représentation graphique, répétez la position plusieurs fois (à la fois horizontale et verticale, mais la forme doit former un rectangle)</p><strong>Un template peut s'afficher comme la charte ci-dessous:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="de"><![CDATA[<strong>Visuelle Repräsentation zur Verwendung im Seitenmodul.</strong><ul><li>Füge eine Reihe hinzu: benutze <strong>[]</strong></li><li>Stelle eine Position dar: benutze <strong>Positionsname</strong></li><li>Stelle einen nicht-editierbaren Bereich dar: benutze <strong>/</strong></li></ul><p>Wenn du eine Position in der grafischen Repräsentation breiter oder höher dargestellt haben möchtest, kannst du die Position mehrfach wiederholen (sowohl horizontal als auch vertikal, die Form sollte aber ein Rechteck bilden)</p><strong>Ein Template könnte zum Beispiel so aussehen:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="hu"><![CDATA[<strong>Vizuálisan kell használni az oldal-modult.</strong><ul><li>Sor hozzáadása: <strong>[]</strong> használata</li><li>Pozíció jelzése: <strong>pozíció neve</strong> használata</li><li>Nem szerkeszthető-terület jelzése: <strong>/</strong> használata</li></ul><p>Ha magasabb vagy szélesebb terület kell, akkor használd több alkalommal a helyet. (mind vízszintesen és függőlegesen, csak téglalap legyen)</p><strong>A sablon így néz ki:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="es"><![CDATA[<strong>Una representación visual para ser utilizado en el módulo de la página.</strong><ul><li>Agregar una fila: usa <strong>[]</strong></li><li>Reflejar una posición: usa <strong>nombre de la posición</strong></li><li>Un area no editable: usa <strong>/</strong></li></ul><p>Si desea una posición para que se muestre más grande o más alto en su representación gráfica, repita varias veces la posición (horizontal y verticalmente, para formar un rectángulo)</p><strong>Una template podría parecerse a la siguiente tabla:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
       </item>
       <item type="message" name="HelpTemplateFormat">
         <translation language="nl"><![CDATA[vb. [left,main,right],[/,main,/]]]></translation>
@@ -109,6 +122,7 @@
         <translation language="de"><![CDATA[z.B. [left,main,right],[/,main,/]]]></translation>
         <translation language="fr"><![CDATA[ex [left,main,right],[/,main,/]]]></translation>
         <translation language="hu"><![CDATA[pl. [left,main,right],[/,main,/]]]></translation>
+        <translation language="es"><![CDATA[e.j. [left,main,right],[/,main,/]]]></translation>
       </item>
       <item type="message" name="HelpTemplateLocation">
         <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/layout/templates</code> van je thema.]]></translation>
@@ -119,6 +133,7 @@
         <translation language="de"><![CDATA[Leg deine Templates im Ordner <code>core/layout/templates</code> deines Themes ab.]]></translation>
         <translation language="fr"><![CDATA[Placez les templates dans le répertoire <code>core/layout/templates</code> de votre thème.]]></translation>
         <translation language="hu"><![CDATA[Tedd a sablonodad a témád <code>core/layout/templates</code> mappájába.]]></translation>
+        <translation language="es"><![CDATA[Pon tus templates en la carpeta <code>core/layout/templates</code> de tu tema.]]></translation>
       </item>
       <item type="message" name="HelpThemes">
         <translation language="nl"><![CDATA[Duid aan welk thema je wil gebruiken.]]></translation>
@@ -129,46 +144,65 @@
         <translation language="de"><![CDATA[Wähle das Theme, dass du verwenden möchtest.]]></translation>
         <translation language="hu"><![CDATA[A használni kívánt sablon kiválasztása.]]></translation>
         <translation language="fr"><![CDATA[Choisissez le thème que vous souhaitez utiliser.]]></translation>
+        <translation language="es"><![CDATA[Selecciona el tema que deseas usar.]]></translation>
       </item>
       <item type="message" name="InformationFileCouldNotBeLoaded">
         <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
         <translation language="en"><![CDATA[A info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
+        <translation language="es"><![CDATA[Un archivo info.xml está presente pero no se ha podido cargar. Verifica si el contenido es XML válido.]]></translation>
+        <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, konnte aber nicht geladen werden. Überprüfe, dass es sich um eine gültige XML Datei handelt.]]></translation>
       </item>
       <item type="message" name="InformationFileIsEmpty">
         <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
         <translation language="en"><![CDATA[A info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
+        <translation language="es"><![CDATA[Un archivo info.xml está presente pero esta vacio o bien no contiene información valiosa.]]></translation>
+        <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, ist aber entweder leer oder enthält keine brauchbaren Informationen.]]></translation>
       </item>
       <item type="message" name="InformationFileIsMissing">
         <translation language="nl"><![CDATA[Er is geen informatie beschikbaar.]]></translation>
         <translation language="en"><![CDATA[There is no information available.]]></translation>
+        <translation language="es"><![CDATA[No hay información disponible.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Informationen verfügbar.]]></translation>
       </item>
       <item type="message" name="InformationModuleIsNotInstalled">
         <translation language="nl"><![CDATA[Deze module is nog niet geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[This module is not yet installed.]]></translation>
+        <translation language="es"><![CDATA[Este módulo no está instalado aun.]]></translation>
+        <translation language="de"><![CDATA[Dieses Modul ist noch nicht installiert.]]></translation>
       </item>
       <item type="message" name="InformationThemeIsNotInstalled">
         <translation language="nl"><![CDATA[Dit thema is nog niet geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[This theme is not yet installed.]]></translation>
-      </item>
-      <item type="message" name="NoModulesInstalled">
-        <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
-        <translation language="en"><![CDATA[No modules installed.]]></translation>
-      </item>
-      <item type="message" name="NoThemes">
-        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
-        <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="es"><![CDATA[Este tema no está instalado aun.]]></translation>
+        <translation language="de"><![CDATA[Dieses Theme ist noch nicht installiert.]]></translation>
       </item>
       <item type="message" name="Module">
         <translation language="nl"><![CDATA[module "%1$s"]]></translation>
         <translation language="en"><![CDATA[module "%1$s"]]></translation>
+        <translation language="es"><![CDATA[módulo "%1$s"]]></translation>
+        <translation language="de"><![CDATA[Modul "%1$s"]]></translation>
       </item>
       <item type="message" name="ModuleInstalled">
         <translation language="nl"><![CDATA[De module "%1$s" werd geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
+        <translation language="es"><![CDATA[El módulo "%1$s" fue instalado.]]></translation>
+        <translation language="de"><![CDATA[Das Modul "%1$s" wurde installiert.]]></translation>
       </item>
       <item type="message" name="ModulesNotWritable">
         <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de modules mappen. Controleer of je schrijfrechten hebt op de modules map in alle applicaties.]]></translation>
         <translation language="en"><![CDATA[We do not have write rights to the modules folders. Check if you have write rights on the modules folders in all applications.]]></translation>
+        <translation language="es"><![CDATA[No tenemos permiso de escritura para la carpeta de módulos. Comprueba si tienes permisos de escritura en la carpeta de módulos (modules) en todas las aplicaciones.]]></translation>
+        <translation language="de"><![CDATA[Es fehlen Schreibrechte für die Modul-Ordner. Bitte überprüfe die Schreibrechte der Ordner "modules" in den Ordnern "frontend" und "backend".]]></translation>
+      </item>
+      <item type="message" name="NoModulesInstalled">
+        <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[No modules installed.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Module installiert.]]></translation>
+      </item>
+      <item type="message" name="NoThemes">
+        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
+        <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
       </item>
       <item type="message" name="PathToTemplate">
         <translation language="nl"><![CDATA[Pad naar de template]]></translation>
@@ -179,6 +213,7 @@
         <translation language="de"><![CDATA[Pfad zum Template]]></translation>
         <translation language="fr"><![CDATA[Chemin vers le template]]></translation>
         <translation language="hu"><![CDATA[A sablon útvonala]]></translation>
+        <translation language="es"><![CDATA[Path del template]]></translation>
       </item>
       <item type="message" name="TemplateInUse">
         <translation language="nl"><![CDATA[Deze template is in gebruik]]></translation>
@@ -189,18 +224,25 @@
         <translation language="de"><![CDATA[Dieses Template wird verwendet.]]></translation>
         <translation language="fr"><![CDATA[Ce template est utilisé.]]></translation>
         <translation language="hu"><![CDATA[Ez a sablon már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Este template está en uso.]]></translation>
       </item>
       <item type="message" name="Theme">
         <translation language="nl"><![CDATA[thema "%1$s"]]></translation>
         <translation language="en"><![CDATA[theme "%1$s"]]></translation>
+        <translation language="es"><![CDATA[tema "%1$s"]]></translation>
+        <translation language="de"><![CDATA[Theme "%1$s"]]></translation>
       </item>
       <item type="message" name="ThemeInstalled">
         <translation language="nl"><![CDATA[Het thema "%1$s" werd geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[The theme "%1$s" was installed.]]></translation>
+        <translation language="es"><![CDATA[El tema "%1$s" fue instalado.]]></translation>
+        <translation language="de"><![CDATA[Das Theme "%1$s" wurde installiert.]]></translation>
       </item>
       <item type="message" name="ThemesNotWritable">
         <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de themes map. Controleer of je schrijfrechten hebt op de themes map in de frontend-applicatie.]]></translation>
         <translation language="en"><![CDATA[We do not have write rights to the themes folder. Check if you have write rights on the themes folders in the frontend-application.]]></translation>
+        <translation language="es"><![CDATA[No tenemos permiso de escritura en la carpeta de temas. Comprueba si tienes permiso de escritura en la carpeta de temas en la frontend-application.]]></translation>
+        <translation language="de"><![CDATA[Wir haben keine Schreibrechte im Themes-Ordner. Überprüfe die Schreibrechte des Ordners "Themes", der sich im Ordner "Frontend" befindet.]]></translation>
       </item>
       <item type="message" name="ZipArchiveIsMissing">
         <translation language="nl"><![CDATA[
@@ -233,6 +275,16 @@
 				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>
 			</ul>
 		]]></translation>
+        <translation language="es"><![CDATA[
+        	
+        	Tu servidor no encuentra la extensión PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" requerida. Fork CMS necesita esta extensión para descomprimir los modulos subidos.<br /><br />
+			<ul>
+				<li>Contacta tu administrador de servidor con el mensaje de arriba.</li>
+				<li>O descomprime el archivo ZIP en tu PC y sube las carpetas manualmente (via FTP) a la raiz de tu sitio web.</li>
+			</ul>
+			
+		]]></translation>
+        <translation language="de"><![CDATA[Deinem Server felt die benötigte PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" Erweiterung. Fork CMS benötigt diese Erweiterung um hochgeladene Module zu entpacken.<br /><br />			<ul>				<li>Kontaktiere deinen Server-Administrator mit der obigen Nachricht.</li>				<li>Oder entpacke das ZIP Archiv auf deinem Computer und lade es manuell (per FTP-Programm) hoch.</li></ul>]]></translation>
       </item>
       <item type="label" name="AddPosition">
         <translation language="nl"><![CDATA[positie toevoegen]]></translation>
@@ -243,10 +295,13 @@
         <translation language="de"><![CDATA[Position hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter une position]]></translation>
         <translation language="hu"><![CDATA[pozíció hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar posición]]></translation>
       </item>
       <item type="label" name="Authors">
         <translation language="nl"><![CDATA[auteurs]]></translation>
         <translation language="en"><![CDATA[authors]]></translation>
+        <translation language="es"><![CDATA[autores]]></translation>
+        <translation language="de"><![CDATA[Autoren]]></translation>
       </item>
       <item type="label" name="DeletePosition">
         <translation language="nl"><![CDATA[positie verwijderen]]></translation>
@@ -257,38 +312,55 @@
         <translation language="de"><![CDATA[Position löschen]]></translation>
         <translation language="fr"><![CDATA[effacer la position]]></translation>
         <translation language="hu"><![CDATA[pozíció törlése]]></translation>
+        <translation language="es"><![CDATA[eliminar posición]]></translation>
       </item>
       <item type="label" name="Events">
         <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
         <translation language="en"><![CDATA[events (hooks)]]></translation>
+        <translation language="es"><![CDATA[eventos (hooks)]]></translation>
+        <translation language="de"><![CDATA[Events (hooks)]]></translation>
       </item>
       <item type="label" name="FindModules">
         <translation language="nl"><![CDATA[vind modules]]></translation>
         <translation language="en"><![CDATA[find modules]]></translation>
+        <translation language="es"><![CDATA[encontrar módulos]]></translation>
+        <translation language="de"><![CDATA[Module finden]]></translation>
       </item>
       <item type="label" name="FindThemes">
         <translation language="nl"><![CDATA[vind thema's]]></translation>
         <translation language="en"><![CDATA[find themes]]></translation>
+        <translation language="es"><![CDATA[encontrar temas]]></translation>
+        <translation language="de"><![CDATA[Themes finden]]></translation>
       </item>
       <item type="label" name="Install">
         <translation language="nl"><![CDATA[installeer]]></translation>
         <translation language="en"><![CDATA[install]]></translation>
+        <translation language="es"><![CDATA[instalar]]></translation>
+        <translation language="de"><![CDATA[installieren]]></translation>
       </item>
       <item type="label" name="InstallableModules">
         <translation language="nl"><![CDATA[niet geïnstalleerde modules]]></translation>
         <translation language="en"><![CDATA[not installed modules]]></translation>
+        <translation language="es"><![CDATA[módulos no instalados]]></translation>
+        <translation language="de"><![CDATA[nicht installierte Module]]></translation>
       </item>
       <item type="label" name="InstallableThemes">
         <translation language="nl"><![CDATA[niet geïnstalleerde thema's']]></translation>
         <translation language="en"><![CDATA[not installed themes]]></translation>
+        <translation language="es"><![CDATA[temas no instalados]]></translation>
+        <translation language="de"><![CDATA[nicht installierte Themes]]></translation>
       </item>
       <item type="label" name="InstalledModules">
         <translation language="nl"><![CDATA[geïnstalleerde modules]]></translation>
         <translation language="en"><![CDATA[installed modules]]></translation>
+        <translation language="es"><![CDATA[ódulos instalados]]></translation>
+        <translation language="de"><![CDATA[installierte Module]]></translation>
       </item>
       <item type="label" name="InstalledThemes">
         <translation language="nl"><![CDATA[geïnstalleerde thema's']]></translation>
         <translation language="en"><![CDATA[installed themes]]></translation>
+        <translation language="es"><![CDATA[temas instalados]]></translation>
+        <translation language="de"><![CDATA[installierte Themes]]></translation>
       </item>
       <item type="label" name="Overwrite">
         <translation language="nl"><![CDATA[overschrijf]]></translation>
@@ -301,30 +373,42 @@
         <translation language="de"><![CDATA[überschreiben]]></translation>
         <translation language="fr"><![CDATA[écraser]]></translation>
         <translation language="hu"><![CDATA[felülír]]></translation>
+        <translation language="es"><![CDATA[sobreescribir]]></translation>
       </item>
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>
+        <translation language="es"><![CDATA[subir módulo]]></translation>
+        <translation language="de"><![CDATA[Modul hochladen]]></translation>
       </item>
       <item type="label" name="UploadTheme">
         <translation language="nl"><![CDATA[thema opladen]]></translation>
         <translation language="en"><![CDATA[upload theme]]></translation>
+        <translation language="es"><![CDATA[subir tema]]></translation>
+        <translation language="de"><![CDATA[Theme hochladen]]></translation>
       </item>
       <item type="label" name="Version">
         <translation language="nl"><![CDATA[versie]]></translation>
         <translation language="en"><![CDATA[version]]></translation>
+        <translation language="es"><![CDATA[versión]]></translation>
+        <translation language="de"><![CDATA[Version]]></translation>
       </item>
       <item type="error" name="AlreadyInstalled">
         <translation language="nl"><![CDATA["%1$s" is reeds geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA["%1$s" is already installed.]]></translation>
+        <translation language="es"><![CDATA["%1$s" está actualmente instalada.]]></translation>
+        <translation language="de"><![CDATA["%1$s" ist bereits installiert.]]></translation>
       </item>
       <item type="error" name="CorruptedFile">
         <translation language="nl"><![CDATA[Het geüploade bestand is geen geldig ZIP bestand en kon niet worden uitgepakt.]]></translation>
         <translation language="en"><![CDATA[The uploaded file is not a valid ZIP file and could not be extracted.]]></translation>
+        <translation language="es"><![CDATA[El arhivo ZIP subido no es válido y no puede ser extraido.]]></translation>
+        <translation language="de"><![CDATA[Die hochgeladene Datei konnte nicht entpackt werden, es scheint sich nicht um eine gültige ZIP-Datei zu handeln.]]></translation>
       </item>
       <item type="error" name="CronjobsNotSet">
         <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld. <a href="%1$s">Configureer</a>]]></translation>
         <translation language="en"><![CDATA[Not all cronjobs are set. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="de"><![CDATA[Es wurden noch nicht alle Cronjobs eingestestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
       </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
@@ -335,6 +419,7 @@
         <translation language="de"><![CDATA[Du kannst dieses Template nicht löschen.]]></translation>
         <translation language="fr"><![CDATA[Vous ne pouvez pas effacer ce template.]]></translation>
         <translation language="hu"><![CDATA[Nem törölheted ezt a sablont.]]></translation>
+        <translation language="es"><![CDATA[No puedes eliminar este template.]]></translation>
       </item>
       <item type="error" name="DuplicatePositionName">
         <translation language="nl"><![CDATA[De positienaam %s is gedupliceerd.]]></translation>
@@ -345,14 +430,19 @@
         <translation language="fr"><![CDATA[La position %s est en double.]]></translation>
         <translation language="de"><![CDATA[Der Positionsname %s existiert bereits.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció duplikált.]]></translation>
+        <translation language="es"><![CDATA[Posición %s está duplicada.]]></translation>
       </item>
       <item type="error" name="FileContentsIsUseless">
         <translation language="nl"><![CDATA[We vonden geen module in het geüploade bestand. Controleer de inhoud.]]></translation>
         <translation language="en"><![CDATA[We could not find a module in the uploaded file. Verify the contents.]]></translation>
+        <translation language="es"><![CDATA[No hemos podido encontrar un módulos en el archivo subido. Verifica el contenido.]]></translation>
+        <translation language="de"><![CDATA[Wir konnten kein Modul in der hochgeladenen Datei finden. Bitte überprüfe den Inhalt.]]></translation>
       </item>
       <item type="error" name="FileIsEmpty">
         <translation language="nl"><![CDATA[Het bestand is leeg. Controleer de inhoud.]]></translation>
         <translation language="en"><![CDATA[The file is empty. Verify the contents.]]></translation>
+        <translation language="es"><![CDATA[El archivo está vacio. Verifica el contenido.]]></translation>
+        <translation language="de"><![CDATA[Diese Datei ist leer. Bitte überprüfe den Inhalt.]]></translation>
       </item>
       <item type="error" name="InvalidTemplateSyntax">
         <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
@@ -363,10 +453,13 @@
         <translation language="de"><![CDATA[Ungültige Syntax.]]></translation>
         <translation language="fr"><![CDATA[Syntaxe non-valide]]></translation>
         <translation language="hu"><![CDATA[Érvénytelen szintaxis.]]></translation>
+        <translation language="es"><![CDATA[Sintasis invalida.]]></translation>
       </item>
       <item type="error" name="ModuleAlreadyExists">
         <translation language="nl"><![CDATA[De module "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
         <translation language="en"><![CDATA[The module "%1$s" already exists, you can not upload it again.]]></translation>
+        <translation language="es"><![CDATA[El módulo "%1$s" existe actualmente, No puedes subirlo de nuevo.]]></translation>
+        <translation language="de"><![CDATA[Das Modul "%1$s" existiert bereits, du kannst es nicht erneut hochladen.]]></translation>
       </item>
       <item type="error" name="NoAlphaNumPositionName">
         <translation language="nl"><![CDATA[De positienaam %s is niet alfanumeriek.]]></translation>
@@ -377,14 +470,18 @@
         <translation language="de"><![CDATA[Position %s ist nicht alphanumerisch.]]></translation>
         <translation language="fr"><![CDATA[La position %s n'est pas alphanumérique.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció nem alfanumerikus.]]></translation>
+        <translation language="es"><![CDATA[La posición %s no es alfanumérica.]]></translation>
       </item>
       <item type="error" name="NoInformationFile">
         <translation language="nl"><![CDATA[We konden geen info.xml bestanden vinden voor "%1$s".]]></translation>
         <translation language="en"><![CDATA[We could not find an info.xml file for "%1$s".]]></translation>
+        <translation language="es"><![CDATA[No hemos podido encontrar un archivo info.xml para "%1$s".]]></translation>
+        <translation language="de"><![CDATA[Für "%1$s" konnte keine info.xml gefunden werden.]]></translation>
       </item>
       <item type="error" name="NoInstallerFile">
         <translation language="nl"><![CDATA[We konden geen installer voor de module "%1$s" vinden.]]></translation>
         <translation language="en"><![CDATA[We could not find an installer for the module "%1$s".]]></translation>
+        <translation language="de"><![CDATA[Für das Modul "%1$s" konnte kein Installer gefunden werden.]]></translation>
       </item>
       <item type="error" name="NonExistingPositionName">
         <translation language="nl"><![CDATA[De positienaam %s is niet gedefiniëerd.]]></translation>
@@ -395,6 +492,7 @@
         <translation language="de"><![CDATA[Position %s ist nicht definiert.]]></translation>
         <translation language="fr"><![CDATA[La position %s n'est pas définie.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció nem definiált.]]></translation>
+        <translation language="es"><![CDATA[La posción %s no está definida.]]></translation>
       </item>
       <item type="error" name="ReservedPositionName">
         <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>
@@ -405,14 +503,19 @@
         <translation language="de"><![CDATA[Position %s ist reserviert.]]></translation>
         <translation language="fr"><![CDATA[La position %s est réservée.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció lefoglalva.]]></translation>
+        <translation language="es"><![CDATA[La posciión %s está reservada.]]></translation>
       </item>
       <item type="error" name="ThemeAlreadyExists">
         <translation language="nl"><![CDATA[Het thema "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
         <translation language="en"><![CDATA[The theme "%1$s" already exists, you can not upload it again.]]></translation>
+        <translation language="es"><![CDATA[El tema "%1$s" existe actualmente, No puedes subirlo de nuevo.]]></translation>
+        <translation language="de"><![CDATA[Das Theme "%1$s" existiert bereits, du kannst es nicht erneut hochladen.]]></translation>
       </item>
       <item type="error" name="ThemeNameDoesntMatch">
         <translation language="nl"><![CDATA[De thema mapnaam komt niet overeen met de themanaam in info.xml.]]></translation>
         <translation language="en"><![CDATA[The theme's folder name doesn't match the theme name in info.xml.]]></translation>
+        <translation language="es"><![CDATA[El nombre de la carpeta del tema no coincide con el nombre del tema en info.xml.]]></translation>
+        <translation language="de"><![CDATA[Der Theme-Ordner-Name und Theme-Name in der info.xml stimmen nicht überein.]]></translation>
       </item>
     </extensions>
   </backend>
