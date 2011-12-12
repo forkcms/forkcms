@@ -5,13 +5,14 @@ Improvements:
 * Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
 * Core: added an getModules method to FrontendModule, analog to the backend method.
 * Core: the direct actions are no longer shown in the navigation.
-* Locale: the missing items are now sorted by application, type, module and name.
 * Core: don't add a timestamp to the urls of well known libraries in the backend.
 * Core: automagic canonical-urls.
 * Core: added a new modifier stripnewlines which will remove all newlines in a string, so JS can handle it. 
-* Location: rewrote most of the JS, because the map wasn't showing the markers correctly, as mentioned by Wouter H on http://forkcms.lighthouseapp.com/projects/61890/tickets/238
-* Added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
+* Core: added schema.org properties in the default HTML and in the Triton-theme.
+* Locale: added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
+* Locale: the missing items are now sorted by application, type, module and name.
 * Locale: added translations for Spanish (by Alberto Aguayo - http://www.bikumo.com)
+* Location: rewrote most of the JS, because the map wasn't showing the markers correctly, as mentioned by Wouter H on http://forkcms.lighthouseapp.com/projects/61890/tickets/238
 
 Bugfixes:
 

@@ -6,35 +6,39 @@
 	- {$navigation}: contains an array with data for previous and next post
 *}
 <div id="blogDetail">
-	<article class="mod article">
+	<article class="mod article" itemscope itemtype="http://schema.org/Blog">
 		<div class="inner">
+			<meta itemprop="interactionCount" content="UserComments:{$commentsCount}">
+			<meta itemprop="author" content="{$item.user_id|usersetting:'nickname'}">
 			<header class="hd">
-				<h1>{$item.title}</h1>
+				<h1 itemprop="name">{$item.title}</h1>
 				<ul>
 					<li>
 						{* Written by *}
 						{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
 
 						{* Written on *}
-						{$lblOn} {$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}
+						{$lblOn} <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 
 						{* Category*}
-						{$lblIn} {$lblThe} {$lblCategory} <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
+						{$lblIn} {$lblThe} {$lblCategory} <a itemprop="articleSection" href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
 
 						{* Tags *}
 						{option:item.tags}
 							{$lblWith} {$lblThe} {$lblTags}
-							{iteration:item.tags}
-								<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
-							{/iteration:item.tags}
+							<span itemprop="keywords">
+								{iteration:item.tags}
+									<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
+								{/iteration:item.tags}
+							</span>
 						{/option:item.tags}
 					</li>
 					<li>
 						{* Comments *}
-						{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
+						{option:!comments}<a href="{$item.full_url}#{$actComment}" itemprop="discussionUrl">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
 						{option:comments}
-							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
-							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
+							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
 					<li>
@@ -42,8 +46,8 @@
 					</li>
 				</ul>
 			</header>
-			<div class="bd content">
-				{option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" />{/option:item.image}
+			<div class="bd content" itemprop="articleBody">
+				{option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
 				{$item.text}
 			</div>
 			<footer class="ft">
@@ -64,7 +68,7 @@
 	</article>
 
 	{option:comments}
-		<section id="blogComments" class="mod">
+		<section id="blogComments" class="mod" itemscope itemtype="http://schema.org/Article">
 			<div class="inner">
 				<header class="hd">
 					<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
@@ -72,19 +76,22 @@
 				<div class="bd content">
 					{iteration:comments}
 						{* Do not alter the id! It is used as an anchor *}
-						<div id="comment-{$comments.id}" class="comment">
+						<div id="comment-{$comments.id}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+							<meta itemprop="discusses" content="{$item.title}" />  
 							<div class="imageHolder">
 								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
 									<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
 								{option:comments.website}</a>{/option:comments.website}
 							</div>
 							<div class="commentContent">
-								<p class="commentAuthor">
-									{option:comments.website}<a href="{$comments.website}">{/option:comments.website}{$comments.author}{option:comments.website}</a>{/option:comments.website}
+								<p class="commentAuthor" itemscope itemtype="http://schema.org/Person">
+									{option:comments.website}<a href="{$comments.website}" itemprop="url">{/option:comments.website}
+										<span itemprop="creator name">{$comments.author}</span>
+									{option:comments.website}</a>{/option:comments.website}
 									{$lblWrote}
-									{$comments.created_on|timeago}
+									<time itemprop="commentTime" datetime="{$comments.created_on|date:'Y-m-d\TH:i:s'}">{$comments.created_on|timeago}</time>
 								</p>
-								<div class="commentText content">
+								<div class="commentText content" itemprop="commentText">
 									{$comments.text|cleanupplaintext}
 								</div>
 							</div>
