@@ -5,10 +5,9 @@
 	<requirements>
 		<minimum_version>3.1.5</minimum_version>
 	</requirements>
-	<info lang="en">
-		<name>Sitemap</name>
-		<description><![CDATA[This module will automatically generate a nice sitemap for the search machine crawlers.]]></description>
-	</info>
+	<description>
+		<![CDATA[This module will automatically generate a nice sitemap for the search machine crawlers.]]>
+	</description>
 	<authors>
 		<author>
 			<name><![CDATA[Jelmer Snoeck]]></name>

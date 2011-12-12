@@ -12,7 +12,7 @@
  *
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
-class SitemapInstall extends ModuleInstaller
+class SitemapInstaller extends ModuleInstaller
 {
 	public function install()
 	{
