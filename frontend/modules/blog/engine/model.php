@@ -851,7 +851,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// add a description to the image
 			foreach($tmpData['images'] as $key => $image)
 			{
-				if(isset($image['alt']) && $image['alt'] != '') $tmpData['images'][$key]['alt'] = $post['title'];
+				if(isset($image['alt']) && $image['alt'] == '') $tmpData['images'][$key]['alt'] = $post['title'];
 				$tmpData['images'][$key]['description'] = $description;
 			}
 
