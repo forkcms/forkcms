@@ -284,19 +284,19 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 * Increase the number of views for this item
 	 *
 	 * @param int $id
-	 * @param bool $usefull
+	 * @param bool $useful
 	 * @param mixed[optional] $previousFeedback
 	 * @return array
 	 */
-	public static function updateFeedback($id, $usefull, $previousFeedback = null)
+	public static function updateFeedback($id, $useful, $previousFeedback = null)
 	{
 		// feedback hasn't changed so don't update the counters
-		if($previousFeedback !== null && $usefull == $previousFeedback) return;
+		if($previousFeedback !== null && $useful == $previousFeedback) return;
 
 		$db = FrontendModel::getDB(true);
 
 		// update counter with current feedback (increase)
-		if($usefull) $db->execute(
+		if($useful) $db->execute(
 			'UPDATE faq_questions
 			 SET num_usefull_yes = num_usefull_yes + 1
 			 WHERE id = ?',

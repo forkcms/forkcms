@@ -63,9 +63,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// add js
 		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
 		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
-		$this->header->addJS('jstree/jquery.tree.js');
-		$this->header->addJS('jstree/lib/jquery.cookie.js');
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js', null, false, false, false);
+		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false, false, false);
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false, false, false);
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);

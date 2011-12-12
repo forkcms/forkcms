@@ -16,6 +16,13 @@
 class FrontendHeader extends FrontendBaseObject
 {
 	/**
+	 * The canonical URL
+	 *
+	 * @var string
+	 */
+	private $canonical;
+
+	/**
 	 * The added css-files
 	 *
 	 * @var	array
@@ -820,9 +827,59 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private function parseSeo()
 	{
+		// any canonical URL provided?
+		if($this->canonical != '') $url = $this->canonical;
+
+		else
+		{
+			// get the chunks of the current url
+			$urlChunks = parse_url($this->URL->getQueryString());
+
+			// a canonical url should contain the domain. So make sure you redirect your website to a single url with .htaccess
+			$url = rtrim(SITE_URL, '/');
+			if(isset($urlChunks['port'])) $url .= ':' . $urlChunks['port'];
+			if(isset($urlChunks['path'])) $url .= '/' . $urlChunks['path'];
+
+			// any items provided through GET?
+			if(isset($urlChunks['query']))
+			{
+				// the items we should add into the canonical url
+				$itemsToAdd = array('page');
+				$addToUrl = array();
+
+				// loop all items in GET and check if we should ignore them
+				foreach($_GET as $key => $value)
+				{
+					if(in_array($key, $itemsToAdd)) $addToUrl[$key] = $value;
+				}
+
+				// add GET-params
+				if(!empty($addToUrl)) $url .= '?' . http_build_query($addToUrl);
+			}
+		}
+
+		// canonical
+		$this->addLink(array('rel' => 'canonical', 'href' => $url));
+
 		// noodp, noydir
 		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
 		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
+	}
+
+	/**
+	 * Set the canonical URL
+	 *
+	 * @param string $url The Canonical URL.
+	 */
+	public function setCanonicalUrl($url)
+	{
+		$url = (string) $url;
+
+		// convert relative url
+		if(substr($url, 0, 1) == '/') $url = SITE_URL . $url;
+
+		// store
+		$this->canonical = $url;
 	}
 
 	/**

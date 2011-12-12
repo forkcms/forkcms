@@ -79,12 +79,12 @@
 						{$hidQuestionId}
 						<div class="options">
 							<ul class="inputList">
-								{iteration:usefull}
+								{iteration:useful}
 									<li>
-										{$usefull.rbtUsefull}
-										<label for="{$usefull.id}">{$usefull.label|ucfirst}</label>
+										{$useful.rbtUseful}
+										<label for="{$useful.id}">{$useful.label|ucfirst}</label>
 									</li>
-								{/iteration:usefull}
+								{/iteration:useful}
 							</ul>
 						</div>
 
