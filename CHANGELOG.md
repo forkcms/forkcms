@@ -13,6 +13,7 @@ Improvements:
 * Added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
 
 Bugfixes:
+
 * Pages: default blocks now apply correctly on new pages.
 * Pages: removed extras still linked to page now no longer trigger an error.
 * Core: settings exclude & checked values on setMassActionCheckboxes now works again.
