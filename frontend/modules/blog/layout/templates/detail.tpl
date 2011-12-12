@@ -6,7 +6,7 @@
 	- {$navigation}: contains an array with data for previous and next post
 *}
 <div id="blogDetail">
-	<article class="mod article">
+	<article class="mod article" itemscope itemtype="http://schema.org/Blog">
 		<div class="inner">
 			<header class="hd">
 				<h1>{$item.title}</h1>
@@ -64,7 +64,7 @@
 	</article>
 
 	{option:comments}
-		<section id="blogComments" class="mod">
+		<section id="blogComments" class="mod" itemscope itemtype="http://schema.org/Article">
 			<div class="inner">
 				<header class="hd">
 					<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
@@ -72,7 +72,8 @@
 				<div class="bd content">
 					{iteration:comments}
 						{* Do not alter the id! It is used as an anchor *}
-						<div id="comment-{$comments.id}" class="comment">
+						<div id="comment-{$comments.id}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+							<meta itemprop="discusses" content="{$item.title}" />  
 							<div class="imageHolder">
 								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
 									<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
@@ -80,11 +81,11 @@
 							</div>
 							<div class="commentContent">
 								<p class="commentAuthor">
-									{option:comments.website}<a href="{$comments.website}">{/option:comments.website}{$comments.author}{option:comments.website}</a>{/option:comments.website}
+									{option:comments.website}<a href="{$comments.website}">{/option:comments.website}<span itemprop="creator">{$comments.author}</span>{option:comments.website}</a>{/option:comments.website}
 									{$lblWrote}
-									{$comments.created_on|timeago}
+									<time itemprop="commentTime" datetime="{$comments.created_on|date:'Y-m-d\TH:i:s'}">{$comments.created_on|timeago}</time>
 								</p>
-								<div class="commentText content">
+								<div class="commentText content" itemprop="commentText">
 									{$comments.text|cleanupplaintext}
 								</div>
 							</div>
