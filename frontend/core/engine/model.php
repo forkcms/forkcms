@@ -173,6 +173,54 @@ class FrontendModel
 	}
 
 	/**
+	 * This will extract all the images and their data from the html content
+	 *
+	 * @param string $html
+	 * @return array
+	 */
+	public static function getImagesFromHtml($html)
+	{
+		$returnData = array();
+
+		// extract the data
+		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
+		preg_match_all('/\<(img|src)(.*) \/>/', $html, $htmlData);
+
+		// go trough the values to extract the src and alt attributes
+		foreach($htmlData[2] as $key => $url)
+		{
+			$tempData = array();
+
+			// extract the attributes
+			$imageData = array();
+			preg_match_all('/(alt|src)=("[^"]*")/i', $url, $imageData[]);
+			if(empty($imageData)) continue;
+
+			$imageData = current($imageData);
+			$attributes = $imageData[1];
+			$values = $imageData[2];
+
+			foreach($values as $vKey => $value)
+			{
+				$value = ltrim($value, '"');
+				$value = rtrim($value, '"');
+				$values[$vKey] = $value;
+			}
+
+			// go trough the attributes to assign them correctly
+			foreach($attributes as $key => $attribute)
+			{
+				if($attribute == 'src') $tempData['src'] = $values[$key];
+				elseif($attribute == 'alt') $tempData['alt'] = $values[$key];
+			}
+
+			$returnData[] = $tempData;
+		}
+
+		return $returnData;
+	}
+
+	/**
 	 * Get the modules
 	 *
 	 * @return array

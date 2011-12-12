@@ -800,4 +800,64 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// return
 		return $items;
 	}
+
+	/**
+	 * A function that is used for the sitemap. This will go trough all the blog data and find images
+	 *
+	 * @param string $language
+	 * @return array
+	 */
+	public static function sitemapImages()
+	{
+		$returnData = array();
+		$data = (array) FrontendModel::getDB()->getRecords(
+			'SELECT p.text, p.introduction, p.image, m.url, m.title, p.language
+			 FROM blog_posts AS p
+			 INNER JOIN meta AS m ON m.id = p.meta_id
+			 WHERE p.status = ? AND p.hidden = ?',
+			array('active', 'N')
+		);
+
+		foreach($data as $key => $post)
+		{
+			// get the blog posts image data
+			$textImages = (array) FrontendModel::getImagesFromHtml($post['text']);
+			$introductionImages = (array) FrontendModel::getImagesFromHtml($post['introduction']);
+			$addedImage = $post['image'];
+
+			// set the description
+			$description = ($post['introduction'] != '') ? $post['introduction'] : $post['text'];
+
+			// don't add the post if we don't have any images
+			if(empty($textImages) && empty($introductionImages) && $addedImage === null) continue;
+
+			$tmpData = array(
+				'url' => $post['url'],
+				'action' => 'detail',
+				'language' => $post['language'],
+				'images' => array()
+			);
+
+			// add the images to the data
+			foreach($textImages as $image) $tmpData['images'][] = $image;
+			foreach($introductionImages as $image) $tmpData['images'][] = $image;
+			if($addedImage !== null)
+			{
+				$tmpData['images'][] = array(
+					'src' => FRONTEND_FILES_PATH . '/blog/images/source/' . $addedImage,
+				);
+			}
+
+			// add a description to the image
+			foreach($tmpData['images'] as $key => $image)
+			{
+				if(isset($image['alt']) && $image['alt'] != '') $tmpData['images'][$key]['alt'] = $post['title'];
+				$tmpData['images'][$key]['description'] = $description;
+			}
+
+			$returnData[] = $tmpData;
+		}
+
+		return $returnData;
+	}
 }

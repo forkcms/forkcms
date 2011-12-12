@@ -91,13 +91,6 @@ class FrontendBaseConfig
 	protected $possibleAJAXActions = array();
 
 	/**
-	 * The database fields and columns to search images and videos for the sitemap
-	 *
-	 * @var array
-	 */
-	protected $sitemapSearchFields = array();
-
-	/**
 	 * @param string $module The module wherefor this is the configuration-file.
 	 */
 	public function __construct($module)
@@ -189,16 +182,6 @@ class FrontendBaseConfig
 			// if the action isn't disabled add it to the possible actions
 			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file] = $action;
 		}
-	}
-
-	/**
-	 * This will return the possible sitemap search fields.
-	 *
-	 * @return array
-	 */
-	public static function getSitemapSearchFields()
-	{
-		return $this->sitemapSearchFields;
 	}
 }
 

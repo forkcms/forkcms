@@ -25,6 +25,13 @@ class FrontendSitemap
 	protected $activeLanguage;
 
 	/**
+	 * Extra sitemap namespaces, for example for images
+	 *
+	 * @var array
+	 */
+	protected $extraSitemapNamespaces = array();
+
+	/**
 	 * The meta data that will be used to process the xml
 	 *
 	 * @var array
@@ -71,6 +78,16 @@ class FrontendSitemap
 	}
 
 	/**
+	 * This will add an extra namespace for the xml data
+	 *
+	 * @param string $namespace
+	 */
+	protected function addExtraNamespace($namespace)
+	{
+		$this->extraSitemapNamespaces[] = (string) $namespace;
+	}
+
+	/**
 	 * Converts an array to a valid xml string.
 	 *
 	 * @param array $xmlData
@@ -107,6 +124,75 @@ class FrontendSitemap
 	}
 
 	/**
+	 * Fetches all the required images for the sitemap.
+	 *
+	 * @param int[optional] $limit
+	 * @param int[optional] $offset
+	 * @return array
+	 */
+	protected function getImageData($limit = 200, $offset = 0)
+	{
+		$allModules = FrontendModel::getModules();
+		$returnData = array();
+
+		// go trough all the modules to see where we can find some images
+		foreach($allModules as $module)
+		{
+			// do we have any image data available?
+			$modelClass = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
+			if(!is_callable(array($modelClass, 'sitemapImages'))) continue;
+
+			$moduleData = call_user_func(array($modelClass, 'sitemapImages'), $this->activeLanguage);
+			$parsedData = array();
+
+			foreach($moduleData as $image)
+			{
+				// if there are no images, we don't need to add this to the sitemap
+				$images = (isset($image['images'])) ? $image['images'] : array();
+				if(empty($images)) continue;
+
+				// get the default values
+				$language = (isset($image['language'])) ? $image['language'] : $this->activeLanguage;
+				$action = (isset($image['action'])) ? $image['action'] : null;
+				$url = (isset($image['url'])) ? $image['url'] : '';
+
+				// get the url for the page the image is on
+				FL::setLocale($language);
+				$imagePageUrl = FrontendNavigation::getURLForBlock($module, $action, $language);
+				$tmpData = array( 'loc' => SITE_URL . $imagePageUrl . '/' . $url);
+
+				// go trough the images to assign the image information
+				foreach($images as $pageImage)
+				{
+					$imageData = array(
+						'image:loc' => $pageImage['src'],
+					);
+
+					// if there is an alt attribute, assign it to the title
+					if(isset($pageImage['alt']) && $pageImage['alt'] != '""') $imageData['image:title'] = $pageImage['alt'];
+
+					// if there is a description given, truncate it on the first occurance of a whitespace
+					// after 140 characters
+					$description = (isset($pageImage['description'])) ? SpoonFilter::stripHTML($pageImage['description']) : null;
+					if($description != null && strlen($description) > 140)
+					{
+						$description = substr($description, 0, strpos($description, ' ', 140));
+						$imageData['image:caption'] = $description;
+					}
+
+					$tmpData[]['image:image'] = $imageData;
+				}
+
+				$parsedData[]['url'] = $tmpData;
+			}
+
+			$returnData[$module] = $parsedData;
+		}
+
+		return $returnData;
+	}
+
+	/**
 	 * Fetch the last modification date for a range of items
 	 *
 	 * @param int $limit
@@ -127,32 +213,6 @@ class FrontendSitemap
 		}
 
 		return FrontendModel::getUTCDate('Y-m-d\TH:i:sP', $lastModDate);
-	}
-
-	/**
-	 * Fetches all the required images for the sitemap.
-	 *
-	 * @param int[optional] $limit
-	 * @param int[optional] $offset
-	 * @return array
-	 */
-	protected function getImageData($limit = 200, $offset = 0)
-	{
-		$allModules = FrontendModel::getModules();
-
-		// go trough all the modules to see where we can find some images
-		foreach($allModules as $module)
-		{
-			// the main priority
-			$modelClass = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
-			$configClass = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Config';
-			$configParameters = call_user_func(array($configClass, 'getSitemapSearchFields'));
-			if(!is_callable(array($modelClass, 'sitemapImages')) && empty($configParameters)) continue;
-
-			Spoon::dump($module);
-		}
-
-
 	}
 
 	/**
@@ -295,11 +355,14 @@ class FrontendSitemap
 		$parsedData = '';
 		$this->sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
 		if($this->sitemapAction == 'page') $parsedData = $this->parsePage();
+		if($this->sitemapAction == 'image') $parsedData = $this->parseImage();
 		if($this->sitemapAction === null) $parsedData = $this->parseIndex();
 
 		// build and parse the output
 		$output = '<?xml version="1.0" encoding="UTF-8"?>';
-		$output .= '<' . $this->sitemapType . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+		$output .= '<' . $this->sitemapType . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"';
+		foreach($this->extraSitemapNamespaces as $namespace) $output .= ' ' . $namespace;
+		$output .= '>';
 		$output .= $this->arrayToXml($parsedData);
 		$output .= '</' . $this->sitemapType . '>';
 		echo $output;
@@ -310,9 +373,12 @@ class FrontendSitemap
 	 *
 	 * @return array
 	 */
-	public function parseImages()
+	public function parseImage()
 	{
 		$output = array();
+		$this->addExtraNamespace('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"');
+
+		foreach($this->metaData as $module => $data) $output[] = $data;
 
 		return $output;
 	}
@@ -347,6 +413,11 @@ class FrontendSitemap
 				'lastmod' => $this->getLastModificationDate($this->getPageDataCount(), 0)
 			);
 		}
+
+		// build the image sitemap
+		$output[]['sitemap'] = array(
+			'loc' => SITE_URL . '/imagesitemap.xml'
+		);
 
 		return $output;
 	}
