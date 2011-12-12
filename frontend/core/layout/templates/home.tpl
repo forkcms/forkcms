@@ -1,6 +1,6 @@
 {include:core/layout/templates/head.tpl}
 
-<body class="{$LANGUAGE}">
+<body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 	<div id="container">
 		<header id="header">
 			{* Logo *}
