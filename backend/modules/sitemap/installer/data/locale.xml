@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<backend>
+		<core>
+	      <item type="message" name="HelpSitemapPagesItems">
+	        <translation language="nl"><![CDATA[Het aantal items dat op de pagina sitemap wordt weergegeven]]></translation>
+	        <translation language="en"><![CDATA[The number of items that is displayed on the pages sitemap]]></translation>
+	      </item>
+		</core>
+	</backend>
+</locale>
