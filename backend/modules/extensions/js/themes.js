@@ -1,7 +1,7 @@
 /**
  * Interaction for the pages templates
  *
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  */
 jsBackend.extensions =
 {

@@ -12,6 +12,7 @@
         <translation language="fr"><![CDATA[identifiants admin]]></translation>
         <translation language="de"><![CDATA[Admin-IDs]]></translation>
         <translation language="hu"><![CDATA[admin ids]]></translation>
+        <translation language="es"><![CDATA[admin ids]]></translation>
       </item>
       <item type="label" name="ApplicationId">
         <translation language="nl"><![CDATA[toepassings-id]]></translation>
@@ -23,6 +24,7 @@
         <translation language="fr"><![CDATA[identifiant de l'application]]></translation>
         <translation language="de"><![CDATA[Application-ID]]></translation>
         <translation language="hu"><![CDATA[application id]]></translation>
+        <translation language="es"><![CDATA[id de aplicación]]></translation>
       </item>
       <item type="label" name="ApplicationSecret">
         <translation language="nl"><![CDATA[app secret]]></translation>
@@ -34,6 +36,7 @@
         <translation language="fr"><![CDATA[app secret]]></translation>
         <translation language="de"><![CDATA[app secret]]></translation>
         <translation language="hu"><![CDATA[app secret]]></translation>
+        <translation language="es"><![CDATA[app secret]]></translation>
       </item>
       <item type="label" name="SEOSettings">
         <translation language="nl"><![CDATA[SEO instellingen]]></translation>
@@ -45,6 +48,7 @@
         <translation language="fr"><![CDATA[réglages SEO]]></translation>
         <translation language="de"><![CDATA[SEO-Einstellungen]]></translation>
         <translation language="hu"><![CDATA[SEO beállítások]]></translation>
+        <translation language="es"><![CDATA[configuracion SEO]]></translation>
       </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
@@ -55,6 +59,7 @@
         <translation language="fr"><![CDATA[Certains réglages ne sont pas configurés.]]></translation>
         <translation language="hu"><![CDATA[Néhény beállítás még nincs konfigurálva.]]></translation>
         <translation language="de"><![CDATA[Einige Einstellungen sind noch nicht konfiguriert.]]></translation>
+        <translation language="es"><![CDATA[Algunas configuraciones no estan configuradas aun.]]></translation>
       </item>
       <item type="message" name="HelpAPIKeys">
         <translation language="nl"><![CDATA[Toegangscodes voor gebruikte webservices:]]></translation>
@@ -65,6 +70,7 @@
         <translation language="hu"><![CDATA[Webszolgáltatások hozzáférési kódja.]]></translation>
         <translation language="fr"><![CDATA[Codes d'accès pour webservices.]]></translation>
         <translation language="de"><![CDATA[Zugangscode für Webdienste.]]></translation>
+        <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatLong">
         <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
@@ -75,6 +81,7 @@
         <translation language="hu"><![CDATA[Használt formátumok áttekintése és részletes oldala.]]></translation>
         <translation language="fr"><![CDATA[Format utilisé pour les vues d'ensemble et les pages de détail.]]></translation>
         <translation language="de"><![CDATA[Format welches für Übersichts- und Detail-Seiten verwendet wird.]]></translation>
+        <translation language="es"><![CDATA[Formato que se utiliza en las páginas de resumen y detalle.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatShort">
         <translation language="nl"><![CDATA[Dit formaat wordt voornamelijk gebruikt bij tabelweergaves.]]></translation>
@@ -85,6 +92,7 @@
         <translation language="hu"><![CDATA[Ez a formátum többnyire táblázat áttekintésére.]]></translation>
         <translation language="fr"><![CDATA[Format utilisé dans les tables de vue d'ensemble.]]></translation>
         <translation language="de"><![CDATA[Dieses Format wird meist in tabellarischen Übersichten verwendet.]]></translation>
+        <translation language="es"><![CDATA[Este formato se utiliza principalmente en resúmenes.]]></translation>
       </item>
       <item type="message" name="HelpDomains">
         <translation language="nl"><![CDATA[Vul de domeinen in waarop de website te bereiken is (1 domein per regel)]]></translation>
@@ -95,6 +103,7 @@
         <translation language="hu"><![CDATA[Domainek, amikkel elérhető az oldal. (Split domainek soronként.)]]></translation>
         <translation language="fr"><![CDATA[Entrez les domaines sur lesquels ce site peut être accessible. (Séparez les domaines par des sauts de ligne.)]]></translation>
         <translation language="de"><![CDATA[Gib die Domains an, unter denen diese Website erreicht werden kann.(Trenne Domains mit Zeilenumbrüchen.)]]></translation>
+        <translation language="es"><![CDATA[Insertar los dominios donde este sitio web puede ser accesible. (Separar dominios con saltos de linea.)]]></translation>
       </item>
       <item type="message" name="HelpEmailWebmaster">
         <translation language="nl"><![CDATA[Stuur notificaties van het CMS naar dit e-mailadres.]]></translation>
@@ -105,6 +114,7 @@
         <translation language="hu"><![CDATA[CMS értesítő küldése erre az e-mail címre.]]></translation>
         <translation language="fr"><![CDATA[Envoyer les notifications du CMS à ces adresses e-mail.]]></translation>
         <translation language="de"><![CDATA[Sende CMS-Benachrichtigungen an diese E-Mail-Adresse.]]></translation>
+        <translation language="es"><![CDATA[Enviar las notificaciones del CMS a esta dirección e-mail.]]></translation>
       </item>
       <item type="message" name="HelpFacebookAdminIds">
         <translation language="nl"><![CDATA[Een lijst met de Facebook-gebruikers hun ID en/of het id van de Facebook-applicatie die de paginas mogen beheren.]]></translation>
@@ -115,6 +125,7 @@
         <translation language="hu"><![CDATA[Vagy Facebook felhasználó ID-t vagy Facebook Platform alkalmazás ID-t alkalmaz az oldal.]]></translation>
         <translation language="fr"><![CDATA[Une ID d'utilisateur Facebook our une ID d'application Facebook en lien avec ce site.]]></translation>
         <translation language="de"><![CDATA[Entweder die Facebookbenutzer-IDs oder die Facebook Plattformanwendungs-ID die diese Website administriert.]]></translation>
+        <translation language="es"><![CDATA[Ya sea IDs de usuario Facebook o ID de una aplicación Facebook Platform la que administra este sitio web.]]></translation>
       </item>
       <item type="message" name="HelpFacebookApiKey">
         <translation language="nl"><![CDATA[De API-sleutel van je Facebook-toepassing]]></translation>
@@ -125,6 +136,7 @@
         <translation language="hu"><![CDATA[A Facebook alkalmazás API kulcsa.]]></translation>
         <translation language="fr"><![CDATA[La clef API de votre application Facebook.]]></translation>
         <translation language="de"><![CDATA[Der API-Key deiner Facebookanwendung.]]></translation>
+        <translation language="es"><![CDATA[La API key de tu aplicación Facebook.]]></translation>
       </item>
       <item type="message" name="HelpFacebookApplicationId">
         <translation language="nl"><![CDATA[Het toepassings-id van je Facebook-toepassing.]]></translation>
@@ -135,6 +147,7 @@
         <translation language="hu"><![CDATA[A Facebook alkalmazás id-je.]]></translation>
         <translation language="fr"><![CDATA[L'ID de votre application Facebook]]></translation>
         <translation language="de"><![CDATA[Die ID deiner Facebookanwendung.]]></translation>
+        <translation language="es"><![CDATA[La id de tu aplicación Facebook]]></translation>
       </item>
       <item type="message" name="HelpFacebookApplicationSecret">
         <translation language="nl"><![CDATA[De App Secret van je Facebook-toepassing.]]></translation>
@@ -145,6 +158,7 @@
         <translation language="hu"><![CDATA[The secret of your Facebook application.]]></translation>
         <translation language="fr"><![CDATA[La clef secrète de votre application Facebook]]></translation>
         <translation language="de"><![CDATA[Secret-Key deiner Facebook-Anwendung.]]></translation>
+        <translation language="es"><![CDATA[La App secret de tu aplicación Facebook.]]></translation>
       </item>
       <item type="message" name="HelpLanguages">
         <translation language="nl"><![CDATA[Duid aan welke talen toegankelijk zijn voor bezoekers]]></translation>
@@ -155,6 +169,7 @@
         <translation language="hu"><![CDATA[Az elérhető nyelvek kiválasztása a látogatók számára.]]></translation>
         <translation language="de"><![CDATA[Wähle die Sprachen die für den Besucher zugänglich sind.]]></translation>
         <translation language="fr"><![CDATA[Choisissez les languages accessibles à vos visiteurs.]]></translation>
+        <translation language="es"><![CDATA[Selecciona las lenguas accesibles para tus visitantes.]]></translation>
       </item>
       <item type="message" name="HelpNumberFormat">
         <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van getallen in de frontend.]]></translation>
@@ -165,6 +180,7 @@
         <translation language="hu"><![CDATA[A szám formátuma a honlapon.]]></translation>
         <translation language="fr"><![CDATA[Le format utilisé pour afficher des nombres sur le site.]]></translation>
         <translation language="de"><![CDATA[Dieses Format wird verwendet um Zahlen auf der Website darzustellen.]]></translation>
+        <translation language="es"><![CDATA[Este formato es usado para mostrar numeros en el sitio web.]]></translation>
       </item>
       <item type="message" name="HelpRedirectLanguages">
         <translation language="nl"><![CDATA[Duid aan op welke talen mensen op basis van hun browsertaal automatisch mogen terechtkomen.]]></translation>
@@ -175,6 +191,7 @@
         <translation language="hu"><![CDATA[A nyelv kiválasztása, ahova a látogatót autómatikusan átirányítja a böngésző.]]></translation>
         <translation language="fr"><![CDATA[Choisissez les languages vers lesquels les gens seront automatiquement redirigés par leurs navigateurs.]]></translation>
         <translation language="de"><![CDATA[Wähle die Sprachen, zu denen Besucher automatisch durch deren Browser weitergeleitet werden dürfen.]]></translation>
+        <translation language="es"><![CDATA[Selecciona la lengua a la que la gente sera redirecionada automáticamente por su navegador.]]></translation>
       </item>
       <item type="message" name="HelpScriptsFoot">
         <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
@@ -185,6 +202,7 @@
         <translation language="hu"><![CDATA[Illeszd ide a <code>&lt;body&gt;</code> végére szánt kódot.]]></translation>
         <translation language="fr"><![CDATA[Collez ici le code qui doit être placé à la fin de la balise <code>&lt;body&gt;</code>]]></translation>
         <translation language="de"><![CDATA[Füge den Code der am Ende des <code>&lt;body&gt;</code> Tag geladen werden soll hier ein.]]></translation>
+        <translation language="es"><![CDATA[Pega el código que necesites para ser cargado al final de la etiqueta <code>&lt;body&gt;</code> aquí.]]></translation>
       </item>
       <item type="message" name="HelpScriptsFootLabel">
         <translation language="nl"><![CDATA[Einde van <code>&lt;body&gt;</code> script(s)]]></translation>
@@ -195,6 +213,7 @@
         <translation language="hu"><![CDATA[A <code>&lt;body&gt;</code> script(ek) vége]]></translation>
         <translation language="fr"><![CDATA[Fin de <code>&lt;body&gt;</code> script(s)]]></translation>
         <translation language="de"><![CDATA[<code>&lt;body&gt;</code> - Ende Script(s)]]></translation>
+        <translation language="es"><![CDATA[fin de <code>&lt;body&gt;</code> script(s)]]></translation>
       </item>
       <item type="message" name="HelpScriptsHead">
         <translation language="nl"><![CDATA[Plaats hier code die op elke pagina geladen moet worden in de <code>&lt;head&gt;</code>-tag.]]></translation>
@@ -205,6 +224,7 @@
         <translation language="hu"><![CDATA[Illeszd ide a <code>&lt;head&gt;</code> szekcióba szánt kódot.]]></translation>
         <translation language="fr"><![CDATA[Copiez le code qui doit être chargé dans la section <code>&lt;head&gt;</code>.]]></translation>
         <translation language="de"><![CDATA[Füge den Code der im <code>&lt;head&gt;</code> Tag geladen werden soll hier ein.]]></translation>
+        <translation language="es"><![CDATA[Pega el código que necesita ser cargado en la sección <code>&lt;head&gt;</code> aquí.]]></translation>
       </item>
       <item type="message" name="HelpScriptsHeadLabel">
         <translation language="nl"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
@@ -215,16 +235,18 @@
         <translation language="hu"><![CDATA[<code>&lt;head&gt;</code> script(ek)]]></translation>
         <translation language="de"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
         <translation language="fr"><![CDATA[<code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="es"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
       </item>
       <item type="message" name="HelpSendingEmails">
         <translation language="nl"><![CDATA[Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken]]></translation>
-        <translation language="en"><![CDATA[You can send emails in 2 ways. By using PHP's built-in mail method or via SMTP. We advice you to use SMTP]]></translation>
+        <translation language="en"><![CDATA[You can send emails in 2 ways. By using PHP's built-in mail method or via SMTP. We advise you to use SMTP]]></translation>
         <translation language="it"><![CDATA[Puoi inviare email in 2 modi. Usando il metodo mail built-in di PHP o attraverso un server SMTP. Noi consigliamo di usare SMTP.]]></translation>
         <translation language="ru"><![CDATA[Вы можете отправлять сообщения 2 способами. Встроенным PHP Mail, или через внешний SMTP. Мы советуем использовать SMTP.]]></translation>
         <translation language="cn"><![CDATA[你可以用两种方法发送电子邮件，一是使用基于PHP的内置邮件方法，二是通过SMTP。我们建议你使用SMTP]]></translation>
         <translation language="hu"><![CDATA[Kétféleképpen küldhetsz e-mailt. Használhatod a beépített PHP mail küldőt vagy SMTP-t. Mi az SMTP-t tanácsoljuk.]]></translation>
         <translation language="de"><![CDATA[E-Mails können auf 2 Wege versendet werden. Mit SMTP oder mit der in PHP eingebauten Funktionalität. Wir empfehlen SMTP zu nutzen.]]></translation>
         <translation language="fr"><![CDATA[Vous pouvez envoer des e-mails de deux façons. En utilisant PHP ou via SMTP. Nous vous recommandons d'utiliser le SMTP]]></translation>
+        <translation language="es"><![CDATA[Tienes dos 2 opciones para enviar e-mails. Usando el método incorporado mail de PHP o via SMTP. Te aconsejamos utilizar SMTP]]></translation>
       </item>
       <item type="message" name="HelpSEONoodp">
         <translation language="nl"><![CDATA[Gebruik geen titel en omschrijving van het <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
@@ -235,6 +257,7 @@
         <translation language="hu"><![CDATA[Opt out of the <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a> override.]]></translation>
         <translation language="fr"><![CDATA[Opt out du  <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>]]></translation>
         <translation language="de"><![CDATA[Verhindere, dass deine Seite zum <a href="http://www.dmoz.org/" class="targetBlank"> Open-Directory-Project</a> hinzugefügt wird.]]></translation>
+        <translation language="es"><![CDATA[Optar por ignorar el servicio <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
       </item>
       <item type="message" name="HelpSEONoydir">
         <translation language="nl"><![CDATA[Gebruik geen titel en omschrijving van de Yahoo! Directory.]]></translation>
@@ -245,6 +268,7 @@
         <translation language="hu"><![CDATA[Opt out of the Yahoo! Directory override.]]></translation>
         <translation language="fr"><![CDATA[Opt Out du répertoire Yahoo!]]></translation>
         <translation language="de"><![CDATA[Verhindere, dass deine Seite zu Yahoo!-Directory hinzugefügt wird.]]></translation>
+        <translation language="es"><![CDATA[Optar por ignorar el servicio Yahoo! Directory.]]></translation>
       </item>
       <item type="message" name="HelpTimeFormat">
         <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
@@ -255,6 +279,7 @@
         <translation language="hu"><![CDATA[A dátum formátuma a honlapon.]]></translation>
         <translation language="de"><![CDATA[Dieses Format wird verwendet um Daten auf der Website anzugeben.]]></translation>
         <translation language="fr"><![CDATA[Le format est utilisé pour afficher des dates sur le site.]]></translation>
+        <translation language="es"><![CDATA[Este formato es usado para mostrar fechas en el sitio web.]]></translation>
       </item>
       <item type="message" name="NoAdminIds">
         <translation language="nl"><![CDATA[Nog geen admin-ids]]></translation>
@@ -265,6 +290,7 @@
         <translation language="de"><![CDATA[Noch keine Admin-IDs.]]></translation>
         <translation language="hu"><![CDATA[Nincs még admin id.]]></translation>
         <translation language="fr"><![CDATA[Pas encore d'identifiants admin]]></translation>
+        <translation language="es"><![CDATA[No hay ids de admin aun.]]></translation>
       </item>
       <item type="message" name="SendTestMail">
         <translation language="nl"><![CDATA[verstuur testmail]]></translation>
@@ -275,6 +301,7 @@
         <translation language="de"><![CDATA[sende Testmail]]></translation>
         <translation language="hu"><![CDATA[teszt e-mail küldése]]></translation>
         <translation language="fr"><![CDATA[envoyer un mail test]]></translation>
+        <translation language="es"><![CDATA[envia email de prueba]]></translation>
       </item>
       <item type="message" name="SEONoFollowInComments">
         <translation language="nl"><![CDATA[<code>rel="nofollow"</code> voor links in reacties]]></translation>
@@ -285,6 +312,7 @@
         <translation language="hu"><![CDATA[a hosszászólás linkjéhez <code>rel="nofollow"</code> hozzáadás]]></translation>
         <translation language="fr"><![CDATA[ajouter le code <code>rel="nofollow"</code> sur les liens à l'intérieur des commentaires]]></translation>
         <translation language="de"><![CDATA[füge <code>rel="nofollow"</code> bei Links in Kommentaren ein]]></translation>
+        <translation language="es"><![CDATA[agregar <code>rel="nofollow"</code> en los enlaces dentro de un comentario]]></translation>
       </item>
       <item type="message" name="TestMessage">
         <translation language="nl"><![CDATA[dit is een test]]></translation>
@@ -296,6 +324,7 @@
         <translation language="de"><![CDATA[dies ist nur ein Test]]></translation>
         <translation language="hu"><![CDATA[ez csak egy teszt]]></translation>
         <translation language="fr"><![CDATA[il s'eagit juste d'un test]]></translation>
+        <translation language="es"><![CDATA[esto es solo una prueba]]></translation>
       </item>
       <item type="message" name="TestWasSent">
         <translation language="nl"><![CDATA[De testmail is verzonden.]]></translation>
@@ -307,6 +336,7 @@
         <translation language="de"><![CDATA[Die Testmail wurde versandt.]]></translation>
         <translation language="hu"><![CDATA[A teszt e-mail elküldve.]]></translation>
         <translation language="fr"><![CDATA[L'e-mail tests a été envoyé.]]></translation>
+        <translation language="es"><![CDATA[El email de prueba ha sido enviado.]]></translation>
       </item>
       <item type="error" name="PortIsRequired">
         <translation language="nl"><![CDATA[Poort is verplicht.]]></translation>
@@ -317,6 +347,7 @@
         <translation language="fr"><![CDATA[Le port est requis.]]></translation>
         <translation language="hu"><![CDATA[A port kötelező.]]></translation>
         <translation language="de"><![CDATA[Port ist eine Pflichtangabe.]]></translation>
+        <translation language="es"><![CDATA[El Puerto es requerido.]]></translation>
       </item>
       <item type="error" name="ServerIsRequired">
         <translation language="nl"><![CDATA[Server is verplicht.]]></translation>
@@ -327,6 +358,7 @@
         <translation language="fr"><![CDATA[Serveur est requis]]></translation>
         <translation language="hu"><![CDATA[A szerver kötelező.]]></translation>
         <translation language="de"><![CDATA[Der Server muss angegeben werden.]]></translation>
+        <translation language="es"><![CDATA[El servidor es requerido.]]></translation>
       </item>
     </settings>
   </backend>

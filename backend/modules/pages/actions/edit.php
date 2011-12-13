@@ -72,9 +72,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// add js
  		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
  		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
- 		$this->header->addJS('jstree/jquery.tree.js');
- 		$this->header->addJS('jstree/lib/jquery.cookie.js');
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+ 		$this->header->addJS('jstree/jquery.tree.js', null, false, false, false);
+ 		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false, false, false);
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false, false, false);
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
@@ -519,18 +519,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// active
 				if($page['status'] == 'active')
 				{
-					// edit search index
-					if(is_callable(array('BackendSearchModel', 'editIndex')))
-					{
-						// init var
-						$text = '';
+					// init var
+					$text = '';
 
-						// build search-text
-						foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
+					// build search-text
+					foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
-						// add
-						BackendSearchModel::editIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
-					}
+					// add to search index
+					BackendSearchModel::editIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=edited&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);

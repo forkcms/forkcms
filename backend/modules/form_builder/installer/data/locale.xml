@@ -11,6 +11,7 @@
         <translation language="de"><![CDATA[Formular hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter un formulaire]]></translation>
         <translation language="hu"><![CDATA[űrlap hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar formulario]]></translation>
       </item>
       <item type="label" name="AddFields">
         <translation language="nl"><![CDATA[velden toevoegen]]></translation>
@@ -21,6 +22,7 @@
         <translation language="de"><![CDATA[Felder hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter des champs]]></translation>
         <translation language="hu"><![CDATA[mező hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar campos]]></translation>
       </item>
       <item type="label" name="BackToData">
         <translation language="nl"><![CDATA[terug naar inzendingen]]></translation>
@@ -31,6 +33,7 @@
         <translation language="fr"><![CDATA[retour aux soumissions]]></translation>
         <translation language="hu"><![CDATA[back to submissions]]></translation>
         <translation language="de"><![CDATA[zurück zu den Einsendungen]]></translation>
+        <translation language="es"><![CDATA[volver a envios]]></translation>
       </item>
       <item type="label" name="Basic">
         <translation language="nl"><![CDATA[basis]]></translation>
@@ -41,6 +44,7 @@
         <translation language="fr"><![CDATA[basique]]></translation>
         <translation language="hu"><![CDATA[alap]]></translation>
         <translation language="de"><![CDATA[Basic]]></translation>
+        <translation language="es"><![CDATA[basico]]></translation>
       </item>
       <item type="label" name="Checkbox">
         <translation language="nl"><![CDATA[selectievakje]]></translation>
@@ -51,6 +55,7 @@
         <translation language="fr"><![CDATA[case à cocher]]></translation>
         <translation language="hu"><![CDATA[checkbox]]></translation>
         <translation language="de"><![CDATA[Checkbox]]></translation>
+        <translation language="es"><![CDATA[checkbox]]></translation>
       </item>
       <item type="label" name="DefaultValue">
         <translation language="nl"><![CDATA[standaardwaarde]]></translation>
@@ -61,10 +66,13 @@
         <translation language="de"><![CDATA[Standardwert]]></translation>
         <translation language="fr"><![CDATA[valeur par défaut]]></translation>
         <translation language="hu"><![CDATA[alap érték]]></translation>
+        <translation language="es"><![CDATA[valor por defecto]]></translation>
       </item>
       <item type="label" name="Details">
         <translation language="nl"><![CDATA[details]]></translation>
         <translation language="en"><![CDATA[details]]></translation>
+        <translation language="es"><![CDATA[detalles]]></translation>
+        <translation language="de"><![CDATA[Details]]></translation>
       </item>
       <item type="label" name="Drag">
         <translation language="nl"><![CDATA[versleep]]></translation>
@@ -75,6 +83,7 @@
         <translation language="de"><![CDATA[verschieben]]></translation>
         <translation language="fr"><![CDATA[déplacer]]></translation>
         <translation language="hu"><![CDATA[mozgat]]></translation>
+        <translation language="es"><![CDATA[mover]]></translation>
       </item>
       <item type="label" name="Dropdown">
         <translation language="nl"><![CDATA[keuzemenu]]></translation>
@@ -85,6 +94,7 @@
         <translation language="de"><![CDATA[Dropdown]]></translation>
         <translation language="fr"><![CDATA[liste déroulante]]></translation>
         <translation language="hu"><![CDATA[dropdown]]></translation>
+        <translation language="es"><![CDATA[lista desplegable]]></translation>
       </item>
       <item type="label" name="EditForm">
         <translation language="nl"><![CDATA[bewerk formulier "%1$s"]]></translation>
@@ -95,6 +105,7 @@
         <translation language="de"><![CDATA[Formular "%1$s" bearbeiten]]></translation>
         <translation language="fr"><![CDATA[éditer le formulaire edit form "%1$s"]]></translation>
         <translation language="hu"><![CDATA["%1$s" űrlap szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar formulario "%1$s"]]></translation>
       </item>
       <item type="label" name="ErrorMessage">
         <translation language="nl"><![CDATA[foutmelding]]></translation>
@@ -105,6 +116,7 @@
         <translation language="fr"><![CDATA[message d'erreur]]></translation>
         <translation language="hu"><![CDATA[hiba üzenet]]></translation>
         <translation language="de"><![CDATA[Fehlermeldung]]></translation>
+        <translation language="es"><![CDATA[mensaje de error]]></translation>
       </item>
       <item type="label" name="Extra">
         <translation language="nl"><![CDATA[extra]]></translation>
@@ -115,6 +127,7 @@
         <translation language="fr"><![CDATA[extra]]></translation>
         <translation language="hu"><![CDATA[extra]]></translation>
         <translation language="de"><![CDATA[Extra]]></translation>
+        <translation language="es"><![CDATA[extra]]></translation>
       </item>
       <item type="label" name="Fields">
         <translation language="nl"><![CDATA[velden]]></translation>
@@ -125,6 +138,7 @@
         <translation language="fr"><![CDATA[champs]]></translation>
         <translation language="hu"><![CDATA[mezők]]></translation>
         <translation language="de"><![CDATA[Felder]]></translation>
+        <translation language="es"><![CDATA[campos]]></translation>
       </item>
       <item type="label" name="FormData">
         <translation language="nl"><![CDATA[inzendingen van "%1$s"]]></translation>
@@ -135,6 +149,7 @@
         <translation language="fr"><![CDATA[soumissions pour "%1$s"]]></translation>
         <translation language="hu"><![CDATA[submissions for "%1$s"]]></translation>
         <translation language="de"><![CDATA[Einsendungen für "%1$s"]]></translation>
+        <translation language="es"><![CDATA[envios para "%1$s"]]></translation>
       </item>
       <item type="label" name="FormElements">
         <translation language="nl"><![CDATA[formulier elementen]]></translation>
@@ -145,6 +160,7 @@
         <translation language="fr"><![CDATA[éléments de formulaire]]></translation>
         <translation language="hu"><![CDATA[űrlapelemek]]></translation>
         <translation language="de"><![CDATA[Formularelemente]]></translation>
+        <translation language="es"><![CDATA[elementos del formulario]]></translation>
       </item>
       <item type="label" name="Heading">
         <translation language="nl"><![CDATA[hoofding]]></translation>
@@ -155,6 +171,7 @@
         <translation language="fr"><![CDATA[En-tête]]></translation>
         <translation language="hu"><![CDATA[cím]]></translation>
         <translation language="de"><![CDATA[Überschrift]]></translation>
+        <translation language="es"><![CDATA[título]]></translation>
       </item>
       <item type="label" name="Identifier">
         <translation language="nl"><![CDATA[identifier]]></translation>
@@ -165,6 +182,7 @@
         <translation language="fr"><![CDATA[identifiant]]></translation>
         <translation language="hu"><![CDATA[azonosító]]></translation>
         <translation language="de"><![CDATA[Bezeichner]]></translation>
+        <translation language="es"><![CDATA[identificador]]></translation>
       </item>
       <item type="label" name="Method">
         <translation language="nl"><![CDATA[methode]]></translation>
@@ -175,6 +193,7 @@
         <translation language="fr"><![CDATA[méthode]]></translation>
         <translation language="hu"><![CDATA[módszer]]></translation>
         <translation language="de"><![CDATA[Methode]]></translation>
+        <translation language="es"><![CDATA[método]]></translation>
       </item>
       <item type="label" name="MethodDatabase">
         <translation language="nl"><![CDATA[opslaan in de database]]></translation>
@@ -185,6 +204,7 @@
         <translation language="fr"><![CDATA[sauvegarder en base de donnée]]></translation>
         <translation language="hu"><![CDATA[adatbázisba mentés]]></translation>
         <translation language="de"><![CDATA[in der Datenbank speichern]]></translation>
+        <translation language="es"><![CDATA[guardar en base de datos]]></translation>
       </item>
       <item type="label" name="MethodDatabaseEmail">
         <translation language="nl"><![CDATA[opslaan in de database en email verzenden]]></translation>
@@ -195,6 +215,7 @@
         <translation language="fr"><![CDATA[sauvegarder en base de données et envoyer par e-mail]]></translation>
         <translation language="hu"><![CDATA[adatbázisba mentés és email-ben küldés]]></translation>
         <translation language="de"><![CDATA[in der Datenbank speichern und als E-Mail versenden]]></translation>
+        <translation language="es"><![CDATA[guardar en base de datos y enviar un email]]></translation>
       </item>
       <item type="label" name="MinutesAgo">
         <translation language="nl"><![CDATA[%1$s minuten geleden]]></translation>
@@ -205,6 +226,7 @@
         <translation language="fr"><![CDATA[il y a %1$s minutes]]></translation>
         <translation language="hu"><![CDATA[%1$s perce]]></translation>
         <translation language="de"><![CDATA[vor %1$s Minuten]]></translation>
+        <translation language="es"><![CDATA[hace %1$s minutos]]></translation>
       </item>
       <item type="label" name="Numeric">
         <translation language="nl"><![CDATA[numeriek]]></translation>
@@ -215,6 +237,7 @@
         <translation language="fr"><![CDATA[numérique]]></translation>
         <translation language="hu"><![CDATA[szám]]></translation>
         <translation language="de"><![CDATA[numerisch]]></translation>
+        <translation language="es"><![CDATA[numérico]]></translation>
       </item>
       <item type="label" name="OneMinuteAgo">
         <translation language="nl"><![CDATA[1 minuut geleden]]></translation>
@@ -225,6 +248,7 @@
         <translation language="fr"><![CDATA[il y a une minute]]></translation>
         <translation language="hu"><![CDATA[1 perce]]></translation>
         <translation language="de"><![CDATA[vor einer Minute]]></translation>
+        <translation language="es"><![CDATA[hace 1 minuto]]></translation>
       </item>
       <item type="label" name="OneSecondAgo">
         <translation language="nl"><![CDATA[1 seconde geleden]]></translation>
@@ -235,6 +259,7 @@
         <translation language="fr"><![CDATA[il y a une seconde]]></translation>
         <translation language="hu"><![CDATA[1 másodperce]]></translation>
         <translation language="de"><![CDATA[vor einer Sekunde]]></translation>
+        <translation language="es"><![CDATA[hace 1 segundo]]></translation>
       </item>
       <item type="label" name="Paragraph">
         <translation language="nl"><![CDATA[paragraaf]]></translation>
@@ -245,6 +270,7 @@
         <translation language="fr"><![CDATA[paragraphe]]></translation>
         <translation language="hu"><![CDATA[bekezdés]]></translation>
         <translation language="de"><![CDATA[Paragraph]]></translation>
+        <translation language="es"><![CDATA[parrafo]]></translation>
       </item>
       <item type="label" name="Parameter">
         <translation language="nl"><![CDATA[argument]]></translation>
@@ -255,6 +281,7 @@
         <translation language="fr"><![CDATA[paramètre]]></translation>
         <translation language="hu"><![CDATA[paraméter]]></translation>
         <translation language="de"><![CDATA[Parameter]]></translation>
+        <translation language="es"><![CDATA[parámetro]]></translation>
       </item>
       <item type="label" name="Preview">
         <translation language="nl"><![CDATA[preview]]></translation>
@@ -265,6 +292,7 @@
         <translation language="fr"><![CDATA[aperçu]]></translation>
         <translation language="hu"><![CDATA[előnézet]]></translation>
         <translation language="de"><![CDATA[Vorschau]]></translation>
+        <translation language="es"><![CDATA[vista previa]]></translation>
       </item>
       <item type="label" name="Properties">
         <translation language="nl"><![CDATA[eigenschappen]]></translation>
@@ -275,6 +303,7 @@
         <translation language="fr"><![CDATA[propriétés]]></translation>
         <translation language="hu"><![CDATA[tulajdonságok]]></translation>
         <translation language="de"><![CDATA[Eigenschaften]]></translation>
+        <translation language="es"><![CDATA[propiedades]]></translation>
       </item>
       <item type="label" name="Radiobutton">
         <translation language="nl"><![CDATA[keuzerondje]]></translation>
@@ -285,6 +314,7 @@
         <translation language="fr"><![CDATA[bouton radio]]></translation>
         <translation language="hu"><![CDATA[rádiógomb]]></translation>
         <translation language="de"><![CDATA[Radiobutton]]></translation>
+        <translation language="es"><![CDATA[radiobutton]]></translation>
       </item>
       <item type="label" name="Recipient">
         <translation language="nl"><![CDATA[bestemmeling]]></translation>
@@ -295,6 +325,7 @@
         <translation language="de"><![CDATA[Empfänger]]></translation>
         <translation language="fr"><![CDATA[destinataire]]></translation>
         <translation language="hu"><![CDATA[átvevő]]></translation>
+        <translation language="es"><![CDATA[recipiente]]></translation>
       </item>
       <item type="label" name="Required">
         <translation language="nl"><![CDATA[vereist]]></translation>
@@ -305,6 +336,7 @@
         <translation language="fr"><![CDATA[requis]]></translation>
         <translation language="hu"><![CDATA[kötelező]]></translation>
         <translation language="de"><![CDATA[Pflichtangabe]]></translation>
+        <translation language="es"><![CDATA[requerido]]></translation>
       </item>
       <item type="label" name="SecondsAgo">
         <translation language="nl"><![CDATA[%1$s seconden geleden]]></translation>
@@ -315,6 +347,7 @@
         <translation language="fr"><![CDATA[il y a %1$s secondes]]></translation>
         <translation language="hu"><![CDATA[%1$s másodperce]]></translation>
         <translation language="de"><![CDATA[vor %1$s Sekunden]]></translation>
+        <translation language="es"><![CDATA[hace %1$s segundos]]></translation>
       </item>
       <item type="label" name="SenderInformation">
         <translation language="nl"><![CDATA[afzender informatie]]></translation>
@@ -325,6 +358,7 @@
         <translation language="fr"><![CDATA[informations expéditeur]]></translation>
         <translation language="hu"><![CDATA[küldő információ]]></translation>
         <translation language="de"><![CDATA[Absenderinformationen]]></translation>
+        <translation language="es"><![CDATA[información del remitente]]></translation>
       </item>
       <item type="label" name="SentOn">
         <translation language="nl"><![CDATA[verstuurd op]]></translation>
@@ -335,6 +369,7 @@
         <translation language="fr"><![CDATA[envoyé le]]></translation>
         <translation language="hu"><![CDATA[küldve]]></translation>
         <translation language="de"><![CDATA[versandt am]]></translation>
+        <translation language="es"><![CDATA[enviado en]]></translation>
       </item>
       <item type="label" name="SessionId">
         <translation language="nl"><![CDATA[sessie id]]></translation>
@@ -345,6 +380,7 @@
         <translation language="fr"><![CDATA[identifiant de session]]></translation>
         <translation language="hu"><![CDATA[session id]]></translation>
         <translation language="de"><![CDATA[Session-ID]]></translation>
+        <translation language="es"><![CDATA[id de sesión]]></translation>
       </item>
       <item type="label" name="SubmitButton">
         <translation language="nl"><![CDATA[verzendknop]]></translation>
@@ -355,6 +391,7 @@
         <translation language="fr"><![CDATA[bouton d'envoi]]></translation>
         <translation language="hu"><![CDATA[küldő gomb]]></translation>
         <translation language="de"><![CDATA[Sende-Button]]></translation>
+        <translation language="es"><![CDATA[boton de envio]]></translation>
       </item>
       <item type="label" name="SuccessMessage">
         <translation language="nl"><![CDATA[succes boodschap]]></translation>
@@ -365,6 +402,7 @@
         <translation language="fr"><![CDATA[message de succès]]></translation>
         <translation language="hu"><![CDATA[sikeres üzenet]]></translation>
         <translation language="de"><![CDATA[Erfolgsmeldung]]></translation>
+        <translation language="es"><![CDATA[mensaje de éxito]]></translation>
       </item>
       <item type="label" name="Textarea">
         <translation language="nl"><![CDATA[tekstgebied]]></translation>
@@ -375,6 +413,7 @@
         <translation language="fr"><![CDATA[zone de texte]]></translation>
         <translation language="hu"><![CDATA[textarea]]></translation>
         <translation language="de"><![CDATA[Textarea]]></translation>
+        <translation language="es"><![CDATA[area de texto]]></translation>
       </item>
       <item type="label" name="Textbox">
         <translation language="nl"><![CDATA[tekstveld]]></translation>
@@ -385,6 +424,7 @@
         <translation language="fr"><![CDATA[boîte de texte]]></translation>
         <translation language="hu"><![CDATA[textbox]]></translation>
         <translation language="de"><![CDATA[Textfeld]]></translation>
+        <translation language="es"><![CDATA[caja de texto]]></translation>
       </item>
       <item type="label" name="TextElements">
         <translation language="nl"><![CDATA[tekst elementen]]></translation>
@@ -395,6 +435,7 @@
         <translation language="fr"><![CDATA[éléments texte]]></translation>
         <translation language="hu"><![CDATA[szövegelemek]]></translation>
         <translation language="de"><![CDATA[Textelemente]]></translation>
+        <translation language="es"><![CDATA[elementos de texto]]></translation>
       </item>
       <item type="label" name="Today">
         <translation language="nl"><![CDATA[vandaag]]></translation>
@@ -405,6 +446,7 @@
         <translation language="fr"><![CDATA[aujourd'hui]]></translation>
         <translation language="hu"><![CDATA[ma]]></translation>
         <translation language="de"><![CDATA[heute]]></translation>
+        <translation language="es"><![CDATA[hoy]]></translation>
       </item>
       <item type="label" name="Validation">
         <translation language="nl"><![CDATA[validatie]]></translation>
@@ -415,6 +457,7 @@
         <translation language="fr"><![CDATA[validation]]></translation>
         <translation language="hu"><![CDATA[érvényesítés]]></translation>
         <translation language="de"><![CDATA[Validierung]]></translation>
+        <translation language="es"><![CDATA[validación]]></translation>
       </item>
       <item type="label" name="Values">
         <translation language="nl"><![CDATA[waarden]]></translation>
@@ -425,6 +468,7 @@
         <translation language="fr"><![CDATA[valeurs]]></translation>
         <translation language="hu"><![CDATA[értékek]]></translation>
         <translation language="de"><![CDATA[Werte]]></translation>
+        <translation language="es"><![CDATA[valores]]></translation>
       </item>
       <item type="label" name="Yesterday">
         <translation language="nl"><![CDATA[gisteren]]></translation>
@@ -435,6 +479,7 @@
         <translation language="fr"><![CDATA[hier]]></translation>
         <translation language="hu"><![CDATA[tegnap]]></translation>
         <translation language="de"><![CDATA[gestern]]></translation>
+        <translation language="es"><![CDATA[ayer]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd toegevoegd.]]></translation>
@@ -445,6 +490,7 @@
         <translation language="fr"><![CDATA[Le formulaire "%1$s"  a été ajouté.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" űrlap hozzáadva.]]></translation>
         <translation language="de"><![CDATA[Das Formular "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="es"><![CDATA[El formulario "%1$s" fue agregado.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je het formulier "%1$s" en al zijn inzendingen wil verwijderen?]]></translation>
@@ -455,6 +501,7 @@
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le formulaire "%1$s" et toutes ses soumissions?]]></translation>
         <translation language="hu"><![CDATA[Are you sure you want to delete the form "%1$s" and all its submissons?]]></translation>
         <translation language="de"><![CDATA[Willst du das Formular "%1$s" und alle zugehörigen Einsendungen wirklich löschen?]]></translation>
+        <translation language="es"><![CDATA[¿Estáss seguro de eliminar el formulario "%1$s" y todos sus envios?]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteData">
         <translation language="nl"><![CDATA[Ben je zeker dat je deze inzending wil verwijderen?]]></translation>
@@ -465,6 +512,7 @@
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer cette soumission?]]></translation>
         <translation language="hu"><![CDATA[Are you sure you want to delete this submission?]]></translation>
         <translation language="de"><![CDATA[Willst du diese Einsendung wirklich löschen?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar este envio?]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd verwijderd.]]></translation>
@@ -475,6 +523,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" űrlap eltávolítva.]]></translation>
         <translation language="de"><![CDATA[Das Formular "%1$s" wurde entfernt.]]></translation>
         <translation language="fr"><![CDATA[Le formulaire "%1$s" a été effacé.]]></translation>
+        <translation language="es"><![CDATA[El formulario "%1$s" fue eliminado.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd opgeslagen.]]></translation>
@@ -485,6 +534,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" űrlap elmentve.]]></translation>
         <translation language="fr"><![CDATA[Le formulaire "%1$s" a été enregistré.]]></translation>
         <translation language="de"><![CDATA[Das Formular "%1$s" wurde gespeichert.]]></translation>
+        <translation language="es"><![CDATA[El formulario "%1$s" fue guardado.]]></translation>
       </item>
       <item type="message" name="HelpIdentifier">
         <translation language="nl"><![CDATA[De identifier wordt in de URL geplaatst na het succesvol opslaan van formulier.]]></translation>
@@ -495,6 +545,7 @@
         <translation language="hu"><![CDATA[Azonosító kerül az URL-be, miután az űrlap sikeresen mentve lett.]]></translation>
         <translation language="de"><![CDATA[Der Bezeichner wird in der URL eingefügt nachdem das Formular erfolgreich übertragen wurde.]]></translation>
         <translation language="fr"><![CDATA[Cet identifiant est placé dans l'URL quand un formulaire est envoyé avec succès.]]></translation>
+        <translation language="es"><![CDATA[El identificador es colocado en la URL despues de haber enviado un formulario con éxito.]]></translation>
       </item>
       <item type="message" name="ImportantImmediateUpdate">
         <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: aanpassingen die je hier maakt worden onmiddelijk opgeslaan.]]></translation>
@@ -505,6 +556,7 @@
         <translation language="hu"><![CDATA[<strong>Fontos</strong>: a módosításokat itt azonnal menteni kell.]]></translation>
         <translation language="de"><![CDATA[<strong>Wichtig</strong>: Hier getätigte Änderungen werden direkt gespeichert.]]></translation>
         <translation language="fr"><![CDATA[<strong>Important</strong>: Les modifications faites ici sont immédiatement enregistrées.]]></translation>
+        <translation language="es"><![CDATA[<strong>Importante</strong>: las modificaciones hechas aquí son inmediatamente guardadas.]]></translation>
       </item>
       <item type="message" name="ItemDeleted">
         <translation language="nl"><![CDATA[Inzending verwijderd.]]></translation>
@@ -515,6 +567,7 @@
         <translation language="hu"><![CDATA[Submission removed.]]></translation>
         <translation language="fr"><![CDATA[Soumission retirée.]]></translation>
         <translation language="de"><![CDATA[Einsendung entfernt.]]></translation>
+        <translation language="es"><![CDATA[envio eliminado.]]></translation>
       </item>
       <item type="message" name="ItemsDeleted">
         <translation language="nl"><![CDATA[Inzendingen verwijderd.]]></translation>
@@ -525,6 +578,7 @@
         <translation language="hu"><![CDATA[Submissions removed.]]></translation>
         <translation language="fr"><![CDATA[Soumissions retirées.]]></translation>
         <translation language="de"><![CDATA[Einsendungen entfernt.]]></translation>
+        <translation language="es"><![CDATA[envio eliminado.]]></translation>
       </item>
       <item type="message" name="NoData">
         <translation language="nl"><![CDATA[Er zijn nog geen inzendingen.]]></translation>
@@ -535,6 +589,7 @@
         <translation language="hu"><![CDATA[There are no submissions yet.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de soumission.]]></translation>
         <translation language="de"><![CDATA[Noch keine Einsendungen vorhanden.]]></translation>
+        <translation language="es"><![CDATA[No hay envios aun.]]></translation>
       </item>
       <item type="message" name="NoFields">
         <translation language="nl"><![CDATA[Er zijn nog geen velden.]]></translation>
@@ -545,6 +600,7 @@
         <translation language="hu"><![CDATA[Nincsenek még mezők.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de champs.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Felder.]]></translation>
+        <translation language="es"><![CDATA[No hay campos aun.]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen formulieren.]]></translation>
@@ -555,6 +611,7 @@
         <translation language="hu"><![CDATA[Nincsenek még űrlapok.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Formulare.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de formulaires.]]></translation>
+        <translation language="es"><![CDATA[No hay formularios aun.]]></translation>
       </item>
       <item type="message" name="NoValues">
         <translation language="nl"><![CDATA[Er zijn nog geen waarden.]]></translation>
@@ -565,6 +622,7 @@
         <translation language="hu"><![CDATA[Nincsenek még értékek.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Werte.]]></translation>
         <translation language="fr"><![CDATA[il n'y a pas encore de valeurs.]]></translation>
+        <translation language="es"><![CDATA[No hay volares aun.]]></translation>
       </item>
       <item type="message" name="OneSentForm">
         <translation language="nl"><![CDATA[1 inzending]]></translation>
@@ -575,6 +633,7 @@
         <translation language="hu"><![CDATA[1 submission]]></translation>
         <translation language="fr"><![CDATA[1 soumission]]></translation>
         <translation language="de"><![CDATA[1 Einsendung]]></translation>
+        <translation language="es"><![CDATA[1 envio]]></translation>
       </item>
       <item type="message" name="SentForms">
         <translation language="nl"><![CDATA[%1$s inzendingen]]></translation>
@@ -585,6 +644,7 @@
         <translation language="hu"><![CDATA[%1$s submissions]]></translation>
         <translation language="fr"><![CDATA[%1$s soumissions]]></translation>
         <translation language="de"><![CDATA[%1$s Einsendungen]]></translation>
+        <translation language="es"><![CDATA[%1$s enviados]]></translation>
       </item>
       <item type="error" name="ErrorMessageIsRequired">
         <translation language="nl"><![CDATA[Gelieve een foutmelding in te geven.]]></translation>
@@ -595,9 +655,10 @@
         <translation language="fr"><![CDATA[Veuillez fournir un message d'erreur.]]></translation>
         <translation language="hu"><![CDATA[Kérlek add meg a hibaüzenetet.]]></translation>
         <translation language="de"><![CDATA[Bitte gib eine Fehlermeldung an.]]></translation>
+        <translation language="es"><![CDATA[Por favor introudce un mensaje de error.]]></translation>
       </item>
       <item type="error" name="IdentifierExists">
-        <translation language="nl"><![CDATA[Deze identificatie bestaat reeds.]]></translation>
+        <translation language="nl"><![CDATA[This identifier already exists.]]></translation>
         <translation language="nl"><![CDATA[This identifier already exists.]]></translation>
         <translation language="it"><![CDATA[Questo identificatore è già esistente.]]></translation>
         <translation language="ru"><![CDATA[Этот ИД уже есть.]]></translation>
@@ -606,6 +667,7 @@
         <translation language="fr"><![CDATA[Cet identifiant existe déjà.]]></translation>
         <translation language="de"><![CDATA[Dieser Bezeichner existiert bereits.]]></translation>
         <translation language="en"><![CDATA[This identifier already exists.]]></translation>
+        <translation language="es"><![CDATA[Este identificador ya existe.]]></translation>
       </item>
       <item type="error" name="InvalidIdentifier">
         <translation language="nl"><![CDATA[Gelieve een geldige identifier op te geven (enkel . - _ en alphanumerieke karakters)]]></translation>
@@ -616,6 +678,7 @@
         <translation language="fr"><![CDATA[Veuillez fournir un identifiants correct. 5 seulement .-_ et caractères alphanumériques)]]></translation>
         <translation language="hu"><![CDATA[Kérlek valós azonosítót adj meg. (csak . - _ és betű karakterek)]]></translation>
         <translation language="de"><![CDATA[Bitte gib einen gültigen Bezeichner an. (nur . - _ und alphanumerische Zeichen)]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce un identificador válido. (solo . - _ y carácteres alfanuméricos)]]></translation>
       </item>
       <item type="error" name="LabelIsRequired">
         <translation language="nl"><![CDATA[Gelieve een label in te geven.]]></translation>
@@ -626,6 +689,7 @@
         <translation language="fr"><![CDATA[Veuillez fournir une étiquette.]]></translation>
         <translation language="hu"><![CDATA[Kérlek add meg a címkét.]]></translation>
         <translation language="de"><![CDATA[Bitte gib ein Label an.]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce una etiqueta.]]></translation>
       </item>
       <item type="error" name="SuccessMessageIsRequired">
         <translation language="nl"><![CDATA[Gelieve een succes boodschap in te geven.]]></translation>
@@ -636,6 +700,7 @@
         <translation language="fr"><![CDATA[Veuillez fournir un message de succès.]]></translation>
         <translation language="hu"><![CDATA[Kérlek add meg a sikeres üzenetet.]]></translation>
         <translation language="de"><![CDATA[Bitte gib eine Erfolgsmeldung an.]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce un mensaje de éxito.]]></translation>
       </item>
       <item type="error" name="UniqueIdentifier">
         <translation language="nl"><![CDATA[Deze identifier is al in gebruik.]]></translation>
@@ -646,6 +711,7 @@
         <translation language="fr"><![CDATA[Cet identifiant est déjà utilisé.]]></translation>
         <translation language="hu"><![CDATA[Ezt az azonosítót már használják.]]></translation>
         <translation language="de"><![CDATA[Der Bezeichner ist bereits in Gebrauch.]]></translation>
+        <translation language="es"><![CDATA[Este identificador ya está en uso.]]></translation>
       </item>
       <item type="error" name="ValueIsRequired">
         <translation language="nl"><![CDATA[Gelieve een waarde in te geven.]]></translation>
@@ -656,6 +722,7 @@
         <translation language="fr"><![CDATA[Veuillez fournir une valeur.]]></translation>
         <translation language="hu"><![CDATA[Kérlek add meg az értéket.]]></translation>
         <translation language="de"><![CDATA[Bitte gib einen Wert an.]]></translation>
+        <translation language="es"><![CDATA[Ppor favor introduce un valor.]]></translation>
       </item>
     </form_builder>
   </backend>

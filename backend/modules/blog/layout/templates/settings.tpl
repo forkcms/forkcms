@@ -15,11 +15,11 @@
 			{$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
 		</div>
 		<div class="options">
-			<label for="recentArticlesNumberOfItems">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
+			<label for="recentArticlesFullNumberOfItems">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
 			{$ddmRecentArticlesFullNumberOfItems} {$ddmRecentArticlesFullNumberOfItemsError}
 		</div>
 		<div class="options">
-			<label for="recentArticlesNumberOfItems">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
+			<label for="recentArticlesListNumberOfItems">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
 			{$ddmRecentArticlesListNumberOfItems} {$ddmRecentArticlesListNumberOfItemsError}
 		</div>
 	</div>

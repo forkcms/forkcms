@@ -161,7 +161,22 @@ class BackendURL
 			 */
 			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php'))
 			{
-				throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
+				// in debug mode we want to see the error
+				if(SPOON_DEBUG) throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
+
+				else
+				{
+					// @todo	don't use redirects for error, we should have something like an invoke method.
+
+					// build the url
+					$errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed';
+
+					// add the querystring, it will be processed by the error-handler
+					$errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
+
+					// redirect to the error page
+					SpoonHTTP::redirect($errorUrl);
+				}
 			}
 
 			// build config-object-name

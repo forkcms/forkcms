@@ -189,6 +189,11 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 		// create elements
 		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
+
+		// since we know the term just here we should set the canonical url here
+		$canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('search');
+		if(isset($_GET['q']) && $_GET['q'] != '') $canonicalUrl .= '?q=' . $_GET['q'];
+		$this->header->setCanonicalUrl($canonicalUrl);
 	}
 
 	/**

@@ -11,6 +11,7 @@
         <translation language="de"><![CDATA[Benutzer hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter un utilisateur]]></translation>
         <translation language="hu"><![CDATA[felhasználó hozzáadása]]></translation>
+        <translation language="es"><![CDATA[añadir usuario]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd toegevoegd.]]></translation>
@@ -21,6 +22,7 @@
         <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été ajouté.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" felhasználó hozzáadva.]]></translation>
         <translation language="de"><![CDATA[Der Benutzer "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="es"><![CDATA[El usuario "%1$s" ha sido agregado.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?]]></translation>
@@ -31,6 +33,7 @@
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer l'utilisateur "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos törölni akarod a(z) "%1$s" felhasználót?]]></translation>
         <translation language="de"><![CDATA[Bist du dir sicher, dass du den Benutzer "%1$s" löschen möchtest?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el usuario "%1$s"?]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd verwijderd.]]></translation>
@@ -41,6 +44,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" felhasználó törölve.]]></translation>
         <translation language="de"><![CDATA[Der Benutzer "%1$s" wurde gelöscht.]]></translation>
         <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été effacé.]]></translation>
+        <translation language="es"><![CDATA[El usuario "%1$s" fue eliminado.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De instellingen voor "%1$s" werden opgeslagen.]]></translation>
@@ -51,6 +55,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" beállításai elmentve.]]></translation>
         <translation language="de"><![CDATA[Die Einstellungen für "%1$s" wurden gespeichert.]]></translation>
         <translation language="fr"><![CDATA[Les réglages pour "%1$s" ont été enregistrés.]]></translation>
+        <translation language="es"><![CDATA[Las configuraciones para "%1$s" han sido guardadas.]]></translation>
       </item>
       <item type="message" name="EditUser">
         <translation language="nl"><![CDATA[bewerk gebruiker "%1$s"]]></translation>
@@ -61,6 +66,7 @@
         <translation language="hu"><![CDATA["%1$s" felhasználó szerkesztése]]></translation>
         <translation language="de"><![CDATA[bearbeite Benutzer "%1$s"]]></translation>
         <translation language="fr"><![CDATA[éditer l'utilisateur "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar usuario "%1$s"]]></translation>
       </item>
       <item type="message" name="HelpActive">
         <translation language="nl"><![CDATA[Geef deze account toegang tot het CMS.]]></translation>
@@ -71,6 +77,7 @@
         <translation language="de"><![CDATA[Aktiviere CMS-Zugang für dieses Konto.]]></translation>
         <translation language="hu"><![CDATA[CMS hozzáférés engedélyezése a fiókhoz.]]></translation>
         <translation language="fr"><![CDATA[Activer l'accès CMS pour ce compte.]]></translation>
+        <translation language="es"><![CDATA[Activa el acceso CMS por esta cuenta.]]></translation>
       </item>
       <item type="message" name="HelpAPIAccess">
         <translation language="nl"><![CDATA[Geef deze account toegang tot de API.]]></translation>
@@ -81,6 +88,7 @@
         <translation language="de"><![CDATA[API-Zugang für dieses Benutzerkonto aktivieren.]]></translation>
         <translation language="hu"><![CDATA[API hozzáférés engedélyezése a fiókhoz.]]></translation>
         <translation language="fr"><![CDATA[Activer l'accès API pour ce compte.]]></translation>
+        <translation language="es"><![CDATA[activa el acceso API para esta cuenta.]]></translation>
       </item>
       <item type="message" name="HelpStrongPassword">
         <translation language="nl"><![CDATA[Sterke wachtwoorden bestaan uit een combinatie van hoofdletters]]></translation>
@@ -91,6 +99,7 @@
         <translation language="de"><![CDATA[Starke Passwörter bestehen aus einer Kombination von großen und kleinen Buchstaben, sowie Ziffern und Sonderzeichen.]]></translation>
         <translation language="hu"><![CDATA[Erős jelszóhoz kombináld a kis- és nagybetűket.]]></translation>
         <translation language="fr"><![CDATA[Les mots de passe évolués sont constitués d'une combinaison de majuscules.]]></translation>
+        <translation language="es"><![CDATA[Las contraseñas seguras consisten en una combinación de letras mayusculas]]></translation>
       </item>
       <item type="message" name="Restored">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd terug geactiveerd.]]></translation>
@@ -101,6 +110,7 @@
         <translation language="de"><![CDATA[Der Benutzer "%1$s" wurde wiederhergestellt.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" felhasználó helyreállítva.]]></translation>
         <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été restauré.]]></translation>
+        <translation language="es"><![CDATA[El usuario "%1$s" ha sido restaurado.]]></translation>
       </item>
       <item type="error" name="CantChangeGodsEmail">
         <translation language="nl"><![CDATA[Je kan het emailadres van deze gebruiker niet aanpassen.]]></translation>
@@ -111,6 +121,7 @@
         <translation language="fr"><![CDATA[Vous ne pouvez pas changer l'adresse e-mail du GOD-user.]]></translation>
         <translation language="de"><![CDATA[De E-Mail-Adresse des Hauptbenutzers kann nicht gelöscht werden.]]></translation>
         <translation language="hu"><![CDATA[Nem tudod megváltoztatni a GOD-felhasználó e-mail címét.]]></translation>
+        <translation language="es"><![CDATA[No puedes cambiar la dirección email de DIOS-user.]]></translation>
       </item>
       <item type="error" name="CantDeleteGod">
         <translation language="nl"><![CDATA[Je kan deze gebruiker niet verwijderen.]]></translation>
@@ -121,6 +132,7 @@
         <translation language="fr"><![CDATA[Vous ne pouvez pas effacer le GOD-user.]]></translation>
         <translation language="de"><![CDATA[Der Haupt-Benutzer kann nicht gelöscht werden.]]></translation>
         <translation language="hu"><![CDATA[Nem törölheted a GOD-felhasználót.]]></translation>
+        <translation language="es"><![CDATA[No puedes eliminar al DIOS-user.]]></translation>
       </item>
       <item type="error" name="EmailWasDeletedBefore">
         <translation language="nl"><![CDATA[Een gebruiker met dit emailadres werd vroeger verwijderd. <a href="%1$s">Activeer deze gebruiker terug</a>.]]></translation>
@@ -131,6 +143,7 @@
         <translation language="fr"><![CDATA[Un utilisateur avec cette adresse e-mail a été effacé. <a href="%1$s">Restaurer cet utilisateur</a>.]]></translation>
         <translation language="de"><![CDATA[Ein Benutzer mit dieser E-Mail-Adresse wurde früher gelöscht. <a href="%1$s"> Stelle diesen Benutzet wieder her</a>]]></translation>
         <translation language="hu"><![CDATA[A felhasználó ezzel az e-mail címmel törölve lett. <a href="%1$s">Felhasználó visszaállítása</a>.]]></translation>
+        <translation language="es"><![CDATA[Un usuario con esta dirección email ha sido eliminado. <a href="%1$s">Restaurar este usuario</a>.]]></translation>
       </item>
       <item type="error" name="NonExisting">
         <translation language="nl"><![CDATA[Deze gebruiker bestaat niet.]]></translation>
@@ -141,6 +154,7 @@
         <translation language="fr"><![CDATA[Cet utilisateur n'existe pas.]]></translation>
         <translation language="de"><![CDATA[Dieser Benutzer existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[Ez a felhasználó nem létezik.]]></translation>
+        <translation language="es"><![CDATA[Este usuario no existe.]]></translation>
       </item>
     </users>
   </backend>

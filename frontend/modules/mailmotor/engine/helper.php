@@ -123,9 +123,12 @@ class FrontendMailmotorCMHelper
 
 		// set groupID
 		$groupId = !empty($groupId) ? $groupId : FrontendMailmotorModel::getDefaultGroupID();
+		
+		// get campaign monitor list id
+		$listId = self::getCampaignMonitorID('list', $groupId);
 
 		// group ID found
-		if(FrontendMailmotorModel::existsGroup($groupId) && $cm->subscribe($email, $email))
+		if(FrontendMailmotorModel::existsGroup($groupId) && $cm->subscribe($email, $email, array(), true, $listId))
 		{
 			// set variables
 			$subscriber['email'] = $email;

@@ -397,7 +397,7 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-		// the ID of the page
+		//the ID of the page
 		var pageID = {$item.id};
 
 		// all the possible templates
@@ -411,6 +411,9 @@
 		// the extra's, but in a way we can access them based on their ID
 		var extrasById = {};
 		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+
+		// indicator that the default blocks may not be set on pageload
+		var initDefaults = false;
 
 		// fix selected state in the tree
 		var selectedId = 'page-'+ pageID;
