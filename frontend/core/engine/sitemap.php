@@ -152,12 +152,15 @@ class FrontendSitemap
 				// get the default values
 				$language = (isset($image['language'])) ? $image['language'] : $this->activeLanguage;
 				$action = (isset($image['action'])) ? $image['action'] : null;
-				$url = (isset($image['url'])) ? $image['url'] : '';
 
 				// get the url for the page the image is on
 				FL::setLocale($language);
 				$imagePageUrl = FrontendNavigation::getURLForBlock($module, $action, $language);
-				$tmpData = array( 'loc' => SITE_URL . $imagePageUrl . '/' . $url);
+				$url = '';
+				if(isset($image['url'])) $url = SITE_URL . $imagePageUrl . '/' . $image['url'];
+				elseif(isset($image['full_url'])) $url = SITE_URL . '/' . ltrim($image['full_url'], '/');
+
+				$tmpData = array('loc' => $url);
 
 				// go trough the images to assign the image information
 				foreach($images as $pageImage)

@@ -150,4 +150,58 @@ class FrontendPagesModel implements FrontendTagsInterface
 		$data['full_url'] = SITE_URL . FrontendNavigation::getURL($pageId, $language);
 		return $data;
 	}
+
+	/**
+	 * A function that is used for the sitemap. This will go trough all the blog data and find images
+	 *
+	 * @param string $language
+	 * @return array
+	 */
+	public static function sitemapImages()
+	{
+		$returnData = array();
+		$data = (array) FrontendModel::getDB()->getRecords(
+			'SELECT p.id, pb.html, p.title, p.language, m.url
+			 FROM pages AS p
+			 INNER JOIN pages_blocks AS pb ON pb.revision_id = p.revision_id
+			 INNER JOIN meta AS m ON m.id = p.meta_id
+			 WHERE p.hidden = ? AND p.status = ? AND p.publish_on < ? AND pb.html != ?',
+			array('N', 'active', date('Y-m-d H:i') . ':00', '')
+		);
+
+		foreach($data as $key => $block)
+		{
+			// get the blog posts image data
+			$blockImages = (array) FrontendModel::getImagesFromHtml($block['html']);
+
+			// don't add the post if we don't have any images
+			if(empty($blockImages)) continue;
+
+			// set the description
+			$description = $block['html'];
+
+			$url = FrontendNavigation::getURL($block['id'], $block['language']);
+
+			$tmpData = array(
+				'full_url' => $url,
+				'action' => 'detail',
+				'language' => $block['language'],
+				'images' => array()
+			);
+
+			// add the images to the data
+			foreach($blockImages as $image) $tmpData['images'][] = $image;
+
+			// add a description to the image
+			foreach($tmpData['images'] as $key => $image)
+			{
+				if(isset($image['alt']) && $image['alt'] == '') $tmpData['images'][$key]['alt'] = $block['title'];
+				$tmpData['images'][$key]['description'] = $description;
+			}
+
+			$returnData[] = $tmpData;
+		}
+
+		return $returnData;
+	}
 }
