@@ -160,7 +160,7 @@ class MailmotorInstaller extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			$parentID = $this->insertPage(
-				array('title' => ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
+				array('title' => SpoonFilter::ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
 				'type' => 'root',
 				'language' => $language),
 				null,
@@ -171,7 +171,7 @@ class MailmotorInstaller extends ModuleInstaller
 			$this->insertPage(
 				array(
 					'parent_id' => $parentID,
-					'title' => ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')
+					'title' => SpoonFilter::ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')
 				),
 				'language' => $language),
 				null,
@@ -182,7 +182,7 @@ class MailmotorInstaller extends ModuleInstaller
 			$this->insertPage(
 				array(
 					'parent_id' => $parentID,
-					'title' => ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')
+					'title' => SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')
 				),
 				'language' => $language),
 				null,

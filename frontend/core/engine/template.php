@@ -101,7 +101,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->parseVars();
 
 		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
 
 		// get template path
 		$template = FrontendTheme::getPath($template);
@@ -335,10 +335,10 @@ class FrontendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $locale['locMonthLong' . ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $locale['locMonthShort' . ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $locale['locDayLong' . ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $locale['locDayShort' . ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $locale['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $locale['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $locale['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $locale['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($locale);

@@ -45,7 +45,7 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
 	private function parse()
 	{
 		// get vars
-		$title = ucfirst(FL::msg('BlogAllComments'));
+		$title = SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
 		$link = SITE_URL . FrontendNavigation::getURLForBlock('blog');
 		$detailLink = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail');
 		$description = null;

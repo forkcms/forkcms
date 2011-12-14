@@ -69,7 +69,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->dataGrid = new BackendDataGridArray($this->group['custom_fields']);
 
 		// set headers values
-		$headers['name'] = ucfirst(BL::lbl('Title'));
+		$headers['name'] = SpoonFilter::ucfirst(BL::lbl('Title'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);

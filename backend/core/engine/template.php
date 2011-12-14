@@ -74,7 +74,7 @@ class BackendTemplate extends SpoonTemplate
 		// parse headers
 		if(!$customHeaders)
 		{
-			SpoonHTTP::setHeaders('Content-type: text/html;charset=utf-8');
+			SpoonHTTP::setHeaders('Content-type: text/html;charset=' . SPOON_CHARSET);
 		}
 
 		parent::display($template);
@@ -307,10 +307,10 @@ class BackendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong' . ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort' . ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $localeToAssign['locDayLong' . ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $localeToAssign['locDayShort' . ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $localeToAssign['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $localeToAssign['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($localeToAssign);
@@ -550,7 +550,7 @@ class BackendTemplateModifiers
 	 */
 	public static function toLabel($value)
 	{
-		return ucfirst(BL::lbl(SpoonFilter::toCamelCase($value, '_', false)));
+		return SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($value, '_', false)));
 	}
 
 	/**

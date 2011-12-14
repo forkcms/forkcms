@@ -59,7 +59,7 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		{
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 

@@ -324,7 +324,7 @@ class CampaignMonitor
 
 		// set parameters
 		$parameters['FieldName'] = (string) $name;
-		$parameters['DataType'] = (string) ucfirst($type);
+		$parameters['DataType'] = (string) SpoonFilter::ucfirst($type);
 
 		// options found
 		if(!empty($options))

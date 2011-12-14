@@ -286,7 +286,7 @@ class BackendMailmotorCMHelper
 
 		// reserve results stack
 		$results = array();
-		$results[0] = ucfirst(BL::lbl('CreateNewClient', 'mailmotor'));
+		$results[0] = SpoonFilter::ucfirst(BL::lbl('CreateNewClient', 'mailmotor'));
 
 		// loop the clients
 		foreach($clients as $client)

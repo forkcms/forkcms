@@ -311,9 +311,9 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
 
 		// add columns
-		$this->dataGridUsers->addColumn('nickname', ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->dataGridUsers->addColumn('surname', ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->dataGridUsers->addColumn('name', ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->addColumn('surname', SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		$this->dataGridUsers->addColumn('name', SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
 		// add column URL
 		$this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
@@ -389,8 +389,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 					if(!in_array($action['group'], $addedBundles))
 					{
 						// assign bundled action boxes
-						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']), in_array($action['value'], $selectedActions))->parse();
-						$actionBoxes[$key]['actions'][$i]['action'] = ucfirst($action['group']);
+						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($action['group']), in_array($action['value'], $selectedActions))->parse();
+						$actionBoxes[$key]['actions'][$i]['action'] = SpoonFilter::ucfirst($action['group']);
 						$actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
 						// add the group to the added bundles
@@ -735,10 +735,10 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 					foreach($this->frm->getFields() as $field)
 					{
 						// field exists?
-						if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . ucfirst($key))
+						if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key))
 						{
 							// add to bundled actions
-							$bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($key));
+							$bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key));
 						}
 					}
 				}

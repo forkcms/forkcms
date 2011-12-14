@@ -116,7 +116,7 @@ class BackendNavigation
 		{
 			// init some vars
 			$selected = (isset($selectedKeys[$currentDepth]) && $selectedKeys[$currentDepth] == $key);
-			$label = ucfirst(BL::lbl($value['label']));
+			$label = SpoonFilter::ucfirst(BL::lbl($value['label']));
 			$url = $value['url'];
 
 			// start HTML

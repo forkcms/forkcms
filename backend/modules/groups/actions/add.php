@@ -484,8 +484,8 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 					if(!in_array($action['group'], $addedBundles))
 					{
 						// assign bundled action boxes
-						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']))->parse();
-						$actionBoxes[$key]['actions'][$i]['action'] = ucfirst($action['group']);
+						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($action['group']))->parse();
+						$actionBoxes[$key]['actions'][$i]['action'] = SpoonFilter::ucfirst($action['group']);
 						$actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
 						// add the group to the added bundles
@@ -575,10 +575,10 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 					foreach($this->frm->getFields() as $field)
 					{
 						// field exists?
-						if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . ucfirst($key))
+						if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key))
 						{
 							// add to bundled actions
-							$bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($key));
+							$bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key));
 						}
 					}
 				}

@@ -130,6 +130,6 @@ class BackendBlogMassCommentAction extends BackendBaseAction
 		if($action == 'delete') $report .= 'deleted';
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('comments') . '&report=' . $report . '#tab' . ucfirst($from));
+		$this->redirect(BackendModel::createURLForAction('comments') . '&report=' . $report . '#tab' . SpoonFilter::ucfirst($from));
 	}
 }

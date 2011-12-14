@@ -352,7 +352,7 @@ class API
 
 		// set correct headers
 		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
+		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
 		// output JSON
 		echo json_encode($JSON);
@@ -377,7 +377,7 @@ class API
 		$version = $pathChunks[count($pathChunks) - 2];
 
 		// init XML
-		$XML = new DOMDocument('1.0', 'utf-8');
+		$XML = new DOMDocument('1.0', SPOON_CHARSET);
 
 		// set some properties
 		$XML->preserveWhiteSpace = false;
@@ -400,7 +400,7 @@ class API
 
 		// set correct headers
 		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: text/xml;charset=utf-8');
+		SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
 
 		// output XML
 		echo $XML->saveXML();

@@ -32,7 +32,7 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		$this->dataGrid = new BackendDataGridDB(BackendFormBuilderModel::QRY_BROWSE, BL::getWorkingLanguage());
-		$this->dataGrid->setHeaderLabels(array('email' => ucfirst(BL::getLabel('Recipient')), 'sent_forms' => ''));
+		$this->dataGrid->setHeaderLabels(array('email' => SpoonFilter::ucfirst(BL::getLabel('Recipient')), 'sent_forms' => ''));
 		$this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
 		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'formatRecipients'), array('[email]'), 'email');

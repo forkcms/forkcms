@@ -388,11 +388,11 @@ class BackendFormBuilderModel
 	public static function getLocale($name, $type = 'label', $application = 'backend')
 	{
 		$name = SpoonFilter::toCamelCase($name);
-		$class = ucfirst($application) . 'Language';
-		$function = 'get' . ucfirst($type);
+		$class = SpoonFilter::ucfirst($application) . 'Language';
+		$function = 'get' . SpoonFilter::ucfirst($type);
 
 		// execute and return value
-		return ucfirst(call_user_func_array(array($class, $function), array($name)));
+		return SpoonFilter::ucfirst(call_user_func_array(array($class, $function), array($name)));
 	}
 
 	/**
@@ -620,7 +620,7 @@ class FormBuilderHelper
 			elseif($field['type'] == 'checkbox' || $field['type'] == 'radiobutton')
 			{
 				// name (prefixed by type)
-				$name = ($field['type'] == 'checkbox') ? 'chk' . ucfirst($fieldName) : 'rbt' . ucfirst($fieldName);
+				$name = ($field['type'] == 'checkbox') ? 'chk' . SpoonFilter::ucfirst($fieldName) : 'rbt' . SpoonFilter::ucfirst($fieldName);
 
 				// rebuild so the html is stored in a general name (and not rbtName)
 				foreach($fieldHTML as &$item) $item['field'] = $item[$name];

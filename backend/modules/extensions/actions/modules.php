@@ -63,7 +63,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstallableModules->setSortingColumns(array('raw_name'));
 
 		// set header labels
-		$this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => ucfirst(BL::getLabel('Name'))));
+		$this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => SpoonFilter::ucfirst(BL::getLabel('Name'))));
 
 		// hide some columns
 		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));

@@ -43,7 +43,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 		// get categories
 		$categories = BackendBlogModel::getCategories();
-		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
+		$categories['new_category'] = SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');

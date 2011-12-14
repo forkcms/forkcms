@@ -279,7 +279,7 @@ class SpoonFeedRSS
 		if(in_array($day, $this->skipDays)) throw new SpoonFeedException('This (' . $day . ') day was already added.');
 
 		// set property
-		$this->skipDays[] = ucfirst($day);
+		$this->skipDays[] = SpoonFilter::ucfirst($day);
 	}
 
 

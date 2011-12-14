@@ -248,6 +248,9 @@ class InstallerStep7 extends InstallerStep
 	 */
 	public function execute()
 	{
+		// extend execution limit
+		set_time_limit(0);
+
 		// validate all previous steps
 		if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
 

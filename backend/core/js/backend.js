@@ -1622,11 +1622,9 @@ jsBackend.tableSequenceByDragAndDrop =
 					var action = (typeof $table.parents('table.dataGrid').data('action') == 'undefined') ? 'sequence' : $table.parents('table.dataGrid').data('action').toString();
 					var module = (typeof $table.parents('table.dataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.dataGrid').data('module').toString();
 
-					// buil ajax-url
-					var url = '/backend/ajax.php?module=' + module + '&action='+ action +'&language=' + jsBackend.current.language;
-
-					// append
-					if(typeof $table.parents('table.dataGrid').data('extra-params') != 'undefined') url += $table.parents('table.dataGrid').data('extra-params');
+					// fetch extra params
+					if(typeof $table.parents('table.dataGrid').data('extra-params') != 'undefined') extraParams = $table.parents('table.dataGrid').data('extra-params');
+					else extraParams = {};
 
 					// init var
 					$rows = $(this).find('tr');
@@ -1638,11 +1636,11 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						data:
+						data: $.extend(
 						{
 							fork: { module: module, action: action },
 							new_id_sequence: newIdSequence.join(',')
-						},
+						}, extraParams),
 						success: function(data, textStatus)
 						{
 							// not a succes so revert the changes
