@@ -824,11 +824,11 @@ class FrontendBlogModel implements FrontendTagsInterface
 			$introductionImages = (array) FrontendModel::getImagesFromHtml($post['introduction']);
 			$addedImage = $post['image'];
 
-			// set the description
-			$description = ($post['introduction'] != '') ? $post['introduction'] : $post['text'];
-
 			// don't add the post if we don't have any images
 			if(empty($textImages) && empty($introductionImages) && $addedImage === null) continue;
+
+			// set the description
+			$description = ($post['introduction'] != '') ? $post['introduction'] : $post['text'];
 
 			$tmpData = array(
 				'url' => $post['url'],
