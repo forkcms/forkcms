@@ -1182,7 +1182,7 @@ jsBackend.forms =
 	},
 
 	// check if any element has been changed
-	unloadWarningCheck: function()
+	unloadWarningCheck: function(e)
 	{
 		// initialize var
 		var changed = false;
