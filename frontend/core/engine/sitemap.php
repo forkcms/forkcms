@@ -140,7 +140,7 @@ class FrontendSitemap
 			$modelClass = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
 			if(!is_callable(array($modelClass, 'sitemapImages'))) continue;
 
-			$moduleData = call_user_func(array($modelClass, 'sitemapImages'), $this->activeLanguage);
+			$moduleData = call_user_func(array($modelClass, 'sitemapImages'));
 			$parsedData = array();
 
 			foreach($moduleData as $image)
@@ -523,11 +523,12 @@ class FrontendSitemap
 		$this->sitemapUrl = (string) $sitemapUrl;
 
 		// seperate the url data
-		$url = str_replace('.xml', '', $this->sitemapUrl);
-		$this->urlData = explode('sitemap', $url);
+		preg_match_all('/(.*?)sitemap(.*?)\.xml/', $this->sitemapUrl, $urlData);
+		$this->urlData = (array) array_merge($urlData[1], $urlData[2]);
 
 		// set the default active language
 		$this->activeLanguage = FrontendModel::getModuleSetting('core', 'default_language');
+		$this->sitemapAction = $this->urlData[0];
 
 		// set the sitemap data
 		if($this->urlData[0] != '')
@@ -539,14 +540,13 @@ class FrontendSitemap
 			// we have selected a language
 			if(count($prefixChunks) > 1)
 			{
-				$this->sitemapAction = $prefixChunks[1];
-
 				// set the active language
 				if(in_array($prefixChunks[0], $activeLanguages)) $this->activeLanguage = $prefixChunks[0];
 				else throw new Exception('This(' . $prefixChunks[0] . ') is an invalid language');
+
+				// set the sitemap action
+				$this->sitemapAction = $prefixChunks[1];
 			}
-			// no language selected so take the first chunk as action
-			else $this->sitemapAction = $prefixChunks[0];
 		}
 
 		// load the pagination data

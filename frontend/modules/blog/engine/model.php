@@ -804,7 +804,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 	/**
 	 * A function that is used for the sitemap. This will go trough all the blog data and find images
 	 *
-	 * @param string $language
 	 * @return array
 	 */
 	public static function sitemapImages()
