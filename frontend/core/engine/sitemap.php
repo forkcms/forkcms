@@ -163,30 +163,23 @@ class FrontendSitemap
 				// get the url for the page the image is on
 				FL::setLocale($language);
 				$imagePageUrl = FrontendNavigation::getURLForBlock($module, $action, $language);
-				$url = '';
 				if(isset($image['url'])) $url = SITE_URL . $imagePageUrl . '/' . $image['url'];
 				elseif(isset($image['full_url'])) $url = SITE_URL . '/' . ltrim($image['full_url'], '/');
+				else $url = '';
 
 				$tmpData = array('loc' => $url);
 
 				// go trough the images to assign the image information
 				foreach($images as $pageImage)
 				{
-					$imageData = array(
-						'image:loc' => $pageImage['src'],
-					);
+					$imageData = array('image:loc' => $pageImage['src']);
 
 					// if there is an alt attribute, assign it to the title
-					if(isset($pageImage['alt']) && $pageImage['alt'] != '""') $imageData['image:title'] = $pageImage['alt'];
+					if(isset($pageImage['alt'])) $imageData['image:title'] = $pageImage['alt'];
 
-					// if there is a description given, truncate it on the first occurance of a whitespace
-					// after 140 characters
-					$description = (isset($pageImage['description'])) ? SpoonFilter::stripHTML($pageImage['description']) : null;
-					if($description != null && strlen($description) > 140)
-					{
-						$description = substr($description, 0, strpos($description, ' ', 140));
-						$imageData['image:caption'] = $description;
-					}
+					// truncate the description
+					$description = (isset($pageImage['description'])) ? $pageImage['description'] : null;
+					$imageData['image:caption'] = $this->truncate($description);
 
 					$tmpData[]['image:image'] = $imageData;
 				}
@@ -361,6 +354,24 @@ class FrontendSitemap
 
 			$this->sitemapPage = $page;
 		}
+	}
+
+	/**
+	 * This will truncate a text after x number of characters on the first occurance of a whitespace
+	 *
+	 * @param string $content
+	 * @param int[optional] $offset
+	 * @return string
+	 */
+	protected function truncate($content, $offset = 140)
+	{
+		$content = SpoonFilter::stripHTML($content);
+		if($content != null && strlen($content) > $offset)
+		{
+			$content = substr($content, 0, strpos($content, ' ', 140));
+		}
+
+		return $content;
 	}
 
 	/**
