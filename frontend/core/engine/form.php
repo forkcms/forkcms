@@ -46,7 +46,7 @@ class FrontendForm extends SpoonForm
 		$useToken = (bool) $useToken;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/' . str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
+		$action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);

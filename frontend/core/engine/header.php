@@ -858,6 +858,9 @@ class FrontendHeader extends FrontendBaseObject
 			}
 		}
 
+		// prevent against xss
+		$url = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($url) : SpoonFilter::htmlentities($url);
+
 		// canonical
 		$this->addLink(array('rel' => 'canonical', 'href' => $url));
 
