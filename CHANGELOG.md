@@ -1,6 +1,7 @@
 3.1.7 (xxxx-xx-xx)
 --
 Improvements:
+* Core: tableSequenceByDragAndDrop allows the module to be chosen, so sequences from other modules might be used
 * Tags: tagpages don't have any SEO-value, so don't index them.
 
 Bugfixes:
