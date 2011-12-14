@@ -388,11 +388,27 @@ class FrontendSitemap
 	}
 
 	/**
+	 * This will parse the existing file as a sitemap.
+	 */
+	protected function parseFile()
+	{
+		// the search engines expect a xml file, so act like one
+		SpoonHTTP::setHeaders(array('Content-Type: application/xml'));
+
+		$filePath = FRONTEND_PATH . '/' . $this->sitemapUrl;
+		$oFile = fopen($filePath, 'r');
+		$rFile = fread($oFile, filesize($filePath));
+		echo $rFile;
+		fclose($oFile);
+		exit;
+	}
+
+	/**
 	 * Parse the images. This will load parse the images into a sexy sitemap.
 	 *
 	 * @return array
 	 */
-	public function parseImage()
+	protected function parseImage()
 	{
 		$output = array();
 
@@ -423,7 +439,7 @@ class FrontendSitemap
 	 *
 	 * @return array
 	 */
-	public function parseIndex()
+	protected function parseIndex()
 	{
 		$output = array();
 
@@ -462,7 +478,7 @@ class FrontendSitemap
 	 *
 	 * @return array
 	 */
-	public function parsePage()
+	protected function parsePage()
 	{
 		$output = array();
 
@@ -507,6 +523,9 @@ class FrontendSitemap
 	{
 		// store the url
 		$this->sitemapUrl = (string) $sitemapUrl;
+
+		// this is the override switch, if there is a sitemap uploaded, this will be used
+		if(file_exists(FRONTEND_PATH . '/' . $this->sitemapUrl)) $this->parseFile();
 
 		// seperate the url data
 		$url = str_replace('.xml', '', $this->sitemapUrl);
