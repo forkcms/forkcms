@@ -339,8 +339,9 @@ class FrontendFaqModel implements FrontendTagsInterface
 			'SELECT f.answer, f.question, f.language, m.url
 			 FROM faq_questions AS f
 			 INNER JOIN meta AS m ON m.id = f.meta_id
-			 WHERE f.hidden = ?',
-			array('N')
+			 INNER JOIN meta_sitemap AS ms ON ms.id = m.sitemap_id
+			 WHERE f.hidden = ?, ms.visible = ?',
+			array('N', 'Y')
 		);
 
 		foreach($data as $key => $question)
@@ -350,9 +351,6 @@ class FrontendFaqModel implements FrontendTagsInterface
 
 			// don't add the post if we don't have any images
 			if(empty($answerImages)) continue;
-
-			// set the description
-			$description = $question['answer'];
 
 			$tmpData = array(
 				'url' => $question['url'],
@@ -368,7 +366,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 			foreach($tmpData['images'] as $key => $image)
 			{
 				if(isset($image['alt']) && $image['alt'] == '') $tmpData['images'][$key]['alt'] = $question['question'];
-				$tmpData['images'][$key]['description'] = $description;
+				$tmpData['images'][$key]['description'] = $question['answer'];;
 			}
 
 			$returnData[] = $tmpData;
