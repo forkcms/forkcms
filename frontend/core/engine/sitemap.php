@@ -115,7 +115,7 @@ class FrontendSitemap
 		// go trough the elements to parse them into an xml node
 		foreach($xmlData as $nodeName => $nodeData)
 		{
-			// this should be cleaned up with an array match, jadajada
+			// this should be cleaned up with a whitelist, jadajada
 			if(is_int($nodeName)) $returnString .= $this->arrayToXml($nodeData);
 			else
 			{
@@ -169,10 +169,10 @@ class FrontendSitemap
 
 				// get the url for the page the image is on
 				FL::setLocale($language);
+				$url = SITE_URL;
 				$imagePageUrl = FrontendNavigation::getURLForBlock($module, $action, $language);
-				if(isset($image['url'])) $url = SITE_URL . $imagePageUrl . '/' . $image['url'];
-				elseif(isset($image['full_url'])) $url = SITE_URL . '/' . ltrim($image['full_url'], '/');
-				else $url = '';
+				if(isset($image['url'])) $url .= $imagePageUrl . '/' . $image['url'];
+				elseif(isset($image['full_url'])) $url .= '/' . ltrim($image['full_url'], '/');
 
 				$tmpData = array('loc' => $url);
 
