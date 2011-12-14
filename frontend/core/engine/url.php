@@ -206,9 +206,7 @@ class FrontendURL
 		if(isset($chunks[0]) && preg_match('/(.*)sitemap(.*).xml/', $chunks[0]))
 		{
 			$sitemap = new FrontendSitemap($chunks[0]);
-
 			$sitemap->parse();
-			exit;
 		}
 
 		// single language

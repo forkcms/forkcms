@@ -60,6 +60,13 @@ class FrontendSitemap
 	protected $pageLimit = 10, $numPages = 1;
 
 	/**
+	 * The parsed xml data
+	 *
+	 * @var string
+	 */
+	protected $parsedData = array();
+
+	/**
 	 * The url data
 	 *
 	 * @var array
@@ -368,20 +375,26 @@ class FrontendSitemap
 		if(SpoonFile::exists(FRONTEND_PATH . '/' . $this->sitemapUrl)) $this->parseFile();
 
 		// get the data to display
-		$parsedData = array();
 		$this->sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
-		if($this->sitemapAction == 'page') $parsedData = $this->parsePage();
-		if($this->sitemapAction == 'image') $parsedData = $this->parseImage();
-		if($this->sitemapAction === null) $parsedData = $this->parseIndex();
+		if($this->sitemapAction == 'page') $this->parsedData = $this->parsePage();
+		if($this->sitemapAction == 'image') $this->parsedData = $this->parseImage();
+		if($this->sitemapAction === null) $this->parsedData = $this->parseIndex();
+		$this->parseContent();
+	}
 
-		// build and parse the output
+	/**
+	 * This will parse the automatic generated content
+	 */
+	protected function parseContent()
+	{
 		$output = '<?xml version="1.0" encoding="UTF-8"?>';
 		$output .= '<' . $this->sitemapType . ' xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"';
 		foreach($this->extraSitemapNamespaces as $namespace) $output .= ' ' . $namespace;
 		$output .= '>';
-		$output .= $this->arrayToXml($parsedData);
+		$output .= $this->arrayToXml($this->parsedData);
 		$output .= '</' . $this->sitemapType . '>';
 		echo $output;
+		exit;
 	}
 
 	/**
