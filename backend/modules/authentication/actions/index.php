@@ -73,8 +73,14 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			$txtPassword = $this->frm->getField('backend_password');
 
 			// required fields
-			$txtEmail->isFilled(BL::err('EmailIsRequired'));
-			$txtPassword->isFilled(BL::err('PasswordIsRequired'));
+			if(!$txtEmail->isFilled() || !$txtPassword->isFilled())
+			{
+				// add error
+				$this->frm->addError('fields required');
+
+				// show error
+				$this->tpl->assign('hasError', true);
+			}
 
 			// invalid form-token?
 			if($this->frm->getToken() != $this->frm->getField('form_token')->getValue())

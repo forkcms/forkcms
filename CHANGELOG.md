@@ -2,6 +2,7 @@
 --
 Improvements:
 * Tags: tagpages don't have any SEO-value, so don't index them.
+* Core: Don't show warnings for the required fields on the login-form.
 
 Bugfixes:
 
