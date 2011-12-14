@@ -370,6 +370,9 @@ class FrontendSitemap
 		// the search engines expect a xml file, so act like one
 		SpoonHTTP::setHeaders(array('Content-Type: application/xml'));
 
+		// this is the override switch, if there is a sitemap uploaded, this will be used
+		if(SpoonFile::exists(FRONTEND_PATH . '/' . $this->sitemapUrl)) $this->parseFile();
+
 		// get the data to display
 		$parsedData = '';
 		$this->sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
@@ -392,9 +395,6 @@ class FrontendSitemap
 	 */
 	protected function parseFile()
 	{
-		// the search engines expect a xml file, so act like one
-		SpoonHTTP::setHeaders(array('Content-Type: application/xml'));
-
 		$filePath = FRONTEND_PATH . '/' . $this->sitemapUrl;
 		$fileContents = SpoonFile::getContent($filePath);
 		echo $fileContents;
@@ -521,9 +521,6 @@ class FrontendSitemap
 	{
 		// store the url
 		$this->sitemapUrl = (string) $sitemapUrl;
-
-		// this is the override switch, if there is a sitemap uploaded, this will be used
-		if(SpoonFile::exists(FRONTEND_PATH . '/' . $this->sitemapUrl)) $this->parseFile();
 
 		// seperate the url data
 		$url = str_replace('.xml', '', $this->sitemapUrl);
