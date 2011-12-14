@@ -328,9 +328,9 @@ class BackendURL
 		}
 
 		// no authenticated user, but available from a cookie
-		elseif(SpoonCookie::exists('interface_language'))
+		elseif(ApplicationCookie::exists('interface_language'))
 		{
-			$locale = SpoonCookie::get('interface_language');
+			$locale = ApplicationCookie::get('interface_language');
 		}
 
 		// validate if the requested locale is possible
