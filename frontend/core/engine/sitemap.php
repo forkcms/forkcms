@@ -300,15 +300,12 @@ class FrontendSitemap
 		switch($this->sitemapAction)
 		{
 			case 'page':
-				// show the page items
 				$this->metaData = $this->getPageData($this->pageLimit, $this->sitemapPage);
+				$this->numPages = ceil($this->getPageDataCount() / $this->pageLimit);
 			break;
 			case 'image':
 				$this->metaData = $this->getImageData($this->pageLimit, $this->sitemapPage);
-
-				// pagination
 				$this->numPages = ceil(count($this->metaData) / $this->pageLimit);
-				$this->setPage();
 			break;
 			case '':
 				// do nothing
@@ -317,6 +314,8 @@ class FrontendSitemap
 				SpoonHTTP::redirect(FrontendNavigation::getURL(404, $this->activeLanguage));
 			break;
 		}
+
+		$this->setPage();
 	}
 
 	/**
@@ -330,14 +329,9 @@ class FrontendSitemap
 		switch($action)
 		{
 			case 'page':
-				// get the page limit for the page sitemap
 				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_pages_items', 100);
-
-				// set the number of pages
-				$this->numPages = ceil($this->getPageDataCount() / $this->pageLimit);
 			break;
 			case 'image':
-				// get the page limit for the image sitemap
 				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_images_items', 100);
 			break;
 			default:
@@ -551,6 +545,5 @@ class FrontendSitemap
 
 		// load the pagination data
 		$this->loadPagination($this->sitemapAction);
-		$this->setPage();
 	}
 }
