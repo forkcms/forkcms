@@ -113,7 +113,7 @@ class BackendMeta
 	}
 
 	/**
-	 * Delete the meta record
+	 * Delete the meta record and the sitemap record.
 	 *
 	 * @param int[optional] $metaId
 	 */
@@ -503,7 +503,7 @@ class BackendMeta
 	}
 
 	/**
-	 * Sets the action to use
+	 * Sets the action to use to build the data in the sitemap via the getUrlForBlock frontend function.
 	 *
 	 * @param string $action
 	 */
@@ -513,7 +513,7 @@ class BackendMeta
 	}
 
 	/**
-	 * Set the form
+	 * Set the form to add the data to.
 	 *
 	 * @param BackendForm $form
 	 * @return BackendMeta
@@ -532,7 +532,7 @@ class BackendMeta
 	}
 
 	/**
-	 * Sets the module to use
+	 * Sets the module to use to build the data in the sitemap via the getUrlForBlock frontend function.
 	 *
 	 * @param string[optional] $module
 	 * @return BackendMeta
