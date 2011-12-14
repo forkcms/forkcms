@@ -340,7 +340,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 			 FROM faq_questions AS f
 			 INNER JOIN meta AS m ON m.id = f.meta_id
 			 INNER JOIN meta_sitemap AS ms ON ms.id = m.sitemap_id
-			 WHERE f.hidden = ?, ms.visible = ?',
+			 WHERE f.hidden = ? AND ms.visible = ?',
 			array('N', 'Y')
 		);
 
