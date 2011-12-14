@@ -48,6 +48,6 @@ class FrontendTagsIndex extends FrontendBaseBlock
 		$this->tpl->assign('tags', $this->tags);
 
 		// tag-pages don't have any SEO-value, so don't index them
-		$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+		$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
 	}
 }
