@@ -1,3 +1,11 @@
+3.1.7 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Core: fixed XSS vulnerability (as mentioned on: http://packetstormsecurity.org/files/107815/forkcms-xss.txt)
+* Core: fixed page-unload warning on IE.
+
+
 3.1.6 (2011-12-13)
 --
 Improvements:
