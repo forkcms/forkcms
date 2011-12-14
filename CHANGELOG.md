@@ -1,5 +1,8 @@
 3.1.7 (xxxx-xx-xx)
 --
+Improvements:
+* Tags: tagpages don't have any SEO-value, so don't index them.
+
 Bugfixes:
 
 * Core: fixed XSS vulnerability (as mentioned on: http://packetstormsecurity.org/files/107815/forkcms-xss.txt)
