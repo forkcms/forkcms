@@ -18,6 +18,13 @@ require_once FRONTEND_CORE_PATH . '/engine/language.php';
 class FrontendSitemap
 {
 	/**
+	 * The time format
+	 *
+	 * @var string
+	 */
+	const TIME_FORMAT = 'Y-m-d\TH:i:sP';
+
+	/**
 	 * The active language
 	 *
 	 * @var string
@@ -175,7 +182,7 @@ class FrontendSitemap
 					$imageData = array('image:loc' => $pageImage['src']);
 
 					// if there is an alt attribute, assign it to the title
-					if(isset($pageImage['alt'])) $imageData['image:title'] = $pageImage['alt'];
+					if(isset($pageImage['alt'])) $imageData['image:title'] = $this->truncate($pageImage['alt']);
 
 					// truncate the description
 					$description = (isset($pageImage['description'])) ? $pageImage['description'] : null;
@@ -211,7 +218,7 @@ class FrontendSitemap
 			if($sitemap['edited_on'] > $lastModDate) $lastModDate = (int) $sitemap['edited_on'];
 		}
 
-		return FrontendModel::getUTCDate('Y-m-d\TH:i:sP', $lastModDate);
+		return FrontendModel::getUTCDate(self::TIME_FORMAT, $lastModDate);
 	}
 
 	/**
@@ -247,7 +254,7 @@ class FrontendSitemap
 				$data[$key]['full_url'] =  $baseUrl . '/' . $sitemap['url'];
 			}
 
-			$data[$key]['edited_on'] = FrontendModel::getUTCDate('Y-m-d\TH:i:sP', $sitemap['edited_on']);
+			$data[$key]['edited_on'] = FrontendModel::getUTCDate(self::TIME_FORMAT, $sitemap['edited_on']);
 		}
 		return $data;
 	}
@@ -338,40 +345,6 @@ class FrontendSitemap
 				// do nothing
 			break;
 		}
-	}
-
-	/**
-	 * This will set the current page for the pagination
-	 */
-	protected function setPage()
-	{
-		if($this->urlData[1] != '')
-		{
-			// get the current page
-			$page = (int) ltrim($this->urlData[1], '-');
-			if($page > 0) $page--;
-			if($page > $this->numPages) $page = $this->numPages;
-
-			$this->sitemapPage = $page;
-		}
-	}
-
-	/**
-	 * This will truncate a text after x number of characters on the first occurance of a whitespace
-	 *
-	 * @param string $content
-	 * @param int[optional] $offset
-	 * @return string
-	 */
-	protected function truncate($content, $offset = 140)
-	{
-		$content = SpoonFilter::stripHTML($content);
-		if($content != null && strlen($content) > $offset)
-		{
-			$content = substr($content, 0, strpos($content, ' ', 140));
-		}
-
-		return $content;
 	}
 
 	/**
@@ -570,5 +543,39 @@ class FrontendSitemap
 
 		// load the pagination data
 		$this->loadPagination($this->sitemapAction);
+	}
+
+	/**
+	 * This will set the current page for the pagination
+	 */
+	protected function setPage()
+	{
+		if($this->urlData[1] != '')
+		{
+			// get the current page
+			$page = (int) ltrim($this->urlData[1], '-');
+			if($page > 0) $page--;
+			if($page > $this->numPages) $page = $this->numPages;
+
+			$this->sitemapPage = $page;
+		}
+	}
+
+	/**
+	 * This will truncate a text after x number of characters on the first occurance of a whitespace
+	 *
+	 * @param string $content
+	 * @param int[optional] $offset
+	 * @return string
+	 */
+	protected function truncate($content, $offset = 140)
+	{
+		$content = SpoonFilter::stripHTML($content);
+		if($content != null && strlen($content) > $offset)
+		{
+			$content = substr($content, 0, strpos($content, ' ', 140));
+		}
+
+		return $content;
 	}
 }
