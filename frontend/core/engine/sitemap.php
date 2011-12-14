@@ -465,7 +465,7 @@ class FrontendSitemap
 		{
 			// add the data so we can parse this in the sitemap
 			$output[]['sitemap'] = array(
-				'loc' => SITE_URL . '/' . $this->activeLanguage . '-pagesitemap.xml',
+				'loc' => SITE_URL . '/pagesitemap.xml',
 				'lastmod' => $this->getLastModificationDate($this->getPageDataCount(), 0)
 			);
 		}
@@ -491,13 +491,14 @@ class FrontendSitemap
 		if($this->numPages > 1 && $this->sitemapPage === null)
 		{
 			$this->sitemapType = 'sitemapindex';
+			$prefix = (SITE_MULTILANGUAGE) ? $this->activeLanguage . '-' : '';
 
 			// build the number of sitemaps equal to the number of pages
 			for($i = 1; $i <= $this->numPages; $i++)
 			{
 				// add the data so we can parse this in the sitemap
 				$output[]['sitemap'] = array(
-					'loc' => SITE_URL . '/' . $this->activeLanguage . '-pagesitemap-' . $i . '.xml',
+					'loc' => SITE_URL . '/' . $prefix . 'pagesitemap-' . $i . '.xml',
 					'lastmod' => $this->getLastModificationDate($this->pageLimit, $i - 1)
 				);
 			}
