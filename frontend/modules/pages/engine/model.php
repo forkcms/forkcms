@@ -165,8 +165,14 @@ class FrontendPagesModel implements FrontendTagsInterface
 			 FROM pages AS p
 			 INNER JOIN pages_blocks AS pb ON pb.revision_id = p.revision_id
 			 INNER JOIN meta AS m ON m.id = p.meta_id
-			 WHERE p.hidden = ? AND p.status = ? AND p.publish_on < ? AND pb.html != ?',
-			array('N', 'active', date('Y-m-d H:i') . ':00', '')
+			 INNER JOIN meta_sitemap AS ms ON ms.id = m.sitemap_id
+			 WHERE
+			 	p.hidden = ? AND
+			 	p.status = ? AND
+			 	p.publish_on < ? AND
+			 	pb.html != ? AND
+			 	ms.visible = ?',
+			array('N', 'active', date('Y-m-d H:i') . ':00', '', 'Y')
 		);
 
 		foreach($data as $key => $block)

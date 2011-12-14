@@ -813,8 +813,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 			'SELECT p.text, p.introduction, p.image, m.url, m.title, p.language
 			 FROM blog_posts AS p
 			 INNER JOIN meta AS m ON m.id = p.meta_id
-			 WHERE p.status = ? AND p.hidden = ?',
-			array('active', 'N')
+			 INNER JOIN meta_sitemap AS ms ON ms.id = m.sitemap_id
+			 WHERE p.status = ? AND p.hidden = ? AND p.publish_on < ? AND ms.visible = ?',
+			array('active', 'N', date('Y-m-d H:i') . ':00', 'Y')
 		);
 
 		foreach($data as $key => $post)
