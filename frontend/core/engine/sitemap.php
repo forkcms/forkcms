@@ -332,6 +332,9 @@ class FrontendSitemap
 			case 'page':
 				// get the page limit for the page sitemap
 				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_pages_items', 100);
+
+				// set the number of pages
+				$this->numPages = ceil($this->getPageDataCount() / $this->pageLimit);
 			break;
 			case 'image':
 				// get the page limit for the image sitemap
@@ -341,9 +344,6 @@ class FrontendSitemap
 				// do nothing
 			break;
 		}
-
-		// set the number of pages
-		$this->numPages = ceil($this->getPageDataCount() / $this->pageLimit);
 	}
 
 	/**
@@ -374,7 +374,7 @@ class FrontendSitemap
 		if(SpoonFile::exists(FRONTEND_PATH . '/' . $this->sitemapUrl)) $this->parseFile();
 
 		// get the data to display
-		$parsedData = '';
+		$parsedData = array();
 		$this->sitemapType = ($this->sitemapAction === null) ? 'sitemapindex' : 'urlset';
 		if($this->sitemapAction == 'page') $parsedData = $this->parsePage();
 		if($this->sitemapAction == 'image') $parsedData = $this->parseImage();
@@ -528,7 +528,7 @@ class FrontendSitemap
 
 		// set the default active language
 		$this->activeLanguage = FrontendModel::getModuleSetting('core', 'default_language');
-		$this->sitemapAction = $this->urlData[0];
+		$this->sitemapAction = ($this->urlData[0] == '') ? null : $this->urlData[0];
 
 		// set the sitemap data
 		if($this->urlData[0] != '')
