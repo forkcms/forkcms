@@ -1211,18 +1211,8 @@ jsBackend.forms =
 			}
 		});
 
-		// not changed?
-		if(!changed)
-		{
-			// prevent default action from being executed
-			if(e) e.preventDefault();
-
-			// unbind the event
-			$(window).off('beforeunload');
-		}
-
 		// return if needed
-		return (changed) ? '{$msgValuesAreChanged}' : null;
+		if(changed) return '{$msgValuesAreChanged}';
 	}
 }
 
