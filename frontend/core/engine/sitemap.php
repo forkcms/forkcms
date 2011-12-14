@@ -396,10 +396,8 @@ class FrontendSitemap
 		SpoonHTTP::setHeaders(array('Content-Type: application/xml'));
 
 		$filePath = FRONTEND_PATH . '/' . $this->sitemapUrl;
-		$oFile = fopen($filePath, 'r');
-		$rFile = fread($oFile, filesize($filePath));
-		echo $rFile;
-		fclose($oFile);
+		$fileContents = SpoonFile::getContent($filePath);
+		echo $fileContents;
 		exit;
 	}
 
@@ -525,7 +523,7 @@ class FrontendSitemap
 		$this->sitemapUrl = (string) $sitemapUrl;
 
 		// this is the override switch, if there is a sitemap uploaded, this will be used
-		if(file_exists(FRONTEND_PATH . '/' . $this->sitemapUrl)) $this->parseFile();
+		if(SpoonFile::exists(FRONTEND_PATH . '/' . $this->sitemapUrl)) $this->parseFile();
 
 		// seperate the url data
 		$url = str_replace('.xml', '', $this->sitemapUrl);
