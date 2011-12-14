@@ -177,11 +177,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 			// don't add the post if we don't have any images
 			if(empty($blockImages)) continue;
 
-			// set the description
-			$description = $block['html'];
-
 			$url = FrontendNavigation::getURL($block['id'], $block['language']);
-
 			$tmpData = array(
 				'full_url' => $url,
 				'action' => 'detail',
@@ -196,7 +192,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 			foreach($tmpData['images'] as $key => $image)
 			{
 				if(isset($image['alt']) && $image['alt'] == '') $tmpData['images'][$key]['alt'] = $block['title'];
-				$tmpData['images'][$key]['description'] = $description;
+				$tmpData['images'][$key]['description'] = $block['html'];
 			}
 
 			$returnData[] = $tmpData;
