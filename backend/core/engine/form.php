@@ -53,7 +53,7 @@ class BackendForm extends SpoonForm
 		$name = ($name === null) ? SpoonFilter::toCamelCase($this->URL->getModule() . '_' . $this->URL->getAction(), '_', true) : (string) $name;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/' . str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
+		$action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);
