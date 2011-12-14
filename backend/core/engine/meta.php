@@ -467,10 +467,7 @@ class BackendMeta
 		}
 		else
 		{
-			// when working with revisions, a sitemap will already provided
-			if(isset($this->data['sitemap_id'])) $meta['sitemap_id'] = $this->saveSitemap($sitemap);
-			else $meta['sitemap_id'] = $this->saveSitemap($sitemap);
-
+			$meta['sitemap_id'] = $this->saveSitemap($sitemap);
 			$this->id = (int) $db->insert('meta', $meta);
 		}
 
