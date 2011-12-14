@@ -63,6 +63,20 @@ class BackendURL
 	}
 
 	/**
+	 * Get the domain
+	 *
+	 * @return string The current domain (without www.)
+	 */
+	public function getDomain()
+	{
+		// get host
+		$host = $this->getHost();
+
+		// replace
+		return str_replace('www.', '', $host);
+	}
+
+	/**
 	 * Get the host
 	 *
 	 * @return string
