@@ -22,7 +22,7 @@ require_once 'engine/installer.php';
 
 // we'll be using utf-8
 define('SPOON_CHARSET', 'utf-8');
-SpoonHTTP::setHeaders('Content-type: text/html;charset=' . SPOON_CHARSET);
+header('Content-type: text/html;charset=' . SPOON_CHARSET);
 
 // run instance
 new Installer();
