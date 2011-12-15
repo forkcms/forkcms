@@ -9,6 +9,7 @@ Bugfixes:
 
 * Core: fixed XSS vulnerability (as mentioned on: http://packetstormsecurity.org/files/107815/forkcms-xss.txt)
 * Core: fixed page-unload warning on IE.
+* Core: it was not possible to use translations that did not exist in English.
 
 
 3.1.6 (2011-12-13)
