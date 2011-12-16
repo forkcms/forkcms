@@ -29,7 +29,7 @@
 						</p>
 						{$txtPasswordError}
 					</div>
-					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">{$lblNone|ucfirst}</p>

@@ -30,7 +30,7 @@
 		</ul>
 
 		<div id="tabContent">
-			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+			<table width="100%">
 				<tr>
 					<td id="leftColumn">
 
@@ -149,7 +149,7 @@
 		</div>
 
 		<div id="tabPermissions">
-			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+			<table width="100%">
 				<tr>
 					<td>
 						{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label>

@@ -2,7 +2,7 @@
 <body id="login">
 	{include:{$BACKEND_MODULES_PATH}/{$MODULE}/layout/templates/ie6.tpl}
 	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
-	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
+	<table id="loginHolder">
 		<tr>
 			<td>
 				{option:hasError}

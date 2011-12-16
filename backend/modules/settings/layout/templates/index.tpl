@@ -111,7 +111,7 @@
 		<div class="content">
 			<p>{$msgHelpAPIKeys}</p>
 			<div class="dataGridHolder">
-				<table border="0" cellspacing="0" cellpadding="0" class="dataGrid dynamicStriping">
+				<table class="dataGrid dynamicStriping">
 					<thead>
 						<tr>
 							<th class="title" style="width: 20%;"><span>{$lblName|ucfirst}</span></th>

@@ -34,7 +34,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
 
 		// set attributes for the datagrid
-		$this->setAttributes(array('class' => 'dataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
+		$this->setAttributes(array('class' => 'dataGrid'));
 
 		// id gets special treatment
 		if(in_array('id', $this->getColumns()))

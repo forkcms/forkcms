@@ -65,7 +65,7 @@
 						<div class="heading">
 							<h3>{$lblPreview|ucfirst}</h3>
 						</div>
-						<div id="fieldsHolder" cellspacing="0" cellpadding="0" border="0" class="sequenceByDragAndDrop">
+						<div id="fieldsHolder" class="sequenceByDragAndDrop">
 							{option:fields}
 								{iteration:fields}
 									{$fields.field}

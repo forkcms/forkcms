@@ -15,7 +15,7 @@
 <div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">
-			<table cellspacing="0" cellpadding="0" border="0">
+			<table>
 				<tbody>
 					<tr>
 						<td>

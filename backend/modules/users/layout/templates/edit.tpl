@@ -6,7 +6,7 @@
 </div>
 
 {form:edit}
-	<table class="settingsUserInfo" border="0" cellspacing="0" cellpadding="0">
+	<table class="settingsUserInfo">
 		<tr>
 			<td>
 				<div class="avatar av48">
@@ -16,7 +16,7 @@
 				</div>
 			</td>
 			<td>
-				<table class="infoGrid" border="0" cellspacing="0" cellpadding="0">
+				<table class="infoGrid">
 					<tr>
 						<th>{$lblName|ucfirst}:</th>
 						<td><strong>{$record.settings.name} {$record.settings.surname}</strong></td>
@@ -111,7 +111,7 @@
 						<label for="newPassword">{$lblPassword|ucfirst}</label>
 						{$txtNewPassword} {$txtNewPasswordError}
 					</p>
-					<table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">/</p>

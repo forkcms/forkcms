@@ -3,7 +3,7 @@
 <h2>Installation complete</h2>
 <p>Fork CMS is installed! You can now log in using:</p>
 
-<table border="0" cellspacing="0" cellpadding="0" class="infoGrid">
+<table class="infoGrid">
 	<tr>
 		<th>Your e-mail</th>
 		<td>{$email}</td>
