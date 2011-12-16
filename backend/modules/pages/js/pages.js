@@ -108,6 +108,9 @@ jsBackend.pages.extras =
 	// add block visual on template
 	addBlockVisual: function(position, index, extraId, visible)
 	{
+		// check if the extra is valid
+		if(extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
+
 		// block
 		if(extraId != 0)
 		{
@@ -146,6 +149,8 @@ jsBackend.pages.extras =
 
 		// mark as updated
 		jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
+
+		return true;
 	},
 
 	// delete a linked block
@@ -659,8 +664,11 @@ jsBackend.pages.template =
 		newDefaults = new Array();
 
 		// check if this default block has been changed
-		if(current != old)
+		if(current != old || (typeof initDefaults != 'undefined' && initDefaults))
 		{
+			// this is a variable indicating that the add-action may initially set default blocks
+			if(typeof initDefaults != 'undefined') initDefaults = false;
+			
 			// loop positions in new template
 			for(var position in current.data.default_extras)
 			{
@@ -674,7 +682,7 @@ jsBackend.pages.template =
 					var existingBlock = null;
 
 					// find existing block sent to default
-					var existingBlock = $('input[id^=blockPosition][value=fallback]').parent().find('input[id^=blockExtraId][value=' + extraId + ']').parent();
+					var existingBlock = $('input[id^=blockPosition][value=fallback]:not(#blockPosition0)').parent().find('input[id^=blockExtraId][value=' + extraId + ']').parent();
 
 					// if this block did net yet exist, add it
 					if(existingBlock.length == 0) newDefaults.push(new Array(extraId, position));
@@ -711,7 +719,10 @@ jsBackend.pages.template =
 			}
 
 			// add visual representation of block to template visualisation
-			jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
+			added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
+
+			// if the visual could be not added, remove the content entirely
+			if(!added) $(this).remove();
 		});
 
 		// reset block indexes

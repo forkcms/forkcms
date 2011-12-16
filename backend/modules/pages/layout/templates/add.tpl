@@ -365,6 +365,9 @@
 		// the extra's, but in a way we can access them based on their ID
 		var extrasById = {};
 		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+
+		// indicator that the default blocks may be set on pageload
+		var initDefaults = true;
 	//]]>
 </script>
 

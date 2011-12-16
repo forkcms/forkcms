@@ -20,6 +20,10 @@ class BackendLocationIndex extends BackendBaseActionIndex
 	public function execute()
 	{
 		parent::execute();
+
+		// add js
+		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, null, true, false);
+
 		$this->loadDataGrid();
 		$this->parse();
 		$this->display();

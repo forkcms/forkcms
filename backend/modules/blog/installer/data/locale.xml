@@ -11,6 +11,7 @@
         <translation language="cn"><![CDATA[添加文章]]></translation>
         <translation language="de"><![CDATA[Artikel hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter un article]]></translation>
+        <translation language="es"><![CDATA[agregar artículo]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
@@ -21,6 +22,7 @@
         <translation language="cn"><![CDATA[文章“%1$s”已添加。]]></translation>
         <translation language="de"><![CDATA[Der Artikel "%1$s" wurde hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA[L'article "%1$s" a été ajouté.]]></translation>
+        <translation language="es"><![CDATA[El artículo "%1$s" ha sido agregado.]]></translation>
       </item>
       <item type="message" name="ArticlesFor">
         <translation language="nl"><![CDATA[Artikels in "%1$s"]]></translation>
@@ -31,6 +33,7 @@
         <translation language="hu"><![CDATA[Cikkek "%1$s"-tól/től]]></translation>
         <translation language="de"><![CDATA[Artikel in "%1$s"]]></translation>
         <translation language="fr"><![CDATA[Articles pour "%1$s" ]]></translation>
+        <translation language="es"><![CDATA[Artículos para "%1$s"]]></translation>
       </item>
       <item type="message" name="CommentOnWithURL">
         <translation language="nl"><![CDATA[Reactie op: <a href="%1$s">%2$s</a>]]></translation>
@@ -41,6 +44,7 @@
         <translation language="hu"><![CDATA[Hozzászólás: <a href="%1$s">%2$s</a>]]></translation>
         <translation language="fr"><![CDATA[Commentaire sur <a href="%1$s">%2$s</a>]]></translation>
         <translation language="de"><![CDATA[Kommentare zu: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="es"><![CDATA[Comentario en: <a href="%1$s">%2$s</a>]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je het artikel "%1$s" wil verwijderen?]]></translation>
@@ -51,6 +55,7 @@
         <translation language="de"><![CDATA[Willst du den Artikel "%1$s" wirklich löschen?]]></translation>
         <translation language="hu"><![CDATA[Biztos törölni akarod a(z) "%1$s" cikket?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer l'article "%1$s"?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el artículo "%1$s"?]]></translation>
       </item>
       <item type="message" name="DeleteAllSpam">
         <translation language="nl"><![CDATA[Alle spam verwijderen:]]></translation>
@@ -61,6 +66,7 @@
         <translation language="hu"><![CDATA[Összes spam törlése:]]></translation>
         <translation language="fr"><![CDATA[Effacer tous les spams:]]></translation>
         <translation language="de"><![CDATA[Lösche allen Spam:]]></translation>
+        <translation language="es"><![CDATA[Eliminar todo el Spam:]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De geselecteerde artikels werden verwijderd.]]></translation>
@@ -71,6 +77,7 @@
         <translation language="hu"><![CDATA[A kiválasztott cikkek törlésre kerültek.]]></translation>
         <translation language="de"><![CDATA[Die ausgewählten Artikel wurden gelöscht.]]></translation>
         <translation language="fr"><![CDATA[Les articles sélectionnées ont été effacés.]]></translation>
+        <translation language="es"><![CDATA[Los artículos seleccionados fueron eliminados.]]></translation>
       </item>
       <item type="message" name="DeletedSpam">
         <translation language="nl"><![CDATA[Alle spamberichten werden verwijderd.]]></translation>
@@ -81,6 +88,7 @@
         <translation language="de"><![CDATA[Alle als Spam markierten Kommentare wurden gelöscht.]]></translation>
         <translation language="hu"><![CDATA[Összes spam-hozzászólás törölve.]]></translation>
         <translation language="fr"><![CDATA[Tous les commentaires spams ont été effacés.]]></translation>
+        <translation language="es"><![CDATA[Todos los comentarios spam fueron eliminados.]]></translation>
       </item>
       <item type="message" name="EditArticle">
         <translation language="nl"><![CDATA[bewerk artikel "%1$s"]]></translation>
@@ -91,6 +99,7 @@
         <translation language="cn"><![CDATA[编辑文章“%1$s”]]></translation>
         <translation language="de"><![CDATA[bearbeite Artikel "%1$s"]]></translation>
         <translation language="fr"><![CDATA[éditer l'article "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar artículo "%1$s"]]></translation>
       </item>
       <item type="message" name="EditCommentOn">
         <translation language="nl"><![CDATA[bewerk reactie op "%1$s"]]></translation>
@@ -101,6 +110,7 @@
         <translation language="cn"><![CDATA[编辑“%1$s”上的评论]]></translation>
         <translation language="fr"><![CDATA[éditer le commentaire sur "%1$s"]]></translation>
         <translation language="de"><![CDATA[bearbeite die Kommentare zu "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar comentario en "%1$s"]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd opgeslagen.]]></translation>
@@ -111,6 +121,7 @@
         <translation language="cn"><![CDATA[文章“%1$s”已保存。]]></translation>
         <translation language="de"><![CDATA[Der Artikel "%1$s" wurde gespeichert.]]></translation>
         <translation language="fr"><![CDATA[L'article "%1$s" a été enregistré.]]></translation>
+        <translation language="es"><![CDATA[El atículo "%1$s" fue guardado.]]></translation>
       </item>
       <item type="message" name="EditedComment">
         <translation language="nl"><![CDATA[De reactie werd opgeslagen.]]></translation>
@@ -121,6 +132,7 @@
         <translation language="cn"><![CDATA[评论已保存。]]></translation>
         <translation language="de"><![CDATA[Der Kommentar wurde gespeichert.]]></translation>
         <translation language="fr"><![CDATA[Le commentaire a été enregistré.]]></translation>
+        <translation language="es"><![CDATA[El comentario fue guardado.]]></translation>
       </item>
       <item type="message" name="FollowAllCommentsInRSS">
         <translation language="nl"><![CDATA[Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
@@ -131,6 +143,7 @@
         <translation language="hu"><![CDATA[Az összes hozzászólás RSS feed-je: <a href="%1$s">%1$s</a>.]]></translation>
         <translation language="de"><![CDATA[Verfolge alle Kommentare in einem RSS-Feed: <a href="%1$s">%1$s</a>.]]></translation>
         <translation language="fr"><![CDATA[Faire suivre les commentaires dans un flux RSS <a href="%1$s">%1$s</a>]]></translation>
+        <translation language="es"><![CDATA[Sigue todos los comentarios en el RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
       </item>
       <item type="message" name="HelpMeta">
         <translation language="nl"><![CDATA[Toon de meta informatie van deze blogpost in de RSS feed (categorie)]]></translation>
@@ -141,6 +154,7 @@
         <translation language="hu"><![CDATA[Mutasd ennek a blogposztnak a meta információit RSS feed-ben (katagória)]]></translation>
         <translation language="de"><![CDATA[Zeige die Meta-Informationen für diesen Blogpost im RSS Feed (Kategorie)]]></translation>
         <translation language="fr"><![CDATA[Afficher les informations meta pour ce post dans le flux RSS (catégorie)]]></translation>
+        <translation language="es"><![CDATA[muestra la meta information de este post en el RSS feed (category)]]></translation>
       </item>
       <item type="message" name="HelpPingServices">
         <translation language="nl"><![CDATA[Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst.]]></translation>
@@ -151,6 +165,7 @@
         <translation language="de"><![CDATA[Informiere verschiedene Blogging-Dienste sobald du einen neuen Artikel veröffentlicht hast.]]></translation>
         <translation language="hu"><![CDATA[Tudj meg több más blogszolgáltatást, mikor új cikket teszel közzé.]]></translation>
         <translation language="fr"><![CDATA[Informez plusieurs services de blog que vous avez posté un nouvel article.]]></translation>
+        <translation language="es"><![CDATA[avisa a varios servicios de blog cuando publicas un nuevo artículo.]]></translation>
       </item>
       <item type="message" name="HelpSpamFilter">
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
@@ -161,6 +176,7 @@
         <translation language="de"><![CDATA[Aktiviere den eingebauten Spamfilter (Akismet) um Spam in den Kommentaren zu vermeiden.]]></translation>
         <translation language="hu"><![CDATA[Engedélyezd a beépített spamszűrőt (Akismet) a spam hozzászólások kivédéséhez.]]></translation>
         <translation language="fr"><![CDATA[Activez le filtre de spam (Akismet) pour éviter les spams dans les commentaires.]]></translation>
+        <translation language="es"><![CDATA[Activar el filtro spam incorporado (Akismet) para ayudar a evitar los comentarios spam.]]></translation>
       </item>
       <item type="message" name="HelpSummary">
         <translation language="nl"><![CDATA[Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.]]></translation>
@@ -171,6 +187,7 @@
         <translation language="hu"><![CDATA[Írj bevezetőt vagy összegzést a hosszú bejegyzésekhez. Ez megjelenik a kezdőoldalon vagy a cikk áttekintésénél.]]></translation>
         <translation language="de"><![CDATA[Schreibe eine kurze Einleitung oder Zusammenfassung für längere Artikel. Sie wird auf der Startseite oder der Artikel-Übersicht angezeigt werden.]]></translation>
         <translation language="fr"><![CDATA[Rédigez une introduction pour les articles longs. Elle sera affichée sur la homepage ou sur la vue d'ensemble de l'article.]]></translation>
+        <translation language="es"><![CDATA[Escribe una introducción o resumen para artículos largos. Esto se mostrará en la página principal o en el resumen del artículo.]]></translation>
       </item>
       <item type="message" name="NoCategoryItems">
         <translation language="nl"><![CDATA[Er zijn nog geen categorieën. <a href="%1$s">Maak een eerste categorie</a>.]]></translation>
@@ -181,6 +198,7 @@
         <translation language="de"><![CDATA[Es gibt noch keine Kategorien. <a href="%1$s">Erstelle die erste Kategorie</a>.]]></translation>
         <translation language="hu"><![CDATA[Nincsenek még kategóriák. <a href="%1$s">Hozd létre az elsőt</a>.]]></translation>
         <translation language="fr"><![CDATA[il n'y a pas encore de catégorie. <a href="%1$s">Créez la première</a>]]></translation>
+        <translation language="es"><![CDATA[No hay categorias aun. <a href="%1$s">Crea la primera categoría</a>.]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
@@ -188,9 +206,10 @@
         <translation language="it"><![CDATA[Non ci sono ancora articoli. <a href="%1$s">Scrivi il primo articolo</a>.]]></translation>
         <translation language="ru"><![CDATA[Нет записей. <a href="%1$s">Напишите первый пост</a>.]]></translation>
         <translation language="cn"><![CDATA[尚无文章。<a href="%1$s">撰写一篇文章</a>。]]></translation>
-        <translation language="de"><![CDATA[Es gift notch keine Artikel. <a href="%1$s">Schreibe den ersten Artikel</a>.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Artikel. <a href="%1$s">Schreibe den ersten Artikel</a>.]]></translation>
         <translation language="hu"><![CDATA[Nincsenek még cikkek. <a href="%1$s">Írd meg az elsőt</a>.]]></translation>
         <translation language="fr"><![CDATA[il n'y a pas encore d'article. <a href="%1$s">Ajouter le premier article</a>.]]></translation>
+        <translation language="es"><![CDATA[No hay artículos aun. <a href="%1$s">Escribe el primer articulo</a>.]]></translation>
       </item>
       <item type="message" name="NotifyByEmailOnNewComment">
         <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie is.]]></translation>
@@ -201,6 +220,7 @@
         <translation language="de"><![CDATA[Benachrichtigung per E-Mail bei neuen Kommentare.]]></translation>
         <translation language="hu"><![CDATA[Értesítés e-mailben, ha új hozzászólás érkezik.]]></translation>
         <translation language="fr"><![CDATA[Notifier par e-mail quand il y a un nouveau commentaire.]]></translation>
+        <translation language="es"><![CDATA[Notificar por email cuando hay un nuevo comentario.]]></translation>
       </item>
       <item type="message" name="NotifyByEmailOnNewCommentToModerate">
         <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie te modereren is.]]></translation>
@@ -211,6 +231,7 @@
         <translation language="de"><![CDATA[Benachrichtigung per E-Mail bei neuen, freizuschaltenden Kommentaren.]]></translation>
         <translation language="hu"><![CDATA[Értesítés e-mailben, ha új hozzászólást moderációra vár.]]></translation>
         <translation language="fr"><![CDATA[Notifier par e-mail quand il y a un nouveau commentaire à modérer.]]></translation>
+        <translation language="es"><![CDATA[Notificar por email cuando hay un nuevo comentario que moderar.]]></translation>
       </item>
       <item type="message" name="NumItemsInRecentArticlesFull">
         <translation language="nl"><![CDATA[Aantal items in recente artikels (volledig) widget]]></translation>
@@ -221,6 +242,7 @@
         <translation language="hu"><![CDATA[A legutóbbi cikkek száma (teljes) widget]]></translation>
         <translation language="fr"><![CDATA[Nombre d'articles dans le widget articles récents (complet)]]></translation>
         <translation language="de"><![CDATA[Anzahl an Artikeln im neueste Artikel (vollständig) Widget.]]></translation>
+        <translation language="es"><![CDATA[Número de artículos en los artículos recientes (completo) widget]]></translation>
       </item>
       <item type="message" name="NumItemsInRecentArticlesList">
         <translation language="nl"><![CDATA[Aantal items in recente artikels (lijst) widget]]></translation>
@@ -231,6 +253,7 @@
         <translation language="hu"><![CDATA[A legutóbbi cikkek száma (lista) widget]]></translation>
         <translation language="fr"><![CDATA[Nombre d'articles dans le widget articles récents (liste)]]></translation>
         <translation language="de"><![CDATA[Anzahl an Artikeln im neueste Artikel (Liste) Widget.]]></translation>
+        <translation language="es"><![CDATA[Número de artículos en los artículos recientes (lista) widget]]></translation>
       </item>
       <item type="message" name="ShowOnlyItemsInCategory">
         <translation language="nl"><![CDATA[Toon enkel berichten in de categorie:]]></translation>
@@ -241,6 +264,7 @@
         <translation language="de"><![CDATA[Zeige nur Artikel der Kategorie:]]></translation>
         <translation language="hu"><![CDATA[Csak cikkek mutatása:]]></translation>
         <translation language="fr"><![CDATA[Montrer seulement les articles pour:]]></translation>
+        <translation language="es"><![CDATA[Mostrar solo artículos para:]]></translation>
       </item>
       <item type="error" name="DeleteCategoryNotAllowed">
         <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
@@ -251,6 +275,7 @@
         <translation language="de"><![CDATA[Es ist nicht erlaubt die Kategorie "%1$s" zu löschen.]]></translation>
         <translation language="hu"><![CDATA[Nem törölhető a(z) "%1$s" kategória.]]></translation>
         <translation language="fr"><![CDATA[Vous ne pouvez pas effacer la catégorie "%1$s".]]></translation>
+        <translation language="es"><![CDATA[INo está permitido eliminar la categoría "%1$s".]]></translation>
       </item>
       <item type="error" name="RSSDescription">
         <translation language="nl"><![CDATA[Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
@@ -261,6 +286,7 @@
         <translation language="fr"><![CDATA[La description du blog RSS n'est pas encore founie. <a href="%1$s">Configurer</a>]]></translation>
         <translation language="hu"><![CDATA[Blog RSS leírás még nincs megadva. <a href="%1$s">Beállítás</a>]]></translation>
         <translation language="de"><![CDATA[Die Blog RSS Beschreibung wurde noch nicht angegeben. <a href="%1$s">Konfigurieren</a>]]></translation>
+        <translation language="es"><![CDATA[Aún no se ha proporcionado una descripción para la alimentación del blog RSS. <a href="%1$s">Configurar</a>]]></translation>
       </item>
     </blog>
   </backend>

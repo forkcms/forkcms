@@ -11,6 +11,17 @@
         <translation language="fr"><![CDATA[action]]></translation>
         <translation language="hu"><![CDATA[használ]]></translation>
         <translation language="de"><![CDATA[Aktion]]></translation>
+        <translation language="es"><![CDATA[acción]]></translation>
+      </item>
+      <item type="label" name="AddGroup">
+        <translation language="nl"><![CDATA[groep toevoegen]]></translation>
+        <translation language="en"><![CDATA[add group]]></translation>
+        <translation language="it"><![CDATA[aggiungi gruppo]]></translation>
+        <translation language="ru"><![CDATA[Добавить группу]]></translation>
+        <translation language="cn"><![CDATA[添加用户组]]></translation>
+        <translation language="de"><![CDATA[Gruppe hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
       </item>
       <item type="label" name="Checkbox">
         <translation language="nl"><![CDATA[&nbsp;]]></translation>
@@ -21,6 +32,7 @@
         <translation language="fr"><![CDATA[Case à cocher]]></translation>
         <translation language="hu"><![CDATA[Checkbox]]></translation>
         <translation language="de"><![CDATA[Checkbox]]></translation>
+        <translation language="es"><![CDATA[&nbsp;]]></translation>
       </item>
       <item type="label" name="DisplayWidgets">
         <translation language="nl"><![CDATA[te tonen widgets]]></translation>
@@ -31,6 +43,7 @@
         <translation language="fr"><![CDATA[widgets à afficher]]></translation>
         <translation language="hu"><![CDATA[widget megjelenítése]]></translation>
         <translation language="de"><![CDATA[anzeigbare Widgets]]></translation>
+        <translation language="es"><![CDATA[widgets a mostrar]]></translation>
       </item>
       <item type="label" name="NumUsers">
         <translation language="nl"><![CDATA[aantal gebruikers]]></translation>
@@ -41,6 +54,7 @@
         <translation language="fr"><![CDATA[nombre d'utilisateurs]]></translation>
         <translation language="hu"><![CDATA[felhasználók száma]]></translation>
         <translation language="de"><![CDATA[Benutzeranzahl]]></translation>
+        <translation language="es"><![CDATA[número de usuarios]]></translation>
       </item>
       <item type="label" name="Presets">
         <translation language="it"><![CDATA[prestabiliti]]></translation>
@@ -51,6 +65,7 @@
         <translation language="de"><![CDATA[Vorgaben]]></translation>
         <translation language="nl"><![CDATA[presets]]></translation>
         <translation language="en"><![CDATA[presets]]></translation>
+        <translation language="es"><![CDATA[requisitos]]></translation>
       </item>
       <item type="label" name="SetPermissions">
         <translation language="nl"><![CDATA[stel rechten in]]></translation>
@@ -61,6 +76,7 @@
         <translation language="fr"><![CDATA[régler les permissions]]></translation>
         <translation language="hu"><![CDATA[engedélyek megadása]]></translation>
         <translation language="de"><![CDATA[Rechte einstellen]]></translation>
+        <translation language="es"><![CDATA[configurar permisos]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA["%1$s" is toegevoegd.]]></translation>
@@ -71,6 +87,7 @@
         <translation language="de"><![CDATA["%1$s" wurde hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA["%1$s" a été ajouté.]]></translation>
         <translation language="hu"><![CDATA["%1$s" hozzáadva.]]></translation>
+        <translation language="es"><![CDATA["%1$s" ha sido agregado.]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA["%1$s" is verwijderd.]]></translation>
@@ -81,6 +98,7 @@
         <translation language="de"><![CDATA["%1$s" wurde gelöscht.]]></translation>
         <translation language="hu"><![CDATA["%1$s" törölve.]]></translation>
         <translation language="fr"><![CDATA["%1$s" a été effacé.]]></translation>
+        <translation language="es"><![CDATA["%1$s" ha sido eliminado.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[wijzigingen aan "%1$s" werden opgeslaan.]]></translation>
@@ -91,6 +109,7 @@
         <translation language="de"><![CDATA[Änderungen an "%1$s" wurden gespeichert.]]></translation>
         <translation language="hu"><![CDATA["%1$s" változásai elmentve.]]></translation>
         <translation language="fr"><![CDATA[Les changements pour "%1$s" ont été enregistrés.]]></translation>
+        <translation language="es"><![CDATA[los cambios para "%1$s" han sido guardados.]]></translation>
       </item>
       <item type="message" name="NoUsers">
         <translation language="nl"><![CDATA[Deze groep bevat geen gebruikers.]]></translation>
@@ -101,6 +120,7 @@
         <translation language="de"><![CDATA[Diese Gruppe enthält keine Benutzer.]]></translation>
         <translation language="hu"><![CDATA[Ez a csoport nem tartalmaz felhasználókat.]]></translation>
         <translation language="fr"><![CDATA[Ce groupe ne contient pas de nouveaux utilisateurs.]]></translation>
+        <translation language="es"><![CDATA[Este grupo no contiene ningún usuario.]]></translation>
       </item>
       <item type="message" name="NoWidgets">
         <translation language="nl"><![CDATA[Er zijn geen widgets beschikbaar.]]></translation>
@@ -111,6 +131,7 @@
         <translation language="de"><![CDATA[Es sind keine Widgets verfügbar.]]></translation>
         <translation language="hu"><![CDATA[Nem áll widget redelkezésre.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas de widget disponible.]]></translation>
+        <translation language="es"><![CDATA[No hay widgets disponibles.]]></translation>
       </item>
       <item type="error" name="GroupAlreadyExists">
         <translation language="nl"><![CDATA[Deze groep bestaat reeds.]]></translation>
@@ -121,6 +142,7 @@
         <translation language="de"><![CDATA[Diese Gruppe gibt es bereits.]]></translation>
         <translation language="hu"><![CDATA[Ez a csoport már létezik.]]></translation>
         <translation language="fr"><![CDATA[Ce groupe existe déjà.]]></translation>
+        <translation language="es"><![CDATA[Este grupo actualmente existe.]]></translation>
       </item>
     </groups>
   </backend>

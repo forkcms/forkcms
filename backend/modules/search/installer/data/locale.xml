@@ -11,6 +11,7 @@
         <translation language="fr"><![CDATA[Le synonyme de terme de recherche "%1$s" a été ajouté.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" keresési szinoníma hozzáadva.]]></translation>
         <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue agregado.]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteSynonym">
         <translation language="nl"><![CDATA[Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?]]></translation>
@@ -21,6 +22,7 @@
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer les synonymes du terme de recherche  "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos törlöd a(z) "%1$s" keresési szinonímát?]]></translation>
         <translation language="de"><![CDATA[Willst du die Synonyme für den Suchbegriff "%1$s" wirklich löschen?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de eliminar el sinonimo para el términ de búsqueda "%1$s"?]]></translation>
       </item>
       <item type="message" name="DeletedSynonym">
         <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd verwijderd.]]></translation>
@@ -31,6 +33,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" keresési szinoníma törölve.]]></translation>
         <translation language="fr"><![CDATA[Le synonyme pour le terme "%1$s" a été effacé.]]></translation>
         <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde gelöscht.]]></translation>
+        <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue eliminado.]]></translation>
       </item>
       <item type="message" name="EditedSynonym">
         <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd opgeslagen.]]></translation>
@@ -41,6 +44,7 @@
         <translation language="hu"><![CDATA[A(z) "%1$s" keresési szinoníma elmentve.]]></translation>
         <translation language="fr"><![CDATA[Le synonyme pour le terme "%1$s" a été enregistré.]]></translation>
         <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde gespeichert.]]></translation>
+        <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue guardado.]]></translation>
       </item>
       <item type="message" name="HelpWeight">
         <translation language="nl"><![CDATA[Het standaard gewicht is 1. Verhoog deze waarde om de belangrijkheid van de resultaten van een bepaalde module te verhogen.]]></translation>
@@ -51,6 +55,7 @@
         <translation language="hu"><![CDATA[Az alapértelmezett mélység 1. Ha jobb keresési eredményeket akarunk, akkor specifikus modul kell.]]></translation>
         <translation language="fr"><![CDATA[Le poids par défaut est 1. Si vous souhaitez donner plus d'importance à un module dans les résultats de recherche.]]></translation>
         <translation language="de"><![CDATA[Das Standard-Gewicht ist 1. Erhöhe den Wert wenn du Suchresultate von bestimmten Modulen mehr Wichtigkeit verleihen willst.]]></translation>
+        <translation language="es"><![CDATA[El peso por defecto es 1. Aumenta el valor para aumentar la importancia de un módulo especifico.]]></translation>
       </item>
       <item type="message" name="HelpWeightGeneral">
         <translation language="nl"><![CDATA[Definieer de belangrijkheid van iedere module in de zoekresultaten.]]></translation>
@@ -61,6 +66,7 @@
         <translation language="hu"><![CDATA[Az egyes modulok keresési eredményeinek a meghatározása itt.]]></translation>
         <translation language="fr"><![CDATA[Définir l'importance de chaque module dans les résultats de recherche.]]></translation>
         <translation language="de"><![CDATA[Hier kannst du die Wichtigkeit der einzelnen Module für die Suchresultate bestimmen.]]></translation>
+        <translation language="es"><![CDATA[Define la importancia de cada módulo en los resultados de búsqueda aquí.]]></translation>
       </item>
       <item type="message" name="IncludeInSearch">
         <translation language="nl"><![CDATA[Opnemen in de zoekresultaten?]]></translation>
@@ -72,6 +78,7 @@
         <translation language="hu"><![CDATA[Tartalmazza a keresési eredményeket?]]></translation>
         <translation language="de"><![CDATA[In Suchergebnissen berücksichtigen?]]></translation>
         <translation language="fr"><![CDATA[Inclure dans les résultats de recherche ?]]></translation>
+        <translation language="es"><![CDATA[¿Incluir en resultados buqueda?]]></translation>
       </item>
       <item type="message" name="NoStatistics">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken.]]></translation>
@@ -82,6 +89,7 @@
         <translation language="de"><![CDATA[Es gibt noch keine Statistiken.]]></translation>
         <translation language="hu"><![CDATA[Nincsenek még statisztikák.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de statistiques.]]></translation>
+        <translation language="es"><![CDATA[No hay estadisticas aun.]]></translation>
       </item>
       <item type="message" name="NoSynonyms">
         <translation language="nl"><![CDATA[Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.]]></translation>
@@ -93,6 +101,7 @@
         <translation language="hu"><![CDATA[Nincsenek még szinonímák. <a href="%1$s">Az első hozzáadása</a>.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Synonyme. <a href"%1$s">Erstelle das erste Synonym</a>]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes. <a href="%1$s">Ajoutez le premier synonyme</a>.]]></translation>
+        <translation language="es"><![CDATA[No hay sinonimos aun. <a href="%1$s">Agregar el primer sinonimo</a>.]]></translation>
       </item>
       <item type="message" name="NoSynonymsBox">
         <translation language="nl"><![CDATA[Er zijn nog geen synoniemen.]]></translation>
@@ -103,6 +112,7 @@
         <translation language="de"><![CDATA[Es gibt noch keine Synonyme.]]></translation>
         <translation language="hu"><![CDATA[Nincsenek még szinonímák.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes.]]></translation>
+        <translation language="es"><![CDATA[No hay sinonimos aun.]]></translation>
       </item>
       <item type="label" name="AddSynonym">
         <translation language="nl"><![CDATA[synoniem toevoegen]]></translation>
@@ -113,6 +123,7 @@
         <translation language="de"><![CDATA[Synonym hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter un synonyme]]></translation>
         <translation language="hu"><![CDATA[szinoníma hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar sinonimo]]></translation>
       </item>
       <item type="label" name="DeleteSynonym">
         <translation language="nl"><![CDATA[synoniem verwijderen]]></translation>
@@ -123,6 +134,7 @@
         <translation language="de"><![CDATA[Synonym löschen]]></translation>
         <translation language="fr"><![CDATA[efface le synonyme]]></translation>
         <translation language="hu"><![CDATA[szinoníma törlése]]></translation>
+        <translation language="es"><![CDATA[eliminar sinonimo]]></translation>
       </item>
       <item type="label" name="EditSynonym">
         <translation language="nl"><![CDATA[synoniem bewerken]]></translation>
@@ -133,6 +145,7 @@
         <translation language="de"><![CDATA[Synonym bearbeiten]]></translation>
         <translation language="fr"><![CDATA[éditer le synonyme]]></translation>
         <translation language="hu"><![CDATA[szinoníma szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar sinonimo]]></translation>
       </item>
       <item type="label" name="ItemsForAutocomplete">
         <translation language="nl"><![CDATA[Items in autocomplete (zoekresultaten: suggesties zoekwoorden)]]></translation>
@@ -143,6 +156,7 @@
         <translation language="fr"><![CDATA[Eléments dans autocomplete (résultats de recherche: suggestion de terme recherché)]]></translation>
         <translation language="hu"><![CDATA[Autocomplete tételek (keresési találatok: keresési kifejezés javaslat)]]></translation>
         <translation language="de"><![CDATA[Einträge in der Auto-Vervollständigung (Such Resultate: Suchbegriff Vorschläge)]]></translation>
+        <translation language="es"><![CDATA[Objetos con autocompletado (resultados de búsqueda: sugerencia de términos de búsqueda)]]></translation>
       </item>
       <item type="label" name="ItemsForAutosuggest">
         <translation language="nl"><![CDATA[Items in autosuggest (zoek widget: resultaten)]]></translation>
@@ -153,6 +167,7 @@
         <translation language="fr"><![CDATA[Eléments dans suggestion automatique (widget de recherche: résultats)]]></translation>
         <translation language="hu"><![CDATA[Autosuggest tételek (kereső widget: találatok)]]></translation>
         <translation language="de"><![CDATA[Einträge im Autosuggest (Such Widget: Resultate)]]></translation>
+        <translation language="es"><![CDATA[Objetos en sugerencia automática (widget de búsqueda: resultados)]]></translation>
       </item>
       <item type="label" name="ModuleWeight">
         <translation language="nl"><![CDATA[module gewicht]]></translation>
@@ -163,6 +178,7 @@
         <translation language="de"><![CDATA[Modulgewicht]]></translation>
         <translation language="fr"><![CDATA[poids du module]]></translation>
         <translation language="hu"><![CDATA[modul mélység]]></translation>
+        <translation language="es"><![CDATA[peso del modulo]]></translation>
       </item>
       <item type="label" name="SearchedOn">
         <translation language="nl"><![CDATA[gezocht op]]></translation>
@@ -173,6 +189,7 @@
         <translation language="fr"><![CDATA[recherché le]]></translation>
         <translation language="hu"><![CDATA[keresett a]]></translation>
         <translation language="de"><![CDATA[gesucht am]]></translation>
+        <translation language="es"><![CDATA[búsqueda en]]></translation>
       </item>
       <item type="error" name="SynonymIsRequired">
         <translation language="nl"><![CDATA[Synoniemen zijn verplicht.]]></translation>
@@ -183,6 +200,7 @@
         <translation language="fr"><![CDATA[Les synonymes sont requis.]]></translation>
         <translation language="hu"><![CDATA[A szinoníma kötelező.]]></translation>
         <translation language="de"><![CDATA[Synonyme werden benötigt.]]></translation>
+        <translation language="es"><![CDATA[Sinonimos es requerido.]]></translation>
       </item>
       <item type="error" name="TermExists">
         <translation language="nl"><![CDATA[Synoniemen voor deze zoekterm bestaan reeds.]]></translation>
@@ -193,6 +211,7 @@
         <translation language="fr"><![CDATA[Les synonymes du terme recherché existent déjà.]]></translation>
         <translation language="hu"><![CDATA[Szinonimák erre a keresési kifejezésre már léteznek.]]></translation>
         <translation language="de"><![CDATA[Synonyme für diesen Suchbegriff existieren bereits.]]></translation>
+        <translation language="es"><![CDATA[Los sinonimos para este término de búsqueda existen actualmente.]]></translation>
       </item>
       <item type="error" name="TermIsRequired">
         <translation language="nl"><![CDATA[De zoekterm is verplicht.]]></translation>
@@ -204,6 +223,7 @@
         <translation language="fr"><![CDATA[Le terme recherché est requis.]]></translation>
         <translation language="hu"><![CDATA[A keresési kifejezés kötelező.]]></translation>
         <translation language="de"><![CDATA[Der Suchbegriff wird benötigt.]]></translation>
+        <translation language="es"><![CDATA[El término de búsqueda es requerido.]]></translation>
       </item>
       <item type="error" name="WeightNotNumeric">
         <translation language="nl"><![CDATA[Het gewicht moet numeriek zijn.]]></translation>
@@ -215,6 +235,7 @@
         <translation language="fr"><![CDATA[Le poids doit être numérique.]]></translation>
         <translation language="hu"><![CDATA[A mélység numerikus.]]></translation>
         <translation language="de"><![CDATA[Das Gewicht muss numerisch sein.]]></translation>
+        <translation language="es"><![CDATA[El peso debe de ser numerico]]></translation>
       </item>
     </search>
   </backend>

@@ -11,6 +11,7 @@
         <translation language="de"><![CDATA[aktiv]]></translation>
         <translation language="fr"><![CDATA[actif]]></translation>
         <translation language="hu"><![CDATA[aktív]]></translation>
+        <translation language="es"><![CDATA[activo]]></translation>
       </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
@@ -21,6 +22,7 @@
         <translation language="de"><![CDATA[Gruppe hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
         <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar grupo]]></translation>
       </item>
       <item type="label" name="AddMembership">
         <translation language="nl"><![CDATA[lidmaatschap toevoegen]]></translation>
@@ -31,6 +33,7 @@
         <translation language="fr"><![CDATA[ajouter une adhésion]]></translation>
         <translation language="de"><![CDATA[Mitgliedschaft hinzufügen]]></translation>
         <translation language="hu"><![CDATA[tagság hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar miembros]]></translation>
       </item>
       <item type="label" name="AddToGroup">
         <translation language="nl"><![CDATA[toevoegen aan een groep]]></translation>
@@ -41,6 +44,7 @@
         <translation language="de"><![CDATA[einer Gruppe hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter à un groupe]]></translation>
         <translation language="hu"><![CDATA[csoporthoz hozzáad]]></translation>
+        <translation language="es"><![CDATA[agregar a un grupo]]></translation>
       </item>
       <item type="label" name="BirthDate">
         <translation language="nl"><![CDATA[geboortedatum]]></translation>
@@ -51,6 +55,7 @@
         <translation language="de"><![CDATA[Geburtsdatum]]></translation>
         <translation language="fr"><![CDATA[date de naissance]]></translation>
         <translation language="hu"><![CDATA[születési idő]]></translation>
+        <translation language="es"><![CDATA[fecha de nacimiento]]></translation>
       </item>
       <item type="label" name="Blocked">
         <translation language="nl"><![CDATA[geblokkeerd]]></translation>
@@ -61,6 +66,7 @@
         <translation language="de"><![CDATA[gesperrt]]></translation>
         <translation language="fr"><![CDATA[bloqué]]></translation>
         <translation language="hu"><![CDATA[tiltott]]></translation>
+        <translation language="es"><![CDATA[bloqueado]]></translation>
       </item>
       <item type="label" name="City">
         <translation language="nl"><![CDATA[stad]]></translation>
@@ -71,6 +77,7 @@
         <translation language="de"><![CDATA[Stadt]]></translation>
         <translation language="fr"><![CDATA[ville]]></translation>
         <translation language="hu"><![CDATA[város]]></translation>
+        <translation language="es"><![CDATA[ciudad]]></translation>
       </item>
       <item type="label" name="Country">
         <translation language="nl"><![CDATA[land]]></translation>
@@ -81,6 +88,7 @@
         <translation language="de"><![CDATA[Land]]></translation>
         <translation language="fr"><![CDATA[pays]]></translation>
         <translation language="hu"><![CDATA[ország]]></translation>
+        <translation language="es"><![CDATA[pais]]></translation>
       </item>
       <item type="label" name="Deleted">
         <translation language="nl"><![CDATA[verwijderd]]></translation>
@@ -91,6 +99,7 @@
         <translation language="de"><![CDATA[gelöscht]]></translation>
         <translation language="fr"><![CDATA[effacé]]></translation>
         <translation language="hu"><![CDATA[törölt]]></translation>
+        <translation language="es"><![CDATA[eliminado]]></translation>
       </item>
       <item type="label" name="DisplayName">
         <translation language="nl"><![CDATA[weergave naam]]></translation>
@@ -101,6 +110,7 @@
         <translation language="fr"><![CDATA[nom affiché]]></translation>
         <translation language="de"><![CDATA[Nickname]]></translation>
         <translation language="hu"><![CDATA[becenév]]></translation>
+        <translation language="es"><![CDATA[nombre mostrado]]></translation>
       </item>
       <item type="label" name="EditGroup">
         <translation language="nl"><![CDATA[groep aanpassen]]></translation>
@@ -111,6 +121,7 @@
         <translation language="de"><![CDATA[Gruppe bearbeiten]]></translation>
         <translation language="fr"><![CDATA[éditer le groupe]]></translation>
         <translation language="hu"><![CDATA[csoport szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar grupo]]></translation>
       </item>
       <item type="label" name="EditMembership">
         <translation language="nl"><![CDATA[lidmaatschap aanpassen]]></translation>
@@ -121,6 +132,7 @@
         <translation language="de"><![CDATA[Zugehörigkeit bearbeiten]]></translation>
         <translation language="fr"><![CDATA[éditer l'adhésion]]></translation>
         <translation language="hu"><![CDATA[tagság szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar miembro]]></translation>
       </item>
       <item type="label" name="ExpiresOn">
         <translation language="nl"><![CDATA[vervalt op]]></translation>
@@ -131,6 +143,7 @@
         <translation language="de"><![CDATA[verfällt am]]></translation>
         <translation language="fr"><![CDATA[expire le]]></translation>
         <translation language="hu"><![CDATA[lejár]]></translation>
+        <translation language="es"><![CDATA[expira en]]></translation>
       </item>
       <item type="label" name="Female">
         <translation language="nl"><![CDATA[vrouw]]></translation>
@@ -141,6 +154,7 @@
         <translation language="de"><![CDATA[weiblich]]></translation>
         <translation language="fr"><![CDATA[femme]]></translation>
         <translation language="hu"><![CDATA[nő]]></translation>
+        <translation language="es"><![CDATA[mujer]]></translation>
       </item>
       <item type="label" name="FirstName">
         <translation language="nl"><![CDATA[voornaam]]></translation>
@@ -151,6 +165,7 @@
         <translation language="de"><![CDATA[Vorname]]></translation>
         <translation language="fr"><![CDATA[prénom]]></translation>
         <translation language="hu"><![CDATA[keresztnév]]></translation>
+        <translation language="es"><![CDATA[primer nombre]]></translation>
       </item>
       <item type="label" name="Gender">
         <translation language="nl"><![CDATA[geslacht]]></translation>
@@ -161,6 +176,7 @@
         <translation language="de"><![CDATA[Geschlecht]]></translation>
         <translation language="fr"><![CDATA[genre]]></translation>
         <translation language="hu"><![CDATA[nem]]></translation>
+        <translation language="es"><![CDATA[género]]></translation>
       </item>
       <item type="label" name="GroupName">
         <translation language="nl"><![CDATA[groep naam]]></translation>
@@ -171,6 +187,7 @@
         <translation language="de"><![CDATA[Gruppenname]]></translation>
         <translation language="fr"><![CDATA[nom de groupe]]></translation>
         <translation language="hu"><![CDATA[csoport név]]></translation>
+        <translation language="es"><![CDATA[nombre del grupo]]></translation>
       </item>
       <item type="label" name="Groups">
         <translation language="nl"><![CDATA[groepen]]></translation>
@@ -181,6 +198,7 @@
         <translation language="de"><![CDATA[Gruppen]]></translation>
         <translation language="fr"><![CDATA[groupes]]></translation>
         <translation language="hu"><![CDATA[csoportok]]></translation>
+        <translation language="es"><![CDATA[grupos]]></translation>
       </item>
       <item type="label" name="Inactive">
         <translation language="nl"><![CDATA[inactief]]></translation>
@@ -191,6 +209,7 @@
         <translation language="de"><![CDATA[inaktiv]]></translation>
         <translation language="fr"><![CDATA[inactif]]></translation>
         <translation language="hu"><![CDATA[inaktív]]></translation>
+        <translation language="es"><![CDATA[inactivo]]></translation>
       </item>
       <item type="label" name="LastName">
         <translation language="nl"><![CDATA[achternaam]]></translation>
@@ -201,6 +220,7 @@
         <translation language="de"><![CDATA[Nachname]]></translation>
         <translation language="fr"><![CDATA[nom]]></translation>
         <translation language="hu"><![CDATA[vezetéknév]]></translation>
+        <translation language="es"><![CDATA[apellido]]></translation>
       </item>
       <item type="label" name="Male">
         <translation language="nl"><![CDATA[man]]></translation>
@@ -211,6 +231,7 @@
         <translation language="de"><![CDATA[männlich]]></translation>
         <translation language="fr"><![CDATA[homme]]></translation>
         <translation language="hu"><![CDATA[férfi]]></translation>
+        <translation language="es"><![CDATA[hombre]]></translation>
       </item>
       <item type="label" name="MembersCount">
         <translation language="nl"><![CDATA[leden aantal]]></translation>
@@ -221,6 +242,7 @@
         <translation language="de"><![CDATA[Mitgliedszahl]]></translation>
         <translation language="fr"><![CDATA[nombre de membre]]></translation>
         <translation language="hu"><![CDATA[tagok száma]]></translation>
+        <translation language="es"><![CDATA[números de miembros]]></translation>
       </item>
       <item type="label" name="RegisteredOn">
         <translation language="nl"><![CDATA[geregistreerd op]]></translation>
@@ -231,6 +253,7 @@
         <translation language="de"><![CDATA[registriert am]]></translation>
         <translation language="fr"><![CDATA[enregistré le]]></translation>
         <translation language="hu"><![CDATA[regisztrált]]></translation>
+        <translation language="es"><![CDATA[registrado en]]></translation>
       </item>
       <item type="label" name="Unblock">
         <translation language="nl"><![CDATA[activeer]]></translation>
@@ -241,6 +264,7 @@
         <translation language="de"><![CDATA[entsperren]]></translation>
         <translation language="fr"><![CDATA[débloquer]]></translation>
         <translation language="hu"><![CDATA[felold]]></translation>
+        <translation language="es"><![CDATA[desbloquear]]></translation>
       </item>
       <item type="label" name="Undelete">
         <translation language="nl"><![CDATA[activeer]]></translation>
@@ -251,6 +275,7 @@
         <translation language="de"><![CDATA[wiederherstellen]]></translation>
         <translation language="fr"><![CDATA[annuler l'effacement]]></translation>
         <translation language="hu"><![CDATA[visszaállít]]></translation>
+        <translation language="es"><![CDATA[rescuperar]]></translation>
       </item>
       <item type="message" name="ConfirmBlock">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil blokkeren?]]></translation>
@@ -261,6 +286,7 @@
         <translation language="de"><![CDATA[Bist du sicher, dass du "%1$s" blockieren willst?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir bloquer "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy ki akarod tiltani "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres bloquear a "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil verwijderen?]]></translation>
@@ -271,6 +297,7 @@
         <translation language="de"><![CDATA[Bist du sicher, dass du "%1$s" löschen willst?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy törölni akarod "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar a "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteGroup">
         <translation language="nl"><![CDATA[Ben je zeker dat je de group "%1$s" wil verwijderen?]]></translation>
@@ -281,6 +308,7 @@
         <translation language="de"><![CDATA[Soll die Gruppe "%1$s" wirklich gelöscht werden?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le groupe"%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy törölni akarod a csoportból "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres elimnar el grupo "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmMassAddToGroup">
         <translation language="nl"><![CDATA[Ben je zeker dat je deze profielen aan volgende groep wil toevoegen?]]></translation>
@@ -291,6 +319,7 @@
         <translation language="de"><![CDATA[Sollen diese Profile wirklich zur folgenden Gruppe hinzugefügt werden?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir ajouter ces profils aux groupes suivants?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy hozzá akarod adni ezt a profilt a kiválasztott csoporthoz?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres agregar estos perfiles al siguiente grupo?]]></translation>
       </item>
       <item type="message" name="ConfirmProfileGroupDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je dit profiel uit de groep "%1$s" wil verwijderen?]]></translation>
@@ -311,6 +340,7 @@
         <translation language="de"><![CDATA[Soll "%1$s" wirklich entsperrt werden?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir débloquer "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy fel akarod oldani "%1$s" tiltását?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres desbloquear a "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmUndelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
@@ -321,6 +351,7 @@
         <translation language="de"><![CDATA[Soll "%1$s" wirklich wiederhergestellt werden?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir revenir sur l'effacement de "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy vissza akarod állítani "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres recuperar a "%1$s"?]]></translation>
       </item>
       <item type="message" name="GroupAdded">
         <translation language="nl"><![CDATA[De groep werd toegevoegd.]]></translation>
@@ -331,6 +362,7 @@
         <translation language="de"><![CDATA[Die Gruppe wurde hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA[Le groupe a été ajouté.]]></translation>
         <translation language="hu"><![CDATA[A csoport hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[El grupo fue agregado.]]></translation>
       </item>
       <item type="message" name="GroupSaved">
         <translation language="nl"><![CDATA[De groep werd opgeslagen.]]></translation>
@@ -341,6 +373,7 @@
         <translation language="de"><![CDATA[Die Gruppe wurde gespeichert.]]></translation>
         <translation language="fr"><![CDATA[Le groupe a été enregistré.]]></translation>
         <translation language="hu"><![CDATA[A csoport elmentve.]]></translation>
+        <translation language="es"><![CDATA[El grupo fue guardado.]]></translation>
       </item>
       <item type="message" name="MembershipAdded">
         <translation language="nl"><![CDATA[Het groep lidmaatschap werd toegevoegd.]]></translation>
@@ -351,6 +384,7 @@
         <translation language="fr"><![CDATA[L'adhésion au groupe a été ajoutée.]]></translation>
         <translation language="de"><![CDATA[Die Gruppen-Mitgliedschaft wurde hinzugefügt.]]></translation>
         <translation language="hu"><![CDATA[A csoport tagsága hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[La pertenencia al grupo se añadió.]]></translation>
       </item>
       <item type="message" name="MembershipDeleted">
         <translation language="nl"><![CDATA[Het groep lidmaatschap werd verwijderd.]]></translation>
@@ -361,6 +395,7 @@
         <translation language="fr"><![CDATA[L'adhésion au groupe a été effacée.]]></translation>
         <translation language="de"><![CDATA[Die Gruppen-Mitgliedschaft wurde gelöscht.]]></translation>
         <translation language="hu"><![CDATA[A csoport tagsága törölve.]]></translation>
+        <translation language="es"><![CDATA[La pertenencia al grupo fue eliminada.]]></translation>
       </item>
       <item type="message" name="MembershipSaved">
         <translation language="nl"><![CDATA[Het groep lidmaatschap werd aangepast.]]></translation>
@@ -371,6 +406,7 @@
         <translation language="fr"><![CDATA[L'adhésion au groupe a été enregistrée.]]></translation>
         <translation language="de"><![CDATA[Die Gruppen-Mitgliedschaft wurde gespeichert.]]></translation>
         <translation language="hu"><![CDATA[A csoport tagsága elmentve.]]></translation>
+        <translation language="es"><![CDATA[La pertenencia al grupo fue guardada.]]></translation>
       </item>
       <item type="message" name="NoGroups">
         <translation language="nl"><![CDATA[Er zijn nog geen groepen.]]></translation>
@@ -381,6 +417,7 @@
         <translation language="de"><![CDATA[Es gibt noch keine Gruppen.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de groupes.]]></translation>
         <translation language="hu"><![CDATA[Nincsen már csoport.]]></translation>
+        <translation language="es"><![CDATA[No hay grupos aun.]]></translation>
       </item>
       <item type="message" name="ProfileAddedToGroup">
         <translation language="nl"><![CDATA[Het profiel werd toegevoegd aan de groep.]]></translation>
@@ -391,6 +428,7 @@
         <translation language="de"><![CDATA[Das Profiul wurde zur Gruppe hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA[Le profil a été ajouté au groupe.]]></translation>
         <translation language="hu"><![CDATA[A profil hozzáadva a csoporthoz.]]></translation>
+        <translation language="es"><![CDATA[El perfil fue agregado al grupo.]]></translation>
       </item>
       <item type="message" name="ProfileBlocked">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd geblokkeerd.]]></translation>
@@ -401,6 +439,7 @@
         <translation language="de"><![CDATA[Das Profil "%1$s" wurde gesperrt.]]></translation>
         <translation language="fr"><![CDATA[Le profil "%1$s" a été bloqué.]]></translation>
         <translation language="hu"><![CDATA[A "%1$s" profil kitiltva.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue bloqueado.]]></translation>
       </item>
       <item type="message" name="ProfileDeleted">
         <translation language="nl"><![CDATA[Het profiel werd verwijderd.]]></translation>
@@ -411,6 +450,7 @@
         <translation language="de"><![CDATA[Das Profil wurde gelöscht. ]]></translation>
         <translation language="fr"><![CDATA[Le profil a été effacé.]]></translation>
         <translation language="hu"><![CDATA[A profil törölve.]]></translation>
+        <translation language="es"><![CDATA[El perfil fue eliminado.]]></translation>
       </item>
       <item type="message" name="ProfilesAddedToGroup">
         <translation language="nl"><![CDATA[De profielen zijn toegevoegd aan de groep.]]></translation>
@@ -421,6 +461,7 @@
         <translation language="de"><![CDATA[Die Profile wurden zur Gruppe hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA[Les profils sont ajoutés au groupe.]]></translation>
         <translation language="hu"><![CDATA[A profilok hozzáadva a csoporthoz.]]></translation>
+        <translation language="es"><![CDATA[Los perfiles fueron agregados al grupo.]]></translation>
       </item>
       <item type="message" name="ProfileUnblocked">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
@@ -431,6 +472,7 @@
         <translation language="de"><![CDATA[Das Profil "%1$s" wurde entsperrt.]]></translation>
         <translation language="fr"><![CDATA[Le profil "%1$s" a été débloqué.]]></translation>
         <translation language="hu"><![CDATA[A "%1$s" profil tiltása feloldva.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue desbloqueado.]]></translation>
       </item>
       <item type="message" name="ProfileUndeleted">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
@@ -441,6 +483,7 @@
         <translation language="de"><![CDATA[Das Profil "%1$s" wurde wiederhergestellt.]]></translation>
         <translation language="fr"><![CDATA[Le profil "%1$s" a été restauré.]]></translation>
         <translation language="hu"><![CDATA[A "%1$s" profil visszaállítva.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue recuperado.]]></translation>
       </item>
       <item type="message" name="Saved">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen.]]></translation>
@@ -451,6 +494,7 @@
         <translation language="de"><![CDATA[Das Profil "%1$s" wurde gespeichert.]]></translation>
         <translation language="fr"><![CDATA[Le profil "%1$s" a été enregistré.]]></translation>
         <translation language="hu"><![CDATA[A "%1$s" profil elmentve.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue guardado.]]></translation>
       </item>
       <item type="error" name="DisplayNameExists">
         <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
@@ -461,6 +505,7 @@
         <translation language="fr"><![CDATA[Ce nom d'affichage est utilisé.]]></translation>
         <translation language="de"><![CDATA[Dieser Nickname wird leider bereits verwendet.]]></translation>
         <translation language="hu"><![CDATA[Ez a becenév már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Este nombre para mostrar está en uso.]]></translation>
       </item>
       <item type="error" name="DisplayNameIsRequired">
         <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
@@ -471,6 +516,7 @@
         <translation language="fr"><![CDATA[Nom d'affichage est un champ requis.]]></translation>
         <translation language="de"><![CDATA[Ein Nickname muss angegeben werden.]]></translation>
         <translation language="hu"><![CDATA[A becenév mező kötelező.]]></translation>
+        <translation language="es"><![CDATA[Nombre para mostrar es un campo requerido.]]></translation>
       </item>
       <item type="error" name="EmailExists">
         <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
@@ -481,6 +527,7 @@
         <translation language="de"><![CDATA[Diese E-Mail-Adresse wird verwendet.]]></translation>
         <translation language="fr"><![CDATA[Cette adresse e-mail est déjà utilisée.]]></translation>
         <translation language="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
       </item>
       <item type="error" name="GroupIsRequired">
         <translation language="nl"><![CDATA[Groep is een verplicht veld.]]></translation>
@@ -491,6 +538,7 @@
         <translation language="de"><![CDATA[Gruppe ist ein Pflichtfeld.]]></translation>
         <translation language="fr"><![CDATA[Groupe est un champ requis.]]></translation>
         <translation language="hu"><![CDATA[A csoport mező kötelező.]]></translation>
+        <translation language="es"><![CDATA[Grupo es un campo requerido.]]></translation>
       </item>
       <item type="error" name="GroupNameExists">
         <translation language="nl"><![CDATA[Deze groep naam is al in gebruik.]]></translation>
@@ -501,6 +549,7 @@
         <translation language="de"><![CDATA[Dieser Gruppenname wird verwendet.]]></translation>
         <translation language="fr"><![CDATA[Ce nom de groupe est déjà utilisé.]]></translation>
         <translation language="hu"><![CDATA[Ez a csoport név már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Este nombre de grupo está en uso.]]></translation>
       </item>
       <item type="error" name="NoGroupSelected">
         <translation language="nl"><![CDATA[Je moet een groep selecteren om deze actie te ondergaan.]]></translation>
@@ -511,6 +560,7 @@
         <translation language="de"><![CDATA[Du musst eine Gruppe auswählen um diese Aktion auszuführen.]]></translation>
         <translation language="fr"><![CDATA[Vous devez sélectionner unb groupe pour accomplir cette action.]]></translation>
         <translation language="hu"><![CDATA[A művelethez ki kell választani egy csoportot.]]></translation>
+        <translation language="es"><![CDATA[Debes seleccionar un grupo para realizar esta acción.]]></translation>
       </item>
       <item type="error" name="NoProfilesSelected">
         <translation language="nl"><![CDATA[Je moet minstens 1 profiel selecteren om deze actie te ondergaan.]]></translation>
@@ -521,6 +571,7 @@
         <translation language="de"><![CDATA[Du musst mindestens 1 Profil auswählen um diese Aktion auszuführen.]]></translation>
         <translation language="fr"><![CDATA[Vous devez sélectionner au moins un profil pour accomplir cette action.]]></translation>
         <translation language="hu"><![CDATA[A művelethez minimum 1 profilt ki kell választani.]]></translation>
+        <translation language="es"><![CDATA[Debes seleccionar minimo 1 perfil para realizar esta acción.]]></translation>
       </item>
       <item type="error" name="UnknownAction">
         <translation language="nl"><![CDATA[Onbekende actie.]]></translation>
@@ -531,6 +582,7 @@
         <translation language="de"><![CDATA[Unbekannte Aktion]]></translation>
         <translation language="fr"><![CDATA[Action inconnue.]]></translation>
         <translation language="hu"><![CDATA[Ismeretlen művelet.]]></translation>
+        <translation language="es"><![CDATA[Acción desconocida.]]></translation>
       </item>
     </profiles>
   </backend>

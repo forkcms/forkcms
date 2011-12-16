@@ -25,6 +25,10 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		if($this->id !== null && BackendLocationModel::exists($this->id))
 		{
 			parent::execute();
+
+			// add js
+			$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, null, true, false);
+
 			$this->getData();
 			$this->loadForm();
 			$this->validateForm();
@@ -131,7 +135,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 
 				// edit search index
 				// @todo why is this commented out?
-				// if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+				// BackendSearchModel::editIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng'])

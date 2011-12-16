@@ -73,7 +73,8 @@ class InstallerStep3 extends InstallerStep
 				array('value' => 'de', 'label' => 'German'),
 				array('value' => 'hu', 'label' => 'Hungarian'),
 				array('value' => 'it', 'label' => 'Italian'),
-				array('value' => 'ru', 'label' => 'Russian')
+				array('value' => 'ru', 'label' => 'Russian'),
+				array('value' => 'es', 'label' => 'Spanish')
 			),
 			(SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'en')
 		);
@@ -88,7 +89,8 @@ class InstallerStep3 extends InstallerStep
 				array('value' => 'de', 'label' => 'German'),
 				array('value' => 'hu', 'label' => 'Hungarian'),
 				array('value' => 'it', 'label' => 'Italian'),
-				array('value' => 'ru', 'label' => 'Russian')
+				array('value' => 'ru', 'label' => 'Russian'),
+				array('value' => 'es', 'label' => 'Spanish')
 			),
 			(SpoonSession::exists('interface_languages') ? SpoonSession::get('interface_languages') : 'en')
 		);
@@ -103,7 +105,8 @@ class InstallerStep3 extends InstallerStep
 				'de' => 'German',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
-				'ru' => 'Russian'
+				'ru' => 'Russian',
+				'es' => 'Spanish'
 			),
 			(SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en')
 		);
@@ -118,7 +121,8 @@ class InstallerStep3 extends InstallerStep
 				'de' => 'German',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
-				'ru' => 'Russian'
+				'ru' => 'Russian',
+				'es' => 'Spanish'
 			),
 			(SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en')
 		);
@@ -133,7 +137,8 @@ class InstallerStep3 extends InstallerStep
 				'de' => 'German',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
-				'ru' => 'Russian'
+				'ru' => 'Russian',
+				'es' => 'Spanish'
 			),
 			(SpoonSession::exists('default_interface_language') ? SpoonSession::get('default_interface_language') : 'en')
 		);

@@ -11,6 +11,7 @@
         <translation language="cn"><![CDATA[添加内容过滤]]></translation>
         <translation language="de"><![CDATA[Inhaltsblock hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter un bloc de contenu]]></translation>
+        <translation language="es"><![CDATA[agregar bloque de contenido]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd toegevoegd.]]></translation>
@@ -21,6 +22,7 @@
         <translation language="de"><![CDATA[Der Inhaltsblock "%1$s" wurde hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA[Le bloc de contenu "%1$s" a été ajouté.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" tartalmi blokk hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[El bloque de contenido "%1$s" fue agregado.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?]]></translation>
@@ -31,6 +33,7 @@
         <translation language="de"><![CDATA[Soll der Inhaltsblock "%1$s" wirklich gelöscht werden?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le bloc de contenu "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos törölni akarod a(z) "%1$s" tartalmi blokkot?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el bloque de contenido "%1$s"?]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd verwijderd.]]></translation>
@@ -41,6 +44,7 @@
         <translation language="de"><![CDATA[Der Inhaltsblock "%1$s" wurde gelöscht.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" tartalmi blokk törölve.]]></translation>
         <translation language="fr"><![CDATA[Le bloc de contenu "%1$s" a été effacé.]]></translation>
+        <translation language="es"><![CDATA[El bloque de contenido "%1$s" fue eliminado.]]></translation>
       </item>
       <item type="message" name="EditContentBlock">
         <translation language="nl"><![CDATA[bewerk inhoudsblok "%1$s"]]></translation>
@@ -51,6 +55,7 @@
         <translation language="de"><![CDATA[bearbeite Inhaltsblock "%1$s"]]></translation>
         <translation language="hu"><![CDATA["%1$s" tartalmi blokk szerkesztése]]></translation>
         <translation language="fr"><![CDATA[éditer le bloc de contenu "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar bloque de contenido "%1$s"]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd opgeslagen.]]></translation>
@@ -61,6 +66,7 @@
         <translation language="de"><![CDATA[Der Inhaltsblock "%1$s" wurde gespeichert.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" tartalmi blokk elmentve.]]></translation>
         <translation language="fr"><![CDATA[Le bloc de contenu "%1$s" a été enregistré.]]></translation>
+        <translation language="es"><![CDATA[El bloque de contenido "%1$s" fue guardado.]]></translation>
       </item>
       <item type="message" name="NoTemplate">
         <translation language="nl"><![CDATA[Geen template]]></translation>
@@ -71,6 +77,7 @@
         <translation language="cn"><![CDATA[无模板]]></translation>
         <translation language="de"><![CDATA[Kein Template]]></translation>
         <translation language="fr"><![CDATA[Pas de template]]></translation>
+        <translation language="es"><![CDATA[Sin emplate]]></translation>
       </item>
     </content_blocks>
   </backend>

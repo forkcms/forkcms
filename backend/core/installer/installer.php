@@ -804,8 +804,9 @@ class CoreInstaller extends ModuleInstaller
 							'fr' => 'Mon site web',
 							'de' => 'Meine Webseite',
 							'hu' => 'Hhonlapom',
-							'it' => 'il mio sito web',
-							'ru' => 'мой сайт');
+							'it' => 'Il mio sito web',
+							'ru' => 'мой сайт',
+							'es' => 'Mi sitio web');
 
 		// language specific
 		foreach($this->getLanguages() as $language)
