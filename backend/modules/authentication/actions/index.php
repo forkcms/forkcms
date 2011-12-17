@@ -58,6 +58,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	 */
 	public function parse()
 	{
+		// assign the interface language ourself, because it won't be assigned automagically
+		$this->tpl->assign('INTERFACE_LANGUAGE', BackendLanguage::getInterfaceLanguage());
 		$this->frm->parse($this->tpl);
 		$this->frmForgotPassword->parse($this->tpl);
 	}
