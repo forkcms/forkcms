@@ -869,8 +869,8 @@ class BackendModel
 			$client = new SpoonXMLRPCClient($service['url']);
 
 			// set some properties
-			$client->setUserAgent('Fork ' . FORK_VERSION);
 			$client->setTimeOut(10);
+			$client->setUserAgent('Fork CMS ' . FORK_VERSION);
 
 			// set port
 			$client->setPort($service['port']);
@@ -1065,9 +1065,9 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.1');
+		$akismet->setUserAgent('Fork CMS ' . FORK_VERSION);
 
-		// try it to decide it the item is spam
+		// try it, to decide if the item is spam
 		try
 		{
 			// check with Akismet if the item is spam
@@ -1116,9 +1116,9 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.1');
+		$akismet->setUserAgent('Fork CMS ' . FORK_VERSION);
 
-		// try it to decide it the item is spam
+		// try it, to decide if the item is spam
 		try
 		{
 			// check with Akismet if the item is spam
