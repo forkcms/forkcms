@@ -37,7 +37,9 @@
 						{* Main content *}
 						<div class="box">
 							<div class="heading">
-								<h3>{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+								<h3>
+									<label for="text">{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								</h3>
 							</div>
 							<div class="optionsRTE">
 								{$txtText} {$txtTextError}
@@ -70,7 +72,9 @@
 						<div class="box">
 							<div class="heading">
 								<div class="oneLiner">
-									<h3>{$lblSummary|ucfirst}</h3>
+									<h3>
+										<label for="introduction">{$lblSummary|ucfirst}</label>
+									</h3>
 									<abbr class="help">(?)</abbr>
 									<div class="tooltip" style="display: none;">
 										<p>{$msgHelpSummary}</p>

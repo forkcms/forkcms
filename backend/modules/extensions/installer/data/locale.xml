@@ -375,6 +375,10 @@
         <translation language="hu"><![CDATA[felülír]]></translation>
         <translation language="es"><![CDATA[sobreescribir]]></translation>
       </item>
+      <item type="label" name="Theme">
+        <translation language="nl"><![CDATA[thema]]></translation>
+        <translation language="en"><![CDATA[theme]]></translation>
+      </item>
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>

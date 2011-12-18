@@ -32,7 +32,7 @@
 						</td>
 						<td>
 							<div class="options">
-								<label for="type">{$lblTypes|ucfirst}</label>
+								<label>{$lblTypes|ucfirst}</label>
 								{option:type}
 									<ul>
 										{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
@@ -42,7 +42,7 @@
 						</td>
 						<td>
 							<div class="options">
-								<label for="language">{$lblLanguages|ucfirst}</label>
+								<label>{$lblLanguages|ucfirst}</label>
 								{option:language}
 									<ul>
 										{iteration:language}<li>{$language.chkLanguage} <label for="{$language.id}">{$language.label|ucfirst}</label></li>{/iteration:language}

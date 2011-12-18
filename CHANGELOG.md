@@ -2,6 +2,7 @@
 --
 Improvements:
 * Tags: tagpages don't have any SEO-value, so don't index them.
+* Core: fixed some label-tags, thx to AnySurfer.
 
 Bugfixes:
 

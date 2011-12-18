@@ -27,7 +27,9 @@
 
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblContent|ucfirst}</h3>
+			<h3>
+				<label for="text">{$lblContent|ucfirst}</label>
+			</h3>
 		</div>
 		<div class="options">
 			<p>

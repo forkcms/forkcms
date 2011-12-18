@@ -98,7 +98,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				// delete empty values
 				foreach($bits as $i => $bit) if(empty($bit)) unset($bits[$i]);
 
-				// add group to action
+				// add group to actions
 				$this->actions[$module['value']][$key]['group'] = $bits[0];
 
 				// add group to array
@@ -297,7 +297,6 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	private function insertPermissions($actionPermissions, $bundledActionPermissions)
 	{
-		// init vars
 		$modulesDenied = array();
 		$modulesGranted = array();
 		$actionsDenied = array();
@@ -426,7 +425,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 					$selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
 
 					// if right widget set visible
-					if($selected === $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+					if($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
 				}
 			}
 		}
@@ -460,7 +459,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			{
 				// add widget checkboxes
 				$widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'])->parse() . '</span>';
-				$widgetBoxes[$j]['widget'] = $widget['label'];
+				$widgetBoxes[$j]['widget'] = '<label for="widgets' . SpoonFilter::toCamelCase($widget['label']) .'">' . $widget['label'] . '</label>';
 				$widgetBoxes[$j]['description'] = $widget['description'];
 			}
 		}
@@ -498,7 +497,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				{
 					// assign action boxes
 					$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
-					$actionBoxes[$key]['actions'][$i]['action'] = $action['label'];
+					$actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
 					$actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
 				}
 			}
@@ -508,7 +507,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			{
 				// create datagrid
 				$widgetGrid = new BackendDataGridArray($widgetBoxes);
-				$widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>'));
+				$widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /><span class="visuallyHidden"></span>'));
 
 				// get content
 				$widgets = $widgetGrid->getContent();
@@ -523,6 +522,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			// get content of datagrids
 			$permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
 			$permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
+			$permissionBoxes[$key]['id'] = SpoonFilter::toCamelCase($module['label']);
 		}
 
 		// create elements

@@ -22,7 +22,7 @@
 						<td>
 							<div class="options">
 								<p>
-									<label for="start_date">{$lblStartDate|ucfirst}</label>
+									<label for="startDate">{$lblStartDate|ucfirst}</label>
 									{$txtStartDate} {$txtStartDateError}
 								</p>
 							</div>
@@ -30,7 +30,7 @@
 						<td>
 							<div class="options">
 								<p>
-									<label for="end_date">{$lblEndDate|ucfirst}</label>
+									<label for="endDate">{$lblEndDate|ucfirst}</label>
 									{$txtEndDate} {$txtEndDateError}
 								</p>
 							</div>

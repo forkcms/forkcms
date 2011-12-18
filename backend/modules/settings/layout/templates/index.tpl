@@ -19,7 +19,9 @@
 
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblWebsiteTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+			<h3>
+				<label for="siteTitle">{$lblWebsiteTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			</h3>
 		</div>
 		<div class="options">
 			{$txtSiteTitle} {$txtSiteTitleError}
@@ -39,7 +41,7 @@
 		</div>
 		<div class="options">
 			<div class="textareaHolder">
-				<p class="p0"><label for="siteHtmlHeader">End of <code>&lt;body&gt;</code> script(s)</label></p>
+				<p class="p0"><label for="siteHtmlFooter">End of <code>&lt;body&gt;</code> script(s)</label></p>
 				{$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
 				<span class="helpTxt">{$msgHelpScriptsFoot}</span>
 			</div>
@@ -156,7 +158,7 @@
 		</div>
 		<div class="options labelWidthLong">
 			<p>
-				<label for="facebookAdminIds">{$lblAdminIds|ucfirst}</label>
+				<label for="addValue-facebookAdminIds">{$lblAdminIds|ucfirst}</label>
 				<span style="float: left;">
 					{$txtFacebookAdminIds} {$txtFacebookAdminIdsError}
 				</span>
