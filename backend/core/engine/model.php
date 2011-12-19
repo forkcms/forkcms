@@ -1065,7 +1065,7 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS ' . FORK_VERSION);
+		$akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
 		// try it, to decide if the item is spam
 		try
@@ -1116,7 +1116,7 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS ' . FORK_VERSION);
+		$akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
 		// try it, to decide if the item is spam
 		try
