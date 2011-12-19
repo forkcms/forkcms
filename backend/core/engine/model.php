@@ -870,7 +870,7 @@ class BackendModel
 
 			// set some properties
 			$client->setTimeOut(10);
-			$client->setUserAgent('Fork CMS ' . FORK_VERSION);
+			$client->setUserAgent('Fork CMS/' . FORK_VERSION);
 
 			// set port
 			$client->setPort($service['port']);
