@@ -743,6 +743,10 @@ class BackendExtensionsModel
 		// execute installation
 		$installer->install();
 
+		// save the warnings in session for later use
+		$warnings = array('module' => $module, 'warnings' => $installer->getWarnings());
+		SpoonSession::set('installer_warnings', $warnings);
+
 		// clear the cache so locale (and so much more) gets rebuilt
 		self::clearCache();
 	}
