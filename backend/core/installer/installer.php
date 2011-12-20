@@ -39,6 +39,13 @@ class ModuleInstaller
 	private $interfaceLanguages = array();
 
 	/**
+	 * Cached modules
+	 *
+	 * @var	array
+	 */
+	private static $modules = array();
+
+	/**
 	 * The variables passed by the installer
 	 *
 	 * @var array
@@ -84,6 +91,53 @@ class ModuleInstaller
 
 		// activate and update description
 		else $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
+	}
+
+	/**
+	 * Add an index
+	 *
+	 * @param string $module The module wherin will be searched.
+	 * @param int $otherId The id of the record.
+	 * @param  array $fields A key/value pair of fields to index.
+	 * @param string[optional] $language The frontend language for this entry.
+	 */
+	protected function addSearchIndex($module, $otherId, array $fields, $language)
+	{
+		// get db
+		$db = $this->getDB();
+
+		// validate cache
+		if(empty(self::$modules))
+		{
+			// get all modules
+			self::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
+		}
+
+		// module exists?
+		if(!in_array('search', self::$modules)) return;
+
+		// no fields?
+		if(empty($fields)) return;
+
+		// insert search index
+		foreach($fields as $field => $value)
+		{
+			// reformat value
+			$value = strip_tags((string) $value);
+
+			// insert in db
+			$db->insert(
+				'search_index',
+				array(
+					'module' => (string) $module,
+					'other_id' => (int) $otherId,
+					'language' => (string) $language,
+					'field' => (string) $field,
+					'value' => $value,
+					'active' => 'Y'
+				)
+			);
+		}
 	}
 
 	/**
