@@ -1,6 +1,7 @@
-3.1.7 (xxxx-xx-xx)
+3.1.7 (2011-12-20)
 --
 Improvements:
+
 * Core: tableSequenceByDragAndDrop allows the module to be chosen, so sequences from other modules might be used
 * Tags: tagpages don't have any SEO-value, so don't index them.
 * Core: created multibyte-safe ucfirst variant and applied it throughout Fork CMS.
@@ -9,7 +10,7 @@ Bugfixes:
 
 * Core: fixed XSS vulnerability (as mentioned on: http://packetstormsecurity.org/files/107815/forkcms-xss.txt)
 * Core: fixed page-unload warning on IE.
-* Core: it was not possible to use translations that did not exist in English.
+* Core: it is now possible to use translations that don't exist in English.
 
 
 3.1.6 (2011-12-13)
