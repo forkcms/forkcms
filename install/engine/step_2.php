@@ -141,9 +141,6 @@ class InstallerStep2 extends InstallerStep
 		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);
 
-		// check if the external-directory is writable
-		self::checkRequirement('fileSystemLibraryExternal', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external'), self::STATUS_ERROR);
-
 		// check if the installer-directory is writable
 		self::checkRequirement('fileSystemInstaller', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'), self::STATUS_ERROR);
 
