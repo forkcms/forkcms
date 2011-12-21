@@ -1,8 +1,14 @@
+3.1.8 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: added public methods to FrontendPage to fetch page id & page record.
+
 3.1.7 (2011-12-20)
 --
 Improvements:
 
-* Core: tableSequenceByDragAndDrop allows the module to be chosen, so sequences from other modules might be used
+* Core: tableSequenceByDragAndDrop allows the module to be chosen, so sequences from other modules might be used.
 * Tags: tagpages don't have any SEO-value, so don't index them.
 * Core: created multibyte-safe ucfirst variant and applied it throughout Fork CMS.
 
