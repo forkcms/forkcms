@@ -23,6 +23,13 @@ class FrontendPage extends FrontendBaseObject
 	protected $breadcrumb;
 
 	/**
+	 * Array of extras linked to this page
+	 *
+	 * @var array
+	 */
+	protected $extras = array();
+
+	/**
 	 * Footer instance
 	 *
 	 * @var	FrontendFooter
@@ -91,6 +98,9 @@ class FrontendPage extends FrontendBaseObject
 
 		// process page
 		$this->processPage();
+
+		// execute all extras linked to the page
+		$this->processExtras();
 
 		// store statistics
 		$this->storeStatistics();
@@ -171,6 +181,16 @@ class FrontendPage extends FrontendBaseObject
 	{
 		$page = Spoon::get('page');
 		return $page->getId();
+	}
+
+	/**
+	 * Get the extras linked to this page
+	 *
+	 * @return array
+	 */
+	public function getExtras()
+	{
+		return $this->extras;
 	}
 
 	/**
@@ -296,6 +316,22 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
+	 * Processes the extras linked to the page
+	 */
+	protected function processExtras()
+	{
+		// loop all extras
+		foreach($this->extras as $extra)
+		{
+			// execute
+			$extra->execute();
+
+			// assign the variables from this extra to the main template
+			$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
+		}
+	}
+
+	/**
 	 * Processes the page
 	 */
 	protected function processPage()
@@ -342,17 +378,8 @@ class FrontendPage extends FrontendBaseObject
 						// create new instance
 						$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
-						// execute
-						$extra->execute();
-
 						// overwrite the template
 						if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
-
-						// add to list of extras
-						else $block = array('extra' => $extra);
-
-						// assign the variables from this block to the main template
-						$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 					}
 
 					// widget
@@ -360,16 +387,13 @@ class FrontendPage extends FrontendBaseObject
 					{
 						// create new instance
 						$extra = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
-
-						// fetch data (if available)
-						$extra->execute();
-
-						// add to list of blocks
-						$block = array('extra' => $extra);
-
-						// assign the variables from this widget to the main template
-						$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 					}
+
+					// add to list of extras
+					$block = array('extra' => $extra);
+
+					// add to list of extras to parse
+					$this->extras[] = $extra;
 				}
 
 				// the block only contains HTML

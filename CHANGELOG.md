@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: added public methods to FrontendPage to fetch page id & page record.
+* Core: split instantiation & execution of extras, allowing extra's to be aware of other extra's on a page.
 
 3.1.7 (2011-12-20)
 --
