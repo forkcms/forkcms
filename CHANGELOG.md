@@ -12,6 +12,7 @@ Bugfixes:
 
 * Core: confirmmessages weren't working anymore, as Samuel Debruyn mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/251
 * Extensions: when a templates was edited and an form-error was shown the added blocks weren't shown correctly again.
+* Tags: related widget wasn't using the current language, patch provided by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/243
 
 
 3.1.7 (2011-12-20)
