@@ -460,7 +460,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			{
 				// add widget checkboxes
 				$widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'])->parse() . '</span>';
-				$widgetBoxes[$j]['widget'] = '<label for="widgets' . SpoonFilter::toCamelCase($widget['label']) .'">' . $widget['label'] . '</label>';
+				$widgetBoxes[$j]['widget'] = '<label for="widgets' . SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
 				$widgetBoxes[$j]['description'] = $widget['description'];
 			}
 		}
