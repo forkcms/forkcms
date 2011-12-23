@@ -143,7 +143,7 @@ class BackendTagsModel
 	 */
 	public static function getURL($URL, $id = null)
 	{
-		$URL = (string) $URL;
+		$URL = SpoonFilter::urlise((string) $URL);
 		$language = BL::getWorkingLanguage();
 
 		// get db
