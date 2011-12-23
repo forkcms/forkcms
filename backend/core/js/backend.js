@@ -560,20 +560,20 @@ jsBackend.controls =
 						'{$lblOK|ucfirst}': function()
 						{
 							// close dialog
-							$this.dialog('close');
+							$(this).dialog('close');
 
 							// submit the form
-							$('select:visible option[data-message-id='+ $this.attr('id') +']').parents('form').eq(0).submit();
+							$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
-							$this.dialog('close');
+							$(this).dialog('close');
 						}
 					},
 					open: function(e)
 					{
 						// set focus on first button
-						if($this.next().find('button').length > 0) { $this.next().find('button')[0].focus(); }
+						if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
 					}
 				});
 			}

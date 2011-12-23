@@ -8,6 +8,10 @@ Improvements:
 * All: added some hidden labels for formelements that doesn't have a <label>-tag linked, which improves the accessibility.
 * Authentication: don't mention which field is required seperatly.
 
+Bugfixes:
+
+* Core: confirmmessages weren't working anymore, as Samuel Debruyn mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/251
+
 
 3.1.7 (2011-12-20)
 --
