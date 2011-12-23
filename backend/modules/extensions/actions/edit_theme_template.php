@@ -218,9 +218,9 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 
 			if(isset($this->extras[$name]))
 			{
-				foreach($this->extras[$name] as $extra)
+				foreach($this->extras[$name] as $y => $extra)
 				{
-					$position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+					$position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
 				}
 			}
 
