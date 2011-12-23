@@ -326,7 +326,7 @@ jsBackend.mailmotor.step3 =
 
 			// give the iframebox the height of the body contents
 			$iframeBox.height(body.height());
-			
+
 			$form.on('submit', function(e)
 			{
 				// prevent the form from submitting

@@ -1131,8 +1131,8 @@ jsBackend.forms =
 		{
 			$('#sidebar input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags|addslashes}',
-				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				emptyMessage: '{$msgNoTags}',
+				errorMessage: '{$errAddTagBeforeSubmitting}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
 				params: { fork: { module: 'tags', action: 'autocomplete' } }
@@ -1142,8 +1142,8 @@ jsBackend.forms =
 		{
 			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags|addslashes}',
-				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				emptyMessage: '{$msgNoTags}',
+				errorMessage: '{$errAddTagBeforeSubmitting}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
 				params: { fork: { module: 'tags', action: 'autocomplete' } },
@@ -1448,7 +1448,7 @@ jsBackend.tinyMCE =
 	// init, something like a constructor
 	init: function()
 	{
-		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit}</span></div>');
 
 		// bind click on the element
 		$(document).on('click', '.clickToEdit', function(e)
@@ -1509,10 +1509,10 @@ jsBackend.tinyMCE =
 			var warnings = [];
 
 			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt|addslashes}'); }
+			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt}'); }
 
 			// invalid links?
-			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks|addslashes}'); }
+			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks}'); }
 
 			// any warnings?
 			if(warnings.length > 0)

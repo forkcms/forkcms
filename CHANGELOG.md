@@ -7,6 +7,7 @@ Improvements:
 * All: fixed a lot of <label>-tags, which improves the accessibility.
 * All: added some hidden labels for formelements that doesn't have a <label>-tag linked, which improves the accessibility.
 * Authentication: don't mention which field is required seperatly.
+* Core: no more need to use the addslashes-modifier in JS-files, it will be handled by Fork. Introduced while fixing the bug mentioned by Tristan Charbonnier on http://forkcms.lighthouseapp.com/projects/61890/tickets/249.
 
 Bugfixes:
 

@@ -60,8 +60,11 @@ class BackendJavascript
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new BackendTemplate();
 
+		// enable addslashes on each locale
+		$tpl->setAddSlashes(true);
+
 		// display
-		$tpl->display($path, true);
+		$tpl->display($path, true, true);
 	}
 
 	/**

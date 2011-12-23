@@ -21,6 +21,13 @@
 class BackendTemplate extends SpoonTemplate
 {
 	/**
+	 * Should we add slashes to each value?
+	 *
+	 * @var bool
+	 */
+	private $addSlashes = false;
+
+	/**
 	 * URL instance
 	 *
 	 * @var	BackendURL
@@ -275,6 +282,14 @@ class BackendTemplate extends SpoonTemplate
 			foreach($messages[$currentModule] as $key => $value) $realMessages[$key] = $value;
 		}
 
+		// execute addslashes on the values for the locale, will be used in JS
+		if($this->addSlashes)
+		{
+			foreach($realErrors as &$value) $value = addslashes($value);
+			foreach($realLabels as &$value) $value = addslashes($value);
+			foreach($realMessages as &$value) $value = addslashes($value);
+		}
+
 		// sort the arrays (just to make it look beautifull)
 		ksort($realErrors);
 		ksort($realLabels);
@@ -341,6 +356,16 @@ class BackendTemplate extends SpoonTemplate
 			// assign
 			$this->assign('bodyClass', $bodyClass);
 		}
+	}
+
+	/**
+	 * Should we execute addSlashed on the locale?
+	 *
+	 * @param bool[optional] $on Enable addslashes.
+	 */
+	public function setAddSlashes($on = true)
+	{
+		$this->addSlashes = (bool) $on;
 	}
 }
 
