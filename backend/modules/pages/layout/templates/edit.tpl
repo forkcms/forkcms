@@ -60,7 +60,7 @@
 							{$msgFallbackInfo}
 						</div>
 
-						<table cellspacing="10" cellpadding="0" border="0">
+						<table cellspacing="10">
 							<tbody>
 								<tr>
 									<td data-position="fallback" id="templatePosition-fallback" colspan="1" class="box">

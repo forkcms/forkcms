@@ -41,7 +41,7 @@ class BackendExtensionsModel
 		$table = self::templateSyntaxToArray($format);
 
 		// add start html
-		$html = '<table border="0" cellpadding="0" cellspacing="10">' . "\n";
+		$html = '<table cellspacing="10">' . "\n";
 		$html .= '	<tbody>' . "\n";
 
 		// init var
