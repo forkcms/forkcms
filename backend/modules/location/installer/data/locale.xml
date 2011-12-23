@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <location>
+      <item type="error" name="AddressCouldNotBeGeocoded">
+        <translation language="nl"><![CDATA[Dit adres kon niet worden omgezet naar coördinaten.]]></translation>
+        <translation language="en"><![CDATA[Address couldn't be converted into coordinates.]]></translation>
+        <translation language="it"><![CDATA[Non sono state trovate coordinate per l'indirizzo fornito.]]></translation>
+        <translation language="ru"><![CDATA[Невозможно получить координаты по этому адресу.]]></translation>
+        <translation language="cn"><![CDATA[地址无法转换为坐标。]]></translation>
+        <translation language="de"><![CDATA[Diese Adresse konnte leider nicht in Koordinaten übertragen werden.]]></translation>
+        <translation language="hu"><![CDATA[A címet nem lehet átalakítani koordinátákká.]]></translation>
+        <translation language="fr"><![CDATA[L'adresse n'a pas pu être convertie en coordonnées.]]></translation>
+        <translation language="es"><![CDATA[La dirección no ha podido convertir en coordenadas.]]></translation>
+      </item>
+      <item type="label" name="Auto">
+        <translation language="nl"><![CDATA[automatisch]]></translation>
+        <translation language="en"><![CDATA[automatic]]></translation>
+        <translation language="it"><![CDATA[automatica]]></translation>
+        <translation language="ru"><![CDATA[Автоматически]]></translation>
+        <translation language="cn"><![CDATA[自动]]></translation>
+        <translation language="de"><![CDATA[automatisch]]></translation>
+        <translation language="fr"><![CDATA[automatique]]></translation>
+        <translation language="hu"><![CDATA[autómatikus]]></translation>
+        <translation language="es"><![CDATA[automatico]]></translation>
+      </item>
+      <item type="label" name="Hybrid">
+        <translation language="nl"><![CDATA[hybride]]></translation>
+        <translation language="en"><![CDATA[hybrid]]></translation>
+        <translation language="it"><![CDATA[ibrida]]></translation>
+        <translation language="ru"><![CDATA[Гибрид]]></translation>
+        <translation language="cn"><![CDATA[混合]]></translation>
+        <translation language="de"><![CDATA[hybrid]]></translation>
+        <translation language="fr"><![CDATA[hybride]]></translation>
+        <translation language="hu"><![CDATA[hibrid]]></translation>
+        <translation language="es"><![CDATA[híbrido]]></translation>
+      </item>
+      <item type="label" name="Map">
+        <translation language="nl"><![CDATA[kaart]]></translation>
+        <translation language="en"><![CDATA[map]]></translation>
+        <translation language="it"><![CDATA[mappa]]></translation>
+        <translation language="ru"><![CDATA[Карта]]></translation>
+        <translation language="cn"><![CDATA[地图]]></translation>
+        <translation language="de"><![CDATA[Karte]]></translation>
+        <translation language="fr"><![CDATA[carte]]></translation>
+        <translation language="hu"><![CDATA[térkép]]></translation>
+        <translation language="es"><![CDATA[mapa]]></translation>
+      </item>
+      <item type="label" name="MapType">
+        <translation language="nl"><![CDATA[kaarttype]]></translation>
+        <translation language="en"><![CDATA[map type]]></translation>
+        <translation language="it"><![CDATA[tipologia di mappa]]></translation>
+        <translation language="ru"><![CDATA[Тип]]></translation>
+        <translation language="cn"><![CDATA[地图类型]]></translation>
+        <translation language="de"><![CDATA[Kartenart]]></translation>
+        <translation language="fr"><![CDATA[type de carte]]></translation>
+        <translation language="hu"><![CDATA[térkép típusa]]></translation>
+        <translation language="es"><![CDATA[tipo de mapa]]></translation>
+      </item>
+      <item type="label" name="Roadmap">
+        <translation language="nl"><![CDATA[wegenkaart]]></translation>
+        <translation language="en"><![CDATA[road map]]></translation>
+        <translation language="it"><![CDATA[mappa stradale]]></translation>
+        <translation language="ru"><![CDATA[Карта дорог]]></translation>
+        <translation language="cn"><![CDATA[地图]]></translation>
+        <translation language="de"><![CDATA[Straßenkarte]]></translation>
+        <translation language="fr"><![CDATA[carte routière]]></translation>
+        <translation language="hu"><![CDATA[road map]]></translation>
+        <translation language="es"><![CDATA[ruta]]></translation>
+      </item>
+      <item type="label" name="Satellite">
+        <translation language="nl"><![CDATA[satelliet]]></translation>
+        <translation language="en"><![CDATA[satellite]]></translation>
+        <translation language="it"><![CDATA[satellite]]></translation>
+        <translation language="ru"><![CDATA[Спутник]]></translation>
+        <translation language="cn"><![CDATA[卫星]]></translation>
+        <translation language="de"><![CDATA[Satellit]]></translation>
+        <translation language="fr"><![CDATA[satellite]]></translation>
+        <translation language="hu"><![CDATA[satellite]]></translation>
+        <translation language="es"><![CDATA[satelite]]></translation>
+      </item>
+      <item type="label" name="Terrain">
+        <translation language="nl"><![CDATA[terrein]]></translation>
+        <translation language="en"><![CDATA[terrain]]></translation>
+        <translation language="it"><![CDATA[terreno]]></translation>
+        <translation language="ru"><![CDATA[Местность]]></translation>
+        <translation language="cn"><![CDATA[地形]]></translation>
+        <translation language="de"><![CDATA[Terrain]]></translation>
+        <translation language="fr"><![CDATA[terrain]]></translation>
+        <translation language="hu"><![CDATA[terrain]]></translation>
+        <translation language="es"><![CDATA[terreno]]></translation>
+      </item>
+      <item type="label" name="ZoomLevel">
+        <translation language="nl"><![CDATA[zoom niveau]]></translation>
+        <translation language="en"><![CDATA[zoom level]]></translation>
+        <translation language="it"><![CDATA[livello di zoom]]></translation>
+        <translation language="ru"><![CDATA[Уровень приближения]]></translation>
+        <translation language="cn"><![CDATA[缩放程度]]></translation>
+        <translation language="de"><![CDATA[Zoomstufe]]></translation>
+        <translation language="fr"><![CDATA[niveau de zoom]]></translation>
+        <translation language="hu"><![CDATA[nagyítási szint]]></translation>
+        <translation language="es"><![CDATA[nivel de zoom]]></translation>
+      </item>
+    </location>
+  </backend>
+</locale>

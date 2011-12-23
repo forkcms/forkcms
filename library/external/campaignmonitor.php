@@ -544,7 +544,7 @@ class CampaignMonitor
 		}
 
 		// redefine
-		$url = (string) $url .'.'. $this->responseFormat;;
+		$url = (string) $url .'.'. $this->responseFormat;
 		$parameters = (array) $parameters;
 		$method = (string) $method;
 		$expectJSON = (bool) $expectJSON;
@@ -813,7 +813,7 @@ class CampaignMonitor
 			foreach($record['CustomFields']['SubscriberCustomField'] as $field)
 			{
 				// set values
-				$results[$i]['custom_fields'][$field['Key']] = $field['Value'];
+				$results[$key]['custom_fields'][$field['Key']] = $field['Value'];
 			}
 		}
 
@@ -1448,7 +1448,7 @@ class CampaignMonitor
 		$results = array();
 
 		// loop the records
-		foreach($records as $record)
+		foreach($records as $key => $record)
 		{
 			// set result values
 			$results[$key]['campaign_id'] = $record['CampaignID'];
@@ -1678,7 +1678,7 @@ class CampaignMonitor
 		$clientId = empty($clientId) ? $this->getClientId() : $clientId;
 
 		// make the call
-		$records = (array) $this->doCall('clients/'. $clientId .'/templates', $parameters);
+		$records = (array) $this->doCall('clients/'. $clientId .'/templates');
 
 		// stop here if no records were set
 		if(empty($records)) return array();
@@ -1849,15 +1849,33 @@ class CampaignMonitor
 	 */
 	public function sendCampaign($campaignId, $confirmationEmail, $deliveryDate = null)
 	{
-		// set ID
-		$campaignId = empty($campaignId) ? $this->getCampaignId() : $campaignId;
-
 		// set parameters
 		$parameters['ConfirmationEmail'] = (string) $confirmationEmail;
 		$parameters['SendDate'] = $deliveryDate;
 
 		// make the call
 		return $this->doCall('campaigns/'. $campaignId .'/send', $parameters, 'POST');
+	}
+
+
+	/**
+	 * This sends a preview campaign based for a given campaign ID.
+	 *
+	 * @return	bool
+	 * @param	string $campaignId	The ID of the campaign to send.
+	 * @param	mixed $recipients This can be an e-mail address string, or an array of addresses.
+	 * @param	string[optional] $personalization This can be 'Fallback','Random', or a specific e-mail address.
+	 */
+	public function sendCampaignPreview($campaignId, $recipients, $personalization = 'Fallback')
+	{
+		$recipients = !is_array($recipients) ? array($recipients) : $recipients;
+
+		// set parameters
+		$parameters['PreviewRecipients'] = $recipients;
+		$parameters['SendDate'] = $personalization;
+
+		// make the call
+		return $this->doCall('campaigns/'. $campaignId .'/sendpreview', $parameters, 'POST');
 	}
 
 

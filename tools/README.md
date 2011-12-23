@@ -58,7 +58,7 @@ The remove_cache-script will clear folders that contain cached files. And can be
 
 
 ### stats
-The stats-script will run severals scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend an PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains usefulle numbers.
+The stats-script will run severals scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend an PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
 
 #### PHP Code Sniffer (phpcs.xml)
 Will contain the same as running `check_code`. It will the code against the styleguide, it will detect deprecated stuff, ... 
@@ -75,42 +75,42 @@ PHP Depend is a tool that performs code analysis. It calculates the software met
 
 below you can find a list, so you can interpret the results
 
-* ahh:    Average Hierarchy Height	The average of the maximum lenght from a root class to ist deepest subclass subclass
-* andc:	  Average Number of Derived Classes	The average of direct subclasses of a class
-* calls:  Number of Method or Function Calls
-* ccn:    Cyclomatic Complexity Number
-* ccn2:   Extended Cyclomatic Complexity Number
-* cis:    Class Interface Size	CIS = public(NOM + VARS) Measures the size of the interface from other parts of the system to a class.
-* cloc:   Comment Lines fo Code
-* clsa:   Number of Abstract Classes
-* clsc:   Number of Concrete Classes
-* cr:     Code Rank Google PageRank applied on Packages and Classes. Classes with a high value should be tested frequently.
-* csz:    Class Size Number 	CSZ = NOM + VARS Measures the size of a class concerning operations and data.
-* dit:    Depth of Inheritance Tree Depth of inheritance to root class
-* eloc:   Executable Lines of Code
-* fanout: Number of Fanouts
-* leafs:  Number of Leaf Classes
-* lloc:   Logical Lines Of Code
-* loc:    Lines Of Code
-* maxDIT: Max Depth of Inheritance Tree. Maximum depth of inheritance
-* noam:   Number Of Added Methods
-* nocc:   Number Of Child Classes
-* noom:   Number Of Overwritten Methods
-* ncloc:  Non Comment Lines Of Code
-* noc:    Number Of Classes
-* nof:    Number Of Functions
-* noi:    Number Of Interfaces
-* nom:    Number Of Methods
-* nop:    Number of Packages
-* npath:  NPath Complexity
-* rcr:    Reverse Code Rank
-* roots:  Number of Root Classes
-* vars:   Properties
-* varsi:  Inherited Properties
-* varsnp: Non Private Properties
-* wmc:    Weighted Method Count. The WMC metric is the sum of the complexities of all declared methods and constructors of class.
-* wmci:   Inherited Weighted Method Count. Same as wmc, but only inherited methods.
-* wmcnp:  Non Private Weighted Method Count. Same as wmc, but only non private methods.
+* ahh:		Average Hierarchy Height	The average of the maximum lenght from a root class to ist deepest subclass subclass
+* andc:		Average Number of Derived Classes	The average of direct subclasses of a class
+* calls:	Number of Method or Function Calls
+* ccn:		Cyclomatic Complexity Number
+* ccn2:		Extended Cyclomatic Complexity Number
+* cis:		Class Interface Size	CIS = public(NOM + VARS) Measures the size of the interface from other parts of the system to a class.
+* cloc:		Comment Lines fo Code
+* clsa:		Number of Abstract Classes
+* clsc:		Number of Concrete Classes
+* cr:		Code Rank Google PageRank applied on Packages and Classes. Classes with a high value should be tested frequently.
+* csz:		Class Size Number 	CSZ = NOM + VARS Measures the size of a class concerning operations and data.
+* dit:		Depth of Inheritance Tree Depth of inheritance to root class
+* eloc:		Executable Lines of Code
+* fanout:	Number of Fanouts
+* leafs:	Number of Leaf Classes
+* lloc:		Logical Lines Of Code
+* loc:		Lines Of Code
+* maxDIT:	Max Depth of Inheritance Tree. Maximum depth of inheritance
+* noam:		Number Of Added Methods
+* nocc:		Number Of Child Classes
+* noom:		Number Of Overwritten Methods
+* ncloc:	Non Comment Lines Of Code
+* noc:		Number Of Classes
+* nof:		Number Of Functions
+* noi:		Number Of Interfaces
+* nom:		Number Of Methods
+* nop:		Number of Packages
+* npath:	NPath Complexity
+* rcr:		Reverse Code Rank
+* roots:	Number of Root Classes
+* vars:		Properties
+* varsi:	Inherited Properties
+* varsnp:	Non Private Properties
+* wmc:		Weighted Method Count. The WMC metric is the sum of the complexities of all declared methods and constructors of class.
+* wmci:		Inherited Weighted Method Count. Same as wmc, but only inherited methods.
+* wmcnp:	Non Private Weighted Method Count. Same as wmc, but only non private methods.
 
 For more information on PHP Depend reports, see: http://pdepend.org/documentation/handbook/reports.html
 

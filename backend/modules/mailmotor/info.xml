@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>mailmotor</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			To easily distribute newsletters, one of Fork CMS's core modules is the Mailmotor module. It seamlessly integrates email campaign management using Campaign Monitor into your very own website.
+			After initially linking the module to your Campaign Monitor account, it's possible to manage every aspect of a newsletter campaign through it's very intuitive interface. Subscribers can be divided into specific customizable groups to allow for very targeted compaigns.
+			Creating a newsletter is a very simple process consisting of only a few steps, where one selects the desired language and group(s) to send the newsletter to and chooses which template to use for each newsletter. The content of the newsletter can than be created and edited through a rich text editor.
+			After succesfully creating your newsletter, it's possibly to first send a preview email to yourself or any selected address. If you're happy about the newsletter, just press the final button to have Campaign Monitor deliver it to your contacts. Hereafter, it's possible to view detailed statistics per newsletter: don't we all want to know just how many people opened the email and of those, how many actually clicked through to your website?
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Dave Lens]]></name>
+			<url><![CDATA[http://www.davelens.be]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add_address"><![CDATA[Triggered when an address is added.]]></event>
+		<event application="backend" name="after_edit_address"><![CDATA[Triggered when an address is edited.]]></event>
+		<event application="backend" name="after_delete_addresses"><![CDATA[Triggered when addresses are deleted.]]></event>
+		<event application="backend" name="after_delete_bounces"><![CDATA[Triggered when the bounces are deleted.]]></event>
+		<event application="backend" name="after_import_address"><![CDATA[Triggered when addresses are imported.]]></event>
+		<event application="backend" name="after_import_address_with_failed_items"><![CDATA[Triggered when addresses are imported, but with addresses that could not be imported.]]></event>
+		<event application="backend" name="after_add_campaign"><![CDATA[Triggered when a campaig is added.]]></event>
+		<event application="backend" name="after_edit_campaign"><![CDATA[Triggered when a campaign is edited.]]></event>
+		<event application="backend" name="after_delete_campaigns"><![CDATA[Triggered when campaigns are deleted.]]></event>
+		<event application="backend" name="after_add_group"><![CDATA[Triggered when a group is added.]]></event>
+		<event application="backend" name="after_edit_group"><![CDATA[Triggered when a group is edited.]]></event>
+		<event application="backend" name="after_delete_groups"><![CDATA[Triggered when groups are deleted.]]></event>
+		<event application="backend" name="after_import_groups"><![CDATA[Triggered when groups are imported.]]></event>
+		<event application="backend" name="after_add_mailing_step1"><![CDATA[Triggered when teh mailing is added in step 1.]]></event>
+		<event application="backend" name="after_copy_mailing"><![CDATA[Triggered when the mailing is copied.]]></event>
+		<event application="backend" name="after_delete_mailings"><![CDATA[Triggered when the mailing is deleted.]]></event>
+		<event application="backend" name="after_edit_mailing"><![CDATA[Triggered when the mailing is edited.]]></event>
+		<event application="backend" name="after_edit_mailing_step1"><![CDATA[Triggered when the mailing is edited in step 1.]]></event>
+		<event application="backend" name="after_edit_mailing_step2"><![CDATA[Triggered when the mailing is edited in step 2.]]></event>
+		<event application="backend" name="after_edit_mailing_step3"><![CDATA[Triggered when the mailing is edited in step 3.]]></event>
+		<event application="backend" name="after_edit_mailing_step4"><![CDATA[Triggered when the mailing is edited in step 4.]]></event>
+		<event application="backend" name="after_mailing_status_sent"><![CDATA[Triggered when the mail is sent]]></event>
+		<event application="backend" name="after_mailing_status_queued"><![CDATA[Triggered when the mailing is queued.]]></event>
+		<event application="backend" name="after_saved_account_settings"><![CDATA[Triggered when the account settings are saved]]></event>
+		<event application="backend" name="after_saved_client_settings"><![CDATA[Triggered when the client settings are saved.]]></event>
+		<event application="backend" name="after_saved_general_settings"><![CDATA[Triggered when the general settings are saved.]]></event>
+		<event application="backend" name="after_account_linked"><![CDATA[Triggered when an account is linked]]></event>
+		<event application="frontend" name="after_subscribe"><![CDATA[Triggered when someone subscribes.]]></event>
+		<event application="frontend" name="after_unsubscribe"><![CDATA[Triggered when someone unsubscribes.]]></event>
+	</events>
+</module>

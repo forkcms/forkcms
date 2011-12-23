@@ -103,7 +103,6 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	/**
 	 * Class constructor.
 	 *
-	 * @return	void
 	 * @param	string $name						The name.
 	 * @param	array[optional] $values				The possible values. Each value should have a label and value-key.
 	 * @param	mixed[optional] $selected			The selected value.
@@ -133,7 +132,6 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	/**
 	 * Adds an error to the error stack.
 	 *
-	 * @return	void
 	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
@@ -303,52 +301,56 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// post/get data
 		$data = $this->getMethod(true);
 
-		// default values
-		$values = $this->values;
+		// allowed values
+		$allowedValues = array();
+
+		// loop initial values and fill the array of allowed values
+		foreach($this->values as $key => $value)
+		{
+			// the current key represents an optgroup
+			if(is_array($value))
+				$allowedValues = array_merge($allowedValues, $value);
+
+			else
+				$allowedValues[$key] = $value;
+		}
 
 		// submitted field
 		if($this->isSubmitted() && isset($data[$this->attributes['name']]))
 		{
-			// option groups
-			if($this->optionGroups) $values = $data[$this->attributes['name']];
-
-			// no option groups
-			else
+			// multiple selection allowed
+			if(!$this->single)
 			{
-				// multiple selection allowed
-				if(!$this->single)
+				// reset
+				$values = array();
+
+				// loop choices
+				foreach((array) $data[$this->attributes['name']] as $value)
 				{
-					// reset
-					$values = array();
-
-					// loop choices
-					foreach((array) $data[$this->attributes['name']] as $value)
-					{
-						// external data is allowed
-						if($this->allowExternalData) $values[] = $value;
-
-						// external data is not allowed
-						else
-						{
-							if((isset($this->values[$value]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $value) && !in_array($value, $values))) $values[] = $value;
-						}
-					}
-				}
-
-				// ony single selection
-				else
-				{
-					// rest
-					$values = null;
-
 					// external data is allowed
-					if($this->allowExternalData) $values = (string) $data[$this->attributes['name']];
+					if($this->allowExternalData) $values[] = $value;
 
-					// external data is NOT allowed
+					// external data is not allowed
 					else
 					{
-						if(isset($this->values[(string) $data[$this->attributes['name']]])) $values = (string) $data[$this->attributes['name']];
+						if((isset($allowedValues[$value]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $value) && !in_array($value, $values))) $values[] = $value;
 					}
+				}
+			}
+
+			// ony single selection
+			else
+			{
+				// rest
+				$values = null;
+
+				// external data is allowed
+				if($this->allowExternalData) $values = (string) $data[$this->attributes['name']];
+
+				// external data is NOT allowed
+				else
+				{
+					if(isset($allowedValues[(string) $data[$this->attributes['name']]]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $data[$this->attributes['name']] && $this->defaultElement[1] != '')) $values = (string) $data[$this->attributes['name']];
 				}
 			}
 		}
@@ -487,39 +489,40 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			$output .= '>' . $this->defaultElement[0] . "</option>\r\n";
 		}
 
-		// has option groups
-		if($this->optionGroups)
+		// loop all values
+		foreach($this->values as $label => $value)
 		{
-			foreach($this->values as $groupName => $group)
+			// value is an optgroup?
+			if($this->optionGroups[$label])
 			{
 				// create optgroup
-				$output .= "\t" . '<optgroup label="' . $groupName . '">' . "\n";
+				$output .= "\t" . '<optgroup label="' . $label . '">' . "\n";
 
-				// loop valuesgoo
-				foreach($group as $value => $label)
+				// loop value
+				foreach($value as $key => $option)
 				{
 					// create option
-					$output .= "\t\t" . '<option value="' . $value . '"';
+					$output .= "\t\t" . '<option value="' . $key . '"';
 
 					// multiple
 					if(!$this->single)
 					{
 						// if the value is within the selected items array
-						if(is_array($selected) && count($selected) != 0 && in_array($value, $selected)) $output .= ' selected="selected"';
+						if(is_array($selected) && count($selected) != 0 && in_array($key, $selected)) $output .= ' selected="selected"';
 					}
 
 					// single
 					else
 					{
 						// if the current value is equal to the submitted value
-						if($value == $selected) $output .= ' selected="selected"';
+						if($key == $selected) $output .= ' selected="selected"';
 					}
 
 					// add custom attributes
-					if(isset($this->optionAttributes[(string) $value]))
+					if(isset($this->optionAttributes[(string) $key]))
 					{
 						// loop each attribute
-						foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
+						foreach($this->optionAttributes[(string) $key] as $attrKey => $attrValue)
 						{
 							// add to the output
 							$output .= ' ' . $attrKey . '="' . $attrValue . '"';
@@ -527,42 +530,38 @@ class SpoonFormDropdown extends SpoonFormAttributes
 					}
 
 					// end option
-					$output .= ">$label</option>\r\n";
+					$output .= ">$option</option>\r\n";
 				}
 
 				// end optgroup
 				$output .= "\t" . '</optgroup>' . "\n";
 			}
-		}
 
-		// regular dropdown
-		else
-		{
-			// loop values
-			foreach($this->values as $value => $label)
+			// no optgroup?
+			else
 			{
 				// create option
-				$output .= "\t" . '<option value="' . $value . '"';
+				$output .= "\t" . '<option value="' . $label . '"';
 
 				// multiple
 				if(!$this->single)
 				{
 					// if the value is within the selected items array
-					if(is_array($selected) && count($selected) != 0 && in_array($value, $selected)) $output .= ' selected="selected"';
+					if(is_array($selected) && count($selected) != 0 && in_array($label, $selected)) $output .= ' selected="selected"';
 				}
 
 				// single
 				else
 				{
 					// if the current value is equal to the submitted value
-					if($this->getSelected() !== null && $value == $selected) $output .= ' selected="selected"';
+					if($this->getSelected() !== null && $label == $selected) $output .= ' selected="selected"';
 				}
 
 				// add custom attributes
-				if(isset($this->optionAttributes[(string) $value]))
+				if(isset($this->optionAttributes[(string) $label]))
 				{
 					// loop each attribute
-					foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
+					foreach($this->optionAttributes[(string) $label] as $attrKey => $attrValue)
 					{
 						// add to the output
 						$output .= ' ' . $attrKey . '="' . $attrValue . '"';
@@ -570,7 +569,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 				}
 
 				// end option
-				$output .= ">$label</option>\r\n";
+				$output .= ">$value</option>\r\n";
 			}
 		}
 
@@ -591,61 +590,65 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	/**
 	 * Should we allow external data to be added.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	bool[optional] $on	Is external data allowed?
 	 */
 	public function setAllowExternalData($on = true)
 	{
 		$this->allowExternalData = (bool) $on;
+		return $this;
 	}
 
 
 	/**
 	 * Sets the default element (top of the dropdown).
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $label				The label.
 	 * @param	string[optional] $value		The value to use.
 	 */
 	public function setDefaultElement($label, $value = null)
 	{
 		$this->defaultElement = array((string) $label, (string) $value);
+		return $this;
 	}
 
 
 	/**
 	 * Overwrites the error stack.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{
 		$this->errors = (string) $error;
+		return $this;
 	}
 
 
 	/**
 	 * Sets custom option attributes for a specific value.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $value		The value wherefor the attributes will be set.
 	 * @param	array $attributes	The attributes to set.
 	 */
 	public function setOptionAttributes($value, array $attributes)
 	{
-		// set each attribute
 		foreach($attributes as $attrKey => $attrValue)
 		{
 			$this->optionAttributes[(string) $value][(string) $attrKey] = (string) $attrValue;
 		}
+
+		return $this;
 	}
 
 
 	/**
 	 * Set the default selected item(s).
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	mixed $selected		Set the selected value.
 	 */
 	public function setSelected($selected)
@@ -669,64 +672,57 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			// multiple selections
 			else $this->selected[] = (string) $selected;
 		}
+
+		return $this;
 	}
 
 
 	/**
 	 * Whether you can select one or more items.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	bool[optional] $single	Only selecting one element is allowed?
 	 */
 	public function setSingle($single = true)
 	{
 		$this->single = (bool) $single;
+		return $this;
 	}
 
 
 	/**
 	 * Sets the values for this dropdown menu.
 	 *
-	 * @return	void
 	 * @param	array[optional] $values		The possible values. Each value should have a label and value-key.
 	 */
 	private function setValues(array $values = null)
 	{
-		// has not items
+		// has no items
 		if(count($values) == 0) $this->setDefaultElement('');
 
 		// at least 1 item
 		else
 		{
-			// check the first element
-			foreach($values as $value)
+			// check all elements
+			foreach($values as $label => $value)
 			{
 				// dropdownfield with optgroups?
-				$this->optionGroups = (is_array($value)) ? true : false;
+				$this->optionGroups[$label] = is_array($value);
 
-				// break the loop
-				break;
-			}
-
-			// has option groups
-			if($this->optionGroups)
-			{
-				// loop each group
-				foreach($values as $groupName => $options)
+				// is option group
+				if($this->optionGroups[$label])
 				{
-					// loop each option
-					foreach($options as $key => $value) $this->values[$groupName][$key] = $value;
+					// loop value and assign its option
+					foreach($value as $key => $option) $this->values[$label][$key] = $option;
 				}
-			}
 
-			// no option groups
-			else
-			{
-				// has items
-				foreach($values as $label => $value) $this->values[$label] = $value;
+				// no option group
+				else
+				{
+					// assign its value
+					$this->values[$label] = $value;
+				}
 			}
 		}
 	}
 }
-
-?>

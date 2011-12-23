@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>form_builder</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>2.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			Building forms is one of those things most developers don't like to do. It's a repetitive monkey job that provides little to no satisfaction. So we created a module that allows anyone to create forms via Fork CMS. No longer do developers have to toil away at forms.
+			The module allows anyone to create his own custom form and link it to a page on their website, without the interference of a developer.
+			Options include changing the default values from form fields, to validation with custom error messages. In other words, you're able to tune the form to your liking.
+			But what to do with the data sent through these custom forms? The interface of the formbuilder allows you to browse through all your sent forms. Optionally, the formbuilder can send you an email each time a new form is submitted (including the form data). If you ask nicely it might even give you an export of all data.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Dieter Vanden Eynde]]></name>
+			<url><![CDATA[http://www.dieterve.be]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a form is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a form is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a form is edited.]]></event>
+		<event application="frontend" name="after_submission"><![CDATA[Triggered when a form is submitted.]]></event>
+	</events>
+</module>

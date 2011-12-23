@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>pages</name>
+	<version>2.0.0</version>
+	<requirements>
+		<minimum_version>3.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			The heart and soul of Fork CMS.
+			A Fork CMS website is administered through the pages module. Users can easily create, edit or delete a new page, or rearange it in the visual tree of the website.
+			Adding/editing pieces of content as well as modules/widgets to the correct part of the page is simple and straightforward through the simplified visual representation of the webpage's design, that can be altered on each page independently.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Matthias Mullie]]></name>
+			<url><![CDATA[http://www.mullie.eu]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Tijs Verkoyen]]></name>
+			<url><![CDATA[http://www.sumocoders.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Davy Hellemans]]></name>
+			<url><![CDATA[http://www.netlash.com]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a page is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a page is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a page is edited.]]></event>
+		<event application="backend" name="after_add_template"><![CDATA[Triggered when a template is added.]]></event>
+		<event application="backend" name="after_delete_template"><![CDATA[Triggered when a template is deleted.]]></event>
+		<event application="backend" name="after_edit_template"><![CDATA[Triggered when a template is edited.]]></event>
+		<event application="backend" name="after_saved_settings"><![CDATA[Triggered when the settings are saved.]]></event>
+		<event application="backend" name="after_recreated_cache"><![CDATA[Triggered when the cache-files are recreated.]]></event>
+	</events>
+</module>

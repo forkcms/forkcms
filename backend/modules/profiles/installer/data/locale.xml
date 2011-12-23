@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <profiles>
+      <item type="label" name="Active">
+        <translation language="nl"><![CDATA[actief]]></translation>
+        <translation language="en"><![CDATA[active]]></translation>
+        <translation language="it"><![CDATA[attivo]]></translation>
+        <translation language="ru"><![CDATA[Активный]]></translation>
+        <translation language="cn"><![CDATA[活动]]></translation>
+        <translation language="de"><![CDATA[aktiv]]></translation>
+        <translation language="fr"><![CDATA[actif]]></translation>
+        <translation language="hu"><![CDATA[aktív]]></translation>
+        <translation language="es"><![CDATA[activo]]></translation>
+      </item>
+      <item type="label" name="AddGroup">
+        <translation language="nl"><![CDATA[groep toevoegen]]></translation>
+        <translation language="en"><![CDATA[add group]]></translation>
+        <translation language="it"><![CDATA[aggiungi gruppo]]></translation>
+        <translation language="ru"><![CDATA[Добавить группу]]></translation>
+        <translation language="cn"><![CDATA[添加用户组]]></translation>
+        <translation language="de"><![CDATA[Gruppe hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar grupo]]></translation>
+      </item>
+      <item type="label" name="AddMembership">
+        <translation language="nl"><![CDATA[lidmaatschap toevoegen]]></translation>
+        <translation language="en"><![CDATA[add membership]]></translation>
+        <translation language="it"><![CDATA[aggiungi appartenenza ]]></translation>
+        <translation language="ru"><![CDATA[Добавить членство]]></translation>
+        <translation language="cn"><![CDATA[添加组成员]]></translation>
+        <translation language="fr"><![CDATA[ajouter une adhésion]]></translation>
+        <translation language="de"><![CDATA[Mitgliedschaft hinzufügen]]></translation>
+        <translation language="hu"><![CDATA[tagság hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar miembros]]></translation>
+      </item>
+      <item type="label" name="AddToGroup">
+        <translation language="nl"><![CDATA[toevoegen aan een groep]]></translation>
+        <translation language="en"><![CDATA[add to a group]]></translation>
+        <translation language="it"><![CDATA[aggiungi ad un gruppo]]></translation>
+        <translation language="ru"><![CDATA[Добавить в группу]]></translation>
+        <translation language="cn"><![CDATA[添加到一个用户组]]></translation>
+        <translation language="de"><![CDATA[einer Gruppe hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter à un groupe]]></translation>
+        <translation language="hu"><![CDATA[csoporthoz hozzáad]]></translation>
+        <translation language="es"><![CDATA[agregar a un grupo]]></translation>
+      </item>
+      <item type="label" name="BirthDate">
+        <translation language="nl"><![CDATA[geboortedatum]]></translation>
+        <translation language="en"><![CDATA[birth date]]></translation>
+        <translation language="it"><![CDATA[data di nascita]]></translation>
+        <translation language="ru"><![CDATA[Дата рождения]]></translation>
+        <translation language="cn"><![CDATA[生日]]></translation>
+        <translation language="de"><![CDATA[Geburtsdatum]]></translation>
+        <translation language="fr"><![CDATA[date de naissance]]></translation>
+        <translation language="hu"><![CDATA[születési idő]]></translation>
+        <translation language="es"><![CDATA[fecha de nacimiento]]></translation>
+      </item>
+      <item type="label" name="Blocked">
+        <translation language="nl"><![CDATA[geblokkeerd]]></translation>
+        <translation language="en"><![CDATA[blocked]]></translation>
+        <translation language="it"><![CDATA[bloccato]]></translation>
+        <translation language="ru"><![CDATA[Заблокирован]]></translation>
+        <translation language="cn"><![CDATA[已屏蔽的]]></translation>
+        <translation language="de"><![CDATA[gesperrt]]></translation>
+        <translation language="fr"><![CDATA[bloqué]]></translation>
+        <translation language="hu"><![CDATA[tiltott]]></translation>
+        <translation language="es"><![CDATA[bloqueado]]></translation>
+      </item>
+      <item type="label" name="City">
+        <translation language="nl"><![CDATA[stad]]></translation>
+        <translation language="en"><![CDATA[city]]></translation>
+        <translation language="it"><![CDATA[città]]></translation>
+        <translation language="ru"><![CDATA[Город]]></translation>
+        <translation language="cn"><![CDATA[城市]]></translation>
+        <translation language="de"><![CDATA[Stadt]]></translation>
+        <translation language="fr"><![CDATA[ville]]></translation>
+        <translation language="hu"><![CDATA[város]]></translation>
+        <translation language="es"><![CDATA[ciudad]]></translation>
+      </item>
+      <item type="label" name="Country">
+        <translation language="nl"><![CDATA[land]]></translation>
+        <translation language="en"><![CDATA[country]]></translation>
+        <translation language="it"><![CDATA[nazione]]></translation>
+        <translation language="ru"><![CDATA[Страна]]></translation>
+        <translation language="cn"><![CDATA[国家/地区]]></translation>
+        <translation language="de"><![CDATA[Land]]></translation>
+        <translation language="fr"><![CDATA[pays]]></translation>
+        <translation language="hu"><![CDATA[ország]]></translation>
+        <translation language="es"><![CDATA[pais]]></translation>
+      </item>
+      <item type="label" name="Deleted">
+        <translation language="nl"><![CDATA[verwijderd]]></translation>
+        <translation language="en"><![CDATA[deleted]]></translation>
+        <translation language="it"><![CDATA[eliminato]]></translation>
+        <translation language="ru"><![CDATA[Удален]]></translation>
+        <translation language="cn"><![CDATA[已删除的]]></translation>
+        <translation language="de"><![CDATA[gelöscht]]></translation>
+        <translation language="fr"><![CDATA[effacé]]></translation>
+        <translation language="hu"><![CDATA[törölt]]></translation>
+        <translation language="es"><![CDATA[eliminado]]></translation>
+      </item>
+      <item type="label" name="DisplayName">
+        <translation language="nl"><![CDATA[weergave naam]]></translation>
+        <translation language="en"><![CDATA[display name]]></translation>
+        <translation language="it"><![CDATA[nome da mostrare]]></translation>
+        <translation language="ru"><![CDATA[Отображаемое Имя]]></translation>
+        <translation language="cn"><![CDATA[显示名称]]></translation>
+        <translation language="fr"><![CDATA[nom affiché]]></translation>
+        <translation language="de"><![CDATA[Nickname]]></translation>
+        <translation language="hu"><![CDATA[becenév]]></translation>
+        <translation language="es"><![CDATA[nombre mostrado]]></translation>
+      </item>
+      <item type="label" name="EditGroup">
+        <translation language="nl"><![CDATA[groep aanpassen]]></translation>
+        <translation language="en"><![CDATA[edit group]]></translation>
+        <translation language="it"><![CDATA[modifica gruppo]]></translation>
+        <translation language="ru"><![CDATA[Редактировать группу]]></translation>
+        <translation language="cn"><![CDATA[编辑用户组]]></translation>
+        <translation language="de"><![CDATA[Gruppe bearbeiten]]></translation>
+        <translation language="fr"><![CDATA[éditer le groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar grupo]]></translation>
+      </item>
+      <item type="label" name="EditMembership">
+        <translation language="nl"><![CDATA[lidmaatschap aanpassen]]></translation>
+        <translation language="en"><![CDATA[edit membership]]></translation>
+        <translation language="it"><![CDATA[modifica appartenenza]]></translation>
+        <translation language="ru"><![CDATA[Редактировать членство]]></translation>
+        <translation language="cn"><![CDATA[编辑组成员]]></translation>
+        <translation language="de"><![CDATA[Zugehörigkeit bearbeiten]]></translation>
+        <translation language="fr"><![CDATA[éditer l'adhésion]]></translation>
+        <translation language="hu"><![CDATA[tagság szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar miembro]]></translation>
+      </item>
+      <item type="label" name="ExpiresOn">
+        <translation language="nl"><![CDATA[vervalt op]]></translation>
+        <translation language="en"><![CDATA[expires on]]></translation>
+        <translation language="it"><![CDATA[scade il]]></translation>
+        <translation language="ru"><![CDATA[Истекает]]></translation>
+        <translation language="cn"><![CDATA[到期日]]></translation>
+        <translation language="de"><![CDATA[verfällt am]]></translation>
+        <translation language="fr"><![CDATA[expire le]]></translation>
+        <translation language="hu"><![CDATA[lejár]]></translation>
+        <translation language="es"><![CDATA[expira en]]></translation>
+      </item>
+      <item type="label" name="Female">
+        <translation language="nl"><![CDATA[vrouw]]></translation>
+        <translation language="en"><![CDATA[female]]></translation>
+        <translation language="it"><![CDATA[femmina]]></translation>
+        <translation language="ru"><![CDATA[Женщина]]></translation>
+        <translation language="cn"><![CDATA[女]]></translation>
+        <translation language="de"><![CDATA[weiblich]]></translation>
+        <translation language="fr"><![CDATA[femme]]></translation>
+        <translation language="hu"><![CDATA[nő]]></translation>
+        <translation language="es"><![CDATA[mujer]]></translation>
+      </item>
+      <item type="label" name="FirstName">
+        <translation language="nl"><![CDATA[voornaam]]></translation>
+        <translation language="en"><![CDATA[first name]]></translation>
+        <translation language="it"><![CDATA[nome]]></translation>
+        <translation language="ru"><![CDATA[Имя]]></translation>
+        <translation language="cn"><![CDATA[名]]></translation>
+        <translation language="de"><![CDATA[Vorname]]></translation>
+        <translation language="fr"><![CDATA[prénom]]></translation>
+        <translation language="hu"><![CDATA[keresztnév]]></translation>
+        <translation language="es"><![CDATA[primer nombre]]></translation>
+      </item>
+      <item type="label" name="Gender">
+        <translation language="nl"><![CDATA[geslacht]]></translation>
+        <translation language="en"><![CDATA[gender]]></translation>
+        <translation language="it"><![CDATA[genere]]></translation>
+        <translation language="ru"><![CDATA[Пол]]></translation>
+        <translation language="cn"><![CDATA[性别]]></translation>
+        <translation language="de"><![CDATA[Geschlecht]]></translation>
+        <translation language="fr"><![CDATA[genre]]></translation>
+        <translation language="hu"><![CDATA[nem]]></translation>
+        <translation language="es"><![CDATA[género]]></translation>
+      </item>
+      <item type="label" name="GroupName">
+        <translation language="nl"><![CDATA[groep naam]]></translation>
+        <translation language="en"><![CDATA[group name]]></translation>
+        <translation language="it"><![CDATA[nome del gruppo]]></translation>
+        <translation language="ru"><![CDATA[Название Группы]]></translation>
+        <translation language="cn"><![CDATA[组名]]></translation>
+        <translation language="de"><![CDATA[Gruppenname]]></translation>
+        <translation language="fr"><![CDATA[nom de groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport név]]></translation>
+        <translation language="es"><![CDATA[nombre del grupo]]></translation>
+      </item>
+      <item type="label" name="Groups">
+        <translation language="nl"><![CDATA[groepen]]></translation>
+        <translation language="en"><![CDATA[groups]]></translation>
+        <translation language="it"><![CDATA[gruppi]]></translation>
+        <translation language="ru"><![CDATA[Группы]]></translation>
+        <translation language="cn"><![CDATA[用户组]]></translation>
+        <translation language="de"><![CDATA[Gruppen]]></translation>
+        <translation language="fr"><![CDATA[groupes]]></translation>
+        <translation language="hu"><![CDATA[csoportok]]></translation>
+        <translation language="es"><![CDATA[grupos]]></translation>
+      </item>
+      <item type="label" name="Inactive">
+        <translation language="nl"><![CDATA[inactief]]></translation>
+        <translation language="en"><![CDATA[inactive]]></translation>
+        <translation language="it"><![CDATA[non attivo]]></translation>
+        <translation language="ru"><![CDATA[Неактивен]]></translation>
+        <translation language="cn"><![CDATA[不活动]]></translation>
+        <translation language="de"><![CDATA[inaktiv]]></translation>
+        <translation language="fr"><![CDATA[inactif]]></translation>
+        <translation language="hu"><![CDATA[inaktív]]></translation>
+        <translation language="es"><![CDATA[inactivo]]></translation>
+      </item>
+      <item type="label" name="LastName">
+        <translation language="nl"><![CDATA[achternaam]]></translation>
+        <translation language="en"><![CDATA[last name]]></translation>
+        <translation language="it"><![CDATA[cognome]]></translation>
+        <translation language="ru"><![CDATA[Фамилия]]></translation>
+        <translation language="cn"><![CDATA[姓]]></translation>
+        <translation language="de"><![CDATA[Nachname]]></translation>
+        <translation language="fr"><![CDATA[nom]]></translation>
+        <translation language="hu"><![CDATA[vezetéknév]]></translation>
+        <translation language="es"><![CDATA[apellido]]></translation>
+      </item>
+      <item type="label" name="Male">
+        <translation language="nl"><![CDATA[man]]></translation>
+        <translation language="en"><![CDATA[male]]></translation>
+        <translation language="it"><![CDATA[maschio]]></translation>
+        <translation language="ru"><![CDATA[Мужчина]]></translation>
+        <translation language="cn"><![CDATA[男]]></translation>
+        <translation language="de"><![CDATA[männlich]]></translation>
+        <translation language="fr"><![CDATA[homme]]></translation>
+        <translation language="hu"><![CDATA[férfi]]></translation>
+        <translation language="es"><![CDATA[hombre]]></translation>
+      </item>
+      <item type="label" name="MembersCount">
+        <translation language="nl"><![CDATA[leden aantal]]></translation>
+        <translation language="en"><![CDATA[members count]]></translation>
+        <translation language="it"><![CDATA[numero di membri]]></translation>
+        <translation language="ru"><![CDATA[Кол-во пользователей]]></translation>
+        <translation language="cn"><![CDATA[成员数]]></translation>
+        <translation language="de"><![CDATA[Mitgliedszahl]]></translation>
+        <translation language="fr"><![CDATA[nombre de membre]]></translation>
+        <translation language="hu"><![CDATA[tagok száma]]></translation>
+        <translation language="es"><![CDATA[números de miembros]]></translation>
+      </item>
+      <item type="label" name="RegisteredOn">
+        <translation language="nl"><![CDATA[geregistreerd op]]></translation>
+        <translation language="en"><![CDATA[registered on]]></translation>
+        <translation language="it"><![CDATA[registrato il]]></translation>
+        <translation language="ru"><![CDATA[Дата регистрации]]></translation>
+        <translation language="cn"><![CDATA[注册时间]]></translation>
+        <translation language="de"><![CDATA[registriert am]]></translation>
+        <translation language="fr"><![CDATA[enregistré le]]></translation>
+        <translation language="hu"><![CDATA[regisztrált]]></translation>
+        <translation language="es"><![CDATA[registrado en]]></translation>
+      </item>
+      <item type="label" name="Unblock">
+        <translation language="nl"><![CDATA[activeer]]></translation>
+        <translation language="en"><![CDATA[unblock]]></translation>
+        <translation language="it"><![CDATA[sblocca]]></translation>
+        <translation language="ru"><![CDATA[Разблокировать]]></translation>
+        <translation language="cn"><![CDATA[解除屏蔽]]></translation>
+        <translation language="de"><![CDATA[entsperren]]></translation>
+        <translation language="fr"><![CDATA[débloquer]]></translation>
+        <translation language="hu"><![CDATA[felold]]></translation>
+        <translation language="es"><![CDATA[desbloquear]]></translation>
+      </item>
+      <item type="label" name="Undelete">
+        <translation language="nl"><![CDATA[activeer]]></translation>
+        <translation language="en"><![CDATA[undelete]]></translation>
+        <translation language="it"><![CDATA[ripristina]]></translation>
+        <translation language="ru"><![CDATA[Восстановить]]></translation>
+        <translation language="cn"><![CDATA[恢复]]></translation>
+        <translation language="de"><![CDATA[wiederherstellen]]></translation>
+        <translation language="fr"><![CDATA[annuler l'effacement]]></translation>
+        <translation language="hu"><![CDATA[visszaállít]]></translation>
+        <translation language="es"><![CDATA[rescuperar]]></translation>
+      </item>
+      <item type="message" name="ConfirmBlock">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil blokkeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to block "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler bloccare "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Заблокировать "%1$s"?]]></translation>
+        <translation language="cn"><![CDATA[你确定要屏蔽“%1$s”吗？]]></translation>
+        <translation language="de"><![CDATA[Bist du sicher, dass du "%1$s" blockieren willst?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir bloquer "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos hogy ki akarod tiltani "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres bloquear a "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Удалить "%1$s"?]]></translation>
+        <translation language="cn"><![CDATA[你确定要删除“%1$s”吗？]]></translation>
+        <translation language="de"><![CDATA[Bist du sicher, dass du "%1$s" löschen willst?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos hogy törölni akarod "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar a "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteGroup">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de group "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the group "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare il gruppo "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Удалить группу "%1$s"?]]></translation>
+        <translation language="cn"><![CDATA[你确定要删除用户组“%1$s”吗？]]></translation>
+        <translation language="de"><![CDATA[Soll die Gruppe "%1$s" wirklich gelöscht werden?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le groupe"%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos hogy törölni akarod a csoportból "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres elimnar el grupo "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmMassAddToGroup">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze profielen aan volgende groep wil toevoegen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to add these profiles to the following group?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler aggiungere questi profili al seguente gruppo?]]></translation>
+        <translation language="ru"><![CDATA[Добавить пользователя в эту группу?]]></translation>
+        <translation language="cn"><![CDATA[你确定要将这些用户资料添加到以下用户组吗？]]></translation>
+        <translation language="de"><![CDATA[Sollen diese Profile wirklich zur folgenden Gruppe hinzugefügt werden?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir ajouter ces profils aux groupes suivants?]]></translation>
+        <translation language="hu"><![CDATA[Biztos hogy hozzá akarod adni ezt a profilt a kiválasztott csoporthoz?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres agregar estos perfiles al siguiente grupo?]]></translation>
+      </item>
+      <item type="message" name="ConfirmProfileGroupDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je dit profiel uit de groep "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete this profile from the group "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare questo profilo dal gruppo "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Удалить профиль из группы "%1$s"?]]></translation>
+        <translation language="cn"><![CDATA[你确定要从用户组“%1$s”中删除这个帐户资料吗？]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer ce profil du groupe "%1$s"?]]></translation>
+        <translation language="de"><![CDATA[Soll dieses Profil wirklich aus der Gruppe "%1$s" entfernen willst?]]></translation>
+        <translation language="hu"><![CDATA[Biztos hogy törölni akarod ezt a profilt a(z) "%1$s" csoportból?]]></translation>
+      </item>
+      <item type="message" name="ConfirmUnblock">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to unblock "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler sbloccare "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Разблокировать "%1$s"?]]></translation>
+        <translation language="cn"><![CDATA[你确定要取消对“%1$s”的屏蔽吗？]]></translation>
+        <translation language="de"><![CDATA[Soll "%1$s" wirklich entsperrt werden?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir débloquer "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos hogy fel akarod oldani "%1$s" tiltását?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres desbloquear a "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmUndelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to undelete "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler ripristinare "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Восстановить "%1$s"?]]></translation>
+        <translation language="cn"><![CDATA[你确定要恢复“%1$s”吗？]]></translation>
+        <translation language="de"><![CDATA[Soll "%1$s" wirklich wiederhergestellt werden?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir revenir sur l'effacement de "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos hogy vissza akarod állítani "%1$s"-(o)t?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres recuperar a "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="GroupAdded">
+        <translation language="nl"><![CDATA[De groep werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The group was added.]]></translation>
+        <translation language="it"><![CDATA[Il gruppo è stato aggiunto.]]></translation>
+        <translation language="ru"><![CDATA[Группа добавлена.]]></translation>
+        <translation language="cn"><![CDATA[用户组已添加。]]></translation>
+        <translation language="de"><![CDATA[Die Gruppe wurde hinzugefügt.]]></translation>
+        <translation language="fr"><![CDATA[Le groupe a été ajouté.]]></translation>
+        <translation language="hu"><![CDATA[A csoport hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[El grupo fue agregado.]]></translation>
+      </item>
+      <item type="message" name="GroupSaved">
+        <translation language="nl"><![CDATA[De groep werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The group was saved.]]></translation>
+        <translation language="it"><![CDATA[Il gruppo è stato salvato.]]></translation>
+        <translation language="ru"><![CDATA[Группа сохранена.]]></translation>
+        <translation language="cn"><![CDATA[用户组已保存。]]></translation>
+        <translation language="de"><![CDATA[Die Gruppe wurde gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[Le groupe a été enregistré.]]></translation>
+        <translation language="hu"><![CDATA[A csoport elmentve.]]></translation>
+        <translation language="es"><![CDATA[El grupo fue guardado.]]></translation>
+      </item>
+      <item type="message" name="MembershipAdded">
+        <translation language="nl"><![CDATA[Het groep lidmaatschap werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The group membership was added.]]></translation>
+        <translation language="it"><![CDATA[L'appartenenza al gruppo è stata aggiunta.]]></translation>
+        <translation language="ru"><![CDATA[Сохранено.]]></translation>
+        <translation language="cn"><![CDATA[用户组成员已添加]]></translation>
+        <translation language="fr"><![CDATA[L'adhésion au groupe a été ajoutée.]]></translation>
+        <translation language="de"><![CDATA[Die Gruppen-Mitgliedschaft wurde hinzugefügt.]]></translation>
+        <translation language="hu"><![CDATA[A csoport tagsága hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[La pertenencia al grupo se añadió.]]></translation>
+      </item>
+      <item type="message" name="MembershipDeleted">
+        <translation language="nl"><![CDATA[Het groep lidmaatschap werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The group membership was deleted.]]></translation>
+        <translation language="it"><![CDATA[L'appartenenza al gruppo è stata eliminata.]]></translation>
+        <translation language="ru"><![CDATA[Удалено.]]></translation>
+        <translation language="cn"><![CDATA[用户组成员已删除。]]></translation>
+        <translation language="fr"><![CDATA[L'adhésion au groupe a été effacée.]]></translation>
+        <translation language="de"><![CDATA[Die Gruppen-Mitgliedschaft wurde gelöscht.]]></translation>
+        <translation language="hu"><![CDATA[A csoport tagsága törölve.]]></translation>
+        <translation language="es"><![CDATA[La pertenencia al grupo fue eliminada.]]></translation>
+      </item>
+      <item type="message" name="MembershipSaved">
+        <translation language="nl"><![CDATA[Het groep lidmaatschap werd aangepast.]]></translation>
+        <translation language="en"><![CDATA[The group membership was saved.]]></translation>
+        <translation language="it"><![CDATA[L'appartenenza al gruppo è stata salvata.]]></translation>
+        <translation language="ru"><![CDATA[Обновлено.]]></translation>
+        <translation language="cn"><![CDATA[用户组成员已保存。]]></translation>
+        <translation language="fr"><![CDATA[L'adhésion au groupe a été enregistrée.]]></translation>
+        <translation language="de"><![CDATA[Die Gruppen-Mitgliedschaft wurde gespeichert.]]></translation>
+        <translation language="hu"><![CDATA[A csoport tagsága elmentve.]]></translation>
+        <translation language="es"><![CDATA[La pertenencia al grupo fue guardada.]]></translation>
+      </item>
+      <item type="message" name="NoGroups">
+        <translation language="nl"><![CDATA[Er zijn nog geen groepen.]]></translation>
+        <translation language="en"><![CDATA[There are no groups yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora gruppi.]]></translation>
+        <translation language="ru"><![CDATA[Нет групп.]]></translation>
+        <translation language="cn"><![CDATA[还没有用户组。]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Gruppen.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de groupes.]]></translation>
+        <translation language="hu"><![CDATA[Nincsen már csoport.]]></translation>
+        <translation language="es"><![CDATA[No hay grupos aun.]]></translation>
+      </item>
+      <item type="message" name="ProfileAddedToGroup">
+        <translation language="nl"><![CDATA[Het profiel werd toegevoegd aan de groep.]]></translation>
+        <translation language="en"><![CDATA[The profile was added to the group.]]></translation>
+        <translation language="it"><![CDATA[Il profilo è stato aggiunto al gruppo.]]></translation>
+        <translation language="ru"><![CDATA[Профиль добавлен в группу.]]></translation>
+        <translation language="cn"><![CDATA[用户资料已经添加到这个用户组。]]></translation>
+        <translation language="de"><![CDATA[Das Profiul wurde zur Gruppe hinzugefügt.]]></translation>
+        <translation language="fr"><![CDATA[Le profil a été ajouté au groupe.]]></translation>
+        <translation language="hu"><![CDATA[A profil hozzáadva a csoporthoz.]]></translation>
+        <translation language="es"><![CDATA[El perfil fue agregado al grupo.]]></translation>
+      </item>
+      <item type="message" name="ProfileBlocked">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd geblokkeerd.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was blocked.]]></translation>
+        <translation language="it"><![CDATA[Il profilo "%1$s" è stato bloccato.]]></translation>
+        <translation language="ru"><![CDATA[Профиль "%1$s" заблокирован.]]></translation>
+        <translation language="cn"><![CDATA[用户资料“％1$s”已屏蔽。]]></translation>
+        <translation language="de"><![CDATA[Das Profil "%1$s" wurde gesperrt.]]></translation>
+        <translation language="fr"><![CDATA[Le profil "%1$s" a été bloqué.]]></translation>
+        <translation language="hu"><![CDATA[A "%1$s" profil kitiltva.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue bloqueado.]]></translation>
+      </item>
+      <item type="message" name="ProfileDeleted">
+        <translation language="nl"><![CDATA[Het profiel werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The profile was deleted.]]></translation>
+        <translation language="it"><![CDATA[Il profilo è stato eliminato.]]></translation>
+        <translation language="ru"><![CDATA[Профиль удален.]]></translation>
+        <translation language="cn"><![CDATA[用户资料已删除。]]></translation>
+        <translation language="de"><![CDATA[Das Profil wurde gelöscht. ]]></translation>
+        <translation language="fr"><![CDATA[Le profil a été effacé.]]></translation>
+        <translation language="hu"><![CDATA[A profil törölve.]]></translation>
+        <translation language="es"><![CDATA[El perfil fue eliminado.]]></translation>
+      </item>
+      <item type="message" name="ProfilesAddedToGroup">
+        <translation language="nl"><![CDATA[De profielen zijn toegevoegd aan de groep.]]></translation>
+        <translation language="en"><![CDATA[The profiles are added to the group.]]></translation>
+        <translation language="it"><![CDATA[I profili sono stati aggiunti al gruppo.]]></translation>
+        <translation language="ru"><![CDATA[Профиль добавлен в группу.]]></translation>
+        <translation language="cn"><![CDATA[用户资料已批量添加到这个组。]]></translation>
+        <translation language="de"><![CDATA[Die Profile wurden zur Gruppe hinzugefügt.]]></translation>
+        <translation language="fr"><![CDATA[Les profils sont ajoutés au groupe.]]></translation>
+        <translation language="hu"><![CDATA[A profilok hozzáadva a csoporthoz.]]></translation>
+        <translation language="es"><![CDATA[Los perfiles fueron agregados al grupo.]]></translation>
+      </item>
+      <item type="message" name="ProfileUnblocked">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was unblocked.]]></translation>
+        <translation language="it"><![CDATA[Il profilo "%1$s" è stato sbloccato.]]></translation>
+        <translation language="ru"><![CDATA[Профиль "%1$s" разблокирован.]]></translation>
+        <translation language="cn"><![CDATA[用户资料“％1$s”已解除屏蔽。]]></translation>
+        <translation language="de"><![CDATA[Das Profil "%1$s" wurde entsperrt.]]></translation>
+        <translation language="fr"><![CDATA[Le profil "%1$s" a été débloqué.]]></translation>
+        <translation language="hu"><![CDATA[A "%1$s" profil tiltása feloldva.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue desbloqueado.]]></translation>
+      </item>
+      <item type="message" name="ProfileUndeleted">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was undeleted.]]></translation>
+        <translation language="it"><![CDATA[Il profilo "%1$s" è stato ripristinato.]]></translation>
+        <translation language="ru"><![CDATA[Профиль "%1$s" восстановлен.]]></translation>
+        <translation language="cn"><![CDATA[用户资料“％1$s”已恢复。]]></translation>
+        <translation language="de"><![CDATA[Das Profil "%1$s" wurde wiederhergestellt.]]></translation>
+        <translation language="fr"><![CDATA[Le profil "%1$s" a été restauré.]]></translation>
+        <translation language="hu"><![CDATA[A "%1$s" profil visszaállítva.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue recuperado.]]></translation>
+      </item>
+      <item type="message" name="Saved">
+        <translation language="nl"><![CDATA[Het profiel "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The profiel "%1$s" was saved.]]></translation>
+        <translation language="it"><![CDATA[Il profilo "%1$s" è stato salvato.]]></translation>
+        <translation language="ru"><![CDATA[Профиль "%1$s" сохранен.]]></translation>
+        <translation language="cn"><![CDATA[用户资料“％1$s”已保存。]]></translation>
+        <translation language="de"><![CDATA[Das Profil "%1$s" wurde gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[Le profil "%1$s" a été enregistré.]]></translation>
+        <translation language="hu"><![CDATA[A "%1$s" profil elmentve.]]></translation>
+        <translation language="es"><![CDATA[El perfil "%1$s" fue guardado.]]></translation>
+      </item>
+      <item type="error" name="DisplayNameExists">
+        <translation language="nl"><![CDATA[Deze weergave naam is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This display name is in use.]]></translation>
+        <translation language="it"><![CDATA[Il nome da mostrare è già in uso.]]></translation>
+        <translation language="ru"><![CDATA[Такое отображаемое имя уже используется.]]></translation>
+        <translation language="cn"><![CDATA[这个显示名称已在使用中。]]></translation>
+        <translation language="fr"><![CDATA[Ce nom d'affichage est utilisé.]]></translation>
+        <translation language="de"><![CDATA[Dieser Nickname wird leider bereits verwendet.]]></translation>
+        <translation language="hu"><![CDATA[Ez a becenév már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Este nombre para mostrar está en uso.]]></translation>
+      </item>
+      <item type="error" name="DisplayNameIsRequired">
+        <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Display name is a required field.]]></translation>
+        <translation language="it"><![CDATA[Il nome da mostrare è un campo obbligatorio.]]></translation>
+        <translation language="ru"><![CDATA[Отображаемое имя - обязательное поле.]]></translation>
+        <translation language="cn"><![CDATA[显示名称是必填字段。]]></translation>
+        <translation language="fr"><![CDATA[Nom d'affichage est un champ requis.]]></translation>
+        <translation language="de"><![CDATA[Ein Nickname muss angegeben werden.]]></translation>
+        <translation language="hu"><![CDATA[A becenév mező kötelező.]]></translation>
+        <translation language="es"><![CDATA[Nombre para mostrar es un campo requerido.]]></translation>
+      </item>
+      <item type="error" name="EmailExists">
+        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
+        <translation language="it"><![CDATA[L'indirizzo email è già in uso.]]></translation>
+        <translation language="ru"><![CDATA[Этот E-Mail уже используется.]]></translation>
+        <translation language="cn"><![CDATA[这个电子邮箱地址已在使用中。]]></translation>
+        <translation language="de"><![CDATA[Diese E-Mail-Adresse wird verwendet.]]></translation>
+        <translation language="fr"><![CDATA[Cette adresse e-mail est déjà utilisée.]]></translation>
+        <translation language="hu"><![CDATA[Ez az e-mail cím már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Esta dirección e-mail está en uso.]]></translation>
+      </item>
+      <item type="error" name="GroupIsRequired">
+        <translation language="nl"><![CDATA[Groep is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Group is a required field.]]></translation>
+        <translation language="it"><![CDATA[Il gruppo è un campo obbligatorio.]]></translation>
+        <translation language="ru"><![CDATA[Группа - обязательное поле.]]></translation>
+        <translation language="cn"><![CDATA[用户组是必填字段。]]></translation>
+        <translation language="de"><![CDATA[Gruppe ist ein Pflichtfeld.]]></translation>
+        <translation language="fr"><![CDATA[Groupe est un champ requis.]]></translation>
+        <translation language="hu"><![CDATA[A csoport mező kötelező.]]></translation>
+        <translation language="es"><![CDATA[Grupo es un campo requerido.]]></translation>
+      </item>
+      <item type="error" name="GroupNameExists">
+        <translation language="nl"><![CDATA[Deze groep naam is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This group name is in use.]]></translation>
+        <translation language="it"><![CDATA[Il nome per il gruppo è già in uso.]]></translation>
+        <translation language="ru"><![CDATA[Такая группа уже используется.]]></translation>
+        <translation language="cn"><![CDATA[这个组名已在使用中。]]></translation>
+        <translation language="de"><![CDATA[Dieser Gruppenname wird verwendet.]]></translation>
+        <translation language="fr"><![CDATA[Ce nom de groupe est déjà utilisé.]]></translation>
+        <translation language="hu"><![CDATA[Ez a csoport név már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Este nombre de grupo está en uso.]]></translation>
+      </item>
+      <item type="error" name="NoGroupSelected">
+        <translation language="nl"><![CDATA[Je moet een groep selecteren om deze actie te ondergaan.]]></translation>
+        <translation language="en"><![CDATA[You must select a group to perfom this action.]]></translation>
+        <translation language="it"><![CDATA[Devi selezionare un gruppo per portare a termine questa azione.]]></translation>
+        <translation language="ru"><![CDATA[Вы должны выбрать группу.]]></translation>
+        <translation language="cn"><![CDATA[你必须选择一个群组来实现这个操作。]]></translation>
+        <translation language="de"><![CDATA[Du musst eine Gruppe auswählen um diese Aktion auszuführen.]]></translation>
+        <translation language="fr"><![CDATA[Vous devez sélectionner unb groupe pour accomplir cette action.]]></translation>
+        <translation language="hu"><![CDATA[A művelethez ki kell választani egy csoportot.]]></translation>
+        <translation language="es"><![CDATA[Debes seleccionar un grupo para realizar esta acción.]]></translation>
+      </item>
+      <item type="error" name="NoProfilesSelected">
+        <translation language="nl"><![CDATA[Je moet minstens 1 profiel selecteren om deze actie te ondergaan.]]></translation>
+        <translation language="en"><![CDATA[You must select minimum 1 profile to perfom this action.]]></translation>
+        <translation language="it"><![CDATA[Devi selezionare almeno un profilo per portare a termine questa azione.]]></translation>
+        <translation language="ru"><![CDATA[Вы должны выбрать как минимум 1 профиль.]]></translation>
+        <translation language="cn"><![CDATA[你必须选择至少一个用户资料来实现这个操作。]]></translation>
+        <translation language="de"><![CDATA[Du musst mindestens 1 Profil auswählen um diese Aktion auszuführen.]]></translation>
+        <translation language="fr"><![CDATA[Vous devez sélectionner au moins un profil pour accomplir cette action.]]></translation>
+        <translation language="hu"><![CDATA[A művelethez minimum 1 profilt ki kell választani.]]></translation>
+        <translation language="es"><![CDATA[Debes seleccionar minimo 1 perfil para realizar esta acción.]]></translation>
+      </item>
+      <item type="error" name="UnknownAction">
+        <translation language="nl"><![CDATA[Onbekende actie.]]></translation>
+        <translation language="en"><![CDATA[Unknown action.]]></translation>
+        <translation language="it"><![CDATA[Azione sconosciuta.]]></translation>
+        <translation language="ru"><![CDATA[Неизвестное действие.]]></translation>
+        <translation language="cn"><![CDATA[未知的操作。]]></translation>
+        <translation language="de"><![CDATA[Unbekannte Aktion]]></translation>
+        <translation language="fr"><![CDATA[Action inconnue.]]></translation>
+        <translation language="hu"><![CDATA[Ismeretlen művelet.]]></translation>
+        <translation language="es"><![CDATA[Acción desconocida.]]></translation>
+      </item>
+    </profiles>
+  </backend>
+</locale>

@@ -20,22 +20,22 @@ function minifyCSS {
 	# remove temp file
 	rm -f ./minified.tmp.css
 
-	cat ../default_www/backend/core/layout/css/reset.css >> minified.tmp.css
+	cat ../backend/core/layout/css/reset.css >> minified.tmp.css
 	sed -i '' "s|\(url(['\"]\{0,1\}\)\([\.a-z].*)\)|\1/backend/core/layout/css/\2|g" minified.tmp.css
 	
 	echo -e "\n" >> minified.tmp.css
 
-	cat ../default_www/backend/core/layout/css/jquery_ui/fork/jquery_ui.css >> minified.tmp.css
+	cat ../backend/core/layout/css/jquery_ui/fork/jquery_ui.css >> minified.tmp.css
 	sed -i '' "s|\(url(['\"]\{0,1\}\)\([\.a-z].*)\)|\1/backend/core/layout/css/jquery_ui/fork/\2|g" minified.tmp.css
 
 	echo -e "\n" >> minified.tmp.css
 
-	cat ../default_www/backend/core/layout/css/debug.css >> minified.tmp.css
+	cat ../backend/core/layout/css/debug.css >> minified.tmp.css
 	sed -i '' "s|\(url(['\"]\{0,1\}\)\([\.a-z].*)\)|\1/backend/core/layout/css/\2|g" minified.tmp.css
 
 	echo -e "\n" >> minified.tmp.css	
 	
-	FILE="../default_www/backend/core/layout/css/screen.css";
+	FILE="../backend/core/layout/css/screen.css";
 
 	# loop lines
 	DONE=false
@@ -67,20 +67,20 @@ function minifyJS {
 	# remove temp file
 	rm -f ./minified.tmp.js
 	
-	cat ../default_www/backend/core/js/jquery/jquery.js >> minified.tmp.js
+	cat ../backend/core/js/jquery/jquery.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js
-	cat ../default_www/backend/core/js/jquery/jquery.ui.js >> minified.tmp.js
+	cat ../backend/core/js/jquery/jquery.ui.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js
-	cat ../default_www/backend/core/js/jquery/jquery.tools.js >> minified.tmp.js
+	cat ../backend/core/js/jquery/jquery.tools.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js
-	cat ../default_www/backend/core/js/jquery/jquery.backend.js >> minified.tmp.js
+	cat ../backend/core/js/jquery/jquery.backend.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js
-	java -jar ./library/yuicompressor.jar --type js --charset utf8 --nomunge --preserve-semi ../default_www/backend/core/js/jquery/jquery.backend.js >> minified.tmp.js
+	java -jar ./library/yuicompressor.jar --type js --charset utf8 --nomunge --preserve-semi ../backend/core/js/jquery/jquery.backend.js >> minified.tmp.js
 	
 	echo "* Combined jQuery files and minified our Fork-plugin"
 	
 	# move to correct location
-	mv -f ./minified.tmp.js ../default_www/backend/core/js/minified.js
+	mv -f ./minified.tmp.js ../backend/core/js/minified.js
 	
 	# tell user
 	echo "* Saved minified jQuery-javascript and removed temporary JS-file"
@@ -120,4 +120,4 @@ minifyCSS
 minifyJS
 
 # done
-echo  "Done"
+echo "Done"
