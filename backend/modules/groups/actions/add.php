@@ -98,7 +98,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				// delete empty values
 				foreach($bits as $i => $bit) if(empty($bit)) unset($bits[$i]);
 
-				// add group to action
+				// add group to actions
 				$this->actions[$module['value']][$key]['group'] = $bits[0];
 
 				// add group to array
@@ -426,7 +426,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 					$selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
 
 					// if right widget set visible
-					if($selected === $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+					if($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
 				}
 			}
 		}

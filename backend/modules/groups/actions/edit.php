@@ -123,7 +123,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	}
 
 	/**
-	 * Get all actions
+	 * Get the actions
 	 */
 	private function getActions()
 	{
@@ -227,7 +227,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	}
 
 	/**
-	 * Get all widgets
+	 * Get the widgets
 	 */
 	private function getWidgets()
 	{
