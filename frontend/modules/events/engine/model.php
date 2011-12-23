@@ -1,21 +1,24 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the events module
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsModel implements FrontendTagsInterface
 {
 	/**
 	 * Get an item
 	 *
-	 * @return	array
-	 * @param	string $URL		The URL for the item.
+	 * @param string $URL The URL for the item.
+	 * @return array
 	 */
 	public static function get($URL)
 	{
@@ -62,13 +65,12 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $return;
 	}
 
-
 	/**
 	 * Get all items (at least a chunk)
 	 *
-	 * @return	array
-	 * @param	int[optional] $limit		The number of items to get.
-	 * @param	int[optional] $offset		The offset.
+	 * @param int[optional] $limit The number of items to get.
+	 * @param int[optional] $offset The offset.
+	 * @return array
 	 */
 	public static function getAll($limit = 10, $offset = 0)
 	{
@@ -89,11 +91,10 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return self::getMultiple($ids);
 	}
 
-
 	/**
 	 * Get all categories used
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getAllCategories()
 	{
@@ -106,13 +107,12 @@ class FrontendEventsModel implements FrontendTagsInterface
 															array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
 	}
 
-
 	/**
 	 * Get all comments (at least a chunk)
 	 *
-	 * @return	array
-	 * @param	int[optional] $limit		The number of items to get.
-	 * @param	int[optional] $offset		The offset.
+	 * @param int[optional] $limit The number of items to get.
+	 * @param int[optional] $offset The offset.
+	 * @return array
 	 */
 	public static function getAllComments($limit = 10, $offset = 0)
 	{
@@ -128,11 +128,10 @@ class FrontendEventsModel implements FrontendTagsInterface
 															array('published', FRONTEND_LANGUAGE, (int) $offset, (int) $limit));
 	}
 
-
 	/**
 	 * Get the number of items
 	 *
-	 * @return	int
+	 * @return int
 	 */
 	public static function getAllCount()
 	{
@@ -143,14 +142,13 @@ class FrontendEventsModel implements FrontendTagsInterface
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', FrontendModel::getUTCDate('Y-m-d') . ' 00:00:00', FrontendModel::getUTCDate('Y-m-d') . ' 00:00:00'));
 	}
 
-
 	/**
 	 * Get all items in a category (at least a chunk)
 	 *
-	 * @return	array
-	 * @param	string $categoryURL		The URL of the category to retrieve the posts for.
-	 * @param	int[optional] $limit	The number of items to get.
-	 * @param	int[optional] $offset	The offset.
+	 * @param string $categoryURL The URL of the category to retrieve the posts for.
+	 * @param int[optional] $limit The number of items to get.
+	 * @param int[optional] $offset The offset.
+	 * @return array
 	 */
 	public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
 	{
@@ -172,12 +170,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return self::getMultiple($ids);
 	}
 
-
 	/**
 	 * Get the number of items in a given category
 	 *
-	 * @return	int
-	 * @param	string $URL		The URL for the category.
+	 * @param string $URL The URL for the category.
+	 * @return int
 	 */
 	public static function getAllForCategoryCount($URL)
 	{
@@ -189,15 +186,14 @@ class FrontendEventsModel implements FrontendTagsInterface
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
 	}
 
-
 	/**
 	 * Get all items between a start and end-date
 	 *
-	 * @return	array
-	 * @param	int $start				The start date as a UNIX-timestamp.
-	 * @param	int $end				The end date as a UNIX-timestamp.
-	 * @param	int[optional] $limit	The number of items to get.
-	 * @param	int[optional] $offset	The offset.
+	 * @param int $start The start date as a UNIX-timestamp.
+	 * @param int $end 	The end date as a UNIX-timestamp.
+	 * @param int[optional] $limit The number of items to get.
+	 * @param int[optional] $offset The offset.
+	 * @return array
 	 */
 	public static function getAllForDateRange($start, $end, $limit = 10, $offset = 0)
 	{
@@ -222,13 +218,12 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return self::getMultiple($ids);
 	}
 
-
 	/**
 	 * Get the number of items in a date range
 	 *
-	 * @return	int
-	 * @param	int $start	The startdate as a UNIX-timestamp.
-	 * @param	int $end	The enddate as a UNIX-timestamp.
+	 * @param int $start The startdate as a UNIX-timestamp.
+	 * @param int $end The enddate as a UNIX-timestamp.
+	 * @return int
 	 */
 	public static function getAllForDateRangeCount($start, $end)
 	{
@@ -243,11 +238,10 @@ class FrontendEventsModel implements FrontendTagsInterface
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', FrontendModel::getUTCDate('Y-m-d H:i:s', $start), FrontendModel::getUTCDate('Y-m-d H:i:s', $end)));
 	}
 
-
 	/**
 	 * Get the statistics for the archive
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getArchiveNumbers()
 	{
@@ -315,12 +309,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $stats;
 	}
 
-
 	/**
 	 * Get the comments for an item
 	 *
-	 * @return	array
-	 * @param	int $id		The ID of the item to get the comments for.
+	 * @param int $id The ID of the item to get the comments for.
+	 * @return array
 	 */
 	public static function getComments($id)
 	{
@@ -339,39 +332,38 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $comments;
 	}
 
+	/**
+	 * Get a draft for an item
+	 *
+	 * @param string $URL The URL for the item to get.
+	 * @param int $draft The draftID.
+	 * @return array
+	 */
+/*	public static function getDraft($URL, $draft)
+	{
+		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+															c.title AS category_title, m2.url AS category_url,
+															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+															i.allow_comments,
+															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+															m.url
+															FROM events_posts AS i
+															INNER JOIN events_categories AS c ON i.category_id = c.id
+															INNER JOIN meta AS m ON i.meta_id = m.id
+															INNER JOIN meta AS m2 ON c.meta_id = m2.id
+															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.revision_id = ? AND m.url = ?
+															LIMIT 1',
+															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
+	}
+*/
 
-//	/**
-//	 * Get a draft for an item
-//	 *
-//	 * @return	array
-//	 * @param	string $URL		The URL for the item to get.
-//	 * @param	int $draft		The draftID.
-//	 */
-//	public static function getDraft($URL, $draft)
-//	{
-//		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-//															c.title AS category_title, m2.url AS category_url,
-//															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-//															i.allow_comments,
-//															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-//															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-//															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-//															m.url
-//															FROM events_posts AS i
-//															INNER JOIN events_categories AS c ON i.category_id = c.id
-//															INNER JOIN meta AS m ON i.meta_id = m.id
-//															INNER JOIN meta AS m2 ON c.meta_id = m2.id
-//															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.revision_id = ? AND m.url = ?
-//															LIMIT 1',
-//															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
-//	}
-//
-//
 	/**
 	 * Fetch the list of tags for a list of items
 	 *
-	 * @return	array
-	 * @param	array $ids	The ids of the items to grab.
+	 * @param array $ids The ids of the items to grab.
+	 * @return array
 	 */
 	public static function getForTags(array $ids)
 	{
@@ -397,13 +389,12 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $items;
 	}
 
-
 	/**
 	 * Get the id of an item by the full URL of the current page.
 	 * Selects the proper part of the full URL to get the item's id from the database.
 	 *
-	 * @return	int					The id that corresponds with the given full URL.
-	 * @param	FrontendURL $URL	The current URL.
+	 * @param FrontendURL $URL The current URL.
+	 * @return int The id that corresponds with the given full URL.
 	 */
 	public static function getIdForTags(FrontendURL $URL)
 	{
@@ -414,12 +405,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return self::get($itemURL);
 	}
 
-
 	/**
 	 * Get multiple items
 	 *
-	 * @return	array
-	 * @param	array $ids	The ids of the items to retrieve.
+	 * @param array $ids The ids of the items to retrieve.
+	 * @return array
 	 */
 	public static function getMultiple(array $ids)
 	{
@@ -491,12 +481,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $return;
 	}
 
-
 	/**
 	 * Get an array with the previous and the next event
 	 *
-	 * @return	array
-	 * @param	int $id		The id of the current item.
+	 * @param int $id The id of the current item.
+	 * @return array
 	 */
 	public static function getNavigation($id)
 	{
@@ -540,12 +529,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $navigation;
 	}
 
-
 	/**
 	 * Get recent comments
 	 *
-	 * @return	array
-	 * @param	int[optional] $limit	The number of comments to get.
+	 * @param int[optional] $limit The number of comments to get.
+	 * @return array
 	 */
 	public static function getRecentComments($limit = 5)
 	{
@@ -586,81 +574,80 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $comments;
 	}
 
+	/**
+	 * Get related items based on tags
+	 *
+	 * @param int $id The id of the item to get related items for.
+	 * @param int[optional] $limit The maximum number of items to retrieve.
+	 * @return array
+	 */
+/*
+	public static function getRelated($id, $limit = 5)
+	{
+		// redefine
+		$id = (int) $id;
+		$limit = (int) $limit;
 
-//	/**
-//	 * Get related items based on tags
-//	 *
-//	 * @return	array
-//	 * @param	int $id					The id of the item to get related items for.
-//	 * @param	int[optional] $limit	The maximum number of items to retrieve.
-//	 */
-//	public static function getRelated($id, $limit = 5)
-//	{
-//		// redefine
-//		$id = (int) $id;
-//		$limit = (int) $limit;
-//
-//		// get the related IDs
-//		$relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'events', 'events');
-//
-//		// no items
-//		if(empty($relatedIDs)) return array();
-//
-//		// get link
-//		$link = FrontendNavigation::getURLForBlock('events', 'detail');
-//
-//		// get items
-//		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title, m.url
-//																FROM events_posts AS i
-//																INNER JOIN meta AS m ON i.meta_id = m.id
-//																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN(' . implode(',', $relatedIDs) . ')
-//																ORDER BY i.publish_on DESC, i.id DESC
-//																LIMIT ?',
-//																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit), 'id');
-//
-//		// loop items
-//		foreach($items as &$row)
-//		{
-//			$row['full_url'] = $link . '/' . $row['url'];
-//		}
-//
-//		// return
-//		return $items;
-//	}
-//
-//
-//	/**
-//	 * Get a revision for an item
-//	 *
-//	 * @return	array
-//	 * @param	string $URL		The URL for the item to get.
-//	 * @param	int $revision	The revisionID.
-//	 */
-//	public static function getRevision($URL, $revision)
-//	{
-//		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-//															c.title AS category_title, m2.url AS category_url,
-//															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-//															i.allow_comments,
-//															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-//															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-//															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-//															m.url
-//															FROM events_posts AS i
-//															INNER JOIN events_categories AS c ON i.category_id = c.id
-//															INNER JOIN meta AS m ON i.meta_id = m.id
-//															INNER JOIN meta AS m2 ON c.meta_id = m2.id
-//															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
-//															LIMIT 1',
-//															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
-//	}
+		// get the related IDs
+		$relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'events', 'events');
 
+		// no items
+		if(empty($relatedIDs)) return array();
+
+		// get link
+		$link = FrontendNavigation::getURLForBlock('events', 'detail');
+
+		// get items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title, m.url
+																FROM events_posts AS i
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN(' . implode(',', $relatedIDs) . ')
+																ORDER BY i.publish_on DESC, i.id DESC
+																LIMIT ?',
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit), 'id');
+
+		// loop items
+		foreach($items as &$row)
+		{
+			$row['full_url'] = $link . '/' . $row['url'];
+		}
+
+		// return
+		return $items;
+	}
+*/
+	/**
+	 * Get a revision for an item
+	 *
+	 * @param string $URL The URL for the item to get.
+	 * @param int $revision The revisionID.
+	 * @return array
+	 */
+/*	public static function getRevision($URL, $revision)
+	{
+		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+															c.title AS category_title, m2.url AS category_url,
+															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+															i.allow_comments,
+															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+															m.url
+															FROM events_posts AS i
+															INNER JOIN events_categories AS c ON i.category_id = c.id
+															INNER JOIN meta AS m ON i.meta_id = m.id
+															INNER JOIN meta AS m2 ON c.meta_id = m2.id
+															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
+															LIMIT 1',
+															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
+	}
+*/
 
 	/**
 	 * Get the subscriptions for an item
 	 *
-	 * @return	array
-	 * @param	int $id		The ID of the item to get the subscriptions for.
+	 * @param int $id The ID of the item to get the subscriptions for.
+	 * @return array
 	 */
 	public static function getSubscriptions($id)
 	{
@@ -679,12 +666,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $subscriptions;
 	}
 
-
 	/**
 	 * Inserts a new comment
 	 *
-	 * @return	int
-	 * @param	array $comment	The comment to add.
+	 * @param array $comment The comment to add.
+	 * @return int
 	 */
 	public static function insertComment(array $comment)
 	{
@@ -713,12 +699,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $comment['id'];
 	}
 
-
 	/**
 	 * Inserts a new subscription
 	 *
-	 * @return	int
-	 * @param	array $subscription		The new subscription to add.
+	 * @param array $subscription The new subscription to add.
+	 * @return int
 	 */
 	public static function insertSubscription(array $subscription)
 	{
@@ -747,13 +732,12 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return $subscription['id'];
 	}
 
-
 	/**
 	 * Get moderation status for an author
 	 *
-	 * @return	bool
-	 * @param	string $author	The name for the author.
-	 * @param	string $email	The emailaddress for the author.
+	 * @param string $author The name for the author.
+	 * @param string $email The emailaddress for the author.
+	 * @return bool
 	 */
 	public static function isModerated($author, $email)
 	{
@@ -763,12 +747,10 @@ class FrontendEventsModel implements FrontendTagsInterface
 														array('published', (string) $author, (string) $email));
 	}
 
-
 	/**
 	 * Notify the admin
 	 *
-	 * @return	void
-	 * @param	array $comment	The comment that was submitted.
+	 * @param array $comment The comment that was submitted.
 	 */
 	public static function notifyAdmin(array $comment)
 	{
@@ -835,12 +817,9 @@ class FrontendEventsModel implements FrontendTagsInterface
 		}
 	}
 
-
 	/**
 	 * Notify the admin
-	 *
-	 * @return	void
-	 * @param	array $subscription		The subscription that was submitted.
+	 * @param array $subscription The subscription that was submitted.
 	 */
 	public static function notifyAdminOnSubscription(array $subscription)
 	{
@@ -907,36 +886,34 @@ class FrontendEventsModel implements FrontendTagsInterface
 		}
 	}
 
+	/**
+	 * Parse the search results for this module
+	 *
+	 * Note: a module's search function should always:
+	 * 		- accept an array of entry id's
+	 * 		- return only the entries that are allowed to be displayed, with their array's index being the entry's id
+	 *
+	 *
+	 * @param array $ids The ids of the found results.
+	 * @return array
+	 */
+/*	public static function search(array $ids)
+	{
+		// get items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title, i.introduction, i.text, m.url
+																FROM events_posts AS i
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' . implode(',', $ids) . ')',
+																array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') . ':00'), 'id');
 
-//	/**
-//	 * Parse the search results for this module
-//	 *
-//	 * Note: a module's search function should always:
-//	 * 		- accept an array of entry id's
-//	 * 		- return only the entries that are allowed to be displayed, with their array's index being the entry's id
-//	 *
-//	 *
-//	 * @return	array
-//	 * @param	array $ids		The ids of the found results.
-//	 */
-//	public static function search(array $ids)
-//	{
-//		// get items
-//		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title, i.introduction, i.text, m.url
-//																FROM events_posts AS i
-//																INNER JOIN meta AS m ON i.meta_id = m.id
-//																WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' . implode(',', $ids) . ')',
-//																array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') . ':00'), 'id');
-//
-//		// prepare items for search
-//		foreach($items as &$item)
-//		{
-//			$item['full_url'] = FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $item['url'];
-//		}
-//
-//		// return
-//		return $items;
-//	}
+		// prepare items for search
+		foreach($items as &$item)
+		{
+			$item['full_url'] = FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $item['url'];
+		}
+
+		// return
+		return $items;
+	}
+*/
 }
-
-?>

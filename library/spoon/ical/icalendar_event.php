@@ -66,8 +66,8 @@ class SpoonICalendarEvent
 	 * @var	string
 	 */
 	private $location;
-	
-	
+
+
 	/**
 	 * Start date
 	 *
@@ -103,7 +103,6 @@ class SpoonICalendarEvent
 	/**
 	 * Default constructor
 	 *
-	 * @return	void
 	 * @param	int $startDate
 	 * @param	int $endDate
 	 * @param	int $description
@@ -164,7 +163,7 @@ class SpoonICalendarEvent
 		return	$this->endDate;
 	}
 
-	
+
 	/**
 	 * Get location
 	 *
@@ -257,7 +256,7 @@ class SpoonICalendarEvent
 
 		// add location if needed
 		if($this->getLocation() !== null) $string .= 'LOCATION:' . $this->getLocation() ."\n";
-		
+
 		// end
 		$string .= 'END:VEVENT'."\n";
 
@@ -269,7 +268,6 @@ class SpoonICalendarEvent
 	/**
 	 * Set creation date
 	 *
-	 * @return	void
 	 * @param	int[optional] $value
 	 */
 	public function setCreateDate($value = null)
@@ -282,7 +280,6 @@ class SpoonICalendarEvent
 	/**
 	 * Set description
 	 *
-	 * @return	void
 	 * @param	string $value
 	 */
 	public function setDescription($value)
@@ -294,7 +291,6 @@ class SpoonICalendarEvent
 	/**
 	 * Set end date
 	 *
-	 * @return	void
 	 * @param	int $value
 	 */
 	public function setEndDate($value)
@@ -302,23 +298,21 @@ class SpoonICalendarEvent
 		$this->endDate = (int) $value;
 	}
 
-	
+
 	/**
 	 * Set a location
 	 *
-	 * @return	void
 	 * @param	string $value
 	 */
 	public function setLocation($value)
 	{
 		$this->location = (string) $value;
 	}
-	
+
 
 	/**
 	 * Set start date
 	 *
-	 * @return	void
 	 * @param	int $value
 	 */
 	public function setStartDate($value)
@@ -330,7 +324,6 @@ class SpoonICalendarEvent
 	/**
 	 * Set summary
 	 *
-	 * @return	void
 	 * @param	string $summary
 	 */
 	public function setSummary($value)
@@ -342,7 +335,6 @@ class SpoonICalendarEvent
 	/**
 	 * Set unique identifier
 	 *
-	 * @return	void
 	 * @param	string[optional] $value
 	 */
 	public function setUID($value = null)
@@ -355,7 +347,6 @@ class SpoonICalendarEvent
 	/**
 	 * Set URL
 	 *
-	 * @return	void
 	 * @param	string $value
 	 */
 	public function setUrl($value)
@@ -363,5 +354,3 @@ class SpoonICalendarEvent
 		$this->url = (string) $value;
 	}
 }
-
-?>

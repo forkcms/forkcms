@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This widget will show the latest comments
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsWidgetComments extends BackendBaseWidget
 {
@@ -18,7 +21,6 @@ class BackendEventsWidgetComments extends BackendBaseWidget
 	 */
 	private $comments;
 
-
 	/**
 	 * An array that contains the number of comments / status
 	 *
@@ -26,11 +28,8 @@ class BackendEventsWidgetComments extends BackendBaseWidget
 	 */
 	private $numCommentStatus;
 
-
 	/**
 	 * Execute the widget
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -47,11 +46,8 @@ class BackendEventsWidgetComments extends BackendBaseWidget
 		$this->display();
 	}
 
-
 	/**
 	 * Load the data
-	 *
-	 * @return	void
 	 */
 	private function loadData()
 	{
@@ -62,11 +58,8 @@ class BackendEventsWidgetComments extends BackendBaseWidget
 		$this->numCommentStatus = BackendEventsModel::getCommentStatusCount();
 	}
 
-
 	/**
 	 * Parse into template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -77,5 +70,3 @@ class BackendEventsWidgetComments extends BackendBaseWidget
 		if(isset($this->numCommentStatus['moderation']) && (int) $this->numCommentStatus['moderation'] > 0) $this->tpl->assign('eventsNumCommentsToModerate', $this->numCommentStatus['moderation']);
 	}
 }
-
-?>

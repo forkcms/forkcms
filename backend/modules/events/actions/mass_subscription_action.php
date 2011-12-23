@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This action is used to update one or more subscriptions (status, delete, ...)
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsMassSubscriptionAction extends BackendBaseAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -137,5 +138,3 @@ class BackendEventsMassSubscriptionAction extends BackendBaseAction
 		}
 	}
 }
-
-?>

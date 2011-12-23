@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsEditSubscription extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -47,12 +48,9 @@ class BackendEventsEditSubscription extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
 	 * If a revision-id was specified in the URL we load the revision and not the actual data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -63,11 +61,8 @@ class BackendEventsEditSubscription extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -83,11 +78,8 @@ class BackendEventsEditSubscription extends BackendBaseActionEdit
 		$this->tpl->assign('itemTitle', $this->record['event_title']);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -119,5 +111,3 @@ class BackendEventsEditSubscription extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

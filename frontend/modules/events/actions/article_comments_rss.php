@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the RSS-feed for comments on a certain item.
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsArticleCommentsRSS extends FrontendBaseBlock
 {
@@ -18,7 +21,6 @@ class FrontendEventsArticleCommentsRSS extends FrontendBaseBlock
 	 */
 	private $record;
 
-
 	/**
 	 * The comments
 	 *
@@ -26,11 +28,8 @@ class FrontendEventsArticleCommentsRSS extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -44,11 +43,8 @@ class FrontendEventsArticleCommentsRSS extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -65,11 +61,8 @@ class FrontendEventsArticleCommentsRSS extends FrontendBaseBlock
 		$this->items = FrontendEventsModel::getComments($this->record['id']);
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -105,5 +98,3 @@ class FrontendEventsArticleCommentsRSS extends FrontendBaseBlock
 		$rss->parse();
 	}
 }
-
-?>

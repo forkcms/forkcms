@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the index-action (default), it will display the overview
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -31,11 +32,8 @@ class BackendEventsIndex extends BackendBaseActionIndex
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrid
-	 *
-	 * @return	void
 	 */
 	private function loadDatagrid()
 	{
@@ -67,11 +65,8 @@ class BackendEventsIndex extends BackendBaseActionIndex
 		$this->datagrid->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Parse all datagrids
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -79,5 +74,3 @@ class BackendEventsIndex extends BackendBaseActionIndex
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
 }
-
-?>

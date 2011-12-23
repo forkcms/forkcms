@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is a widget with the link to the archive
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsWidgetArchive extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -28,11 +29,8 @@ class FrontendEventsWidgetArchive extends FrontendBaseWidget
 		$this->parse();
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -47,5 +45,3 @@ class FrontendEventsWidgetArchive extends FrontendBaseWidget
 		}
 	}
 }
-
-?>

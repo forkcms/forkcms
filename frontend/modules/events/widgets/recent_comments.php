@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is a widget with recent comments on all events-articles
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsWidgetRecentComments extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -28,11 +29,8 @@ class FrontendEventsWidgetRecentComments extends FrontendBaseWidget
 		$this->parse();
 	}
 
-
 	/**
 	 * Parse
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -40,5 +38,3 @@ class FrontendEventsWidgetRecentComments extends FrontendBaseWidget
 		$this->tpl->assign('widgetEventsRecentComments', FrontendEventsModel::getRecentComments(5));
 	}
 }
-
-?>

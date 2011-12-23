@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the categories-action, it will display the overview of events categories
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsCategories extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -31,11 +32,8 @@ class BackendEventsCategories extends BackendBaseActionIndex
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -58,24 +56,20 @@ class BackendEventsCategories extends BackendBaseActionIndex
 		$this->datagrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
 
-
 	/**
 	 * Set class on row with the default class
 	 *
-	 * @return	array
-	 * @param	int $id					The id of the category.
-	 * @param	array $rowAttributes	The current row attributes.
+	 * @param int $id The id of the category.
+	 * @param array $rowAttributes The current row attributes.
+	 * @return array
 	 */
 	public static function setDefault($id, $rowAttributes)
 	{
@@ -93,5 +87,3 @@ class BackendEventsCategories extends BackendBaseActionIndex
 		}
 	}
 }
-
-?>

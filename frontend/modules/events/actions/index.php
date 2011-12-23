@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the overview-action
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsIndex extends FrontendBaseBlock
 {
@@ -18,7 +21,6 @@ class FrontendEventsIndex extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * The pagination array
 	 * It will hold all needed parameters, some of them need initialization.
@@ -27,11 +29,8 @@ class FrontendEventsIndex extends FrontendBaseBlock
 	 */
 	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -48,11 +47,8 @@ class FrontendEventsIndex extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -81,11 +77,8 @@ class FrontendEventsIndex extends FrontendBaseBlock
 		$this->items = FrontendEventsModel::getAll($this->pagination['limit'], $this->pagination['offset']);
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -103,5 +96,3 @@ class FrontendEventsIndex extends FrontendBaseBlock
 		$this->parsePagination();
 	}
 }
-
-?>

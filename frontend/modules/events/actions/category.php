@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the category-action
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsCategory extends FrontendBaseBlock
 {
@@ -18,14 +21,12 @@ class FrontendEventsCategory extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * The requested category
 	 *
 	 * @var	array
 	 */
 	private $category;
-
 
 	/**
 	 * The pagination array
@@ -35,11 +36,8 @@ class FrontendEventsCategory extends FrontendBaseBlock
 	 */
 	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -56,11 +54,8 @@ class FrontendEventsCategory extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -100,11 +95,8 @@ class FrontendEventsCategory extends FrontendBaseBlock
 		$this->items = FrontendEventsModel::getAllForCategory($requestedCategory, $this->pagination['limit'], $this->pagination['offset']);
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -133,5 +125,3 @@ class FrontendEventsCategory extends FrontendBaseBlock
 		$this->parsePagination();
 	}
 }
-
-?>

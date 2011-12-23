@@ -118,7 +118,6 @@ class SpoonICal
 	/**
 	 * Parse the feed and output the feed into the browser.
 	 *
-	 * @return	void
 	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging).
 	 */
 	public function parse($headers = true)
@@ -141,7 +140,6 @@ class SpoonICal
 	/**
 	 * Write the feed into a file
 	 *
-	 * @return	void
 	 * @param	string $path	The path (and filename) where the feed should be written.
 	 */
 	public function parseToFile($path)
@@ -157,7 +155,6 @@ class SpoonICal
 	/**
 	 * Set the filename.
 	 *
-	 * @return	void
 	 * @param	string $name	The name of the file.
 	 */
 	public function setFilename($name)
@@ -169,7 +166,6 @@ class SpoonICal
 	/**
 	 * Set the product identifier
 	 *
-	 * @return	void
 	 * @param	string $value	The product identifier.
 	 */
 	public function setProductIdentifier($value)
@@ -200,7 +196,6 @@ class SpoonICalItem
 	/**
 	 * This property defines the access classification for a calendar component.
 	 *
-	 * @return	void
 	 * @param	 $value		The access classification, eg: PUBLIC, PRIVATE, CONFIDENTIAL, ...
 	 */
 	public function setClass($value)
@@ -212,7 +207,6 @@ class SpoonICalItem
 	/**
 	 * This property specifies the date and time that the calendar information was created by the calendar user agent in the calendar store.
 	 *
-	 * @return	void
 	 * @param	int $value	The timestamp.
 	 */
 	public function setCreated($value)
@@ -224,7 +218,6 @@ class SpoonICalItem
 	/**
 	 * This property provides a more complete description of the calendar component than that provided by the "SUMMARY" property.
 	 *
-	 * @return	void
 	 * @param	string $value	The description
 	 */
 	public function setDescription($value)
@@ -237,7 +230,6 @@ class SpoonICalItem
 	 * In the case of an iCalendar object that specifies a "METHOD" property, this property specifies the date and time that the instance of the iCalendar object was created.
 	 * In the case of an iCalendar object that doesn't specify a "METHOD" property, this property specifies the date and time that the information associated with the calendar component was last revised in the calendar store.
 	 *
-	 * @return	void
 	 * @param	int $value	The timestamp.
 	 */
 	public function setDTStamp($value)
@@ -249,7 +241,6 @@ class SpoonICalItem
 	/**
 	 * This property specifies when the calendar component begins.
 	 *
-	 * @return	void
 	 * @param	int $value	The timestamp.
 	 */
 	public function setDTStart($value)
@@ -261,7 +252,6 @@ class SpoonICalItem
 	/**
 	 * This property specifies a positive duration of time.
 	 *
-	 * @return	void
 	 * @param unknown_type $value
 	 */
 	public function setDuration($value)
@@ -273,7 +263,6 @@ class SpoonICalItem
 	/**
 	 * This property specifies information related to the global position for the activity specified by a calendar component.
 	 *
-	 * @return	void
 	 * @param	float $lat
 	 * @param	float $lon
 	 */
@@ -287,7 +276,6 @@ class SpoonICalItem
 	/**
 	 * This property specifies the date and time that the information associated with the calendar component was last revised in the calendar store.
 	 *
-	 * @return	void
 	 * @param	int $value	The timestamp.
 	 */
 	public function setLastModified($value)
@@ -299,7 +287,6 @@ class SpoonICalItem
 	/**
 	 * This property defines the intended venue for the activity defined by a calendar component.
 	 *
-	 * @return	void
 	 * @param	string $value
 	 */
 	public function setLocation($value)
@@ -311,7 +298,6 @@ class SpoonICalItem
 	/**
 	 * This property defines a short summary or subject for the calendar component.
 	 *
-	 * @return	void
 	 * @param	string $value	The summary.
 	 */
 	public function setSummary($value)
@@ -443,5 +429,3 @@ class SpoonICalEvent extends SpoonICalItem
  * @since		1.3.2
  */
 class SpoonIcalException extends SpoonException {}
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
- * This is the comments-action , it will display the overview of events comments
+ * This is the comments-action, it will display the overview of events comments
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsComments extends BackendBaseActionIndex
 {
@@ -18,15 +21,14 @@ class BackendEventsComments extends BackendBaseActionIndex
 	 */
 	private $dgPublished, $dgModeration, $dgSpam;
 
-
 	/**
 	 * Add postdata into the comment
 	 *
-	 * @return	string
-	 * @param 	string $text	The comment.
-	 * @param	string $title	The title for the eventsarticle.
-	 * @param	string $URL		The URL for the eventsarticle.
-	 * @param	int $id			The id of the comment.
+	 * @param string $text The comment.
+	 * @param string $title The title for the eventsarticle.
+	 * @param string $URL The URL for the eventsarticle.
+	 * @param int $id The id of the comment.
+	 * @return string
 	 */
 	public static function addPostData($text, $title, $URL, $id)
 	{
@@ -37,11 +39,8 @@ class BackendEventsComments extends BackendBaseActionIndex
 		return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $URL, $title) . '</em></p>' . "\n" . (string) $text;
 	}
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -58,11 +57,8 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
@@ -184,11 +180,8 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -205,5 +198,3 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->tpl->assign('numSpam', $this->dgSpam->getNumResults());
 	}
 }
-
-?>

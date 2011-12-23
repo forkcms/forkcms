@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the events module
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsModel
 {
@@ -55,11 +58,10 @@ class BackendEventsModel
 												WHERE i.status = ? AND i.language = ?
 												GROUP BY i.id';
 
-
 	/**
 	 * Checks the settings and optionally returns an array with warnings
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function checkSettings()
 	{
@@ -84,12 +86,10 @@ class BackendEventsModel
 		return $warnings;
 	}
 
-
 	/**
 	 * Deletes one or more items
 	 *
-	 * @return	void
-	 * @param 	mixed $ids		The ids to delete.
+	 * @param mixed $ids The ids to delete.
 	 */
 	public static function delete($ids)
 	{
@@ -115,12 +115,10 @@ class BackendEventsModel
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 	}
 
-
 	/**
 	 * Deletes a category
 	 *
-	 * @return	void
-	 * @param	int $id		The id of the category to delete.
+	 * @param int $id The id of the category to delete.
 	 */
 	public static function deleteCategory($id)
 	{
@@ -153,12 +151,10 @@ class BackendEventsModel
 		}
 	}
 
-
 	/**
 	 * Deletes one or more comments
 	 *
-	 * @return	void
-	 * @param	array $ids		The id(s) of the items(s) to delete.
+	 * @param array $ids The id(s) of the items(s) to delete.
 	 */
 	public static function deleteComments($ids)
 	{
@@ -183,11 +179,8 @@ class BackendEventsModel
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 	}
 
-
 	/**
 	 * Delete all spam
-	 *
-	 * @return	void
 	 */
 	public static function deleteSpamComments()
 	{
@@ -209,11 +202,8 @@ class BackendEventsModel
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 	}
 
-
 	/**
 	 * Delete all spam
-	 *
-	 * @return	void
 	 */
 	public static function deleteSpamSubscriptions()
 	{
@@ -235,12 +225,10 @@ class BackendEventsModel
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 	}
 
-
 	/**
 	 * Deletes one or more subscriptions
 	 *
-	 * @return	void
-	 * @param	array $ids		The id(s) of the item(s) to delete.
+	 * @param array $ids The id(s) of the item(s) to delete.
 	 */
 	public static function deleteSubscriptions($ids)
 	{
@@ -265,12 +253,11 @@ class BackendEventsModel
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 	}
 
-
 	/**
 	 * Checks if an item exists
 	 *
-	 * @return	bool
-	 * @param	int $id		The id of the item to check for existence.
+	 * @param int $id The id of the item to check for existence.
+	 * @return bool
 	 */
 	public static function exists($id)
 	{
@@ -280,12 +267,11 @@ class BackendEventsModel
 														array((int) $id, BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Checks if a category exists
 	 *
-	 * @return	int
-	 * @param	int $id		The id of the category to check for existence.
+	 * @param int $id The id of the category to check for existence.
+	 * @return int
 	 */
 	public static function existsCategory($id)
 	{
@@ -295,12 +281,11 @@ class BackendEventsModel
 														array((int) $id, BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Checks if a comment exists
 	 *
-	 * @return	int
-	 * @param	int $id		The id of the item to check for existence.
+	 * @param int $id The id of the item to check for existence.
+	 * @return int
 	 */
 	public static function existsComment($id)
 	{
@@ -310,12 +295,11 @@ class BackendEventsModel
 														array((int) $id, BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Checks if a subscription exists
 	 *
-	 * @return	int
-	 * @param	int $id		The id of the item to check for existence.
+	 * @param int $id The id of the item to check for existence.
+	 * @return int
 	 */
 	public static function existsSubscription($id)
 	{
@@ -325,12 +309,11 @@ class BackendEventsModel
 														array((int) $id, BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Get all data for a given id
 	 *
-	 * @return	array
-	 * @param	int $id		The Id of the item to fetch?
+	 * @param int $id The Id of the item to fetch?
+	 * @return array
 	 */
 	public static function get($id)
 	{
@@ -342,14 +325,13 @@ class BackendEventsModel
 															array((int) $id, 'active', BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Get the comments
 	 *
-	 * @return	array
-	 * @param	string[optional] $status		The type of comments to get.
-	 * @param	int[optional] $limit			The maximum number of items to retrieve.
-	 * @param	int[optional] $offset			The offset.
+	 * @param string[optional] $status The type of comments to get.
+	 * @param int[optional] $limit The maximum number of items to retrieve.
+	 * @param int[optional] $offset The offset.
+	 * @return array
 	 */
 	public static function getAllCommentsForStatus($status, $limit = 30, $offset = 0)
 	{
@@ -385,12 +367,11 @@ class BackendEventsModel
 															array($status, BL::getWorkingLanguage(), $offset, $limit));
 	}
 
-
 	/**
 	 * Get all items by a given tag id
 	 *
-	 * @return	array
-	 * @param	int $tagId	The id of the tag.
+	 * @param int $tagId The id of the tag.
+	 * @return array
 	 */
 	public static function getByTag($tagId)
 	{
@@ -409,11 +390,10 @@ class BackendEventsModel
 		return $items;
 	}
 
-
 	/**
 	 * Get all categories
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getCategories()
 	{
@@ -457,12 +437,11 @@ class BackendEventsModel
 		return $categories;
 	}
 
-
 	/**
 	 * Get all data for a given id
 	 *
-	 * @return	array
-	 * @param	int $id		The id of the category to fetch.
+	 * @param int $id The id of the category to fetch.
+	 * @return array
 	 */
 	public static function getCategory($id)
 	{
@@ -472,13 +451,12 @@ class BackendEventsModel
 															array((int) $id, BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Get a category id by title
 	 *
-	 * @return	int
-	 * @param	string $title					The title of the category.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param string $title The title of the category.
+	 * @param string[optional] $language The language to use, if not provided we will use the working language.
+	 * @return int
 	 */
 	public static function getCategoryId($title, $language = null)
 	{
@@ -493,12 +471,11 @@ class BackendEventsModel
 													array($title, $language));
 	}
 
-
 	/**
 	 * Get all data for a given id
 	 *
-	 * @return	array
-	 * @param	int $id		The Id of the comment to fetch?
+	 * @param int $id The Id of the comment to fetch?
+	 * @return array
 	 */
 	public static function getComment($id)
 	{
@@ -512,12 +489,11 @@ class BackendEventsModel
 															array((int) $id));
 	}
 
-
 	/**
 	 * Get multiple comments at once
 	 *
-	 * @return	array
-	 * @param	array $ids		The id(s) of the comment(s).
+	 * @param array $ids The id(s) of the comment(s).
+	 * @return array
 	 */
 	public static function getComments(array $ids)
 	{
@@ -526,11 +502,10 @@ class BackendEventsModel
 															WHERE i.id IN (' . implode(',', $ids) . ')');
 	}
 
-
 	/**
 	 * Get a count per comment
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public static function getCommentStatusCount()
 	{
@@ -541,13 +516,12 @@ class BackendEventsModel
 															array(BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Get the latest comments for a given type
 	 *
-	 * @return	array
-	 * @param	string $status			The status for the comments to retrieve.
-	 * @param	int[optional] $limit	The maximum number of items to retrieve.
+	 * @param string $status The status for the comments to retrieve.
+	 * @param int[optional] $limit The maximum number of items to retrieve.
+	 * @return array
 	 */
 	public static function getLatestComments($status, $limit = 10)
 	{
@@ -573,24 +547,22 @@ class BackendEventsModel
 		return $comments;
 	}
 
-
 	/**
 	 * Get the maximum id
 	 *
-	 * @return	int
+	 * @return int
 	 */
 	public static function getMaximumId()
 	{
 		return (int) BackendModel::getDB()->getVar('SELECT MAX(id) FROM events LIMIT 1');
 	}
 
-
 	/**
 	 * Get all data for a given revision
 	 *
-	 * @return	array
-	 * @param	int $id				The id of the item.
-	 * @param	int $revisionId		The revision to get.
+	 * @param int $id The id of the item.
+	 * @param int $revisionId The revision to get.
+	 * @return array
 	 */
 	public static function getRevision($id, $revisionId)
 	{
@@ -601,12 +573,11 @@ class BackendEventsModel
 															array((int) $id, (int) $revisionId));
 	}
 
-
 	/**
 	 * Get all data for a given id
 	 *
-	 * @return	array
-	 * @param	int $id		The id of the item to fetch?
+	 * @param int $id The id of the item to fetch?
+	 * @return array
 	 */
 	public static function getSubscription($id)
 	{
@@ -620,13 +591,12 @@ class BackendEventsModel
 															array((int) $id));
 	}
 
-
 	/**
 	 * Retrieve the unique URL for an item
 	 *
-	 * @return	string
-	 * @param	string $URL			The URL to base on.
-	 * @param	int[optional] $id	The id of the item to ignore.
+	 * @param string $URL The URL to base on.
+	 * @param int[optional] $id The id of the item to ignore.
+	 * @return string
 	 */
 	public static function getURL($URL, $id = null)
 	{
@@ -682,13 +652,12 @@ class BackendEventsModel
 		return $URL;
 	}
 
-
 	/**
 	 * Retrieve the unique URL for a category
 	 *
-	 * @return	string
-	 * @param	string $URL			The string wheron the URL will be based.
-	 * @param	int[optional] $id	The id of the category to ignore.
+	 * @param string $URL The string wheron the URL will be based.
+	 * @param int[optional] $id The id of the category to ignore.
+	 * @return string
 	 */
 	public static function getURLForCategory($URL, $id = null)
 	{
@@ -744,12 +713,11 @@ class BackendEventsModel
 		return $URL;
 	}
 
-
 	/**
 	 * Inserts an item into the database
 	 *
-	 * @return	int
-	 * @param	array $item		The data to insert.
+	 * @param array $item The data to insert.
+	 * @return int
 	 */
 	public static function insert(array $item)
 	{
@@ -763,13 +731,12 @@ class BackendEventsModel
 		return $item['revision_id'];
 	}
 
-
 	/**
 	 * Inserts a new category into the database
 	 *
-	 * @return	int
-	 * @param	array $item				The data for the category to insert.
-	 * @param	array[optional] $meta	The metadata for the category to insert.
+	 * @param array $item The data for the category to insert.
+	 * @param array[optional] $meta The metadata for the category to insert.
+	 * @return int
 	 */
 	public static function insertCategory(array $item, $meta = null)
 	{
@@ -789,12 +756,11 @@ class BackendEventsModel
 		return $item['id'];
 	}
 
-
 	/**
 	 * Recalculate the commentcount
 	 *
-	 * @return	bool
-	 * @param	array $ids	The id(s) of the post wherefor the commentcount should be recalculated.
+	 * @param array $ids The id(s) of the post wherefor the commentcount should be recalculated.
+	 * @return bool
 	 */
 	public static function reCalculateCommentCount(array $ids)
 	{
@@ -828,12 +794,11 @@ class BackendEventsModel
 		return true;
 	}
 
-
 	/**
 	 * Recalculate the subscriptioncount
 	 *
-	 * @return	bool
-	 * @param	array $ids	The id(s) of the post wherefor the subscriptioncount should be recalculated.
+	 * @param array $ids The id(s) of the post wherefor the subscriptioncount should be recalculated.
+	 * @return bool
 	 */
 	public static function reCalculateSubscriptionCount(array $ids)
 	{
@@ -867,12 +832,11 @@ class BackendEventsModel
 		return true;
 	}
 
-
 	/**
 	 * Update an existing item
 	 *
-	 * @return	int
-	 * @param	array $item		The new data.
+	 * @param array $item The new data.
+	 * @return int
 	 */
 	public static function update(array $item)
 	{
@@ -919,13 +883,12 @@ class BackendEventsModel
 		return $item['revision_id'];
 	}
 
-
 	/**
 	 * Update an existing category
 	 *
-	 * @return	int
-	 * @param	array $item				The new data.
-	 * @param	array[optional] $meta	The new meta-data.
+	 * @param array $item The new data.
+	 * @param array[optional] $meta The new meta-data.
+	 * @return int
 	 */
 	public static function updateCategory(array $item, $meta = null)
 	{
@@ -952,25 +915,22 @@ class BackendEventsModel
 		return $updated;
 	}
 
-
 	/**
 	 * Update an existing comment
 	 *
-	 * @return	int
-	 * @param	array $item		The new data.
+	 * @param array $item The new data.
+	 * @return int
 	 */
 	public static function updateComment(array $item)
 	{
 		return BackendModel::getDB(true)->update('events_comments', $item, 'id = ?', array((int) $item['id']));
 	}
 
-
 	/**
 	 * Updates one or more comments' status
 	 *
-	 * @return	void
-	 * @param	array $ids			The id(s) of the comment(s) to change the status for.
-	 * @param	string $status		The new status.
+	 * @param array $ids The id(s) of the comment(s) to change the status for.
+	 * @param string $status The new status.
 	 */
 	public static function updateCommentStatuses($ids, $status)
 	{
@@ -995,25 +955,22 @@ class BackendEventsModel
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 	}
 
-
 	/**
 	 * Update a subscription
 	 *
-	 * @return	int
-	 * @param	array $item		The new data.
+	 * @param array $item The new data.
+	 * @return int
 	 */
 	public static function updateSubscription(array $item)
 	{
 		return BackendModel::getDB(true)->update('events_comments', $item, 'id = ?', array((int) $item['id']));
 	}
 
-
 	/**
 	 * Updates one or more subscriptions' status
 	 *
-	 * @return	void
-	 * @param	array $ids			The id(s) of the items(s) to change the status for.
-	 * @param	string $status		The new status.
+	 * @param array $ids The id(s) of the items(s) to change the status for.
+	 * @param string $status The new status.
 	 */
 	public static function updateSubscriptionStatuses($ids, $status)
 	{
@@ -1038,5 +995,3 @@ class BackendEventsModel
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 	}
 }
-
-?>

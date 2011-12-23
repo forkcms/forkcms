@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the Ical for a specific item
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsIcal extends FrontendBaseBlock
 {
@@ -18,7 +21,6 @@ class FrontendEventsIcal extends FrontendBaseBlock
 	 */
 	private $record;
 
-
 	/**
 	 * The settings
 	 *
@@ -26,11 +28,8 @@ class FrontendEventsIcal extends FrontendBaseBlock
 	 */
 	private $settings;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -44,11 +43,8 @@ class FrontendEventsIcal extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -68,11 +64,8 @@ class FrontendEventsIcal extends FrontendBaseBlock
 		$this->settings = FrontendModel::getModuleSettings('events');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -107,5 +100,3 @@ class FrontendEventsIcal extends FrontendBaseBlock
 		$ical->parse();
 	}
 }
-
-?>

@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsEdit extends BackendBaseActionEdit
 {
@@ -18,11 +21,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 	 */
 	private $dgDrafts;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -61,12 +61,9 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Get the data
 	 * If a revision-id was specified in the URL we load the revision and not the actual data.
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -106,11 +103,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
-
 	/**
 	 * Load the datagrid with drafts
-	 *
-	 * @return	void
 	 */
 	private function loadDrafts()
 	{
@@ -140,11 +134,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -180,11 +171,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
 
-
 	/**
 	 * Load the datagrid with revisions
-	 *
-	 * @return	void
 	 */
 	private function loadRevisions()
 	{
@@ -211,11 +199,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -238,11 +223,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -331,5 +313,3 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

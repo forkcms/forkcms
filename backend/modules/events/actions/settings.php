@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the settings-action, it will display a form to set general settings
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsSettings extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -34,11 +35,8 @@ class BackendEventsSettings extends BackendBaseActionEdit
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the settings form
-	 *
-	 * @return	void
 	 */
 	private function loadForm()
 	{
@@ -83,11 +81,8 @@ class BackendEventsSettings extends BackendBaseActionEdit
 		$this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
 	}
 
-
 	/**
 	 * Parse the form
-	 *
-	 * @return	void
 	 */
 	protected function parse()
 	{
@@ -98,11 +93,8 @@ class BackendEventsSettings extends BackendBaseActionEdit
 		$this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'comments_rss'));
 	}
 
-
 	/**
 	 * Validates the settings form
-	 *
-	 * @return	void
 	 */
 	private function validateForm()
 	{
@@ -164,5 +156,3 @@ class BackendEventsSettings extends BackendBaseActionEdit
 		}
 	}
 }
-
-?>

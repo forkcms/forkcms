@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the subscriptions-action , it will display the overview of events subscriptions
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsSubscriptions extends BackendBaseActionIndex
 {
@@ -18,11 +21,8 @@ class BackendEventsSubscriptions extends BackendBaseActionIndex
 	 */
 	private $dgPublished, $dgModeration, $dgSpam;
 
-
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -39,11 +39,8 @@ class BackendEventsSubscriptions extends BackendBaseActionIndex
 		$this->display();
 	}
 
-
 	/**
 	 * Loads the datagrids
-	 *
-	 * @return	void
 	 */
 	private function loadDataGrids()
 	{
@@ -159,11 +156,8 @@ class BackendEventsSubscriptions extends BackendBaseActionIndex
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 
-
 	/**
 	 * Parse & display the page
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -180,5 +174,3 @@ class BackendEventsSubscriptions extends BackendBaseActionIndex
 		$this->tpl->assign('numSpam', $this->dgSpam->getNumResults());
 	}
 }
-
-?>

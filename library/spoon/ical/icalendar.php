@@ -57,7 +57,6 @@ class SpoonICalendar
 	/**
 	 * Add an even
 	 *
-	 * @return	void
 	 * @param	SpoonICalendarEvent $item
 	 */
 	public function addEvent()
@@ -149,7 +148,6 @@ class SpoonICalendar
 	/**
 	 * Set product identifier
 	 *
-	 * @return	void
 	 * @param	string $value
 	 */
 	public function setProductIdentifier($value)
@@ -161,7 +159,6 @@ class SpoonICalendar
 	/**
 	 * Set version
 	 *
-	 * @return	void
 	 * @param	string[optional] $value
 	 */
 	public function setVersion($value = '2.0')
@@ -171,4 +168,3 @@ class SpoonICalendar
 
 }
 
-?>

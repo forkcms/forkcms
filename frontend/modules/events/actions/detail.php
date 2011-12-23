@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the detail-action
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsDetail extends FrontendBaseBlock
 {
@@ -18,14 +21,12 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 */
 	private $comments;
 
-
 	/**
 	 * Form instance
 	 *
 	 * @var FrontendForm
 	 */
 	private $frmComment, $frmSubscription;
-
 
 	/**
 	 * The item
@@ -34,14 +35,12 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 */
 	private $record;
 
-
 	/**
 	 * The settings
 	 *
 	 * @var	array
 	 */
 	private $settings;
-
 
 	/**
 	 * The subscriptions
@@ -50,11 +49,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 */
 	private $subscriptions;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -80,11 +76,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -138,11 +131,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if(!$this->settings['allow_subscriptions']) $this->record['allow_subscriptions'] = false;
 	}
 
-
 	/**
 	 * Load the form
-	 *
-	 * @return	void
 	 */
 	private function loadForms()
 	{
@@ -170,11 +160,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->frmComment->addTextarea('message');
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -274,11 +261,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->tpl->assign('navigation', FrontendEventsModel::getNavigation($this->record['id']));
 	}
 
-
 	/**
 	 * Validate the comment form
-	 *
-	 * @return	void
 	 */
 	private function validateFormComment()
 	{
@@ -404,11 +388,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		}
 	}
 
-
 	/**
 	 * Validate the form
-	 *
-	 * @return	void
 	 */
 	private function validateForms()
 	{
@@ -419,11 +400,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->validateFormComment();
 	}
 
-
 	/**
 	 * Validate the subscription form
-	 *
-	 * @return	void
 	 */
 	private function validateFormSubscription()
 	{
@@ -535,5 +513,3 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		}
 	}
 }
-
-?>

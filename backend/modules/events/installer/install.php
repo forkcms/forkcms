@@ -1,23 +1,26 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Installer for the events module
  *
- * @package		installer
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class EventsInstall extends ModuleInstaller
 {
 	/**
 	 * Add the default category for a language
 	 *
-	 * @return	int
-	 * @param	string $language	The language to use.
-	 * @param	string $title		The title of the category.
-	 * @param	string $url			The URL for the category.
+	 * @param string $language The language to use.
+	 * @param string $title The title of the category.
+	 * @param string $url The URL for the category.
+	 * @return int
 	 */
 	private function addCategory($language, $title, $url)
 	{
@@ -29,11 +32,8 @@ class EventsInstall extends ModuleInstaller
 		return (int) $this->getDB()->insert('events_categories', $item);
 	}
 
-
 	/**
 	 * Install the module
-	 *
-	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -143,37 +143,33 @@ class EventsInstall extends ModuleInstaller
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 
-
 	/**
 	 * Does the category with this id exist within this language.
 	 *
-	 * @return	bool
-	 * @param	string $language	The langauge to use.
-	 * @param	int $id				The id to exclude.
+	 * @param string $language The langauge to use.
+	 * @param int $id The id to exclude.
+	 * @return bool
 	 */
 	private function existsCategory($language, $id)
 	{
 		return (bool) $this->getDB()->getVar('SELECT COUNT(id) FROM events_categories WHERE id = ? AND language = ?', array((int) $id, (string) $language));
 	}
 
-
 	/**
 	 * Fetch the id of the first category in this language we come across
 	 *
-	 * @return	int
-	 * @param	string $language	The language to use.
+	 * @param string $language The language to use.
+	 * @return int
 	 */
 	private function getCategory($language)
 	{
 		return (int) $this->getDB()->getVar('SELECT id FROM events_categories WHERE language = ?', array((string) $language));
 	}
 
-
 	/**
 	 * Install example data
 	 *
-	 * @return	void
-	 * @param	string $language	The language to use.
+	 * @param string $language The language to use.
 	 */
 	private function installExampleData($language)
 	{
@@ -264,5 +260,3 @@ class EventsInstall extends ModuleInstaller
 		}
 	}
 }
-
-?>

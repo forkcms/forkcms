@@ -1,20 +1,21 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This edit-action will update a category using Ajax
  *
- * @package		backend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendEventsAjaxEditCategory extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -49,5 +50,3 @@ class BackendEventsAjaxEditCategory extends BackendBaseAJAXAction
 		$this->output(self::OK, $item, vsprintf(BL::msg('EditedCategory'), array($item['title'])));
 	}
 }
-
-?>

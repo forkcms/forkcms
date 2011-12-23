@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * Frontend Ical class.
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendIcal extends SpoonIcal
 {
@@ -18,13 +21,11 @@ class FrontendIcal extends SpoonIcal
 	 */
 	private $title;
 
-
 	/**
 	 * Default constructor
 	 *
-	 * @return	void
-	 * @param	string $title			The title for the calendar.
-	 * @param	string $description		A description for the calendar.
+	 * @param string $title The title for the calendar.
+	 * @param string $description A description for the calendar.
 	 */
 	public function __construct($title, $description)
 	{
@@ -50,23 +51,20 @@ class FrontendIcal extends SpoonIcal
 		$this->setXProperties($properties);
 	}
 
-
 	/**
 	 * Get the title
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getTitle()
 	{
 		return $this->title;
 	}
 
-
 	/**
 	 * Parse the ical and output into the browser.
 	 *
-	 * @return	void
-	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging).
+	 * @param bool[optional] $headers Should the headers be set? (Use false if you're debugging).
 	 */
 	public function parse($headers = true)
 	{
@@ -77,12 +75,10 @@ class FrontendIcal extends SpoonIcal
 		parent::parse($headers);
 	}
 
-
 	/**
 	 * Set the title
 	 *
-	 * @return	void
-	 * @param	string $title	The title for the calendar.
+	 * @param string $title The title for the calendar.
 	 */
 	public function setTitle($title)
 	{
@@ -90,15 +86,10 @@ class FrontendIcal extends SpoonIcal
 	}
 }
 
-
 /**
  * FrontendIcalItem, this is our extended version of SpoonIcalItem
  *
- * @package		frontend
- * @subpackage	core
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendIcalItemEvent extends SpoonIcalItemEvent
 {
@@ -109,14 +100,12 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 	 */
 	private $utm = array('utm_source' => 'feed', 'utm_medium' => 'ical');
 
-
 	/**
 	 * Default constructor.
 	 *
-	 * @return	void
-	 * @param	string $title			The title for the item.
-	 * @param	string $link			The link for the item.
-	 * @param	string $description		The content for the item.
+	 * @param string $title The title for the item.
+	 * @param string $link The link for the item.
+	 * @param string $description The content for the item.
 	 */
 	public function __construct($title, $link, $description)
 	{
@@ -154,12 +143,11 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		$this->setXProperties($properties);
 	}
 
-
 	/**
 	 * Process links, will prepend SITE_URL if needed and append UTM-parameters
 	 *
-	 * @return	string
-	 * @param	string $content		The content to process.
+	 * @param string $content The content to process.
+	 * @return string
 	 */
 	public function processLinks($content)
 	{
@@ -201,12 +189,10 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		return $content;
 	}
 
-
 	/**
 	 * Set the url
 	 *
-	 * @return	void
-	 * @param	string $url		The url to assiociate the item with.
+	 * @param string $url The url to assiociate the item with.
 	 */
 	public function setUrl($url)
 	{
@@ -220,5 +206,3 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		parent::setUrl(FrontendModel::addURLParameters($url, $this->utm));
 	}
 }
-
-?>

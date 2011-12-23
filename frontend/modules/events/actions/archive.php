@@ -1,13 +1,16 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the archive-action
  *
- * @package		frontend
- * @subpackage	events
- *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @since		2.0
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendEventsArchive extends FrontendBaseBlock
 {
@@ -18,14 +21,12 @@ class FrontendEventsArchive extends FrontendBaseBlock
 	 */
 	private $items;
 
-
 	/**
 	 * The dates for the archive
 	 *
 	 * @var	int
 	 */
 	private $startDate, $endDate;
-
 
 	/**
 	 * The pagination array
@@ -35,7 +36,6 @@ class FrontendEventsArchive extends FrontendBaseBlock
 	 */
 	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-
 	/**
 	 * The requested year and month
 	 *
@@ -43,11 +43,8 @@ class FrontendEventsArchive extends FrontendBaseBlock
 	 */
 	private $year, $month;
 
-
 	/**
 	 * Execute the extra
-	 *
-	 * @return	void
 	 */
 	public function execute()
 	{
@@ -64,11 +61,8 @@ class FrontendEventsArchive extends FrontendBaseBlock
 		$this->parse();
 	}
 
-
 	/**
 	 * Load the data, don't forget to validate the incoming data
-	 *
-	 * @return	void
 	 */
 	private function getData()
 	{
@@ -127,11 +121,8 @@ class FrontendEventsArchive extends FrontendBaseBlock
 		$this->items = FrontendEventsModel::getAllForDateRange($this->startDate, $this->endDate, $this->pagination['limit'], $this->pagination['offset']);
 	}
 
-
 	/**
 	 * Parse the data into the template
-	 *
-	 * @return	void
 	 */
 	private function parse()
 	{
@@ -162,5 +153,3 @@ class FrontendEventsArchive extends FrontendBaseBlock
 		$this->parsePagination();
 	}
 }
-
-?>
