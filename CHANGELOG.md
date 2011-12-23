@@ -4,6 +4,8 @@ Improvements:
 
 * Core: added public methods to FrontendPage to fetch page id & page record.
 * Core: split instantiation & execution of extras, allowing extra's to be aware of other extra's on a page.
+* All: fixed a lot of <label>-tags, which improves the accessibility.
+* All: added some hidden labels for formelements that doesn't have a <label>-tag linked, which improves the accessibility.	
 
 3.1.7 (2011-12-20)
 --

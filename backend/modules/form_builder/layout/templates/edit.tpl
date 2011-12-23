@@ -41,7 +41,7 @@
 						{$ddmMethod} {$ddmMethodError}
 					</p>
 					<p id="emailWrapper" class="hidden">
-						<label for="email">{$lblRecipient|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="addValue-email">{$lblRecipient|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
 				</div>

@@ -456,6 +456,11 @@ div#pageTitle {
 		visibility: hidden;
 	}
 
+	.pageTitle h2 label {
+		font-size: 14px; 
+		font-weight: 700;
+	}
+	
 /*
 	Center message
 */

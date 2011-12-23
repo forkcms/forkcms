@@ -359,7 +359,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 
 					// add widget checkboxes
 					$widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'], isset($selectedWidgets[$j]) ? $selectedWidgets[$j] : null)->parse() . '</span>';
-					$widgetBoxes[$j]['widget'] = $widget['label'];
+					$widgetBoxes[$j]['widget'] = '<label for="widgets' . SpoonFilter::toCamelCase($widget['label']) .'">' . $widget['label'] . '</label>';
 					$widgetBoxes[$j]['description'] = $widget['description'];
 				}
 			}
@@ -403,7 +403,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 				{
 					// assign action boxes
 					$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'], in_array($action['value'], $selectedActions))->parse();
-					$actionBoxes[$key]['actions'][$i]['action'] = $action['label'];
+					$actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' .$action['label'] . '</label>';
 					$actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
 				}
 			}
@@ -413,7 +413,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			{
 				// create datagrid
 				$widgetGrid = new BackendDataGridArray($widgetBoxes);
-				$widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>'));
+				$widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /></span>'));
 
 				// get content
 				$widgets = $widgetGrid->getContent();
@@ -428,6 +428,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			// get content of datagrids
 			$permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
 			$permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
+			$permissionBoxes[$key]['id'] = SpoonFilter::toCamelCase($module['label']);
 
 		}
 
