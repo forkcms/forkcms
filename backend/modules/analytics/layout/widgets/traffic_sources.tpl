@@ -25,7 +25,7 @@
 					{/option:dgAnalyticsReferrers}
 
 					{option:!dgAnalyticsReferrers}
-						<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+						<table class="dataGrid">
 							<tr>
 								<td>{$msgNoReferrers}</td>
 							</tr>
@@ -42,7 +42,7 @@
 					{/option:dgAnalyticsKeywords}
 
 					{option:!dgAnalyticsKeywords}
-						<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+						<table class="dataGrid">
 							<tr>
 								<td>{$msgNoKeywords}</td>
 							</tr>

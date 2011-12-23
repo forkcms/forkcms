@@ -297,7 +297,7 @@
 		font-size: 11px;
 	}
 
-.box h3 {
+.box h3, .box h3 label {
 	margin: 0;
 	padding: 0;
 	color: #000;
