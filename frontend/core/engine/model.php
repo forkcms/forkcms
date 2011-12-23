@@ -313,11 +313,14 @@ class FrontendModel
 		);
 
 		// init positions
-		$record['positions'] = array();
+		$record['positions'] = array('main' => array());
 
 		// loop blocks
 		foreach($blocks as $block)
 		{
+			// set the block to the positions array
+			if(!isset($record['positions'][$block['position']])) $record['positions'][$block['position']] = array();
+
 			// unserialize data if it is available
 			if(isset($block['data'])) $block['data'] = unserialize($block['data']);
 
