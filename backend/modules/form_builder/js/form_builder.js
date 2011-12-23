@@ -1057,7 +1057,7 @@ jsBackend.formBuilder.fields =
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
 				type: type,
-				values: values
+				values: value
 			}),
 			success: function(data, textStatus)
 			{
