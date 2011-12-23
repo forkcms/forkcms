@@ -9,7 +9,7 @@
 </div>
 
 {option:datagrid}
-	<div class="datagridHolder">
+	<div class="dataGridHolder">
 		{$datagrid}
 	</div>
 {/option:datagrid}

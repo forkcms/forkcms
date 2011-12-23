@@ -12,10 +12,17 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class EventsInstall extends ModuleInstaller
+class EventsInstaller extends ModuleInstaller
 {
 	/**
-	 * Add the default category for a language
+	 * Default category id
+	 *
+	 * @var	int
+	 */
+	private $defaultCategoryId;
+
+	/**
+	 * Add a category for a language
 	 *
 	 * @param string $language The language to use.
 	 * @param string $title The title of the category.
@@ -24,7 +31,7 @@ class EventsInstall extends ModuleInstaller
 	 */
 	private function addCategory($language, $title, $url)
 	{
-		// build array
+		$item = array();
 		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
 		$item['language'] = (string) $language;
 		$item['title'] = (string) $title;
@@ -33,15 +40,44 @@ class EventsInstall extends ModuleInstaller
 	}
 
 	/**
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @param string $language The language to use.
+	 * @return int
+	 */
+	private function getCategory($language)
+	{
+		return (int) $this->getDB()->getVar('SELECT id FROM events_categories WHERE language = ?', array((string) $language));
+	}
+
+	/**
+	 * Insert an empty admin dashboard sequence
+	 */
+	private function insertWidget()
+	{
+		$comments = array(
+				'column' => 'right',
+				'position' => 1,
+				'hidden' => false,
+				'present' => true
+		);
+
+		$this->insertDashboardWidget('events', 'comments', $comments);
+	}
+
+	/**
 	 * Install the module
 	 */
-	protected function execute()
+	public function install()
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'events' as a module
-		$this->addModule('events', 'The events module.');
+		$this->addModule('events');
+
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// general settings
 		$this->setSetting('events', 'allow_comments', true);
@@ -73,44 +109,57 @@ class EventsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'events', 'delete');
 		$this->setActionRights(1, 'events', 'comments');
 		$this->setActionRights(1, 'events', 'edit_comment');
-		$this->setActionRights(1, 'events', 'delete_spam');
+		$this->setActionRights(1, 'events', 'delete_comment_spam');
 		$this->setActionRights(1, 'events', 'mass_comment_action');
+		$this->setActionRights(1, 'events', 'mass_subscription_action');
 		$this->setActionRights(1, 'events', 'settings');
+		$this->setActionRights(1, 'events', 'subscriptions');
+		$this->setActionRights(1, 'events', 'edit_subscription');
+		$this->setActionRights(1, 'events', 'delete_subscription_spam');
+
+		// insert dashboard widget
+		$this->insertWidget();
+
+		// set navigation
+		$navigationModulesId = $this->setNavigation(null, 'Modules');
+		$navigationEventsId = $this->setNavigation($navigationModulesId, 'Events');
+		$this->setNavigation($navigationEventsId, 'Articles', 'events/index', array('events/add',	'events/edit', 'events/import_eventsger'));
+		$this->setNavigation($navigationEventsId, 'Comments', 'events/comments', array('events/edit_comment'));
+		$this->setNavigation($navigationEventsId, 'Subscriptions', 'events/subscriptions', array('events/edit_subscription'));
+		$this->setNavigation($navigationEventsId, 'Categories', 'events/categories', array('events/add_category',	'events/edit_category'));
+
+		// settings navigation
+		$navigationSettingsId = $this->setNavigation(null, 'Settings');
+		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+		$this->setNavigation($navigationModulesId, 'Events', 'events/settings');
 
 		// add extra's
-		$eventsID = $this->insertExtra('events', 'block', 'Events', null, null, 'N', 5000);
+		$eventsId = $this->insertExtra('events', 'block', 'Events', null, null, 'N', 5000);
 		$this->insertExtra('events', 'widget', 'RecentComments', 'recent_comments', null, 'N', 5001);
 		$this->insertExtra('events', 'widget', 'Categories', 'categories', null, 'N', 5002);
 		$this->insertExtra('events', 'widget', 'Archive', 'archive', null, 'N', 5003);
+
+		// get search extra id
+		$searchId = (int) $this->getDB()->getVar(
+				'SELECT id FROM modules_extras
+				WHERE module = ? AND type = ? AND action = ?',
+				array('search', 'widget', 'form')
+		);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
 			// fetch current categoryId
-			$currentCategoryId = $this->getCategory($language);
+			$this->defaultCategoryId = $this->getCategory($language);
 
 			// no category exists
-			if($currentCategoryId == 0)
+			if($this->defaultCategoryId == 0)
 			{
 				// add default category
-				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
 
 				// insert default category setting
-				$this->setSetting('events', 'default_category_' . $language, $defaultCategoryId, true);
-			}
-
-			// category exists
-			else
-			{
-				// current default categoryId
-				$currentDefaultCategoryId = $this->getSetting('events', 'default_category_' . $language);
-
-				// does not exist
-				if(!$this->existsCategory($language, $currentDefaultCategoryId))
-				{
-					// insert default category setting
-					$this->setSetting('events', 'default_category_' . $language, $currentCategoryId, true);
-				}
+				$this->setSetting('events', 'default_category_' . $language, $this->defaultCategoryId, true);
 			}
 
 			// feedburner URL
@@ -121,49 +170,26 @@ class EventsInstall extends ModuleInstaller
 			$this->setSetting('events', 'rss_title_' . $language, 'RSS');
 			$this->setSetting('events', 'rss_description_' . $language, '');
 
-			// check if a page for events already exists in this language
+			// check if a page for blog already exists in this language
 			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
 												WHERE b.extra_id = ? AND p.language = ?',
-												array($eventsID, $language)))
+												array($eventsId, $language)))
 			{
-				// insert page
-				$this->insertPage(array('title' => 'Events',
-										'language' => $language),
-									null,
-									array('extra_id' => $eventsID));
+				$this->insertPage(
+					array('title' => 'Events', 'language' => $language),
+					null,
+					array('extra_id' => $eventsId, 'position' => 'main'),
+					array('extra_id' => $searchId, 'position' => 'top')
+				);
 			}
 
-			// install example data if requested
-			if($this->installExample()) $this->installExampleData($language);
+			if($this->installExample())
+			{
+				$this->installExampleData($language);
+			}
 		}
-
-		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
-	}
-
-	/**
-	 * Does the category with this id exist within this language.
-	 *
-	 * @param string $language The langauge to use.
-	 * @param int $id The id to exclude.
-	 * @return bool
-	 */
-	private function existsCategory($language, $id)
-	{
-		return (bool) $this->getDB()->getVar('SELECT COUNT(id) FROM events_categories WHERE id = ? AND language = ?', array((int) $id, (string) $language));
-	}
-
-	/**
-	 * Fetch the id of the first category in this language we come across
-	 *
-	 * @param string $language The language to use.
-	 * @return int
-	 */
-	private function getCategory($language)
-	{
-		return (int) $this->getDB()->getVar('SELECT id FROM events_categories WHERE language = ?', array((string) $language));
 	}
 
 	/**

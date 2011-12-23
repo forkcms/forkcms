@@ -219,7 +219,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="datagridHolder">
+				<div class="dataGridHolder">
 					{$drafts}
 				</div>
 			{/option:drafts}
@@ -233,7 +233,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="datagridHolder">
+				<div class="dataGridHolder">
 					{$revisions}
 				</div>
 			{/option:revisions}

@@ -15,8 +15,8 @@
 	{/option:eventsNumCommentsToModerate}
 
 	{option:eventsComments}
-	<div class="datagridHolder">
-		<table cellspacing="0" class="datagrid">
+	<div class="dataGridHolder">
+		<table class="dataGrid">
 			<tbody>
 				{iteration:eventsComments}
 				<tr class="{cycle:'odd':'even'}">

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>events</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>3.1.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			The Events module features everything you need to easily post events on your website. All you need to do is provide the content. Your visitors will be able to discuss your event and share it to friends via social networks.
+			Some of the more advanced features:
+			* scheduled publishing
+			* advanced seo tweaking per article
+			* comments with automatic spam detection
+			* subscriptions
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Tijs Verkoyen]]></name>
+			<url><![CDATA[http://www.sumocoders.be]]></url>
+		</author>
+	</authors>
+	<events>
+		<!-- @todo	fix me -->
+		<event application="backend" name="after_add"><![CDATA[Triggered when an article is added.]]></event>
+	</events>
+</module>

@@ -15,7 +15,7 @@
 	<div id="tabPublished">
 		{option:dgPublished}
 			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsPublished">
-				<div class="datagridHolder">
+				<div class="dataGridHolder">
 					<input type="hidden" name="from" value="published" />
 					{$dgPublished}
 				</div>
@@ -27,7 +27,7 @@
 	<div id="tabModeration">
 		{option:dgModeration}
 			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsModeration">
-				<div class="datagridHolder">
+				<div class="dataGridHolder">
 					<input type="hidden" name="from" value="moderation" />
 					{$dgModeration}
 				</div>
@@ -39,7 +39,7 @@
 	<div id="tabSpam">
 		{option:dgSpam}
 			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsSpam">
-				<div class="datagridHolder">
+				<div class="dataGridHolder">
 					<input type="hidden" name="from" value="spam" />
 					<div class="generalMessage infoMessage">
 							{$msgDeleteAllSpam}
