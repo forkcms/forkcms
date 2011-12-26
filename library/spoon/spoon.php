@@ -162,10 +162,8 @@ class Spoon
 		$classes['spoonhttp'] = 'http/http.php';
 		$classes['spoonicalexception'] = 'ical/exception.php';
 		$classes['spoonical'] = 'ical/ical.php';
-		$classes['spoonicalitem'] = 'ical/ical_item.php';
-		$classes['spoonicalitemevent'] = 'ical/ical_item.php';
-		$classes['spoonicalitemtodo'] = 'ical/ical_item.php';
-		$classes['spoonicalitemjournal'] = 'ical/ical_item.php';
+		$classes['spoonicalitem'] = 'ical/ical';
+		$classes['Spoonicalevent'] = 'ical/ical';
 		$classes['spoonlocale'] = 'locale/locale.php';
 		$classes['spoonlog'] = 'log/log.php';
 		$classes['spoonrestclient'] = 'rest/client.php';

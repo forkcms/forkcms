@@ -82,7 +82,7 @@
 							</div>
 							<div class="options">
 								<label for="image">{$lblImage|ucfirst}</label>
-								<img src="{$item.image_url}" width="128" /><br />
+								{option:item.image}<img src="{$item.image_url}" width="128" /><br />{/option:item.image}
 								{$fileImage} {$fileImageError} <span class=""><a href="#">{$lblDelete|ucfirst}</a></span>
 								{$hidRemoveImage}
 							</div>

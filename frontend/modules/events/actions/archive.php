@@ -48,16 +48,9 @@ class FrontendEventsArchive extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// load template
 		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// parse
 		$this->parse();
 	}
 
@@ -111,7 +104,7 @@ class FrontendEventsArchive extends FrontendBaseBlock
 		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
 		// redirect if the request page doesn't exists
-		if($requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+		if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
 
 		// populate calculated fields in pagination
 		$this->pagination['requested_page'] = $requestedPage;
@@ -130,16 +123,16 @@ class FrontendEventsArchive extends FrontendBaseBlock
 		$rssLink = FrontendModel::getModuleSetting('events', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('events', 'rss');
 
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		// add RSS-feed
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true);
 
 		// add into breadcrumb
-		$this->breadcrumb->addElement(ucfirst(FL::lbl('Archive')));
+		$this->breadcrumb->addElement(SpoonFilter::ucfirst(FL::lbl('Archive')));
 		$this->breadcrumb->addElement($this->year);
 		if($this->month !== null) $this->breadcrumb->addElement(SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true));
 
 		// set pageTitle
-		$this->header->setPageTitle(ucfirst(FL::lbl('Archive')));
+		$this->header->setPageTitle(SpoonFilter::ucfirst(FL::lbl('Archive')));
 		$this->header->setPageTitle($this->year);
 		if($this->month !== null) $this->header->setPageTitle(SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true));
 

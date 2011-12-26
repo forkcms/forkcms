@@ -87,11 +87,11 @@ class FrontendIcal extends SpoonIcal
 }
 
 /**
- * FrontendIcalItem, this is our extended version of SpoonIcalItem
+ * FrontendIcalItem, this is our extended version of SpoonIcalItemEvent
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendIcalItemEvent extends SpoonIcalItemEvent
+class FrontendIcalEvent extends SpoonIcalEvent
 {
 	/**
 	 * Initial values for UTM-parameters
@@ -124,20 +124,13 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		// set description
 		$this->setDescription($this->processLinks($description));
 
-		// set organiser
-		$siteTitle = FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
-		$from = FrontendModel::getModuleSetting('core', 'mailer_reply_to');
-		$sentBy = FrontendModel::getModuleSetting('core', 'mailer_from');
-		$this->setOrganizer($from['email'], $siteTitle, null, $sentBy['email'], FRONTEND_LANGUAGE);
-
 		// set identifier
 		$this->setUniqueIdentifier(md5($link));
 
 		// build properties
-		$properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = SpoonIcal::formatAsString($title);
-		$properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SpoonIcal::formatAsString(SITE_URL . '/favicon.ico');
-		$properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = SpoonIcal::formatAsString($this->getUrl());
-		$properties['X-GOOGLE-CALENDAR-CONTENT-TYPE'] = 'text/html';
+		$properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = $title;
+		$properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SITE_URL . '/favicon.ico';
+		$properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = $this->getUrl();
 
 		// set properties
 		$this->setXProperties($properties);
@@ -202,7 +195,10 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		// if link doesn't start with http, we prepend the URL of the site
 		if(substr($url, 0, 7) != 'http://') $url = SITE_URL . $url;
 
+		$url = FrontendModel::addURLParameters($url, $this->utm);
+		$url = htmlspecialchars_decode($url);
+
 		// call parent
-		parent::setUrl(FrontendModel::addURLParameters($url, $this->utm));
+		parent::setUrl($url);
 	}
 }

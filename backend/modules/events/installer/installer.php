@@ -205,13 +205,15 @@ class EventsInstaller extends ModuleInstaller
 		// check if eventsposts already exist in this language
 		if(!(bool) $db->getVar('SELECT COUNT(id) FROM events WHERE language = ?', array($language)))
 		{
+			$date = ((int) date('m') > 6) ? gmmktime(11, 24, 00, 06, 20, (int) date('Y') + 1) : gmmktime(11, 24, 00, 06, 20, (int) date('Y'));
+
 			// insert sample eventspost 1
 			$db->insert('events', array('id' => 1,
 											'category_id' => $this->getSetting('events', 'default_category_' . $language),
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
-											'starts_on' => gmdate('Y-06-20 11:24:00'),
+											'starts_on' => $date,
 											'title' => 'Nunc sediam est',
 											'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/events/installer/data/' . $language . '/sample1.txt'),
 											'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/events/installer/data/' . $language . '/sample1.txt'),
@@ -225,6 +227,8 @@ class EventsInstaller extends ModuleInstaller
 											'allow_subscriptions' => 'N',
 											'max_subscriptions' => null
 										));
+
+			$date = ((int) date('m') > 10) ? gmmktime(09, rand(0, 59), 00, 10, 11, (int) date('Y') + 1) : gmmktime(09, rand(0, 59), 00, 10, 11, (int) date('Y'));
 
 			// insert sample eventspost 2
 			$db->insert('events', array('id' => 2,

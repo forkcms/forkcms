@@ -69,7 +69,6 @@ class FrontendEventsIcal extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
-		// @todo	fix me
 		// get vars
 		$title = (isset($this->settings['ical_title_' . FRONTEND_LANGUAGE])) ? $this->settings['ical_title_' . FRONTEND_LANGUAGE] : FrontendModel::getModuleSetting('events', 'ical_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 		$description = (isset($this->settings['ical_description_' . FRONTEND_LANGUAGE])) ? $this->settings['ical_description_' . FRONTEND_LANGUAGE] : null;
@@ -82,19 +81,19 @@ class FrontendEventsIcal extends FrontendBaseBlock
 		$description = ($this->record['introduction'] != '') ? $this->record['introduction'] : $this->record['text'];
 
 		// create instance
-		$icalItem = new FrontendIcalItemEvent($title, $this->record['full_url'], $description);
+		$icalItem = new FrontendIcalEvent($title, $this->record['full_url'], $description);
 
 		// set dates
-		$icalItem->setDatetimeStart(gmdate('U', $this->record['starts_on']));
-		if($this->record['ends_on'] != null) $icalItem->setDatetimeEnd(gmdate('U', $this->record['ends_on']));
-		$icalItem->setDatetimeCreated($this->record['created_on']);
-		$icalItem->setDatetimeLastModified($this->record['edited_on']);
+		$icalItem->setStart(gmdate('U', $this->record['starts_on']));
+		if($this->record['ends_on'] != null) $icalItem->setEnd(gmdate('U', $this->record['ends_on']));
+		$icalItem->setCreated($this->record['created_on']);
+		$icalItem->setLastModified($this->record['edited_on']);
 
 		// set other properties
-		$icalItem->setCategories(array($this->record['category_title']));
+		$icalItem->addCategory($this->record['category_title']);
 
 		// add item
-		$ical->addItem($icalItem);
+		$ical->addEvent($icalItem);
 
 		// output
 		$ical->parse();

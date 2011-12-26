@@ -54,25 +54,12 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
-		// call the parent
 		parent::execute();
-
-		// hide contenTitle, in the template the title is wrapped with an inverse-option
 		$this->tpl->assign('hideContentTitle', true);
-
-		// load template
 		$this->loadTemplate();
-
-		// load the data
 		$this->getData();
-
-		// load form
 		$this->loadForms();
-
-		// validate form
 		$this->validateForms();
-
-		// parse
 		$this->parse();
 	}
 
@@ -84,24 +71,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		// validate incoming parameters
 		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
 
-		// load draft
-		if($this->URL->getParameter('draft', 'int') != 0)
-		{
-			// get data
-			$this->record = FrontendEventsModel::getDraft($this->URL->getParameter(1), $this->URL->getParameter('draft', 'int'));
-
-			// add no-index to meta-custom, so the draft won't get accidentally indexed
-			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
-		}
-
 		// load revision
-		elseif($this->URL->getParameter('revision', 'int') != 0)
+		if($this->URL->getParameter('revision', 'int') != 0)
 		{
 			// get data
 			$this->record = FrontendEventsModel::getRevision($this->URL->getParameter(1), $this->URL->getParameter('revision', 'int'));
 
-			// add no-index to meta-custom, so the draft won't get accidentally indexed
-			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+			// add no-index, so the draft won't get accidentally indexed
+			$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 		}
 
 		// get by URL
@@ -110,15 +87,11 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		// anything found?
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 
-		// overwrite URLs
-		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
-		$this->record['allow_subscriptions'] = ($this->record['allow_subscriptions'] == 'Y');
+		// get comments
+		$this->comments = FrontendEventsModel::getComments($this->record['id']);
 
 		// get tags
 		$this->record['tags'] = FrontendTagsModel::getForItem('events', $this->record['revision_id']);
-
-		// get comments
-		$this->comments = FrontendEventsModel::getComments($this->record['id']);
 
 		// get subscriptions
 		$this->subscriptions = FrontendEventsModel::getSubscriptions($this->record['id']);
@@ -126,7 +99,11 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		// get settings
 		$this->settings = FrontendModel::getModuleSettings('events');
 
-		// reset allow comments
+		// overwrite URLs
+		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
+		$this->record['allow_subscriptions'] = ($this->record['allow_subscriptions'] == 'Y');
+
+		// reset
 		if(!$this->settings['allow_comments']) $this->record['allow_comments'] = false;
 		if(!$this->settings['allow_subscriptions']) $this->record['allow_subscriptions'] = false;
 	}
@@ -156,7 +133,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		// create elements
 		$this->frmComment->addText('author', $author);
 		$this->frmComment->addText('email', $email);
-		$this->frmComment->addText('website', $website);
+		$this->frmComment->addText('website', $website, null);
 		$this->frmComment->addTextarea('message');
 	}
 
@@ -169,52 +146,48 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$rssLink = FrontendModel::getModuleSetting('events', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('events', 'rss');
 
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
+		// add RSS-feed
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true);
 
 		// get RSS-link for the comments
 		$rssCommentsLink = FrontendNavigation::getURLForBlock('events', 'article_comments_rss') . '/' . $this->record['url'];
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) . '" href="' . $rssCommentsLink . '" />');
+		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])), 'href' => $rssCommentsLink), true);
 
 		// build Facebook Open Graph-data
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
-			// default image
-			$image = SITE_URL . '/facebook.png';
+			// add specified image
+			$this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/events/images/source/' . $this->record['image']);
 
-			// try to get an image in the content
-			$matches = array();
-			preg_match('/<img.*src="(.*)".*\/>/iU', $this->record['text'], $matches);
+			// add images from content
+			$this->header->extractOpenGraphImages($this->record['text']);
 
-			// found an image?
-			if(isset($matches[1]))
-			{
-				$image = $matches[1];
-				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
-			}
-
-			$meta = '<!-- openGraph meta-data -->' . "\n";
-			$meta .= '<meta property="og:title" content="' . $this->record['title'] . '" />' . "\n";
-			$meta .= '<meta property="og:type" content="article" />' . "\n";
-			$meta .= '<meta property="og:image" content="' . $image . '" />' . "\n";
-			$meta .= '<meta property="og:url" content="' . SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url'] . '" />' . "\n";
-			$meta .= '<meta property="og:site_name" content="' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) . '" />' . "\n";
-			$meta .= '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids') . '" />' . "\n";
-			$meta .= '<meta property="og:description" content="' . $this->record['title'] . '" />' . "\n";
-
-			// add
-			$this->header->addMetaCustom($meta);
+			// add additional OpenGraph data
+			$this->header->addOpenGraphData('title', $this->record['title'], true);
+			$this->header->addOpenGraphData('type', 'article', true);
+			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'], true);
+			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
+			$this->header->addOpenGraphData('description', $this->record['title'], true);
 		}
+
+		// when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb
+		if(count(FrontendEventsModel::getAllCategories()) > 1) $this->breadcrumb->addElement($this->record['category_title'], FrontendNavigation::getURLForBlock('events', 'category') . '/' . $this->record['category_url']);
 
 		// add into breadcrumb
 		$this->breadcrumb->addElement($this->record['title']);
 
 		// set meta
-		$this->header->setPageTitle($this->record['title']);
-		$this->header->setMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
-		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+		$this->header->setPageTitle($this->record['meta_title'], ($this->record['meta_title_overwrite'] == 'Y'));
+		$this->header->addMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+
+		// advanced SEO-attributes
+		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
+		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
+
+		$this->header->setCanonicalUrl(FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url']);
 
 		// assign article
 		$this->tpl->assign('item', $this->record);
@@ -338,8 +311,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				// should we check if the item is spam
 				if($spamFilterEnabled)
 				{
+					// check for spam
+					$result = FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website);
+
 					// if the comment is spam alter the comment status so it will appear in the spam queue
-					if(FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website)) $comment['status'] = 'spam';
+					if($result) $comment['status'] = 'spam';
+
+					// if the status is unknown then we should moderate it manually
+					elseif($result == 'unknown') $comment['status'] = 'moderation';
 				}
 
 				// insert comment
