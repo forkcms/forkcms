@@ -17,7 +17,7 @@ Bugfixes:
 * Tags: the url for a tag that contains spaces wasn't calculated correctly, mentioned by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/244
 * Mailmotor: also replace https while linking the account
 * Formbuilder: changing the value of the submitbutton wasn't working, mentioned by phill on http://forkcms.lighthouseapp.com/projects/61890/tickets/252.
-
+* Installer: show the warning when library/external is not readable.
 
 3.1.7 (2011-12-20)
 --
