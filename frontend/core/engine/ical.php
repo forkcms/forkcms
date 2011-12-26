@@ -49,6 +49,9 @@ class FrontendIcal extends SpoonIcal
 
 		// set properties
 		$this->setXProperties($properties);
+
+		// set the filename
+		$this->setFilename(str_replace('-', '_', SpoonFilter::urlise($title)) . '.ics');
 	}
 
 	/**

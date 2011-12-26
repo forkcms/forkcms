@@ -76,6 +76,9 @@ class FrontendEventsIcal extends FrontendBaseBlock
 		// create new ical instance
 		$ical = new FrontendIcal($title, $description);
 
+		// set filename
+		$ical->setFilename(str_replace('-', '_', SpoonFilter::urlise($this->record['title'])) . '.ics');
+
 		// init vars
 		$title = $this->record['title'];
 		$description = ($this->record['introduction'] != '') ? $this->record['introduction'] : $this->record['text'];

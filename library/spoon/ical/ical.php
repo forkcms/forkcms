@@ -19,6 +19,9 @@
 
 /**
  * This class is used to handle iCal-feeds
+ * @todo	iana-properties
+ * @todo	setters
+ * @todo	getters
  *
  * @package		spoon
  * @subpackage	ical
@@ -30,7 +33,13 @@
  */
 class SpoonICal
 {
+	/**
+	 * Defines the calendar scale used for the calendar
+	 *
+	 * @var	string
+	 */
 	private $calendarScale = 'GREGORIAN';
+
 
 	/**
 	 * An array of the events
@@ -40,12 +49,51 @@ class SpoonICal
 	private $events;
 
 
+	/**
+	 * The default filename
+	 *
+	 * @var	string
+	 */
 	private $fileName = 'ical.ics';
+
+
+	/**
+	 * Defines the iCalendar object method
+	 *
+	 * @var string
+	 */
 	private $method;
+
+
+	/**
+	 * Specifies the identifier for the product that created the iCalendar object
+	 *
+	 * @var	string
+	 */
 	private $productIdentifier = '-//Spoon Ical//';
+
+
+	/**
+	 * ICAL version to use
+	 *
+	 * @var	string
+	 */
 	private $version = '2.0';
+
+
+	/**
+	 * The timezone
+	 *
+	 * @var	string
+	 */
 	private $timezone;
 
+
+	/**
+	 * The X-properties
+	 *
+	 * @var	array
+	 */
 	private $xProperties;
 
 
@@ -103,6 +151,7 @@ class SpoonICal
 		return $string;
 	}
 
+
 	/**
 	 * Formats a string for building purposes
 	 *
@@ -131,18 +180,33 @@ class SpoonICal
 	}
 
 
+	/**
+	 * Get the filename
+	 *
+	 * @return	string
+	 */
 	public function getFilename()
 	{
 		return (string) $this->fileName;
 	}
 
 
+	/**
+	 * Get the product identifier
+	 *
+	 * @return string
+	 */
 	public function getProductIdentifier()
 	{
 		return $this->productIdentifier;
 	}
 
 
+	/**
+	 * Get the version
+	 *
+	 * @return string
+	 */
 	public function getVersion()
 	{
 		return $this->version;
@@ -224,6 +288,24 @@ class SpoonICal
  	}
 }
 
+
+/**
+ * Base class for iCal-objects
+ * @todo	docs
+ * @todo	getters
+ * @todo	setters
+ * @todo	move custom properties to Event
+ * @todo	implement VTODO en VJOURNAL
+ * @todo	refactor build-methods
+ *
+ * @package		spoon
+ * @subpackage	ical
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Sam Tubbax <sam@sumocoders.be>
+ * @since		1.3.2
+ */
 class SpoonICalItem
 {
 	protected $attach;
