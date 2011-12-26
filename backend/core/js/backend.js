@@ -447,7 +447,13 @@ jsBackend.ckeditor =
 			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
 
 			// hide the toolbar
-//			if($('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':visible')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').hide(); // @todo: fix properly
+			$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
+			$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
+			if($toolbox.is(':visible'))
+			{
+				$toolbox.hide();
+				$collapser.addClass('cke_toolbox_collapser_min');
+			}
 		}
 
 		// check the content
@@ -459,8 +465,14 @@ jsBackend.ckeditor =
 		// hide the click to edit
 		$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
 
-		// show the toolbar, I know the little icon isn't correct.
-//		if(evt.editor.config.toggleToolbar && $('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':hidden')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').show(); // @todo: fix properly
+		// show the toolbar
+		$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
+		$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
+		if($toolbox.is(':hidden'))
+		{
+			$toolbox.show();
+			$collapser.removeClass('cke_toolbox_collapser_min');
+		}
 	},
 
 	onReady: function(evt)
