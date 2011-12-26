@@ -7534,8 +7534,8 @@
         <translation language="es"><![CDATA["%1$s" guardado como borrador.]]></translation>
       </item>
       <item type="message" name="EditorSelectInternalPage">
-        <translation language="nl"><![CDATA[Selecteer interne pagina.]]></translation>
-        <translation language="en"><![CDATA[Select internal page.]]></translation>
+        <translation language="nl"><![CDATA[Selecteer interne pagina]]></translation>
+        <translation language="en"><![CDATA[Select internal page]]></translation>
       </item>
       <item type="message" name="TR">
         <translation language="tr"><![CDATA[Türkçe]]></translation>
