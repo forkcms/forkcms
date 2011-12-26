@@ -206,7 +206,8 @@ jsBackend.ckeditor =
 		forcePasteAsPlainText: true,
 
 		// buttons
-		toolbar_Full: [
+		toolbar_Full:
+		[
 			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
 			{ name: 'clipboard', items: ['Undo', 'Redo']},
 			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
@@ -218,7 +219,8 @@ jsBackend.ckeditor =
 		],
 
 		// buttons specific for the newsletter
-		toolbar_Newsletter: [
+		toolbar_Newsletter:
+		[
    			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
    			{ name: 'clipboard', items: ['Undo', 'Redo']},
    			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
@@ -274,7 +276,8 @@ jsBackend.ckeditor =
 		var editorConfig = $.extend({}, jsBackend.ckeditor.defaultConfig);
 
 		// specific config for the newsletter
-		var newsletterConfig = $.extend({}, jsBackend.ckeditor.defaultConfig, {
+		var newsletterConfig = $.extend({}, jsBackend.ckeditor.defaultConfig,
+		{
 			showClickToEdit: false,
 			toolbar: 'Newsletter',
 			toolbarStartupExpanded: true,
@@ -298,7 +301,8 @@ jsBackend.ckeditor =
 		if(!$(element).parent('div, p').hasClass('optionsRTE')) $(element).parent('div, p').addClass('optionsRTE');
 
 		// add the CKFinder
-		CKFinder.setupCKEditor(null, {
+		CKFinder.setupCKEditor(null,
+		{
 			basePath: '/backend/core/js/ckfinder',
 			width: 800
 		});
@@ -378,24 +382,24 @@ jsBackend.ckeditor =
 
 			// add a new element
 			infoTab.add(
-				{
-					type: 'vbox',
-					id: 'localPageOptions',
-					children: [
+			{
+				type: 'vbox',
+				id: 'localPageOptions',
+				children:
+				[
+				 	{
+						type: 'select',
+						label: '{$msgEditorSelectInternalPage}',
+						id: 'localPage',
+						title: '{$msgEditorSelectInternalPage}',
+						items: linkList,
+						onChange: function(evt)
 						{
-							type: 'select',
-							label: '{$msgEditorSelectInternalPage}',
-							id: 'localPage',
-							title: '{$msgEditorSelectInternalPage}',
-							items: linkList,
-							onChange: function(evt)
-							{
-								CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
-							}
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
 						}
-					]
-				}
-			);
+				 	}
+			 	]
+			});
 		}
 
 		// specific stuff for the table-dialog

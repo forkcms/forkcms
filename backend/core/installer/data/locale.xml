@@ -7533,6 +7533,10 @@
         <translation language="fr"><![CDATA[%1$s sauvegardé en tant que brouillon.]]></translation>
         <translation language="es"><![CDATA["%1$s" guardado como borrador.]]></translation>
       </item>
+      <item type="message" name="EditorSelectInternalPage">
+        <translation language="nl"><![CDATA[Selecteer interne pagina.]]></translation>
+        <translation language="en"><![CDATA[Select internal page.]]></translation>
+      </item>
       <item type="message" name="TR">
         <translation language="tr"><![CDATA[Türkçe]]></translation>
         <translation language="pl"><![CDATA[Turecki]]></translation>

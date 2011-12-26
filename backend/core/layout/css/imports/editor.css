@@ -77,3 +77,5 @@
 	}
 
 .editorWarning { display: inline-block; margin-top: 3px; }
+	
+.cke_dialog { z-index: 999999999999; }

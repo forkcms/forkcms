@@ -81,10 +81,11 @@ background-position:0 -1088px;
 background-repeat:no-repeat;
 cursor:se-resize;
 display:block;
-float:right;
 height:12px;
-margin-top:11px;
 width:12px;
+position:absolute;
+bottom:0;
+right:0;
 }
 
 .cke_skin_chris .cke_resizer_horizontal,.cke_skin_chris .cke_rtl .cke_resizer_horizontal {
