@@ -33,7 +33,7 @@
 		<event application="backend" name="after_edit_group"><![CDATA[Triggered when a group is edited.]]></event>
 		<event application="backend" name="after_delete_groups"><![CDATA[Triggered when groups are deleted.]]></event>
 		<event application="backend" name="after_import_groups"><![CDATA[Triggered when groups are imported.]]></event>
-		<event application="backend" name="after_add_mailing_step1"><![CDATA[Triggered when teh mailing is added in step 1.]]></event>
+		<event application="backend" name="after_add_mailing_step1"><![CDATA[Triggered when the mailing is added in step 1.]]></event>
 		<event application="backend" name="after_copy_mailing"><![CDATA[Triggered when the mailing is copied.]]></event>
 		<event application="backend" name="after_delete_mailings"><![CDATA[Triggered when the mailing is deleted.]]></event>
 		<event application="backend" name="after_edit_mailing"><![CDATA[Triggered when the mailing is edited.]]></event>

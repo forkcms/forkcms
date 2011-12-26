@@ -32,7 +32,7 @@
 		<event application="backend" name="after_reactivate"><![CDATA[Triggered when a profile is reactivated.]]></event>
 		<event application="backend" name="after_profile_add_to_group"><![CDATA[Triggered when a profile is added to a group.]]></event>
 		<event application="backend" name="after_profile_delete_from_group"><![CDATA[Triggered when a profile is deleted from a group.]]></event>
-		<event application="backend" name="after_profile_edit_groups"><![CDATA[Triggered when teh groups for a profile are saved.]]></event>
+		<event application="backend" name="after_profile_edit_groups"><![CDATA[Triggered when the groups for a profile are saved.]]></event>
 		<event application="backend" name="after_delete_profile"><![CDATA[Triggered when a profile is deleted.]]></event>
 		<event application="backend" name="after_add_group"><![CDATA[Triggered when a group is added.]]></event>
 		<event application="backend" name="after_delete_group"><![CDATA[Triggered when a group is deleted.]]></event>
