@@ -77,7 +77,7 @@
 					{iteration:comments}
 						{* Do not alter the id! It is used as an anchor *}
 						<div id="comment-{$comments.id}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
-							<meta itemprop="discusses" content="{$item.title}" />  
+							<meta itemprop="discusses" content="{$item.title}" />
 							<div class="imageHolder">
 								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
 									<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
@@ -111,7 +111,7 @@
 					{option:commentIsInModeration}<div class="message warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
 					{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
 					{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
-					{form:comment}
+					{form:commentsForm}
 						<div class="alignBlocks">
 							<p {option:txtAuthorError}class="errorArea"{/option:txtAuthorError}>
 								<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
@@ -133,7 +133,7 @@
 						<p>
 							<input class="inputSubmit" type="submit" name="comment" value="{$msgComment|ucfirst}" />
 						</p>
-					{/form:comment}
+					{/form:commentForm}
 				</div>
 			</div>
 		</section>

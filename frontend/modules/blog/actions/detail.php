@@ -107,7 +107,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new FrontendForm('comment');
+		$this->frm = new FrontendForm('commentsForm');
 		$this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
 		// init vars
