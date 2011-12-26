@@ -19,6 +19,7 @@ Bugfixes:
 * Formbuilder: changing the value of the submitbutton wasn't working, mentioned by phill on http://forkcms.lighthouseapp.com/projects/61890/tickets/252.
 * Installer: show the warning when library/external is not readable.
 
+
 3.1.7 (2011-12-20)
 --
 Improvements:
