@@ -190,7 +190,8 @@ jsBackend.balloons =
  */
 jsBackend.ckeditor =
 {
-	defaultConfig: {
+	defaultConfig:
+	{
 		customConfig: '',
 
 		// layout configuration

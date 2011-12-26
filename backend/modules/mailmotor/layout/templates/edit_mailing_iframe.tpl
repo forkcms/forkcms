@@ -12,6 +12,7 @@
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.js"></script>
+	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.dialog.patch.js"></script>
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.tools.js"></script>
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.backend.js"></script>
