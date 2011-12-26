@@ -138,6 +138,8 @@ class EventsInstaller extends ModuleInstaller
 		$this->insertExtra('events', 'widget', 'RecentComments', 'recent_comments', null, 'N', 5001);
 		$this->insertExtra('events', 'widget', 'Categories', 'categories', null, 'N', 5002);
 		$this->insertExtra('events', 'widget', 'Archive', 'archive', null, 'N', 5003);
+		$this->insertExtra('events', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 5004);
+		$this->insertExtra('events', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 5005);
 
 		// get search extra id
 		$searchId = (int) $this->getDB()->getVar(
