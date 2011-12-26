@@ -171,15 +171,14 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 						// loop new templates
 						foreach($newTemplates as $newTemplateId => $newTemplate)
 						{
-							// check if we have a matching template
-							if($oldTemplate['path'] == $newTemplate['path'])
-							{
-								// switch template
-								BackendPagesModel::updatePagesTemplates($oldTemplateId, $newTemplateId);
+							// if the templates don't match we can skip this one
+							if($oldTemplate['path'] != $newTemplate['path']) continue;
 
-								// break loop
-								continue 2;
-							}
+							// switch template
+							BackendPagesModel::updatePagesTemplates($oldTemplateId, $newTemplateId);
+
+							// break loop
+							continue 2;
 						}
 
 						// getting here meant we found no matching template for the new theme; pick first theme's template as default

@@ -22,6 +22,13 @@
 class FrontendTemplate extends SpoonTemplate
 {
 	/**
+	 * Should we add slashes to each value?
+	 *
+	 * @var bool
+	 */
+	private $addSlashes = false;
+
+	/**
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @param bool[optional] $addToReference Should the instance be added into the reference.
@@ -305,17 +312,31 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
+		$actions = FrontendLanguage::getActions();
+		$errors = FrontendLanguage::getErrors();
+		$labels = FrontendLanguage::getLabels();
+		$messages = FrontendLanguage::getMessages();
+
+		// execute addslashes on the values for the locale, will be used in JS
+		if($this->addSlashes)
+		{
+			foreach($actions['core'] as &$value) $value = addslashes($value);
+			foreach($errors['core'] as &$value) $value = addslashes($value);
+			foreach($labels['core'] as &$value) $value = addslashes($value);
+			foreach($messages['core'] as &$value) $value = addslashes($value);
+		}
+
 		// assign actions
-		$this->assignArray(FrontendLanguage::getActions(), 'act');
+		$this->assignArray($actions, 'act');
 
 		// assign errors
-		$this->assignArray(FrontendLanguage::getErrors(), 'err');
+		$this->assignArray($errors, 'err');
 
 		// assign labels
-		$this->assignArray(FrontendLanguage::getLabels(), 'lbl');
+		$this->assignArray($labels, 'lbl');
 
 		// assign messages
-		$this->assignArray(FrontendLanguage::getMessages(), 'msg');
+		$this->assignArray($messages, 'msg');
 	}
 
 	/**
@@ -354,6 +375,16 @@ class FrontendTemplate extends SpoonTemplate
 
 		// assign current timestamp
 		$this->assign('timestamp', time());
+	}
+
+	/**
+	 * Should we execute addSlashed on the locale?
+	 *
+	 * @param bool[optional] $on Enable addslashes.
+	 */
+	public function setAddSlashes($on = true)
+	{
+		$this->addSlashes = (bool) $on;
 	}
 }
 

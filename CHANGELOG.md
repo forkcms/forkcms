@@ -7,6 +7,16 @@ Improvements:
 * All: fixed a lot of <label>-tags, which improves the accessibility.
 * All: added some hidden labels for formelements that doesn't have a <label>-tag linked, which improves the accessibility.
 * Authentication: don't mention which field is required seperatly.
+* Core: no more need to use the addslashes-modifier in JS-files, it will be handled by Fork. Introduced while fixing the bug mentioned by Tristan Charbonnier on http://forkcms.lighthouseapp.com/projects/61890/tickets/249.
+
+Bugfixes:
+
+* Core: confirmmessages weren't working anymore, as Samuel Debruyn mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/251
+* Extensions: when a templates was edited and an form-error was shown the added blocks weren't shown correctly again.
+* Tags: related widget wasn't using the current language, patch provided by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/243
+* Tags: the url for a tag that contains spaces wasn't calculated correctly, mentioned by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/244
+* Mailmotor: also replace https while linking the account
+* Formbuilder: changing the value of the submitbutton wasn't working, mentioned by phill on http://forkcms.lighthouseapp.com/projects/61890/tickets/252.
 
 
 3.1.7 (2011-12-20)
