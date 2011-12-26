@@ -305,10 +305,6 @@ class BackendLanguage
 			// settings cookies isn't allowed, because this isn't a real problem we ignore the exception
 		}
 
-		// store in session for TinyMCE
-		SpoonSession::set('tiny_mce_language', $language);
-		SpoonSession::set('interface_language', $language);
-
 		// init vars
 		$err = array();
 		$lbl = array();
