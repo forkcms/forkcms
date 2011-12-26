@@ -119,7 +119,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$website = (SpoonCookie::exists('comment_website')) ? SpoonCookie::get('comment_website') : 'http://';
 
 		// create from
-		$this->frmSubscription = new FrontendForm('subscription');
+		$this->frmSubscription = new FrontendForm('subscriptionsForm');
 		$this->frmSubscription->setAction($this->frmSubscription->getAction() . '#' . FL::act('Subscription'));
 
 		// create elements
@@ -127,7 +127,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->frmSubscription->addText('subscription_email', $email);
 
 		// create form
-		$this->frmComment = new FrontendForm('comment');
+		$this->frmComment = new FrontendForm('commentsForm');
 		$this->frmComment->setAction($this->frmComment->getAction() . '#' . FL::act('Comment'));
 
 		// create elements

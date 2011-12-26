@@ -23,7 +23,7 @@
 						{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
 
 						{* Written on *}
-						{$lblOn} <time datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}" pubdate>{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
+						{$lblOn} <time datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 
 						{* Category*}
 						{$lblIn} {$lblThe} {$lblCategory} <a title="{$item.category_title}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
@@ -116,7 +116,7 @@
 
 					{option:subscriptionsComplete}<div class="message notice"><p>{$msgEventsSubscriptionsComplete}</p></div>{/option:subscriptionsComplete}
 					{option:!subscriptionsComplete}
-						{form:subscription}
+						{form:subscriptionsForm}
 							<div class="alignBlocks">
 								<p {option:txtSubscriptionAuthorError}class="errorArea"{/option:txtSubscriptionAuthorError}>
 									<label for="subscriptionAuthor">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
@@ -130,7 +130,7 @@
 							<p>
 								<input class="inputSubmit" type="submit" name="subscription" value="{$lblSubscribe|ucfirst}" />
 							</p>
-						{/form:subscription}
+						{/form:subscriptionsForm}
 					{/option:!subscriptionsComplete}
 				</div>
 			</div>
@@ -147,7 +147,7 @@
 					{iteration:comments}
 						{* Do not alter the id! It is used as an anchor *}
 						<div id="comment-{$comments.id}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
-							<meta itemprop="discusses" content="{$item.title}" />  
+							<meta itemprop="discusses" content="{$item.title}" />
 							<div class="imageHolder">
 								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
 									<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
@@ -181,7 +181,7 @@
 					{option:commentIsInModeration}<div class="message warning"><p>{$msgEventsCommentInModeration}</p></div>{/option:commentIsInModeration}
 					{option:commentIsSpam}<div class="message error"><p>{$msgEventsCommentIsSpam}</p></div>{/option:commentIsSpam}
 					{option:commentIsAdded}<div class="message success"><p>{$msgEventsCommentIsAdded}</p></div>{/option:commentIsAdded}
-					{form:comment}
+					{form:commentsForm}
 						<div class="alignBlocks">
 							<p {option:txtAuthorError}class="errorArea"{/option:txtAuthorError}>
 								<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
@@ -203,7 +203,7 @@
 						<p>
 							<input class="inputSubmit" type="submit" name="comment" value="{$msgComment|ucfirst}" />
 						</p>
-					{/form:comment}
+					{/form:commentsForm}
 				</div>
 			</div>
 		</section>
