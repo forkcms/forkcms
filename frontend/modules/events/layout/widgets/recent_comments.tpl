@@ -4,23 +4,23 @@
 *}
 
 {option:widgetEventsRecentComments}
-	<div id="eventsRecentCommentsWidget" class="mod">
+	<section id="eventsRecentCommentsWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblRecentComments|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
 					{iteration:widgetEventsRecentComments}
-					<li>
-						{option:widgetEventsRecentComments.website}<a href="{$widgetEventsRecentComments.website}" rel="nofollow">{/option:widgetEventsRecentComments.website}
-							{$widgetEventsRecentComments.author}
-						{option:widgetEventsRecentComments.website}</a>{/option:widgetEventsRecentComments.website}
-						{$lblCommentedOn} <a href="{$widgetEventsRecentComments.full_url}">{$widgetEventsRecentComments.event_title}</a>
-					</li>
+						<li>
+							{option:widgetEventsRecentComments.website}<a href="{$widgetEventsRecentComments.website}" rel="nofollow">{/option:widgetEventsRecentComments.website}
+								{$widgetEventsRecentComments.author}
+							{option:widgetEventsRecentComments.website}</a>{/option:widgetEventsRecentComments.website}
+							{$lblCommentedOn} <a href="{$widgetEventsRecentComments.full_url}">{$widgetEventsRecentComments.event_title}</a>
+						</li>
 					{/iteration:widgetEventsRecentComments}
 				</ul>
 			</div>
 		</div>
-	</div>
+	</section>
 {/option:widgetEventsRecentComments}

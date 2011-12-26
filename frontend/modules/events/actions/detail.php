@@ -123,8 +123,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->frmSubscription->setAction($this->frmSubscription->getAction() . '#' . FL::act('Subscription'));
 
 		// create elements
-		$this->frmSubscription->addText('author', $author);
-		$this->frmSubscription->addText('email', $email);
+		$this->frmSubscription->addText('subscription_author', $author);
+		$this->frmSubscription->addText('subscription_email', $email);
 
 		// create form
 		$this->frmComment = new FrontendForm('comment');
@@ -407,8 +407,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 			}
 
 			// validate required fields
-			$this->frmSubscription->getField('author')->isFilled(FL::err('AuthorIsRequired'));
-			$this->frmSubscription->getField('email')->isEmail(FL::err('EmailIsRequired'));
+			$this->frmSubscription->getField('subscription_author')->isFilled(FL::err('AuthorIsRequired'));
+			$this->frmSubscription->getField('subscription_email')->isEmail(FL::err('EmailIsRequired'));
 
 			// no errors?
 			if($this->frmSubscription->isCorrect())
@@ -418,8 +418,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$moderationEnabled = (isset($this->settings['moderation_subscriptions']) && $this->settings['moderation_subscriptions']);
 
 				// reformat data
-				$author = $this->frmSubscription->getField('author')->getValue();
-				$email = $this->frmSubscription->getField('email')->getValue();
+				$author = $this->frmSubscription->getField('subscription_author')->getValue();
+				$email = $this->frmSubscription->getField('subscription_email')->getValue();
 
 				// build array
 				$subscription['event_id'] = $this->record['id'];

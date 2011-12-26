@@ -7,9 +7,9 @@
 	{option:widgetEventsArchive}
 		<div id="eventsArchiveWidget" class="mod">
 			<div class="inner">
-				<div class="hd">
+				<header class="hd">
 					<h3>{$lblArchive|ucfirst}</h3>
-				</div>
+				</header>
 				<div class="bd">
 					<ul>
 						{iteration:widgetEventsArchive}

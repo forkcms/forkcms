@@ -2,7 +2,7 @@
 	variables that are available:
 	- {$item}: contains data about the post
 	- {$comments}: contains an array with the comments for the post, each element contains data about the comment.
-	- {$commentsCount}: contains a variable with the number of comments for this blog post.
+	- {$commentsCount}: contains a variable with the number of comments for this item post.
 	- {$navigation}: contains an array with data for previous and next post
 *}
 <div id="blogDetail">

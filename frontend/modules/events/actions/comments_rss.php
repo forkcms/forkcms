@@ -51,7 +51,7 @@ class FrontendEventsCommentsRss extends FrontendBaseBlock
 	private function parse()
 	{
 		// get vars
-		$title = ucfirst(FL::msg('EventsAllComments'));
+		$title = SpoonFilter::ucfirst(FL::msg('EventsAllComments'));
 		$link = SITE_URL . FrontendNavigation::getURLForBlock('events');
 		$detailLink = SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail');
 		$description = null;

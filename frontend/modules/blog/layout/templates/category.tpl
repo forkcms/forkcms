@@ -1,7 +1,7 @@
 {*
 	variables that are available:
 	- {$category}: contains data about the category
-	- {$items}: contains an array with all posts, each element contains data about the post
+	- {$items}: contains an array with all items, each element contains data about the item
 *}
 
 {option:items}
@@ -10,7 +10,11 @@
 			<article class="mod article">
 				<div class="inner">
 					<header class="hd">
-						<h3><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h3>
+						<h3>
+							<a href="{$items.full_url}" title="{$items.title}">
+								{$items.title}
+							</a>
+						</h3>
 						<ul>
 							<li>
 								{* Written by *}
@@ -49,5 +53,5 @@
 			</article>
 		{/iteration:items}
 	</section>
-	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
+	{include:core/layout/templates/pagination.tpl}
 {/option:items}

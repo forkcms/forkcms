@@ -4,22 +4,22 @@
 *}
 
 {option:widgetEventsCategories}
-	<div id="eventsCategoriesWidget" class="mod">
+	<section id="eventsCategoriesWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblCategories|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
 					{iteration:widgetEventsCategories}
 						<li>
 							<a href="{$widgetEventsCategories.url}">
-								{$widgetEventsCategories.label} ({$widgetEventsCategories.total})
+								{$widgetEventsCategories.label}&nbsp;({$widgetEventsCategories.total})
 							</a>
 						</li>
 					{/iteration:widgetEventsCategories}
 				</ul>
 			</div>
 		</div>
-	</div>
+	</section>
 {/option:widgetEventsCategories}

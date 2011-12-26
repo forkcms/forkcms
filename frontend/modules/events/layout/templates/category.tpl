@@ -4,63 +4,55 @@
 	- {$items}: contains an array with all items, each element contains data about the item
 *}
 
-{option:!items}
-	<div id="eventsCategory">
-		<div class="mod">
-			<div class="inner">
-				<div class="hd">
-					{$category|dump}
-				</div>
-				<div class="bd">
-					<p>{$msgEventsNoItems}</p>
-				</div>
-			</div>
-		</div>
-	</div>
-{/option:!items}
 {option:items}
-	<div id="eventsIndex">
-		<h1>
-			{$category.label}
-		</h1>
-
+	<section id="eventsIndex">
 		{iteration:items}
-			<div class="mod article">
+			<article class="mod article">
 				<div class="inner">
-					<div class="hd">
-						<h2>
+					<header class="hd">
+						<h3>
 							<a href="{$items.full_url}" title="{$items.title}">
 								{$items.starts_on|date:{$dateFormatShort}:{$LANGUAGE}|ucfirst} -
 								{$items.title}
 							</a>
-						</h2>
-						<p>
-							{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgEventsNoComments|ucfirst}</a>{/option:!items.comments}
-							{option:items.comments}
-								{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgEventsNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
-								{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgEventsOneComment}</a>{/option:!items.comments_multiple}
-							{/option:items.comments}
-						</p>
-					</div>
+						</h3>
+						<ul>
+							<li>
+								{* Written by *}
+								{$msgWrittenBy|ucfirst|sprintf:{$items.user_id|usersetting:'nickname'}}
+
+								{* Written on *}
+								{$lblOn} {$items.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}
+
+								{* Category*}
+								{$lblIn} {$lblThe} {$lblCategory} <a href="{$items.category_full_url}" title="{$items.category_title}">{$items.category_title}</a>{option:!items.tags}.{/option:!items.tags}
+
+								{* Tags*}
+								{option:items.tags}
+									{$lblWith} {$lblThe} {$lblTags}
+									{iteration:items.tags}
+										<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.name}">{$items.tags.name}</a>{option:!items.tags.last}, {/option:!items.tags.last}{option:items.tags.last}.{/option:items.tags.last}
+									{/iteration:items.tags}
+								{/option:items.tags}
+							</li>
+							<li>
+								{* Comments *}
+								{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgEventsNoComments|ucfirst}</a>{/option:!items.comments}
+								{option:items.comments}
+									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgEventsNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgEventsOneComment}</a>{/option:!items.comments_multiple}
+								{/option:items.comments}
+							</li>
+						</ul>
+					</header>
 					<div class="bd content">
+						{option:items.image}<img src="{$FRONTEND_FILES_URL}/events/images/source/{$items.image}" alt="{$items.title}" />{/option:items.image}
 						{option:!items.introduction}{$items.text}{/option:!items.introduction}
 						{option:items.introduction}{$items.introduction}{/option:items.introduction}
 					</div>
-					<div class="ft">
-						<p>
-							{$msgWrittenBy|ucfirst|sprintf:{$items.user_id|usersetting:'nickname'}}
-							{$lblInTheCategory}: <a href="{$items.category_full_url}" title="{$items.category_title}">{$items.category_title}</a>.
-							{option:items.tags}
-								{$lblTags|ucfirst}:
-								{iteration:items.tags}
-									<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.name}">{$items.tags.name}</a>{option:!items.tags.last}, {/option:!items.tags.last}{option:items.tags.last}.{/option:items.tags.last}
-								{/iteration:items.tags}
-							{/option:items.tags}
-						</p>
-					</div>
 				</div>
-			</div>
+			</article>
 		{/iteration:items}
-	</div>
-	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
+	</section>
+	{include:core/layout/templates/pagination.tpl}
 {/option:items}
