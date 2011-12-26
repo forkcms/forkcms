@@ -324,10 +324,13 @@ jsBackend.ckeditor =
 			var warnings = [];
 
 			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt|addslashes}'); }
+			if(content.match(/<img(.*)alt=""(.*)/im)) warnings.push('{$msgEditorImagesWithoutAlt|addslashes}');
 
 			// invalid links?
-			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks|addslashes}'); }
+			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push('{$msgEditorInvalidLinks|addslashes}');
+
+			// replace absolute urls by relative
+			content = content.replace(/href=("|'){$SITE_PROTOCOL}:\/\/{$SITE_DOMAIN}(.*)\1/, 'href="$2"');
 
 			// remove the previous warnings
 			$('#' + editor.element.getId() + '_warnings').remove();
@@ -336,8 +339,11 @@ jsBackend.ckeditor =
 			if(warnings.length > 0)
 			{
 				// append the warnings after the editor
-				$('#cke_' + editor.element.getId()).after('<span id="'+ editor.element.getId() + '_warnings' +'" class="infoMessage editorWarning">'+ warnings.join(' ') + '</span>');
+				$('#cke_' + editor.element.getId()).after('<span id=" '+ editor.element.getId() + '_warnings" class="infoMessage editorWarning">' + warnings.join(' ') + '</span>');
 			}
+
+			// replace with cleaned content
+			editor.setData(content);
 		}
 	},
 
@@ -396,7 +402,8 @@ jsBackend.ckeditor =
 						items: linkList,
 						onChange: function(evt)
 						{
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('{$SITE_PROTOCOL}://');
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue('{$SITE_DOMAIN}/' + evt.data.value);
 						}
 				 	}
 			 	]
@@ -440,7 +447,7 @@ jsBackend.ckeditor =
 			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
 
 			// hide the toolbar
-			if($('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':visible')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').hide();
+//			if($('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':visible')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').hide(); // @todo: fix properly
 		}
 
 		// check the content
@@ -453,7 +460,7 @@ jsBackend.ckeditor =
 		$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
 
 		// show the toolbar, I know the little icon isn't correct.
-		if(evt.editor.config.toggleToolbar && $('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':hidden')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').show();
+//		if(evt.editor.config.toggleToolbar && $('#cke_top_' + evt.editor.name + ' .cke_toolbox').is(':hidden')) $('#cke_top_' + evt.editor.name + ' .cke_toolbox').show(); // @todo: fix properly
 	},
 
 	onReady: function(evt)
