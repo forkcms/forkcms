@@ -25,22 +25,11 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 		// does the item exists
 		if($this->id !== null && BackendEventsModel::existsCategory($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the datagrid
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -71,6 +60,9 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+		// set callback for generating a unique URL
+		$this->meta->setUrlCallback('BackendEventsModel', 'getURLForCategory', array($this->record['id']));
 	}
 
 	/**
@@ -78,10 +70,7 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
-
-		// assign
 		$this->tpl->assign('item', $this->record);
 
 		// get default category id
@@ -102,12 +91,8 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique URL
-			$this->meta->setUrlCallback('BackendEventsModel', 'getURLForCategory', array($this->record['id']));
-
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -117,7 +102,6 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 			// validate meta
 			$this->meta->validate();
 
-			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
@@ -128,6 +112,9 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 				// upate the item
 				BackendEventsModel::updateCategory($item);
 
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
+				
 				// it isn't the default category but it should be.
 				if(BackendModel::getModuleSetting('events', 'default_category_' . BL::getWorkingLanguage(), null) != $item['id'] && $this->frm->getField('is_default')->getChecked())
 				{

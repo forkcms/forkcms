@@ -167,7 +167,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 			// add additional OpenGraph data
 			$this->header->addOpenGraphData('title', $this->record['title'], true);
 			$this->header->addOpenGraphData('type', 'article', true);
-			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'], true);
+			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url'], true);
 			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
 			$this->header->addOpenGraphData('description', $this->record['title'], true);
 		}
@@ -187,7 +187,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
 		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
-		$this->header->setCanonicalUrl(FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url']);
+		$this->header->setCanonicalUrl(FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url']);
 
 		// assign article
 		$this->tpl->assign('item', $this->record);
@@ -324,6 +324,9 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				// insert comment
 				$comment['id'] = FrontendEventsModel::insertComment($comment);
 
+				// trigger event
+				FrontendModel::triggerEvent('events', 'after_add_comment', array('comment' => $comment));
+
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)
 				{
@@ -449,6 +452,9 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 				// insert subscription
 				$subscription['id'] = FrontendEventsModel::insertSubscription($subscription);
+
+				// trigger event
+				FrontendModel::triggerEvent('events', 'after_add_subscription', array('subscription' => $subscription));
 
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)

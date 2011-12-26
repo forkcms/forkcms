@@ -6,6 +6,10 @@
 		<translation language="nl"><![CDATA[Evenementen RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
 		<translation language="en"><![CDATA[Events RSS description is not yet provided. <a href="%1$s">Configure</a>]]></translation>
 	  </item>
+	  <item type="error" name="NoSubscriptionSelected">
+		<translation language="nl"><![CDATA[Er zijn geen inschrijvingen geselecteerd.]]></translation>
+		<translation language="en"><![CDATA[No subscriptions selected.]]></translation>
+	  </item>
 	  <item type="label" name="Add">
 		<translation language="nl"><![CDATA[evenement toevoegen]]></translation>
 		<translation language="en"><![CDATA[add event]]></translation>
@@ -13,6 +17,10 @@
 	  <item type="label" name="AllowSubscriptions">
 		<translation language="nl"><![CDATA[inschrijvingen toelaten]]></translation>
 		<translation language="en"><![CDATA[allow subscriptions]]></translation>
+	  </item>
+	  <item type="label" name="Subscription">
+		<translation language="nl"><![CDATA[inschrijving]]></translation>
+		<translation language="en"><![CDATA[subscription]]></translation>
 	  </item>
 	  <item type="message" name="Added">
 		<translation language="nl"><![CDATA[Het evenement "%1$s" werd toegevoegd.]]></translation>
@@ -46,6 +54,10 @@
 		<translation language="nl"><![CDATA[bewerk reactie op "%1$s"]]></translation>
 		<translation language="en"><![CDATA[edit comment on "%1$s"]]></translation>
 	  </item>
+	  <item type="message" name="EditSubscriptionFor">
+		<translation language="nl"><![CDATA[bewerk inschrijving voor "%1$s"]]></translation>
+		<translation language="en"><![CDATA[edit subscription for "%1$s"]]></translation>
+	  </item>
 	  <item type="message" name="Edited">
 		<translation language="nl"><![CDATA[Het evenement "%1$s" werd opgeslagen.]]></translation>
 		<translation language="en"><![CDATA[The event "%1$s" was saved.]]></translation>
@@ -53,6 +65,14 @@
 	  <item type="message" name="EditedComment">
 		<translation language="nl"><![CDATA[De reactie werd opgeslagen.]]></translation>
 		<translation language="en"><![CDATA[The comment was saved.]]></translation>
+	  </item>
+	  <item type="message" name="EditedSubscription">
+		<translation language="nl"><![CDATA[De inschrijving werd opgeslagen.]]></translation>
+		<translation language="en"><![CDATA[The subscription was saved.]]></translation>
+	  </item>
+	  <item type="message" name="FilterSubscribtionsForSpam">
+		<translation language="nl"><![CDATA[Filter inschrijving op spam]]></translation>
+		<translation language="en"><![CDATA[Filter subscriptions for spam]]></translation>
 	  </item>
 	  <item type="message" name="FollowAllCommentsInRSS">
 		<translation language="nl"><![CDATA[Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
@@ -73,6 +93,10 @@
 	  <item type="message" name="HelpSpamFilter">
 		<translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
 		<translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam comments.]]></translation>
+	  </item>
+	  <item type="label" name="InThePicture">
+		<translation language="nl"><![CDATA[in de kijker]]></translation>
+		<translation language="en"><![CDATA[in the picture]]></translation>
 	  </item>
 	  <item type="message" name="MakeDefaultCategory">
 		<translation language="nl"><![CDATA[Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).]]></translation>
@@ -220,9 +244,17 @@
 		<translation language="nl"><![CDATA[Al %1$s reacties]]></translation>
 		<translation language="en"><![CDATA[%1$s comments]]></translation>
 	  </item>
+	  <item type="message" name="EventsNumberOfSubscriptions">
+		<translation language="nl"><![CDATA[Al %1$s inschrijvingen]]></translation>
+		<translation language="en"><![CDATA[%1$s subscriptions]]></translation>
+	  </item>
 	  <item type="message" name="EventsOneComment">
 		<translation language="nl"><![CDATA[Al 1 reactie]]></translation>
 		<translation language="en"><![CDATA[1 comment already]]></translation>
+	  </item>
+	  <item type="message" name="EventsOneSubscription">
+		<translation language="nl"><![CDATA[Al 1 inschrijving]]></translation>
+		<translation language="en"><![CDATA[1 subscription already]]></translation>
 	  </item>
 	  <item type="message" name="EventsCommentIsAdded">
 		<translation language="nl"><![CDATA[Je reactie werd toegevoegd.]]></translation>
@@ -263,6 +295,10 @@
 	  <item type="message" name="EventsSubscriptionIsSpam">
 		<translation language="nl"><![CDATA[Je inschrijving werd gemarkeerd als spam.]]></translation>
 		<translation language="en"><![CDATA[Your subscription was marked as spam.]]></translation>
+	  </item>
+	  <item type="message" name="EventsSubscriptionsComplete">
+		<translation language="nl"><![CDATA[Er zijn geen plaatsen meer beschikbaar.]]></translation>
+		<translation language="en"><![CDATA[This event is complete.]]></translation>
 	  </item>
 	  <item type="message" name="Subscribe">
 		<translation language="nl"><![CDATA[inschrijven]]></translation>

@@ -29,31 +29,16 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exists
+		// does the item exist
 		if($this->id !== null && BackendEventsModel::exists($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load drafts
 			$this->loadDrafts();
-
-			// load the datagrid with revisions
 			$this->loadRevisions();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the datagrid
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -67,7 +52,6 @@ class BackendEventsEdit extends BackendBaseActionEdit
 	 */
 	private function getData()
 	{
-		// get the record
 		$this->record = (array) BackendEventsModel::get($this->id);
 
 		// is there a revision specified?
@@ -118,7 +102,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setPaging(false);
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+		$this->dgDrafts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
@@ -128,7 +112,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+		$this->dgDrafts->addColumn('use_draft', null, SpoonFilter::ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -169,6 +153,9 @@ class BackendEventsEdit extends BackendBaseActionEdit
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+		// set callback for generating a unique URL
+		$this->meta->setUrlCallback('BackendEventsModel', 'getURL', array($this->record['id']));
 	}
 
 	/**
@@ -186,7 +173,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+		$this->dgRevisions->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
@@ -196,7 +183,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		$this->dgRevisions->addColumn('use_revision', null, SpoonFilter::ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
 	/**
@@ -216,7 +203,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
-		$this->tpl->assign('status', BL::lbl(ucfirst($this->record['status'])));
+		$this->tpl->assign('status', BL::lbl(SpoonFilter::ucfirst($this->record['status'])));
 
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
@@ -231,9 +218,6 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique URL
-			$this->meta->setUrlCallback('BackendEventsModel', 'getURL', array($this->record['id']));
-
 			// get the status
 			$status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
@@ -282,6 +266,9 @@ class BackendEventsEdit extends BackendBaseActionEdit
 
 				// update the item
 				$item['revision_id'] = BackendEventsModel::update($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// recalculate comment count so the new revision has the correct count
 				BackendEventsModel::reCalculateCommentCount(array($this->id));

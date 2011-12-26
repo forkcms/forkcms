@@ -15,7 +15,7 @@
 class BackendEventsComments extends BackendBaseActionIndex
 {
 	/**
-	 * Datagrids
+	 * DataGrids
 	 *
 	 * @var	BackendDataGridDB
 	 */
@@ -44,16 +44,9 @@ class BackendEventsComments extends BackendBaseActionIndex
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load datagrids
 		$this->loadDataGrids();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
@@ -63,7 +56,7 @@ class BackendEventsComments extends BackendBaseActionIndex
 	private function loadDataGrids()
 	{
 		/*
-		 * Datagrid for the published comments.
+		 * DataGrid for the published comments.
 		 */
 		$this->dgPublished = new BackendDataGridDB(BackendEventsModel::QRY_DATAGRID_BROWSE_COMMENTS, array('published', BL::getWorkingLanguage()));
 
@@ -74,7 +67,7 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgPublished->setPagingLimit(30);
 
 		// header labels
-		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
+		$this->dgPublished->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
@@ -112,7 +105,7 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
-		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
+		$this->dgModeration->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
@@ -141,7 +134,7 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		/*
-		 * Datagrid for the comments that are marked as spam
+		 * DataGrid for the comments that are marked as spam
 		 */
 		$this->dgSpam = new BackendDataGridDB(BackendEventsModel::QRY_DATAGRID_BROWSE_COMMENTS, array('spam', BL::getWorkingLanguage()));
 
@@ -152,7 +145,7 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgSpam->setPagingLimit(30);
 
 		// header labels
-		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
+		$this->dgSpam->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgSpam->setMassActionCheckboxes('checkbox', '[id]');

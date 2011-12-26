@@ -42,7 +42,7 @@
 							</li>
 							<li>
 								{* Comments *}
-								{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgEventNoComments|ucfirst}</a>{/option:!items.comments}
+								{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgEventsNoComments|ucfirst}</a>{/option:!items.comments}
 								{option:items.comments}
 									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgEventsNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
 									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgEventsOneComment}</a>{/option:!items.comments_multiple}

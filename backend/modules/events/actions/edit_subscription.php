@@ -19,28 +19,16 @@ class BackendEventsEditSubscription extends BackendBaseActionEdit
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exists
+		// does the item exist
 		if($this->id !== null && BackendEventsModel::existsSubscription($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-
-			// get all data for the item we want to edit
 			$this->getData();
-
-			// load the form
 			$this->loadForm();
-
-			// validate the form
 			$this->validateForm();
-
-			// parse the datagrid
 			$this->parse();
-
-			// display the page
 			$this->display();
 		}
 
@@ -83,7 +71,6 @@ class BackendEventsEditSubscription extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
 			// cleanup the submitted fields, ignore fields that were added by hackers
@@ -104,6 +91,9 @@ class BackendEventsEditSubscription extends BackendBaseActionEdit
 
 				// insert the item
 				BackendEventsModel::updateSubscription($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_edit_subscription', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('subscriptions') . '&report=edited-subscription&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . SpoonFilter::toCamelCase($item['status']));

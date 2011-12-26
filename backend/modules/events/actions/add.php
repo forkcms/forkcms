@@ -19,19 +19,10 @@ class BackendEventsAdd extends BackendBaseActionAdd
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load the form
 		$this->loadForm();
-
-		// validate the form
 		$this->validateForm();
-
-		// parse
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
@@ -79,7 +70,6 @@ class BackendEventsAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// get url
@@ -146,6 +136,9 @@ class BackendEventsAdd extends BackendBaseActionAdd
 
 				// insert the item
 				$item['revision_id'] = BackendEventsModel::insert($item);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
 				// save the tags
 				BackendTagsModel::saveTags($item['revision_id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());

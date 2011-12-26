@@ -39,7 +39,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exists
+		// does the item exist
 		if($this->id !== null && BackendBlogModel::exists($this->id))
 		{
 			parent::execute();

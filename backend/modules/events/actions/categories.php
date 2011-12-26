@@ -19,16 +19,9 @@ class BackendEventsCategories extends BackendBaseActionIndex
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load datagrids
 		$this->loadDataGrid();
-
-		// parse page
 		$this->parse();
-
-		// display the page
 		$this->display();
 	}
 
@@ -38,22 +31,22 @@ class BackendEventsCategories extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendEventsModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
+		$this->dataGrid = new BackendDataGridDB(BackendEventsModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('title'), 'title');
+		$this->dataGrid->setSortingColumns(array('title'), 'title');
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// row function
-		$this->datagrid->setRowFunction(array('BackendEventsCategories', 'setDefault'), array('[id]'));
+		$this->dataGrid->setRowFunction(array('BackendEventsCategories', 'setDefault'), array('[id]'));
 
 		// disable paging
-		$this->datagrid->setPaging(false);
+		$this->dataGrid->setPaging(false);
 
 		// add attributes, so the inline editing has all the needed data
-		$this->datagrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
+		$this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	}
 
 	/**
@@ -61,7 +54,7 @@ class BackendEventsCategories extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
 	/**

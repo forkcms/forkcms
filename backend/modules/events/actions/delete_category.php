@@ -19,21 +19,23 @@ class BackendEventsDeleteCategory extends BackendBaseActionDelete
 	 */
 	public function execute()
 	{
-		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
 		if($this->id !== null && BackendEventsModel::existsCategory($this->id))
 		{
-			// call parent, this will probably add some general CSS/JS or other required files
-			parent::execute();
-
 			// get data
 			$this->record = (array) BackendEventsModel::getCategory($this->id);
 
+			// call parent, this will probably add some general CSS/JS or other required files
+			parent::execute();
+			
 			// delete item
 			BackendEventsModel::deleteCategory($this->id);
 
+			// trigger event
+			BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('id' => $this->id));
+			
 			// user was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
 		}

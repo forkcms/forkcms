@@ -19,10 +19,7 @@ class BackendEventsDeleteCommentSpam extends BackendBaseActionDelete
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// delete item
 		BackendEventsModel::deleteSpamComments();
 
 		// item was deleted, so redirect
