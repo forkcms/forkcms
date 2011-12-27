@@ -335,34 +335,7 @@ jsBackend.mailmotor.step3 =
 				// set variables
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
-				var textareaValue = $iframe[0].contentWindow.getTinyMCEContent();
-
-				// remove tiny fields added to the body by naughty tinyMCE
-				body.find('.mceListBoxMenu').remove();
-				body.find('.mceEditor').remove();
-				body.find('.clickToEdit').remove();
-
-				/*
-					This may seem strange, but here's why I did it like this:
-					Some templates caused tinymce().getContent() to return the entire TinyMCE codes.
-					If we add the textarea's value after the textarea, and then remove it, we don't
-					run into this problem.
-				*/
-				var textarea = body.find('#contentHtml');
-
-				/*
-					By escaping the textareaValue below, we ensure that entities will remain intact.
-					in mailmotor/detail.php on the frontend, we do a rawurlencode of the contents,
-					so CampaignMonitor receives the HTML contents with parsed entities.
-				*/
-				textarea.after(escape(textareaValue));
-				textarea.remove();
-
-				// set iframe variables
-				var bodyHTML = body.html();
-
-				// we unescape the entire HTML so the user won't panic whilst the ajax is loading
-				body.html(unescape(body.html()));
+				var textareaValue = $iframe[0].contentWindow.getEditorContent();
 
 				// make the call
 				$.ajax(
@@ -373,8 +346,7 @@ jsBackend.mailmotor.step3 =
 						mailing_id: variables.mailingId,
 						subject: subject,
 						content_plain: plainText,
-						content_html: textareaValue,
-						full_content_html: bodyHTML
+						content_html: textareaValue
 					},
 					success: function(data, textStatus)
 					{

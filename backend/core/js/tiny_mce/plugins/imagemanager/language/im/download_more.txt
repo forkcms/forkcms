@@ -1,6 +1,0 @@
-
-Visit this URL to download and contribute language packs.
-
-http://tinymce.moxiecode.com/download_i18n_imagemanager.php
-
-You can also reach this link from the Download page on the TinyMCE website.

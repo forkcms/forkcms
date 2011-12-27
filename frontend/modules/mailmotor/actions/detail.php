@@ -8,30 +8,35 @@
 class FrontendMailmotorDetail extends FrontendBaseBlock
 {
 	/**
-	 * stores whether this is CM requesting the information
+	 * The mailing's body to assign in the template
+	 *
+	 * @var string
+	 */
+	private $body;
+
+	/**
+	 * Whether this is CM requesting the information
 	 *
 	 * @var	bool
 	 */
 	private $forCM = false;
 
 	/**
-	 * The ID of the mailing
+	 * The ID of the mailing record in our database
 	 *
 	 * @var	int
 	 */
 	private $id;
 
 	/**
-	 * The mailing
-	 *
 	 * @var	array
 	 */
-	private $record;
+	private $mailing;
 
 	/**
-	 * The type of content to show (HTML or plain)
+	 * The type of content to base the body on.
 	 *
-	 * @var	string
+	 * @var	string can be 'html' or 'plain'
 	 */
 	private $type;
 
@@ -42,60 +47,60 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 	{
 		parent::execute();
 
-		// hide contenTitle, in the template the title is wrapped with an inverse-option
-		$this->tpl->assign('hideContentTitle', true);
-
-		// load the data
-		$this->getData();
-
 		// overwrite the template path
 		$this->setOverwrite(true);
 		$this->setTemplatePath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/layout/templates/detail.tpl');
 
-		// parse
+		$this->loadData();
 		$this->parse();
 	}
 
 	/**
-	 * Load the data, don't forget to validate the incoming data
+	 * @return string The generated mailing body.
 	 */
-	private function getData()
+	protected function getEmailBody()
 	{
-		// store the ID
-		$this->id = $this->URL->getParameter(1);
+		$template = FrontendMailmotorModel::getTemplate(
+			$this->mailing['language'],
+			$this->mailing['template']
+		);
 
-		// store the type
-		$this->type = SpoonFilter::getGetValue('type', array('html', 'plain'), 'html');
+		// define the key/value replacements to assign in to the mailing body
+		$replacements = array(
+			'{$siteURL}' => SITE_URL,
+			'src="/"' => 'src="' . SITE_URL . '/'
+		);
 
-		// is this CM asking the info?
-		$this->forCM = SpoonFilter::getGetValue('cm', array(0, 1), 0, 'bool');
+		// build the mailing body
+		$mailing = new MailingBodyBuilder();
+		$mailing->setTemplateContent($template['content']);
+		$mailing->setEditorContent($this->mailing['content_html']);
+		$mailing->setCSS($template['css']);
+		$mailing->setUTMParameters($this->mailing['name']);
 
-		// fetch the mailing data
-		$this->record = FrontendMailmotorModel::get($this->id);
+		if($this->type === 'plain')
+		{
+			$mailing->enablePlaintext();
+		}
 
-		// anything found?
-		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
-	}
+		$body = $mailing->buildBody($replacements);
 
-	/**
-	 * Parse the data into the template
-	 */
-	private function parse()
-	{
-		// add into breadcrumb
-		$this->breadcrumb->addElement($this->record['name']);
+		// Handle the online preview link
+		if(preg_match_all('/<a.*?id="onlineVersionURL".*?>.*?<\/a>/', $body, $matches))
+		{
+			// loop the matches
+			foreach($matches[0] as $match)
+			{
+				// replace the match
+				$body = str_replace('href="#', 'href="' . FrontendMailmotorModel::getMailingPreviewURL($this->id, $this->type), $body);
+			}
+		}
 
-		// set meta
-		$this->header->setPageTitle($this->record['name']);
-
-		// set the content to parse
-		$content = ($this->type == 'html') ? $this->record['data']['full_content_html'] : $this->record['content_plain'];
-
-	// cm is asking the info
+		// Handle CM-related content substitutions, such as the unsubscribe link
 		if($this->forCM)
 		{
 			// replace the unsubscribe
-			if(preg_match_all('/<a.*?id="unsubscribeURL".*?>.*?<\/a>/', $content, $matches))
+			if(preg_match_all('/<a.*?id="unsubscribeURL".*?>.*?<\/a>/', $body, $matches))
 			{
 				// loop the matches
 				foreach($matches[0] as $match)
@@ -104,23 +109,39 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 					preg_match('/style=".*?"/is', $match, $styleAttribute);
 
 					// replace the match
-					$content = str_replace($match, '<unsubscribe' . (isset($styleAttribute[0]) ? ' ' . $styleAttribute[0] : '') . '>' . strip_tags($match) . '</unsubscribe>', $content);
-				}
-			}
-
-			// online preview links
-			if(preg_match_all('/<a.*?id="onlineVersionURL".*?>.*?<\/a>/', $content, $matches))
-			{
-				// loop the matches
-				foreach($matches[0] as $match)
-				{
-					// replace the match
-					$content = str_replace('href="#', 'href="' . FrontendMailmotorModel::getMailingPreviewURL($this->id, $this->type), $content);
+					$body = str_replace($match, '<unsubscribe' . (isset($styleAttribute[0]) ? ' ' . $styleAttribute[0] : '') . '>' . strip_tags($match) . '</unsubscribe>', $body);
 				}
 			}
 		}
 
-		// assign article
-		$this->tpl->assign('mailingContent', $content);
+		return $body;
+	}
+
+	/**
+	 * Load the data, don't forget to validate the incoming data
+	 */
+	protected function loadData()
+	{
+		$this->id = $this->URL->getParameter(1);
+		$this->mailing = FrontendMailmotorModel::get($this->id);
+		$this->type = SpoonFilter::getGetValue('type', array('html', 'plain'), 'html');
+		$this->forCM = SpoonFilter::getGetValue('cm', array(0, 1), 0, 'bool');
+
+		// no point continueing if the mailing record is not set
+		if(empty($this->mailing))
+		{
+			$this->redirect(FrontendNavigation::getURL(404));
+		}
+	}
+
+	/**
+	 * Assigns the mailing body and other data into the template.
+	 */
+	protected function parse()
+	{
+		$this->breadcrumb->addElement($this->mailing['name']);
+		$this->header->setPageTitle($this->mailing['name']);
+		$this->tpl->assign('hideContentTitle', true);
+		$this->tpl->assign('body', $this->getEmailBody());
 	}
 }

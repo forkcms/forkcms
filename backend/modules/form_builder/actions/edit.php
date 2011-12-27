@@ -101,7 +101,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addText('heading');
 
 		// paragraph dialog
-		$this->frm->addTextarea('paragraph');
+		$this->frm->addEditor('paragraph');
 		$this->frm->getField('paragraph')->setAttribute('cols', 30);
 
 		// submit dialog
