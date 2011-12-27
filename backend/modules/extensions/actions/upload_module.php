@@ -67,7 +67,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 	/**
 	 * Process the zip-file
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	private function processZipFile()
 	{
