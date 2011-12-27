@@ -498,6 +498,11 @@
         <translation language="hu"><![CDATA[A %s pozíció nem definiált.]]></translation>
         <translation language="es"><![CDATA[La posción %s no está definida.]]></translation>
       </item>
+      <item type="error" name="NoThemes">
+        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
+        <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
+      </item>
       <item type="error" name="ReservedPositionName">
         <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>
         <translation language="en"><![CDATA[Position %s is reserved.]]></translation>
