@@ -1,3 +1,10 @@
+3.1.9 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Blog: meta should be deleted before the items are deleted.
+
+
 3.1.8 (2011-12-27)
 --
 Improvements:
