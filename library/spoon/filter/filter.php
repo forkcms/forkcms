@@ -139,8 +139,6 @@ class SpoonFilter
 
 	/**
 	 * Disable php's magic quotes (yuck!)
-	 *
-	 * @return	void
 	 */
 	public static function disableMagicQuotes()
 	{
@@ -946,5 +944,3 @@ class SpoonFilter
  * @since		0.1.1
  */
 class SpoonFilterException extends SpoonException {}
-
-?>
