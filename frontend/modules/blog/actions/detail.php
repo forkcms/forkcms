@@ -144,7 +144,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
 			// add specified image
-			$this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
+			if(isset($this->record['image']) && $this->record['image'] != '') $this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
 
 			// add images from content
 			$this->header->extractOpenGraphImages($this->record['text']);
