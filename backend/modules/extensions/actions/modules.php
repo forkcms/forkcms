@@ -63,7 +63,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		$this->dataGridInstallableModules->setSortingColumns(array('raw_name'));
 
 		// set header labels
-		$this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => ucfirst(BL::getLabel('Name'))));
+		$this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => SpoonFilter::ucfirst(BL::getLabel('Name'))));
 
 		// hide some columns
 		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
@@ -108,5 +108,8 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// parse data grid
 		$this->tpl->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
 		$this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
+
+		// parse installer warnings
+		$this->tpl->assign('warnings', (array) SpoonSession::get('installer_warnings'));
 	}
 }

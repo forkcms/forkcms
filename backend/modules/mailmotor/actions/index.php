@@ -93,7 +93,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		if(!empty($this->campaign)) $this->dgQueuedMailings->setColumnHidden('campaign_name');
 
 		// set headers values
-		$headers['sent'] = ucfirst(BL::lbl('WillBeSentOn'));
+		$headers['sent'] = SpoonFilter::ucfirst(BL::lbl('WillBeSentOn'));
 
 		// set headers
 		$this->dgQueuedMailings->setHeaderLabels($headers);
@@ -273,6 +273,6 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 */
 	public static function setCampaignLink($id, $name)
 	{
-		return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : ucfirst(BL::lbl('NoCampaign'));
+		return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
 	}
 }

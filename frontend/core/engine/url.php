@@ -441,6 +441,18 @@ class FrontendURL
 	 */
 	private function setQueryString($queryString)
 	{
-		$this->queryString = trim((string) $queryString, '/');
+		$queryString = trim((string) $queryString, '/');
+
+		// replace GET with encoded GET in the queryString to prevent XSS
+		if(isset($_GET) && !empty($_GET))
+		{
+			// strip GET from the queryString
+			list($queryString, $get) = explode('?', $queryString, 2);
+
+			// readd
+			$queryString = $queryString . '?' . http_build_query($_GET);
+		}
+
+		$this->queryString = $queryString;
 	}
 }

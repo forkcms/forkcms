@@ -644,6 +644,17 @@
         <translation language="hu"><![CDATA[Nem áll rendelkezésre koncepció.]]></translation>
         <translation language="es"><![CDATA[No hay conceptos disponibles.]]></translation>
       </item>
+      <item type="message" name="NumberOfRecipients">
+        <translation language="en"><![CDATA[This group contains %1$s address(es).]]></translation>
+        <translation language="nl"><![CDATA[Deze doelgroep bevat %1$s adres(sen).]]></translation>
+        <translation language="it"><![CDATA[Questo gruppo contiene %1$s indirizzo/i.]]></translation>
+        <translation language="ru"><![CDATA[Кол-во адресов группе: %1$s ]]></translation>
+        <translation language="cn"><![CDATA[这个组包含 %1$s 个地址。]]></translation>
+        <translation language="hu"><![CDATA[Ez a csoport tartalmaz %1$s címet.]]></translation>
+        <translation language="fr"><![CDATA[Ce groupe contient "%1$s" adresse(s).]]></translation>
+        <translation language="de"><![CDATA[Diese Gruppe beinhaltet %1$s Adresse(n).]]></translation>
+        <translation language="es"><![CDATA[Este grupo contiene %1$s dirección(es).]]></translation>
+      </item>
       <item type="message" name="PeopleGroups">
         <translation language="en"><![CDATA[These people come from the following groups:]]></translation>
         <translation language="nl"><![CDATA[Deze personen komen uit volgende doelgroepen:]]></translation>

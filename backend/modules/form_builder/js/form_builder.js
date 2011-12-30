@@ -87,7 +87,7 @@ jsBackend.formBuilder.fields =
 		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
 
 		// init errors
-		jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
+		if(typeof defaultErrorMessages != 'undefined') jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
@@ -1057,7 +1057,7 @@ jsBackend.formBuilder.fields =
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
 				type: type,
-				values: values
+				values: value
 			}),
 			success: function(data, textStatus)
 			{

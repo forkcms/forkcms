@@ -5,7 +5,7 @@
 
 	{option:faqFeedback}
 		<div class="dataGridHolder">
-			<table cellspacing="0" class="dataGrid">
+			<table class="dataGrid">
 				<tbody>
 					{iteration:faqFeedback}
 					<tr class="{cycle:'odd':'even'}">

@@ -1,7 +1,7 @@
-<table border="0" cellspacing="0" cellpadding="0" id="mainHolder">
+<table id="mainHolder">
 	<tr>
 		<td id="subnavigation" style="width: 164px;">
-			<table border="0" cellspacing="0" cellpadding="0">
+			<table>
 				<tr>
 					<td id="moduleHolder">
 						{$var|getnavigation}

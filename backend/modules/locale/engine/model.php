@@ -137,7 +137,7 @@ class BackendLocaleModel
 	 */
 	public static function createXMLForExport(array $items)
 	{
-		$xml = new DOMDocument('1.0', 'utf-8');
+		$xml = new DOMDocument('1.0', SPOON_CHARSET);
 
 		// set some properties
 		$xml->preserveWhiteSpace = false;
@@ -1084,7 +1084,7 @@ class BackendLocaleModel
 		$labels = $types;
 
 		// loop and build labels
-		foreach($labels as &$row) $row = ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+		foreach($labels as &$row) $row = SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
 
 		// build array
 		return array_combine($types, $labels);
@@ -1104,7 +1104,7 @@ class BackendLocaleModel
 		$labels = $aTypes;
 
 		// loop and build labels
-		foreach($labels as &$row) $row = ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+		foreach($labels as &$row) $row = SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
 
 		// build array
 		$aTypes = array_combine($aTypes, $labels);

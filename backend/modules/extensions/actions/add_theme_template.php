@@ -107,14 +107,14 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		{
 			if($item['type'] == 'block')
 			{
-				$blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
-				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
+				$blocks[$item['id']] = SpoonFilter::ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = SpoonFilter::ucfirst($item['data']['extra_label']);
 			}
 
 			elseif($item['type'] == 'widget')
 			{
-				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . ucfirst(BL::lbl($item['label']));
-				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+				$widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . SpoonFilter::ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
 			}
 		}
 
@@ -123,8 +123,8 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		asort($widgets, SORT_STRING);
 
 		// create array
-		$defaultExtras = array('' => array(0 => ucfirst(BL::lbl('Editor'))),
-								ucfirst(BL::lbl('Widgets')) => $widgets);
+		$defaultExtras = array('' => array(0 => SpoonFilter::ucfirst(BL::lbl('Editor'))),
+								SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets);
 
 		// create default position field
 		$position = array();

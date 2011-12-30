@@ -18,58 +18,58 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Breadcrumb instance
 	 *
-	 * @var	FrontendBreadcrumb
+	 * @var FrontendBreadcrumb
 	 */
-	private $breadcrumb;
+	protected $breadcrumb;
 
 	/**
-	 * Current page id
+	 * Array of extras linked to this page
 	 *
-	 * @var	int
+	 * @var array
 	 */
-	private static $currentPageId;
+	protected $extras = array();
 
 	/**
 	 * Footer instance
 	 *
 	 * @var	FrontendFooter
 	 */
-	private $footer;
+	protected $footer;
 
 	/**
 	 * Header instance
 	 *
 	 * @var	FrontendHeader
 	 */
-	private $header;
+	protected $header;
 
 	/**
 	 * The current pageId
 	 *
 	 * @var	int
 	 */
-	private $pageId;
+	protected $pageId;
 
 	/**
 	 * Content of the page
 	 *
 	 * @var	array
 	 */
-	private $record = array();
+	protected $record = array();
 
 	/**
 	 * The path of the template to show
 	 *
 	 * @var	string
 	 */
-	private $templatePath;
+	protected $templatePath;
 
 	/**
 	 * The statuscode
 	 *
 	 * @var	int
 	 */
-	private $statusCode = 200;
+	protected $statusCode = 200;
 
 	public function __construct()
 	{
@@ -81,20 +81,26 @@ class FrontendPage extends FrontendBaseObject
 		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
-		// make the pageId accessible through a static method
-		self::$currentPageId = $this->pageId;
-
 		// set headers if this is a 404 page
 		if($this->pageId == 404) $this->statusCode = 404;
 
+		// create breadcrumb instance
+		$this->breadcrumb = new FrontendBreadcrumb();
+
 		// create header instance
 		$this->header = new FrontendHeader();
+
+		// new footer instance
+		$this->footer = new FrontendFooter();
 
 		// get pagecontent
 		$this->getPageContent();
 
 		// process page
 		$this->processPage();
+
+		// execute all extras linked to the page
+		$this->processExtras();
 
 		// store statistics
 		$this->storeStatistics();
@@ -151,12 +157,12 @@ class FrontendPage extends FrontendBaseObject
 			}
 
 			// assign position to template
-			$this->tpl->assign('position' . ucfirst($position), $blocks);
+			$this->tpl->assign('position' . SpoonFilter::ucfirst($position), $blocks);
 		}
 
 		// assign empty positions
 		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
-		foreach($unusedPositions as $position) $this->tpl->assign('position' . ucfirst($position), array());
+		foreach($unusedPositions as $position) $this->tpl->assign('position' . SpoonFilter::ucfirst($position), array());
 
 		// only overwrite when status code is 404
 		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
@@ -166,19 +172,41 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
-	 * Get the current pageid
+	 * Get the current page id
 	 *
 	 * @return int
+	 * @deprecated deprecated since version 3.1.8 - will be removed in version 3.2.x
 	 */
 	public static function getCurrentPageId()
 	{
-		return self::$currentPageId;
+		$page = Spoon::get('page');
+		return $page->getId();
+	}
+
+	/**
+	 * Get the extras linked to this page
+	 *
+	 * @return array
+	 */
+	public function getExtras()
+	{
+		return $this->extras;
+	}
+
+	/**
+	 * Get the current page id
+	 *
+	 * @return int
+	 */
+	public function getId()
+	{
+		return $this->pageId;
 	}
 
 	/**
 	 * Get page content
 	 */
-	public function getPageContent()
+	protected function getPageContent()
 	{
 		// load revision
 		if($this->URL->getParameter('page_revision', 'int') != 0)
@@ -235,6 +263,16 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
+	 * Get the content of the page
+	 *
+	 * @var	array
+	 */
+	public function getRecord()
+	{
+		return $this->record;
+	}
+
+	/**
 	 * Fetch the statuscode for the current page.
 	 *
 	 * @return int
@@ -247,7 +285,7 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Parse the languages
 	 */
-	private function parseLanguages()
+	protected function parseLanguages()
 	{
 		// just execute if the site is multi-language
 		if(SITE_MULTILANGUAGE)
@@ -278,9 +316,25 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
+	 * Processes the extras linked to the page
+	 */
+	protected function processExtras()
+	{
+		// loop all extras
+		foreach($this->extras as $extra)
+		{
+			// execute
+			$extra->execute();
+
+			// assign the variables from this extra to the main template
+			$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
+		}
+	}
+
+	/**
 	 * Processes the page
 	 */
-	private function processPage()
+	protected function processPage()
 	{
 		// set pageTitle
 		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
@@ -294,14 +348,8 @@ class FrontendPage extends FrontendBaseObject
 		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
 		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
-		// create breadcrumb instance
-		$this->breadcrumb = new FrontendBreadcrumb();
-
 		// create navigation instance
 		new FrontendNavigation();
-
-		// new footer instance
-		$this->footer = new FrontendFooter();
 
 		// assign content
 		$this->tpl->assign('page', $this->record);
@@ -330,17 +378,8 @@ class FrontendPage extends FrontendBaseObject
 						// create new instance
 						$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
-						// execute
-						$extra->execute();
-
 						// overwrite the template
 						if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
-
-						// add to list of extras
-						else $block = array('extra' => $extra);
-
-						// assign the variables from this block to the main template
-						$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 					}
 
 					// widget
@@ -348,16 +387,13 @@ class FrontendPage extends FrontendBaseObject
 					{
 						// create new instance
 						$extra = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
-
-						// fetch data (if available)
-						$extra->execute();
-
-						// add to list of blocks
-						$block = array('extra' => $extra);
-
-						// assign the variables from this widget to the main template
-						$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 					}
+
+					// add to list of extras
+					$block = array('extra' => $extra);
+
+					// add to list of extras to parse
+					$this->extras[] = $extra;
 				}
 
 				// the block only contains HTML
@@ -375,7 +411,7 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Store the data for statistics
 	 */
-	private function storeStatistics()
+	protected function storeStatistics()
 	{
 		// @later save temp statistics data here.
 	}

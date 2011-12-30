@@ -56,7 +56,7 @@ class BackendDataGrid extends SpoonDataGrid
 			$this->setColumnHeaderAttributes($column, array('class' => $column));
 
 			// set default label
-			$this->setHeaderLabels(array($column => ucfirst(BL::lbl(SpoonFilter::toCamelCase($column)))));
+			$this->setHeaderLabels(array($column => SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($column)))));
 		}
 
 		// set paging class
@@ -257,7 +257,7 @@ class BackendDataGrid extends SpoonDataGrid
 				$id = 'confirm-' . (string) $uniqueId;
 
 				// set title if there wasn't one provided
-				if($title === null) $title = ucfirst(BL::lbl('Delete') . '?');
+				if($title === null) $title = SpoonFilter::ucfirst(BL::lbl('Delete') . '?');
 
 				// grab current value
 				$value = $this->columns[$column]->getValue();
@@ -331,13 +331,13 @@ class BackendDataGrid extends SpoonDataGrid
 	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
 		// buid HTML
-		$HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' . ucfirst(BL::lbl('WithSelected')) . '</label></p>
+		$HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' . SpoonFilter::ucfirst(BL::lbl('WithSelected')) . '</label></p>
 				<p>
 					' . $actionDropDown->parse() . '
 				</p>
 				<div class="buttonHolder">
 					<a href="#" class="submitButton button">
-						<span>' . ucfirst(BL::lbl('Execute')) . '</span>
+						<span>' . SpoonFilter::ucfirst(BL::lbl('Execute')) . '</span>
 					</a>
 				</div>';
 

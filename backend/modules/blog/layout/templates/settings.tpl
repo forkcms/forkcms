@@ -50,8 +50,8 @@
 		</div>
 		<div class="options">
 			<ul class="inputList p0">
-				<li><label for="notifyOnNewCommentToModerate">{$chkNotifyByEmailOnNewCommentToModerate} {$msgNotifyByEmailOnNewCommentToModerate|ucfirst}</label></li>
-				<li><label for="notifyOnNewComment">{$chkNotifyByEmailOnNewComment} {$msgNotifyByEmailOnNewComment|ucfirst}</label></li>
+				<li><label for="notifyByEmailOnNewCommentToModerate">{$chkNotifyByEmailOnNewCommentToModerate} {$msgNotifyByEmailOnNewCommentToModerate|ucfirst}</label></li>
+				<li><label for="notifyByEmailOnNewComment">{$chkNotifyByEmailOnNewComment} {$msgNotifyByEmailOnNewComment|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>

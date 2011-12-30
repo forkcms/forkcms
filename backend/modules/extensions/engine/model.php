@@ -41,7 +41,7 @@ class BackendExtensionsModel
 		$table = self::templateSyntaxToArray($format);
 
 		// add start html
-		$html = '<table border="0" cellpadding="0" cellspacing="10">' . "\n";
+		$html = '<table cellspacing="10">' . "\n";
 		$html .= '	<tbody>' . "\n";
 
 		// init var
@@ -103,7 +103,7 @@ class BackendExtensionsModel
 				$exists = $value != '/';
 
 				// set values
-				$title = ucfirst($value);
+				$title = SpoonFilter::ucfirst($value);
 				$type = '';
 
 				// start cell
@@ -129,7 +129,7 @@ class BackendExtensionsModel
 									<div class="linkedBlocks"><!-- linked blocks will be added here --></div>
 									<div class="buttonHolder buttonAddHolder">
 										<a href="#addBlock" class="button icon iconAdd addBlock">
-											<span>' . ucfirst(BL::lbl('AddBlock')) . '</span>
+											<span>' . SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '</span>
 										</a>
 									</div>
 								</td>' . "\n";
@@ -354,14 +354,14 @@ class BackendExtensionsModel
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
 
 			// build name
-			$name = ucfirst(BL::lbl($row['label']));
+			$name = SpoonFilter::ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// add human readable name
-			$module = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
-			$row['human_name'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ': ' . $name;
-			$row['path'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
+			$module = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
+			$row['human_name'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ': ' . $name;
+			$row['path'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
 		}
 
 		// any items to remove?
@@ -411,12 +411,12 @@ class BackendExtensionsModel
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
 
 			// build name
-			$name = ucfirst(BL::lbl($row['label']));
+			$name = SpoonFilter::ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 			if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
 			// create modulename
-			$moduleName = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
+			$moduleName = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
 
 			// build array
 			if(!isset($values[$row['module']])) $values[$row['module']] = array('value' => $row['module'], 'name' => $moduleName, 'items' => array());
@@ -463,7 +463,7 @@ class BackendExtensionsModel
 			$module = array();
 			$module['id'] = 'module_' . $moduleName;
 			$module['raw_name'] = $moduleName;
-			$module['name'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($moduleName)));
+			$module['name'] = SpoonFilter::ucfirst(BL::getLabel(SpoonFilter::toCamelCase($moduleName)));
 			$module['description'] = '';
 			$module['version'] = '';
 			$module['installed'] = false;
@@ -742,6 +742,10 @@ class BackendExtensionsModel
 
 		// execute installation
 		$installer->install();
+
+		// save the warnings in session for later use
+		$warnings = array('module' => $module, 'warnings' => $installer->getWarnings());
+		SpoonSession::set('installer_warnings', $warnings);
 
 		// clear the cache so locale (and so much more) gets rebuilt
 		self::clearCache();

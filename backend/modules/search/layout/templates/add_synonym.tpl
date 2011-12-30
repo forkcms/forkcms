@@ -12,7 +12,7 @@
 				{$txtTerm} {$txtTermError}
 			</p>
 			<div class="fakeP">
-				<label for="synonym">{$lblSynonyms|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="addValue-synonym">{$lblSynonyms|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				<div class="itemAdder">
 					{$txtSynonym} {$txtSynonymError}
 				</div>

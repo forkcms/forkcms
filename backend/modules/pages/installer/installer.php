@@ -59,7 +59,7 @@ class PagesInstaller extends ModuleInstaller
 						'id' => 1,
 						'parent_id' => 0,
 						'template_id' => $this->getTemplateId('home'),
-						'title' => ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
 						'language' => $language,
 						'allow_move' => 'N',
 						'allow_delete' => 'N'
@@ -73,7 +73,7 @@ class PagesInstaller extends ModuleInstaller
 				$this->insertPage(
 					array(
 						'id' => 2,
-						'title' => ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
 						'type' => 'footer',
 						'language' => $language
 					),
@@ -87,7 +87,7 @@ class PagesInstaller extends ModuleInstaller
 				$this->insertPage(
 					array(
 						'id' => 3,
-						'title' => ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
 						'type' => 'footer',
 						'language' => $language
 					),
@@ -181,7 +181,7 @@ class PagesInstaller extends ModuleInstaller
 						'id' => 1,
 						'parent_id' => 0,
 						'template_id' => $this->getTemplateId('home'),
-						'title' => ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
 						'language' => $language,
 						'allow_move' => 'N',
 						'allow_delete' => 'N'
@@ -196,7 +196,7 @@ class PagesInstaller extends ModuleInstaller
 				// blog
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('Blog', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Blog', 'core', $language, 'lbl', 'frontend')),
 						'language' => $language
 					),
 					null,
@@ -211,7 +211,7 @@ class PagesInstaller extends ModuleInstaller
 				// about us parent
 				$aboutUsId = $this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')
+						'title' => SpoonFilter::ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')
 					),
 					'parent_id' => 1,
 					'language' => $language),
@@ -223,7 +223,7 @@ class PagesInstaller extends ModuleInstaller
 				// location
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('Location', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Location', 'core', $language, 'lbl', 'frontend')),
 						'parent_id' => $aboutUsId,
 						'language' => $language
 					),
@@ -236,7 +236,7 @@ class PagesInstaller extends ModuleInstaller
 				// about us child
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
 						'parent_id' => $aboutUsId,
 						'language' => $language
 					),
@@ -249,7 +249,7 @@ class PagesInstaller extends ModuleInstaller
 				// history
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('History', 'core', $language, 'lbl', 'frontend')
+						'title' => SpoonFilter::ucfirst($this->getLocale('History', 'core', $language, 'lbl', 'frontend')
 					),
 					'parent_id' => 1,
 					'language' => $language),

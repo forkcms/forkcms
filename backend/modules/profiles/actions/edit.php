@@ -68,8 +68,8 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 	{
 		// gender dropdown values
 		$genderValues = array(
-			'male' => ucfirst(BL::getLabel('Male')),
-			'female' => ucfirst(BL::getLabel('Female'))
+			'male' => SpoonFilter::ucfirst(BL::getLabel('Male')),
+			'female' => SpoonFilter::ucfirst(BL::getLabel('Female'))
 		);
 
 		// birthdate dropdown values

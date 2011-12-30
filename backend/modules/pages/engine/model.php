@@ -875,7 +875,7 @@ class BackendPagesModel
 
 				// get URL for parent
 				$title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-				$title = trim($title, ucfirst(BL::lbl('Home')) . ' > ');
+				$title = trim($title, SpoonFilter::ucfirst(BL::lbl('Home')) . ' > ');
 
 				// add it
 				$titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
@@ -1013,13 +1013,13 @@ class BackendPagesModel
 		require_once FRONTEND_CACHE_PATH . '/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php';
 
 		// start HTML
-		$html = '<h4>' . ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
+		$html = '<h4>' . SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
 		$html .= '<div class="clearfix">' . "\n";
 		$html .= '	<ul>' . "\n";
 		$html .= '		<li id="page-1" rel="home">';
 
 		// homepage should
-		$html .= '			<a href="' . BackendModel::createURLForAction('edit', null, null, array('id' => 1)) . '"><ins>&#160;</ins>' . ucfirst(BL::lbl('Home')) . '</a>' . "\n";
+		$html .= '			<a href="' . BackendModel::createURLForAction('edit', null, null, array('id' => 1)) . '"><ins>&#160;</ins>' . SpoonFilter::ucfirst(BL::lbl('Home')) . '</a>' . "\n";
 
 		// add subpages
 		$html .= self::getSubTree($navigation, 1);
@@ -1033,7 +1033,7 @@ class BackendPagesModel
 		if(BackendModel::getModuleSetting('pages', 'meta_navigation', false))
 		{
 			// meta pages
-			$html .= '<h4>' . ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
+			$html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
 			$html .= '<div class="clearfix">' . "\n";
 			$html .= '	<ul>' . "\n";
 
@@ -1063,7 +1063,7 @@ class BackendPagesModel
 		}
 
 		// footer pages
-		$html .= '<h4>' . ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
+		$html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
 
 		// start
 		$html .= '<div class="clearfix">' . "\n";
@@ -1095,7 +1095,7 @@ class BackendPagesModel
 		if(isset($navigation['root'][0]) && !empty($navigation['root'][0]))
 		{
 			// meta pages
-			$html .= '<h4>' . ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
+			$html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
 
 			// start
 			$html .= '<div class="clearfix">' . "\n";

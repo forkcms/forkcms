@@ -36,7 +36,7 @@ class BackendFaqCategories extends BackendBaseActionIndex
 	{
 		// create dataGrid
 		$this->dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
-		$this->dataGrid->setHeaderLabels(array('num_items' => ucfirst(BL::lbl('Amount'))));
+		$this->dataGrid->setHeaderLabels(array('num_items' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
 		$this->dataGrid->enableSequenceByDragAndDrop();
 		$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
 		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);

@@ -22,6 +22,13 @@
 class FrontendTemplate extends SpoonTemplate
 {
 	/**
+	 * Should we add slashes to each value?
+	 *
+	 * @var bool
+	 */
+	private $addSlashes = false;
+
+	/**
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @param bool[optional] $addToReference Should the instance be added into the reference.
@@ -101,7 +108,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->parseVars();
 
 		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
 
 		// get template path
 		$template = FrontendTheme::getPath($template);
@@ -305,17 +312,31 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
+		$actions = FrontendLanguage::getActions();
+		$errors = FrontendLanguage::getErrors();
+		$labels = FrontendLanguage::getLabels();
+		$messages = FrontendLanguage::getMessages();
+
+		// execute addslashes on the values for the locale, will be used in JS
+		if($this->addSlashes)
+		{
+			foreach($actions['core'] as &$value) $value = addslashes($value);
+			foreach($errors['core'] as &$value) $value = addslashes($value);
+			foreach($labels['core'] as &$value) $value = addslashes($value);
+			foreach($messages['core'] as &$value) $value = addslashes($value);
+		}
+
 		// assign actions
-		$this->assignArray(FrontendLanguage::getActions(), 'act');
+		$this->assignArray($actions, 'act');
 
 		// assign errors
-		$this->assignArray(FrontendLanguage::getErrors(), 'err');
+		$this->assignArray($errors, 'err');
 
 		// assign labels
-		$this->assignArray(FrontendLanguage::getLabels(), 'lbl');
+		$this->assignArray($labels, 'lbl');
 
 		// assign messages
-		$this->assignArray(FrontendLanguage::getMessages(), 'msg');
+		$this->assignArray($messages, 'msg');
 	}
 
 	/**
@@ -335,10 +356,10 @@ class FrontendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $locale['locMonthLong' . ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $locale['locMonthShort' . ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $locale['locDayLong' . ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $locale['locDayShort' . ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $locale['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $locale['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $locale['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $locale['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($locale);
@@ -354,6 +375,16 @@ class FrontendTemplate extends SpoonTemplate
 
 		// assign current timestamp
 		$this->assign('timestamp', time());
+	}
+
+	/**
+	 * Should we execute addSlashed on the locale?
+	 *
+	 * @param bool[optional] $on Enable addslashes.
+	 */
+	public function setAddSlashes($on = true)
+	{
+		$this->addSlashes = (bool) $on;
 	}
 }
 

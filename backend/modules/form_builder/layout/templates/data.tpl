@@ -16,13 +16,13 @@
 
 			<input type="hidden" name="id" value="{$id}" />
 
-			<table cellspacing="0" cellpadding="0" border="0">
+			<table>
 				<tbody>
 					<tr>
 						<td>
 							<div class="options">
 								<p>
-									<label for="start_date">{$lblStartDate|ucfirst}</label>
+									<label for="startDate">{$lblStartDate|ucfirst}</label>
 									{$txtStartDate} {$txtStartDateError}
 								</p>
 							</div>
@@ -30,7 +30,7 @@
 						<td>
 							<div class="options">
 								<p>
-									<label for="end_date">{$lblEndDate|ucfirst}</label>
+									<label for="endDate">{$lblEndDate|ucfirst}</label>
 									{$txtEndDate} {$txtEndDateError}
 								</p>
 							</div>

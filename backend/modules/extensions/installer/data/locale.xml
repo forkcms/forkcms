@@ -375,6 +375,10 @@
         <translation language="hu"><![CDATA[felülír]]></translation>
         <translation language="es"><![CDATA[sobreescribir]]></translation>
       </item>
+      <item type="label" name="Theme">
+        <translation language="nl"><![CDATA[thema]]></translation>
+        <translation language="en"><![CDATA[theme]]></translation>
+      </item>
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>
@@ -493,6 +497,11 @@
         <translation language="fr"><![CDATA[La position %s n'est pas définie.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció nem definiált.]]></translation>
         <translation language="es"><![CDATA[La posción %s no está definida.]]></translation>
+      </item>
+      <item type="error" name="NoThemes">
+        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
+        <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
       </item>
       <item type="error" name="ReservedPositionName">
         <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>

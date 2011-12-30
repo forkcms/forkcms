@@ -58,6 +58,9 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	 */
 	public function parse()
 	{
+		// assign the interface language ourself, because it won't be assigned automagically
+		$this->tpl->assign('INTERFACE_LANGUAGE', BackendLanguage::getInterfaceLanguage());
+
 		$this->frm->parse($this->tpl);
 		$this->frmForgotPassword->parse($this->tpl);
 	}
@@ -195,7 +198,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('reset_password') . '&email=' . $email . '&key=' . $key;
 
 				// send e-mail to user
-				BackendMailer::addEmail(ucfirst(BL::msg('ResetYourPasswordMailSubject')), BACKEND_MODULE_PATH . '/layout/templates/mails/reset_password.tpl', $variables, $email);
+				BackendMailer::addEmail(SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject')), BACKEND_MODULE_PATH . '/layout/templates/mails/reset_password.tpl', $variables, $email);
 
 				// clear post-values
 				$_POST['backend_email_forgot'] = '';

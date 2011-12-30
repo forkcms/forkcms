@@ -8,12 +8,12 @@
 		</div>
 		<div class="options">
 			<p class="oneLineWrapper bigInput">
-				<label for="page_path">{$lblURL|ucfirst}</label>
+				<label for="pagePath">{$lblURL|ucfirst}</label>
 				{$SITE_URL} {$txtPagePath} {$txtPagePathError}
 			</p>
 			<p>
 				{option:ddmPageList}
-					<label for="page_list">{$lblOr|ucfirst}</label>
+					<label for="pageList">{$lblOr|ucfirst}</label>
 					{$ddmPageList} {$ddmPageListError}
 				{/option:ddmPageList}
 			</p>
@@ -22,7 +22,7 @@
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
 		</div>
 	</div>
 {/form:add}

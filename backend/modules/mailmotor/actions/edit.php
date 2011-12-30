@@ -130,7 +130,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('groups', $groups);
 
 		// assign the template language
-		$this->tpl->assign('templateLanguage', ucfirst(BL::lbl(strtoupper($template['language']))));
+		$this->tpl->assign('templateLanguage', SpoonFilter::ucfirst(BL::lbl(strtoupper($template['language']))));
 
 		// get the price settings
 		$pricePerEmail = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');

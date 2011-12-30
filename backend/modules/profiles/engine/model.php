@@ -379,7 +379,7 @@ class BackendProfilesModel
 		$labels = $status;
 
 		// loop and build labels
-		foreach($labels as &$row) $row = ucfirst(BackendLanguage::getLabel(ucfirst($row)));
+		foreach($labels as &$row) $row = SpoonFilter::ucfirst(BackendLanguage::getLabel(SpoonFilter::ucfirst($row)));
 
 		// build array
 		return array_combine($status, $labels);

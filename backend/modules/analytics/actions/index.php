@@ -73,8 +73,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			// set headers
 			$dataGrid->setHeaderLabels(
 				array(
-					'pageviews' => ucfirst(BL::lbl('Views')),
-					'pageviews_percentage' => '% ' . ucfirst(BL::lbl('Views'))
+					'pageviews' => SpoonFilter::ucfirst(BL::lbl('Views')),
+					'pageviews_percentage' => '% ' . SpoonFilter::ucfirst(BL::lbl('Views'))
 				)
 			);
 
@@ -98,8 +98,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			// set headers
 			$dataGrid->setHeaderLabels(
 				array(
-					'pageviews' => ucfirst(BL::lbl('Views')),
-					'pageviews_percentage' => '% ' . ucfirst(BL::lbl('Views'))
+					'pageviews' => SpoonFilter::ucfirst(BL::lbl('Views')),
+					'pageviews_percentage' => '% ' . SpoonFilter::ucfirst(BL::lbl('Views'))
 				)
 			);
 
@@ -124,7 +124,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 
@@ -230,7 +230,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			if($label == '{$lblAnalytics' . SpoonFilter::toCamelCase($source['label']) . '}') $label = $source['label'];
 
 			// build array
-			$graphData[$i]['label'] = ucfirst($label);
+			$graphData[$i]['label'] = SpoonFilter::ucfirst($label);
 			$graphData[$i]['value'] = (string) $source['value'];
 			$graphData[$i]['percentage'] = (string) $source['percentage'];
 		}

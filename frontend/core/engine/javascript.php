@@ -53,6 +53,9 @@ class FrontendJavascript
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new FrontendTemplate();
 
+		// enable addslashes on each locale
+		$tpl->setAddSlashes(true);
+
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 

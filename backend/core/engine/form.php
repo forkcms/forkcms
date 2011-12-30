@@ -554,9 +554,27 @@ class BackendFormDate extends SpoonFormDate
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFormImage extends SpoonFormImage
 {
+	/**
+	 * This function will return the errors. It is extended so we can do image checks automatically.
+	 *
+	 * @return string
+	 */
+	public function getErrors()
+	{
+		// do an image validation
+		if($this->isFilled())
+		{
+			$this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly'));
+			$this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
+		}
+
+		return $this->errors;
+	}
+
 	/**
 	 * Parses the html for this filefield.
 	 *

@@ -83,7 +83,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics_campaign') . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
 
 		// set headers values
-		$headers['sent'] = ucfirst(BL::lbl('Sent'));
+		$headers['sent'] = SpoonFilter::ucfirst(BL::lbl('Sent'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);

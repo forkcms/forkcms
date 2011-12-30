@@ -139,8 +139,6 @@ class SpoonFilter
 
 	/**
 	 * Disable php's magic quotes (yuck!)
-	 *
-	 * @return	void
 	 */
 	public static function disableMagicQuotes()
 	{
@@ -866,6 +864,29 @@ class SpoonFilter
 
 
 	/**
+	 * Multibyte-safe ucfirst
+	 *
+	 * @return	string							The ucfirst'ed string.
+	 * @param	string $string					The string to ucfirst
+	 * @param	string[optional] $charset		The charset to use, default is based on SPOON_CHARSET.
+	 */
+	public static function ucfirst($string, $charset = null)
+	{
+		// init vars
+		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$string = (string) $string;
+
+		// uppercase first character
+		$first = mb_strtoupper(mb_substr($string, 0, 1, $charset), $charset);
+
+		// leave rest untouched
+		$rest = mb_substr($string, 1, mb_strlen($string, $charset) - 1, $charset);
+
+		return $first . $rest;
+	}
+
+
+	/**
 	 * Prepares a string so that it can be used in urls.
 	 *
 	 * @return	string						The urlised string.
@@ -923,5 +944,3 @@ class SpoonFilter
  * @since		0.1.1
  */
 class SpoonFilterException extends SpoonException {}
-
-?>
