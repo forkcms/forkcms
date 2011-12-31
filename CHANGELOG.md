@@ -1,5 +1,9 @@
 3.1.9 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: the frontend CSS-minifier supports @import-statements from now on.
+
 Bugfixes:
 
 * Blog: meta should be deleted before the items are deleted.
