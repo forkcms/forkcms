@@ -8,7 +8,7 @@
  */
 
 /**
- * This action will generate a valid url based upon the submitted url.
+ * This action will generate the css that is needed for CK Editor
  *
  * @author Matthias Mullie <matthias@mullie.eu>
  */
@@ -85,7 +85,6 @@ class BackendCoreAjaxContentCss extends BackendBaseAJAXAction
 	 * Grab all the styles from a CSS-file and return them as an array
 	 *
 	 * @param string $file The file that will be processed
-	 * @param bool[optional] $isContent If true, only styles that are scoped inside the .content class will be returned.
 	 * @return array
 	 */
 	private function processFile($file)
