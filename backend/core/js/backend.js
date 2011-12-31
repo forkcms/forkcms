@@ -250,6 +250,9 @@ jsBackend.ckeditor =
 		// remove useless plugins
 		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
+		// templates
+		templates_files: [ '/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=en' ],
+
 		// custom vars
 		editorType: 'default',
 		showClickToEdit: true,
