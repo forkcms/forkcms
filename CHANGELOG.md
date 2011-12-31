@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: the frontend CSS-minifier supports @import-statements from now on.
+* Core: you can't select redirect-languages that aren't active.
 
 Bugfixes:
 

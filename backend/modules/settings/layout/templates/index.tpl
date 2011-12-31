@@ -54,7 +54,7 @@
 		</div>
 		<div class="options">
 			<p>{$msgHelpLanguages}</p>
-			<ul class="inputList pb0">
+			<ul id="activeLanguages" class="inputList pb0">
 				{iteration:activeLanguages}
 					<li>{$activeLanguages.chkActiveLanguages} <label for="{$activeLanguages.id}">{$activeLanguages.label|ucfirst}{option:activeLanguages.default} ({$lblDefault}){/option:activeLanguages.default}</label></li>
 				{/iteration:activeLanguages}
@@ -62,7 +62,7 @@
 		</div>
 		<div class="options">
 			<p>{$msgHelpRedirectLanguages}</p>
-			<ul class="inputList pb0">
+			<ul id="redirectLanguages" class="inputList pb0">
 				{iteration:redirectLanguages}
 					<li>{$redirectLanguages.chkRedirectLanguages} <label for="{$redirectLanguages.id}">{$redirectLanguages.label|ucfirst}{option:redirectLanguages.default} ({$lblDefault}){/option:redirectLanguages.default}</label></li>
 				{/iteration:redirectLanguages}

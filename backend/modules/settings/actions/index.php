@@ -244,10 +244,15 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 				// before we save the languages, we need to ensure that each language actually exists and may be chosen.
 				$languages = array(SITE_DEFAULT_LANGUAGE);
+				$activeLanguages = array_unique(array_merge($languages, $this->frm->getField('active_languages')->getValue()));
+				$redirectLanguages = array_unique(array_merge($languages, $this->frm->getField('redirect_languages')->getValue()));
+
+				// cleanup redirect-languages, by removing the values that aren't present in the active languages
+				$redirectLanguages = array_intersect($redirectLanguages, $activeLanguages);
 
 				// save active languages
-				BackendModel::setModuleSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('active_languages')->getValue())));
-				BackendModel::setModuleSetting('core', 'redirect_languages', array_unique(array_merge($languages, $this->frm->getField('redirect_languages')->getValue())));
+				BackendModel::setModuleSetting('core', 'active_languages', $activeLanguages);
+				BackendModel::setModuleSetting('core', 'redirect_languages', $redirectLanguages);
 
 				// domains may not contain www, http or https. Therefor we must loop and create the list of domains.
 				$siteDomains = array();
