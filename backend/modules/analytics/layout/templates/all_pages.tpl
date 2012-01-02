@@ -87,7 +87,7 @@
 	{/option:dgPages}
 
 	{option:!dgPages}
-		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+		<table class="dataGrid">
 			<tr>
 				<td>{$msgNoPages}</td>
 			</tr>

@@ -103,7 +103,7 @@
         <translation language="es"><![CDATA[<strong>¡Atención!</strong> Seleccionado esta casilla el contenido de la página sera reseteado al valor pod defecto elegido aquí.]]></translation>
       </item>
       <item type="message" name="HelpPositionsLayout">
-        <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rijs toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rij toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="en"><![CDATA[<strong>A visual representation to be used in the pages-module.</strong><ul><li>Add a row: use <strong>[]</strong></li><li>Reflect a position: use <strong>position name</strong></li><li>Reflect a non-editable area: use <strong>/</strong></li></ul><p>If you want a position to display wider or higher in it's graphical representation, repeat the position multiple times (both horizontal and vertical, but the shape should form a rectangle)</p><strong>A template could look like the chart below:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="it"><![CDATA[<strong>Una rappresentazione visuale da usare nel modulo della pagina.</strong><ul><li>Aggiungi una riga: usa <strong>[]</strong></li><li>Rifletti una posizione: usa <strong>nome della posizione</strong></li><li>Rifletti un'area non modificabile: usa <strong>/</strong></li></ul><p>Se vuoi che una posizione sia visualizzata più larga o alta nella sua rappresentazione grafica, ripeti la posizione diverse volte (sia orizzontalmente, sia verticalemente, in modo da formare un rettangolo)</p><strong>Un template potrebbe assomigliare a questo:</strong><pre>[ / , / , / , / , top ],<br />[ / , / , / , / , / ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="ru"><![CDATA[<strong>Визуальное представление для страниц модуля.</strong><ul><li>Добавление строки: используйте <strong>[]</strong></li><li>Позиционирование: <strong>имя позиции</strong></li><li>Нередактируемая сецкия: <strong>/</strong></li></ul><p>Если вы хотите изменить графическое представление,</p><strong>шаблон должен выглядеть примерно так:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
@@ -375,6 +375,10 @@
         <translation language="hu"><![CDATA[felülír]]></translation>
         <translation language="es"><![CDATA[sobreescribir]]></translation>
       </item>
+      <item type="label" name="Theme">
+        <translation language="nl"><![CDATA[thema]]></translation>
+        <translation language="en"><![CDATA[theme]]></translation>
+      </item>
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>
@@ -493,6 +497,11 @@
         <translation language="fr"><![CDATA[La position %s n'est pas définie.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció nem definiált.]]></translation>
         <translation language="es"><![CDATA[La posción %s no está definida.]]></translation>
+      </item>
+      <item type="error" name="NoThemes">
+        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
+        <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
       </item>
       <item type="error" name="ReservedPositionName">
         <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>

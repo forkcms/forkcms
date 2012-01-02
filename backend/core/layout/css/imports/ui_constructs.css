@@ -297,7 +297,7 @@
 		font-size: 11px;
 	}
 
-.box h3 {
+.box h3, .box h3 label {
 	margin: 0;
 	padding: 0;
 	color: #000;
@@ -456,6 +456,11 @@ div#pageTitle {
 		visibility: hidden;
 	}
 
+	.pageTitle h2 label {
+		font-size: 14px; 
+		font-weight: 700;
+	}
+	
 /*
 	Center message
 */

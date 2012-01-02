@@ -15,7 +15,7 @@
 <div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">
-			<table cellspacing="0" cellpadding="0" border="0">
+			<table>
 				<tbody>
 					<tr>
 						<td>
@@ -32,7 +32,7 @@
 						</td>
 						<td>
 							<div class="options">
-								<label for="type">{$lblTypes|ucfirst}</label>
+								<label>{$lblTypes|ucfirst}</label>
 								{option:type}
 									<ul>
 										{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
@@ -42,7 +42,7 @@
 						</td>
 						<td>
 							<div class="options">
-								<label for="language">{$lblLanguages|ucfirst}</label>
+								<label>{$lblLanguages|ucfirst}</label>
 								{option:language}
 									<ul>
 										{iteration:language}<li>{$language.chkLanguage} <label for="{$language.id}">{$language.label|ucfirst}</label></li>{/iteration:language}

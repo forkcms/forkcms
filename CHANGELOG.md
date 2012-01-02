@@ -1,4 +1,54 @@
-3.1.6 (xxxx-xx-xx)
+3.1.9 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: the frontend CSS-minifier supports @import-statements from now on.
+* Core: you can't select redirect-languages that aren't active.
+
+Bugfixes:
+
+* Blog: meta should be deleted before the items are deleted.
+
+
+3.1.8 (2011-12-27)
+--
+Improvements:
+
+* Core: added public methods to FrontendPage to fetch page id & page record.
+* Core: split instantiation & execution of extras, allowing extra's to be aware of other extra's on a page.
+* All: fixed a lot of <label>-tags, which improves the accessibility.
+* All: added some hidden labels for formelements that doesn't have a <label>-tag linked, which improves the accessibility.
+* Authentication: don't mention which field is required seperatly.
+* Core: no more need to use the addslashes-modifier in JS-files, it will be handled by Fork. Introduced while fixing the bug mentioned by Tristan Charbonnier on http://forkcms.lighthouseapp.com/projects/61890/tickets/249.
+* Core: added a generic class that will enable you to use iCal-feeds.
+
+Bugfixes:
+
+* Core: confirmmessages weren't working anymore, as Samuel Debruyn mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/251
+* Extensions: when a templates was edited and an form-error was shown the added blocks weren't shown correctly again.
+* Tags: related widget wasn't using the current language, patch provided by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/243
+* Tags: the url for a tag that contains spaces wasn't calculated correctly, mentioned by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/244
+* Mailmotor: also replace https while linking the account
+* Formbuilder: changing the value of the submitbutton wasn't working, mentioned by phill on http://forkcms.lighthouseapp.com/projects/61890/tickets/252.
+* Installer: show the warning when library/external is not readable.
+
+
+3.1.7 (2011-12-20)
+--
+Improvements:
+
+* Core: tableSequenceByDragAndDrop allows the module to be chosen, so sequences from other modules might be used.
+* Tags: tagpages don't have any SEO-value, so don't index them.
+* Core: created multibyte-safe ucfirst variant and applied it throughout Fork CMS.
+
+Bugfixes:
+
+* Core: fixed XSS vulnerability (as mentioned on: http://packetstormsecurity.org/files/107815/forkcms-xss.txt)
+* Core: fixed page-unload warning on IE.
+* Core: it is now possible to use translations that don't exist in English.
+
+
+3.1.6 (2011-12-13)
 --
 Improvements:
 
@@ -20,7 +70,7 @@ Bugfixes:
 * Pages: removed extras still linked to page now no longer trigger an error.
 * Core: settings exclude & checked values on setMassActionCheckboxes now works again.
 * Formbuilder: fixed a typo, as mentioned by Tommy Van de Velde on http://forkcms.lighthouseapp.com/projects/61890/tickets/239.
-* Core: when adding a JS-file with an ? in it the timestamp was appended with a ?.
+* Core: when adding a JS-file with a ? in it the timestamp was appended with a ?.
 * Locale: improved translations for German (by Philipp Kruft - http://www.novacore.de)
 
 

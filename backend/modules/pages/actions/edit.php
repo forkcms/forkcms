@@ -173,7 +173,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setPaging(false);
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+		$this->dgDrafts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
@@ -183,7 +183,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+		$this->dgDrafts->addColumn('use_draft', null, SpoonFilter::ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -318,9 +318,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		if(isset($this->record['data']['internal_redirect']['page_id'])) $redirectValue = 'internal';
 		if(isset($this->record['data']['external_redirect']['url'])) $redirectValue = 'external';
 		$redirectValues = array(
-			array('value' => 'none', 'label' => ucfirst(BL::lbl('None'))),
-			array('value' => 'internal', 'label' => ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
-			array('value' => 'external', 'label' => ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
+			array('value' => 'none', 'label' => SpoonFilter::ucfirst(BL::lbl('None'))),
+			array('value' => 'internal', 'label' => SpoonFilter::ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
+			array('value' => 'external', 'label' => SpoonFilter::ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
 		);
 		$this->frm->addRadiobutton('redirect', $redirectValues, $redirectValue);
 		$this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown(), ($redirectValue == 'internal') ? $this->record['data']['internal_redirect']['page_id'] : null);
@@ -362,7 +362,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+		$this->dgRevisions->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
@@ -372,7 +372,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		$this->dgRevisions->addColumn('use_revision', null, SpoonFilter::ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
 	/**

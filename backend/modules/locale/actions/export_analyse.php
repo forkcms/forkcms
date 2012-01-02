@@ -37,7 +37,7 @@ class BackendLocaleExportAnalyse extends BackendBaseActionIndex
 
 		// xml headers
 		$headers[] = 'Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"';
-		$headers[] = 'Content-Type: application/octet-stream;charset=utf-8';
+		$headers[] = 'Content-Type: application/octet-stream;charset=' . SPOON_CHARSET;
 		$headers[] = 'Content-Length: ' . strlen($xmlOutput);
 
 		// set headers

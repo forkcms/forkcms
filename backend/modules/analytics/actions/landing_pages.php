@@ -42,7 +42,7 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 
 			// set headers
 			$dataGrid->setHeaderLabels(
-				array('page_path' => ucfirst(BL::lbl('Page')))
+				array('page_path' => SpoonFilter::ucfirst(BL::lbl('Page')))
 			);
 
 			// add mass action dropdown

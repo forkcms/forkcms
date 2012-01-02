@@ -117,7 +117,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setPaging(false);
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+		$this->dgDrafts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
@@ -127,7 +127,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+		$this->dgDrafts->addColumn('use_draft', null, SpoonFilter::ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -147,7 +147,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// get categories
 		$categories = BackendBlogModel::getCategories();
-		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
+		$categories['new_category'] = SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
 		// create elements
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
@@ -186,7 +186,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+		$this->dgRevisions->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
@@ -196,7 +196,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		$this->dgRevisions->addColumn('use_revision', null, SpoonFilter::ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
 	/**
@@ -219,7 +219,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
-		$this->tpl->assign('status', BL::lbl(ucfirst($this->record['status'])));
+		$this->tpl->assign('status', BL::lbl(SpoonFilter::ucfirst($this->record['status'])));
 
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);

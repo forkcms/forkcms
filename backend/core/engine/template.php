@@ -21,6 +21,13 @@
 class BackendTemplate extends SpoonTemplate
 {
 	/**
+	 * Should we add slashes to each value?
+	 *
+	 * @var bool
+	 */
+	private $addSlashes = false;
+
+	/**
 	 * URL instance
 	 *
 	 * @var	BackendURL
@@ -74,7 +81,7 @@ class BackendTemplate extends SpoonTemplate
 		// parse headers
 		if(!$customHeaders)
 		{
-			SpoonHTTP::setHeaders('Content-type: text/html;charset=utf-8');
+			SpoonHTTP::setHeaders('Content-type: text/html;charset=' . SPOON_CHARSET);
 		}
 
 		parent::display($template);
@@ -275,6 +282,14 @@ class BackendTemplate extends SpoonTemplate
 			foreach($messages[$currentModule] as $key => $value) $realMessages[$key] = $value;
 		}
 
+		// execute addslashes on the values for the locale, will be used in JS
+		if($this->addSlashes)
+		{
+			foreach($realErrors as &$value) $value = addslashes($value);
+			foreach($realLabels as &$value) $value = addslashes($value);
+			foreach($realMessages as &$value) $value = addslashes($value);
+		}
+
 		// sort the arrays (just to make it look beautifull)
 		ksort($realErrors);
 		ksort($realLabels);
@@ -307,10 +322,10 @@ class BackendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong' . ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort' . ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $localeToAssign['locDayLong' . ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $localeToAssign['locDayShort' . ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $localeToAssign['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $localeToAssign['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($localeToAssign);
@@ -341,6 +356,16 @@ class BackendTemplate extends SpoonTemplate
 			// assign
 			$this->assign('bodyClass', $bodyClass);
 		}
+	}
+
+	/**
+	 * Should we execute addSlashed on the locale?
+	 *
+	 * @param bool[optional] $on Enable addslashes.
+	 */
+	public function setAddSlashes($on = true)
+	{
+		$this->addSlashes = (bool) $on;
 	}
 }
 
@@ -550,7 +575,7 @@ class BackendTemplateModifiers
 	 */
 	public static function toLabel($value)
 	{
-		return ucfirst(BL::lbl(SpoonFilter::toCamelCase($value, '_', false)));
+		return SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($value, '_', false)));
 	}
 
 	/**

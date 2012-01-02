@@ -560,20 +560,20 @@ jsBackend.controls =
 						'{$lblOK|ucfirst}': function()
 						{
 							// close dialog
-							$this.dialog('close');
+							$(this).dialog('close');
 
 							// submit the form
-							$('select:visible option[data-message-id='+ $this.attr('id') +']').parents('form').eq(0).submit();
+							$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{
-							$this.dialog('close');
+							$(this).dialog('close');
 						}
 					},
 					open: function(e)
 					{
 						// set focus on first button
-						if($this.next().find('button').length > 0) { $this.next().find('button')[0].focus(); }
+						if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
 					}
 				});
 			}
@@ -1131,8 +1131,8 @@ jsBackend.forms =
 		{
 			$('#sidebar input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags|addslashes}',
-				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				emptyMessage: '{$msgNoTags}',
+				errorMessage: '{$errAddTagBeforeSubmitting}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
 				params: { fork: { module: 'tags', action: 'autocomplete' } }
@@ -1142,8 +1142,8 @@ jsBackend.forms =
 		{
 			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags|addslashes}',
-				errorMessage: '{$errAddTagBeforeSubmitting|addslashes}',
+				emptyMessage: '{$msgNoTags}',
+				errorMessage: '{$errAddTagBeforeSubmitting}',
 				addLabel: '{$lblAdd|ucfirst}',
 				removeLabel: '{$lblDeleteThisTag|ucfirst}',
 				params: { fork: { module: 'tags', action: 'autocomplete' } },
@@ -1182,7 +1182,7 @@ jsBackend.forms =
 	},
 
 	// check if any element has been changed
-	unloadWarningCheck: function()
+	unloadWarningCheck: function(e)
 	{
 		// initialize var
 		var changed = false;
@@ -1211,18 +1211,8 @@ jsBackend.forms =
 			}
 		});
 
-		// not changed?
-		if(!changed)
-		{
-			// prevent default action from being executed
-			if(e) e.preventDefault();
-
-			// unbind the event
-			$(window).off('beforeunload');
-		}
-
 		// return if needed
-		return (changed) ? '{$msgValuesAreChanged}' : null;
+		if(changed) return '{$msgValuesAreChanged}';
 	}
 }
 
@@ -1458,7 +1448,7 @@ jsBackend.tinyMCE =
 	// init, something like a constructor
 	init: function()
 	{
-		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit}</span></div>');
 
 		// bind click on the element
 		$(document).on('click', '.clickToEdit', function(e)
@@ -1519,10 +1509,10 @@ jsBackend.tinyMCE =
 			var warnings = [];
 
 			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt|addslashes}'); }
+			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt}'); }
 
 			// invalid links?
-			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks|addslashes}'); }
+			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks}'); }
 
 			// any warnings?
 			if(warnings.length > 0)
@@ -1630,12 +1620,11 @@ jsBackend.tableSequenceByDragAndDrop =
 					// the table
 					$table = $(this);
 					var action = (typeof $table.parents('table.dataGrid').data('action') == 'undefined') ? 'sequence' : $table.parents('table.dataGrid').data('action').toString();
+					var module = (typeof $table.parents('table.dataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.dataGrid').data('module').toString();
 
-					// buil ajax-url
-					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
-
-					// append
-					if(typeof $table.parents('table.dataGrid').data('extra-params') != 'undefined') url += $table.parents('table.dataGrid').data('extra-params');
+					// fetch extra params
+					if(typeof $table.parents('table.dataGrid').data('extra-params') != 'undefined') extraParams = $table.parents('table.dataGrid').data('extra-params');
+					else extraParams = {};
 
 					// init var
 					$rows = $(this).find('tr');
@@ -1647,11 +1636,11 @@ jsBackend.tableSequenceByDragAndDrop =
 					// make the call
 					$.ajax(
 					{
-						data:
+						data: $.extend(
 						{
-							fork: { action: action },
+							fork: { module: module, action: action },
 							new_id_sequence: newIdSequence.join(',')
-						},
+						}, extraParams),
 						success: function(data, textStatus)
 						{
 							// not a succes so revert the changes

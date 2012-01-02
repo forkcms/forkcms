@@ -14,6 +14,14 @@
  */
 class FrontendFooter extends FrontendBaseObject
 {
+	public function __construct()
+	{
+		parent::__construct();
+
+		// store in reference
+		Spoon::set('footer', $this);
+	}
+
 	/**
 	 * Parse the footer into the template
 	 */

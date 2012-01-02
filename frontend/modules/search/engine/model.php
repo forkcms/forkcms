@@ -419,9 +419,9 @@ class FrontendSearchModel
 			foreach($moduleResults as $module => $otherIds)
 			{
 				// check if this module actually is prepared to handle searches (well it should, because else there shouldn't be any search indices)
-				if(is_callable(array('Frontend' . ucfirst($module) . 'Model', 'search')))
+				if(is_callable(array('Frontend' . SpoonFilter::ucfirst($module) . 'Model', 'search')))
 				{
-					$moduleResults[$module] = call_user_func(array('Frontend' . ucfirst($module) . 'Model', 'search'), $otherIds);
+					$moduleResults[$module] = call_user_func(array('Frontend' . SpoonFilter::ucfirst($module) . 'Model', 'search'), $otherIds);
 
 					// update the ones that are allowed to be searched through
 					self::statusIndex($module, array_keys($moduleResults[$module]), true);

@@ -73,7 +73,7 @@ class SearchInstaller extends ModuleInstaller
 				// insert search
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')
+						'title' => SpoonFilter::ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')
 					),
 					'type' => 'root',
 					'language' => $language),

@@ -36,8 +36,8 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		$this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_CAMPAIGNS);
 
 		// set headers values
-		$headers['name'] = ucfirst(BL::lbl('Title'));
-		$headers['created_on'] = ucfirst(BL::lbl('Created'));
+		$headers['name'] = SpoonFilter::ucfirst(BL::lbl('Title'));
+		$headers['created_on'] = SpoonFilter::ucfirst(BL::lbl('Created'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);

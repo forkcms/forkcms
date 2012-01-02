@@ -81,7 +81,7 @@ class FrontendBlogRSS extends FrontendBaseBlock
 				if(isset($item['tags']))
 				{
 					// append tags-paragraph
-					$description .= '	<p>' . ucfirst(FL::lbl('Tags')) . ': ';
+					$description .= '	<p>' . SpoonFilter::ucfirst(FL::lbl('Tags')) . ': ';
 					$first = true;
 
 					// loop tags

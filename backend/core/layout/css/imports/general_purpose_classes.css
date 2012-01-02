@@ -20,3 +20,8 @@
 .floatLeft { float: left; }
 .floatRight { float: right; }
 .inline { display: inline !important; }
+.visuallyHidden { 
+	position: absolute !important; 
+	clip: rect(1px 1px 1px 1px); 
+	clip: rect(1px, 1px, 1px, 1px);
+}

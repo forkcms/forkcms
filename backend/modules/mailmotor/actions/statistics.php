@@ -91,7 +91,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 
 		// set headers values
 		$headers['link'] = strtoupper(BL::lbl('URL'));
-		$headers['clicks'] = ucfirst(BL::msg('ClicksAmount'));
+		$headers['clicks'] = SpoonFilter::ucfirst(BL::msg('ClicksAmount'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);

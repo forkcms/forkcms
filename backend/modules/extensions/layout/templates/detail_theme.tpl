@@ -16,7 +16,7 @@
 {/option:warnings}
 
 {option:information}
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+	<table width="100%">
 		<tr>
 			<td id="leftColumn">
 				{option:information.description}

@@ -127,12 +127,12 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true);
 
 		// add into breadcrumb
-		$this->breadcrumb->addElement(ucfirst(FL::lbl('Archive')));
+		$this->breadcrumb->addElement(SpoonFilter::ucfirst(FL::lbl('Archive')));
 		$this->breadcrumb->addElement($this->year);
 		if($this->month !== null) $this->breadcrumb->addElement(SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true));
 
 		// set pageTitle
-		$this->header->setPageTitle(ucfirst(FL::lbl('Archive')));
+		$this->header->setPageTitle(SpoonFilter::ucfirst(FL::lbl('Archive')));
 		$this->header->setPageTitle($this->year);
 		if($this->month !== null) $this->header->setPageTitle(SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true));
 

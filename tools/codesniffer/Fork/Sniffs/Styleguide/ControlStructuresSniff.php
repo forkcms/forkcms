@@ -56,7 +56,7 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 				// the 'break' statement should be indented one more level than the 'case' statement
 				if($tokens[$current['scope_closer']]['code'] == T_BREAK && ($tokens[$current['scope_closer']]['column'] - 1) != $current['column'])
 				{
-					$phpcsFile->addError('"break" and "case" should be indented equaly.', $stackPtr);
+					$phpcsFile->addError('"break" should be indented one more level then "case".', $stackPtr);
 				}
 
 				// the code needs to be on a new line

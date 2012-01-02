@@ -45,8 +45,8 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 		$this->dataGrid->setColumnsHidden(array('id', 'status'));
 
 		// set headers values
-		$headers['name'] = ucfirst(FL::lbl('Name'));
-		$headers['send_on'] = ucfirst(FL::lbl('Sent'));
+		$headers['name'] = SpoonFilter::ucfirst(FL::lbl('Name'));
+		$headers['send_on'] = SpoonFilter::ucfirst(FL::lbl('Sent'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);

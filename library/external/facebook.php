@@ -12,7 +12,7 @@
  * - API-key isn't used anymore.
  * - Removed datefunction, because it isn't used anymore.
  * - Don't use a global curl instance anymore.
- * - Bugfix: when getting teh access token a file was submitted.
+ * - Bugfix: when getting the access token a file was submitted.
  * - Implemented signed cookies, thx to Davy Van Vooren.
  *
  * License

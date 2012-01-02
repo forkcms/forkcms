@@ -72,7 +72,7 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['data'] = array();
 
 			foreach($metricsPerDay as $j => $data)

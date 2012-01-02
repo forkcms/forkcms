@@ -84,7 +84,7 @@
 	{/option:dgContent}
 
 	{option:!dgContent}
-		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+		<table class="dataGrid">
 			<tr>
 				<td>{$msgNoContent}</td>
 			</tr>
@@ -106,7 +106,7 @@
 	{/option:dgExitPages}
 
 	{option:!dgExitPages}
-		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+		<table class="dataGrid">
 			<tr>
 				<td>{$msgNoExitPages}</td>
 			</tr>
@@ -128,7 +128,7 @@
 	{/option:dgLandingPages}
 
 	{option:!dgLandingPages}
-		<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+		<table class="dataGrid">
 			<tr>
 				<td>{$msgNoLandingPages}</td>
 			</tr>

@@ -1,7 +1,7 @@
 {*
 	variables that are available:
 	- {$archive}: contains an array with some dates
-	- {$items}: contains an array with all items, each element contains data about the itme
+	- {$items}: contains an array with all items, each element contains data about the items
 *}
 
 {option:!items}

@@ -91,7 +91,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		}
 
 		// set headers
-		$this->dgPosts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('Author')), 'publish_on' => ucfirst(BL::lbl('PublishedOn'))));
+		$this->dgPosts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('Author')), 'publish_on' => SpoonFilter::ucfirst(BL::lbl('PublishedOn'))));
 
 		// hide columns
 		$this->dgPosts->setColumnsHidden(array('revision_id'));
@@ -136,7 +136,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		}
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('Author'))));
+		$this->dgDrafts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('Author'))));
 
 		// hide columns
 		$this->dgDrafts->setColumnsHidden(array('revision_id'));
@@ -181,7 +181,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		}
 
 		// set headers
-		$this->dgRecent->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('Author'))));
+		$this->dgRecent->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('Author'))));
 
 		// hide columns
 		$this->dgRecent->setColumnsHidden(array('revision_id'));
