@@ -194,6 +194,10 @@
         <translation language="es"><![CDATA[No tenemos permiso de escritura para la carpeta de módulos. Comprueba si tienes permisos de escritura en la carpeta de módulos (modules) en todas las aplicaciones.]]></translation>
         <translation language="de"><![CDATA[Es fehlen Schreibrechte für die Modul-Ordner. Bitte überprüfe die Schreibrechte der Ordner "modules" in den Ordnern "frontend" und "backend".]]></translation>
       </item>
+      <item type="message" name="ModulesWarnings">
+        <translation language="nl"><![CDATA[Er zijn waarschuwingen voor volgende module(s)]]></translation>
+        <translation language="en"><![CDATA[There are some warnings for following module(s)]]></translation>
+      </item>
       <item type="message" name="NoModulesInstalled">
         <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[No modules installed.]]></translation>

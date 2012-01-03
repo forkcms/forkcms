@@ -1,3 +1,10 @@
+3.1.10 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Extensions: fixed module-warnings system.
+
+
 3.1.9 (2012-01-03)
 --
 Improvements:
