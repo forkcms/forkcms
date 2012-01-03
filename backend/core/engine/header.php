@@ -164,9 +164,12 @@ class BackendHeader
 			$ignoreCache = array(
 				'/backend/core/js/jquery/jquery.js',
 				'/backend/core/js/jquery/jquery.ui.js',
+				'/backend/core/js/ckeditor/jquery.ui.dialog.patch.js',
 				'/backend/core/js/jquery/jquery.tools.js',
 				'/backend/core/js/jquery/jquery.backend.js',
-				'/backend/core/js/tiny_mce/tiny_mce.js'
+				'/backend/core/js/ckeditor/ckeditor.js',
+				'/backend/core/js/ckeditor/adapters/jquery.js',
+				'/backend/core/js/ckfinder/ckfinder.js'
 			);
 
 			foreach($this->jsFiles as $file)

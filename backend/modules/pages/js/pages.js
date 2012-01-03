@@ -93,7 +93,7 @@ jsBackend.pages.extras =
 		var visible = blockVisibility.attr('checked');
 
 		// add visual representation of block to template visualisation
-		jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
+		var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
 
 		// block/widget = don't show editor
 		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') $('.blockContentHTML', block).hide();
@@ -103,6 +103,8 @@ jsBackend.pages.extras =
 
 		// reset block indexes
 //		jsBackend.pages.extras.resetIndexes();
+
+		return addedVisual ? index : false;
 	},
 
 	// add block visual on template
@@ -181,11 +183,14 @@ jsBackend.pages.extras =
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
 
+		// set content in editor
+		$('#html').val(previousContent);
+
 		// placeholder for block node that will be moved by the jQuery dialog
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
 		// show dialog
-		$('#blockHtml' + index).parent().parent().parent().dialog(
+		$('#blockHtml').dialog(
 		{
 			closeOnEscape: false,
 			draggable: false,
@@ -193,12 +198,16 @@ jsBackend.pages.extras =
 			modal: true,
 			width: 940,
 			title: '{$lblEditor|ucfirst}',
+			position: 'center',
 			buttons:
 			{
 				'{$lblOK|ucfirst}': function()
 				{
+					// grab the content
+					var content = $('#html').val();
+
 					// save content
-					jsBackend.pages.extras.setContent(index, null);
+					jsBackend.pages.extras.setContent(index, content);
 
 					// edit content = template is no longer original
 					jsBackend.pages.template.original = false;
@@ -231,9 +240,6 @@ jsBackend.pages.extras =
 				blockPlaceholder.remove();
 			}
 		});
-
-		// add editor
-		tinyMCE.execCommand('mceAddControl', true, 'blockHtml' + index);
 	},
 
 	// hide fallback
@@ -345,17 +351,10 @@ jsBackend.pages.extras =
 	},
 
 	// save/reset the content
-	setContent: function(index, previousContent)
+	setContent: function(index, content)
 	{
-		// content does not need to be saved
-		if(previousContent != null)
-		{
-			// reset to previous content
-			tinyMCE.get('blockHtml' + index).setContent(previousContent);
-		}
-
-		// remove editor
-		tinyMCE.execCommand('mceRemoveControl', true, 'blockHtml' + index);
+		// the content to set
+		if(content != null) $('#blockHtml' + index).val(content);
 
 		// add short description to visual representation of block
 		var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
@@ -437,14 +436,23 @@ jsBackend.pages.extras =
 				{
 					'{$lblOK|ucfirst}': function()
 					{
+						// fetch the selected extra id
+						var selectedExtraId = $('#extraExtraId').val();
+
 						// add the extra
-						jsBackend.pages.extras.addBlock($('#extraExtraId').val(), position);
+						var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
 
 						// add a block = template is no longer original
 						jsBackend.pages.template.original = false;
 
 						// close dialog
 						$(this).dialog('close');
+
+						// if the added block was an editor, show the editor immediately
+						if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
+						{
+							$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+						}
 					},
 					'{$lblCancel|ucfirst}': function()
 					{

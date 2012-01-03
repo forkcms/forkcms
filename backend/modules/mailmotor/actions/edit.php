@@ -47,7 +47,6 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-			$this->header->addJS('tiny_mce/jquery.tinymce.js', 'core');
 			$this->getData();
 			$this->loadWizardSteps();
 			$this->{'loadStep' . $this->stepId}();

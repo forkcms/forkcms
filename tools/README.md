@@ -68,7 +68,7 @@ Most warnings will be about CyclomaticComplexity or NestingLevel, you can't igno
 #### PHP Mess Detection (phpmd.xml)
 Basicaly PHP Mess Detection is a spin-off of PHP Depend (see below) it will also check the code for possible bugs, suboptimal code, ... Once again it is important to intepret the result, not everything that is reported means that the code is bad.
 
-<small>Remark: it seems like PHP Mess Detection ignores the --ignore parameter, so all TinyMCE-crap-code is included, you can ignore all the errors about files inside the tiny_mce-folder</small>
+<small>Remark: it seems like PHP Mess Detection ignores the --ignore parameter, so all editor-crap-code is included, you can ignore all the errors about files inside the ckeditor and ckfinder-folder</small>
 
 #### PHP Depend (pdepend.xml, pdepend_chart.svg, pdepend_pyramid.svg)
 PHP Depend is a tool that performs code analysis. It calculates the software metrics, each number represents a aspect of the code.
