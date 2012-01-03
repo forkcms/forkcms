@@ -8,6 +8,7 @@ Improvements:
 Bugfixes:
 
 * Extensions: fixed module-warnings system.
+* Extensions: fixed module upload.
 
 
 3.1.9 (2012-01-03)
