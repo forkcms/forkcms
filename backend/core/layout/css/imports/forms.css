@@ -34,7 +34,7 @@ textarea {
 }
 
 	textarea.inputEditor {
-		/* Reset border-radius for tinyMCE textareas */
+		/* Reset border-radius for editor textareas */
 		-moz-border-radius: 0;
 		-webkit-border-radius: 0;
 		border-radius: 0;

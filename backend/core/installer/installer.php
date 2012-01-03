@@ -875,5 +875,9 @@ class CoreInstaller extends ModuleInstaller
 		{
 			// we don't need those keys.
 		}
+
+		// ckfinder
+		$this->setSetting('core', 'ckfinder_license_name', 'Fork CMS');
+		$this->setSetting('core', 'ckfinder_license_key', 'QJH2-32UV-6VRM-V6Y7-A91J-W26Z-3F8R');
 	}
 }

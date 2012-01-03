@@ -1,3 +1,15 @@
+3.2.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: integrated CKEditor into Fork CMS.
+* Pages: when adding an editor field, the editor will immediately open.
+
+Bugfixes:
+
+* Extensions: fixed module-warnings system.
+
+
 3.1.9 (2012-01-03)
 --
 Improvements:
