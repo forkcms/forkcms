@@ -126,16 +126,11 @@ class ModuleInstaller
 			$value = strip_tags((string) $value);
 
 			// insert in db
-			$db->insert(
-				'search_index',
-				array(
-					'module' => (string) $module,
-					'other_id' => (int) $otherId,
-					'language' => (string) $language,
-					'field' => (string) $field,
-					'value' => $value,
-					'active' => 'Y'
-				)
+			$db->execute(
+				'INSERT INTO search_index (module, other_id, language, field, value, active)
+				 VALUES (?, ?, ?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?, active = ?',
+				array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
 			);
 		}
 	}
