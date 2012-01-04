@@ -4,6 +4,7 @@ Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
 * Pages: when adding an editor field, the editor will immediately open.
+* Core: added a possibility to add an extra to all pages when installing forkcms with the installer function addDefaultExtra. The extra will be added to all pages without this extra.
 
 Bugfixes:
 

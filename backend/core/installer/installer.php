@@ -25,6 +25,13 @@ class ModuleInstaller
 	private $db;
 
 	/**
+	 * The default extras that have to be added to every page.
+	 *
+	 * @var array
+	 */
+	private $defaultExtras;
+
+	/**
 	 * The frontend language(s)
 	 *
 	 * @var array
@@ -66,6 +73,17 @@ class ModuleInstaller
 		$this->interfaceLanguages = $interfaceLanguages;
 		$this->example = (bool) $example;
 		$this->variables = $variables;
+	}
+
+	/**
+	 * Adds a default extra to the stack of extras
+	 *
+	 * @param int $extraId The extra id to add to every page.
+	 * @param string $position The position to put the default extra.
+	 */
+	protected function addDefaultExtra($extraId, $position)
+	{
+		$this->defaultExtras[] = array('id' => $extraId, 'position' => $position);
 	}
 
 	/**
@@ -119,6 +137,16 @@ class ModuleInstaller
 	protected function getDB()
 	{
 		return $this->db;
+	}
+
+	/**
+	 * Get the default extras.
+	 *
+	 * @return array
+	 */
+	public function getDefaultExtras()
+	{
+		return $this->defaultExtras;
 	}
 
 	/**
