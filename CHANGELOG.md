@@ -4,6 +4,7 @@ Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
 * Pages: when adding an editor field, the editor will immediately open.
+* Core: add a class 'noHelpTxt' to an image or file field to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
 
 Bugfixes:
 
