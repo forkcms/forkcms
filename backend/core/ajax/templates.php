@@ -23,7 +23,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 		parent::execute();
 
 		// init vars
-		$templates = '';
+		$templates = array();
 		$theme = BackendModel::getModuleSetting('core', 'theme');
 		$files[] = BACKEND_PATH . '/core/layout/editor_templates/templates.js';
 		$themePath = FRONTEND_PATH . '/themes/' . $theme . '/core/layout/editor_templates/templates.js';
@@ -34,7 +34,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 		foreach($files as $file)
 		{
 			// process file
-			$templates[] = $this->processFile($file);
+			$templates = array_merge($templates, $this->processFile($file));
 		}
 
 		// set headers
@@ -44,7 +44,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 		if(!empty($templates))
 		{
 			echo 'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n";
-			echo '[' . implode(',' . "\n", $templates) . ']' . "\n";
+			echo json_encode($templates) . "\n";
 			echo '});';
 		}
 		exit;
@@ -54,29 +54,56 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 	 * Process the content of the file.
 	 *
 	 * @param string $file The file to process.
-	 * @return boolean|string
+	 * @return boolean|array
 	 */
 	private function processFile($file)
 	{
 		// if the files doesn't exists we can stop here and just return an empty string
-		if(!SpoonFile::exists($file)) return '';
+		if(!SpoonFile::exists($file)) return array();
 
 		// fetch content from file
 		$content = SpoonFile::getContent($file);
+		$json = @json_decode($content, true);
 
-		$search = array("\n", "\r", "\t", 'image: "/', 'image: \'/');
-		$replace = array('', '', '', 'image: "', 'image: \'');
+		// skip invalid JSON
+		if($json === false) return array();
+		if($json === null) return array();
 
-		// replace some stuff, we need to replace the first slash for images, because we will set it in the config
-		// it ourself, otherwise no images will be shown
-		$content = str_replace($search, $replace, $content);
+		$return = array();
 
-		// remove array stuff
-		$content = trim($content, '[]');
+		// loop templates
+		foreach($json as $template)
+		{
+			// skip items without a title
+			if(!isset($template['title'])) continue;
 
-		// split the templates
-		$content = str_replace('},', "},\n", $content);
+			if(isset($template['file']))
+			{
+				if(SpoonFile::exists(PATH_WWW . $template['file']))
+				{
+					$template['html'] = SpoonFile::getContent(PATH_WWW . $template['file']);
+				}
+			}
 
-		return $content;
+			// skip items without HTML
+			if(!isset($template['html'])) continue;
+
+			$image = '';
+			if(isset($template['image']))
+			{
+				// we have to remove the first slash, because that is set in the wrapper. Otherwise the images don't work
+				$image = ltrim($template['image'], '/');
+			}
+
+			$temp['title'] = $template['title'];
+			$temp['description'] = (isset($template['description'])) ? $template['description'] : '';
+			$temp['image'] = $image;
+			$temp['html'] = $template['html'];
+
+			// add the template
+			$return[] = $temp;
+		}
+
+		return $return;
 	}
 }
