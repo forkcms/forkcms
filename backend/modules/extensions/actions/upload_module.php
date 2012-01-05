@@ -38,38 +38,11 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 	}
 
 	/**
-	 * Do we have write rights to the modules folders?
+	 * Process the zip-file & install the module
 	 *
-	 * @return bool
+	 * @return string
 	 */
-	private function isWritable()
-	{
-		// check if writable
-		if(!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) return false;
-		if(!BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH)) return false;
-
-		// everything is writeable
-		return true;
-	}
-
-	/**
-	 * Create a form and its elements.
-	 */
-	private function loadForm()
-	{
-		// create form
-		$this->frm = new BackendForm('upload');
-
-		// create and add elements
-		$this->frm->addFile('file');
-	}
-
-	/**
-	 * Process the zip-file
-	 *
-	 * @return array
-	 */
-	private function processZipFile()
+	private function installModule()
 	{
 		// list of validated files (these files will actually be unpacked)
 		$files = array();
@@ -90,9 +63,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		if($zip->numFiles == 0)
 		{
 			$fileFile->addError(BL::getError('FileIsEmpty'));
-			return array();
+			return;
 		}
-
 
 		// directories we are allowed to upload to
 		$allowedDirectories = array(
@@ -144,25 +116,58 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		if(count($files) == 0)
 		{
 			$fileFile->addError(BL::getError('FileContentsIsUseless'));
-			return array();
+			return;
 		}
 
 		// module already exists on the filesystem
 		if(BackendExtensionsModel::existsModule($moduleName))
 		{
 			$fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
-			return array();
+			return;
 		}
 
 		// installer in array?
 		if(!in_array('backend/modules/' . $moduleName . '/installer/installer.php', $files))
 		{
 			$fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
-			return array();
+			return;
 		}
 
+		// unpack module files
+		$zip->extractTo(PATH_WWW, $files);
+
+		// run installer
+		BackendExtensionsModel::installModule($moduleName);
+
 		// return the files
-		return $files;
+		return $moduleName;
+	}
+
+	/**
+	 * Do we have write rights to the modules folders?
+	 *
+	 * @return bool
+	 */
+	private function isWritable()
+	{
+		// check if writable
+		if(!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) return false;
+		if(!BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH)) return false;
+
+		// everything is writeable
+		return true;
+	}
+
+	/**
+	 * Create a form and its elements.
+	 */
+	private function loadForm()
+	{
+		// create form
+		$this->frm = new BackendForm('upload');
+
+		// create and add elements
+		$this->frm->addFile('file');
 	}
 
 	/**
@@ -179,17 +184,13 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 			// validate the file
 			if($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip')))
 			{
-				$files = $this->processZipFile();
+				$moduleName = $this->installModule();
 			}
 
 			// passed all validation
 			if($this->frm->isCorrect())
 			{
-				// unpack module files
-				$zip->extractTo(PATH_WWW, $files);
-
-				// run installer
-				BackendExtensionsModel::installModule($moduleName);
+				// by now, the module has already been installed in processZipFile()
 
 				// redirect with fireworks
 				$this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $moduleName . '&highlight=row-module_' . $moduleName);

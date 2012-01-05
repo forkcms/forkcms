@@ -1,5 +1,25 @@
-3.1.9 (xxxx-xx-xx)
+3.2.0 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: integrated CKEditor into Fork CMS.
+* Pages: when adding an editor field, the editor will immediately open.
+* Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
+* Core: added maxItems and afterAdd options for the multipleSelectbox.
+
+Bugfixes:
+
+* Extensions: fixed module-warnings system.
+* Extensions: fixed module upload.
+
+
+3.1.9 (2012-01-03)
+--
+Improvements:
+
+* Core: the frontend CSS-minifier supports @import-statements from now on.
+* Core: you can't select redirect-languages that aren't active.
+
 Bugfixes:
 
 * Blog: meta should be deleted before the items are deleted.

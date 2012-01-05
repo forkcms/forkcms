@@ -1,0 +1,533 @@
+body .cke_dialog {
+visibility:visible;
+}
+
+.cke_skin_chris .cke_dialog_body {
+margin:1px 16px 20px;
+position:relative;
+z-index:1;
+}
+
+.cke_skin_chris .cke_dialog_tl,.cke_skin_chris .cke_dialog_tr,.cke_skin_chris .cke_dialog_tc,.cke_skin_chris .cke_dialog_bl,.cke_skin_chris .cke_dialog_br,.cke_skin_chris .cke_dialog_bc {
+background-image:url(images/sprites.png);
+background-repeat:no-repeat;
+position:absolute;
+}
+
+.cke_skin_chris .cke_dialog_tl {
+background-position:-16px -15px;
+height:16px;
+left:0;
+top:0;
+width:16px;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_tl {
+background-position:-16px -397px;
+}
+
+.cke_skin_chris .cke_dialog_tr {
+background-position:-16px -76px;
+height:16px;
+right:0;
+top:0;
+width:16px;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_tr {
+background-position:-16px -457px;
+}
+
+.cke_skin_chris .cke_dialog_tc {
+background-position:0 -136px;
+background-repeat:repeat-x;
+height:16px;
+left:16px;
+right:16px;
+top:0;
+}
+
+.cke_skin_chris .cke_dialog_bl {
+background-position:-16px -196px;
+bottom:0;
+height:51px;
+left:0;
+width:30px;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_bl {
+background-position:-16px -517px;
+}
+
+.cke_skin_chris .cke_dialog_br {
+background-position:-16px -263px;
+bottom:0;
+height:51px;
+right:0;
+width:30px;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_br {
+background-position:-16px -584px;
+}
+
+.cke_skin_chris .cke_dialog_bc {
+background-position:0 -330px;
+background-repeat:repeat-x;
+bottom:0;
+height:51px;
+left:30px;
+right:30px;
+}
+
+.cke_skin_chris .cke_dialog_ml,.cke_skin_chris .cke_dialog_mr {
+background-image:url(images/dialog_sides.png);
+background-repeat:repeat-y;
+bottom:51px;
+position:absolute;
+top:16px;
+width:16px;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_ml,.cke_skin_chris .cke_rtl .cke_dialog_mr {
+background-image:url(images/dialog_sides_rtl.png);
+}
+
+.cke_skin_chris .cke_dialog_ml {
+background-position:-1px 0;
+left:0;
+}
+
+.cke_skin_chris .cke_dialog_mr {
+background-position:-16px 0;
+right:0;
+}
+
+.cke_skin_chris .cke_browser_iequirks .cke_dialog_ml,.cke_skin_chris .cke_browser_iequirks .cke_dialog_mr {
+margin-top:3px;
+}
+
+.cke_skin_chris .cke_dialog_title {
+/* background-color:#8db1ff;
+background-image:url(images/sprites.png);
+background-position:0 -678px;
+background-repeat:repeat-x; */
+background:#eee url(images/gradient.png);
+background-position:0 -60px;
+color:#444;
+cursor:move;
+font-size:18px;
+font-weight:bold;
+padding:7px 10px 26px;
+position:relative;
+font-family: "Trebuchet MS",sans-serif;
+}
+
+.cke_skin_chris .cke_browser_ie.cke_rtl .cke_dialog_title {
+position:static!important;
+unicode-bidi:bidi-override;
+}
+
+.cke_skin_chris .cke_dialog_contents {
+background-color:#f7f8fd;
+/* border:#2b66c9 1px solid; */
+border-top:1px solid #bbb;
+overflow:auto;
+padding:5px 10px;
+}
+
+.cke_skin_chris .cke_dialog_footer {
+background-color:#fff;
+text-align:right;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_footer {
+text-align:left;
+}
+
+.cke_skin_chris .cke_dialog_tabs {
+display:inline-block;
+height:19px;
+margin-left:10px;
+margin-right:10px;
+margin-top:-19px;
+position:absolute;
+z-index:2;
+}
+
+.cke_skin_chris a.cke_dialog_tab,.cke_skin_chris a:link.cke_dialog_tab,.cke_skin_chris a:active.cke_dialog_tab,.cke_skin_chris a:hover.cke_dialog_tab,.cke_skin_chris a:visited.cke_dialog_tab {
+border-left:1px solid #aaa;
+border-right:1px solid #aaa;
+border-top:1px solid #aaa;
+color:#444;
+cursor:pointer;
+display:inline-block;
+height:14px;
+padding:2px 12px;
+margin-right:10px;
+-webkit-border-top-left-radius: 2px;
+-webkit-border-top-right-radius: 2px;
+-moz-border-radius-topleft: 2px;
+-moz-border-radius-topright: 2px;
+border-top-left-radius: 2px;
+border-top-right-radius: 2px;
+background:url(images/gradient.png);
+color:#444;
+}
+
+.cke_skin_chris .cke_browser_gecko18 a.cke_dialog_tab,.cke_skin_chris .cke_browser_gecko18 a:link.cke_dialog_tab,.cke_skin_chris .cke_browser_gecko18 a:active.cke_dialog_tab,.cke_skin_chris .cke_browser_gecko18 a:hover.cke_dialog_tab,.cke_skin_chris .cke_browser_gecko18 a:visited.cke_dialog_tab {
+display:inline;
+position:relative;
+top:6px;
+}
+
+.cke_skin_chris a:hover.cke_dialog_tab {
+background-color:#fff;
+}
+
+.cke_skin_chris a.cke_dialog_tab_selected,.cke_skin_chris a:link.cke_dialog_tab_selected,.cke_skin_chris a:active.cke_dialog_tab_selected,.cke_skin_chris a:hover.cke_dialog_tab_selected,.cke_skin_chris a:visited.cke_dialog_tab_selected {
+background:#f7f8fd;
+border-bottom:1px solid #f7f8fd;
+cursor:default;
+font-weight:normal;
+}
+
+.cke_skin_chris .cke_hc .cke_dialog_tabs a,.cke_skin_chris .cke_hc .cke_dialog_footer a {
+border:1px solid #FFF;
+filter:alpha(opacity=100);
+opacity:1;
+}
+
+.cke_skin_chris .cke_single_page .cke_dialog_title {
+padding-bottom:3px;
+}
+
+.cke_skin_chris .cke_dialog_ui_vbox table,.cke_skin_chris .cke_dialog_ui_hbox table {
+margin:auto;
+}
+
+.cke_skin_chris .cke_dialog_ui_vbox_child {
+padding:5px 0;
+}
+
+.cke_skin_chris input.cke_dialog_ui_input_text,.cke_skin_chris input.cke_dialog_ui_input_password {
+background-color:#FFF;
+border:none;
+height:14px;
+padding:0;
+width:100%;
+}
+
+input:focus {
+outline: none;
+}
+
+.cke_skin_chris .cke_browser_gecko.cke_hc div.cke_dialog_ui_input_text,.cke_skin_chris .cke_browser_gecko.cke_hc div.cke_dialog_ui_input_password {
+border-width:0;
+}
+
+.cke_skin_chris .cke_browser_gecko18.cke_hc div.cke_dialog_ui_input_text,.cke_skin_chris .cke_browser_gecko18.cke_hc div.cke_dialog_ui_input_password {
+border-width:1px;
+}
+
+.cke_skin_chris textarea.cke_dialog_ui_input_textarea {
+background-color:#FFF;
+border:none;
+overflow:auto;
+padding:0;
+resize:none;
+width:100%;
+}
+
+.cke_skin_chris div.cke_disabled .cke_dialog_ui_labeled_content * {
+background-color:#a0a0a0;
+cursor:default;
+}
+
+.cke_skin_chris .cke_dialog_ui_hbox {
+width:100%;
+}
+
+.cke_skin_chris .cke_dialog_ui_hbox_first,.cke_skin_chris .cke_dialog_ui_hbox_child,.cke_skin_chris .cke_dialog_ui_hbox_last {
+vertical-align:top;
+}
+
+.cke_skin_chris .cke_ltr .cke_dialog_ui_hbox_first,.cke_skin_chris .cke_ltr .cke_dialog_ui_hbox_child {
+padding-right:10px;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_ui_hbox_first,.cke_skin_chris .cke_rtl .cke_dialog_ui_hbox_child {
+padding-left:10px;
+}
+
+.cke_skin_chris a.cke_dialog_ui_button {
+border-collapse:separate;
+cursor:default;
+}
+
+.cke_skin_chris span.cke_dialog_ui_button {
+background:url(images/gradient.png) repeat-x;
+border:1px solid #bebebe;
+color:#444;
+cursor:default;
+display:inline-block;
+padding:4px 8px;
+text-align:center;
+font-family:Tahoma, Geneva, Verdana, sans-serif;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+}
+
+.cke_skin_chris a.cke_dialog_ui_button span.cke_disabled {
+background-color:#c5c5b3;
+border:#898980 1px solid;
+color:#5e5e55;
+}
+
+.cke_skin_chris a:focus span.cke_dialog_ui_button,.cke_skin_chris a:active span.cke_dialog_ui_button {
+background-color:#8db1ff;
+}
+
+.cke_skin_chris .cke_hc a:focus span.cke_dialog_ui_button,.cke_skin_chris .cke_hc a:active span.cke_dialog_ui_button {
+border-width:2px;
+}
+
+.cke_skin_chris .cke_dialog_footer_buttons {
+display:inline-table;
+margin-left:12px;
+margin-right:12px;
+position:relative;
+width:auto;
+}
+
+.cke_skin_chris .cke_dialog_footer_buttons span.cke_dialog_ui_button {
+margin:7px 0;
+width:60px;
+}
+
+.cke_skin_chris a.cke_dialog_close_button,.cke_skin_chris a:hover.cke_dialog_close_button,.cke_skin_chris .cke_browser_ie6 a.cke_dialog_close_button,.cke_skin_chris .cke_browser_ie6 a:hover.cke_dialog_close_button {
+background-image:url(images/sprites.png);
+background-position:-20px -655px;
+background-repeat:no-repeat;
+cursor:pointer;
+height:21px;
+position:absolute;
+text-align:center;
+top:7px;
+width:21px;
+}
+
+.cke_skin_chris .cke_rtl a.cke_dialog_close_button,.cke_skin_chris .cke_rtl a:hover.cke_dialog_close_button {
+left:10px;
+}
+
+.cke_skin_chris .cke_browser_ie6.cke_rtl a.cke_dialog_close_button,.cke_skin_chris .cke_browser_ie6.cke_rtl a:hover.cke_dialog_close_button {
+float:left;
+margin-left:-7px;
+margin-top:-55px;
+position:relative;
+}
+
+.cke_skin_chris .cke_browser_iequirks.cke_rtl.cke_single_page a.cke_dialog_close_button,.cke_skin_chris .cke_browser_iequirks.cke_rtl.cke_single_page a:hover.cke_dialog_close_button {
+margin-top:-32px;
+}
+
+.cke_skin_chris .cke_browser_iequirks.cke_ltr a.cke_dialog_close_button,.cke_skin_chris .cke_browser_iequirks.cke_ltr a:hover.cke_dialog_close_button {
+margin-top:0;
+}
+
+.cke_skin_chris .cke_dialog_ui_input_select {
+background-color:#FFF;
+border:1px solid #aaa;
+padding:3px;
+}
+
+.cke_skin_chris .cke_dialog_ui_input_file {
+height:25px;
+width:100%;
+}
+
+.cke_skin_chris .cke_dialog .cke_dark_background {
+background-color:#eaead1;
+font-size:14px;
+text-align:center;
+}
+
+.cke_skin_chris .cke_dialog .cke_hand {
+cursor:pointer;
+}
+
+.cke_skin_chris .cke_dialog .cke_centered {
+text-align:center;
+}
+
+.cke_skin_chris .cke_dialog a.cke_btn_reset {
+background-image:url(images/mini.gif);
+background-position:0 -32px;
+background-repeat:no-repeat;
+border:1px none;
+float:right;
+font-size:1px;
+height:16px;
+width:16px;
+}
+
+.cke_skin_chris .cke_dialog a.cke_btn_locked,.cke_skin_chris .cke_dialog a.cke_btn_unlocked {
+background-image:url(images/mini.gif);
+background-position:0 0;
+background-repeat:no-repeat;
+border:none 1px;
+float:left;
+font-size:1px;
+height:16px;
+width:16px;
+}
+
+.cke_skin_chris .cke_dialog a.cke_btn_unlocked {
+background-image:url(images/mini.gif);
+background-position:0 -16px;
+}
+
+.cke_skin_chris .cke_dialog .cke_btn_over {
+border:outset 1px;
+cursor:pointer;
+}
+
+.cke_skin_chris .cke_dialog .ImagePreviewBox {
+background-color:#FFF;
+border:2px ridge #000;
+height:160px;
+overflow:scroll;
+padding:2px;
+width:230px;
+}
+
+.cke_skin_chris .cke_dialog .ImagePreviewBox table td {
+white-space:normal;
+}
+
+.cke_skin_chris .cke_dialog .ImagePreviewLoader {
+background-color:#e4e4e4;
+filter:alpha(opacity=90);
+height:160px;
+margin:2px;
+opacity:.9;
+overflow:hidden;
+padding:2px;
+position:absolute;
+white-space:normal;
+width:230px;
+}
+
+.cke_skin_chris .cke_dialog .FlashPreviewBox {
+background-color:#FFF;
+border:2px ridge #000;
+height:160px;
+overflow:auto;
+padding:2px;
+white-space:normal;
+width:390px;
+}
+
+.cke_skin_chris .cke_dialog .cke_pastetext {
+height:170px;
+width:346px;
+}
+
+.cke_skin_chris .cke_dialog .cke_pastetext textarea {
+height:170px;
+resize:none;
+width:340px;
+}
+
+.cke_skin_chris .cke_dialog iframe.cke_pasteframe {
+background-color:#FFF;
+border:1px solid #000;
+height:130px;
+width:346px;
+}
+
+.cke_skin_chris .cke_dialog .cke_light_background {
+background-color:#ffffbe;
+text-align:center;
+}
+
+.cke_skin_chris .cke_disabled {
+color:#a0a0a0;
+}
+
+.cke_skin_chris .cke_hc .cke_dialog_title,.cke_skin_chris .cke_hc .cke_dialog_tabs,.cke_skin_chris .cke_hc .cke_dialog_contents,.cke_skin_chris .cke_hc .cke_dialog_footer {
+border-left:1px solid;
+border-right:1px solid;
+}
+
+.cke_skin_chris .cke_hc .cke_dialog_title {
+border-top:1px solid;
+}
+
+.cke_skin_chris .cke_hc .cke_dialog_footer {
+border-bottom:1px solid;
+}
+
+.cke_skin_chris .cke_hc .cke_dialog_close_button span {
+cursor:pointer;
+display:inline;
+font-weight:bold;
+position:relative;
+top:3px;
+}
+
+.cke_skin_chris .cke_hc a.cke_btn_locked,.cke_skin_chris .cke_hc a.cke_btn_unlocked,.cke_skin_chris .cke_hc a.cke_btn_reset {
+border-style:solid;
+float:left;
+height:auto;
+width:auto;
+}
+
+.cke_skin_chris table.cke_dialog.cke_browser_gecko,.cke_skin_chris .cke_browser_gecko18 .cke_dialog_footer_buttons span.cke_dialog_ui_button {
+display:block;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog_tabs,.cke_skin_chris .cke_ltr a.cke_dialog_close_button {
+right:10px;
+}
+
+.cke_skin_chris .cke_hc a:hover.cke_dialog_tab,.cke_skin_chris .cke_hc a.cke_dialog_tab_selected,.cke_skin_chris .cke_hc a:link.cke_dialog_tab_selected,.cke_skin_chris .cke_hc a:active.cke_dialog_tab_selected,.cke_skin_chris .cke_hc a:hover.cke_dialog_tab_selected,.cke_skin_chris .cke_hc a:visited.cke_dialog_tab_selected {
+border-width:3px;
+padding:2px 3px!important;
+}
+
+.cke_skin_chris .cke_single_page .cke_dialog_tabs,.cke_skin_chris a.cke_dialog_close_button span,.cke_skin_chris .cke_dialog_body .cke_label {
+display:none;
+}
+
+.cke_skin_chris div.cke_dialog_ui_input_text,.cke_skin_chris div.cke_dialog_ui_input_password,.cke_skin_chris div.cke_dialog_ui_input_textarea {
+border:1px solid #aaa;
+padding:4px;
+font-family:Tahoma, Geneva, Verdana, sans-serif;
+-webkit-border-radius: 2px;
+-moz-border-radius: 2px;
+border-radius: 2px;
+background:#f9f9f9;
+}
+
+.cke_skin_chris .cke_browser_gecko18 .cke_dialog_footer_buttons,.cke_skin_chris .cke_hc .cke_dialog_body .cke_label {
+display:inline;
+}
+
+.cke_skin_chris strong,.cke_skin_chris .cke_dialog_body label.cke_required {
+font-weight:bold;
+}
+
+.cke_skin_chris .cke_rtl .cke_dialog a.cke_btn_locked,.cke_skin_chris .cke_rtl .cke_dialog a.cke_btn_unlocked,.cke_skin_chris .cke_rtl.cke_hc a.cke_btn_locked,.cke_skin_chris .cke_rtl.cke_hc a.cke_btn_unlocked,.cke_skin_chris .cke_rtl.cke_hc a.cke_btn_reset {
+float:right;
+}
+
+.cke_skin_chris .cke_dialog_ui_hbox_last .cke_dialog_ui_button {
+margin-top:7px!important;
+}
+
+.cke_skin_chris .cke_dialog_ui_vbox table td {
+vertical-align:middle;
+}

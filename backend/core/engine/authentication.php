@@ -116,7 +116,7 @@ class BackendAuthentication
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
 		$alwaysAllowed = array(
 			'dashboard' => array('index' => 7),
-			'core' => array('generate_url' => 7),
+			'core' => array('generate_url' => 7, 'content_css' => 7),
 			'error' => array('index' => 7),
 			'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7)
 		);

@@ -232,11 +232,18 @@ class BackendForm extends SpoonForm
 		$classError = 'inputEditorError ' . (string) $classError;
 		$HTML = (bool) $HTML;
 
-		// we add JS because we need TinyMCE
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
+		// we add JS because we need CKEditor
+		$this->header->addJS('ckeditor/ckeditor.js', 'core', false);
+		$this->header->addJS('ckeditor/adapters/jquery.js', 'core', false);
+		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 
-		// create and return a textarea for TinyMCE
+		// add the internal link lists-file
+		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
+		{
+			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js', null, null, true);
+		}
+
+		// create and return a textarea for the editor
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
 	}
 

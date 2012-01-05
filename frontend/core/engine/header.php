@@ -481,6 +481,46 @@ class FrontendHeader extends FrontendBaseObject
 		// grab content
 		$content = SpoonFile::getContent(PATH_WWW . $file);
 
+		// get imports, for now we don't support imports with media, and imports should use url(xxx)
+		$matches = array();
+		$pattern = '/@import';
+		$pattern .=  '.*';
+		$pattern .=  'url\(';
+		$pattern .= 	'["\']?';
+		$pattern .=  		'(.*)';
+		$pattern .= 	'["\']?';
+		$pattern .= '\)';
+		$pattern .= ';/iU';
+		preg_match_all($pattern, $content, $matches);
+
+		// any imports?
+		if(!empty($matches[0]))
+		{
+			$search = array();
+			$replace = array();
+
+			// loop the matches
+			foreach($matches[0] as $i => $import)
+			{
+				// get the path for the file that will be imported
+				$path = realpath(PATH_WWW . dirname($file) . '/' . trim($matches[1][$i], '"\''));
+
+				// only replace the import with the content if we can grab the content of the file
+				if(SpoonFile::exists($path))
+				{
+					// grab content
+					$importContent = SpoonFile::getContent($path);
+
+					// add to replacement array
+					$search[] = $import;
+					$replace[] = $importContent;
+				}
+			}
+
+			// replace the import statements
+			if(!empty($search)) $content = str_replace($search, $replace, $content);
+		}
+
 		// fix urls
 		$matches = array();
 		$pattern = '/url\(';

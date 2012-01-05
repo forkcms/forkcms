@@ -116,6 +116,7 @@ class BackendBaseAction
 			// add jquery, we will need this in every action, so add it globally
 			$this->header->addJS('jquery/jquery.js', 'core');
 			$this->header->addJS('jquery/jquery.ui.js', 'core');
+			$this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'core');
 			$this->header->addJS('jquery/jquery.tools.js', 'core');
 			$this->header->addJS('jquery/jquery.backend.js', 'core');
 		}

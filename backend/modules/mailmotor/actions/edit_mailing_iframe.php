@@ -90,7 +90,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 			1.	edit_mailing_iframe.tpl contains a var {$templateHtml}. This is where $this->template['content'] goes.
 
 			2.	Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside. This will
-				become the TinyMCE field which will contain our stored content HTML.
+				become the editor field which will contain our stored content HTML.
 
 			3.	We need everything inside the <body> tags so we don't end up with two <body>s.
 		*/

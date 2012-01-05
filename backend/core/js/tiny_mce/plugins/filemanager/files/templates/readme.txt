@@ -1,1 +1,0 @@
-The contents of this directory is used as templates when creating documents and directories.

@@ -15,7 +15,7 @@
 
 {option:warnings}
 	<div class="generalMessage infoMessage">
-		<p><strong>There are some warnings for following modules:</strong></p>
+		<p><strong>{$msgModulesWarnings}:</strong></p>
 		<ul>
 			<li>
 				<strong>{$warnings.module}</strong>
