@@ -1053,3 +1053,14 @@ width:150px;
 display:none;
 }
 }
+
+/* Custom for fork */
+.cke_panel_listItem p,.cke_panel_listItem h1,.cke_panel_listItem h2,.cke_panel_listItem h3,.cke_panel_listItem h4,.cke_panel_listItem h5,.cke_panel_listItem h6,.cke_panel_listItem pre {
+	font-family:'Microsoft Sans Serif',Tahoma,Arial,Verdana,Sans-Serif !important;
+}
+.cke_panel_listItem h1 { font-size: 2em !important; padding: 0; }
+.cke_panel_listItem h2 { font-size: 1.8em !important; padding: 0; }
+.cke_panel_listItem h3 { font-size: 1.6em !important; padding: 0; }
+.cke_panel_listItem h4 { font-size: 1.4em !important; padding: 0; }
+.cke_panel_listItem h5 { font-size: 1.2em !important; padding: 0; }
+.cke_panel_listItem h6 { font-size: 1em !important; padding: 0; }
