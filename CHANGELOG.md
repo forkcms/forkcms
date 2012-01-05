@@ -4,6 +4,7 @@ Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
 * Pages: when adding an editor field, the editor will immediately open.
+* Core: added maxItems and afterAdd options for the multipleSelectbox.
 
 Bugfixes:
 
