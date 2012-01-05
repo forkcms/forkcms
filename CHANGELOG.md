@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
+* Core: added cookie containing unique visitor id.
 * Pages: when adding an editor field, the editor will immediately open.
 
 Bugfixes:

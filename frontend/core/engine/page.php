@@ -75,6 +75,9 @@ class FrontendPage extends FrontendBaseObject
 	{
 		parent::__construct();
 
+		// set tracking cookie
+		FrontendModel::getVisitorId();
+
 		// add reference
 		Spoon::set('page', $this);
 
@@ -107,6 +110,24 @@ class FrontendPage extends FrontendBaseObject
 
 		// display
 		$this->display();
+
+		// trigger event
+		FrontendModel::triggerEvent(
+			'core',
+			'after_page_processed',
+			array(
+				'id' => $this->getId(),
+				'record' => $this->getRecord(),
+				'statusCode' => $this->getStatusCode(),
+				'sessionId' => SpoonSession::getSessionId(),
+				'visitorId' => FrontendModel::getVisitorId(),
+				'SESSION' => $_SESSION,
+				'COOKIE' => $_COOKIE,
+				'GET' => $_GET,
+				'POST' => $_POST,
+				'SERVER' => $_SERVER
+			)
+		);
 	}
 
 	/**
