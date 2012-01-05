@@ -213,9 +213,8 @@ jsBackend.ckeditor =
 			{ name: 'clipboard', items: ['Undo', 'Redo']},
 			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
 			{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-			{ name: 'document', items: ['Source', 'ShowBlocks', 'Maximize', 'Templates']},
-			'/',
 			{ name: 'insert', items : ['Table', '-', 'Image', 'MediaEmbed', '-', 'SpecialChar']},
+			{ name: 'document', items: ['Templates', 'Maximize', 'Source']},
 			{ name: 'styles', items : ['Format', 'Styles']}
 		],
 
@@ -226,16 +225,15 @@ jsBackend.ckeditor =
    			{ name: 'clipboard', items: ['Undo', 'Redo']},
    			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
    			{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-   			{ name: 'document', items: ['Source', 'Templates']},
-   			'/',
    			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar']},
+   			{ name: 'document', items: ['Templates', 'Source']},
    			{ name: 'styles', items : ['Format']}
    		],
 
-		// skin by Chris Herberte (http://www.chrisherberte.com/blog/ckeditor-skin)
-		skin: 'chris',
+		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
+		skin: 'BootstrapCK-Skin',
 
-		uiColor: '#E7F0F8',
+//		uiColor: '#FAFAFA',
 		toolbar: 'Full',
 		toolbarStartupExpanded: false,
 
@@ -406,7 +404,7 @@ jsBackend.ckeditor =
 						onChange: function(evt)
 						{
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('{$SITE_PROTOCOL}://');
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue('{$SITE_DOMAIN}/' + evt.data.value);
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue('{$SITE_DOMAIN}' + evt.data.value);
 						}
 				 	}
 			 	]
@@ -446,8 +444,11 @@ jsBackend.ckeditor =
 		// focus outside the editor?
 		if(evt.editor.config.toggleToolbar && outsideEditor)
 		{
-			// show the click to edit
-			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
+			if(evt.editor.config.showClickToEdit)
+			{
+				// show the click to edit
+				$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
+			}
 
 			// hide the toolbar
 			$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
@@ -465,8 +466,11 @@ jsBackend.ckeditor =
 
 	onFocus: function(evt)
 	{
-		// hide the click to edit
-		$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
+		if(evt.editor.config.showClickToEdit)
+		{
+			// hide the click to edit
+			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
+		}
 
 		// show the toolbar
 		$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
