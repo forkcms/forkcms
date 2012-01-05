@@ -111,9 +111,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
 		// init vars
-		$author = (ApplicationCookie::exists('comment_author')) ? SpoonCookie::get('comment_author') : null;
-		$email = (ApplicationCookie::exists('comment_email')) ? SpoonCookie::get('comment_email') : null;
-		$website = (ApplicationCookie::exists('comment_website')) ? SpoonCookie::get('comment_website') : 'http://';
+		$author = (ApplicationCookie::exists('comment_author')) ? ApplicationCookie::get('comment_author') : null;
+		$email = (ApplicationCookie::exists('comment_email') && SpoonFilter::isEmail(ApplicationCookie::get('comment_email'))) ? ApplicationCookie::get('comment_email') : null;
+		$website = (ApplicationCookie::exists('comment_website') && SpoonFilter::isURL(ApplicationCookie::get('comment_website'))) ? ApplicationCookie::get('comment_website') : 'http://';
 
 		// create elements
 		$this->frm->addText('author', $author);
