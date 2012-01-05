@@ -11,6 +11,7 @@
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendUsersEdit extends BackendBaseActionEdit
 {
