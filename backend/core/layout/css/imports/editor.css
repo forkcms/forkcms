@@ -352,3 +352,16 @@ cke_skin_BootstrapCK-Skin .cke_dialog * {
 	bottom: 1px !important;
 	right: 1px !important;
 }
+
+/*
+	Don't show styles, we don't want users to use faulty elements just because "they seem to look better" or "they draw more attention"
+*/
+.cke_panel_listItem p,.cke_panel_listItem h1,.cke_panel_listItem h2,.cke_panel_listItem h3,.cke_panel_listItem h4,.cke_panel_listItem h5,.cke_panel_listItem h6,.cke_panel_listItem pre {
+	font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,sans-serif !important;
+}
+.cke_panel_listItem h1 { font-size: 2em !important; padding: 0; }
+.cke_panel_listItem h2 { font-size: 1.8em !important; padding: 0; }
+.cke_panel_listItem h3 { font-size: 1.6em !important; padding: 0; }
+.cke_panel_listItem h4 { font-size: 1.4em !important; padding: 0; }
+.cke_panel_listItem h5 { font-size: 1.2em !important; padding: 0; }
+.cke_panel_listItem h6 { font-size: 1em !important; padding: 0; }
