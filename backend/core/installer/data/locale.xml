@@ -8007,8 +8007,8 @@
         <translation language="es"><![CDATA[No se ha seleccionado ningún objeto.]]></translation>
       </item>
       <item type="error" name="NoModuleLinked">
-        <translation language="nl"><![CDATA[Kan de URL niet genereren. Zorg dat deze module aan een pagina hangt.]]></translation>
-        <translation language="en"><![CDATA[Cannot generate URL. Create a page that has this module attached to it.]]></translation>
+        <translation language="nl"><![CDATA[Kan de URL niet genereren. Zorg dat deze module aan een pagina gekoppeld is.]]></translation>
+        <translation language="en"><![CDATA[Cannot generate URL. Create a page that has this module linked to it.]]></translation>
         <translation language="hu"><![CDATA[Nem lehet létrehozni URL-t. Hozz létre egy oldalt, amely ehhez a modulhoz kapcsolódik.]]></translation>
         <translation language="it"><![CDATA[Impossibile generare l'URL. Crea una pagina con questo modulo collegato.]]></translation>
         <translation language="ru"><![CDATA[Невозможно создать URL-адрес. Создайте страницу с этим модулем, для привязки.]]></translation>

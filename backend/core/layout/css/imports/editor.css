@@ -95,7 +95,8 @@
 /*
 	Improve corners & border
 */
-span.cke_skin_BootstrapCK-Skin, span.cke_skin_BootstrapCK-Skin:focus {
+.cke_skin_BootstrapCK-Skin,
+.cke_skin_BootstrapCK-Skin:focus {
 	padding: 0 0 1px 0 !important;
 	border: 1px solid #DDD !important;
 	border-top: 0 !important;
@@ -126,7 +127,8 @@ span.cke_skin_BootstrapCK-Skin, span.cke_skin_BootstrapCK-Skin:focus {
 /*
 	Editor show have white background
 */
-.cke_skin_BootstrapCK-Skin .cke_bottom, .cke_skin_BootstrapCK-Skin .cke_contents {
+.cke_skin_BootstrapCK-Skin .cke_bottom,
+.cke_skin_BootstrapCK-Skin .cke_contents {
 	background-color: #FFF !important;
 }
 
@@ -147,7 +149,9 @@ span.cke_skin_BootstrapCK-Skin, span.cke_skin_BootstrapCK-Skin:focus {
 	background-color: #E7F0F8 !important;
 }
 
-.cke_skin_BootstrapCK-Skin .cke_button a:hover, .cke_skin_BootstrapCK-Skin .cke_button a:focus, .cke_skin_BootstrapCK-Skin .cke_button a:active {
+.cke_skin_BootstrapCK-Skin .cke_button a:hover,
+.cke_skin_BootstrapCK-Skin .cke_button a:focus,
+.cke_skin_BootstrapCK-Skin .cke_button a:active {
 	background-color: #F1F5FA !important;
 }
 
@@ -260,13 +264,13 @@ cke_skin_BootstrapCK-Skin .cke_dialog * {
 /*
 	No fugly focus state
 */
-.cke_skin_BootstrapCK-Skin input.cke_dialog_ui_input_text:focus {
+.cke_skin_BootstrapCK-Skin .cke_dialog_ui_input_text:focus,
+.cke_skin_BootstrapCK-Skin .cke_rcombo .cke_on a {
 	box-shadow: none !important;
 	-moz-outline-radius: 5px !important;
 	outline: 2px solid #C2DEFF !important;
 	border-color: #456b99 !important;
 	color: #000 !important;
-	border-color: #666 #999 #999 #AAA !important;
 }
 
 /*
@@ -303,7 +307,8 @@ cke_skin_BootstrapCK-Skin .cke_dialog * {
 	height: 23px !important;
 }
 
-.cke_skin_BootstrapCK-Skin .cke_dialog_tab, .cke_skin_BootstrapCK-Skin .cke_dialog_tab:hover {
+.cke_skin_BootstrapCK-Skin .cke_dialog_tab,
+.cke_skin_BootstrapCK-Skin .cke_dialog_tab:hover {
     background: #F6F6F6 !important;
     border-bottom-width: 0 !important;
     float: left !important;
@@ -356,12 +361,22 @@ cke_skin_BootstrapCK-Skin .cke_dialog * {
 /*
 	Don't show styles, we don't want users to use faulty elements just because "they seem to look better" or "they draw more attention"
 */
-.cke_panel_listItem p,.cke_panel_listItem h1,.cke_panel_listItem h2,.cke_panel_listItem h3,.cke_panel_listItem h4,.cke_panel_listItem h5,.cke_panel_listItem h6,.cke_panel_listItem pre {
+.cke_panel_listItem p,
+.cke_panel_listItem h1,
+.cke_panel_listItem h2,
+.cke_panel_listItem h3,
+.cke_panel_listItem h4,
+.cke_panel_listItem h5,
+.cke_panel_listItem h6,
+.cke_panel_listItem pre {
 	font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,sans-serif !important;
+	color: #000 !important;
+	padding: 0 !important;
 }
-.cke_panel_listItem h1 { font-size: 2em !important; padding: 0; }
-.cke_panel_listItem h2 { font-size: 1.8em !important; padding: 0; }
-.cke_panel_listItem h3 { font-size: 1.6em !important; padding: 0; }
-.cke_panel_listItem h4 { font-size: 1.4em !important; padding: 0; }
-.cke_panel_listItem h5 { font-size: 1.2em !important; padding: 0; }
-.cke_panel_listItem h6 { font-size: 1em !important; padding: 0; }
+
+.cke_panel_listItem h1 { font-size: 2em !important; }
+.cke_panel_listItem h2 { font-size: 1.8em !important; }
+.cke_panel_listItem h3 { font-size: 1.6em !important; }
+.cke_panel_listItem h4 { font-size: 1.4em !important; }
+.cke_panel_listItem h5 { font-size: 1.2em !important; }
+.cke_panel_listItem h6 { font-size: 1em !important; }

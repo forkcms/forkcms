@@ -347,6 +347,9 @@ class FrontendPage extends FrontendBaseObject
 			// execute
 			$extra->execute();
 
+			// overwrite the template
+			if(is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
+
 			// assign the variables from this extra to the main template
 			$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 		}
@@ -398,9 +401,6 @@ class FrontendPage extends FrontendBaseObject
 					{
 						// create new instance
 						$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
-
-						// overwrite the template
-						if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
 					}
 
 					// widget

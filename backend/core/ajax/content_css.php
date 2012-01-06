@@ -66,6 +66,9 @@ class BackendCoreAjaxContentCss extends BackendBaseAJAXAction
 		if(SpoonFile::exists($cssPath . 'editor_content.css')) array_push($files, $cssPath . 'editor_content.css');
 		else array_push($files, $coreCssPath . 'editor_content.css');
 
+		// add backend editor css
+//		array_push($files, BACKEND_PATH . '/core/layout/css/imports/editor.css');
+
 		// loop all css files
 		foreach($files as $file)
 		{

@@ -12,7 +12,7 @@ Bugfixes:
 
 * Extensions: fixed module-warnings system.
 * Extensions: fixed module upload.
-
+* Core: fixed core template override from within module action.
 
 3.1.9 (2012-01-03)
 --
