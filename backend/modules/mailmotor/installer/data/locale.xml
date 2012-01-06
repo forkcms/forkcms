@@ -668,7 +668,7 @@
       </item>
       <item type="message" name="PlainTextEditable">
         <translation language="en"><![CDATA[Make the textual version of each individual mail adjustable.]]></translation>
-        <translation language="nl"><![CDATA[De tekstuele versie van iedere]]></translation>
+        <translation language="nl"><![CDATA[De tekstuele versie van iedere mail individueel aanpasbaar maken.]]></translation>
         <translation language="it"><![CDATA[Rendi la versione testuale di ogni email modificabile.]]></translation>
         <translation language="ru"><![CDATA[Сделать текстовую версию для каждой рассылки.]]></translation>
         <translation language="cn"><![CDATA[使每封独立邮件的文字版本可调整。]]></translation>
