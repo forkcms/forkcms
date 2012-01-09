@@ -351,7 +351,7 @@ jsBackend.ckeditor =
 			}
 		}
 	},
-	
+
 	fixRelativeUrls: function(evt)
 	{
 		// get the editor
@@ -374,7 +374,7 @@ jsBackend.ckeditor =
 	{
 		jsBackend.ckeditor.fixRelativeUrls({ editor: evt.editor});
 	},
-	
+
 	onDialogDefinition: function(evt)
 	{
 		// get the dialog definition
@@ -1125,7 +1125,7 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function()
+		$('tr td.checkbox input.inputCheckbox:checked').each(function()
 		{
 			if(!$(this).parents('table').hasClass('noSelectedState'))
 			{
@@ -1134,7 +1134,7 @@ jsBackend.controls =
 		});
 
 		// bind change-events
-		$(document).on('change', 'tr td input:checkbox', function(e)
+		$(document).on('change', 'tr td.checkbox input.inputCheckbox:checkbox', function(e)
 		{
 			if(!$(this).parents('table').hasClass('noSelectedState'))
 			{
