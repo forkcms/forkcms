@@ -1159,16 +1159,16 @@ class BackendModel
 		// get db
 		$db = self::getDB(true);
 
-		// update if already existing
-		// @todo refactor
-		if((int) $db->getVar('SELECT COUNT(*)
-									FROM hooks_subscriptions AS i
-									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
-									array($eventModule, $eventName, $module)) > 0)
-		{
-			// update
-			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
-		}
+		// check if the subscription already exists
+		$exists = (bool) $db->getVar(
+			'SELECT COUNT(*)
+			 FROM hooks_subscriptions AS i
+			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
+			array($eventModule, $eventName, $module)
+		);
+
+		// update
+		if($exists) $db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
 
 		// insert
 		else $db->insert('hooks_subscriptions', $item);

@@ -508,12 +508,8 @@ class FrontendHeader extends FrontendBaseObject
 				// only replace the import with the content if we can grab the content of the file
 				if(SpoonFile::exists($path))
 				{
-					// grab content
-					$importContent = SpoonFile::getContent($path);
-
-					// add to replacement array
 					$search[] = $import;
-					$replace[] = $importContent;
+					$replace[] = SpoonFile::getContent($path);
 				}
 			}
 

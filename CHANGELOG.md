@@ -4,13 +4,16 @@ Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
 * Core: added an extra check (parent has to be td.checkbox) for the row selection within tables in the backend.
+* Core: added cookie containing unique visitor id.
 * Pages: when adding an editor field, the editor will immediately open.
+* Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
+* Core: added maxItems and afterAdd options for the multipleSelectbox.
 
 Bugfixes:
 
 * Extensions: fixed module-warnings system.
 * Extensions: fixed module upload.
-
+* Core: fixed core template override from within module action.
 
 3.1.9 (2012-01-03)
 --

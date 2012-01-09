@@ -75,6 +75,9 @@ class FrontendPage extends FrontendBaseObject
 	{
 		parent::__construct();
 
+		// set tracking cookie
+		FrontendModel::getVisitorId();
+
 		// add reference
 		Spoon::set('page', $this);
 
@@ -107,6 +110,24 @@ class FrontendPage extends FrontendBaseObject
 
 		// display
 		$this->display();
+
+		// trigger event
+		FrontendModel::triggerEvent(
+			'core',
+			'after_page_processed',
+			array(
+				'id' => $this->getId(),
+				'record' => $this->getRecord(),
+				'statusCode' => $this->getStatusCode(),
+				'sessionId' => SpoonSession::getSessionId(),
+				'visitorId' => FrontendModel::getVisitorId(),
+				'SESSION' => $_SESSION,
+				'COOKIE' => $_COOKIE,
+				'GET' => $_GET,
+				'POST' => $_POST,
+				'SERVER' => $_SERVER
+			)
+		);
 	}
 
 	/**
@@ -326,6 +347,9 @@ class FrontendPage extends FrontendBaseObject
 			// execute
 			$extra->execute();
 
+			// overwrite the template
+			if(is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
+
 			// assign the variables from this extra to the main template
 			$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
 		}
@@ -377,9 +401,6 @@ class FrontendPage extends FrontendBaseObject
 					{
 						// create new instance
 						$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
-
-						// overwrite the template
-						if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
 					}
 
 					// widget

@@ -588,12 +588,16 @@ class ModuleInstaller
 		$action = (string) $action;
 		$level = (int) $level;
 
+		// check if the action already exists
+		$exists = (bool) $this->getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM groups_rights_actions
+			 WHERE group_id = ? AND module = ? AND action = ?',
+			array($groupId, $module, $action)
+		);
+
 		// action doesn't exist
-		// @todo refactor me...
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
-											FROM groups_rights_actions
-											WHERE group_id = ? AND module = ? AND action = ?',
-											array($groupId, $module, $action)))
+		if(!$exists)
 		{
 			// build item
 			$item = array('group_id' => $groupId,
@@ -710,21 +714,29 @@ class ModuleInstaller
 			);
 		}
 
-		// doesn't already exist
-		// @todo refactor me...
-		elseif(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
-												FROM modules_settings
-												WHERE module = ? AND name = ?',
-												array($module, $name)))
+		// don't overwrite
+		else
 		{
-			// build item
-			$item = array(
-				'module' => $module,
-				'name' => $name,
-				'value' => $value
+			// check if this setting already exists
+			$exists = (bool) $this->getDB()->getVar(
+				'SELECT COUNT(name)
+				 FROM modules_settings
+				 WHERE module = ? AND name = ?',
+				array($module, $name)
 			);
 
-			$this->getDB()->insert('modules_settings', $item);
+			// does not yet exist
+			if(!$exists)
+			{
+				// build item
+				$item = array(
+					'module' => $module,
+					'name' => $name,
+					'value' => $value
+				);
+
+				$this->getDB()->insert('modules_settings', $item);
+			}
 		}
 	}
 }
