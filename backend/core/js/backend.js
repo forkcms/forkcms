@@ -1088,10 +1088,10 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
+		$('tr td.checkbox input.inputCheckbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
 
 		// bind change-events
-		$(document).on('change', 'tr td input:checkbox', function(e)
+		$(document).on('change', 'tr td.checkbox input.inputCheckbox:checkbox', function(e)
 		{
 			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
 			else $(this).parents().filter('tr').eq(0).removeClass('selected');
