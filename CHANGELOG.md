@@ -14,6 +14,7 @@ Bugfixes:
 * Extensions: fixed module-warnings system.
 * Extensions: fixed module upload.
 * Core: fixed core template override from within module action.
+* Core: added #xfbml=1 to the Facebook connect URL so Facebook plugins also work when there's no Facebook app id given in the settings tab.
 
 3.1.9 (2012-01-03)
 --

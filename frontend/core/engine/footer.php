@@ -67,7 +67,7 @@ class FrontendFooter extends FrontendBaseObject
 				$siteHTMLFooter .= '	};' . "\n";
 			}
 			$siteHTMLFooter .= '	(function() {' . "\n";
-			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
+			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . $locale . '/all.js#xfbml=1";' . "\n";
 			$siteHTMLFooter .= '		document.getElementById(\'fb-root\').appendChild(e);' . "\n";
 			$siteHTMLFooter .= '	}());' . "\n";
 			$siteHTMLFooter .= '</script>';
