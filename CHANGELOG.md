@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
+* Core: added an extra check (parent has to be td.checkbox) for the row selection within tables in the backend.
 * Pages: when adding an editor field, the editor will immediately open.
 
 Bugfixes:
