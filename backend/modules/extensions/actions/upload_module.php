@@ -68,8 +68,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 
 		// directories we are allowed to upload to
 		$allowedDirectories = array(
-				'backend/modules/',
-				'frontend/modules/'
+			'backend/modules/',
+			'frontend/modules/'
 		);
 
 		// name of the module we are trying to upload
