@@ -85,9 +85,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		parent::parse();
 
 		// get url
-		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
-		$url404 = BackendModel::getURL(404);
-		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+		$this->tpl->assign('detailURL', $this->meta->getFullUrl());
 
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);

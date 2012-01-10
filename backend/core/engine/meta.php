@@ -16,13 +16,6 @@
 class BackendMeta
 {
 	/**
-	 * The default sitemap priority
-	 *
-	 * @var int
-	 */
-	const DEFAULT_PRIORITY = 0.8;
-
-	/**
 	 * The action to use for the sitemap
 	 *
 	 * @var	string
@@ -75,23 +68,23 @@ class BackendMeta
 	protected $module;
 
 	/**
-	 * The URL-instance
+	 * The url-instance
 	 *
-	 * @var	BackendURL
+	 * @var	Backendurl
 	 */
 	protected $url;
 
 	/**
 	 * @param int[optional] $metaId The metaID to load.
-	 * @param string[optional] $baseFieldName The field where the URL should be based on.
+	 * @param string[optional] $baseFieldName The field where the url should be based on.
 	 * @param bool[optional] $custom Add/show custom-meta.
 	 */
 	public function __construct($metaId = null, $baseFieldName = 'title', $custom = false)
 	{
-		// check if URL is available from the referene
-		if(!Spoon::exists('url')) throw new BackendException('URL should be available in the reference.');
+		// check if url is available from the referene
+		if(!Spoon::exists('url')) throw new BackendException('url should be available in the reference.');
 
-		// get BackendURL instance
+		// get Backendurl instance
 		$this->url = Spoon::get('url');
 		$this->setModule();
 
@@ -124,16 +117,16 @@ class BackendMeta
 	/**
 	 * Generate an url, using the predefined callback.
 	 *
-	 * @param string $URL The base-url to start from.
+	 * @param string $url The base-url to start from.
 	 * @return string
 	 */
-	public function generateUrl($URL)
+	public function generateUrl($url)
 	{
 		// validate (check if the function exists)
 		if(!is_callable(array($this->callback['class'], $this->callback['method']))) throw new BackendException('The callback-method doesn\'t exist.');
 
 		// build parameters for use in the callback
-		$parameters[] = SpoonFilter::urlise($URL);
+		$parameters[] = SpoonFilter::urlise($url);
 
 		// add parameters set by user
 		if(!empty($this->callback['parameters']))
@@ -184,10 +177,10 @@ class BackendMeta
 		if(!isset($this->module)) return false;
 
 		if($this->module == 'pages') $fullUrl = (SITE_MULTILANGUAGE) ? '/' . BL::getWorkingLanguage() : '';
-		else $fullUrl = BackendModel::getURLForBlock($this->module, $this->action);
+		else $fullUrl = BackendModel::geturlForBlock($this->module, $this->action);
 
 		// 404 url?
-		if($fullUrl == BackendModel::getURL(404)) return false;
+		if($fullUrl == BackendModel::geturl(404)) return false;
 		else return SITE_URL . $fullUrl;
 	}
 
@@ -262,11 +255,11 @@ class BackendMeta
 	}
 
 	/**
-	 * Return the current value for an URL
+	 * Return the current value for an url
 	 *
 	 * @return mixed
 	 */
-	public function getURL()
+	public function geturl()
 	{
 		// not set so return null
 		if(!isset($this->data['url'])) return null;
@@ -276,11 +269,11 @@ class BackendMeta
 	}
 
 	/**
-	 * Should the URL overwrite the default
+	 * Should the url overwrite the default
 	 *
 	 * @return mixed
 	 */
-	public function getURLOverwrite()
+	public function geturlOverwrite()
 	{
 		// not set so return null
 		if(!isset($this->data['url_overwrite'])) return null;
@@ -290,7 +283,7 @@ class BackendMeta
 	}
 
 	/**
-	 * Add all element into the form
+	 * Add all elements into the form
 	 */
 	protected function loadForm()
 	{
@@ -323,7 +316,7 @@ class BackendMeta
 		$this->form->addCheckbox('meta_keywords_overwrite', (isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] == 'Y'));
 		$this->form->addText('meta_keywords', (isset($this->data['keywords'])) ? $this->data['keywords'] : null);
 
-		// add URL elements into the form
+		// add url elements into the form
 		$this->form->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
 		$this->form->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
 
@@ -411,12 +404,12 @@ class BackendMeta
 		if($this->form->getField('page_title_overwrite')->isChecked()) $title = $this->form->getField('page_title')->getValue();
 		else $title = $this->form->getField($this->baseFieldName)->getValue();
 
-		// get URL
-		if($this->form->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
-		else $URL = SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue());
+		// get url
+		if($this->form->getField('url_overwrite')->isChecked()) $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
+		else $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue());
 
-		// get the real URL
-		$URL = $this->generateUrl($URL);
+		// get the real url
+		$url = $this->generateUrl($url);
 
 		// get meta custom
 		if($this->custom && $this->form->getField('meta_custom')->isFilled()) $custom = $this->form->getField('meta_custom')->getValue(true);
@@ -429,7 +422,7 @@ class BackendMeta
 		$meta['description_overwrite'] = ($this->form->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
 		$meta['title'] = $title;
 		$meta['title_overwrite'] = ($this->form->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
-		$meta['url'] = $URL;
+		$meta['url'] = $url;
 		$meta['url_overwrite'] = ($this->form->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 		$meta['custom'] = $custom;
 		$meta['data'] = null;
@@ -443,7 +436,7 @@ class BackendMeta
 		$sitemap['module'] = $this->module;
 		$sitemap['action'] = $this->action;
 		$sitemap['language'] = BL::getWorkingLanguage();
-		$sitemap['url'] = $this->getURL();
+		$sitemap['url'] = $this->geturl();
 		$sitemap['visible'] = ($this->form->getField('use_sitemap')->isChecked()) ? 'Y' : 'N';
 		$sitemap['edited_on'] = BackendModel::getUTCDate();
 		if(isset($this->data['sitemap_id'])) $sitemap['id'] = (int) $this->data['sitemap_id'];
@@ -510,7 +503,7 @@ class BackendMeta
 		$this->form = $form;
 
 		// set default callback
-		$this->setUrlCallback('Backend' . SpoonFilter::toCamelCase($this->url->getModule()) . 'Model', 'getURL');
+		$this->setUrlCallback('Backend' . SpoonFilter::toCamelCase($this->url->getModule()) . 'Model', 'geturl');
 
 		// load the form
 		$this->loadForm();
@@ -534,7 +527,7 @@ class BackendMeta
 	}
 
 	/**
-	 * Set the callback to calculate an unique URL
+	 * Set the callback to calculate an unique url
 	 * REMARK: this method has to be public and static
 	 * REMARK: if you specify arguments they will be appended
 	 *
@@ -543,7 +536,7 @@ class BackendMeta
 	 * @param array[optional] $parameters Parameters to parse, they will be passed after ours.
 	 * @return BackendMeta
 	 */
-	public function setURLCallback($className, $methodName, $parameters = array())
+	public function seturlCallback($className, $methodName, $parameters = array())
 	{
 		$className = (string) $className;
 		$methodName = (string) $methodName;
@@ -582,20 +575,20 @@ class BackendMeta
 			$this->form->getField('meta_keywords')->isFilled(BL::err('FieldIsRequired'));
 		}
 
-		// URL overwrite is checked
+		// url overwrite is checked
 		if($this->form->getField('url_overwrite')->isChecked())
 		{
 			// filled
 			$this->form->getField('url')->isFilled(BL::err('FieldIsRequired'));
 
 			// fetch url
-			$URL = $this->form->getField('url')->getValue();
+			$url = $this->form->getField('url')->getValue();
 
 			// get the real url
-			$generatedUrl = $this->generateUrl($URL);
+			$generatedUrl = $this->generateUrl($url);
 
 			// check if urls are different
-			if($URL != $generatedUrl) $this->form->getField('url')->addError(BL::err('URLAlreadyExists'));
+			if($url != $generatedUrl) $this->form->getField('url')->addError(BL::err('urlAlreadyExists'));
 		}
 
 		// if the form was submitted correctly the data array should be populated
@@ -613,16 +606,16 @@ class BackendMeta
 			if($this->form->getField('page_title_overwrite')->isChecked()) $title = $this->form->getField('page_title')->getValue();
 			else $title = $this->form->getField($this->baseFieldName)->getValue();
 
-			// get URL
-			if($this->form->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
-			else $URL = SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue());
+			// get url
+			if($this->form->getField('url_overwrite')->isChecked()) $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
+			else $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue());
 
 			// sitemap enabled
 			if($this->form->getField('use_sitemap')->isChecked()) $useSitemap = 'Y';
 			else $useSitemap = 'N';
 
-			// get the real URL
-			$URL = $this->generateUrl($URL);
+			// get the real url
+			$url = $this->generateUrl($url);
 
 			// get meta custom
 			if($this->custom && $this->form->getField('meta_custom')->isFilled()) $custom = $this->form->getField('meta_custom')->getValue();
@@ -635,7 +628,7 @@ class BackendMeta
 			$this->data['description_overwrite'] = ($this->form->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['title'] = $title;
 			$this->data['title_overwrite'] = ($this->form->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
-			$this->data['url'] = $URL;
+			$this->data['url'] = $url;
 			$this->data['url_overwrite'] = ($this->form->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['custom'] = $custom;
 			$this->data['use_sitemap'] = $useSitemap;

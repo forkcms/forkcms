@@ -18,22 +18,6 @@
 		</div>
 	</div>
 
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblSitemap|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<p>
-				<label for="sitemapPagesItems">{$msgHelpSitemapPagesItems|ucfirst}</label>
-				{$ddmSitemapPagesItems} {$ddmSitemapPagesItemsError}
-			</p>
-			<p>
-				<label for="sitemapImagesItems">{$msgHelpSitemapImagesItems|ucfirst}</label>
-				{$ddmSitemapImagesItems} {$ddmSitemapImagesItemsError}
-			</p>
-		</div>
-	</div>
-
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
