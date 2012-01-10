@@ -266,10 +266,10 @@ class FrontendModel
 			$attributes = $imageData[1];
 			$values = $imageData[2];
 
+			// go trough the values to trim it from "
 			foreach($values as $vKey => $value)
 			{
-				$value = ltrim($value, '"');
-				$value = rtrim($value, '"');
+				$value = trim($value, '"');
 				$values[$vKey] = $value;
 			}
 
