@@ -159,6 +159,12 @@ class ModuleInstaller
 				array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
 			);
 		}
+
+		// invalidate the cache for search
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/search/') as $file)
+		{
+			SpoonFile::delete(FRONTEND_CACHE_PATH . '/search/' . $file);
+		}
 	}
 
 	/**
