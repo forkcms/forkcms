@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
  *
@@ -726,8 +733,9 @@ class BackendExtensionsModel
 	 * Install a module.
 	 *
 	 * @param string $module The name of the module to be installed.
+	 * @param array $information Warnings from the upload of the module.
 	 */
-	public static function installModule($module)
+	public static function installModule($module, array $warnings= array())
 	{
 		// we need the installer
 		require_once BACKEND_CORE_PATH . '/installer/installer.php';
@@ -750,6 +758,9 @@ class BackendExtensionsModel
 
 		// execute installation
 		$installer->install();
+
+		// add the warnings
+		foreach($warnings as $warning) $installer->addWarning($warning);
 
 		// save the warnings in session for later use
 		if($installer->getWarnings())
