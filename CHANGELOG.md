@@ -9,6 +9,7 @@ Improvements:
 * Core: added maxItems and afterAdd options for the multipleSelectbox.
 * Core: added a possibility to add an extra to all pages when installing forkcms with the installer function addDefaultExtra. The extra will be added to all pages without this extra.
 * Core: You can now add items to the search index in the installer of your module.
+* Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
 * Pages: when adding an editor field, the editor will immediately open.
 * Pages: The sitemap now correctly displays subpages.
 
