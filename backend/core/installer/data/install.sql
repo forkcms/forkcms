@@ -597,5 +597,3 @@ CREATE TABLE IF NOT EXISTS `hooks_subscriptions` (
   `created_on` datetime NOT NULL,
   UNIQUE KEY `event_module` (`event_module`(100),`event_name`(100),`module`(100))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-

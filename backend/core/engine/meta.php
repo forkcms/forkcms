@@ -10,7 +10,7 @@
 /**
  * This class represents a META-object
  *
- * @author Tijs Verkoyen <tijs@sumocoders.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendMeta
@@ -85,7 +85,6 @@ class BackendMeta
 	 * @param int[optional] $metaId The metaID to load.
 	 * @param string[optional] $baseFieldName The field where the URL should be based on.
 	 * @param bool[optional] $custom Add/show custom-meta.
-	 * @return BackendMeta
 	 */
 	public function __construct($metaId = null, $baseFieldName = 'title', $custom = false)
 	{
@@ -104,8 +103,6 @@ class BackendMeta
 
 		// metaId was specified, so we should load the item
 		if($metaId !== null) $this->loadMeta($metaId);
-
-		return $this;
 	}
 
 	/**
