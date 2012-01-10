@@ -8,6 +8,7 @@ Improvements:
 * Pages: when adding an editor field, the editor will immediately open.
 * Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
 * Core: added maxItems and afterAdd options for the multipleSelectbox.
+* Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
 
 Bugfixes:
 
