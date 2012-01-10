@@ -735,7 +735,7 @@ class BackendExtensionsModel
 	 * @param string $module The name of the module to be installed.
 	 * @param array $information Warnings from the upload of the module.
 	 */
-	public static function installModule($module, array $warnings= array())
+	public static function installModule($module, array $warnings = array())
 	{
 		// we need the installer
 		require_once BACKEND_CORE_PATH . '/installer/installer.php';

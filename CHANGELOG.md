@@ -11,7 +11,8 @@ Improvements:
 * Core: you can now add items to the search index in the installer of your module.
 * Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
 * Pages: when adding an editor field, the editor will immediately open.
-* Pages: The sitemap now correctly displays subpages.
+* Pages: the sitemap now correctly displays subpages.
+* Extensions: modules may now also include files in /library/external. 
 * All: actions where the user has no rights for, are no longer shown.
 
 Bugfixes:

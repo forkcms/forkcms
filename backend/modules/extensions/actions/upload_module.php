@@ -104,7 +104,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 					if($directory == 'library/external/')
 					{
 						if(!SpoonFile::exists(PATH_WWW . '/' . $fileName)) $files[] = $fileName;
-						else $warnings[] = 'The file(' . $fileName . ') already exists.';
+						else $warnings[] = sprintf(BL::getError('LibraryFileAlreadyExists'), $fileName);
 						break;
 					}
 
@@ -115,7 +115,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 					$tmpName = $chunks[0];
 
 					// ignore hidden files
-					if(substr(basename($fileName), 0,  1) == '.') break;
+					if(substr(basename($fileName), 0, 1) == '.') break;
 
 					// first module we find, store the name
 					elseif($moduleName === null) $moduleName = $tmpName;
@@ -131,6 +131,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 				}
 			}
 		}
+
 		// after filtering no files left (nothing useful found)
 		if(count($files) == 0)
 		{
