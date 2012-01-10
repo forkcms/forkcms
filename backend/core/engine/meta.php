@@ -10,12 +10,8 @@
 /**
  * This class represents a META-object
  *
-<<<<<<< HEAD
  * @author Tijs Verkoyen <tijs@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
-=======
- * @author Tijs Verkoyen <tijs@sumocoders.be>
->>>>>>> master
  */
 class BackendMeta
 {
