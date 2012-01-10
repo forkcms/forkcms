@@ -21,6 +21,7 @@ Bugfixes:
 * Extensions: fixed module-warnings system.
 * Extensions: fixed module upload.
 * Users: Fixed a bug that was triggered when editing a user that was not the loggedin user and when the loggedin user was not a god user.
+* Spoon: dropdown opt-group's values were reset by the array_merge function.
 
 
 3.1.9 (2012-01-03)
