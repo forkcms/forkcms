@@ -163,7 +163,7 @@ class BackendMeta
 	}
 
 	/**
-	 * Should the keywords overwrite the default
+	 * Should the description overwrite the default
 	 *
 	 * @return mixed
 	 */

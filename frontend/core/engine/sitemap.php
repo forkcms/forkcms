@@ -291,7 +291,7 @@ class FrontendSitemap
 			'SELECT s.*, UNIX_TIMESTAMP(s.edited_on) AS edited_on
 			 FROM meta_sitemap AS s
 			 WHERE s.visible = ? AND s.language = ?
-			 ORDER BY s.priority DESC
+			 ORDER BY s.edited_on DESC
 			 LIMIT ?, ?',
 			array('Y', $language, (int) $offset, (int) $limit)
 		);
@@ -496,8 +496,6 @@ class FrontendSitemap
 				$output[]['url'] = array(
 					'loc' => $page['full_url'],
 					'lastmod' => $page['edited_on'],
-					'changefreq' => $page['change_frequency'],
-					'priority' => $page['priority']
 				);
 			}
 		}
