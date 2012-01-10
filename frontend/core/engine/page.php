@@ -193,18 +193,6 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
-	 * Get the current page id
-	 *
-	 * @return int
-	 * @deprecated deprecated since version 3.1.8 - will be removed in version 3.2.x
-	 */
-	public static function getCurrentPageId()
-	{
-		$page = Spoon::get('page');
-		return $page->getId();
-	}
-
-	/**
 	 * Get the extras linked to this page
 	 *
 	 * @return array

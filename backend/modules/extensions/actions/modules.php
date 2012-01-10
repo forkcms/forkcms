@@ -27,7 +27,6 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 	 */
 	public function execute()
 	{
-//Spoon::dump($_SESSION);
 		parent::execute();
 		$this->loadData();
 		$this->loadDataGridInstalled();
