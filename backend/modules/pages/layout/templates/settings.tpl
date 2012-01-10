@@ -27,6 +27,10 @@
 				<label for="sitemapPagesItems">{$msgHelpSitemapPagesItems|ucfirst}</label>
 				{$ddmSitemapPagesItems} {$ddmSitemapPagesItemsError}
 			</p>
+			<p>
+				<label for="sitemapImagesItems">{$msgHelpSitemapImagesItems|ucfirst}</label>
+				{$ddmSitemapImagesItems} {$ddmSitemapImagesItemsError}
+			</p>
 		</div>
 	</div>
 

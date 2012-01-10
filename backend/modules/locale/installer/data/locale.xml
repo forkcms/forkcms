@@ -46,6 +46,14 @@
         <translation language="nl"><![CDATA[jaarlijks]]></translation>
         <translation language="en"><![CDATA[yearly]]></translation>
       </item>
+      <item type="message" name="HelpSitemapPagesItems">
+        <translation language="nl"><![CDATA[Aantal items op de pagina sitemap]]></translation>
+        <translation language="en"><![CDATA[Number of items on the pages sitemap]]></translation>
+      </item>
+      <item type="message" name="HelpSitemapImagesItems">
+        <translation language="nl"><![CDATA[Aantal items op de afbeelding sitemap]]></translation>
+        <translation language="en"><![CDATA[Number of items on the images sitemap]]></translation>
+      </item>
   	</core>
     <locale>
       <item type="label" name="Actions">
