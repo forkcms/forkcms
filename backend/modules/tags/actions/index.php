@@ -36,7 +36,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->dataGrid = new BackendDataGridDB(BackendTagsModel::QRY_DATAGRID_BROWSE, BL::getWorkingLanguage());
 
 		// header labels
-		$this->dataGrid->setHeaderLabels(array('tag' => ucfirst(BL::lbl('Name')), 'num_tags' => ucfirst(BL::lbl('Amount'))));
+		$this->dataGrid->setHeaderLabels(array('tag' => SpoonFilter::ucfirst(BL::lbl('Name')), 'num_tags' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
 
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');

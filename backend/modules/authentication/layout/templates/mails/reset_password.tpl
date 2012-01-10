@@ -67,10 +67,10 @@
 	</style>
 </head>
 <body>
-	<table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
+	<table width="100%" height="100%">
 		<tr>
 			<td align="center">
-				<table border="0" cellspacing="0" cellpadding="0" width="400">
+				<table width="400">
 					<tr>
 						<td>
 

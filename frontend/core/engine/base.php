@@ -979,7 +979,7 @@ class FrontendBaseAJAXAction
 
 		// set correct headers
 		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
+		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
 		// output JSON to the browser
 		echo json_encode($response);

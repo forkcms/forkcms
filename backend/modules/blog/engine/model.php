@@ -153,6 +153,10 @@ class BackendBlogModel
 		$db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 		$db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
+		// delete records
+		$db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
+		$db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
+
 		// delete tags
 		foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'blog');
 
@@ -538,7 +542,7 @@ class BackendBlogModel
 			 INNER JOIN meta AS m ON p.meta_id = m.id
 			 WHERE i.status = ? AND p.status = ? AND i.language = ?
 			 ORDER BY i.created_on DESC
-			LIMIT ?',
+			 LIMIT ?',
 			array((string) $status, 'active', BL::getWorkingLanguage(), (int) $limit)
 		);
 

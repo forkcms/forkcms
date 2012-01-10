@@ -33,7 +33,7 @@
 					<h3>{$lblDashboard|ucfirst}</h3>
 				</div>
 				<div class="options labelWidthLong horizontal">
-					<label for="widgetList">{$lblDisplayWidgets|ucfirst}</label>
+					<label for="toggleChecksWidgets">{$lblDisplayWidgets|ucfirst}</label>
 					<div class="dataGridHolder groupHolder">
 						{option:widgets}
 							{$widgets}
@@ -52,11 +52,16 @@
 					<h3>{$lblModules|ucfirst}</h3>
 				</div>
 				<div class="options labelWidthLong horizontal">
-					<label for="moduleList">{$lblSetPermissions|ucfirst}</label>
+					<label>{$lblSetPermissions|ucfirst}</label>
 					<ul id="moduleList" class="inputList">
 						{iteration:permissions}
 							<li class="module">
-								{$permissions.chk}<a href="#" class="icon iconCollapsed container" title="open"><span><label for="modules{$permissions.label}">{$permissions.label}</label></span></a>
+								{$permissions.chk}
+								<a href="#" class="icon iconCollapsed container" title="open">
+									<span>
+										<label for="{$permissions.id}">{$permissions.label}</label>
+									</span>
+								</a>
 								<div class="datagridHolder hide clearfix">
 									{$permissions.actions.dataGrid}
 								</div>

@@ -11,6 +11,7 @@
         <translation language="de"><![CDATA[Schlagwort(e) wurde(n) gelöscht.]]></translation>
         <translation language="hu"><![CDATA[A kiválasztott címke törölve.]]></translation>
         <translation language="fr"><![CDATA[Les tags choisis ont été effacés.]]></translation>
+        <translation language="es"><![CDATA[La etiqueta(s) seleccionadas fue/fueron eliminadas.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De tag "%1$s" werd opgeslagen.]]></translation>
@@ -21,6 +22,7 @@
         <translation language="de"><![CDATA[Das Schlagwort "%1$s" wurde gespeichert.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" címke elmentve.]]></translation>
         <translation language="fr"><![CDATA[Le tag "%1$s" a été enregistré.]]></translation>
+        <translation language="es"><![CDATA[La etiqueta "%1$s" fue guardada.]]></translation>
       </item>
       <item type="message" name="EditTag">
         <translation language="nl"><![CDATA[bewerk tag "%1$s"]]></translation>
@@ -31,6 +33,7 @@
         <translation language="de"><![CDATA[bearbeite Schlagwort "%1$s"]]></translation>
         <translation language="hu"><![CDATA["%1$s" címke szerkesztése]]></translation>
         <translation language="fr"><![CDATA[éditer le tag "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar etiqueta "%1$s"]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen tags.]]></translation>
@@ -41,6 +44,7 @@
         <translation language="de"><![CDATA[Es gibt noch keine Schlagworte.]]></translation>
         <translation language="hu"><![CDATA[Nincsenek még címkék.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de tags.]]></translation>
+        <translation language="es"><![CDATA[No hay etiquetas aun.]]></translation>
       </item>
       <item type="error" name="NonExisting">
         <translation language="nl"><![CDATA[Deze tag bestaat niet.]]></translation>
@@ -51,6 +55,7 @@
         <translation language="fr"><![CDATA[Ce tag n'existe pas.]]></translation>
         <translation language="de"><![CDATA[Dieses Schlagwort existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[Ez a címke nem létezik.]]></translation>
+        <translation language="es"><![CDATA[Está etiqueta no existe.]]></translation>
       </item>
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen tags geselecteerd.]]></translation>
@@ -61,6 +66,7 @@
         <translation language="fr"><![CDATA[Aucun tag n'a été sélectionné.]]></translation>
         <translation language="de"><![CDATA[Es waren keine Schlagworte gewählt.]]></translation>
         <translation language="hu"><![CDATA[Nem lett címke kiválasztva.]]></translation>
+        <translation language="es"><![CDATA[Ninguna etiqueta fue seleccionada.]]></translation>
       </item>
       <item type="error" name="TagAlreadyExists">
         <translation language="nl"><![CDATA[Deze tag bestaat al.]]></translation>
@@ -71,6 +77,7 @@
         <translation language="fr"><![CDATA[Ce tag existe déjà]]></translation>
         <translation language="de"><![CDATA[Dieses Schlagwort existiert bereits.]]></translation>
         <translation language="hu"><![CDATA[Ez a címke már létezik.]]></translation>
+        <translation language="es"><![CDATA[Esta etiqueta existe actualmente.]]></translation>
       </item>
     </tags>
   </backend>

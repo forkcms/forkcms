@@ -65,8 +65,8 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 	{
 		// gender dropdown values
 		$genderValues = array(
-			'male' => ucfirst(FL::getLabel('Male')),
-			'female' => ucfirst(FL::getLabel('Female'))
+			'male' => SpoonFilter::ucfirst(FL::getLabel('Male')),
+			'female' => SpoonFilter::ucfirst(FL::getLabel('Female'))
 		);
 
 		// birthdate dropdown values

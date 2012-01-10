@@ -11,6 +11,7 @@
         <translation language="cn"><![CDATA[所有统计]]></translation>
         <translation language="de"><![CDATA[alle Statistiken]]></translation>
         <translation language="fr"><![CDATA[toutes les statistiques]]></translation>
+        <translation language="es"><![CDATA[todas las estadisticas]]></translation>
       </item>
       <item type="label" name="TopKeywords">
         <translation language="nl"><![CDATA[top zoekwoorden]]></translation>
@@ -21,6 +22,7 @@
         <translation language="cn"><![CDATA[热门关键词]]></translation>
         <translation language="fr"><![CDATA[meilleurs mots-clefs]]></translation>
         <translation language="de"><![CDATA[Top Keywords]]></translation>
+        <translation language="es"><![CDATA[top palabras clave]]></translation>
       </item>
       <item type="label" name="TopReferrers">
         <translation language="nl"><![CDATA[top verwijzende sites]]></translation>
@@ -31,6 +33,7 @@
         <translation language="cn"><![CDATA[最多引用]]></translation>
         <translation language="fr"><![CDATA[meilleurs référents]]></translation>
         <translation language="de"><![CDATA[Top Verweisende-Seiten]]></translation>
+        <translation language="es"><![CDATA[top referentes]]></translation>
       </item>
       <item type="message" name="EditYourDashboard">
         <translation language="nl"><![CDATA[Personaliseer je dashboard]]></translation>
@@ -41,6 +44,7 @@
         <translation language="cn"><![CDATA[自定义控制面板]]></translation>
         <translation language="de"><![CDATA[Individualisiere dein Dashboard]]></translation>
         <translation language="fr"><![CDATA[Personnaliser votre tableau de bord.]]></translation>
+        <translation language="es"><![CDATA[Personaliza tu dashboard]]></translation>
       </item>
       <item type="message" name="HelpEditDashboard">
         <translation language="nl"><![CDATA[Personaliseer je dashboard door de verschillende items te verslepen. Sluit de items om ze te verwijderen.]]></translation>
@@ -51,6 +55,7 @@
         <translation language="cn"><![CDATA[拖拽模块可将其放置在你想要的位置。点击右上角“关闭”按钮可移除相应模块。]]></translation>
         <translation language="de"><![CDATA[Individualisiere das Dashboard, indem du die Boxen an die gewünschte Stelle ziehst. Schließe Boxen um sie vom Dashboard zu entfernen.]]></translation>
         <translation language="fr"><![CDATA[Personnalisez votre tableau de bord en déplaçant les boîtes de la façon que vous voulez. Fermez les boîtes pour les retirer.]]></translation>
+        <translation language="es"><![CDATA[Personaliza tu dashboard arrastrando las cajas donde quieres ponerlas. Cierra las cajas para eliminarlas.]]></translation>
       </item>
       <item type="message" name="WillBeEnabledOnSave">
         <translation language="nl"><![CDATA[Deze widget zal geactiveerd worden bij het opslaan.]]></translation>
@@ -61,6 +66,7 @@
         <translation language="cn"><![CDATA[这个小工具将在保存后启用]]></translation>
         <translation language="de"><![CDATA[Dieses Widget wird beim speichern reaktiviert.]]></translation>
         <translation language="fr"><![CDATA[Le widget sera ré-activé à la sauvegarde.]]></translation>
+        <translation language="es"><![CDATA[Este widget será reactivado al guardar.]]></translation>
       </item>
     </dashboard>
   </backend>

@@ -41,8 +41,8 @@ class BackendProfilesBlock extends BackendBaseActionDelete
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_unblock', array('id' => $this->id));
 
-				// report
-				$report = 'unblocked';
+				// redirect
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-unblocked&var=' . urlencode($profile['email']) . '&highlight=row-' . $this->id);
 			}
 
 			// block profile
@@ -57,12 +57,9 @@ class BackendProfilesBlock extends BackendBaseActionDelete
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_block', array('id' => $this->id));
 
-				// report
-				$report = 'blocked';
+				// redirect
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-blocked&var=' . urlencode($profile['email']) . '&highlight=row-' . $this->id);
 			}
-
-			// redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-' . $report . '&var=' . urlencode($profile['email']) . '&highlight=row-' . $this->id);
 		}
 
 		// profile does not exists

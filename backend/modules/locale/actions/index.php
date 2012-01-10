@@ -85,7 +85,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 				if($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
 
 				// set header labels
-				$dataGrid->setHeaderLabels(array($lang => ucfirst(BL::getMessage(strtoupper($lang)))));
+				$dataGrid->setHeaderLabels(array($lang => SpoonFilter::ucfirst(BL::getMessage(strtoupper($lang)))));
 
 				// set column attributes
 				$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
@@ -122,7 +122,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod), $this->filter['language'], 'noFocus');
 		$this->frm->addMultiCheckbox('type', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus');
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::lbl('ChooseAModule')));
+		$this->frm->getField('module')->setDefaultElement(SpoonFilter::ucfirst(BL::lbl('ChooseAModule')));
 
 		// manually parse fields
 		$this->frm->parse($this->tpl);
@@ -183,6 +183,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
 
 		// build query for filter
-		$this->filterQuery = $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);;
+		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);;
 	}
 }

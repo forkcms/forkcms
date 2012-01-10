@@ -20,5 +20,9 @@ if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 // require the installer class
 require_once 'engine/installer.php';
 
+// we'll be using utf-8
+define('SPOON_CHARSET', 'utf-8');
+header('Content-type: text/html;charset=' . SPOON_CHARSET);
+
 // run instance
 new Installer();

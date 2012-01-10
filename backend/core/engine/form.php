@@ -53,7 +53,7 @@ class BackendForm extends SpoonForm
 		$name = ($name === null) ? SpoonFilter::toCamelCase($this->URL->getModule() . '_' . $this->URL->getAction(), '_', true) : (string) $name;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/' . str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
+		$action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);
@@ -232,11 +232,18 @@ class BackendForm extends SpoonForm
 		$classError = 'inputEditorError ' . (string) $classError;
 		$HTML = (bool) $HTML;
 
-		// we add JS because we need TinyMCE
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
+		// we add JS because we need CKEditor
+		$this->header->addJS('ckeditor/ckeditor.js', 'core', false);
+		$this->header->addJS('ckeditor/adapters/jquery.js', 'core', false);
+		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 
-		// create and return a textarea for TinyMCE
+		// add the internal link lists-file
+		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
+		{
+			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js', null, null, true);
+		}
+
+		// create and return a textarea for the editor
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
 	}
 
@@ -554,9 +561,27 @@ class BackendFormDate extends SpoonFormDate
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendFormImage extends SpoonFormImage
 {
+	/**
+	 * This function will return the errors. It is extended so we can do image checks automatically.
+	 *
+	 * @return string
+	 */
+	public function getErrors()
+	{
+		// do an image validation
+		if($this->isFilled())
+		{
+			$this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly'));
+			$this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
+		}
+
+		return $this->errors;
+	}
+
 	/**
 	 * Parses the html for this filefield.
 	 *

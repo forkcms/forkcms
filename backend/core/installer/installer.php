@@ -61,6 +61,13 @@ class ModuleInstaller
 	private $variables = array();
 
 	/**
+	 * The warnings thrown during the install
+	 *
+	 * @var array
+	 */
+	private $warnings = array();
+
+	/**
 	 * @param SpoonDatabase $db The database-connection.
 	 * @param array $languages The selected frontend languages.
 	 * @param array $interfaceLanguages The selected backend languages.
@@ -102,6 +109,16 @@ class ModuleInstaller
 
 		// store the module name for later usage
 		$this->module = $name;
+	}
+
+	/**
+	 * Adds a warning to the stack of warnings
+	 *
+	 * @param string $message The message that needs to be displayed.
+	 */
+	protected function addWarning($message)
+	{
+		$this->warnings[] = array('message' => $message);
 	}
 
 	/**
@@ -248,6 +265,16 @@ class ModuleInstaller
 	protected function getVariable($name)
 	{
 		return (!isset($this->variables[$name])) ? null : $this->variables[$name];
+	}
+
+	/**
+	 * Get all warnings
+	 *
+	 * @return array
+	 */
+	public function getWarnings()
+	{
+		return $this->warnings;
 	}
 
 	/**
@@ -459,7 +486,7 @@ class ModuleInstaller
 			'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
 			'title' => (string) $title,
 			'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-			'url' => SpoonFilter::urlise((string) $url, 'utf-8'),
+			'url' => SpoonFilter::urlise((string) $url, SPOON_CHARSET),
 			'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
 			'custom' => (!is_null($custom) ? (string) $custom : null),
 			'data' => (!is_null($data)) ? serialize($data) : null
@@ -606,12 +633,16 @@ class ModuleInstaller
 		$action = (string) $action;
 		$level = (int) $level;
 
+		// check if the action already exists
+		$exists = (bool) $this->getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM groups_rights_actions
+			 WHERE group_id = ? AND module = ? AND action = ?',
+			array($groupId, $module, $action)
+		);
+
 		// action doesn't exist
-		// @todo refactor me...
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
-											FROM groups_rights_actions
-											WHERE group_id = ? AND module = ? AND action = ?',
-											array($groupId, $module, $action)))
+		if(!$exists)
 		{
 			// build item
 			$item = array('group_id' => $groupId,
@@ -728,21 +759,29 @@ class ModuleInstaller
 			);
 		}
 
-		// doesn't already exist
-		// @todo refactor me...
-		elseif(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
-												FROM modules_settings
-												WHERE module = ? AND name = ?',
-												array($module, $name)))
+		// don't overwrite
+		else
 		{
-			// build item
-			$item = array(
-				'module' => $module,
-				'name' => $name,
-				'value' => $value
+			// check if this setting already exists
+			$exists = (bool) $this->getDB()->getVar(
+				'SELECT COUNT(name)
+				 FROM modules_settings
+				 WHERE module = ? AND name = ?',
+				array($module, $name)
 			);
 
-			$this->getDB()->insert('modules_settings', $item);
+			// does not yet exist
+			if(!$exists)
+			{
+				// build item
+				$item = array(
+					'module' => $module,
+					'name' => $name,
+					'value' => $value
+				);
+
+				$this->getDB()->insert('modules_settings', $item);
+			}
 		}
 	}
 
@@ -869,8 +908,9 @@ class CoreInstaller extends ModuleInstaller
 							'fr' => 'Mon site web',
 							'de' => 'Meine Webseite',
 							'hu' => 'Hhonlapom',
-							'it' => 'il mio sito web',
-							'ru' => 'мой сайт');
+							'it' => 'Il mio sito web',
+							'ru' => 'мой сайт',
+							'es' => 'Mi sitio web');
 
 		// language specific
 		foreach($this->getLanguages() as $language)
@@ -912,5 +952,9 @@ class CoreInstaller extends ModuleInstaller
 		{
 			// we don't need those keys.
 		}
+
+		// ckfinder
+		$this->setSetting('core', 'ckfinder_license_name', 'Fork CMS');
+		$this->setSetting('core', 'ckfinder_license_key', 'QJH2-32UV-6VRM-V6Y7-A91J-W26Z-3F8R');
 	}
 }

@@ -29,6 +29,13 @@ class FrontendModel
 	private static $moduleSettings = array();
 
 	/**
+	 * Visitor id from tracking cookie
+	 *
+	 * @var	string
+	 */
+	private static $visitorId;
+
+	/**
 	 * Add a number to the string
 	 *
 	 * @param string $string The string where the number will be appended to.
@@ -100,6 +107,65 @@ class FrontendModel
 
 		// no GET-parameters defined before
 		else return $URL .= '?' . $queryString . $hash;
+	}
+
+	/**
+	 * Get plain text for a given text
+	 *
+	 * @param string $text The text to convert.
+	 * @param bool[optional] $includeAHrefs Should the url be appended after the link-text?
+	 * @param bool[optional] $includeImgAlts Should the alt tag be inserted for images?
+	 * @return string
+	 */
+	public static function convertToPlainText($text, $includeAHrefs = true, $includeImgAlts = true)
+	{
+		// remove tabs, line feeds and carriage returns
+		$text = str_replace(array("\t", "\n", "\r"), '', $text);
+
+		// remove the head-, style- and script-tags and all their contents
+		$text = preg_replace('|\<head[^>]*\>(.*\n*)\</head\>|isU', '', $text);
+		$text = preg_replace('|\<style[^>]*\>(.*\n*)\</style\>|isU', '', $text);
+		$text = preg_replace('|\<script[^>]*\>(.*\n*)\</script\>|isU', '', $text);
+
+		// put back some new lines where needed
+		$text = preg_replace('#(\<(h1|h2|h3|h4|h5|h6|p|ul|ol)[^\>]*\>.*\</(h1|h2|h3|h4|h5|h6|p|ul|ol)\>)#isU', "\n$1", $text);
+
+		// replace br tags with newlines
+		$text = preg_replace('#(\<br[^\>]*\>)#isU', "\n", $text);
+
+		// replace links with the inner html of the link with the url between ()
+		// eg.: <a href="http://site.domain.com">My site</a> => My site (http://site.domain.com)
+		if($includeAHrefs) $text = preg_replace('|<a.*href="(.*)".*>(.*)</a>|isU', '$2 ($1)', $text);
+
+		// replace images with their alternative content
+		// eg. <img src="path/to/the/image.jpg" alt="My image" /> => My image
+		if($includeImgAlts) $text = preg_replace('|\<img[^>]*alt="(.*)".*/\>|isU', '$1', $text);
+
+		// decode html entities
+		$text = html_entity_decode($text, ENT_QUOTES, 'ISO-8859-15');
+
+		// remove space characters at the beginning and end of each line and clear lines with nothing but spaces
+		$text = preg_replace('/^\s*|\s*$|^\s*$/m', '', $text);
+
+		// strip tags
+		$text = strip_tags($text, '<h1><h2><h3><h4><h5><h6><p><li>');
+
+		// format heading, paragraphs and list items
+		$text = preg_replace('|\<h[123456]([^\>]*)\>(.*)\</h[123456]\>|isU', "\n** $2 **\n", $text);
+		$text = preg_replace('|\<p([^\>]*)\>(.*)\</p\>|isU', "$2\n", $text);
+		$text = preg_replace('|\<li([^\>]*)\>\n*(.*)\n*\</li\>|isU', "- $2\n", $text);
+
+		// replace 3 and more line breaks in a row by 2 line breaks
+		$text = preg_replace('/\n{3,}/', "\n\n", $text);
+
+		// use php contant for new lines
+		$text = str_replace("\n", PHP_EOL, $text);
+
+		// trim line breaks at the beginning and ending of the text
+		$text = trim($text, PHP_EOL);
+
+		// return the plain text
+		return $text;
 	}
 
 	/**
@@ -439,6 +505,25 @@ class FrontendModel
 		}
 
 		return $record;
+	}
+
+	/**
+	 * Get the visitor's id (using a tracking cookie)
+	 *
+	 * @return string
+	 */
+	public static function getVisitorId()
+	{
+		// check if tracking id is fetched already
+		if(self::$visitorId !== null) return self::$visitorId;
+
+		// get/init tracking identifier
+		self::$visitorId = SpoonCookie::exists('track') ? (string) SpoonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
+
+		// set/prolong tracking cookie
+		SpoonCookie::set('track', self::$visitorId, 86400 * 365);
+
+		return self::getVisitorId();
 	}
 
 	/**
@@ -812,16 +897,16 @@ class FrontendModel
 		// get db
 		$db = self::getDB(true);
 
-		// update if already existing
-		// @todo refactor this nasty if statement
-		if((int) $db->getVar('SELECT COUNT(*)
-									FROM hooks_subscriptions AS i
-									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
-									array($eventModule, $eventName, $module)) > 0)
-		{
-			// update
-			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
-		}
+		// check if the subscription already exists
+		$exists = (bool) $db->getVar(
+			'SELECT COUNT(*)
+			 FROM hooks_subscriptions AS i
+			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
+			array($eventModule, $eventName, $module)
+		);
+
+		// update
+		if($exists) $db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
 
 		// insert
 		else $db->insert('hooks_subscriptions', $item);

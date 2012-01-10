@@ -492,7 +492,7 @@ class BackendAnalyticsModel
 		foreach($matches as $item)
 		{
 			// trim item
-			$item = explode('", "', trim($item," \n\r\t\""));
+			$item = explode('", "', trim($item," \n\r\t\"]"));
 
 			// build cache list
 			$cacheList[$item[1]] = $item[0];
@@ -1071,7 +1071,7 @@ class BackendAnalyticsModel
 	 */
 	public static function writeCacheFile(array $data, $startTimestamp, $endTimestamp)
 	{
-		$xml = "<?xml version='1.0' encoding='UTF-8'?>\n";
+		$xml = "<?xml version='1.0' encoding='" . SPOON_CHARSET . "'?>\n";
 		$xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
 
 		// loop data

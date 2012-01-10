@@ -90,7 +90,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 		$csv = SpoonFileCSV::arrayToString($this->rows, $this->columnHeaders);
 
 		// set headers for download
-		$headers[] = 'Content-type: application/csv; charset=utf-8';
+		$headers[] = 'Content-type: application/csv; charset=' . SPOON_CHARSET;
 		$headers[] = 'Content-Disposition: attachment; filename="' . date('Ymd_His') . '.csv"';
 		$headers[] = 'Content-Length: ' . strlen($csv);
 		$headers[] = 'Pragma: no-cache';
@@ -173,8 +173,8 @@ class BackendFormBuilderExportData extends BackendBaseAction
 	private function setItems()
 	{
 		// init header labels
-		$lblSessionId = ucfirst(BL::lbl('SessionId'));
-		$lblSentOn = ucfirst(BL::lbl('SentOn'));
+		$lblSessionId = SpoonFilter::ucfirst(BL::lbl('SessionId'));
+		$lblSentOn = SpoonFilter::ucfirst(BL::lbl('SentOn'));
 		$this->columnHeaders = array($lblSessionId, $lblSentOn);
 
 		// fetch query and parameters

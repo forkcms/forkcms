@@ -723,7 +723,7 @@ class BackendMailmotorModel
 		);
 
 		// prepend an additional option
-		array_unshift($record, ucfirst(BL::lbl('NoCampaign')));
+		array_unshift($record, SpoonFilter::ucfirst(BL::lbl('NoCampaign')));
 
 		return $record;
 	}
@@ -1101,7 +1101,6 @@ class BackendMailmotorModel
 		// get groups for this mailing ID
 		$record['groups'] = self::getGroupIDsByMailingID($id);
 		$record['recipients'] = self::getAddressesByGroupID($record['groups']);
-		$record['data'] = unserialize($record['data']);
 
 		// fetch CM id for this mailing
 		$record['cm_id'] = BackendMailmotorCMHelper::getCampaignMonitorID('campaign', $record['id']);

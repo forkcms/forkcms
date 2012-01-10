@@ -47,7 +47,6 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
-			$this->header->addJS('tiny_mce/jquery.tinymce.js', 'core');
 			$this->getData();
 			$this->loadWizardSteps();
 			$this->{'loadStep' . $this->stepId}();
@@ -130,7 +129,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('groups', $groups);
 
 		// assign the template language
-		$this->tpl->assign('templateLanguage', ucfirst(BL::lbl(strtoupper($template['language']))));
+		$this->tpl->assign('templateLanguage', SpoonFilter::ucfirst(BL::lbl(strtoupper($template['language']))));
 
 		// get the price settings
 		$pricePerEmail = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');

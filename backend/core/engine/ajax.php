@@ -40,9 +40,19 @@ class BackendAJAX
 			define('NAMED_APPLICATION', 'backend_ajax');
 		}
 
-		$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
-		$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
-		$this->setLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
+		// get values from the GET-parameters
+		$module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
+		$action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
+		$language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
+
+		// overrule the values with the ones provided through POST
+		$module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
+		$action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
+		$language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
+
+		$this->setModule($module);
+		$this->setAction($action);
+		$this->setLanguage($language);
 
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());

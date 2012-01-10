@@ -29,7 +29,7 @@
 						</p>
 						{$txtPasswordError}
 					</div>
-					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">{$lblNone|ucfirst}</p>
@@ -108,7 +108,7 @@
 				<div class="options last">
 					<ul class="inputList">
 						<li>{$chkActive} <label for="active">{$msgHelpActive}</label> {$chkActiveError}</li>
-						<li>{$chkApiAccess} <label for="api_access">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
+						<li>{$chkApiAccess} <label for="apiAccess">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
 					</ul>
 					<p>{$lblGroups|ucfirst}</p>
 					<ul id="groupList" class="inputList">

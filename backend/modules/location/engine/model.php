@@ -136,7 +136,7 @@ class BackendLocationModel
 		// update extra (item id is now known)
 		$extra['data'] = serialize(array(
 			'id' => $item['id'],
-			'extra_label' => ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+			'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
 			'language' => $item['language'],
 			'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
 		);
@@ -165,7 +165,7 @@ class BackendLocationModel
 			'action' => 'location',
 			'data' => serialize(array(
 				'id' => $item['id'],
-				'extra_label' => ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+				'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
 				'language' => $item['language'],
 				'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
 			),

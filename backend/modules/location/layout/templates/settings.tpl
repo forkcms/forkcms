@@ -12,7 +12,7 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="zoom_level">{$lblZoomLevel|ucfirst}</label>
+				<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
 				{$ddmZoomLevel} {$ddmZoomLevelError}
 			</p>
 		</div>
@@ -30,7 +30,7 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="map_type">{$lblMapType|ucfirst}</label>
+				<label for="mapType">{$lblMapType|ucfirst}</label>
 				{$ddmMapType} {$ddmMapTypeError}
 			</p>
 		</div>
@@ -42,25 +42,25 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="zoom_level_widget">{$lblZoomLevel|ucfirst}</label>
+				<label for="zoomLevelWidget">{$lblZoomLevel|ucfirst}</label>
 				{$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
 			</p>
 		</div>
 		<div class="options">
 			<p>
-				<label for="width_widget">{$lblWidth|ucfirst}</label>
+				<label for="widthWidget">{$lblWidth|ucfirst}</label>
 				{$txtWidthWidget} {$txtWidthWidgetError}
 			</p>
 		</div>
 		<div class="options">
 			<p>
-				<label for="height_widget">{$lblHeight|ucfirst}</label>
+				<label for="heightWidget">{$lblHeight|ucfirst}</label>
 				{$txtHeightWidget} {$txtHeightWidgetError}
 			</p>
 		</div>
 		<div class="options">
 			<p>
-				<label for="map_type_widget">{$lblMapType|ucfirst}</label>
+				<label for="mapTypeWidget">{$lblMapType|ucfirst}</label>
 				{$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
 			</p>
 		</div>

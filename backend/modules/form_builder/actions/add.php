@@ -116,7 +116,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 				// create submit button
 				$field['form_id'] = $id;
 				$field['type'] = 'submit';
-				$field['settings'] = serialize(array('values' => ucfirst(FL::getLabel('Send'))));
+				$field['settings'] = serialize(array('values' => SpoonFilter::ucfirst(FL::getLabel('Send'))));
 				BackendFormBuilderModel::insertField($field);
 
 				// everything is saved, so redirect to the editform

@@ -10,6 +10,7 @@
 		<ul class="inputList checkboxTextFieldCombo">
 			<li>
 				{$chkPageTitleOverwrite}
+				<label for="pageTitle" class="visuallyHidden">{$lblPageTitle|ucfirst}</label>
 				{$txtPageTitle} {$txtPageTitleError}
 			</li>
 		</ul>
@@ -20,6 +21,7 @@
 		<ul class="inputList checkboxTextFieldCombo">
 			<li>
 				{$chkMetaDescriptionOverwrite}
+				<label for="metaDescription" class="visuallyHidden">{$lblDescription|ucfirst}</label>
 				{$txtMetaDescription} {$txtMetaDescriptionError}
 			</li>
 		</ul>
@@ -30,6 +32,7 @@
 		<ul class="inputList checkboxTextFieldCombo">
 			<li>
 				{$chkMetaKeywordsOverwrite}
+				<label for="metaKeywords" class="visuallyHidden">{$lblKeywords|ucfirst}</label>
 				{$txtMetaKeywords} {$txtMetaKeywordsError}
 			</li>
 		</ul>
@@ -57,6 +60,7 @@
 		<ul class="inputList checkboxTextFieldCombo">
 			<li>
 				{$chkUrlOverwrite}
+				<label for="url" class="visuallyHidden">{$lblCustomURL|ucfirst}</label>
 				{option:detailURL}<span id="urlFirstPart">{$detailURL}/</span>{/option:detailURL}{$txtUrl} {$txtUrlError}
 			</li>
 		</ul>

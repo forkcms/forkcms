@@ -1,17 +1,88 @@
-3.1.6 (xxxx-xx-xx)
+3.2.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: integrated CKEditor into Fork CMS.
+* Core: added an extra check (parent has to be td.checkbox) for the row selection within tables in the backend.
+* Core: added cookie containing unique visitor id.
+* Pages: when adding an editor field, the editor will immediately open.
+* Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
+* Core: added maxItems and afterAdd options for the multipleSelectbox.
+
+Bugfixes:
+
+* Extensions: fixed module-warnings system.
+* Extensions: fixed module upload.
+* Core: fixed core template override from within module action.
+* Core: added #xfbml=1 to the Facebook connect URL so Facebook plugins also work when there's no Facebook app id given in the settings tab.
+* Users: Fixed a bug that was triggered when editing a user that was not the loggedin user and when the loggedin user was not a god user.
+
+
+3.1.9 (2012-01-03)
+--
+Improvements:
+
+* Core: the frontend CSS-minifier supports @import-statements from now on.
+* Core: you can't select redirect-languages that aren't active.
+
+Bugfixes:
+
+* Blog: meta should be deleted before the items are deleted.
+
+
+3.1.8 (2011-12-27)
+--
+Improvements:
+
+* Core: added public methods to FrontendPage to fetch page id & page record.
+* Core: split instantiation & execution of extras, allowing extra's to be aware of other extra's on a page.
+* All: fixed a lot of <label>-tags, which improves the accessibility.
+* All: added some hidden labels for formelements that doesn't have a <label>-tag linked, which improves the accessibility.
+* Authentication: don't mention which field is required seperatly.
+* Core: no more need to use the addslashes-modifier in JS-files, it will be handled by Fork. Introduced while fixing the bug mentioned by Tristan Charbonnier on http://forkcms.lighthouseapp.com/projects/61890/tickets/249.
+* Core: added a generic class that will enable you to use iCal-feeds.
+
+Bugfixes:
+
+* Core: confirmmessages weren't working anymore, as Samuel Debruyn mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/251
+* Extensions: when a templates was edited and an form-error was shown the added blocks weren't shown correctly again.
+* Tags: related widget wasn't using the current language, patch provided by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/243
+* Tags: the url for a tag that contains spaces wasn't calculated correctly, mentioned by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/244
+* Mailmotor: also replace https while linking the account
+* Formbuilder: changing the value of the submitbutton wasn't working, mentioned by phill on http://forkcms.lighthouseapp.com/projects/61890/tickets/252.
+* Installer: show the warning when library/external is not readable.
+
+
+3.1.7 (2011-12-20)
+--
+Improvements:
+
+* Core: tableSequenceByDragAndDrop allows the module to be chosen, so sequences from other modules might be used.
+* Tags: tagpages don't have any SEO-value, so don't index them.
+* Core: created multibyte-safe ucfirst variant and applied it throughout Fork CMS.
+
+Bugfixes:
+
+* Core: fixed XSS vulnerability (as mentioned on: http://packetstormsecurity.org/files/107815/forkcms-xss.txt)
+* Core: fixed page-unload warning on IE.
+* Core: it is now possible to use translations that don't exist in English.
+
+
+3.1.6 (2011-12-13)
 --
 Improvements:
 
 * Core: when not in debugmode non-existing files or faulty urls shouldn't trigger an exception but a 404.
 * Core: added an getModules method to FrontendModule, analog to the backend method.
 * Core: the direct actions are no longer shown in the navigation.
-* Locale: the missing items are now sorted by application, type, module and name.
 * Core: don't add a timestamp to the urls of well known libraries in the backend.
 * Core: automagic canonical-urls.
 * Core: added a new modifier stripnewlines which will remove all newlines in a string, so JS can handle it. 
+* Core: added schema.org properties in the default HTML and in the Triton-theme.
+* Locale: added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
+* Locale: the missing items are now sorted by application, type, module and name.
+* Locale: added translations for Spanish (by Alberto Aguayo - http://www.bikumo.com)
 * Location: rewrote most of the JS, because the map wasn't showing the markers correctly, as mentioned by Wouter H on http://forkcms.lighthouseapp.com/projects/61890/tickets/238
-* Added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
-* Core: Added schema.org properties in the default HTML and in the Triton-theme.
 
 Bugfixes:
 
@@ -19,7 +90,8 @@ Bugfixes:
 * Pages: removed extras still linked to page now no longer trigger an error.
 * Core: settings exclude & checked values on setMassActionCheckboxes now works again.
 * Formbuilder: fixed a typo, as mentioned by Tommy Van de Velde on http://forkcms.lighthouseapp.com/projects/61890/tickets/239.
-* Core: when adding a JS-file with an ? in it the timestamp was appended with a ?.
+* Core: when adding a JS-file with a ? in it the timestamp was appended with a ?.
+* Locale: improved translations for German (by Philipp Kruft - http://www.novacore.de)
 
 
 3.1.5 (2011-12-06)

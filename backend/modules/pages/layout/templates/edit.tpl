@@ -60,7 +60,7 @@
 							{$msgFallbackInfo}
 						</div>
 
-						<table cellspacing="10" cellpadding="0" border="0">
+						<table cellspacing="10">
 							<tbody>
 								<tr>
 									<td data-position="fallback" id="templatePosition-fallback" colspan="1" class="box">
@@ -119,11 +119,13 @@
 							<li>
 								<label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
 								{option:redirect.isInternal}
+										<label for="internalRedirect" class="visuallyHidden">{$redirect.label}</label>
 										{$ddmInternalRedirect} {$ddmInternalRedirectError}
 										<span class="helpTxt">{$msgHelpInternalRedirect}</span>
 								{/option:redirect.isInternal}
 
 								{option:redirect.isExternal}
+										<label for="externalRedirect" class="visuallyHidden">{$redirect.label}</label>
 										{$txtExternalRedirect} {$txtExternalRedirectError}
 										<span class="helpTxt">{$msgHelpExternalRedirect}</span>
 								{/option:redirect.isExternal}
@@ -181,6 +183,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkPageTitleOverwrite}
+							<label for="pageTitle" class="visuallyHidden">{$lblPageTitle|ucfirst}</label>
 							{$txtPageTitle} {$txtPageTitleError}
 						</li>
 					</ul>
@@ -191,6 +194,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkNavigationTitleOverwrite}
+							<label for="navigationTitle" class="visuallyHidden">{$lblNavigationTitle|ucfirst}</label>
 							{$txtNavigationTitle} {$txtNavigationTitleError}
 						</li>
 					</ul>
@@ -209,6 +213,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkMetaDescriptionOverwrite}
+							<label for="metaDescription" class="visuallyHidden">{$lblDescription|ucfirst}</label>
 							{$txtMetaDescription} {$txtMetaDescriptionError}
 						</li>
 					</ul>
@@ -219,6 +224,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkMetaKeywordsOverwrite}
+							<label for="metaKeywords" class="visuallyHidden">{$lblKeywords|ucfirst}</label>
 							{$txtMetaKeywords} {$txtMetaKeywordsError}
 						</li>
 					</ul>
@@ -244,6 +250,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
+							<label for="url" class="visuallyHidden">{$lblCustomURL|ucfirst}</label>
 							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
@@ -319,7 +326,9 @@
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>{$lblTags|ucfirst}</h3>
+					<h3>
+						<label for="addValue-tags">{$lblTags|ucfirst}</label>
+					</h3>
 				</div>
 				<div class="options">
 					{$txtTags} {$txtTagsError}
@@ -429,6 +438,21 @@
 		</div>
 	</div>
 {/form:edit}
+
+<div class="box" id="blockHtml" style="display: none;">
+	<div class="blockContentHTML optionsRTE">
+		<fieldset>
+			<div class="generalMessage singleMessage infoMessage">
+				{$msgContentSaveWarning}
+			</div>
+			<div class="heading">
+				<h3>{$lblEditor|ucfirst}</h3>
+			</div>
+			{$txtHtml}
+			{$txtHtmlError}
+		</fieldset>
+	</div>
+</div>
 
 <script type="text/javascript">
 	//<![CDATA[

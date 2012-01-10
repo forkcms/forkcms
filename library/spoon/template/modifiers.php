@@ -46,7 +46,7 @@ class SpoonTemplateModifiers
 										'stripslashes' => 'stripslashes',
 										'substring' => 'substr',
 										'trim' => 'trim',
-										'ucfirst' => 'ucfirst',
+										'ucfirst' => array('SpoonFilter', 'ucfirst'),
 										'ucwords' => 'ucwords',
 										'uppercase' => array('SpoonTemplateModifiers', 'uppercase'));
 

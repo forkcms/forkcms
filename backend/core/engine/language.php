@@ -305,10 +305,6 @@ class BackendLanguage
 			// settings cookies isn't allowed, because this isn't a real problem we ignore the exception
 		}
 
-		// store in session for TinyMCE
-		SpoonSession::set('tiny_mce_language', $language);
-		SpoonSession::set('interface_language', $language);
-
 		// init vars
 		$err = array();
 		$lbl = array();
@@ -322,17 +318,20 @@ class BackendLanguage
 
 		// overwrite with the requested language's translations
 		require BACKEND_CACHE_PATH . '/locale/' . $language . '.php';
-		foreach(self::$err as $module => &$translations)
+		foreach($err as $module => $translations)
 		{
-			if(isset($err[$module])) $translations = array_merge($translations, $err[$module]);
+			if(!isset(self::$err[$module])) self::$err[$module] = array();
+			self::$err[$module] = array_merge(self::$err[$module], $translations);
 		}
-		foreach(self::$lbl as $module => &$translations)
+		foreach($lbl as $module => $translations)
 		{
-			if(isset($lbl[$module])) $translations = array_merge($translations, (array) $lbl[$module]);
+			if(!isset(self::$lbl[$module])) self::$lbl[$module] = array();
+			self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
 		}
-		foreach(self::$msg as $module => &$translations)
+		foreach($msg as $module => $translations)
 		{
-			if(isset($msg[$module])) $translations = array_merge($translations, (array) $msg[$module]);
+			if(!isset(self::$msg[$module])) self::$msg[$module] = array();
+			self::$msg[$module] = array_merge(self::$msg[$module], $translations);
 		}
 	}
 

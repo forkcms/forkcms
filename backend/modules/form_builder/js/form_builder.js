@@ -87,7 +87,7 @@ jsBackend.formBuilder.fields =
 		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
 
 		// init errors
-		jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
+		if(typeof defaultErrorMessages != 'undefined') jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
 
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
@@ -244,16 +244,6 @@ jsBackend.formBuilder.fields =
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
 							});
 						}
-						else if(id == 'paragraphDialog')
-						{
-							// we want other buttons
-							tinyMCE.activeEditor.settings.theme_advanced_buttons1 = 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor';
-							tinyMCE.activeEditor.settings.theme_advanced_buttons2 = 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes';
-							tinyMCE.activeEditor.settings.theme_advanced_buttons3 = '';
-
-							// create tinymce control
-							tinyMCE.execCommand('mceAddControl', false, 'paragraph');
-						}
 
 						// focus on first input element
 						if($(this).find(':input:visible').length > 0) $(this).find(':input:visible')[0].focus();
@@ -267,13 +257,6 @@ jsBackend.formBuilder.fields =
 					{
 						// no items message
 						jsBackend.formBuilder.fields.toggleNoItems();
-
-						// unload tinymce
-						if(tinyMCE.getInstanceById('paragraph'))
-						{
-							tinyMCE.execCommand('mceSetContent', false, 'paragraph');
-							tinyMCE.execCommand('mceRemoveControl', false, 'paragraph');
-						}
 
 						// reset
 						jsBackend.formBuilder.fields.resetDialog(id);
@@ -914,9 +897,6 @@ jsBackend.formBuilder.fields =
 	 */
 	saveParagraph: function()
 	{
-		// save tiny mce
-		tinyMCE.triggerSave();
-
 		// init vars
 		var fieldId = $('#paragraphId').val();
 		var type = 'paragraph';
@@ -1057,7 +1037,7 @@ jsBackend.formBuilder.fields =
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
 				type: type,
-				values: values
+				values: value
 			}),
 			success: function(data, textStatus)
 			{

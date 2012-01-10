@@ -127,7 +127,7 @@
 			{$dgReferrers}
 		{/option:dgReferrers}
 		{option:!dgReferrers}
-			<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+			<table class="dataGrid">
 				<tr>
 					<td>{$msgNoReferrers}</td>
 				</tr>
@@ -148,7 +148,7 @@
 			{$dgKeywords}
 		{/option:dgKeywords}
 		{option:!dgKeywords}
-			<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+			<table class="dataGrid">
 				<tr>
 					<td>{$msgNoKeywords}</td>
 				</tr>

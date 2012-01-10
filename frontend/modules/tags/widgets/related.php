@@ -61,8 +61,8 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				'SELECT mt.module, mt.other_id
 				 FROM modules_tags AS mt
 				 INNER JOIN tags AS t ON t.id = mt.tag_id
-				 WHERE t.tag = ?',
-				array($tag)
+				 WHERE t.language = ? AND t.tag = ?',
+				array(FRONTEND_LANGUAGE, $tag)
 			);
 
 			// loop items

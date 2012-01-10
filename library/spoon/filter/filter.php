@@ -139,8 +139,6 @@ class SpoonFilter
 
 	/**
 	 * Disable php's magic quotes (yuck!)
-	 *
-	 * @return	void
 	 */
 	public static function disableMagicQuotes()
 	{
@@ -811,12 +809,6 @@ class SpoonFilter
 		// trim whitespace and strip HTML tags
 		$string = trim($string);
 
-		// replace html entities that aren't replaced by SpoonFilter::htmlentitiesDecode (should be solved when using a newer Spoon Library)
-		$string = str_replace('&euro;', 'EUR', $string);
-		$string = str_replace('&#8364;', 'EUR', $string);
-		$string = str_replace('&#8211;', '-', $string);
-		$string = str_replace('&#8230;', '...', $string);
-
 		// decode html entities
 		$string = SpoonFilter::htmlentitiesDecode($string);
 
@@ -862,6 +854,29 @@ class SpoonFilter
 		}
 
 		return $string;
+	}
+
+
+	/**
+	 * Multibyte-safe ucfirst
+	 *
+	 * @return	string							The ucfirst'ed string.
+	 * @param	string $string					The string to ucfirst
+	 * @param	string[optional] $charset		The charset to use, default is based on SPOON_CHARSET.
+	 */
+	public static function ucfirst($string, $charset = null)
+	{
+		// init vars
+		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$string = (string) $string;
+
+		// uppercase first character
+		$first = mb_strtoupper(mb_substr($string, 0, 1, $charset), $charset);
+
+		// leave rest untouched
+		$rest = mb_substr($string, 1, mb_strlen($string, $charset) - 1, $charset);
+
+		return $first . $rest;
 	}
 
 
@@ -923,5 +938,3 @@ class SpoonFilter
  * @since		0.1.1
  */
 class SpoonFilterException extends SpoonException {}
-
-?>

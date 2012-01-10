@@ -248,6 +248,9 @@ class InstallerStep7 extends InstallerStep
 	 */
 	public function execute()
 	{
+		// extend execution limit
+		set_time_limit(0);
+
 		// validate all previous steps
 		if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
 
@@ -305,6 +308,9 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function installModules()
 	{
+		// init var
+		$warnings = array();
+
 		/**
 		 * First we need to install the core. All the linked modules, settings and sql tables are
 		 * being installed.
@@ -333,6 +339,10 @@ class InstallerStep7 extends InstallerStep
 
 		// install the core
 		$installer->install();
+
+		// add the warnings
+		$moduleWarnings = $installer->getWarnings();
+		if(!empty($moduleWarnings)) $warnings[] = array('module' => 'core', 'warnings' => $moduleWarnings);
 
 		// variables passed to module installers
 		$variables = array();
@@ -371,8 +381,15 @@ class InstallerStep7 extends InstallerStep
 
 				// install the module
 				$installer->install();
+
+				// add the warnings
+				$moduleWarnings = $installer->getWarnings();
+				if(!empty($moduleWarnings)) $warnings[] = array('module' => $module, 'warnings' => $moduleWarnings);
 			}
 		}
+
+		// parse the warnings
+		$this->tpl->assign('warnings', $warnings);
 	}
 
 	/**
