@@ -28,7 +28,12 @@ class FrontendPagesModel implements FrontendTagsInterface
 			'SELECT i.id, i.title
 			 FROM pages AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
-			 WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' . implode(',', $ids) . ')
+			 WHERE
+			 	i.status = ? AND
+			 	i.hidden = ? AND
+			 	i.language = ? AND
+			 	i.publish_on <= ? AND
+			 	i.id IN (' . implode(',', $ids) . ')
 			 ORDER BY i.title ASC',
 			array('active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
 		);
@@ -37,7 +42,10 @@ class FrontendPagesModel implements FrontendTagsInterface
 		if(!empty($items))
 		{
 			// reset url
-			foreach($items as &$row) $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+			foreach($items as $key => $row)
+			{
+				$items[$key]['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+			}
 		}
 
 		// return
@@ -72,13 +80,20 @@ class FrontendPagesModel implements FrontendTagsInterface
 			 WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
 			 AND i.language = ? AND i.publish_on <= ?
 			 ORDER BY i.sequence ASC',
-			array((int) $id, 'active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00'));
+			array(
+				(int) $id, 'active', 'N', FRONTEND_LANGUAGE,
+				FrontendModel::getUTCDate('Y-m-d H:i') . ':00'
+			)
+		);
 
 		// has items
 		if(!empty($items))
 		{
 			// reset url
-			foreach($items as &$row) $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+			foreach($items as $key => $row)
+			{
+				$items[$key]['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+			}
 		}
 
 		// return
@@ -109,23 +124,105 @@ class FrontendPagesModel implements FrontendTagsInterface
 			 FROM pages AS p
 			 INNER JOIN meta AS m ON p.meta_id = m.id
 			 INNER JOIN themes_templates AS t ON p.template_id = t.id
-			 WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' . implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.language = ?',
+			 WHERE
+			 	p.id IN (' . implode(', ', $ids) . ') AND
+			 	p.id NOT IN (' . implode(', ', $ignore) . ') AND
+			 	p.status = ? AND
+			 	p.hidden = ? AND
+			 	p.language = ?',
 			array('active', 'N', FRONTEND_LANGUAGE), 'id'
 		);
 
 		// prepare items for search
-		foreach($items as &$item)
+		foreach($items as $key => $item)
 		{
-			$item['text'] = implode(' ', (array) $db->getColumn(
+			$items[$key]['text'] = implode(' ', (array) $db->getColumn(
 				'SELECT pb.html
 				 FROM pages_blocks AS pb
 				 WHERE pb.revision_id = ?',
 				array($item['text']))
 			);
 
-			$item['full_url'] = FrontendNavigation::getURL($item['id']);
+			$items[$key]['full_url'] = FrontendNavigation::getURL($item['id']);
 		}
 
 		return $items;
+	}
+
+	/**
+	 * This will output the right url for the sitemap.
+	 *
+	 * @param array $data This is the data provided by the sitemap
+	 * @param string $language
+	 * @return array
+	 */
+	public static function sitemap(array $data, $language)
+	{
+		$pageUrl = (string) $data['url'];
+		$pageId = (int) FrontendModel::getDB()->getVar(
+			'SELECT p.id
+			 FROM pages AS p
+			 INNER JOIN meta AS m ON m.id = p.meta_id
+			 WHERE m.url = ? AND m.sitemap_id = ? AND p.language = ?',
+			array($pageUrl, (int) $data['id'], (string) $language)
+		);
+
+		$data['full_url'] = SITE_URL . FrontendNavigation::getURL($pageId, $language);
+		return $data;
+	}
+
+	/**
+	 * A function that is used for the sitemap. This will go trough all the blog data and find images
+	 *
+	 * @return array
+	 */
+	public static function sitemapImages()
+	{
+		$returnData = array();
+		$data = (array) FrontendModel::getDB()->getRecords(
+			'SELECT p.id, pb.html, p.title, p.language, m.url
+			 FROM pages AS p
+			 INNER JOIN pages_blocks AS pb ON pb.revision_id = p.revision_id
+			 INNER JOIN meta AS m ON m.id = p.meta_id
+			 INNER JOIN meta_sitemap AS ms ON ms.id = m.sitemap_id
+			 WHERE
+			 	p.hidden = ? AND
+			 	p.status = ? AND
+			 	p.publish_on < ? AND
+			 	pb.html != ? AND
+			 	ms.visible = ?',
+			array('N', 'active', date('Y-m-d H:i') . ':00', '', 'Y')
+		);
+
+		foreach($data as $key => $block)
+		{
+			// get the blog posts image data
+			$blockImages = (array) FrontendModel::getImagesFromHtml($block['html']);
+
+			// don't add the post if we don't have any images
+			if(empty($blockImages)) continue;
+
+			$url = FrontendNavigation::getURL($block['id'], $block['language']);
+			$tmpData = array(
+				'full_url' => $url,
+				'action' => 'detail',
+				'language' => $block['language'],
+				'images' => array()
+			);
+
+			// add the images to the data
+			foreach($blockImages as $image) $tmpData['images'][] = $image;
+
+			// add a description to the image
+			foreach($tmpData['images'] as $key => $image)
+			{
+				if(isset($image['alt']) && $image['alt'] == '') $tmpData['images'][$key]['alt'] = $block['title'];
+				$tmpData['images'][$key]['description'] = $block['html'];
+			}
+
+			$returnData[] = $tmpData;
+		}
+
+		return $returnData;
 	}
 }

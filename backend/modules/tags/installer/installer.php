@@ -12,6 +12,7 @@
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class TagsInstaller extends ModuleInstaller
 {
@@ -48,17 +49,28 @@ class TagsInstaller extends ModuleInstaller
 		$this->insertExtra('tags', 'widget', 'Related', 'related', null, 'N', 32);
 
 		// get search extra id
-		$searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+		$searchId = (int) $this->getDB()->getVar(
+			'SELECT id
+			 FROM modules_extras
+			 WHERE module = ? AND type = ? AND action = ?',
+			array('search', 'widget', 'form')
+		);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			// check if a page for tags already exists in this language
-			// @todo refactor this if statement
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
-												FROM pages AS p
-												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?', array($tagsID, $language)) == 0)
+			$existsPage = (bool) $this->getDB()->getVar(
+				'SELECT COUNT(p.id)
+				 FROM pages AS p
+				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+				 WHERE b.extra_id = ? AND p.language = ?',
+				array($tagsID, $language)
+			);
+
+			if(!$existsPage)
 			{
 				// insert contact page
 				$this->insertPage(

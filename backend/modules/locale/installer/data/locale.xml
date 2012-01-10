@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
+  	<core>
+      <item type="label" name="Always">
+        <translation language="nl"><![CDATA[altijd]]></translation>
+        <translation language="en"><![CDATA[always]]></translation>
+      </item>
+      <item type="label" name="Daily">
+        <translation language="nl"><![CDATA[dagelijks]]></translation>
+        <translation language="en"><![CDATA[daily]]></translation>
+      </item>
+      <item type="label" name="Hourly">
+        <translation language="nl"><![CDATA[elk uur]]></translation>
+        <translation language="en"><![CDATA[hourly]]></translation>
+      </item>
+      <item type="label" name="Monthly">
+        <translation language="nl"><![CDATA[maandelijks]]></translation>
+        <translation language="en"><![CDATA[monthly]]></translation>
+      </item>
+      <item type="label" name="Never">
+        <translation language="nl"><![CDATA[nooit]]></translation>
+        <translation language="en"><![CDATA[never]]></translation>
+      </item>
+      <item type="label" name="Sitemap">
+        <translation language="nl"><![CDATA[sitemap]]></translation>
+        <translation language="en"><![CDATA[sitemap]]></translation>
+      </item>
+      <item type="label" name="SitemapChangeFrequency">
+        <translation language="nl"><![CDATA[veranderlijkheid van de sitemap]]></translation>
+        <translation language="en"><![CDATA[change frequency for the sitemap]]></translation>
+      </item>
+      <item type="label" name="SitemapPriority">
+        <translation language="nl"><![CDATA[de prioriteit voor deze pagina]]></translation>
+        <translation language="en"><![CDATA[the priority for this page]]></translation>
+      </item>
+      <item type="label" name="UseSitemap">
+        <translation language="nl"><![CDATA[sitemap gebruiken voor dit item]]></translation>
+        <translation language="en"><![CDATA[use a sitemap for this item]]></translation>
+      </item>
+      <item type="label" name="Weekly">
+        <translation language="nl"><![CDATA[wekelijks]]></translation>
+        <translation language="en"><![CDATA[weekly]]></translation>
+      </item>
+      <item type="label" name="Yearly">
+        <translation language="nl"><![CDATA[jaarlijks]]></translation>
+        <translation language="en"><![CDATA[yearly]]></translation>
+      </item>
+      <item type="message" name="HelpSitemapPagesItems">
+        <translation language="nl"><![CDATA[Aantal items op de pagina sitemap]]></translation>
+        <translation language="en"><![CDATA[Number of items on the pages sitemap]]></translation>
+      </item>
+      <item type="message" name="HelpSitemapImagesItems">
+        <translation language="nl"><![CDATA[Aantal items op de afbeelding sitemap]]></translation>
+        <translation language="en"><![CDATA[Number of items on the images sitemap]]></translation>
+      </item>
+      <item type="message" name="HelpSitemap">
+        <translation language="nl"><![CDATA[Indien u dit inschakeld zal deze pagina automatisch opgenomen worden in de sitemap van uw website. Hierdoor zullen de zoekmachines uw pagina beter vinden.]]></translation>
+        <translation language="en"><![CDATA[When you enable this, this page will automatically be added to your sitemap. Enabling this makes it easier for search engines to find your page.]]></translation>
+      </item>
+  	</core>
     <locale>
       <item type="label" name="Actions">
         <translation language="nl"><![CDATA[acties]]></translation>
@@ -389,4 +447,52 @@
       </item>
     </locale>
   </backend>
+  <frontend>
+    <core>
+      <item type="label" name="Always">
+        <translation language="nl"><![CDATA[altijd]]></translation>
+        <translation language="en"><![CDATA[always]]></translation>
+      </item>
+      <item type="label" name="Daily">
+        <translation language="nl"><![CDATA[dagelijks]]></translation>
+        <translation language="en"><![CDATA[daily]]></translation>
+      </item>
+      <item type="label" name="Hourly">
+        <translation language="nl"><![CDATA[elk uur]]></translation>
+        <translation language="en"><![CDATA[hourly]]></translation>
+      </item>
+      <item type="label" name="Monthly">
+        <translation language="nl"><![CDATA[maandelijks]]></translation>
+        <translation language="en"><![CDATA[monthly]]></translation>
+      </item>
+      <item type="label" name="Never">
+        <translation language="nl"><![CDATA[nooit]]></translation>
+        <translation language="en"><![CDATA[never]]></translation>
+      </item>
+      <item type="label" name="Sitemap">
+        <translation language="nl"><![CDATA[sitemap]]></translation>
+        <translation language="en"><![CDATA[sitemap]]></translation>
+      </item>
+      <item type="label" name="SitemapChangeFrequency">
+        <translation language="nl"><![CDATA[veranderlijkheid van de sitemap]]></translation>
+        <translation language="en"><![CDATA[change frequency for the sitemap]]></translation>
+      </item>
+      <item type="label" name="SitemapPriority">
+        <translation language="nl"><![CDATA[de prioriteit voor deze pagina]]></translation>
+        <translation language="en"><![CDATA[the priority for this page]]></translation>
+      </item>
+      <item type="label" name="UseSitemap">
+        <translation language="nl"><![CDATA[sitemap gebruiken voor dit item]]></translation>
+        <translation language="en"><![CDATA[use a sitemap for this item]]></translation>
+      </item>
+      <item type="label" name="Weekly">
+        <translation language="nl"><![CDATA[wekelijks]]></translation>
+        <translation language="en"><![CDATA[weekly]]></translation>
+      </item>
+      <item type="label" name="Yearly">
+        <translation language="nl"><![CDATA[jaarlijks]]></translation>
+        <translation language="en"><![CDATA[yearly]]></translation>
+      </item>
+    </core>
+  </frontend>
 </locale>

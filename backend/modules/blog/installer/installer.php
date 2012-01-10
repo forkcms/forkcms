@@ -33,6 +33,7 @@ class BlogInstaller extends ModuleInstaller
 	 */
 	private function addCategory($language, $title, $url)
 	{
+		$this->setSitemapAction('category');
 		$item = array();
 		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
 		$item['language'] = (string) $language;
@@ -146,6 +147,8 @@ class BlogInstaller extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			$this->setSitemapLanguage($language);
+
 			// fetch current categoryId
 			$this->defaultCategoryId = $this->getCategory($language);
 
@@ -165,11 +168,15 @@ class BlogInstaller extends ModuleInstaller
 			$this->setSetting('blog', 'rss_description_' . $language, '');
 
 			// check if a page for blog already exists in this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
-												FROM pages AS p
-												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?',
-												array($blogId, $language)))
+			$existsPage = (bool) $this->getDB()->getVar(
+				'SELECT COUNT(p.id)
+				 FROM pages AS p
+				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+				 WHERE b.extra_id = ? AND p.language = ?',
+				array($blogId, $language)
+			);
+
+			if(!$existsPage)
 			{
 				$this->insertPage(
 					array('title' => 'Blog', 'language' => $language),
@@ -199,6 +206,8 @@ class BlogInstaller extends ModuleInstaller
 		// check if blogposts already exist in this language
 		if(!(bool) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)))
 		{
+			$this->setSitemapAction('detail');
+
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array(
 				'id' => 1,

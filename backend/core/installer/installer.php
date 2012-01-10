@@ -14,6 +14,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
@@ -48,6 +49,20 @@ class ModuleInstaller
 	private $interfaceLanguages = array();
 
 	/**
+	 * The sitemap data
+	 *
+	 * @var string
+	 */
+	private $sitemapAction, $sitemapLanguage;
+
+	/**
+	 * The installed modulename
+	 *
+	 * @var string
+	 */
+	private $module;
+
+	/*
 	 * Cached modules
 	 *
 	 * @var	array
@@ -118,6 +133,9 @@ class ModuleInstaller
 
 		// activate and update description
 		else $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
+
+		// store the module name for later usage
+		$this->module = $name;
 	}
 
 	/**
@@ -284,6 +302,22 @@ class ModuleInstaller
 			 WHERE module = ? AND name = ?',
 			array((string) $module, (string) $name))
 		);
+	}
+
+	/**
+	 * Fetch the sitemap language
+	 *
+	 * @return string
+	 */
+	protected function getSitemapLanguage()
+	{
+		if(!isset($this->sitemapLanguage))
+		{
+			$languages = $this->getInterfaceLanguages();
+			$this->sitemapLanguage = current($languages);
+		}
+
+		return $this->sitemapLanguage;
 	}
 
 	/**
@@ -519,7 +553,18 @@ class ModuleInstaller
 	 */
 	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
 	{
+		$sitemapData = array(
+			'module' => $this->module,
+			'action' => $this->sitemapAction,
+			'language' => $this->getSitemapLanguage(),
+			'url' => SpoonFilter::urlise((string) $url, 'utf-8'),
+			'priority' => 0.8,
+			'edited_on' => gmdate('Y-m-d H:i:s')
+		);
+		$sitemapId = $this->getDB()->insert('meta_sitemap', $sitemapData);
+
 		$item = array(
+			'sitemap_id' => $sitemapId,
 			'keywords' => (string) $keywords,
 			'keywords_overwrite' => ($keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N'),
 			'description' => (string) $description,
@@ -823,6 +868,26 @@ class ModuleInstaller
 				$this->getDB()->insert('modules_settings', $item);
 			}
 		}
+	}
+
+	/**
+	 * Set the sitemap action. This will be used when you save meta data.
+	 *
+	 * @param string $name
+	 */
+	protected function setSitemapAction($name)
+	{
+		$this->sitemapAction = $name;
+	}
+
+	/**
+	 * Set the current language we're installing data for. This is used for the sitemap
+	 *
+	 * @param string $language
+	 */
+	protected function setSitemapLanguage($language)
+	{
+		$this->sitemapLanguage = (string) $language;
 	}
 }
 

@@ -54,7 +54,8 @@ class BackendFaqAdd extends BackendBaseActionAdd
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 
 		// meta
-		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+		$this->meta = new BackendMeta(null, 'title', true);
+		$this->meta->setForm($this->frm)->setAction('detail');
 	}
 
 	/**
@@ -64,12 +65,8 @@ class BackendFaqAdd extends BackendBaseActionAdd
 	{
 		parent::parse();
 
-		// get url
-		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
-		$url404 = BackendModel::getURL(404);
-
 		// parse additional variables
-		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+		$this->tpl->assign('detailURL', $this->meta->getFullUrl());
 	}
 
 	/**

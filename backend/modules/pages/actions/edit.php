@@ -344,10 +344,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
 
 		// meta
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-
-		// set callback for generating an unique URL
-		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $isAction));
+		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendPagesModel', 'getURL', array(
+				$this->record['id'],
+				$this->record['parent_id'],
+				$isAction)
+			);
 	}
 
 	/**

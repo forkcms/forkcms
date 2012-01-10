@@ -239,6 +239,54 @@ class FrontendModel
 	}
 
 	/**
+	 * This will extract all the images and their data from the html content
+	 *
+	 * @param string $html
+	 * @return array
+	 */
+	public static function getImagesFromHtml($html)
+	{
+		$returnData = array();
+
+		// extract the data
+		$allowedExtensions = array('jpg', 'jpeg', 'gif', 'png');
+		preg_match_all('/\<(img|src)(.*) \/>/', $html, $htmlData);
+
+		// go trough the values to extract the src and alt attributes
+		foreach($htmlData[2] as $key => $url)
+		{
+			$tempData = array();
+
+			// extract the attributes
+			$imageData = array();
+			preg_match_all('/(alt|src)=("[^"]*")/i', $url, $imageData[]);
+			if(empty($imageData)) continue;
+
+			$imageData = current($imageData);
+			$attributes = $imageData[1];
+			$values = $imageData[2];
+
+			// go trough the values to trim it from "
+			foreach($values as $vKey => $value)
+			{
+				$value = trim($value, '"');
+				$values[$vKey] = $value;
+			}
+
+			// go trough the attributes to assign them correctly
+			foreach($attributes as $key => $attribute)
+			{
+				if($attribute == 'src') $tempData['src'] = $values[$key];
+				elseif($attribute == 'alt') $tempData['alt'] = $values[$key];
+			}
+
+			$returnData[] = $tempData;
+		}
+
+		return $returnData;
+	}
+
+	/**
 	 * Get the modules
 	 *
 	 * @return array
@@ -460,25 +508,6 @@ class FrontendModel
 	}
 
 	/**
-	 * Get the visitor's id (using a tracking cookie)
-	 *
-	 * @return string
-	 */
-	public static function getVisitorId()
-	{
-		// check if tracking id is fetched already
-		if(self::$visitorId !== null) return self::$visitorId;
-
-		// get/init tracking identifier
-		self::$visitorId = SpoonCookie::exists('track') ? (string) SpoonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
-
-		// set/prolong tracking cookie
-		SpoonCookie::set('track', self::$visitorId, 86400 * 365);
-
-		return self::getVisitorId();
-	}
-
-	/**
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
 	 * @param string[optional] $format The format wherin the data will be returned, if not provided we will return it in MySQL-datetime-format.
@@ -495,6 +524,25 @@ class FrontendModel
 
 		// timestamp given
 		return gmdate($format, (int) $timestamp);
+	}
+
+	/**
+	 * Get the visitor's id (using a tracking cookie)
+	 *
+	 * @return string
+	 */
+	public static function getVisitorId()
+	{
+		// check if tracking id is fetched already
+		if(self::$visitorId !== null) return self::$visitorId;
+
+		// get/init tracking identifier
+		self::$visitorId = SpoonCookie::exists('track') ? (string) SpoonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
+
+		// set/prolong tracking cookie
+		SpoonCookie::set('track', self::$visitorId, 86400 * 365);
+
+		return self::getVisitorId();
 	}
 
 	/**

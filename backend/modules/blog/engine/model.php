@@ -150,7 +150,12 @@ class BackendBlogModel
 		);
 
 		// delete meta
-		if(!empty($metaIds)) $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
+		$meta = new BackendMeta();
+		foreach($metaIds as $metaId) $meta->delete($metaId);
+
+		// delete records
+		$db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
+		$db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
 		// delete records
 		$db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
@@ -179,7 +184,8 @@ class BackendBlogModel
 		if(!empty($item))
 		{
 			// delete meta
-			$db->delete('meta', 'id = ?', array($item['meta_id']));
+			$meta = new BackendMeta($item['meta_id']);
+			$meta->delete();
 
 			// delete category
 			$db->delete('blog_categories', 'id = ?', array($id));

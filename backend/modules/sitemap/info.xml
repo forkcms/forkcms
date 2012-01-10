@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Sitemap</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>3.1.5</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[This module will automatically generate a nice sitemap for the search machine crawlers.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Jelmer Snoeck]]></name>
+			<url><![CDATA[http://www.jelmersnoeck.be]]></url>
+		</author>
+	</authors>
+</module>

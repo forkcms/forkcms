@@ -26,7 +26,7 @@ class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 		$frm = new BackendForm('meta');
 
 		// get parameters
-		$URL = SpoonFilter::getPostValue('url', null, '', 'string');
+		$url = SpoonFilter::getPostValue('url', null, '', 'string');
 		$metaId = SpoonFilter::getPostValue('meta_id', null, null);
 		$baseFieldName = SpoonFilter::getPostValue('baseFieldName', null, '', 'string');
 		$custom = SpoonFilter::getPostValue('custom', null, false, 'bool');
@@ -39,15 +39,14 @@ class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 		$parameters = @unserialize($parameters);
 
 		// meta object
-		$this->meta = new BackendMeta($frm, $metaId, $baseFieldName, $custom);
-
-		// set callback for generating an unique URL
-		$this->meta->setUrlCallback($className, $methodName, $parameters);
+		$this->meta = new BackendMeta($metaId, $baseFieldName, $custom);
+		$this->meta->setForm($frm)
+			->setUrlCallback($className, $methodName, $parameters);
 
 		// fetch generated meta url
-		$URL = urldecode($this->meta->generateURL($URL));
+		$url = urldecode($this->meta->generateUrl($url));
 
 		// output
-		$this->output(self::OK, $URL);
+		$this->output(self::OK, $url);
 	}
 }

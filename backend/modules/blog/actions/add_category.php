@@ -11,6 +11,7 @@
  * This is the add-action, it will display a form to create a new category
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogAddCategory extends BackendBaseActionAdd
 {
@@ -35,10 +36,10 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		$this->frm->addText('title', null, 255, 'inputText title', 'inputTextError title');
 
 		// meta
-		$this->meta = new BackendMeta($this->frm, null, 'title', true);
-
-		// set callback for generating an unique URL
-		$this->meta->setURLCallback('BackendBlogModel', 'getURLForCategory');
+		$this->meta = new BackendMeta(null, 'title', true);
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendBlogModel', 'getURLForCategory')
+			->setAction('category');
 	}
 
 	/**

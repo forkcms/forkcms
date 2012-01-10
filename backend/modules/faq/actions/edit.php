@@ -71,7 +71,10 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
 
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
+		$this->meta->setForm($this->frm)
+			->setUrlCallback('BackendFaqModel', 'getURL', array($this->record['id']))
+			->setAction('detail');
 	}
 
 	/**
@@ -82,9 +85,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		parent::parse();
 
 		// get url
-		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
-		$url404 = BackendModel::getURL(404);
-		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+		$this->tpl->assign('detailURL', $this->meta->getFullUrl());
 
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
@@ -98,8 +99,6 @@ class BackendFaqEdit extends BackendBaseActionEdit
 	{
 		if($this->frm->isSubmitted())
 		{
-			$this->meta->setUrlCallback('BackendFaqModel', 'getURL', array($this->record['id']));
-
 			$this->frm->cleanupFields();
 
 			// validate fields

@@ -14,6 +14,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
@@ -169,10 +170,10 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('delete_image');
 
 		// meta object
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-
-		// set callback for generating a unique URL
-		$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
+		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
+		$this->meta->setForm($this->frm)
+			->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']))
+			->setAction('detail');
 	}
 
 	/**
@@ -214,12 +215,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	{
 		parent::parse();
 
-		// get url
-		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
-		$url404 = BackendModel::getURL(404);
-
 		// parse additional variables
-		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+		$this->tpl->assign('detailURL', $this->meta->getFullUrl());
 
 		// fetch proper slug
 		$this->record['url'] = $this->meta->getURL();

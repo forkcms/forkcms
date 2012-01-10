@@ -53,9 +53,12 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 	{
 		// create form
 		$this->frm = new BackendForm('editCategory');
-		$this->frm->addText('title', $this->record['title']);
+		$this->frm->addText('title', $this->record['title'], 255, 'inputText title', 'inputTextError title');
 
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
+		$this->meta->setForm($this->frm)
+			->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']))
+			->setAction('category');
 	}
 
 	/**
@@ -77,8 +80,6 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 	{
 		if($this->frm->isSubmitted())
 		{
-			$this->meta->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']));
-
 			$this->frm->cleanupFields();
 
 			// validate fields

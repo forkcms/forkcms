@@ -38,8 +38,21 @@ class BackendFaqModel
 	 */
 	public static function delete($id)
 	{
-		BackendModel::getDB(true)->delete('faq_questions', 'id = ?', array((int) $id));
-		BackendTagsModel::saveTags($id, '', 'faq');
+		$db = BackendModel::getDB(true);
+		$item = self::get($id);
+
+		if(!empty($item))
+		{
+			$metaId = (int) $item['meta_id'];
+			$meta = new BackendMeta($metaId);
+			$meta->delete();
+
+			$db->delete('faq_questions', 'id = ?', array((int) $id));
+			BackendTagsModel::saveTags($id, '', 'faq');
+
+			// invalidate the cache for the faq
+			BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+		}
 	}
 
 	/**
@@ -54,11 +67,14 @@ class BackendFaqModel
 
 		if(!empty($item))
 		{
-			$db->delete('meta', 'id = ?', array($item['meta_id']));
+			$metaId = (int) $item['meta_id'];
+			$meta = new BackendMeta($metaId);
+			$meta->delete();
+
 			$db->delete('faq_categories', 'id = ?', array((int) $id));
 			$db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
-			// invalidate the cache for blog
+			// invalidate the cache for the faq
 			BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
 		}
 	}
@@ -100,7 +116,8 @@ class BackendFaqModel
 			'SELECT COUNT(i.id)
 		 	 FROM faq_questions AS i
 			 WHERE i.id = ? AND i.language = ?',
-			 array((int) $id, BL::getWorkingLanguage()));
+			array((int) $id, BL::getWorkingLanguage())
+		);
 	}
 
 	/**
@@ -115,7 +132,8 @@ class BackendFaqModel
 			'SELECT COUNT(i.id)
 			 FROM faq_categories AS i
 			 WHERE i.id = ? AND i.language = ?',
-			 array((int) $id, BL::getWorkingLanguage()));
+			array((int) $id, BL::getWorkingLanguage())
+		);
 	}
 
 	/**
@@ -131,7 +149,8 @@ class BackendFaqModel
 			 FROM faq_questions AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
 			 WHERE i.id = ? AND i.language = ?',
-			 array((int) $id, BL::getWorkingLanguage()));
+			array((int) $id, BL::getWorkingLanguage())
+		);
 	}
 
 	/**
@@ -163,7 +182,8 @@ class BackendFaqModel
 			'SELECT f.*
 			 FROM faq_feedback AS f
 			 WHERE f.question_id = ? AND f.processed = ?',
-			 array((int) $id, 'N'));
+			array((int) $id, 'N')
+		);
 	}
 
 	/**
@@ -180,7 +200,8 @@ class BackendFaqModel
 			 INNER JOIN tags AS t ON mt.tag_id = t.id
 			 INNER JOIN faq_questions AS i ON mt.other_id = i.id
 			 WHERE mt.module = ? AND mt.tag_id = ? AND i.language = ?',
-			 array('faq', (int) $tagId, BL::getWorkingLanguage()));
+			array('faq', (int) $tagId, BL::getWorkingLanguage())
+		);
 
 		foreach($items as &$row)
 		{
@@ -208,14 +229,16 @@ class BackendFaqModel
 				 LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
 				 WHERE i.language = ?
 				 GROUP BY i.id',
-				 array(BL::getWorkingLanguage()));
+				array(BL::getWorkingLanguage())
+			);
 		}
 
 		return (array) $db->getPairs(
 			'SELECT i.id, i.title
 			 FROM faq_categories AS i
 			 WHERE i.language = ?',
-			 array(BL::getWorkingLanguage()));
+			array(BL::getWorkingLanguage())
+		);
 	}
 
 	/**
@@ -230,7 +253,8 @@ class BackendFaqModel
 			'SELECT i.*
 			 FROM faq_categories AS i
 			 WHERE i.id = ? AND i.language = ?',
-			 array((int) $id, BL::getWorkingLanguage()));
+			array((int) $id, BL::getWorkingLanguage())
+		);
 	}
 
 	/**
@@ -245,7 +269,8 @@ class BackendFaqModel
 			'SELECT f.*
 			 FROM faq_feedback AS f
 			 WHERE f.id = ?',
-			 array((int) $id));
+			array((int) $id)
+		);
 	}
 
 	/**
@@ -259,7 +284,8 @@ class BackendFaqModel
 			'SELECT MAX(i.sequence)
 			 FROM faq_categories AS i
 			 WHERE i.language = ?',
-			 array(BL::getWorkingLanguage()));
+			array(BL::getWorkingLanguage())
+		);
 	}
 
 	/**
@@ -274,7 +300,8 @@ class BackendFaqModel
 			'SELECT MAX(i.sequence)
 			 FROM faq_questions AS i
 			 WHERE i.category_id = ?',
-			 array((int) $id));
+			array((int) $id)
+		);
 	}
 
 	/**
@@ -298,7 +325,8 @@ class BackendFaqModel
 				 FROM faq_questions AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ?',
-				 array(BL::getWorkingLanguage(), $url));
+				array(BL::getWorkingLanguage(), $url)
+			);
 
 			// already exists
 			if($number != 0)
@@ -316,7 +344,8 @@ class BackendFaqModel
 				 FROM faq_questions AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
-				 array(BL::getWorkingLanguage(), $url, $id));
+				array(BL::getWorkingLanguage(), $url, $id)
+			);
 
 			// already exists
 			if($number != 0)
@@ -350,7 +379,8 @@ class BackendFaqModel
 				 FROM faq_categories AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ?',
-				 array(BL::getWorkingLanguage(), $url));
+				array(BL::getWorkingLanguage(), $url)
+			);
 
 			// already exists
 			if($number != 0)
@@ -368,7 +398,8 @@ class BackendFaqModel
 				 FROM faq_categories AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
-				 array(BL::getWorkingLanguage(), $url, $id));
+				array(BL::getWorkingLanguage(), $url, $id)
+			);
 
 			// already exists
 			if($number != 0)

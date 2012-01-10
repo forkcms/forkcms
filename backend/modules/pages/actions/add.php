@@ -243,10 +243,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
 
 		// meta
-		$this->meta = new BackendMeta($this->frm, null, 'title', true);
-
-		// set callback for generating an unique URL
-		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
+		$this->meta = new BackendMeta(null, 'title', true);
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
 	}
 
 	/**

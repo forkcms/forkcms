@@ -202,6 +202,13 @@ class FrontendURL
 		// split into chunks
 		$chunks = (array) explode('/', $queryString);
 
+		// this is used for dynamicly generating the sitemap
+		if(isset($chunks[0]) && preg_match('/(.*)sitemap(.*).xml/', $chunks[0]))
+		{
+			$sitemap = new FrontendSitemap($chunks[0]);
+			$sitemap->parse();
+		}
+
 		// single language
 		if(!SITE_MULTILANGUAGE)
 		{

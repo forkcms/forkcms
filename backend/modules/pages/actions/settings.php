@@ -47,11 +47,13 @@ class BackendPagesSettings extends BackendBaseActionEdit
 		// form is submitted
 		if($this->frm->isSubmitted())
 		{
+			$fields = $this->frm->getFields();
+
 			// form is validated
 			if($this->frm->isCorrect())
 			{
 				// set our settings
-				BackendModel::setModuleSetting($this->getModule(), 'meta_navigation', (bool) $this->frm->getField('meta_navigation')->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'meta_navigation', (bool) $fields['meta_navigation']->getValue());
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');

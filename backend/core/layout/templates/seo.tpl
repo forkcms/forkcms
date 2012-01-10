@@ -69,6 +69,19 @@
 
 <div class="subtleBox">
 	<div class="heading">
+		<h3>{$lblSitemap|ucfirst}</h3>
+	</div>
+
+	<div class="options">
+		<p>
+			<label for="useSitemap">{$chkUseSitemap} {$lblUseSitemap|ucfirst}</label>
+			{$msgHelpSitemap}
+		</p>
+	</div>
+</div>
+
+<div class="subtleBox">
+	<div class="heading">
 		<h3>{$lblSEO|uppercase}</h3>
 	</div>
 	<div class="options">

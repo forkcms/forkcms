@@ -12,6 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogEditCategory extends BackendBaseActionEdit
 {
@@ -58,10 +59,10 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 
 		// meta object
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-
-		// set callback for generating a unique URL
-		$this->meta->setUrlCallback('BackendBlogModel', 'getURLForCategory', array($this->record['id']));
+		$this->meta = new BackendMeta($this->record['meta_id'], 'title', true);
+		$this->meta->setForm($this->frm)
+			->setUrlCallback('BackendBlogModel', 'getURLForCategory', array($this->record['id']))
+			->setAction('category');
 	}
 
 	/**

@@ -281,6 +281,54 @@ class FrontendFaqModel implements FrontendTagsInterface
 	}
 
 	/**
+	 * A function that is used for the sitemap. This will go trough all the blog data and find images
+	 *
+	 * @return array
+	 */
+	public static function sitemapImages()
+	{
+		$returnData = array();
+		$data = (array) FrontendModel::getDB()->getRecords(
+			'SELECT f.answer, f.question, f.language, m.url
+			 FROM faq_questions AS f
+			 INNER JOIN meta AS m ON m.id = f.meta_id
+			 INNER JOIN meta_sitemap AS ms ON ms.id = m.sitemap_id
+			 WHERE f.hidden = ? AND ms.visible = ?',
+			array('N', 'Y')
+		);
+
+		foreach($data as $key => $question)
+		{
+			// get the blog posts image data
+			$answerImages = (array) FrontendModel::getImagesFromHtml($question['answer']);
+
+			// don't add the post if we don't have any images
+			if(empty($answerImages)) continue;
+
+			$tmpData = array(
+				'url' => $question['url'],
+				'action' => 'detail',
+				'language' => $question['language'],
+				'images' => array()
+			);
+
+			// add the images to the data
+			foreach($answerImages as $image) $tmpData['images'][] = $image;
+
+			// add a description to the image
+			foreach($tmpData['images'] as $key => $image)
+			{
+				if(isset($image['alt']) && $image['alt'] == '') $tmpData['images'][$key]['alt'] = $question['question'];
+				$tmpData['images'][$key]['description'] = $question['answer'];;
+			}
+
+			$returnData[] = $tmpData;
+		}
+
+		return $returnData;
+	}
+
+	/**
 	 * Increase the number of views for this item
 	 *
 	 * @param int $id

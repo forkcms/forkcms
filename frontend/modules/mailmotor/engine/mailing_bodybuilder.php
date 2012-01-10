@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+/**
+ * In this file we store all the functions we use to build the content of a mailing.
+ */
 class MailingBodyBuilder
 {
 	/**
@@ -24,48 +34,6 @@ class MailingBodyBuilder
 	public function __construct()
 	{
 		require 'external/css_to_inline_styles.php';
-	}
-
-	/**
-	 * Adds Google UTM GET Parameters to all anchor links in the mailing
-	 *
-	 * @param string $body
-	 * @return string The given HTML content, with the UTM-vars assigned.
-	 */
-	private function processUTMParameters($body)
-	{
-		// search for all hrefs
-		preg_match_all('/href="(.*)"/isU', $body, $matches);
-
-		// check if we have matches
-		if(!isset($matches[1]) || empty($matches[1])) return $body;
-
-		// build the google vars query
-		$utm = $this->getUTMParameters();
-		$params['utm_source'] = $utm['source'];
-		$params['utm_medium'] = $utm['medium'];
-		$params['utm_campaign'] = $utm['campaign'];
-
-		// build google vars query
-		$googleQuery = http_build_query($params);
-
-		// reserve search vars
-		$search = array();
-		$replace = array();
-
-		// loop the matches
-		foreach($matches[1] as $match)
-		{
-			// ignore #
-			if(strpos($match, '#') > -1) continue;
-
-			// add results to search/replace stack
-			$search[] = 'href="' . $match . '"';
-			$replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
-		}
-
-		// replace the content HTML with the replace values
-		return str_replace($search, $replace, $body);
 	}
 
 	/**
@@ -188,6 +156,48 @@ class MailingBodyBuilder
 		$body = str_replace($search, $replace, $body);
 
 		return $body;
+	}
+
+	/**
+	 * Adds Google UTM GET Parameters to all anchor links in the mailing
+	 *
+	 * @param string $body
+	 * @return string The given HTML content, with the UTM-vars assigned.
+	 */
+	private function processUTMParameters($body)
+	{
+		// search for all hrefs
+		preg_match_all('/href="(.*)"/isU', $body, $matches);
+
+		// check if we have matches
+		if(!isset($matches[1]) || empty($matches[1])) return $body;
+
+		// build the google vars query
+		$utm = $this->getUTMParameters();
+		$params['utm_source'] = $utm['source'];
+		$params['utm_medium'] = $utm['medium'];
+		$params['utm_campaign'] = $utm['campaign'];
+
+		// build google vars query
+		$googleQuery = http_build_query($params);
+
+		// reserve search vars
+		$search = array();
+		$replace = array();
+
+		// loop the matches
+		foreach($matches[1] as $match)
+		{
+			// ignore #
+			if(strpos($match, '#') > -1) continue;
+
+			// add results to search/replace stack
+			$search[] = 'href="' . $match . '"';
+			$replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
+		}
+
+		// replace the content HTML with the replace values
+		return str_replace($search, $replace, $body);
 	}
 
 	/**

@@ -36,9 +36,12 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		$this->frm = new BackendForm('addCategory');
-		$this->frm->addText('title');
+		$this->frm->addText('title', null, 255, 'inputText title', 'inputTextError title');
 
-		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+		$this->meta = new BackendMeta(null, 'title', true);
+		$this->meta->setForm($this->frm)
+			->setURLCallback('BackendFaqModel', 'getURLForCategory')
+			->setAction('category');
 	}
 
 	/**
@@ -48,8 +51,6 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	{
 		if($this->frm->isSubmitted())
 		{
-			$this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
-
 			$this->frm->cleanupFields();
 
 			// validate fields

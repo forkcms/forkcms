@@ -11,9 +11,17 @@
  * This class represents a META-object
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendMeta
 {
+	/**
+	 * The action to use for the sitemap
+	 *
+	 * @var	string
+	 */
+	protected $action;
+
 	/**
 	 * The name of the field we should use to generate default-values
 	 *
@@ -29,7 +37,7 @@ class BackendMeta
 	protected $callback = array();
 
 	/**
-	 * Do we need meta ustom
+	 * Do we need custom meta
 	 *
 	 * @var	bool
 	 */
@@ -43,72 +51,82 @@ class BackendMeta
 	protected $data;
 
 	/**
-	 * The form instance
-	 *
 	 * @var	BackendForm
 	 */
-	protected $frm;
+	protected $form;
 
 	/**
-	 * The id, when an existing meta-record is loaded
-	 *
 	 * @var	int
 	 */
 	protected $id;
 
 	/**
-	 * The URL-instance
+	 * The module to use
 	 *
-	 * @var	BackendURL
+	 * @var	string
 	 */
-	protected $URL;
+	protected $module;
 
 	/**
-	 * @param BackendForm $form An instance of Backendform, the elements will be parsed in here.
+	 * The url-instance
+	 *
+	 * @var	Backendurl
+	 */
+	protected $url;
+
+	/**
 	 * @param int[optional] $metaId The metaID to load.
-	 * @param string[optional] $baseFieldName The field where the URL should be based on.
+	 * @param string[optional] $baseFieldName The field where the url should be based on.
 	 * @param bool[optional] $custom Add/show custom-meta.
 	 */
-	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
+	public function __construct($metaId = null, $baseFieldName = 'title', $custom = false)
 	{
-		// check if URL is available from the referene
-		if(!Spoon::exists('url')) throw new BackendException('URL should be available in the reference.');
+		// check if url is available from the referene
+		if(!Spoon::exists('url')) throw new BackendException('url should be available in the reference.');
 
-		// get BackendURL instance
-		$this->URL = Spoon::get('url');
+		// get Backendurl instance
+		$this->url = Spoon::get('url');
+		$this->setModule();
 
 		// should we use meta-custom
 		$this->custom = (bool) $custom;
-
-		// set form instance
-		$this->frm = $form;
 
 		// set base field name
 		$this->baseFieldName = (string) $baseFieldName;
 
 		// metaId was specified, so we should load the item
 		if($metaId !== null) $this->loadMeta($metaId);
+	}
 
-		// set default callback
-		$this->setUrlCallback('Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model', 'getURL');
+	/**
+	 * Delete the meta record and the sitemap record.
+	 *
+	 * @param int[optional] $metaId
+	 */
+	public function delete($metaId = null)
+	{
+		if($metaId === null && $this->id === null) throw new Exception('You must provide a meta-id to delete');
+		if($metaId !== null) $this->loadMeta($metaId);
 
-		// load the form
-		$this->loadForm();
+		// delete the meta data
+		$db = FrontendModel::getDB(true);
+		$db->delete('meta', 'id = ?', (int) $this->id);
+		$db->delete('meta_sitemap', 'id = ?', (int) $this->data['sitemap_id']);
 	}
 
 	/**
 	 * Generate an url, using the predefined callback.
 	 *
-	 * @param string $URL The base-url to start from.
+	 * @param string $url The base-url to start from.
 	 * @return string
 	 */
-	public function generateURL($URL)
+	public function generateUrl($url)
 	{
 		// validate (check if the function exists)
 		if(!is_callable(array($this->callback['class'], $this->callback['method']))) throw new BackendException('The callback-method doesn\'t exist.');
 
 		// build parameters for use in the callback
-		$parameters[] = SpoonFilter::urlise($URL);
+		$parameters[] = SpoonFilter::urlise($url);
 
 		// add parameters set by user
 		if(!empty($this->callback['parameters']))
@@ -146,6 +164,24 @@ class BackendMeta
 
 		// return value
 		return ($this->data['description_overwrite'] == 'Y');
+	}
+
+	/**
+	 * This will generate the full url of an item
+	 *
+	 * @return mixed
+	 */
+	public function getFullUrl()
+	{
+		// no module set
+		if(!isset($this->module)) return false;
+
+		if($this->module == 'pages') $fullUrl = (SITE_MULTILANGUAGE) ? '/' . BL::getWorkingLanguage() : '';
+		else $fullUrl = BackendModel::geturlForBlock($this->module, $this->action);
+
+		// 404 url?
+		if($fullUrl == BackendModel::geturl(404)) return false;
+		else return SITE_URL . $fullUrl;
 	}
 
 	/**
@@ -219,11 +255,11 @@ class BackendMeta
 	}
 
 	/**
-	 * Return the current value for an URL
+	 * Return the current value for an url
 	 *
 	 * @return mixed
 	 */
-	public function getURL()
+	public function geturl()
 	{
 		// not set so return null
 		if(!isset($this->data['url'])) return null;
@@ -233,11 +269,11 @@ class BackendMeta
 	}
 
 	/**
-	 * Should the URL overwrite the default
+	 * Should the url overwrite the default
 	 *
 	 * @return mixed
 	 */
-	public function getURLOverwrite()
+	public function geturlOverwrite()
 	{
 		// not set so return null
 		if(!isset($this->data['url_overwrite'])) return null;
@@ -247,12 +283,12 @@ class BackendMeta
 	}
 
 	/**
-	 * Add all element into the form
+	 * Add all elements into the form
 	 */
 	protected function loadForm()
 	{
 		// is the form submitted?
-		if($this->frm->isSubmitted())
+		if($this->form->isSubmitted())
 		{
 			/**
 			 * If the fields are disabled we don't have any values in the post. When an error occurs in the other fields of the form the meta-fields would be cleared
@@ -265,23 +301,27 @@ class BackendMeta
 			if($this->custom && !isset($_POST['meta_custom'])) $_POST['meta_custom'] = (isset($this->data['custom'])) ? $this->data['custom'] : null;
 			if(!isset($_POST['seo_index'])) $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none';
 			if(!isset($_POST['seo_follow'])) $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none';
+			if(!isset($_POST['use_sitemap'])) $_POST['use_sitemap'] = (isset($this->data['use_sitemap'])) ? $this->data['use_sitemap'] : 'N';
 		}
 
 		// add page title elements into the form
-		$this->frm->addCheckbox('page_title_overwrite', (isset($this->data['title_overwrite']) && $this->data['title_overwrite'] == 'Y'));
-		$this->frm->addText('page_title', (isset($this->data['title'])) ? $this->data['title'] : null);
+		$this->form->addCheckbox('page_title_overwrite', (isset($this->data['title_overwrite']) && $this->data['title_overwrite'] == 'Y'));
+		$this->form->addText('page_title', (isset($this->data['title'])) ? $this->data['title'] : null);
 
 		// add meta description elements into the form
-		$this->frm->addCheckbox('meta_description_overwrite', (isset($this->data['description_overwrite']) && $this->data['description_overwrite'] == 'Y'));
-		$this->frm->addText('meta_description', (isset($this->data['description'])) ? $this->data['description'] : null);
+		$this->form->addCheckbox('meta_description_overwrite', (isset($this->data['description_overwrite']) && $this->data['description_overwrite'] == 'Y'));
+		$this->form->addText('meta_description', (isset($this->data['description'])) ? $this->data['description'] : null);
 
 		// add meta keywords elements into the form
-		$this->frm->addCheckbox('meta_keywords_overwrite', (isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] == 'Y'));
-		$this->frm->addText('meta_keywords', (isset($this->data['keywords'])) ? $this->data['keywords'] : null);
+		$this->form->addCheckbox('meta_keywords_overwrite', (isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] == 'Y'));
+		$this->form->addText('meta_keywords', (isset($this->data['keywords'])) ? $this->data['keywords'] : null);
 
-		// add URL elements into the form
-		$this->frm->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
-		$this->frm->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
+		// add url elements into the form
+		$this->form->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
+		$this->form->addText('url', (isset($this->data['url'])) ? urldecode($this->data['url']) : null);
+
+		// sitemap enabled
+		$this->form->addCheckbox('use_sitemap', (!isset($this->data['sitemap_use_sitemap']) || (isset($this->data['sitemap_use_sitemap']) && $this->data['sitemap_use_sitemap'] == 'Y')));
 
 		// advanced SEO
 		$indexValues = array(
@@ -289,27 +329,27 @@ class BackendMeta
 			array('value' => 'index', 'label' => 'index'),
 			array('value' => 'noindex', 'label' => 'noindex')
 		);
-		$this->frm->addRadiobutton('seo_index', $indexValues, (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none');
+		$this->form->addRadiobutton('seo_index', $indexValues, (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none');
 		$followValues = array(
 			array('value' => 'none', 'label' => BL::getLabel('None')),
 			array('value' => 'follow', 'label' => 'follow'),
 			array('value' => 'nofollow', 'label' => 'nofollow')
 		);
-		$this->frm->addRadiobutton('seo_follow', $followValues, (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none');
+		$this->form->addRadiobutton('seo_follow', $followValues, (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none');
 
 		// should we add the meta-custom field
 		if($this->custom)
 		{
 			// add meta custom element into the form
-			$this->frm->addTextarea('meta_custom', (isset($this->data['custom'])) ? $this->data['custom'] : null);
+			$this->form->addTextarea('meta_custom', (isset($this->data['custom'])) ? $this->data['custom'] : null);
 		}
 
-		$this->frm->addHidden('meta_id', $this->id);
-		$this->frm->addHidden('base_field_name', $this->baseFieldName);
-		$this->frm->addHidden('custom', $this->custom);
-		$this->frm->addHidden('class_name', $this->callback['class']);
-		$this->frm->addHidden('method_name', $this->callback['method']);
-		$this->frm->addHidden('parameters', SpoonFilter::htmlspecialchars(serialize($this->callback['parameters'])));
+		$this->form->addHidden('meta_id', $this->id);
+		$this->form->addHidden('base_field_name', $this->baseFieldName);
+		$this->form->addHidden('custom', $this->custom);
+		$this->form->addHidden('class_name', $this->callback['class']);
+		$this->form->addHidden('method_name', $this->callback['method']);
+		$this->form->addHidden('parameters', SpoonFilter::htmlspecialchars(serialize($this->callback['parameters'])));
 	}
 
 	/**
@@ -321,10 +361,12 @@ class BackendMeta
 	{
 		$this->id = (int) $id;
 
-		// get item
 		$this->data = (array) BackendModel::getDB()->getRecord(
-			'SELECT *
+			'SELECT
+			 	m.*, s.id AS sitemap_id, s.module, s.action, s.priority AS sitemap_priority,
+			 	s.change_frequency AS sitemap_change_frequency, s.visible AS sitemap_use_sitemap
 			 FROM meta AS m
+			 LEFT OUTER JOIN meta_sitemap AS s ON s.id = m.sitemap_id
 			 WHERE m.id = ?',
 			array($this->id)
 		);
@@ -334,6 +376,10 @@ class BackendMeta
 
 		// unserialize data
 		if(isset($this->data['data'])) $this->data['data'] = @unserialize($this->data['data']);
+
+		// set the module
+		if(isset($this->data['module'])) $this->setModule($this->data['module']);
+		if(isset($this->data['action'])) $this->setAction($this->data['action']);
 	}
 
 	/**
@@ -347,80 +393,150 @@ class BackendMeta
 		$update = (bool) $update;
 
 		// get meta keywords
-		if($this->frm->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->frm->getField('meta_keywords')->getValue();
-		else $keywords = $this->frm->getField($this->baseFieldName)->getValue();
+		if($this->form->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->form->getField('meta_keywords')->getValue();
+		else $keywords = $this->form->getField($this->baseFieldName)->getValue();
 
 		// get meta description
-		if($this->frm->getField('meta_description_overwrite')->isChecked()) $description = $this->frm->getField('meta_description')->getValue();
-		else $description = $this->frm->getField($this->baseFieldName)->getValue();
+		if($this->form->getField('meta_description_overwrite')->isChecked()) $description = $this->form->getField('meta_description')->getValue();
+		else $description = $this->form->getField($this->baseFieldName)->getValue();
 
 		// get page title
-		if($this->frm->getField('page_title_overwrite')->isChecked()) $title = $this->frm->getField('page_title')->getValue();
-		else $title = $this->frm->getField($this->baseFieldName)->getValue();
+		if($this->form->getField('page_title_overwrite')->isChecked()) $title = $this->form->getField('page_title')->getValue();
+		else $title = $this->form->getField($this->baseFieldName)->getValue();
 
-		// get URL
-		if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
-		else $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
+		// get url
+		if($this->form->getField('url_overwrite')->isChecked()) $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
+		else $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue());
 
-		// get the real URL
-		$URL = $this->generateURL($URL);
+		// get the real url
+		$url = $this->generateUrl($url);
 
 		// get meta custom
-		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue(true);
+		if($this->custom && $this->form->getField('meta_custom')->isFilled()) $custom = $this->form->getField('meta_custom')->getValue(true);
 		else $custom = null;
 
 		// build meta
 		$meta['keywords'] = $keywords;
-		$meta['keywords_overwrite'] = ($this->frm->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
+		$meta['keywords_overwrite'] = ($this->form->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
 		$meta['description'] = $description;
-		$meta['description_overwrite'] = ($this->frm->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
+		$meta['description_overwrite'] = ($this->form->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
 		$meta['title'] = $title;
-		$meta['title_overwrite'] = ($this->frm->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
-		$meta['url'] = $URL;
-		$meta['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
+		$meta['title_overwrite'] = ($this->form->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
+		$meta['url'] = $url;
+		$meta['url_overwrite'] = ($this->form->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 		$meta['custom'] = $custom;
 		$meta['data'] = null;
-		if($this->frm->getField('seo_index')->getValue() != 'none') $meta['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
-		if($this->frm->getField('seo_follow')->getValue() != 'none') $meta['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
+		if($this->form->getField('seo_index')->getValue() != 'none') $meta['data']['seo_index'] = $this->form->getField('seo_index')->getValue();
+		if($this->form->getField('seo_follow')->getValue() != 'none') $meta['data']['seo_follow'] = $this->form->getField('seo_follow')->getValue();
 		if(isset($meta['data'])) $meta['data'] = serialize($meta['data']);
 
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// should we update the record
+		$sitemap['module'] = $this->module;
+		$sitemap['action'] = $this->action;
+		$sitemap['language'] = BL::getWorkingLanguage();
+		$sitemap['url'] = $this->geturl();
+		$sitemap['visible'] = ($this->form->getField('use_sitemap')->isChecked()) ? 'Y' : 'N';
+		$sitemap['edited_on'] = BackendModel::getUTCDate();
+		if(isset($this->data['sitemap_id'])) $sitemap['id'] = (int) $this->data['sitemap_id'];
+
 		if($update)
 		{
-			// validate
 			if($this->id === null) throw new BackendException('No metaID specified.');
+			$meta['sitemap_id'] = $this->saveSitemap($sitemap);
 
-			// update the existing record
-			$db->update('meta', $meta, 'id = ?', array($this->id));
-
-			// return the id
-			return $this->id;
+			$db->update('meta', $meta, 'id = ?', (int) $this->id);
 		}
-
-		// insert a new meta-record
 		else
 		{
-			// insert
-			$id = (int) $db->insert('meta', $meta);
-
-			// return the id
-			return $id;
+			$meta['sitemap_id'] = $this->saveSitemap($sitemap);
+			$this->id = (int) $db->insert('meta', $meta);
 		}
+
+		// return the meta id
+		return $this->id;
 	}
 
 	/**
-	 * Set the callback to calculate an unique URL
+	 * Save the sitemap data
+	 *
+	 * @param array $data
+	 * @return int
+	 */
+	public function saveSitemap(array $data)
+	{
+		$db = BackendModel::getDB(true);
+
+		// if there is an id given, we should update the record
+		if(isset($data['id']) && $data['id'] != 0)
+		{
+			$itemId = $data['id'];
+			unset($data['id']);
+
+			$db->update('meta_sitemap', $data, 'id = ?', (int) $itemId);
+		}
+		// if there is no id given, create a new record
+		else $itemId = $db->insert('meta_sitemap', $data);
+
+		return $itemId;
+	}
+
+	/**
+	 * Sets the action to use to build the data in the sitemap via the getUrlForBlock frontend function.
+	 *
+	 * @param string $action
+	 */
+	public function setAction($action)
+	{
+		$this->action = (string) $action;
+	}
+
+	/**
+	 * Set the form to add the data to.
+	 *
+	 * @param BackendForm $form
+	 * @return BackendMeta
+	 */
+	public function setForm(BackendForm $form)
+	{
+		$this->form = $form;
+
+		// set default callback
+		$this->setUrlCallback('Backend' . SpoonFilter::toCamelCase($this->url->getModule()) . 'Model', 'geturl');
+
+		// load the form
+		$this->loadForm();
+
+		return $this;
+	}
+
+	/**
+	 * Sets the module to use to build the data in the sitemap via the getUrlForBlock frontend function.
+	 *
+	 * @param string[optional] $module
+	 * @return BackendMeta
+	 */
+	public function setModule($module = null)
+	{
+		// we should use the module given in the url
+		if($module === null) $this->module = $this->url->getModule();
+		else $this->module = (string) $module;
+
+		return $this;
+	}
+
+	/**
+	 * Set the callback to calculate an unique url
 	 * REMARK: this method has to be public and static
 	 * REMARK: if you specify arguments they will be appended
 	 *
 	 * @param string $className Name of the class to use.
 	 * @param string $methodName Name of the method to use.
 	 * @param array[optional] $parameters Parameters to parse, they will be passed after ours.
+	 * @return BackendMeta
 	 */
-	public function setURLCallback($className, $methodName, $parameters = array())
+	public function seturlCallback($className, $methodName, $parameters = array())
 	{
 		$className = (string) $className;
 		$methodName = (string) $methodName;
@@ -431,6 +547,8 @@ class BackendMeta
 
 		// re-load the form
 		$this->loadForm();
+
+		return $this;
 	}
 
 	/**
@@ -440,79 +558,84 @@ class BackendMeta
 	public function validate()
 	{
 		// page title overwrite is checked
-		if($this->frm->getField('page_title_overwrite')->isChecked())
+		if($this->form->getField('page_title_overwrite')->isChecked())
 		{
-			$this->frm->getField('page_title')->isFilled(BL::err('FieldIsRequired'));
+			$this->form->getField('page_title')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// meta description overwrite is checked
-		if($this->frm->getField('meta_description_overwrite')->isChecked())
+		if($this->form->getField('meta_description_overwrite')->isChecked())
 		{
-			$this->frm->getField('meta_description')->isFilled(BL::err('FieldIsRequired'));
+			$this->form->getField('meta_description')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// meta keywords overwrite is checked
-		if($this->frm->getField('meta_keywords_overwrite')->isChecked())
+		if($this->form->getField('meta_keywords_overwrite')->isChecked())
 		{
-			$this->frm->getField('meta_keywords')->isFilled(BL::err('FieldIsRequired'));
+			$this->form->getField('meta_keywords')->isFilled(BL::err('FieldIsRequired'));
 		}
 
-		// URL overwrite is checked
-		if($this->frm->getField('url_overwrite')->isChecked())
+		// url overwrite is checked
+		if($this->form->getField('url_overwrite')->isChecked())
 		{
 			// filled
-			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
+			$this->form->getField('url')->isFilled(BL::err('FieldIsRequired'));
 
 			// fetch url
-			$URL = $this->frm->getField('url')->getValue();
+			$url = $this->form->getField('url')->getValue();
 
 			// get the real url
-			$generatedUrl = $this->generateURL($URL);
+			$generatedUrl = $this->generateUrl($url);
 
 			// check if urls are different
-			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
+			if($url != $generatedUrl) $this->form->getField('url')->addError(BL::err('urlAlreadyExists'));
 		}
 
 		// if the form was submitted correctly the data array should be populated
-		if($this->frm->isCorrect())
+		if($this->form->isCorrect())
 		{
 			// get meta keywords
-			if($this->frm->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->frm->getField('meta_keywords')->getValue();
-			else $keywords = $this->frm->getField($this->baseFieldName)->getValue();
+			if($this->form->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->form->getField('meta_keywords')->getValue();
+			else $keywords = $this->form->getField($this->baseFieldName)->getValue();
 
 			// get meta description
-			if($this->frm->getField('meta_description_overwrite')->isChecked()) $description = $this->frm->getField('meta_description')->getValue();
-			else $description = $this->frm->getField($this->baseFieldName)->getValue();
+			if($this->form->getField('meta_description_overwrite')->isChecked()) $description = $this->form->getField('meta_description')->getValue();
+			else $description = $this->form->getField($this->baseFieldName)->getValue();
 
 			// get page title
-			if($this->frm->getField('page_title_overwrite')->isChecked()) $title = $this->frm->getField('page_title')->getValue();
-			else $title = $this->frm->getField($this->baseFieldName)->getValue();
+			if($this->form->getField('page_title_overwrite')->isChecked()) $title = $this->form->getField('page_title')->getValue();
+			else $title = $this->form->getField($this->baseFieldName)->getValue();
 
-			// get URL
-			if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
-			else $URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
+			// get url
+			if($this->form->getField('url_overwrite')->isChecked()) $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
+			else $url = SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue());
 
-			// get the real URL
-			$URL = $this->generateURL($URL);
+			// sitemap enabled
+			if($this->form->getField('use_sitemap')->isChecked()) $useSitemap = 'Y';
+			else $useSitemap = 'N';
+
+			// get the real url
+			$url = $this->generateUrl($url);
 
 			// get meta custom
-			if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue();
+			if($this->custom && $this->form->getField('meta_custom')->isFilled()) $custom = $this->form->getField('meta_custom')->getValue();
 			else $custom = null;
 
 			// set data
 			$this->data['keywords'] = $keywords;
-			$this->data['keywords_overwrite'] = ($this->frm->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['keywords_overwrite'] = ($this->form->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['description'] = $description;
-			$this->data['description_overwrite'] = ($this->frm->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['description_overwrite'] = ($this->form->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['title'] = $title;
-			$this->data['title_overwrite'] = ($this->frm->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
-			$this->data['url'] = $URL;
-			$this->data['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['title_overwrite'] = ($this->form->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['url'] = $url;
+			$this->data['url_overwrite'] = ($this->form->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['custom'] = $custom;
-			if($this->frm->getField('seo_index')->getValue() == 'none') unset($this->data['data']['seo_index']);
-			else $this->data['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
-			if($this->frm->getField('seo_follow')->getValue() == 'none') unset($this->data['data']['seo_follow']);
-			else $this->data['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
+			$this->data['use_sitemap'] = $useSitemap;
+			if($this->form->getField('seo_index')->getValue() == 'none') unset($this->data['data']['seo_index']);
+			else $this->data['data']['seo_index'] = $this->form->getField('seo_index')->getValue();
+			if($this->form->getField('seo_follow')->getValue() == 'none') unset($this->data['data']['seo_follow']);
+			else $this->data['data']['seo_follow'] = $this->form->getField('seo_follow')->getValue();
 		}
 	}
 }
