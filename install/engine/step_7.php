@@ -14,6 +14,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class InstallerStep7 extends InstallerStep
 {
