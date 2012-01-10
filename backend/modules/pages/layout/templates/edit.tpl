@@ -265,6 +265,7 @@
 				<div class="options">
 					<p>
 						<label for="useSitemap">{$chkUseSitemap} {$lblUseSitemap|ucfirst}</label>
+						{$msgHelpSitemap}
 					</p>
 				</div>
 			</div>

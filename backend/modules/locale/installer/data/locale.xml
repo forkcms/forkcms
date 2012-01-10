@@ -54,6 +54,10 @@
         <translation language="nl"><![CDATA[Aantal items op de afbeelding sitemap]]></translation>
         <translation language="en"><![CDATA[Number of items on the images sitemap]]></translation>
       </item>
+      <item type="message" name="HelpSitemap">
+        <translation language="nl"><![CDATA[Indien u dit inschakeld zal deze pagina automatisch opgenomen worden in de sitemap van uw website. Hierdoor zullen de zoekmachines uw pagina beter vinden.]]></translation>
+        <translation language="en"><![CDATA[When you enable this, this page will automatically be added to your sitemap. Enabling this makes it easier for search engines to find your page.]]></translation>
+      </item>
   	</core>
     <locale>
       <item type="label" name="Actions">
