@@ -15,6 +15,7 @@
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class ModuleInstaller
 {
@@ -172,7 +173,7 @@ class ModuleInstaller
 	 *
 	 * @param string $message The message that needs to be displayed.
 	 */
-	protected function addWarning($message)
+	public function addWarning($message)
 	{
 		$this->warnings[] = array('message' => $message);
 	}
