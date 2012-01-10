@@ -163,6 +163,20 @@ class BackendMeta
 	}
 
 	/**
+	 * Should the keywords overwrite the default
+	 *
+	 * @return mixed
+	 */
+	public function getDescriptionOverwrite()
+	{
+		// not set so return null
+		if(!isset($this->data['description_overwrite'])) return null;
+
+		// return value
+		return ($this->data['description_overwrite'] == 'Y');
+	}
+
+	/**
 	 * This will generate the full url of an item
 	 *
 	 * @return mixed
