@@ -207,7 +207,7 @@ class SpoonThumbnail
 	 * @param	int[optional] $quality		The quality to use (only applies on jpg-images).
 	 * @param	int[optional] $chmod		Mode that should be applied on the file.
 	 */
-	public function parseToFile($filename, $quality = 100, $chmod = 0777)
+	public function parseToFile($filename, $quality = 100, $chmod = 0666)
 	{
 		// redefine vars
 		$filename = (string) $filename;
