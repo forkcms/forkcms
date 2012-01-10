@@ -314,17 +314,17 @@ class FrontendSitemap
 			case 'page':
 				$this->metaData = $this->getPageData($this->pageLimit, $this->sitemapPage);
 				$this->numPages = ceil($this->getPageDataCount() / $this->pageLimit);
-			break;
+				break;
 			case 'image':
 				$this->metaData = $this->getImageData($this->pageLimit, $this->sitemapPage);
 				$this->numPages = ceil(count($this->metaData) / $this->pageLimit);
-			break;
+				break;
 			case '':
 				// do nothing
-			break;
+				break;
 			default:
 				SpoonHTTP::redirect(FrontendNavigation::getURL(404, $this->activeLanguage));
-			break;
+				break;
 		}
 
 		$this->setPage();
@@ -342,13 +342,13 @@ class FrontendSitemap
 		{
 			case 'page':
 				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_pages_items', 100);
-			break;
+				break;
 			case 'image':
 				$this->pageLimit = FrontendModel::getModuleSetting('pages', 'sitemap_images_items', 100);
-			break;
+				break;
 			default:
 				// do nothing
-			break;
+				break;
 		}
 	}
 

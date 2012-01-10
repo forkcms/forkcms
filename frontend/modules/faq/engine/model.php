@@ -281,55 +281,8 @@ class FrontendFaqModel implements FrontendTagsInterface
 	}
 
 	/**
-	 * Increase the number of views for this item
-	 *
-	 * @param int $id
-	 * @param bool $useful
-	 * @param mixed[optional] $previousFeedback
-	 * @return array
-	 */
-	public static function updateFeedback($id, $useful, $previousFeedback = null)
-	{
-		// feedback hasn't changed so don't update the counters
-		if($previousFeedback !== null && $useful == $previousFeedback) return;
-
-		$db = FrontendModel::getDB(true);
-
-		// update counter with current feedback (increase)
-		if($useful) $db->execute(
-			'UPDATE faq_questions
-			 SET num_usefull_yes = num_usefull_yes + 1
-			 WHERE id = ?',
-			array((int) $id)
-		);
-
-		else $db->execute(
-			'UPDATE faq_questions
-			 SET num_usefull_no = num_usefull_no + 1
-			 WHERE id = ?',
-			array((int) $id)
-		);
-
-		// update counter with previous feedback (decrease)
-		if($previousFeedback) $db->execute(
-			'UPDATE faq_questions
-			 SET num_usefull_yes = num_usefull_yes - 1
-			 WHERE id = ?',
-			array((int) $id)
-		);
-
-		elseif($previousFeedback !== null) $db->execute(
-			'UPDATE faq_questions
-			 SET num_usefull_no = num_usefull_no - 1
-			 WHERE id = ?',
-			array((int) $id)
-		);
-	}
-
-	/**
 	 * A function that is used for the sitemap. This will go trough all the blog data and find images
 	 *
-	 * @param string $language
 	 * @return array
 	 */
 	public static function sitemapImages()
@@ -373,5 +326,51 @@ class FrontendFaqModel implements FrontendTagsInterface
 		}
 
 		return $returnData;
+	}
+
+	/**
+	 * Increase the number of views for this item
+	 *
+	 * @param int $id
+	 * @param bool $useful
+	 * @param mixed[optional] $previousFeedback
+	 * @return array
+	 */
+	public static function updateFeedback($id, $useful, $previousFeedback = null)
+	{
+		// feedback hasn't changed so don't update the counters
+		if($previousFeedback !== null && $useful == $previousFeedback) return;
+
+		$db = FrontendModel::getDB(true);
+
+		// update counter with current feedback (increase)
+		if($useful) $db->execute(
+			'UPDATE faq_questions
+			 SET num_usefull_yes = num_usefull_yes + 1
+			 WHERE id = ?',
+			array((int) $id)
+		);
+
+		else $db->execute(
+			'UPDATE faq_questions
+			 SET num_usefull_no = num_usefull_no + 1
+			 WHERE id = ?',
+			array((int) $id)
+		);
+
+		// update counter with previous feedback (decrease)
+		if($previousFeedback) $db->execute(
+			'UPDATE faq_questions
+			 SET num_usefull_yes = num_usefull_yes - 1
+			 WHERE id = ?',
+			array((int) $id)
+		);
+
+		elseif($previousFeedback !== null) $db->execute(
+			'UPDATE faq_questions
+			 SET num_usefull_no = num_usefull_no - 1
+			 WHERE id = ?',
+			array((int) $id)
+		);
 	}
 }
