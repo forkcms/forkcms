@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
+* Core: added an extra check (parent has to be td.checkbox) for the row selection within tables in the backend.
 * Core: added cookie containing unique visitor id.
 * Pages: when adding an editor field, the editor will immediately open.
 * Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
@@ -13,6 +14,9 @@ Bugfixes:
 * Extensions: fixed module-warnings system.
 * Extensions: fixed module upload.
 * Core: fixed core template override from within module action.
+* Core: added #xfbml=1 to the Facebook connect URL so Facebook plugins also work when there's no Facebook app id given in the settings tab.
+* Users: Fixed a bug that was triggered when editing a user that was not the loggedin user and when the loggedin user was not a god user.
+
 
 3.1.9 (2012-01-03)
 --
