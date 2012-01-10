@@ -61,6 +61,8 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// assign the active record and additional variables
 		$this->tpl->assign('mailing', $this->record);
 		$this->tpl->assign('template', $this->template);

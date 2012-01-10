@@ -163,29 +163,37 @@ class BackendExtensionsModel
 		$akismetModules = self::getModulesThatRequireAkismet();
 		$googleMapsModules = self::getModulesThatRequireGoogleMaps();
 
-		// check if the akismet key is available if there are modules that require it
-		if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index', 'settings'))
 		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
-		}
-
-		// check if the google maps key is available if there are modules that require it
-		if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
-		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
-		}
-
-		// check if there are cronjobs that are not yet set
-		$modules = BackendExtensionsModel::getModules();
-		foreach($modules as $module)
-		{
-			if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+			// check if the akismet key is available if there are modules that require it
+			if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
-				break;
+				$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
+			}
+
+			// check if the google maps key is available if there are modules that require it
+			if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
+			}
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('modules', 'extensions'))
+		{
+			// check if there are cronjobs that are not yet set
+			$modules = BackendExtensionsModel::getModules();
+			foreach($modules as $module)
+			{
+				if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+				{
+					// add warning
+					$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+					break;
+				}
 			}
 		}
 

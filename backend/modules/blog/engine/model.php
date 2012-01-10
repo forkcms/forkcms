@@ -103,16 +103,20 @@ class BackendBlogModel
 	{
 		$warnings = array();
 
-		// rss title
-		if(BackendModel::getModuleSetting('blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('settings', 'blog'))
 		{
-			$warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
-		}
+			// rss title
+			if(BackendModel::getModuleSetting('blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '')
+			{
+				$warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			}
 
-		// rss description
-		if(BackendModel::getModuleSetting('blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '')
-		{
-			$warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			// rss description
+			if(BackendModel::getModuleSetting('blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '')
+			{
+				$warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			}
 		}
 
 		return $warnings;

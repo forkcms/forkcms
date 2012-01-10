@@ -29,8 +29,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		// check if the user is really logged on
 		if(BackendAuthentication::getUser()->isAuthenticated())
 		{
-			$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard'));
-			$this->redirect($redirectURL);
+			$this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard')));
 		}
 
 		parent::execute();
@@ -58,6 +57,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	 */
 	public function parse()
 	{
+		parent::parse();
+
 		// assign the interface language ourself, because it won't be assigned automagically
 		$this->tpl->assign('INTERFACE_LANGUAGE', BackendLanguage::getInterfaceLanguage());
 
@@ -161,11 +162,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				// loop through modules and break on first allowed module
 				foreach($modules as $module) if(BackendAuthentication::isAllowedModule($module)) break;
 
-				// get the redirect-URL from the URL
-				$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module));
-
 				// redirect to the correct URL (URL the user was looking for or fallback)
-				$this->redirect($redirectURL);
+				$this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module)));
 			}
 		}
 

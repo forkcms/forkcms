@@ -46,9 +46,6 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		$this->dataGrid->setSortingColumns(array('name', 'created_on'), 'name');
 		$this->dataGrid->setSortParameter('desc');
 
-		// set column URLs
-		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
-
 		// add the multicheckbox column
 		$this->dataGrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
 		$this->dataGrid->setColumnsSequence('checkbox');
@@ -73,13 +70,22 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 
 		// set paging limit
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index'))
+		{
+			// set column URLs
+			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
+		}
 	}
 
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 

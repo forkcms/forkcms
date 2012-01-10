@@ -136,8 +136,10 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 	/**
 	 * Parse the form
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// show options
 		if($this->needsAkismet) $this->tpl->assign('needsAkismet', true);
 		if($this->needsGoogleMaps) $this->tpl->assign('needsGoogleMaps', true);

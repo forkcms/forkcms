@@ -82,15 +82,19 @@ class BackendMailmotorModel
 	{
 		$warnings = array();
 
-		// analytics session token
-		if(BackendModel::getModuleSetting('mailmotor', 'cm_account') == false)
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('settings', 'mailmotor'))
 		{
-			$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMAccount', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmotor')));
-		}
-		elseif(BackendModel::getModuleSetting('mailmotor', 'cm_client_id') == '')
-		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMClientID', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmtor')));
+			// analytics session token
+			if(BackendModel::getModuleSetting('mailmotor', 'cm_account') == false)
+			{
+				$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMAccount', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmotor')));
+			}
+			elseif(BackendModel::getModuleSetting('mailmotor', 'cm_client_id') == '')
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMClientID', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmtor')));
+			}
 		}
 
 		return $warnings;

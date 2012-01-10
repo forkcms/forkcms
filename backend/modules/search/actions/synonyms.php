@@ -39,18 +39,24 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 		// column function
 		$this->dataGrid->setColumnFunction('str_replace', array(',', ', ', '[synonym]'), 'synonym', true);
 
-		// set colum URLs
-		$this->dataGrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_synonym'))
+		{
+			// set colum URLs
+			$this->dataGrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]');
 
-		// add column
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]', BL::lbl('Edit'));
+			// add column
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 	}
 
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// assign the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}

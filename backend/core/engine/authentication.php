@@ -108,7 +108,7 @@ class BackendAuthentication
 	 * @param string $module The module wherin the action is located.
 	 * @return bool
 	 */
-	public static function isAllowedAction($action, $module)
+	public static function isAllowedAction($action = null, $module = null)
 	{
 		// GOD's rule them all!
 		if(self::getUser()->isGod()) return true;
@@ -121,8 +121,11 @@ class BackendAuthentication
 			'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7)
 		);
 
-		$action = (string) $action;
-		$module = (string) $module;
+		// grab the URL from the reference
+		$URL = Spoon::get('url');
+
+		$action = ($action !== null) ? (string) $action : $URL->getAction();
+		$module = ($module !== null) ? (string) $module : $URL->getModule();
 
 		// is this action an action that doesn't require authentication?
 		if(isset($alwaysAllowed[$module][$action])) return true;

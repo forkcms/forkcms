@@ -148,16 +148,20 @@ class BackendTemplate extends SpoonTemplate
 				$this->assign('authenticatedUser' . SpoonFilter::toCamelCase($key), $setting);
 			}
 
-			// assign special vars
-			$this->assign(
-				'authenticatedUserEditUrl',
-				BackendModel::createURLForAction(
-					'edit',
-					'users',
-					null,
-					array('id' => BackendAuthentication::getUser()->getUserId())
-				)
-			);
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('edit', 'users'))
+			{
+				// assign special vars
+				$this->assign(
+					'authenticatedUserEditUrl',
+					BackendModel::createURLForAction(
+						'edit',
+						'users',
+						null,
+						array('id' => BackendAuthentication::getUser()->getUserId())
+					)
+				);
+			}
 		}
 	}
 

@@ -7,17 +7,23 @@
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
+			{option:showAdd}
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 				<span>{$lblAdd|ucfirst}</span>
 			</a>
+			{/option:showAdd}
+
 			{option:!item.is_hidden}
 				<a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" class="button icon iconZoom previewButton targetBlank">
 					<span>{$lblView|ucfirst}</span>
 				</a>
 			{/option:!item.is_hidden}
+
+			{option:showIndex}
 			<a href="{$var|geturl:'index'}" class="button icon iconBack">
 				<span>{$lblOverview|ucfirst}</span>
 			</a>
+			{/option:showIndex}
 		</div>
 	</div>
 

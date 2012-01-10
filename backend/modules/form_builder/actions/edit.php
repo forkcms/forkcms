@@ -114,6 +114,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 	protected function parse()
 	{
 		$this->parseFields();
+
 		parent::parse();
 
 		$this->tpl->assign('id', $this->record['id']);

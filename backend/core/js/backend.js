@@ -282,6 +282,16 @@ jsBackend.ckeditor =
 		}
 	},
 
+	destroy: function()
+	{
+		// the destroy will trigger errors, but it will actually be destroyed just fine!
+		try
+		{
+			$.each(CKEDITOR.instances, function(i, value) { value.destroy(); });
+		}
+		catch(err) {}
+	},
+
 	load: function()
 	{
 		// extend the editor config
