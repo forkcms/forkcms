@@ -844,7 +844,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 			if($addedImage !== null)
 			{
 				$tmpData['images'][] = array(
-					'src' => FRONTEND_FILES_PATH . '/blog/images/source/' . $addedImage,
+					'src' => FRONTEND_FILES_URL . '/blog/images/source/' . $addedImage,
 				);
 			}
 

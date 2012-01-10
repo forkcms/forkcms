@@ -179,7 +179,11 @@ class FrontendSitemap
 				// go trough the images to assign the image information
 				foreach($images as $pageImage)
 				{
-					$imageData = array('image:loc' => $pageImage['src']);
+					// validate the url, we want full urls
+					$imageSource = $pageImage['src'];
+					if(!SpoonFilter::isURL($imageSource)) $imageSource = SITE_URL . '/' . ltrim($imageSource, '/');
+
+					$imageData = array('image:loc' => $imageSource);
 
 					// if there is an alt attribute, assign it to the title
 					if(isset($pageImage['alt'])) $imageData['image:title'] = $this->truncate($pageImage['alt']);
@@ -188,6 +192,7 @@ class FrontendSitemap
 					$description = (isset($pageImage['description'])) ? $pageImage['description'] : null;
 					$imageData['image:caption'] = $this->truncate($description);
 
+					// add the image
 					$tmpData[]['image:image'] = $imageData;
 				}
 
