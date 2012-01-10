@@ -332,20 +332,6 @@ class BackendMeta
 
 		// sitemap enabled
 		$this->form->addCheckbox('use_sitemap', (!isset($this->data['sitemap_use_sitemap']) || (isset($this->data['sitemap_use_sitemap']) && $this->data['sitemap_use_sitemap'] == 'Y')));
-		$this->form->addCheckbox('sitemap_priority_overwrite', (isset($this->data['sitemap_priority']) && $this->data['sitemap_priority'] != self::DEFAULT_PRIORITY));
-		$this->form->addText('sitemap_priority', (isset($this->data['sitemap_priority'])) ? urldecode($this->data['sitemap_priority']) : self::DEFAULT_PRIORITY);
-
-		// the values for the change frequency
-		$changeFrequency = array(
-			'always' => BL::lbl('Always'),
-			'hourly' => BL::lbl('Hourly'),
-			'daily' => BL::lbl('Daily'),
-			'weekly' => BL::lbl('Weekly'),
-			'monthly' => BL::lbl('Monthly'),
-			'yearly' => BL::lbl('Yearly'),
-			'never' => BL::lbl('Never')
-		);
-		$this->form->addDropdown('sitemap_change_frequency', $changeFrequency, (isset($this->data['sitemap_change_frequency'])) ? $this->data['sitemap_change_frequency'] : 'weekly');
 
 		// advanced SEO
 		$indexValues = array(
@@ -457,13 +443,10 @@ class BackendMeta
 		// get db
 		$db = BackendModel::getDB(true);
 
-		$sitemapPriority = $this->form->getField('sitemap_priority')->getValue();
 		$sitemap['module'] = $this->module;
 		$sitemap['action'] = $this->action;
 		$sitemap['language'] = BL::getWorkingLanguage();
 		$sitemap['url'] = $this->getURL();
-		$sitemap['priority'] = ($sitemapPriority == '') ? self::DEFAULT_PRIORITY : $sitemapPriority;
-		$sitemap['change_frequency'] = $this->form->getField('sitemap_change_frequency')->getValue();
 		$sitemap['visible'] = ($this->form->getField('use_sitemap')->isChecked()) ? 'Y' : 'N';
 		$sitemap['edited_on'] = BackendModel::getUTCDate();
 		if(isset($this->data['sitemap_id'])) $sitemap['id'] = (int) $this->data['sitemap_id'];
@@ -659,8 +642,6 @@ class BackendMeta
 			$this->data['url_overwrite'] = ($this->form->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['custom'] = $custom;
 			$this->data['use_sitemap'] = $useSitemap;
-			$this->data['sitemap_priority'] = $this->form->getField('sitemap_priority')->getValue();
-			$this->data['sitemap_change_frequency'] = $this->form->getField('sitemap_change_frequency')->getValue();
 			if($this->form->getField('seo_index')->getValue() == 'none') unset($this->data['data']['seo_index']);
 			else $this->data['data']['seo_index'] = $this->form->getField('seo_index')->getValue();
 			if($this->form->getField('seo_follow')->getValue() == 'none') unset($this->data['data']['seo_follow']);

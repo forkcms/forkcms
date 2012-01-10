@@ -77,29 +77,6 @@
 			<label for="useSitemap">{$chkUseSitemap} {$lblUseSitemap|ucfirst}</label>
 		</p>
 	</div>
-
-	<div class="options">
-		<p>
-			<label for="sitemapPriorityOverwrite">{$lblSitemapPriority|ucfirst}</label>
-			<span class="helpTxt">{$msgHelpSitemapPriority}</span>
-		</p>
-		<ul class="inputList checkboxTextFieldCombo">
-			<li>
-				{$chkSitemapPriorityOverwrite}
-				{$txtSitemapPriority} {$txtSitemapPriorityError}
-			</li>
-		</ul>
-	</div>
-
-	<div class="options">
-		<p>
-			<label for="sitemapChangeFrequency">{$lblSitemapChangeFrequency|ucfirst}</label>
-			<span class="helpTxt">{$msgHelpSitemapChangeFrequency}</span>
-		</p>
-		<p>
-			{$ddmSitemapChangeFrequency} {$ddmSitemapChangeFrequencyError}
-		</p>
-	</div>
 </div>
 
 <div class="subtleBox">
