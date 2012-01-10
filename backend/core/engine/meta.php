@@ -10,7 +10,7 @@
 /**
  * This class represents a META-object
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendMeta
