@@ -430,8 +430,11 @@ jsBackend.ckeditor =
 						items: linkList,
 						onChange: function(evt)
 						{
+							domain = '{$SITE_DOMAIN}/';
+							domain = domain.replace('//', '/');
+
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('{$SITE_PROTOCOL}://');
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue('{$SITE_DOMAIN}' + evt.data.value);
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(domain + evt.data.value);
 						}
 				 	}
 			 	]

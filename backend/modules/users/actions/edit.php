@@ -118,7 +118,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-	// is the form submitted?
+		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
 			// cleanup the submitted fields, ignore fields that were added by hackers

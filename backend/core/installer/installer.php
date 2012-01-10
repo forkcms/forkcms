@@ -15,6 +15,7 @@
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class ModuleInstaller
 {
@@ -24,6 +25,13 @@ class ModuleInstaller
 	 * @var SpoonDatabase
 	 */
 	private $db;
+
+	/**
+	 * The default extras that have to be added to every page.
+	 *
+	 * @var array
+	 */
+	private $defaultExtras;
 
 	/**
 	 * The frontend language(s)
@@ -52,6 +60,13 @@ class ModuleInstaller
 	 * @var string
 	 */
 	private $module;
+
+	/*
+	 * Cached modules
+	 *
+	 * @var	array
+	 */
+	private static $modules = array();
 
 	/**
 	 * The variables passed by the installer
@@ -84,6 +99,17 @@ class ModuleInstaller
 	}
 
 	/**
+	 * Adds a default extra to the stack of extras
+	 *
+	 * @param int $extraId The extra id to add to every page.
+	 * @param string $position The position to put the default extra.
+	 */
+	protected function addDefaultExtra($extraId, $position)
+	{
+		$this->defaultExtras[] = array('id' => $extraId, 'position' => $position);
+	}
+
+	/**
 	 * Inserts a new module
 	 *
 	 * @param string $name The name of the module.
@@ -112,6 +138,54 @@ class ModuleInstaller
 	}
 
 	/**
+	 * Add a search index
+	 *
+	 * @param string $module The module wherin will be searched.
+	 * @param int $otherId The id of the record.
+	 * @param  array $fields A key/value pair of fields to index.
+	 * @param string[optional] $language The frontend language for this entry.
+	 */
+	protected function addSearchIndex($module, $otherId, array $fields, $language)
+	{
+		// get db
+		$db = $this->getDB();
+
+		// validate cache
+		if(empty(self::$modules))
+		{
+			// get all modules
+			self::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
+		}
+
+		// module exists?
+		if(!in_array('search', self::$modules)) return;
+
+		// no fields?
+		if(empty($fields)) return;
+
+		// insert search index
+		foreach($fields as $field => $value)
+		{
+			// reformat value
+			$value = strip_tags((string) $value);
+
+			// insert in db
+			$db->execute(
+				'INSERT INTO search_index (module, other_id, language, field, value, active)
+				 VALUES (?, ?, ?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?, active = ?',
+				array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
+			);
+		}
+
+		// invalidate the cache for search
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/search/') as $file)
+		{
+			SpoonFile::delete(FRONTEND_CACHE_PATH . '/search/' . $file);
+		}
+	}
+
+	/**
 	 * Adds a warning to the stack of warnings
 	 *
 	 * @param string $message The message that needs to be displayed.
@@ -137,6 +211,16 @@ class ModuleInstaller
 	protected function getDB()
 	{
 		return $this->db;
+	}
+
+	/**
+	 * Get the default extras.
+	 *
+	 * @return array
+	 */
+	public function getDefaultExtras()
+	{
+		return $this->defaultExtras;
 	}
 
 	/**

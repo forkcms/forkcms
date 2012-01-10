@@ -5,16 +5,21 @@ Improvements:
 * Core: integrated CKEditor into Fork CMS.
 * Core: added an extra check (parent has to be td.checkbox) for the row selection within tables in the backend.
 * Core: added cookie containing unique visitor id.
-* Pages: when adding an editor field, the editor will immediately open.
 * Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
 * Core: added maxItems and afterAdd options for the multipleSelectbox.
+* Core: added a possibility to add an extra to all pages when installing forkcms with the installer function addDefaultExtra. The extra will be added to all pages without this extra.
+* Core: You can now add items to the search index in the installer of your module.
+* Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
+* Pages: when adding an editor field, the editor will immediately open.
+* Pages: The sitemap now correctly displays subpages.
 
 Bugfixes:
 
-* Extensions: fixed module-warnings system.
-* Extensions: fixed module upload.
 * Core: fixed core template override from within module action.
 * Core: added #xfbml=1 to the Facebook connect URL so Facebook plugins also work when there's no Facebook app id given in the settings tab.
+* ContentBlocks: Fixed a bug where a hidden content block assigned to a page would trigger a PHP Notice.
+* Extensions: fixed module-warnings system.
+* Extensions: fixed module upload.
 * Users: Fixed a bug that was triggered when editing a user that was not the loggedin user and when the loggedin user was not a god user.
 
 
