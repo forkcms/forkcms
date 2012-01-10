@@ -10,6 +10,7 @@ Improvements:
 * Core: added a possibility to add an extra to all pages when installing forkcms with the installer function addDefaultExtra. The extra will be added to all pages without this extra.
 * Core: You can now add items to the search index in the installer of your module.
 * Pages: when adding an editor field, the editor will immediately open.
+* Pages: The sitemap now correctly displays subpages.
 
 Bugfixes:
 
