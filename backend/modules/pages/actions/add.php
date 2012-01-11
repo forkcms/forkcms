@@ -116,6 +116,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('html');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
+		$this->frm->addCheckbox('hide_content_title');
 
 		// a god user should be able to adjust the detailed settings for a page easily
 		if($this->isGod)
@@ -317,6 +318,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				if($this->frm->getField('is_action')->isChecked()) $data['is_action'] = true;
 				if($redirectValue == 'internal') $data['internal_redirect'] = array('page_id' => $this->frm->getField('internal_redirect')->getValue(), 'code' => '301');
 				if($redirectValue == 'external') $data['external_redirect'] = array('url' => $this->frm->getField('external_redirect')->getValue(), 'code' => '301');
+				$data['hide_content_title'] = ($this->frm->getField('hide_content_title')->getChecked());
 
 				// build page record
 				$page['id'] = BackendPagesModel::getMaximumPageId() + 1;

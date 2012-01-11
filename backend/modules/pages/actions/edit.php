@@ -198,6 +198,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	{
 		// get default template id
 		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$hideContentTitle = (isset($this->record['data']['hide_content_title'])) ? $this->record['data']['hide_content_title'] : false;
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -210,6 +211,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addEditor('html');
 		$this->frm->addHidden('template_id', $this->record['template_id']);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
+		$this->frm->addCheckbox('hide_content_title', $hideContentTitle);
 
 		// a god user should be able to adjust the detailed settings for a page easily
 		if($this->isGod)
@@ -442,6 +444,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			$redirectValue = $this->frm->getField('redirect')->getValue();
 			if($redirectValue == 'internal') $this->frm->getField('internal_redirect')->isFilled(BL::err('FieldIsRequired'));
 			if($redirectValue == 'external') $this->frm->getField('external_redirect')->isURL(BL::err('InvalidURL'));
+			$data['hide_content_title'] = ($this->frm->getField('hide_content_title')->getChecked());
 
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()));
@@ -465,6 +468,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				if($this->frm->getField('is_action')->isChecked()) $data['is_action'] = true;
 				if($redirectValue == 'internal') $data['internal_redirect'] = array('page_id' => $this->frm->getField('internal_redirect')->getValue(), 'code' => '301');
 				if($redirectValue == 'external') $data['external_redirect'] = array('url' => $this->frm->getField('external_redirect')->getValue(), 'code' => '301');
+				$data['hide_content_title'] = ($this->frm->getField('hide_content_title')->getChecked());
 
 				// build page record
 				$page['id'] = $this->record['id'];

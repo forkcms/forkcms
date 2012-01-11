@@ -316,6 +316,9 @@
 			<p>
 				<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
 			</p>
+			<p>
+				<label for="hideContentTitle">{$chkHideContentTitle} {$msgHideContentTitle}</label>
+			</p>
 			{option:isGod}
 				<ul class="inputList">
 					{iteration:allow}

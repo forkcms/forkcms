@@ -362,9 +362,9 @@ class FrontendPage extends FrontendBaseObject
 
 		// create navigation instance
 		new FrontendNavigation();
-
 		// assign content
 		$this->tpl->assign('page', $this->record);
+		if(isset($this->record['data']['hide_content_title']) && $this->record['data']['hide_content_title'] === true) $this->tpl->assign('hideContentTitle', true);
 
 		// set template path
 		$this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
