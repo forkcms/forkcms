@@ -1,3 +1,10 @@
+3.2.1 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Core: added missing locale for ckeditor & ckfinder.
+
+
 3.2.0 (2012-01-10)
 --
 Improvements:
