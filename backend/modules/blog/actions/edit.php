@@ -32,6 +32,13 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	private $dgDrafts;
 
 	/**
+	 * Is the image field allowed?
+	 *
+	 * @var bool
+	 */
+	protected $imageIsAllowed = true;
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()
@@ -68,6 +75,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	private function getData()
 	{
 		$this->record = (array) BackendBlogModel::get($this->id);
+		$this->imageIsAllowed = BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true);
 
 		// is there a revision specified?
 		$revisionToLoad = $this->getParameter('revision', 'int');
@@ -165,8 +173,11 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
-		$this->frm->addImage('image');
-		$this->frm->addCheckbox('delete_image');
+		if($this->imageIsAllowed)
+		{
+			$this->frm->addImage('image');
+			$this->frm->addCheckbox('delete_image');
+		}
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -232,6 +243,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
 		$this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
+		$this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
+
 		// assign category
 		if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
 	}
@@ -257,14 +270,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 
-			// do the image checks
-			if($this->frm->getField('image')->isFilled())
-			{
-				// image extension and mime type
-				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
-				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
-			}
-
 			// validate meta
 			$this->meta->validate();
 
@@ -286,53 +291,58 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['status'] = $status;
-				$item['image'] = $this->record['image'];
 
-				// the image path
-				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
-
-				// if the image should be deleted
-				if($this->frm->getField('delete_image')->isChecked())
+				if($this->imageIsAllowed)
 				{
-					// delete the image
-					SpoonFile::delete($imagePath . '/source/' . $item['image']);
+					$item['image'] = $this->record['image'];
 
-					// reset the name
-					$item['image'] = null;
-				}
+					// the image path
+					$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
-				// new image given?
-				if($this->frm->getField('image')->isFilled())
-				{
-					// delete the old image
-					SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
-
-					// build the image name
-					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
-
-					// upload the image
-					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
-				}
-
-				// rename the old image
-				elseif($item['image'] != null)
-				{
-					// get the old file extension
-					$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
-
-					// get the new image name
-					$newName = $this->meta->getURL() . '.' . $imageExtension;
-
-					// only change the name if there is a difference
-					if($newName != $item['image'])
+					// if the image should be deleted
+					if($this->frm->getField('delete_image')->isChecked())
 					{
-						// move the old file to the new name
-						SpoonFile::move($imagePath . '/source/' . $item['image'], $imagePath . '/source/' . $newName);
+						// delete the image
+						SpoonFile::delete($imagePath . '/source/' . $item['image']);
 
-						// assign the new name to the database
-						$item['image'] = $newName;
+						// reset the name
+						$item['image'] = null;
+					}
+
+					// new image given?
+					if($this->frm->getField('image')->isFilled())
+					{
+						// delete the old image
+						SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
+
+						// build the image name
+						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+
+						// upload the image
+						$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+					}
+
+					// rename the old image
+					elseif($item['image'] != null)
+					{
+						// get the old file extension
+						$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
+
+						// get the new image name
+						$newName = $this->meta->getURL() . '.' . $imageExtension;
+
+						// only change the name if there is a difference
+						if($newName != $item['image'])
+						{
+							// move the old file to the new name
+							SpoonFile::move($imagePath . '/source/' . $item['image'], $imagePath . '/source/' . $newName);
+
+							// assign the new name to the database
+							$item['image'] = $newName;
+						}
 					}
 				}
+				else $item['image'] = null;
 
 				// update the item
 				$item['revision_id'] = BackendBlogModel::update($item);
