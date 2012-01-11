@@ -51,7 +51,7 @@
 						</ul>
 					</header>
 					<div class="bd content">
-						{option:items.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$items.image}" alt="{$items.title}" />{/option:items.image}
+						{option:items.image}<img src="{$SITE_URL}/image.php?module=blog&amp;action=images&amp;width=250&amp;height=150&amp;crop=true&amp;file=asdf{$items.image}" alt="{$items.title}" />{/option:items.image}
 						{option:!items.introduction}{$items.text}{/option:!items.introduction}
 						{option:items.introduction}{$items.introduction}{/option:items.introduction}
 					</div>
