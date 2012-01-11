@@ -1,3 +1,13 @@
+3.2.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Pages: It is now possible to hide the content title from the backend. Previously this was done in the action code.
+
+Bugfixes:
+
+
+
 3.2.0 (2012-01-10)
 --
 Improvements:
