@@ -7880,7 +7880,7 @@
         <translation language="es"><![CDATA[Nombre no válido.]]></translation>
       </item>
       <item type="error" name="InvalidNumber">
-        <translation language="nl"><![CDATA[Ongeldig cijfer.]]></translation>
+        <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>
         <translation language="en"><![CDATA[Invalid number.]]></translation>
         <translation language="hu"><![CDATA[Helytelen szám.]]></translation>
         <translation language="ru"><![CDATA[Неверный номер.]]></translation>
