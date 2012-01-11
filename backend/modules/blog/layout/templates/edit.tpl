@@ -47,6 +47,7 @@
 						</div>
 
 						{* Image *}
+						{option:imageIsAllowed}
 						<div class="box">
 							<div class="heading">
 								<h3>{$lblImage|ucfirst}</h3>
@@ -67,6 +68,7 @@
 								</p>
 							</div>
 						</div>
+						{/option:imageIsAllowed}
 
 						{* Summary *}
 						<div class="box">
