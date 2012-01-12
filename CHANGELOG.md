@@ -1,5 +1,9 @@
 3.2.1 (xxxx-xx-xx)
 --
+Improvements:
+
+* Blog: Added an option for the god user to enable or disable the upload image functionallity for the blog module.
+
 Bugfixes:
 
 * Core: added missing locale for ckeditor & ckfinder.
