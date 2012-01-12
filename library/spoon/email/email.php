@@ -82,8 +82,8 @@ class SpoonEmail
 	 * @var array
 	 */
 	private $content = array('html' => '', 'plain' => '');
-	
-	
+
+
 	/**
 	 * Content transfer encoding value for the html and plaintext content.
 	 *
@@ -663,6 +663,9 @@ class SpoonEmail
 			// loop recipients
 			foreach($recipients as $recipient)
 			{
+				// the name can't be an emailaddress, so remove it.
+				if(SpoonFilter::isEmail($recipient['name'])) $recipient['name'] = null;
+
 				// reformat to a proper string
 				$stack = $recipient['name'] . ' <' . $recipient['email'] . '>';
 
