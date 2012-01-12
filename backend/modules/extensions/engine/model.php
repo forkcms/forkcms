@@ -448,7 +448,7 @@ class BackendExtensionsModel
 		$installedModules = (array) BackendModel::getDB()->getRecords('SELECT name FROM modules', null, 'name');
 
 		// get modules present on the filesystem
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
+		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH, false, null, '/^[a-zA-Z0-9_]+$/');
 
 		// all modules that are managable in the backend
 		$managableModules = array();
