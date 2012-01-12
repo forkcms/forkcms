@@ -739,7 +739,7 @@ class BackendModel
 	/**
 	 * Image Save
 	 *
-	 * @param SpoonFormImage $imageFile ImageFile.
+	 * @param mixed $imageFile This can either be de SpoonFormImage element or a string to an image file.
 	 * @param string $module Module name.
 	 * @param string $filename Filename.
 	 * @param string[optional] $subDirectory Subdirectory.
@@ -764,12 +764,29 @@ class BackendModel
 			$allowEnlargement = (empty($size['allowEnlargement']) ? null : $size['allowEnlargement']);
 			$forceOriginalAspectRatio = (empty($size['forceOriginalAspectRatio']) ? null : $size['forceOriginalAspectRatio']);
 
-			// create
-			$imageFile->createThumbnail($filepath, $width, $height, $allowEnlargement, $forceOriginalAspectRatio);
+
+			/*
+			 * If we have a SpoonFormImage instance as the imageFile, we should use the create thumnail action from that,
+			 * else we need to create a new thumbnail instance
+			 */
+			if($imageFile instanceof SpoonFormImage) $imageFile->createThumbnail($filepath, $width, $height, $allowEnlargement, $forceOriginalAspectRatio);
+			else
+			{
+				$thumnail = new SpoonThumbnail($imageFile, $width, $height);
+				$thumnail->setAllowEnlargement($allowEnlargement);
+				$thumnail->setForceOriginalAspectRatio($forceOriginalAspectRatio);
+
+				$thumnail->parseToFile($filepath);
+			}
 		}
 
-		// save original
-		$imageFile->moveFile(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+		/**
+		 * If we have a SpoonFormImage we can use that moveFile function, otherwise we need to use
+		 * the SpoonFile component.
+		 */
+		$destinationSourcePath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+		if($imageFile instanceof SpoonFormImage) $imageFile->moveFile($destinationSourcePath);
+		else SpoonFile::move($imageFile, $destinationSourcePath);
 	}
 
 	/**
