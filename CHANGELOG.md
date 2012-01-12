@@ -5,6 +5,7 @@ Improvements:
 * Blog: Added an option for the god user to enable or disable the upload image functionallity for the blog module.
 * Extensions: only modules with a valid name will be included in the list of installable modules.
 * Core: upgraded jQueryUI to 1.8.17
+* Core: Made it possible to use the imageSave function with a string to an image instead of forcing it to use SpoonFormImage
 
 Bugfixes:
 
