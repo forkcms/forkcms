@@ -96,12 +96,16 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 				// only 1 language selected?
 				if(count($this->filter['language']) == 1)
 				{
-					// user is God?
-					if($this->isGod)
+					// check if this action is allowed
+					if(BackendAuthentication::isAllowedAction('edit'))
 					{
 						// add edit button
 						$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[translation_id]' . $this->filterQuery);
+					}
 
+					// check if this action is allowed
+					if(BackendAuthentication::isAllowedAction('add'))
+					{
 						// add copy button
 						$dataGrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '&amp;id=[translation_id]' . $this->filterQuery, array('class' => 'button icon iconCopy linkButton'));
 					}
@@ -131,8 +135,10 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse datagrids
 		$this->tpl->assign('dgLabels', ($this->dgLabels->getNumResults() != 0) ? $this->dgLabels->getContent() : false);
 		$this->tpl->assign('dgMessages', ($this->dgMessages->getNumResults() != 0) ? $this->dgMessages->getContent() : false);

@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the module upload-action.
  * It will install a module via a compressed zip file.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendExtensionsUploadModule extends BackendBaseActionAdd
 {
@@ -69,11 +77,15 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		// directories we are allowed to upload to
 		$allowedDirectories = array(
 			'backend/modules/',
-			'frontend/modules/'
+			'frontend/modules/',
+			'library/external/'
 		);
 
 		// name of the module we are trying to upload
 		$moduleName = null;
+
+		// there are some complications
+		$warnings = array();
 
 		// check every file in the zip
 		for($i = 0; $i < $zip->numFiles; $i++)
@@ -88,6 +100,14 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 				// yay, in a valid directory
 				if(stripos($fileName, $directory) === 0)
 				{
+					// we have a library file
+					if($directory == 'library/external/')
+					{
+						if(!SpoonFile::exists(PATH_WWW . '/' . $fileName)) $files[] = $fileName;
+						else $warnings[] = sprintf(BL::getError('LibraryFileAlreadyExists'), $fileName);
+						break;
+					}
+
 					// extract the module name from the url
 					$tmpName = trim(str_ireplace($directory, '', $fileName), '/');
 					if($tmpName == '') break;
@@ -100,7 +120,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 					// first module we find, store the name
 					elseif($moduleName === null) $moduleName = $tmpName;
 
-					// the name does not match the previous madule we found, skip the file
+					// the name does not match the previous module we found, skip the file
 					elseif($moduleName !== $tmpName) break;
 
 					// passed all our tests, store it for extraction
@@ -137,7 +157,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 		$zip->extractTo(PATH_WWW, $files);
 
 		// run installer
-		BackendExtensionsModel::installModule($moduleName);
+		BackendExtensionsModel::installModule($moduleName, $warnings);
 
 		// return the files
 		return $moduleName;

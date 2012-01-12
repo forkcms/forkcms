@@ -62,7 +62,6 @@ class BackendFaqAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// get url

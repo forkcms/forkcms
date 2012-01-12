@@ -63,8 +63,10 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 	/**
 	 * Parse the form
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse the form
 		$this->frm->parse($this->tpl);
 	}

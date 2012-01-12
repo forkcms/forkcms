@@ -18,10 +18,17 @@
 					<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtTitle} {$txtTitleError}
 				</p>
-				<p style="position: relative;">
-					<label for="text">{$lblContent|ucfirst}</label>
-					{$txtText} {$txtTextError}
-				</p>
+
+				<div class="box">
+					<div class="heading">
+						<h3>
+							<label for="text">{$lblContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						</h3>
+					</div>
+					<div class="optionsRTE">
+						{$txtText} {$txtTextError}
+					</div>
+				</div>
 				{option:ddmTemplate}<p>{$lblTemplate|ucfirst} <label for="template">{$ddmTemplate} {$ddmTemplateError}</label></p>{/option:ddmTemplate}
 				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label></p>
 			</fieldset>
@@ -54,9 +61,11 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+		{/option:showDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

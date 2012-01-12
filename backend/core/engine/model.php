@@ -81,10 +81,14 @@ class BackendModel
 		// check if debug-mode is active
 		if(SPOON_DEBUG) $warnings[] = array('message' => BL::err('DebugModeIsActive'));
 
-		// check if the fork API keys are available
-		if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index', 'settings'))
 		{
-			$warnings[] = array('message' => sprintf(BL::err('ForkAPIKeys'), BackendModel::createURLForAction('settings', 'index')));
+			// check if the fork API keys are available
+			if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
+			{
+				$warnings[] = array('message' => sprintf(BL::err('ForkAPIKeys'), BackendModel::createURLForAction('index', 'settings')));
+			}
 		}
 
 		// check for extensions warnings

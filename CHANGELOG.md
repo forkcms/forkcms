@@ -1,4 +1,15 @@
-3.2.0 (xxxx-xx-xx)
+3.2.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Blog: Added an option for the god user to enable or disable the upload image functionallity for the blog module.
+
+Bugfixes:
+
+* Core: added missing locale for ckeditor & ckfinder.
+
+
+3.2.0 (2012-01-10)
 --
 Improvements:
 
@@ -8,10 +19,12 @@ Improvements:
 * Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
 * Core: added maxItems and afterAdd options for the multipleSelectbox.
 * Core: added a possibility to add an extra to all pages when installing forkcms with the installer function addDefaultExtra. The extra will be added to all pages without this extra.
-* Core: You can now add items to the search index in the installer of your module.
+* Core: you can now add items to the search index in the installer of your module.
 * Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
 * Pages: when adding an editor field, the editor will immediately open.
-* Pages: The sitemap now correctly displays subpages.
+* Pages: the sitemap now correctly displays subpages.
+* Extensions: modules may now also include files in /library/external. 
+* All: actions where the user has no rights for, are no longer shown.
 
 Bugfixes:
 

@@ -518,6 +518,10 @@
         <translation language="hu"><![CDATA[A %s pozíció lefoglalva.]]></translation>
         <translation language="es"><![CDATA[La posciión %s está reservada.]]></translation>
       </item>
+      <item type="error" name="LibraryFileAlreadyExists">
+        <translation language="nl"><![CDATA[Het library-bestand "%1$s" bestond al van een andere module. Deze module werkt mogelijk niet optimaal.]]></translation>
+        <translation language="en"><![CDATA[The library-file "%1$s" already existed by another module. This module may not function properly.]]></translation>
+      </item>
       <item type="error" name="ThemeAlreadyExists">
         <translation language="nl"><![CDATA[Het thema "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
         <translation language="en"><![CDATA[The theme "%1$s" already exists, you can not upload it again.]]></translation>

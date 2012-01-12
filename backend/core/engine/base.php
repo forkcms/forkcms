@@ -234,6 +234,39 @@ class BackendBaseAction
 	}
 
 	/**
+	 * Parse to template
+	 */
+	protected function parse()
+	{
+		// build pathName
+		$pathName = BACKEND_MODULES_PATH . '/' . $this->getModule();
+
+		// get actions
+		$actions = (array) SpoonFile::getList($pathName . '/actions', '/(.*)\.php/i');
+		$ajaxActions = (array) SpoonFile::getList($pathName . '/ajax', '/(.*)\.php/i');
+
+		// loop through actions
+		foreach($actions as $action)
+		{
+			// get action name
+			$actionName = str_replace('.php', '', $action);
+
+			// check if allowed to perform this action
+			$this->tpl->assign('show' . SpoonFilter::toCamelCase($actionName, '_'), BackendAuthentication::isAllowedAction($actionName, $this->getModule()));
+		}
+
+		// loop through ajax
+		foreach($ajaxActions as $action)
+		{
+			// get action name
+			$actionName = str_replace('.php', '', $action);
+
+			// check if allowed to perform this action
+			$this->tpl->assign('show' . SpoonFilter::toCamelCase($actionName, '_'), BackendAuthentication::isAllowedAction($actionName, $this->getModule()));
+		}
+	}
+
+	/**
 	 * Redirect to a given URL
 	 *
 	 * @param string $URL The URL to redirect to.
@@ -287,6 +320,14 @@ class BackendBaseActionIndex extends BackendBaseAction
 	{
 		parent::execute();
 	}
+
+	/**
+	 * Parse to template
+	 */
+	protected function parse()
+	{
+		parent::parse();
+	}
 }
 
 /**
@@ -316,7 +357,9 @@ class BackendBaseActionAdd extends BackendBaseAction
 	 */
 	protected function parse()
 	{
-		$this->frm->parse($this->tpl);
+		parent::parse();
+
+		if($this->frm) $this->frm->parse($this->tpl);
 	}
 }
 
@@ -368,7 +411,9 @@ class BackendBaseActionEdit extends BackendBaseAction
 	 */
 	protected function parse()
 	{
-		$this->frm->parse($this->tpl);
+		parent::parse();
+
+		if($this->frm) $this->frm->parse($this->tpl);
 	}
 }
 
@@ -400,7 +445,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the children
+		parent::parse();
 	}
 }
 

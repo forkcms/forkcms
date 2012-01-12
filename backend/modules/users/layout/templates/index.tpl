@@ -3,9 +3,12 @@
 
 <div class="pageTitle">
 	<h2>{$lblUsers|ucfirst}</h2>
+
+	{option:showAdd}
 	<div class="buttonHolderRight">
 		<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span>{$lblAdd|ucfirst}</span></a>
 	</div>
+	{/option:showAdd}
 </div>
 <div class="dataGridHolder">
 	{option:dataGrid}{$dataGrid}{/option:dataGrid}

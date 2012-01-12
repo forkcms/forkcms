@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
  *
@@ -163,29 +170,37 @@ class BackendExtensionsModel
 		$akismetModules = self::getModulesThatRequireAkismet();
 		$googleMapsModules = self::getModulesThatRequireGoogleMaps();
 
-		// check if the akismet key is available if there are modules that require it
-		if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index', 'settings'))
 		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
-		}
-
-		// check if the google maps key is available if there are modules that require it
-		if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
-		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
-		}
-
-		// check if there are cronjobs that are not yet set
-		$modules = BackendExtensionsModel::getModules();
-		foreach($modules as $module)
-		{
-			if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+			// check if the akismet key is available if there are modules that require it
+			if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
-				break;
+				$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
+			}
+
+			// check if the google maps key is available if there are modules that require it
+			if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
+			}
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('modules', 'extensions'))
+		{
+			// check if there are cronjobs that are not yet set
+			$modules = BackendExtensionsModel::getModules();
+			foreach($modules as $module)
+			{
+				if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+				{
+					// add warning
+					$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+					break;
+				}
 			}
 		}
 
@@ -718,8 +733,9 @@ class BackendExtensionsModel
 	 * Install a module.
 	 *
 	 * @param string $module The name of the module to be installed.
+	 * @param array $information Warnings from the upload of the module.
 	 */
-	public static function installModule($module)
+	public static function installModule($module, array $warnings = array())
 	{
 		// we need the installer
 		require_once BACKEND_CORE_PATH . '/installer/installer.php';
@@ -742,6 +758,9 @@ class BackendExtensionsModel
 
 		// execute installation
 		$installer->install();
+
+		// add the warnings
+		foreach($warnings as $warning) $installer->addWarning($warning);
 
 		// save the warnings in session for later use
 		if($installer->getWarnings())

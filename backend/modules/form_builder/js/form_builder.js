@@ -204,7 +204,10 @@ jsBackend.formBuilder.fields =
 									break;
 							}
 						},
-						'{$lblCancel|ucfirst}': function(){ $(this).dialog('close'); }
+						'{$lblCancel|ucfirst}': function()
+						{
+							$(this).dialog('close');
+						}
 					 },
 
 					// set focus on first input field

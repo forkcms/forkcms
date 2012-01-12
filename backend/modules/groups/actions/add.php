@@ -541,7 +541,6 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 	}
 

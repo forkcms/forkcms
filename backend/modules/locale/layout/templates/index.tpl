@@ -4,11 +4,9 @@
 <div class="pageTitle">
 	<h2>{$lblTranslations|ucfirst}</h2>
 		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'add'}{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			{option:isGod}
-				<a href="{$var|geturl:'export'}{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
-				<a href="{$var|geturl:'import'}{$filter}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
-			{/option:isGod}
+			{option:showAdd}<a href="{$var|geturl:'add'}{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>{/option:showAdd}
+			{option:showExport}<a href="{$var|geturl:'export'}{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>{/option:showExport}
+			{option:showImport}<a href="{$var|geturl:'import'}{$filter}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>{/option:showImport}
 		</div>
 </div>
 

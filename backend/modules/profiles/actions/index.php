@@ -109,14 +109,8 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		// sorting columns
 		$this->dgProfiles->setSortingColumns(array('email', 'display_name', 'status', 'registered_on'), 'email');
 
-		// set column URLs
-		$this->dgProfiles->setColumnURL('email', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-
 		// set column function
 		$this->dgProfiles->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[registered_on]'), 'registered_on', true);
-
-		// add columns
-		$this->dgProfiles->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[id]', BL::getLabel('Edit'));
 
 		// add the mass action controls
 		$this->dgProfiles->setMassActionCheckboxes('checkbox', '[id]');
@@ -125,6 +119,16 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 		$ddmMassAction->setOptionAttributes('addToGroup', array('data-message-id' => 'confirmAddToGroup'));
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
 		$this->dgProfiles->setMassAction($ddmMassAction);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set column URLs
+			$this->dgProfiles->setColumnURL('email', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+
+			// add columns
+			$this->dgProfiles->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[id]', BL::getLabel('Edit'));
+		}
 	}
 
 	/**
@@ -158,8 +162,10 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 	/**
 	 * Parse & display the page.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse datagrid
 		$this->tpl->assign('dgProfiles', ($this->dgProfiles->getNumResults() != 0) ? $this->dgProfiles->getContent() : false);
 

@@ -47,6 +47,7 @@
 						</div>
 
 						{* Image *}
+						{option:imageIsAllowed}
 						<div class="box">
 							<div class="heading">
 								<h3>{$lblImage|ucfirst}</h3>
@@ -67,6 +68,7 @@
 								</p>
 							</div>
 						</div>
+						{/option:imageIsAllowed}
 
 						{* Summary *}
 						<div class="box">
@@ -200,19 +202,22 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+
+		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+			<p>
+				{$msgConfirmDelete|sprintf:{$item.title}}
+			</p>
+		</div>
+		{/option:showDelete}
+
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
 			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
-	</div>
-
-	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-		<p>
-			{$msgConfirmDelete|sprintf:{$item.title}}
-		</p>
 	</div>
 
 	<div id="addCategoryDialog" class="forkForms" title="{$lblAddCategory|ucfirst}" style="display: none;">

@@ -90,7 +90,7 @@
 	</table>
 {/option:information}
 
-{option:isInstallable}
+{option:showInstallModule}
 <div class="fullwidthOptions">
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'install_theme'}&amp;theme={$name}" data-message-id="confirmInstall" class="askConfirmation button mainButton">
@@ -98,7 +98,7 @@
 		</a>
 	</div>
 </div>
-{/option:isInstallable}
+{/option:showInstallTheme}
 
 <div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
 	<p>

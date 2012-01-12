@@ -254,6 +254,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('isGod', $this->isGod);

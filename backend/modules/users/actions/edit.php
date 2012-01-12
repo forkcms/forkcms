@@ -103,7 +103,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		if($this->record['settings']['avatar'] != '') $this->record['settings']['avatar'] .= '?time=' . time();
 
 		// only allow deletion of other users
-		if(BackendAuthentication::getUser()->getUserId() != $this->id) $this->tpl->assign('deleteAllowed', true);
+		$this->tpl->assign('showDelete', BackendAuthentication::getUser()->getUserId() != $this->id && BackendAuthentication::isAllowedAction('delete'));
 
 		// assign
 		$this->tpl->assign('record', $this->record);

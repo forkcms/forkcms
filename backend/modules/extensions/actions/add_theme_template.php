@@ -203,7 +203,6 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign form errors

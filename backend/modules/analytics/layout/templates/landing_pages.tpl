@@ -3,11 +3,14 @@
 
 <div class="pageTitle">
 	<h2>{$lblLandingPages|ucfirst}</h2>
+
+	{option:showAddLandingPage}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_landing_page'}" class="button icon iconAdd" title="{$lblAddLandingPage|ucfirst}">
 			<span>{$lblAddLandingPage|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showLandingPages}
 </div>
 
 <div class="box">

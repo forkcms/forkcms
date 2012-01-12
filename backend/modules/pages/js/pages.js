@@ -238,6 +238,13 @@ jsBackend.pages.extras =
 
 				// remove placeholder
 				blockPlaceholder.remove();
+			},
+			// jQuery's dialog & CKEditor don't play nicely!
+			open: function()
+			{
+				// reload the editors
+				jsBackend.ckeditor.destroy();
+				jsBackend.ckeditor.load();
 			}
 		});
 	},
