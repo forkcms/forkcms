@@ -183,9 +183,6 @@ jsBackend.pages.extras =
 		// save unaltered content
 		var previousContent = $('#blockHtml' + index).val();
 
-		// set content in editor
-		$('#html').val(previousContent);
-
 		// placeholder for block node that will be moved by the jQuery dialog
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
@@ -245,6 +242,9 @@ jsBackend.pages.extras =
 				// reload the editors
 				jsBackend.ckeditor.destroy();
 				jsBackend.ckeditor.load();
+
+				// set content in editor
+				$('#html').val(previousContent);
 			}
 		});
 	},

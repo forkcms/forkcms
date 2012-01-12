@@ -8,6 +8,7 @@ Improvements:
 Bugfixes:
 
 * Core: added missing locale for ckeditor & ckfinder.
+* Pages: fixed reset previous value when editing editor block.
 
 
 3.2.0 (2012-01-10)
