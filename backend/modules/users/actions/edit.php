@@ -62,20 +62,15 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		foreach($groups as $group) $checkedGroups[] = $group['id'];
 
 		// create elements
+		// profile
 		$this->frm->addText('email', $this->record['email'], 255);
 		if($this->user->isGod()) $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
-		$this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
-		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
-		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $this->user->getSetting('date_format'));
-		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $this->user->getSetting('time_format'));
-		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), $this->user->getSetting('number_format', 'dot_nothing'));
+		$this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
 		$this->frm->addImage('avatar');
-		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
-		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
 
+		// password
 		// check if we're god or same user
 		if(BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod())
 		{
@@ -88,8 +83,18 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
 		}
 
+		// settings
+		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
+		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $this->user->getSetting('date_format'));
+		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $this->user->getSetting('time_format'));
+		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), $this->user->getSetting('number_format', 'dot_nothing'));
+
+		// permissions
+		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		// disable active field for current users
 		if(BackendAuthentication::getUser()->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
+		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
+		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
 	}
 
 	/**

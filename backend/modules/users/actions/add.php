@@ -42,24 +42,23 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$checkedGroups = (count($groups) == 1) ? $groups[0]['value'] : null;
 
 		// create elements
+		// profile
 		$this->frm->addText('email', null, 255);
-		$this->frm->addPassword('password', null, 75, 'inputText inputPassword passwordGenerator', 'inputTextError inputPasswordError passwordGenerator');
-		$this->frm->addPassword('confirm_password', null, 75);
-		$this->frm->addText('nickname', null, 24);
+		$this->frm->addPassword('password', null, 75, 'inputText inputPassword passwordGenerator', 'inputTextError inputPasswordError passwordGenerator')->setAttributes(array('autocomplete' => 'off'));
+		$this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
 		$this->frm->addText('name', null, 255);
 		$this->frm->addText('surname', null, 255);
+		$this->frm->addText('nickname', null, 24);
+		$this->frm->addImage('avatar');
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), BackendModel::getModuleSetting('core', 'default_interface_language'));
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
 		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing'));
-		$this->frm->addImage('avatar');
+
+		// permissons
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
 		$this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
-
-		// disable autocomplete
-		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));
-		$this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
 	}
 
 	/**
