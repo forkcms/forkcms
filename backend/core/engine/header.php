@@ -114,7 +114,7 @@ class BackendHeader
 		if($overwritePath) $realPath = $fileName;
 
 		// should we parse the js-file? as in assign variables
-		elseif($parseThroughPHP) $realPath = '/backend/js.php?module=' . $module . '&amp;file=' . $fileName . '&amp;language=' . BackendLanguage::getWorkingLanguage();
+		elseif($parseThroughPHP) $realPath = '/backend/js.php?module=' . $module . '&file=' . $fileName . '&language=' . BackendLanguage::getWorkingLanguage();
 
 		// we have to build the path, but core is a special one
 		elseif($module !== 'core') $realPath = '/backend/modules/' . $module . '/js/' . $fileName;
