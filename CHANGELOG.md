@@ -11,6 +11,7 @@ Bugfixes:
 
 * Core: added missing locale for ckeditor & ckfinder.
 * Pages: fixed reset previous value when editing editor block.
+* Core: when not in debugmode the dialog-patch wasn't included in the minified JS-file.
 
 
 3.2.0 (2012-01-10)
