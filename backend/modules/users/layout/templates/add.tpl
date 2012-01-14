@@ -98,6 +98,21 @@
 					</p>
 				</div>
 			</div>
+			<div class="subtleBox">
+				<div class="heading">
+					<h3>{$lblCSV|ucfirst}</h3>
+				</div>
+				<div class="options horizontal labelWidthLong">
+					<p>
+						<label for="csvSplitCharacter">{$lblSplitCharacter|ucfirst}</label>
+						{$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
+					</p>
+					<p>
+						<label for="csvLineEnding">{$lblLineEnding|ucfirst}</label>
+						{$ddmCsvLineEnding} {$ddmCsvLineEndingError}
+					</p>
+				</div>
+			</div>
 		</div>
 
 		<div id="tabPermissions">

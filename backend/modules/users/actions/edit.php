@@ -89,6 +89,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $this->user->getSetting('time_format'));
 		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), $this->user->getSetting('number_format', 'dot_nothing'));
 
+		$this->frm->addDropDown('csv_split_character', BackendUsersModel::getCSVSplitCharacters(), $this->user->getSetting('csv_split_character'));
+		$this->frm->addDropDown('csv_line_ending', BackendUsersModel::getCSVLineEndings(), $this->user->getSetting('csv_line_ending'));
+
 		// permissions
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		// disable active field for current users
@@ -201,6 +204,8 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['time_format'] = $fields['time_format']->getValue();
 				$settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
 				$settings['number_format'] = $fields['number_format']->getValue();
+				$settings['csv_split_character'] = $fields['csv_split_character']->getValue();
+				$settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
 				$settings['api_access'] = (bool) $fields['api_access']->getChecked();
 
 				// get selected groups

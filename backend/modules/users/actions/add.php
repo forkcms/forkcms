@@ -50,10 +50,14 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addText('surname', null, 255);
 		$this->frm->addText('nickname', null, 24);
 		$this->frm->addImage('avatar');
+
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), BackendModel::getModuleSetting('core', 'default_interface_language'));
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
 		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing'));
+
+		$this->frm->addDropDown('csv_split_character', BackendUsersModel::getCSVSplitCharacters());
+		$this->frm->addDropDown('csv_line_ending', BackendUsersModel::getCSVLineEndings());
 
 		// permissons
 		$this->frm->addCheckbox('active', true);
@@ -127,6 +131,8 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
 				$settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
 				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
+				$settings['csv_split_character'] = $this->frm->getField('csv_split_character')->getValue();
+				$settings['csv_line_ending'] = $this->frm->getField('csv_line_ending')->getValue();
 				$settings['password_key'] = uniqid();
 				$settings['avatar'] = 'no-avatar.gif';
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
