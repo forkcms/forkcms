@@ -159,6 +159,11 @@ class BackendUsersModel
 		return $user;
 	}
 
+	/**
+	 * Get the possible line endings for a CSV-file
+	 *
+	 * @return array
+	 */
 	public static function getCSVLineEndings()
 	{
 		return array(

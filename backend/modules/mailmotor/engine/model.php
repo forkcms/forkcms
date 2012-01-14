@@ -350,7 +350,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $emails, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
+		BackendCSV::arrayToFile($path, $emails, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
 	}
 
 	/**
@@ -400,7 +400,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $records, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
+		BackendCSV::arrayToFile($path, $records, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
 	}
 
 	/**
@@ -435,7 +435,7 @@ class BackendMailmotorModel
 		$columns[] = BL::msg('MailingCSVUnopensPercentage');
 
 		// set start of the CSV
-		$csv = SpoonFileCSV::arrayToString($records, $columns);
+		$csv = BackendCSV::arrayToString($records, $columns);
 
 		// check set links
 		if(!empty($statsClickedLinks))
@@ -444,7 +444,7 @@ class BackendMailmotorModel
 			$statsClickedLinks = SpoonFilter::arrayMapRecursive('urldecode', $statsClickedLinks);
 
 			// fetch CSV strings
-			$csv .= PHP_EOL . SpoonFileCSV::arrayToString($statsClickedLinks);
+			$csv .= PHP_EOL . BackendCSV::arrayToString($statsClickedLinks);
 		}
 
 		// set the filename and path
@@ -496,7 +496,7 @@ class BackendMailmotorModel
 		$columns[] = BL::msg('MailingCSVUnopensPercentage');
 
 		// set start of the CSV
-		$csv = SpoonFileCSV::arrayToString($records, $columns);
+		$csv = BackendCSV::arrayToString($records, $columns);
 
 		// fetch all mailings in this campaign
 		$mailings = BackendModel::getDB()->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
@@ -510,7 +510,7 @@ class BackendMailmotorModel
 			$mailingColumns['language'] = BL::lbl('Language');
 
 			// add the records to the csv string
-			$csv .= PHP_EOL . 'Mailings:' . PHP_EOL . SpoonFileCSV::arrayToString($mailings, $mailingColumns, array('id', 'campaign_id', 'campaign_name', 'send_on', 'status'));
+			$csv .= PHP_EOL . 'Mailings:' . PHP_EOL . BackendCSV::arrayToString($mailings, $mailingColumns, array('id', 'campaign_id', 'campaign_name', 'send_on', 'status'));
 		}
 
 		// set headers for download

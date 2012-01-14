@@ -6,6 +6,7 @@ Improvements:
 * Extensions: only modules with a valid name will be included in the list of installable modules.
 * Core: upgraded jQueryUI to 1.8.17
 * Installer: added a check for subfolders.
+* Core: added a generic method to output CSV-files, which uses the user-settings for splitchar and line-ending.
 
 Bugfixes:
 

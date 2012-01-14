@@ -3452,6 +3452,15 @@
         <translation language="nl"><![CDATA[cronjobs]]></translation>
         <translation language="de"><![CDATA[Cronjobs]]></translation>
       </item>
+      <item type="label" name="CSV">
+        <translation language="nl"><![CDATA[CSV]]></translation>
+        <translation language="en"><![CDATA[CSV]]></translation>
+        <translation language="it"><![CDATA[CSV]]></translation>
+        <translation language="de"><![CDATA[CSV]]></translation>
+        <translation language="fr"><![CDATA[CSV]]></translation>
+        <translation language="hu"><![CDATA[CSV]]></translation>
+        <translation language="es"><![CDATA[CSV]]></translation>
+      </item>
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
         <translation language="en"><![CDATA[custom URL]]></translation>
@@ -4374,6 +4383,10 @@
         <translation language="de"><![CDATA[Layout]]></translation>
         <translation language="fr"><![CDATA[layout]]></translation>
         <translation language="es"><![CDATA[layout]]></translation>
+      </item>
+      <item type="label" name="LineEnding">
+        <translation language="nl"><![CDATA[lijneinde]]></translation>
+        <translation language="en"><![CDATA[line ending]]></translation>
       </item>
       <item type="label" name="Loading">
         <translation language="nl"><![CDATA[loading]]></translation>
@@ -5828,6 +5841,10 @@
         <translation language="de"><![CDATA[Spamfilter]]></translation>
         <translation language="fr"><![CDATA[filtre de spam]]></translation>
         <translation language="es"><![CDATA[filtro de spam]]></translation>
+      </item>
+      <item type="label" name="SplitCharacter">
+        <translation language="nl"><![CDATA[scheidingsteken]]></translation>
+        <translation language="en"><![CDATA[split character]]></translation>
       </item>
       <item type="label" name="StartDate">
         <translation language="nl"><![CDATA[startdatum]]></translation>

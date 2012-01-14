@@ -37,7 +37,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$csv[] = array('email' => BackendModel::getModuleSetting($this->getModule(), 'from_email'));
 
 		// download the file
-		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/example.csv', $csv, null, null, ';', '"', true);
+		BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/example.csv', $csv, null, null, ';', '"', true);
 	}
 
 	/**
@@ -207,7 +207,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			$fileCSV->isFilled(BL::err('CSVIsRequired'));
 
 			// convert the CSV file to an array
-			$csv = $fileCSV->isFilled() ? SpoonFileCSV::fileToArray($fileCSV->getTempFileName()) : null;
+			$csv = $fileCSV->isFilled() ? BackendCSV::fileToArray($fileCSV->getTempFileName()) : null;
 
 			// check if the csv is valid
 			if($csv === false || empty($csv) || !isset($csv[0])) $fileCSV->addError(BL::err('InvalidCSV'));
@@ -246,7 +246,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// convert the CSV file to an array, and fetch the group's CM ID
-				$csv = SpoonFileCSV::fileToArray($fileCSV->getTempFileName(), null, null, ';', '"');
+				$csv = BackendCSV::fileToArray($fileCSV->getTempFileName(), null, null, ';', '"');
 
 				// process our import, and get the failed subscribers
 				$failedSubscribers = $this->processImport($csv, $values['groups']);
@@ -268,7 +268,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 				{
 					// write a CSV file to the cache
 					$csvFile = 'import-report-' . SpoonFilter::urlise(BackendModel::getUTCDate()) . '.csv';
-					SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers, null, null, ';', '"');
+					BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers, null, null, ';', '"');
 
 					// trigger event
 					BackendModel::triggerEvent($this->getModule(), 'after_import_address_with_failed_items', array('failed' => $failedSubscribers));
