@@ -79,7 +79,7 @@ class SpoonFormText extends SpoonFormInput
 	{
 		// redefine html & default value
 		$allowHTML = ($allowHTML !== null) ? (bool) $allowHTML : $this->isHTML;
-		$value = $this->value;
+		$value = (string) $this->value;
 
 		// contains html
 		if($this->isHTML)
@@ -336,7 +336,7 @@ class SpoonFormText extends SpoonFormInput
 		$data = $this->getMethod(true);
 
 		// validate
-		if(!(isset($data[$this->attributes['name']]) && trim($data[$this->attributes['name']]) != ''))
+		if(!(isset($data[$this->attributes['name']]) && trim((string) $data[$this->attributes['name']]) != ''))
 		{
 			if($error !== null) $this->setError($error);
 			return false;

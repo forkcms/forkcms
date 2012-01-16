@@ -469,6 +469,9 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// default element?
 		if(count($this->defaultElement) != 0)
 		{
+			// skip the default element
+			if(isset($this->defaultElement[1]) && $this->defaultElement[1] == $label) continue;
+
 			// create option
 			$output .= "\t" . '<option value="' . $this->defaultElement[1] . '"';
 
@@ -611,6 +614,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	public function setDefaultElement($label, $value = null)
 	{
 		$this->defaultElement = array((string) $label, (string) $value);
+		if($value !== null) $this->values[$value] = (string) $label;
 		return $this;
 	}
 

@@ -663,8 +663,11 @@ class SpoonEmail
 			// loop recipients
 			foreach($recipients as $recipient)
 			{
-				// the name can't be an email address, so remove it.
-				if(SpoonFilter::isEmail($recipient['name'])) throw new SpoonEmailException('Email addresses aren\'t allowed for names.');
+				// name should NOT be an e-mail address
+				if(SpoonFilter::isEmail($recipient['name']))
+				{
+					throw new SpoonEmailException('E-mail addresses aren\'t allowed as names.');
+				}
 
 				// reformat to a proper string
 				$stack = $recipient['name'] . ' <' . $recipient['email'] . '>';
