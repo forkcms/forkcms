@@ -8,12 +8,15 @@
 		{option:!filterCategory}{$lblArticles}{/option:!filterCategory}
 		{option:filterCategory}{$msgArticlesFor|sprintf:{$filterCategory.title}}{/option:filterCategory}
 	</h2>
+
+	{option:showAdd}
 	<div class="buttonHolderRight">
 		{option:filterCategory}<a href="{$var|geturl:'add':null:'&category={$filterCategory.id}'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">{/option:filterCategory}
 		{option:!filterCategory}<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">{/option:!filterCategory}
 			<span>{$lblAdd|ucfirst}</span>
 		{option:!filterCategory}</a>{/option:!filterCategory}
 	</div>
+	{/option:showAdd}
 </div>
 
 {form:filter}
