@@ -94,7 +94,7 @@
 	</table>
 {/option:information}
 
-{option:showInstallModule}
+{option:showExtensionsInstallModule}
 <div class="fullwidthOptions">
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'install_module'}&amp;module={$name}" data-message-id="confirmInstall" class="askConfirmation button mainButton">
@@ -102,7 +102,7 @@
 		</a>
 	</div>
 </div>
-{/option:showInstallModule}
+{/option:showExtensionsInstallModule}
 
 <div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
 	<p>

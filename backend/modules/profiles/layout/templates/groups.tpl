@@ -4,13 +4,13 @@
 <div class="pageTitle">
 	<h2>{$lblGroups|ucfirst}</h2>
 
-	{option:showAddGroup}
+	{option:showProfilesAddGroup}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_group'}" class="button icon iconAdd">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
-	{/option:showAddGroup}
+	{/option:showProfilesAddGroup}
 </div>
 
 <div class="dataGridHolder">

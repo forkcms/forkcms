@@ -4,13 +4,13 @@
 <div class="pageTitle">
 	<h2>{$lblFormBuilder|ucfirst}</h2>
 
-    {option:showAdd}
+    {option:showFormBuilderAdd}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
-    {/option:showAdd}
+    {/option:showFormBuilderAdd}
 </div>
 
 {option:dataGrid}

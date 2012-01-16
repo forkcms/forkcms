@@ -4,13 +4,13 @@
 <div class="pageTitle">
 	<h2>{$lblFaq|ucfirst}</h2>
 
-	{option:showAdd}
+	{option:showFaqAdd}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
-	{/option:showAdd}
+	{/option:showFaqAdd}
 </div>
 
 <div id="dataGridQuestionsHolder">

@@ -88,7 +88,7 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:showDelete}
+		{option:showGroupsDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
@@ -97,7 +97,7 @@
 				{$msgConfirmDelete|sprintf:{$item.name}}
 			</p>
 		</div>
-		{/option:showDelete}
+		{/option:showGroupsDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

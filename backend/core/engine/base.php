@@ -238,32 +238,7 @@ class BackendBaseAction
 	 */
 	protected function parse()
 	{
-		// build pathName
-		$pathName = BACKEND_MODULES_PATH . '/' . $this->getModule();
 
-		// get actions
-		$actions = (array) SpoonFile::getList($pathName . '/actions', '/(.*)\.php/i');
-		$ajaxActions = (array) SpoonFile::getList($pathName . '/ajax', '/(.*)\.php/i');
-
-		// loop through actions
-		foreach($actions as $action)
-		{
-			// get action name
-			$actionName = str_replace('.php', '', $action);
-
-			// check if allowed to perform this action
-			$this->tpl->assign('show' . SpoonFilter::toCamelCase($actionName, '_'), BackendAuthentication::isAllowedAction($actionName, $this->getModule()));
-		}
-
-		// loop through ajax
-		foreach($ajaxActions as $action)
-		{
-			// get action name
-			$actionName = str_replace('.php', '', $action);
-
-			// check if allowed to perform this action
-			$this->tpl->assign('show' . SpoonFilter::toCamelCase($actionName, '_'), BackendAuthentication::isAllowedAction($actionName, $this->getModule()));
-		}
 	}
 
 	/**

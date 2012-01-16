@@ -4,13 +4,13 @@
 <div class="pageTitle">
 	<h2>{$lblBounces|ucfirst} {$lblFor} &ldquo;{$mailing.name}&rdquo;</h2>
 
-	{option:showDeleteBounces}
+	{option:showMailmotorDeleteBounces}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'delete_bounces'}&amp;mailing_id={$mailing.id}" class="button icon iconDelete" title="{$msgDeleteBounces|ucfirst}">
 			<span>{$msgDeleteBounces|ucfirst}</span>
 		</a>
 	</div>
-	{/option:showDeleteBounces}
+	{/option:showMailmotorDeleteBounces}
 </div>
 
 {option:dataGrid}

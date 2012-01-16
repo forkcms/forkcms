@@ -454,6 +454,9 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->tpl->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('groupName', $this->record['name']);
+
+		// only allow deletion of empty groups
+		$this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('delete'));
 	}
 
 	/**

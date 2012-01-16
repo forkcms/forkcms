@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:showDeleteGroup}
+		{option:showProfilesDeleteGroup}
 		<a href="{$var|geturl:'delete_group'}&amp;id={$group.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
@@ -26,7 +26,7 @@
 				{$msgConfirmDeleteGroup|sprintf:{$group.name}}
 			</p>
 		</div>
-		{/option:showDeleteGroup}
+		{/option:showProfilesDeleteGroup}
 
 		<div class="buttonHolderRight">
 			<input id="saveButton" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />

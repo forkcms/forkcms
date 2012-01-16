@@ -414,7 +414,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		if(!BackendAuthentication::isAllowedAction('delete', $this->getModule())) $showDelete = false;
 
 		// show delete button
-		$this->tpl->assign('showDelete', $showDelete);
+		$this->tpl->assign('showPagesDelete', $showDelete);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');

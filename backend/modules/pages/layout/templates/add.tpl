@@ -7,11 +7,11 @@
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblAdd}</h2>
 
-		{option:showIndex}
+		{option:showPagesIndex}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
-		{/option:showIndex}
+		{/option:showPagesIndex}
 	</div>
 
 	<p id="pagesPageTitle">

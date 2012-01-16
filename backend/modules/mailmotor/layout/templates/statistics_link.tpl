@@ -41,13 +41,13 @@
 </div>
 {/option:dataGrid}
 
-{option:showStatistics}
+{option:showMailmotorStatistics}
 <div class="buttonHolderLeft">
 	<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="button" title="{$lblAddGroup|ucfirst}">
 		<span>{$msgBackToStatistics|sprintf:{$mailing.name}}</span>
 	</a>
 </div>
-{/option:showStatistics}
+{/option:showMailmotorStatistics}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

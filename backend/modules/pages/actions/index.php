@@ -140,9 +140,6 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 
-		// check if allowed to add
-		$this->tpl->assign('showAdd', BackendAuthentication::isAllowedAction('add', $this->getModule()));
-
 		// open the tree on a specific page
 		if($this->getParameter('id', 'int') !== null) $this->tpl->assign('openedPageId', $this->getParameter('id', 'int'));
 		else $this->tpl->assign('openedPageId', 1);
