@@ -109,7 +109,13 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
 				FrontendModel::triggerEvent('profiles', 'after_resend_activation', array('id' => $profileId));
 
 				// send email
-				FrontendMailer::addEmail(FL::getMessage('RegisterSubject'), FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl', $mailValues, $profile->getEmail(), $profile->getEmail());
+				FrontendMailer::addEmail(
+					FL::getMessage('RegisterSubject'),
+					FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
+					$mailValues,
+					$profile->getEmail(),
+					''
+				);
 
 				// redirect
 				$this->redirect(SELF . '?sent=true');
