@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="fullwidthOptions">
-			{option:showDelete}
+			{option:showLocaleDelete}
 			<a href="{$var|geturl:'delete'}&amp;id={$id}{$filterQuery}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
@@ -47,7 +47,7 @@
 					{$msgConfirmDelete}
 				</p>
 			</div>
-			{/option:showDelete}
+			{/option:showLocaleDelete}
 
 			<div class="buttonHolderRight">
 				<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

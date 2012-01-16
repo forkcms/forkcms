@@ -16,13 +16,13 @@
 		</div>
 	</div>
 
-	{option:showImportGroups}
+	{option:showMailmotorImportGroups}
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'import_groups'}" class="submitButton button inputButton button mainButton"><span>{$msgImportGroupsTitle}</span></a>
 		</div>
 	</div>
-	{/option:showImportGroups}
+	{/option:showMailmotorImportGroups}
 {/form:import}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

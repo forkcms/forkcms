@@ -14,7 +14,7 @@
 			<p class="p0">
 				{$fileCsv} {$fileCsvError}
 
-				{option:showImportAddresses}<label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1">{$lblExampleFile}</a>.</label>{/option:showImportAddresses}
+				{option:showMailmotorImportAddresses}<label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1">{$lblExampleFile}</a>.</label>{/option:showMailmotorImportAddresses}
 			</p>
 		</div>
 	</div>
@@ -42,13 +42,13 @@
 		</div>
 	</div>
 
-	{option:showImportAddresses}
+	{option:showMailmotorImportAddresses}
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'import_addresses'}" class="submitButton button inputButton button mainButton"><span>{$lblImportAddresses|ucfirst}</span></a>
 		</div>
 	</div>
-	{/option:showImportAddresses}
+	{/option:showMailmotorImportAddresses}
 {/form:import}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

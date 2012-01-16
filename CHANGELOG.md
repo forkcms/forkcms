@@ -2,18 +2,19 @@
 --
 Improvements:
 
-* Blog: added an option for the god user to enable or disable the upload image functionallity for the blog module.
-* Extensions: only modules with a valid name will be included in the list of installable modules.
 * Core: upgraded jQueryUI to 1.8.17
-* Installer: added a check for subfolders.
 * Core: added a generic method to output CSV-files, which uses the user-settings for splitchar and line-ending.
 * Core: it is now possible to set an empty string as recipient name in the mailers.
+* Extensions: only modules with a valid name will be included in the list of installable modules.
+* Blog: added an option for the god user to enable or disable the upload image functionallity for the blog module.
+* Installer: added a check for subfolders.
+* All: template-options for available actions are now available for all modules and thus also prefixed with the modulename.
 
 Bugfixes:
 
 * Core: added missing locale for ckeditor & ckfinder.
-* Pages: fixed reset previous value when editing editor block.
 * Core: when not in debugmode the dialog-patch wasn't included in the minified JS-file.
+* Pages: fixed reset previous value when editing editor block.
 * Spoon: when deleting a cookie we now set the expiration date far in the past to prevent that users with an incorrect system time can still use deleted cookies.
 
 

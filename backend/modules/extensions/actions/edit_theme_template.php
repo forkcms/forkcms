@@ -80,7 +80,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 
 		// assign
 		$this->tpl->assign('inUse', $inUse);
-		$this->tpl->assign('showDeleteThemeTemplate', $deleteAllowed);
+		$this->tpl->assign('showExtensionsDeleteThemeTemplate', $deleteAllowed);
 	}
 
 	/**

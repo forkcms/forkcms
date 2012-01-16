@@ -4,11 +4,11 @@
 <div class="pageTitle">
 	<h2>{$lblTranslations|ucfirst}</h2>
 
-	{option:showExportAnalyse}
+	{option:showLocaleExportAnalyse}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'export_analyse'}&amp;language={$language}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
 	</div>
-	{/option:showExportAnalyse}
+	{/option:showLocaleExportAnalyse}
 </div>
 
 {option:dgFrontend}

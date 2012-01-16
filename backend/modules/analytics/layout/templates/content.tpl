@@ -74,9 +74,9 @@
 <div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3>
-			{option:showAllPages}<a href="{$var|geturl:'all_pages'}">{/option:showAllPages}
+			{option:showAnalyticsAllPages}<a href="{$var|geturl:'all_pages'}">{/option:showAnalyticsAllPages}
 				{$lblTopPages|ucfirst}
-			{option:showAllPages}</a>{/option:showAllPages}
+			{option:showAnalyticsAllPages}</a>{/option:showAnalyticsAllPages}
 		</h3>
 
 		<div class="buttonHolderRight">
@@ -101,9 +101,9 @@
 <div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3>
-			{option:showExitPages}<a href="{$var|geturl:'exit_pages'}">{/option:showExitPages}
+			{option:showAnalyticsExitPages}<a href="{$var|geturl:'exit_pages'}">{/option:showAnalyticsExitPages}
 				{$lblTopExitPages|ucfirst}
-			{option:showExitPages}</a>{/option:showExitPages}
+			{option:showAnalyticsExitPages}</a>{/option:showAnalyticsExitPages}
 		</h3>
 
 		<div class="buttonHolderRight">
@@ -128,9 +128,9 @@
 <div class="dataGridHolder">
 	<div class="tableHeading">
 		<h3>
-			{option:showLandingPages}<a href="{$var|geturl:'landing_pages'}">{/option:showLandingPages}
+			{option:showAnalyticsLandingPages}<a href="{$var|geturl:'landing_pages'}">{/option:showAnalyticsLandingPages}
 				{$lblTopLandingPages|ucfirst}
-			{option:showLandingPages}</a>{/option:showLandingPages}
+			{option:showAnalyticsLandingPages}</a>{/option:showAnalyticsLandingPages}
 		</h3>
 
 		<div class="buttonHolderRight">

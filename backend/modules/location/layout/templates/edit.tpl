@@ -65,7 +65,7 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:showDelete}
+		{option:showLocationDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
@@ -74,7 +74,7 @@
 				{$msgConfirmDelete|sprintf:{$item.title}}
 			</p>
 		</div>
-		{/option:showDelete}
+		{/option:showLocationDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

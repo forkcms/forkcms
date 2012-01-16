@@ -61,11 +61,11 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:showDelete}
+		{option:showContentBlocksDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
-		{/option:showDelete}
+		{/option:showContentBlocksDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
