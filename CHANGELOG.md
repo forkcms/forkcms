@@ -7,6 +7,7 @@ Improvements:
 * Core: upgraded jQueryUI to 1.8.17
 * Installer: added a check for subfolders.
 * Core: added a generic method to output CSV-files, which uses the user-settings for splitchar and line-ending.
+* Core: it is now possible to set an empty string as recipient name in the mailers.
 
 Bugfixes:
 
