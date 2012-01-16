@@ -27,13 +27,13 @@
 			{$lblRecentlyEdited|ucfirst}
 		</h2>
 
-    	{option:showPagesAdd}
+		{option:showPagesAdd}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 				<span>{$lblAdd|ucfirst}</span>
 			</a>
 		</div>
-    	{/option:showPagesAdd}
+		{/option:showPagesAdd}
 	</div>
 
 {/option:dgDrafts}
