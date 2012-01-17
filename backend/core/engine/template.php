@@ -267,7 +267,8 @@ class BackendTemplate extends SpoonTemplate
 	private function parseLabels()
 	{
 		// grab the current module
-		if($this->URL instanceof BackendURL) $currentModule = $this->URL->getModule();
+		if(Spoon::exists('url')) $currentModule = Spoon::get('url')->getModule();
+		elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
 		else $currentModule = 'core';
 
 		// init vars
