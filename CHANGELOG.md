@@ -17,6 +17,7 @@ Bugfixes:
 * Pages: fixed reset previous value when editing editor block.
 * Spoon: when deleting a cookie we now set the expiration date far in the past to prevent that users with an incorrect system time can still use deleted cookies.
 * API: all illegal characters are now wrapped with CDATA tags.
+* Blog: API calls now show the most recent version of a blog title.
 
 
 3.2.0 (2012-01-10)
