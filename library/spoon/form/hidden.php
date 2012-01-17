@@ -91,7 +91,7 @@ class SpoonFormHidden extends SpoonFormAttributes
 		$data = $this->getMethod(true);
 
 		// validate
-		if(!(isset($data[$this->attributes['name']]) && trim($data[$this->attributes['name']]) != '')) return false;
+		if(!(isset($data[$this->attributes['name']]) && trim((string) $data[$this->attributes['name']]) != '')) return false;
 		return true;
 	}
 

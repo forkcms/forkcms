@@ -1,11 +1,11 @@
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td>
-			<!-- tinymce -->
-				<textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditor">
+			<!-- editor -->
+				<textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditorNewsletter">
 					{$contentHtml}
 				</textarea>
-			<!-- /tinymce -->
+			<!-- /editor -->
 		</td>
 	</tr>
 	<tr>

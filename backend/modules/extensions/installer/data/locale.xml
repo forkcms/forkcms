@@ -194,6 +194,10 @@
         <translation language="es"><![CDATA[No tenemos permiso de escritura para la carpeta de módulos. Comprueba si tienes permisos de escritura en la carpeta de módulos (modules) en todas las aplicaciones.]]></translation>
         <translation language="de"><![CDATA[Es fehlen Schreibrechte für die Modul-Ordner. Bitte überprüfe die Schreibrechte der Ordner "modules" in den Ordnern "frontend" und "backend".]]></translation>
       </item>
+      <item type="message" name="ModulesWarnings">
+        <translation language="nl"><![CDATA[Er zijn waarschuwingen voor volgende module(s)]]></translation>
+        <translation language="en"><![CDATA[There are some warnings for following module(s)]]></translation>
+      </item>
       <item type="message" name="NoModulesInstalled">
         <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[No modules installed.]]></translation>
@@ -513,6 +517,10 @@
         <translation language="fr"><![CDATA[La position %s est réservée.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció lefoglalva.]]></translation>
         <translation language="es"><![CDATA[La posciión %s está reservada.]]></translation>
+      </item>
+      <item type="error" name="LibraryFileAlreadyExists">
+        <translation language="nl"><![CDATA[Het library-bestand "%1$s" bestond al van een andere module. Deze module werkt mogelijk niet optimaal.]]></translation>
+        <translation language="en"><![CDATA[The library-file "%1$s" already existed by another module. This module may not function properly.]]></translation>
       </item>
       <item type="error" name="ThemeAlreadyExists">
         <translation language="nl"><![CDATA[Het thema "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>

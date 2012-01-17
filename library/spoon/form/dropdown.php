@@ -24,6 +24,7 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		0.1.1
  */
 class SpoonFormDropdown extends SpoonFormAttributes
@@ -301,18 +302,18 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// post/get data
 		$data = $this->getMethod(true);
 
-		// allowed values
-		$allowedValues = array();
-
 		// loop initial values and fill the array of allowed values
+		$allowedValues = array();
 		foreach($this->values as $key => $value)
 		{
 			// the current key represents an optgroup
 			if(is_array($value))
-				$allowedValues = array_merge($allowedValues, $value);
+			{
+				foreach($value as $key2 => $value2) $allowedValues[$key2] = $value2;
+			}
 
-			else
-				$allowedValues[$key] = $value;
+			// single value
+			else $allowedValues[$key] = $value;
 		}
 
 		// submitted field
@@ -468,6 +469,9 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// default element?
 		if(count($this->defaultElement) != 0)
 		{
+			// skip the default element
+			if(isset($this->defaultElement[1]) && $this->defaultElement[1] == $label) continue;
+
 			// create option
 			$output .= "\t" . '<option value="' . $this->defaultElement[1] . '"';
 
@@ -610,6 +614,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	public function setDefaultElement($label, $value = null)
 	{
 		$this->defaultElement = array((string) $label, (string) $value);
+		if($value !== null) $this->values[$value] = (string) $label;
 		return $this;
 	}
 

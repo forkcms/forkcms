@@ -3,11 +3,14 @@
 
 <div class="pageTitle">
 	<h2>{$lblSearch|ucfirst}: {$lblSynonyms}</h2>
+
+	{option:showSearchAddSynonym}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_synonym'}" class="button icon iconAdd" title="{$lblAddSynonym|ucfirst}">
 			<span>{$lblAddSynonym|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showSearchAddSynonym}
 </div>
 
 {option:dataGrid}

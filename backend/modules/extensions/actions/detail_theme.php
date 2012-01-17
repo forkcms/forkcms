@@ -136,13 +136,15 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 	/**
 	 * Parse.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// assign theme data
 		$this->tpl->assign('name', $this->currentTheme);
 		$this->tpl->assign('warnings', $this->warnings);
 		$this->tpl->assign('information', $this->information);
-		$this->tpl->assign('isInstallable', !BackendExtensionsModel::isThemeInstalled($this->currentTheme));
+		$this->tpl->assign('showExtensionsInstallTheme', !BackendExtensionsModel::isThemeInstalled($this->currentTheme) && BackendAuthentication::isAllowedAction('install_theme'));
 
 		// data grids
 		$this->tpl->assign('dataGridTemplates', (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults() > 0) ? $this->dataGridTemplates->getContent() : false);

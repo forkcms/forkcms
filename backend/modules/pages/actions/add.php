@@ -61,11 +61,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
-		$this->header->addJS('jstree/jquery.tree.js', null, false, false, false);
-		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false, false, false);
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false, false, false);
+		$this->header->addJS('jstree/jquery.tree.js');
+		$this->header->addJS('jstree/lib/jquery.cookie.js');
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
@@ -115,6 +113,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+		$this->frm->addEditor('html');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 
@@ -255,6 +254,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('isGod', $this->isGod);

@@ -43,9 +43,10 @@ class BackendBlogAPI
 				 FROM blog_comments AS i
 				 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 				 INNER JOIN meta AS m ON p.meta_id = m.id
+				 WHERE p.status = ?
 				 GROUP BY i.id
 				 LIMIT ?, ?',
-				array($offset, $limit)
+				array('active', $offset, $limit)
 			);
 
 			$return = array('comments' => null);

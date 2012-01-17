@@ -25,7 +25,7 @@
 
 {option:warnings}
 	<div class="generalMessage infoMessage">
-		<p><strong>There are some warnings for following modules:</strong></p>
+		<p><strong>There are some warnings for following module(s):</strong></p>
 		{iteration:warnings}
 			<ul>
 				<li>

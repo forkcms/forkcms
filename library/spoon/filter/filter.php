@@ -306,8 +306,8 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
-		// apply method
-		$return = htmlentities($value, $quoteStyle, $charset);
+		// apply htmlentities
+		$return = htmlentities((string) $value, $quoteStyle, $charset);
 
 		/**
 		 * PHP doesn't replace a backslash to its html entity since this is something
@@ -334,7 +334,7 @@ class SpoonFilter
 		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
 		// apply method
-		return html_entity_decode($value, $quoteStyle, $charset);
+		return html_entity_decode((string) $value, $quoteStyle, $charset);
 	}
 
 
@@ -351,7 +351,7 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// apply method
-		return htmlspecialchars($value, ENT_QUOTES, $charset);
+		return htmlspecialchars((string) $value, ENT_QUOTES, $charset);
 	}
 
 
@@ -363,7 +363,7 @@ class SpoonFilter
 	 */
 	public static function htmlspecialcharsDecode($value)
 	{
-		return htmlspecialchars_decode($value, ENT_QUOTES);
+		return htmlspecialchars_decode((string) $value, ENT_QUOTES);
 	}
 
 
@@ -834,11 +834,8 @@ class SpoonFilter
 	 */
 	public static function toCamelCase($value, $separator = '_', $lcfirst = false, $charset = null)
 	{
-		// init vars
-		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
-
-		// init var
 		$string = '';
+		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// fetch words
 		$words = explode((string) $separator, (string) $value);
@@ -849,13 +846,12 @@ class SpoonFilter
 			// skip empty words
 			if($word == '') continue;
 
-			// if it is the first word and we should use lowercase for the first word
+			// first word lowercase
 			if($i == 0 && $lcfirst) $word = $word;
 
 			// convert first letter to uppercase
 			else $word[0] = mb_strtoupper($word[0], $charset);
 
-			// append
 			$string .= $word;
 		}
 

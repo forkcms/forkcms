@@ -213,6 +213,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// parse settings in template
 		$this->tpl->assign('account', $this->accountLinked);
 

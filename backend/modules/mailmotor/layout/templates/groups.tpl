@@ -3,11 +3,14 @@
 
 <div class="pageTitle">
 	<h2>{$lblGroups|ucfirst}</h2>
+
+	{option:showMailmotorAddGroup}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_group'}" class="button icon iconAdd" title="{$lblAddGroup|ucfirst}">
 			<span>{$lblAddGroup|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showMailmotorAddGroup}
 </div>
 
 {option:noDefaultsSet}

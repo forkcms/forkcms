@@ -59,8 +59,12 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 	 */
 	private function parse()
 	{
-		// parse redirect link
-		$this->tpl->assign('settingsUrl', BackendModel::createURLForAction('settings', 'analytics'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('settings', 'analytics'))
+		{
+			// parse redirect link
+			$this->tpl->assign('settingsUrl', BackendModel::createURLForAction('settings', 'analytics'));
+		}
 
 		$this->parseKeywords();
 		$this->parseReferrers();

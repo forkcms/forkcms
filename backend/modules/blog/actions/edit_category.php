@@ -70,10 +70,11 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 	protected function parse()
 	{
 		parent::parse();
+
 		$this->tpl->assign('item', $this->record);
 
 		// delete allowed?
-		$this->tpl->assign('deleteAllowed', BackendBlogModel::deleteCategoryAllowed($this->id));
+		$this->tpl->assign('showBlogDeleteCategory', BackendBlogModel::deleteCategoryAllowed($this->id) && BackendModel::createURLForAction('delete_category'));
 	}
 
 	/**

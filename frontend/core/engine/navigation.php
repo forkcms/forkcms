@@ -43,14 +43,14 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @var	string
 	 */
-	private static $templatePath;
+	protected static $templatePath;
 
 	public function __construct()
 	{
 		parent::__construct();
 
 		// set template path
-		$this->setTemplatePath(FRONTEND_PATH . '/core/layout/templates/navigation.tpl');
+		self::setTemplatePath(FRONTEND_PATH . '/core/layout/templates/navigation.tpl');
 
 		// set selected ids
 		$this->setSelectedPageIds();
@@ -411,6 +411,16 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
+	 * Return the current template path
+	 *
+	 * return @string
+	 */
+	public static function getTemplatePath()
+	{
+		return self::$templatePath;
+	}
+
+	/**
 	 * Get URL for a given pageId
 	 *
 	 * @param int $pageId The pageID wherefor you want the URL.
@@ -595,7 +605,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @param string $path The path to set.
 	 */
-	private function setTemplatePath($path)
+	public static function setTemplatePath($path)
 	{
 		self::$templatePath = (string) $path;
 	}

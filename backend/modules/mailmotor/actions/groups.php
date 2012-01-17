@@ -53,8 +53,12 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		$this->dataGrid->setSortingColumns(array('name', 'created_on'), 'created_on');
 		$this->dataGrid->setSortParameter('desc');
 
-		// set colum URLs
-		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('addresses'))
+		{
+			// set colum URLs
+			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
+		}
 
 		// set the datagrid ID so we don't run into trouble with multiple datagrids that use mass actions
 		$this->dataGrid->setAttributes(array('id' => 'dgGroups'));
@@ -70,10 +74,23 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		// set column functions
 		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
-		// add delete column
-		$this->dataGrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
-		$this->dataGrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]', BL::lbl('Edit'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('custom_fields'))
+		{
+			$this->dataGrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('export_addresses'))
+		{
+			$this->dataGrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_group'))
+		{
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 
 		// add styles
 		$this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
@@ -85,8 +102,10 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }

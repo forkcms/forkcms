@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * This is the module upload-action.
  * It will install a module via a compressed zip file.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendExtensionsUploadModule extends BackendBaseActionAdd
 {
@@ -38,6 +46,124 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 	}
 
 	/**
+	 * Process the zip-file & install the module
+	 *
+	 * @return string
+	 */
+	private function installModule()
+	{
+		// list of validated files (these files will actually be unpacked)
+		$files = array();
+
+		// shorten field variables
+		$fileFile = $this->frm->getField('file');
+
+		// create ziparchive instance
+		$zip = new ZipArchive();
+
+		// try and open it
+		if($zip->open($fileFile->getTempFileName()) !== true)
+		{
+			$fileFile->addError(BL::getError('CorruptedFile'));
+		}
+
+		// zip file needs to contain some files
+		if($zip->numFiles == 0)
+		{
+			$fileFile->addError(BL::getError('FileIsEmpty'));
+			return;
+		}
+
+		// directories we are allowed to upload to
+		$allowedDirectories = array(
+			'backend/modules/',
+			'frontend/modules/',
+			'library/external/'
+		);
+
+		// name of the module we are trying to upload
+		$moduleName = null;
+
+		// there are some complications
+		$warnings = array();
+
+		// check every file in the zip
+		for($i = 0; $i < $zip->numFiles; $i++)
+		{
+			// get the file name
+			$file = $zip->statIndex($i);
+			$fileName = $file['name'];
+
+			// check if the file is in one of the valid directories
+			foreach($allowedDirectories as $directory)
+			{
+				// yay, in a valid directory
+				if(stripos($fileName, $directory) === 0)
+				{
+					// we have a library file
+					if($directory == 'library/external/')
+					{
+						if(!SpoonFile::exists(PATH_WWW . '/' . $fileName)) $files[] = $fileName;
+						else $warnings[] = sprintf(BL::getError('LibraryFileAlreadyExists'), $fileName);
+						break;
+					}
+
+					// extract the module name from the url
+					$tmpName = trim(str_ireplace($directory, '', $fileName), '/');
+					if($tmpName == '') break;
+					$chunks = explode('/', $tmpName);
+					$tmpName = $chunks[0];
+
+					// ignore hidden files
+					if(substr(basename($fileName), 0, 1) == '.') break;
+
+					// first module we find, store the name
+					elseif($moduleName === null) $moduleName = $tmpName;
+
+					// the name does not match the previous module we found, skip the file
+					elseif($moduleName !== $tmpName) break;
+
+					// passed all our tests, store it for extraction
+					$files[] = $fileName;
+
+					// go to next file
+					break;
+				}
+			}
+		}
+
+		// after filtering no files left (nothing useful found)
+		if(count($files) == 0)
+		{
+			$fileFile->addError(BL::getError('FileContentsIsUseless'));
+			return;
+		}
+
+		// module already exists on the filesystem
+		if(BackendExtensionsModel::existsModule($moduleName))
+		{
+			$fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
+			return;
+		}
+
+		// installer in array?
+		if(!in_array('backend/modules/' . $moduleName . '/installer/installer.php', $files))
+		{
+			$fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
+			return;
+		}
+
+		// unpack module files
+		$zip->extractTo(PATH_WWW, $files);
+
+		// run installer
+		BackendExtensionsModel::installModule($moduleName, $warnings);
+
+		// return the files
+		return $moduleName;
+	}
+
+	/**
 	 * Do we have write rights to the modules folders?
 	 *
 	 * @return bool
@@ -65,107 +191,6 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 	}
 
 	/**
-	 * Process the zip-file
-	 *
-	 * @return array
-	 */
-	private function processZipFile()
-	{
-		// list of validated files (these files will actually be unpacked)
-		$files = array();
-
-		// shorten field variables
-		$fileFile = $this->frm->getField('file');
-
-		// create ziparchive instance
-		$zip = new ZipArchive();
-
-		// try and open it
-		if($zip->open($fileFile->getTempFileName()) !== true)
-		{
-			$fileFile->addError(BL::getError('CorruptedFile'));
-		}
-
-		// zip file needs to contain some files
-		if($zip->numFiles == 0)
-		{
-			$fileFile->addError(BL::getError('FileIsEmpty'));
-			return array();
-		}
-
-
-		// directories we are allowed to upload to
-		$allowedDirectories = array(
-				'backend/modules/',
-				'frontend/modules/'
-		);
-
-		// name of the module we are trying to upload
-		$moduleName = null;
-
-		// check every file in the zip
-		for($i = 0; $i < $zip->numFiles; $i++)
-		{
-			// get the file name
-			$file = $zip->statIndex($i);
-			$fileName = $file['name'];
-
-			// check if the file is in one of the valid directories
-			foreach($allowedDirectories as $directory)
-			{
-				// yay, in a valid directory
-				if(stripos($fileName, $directory) === 0)
-				{
-					// extract the module name from the url
-					$tmpName = trim(str_ireplace($directory, '', $fileName), '/');
-					if($tmpName == '') break;
-					$chunks = explode('/', $tmpName);
-					$tmpName = $chunks[0];
-
-					// ignore hidden files
-					if(substr(basename($fileName), 0, 1) == '.') break;
-
-					// first module we find, store the name
-					elseif($moduleName === null) $moduleName = $tmpName;
-
-					// the name does not match the previous madule we found, skip the file
-					elseif($moduleName !== $tmpName) break;
-
-					// passed all our tests, store it for extraction
-					$files[] = $fileName;
-
-					// go to next file
-					break;
-				}
-			}
-		}
-
-		// after filtering no files left (nothing useful found)
-		if(count($files) == 0)
-		{
-			$fileFile->addError(BL::getError('FileContentsIsUseless'));
-			return array();
-		}
-
-		// module already exists on the filesystem
-		if(BackendExtensionsModel::existsModule($moduleName))
-		{
-			$fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
-			return array();
-		}
-
-		// installer in array?
-		if(!in_array('backend/modules/' . $moduleName . '/installer/installer.php', $files))
-		{
-			$fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
-			return array();
-		}
-
-		// return the files
-		return $files;
-	}
-
-	/**
 	 * Validate a submitted form and process it.
 	 */
 	private function validateForm()
@@ -179,17 +204,13 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 			// validate the file
 			if($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip')))
 			{
-				$files = $this->processZipFile();
+				$moduleName = $this->installModule();
 			}
 
 			// passed all validation
 			if($this->frm->isCorrect())
 			{
-				// unpack module files
-				$zip->extractTo(PATH_WWW, $files);
-
-				// run installer
-				BackendExtensionsModel::installModule($moduleName);
+				// by now, the module has already been installed in processZipFile()
 
 				// redirect with fireworks
 				$this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $moduleName . '&highlight=row-module_' . $moduleName);

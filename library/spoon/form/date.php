@@ -186,7 +186,7 @@ class SpoonFormDate extends SpoonFormInput
 			if(isset($data[$this->attributes['name']]))
 			{
 				// value
-				$value = $data[$this->attributes['name']];
+				$value = (string) $data[$this->attributes['name']];
 			}
 		}
 
@@ -209,7 +209,7 @@ class SpoonFormDate extends SpoonFormInput
 			$data = $this->getMethod(true);
 
 			// check filled status
-			if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != ''))
+			if(!(isset($data[$this->getName()]) && trim((string) $data[$this->getName()]) != ''))
 			{
 				if($error !== null) $this->setError($error);
 				return false;
@@ -235,7 +235,7 @@ class SpoonFormDate extends SpoonFormInput
 			$data = $this->getMethod(true);
 
 			// maxlength checks out (needs to be equal)
-			if(strlen($data[$this->attributes['name']]) == $this->attributes['maxlength'])
+			if(strlen((string) $data[$this->attributes['name']]) == $this->attributes['maxlength'])
 			{
 				// define long mask
 				$longMask = str_replace(array('d', 'm', 'y', 'Y'), array('dd', 'mm', 'yy', 'yyyy'), $this->mask);

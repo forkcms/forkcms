@@ -3,9 +3,12 @@
 
 <div class="pageTitle">
 	<h2>{$lblBlog|ucfirst}: {$lblCategories}</h2>
+
+	{option:showBlogAddCategory}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_category'}" class="button icon iconAdd"><span>{$lblAddCategory|ucfirst}</span></a>
 	</div>
+	{/option:showBlogAddCategory}
 </div>
 
 {option:dataGrid}

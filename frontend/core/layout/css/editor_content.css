@@ -1,0 +1,52 @@
+/*
+
+	Default stylesheet for the editor
+    
+	@package      backend
+	@subpackage   core
+    
+	@author       Thomas Deceuninck <thomasdeceuninck@netlash.com>
+	@since        2.0
+
+*/
+
+body {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	height: 100%;
+	height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
+	cursor: text;
+	padding: 6px;
+	height: auto;
+	width: auto;
+	margin: 0;
+	background: #FFF;
+}
+
+html {
+	height: auto;
+	width: auto;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px dotted #999;
+}
+
+/*
+	Editor defaults edited
+*/
+
+acronym { border-bottom: 1px dotted #CCC; cursor:help; }
+abbr { border-bottom: 1px dashed #CCC; cursor: help; }
+img:-moz-broken { -moz-force-broken-image-icon:1; width: 24px; height: 24px; }

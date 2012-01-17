@@ -352,7 +352,7 @@ class BackendURL
 		if(isset($_GET) && !empty($_GET))
 		{
 			// strip GET from the queryString
-			list($queryString, $get) = explode('?', $queryString, 2);
+			list($queryString) = explode('?', $queryString, 2);
 
 			// readd
 			$queryString = $queryString . '?' . http_build_query($_GET);

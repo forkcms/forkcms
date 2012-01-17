@@ -62,7 +62,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 				if(!is_callable($item['callback']))
 				{
 					// in debug mode we want to know if there are errors
-					if(SPOON_DEBUG) throw new BackendException('Invalid callback.');
+					if(SPOON_DEBUG) throw new BackendException('Invalid callback!');
 
 					// set to error state
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);

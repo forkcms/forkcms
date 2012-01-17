@@ -3,11 +3,14 @@
 
 <div class="pageTitle">
 	<h2>{$lblLocation|ucfirst}</h2>
+
+	{option:showLocationAdd}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showLocationAdd}
 </div>
 
 {option:dataGrid}
@@ -47,7 +50,7 @@
 					lat: {$items.lat},
 					lng: {$items.lng},
 					title: '{$items.title}',
-					text: '{$items.text|stripnewlines}' 
+					text: '{$items.text|stripnewlines}'
 				});
 			{/option:items.lng}
 		{/option:items.lat}

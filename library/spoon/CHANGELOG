@@ -13,6 +13,9 @@
 - SpoonFormTime::isValid now is a bit more precise and doesn't allow extra characters.
 - Added some basic getters to SpoonDatabase
 - SpoonFormDropDown will now allow you to combine option groups and regular values.
+- Fixed XSS vulnerability in SpoonForm.
+- Bugfix: Removes bare LFs so mailservers don't freak out.
+
 
 1.3.0 (2011-02-18)
 ----

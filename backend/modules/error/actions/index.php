@@ -28,8 +28,10 @@ class BackendErrorIndex extends BackendBaseActionIndex
 	/**
 	 * Parse the correct messages into the template
 	 */
-	public function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// grab the error-type from the parameters
 		$errorType = $this->getParameter('type');
 

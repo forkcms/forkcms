@@ -41,5 +41,5 @@
 	/* Misc */
 	@import url("imports/misc.css");
 
-	/* TinyMCE related */
-	@import url("imports/tinymce.css");
+	/* Editor related */
+	@import url("imports/editor.css");

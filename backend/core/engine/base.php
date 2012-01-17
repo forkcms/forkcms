@@ -116,6 +116,7 @@ class BackendBaseAction
 			// add jquery, we will need this in every action, so add it globally
 			$this->header->addJS('jquery/jquery.js', 'core');
 			$this->header->addJS('jquery/jquery.ui.js', 'core');
+			$this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'core');
 			$this->header->addJS('jquery/jquery.tools.js', 'core');
 			$this->header->addJS('jquery/jquery.backend.js', 'core');
 		}
@@ -233,6 +234,14 @@ class BackendBaseAction
 	}
 
 	/**
+	 * Parse to template
+	 */
+	protected function parse()
+	{
+
+	}
+
+	/**
 	 * Redirect to a given URL
 	 *
 	 * @param string $URL The URL to redirect to.
@@ -286,6 +295,14 @@ class BackendBaseActionIndex extends BackendBaseAction
 	{
 		parent::execute();
 	}
+
+	/**
+	 * Parse to template
+	 */
+	protected function parse()
+	{
+		parent::parse();
+	}
 }
 
 /**
@@ -315,7 +332,9 @@ class BackendBaseActionAdd extends BackendBaseAction
 	 */
 	protected function parse()
 	{
-		$this->frm->parse($this->tpl);
+		parent::parse();
+
+		if($this->frm) $this->frm->parse($this->tpl);
 	}
 }
 
@@ -367,7 +386,9 @@ class BackendBaseActionEdit extends BackendBaseAction
 	 */
 	protected function parse()
 	{
-		$this->frm->parse($this->tpl);
+		parent::parse();
+
+		if($this->frm) $this->frm->parse($this->tpl);
 	}
 }
 
@@ -399,7 +420,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the children
+		parent::parse();
 	}
 }
 

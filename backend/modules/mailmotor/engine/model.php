@@ -82,15 +82,19 @@ class BackendMailmotorModel
 	{
 		$warnings = array();
 
-		// analytics session token
-		if(BackendModel::getModuleSetting('mailmotor', 'cm_account') == false)
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('settings', 'mailmotor'))
 		{
-			$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMAccount', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmotor')));
-		}
-		elseif(BackendModel::getModuleSetting('mailmotor', 'cm_client_id') == '')
-		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMClientID', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmtor')));
+			// analytics session token
+			if(BackendModel::getModuleSetting('mailmotor', 'cm_account') == false)
+			{
+				$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMAccount', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmotor')));
+			}
+			elseif(BackendModel::getModuleSetting('mailmotor', 'cm_client_id') == '')
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMClientID', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmtor')));
+			}
 		}
 
 		return $warnings;
@@ -346,7 +350,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $emails, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
+		BackendCSV::arrayToFile($path, $emails, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
 	}
 
 	/**
@@ -396,7 +400,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $records, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
+		BackendCSV::arrayToFile($path, $records, array(BL::lbl('Email'), BL::lbl('Created')), null, ';', '"', true);
 	}
 
 	/**
@@ -431,7 +435,7 @@ class BackendMailmotorModel
 		$columns[] = BL::msg('MailingCSVUnopensPercentage');
 
 		// set start of the CSV
-		$csv = SpoonFileCSV::arrayToString($records, $columns);
+		$csv = BackendCSV::arrayToString($records, $columns);
 
 		// check set links
 		if(!empty($statsClickedLinks))
@@ -440,7 +444,7 @@ class BackendMailmotorModel
 			$statsClickedLinks = SpoonFilter::arrayMapRecursive('urldecode', $statsClickedLinks);
 
 			// fetch CSV strings
-			$csv .= PHP_EOL . SpoonFileCSV::arrayToString($statsClickedLinks);
+			$csv .= PHP_EOL . BackendCSV::arrayToString($statsClickedLinks);
 		}
 
 		// set the filename and path
@@ -492,7 +496,7 @@ class BackendMailmotorModel
 		$columns[] = BL::msg('MailingCSVUnopensPercentage');
 
 		// set start of the CSV
-		$csv = SpoonFileCSV::arrayToString($records, $columns);
+		$csv = BackendCSV::arrayToString($records, $columns);
 
 		// fetch all mailings in this campaign
 		$mailings = BackendModel::getDB()->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
@@ -506,7 +510,7 @@ class BackendMailmotorModel
 			$mailingColumns['language'] = BL::lbl('Language');
 
 			// add the records to the csv string
-			$csv .= PHP_EOL . 'Mailings:' . PHP_EOL . SpoonFileCSV::arrayToString($mailings, $mailingColumns, array('id', 'campaign_id', 'campaign_name', 'send_on', 'status'));
+			$csv .= PHP_EOL . 'Mailings:' . PHP_EOL . BackendCSV::arrayToString($mailings, $mailingColumns, array('id', 'campaign_id', 'campaign_name', 'send_on', 'status'));
 		}
 
 		// set headers for download
@@ -1101,7 +1105,6 @@ class BackendMailmotorModel
 		// get groups for this mailing ID
 		$record['groups'] = self::getGroupIDsByMailingID($id);
 		$record['recipients'] = self::getAddressesByGroupID($record['groups']);
-		$record['data'] = unserialize($record['data']);
 
 		// fetch CM id for this mailing
 		$record['cm_id'] = BackendMailmotorCMHelper::getCampaignMonitorID('campaign', $record['id']);

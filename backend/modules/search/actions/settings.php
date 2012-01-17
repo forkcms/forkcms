@@ -89,6 +89,8 @@ class BackendSearchSettings extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// parse form
 		$this->frm->parse($this->tpl);
 
