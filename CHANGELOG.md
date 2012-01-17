@@ -16,6 +16,7 @@ Bugfixes:
 * Core: when not in debugmode the dialog-patch wasn't included in the minified JS-file.
 * Pages: fixed reset previous value when editing editor block.
 * Spoon: when deleting a cookie we now set the expiration date far in the past to prevent that users with an incorrect system time can still use deleted cookies.
+* API: all illegal characters are now wrapped with CDATA tags.
 
 
 3.2.0 (2012-01-10)
