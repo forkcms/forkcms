@@ -2,6 +2,7 @@
 --
 Bugfixes:
 * Core: module specific locale are now parsed in the templates when used in cronjobs, tx to annelyze.
+* API: added a client, useful for working with third parties and development.
 
 
 3.2.1 (2012-01-17)
