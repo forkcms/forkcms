@@ -1,5 +1,9 @@
 3.2.2 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: added an isPrice filter, also for text fields.
+
 Bugfixes:
 
 * Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
