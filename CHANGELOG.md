@@ -4,8 +4,10 @@ Improvements:
 
 * Core: added an isPrice filter, also for text fields.
 * Core: added the text color for the hover states of buttons.
+* API: Added API::isValidRequestMethod($method) that checks if the request method of an incoming API call is valid for a given API method'.
 * Analytics: Fixed the cronjobs execution time, should only run once a day.
 * Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
+* Blog: API methods are now limited to their correct request methods.
 
 Bugfixes:
 

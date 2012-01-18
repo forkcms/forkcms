@@ -318,6 +318,23 @@ class API
 	}
 
 	/**
+	 * This is called in backend/modules/<module>/engine/api.php to limit certain calls to
+	 * a given request method.
+	 *
+	 * @return bool
+	 */
+	public static function isValidRequestMethod($method)
+	{
+		if($method !== $_SERVER['REQUEST_METHOD'])
+		{
+			$message = 'Illegal request method, only ' . $method . ' allowed for this method';
+			self::output(self::BAD_REQUEST, array('message' => $message));
+		}
+
+		return true;
+	}
+
+	/**
 	 * Output the return
 	 *
 	 * @param int $statusCode The status code.
