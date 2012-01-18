@@ -94,7 +94,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if(in_array($name, array('use_revision', 'use_draft')))
 		{
 			// rebuild value, it should have special markup
-			$value = '<a href="' . $URL . '" class="button icon' . SpoonFilter::toCamelCase($name) . '">
+			$value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' . SpoonFilter::toCamelCase($name) . '">
 						<span>' . $value . '</span>
 					</a>';
 

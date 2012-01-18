@@ -1,5 +1,9 @@
 3.2.2 (xxxx-xx-xx)
 --
+Improvements:
+* Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
+* Core: added the text color for the hover states of buttons.
+
 Bugfixes:
 
 * Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
