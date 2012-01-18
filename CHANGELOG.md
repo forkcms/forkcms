@@ -1,7 +1,9 @@
 3.2.2 (xxxx-xx-xx)
 --
 Bugfixes:
-* Core: module specific locale are now parsed in the templates when used in cronjobs, tx to annelyze.
+
+* Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
+* Mailmotor: improve visibility of ckeditor in mailmotor.
 
 
 3.2.1 (2012-01-17)

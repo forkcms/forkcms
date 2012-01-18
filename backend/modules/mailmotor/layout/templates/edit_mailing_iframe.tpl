@@ -8,6 +8,7 @@
 	<title>Fork CMS - mailing</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 
+	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/backend/modules/mailmotor/layout/css/iframe.css" />
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.js"></script>
