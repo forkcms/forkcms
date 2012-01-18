@@ -2,6 +2,8 @@
 --
 Bugfixes:
 * Core: module specific locale are now parsed in the templates when used in cronjobs, tx to annelyze.
+* API: Added API::isValidRequestMethod($method) that checks if the request method of an incoming API call is valid for a given API method'
+* Blog: API methods are now limited to their correct request methods
 
 
 3.2.1 (2012-01-17)
