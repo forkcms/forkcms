@@ -474,18 +474,21 @@ class SpoonFilter
 	 */
 	public static function isFloat($value, $allowCommas = false)
 	{
-		// no commas allowed
-		if(!$allowCommas) return ((string) (float) $value === (string) $value);
+		// replace commas if needed
+		if($allowCommas) $value = str_replace(',', '.', (string) $value);
 
-		// replace commas with dots
-		return ((string) (float) str_replace(',', '.', (string) $value) === str_replace(',', '.', (string) $value));
+		// trim zero characters after the decimal separator
+		if(mb_strpos($value, '.') !== false) rtrim($value, '0');
+
+		// validate
+		return ((string) (float) $value === (string) $value);
 	}
 
 
 	/**
 	 * Checks if the value is greather than a given minimum.
 	 *
-	 * @return	bool			true if the value is greather then, false if not.
+	 * @return	bool				true if the value is greather then, false if not.
 	 * @param	float $minimum		The minimum as a float.
 	 * @param	float $value		The value to validate.
 	 */
@@ -629,6 +632,32 @@ class SpoonFilter
 	public static function isOdd($value)
 	{
 		return !self::isEven((int) $value);
+	}
+
+
+	/**
+	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
+	 *
+	 * @return	bool
+	 * @param 	string $value					The value to validate.
+	 * @param	string[optional] $error			The error message to set.
+	 * @param	int[optional] $precision		The allowed number of digits after the decimal separator. Defaults to 2.
+	 * @param	bool[optional] $allowNegative	Do you want to allow negative prices? Defaults to false.
+	 * @param	bool[optional] $allowCommas		Do you want to use commas as a decimal separator? Defaults to true.
+	 */
+	public static function isPrice($value, $precision = 2, $allowNegative = false, $allowCommas = true)
+	{
+		// replace commas if needed
+		if($allowCommas) $value = str_replace(',', '.', (string) $value);
+
+		// trim zero characters after the decimal separator
+		if(mb_strpos($value, '.') !== false) rtrim($value, '0');
+
+		// no negatives allowed
+		if(!$allowNegative) return ((float) $value >= 0);
+
+		// no commas allowed
+		return ((string) (float) $value === (string) $value);
 	}
 
 
