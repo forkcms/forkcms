@@ -22,6 +22,10 @@
 			<url><![CDATA[http://www.dieterve.be]]></url>
 		</author>
 	</authors>
+	<cronjobs>
+		<cronjob minute="16" hour="0" day-of-month="*" month="*" day-of-week="*" action="get_data"><![CDATA[Looks for new Analytics data.]]></cronjob>
+		<cronjob minute="46" hour="0" day-of-month="*" month="*" day-of-week="*" action="get_traffic_sources"><![CDATA[Looks for new Analytics data for the dashboard.]]></cronjob>
+	</cronjobs>
 	<events>
 		<event application="backend" name="after_add_landing_page"><![CDATA[Triggered when a landing page is added.]]></event>
 		<event application="backend" name="after_delete_landing_page"><![CDATA[Triggered when a landing page is deleted.]]></event>
