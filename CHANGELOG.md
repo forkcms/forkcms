@@ -4,12 +4,15 @@ Improvements:
 
 * Core: added an isPrice filter, also for text fields.
 * Core: added the text color for the hover states of buttons.
+* Analytics: Fixed the cronjobs execution time, should only run once a day.
 * Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
 
 Bugfixes:
 
 * Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
+* Analytics: Fixed the labels for keywords and referrers when updating through ajax.
 * Mailmotor: improve visibility of ckeditor in mailmotor.
+* Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
 
 
 3.2.1 (2012-01-17)
