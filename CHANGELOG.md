@@ -3,6 +3,8 @@
 Improvements:
 
 * Core: added an isPrice filter, also for text fields.
+* Core: added the text color for the hover states of buttons.
+* Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
 
 Bugfixes:
 
