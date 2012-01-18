@@ -321,6 +321,7 @@ class API
 	 * This is called in backend/modules/<module>/engine/api.php to limit certain calls to
 	 * a given request method.
 	 *
+	 * @param string $method
 	 * @return bool
 	 */
 	public static function isValidRequestMethod($method)
