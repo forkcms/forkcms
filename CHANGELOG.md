@@ -1,9 +1,15 @@
 3.2.2 (xxxx-xx-xx)
 --
+Improvements:
+
+* Analytics: Fixed the cronjobs execution time, should only run once a day.
+
 Bugfixes:
 
 * Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
 * Mailmotor: improve visibility of ckeditor in mailmotor.
+* Analytics: Fixed the labels for keywords and referrers when updating through ajax.
+* Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
 
 
 3.2.1 (2012-01-17)
