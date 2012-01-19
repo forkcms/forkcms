@@ -316,7 +316,7 @@ class SpoonFile
 		if(!$createFile && self::exists($filename)) throw new SpoonFileException('The file "' . $filename . '" doesn\'t exist');
 
 		// create directory recursively if needed
-		SpoonDirectory::create(dirname($filename), $chmod, true);
+		SpoonDirectory::create(dirname($filename));
 
 		// create file & open for writing
 		$handler = ($append) ? @fopen($filename, 'a') : @fopen($filename, 'w');
