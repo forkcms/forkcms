@@ -26,7 +26,7 @@ class BackendBlogAPI
 	public static function commentsGet($status = null, $limit = 30, $offset = 0)
 	{
 		// authorize
-		if(API::authorize())
+		if(API::authorize() && API::isValidRequestMethod('GET'))
 		{
 			// redefine
 			if($status !== null) $status = (string) $status;
@@ -94,7 +94,7 @@ class BackendBlogAPI
 	public static function commentsGetById($id)
 	{
 		// authorize
-		if(API::authorize())
+		if(API::authorize() && API::isValidRequestMethod('GET'))
 		{
 			// get comment
 			$comment = (array) BackendBlogModel::getComment($id);
@@ -148,7 +148,7 @@ class BackendBlogAPI
 	public static function commentsUpdate($id, $status = null, $text = null, $authorName = null, $authorEmail = null, $authorWebsite = null)
 	{
 		// authorize
-		if(API::authorize())
+		if(API::authorize() && API::isValidRequestMethod('POST'))
 		{
 			// redefine
 			$id = (int) $id;
@@ -164,13 +164,14 @@ class BackendBlogAPI
 			// update
 			if($text !== null || $authorName !== null || $authorEmail != null || $authorWebsite !== null)
 			{
+				$item['id'] = (int) $id;
 				if($text !== null) $item['text'] = $text;
 				if($authorName !== null) $item['author'] = $authorName;
 				if($authorEmail !== null) $item['email'] = $authorEmail;
 				if($authorWebsite !== null) $item['website'] = $authorWebsite;
 
 				// update the comment
-				BackendBlogModel::updateComment($id, $item);
+				BackendBlogModel::updateComment($item);
 			}
 
 			// change the status if needed
@@ -187,7 +188,7 @@ class BackendBlogAPI
 	public static function commentsUpdateStatus($id, $status)
 	{
 		// authorize
-		if(API::authorize())
+		if(API::authorize() && API::isValidRequestMethod('POST'))
 		{
 			// redefine
 			if(!is_array($id)) $id = (array) explode(',', $id);

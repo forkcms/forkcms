@@ -2228,6 +2228,10 @@
         <translation language="de"><![CDATA[Ungültiges Passwort.]]></translation>
         <translation language="es"><![CDATA[Contraseña invalida.]]></translation>
       </item>
+      <item type="error" name="InvalidPrice">
+        <translation language="nl"><![CDATA[Gelieve een geldig bedrag in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please insert a valid price.]]></translation>
+      </item>
       <item type="error" name="InvalidURL">
         <translation language="nl"><![CDATA[Dit is een ongeldige URL.]]></translation>
         <translation language="en"><![CDATA[This is an invalid URL.]]></translation>

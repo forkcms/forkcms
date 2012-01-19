@@ -464,6 +464,6 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function validateForm()
 	{
-		return (InstallerStep2::isAllowed() && InstallerStep3::isAllowed() && InstallerStep4::isAllowed() && InstallerStep5::isAllowed());
+		return InstallerStep6::isAllowed();
 	}
 }
