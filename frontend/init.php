@@ -126,7 +126,7 @@ class FrontendInit
 			{
 				$chunks = $parts;
 				array_shift($chunks);
-				$pathToLoad = PATH_LIBRARY .'/base/' . strtolower(implode('_', $chunks)) .'.php';
+				$pathToLoad = PATH_LIBRARY . '/base/' . strtolower(implode('_', $chunks)) . '.php';
 
 				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
 			}
