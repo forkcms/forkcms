@@ -111,9 +111,18 @@ class BackendInit
 			// split in parts
 			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
 
-
 			// the real matches
 			$parts = $parts[0];
+
+			// is it an application class?
+			if(isset($parts[0]) && $parts[0] == 'Application')
+			{
+				$chunks = $parts;
+				array_shift($chunks);
+				$pathToLoad = PATH_LIBRARY .'/base/' . strtolower(implode('_', $chunks)) .'.php';
+
+				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
+			}
 
 			// get root path constant and see if it exists
 			$rootPath = strtoupper(array_shift($parts)) . '_PATH';
