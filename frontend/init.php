@@ -122,7 +122,7 @@ class FrontendInit
 			$parts = $parts[0];
 
 			// is it an application class?
-			if(isset($parts[0]) && $parts[0] == 'Application')
+			if(isset($parts[0]) && $parts[0] == 'Common')
 			{
 				$chunks = $parts;
 				array_shift($chunks);

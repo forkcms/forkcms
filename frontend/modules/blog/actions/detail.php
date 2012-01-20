@@ -111,9 +111,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
 		// init vars
-		$author = (ApplicationCookie::exists('comment_author')) ? ApplicationCookie::get('comment_author') : null;
-		$email = (ApplicationCookie::exists('comment_email') && SpoonFilter::isEmail(ApplicationCookie::get('comment_email'))) ? ApplicationCookie::get('comment_email') : null;
-		$website = (ApplicationCookie::exists('comment_website') && SpoonFilter::isURL(ApplicationCookie::get('comment_website'))) ? ApplicationCookie::get('comment_website') : 'http://';
+		$author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
+		$email = (CommonCookie::exists('comment_email') && SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
+		$website = (CommonCookie::exists('comment_website') && SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
 		// create elements
 		$this->frm->addText('author', $author);
@@ -322,9 +322,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// store author-data in cookies
 				try
 				{
-					ApplicationCookie::set('comment_author', $author);
-					ApplicationCookie::set('comment_email', $email);
-					ApplicationCookie::set('comment_website', $website);
+					CommonCookie::set('comment_author', $author);
+					CommonCookie::set('comment_email', $email);
+					CommonCookie::set('comment_website', $website);
 				}
 				catch(Exception $e)
 				{

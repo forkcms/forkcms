@@ -332,9 +332,9 @@ class BackendURL
 		}
 
 		// no authenticated user, but available from a cookie
-		elseif(ApplicationCookie::exists('interface_language'))
+		elseif(CommonCookie::exists('interface_language'))
 		{
-			$locale = ApplicationCookie::get('interface_language');
+			$locale = CommonCookie::get('interface_language');
 		}
 
 		// validate if the requested locale is possible

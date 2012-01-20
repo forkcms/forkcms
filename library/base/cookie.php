@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class ApplicationCookie extends SpoonCookie
+class CommonCookie extends SpoonCookie
 {
 	/**
 	 * Stores a value in a cookie, by default the cookie will expire in one day.

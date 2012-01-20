@@ -229,7 +229,7 @@ class FrontendURL
 				try
 				{
 					// set cookie
-					ApplicationCookie::set('frontend_language', $language);
+					CommonCookie::set('frontend_language', $language);
 				}
 
 				// fetch failed cookie
@@ -246,10 +246,10 @@ class FrontendURL
 			}
 
 			// language set in the cookie
-			elseif(ApplicationCookie::exists('frontend_language') && in_array(ApplicationCookie::get('frontend_language'), $redirectLanguages))
+			elseif(CommonCookie::exists('frontend_language') && in_array(CommonCookie::get('frontend_language'), $redirectLanguages))
 			{
 				// set languageId
-				$language = (string) ApplicationCookie::get('frontend_language');
+				$language = (string) CommonCookie::get('frontend_language');
 
 				// redirect is needed
 				$mustRedirect = true;
@@ -265,7 +265,7 @@ class FrontendURL
 				try
 				{
 					// set cookie
-					ApplicationCookie::set('frontend_language', $language);
+					CommonCookie::set('frontend_language', $language);
 				}
 
 				// fetch failed cookie
