@@ -201,9 +201,9 @@ jsBackend.ckeditor =
 		contentsCss:
 		[
 			'/frontend/core/layout/css/screen.css',
-			'/frontend/themes/{$THEME}/core/layout/css/screen.css',
+			{option:THEME_HAS_CSS}'/frontend/themes/{$THEME}/core/layout/css/screen.css',{/option:THEME_HAS_CSS}
 			'/frontend/core/layout/css/editor_content.css',
-			'/frontend/themes/{$THEME}/core/layout/css/editor_content.css',
+			{option:THEME_HAS_EDITOR_CSS}'/frontend/themes/{$THEME}/core/layout/css/editor_content.css',{/option:THEME_HAS_EDITOR_CSS}
 			'/backend/core/layout/css/imports/editor.css'
 		],
 

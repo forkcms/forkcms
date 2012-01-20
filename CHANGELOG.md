@@ -17,6 +17,7 @@ Bugfixes:
 * Mailmotor: improve visibility of ckeditor in mailmotor.
 * Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
 * Core: Click To Edit above the editor should behave from now on.
+* Core: added the options for the theme-specific editor_content.css and and screen.css that will be loaded in the editor.
 
 
 3.2.1 (2012-01-17)
