@@ -1107,8 +1107,8 @@ jsBackend.controls =
 		// strong password
 		if(score >= 4) return 'strong';
 
-		// ok
-		if(score >= 2) return 'ok';
+		// average
+		if(score >= 2) return 'average';
 
 		// fallback
 		return 'weak';

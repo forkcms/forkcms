@@ -3004,6 +3004,10 @@
         <translation language="fr"><![CDATA[avatar]]></translation>
         <translation language="es"><![CDATA[avatar]]></translation>
       </item>
+      <item type="label" name="Average">
+        <translation language="nl"><![CDATA[gemiddeld]]></translation>
+        <translation language="en"><![CDATA[average]]></translation>
+      </item>
       <item type="label" name="Back">
         <translation language="nl"><![CDATA[terug]]></translation>
         <translation language="en"><![CDATA[back]]></translation>
@@ -3464,6 +3468,10 @@
         <translation language="fr"><![CDATA[CSV]]></translation>
         <translation language="hu"><![CDATA[CSV]]></translation>
         <translation language="es"><![CDATA[CSV]]></translation>
+      </item>
+      <item type="label" name="CurrentPassword">
+        <translation language="nl"><![CDATA[huidig wachtwoord]]></translation>
+        <translation language="en"><![CDATA[current password]]></translation>
       </item>
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
@@ -4355,6 +4363,18 @@
         <translation language="fr"><![CDATA[dernière édition le]]></translation>
         <translation language="es"><![CDATA[última edición en]]></translation>
       </item>
+      <item type="label" name="LastFailedLoginAttempt">
+        <translation language="nl"><![CDATA[laatste mislukte aanmelding]]></translation>
+        <translation language="en"><![CDATA[last failed login attempt]]></translation>
+      </item>
+      <item type="label" name="LastLogin">
+        <translation language="nl"><![CDATA[laatste aanmelding]]></translation>
+        <translation language="en"><![CDATA[last login]]></translation>
+      </item>
+      <item type="label" name="LastPasswordChange">
+        <translation language="nl"><![CDATA[laatste aanpassing wachtwoord]]></translation>
+        <translation language="en"><![CDATA[last password change]]></translation>
+      </item>
       <item type="label" name="LastSaved">
         <translation language="nl"><![CDATA[laatst opgeslagen]]></translation>
         <translation language="en"><![CDATA[last saved]]></translation>
@@ -4794,6 +4814,10 @@
         <translation language="fr"><![CDATA[titre navigation]]></translation>
         <translation language="es"><![CDATA[título de navegación]]></translation>
       </item>
+      <item type="label" name="Never">
+        <translation language="nl"><![CDATA[nooit]]></translation>
+        <translation language="en"><![CDATA[never]]></translation>
+      </item>
       <item type="label" name="NewPassword">
         <translation language="nl"><![CDATA[nieuw wachtwoord]]></translation>
         <translation language="en"><![CDATA[new password]]></translation>
@@ -4881,6 +4905,10 @@
         <translation language="de"><![CDATA[keine]]></translation>
         <translation language="fr"><![CDATA[aucun]]></translation>
         <translation language="es"><![CDATA[ninguno]]></translation>
+      </item>
+      <item type="label" name="NoPreviousLogin">
+        <translation language="nl"><![CDATA[geen eerdere aanmelding]]></translation>
+        <translation language="en"><![CDATA[no previous login]]></translation>
       </item>
       <item type="label" name="NoTheme">
         <translation language="nl"><![CDATA[geen thema]]></translation>
@@ -5053,6 +5081,10 @@
         <translation language="de"><![CDATA[Password]]></translation>
         <translation language="fr"><![CDATA[mot de passe]]></translation>
         <translation language="es"><![CDATA[contraseña]]></translation>
+      </item>
+      <item type="label" name="PasswordStrength">
+        <translation language="nl"><![CDATA[wachtwoord sterkte]]></translation>
+        <translation language="en"><![CDATA[password strength]]></translation>
       </item>
       <item type="label" name="PerDay">
         <translation language="nl"><![CDATA[per dag]]></translation>

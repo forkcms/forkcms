@@ -29,6 +29,26 @@
 						<th>{$lblEmail|ucfirst}:</th>
 						<td>{$record.email}</td>
 					</tr>
+					<tr>
+						<th>{$lblLastLogin|ucfirst}:</th>
+						<td>
+							{option:record.settings.last_login}{$record.settings.last_login|date:'{$authenticatedUserDateFormat} {$authenticatedUserTimeFormat}':{$INTERFACE_LANGUAGE}}{/option:record.settings.last_login}
+							{option:!record.settings.last_login}{$lblNoPreviousLogin}{/option:!record.settings.last_login}
+						</td>
+					</tr>
+					{option:record.settings.last_failed_login_attempt}
+						<tr>
+							<th>{$lblLastFailedLoginAttempt|ucfirst}:</th>
+							<td>{$record.settings.last_failed_login_attempt|date:'{$authenticatedUserDateFormat} {$authenticatedUserTimeFormat}':{$INTERFACE_LANGUAGE}}</td>
+						</tr>
+					{/option:record.settings.last_failed_login_attempt}
+					<tr>
+						<th>{$lblLastPasswordChange|ucfirst}:</th>
+						<td>
+							{option:record.settings.last_password_change}{$record.settings.last_password_change|date:'{$authenticatedUserDateFormat} {$authenticatedUserTimeFormat}':{$INTERFACE_LANGUAGE}}{/option:record.settings.last_password_change}
+							{option:!record.settings.last_password_change}{$lblNever}{/option:!record.settings.last_password_change}
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>
@@ -117,6 +137,20 @@
 
 		{option:allowPasswordEdit}
 		<div id="tabPassword">
+			{option:showPasswordStrength}
+				<div class="subtleBox settingsUserInfo">
+					<div class="heading">
+						<h3>{$lblCurrentPassword|ucfirst}</h3>
+					</div>
+					<div class="options">
+						<p>
+							<label>{$lblPasswordStrength|ucfirst}</label>
+							<span class="strength {$record.settings.password_strength}">{$passwordStrengthLabel|ucfirst}</span>
+						</p>
+					</div>
+				</div>
+			{/option:showPasswordStrength}
+
 			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblChangePassword|ucfirst}</h3>
@@ -131,7 +165,7 @@
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">/</p>
 								<p class="strength weak">{$lblWeak|ucfirst}</p>
-								<p class="strength ok">{$lblOK|ucfirst}</p>
+								<p class="strength average">{$lblAverage|ucfirst}</p>
 								<p class="strength strong">{$lblStrong|ucfirst}</p>
 							</td>
 							<td>
