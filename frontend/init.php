@@ -315,12 +315,16 @@ class FrontendInit
 	private function requireGlobals()
 	{
 		// fetch config
-		$installed[] = @include_once dirname(__FILE__) . '/cache/config/config.php';
+		@include_once dirname(__FILE__) . '/cache/config/config.php';
+
+		// config doest not exist, use standard library location
+		if(!defined('INIT_PATH_LIBRARY')) $libraryPath = dirname(__FILE__) . '/../library';
+		else $libraryPath = INIT_PATH_LIBRARY;
 
 		// load the globals
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_backend.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_frontend.php';
+		$installed[] = @include_once $libraryPath . '/globals.php';
+		$installed[] = @include_once $libraryPath . '/globals_backend.php';
+		$installed[] = @include_once $libraryPath . '/globals_frontend.php';
 
 		// something could not be loaded
 		if(in_array(false, $installed))
