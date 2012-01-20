@@ -9,6 +9,7 @@ Improvements:
 * Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
 * Blog: API methods are now limited to their correct request methods.
 * Pages: editor will be larger by default.
+* Formbuilder: altered the splitchar, so "," can be used in values for dropdowns, checkboxes or radiobuttons.
 
 Bugfixes:
 
