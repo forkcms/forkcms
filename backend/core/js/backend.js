@@ -187,6 +187,7 @@ jsBackend.balloons =
  * CK Editor related objects
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Matthias Mullie <matthias@mullie.eu>
  */
 jsBackend.ckeditor =
 {
@@ -196,8 +197,15 @@ jsBackend.ckeditor =
 
 		// layout configuration
 		bodyClass: 'content',
-		contentsCss: '/backend/ajax.php?fork[module]=core&fork[action]=content_css&fork[language]=en',
 		stylesSet: [],
+		contentsCss:
+		[
+			'/frontend/core/layout/css/screen.css',
+			'/frontend/themes/{$THEME}/core/layout/css/screen.css',
+			'/frontend/core/layout/css/editor_content.css',
+			'/frontend/themes/{$THEME}/core/layout/css/editor_content.css',
+			'/backend/core/layout/css/imports/editor.css'
+		],
 
 		// language options
 		contentsLanguage: '{$LANGUAGE}',
@@ -209,33 +217,31 @@ jsBackend.ckeditor =
 		// buttons
 		toolbar_Full:
 		[
-			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
-			{ name: 'clipboard', items: ['Undo', 'Redo']},
-			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
-			{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-			{ name: 'document', items: ['Source', 'ShowBlocks', 'Maximize', 'Templates']},
-			'/',
-			{ name: 'insert', items : ['Table', '-', 'Image', 'MediaEmbed', '-', 'SpecialChar']},
-			{ name: 'styles', items : ['Format', 'Styles']}
+			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
+			{ name: 'clipboard', items: ['Undo', 'Redo'] },
+			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
+			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+			{ name: 'insert', items : ['Table', '-', 'Image', 'MediaEmbed', '-', 'SpecialChar'] },
+			{ name: 'document', items: ['Templates', 'Maximize', 'Source'] },
+			{ name: 'styles', items : ['Format', 'Styles'] }
 		],
 
 		// buttons specific for the newsletter
 		toolbar_Newsletter:
 		[
-   			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
-   			{ name: 'clipboard', items: ['Undo', 'Redo']},
-   			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
-   			{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-   			{ name: 'document', items: ['Source', 'Templates']},
-   			'/',
-   			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar']},
-   			{ name: 'styles', items : ['Format']}
+   			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
+   			{ name: 'clipboard', items: ['Undo', 'Redo'] },
+   			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
+   			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+   			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar'] },
+   			{ name: 'document', items: ['Templates', 'Source'] },
+   			{ name: 'styles', items : ['Format'] }
    		],
 
-		// skin by Chris Herberte (http://www.chrisherberte.com/blog/ckeditor-skin)
-		skin: 'chris',
+		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
+		skin: 'BootstrapCK-Skin',
 
-		uiColor: '#E7F0F8',
+//		uiColor: '#FAFAFA',
 		toolbar: 'Full',
 		toolbarStartupExpanded: false,
 
@@ -251,7 +257,7 @@ jsBackend.ckeditor =
 		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
 		// templates
-		templates_files: [ '/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=en' ],
+		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=en'],
 
 		// custom vars
 		editorType: 'default',
@@ -267,11 +273,23 @@ jsBackend.ckeditor =
 		{
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
-			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
+			CKEDITOR.on('instanceCreated', jsBackend.ckeditor.onReady);
+//			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
+			CKEDITOR.on('instanceDestroyed', jsBackend.ckeditor.onDestroy);
 
 			// load the editors
 			jsBackend.ckeditor.load();
 		}
+	},
+
+	destroy: function()
+	{
+		// the destroy will trigger errors, but it will actually be destroyed just fine!
+		try
+		{
+			$.each(CKEDITOR.instances, function(i, value) { value.destroy(); });
+		}
+		catch(err) {}
 	},
 
 	load: function()
@@ -332,9 +350,6 @@ jsBackend.ckeditor =
 			// invalid links?
 			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push('{$msgEditorInvalidLinks|addslashes}');
 
-			// replace absolute urls by relative
-			content = content.replace(/href=("|'){$SITE_PROTOCOL}:\/\/{$SITE_DOMAIN}(.*)\1/, 'href="$2"');
-
 			// remove the previous warnings
 			$('#' + editor.element.getId() + '_warnings').remove();
 
@@ -344,10 +359,30 @@ jsBackend.ckeditor =
 				// append the warnings after the editor
 				$('#cke_' + editor.element.getId()).after('<span id=" '+ editor.element.getId() + '_warnings" class="infoMessage editorWarning">' + warnings.join(' ') + '</span>');
 			}
+		}
+	},
+
+	fixRelativeUrls: function(evt)
+	{
+		// get the editor
+		var editor = evt.editor;
+
+		// was the content changed, or is the check forced?
+		if(editor.checkDirty())
+		{
+			var content = editor.getData();
+
+			// replace absolute urls by relative
+			content = content.replace(/href=("|'){$SITE_PROTOCOL}:\/\/{$SITE_DOMAIN}(.*)\1/, 'href="$2"');
 
 			// replace with cleaned content
 			editor.setData(content);
 		}
+	},
+
+	onDestroy: function(evt)
+	{
+		jsBackend.ckeditor.fixRelativeUrls({ editor: evt.editor});
 	},
 
 	onDialogDefinition: function(evt)
@@ -405,8 +440,11 @@ jsBackend.ckeditor =
 						items: linkList,
 						onChange: function(evt)
 						{
+							domain = '{$SITE_DOMAIN}/';
+							domain = domain.replace('//', '/');
+
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('{$SITE_PROTOCOL}://');
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue('{$SITE_DOMAIN}/' + evt.data.value);
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(domain + evt.data.value);
 						}
 				 	}
 			 	]
@@ -444,18 +482,24 @@ jsBackend.ckeditor =
 		else if(typeof $currentElement.attr('class') != 'undefined' && $currentElement.attr('class').indexOf('cke_') >= 0) outsideEditor = false;
 
 		// focus outside the editor?
-		if(evt.editor.config.toggleToolbar && outsideEditor)
+		if(outsideEditor)
 		{
-			// show the click to edit
-			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
-
-			// hide the toolbar
-			$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
-			$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
-			if($toolbox.is(':visible'))
+			if(evt.editor.config.showClickToEdit)
 			{
-				$toolbox.hide();
-				$collapser.addClass('cke_toolbox_collapser_min');
+				// show the click to edit
+				$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
+			}
+
+			if(evt.editor.config.toggleToolbar)
+			{
+				// hide the toolbar
+				$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
+				$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
+				if($toolbox.is(':visible'))
+				{
+					$toolbox.hide();
+					$collapser.addClass('cke_toolbox_collapser_min');
+				}
 			}
 		}
 
@@ -465,16 +509,22 @@ jsBackend.ckeditor =
 
 	onFocus: function(evt)
 	{
-		// hide the click to edit
-		$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
-
-		// show the toolbar
-		$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
-		$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
-		if($toolbox.is(':hidden'))
+		if(evt.editor.config.showClickToEdit)
 		{
-			$toolbox.show();
-			$collapser.removeClass('cke_toolbox_collapser_min');
+			// hide the click to edit
+			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
+		}
+
+		if(evt.editor.config.toggleToolbar)
+		{
+			// show the toolbar
+			$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
+			$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
+			if($toolbox.is(':hidden'))
+			{
+				$toolbox.show();
+				$collapser.removeClass('cke_toolbox_collapser_min');
+			}
 		}
 	},
 
@@ -863,7 +913,8 @@ jsBackend.controls =
 					draggable: false,
 					resizable: false,
 					modal: true,
-					buttons: {
+					buttons:
+					{
 						'{$lblOK|ucfirst}': function()
 						{
 							// close dialog
@@ -880,7 +931,7 @@ jsBackend.controls =
 					open: function(e)
 					{
 						// set focus on first button
-						if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
+						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
 					}
 				});
 			}
@@ -967,14 +1018,13 @@ jsBackend.controls =
 		if($passwordGenerator.length > 0)
 		{
 			$passwordGenerator.passwordGenerator(
-				{
-					length: 8,
-					numbers: false,
-					lowercase: true,
-					uppercase: true,
-					generateLabel: '{$lblGenerate|ucfirst}'
-				}
-			);
+			{
+				length: 8,
+				numbers: false,
+				lowercase: true,
+				uppercase: true,
+				generateLabel: '{$lblGenerate|ucfirst}'
+			});
 		}
 	},
 
@@ -1033,7 +1083,7 @@ jsBackend.controls =
 		// loop chars and add unique chars
 		for(var i = 0; i<string.length; i++)
 		{
-			if($.inArray(string.charAt(i), uniqueChars) == -1) { uniqueChars.push(string.charAt(i)); }
+			if($.inArray(string.charAt(i), uniqueChars) == -1) uniqueChars.push(string.charAt(i));
 		}
 
 		// less then 3 unique chars is just weak
@@ -1088,18 +1138,18 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function() 
-		{ 
-			if(!$(this).parents('table').hasClass('noSelectedState')) 
+		$('tr td.checkbox input.inputCheckbox:checked').each(function()
+		{
+			if(!$(this).parents('table').hasClass('noSelectedState'))
 			{
 				$(this).parents().filter('tr').eq(0).addClass('selected');
 			}
 		});
 
 		// bind change-events
-		$(document).on('change', 'tr td input:checkbox', function(e)
+		$(document).on('change', 'tr td.checkbox input.inputCheckbox:checkbox', function(e)
 		{
-			if(!$(this).parents('table').hasClass('noSelectedState')) 
+			if(!$(this).parents('table').hasClass('noSelectedState'))
 			{
 				if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
 				else $(this).parents().filter('tr').eq(0).removeClass('selected');
@@ -1263,7 +1313,8 @@ jsBackend.forms =
 			var value = $(this).val();
 
 			// set options
-			$this.datepicker('option', {
+			$this.datepicker('option',
+			{
 				dateFormat: data.mask,
 				firstDate: data.firstday
 			}).datepicker('setDate', value);
@@ -1280,7 +1331,8 @@ jsBackend.forms =
 			var value = $(this).val();
 
 			// set options
-			$this.datepicker('option', {
+			$this.datepicker('option',
+			{
 				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 			}).datepicker('setDate', value);
@@ -1600,7 +1652,7 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 3).replace(/\./g, ''));
 
 			// lower than 19?
-			if(version < 19) { showWarning = true; }
+			if(version < 19) showWarning = true;
 		}
 
 		// check opera
@@ -1610,7 +1662,7 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
 			// lower than 9?
-			if(version < 9) { showWarning = true; }
+			if(version < 9) showWarning = true;
 		}
 
 		// check safari, should be webkit when using 1.4
@@ -1620,7 +1672,7 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 3));
 
 			// lower than 1.4?
-			if(version < 400) { showWarning = true; }
+			if(version < 400) showWarning = true;
 		}
 
 		// check IE
@@ -1630,11 +1682,11 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
 			// lower or equal than 6
-			if(version <= 6) { showWarning = true; }
+			if(version <= 6) showWarning = true;
 		}
 
 		// show warning if needed
-		if(showWarning) { $('#showBrowserWarning').show(); }
+		if(showWarning) $('#showBrowserWarning').show();
 	}
 }
 
@@ -1684,8 +1736,8 @@ jsBackend.messages =
 		$('#'+ uniqueId).fadeIn();
 
 		// timeout
-		if(type == 'notice') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
-		if(type == 'success') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
+		if(type == 'notice') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
+		if(type == 'success') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
 	}
 }
 
@@ -1707,7 +1759,8 @@ jsBackend.tabs =
 
 			$('.tabs .ui-tabs-panel').each(function()
 			{
-				if($(this).find('.formError').length > 0) {
+				if($(this).find('.formError').length > 0)
+				{
 					$($('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent()).addClass('ui-state-error');
 				}
 			});
@@ -1881,7 +1934,7 @@ jsBackend.tableSequenceByDragAndDrop =
 							$table.find('tr:odd').addClass('even');
 
 							// alert the user
-							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+							if(data.code != 200 && jsBackend.debug) alert(data.message);
 
 							// show message
 							jsBackend.messages.add('success', 'Changed order successfully.');

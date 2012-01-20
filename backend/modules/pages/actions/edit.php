@@ -173,18 +173,22 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// set headers
 		$this->dgDrafts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
-		// set colum URLs
-		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
-
 		// set column-functions
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, SpoonFilter::ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
-
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set colum URLs
+			$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
+
+			// add use column
+			$this->dgDrafts->addColumn('use_draft', null, BL::lbl('UseThisDraft'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+		}
 	}
 
 	/**
@@ -363,15 +367,19 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// set headers
 		$this->dgRevisions->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
-		// set colum URLs
-		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
-
 		// set functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, SpoonFilter::ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set colum URLs
+			$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
+
+			// add use column
+			$this->dgRevisions->addColumn('use_revision', null, BL::lbl('UseThisVersion'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		}
 	}
 
 	/**
@@ -379,6 +387,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// set
 		$this->record['url'] = $this->meta->getURL();
 		if($this->id == 1) $this->record['url'] = '';
@@ -400,14 +410,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		if(BackendPagesModel::getFirstChildId($this->record['id']) !== false) $showDelete = false;
 		if(!$this->record['delete_allowed']) $showDelete = false;
 
+		// allowed?
+		if(!BackendAuthentication::isAllowedAction('delete', $this->getModule())) $showDelete = false;
+
 		// show delete button
-		$this->tpl->assign('showDelete', $showDelete);
+		$this->tpl->assign('showPagesDelete', $showDelete);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
-
-		// parse the form
-		$this->frm->parse($this->tpl);
 
 		// parse datagrids
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);

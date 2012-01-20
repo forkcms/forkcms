@@ -13,7 +13,7 @@
 	</div>
 </div>
 
-<div id="redirect" class="hidden">{$redirect}</div>
+{option:redirect}<div id="redirect" class="hidden">{$redirect}</div>{/option:redirect}
 <div id="redirectGet" class="hidden">{$redirectGet}</div>
 <div id="settingsUrl" class="hidden">{$settingsUrl}</div>
 <div id="page" class="hidden">{$page}</div>

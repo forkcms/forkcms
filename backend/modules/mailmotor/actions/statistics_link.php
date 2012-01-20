@@ -88,7 +88,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 
 		// call the parent, as in create a new datagrid with the created source
 		$this->dataGrid = new BackendDataGrid($source);
-		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics_link') . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id'] . '&url=' . $this->linkURL);
+		$this->dataGrid->setURL(BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id'] . '&url=' . $this->linkURL);
 		$this->dataGrid->setColumnsHidden(array('list_id', 'url'));
 
 		// set header labels
@@ -113,8 +113,10 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// manually parse fields
 		$this->frm->parse($this->tpl);
 

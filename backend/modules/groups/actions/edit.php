@@ -310,21 +310,25 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	{
 		$this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
 
-		// add columns
-		$this->dataGridUsers->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->dataGridUsers->addColumn('surname', SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->dataGridUsers->addColumn('name', SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit', 'users'))
+		{
+			// add columns
+			$this->dataGridUsers->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+			$this->dataGridUsers->addColumn('surname', SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+			$this->dataGridUsers->addColumn('name', SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
-		// add column URL
-		$this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+			// add column URL
+			$this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
-		// set columns sequence
-		$this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
+			// set columns sequence
+			$this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
 
-		// show users's name, surname and nickname
-		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'surname'), 'surname', false);
-		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'name'), 'name', false);
-		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+			// show users's name, surname and nickname
+			$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'surname'), 'surname', false);
+			$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'name'), 'name', false);
+			$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+		}
 	}
 
 	/**
@@ -450,6 +454,9 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->tpl->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('groupName', $this->record['name']);
+
+		// only allow deletion of empty groups
+		$this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('delete'));
 	}
 
 	/**

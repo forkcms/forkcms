@@ -17,19 +17,20 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showProfilesDeleteGroup}
 		<a href="{$var|geturl:'delete_group'}&amp;id={$group.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+			<p>
+				{$msgConfirmDeleteGroup|sprintf:{$group.name}}
+			</p>
+		</div>
+		{/option:showProfilesDeleteGroup}
 
 		<div class="buttonHolderRight">
 			<input id="saveButton" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 		</div>
-	</div>
-
-	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-		<p>
-			{$msgConfirmDeleteGroup|sprintf:{$group.name}}
-		</p>
 	</div>
 {/form:editGroup}
 

@@ -66,8 +66,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 		$json = @json_decode($content, true);
 
 		// skip invalid JSON
-		if($json === false) return array();
-		if($json === null) return array();
+		if($json === false || $json === null) return array();
 
 		$return = array();
 

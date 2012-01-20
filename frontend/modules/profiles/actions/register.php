@@ -152,7 +152,13 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 					$mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') . '/' . $activationKey;
 
 					// send email
-					FrontendMailer::addEmail(FL::getMessage('RegisterSubject'), FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl', $mailValues, $values['email'], $values['display_name']);
+					FrontendMailer::addEmail(
+						FL::getMessage('RegisterSubject'),
+						FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
+						$mailValues,
+						$values['email'],
+						''
+					);
 
 					// redirect
 					$this->redirect(SELF . '?sent=true');

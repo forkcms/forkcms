@@ -3,11 +3,14 @@
 
 <div class="pageTitle">
 	<h2>{$lblContentBlocks|ucfirst}</h2>
+
+	{option:showContentBlocksAdd}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showContentBlocksAdd}
 </div>
 {option:dataGrid}
 <div class="dataGridHolder">

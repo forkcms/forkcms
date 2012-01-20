@@ -70,6 +70,9 @@ class InstallerStep2 extends InstallerStep
 		// we require at least PHP 5.2.x
 		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.2.0-whatever', '>='), self::STATUS_ERROR);
 
+		// Fork can't be installed in subfolders, so we should check that.
+		self::checkRequirement('subfolder', (substr($_SERVER['REQUEST_URI'], 0, 18) == '/install/index.php'), self::STATUS_ERROR);
+
 		/*
 		 * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
 		 * extensions, we can't guarantee that everything will work.

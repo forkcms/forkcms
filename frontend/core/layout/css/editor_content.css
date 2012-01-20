@@ -35,6 +35,14 @@ img {
 	height: auto;
 }
 
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px dotted #999;
+}
+
 /*
 	Editor defaults edited
 */

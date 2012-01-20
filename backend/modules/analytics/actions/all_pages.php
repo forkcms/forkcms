@@ -158,7 +158,12 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setPaging(false);
 			$dataGrid->setColumnHidden('page_encoded');
-			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule()))
+			{
+				$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
+			}
 
 			// parse the datagrid
 			$this->tpl->assign('dgPages', $dataGrid->getContent());

@@ -12,9 +12,17 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogSettings extends BackendBaseActionEdit
 {
+	/**
+	 * Is the user a god user?
+	 *
+	 * @var bool
+	 */
+	protected $isGod = false;
+
 	/**
 	 * Execute the action
 	 */
@@ -32,6 +40,8 @@ class BackendBlogSettings extends BackendBaseActionEdit
 	 */
 	private function loadForm()
 	{
+		$this->isGod = BackendAuthentication::getUser()->isGod();
+
 		$this->frm = new BackendForm('settings');
 
 		// add fields for pagination
@@ -65,6 +75,9 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm->addText('rss_title', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
 		$this->frm->addTextarea('rss_description', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage()));
 		$this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
+
+		// god user?
+		if($this->isGod) $this->frm->addCheckbox('show_image_form', BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true));
 	}
 
 	/**
@@ -76,6 +89,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 
 		// parse additional variables
 		$this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'comments_rss'));
+		$this->tpl->assign('isGod', $this->isGod);
 	}
 
 	/**
@@ -120,6 +134,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
+				if($this->isGod) BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
 				if(BackendModel::getModuleSetting('core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
 
 				// trigger event

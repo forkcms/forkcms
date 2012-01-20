@@ -6,11 +6,14 @@
 		<h2>
 			{$lblExtensions|ucfirst}: <label for="theme">{$lblTemplates} {$lblFor}</label> {$ddmTheme}
 		</h2>
+
+		{option:showExtensionsAddThemeTemplate}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add_theme_template'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="button icon iconAdd" title="{$lblAddTemplate|ucfirst}">
 				<span>{$lblAddTemplate|ucfirst}</span>
 			</a>
 		</div>
+		{/option:showExtensionsAddThemeTemplate}
 	</div>
 
 	<div class="dataGridHolder">

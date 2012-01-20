@@ -5,11 +5,14 @@
 	{option:dgUnsentMailings}
 	<div class="pageTitle">
 		<h2>{$lblUnsentMailings|ucfirst}{option:name} {$lblIn} {$lblCampaign} &ldquo;{$name}&rdquo;{/option:name}</h2>
+
+		{option:showMailmotorAdd}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconMailAdd" title="{$lblAddNewMailing|ucfirst}">
 				<span>{$lblAddNewMailing|ucfirst}</span>
 			</a>
 		</div>
+		{/option:showMailmotorAdd}
 	</div>
 	<div class="dataGridHolder">
 		{$dgUnsentMailings}
@@ -19,11 +22,14 @@
 	{option:!dgUnsentMailings}
 	<div class="pageTitle">
 		<h2>{$lblNewsletters|ucfirst}</h2>
+
+		{option:showMailmotorAdd}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconMailAdd" title="{$lblAddNewMailing|ucfirst}">
 				<span>{$lblAddNewMailing|ucfirst}</span>
 			</a>
 		</div>
+		{/option:showMailmotorAdd}
 	</div>
 	<p>{$msgNoUnsentMailings}</p>
 	{/option:!dgUnsentMailings}

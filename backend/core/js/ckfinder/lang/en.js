@@ -2,7 +2,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file, and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -153,6 +153,7 @@ CKFinder.lang['en'] =
 	UploadLabel			: 'Files to Upload',
 	UploadTotalFiles	: 'Total Files:',
 	UploadTotalSize		: 'Total Size:',
+	UploadSend			: 'Upload',
 	UploadAddFiles		: 'Add Files',
 	UploadClearFiles	: 'Clear Files',
 	UploadCancel		: 'Cancel Upload',
@@ -174,6 +175,7 @@ CKFinder.lang['en'] =
 	SetSortName		: 'by File Name',
 	SetSortDate		: 'by Date',
 	SetSortSize		: 'by Size',
+	SetSortExtension		: 'by Extension',
 
 	// Status Bar
 	FilesCountEmpty : '<Empty Folder>',

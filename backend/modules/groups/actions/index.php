@@ -31,16 +31,23 @@ class BackendGroupsIndex extends BackendBaseActionIndex
 	public function loadDataGrid()
 	{
 		$this->dataGrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
-		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-		$this->dataGrid->setColumnURL('num_users', BackendModel::createURLForAction('edit') . '&amp;id=[id]#tabUsers');
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+			$this->dataGrid->setColumnURL('num_users', BackendModel::createURLForAction('edit') . '&amp;id=[id]#tabUsers');
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		}
 	}
 
 	/**
 	 * Parse the datagrid
 	 */
-	public function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', $this->dataGrid->getContent());
 	}
 }

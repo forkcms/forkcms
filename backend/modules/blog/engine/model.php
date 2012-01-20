@@ -103,16 +103,20 @@ class BackendBlogModel
 	{
 		$warnings = array();
 
-		// rss title
-		if(BackendModel::getModuleSetting('blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('settings', 'blog'))
 		{
-			$warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
-		}
+			// rss title
+			if(BackendModel::getModuleSetting('blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '')
+			{
+				$warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			}
 
-		// rss description
-		if(BackendModel::getModuleSetting('blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '')
-		{
-			$warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			// rss description
+			if(BackendModel::getModuleSetting('blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '')
+			{
+				$warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			}
 		}
 
 		return $warnings;
@@ -480,9 +484,9 @@ class BackendBlogModel
 			 FROM blog_comments AS i
 			 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 			 INNER JOIN meta AS m ON p.meta_id = m.id
-			 WHERE i.id = ?
+			 WHERE i.id = ? AND p.status = ?
 			 LIMIT 1',
-			array((int) $id)
+			array((int) $id, 'active')
 		);
 	}
 

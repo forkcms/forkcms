@@ -7,17 +7,23 @@
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
+			{option:showPagesAdd}
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 				<span>{$lblAdd|ucfirst}</span>
 			</a>
+			{/option:showPagesAdd}
+
 			{option:!item.is_hidden}
 				<a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" class="button icon iconZoom previewButton targetBlank">
 					<span>{$lblView|ucfirst}</span>
 				</a>
 			{/option:!item.is_hidden}
+
+			{option:showPagesIndex}
 			<a href="{$var|geturl:'index'}" class="button icon iconBack">
 				<span>{$lblOverview|ucfirst}</span>
 			</a>
+			{/option:showPagesIndex}
 		</div>
 	</div>
 
@@ -388,14 +394,14 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:showDelete}
+		{option:showPagesDelete}
 			<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 				<p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
 			</div>
-		{/option:showDelete}
+		{/option:showPagesDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

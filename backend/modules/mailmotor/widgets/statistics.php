@@ -101,11 +101,15 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 			// no pagination
 			$dataGrid->setPaging(false);
 
-			// set edit link
-			$dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
-
 			// set column functions
 			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('edit_address', 'mailmotor'))
+			{
+				// set edit link
+				$dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
+			}
 
 			// parse the datagrid
 			$this->tpl->assign('dgMailmotorSubscriptions', $dataGrid->getContent());
@@ -125,8 +129,13 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setPaging(false);
-			$dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
 			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('edit_address'))
+			{
+				$dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
+			}
 
 			// parse the datagrid
 			$this->tpl->assign('dgMailmotorUnsubscriptions', $dataGrid->getContent());
