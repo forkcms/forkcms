@@ -316,7 +316,7 @@ jsBackend.ckeditor =
 		if($(element).ckeditorGet().config.showClickToEdit)
 		{
 			// add the click to edit div
-			$(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+			if(!$(element).prev().hasClass('clickToEdit')) $(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
 		}
 
 		// add the optionsRTE-class if it isn't present

@@ -15,6 +15,7 @@ Bugfixes:
 * Analytics: Fixed the labels for keywords and referrers when updating through ajax.
 * Mailmotor: improve visibility of ckeditor in mailmotor.
 * Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
+* Core: Click To Edit above the editor should behave from now on.
 
 
 3.2.1 (2012-01-17)
