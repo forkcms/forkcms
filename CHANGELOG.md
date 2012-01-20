@@ -19,6 +19,7 @@ Bugfixes:
 * Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
 * Core: Click To Edit above the editor should behave from now on.
 * Core: added the options for the theme-specific editor_content.css and and screen.css that will be loaded in the editor.
+* Extensions: a notice was triggered when using invalid templatesyntax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/257.
 
 
 3.2.1 (2012-01-17)
