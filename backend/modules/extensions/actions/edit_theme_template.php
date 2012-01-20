@@ -301,7 +301,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 							if(!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
 
 							// can't build proper html -> error
-							elseif(substr_count($html, '#position-' . $cell) != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+							elseif(substr_count($html, '"#position-' . $cell . '"') != 1) $errors[] = BL::err('InvalidTemplateSyntax');
 						}
 					}
 
