@@ -149,10 +149,10 @@ class FrontendProfilesAuthentication
 		}
 
 		// check cookie
-		elseif(ApplicationCookie::exists('frontend_profile_secret_key') && ApplicationCookie::get('frontend_profile_secret_key') != '')
+		elseif(CommonCookie::exists('frontend_profile_secret_key') && CommonCookie::get('frontend_profile_secret_key') != '')
 		{
 			// secret
-			$secret = (string) ApplicationCookie::get('frontend_profile_secret_key');
+			$secret = (string) CommonCookie::get('frontend_profile_secret_key');
 
 			// get profile id
 			$profileId = (int) FrontendModel::getDB()->getVar(
@@ -182,7 +182,7 @@ class FrontendProfilesAuthentication
 				);
 
 				// set new cookie
-				ApplicationCookie::set('frontend_profile_secret_key', $profileSecret);
+				CommonCookie::set('frontend_profile_secret_key', $profileSecret);
 
 				// set is_logged_in to true
 				SpoonSession::set('frontend_profile_logged_in', true);
@@ -198,7 +198,7 @@ class FrontendProfilesAuthentication
 			}
 
 			// invalid cookie
-			else ApplicationCookie::delete('frontend_profile_secret_key');
+			else CommonCookie::delete('frontend_profile_secret_key');
 		}
 
 		// no one is logged in
@@ -232,7 +232,7 @@ class FrontendProfilesAuthentication
 			$secretKey = FrontendProfilesModel::getEncryptedString(SpoonSession::getSessionId(), FrontendProfilesModel::getRandomString());
 
 			// set cookie
-			ApplicationCookie::set('frontend_profile_secret_key', $secretKey);
+			CommonCookie::set('frontend_profile_secret_key', $secretKey);
 		}
 
 		// delete all records for this session to prevent duplicate keys (this should never happen)
@@ -268,7 +268,7 @@ class FrontendProfilesAuthentication
 		SpoonSession::set('frontend_profile_logged_in', false);
 
 		// delete cookie
-		ApplicationCookie::delete('frontend_profile_secret_key');
+		CommonCookie::delete('frontend_profile_secret_key');
 	}
 
 	/**

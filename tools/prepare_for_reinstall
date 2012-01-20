@@ -14,7 +14,6 @@ rm -f `find ../frontend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn
 rm -f `find ../frontend/cache/minified_css/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ../frontend/cache/minified_js/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ../frontend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/statistics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ../frontend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
 rm -f `find ../backend/cache/analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
