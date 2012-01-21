@@ -29,16 +29,16 @@ class Fork_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_Forbid
 		'ereg_replace' => 'preg_replace',
 		'eregi' => 'preg_match',
 		'eregi_replace' => 'preg_replace',
-		'set_magic_quotes_runtime' => null,
 		'magic_quotes_runtime' => null,
+		'mysql_db_query' => 'mysql_select_db and mysql_query',
+		'mysql_escape_string' => 'mysql_real_escape_string',
+		'session_is_registered' => 'use $_SESSION',
 		'session_register' => 'use $_SESSION',
 		'session_unregister' => 'use $_SESSION',
-		'session_is_registered' => 'use $_SESSION',
+		'set_magic_quotes_runtime' => null,
 		'set_socket_blocking' => 'stream_set_blocking',
 		'split' => 'preg_split',
 		'spliti' => 'preg_split',
-		'sql_regcase' => null,
-		'mysql_db_query' => 'mysql_select_db and mysql_query',
-		'mysql_escape_string' => 'mysql_real_escape_string'
+		'sql_regcase' => null
 	);
 }
