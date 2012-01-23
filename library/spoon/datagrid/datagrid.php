@@ -841,7 +841,7 @@ class SpoonDataGrid
 			// even row attributes
 			else $cycleAttributes = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_even']));
 
-			// lets see if we have a match with the current attributes
+			// no longer overwrite default attributes with odd/even attributes.
 			if(!empty($row['attributes']))
 			{
 				$cycleData = array();
@@ -868,6 +868,7 @@ class SpoonDataGrid
 				// rebuild the data
 				$row['attributes'] = $this->getHTMLAttributes(array_combine($rowData[2], $rowData[3]));
 			}
+
 			// no match, just assign the cycle attributes as the row attributes
 			else $row['attributes'] = $cycleAttributes;
 
@@ -1685,11 +1686,12 @@ class SpoonDataGrid
 	 */
 	public function setEvenRowAttributes(array $attributes)
 	{
-		// has results
 		if($this->source->getNumResults() > 0)
 		{
-			// add to the list
-			foreach($attributes as $key => $value) $this->attributes['row_even'][(string) $key] = (string) $value;
+			foreach($attributes as $key => $value)
+			{
+				$this->attributes['row_even'][(string) $key] = (string) $value;
+			}
 		}
 	}
 
@@ -1724,7 +1726,6 @@ class SpoonDataGrid
 	 */
 	public function setOddRowAttributes(array $attributes)
 	{
-		// has results
 		if($this->source->getNumResults() > 0)
 		{
 			// add to the list

@@ -1103,6 +1103,16 @@ class BackendExtensionsModel
 			$table[$i] = (array) explode(',', $row);
 		}
 
+		// no rows
+		if(!isset($table[0])) return false;
+
+		$columns = count($table[0]);
+
+		foreach($table as $row)
+		{
+			if(count($row) != $columns) return false;
+		}
+
 		return $table;
 	}
 
