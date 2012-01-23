@@ -158,7 +158,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 			BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 			// check if the method exists
-			if(method_exists('BackendSearchModel', 'addIndex'))
+			if(method_exists('BackendSearchModel', 'saveIndex'))
 			{
 				// init var
 				$text = '';
@@ -167,7 +167,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 				foreach($blocks as $block) $text .= ' ' . $block['html'];
 
 				// add
-				BackendSearchModel::addIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text), $to);
+				BackendSearchModel::saveIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text), $to);
 			}
 
 			// get tags

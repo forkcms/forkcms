@@ -387,7 +387,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
 					// add to search index
-					BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
+					BackendSearchModel::saveIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);

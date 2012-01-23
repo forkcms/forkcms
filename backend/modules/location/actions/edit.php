@@ -135,7 +135,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 
 				// edit search index
 				// @todo why is this commented out?
-				// BackendSearchModel::editIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+				// BackendSearchModel::saveIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng'])
