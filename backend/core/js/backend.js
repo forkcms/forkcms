@@ -209,7 +209,7 @@ jsBackend.ckeditor =
 
 		// language options
 		contentsLanguage: '{$LANGUAGE}',
-		language: '{$INTERFACE_LANGUAGE}',
+		language: '{$EDITOR_LANGUAGE}',
 
 		// paste options
 		forcePasteAsPlainText: true,

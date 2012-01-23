@@ -923,7 +923,7 @@ class CoreInstaller extends ModuleInstaller
 
 		// default titles
 		$siteTitles = array('en' => 'My website',
-							'cn' => '我的网站',
+							'zh' => '我的网站',
 							'nl' => 'Mijn website',
 							'fr' => 'Mon site web',
 							'de' => 'Meine Webseite',
