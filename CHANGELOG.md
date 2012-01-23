@@ -11,6 +11,7 @@ Improvements:
 * Pages: editor will be larger by default.
 * Formbuilder: altered the splitchar, so "," can be used in values for dropdowns, checkboxes or radiobuttons.
 * Extensions: improved the validation of the positions, as mention on http://forkcms.lighthouseapp.com/projects/61890/tickets/256 by Dieter W.
+* Core: init Facebook for its JS SDK when an admin or app id is set.
 
 Bugfixes:
 
