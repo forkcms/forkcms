@@ -2946,7 +2946,7 @@
       <item type="label" name="BG">
         <translation language="zh"><![CDATA[比利时语]]></translation>
         <translation language="hu"><![CDATA[bulgár]]></translation>
-        <translation language="de"><![CDATA[bulgarisch]]></translation>
+        <translation language="de"><![CDATA[Bulgarisch]]></translation>
         <translation language="fr"><![CDATA[Bulgare]]></translation>
         <translation language="tr"><![CDATA[Bulgar]]></translation>
         <translation language="nl"><![CDATA[Bulgaars]]></translation>
@@ -6600,17 +6600,6 @@
         <translation language="fr"><![CDATA[Toutes les adresses classées par date de souscription.]]></translation>
         <translation language="de"><![CDATA[Alle Adressen nach Anmeldedatum sortiert.]]></translation>
         <translation language="es"><![CDATA[Todas las direcciones ordenadas por fecha de subscripcion.]]></translation>
-      </item>
-      <item type="message" name="BG">
-        <translation language="zh"><![CDATA[比利时语]]></translation>
-        <translation language="hu"><![CDATA[bulgár]]></translation>
-        <translation language="fr"><![CDATA[Bulgare]]></translation>
-        <translation language="de"><![CDATA[Bulgarisch]]></translation>
-        <translation language="nl"><![CDATA[Bulgaars]]></translation>
-        <translation language="en"><![CDATA[Bulgarian]]></translation>
-        <translation language="it"><![CDATA[bulgaro]]></translation>
-        <translation language="ru"><![CDATA[болгарский]]></translation>
-        <translation language="es"><![CDATA[bulgaro]]></translation>
       </item>
       <item type="message" name="ClickToEdit">
         <translation language="nl"><![CDATA[Klik om te wijzigen.]]></translation>

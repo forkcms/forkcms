@@ -67,6 +67,7 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addMultiCheckbox('languages',
 			array(
 				array('value' => 'en', 'label' => 'English'),
+				array('value' => 'bg', 'label' => 'Bulgarian'),
 				array('value' => 'zh', 'label' => 'Chinese'),
 				array('value' => 'cs', 'label' => 'Czech'),
 				array('value' => 'nl', 'label' => 'Dutch'),
@@ -91,6 +92,7 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addMultiCheckbox('interface_languages',
 			array(
 				array('value' => 'en', 'label' => 'English'),
+				array('value' => 'bg', 'label' => 'Bulgarian'),
 				array('value' => 'zh', 'label' => 'Chinese'),
 				array('value' => 'cs', 'label' => 'Czech'),
 				array('value' => 'nl', 'label' => 'Dutch'),
@@ -115,6 +117,7 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addDropdown('language',
 			array(
 				'en' => 'English',
+				'bg' => 'Bulgarian',
 				'zh' => 'Chinese',
 				'cs' => 'Czech',
 				'nl' => 'Dutch',
@@ -139,6 +142,7 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addDropdown('default_language',
 			array(
 				'en' => 'English',
+				'bg' => 'Bulgarian',
 				'zh' => 'Chinese',
 				'cs' => 'Czech',
 				'nl' => 'Dutch',
@@ -163,6 +167,7 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addDropdown('default_interface_language',
 			array(
 				'en' => 'English',
+				'bg' => 'Bulgarian',
 				'zh' => 'Chinese',
 				'cs' => 'Czech',
 				'nl' => 'Dutch',
