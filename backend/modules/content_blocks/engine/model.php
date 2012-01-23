@@ -18,7 +18,7 @@
 class BackendContentBlocksModel
 {
 	const QRY_BROWSE =
-		'SELECT i.id, i.title
+		'SELECT i.id, i.title, i.hidden
 		 FROM content_blocks AS i
 		 WHERE i.status = ? AND i.language = ?';
 
