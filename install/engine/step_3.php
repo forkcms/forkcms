@@ -68,7 +68,7 @@ class InstallerStep3 extends InstallerStep
 			array(
 				array('value' => 'en', 'label' => 'English'),
 				array('value' => 'zh', 'label' => 'Chinese'),
-				array('value' => 'cz', 'label' => 'Czech'),
+				array('value' => 'cs', 'label' => 'Czech'),
 				array('value' => 'nl', 'label' => 'Dutch'),
 				array('value' => 'fr', 'label' => 'French'),
 				array('value' => 'de', 'label' => 'German'),
@@ -92,7 +92,7 @@ class InstallerStep3 extends InstallerStep
 			array(
 				array('value' => 'en', 'label' => 'English'),
 				array('value' => 'zh', 'label' => 'Chinese'),
-				array('value' => 'cz', 'label' => 'Czech'),
+				array('value' => 'cs', 'label' => 'Czech'),
 				array('value' => 'nl', 'label' => 'Dutch'),
 				array('value' => 'fr', 'label' => 'French'),
 				array('value' => 'de', 'label' => 'German'),

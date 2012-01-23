@@ -18,7 +18,7 @@
 class BackendBlogModel
 {
 	const QRY_DATAGRID_BROWSE =
-		'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
+		'SELECT i.hidden, i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 		 FROM blog_posts AS i
 		 WHERE i.status = ? AND i.language = ?';
 
