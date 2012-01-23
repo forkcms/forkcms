@@ -158,6 +158,26 @@ class BackendDataGrid extends SpoonDataGrid
 	}
 
 	/**
+	 * Enable the grey out functionallity. This will see if we have a column that matches our set.
+	 * If so, it will call the BackendDatagridFunction with the type and value so we can parse the data.
+	 */
+	public function enableGreyingOut()
+	{
+		$allowedColumns = array('hidden', 'visible', 'active', 'published');
+		$allColumns = $this->getColumns();
+
+		foreach($allowedColumns as $column)
+		{
+			// we have a match, set the row function
+			if(array_search($column, $allColumns) !== false)
+			{
+				$this->setColumnHidden($column);
+				$this->setRowFunction(array('BackendDatagridFunctions', 'greyOut'), array($column, '[' . $column . ']'), array($column));
+			}
+		}
+	}
+
+	/**
 	 * Enable drag and drop for the current datagrid
 	 */
 	public function enableSequenceByDragAndDrop()
@@ -196,6 +216,13 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// has paging & more than 1 page
 		elseif($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) $this->tpl->assign('footer', true);
+
+		// set the odd and even classes
+		$this->setOddRowAttributes(array('class' => 'odd', 'test' => 'odd_test'));
+		$this->setEvenRowAttributes(array('class' => 'even', 'test' => 'even_test'));
+
+		// enable greying out
+		$this->enableGreyingOut();
 
 		// execute parent
 		return parent::getContent();
@@ -805,6 +832,35 @@ class BackendDataGridFunctions
 		$html .= '</div>';
 
 		return $html;
+	}
+
+	/**
+	 * This will grey out certain rows from comon columns. These columns are:
+	 *
+	 * 'visible', 'hidden', 'active', 'published'
+	 *
+	 * @param string $type The type of column. This is given since some columns can have different meanings than others.
+	 * @param string $value
+	 * @param array $attributes
+	 */
+	public static function greyOut($type, $value, array $attributes = array())
+	{
+		// the base class
+		$grayedOutClass = 'grayedOut';
+
+		switch($type)
+		{
+			case 'visible':
+			case 'active':
+			case 'published':
+				if($value == 'N') return array('class' => $grayedOutClass);
+				break;
+			case 'hidden':
+				if($value == 'Y') return array('class' => $grayedOutClass);
+				break;
+		}
+
+		return array();
 	}
 
 	/**
