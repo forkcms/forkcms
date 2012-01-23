@@ -219,8 +219,8 @@ class BackendDataGrid extends SpoonDataGrid
 		elseif($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) $this->tpl->assign('footer', true);
 
 		// set the odd and even classes
-		$this->setOddRowAttributes(array('class' => 'odd', 'test' => 'odd_test'));
-		$this->setEvenRowAttributes(array('class' => 'even', 'test' => 'even_test'));
+		$this->setOddRowAttributes(array('class' => 'odd'));
+		$this->setEvenRowAttributes(array('class' => 'even'));
 
 		// enable greying out
 		$this->enableGreyingOut();
