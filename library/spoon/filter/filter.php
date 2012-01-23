@@ -876,7 +876,7 @@ class SpoonFilter
 			if($word == '') continue;
 
 			// first word lowercase
-			if($i == 0 && $lcfirst) $word = $word;
+			if($i == 0 && $lcfirst) $word[0] = mb_strtolower($word[0], $charset);
 
 			// convert first letter to uppercase
 			else $word[0] = mb_strtoupper($word[0], $charset);
