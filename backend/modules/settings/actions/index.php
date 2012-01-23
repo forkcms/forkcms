@@ -103,7 +103,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$redirectAttributes['id'] = 'redirect_language_' . $abbreviation;
 
 			// fetch label
-			$label = BL::msg(mb_strtoupper($abbreviation), 'core');
+			$label = BL::lbl(mb_strtoupper($abbreviation), 'core');
 
 			// default may not be unselected
 			if($defaultLanguage)
