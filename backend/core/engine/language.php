@@ -152,7 +152,7 @@ class BackendLanguage
 		foreach((array) BackendModel::getModuleSetting('core', 'interface_languages', array('en')) as $key)
 		{
 			// fetch language's translation
-			$languages[$key] = self::getMessage(mb_strtoupper($key), 'core');
+			$languages[$key] = self::getLabel(mb_strtoupper($key), 'core');
 		}
 
 		// sort alphabetically
@@ -264,7 +264,7 @@ class BackendLanguage
 		foreach((array) BackendModel::getModuleSetting('core', 'languages', array('en')) as $key)
 		{
 			// fetch the language's translation
-			$languages[$key] = self::getMessage(mb_strtoupper($key), 'core');
+			$languages[$key] = self::getLabel(mb_strtoupper($key), 'core');
 		}
 
 		// sort alphabetically

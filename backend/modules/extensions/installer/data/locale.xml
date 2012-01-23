@@ -7,7 +7,7 @@
         <translation language="en"><![CDATA[The template "%1$s" was added.]]></translation>
         <translation language="it"><![CDATA[Il template "%1$s" è stato aggiunto.]]></translation>
         <translation language="ru"><![CDATA[Шаблон "%1$s" добавлен.]]></translation>
-        <translation language="cn"><![CDATA[模板 “%1$s” 已添加。]]></translation>
+        <translation language="zh"><![CDATA[模板 “%1$s” 已添加。]]></translation>
         <translation language="de"><![CDATA[Das Template "%1$s" wurde hinzugefügt.]]></translation>
         <translation language="fr"><![CDATA[Le template "%1$s" a été ajouté.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon hozzáadva.]]></translation>
@@ -18,7 +18,7 @@
         <translation language="en"><![CDATA[Are your sure you want to delete the template "%1$s"?]]></translation>
         <translation language="it"><![CDATA[Sei sicuro di voler eliminare il template "%1$s"?]]></translation>
         <translation language="ru"><![CDATA[Удалить шаблон "%1$s"?]]></translation>
-        <translation language="cn"><![CDATA[你确定要删除模板“%1$s”吗？]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除模板“%1$s”吗？]]></translation>
         <translation language="de"><![CDATA[Soll das Template "%1$s" wirklich gelöscht werden?]]></translation>
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le template "%1$s"?]]></translation>
         <translation language="hu"><![CDATA[Biztos törlöd a(z) "%1$s" sablont?]]></translation>
@@ -70,7 +70,7 @@
         <translation language="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
         <translation language="it"><![CDATA[Il template "%1$s" è stato eliminato.]]></translation>
         <translation language="ru"><![CDATA[Шаблон "%1$s" удален.]]></translation>
-        <translation language="cn"><![CDATA[模板“%1$s”已删除。]]></translation>
+        <translation language="zh"><![CDATA[模板“%1$s”已删除。]]></translation>
         <translation language="de"><![CDATA[Das Template "%1$s" wurde gelöscht.]]></translation>
         <translation language="fr"><![CDATA[Le template "%1$s" a été effacé.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon törölve.]]></translation>
@@ -81,7 +81,7 @@
         <translation language="en"><![CDATA[The template "%1$s" was saved.]]></translation>
         <translation language="it"><![CDATA[Il template "%1$s" è stato salvato.]]></translation>
         <translation language="ru"><![CDATA[Шаблон "%1$s" изменен.]]></translation>
-        <translation language="cn"><![CDATA[模板“%1$s”已保存。]]></translation>
+        <translation language="zh"><![CDATA[模板“%1$s”已保存。]]></translation>
         <translation language="de"><![CDATA[Das Template "%1$s" wurde gespeichert.]]></translation>
         <translation language="fr"><![CDATA[Le template "%1$s" a été enregistré.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon elmentve.]]></translation>
@@ -98,7 +98,7 @@
         <translation language="en"><![CDATA[<strong>Attention!</strong> Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.]]></translation>
         <translation language="it"><![CDATA[<strong>Attenzione!</strong> Selezionando questa checkbox il contenuto di ogni pagina verrà resettato ai valori di default scelti qui.]]></translation>
         <translation language="ru"><![CDATA[<strong>Осторожно!</strong> Все содержание может быть сброшено по-умолчанию.]]></translation>
-        <translation language="cn"><![CDATA[<strong>注意！</strong> 选中这个复选框项目将会使每个页面重置回默认的勾选状态。]]></translation>
+        <translation language="zh"><![CDATA[<strong>注意！</strong> 选中这个复选框项目将会使每个页面重置回默认的勾选状态。]]></translation>
         <translation language="de"><![CDATA[<strong>Aufpassen!</strong> Das aktivieren dieser Checkbox führt dazu, dass die Inhalte aller Seiten auf die oberhalb gewählten Standardwerte zurückgesetzt werden.]]></translation>
         <translation language="fr"><![CDATA[<strong>Attention!</strong> Cocher cette case entrainera une réinitialisation du contenu de chaque page aux valeurs par défaut.]]></translation>
         <translation language="hu"><![CDATA[<strong>Figyelem!</strong> Ha bejelölöd ezt az opciót, akkor minden oldal tartalma visszaáll a fenti alapértelmezettre.]]></translation>
@@ -109,7 +109,7 @@
         <translation language="en"><![CDATA[<strong>A visual representation to be used in the pages-module.</strong><ul><li>Add a row: use <strong>[]</strong></li><li>Reflect a position: use <strong>position name</strong></li><li>Reflect a non-editable area: use <strong>/</strong></li></ul><p>If you want a position to display wider or higher in it's graphical representation, repeat the position multiple times (both horizontal and vertical, but the shape should form a rectangle)</p><strong>A template could look like the chart below:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="it"><![CDATA[<strong>Una rappresentazione visuale da usare nel modulo della pagina.</strong><ul><li>Aggiungi una riga: usa <strong>[]</strong></li><li>Rifletti una posizione: usa <strong>nome della posizione</strong></li><li>Rifletti un'area non modificabile: usa <strong>/</strong></li></ul><p>Se vuoi che una posizione sia visualizzata più larga o alta nella sua rappresentazione grafica, ripeti la posizione diverse volte (sia orizzontalmente, sia verticalemente, in modo da formare un rettangolo)</p><strong>Un template potrebbe assomigliare a questo:</strong><pre>[ / , / , / , / , top ],<br />[ / , / , / , / , / ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="ru"><![CDATA[<strong>Визуальное представление для страниц модуля.</strong><ul><li>Добавление строки: используйте <strong>[]</strong></li><li>Позиционирование: <strong>имя позиции</strong></li><li>Нередактируемая сецкия: <strong>/</strong></li></ul><p>Если вы хотите изменить графическое представление,</p><strong>шаблон должен выглядеть примерно так:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
-        <translation language="cn"><![CDATA[<strong>视觉元素可以不在页面模块中使用</strong><ul><li>添加一行，使用 <strong>[]</strong></li><li>显示一个位置： <strong>位置名称</strong></li><li>显示一个不可编辑区域：使用<strong>/</strong></li></ul><p>如果你想一个位置能显示它所使用的图形元素的宽度或高度，重复它的位置几次（包括水平方向和垂直方向，但这个形状必须是一个矩形)</p><strong>一个模板可以看起来像下方的这个图表：</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="zh"><![CDATA[<strong>视觉元素可以不在页面模块中使用</strong><ul><li>添加一行，使用 <strong>[]</strong></li><li>显示一个位置： <strong>位置名称</strong></li><li>显示一个不可编辑区域：使用<strong>/</strong></li></ul><p>如果你想一个位置能显示它所使用的图形元素的宽度或高度，重复它的位置几次（包括水平方向和垂直方向，但这个形状必须是一个矩形)</p><strong>一个模板可以看起来像下方的这个图表：</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="fr"><![CDATA[<strong>Une représentation visuelle utilisée sur la page de modules</strong><ul><li>Ajouter un rang: utiliser <strong>[]</strong></li><li>Spécifier une position: utiliser <strong>nom de la position</strong></li><li>Spécifier une zone non-éditable: utiliser <strong>/</strong></li></ul><p>Si vous voulez qu'une position s'affiche de façon plus large ou plus grande dans sa représentation graphique, répétez la position plusieurs fois (à la fois horizontale et verticale, mais la forme doit former un rectangle)</p><strong>Un template peut s'afficher comme la charte ci-dessous:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="de"><![CDATA[<strong>Visuelle Repräsentation zur Verwendung im Seitenmodul.</strong><ul><li>Füge eine Reihe hinzu: benutze <strong>[]</strong></li><li>Stelle eine Position dar: benutze <strong>Positionsname</strong></li><li>Stelle einen nicht-editierbaren Bereich dar: benutze <strong>/</strong></li></ul><p>Wenn du eine Position in der grafischen Repräsentation breiter oder höher dargestellt haben möchtest, kannst du die Position mehrfach wiederholen (sowohl horizontal als auch vertikal, die Form sollte aber ein Rechteck bilden)</p><strong>Ein Template könnte zum Beispiel so aussehen:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
         <translation language="hu"><![CDATA[<strong>Vizuálisan kell használni az oldal-modult.</strong><ul><li>Sor hozzáadása: <strong>[]</strong> használata</li><li>Pozíció jelzése: <strong>pozíció neve</strong> használata</li><li>Nem szerkeszthető-terület jelzése: <strong>/</strong> használata</li></ul><p>Ha magasabb vagy szélesebb terület kell, akkor használd több alkalommal a helyet. (mind vízszintesen és függőlegesen, csak téglalap legyen)</p><strong>A sablon így néz ki:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
@@ -120,7 +120,7 @@
         <translation language="en"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
         <translation language="it"><![CDATA[es.[left,main,right],[/,main,/]]]></translation>
         <translation language="ru"><![CDATA[прим. [left,main,right],[/,main,/]]]></translation>
-        <translation language="cn"><![CDATA[例如：[left,main,right],[/,main,/]]]></translation>
+        <translation language="zh"><![CDATA[例如：[left,main,right],[/,main,/]]]></translation>
         <translation language="de"><![CDATA[z.B. [left,main,right],[/,main,/]]]></translation>
         <translation language="fr"><![CDATA[ex [left,main,right],[/,main,/]]]></translation>
         <translation language="hu"><![CDATA[pl. [left,main,right],[/,main,/]]]></translation>
@@ -131,7 +131,7 @@
         <translation language="en"><![CDATA[Put your templates in the <code>core/layout/templates</code> folder of your theme.]]></translation>
         <translation language="it"><![CDATA[Metti i tuoi template nella cartella <code>core/layout/templates</code> del tuo tema.]]></translation>
         <translation language="ru"><![CDATA[Путь для шаблонов <code>core/layout/templates</code>.]]></translation>
-        <translation language="cn"><![CDATA[将你的模板放置在你的主题文件夹<code>core/layout/templates</code> 中。]]></translation>
+        <translation language="zh"><![CDATA[将你的模板放置在你的主题文件夹<code>core/layout/templates</code> 中。]]></translation>
         <translation language="de"><![CDATA[Leg deine Templates im Ordner <code>core/layout/templates</code> deines Themes ab.]]></translation>
         <translation language="fr"><![CDATA[Placez les templates dans le répertoire <code>core/layout/templates</code> de votre thème.]]></translation>
         <translation language="hu"><![CDATA[Tedd a sablonodad a témád <code>core/layout/templates</code> mappájába.]]></translation>
@@ -142,7 +142,7 @@
         <translation language="en"><![CDATA[Select the theme you wish to use.]]></translation>
         <translation language="it"><![CDATA[Scegli il tema che vuoi usare.]]></translation>
         <translation language="ru"><![CDATA[Выберите тему.]]></translation>
-        <translation language="cn"><![CDATA[选择你想使用的主题。]]></translation>
+        <translation language="zh"><![CDATA[选择你想使用的主题。]]></translation>
         <translation language="de"><![CDATA[Wähle das Theme, dass du verwenden möchtest.]]></translation>
         <translation language="hu"><![CDATA[A használni kívánt sablon kiválasztása.]]></translation>
         <translation language="fr"><![CDATA[Choisissez le thème que vous souhaitez utiliser.]]></translation>
@@ -215,7 +215,7 @@
         <translation language="en"><![CDATA[Path to template]]></translation>
         <translation language="it"><![CDATA[Path del template]]></translation>
         <translation language="ru"><![CDATA[Путь к шаблону]]></translation>
-        <translation language="cn"><![CDATA[模板路径]]></translation>
+        <translation language="zh"><![CDATA[模板路径]]></translation>
         <translation language="de"><![CDATA[Pfad zum Template]]></translation>
         <translation language="fr"><![CDATA[Chemin vers le template]]></translation>
         <translation language="hu"><![CDATA[A sablon útvonala]]></translation>
@@ -226,7 +226,7 @@
         <translation language="en"><![CDATA[This template is in use.]]></translation>
         <translation language="it"><![CDATA[Questo template è in uso.]]></translation>
         <translation language="ru"><![CDATA[Шаблон уже используется.]]></translation>
-        <translation language="cn"><![CDATA[这个模板正在使用中。]]></translation>
+        <translation language="zh"><![CDATA[这个模板正在使用中。]]></translation>
         <translation language="de"><![CDATA[Dieses Template wird verwendet.]]></translation>
         <translation language="fr"><![CDATA[Ce template est utilisé.]]></translation>
         <translation language="hu"><![CDATA[Ez a sablon már használatban van.]]></translation>
@@ -297,7 +297,7 @@
         <translation language="en"><![CDATA[add position]]></translation>
         <translation language="it"><![CDATA[aggiungi posizione]]></translation>
         <translation language="ru"><![CDATA[Добавить расположение]]></translation>
-        <translation language="cn"><![CDATA[添加位置]]></translation>
+        <translation language="zh"><![CDATA[添加位置]]></translation>
         <translation language="de"><![CDATA[Position hinzufügen]]></translation>
         <translation language="fr"><![CDATA[ajouter une position]]></translation>
         <translation language="hu"><![CDATA[pozíció hozzáadása]]></translation>
@@ -314,7 +314,7 @@
         <translation language="en"><![CDATA[delete position]]></translation>
         <translation language="it"><![CDATA[elimina posizione]]></translation>
         <translation language="ru"><![CDATA[Удалить расположение]]></translation>
-        <translation language="cn"><![CDATA[删除位置]]></translation>
+        <translation language="zh"><![CDATA[删除位置]]></translation>
         <translation language="de"><![CDATA[Position löschen]]></translation>
         <translation language="fr"><![CDATA[effacer la position]]></translation>
         <translation language="hu"><![CDATA[pozíció törlése]]></translation>
@@ -375,7 +375,7 @@
         <translation language="en"><![CDATA[overwrite]]></translation>
         <translation language="it"><![CDATA[sovrascrivi]]></translation>
         <translation language="ru"><![CDATA[Перезаписать]]></translation>
-        <translation language="cn"><![CDATA[重写]]></translation>
+        <translation language="zh"><![CDATA[重写]]></translation>
         <translation language="de"><![CDATA[überschreiben]]></translation>
         <translation language="fr"><![CDATA[écraser]]></translation>
         <translation language="hu"><![CDATA[felülír]]></translation>
@@ -425,7 +425,7 @@
         <translation language="en"><![CDATA[You can't delete this template.]]></translation>
         <translation language="it"><![CDATA[Non puoi eliminare questo template.]]></translation>
         <translation language="ru"><![CDATA[Вы не можете удалить этот шаблон.]]></translation>
-        <translation language="cn"><![CDATA[你不能删除这个模板。]]></translation>
+        <translation language="zh"><![CDATA[你不能删除这个模板。]]></translation>
         <translation language="de"><![CDATA[Du kannst dieses Template nicht löschen.]]></translation>
         <translation language="fr"><![CDATA[Vous ne pouvez pas effacer ce template.]]></translation>
         <translation language="hu"><![CDATA[Nem törölheted ezt a sablont.]]></translation>
@@ -436,7 +436,7 @@
         <translation language="en"><![CDATA[Position %s is duplicated.]]></translation>
         <translation language="it"><![CDATA[La posizione %s è duplicata.]]></translation>
         <translation language="ru"><![CDATA[%s - дублировано.]]></translation>
-        <translation language="cn"><![CDATA[位置 %s 重复了。]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 重复了。]]></translation>
         <translation language="fr"><![CDATA[La position %s est en double.]]></translation>
         <translation language="de"><![CDATA[Der Positionsname %s existiert bereits.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció duplikált.]]></translation>
@@ -459,7 +459,7 @@
         <translation language="en"><![CDATA[Invalid syntax.]]></translation>
         <translation language="it"><![CDATA[Sintassi non valida.]]></translation>
         <translation language="ru"><![CDATA[Неправильный синтакс.]]></translation>
-        <translation language="cn"><![CDATA[无效的语法。]]></translation>
+        <translation language="zh"><![CDATA[无效的语法。]]></translation>
         <translation language="de"><![CDATA[Ungültige Syntax.]]></translation>
         <translation language="fr"><![CDATA[Syntaxe non-valide]]></translation>
         <translation language="hu"><![CDATA[Érvénytelen szintaxis.]]></translation>
@@ -476,7 +476,7 @@
         <translation language="en"><![CDATA[Position %s is not alphanumerical.]]></translation>
         <translation language="it"><![CDATA[La posizione %s non è alfanumerica.]]></translation>
         <translation language="ru"><![CDATA[%s - неправильное название.]]></translation>
-        <translation language="cn"><![CDATA[位置 %s 非字母或数字。]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 非字母或数字。]]></translation>
         <translation language="de"><![CDATA[Position %s ist nicht alphanumerisch.]]></translation>
         <translation language="fr"><![CDATA[La position %s n'est pas alphanumérique.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció nem alfanumerikus.]]></translation>
@@ -498,7 +498,7 @@
         <translation language="en"><![CDATA[Position %s is not defined.]]></translation>
         <translation language="it"><![CDATA[La posizione %s non è definita.]]></translation>
         <translation language="ru"><![CDATA[%s - нет названия.]]></translation>
-        <translation language="cn"><![CDATA[位置 %s 未定义。]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 未定义。]]></translation>
         <translation language="de"><![CDATA[Position %s ist nicht definiert.]]></translation>
         <translation language="fr"><![CDATA[La position %s n'est pas définie.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció nem definiált.]]></translation>
@@ -514,7 +514,7 @@
         <translation language="en"><![CDATA[Position %s is reserved.]]></translation>
         <translation language="it"><![CDATA[La posizione %s è riservata.]]></translation>
         <translation language="ru"><![CDATA[%s - сохранено.]]></translation>
-        <translation language="cn"><![CDATA[位置 %s 已保留。]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 已保留。]]></translation>
         <translation language="de"><![CDATA[Position %s ist reserviert.]]></translation>
         <translation language="fr"><![CDATA[La position %s est réservée.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció lefoglalva.]]></translation>
