@@ -394,7 +394,7 @@ class BackendPagesModel
 					}
 
 					// add
-					if(SITE_MULTILANGUAGE) $links[] = array($title, $language . '/' . $url);
+					if(SITE_MULTILANGUAGE) $links[] = array($title, '/' . $language . '/' . $url);
 					else $links[] = array($title, $url);
 				}
 			}
