@@ -10,6 +10,7 @@
 	<![endif]-->
 
 	<script type="text/javascript" src="/frontend/core/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/frontend/core/js/html5.js"></script>
 	<script type="text/javascript" src="js/client.js"></script>
 </head>
 <body class="en onsite">
