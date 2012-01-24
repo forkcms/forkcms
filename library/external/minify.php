@@ -30,6 +30,7 @@ class MinifyCSS extends Minify
 {
 	/**
 	 * Combine CSS from import statements.
+	 * @import's will be loaded and their content merged into the original file, to save HTTP requests.
 	 *
 	 * @param string $source The file to combine imports for.
 	 * @param string[optional] $path The path the data should be written to.
@@ -219,8 +220,9 @@ class MinifyCSS extends Minify
 
 	/**
 	 * Import images into the CSS, base64-ized.
+	 * @url(image.jpg) images will be loaded and their content merged into the original file, to save HTTP requests.
 	 *
-	 * @param string $source The file to import data for.
+	 * @param string $source The file to import images for.
 	 * @param string[optional] $path The path the data should be written to.
 	 * @return string
 	 */
@@ -274,6 +276,7 @@ class MinifyCSS extends Minify
 
 	/**
 	 * Minify the data.
+	 * Perform all of the available CSS optimizations.
 	 *
 	 * @param string[optional] $path The path the data should be written to.
 	 * @return string The minified data.
@@ -315,6 +318,8 @@ class MinifyCSS extends Minify
 
 	/**
 	 * Moving a css file should update all relative urls.
+	 * Relative references (e.g. ../images/image.gif) in a certain css file, will have to be updated when a file is
+	 * being saved at another location (e.g. ../../images/image.gif, if the new CSS file is 1 folder deeper)
 	 *
 	 * @param string $source The file to update relative urls for.
 	 * @param string $path The path the data will be written to.
@@ -360,6 +365,7 @@ class MinifyCSS extends Minify
 
 	/**
 	 * Shorthand hex color codes.
+	 * #FF0000 -> #F00
 	 *
 	 * @param string $content The file/content to shorten the hex color codes for.
 	 * @param string[optional] $path The path the data should be written to.
