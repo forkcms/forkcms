@@ -273,9 +273,7 @@ jsBackend.ckeditor =
 		{
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
-			CKEDITOR.on('instanceCreated', jsBackend.ckeditor.onReady);
-//			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
-			CKEDITOR.on('instanceDestroyed', jsBackend.ckeditor.onDestroy);
+			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
 
 			// load the editors
 			jsBackend.ckeditor.load();
@@ -380,13 +378,10 @@ jsBackend.ckeditor =
 		}
 	},
 
-	onDestroy: function(evt)
-	{
-		jsBackend.ckeditor.fixRelativeUrls({ editor: evt.editor});
-	},
-
 	onDialogDefinition: function(evt)
 	{
+		var editor = evt.editor
+
 		// get the dialog definition
 		var dialogDefinition = evt.data.definition;
 
@@ -416,6 +411,11 @@ jsBackend.ckeditor =
 		// specific stuff for the link-dialog
 		if(evt.data.name == 'link')
 		{
+			dialogDefinition.onOk = function(evt) {
+				jsBackend.ckeditor.fixRelativeUrls({ editor: editor});
+			};
+
+
 			// remove the advanced tab because it is confusing fo the end-user
 			dialogDefinition.removeContents('advanced');
 
