@@ -103,38 +103,27 @@ class BackendBaseAction
 	 */
 	public function execute()
 	{
-		// if not in debug-mode we should include the minified versions
-		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/js/minified.js'))
-		{
-			// include the minified JS-file
-			$this->header->addJS('minified.js', 'core', false);
-		}
-
-		// in debug-mode or minified files don't exist
-		else
-		{
-			// add jquery, we will need this in every action, so add it globally
-			$this->header->addJS('jquery/jquery.js', 'core');
-			$this->header->addJS('jquery/jquery.ui.js', 'core');
-			$this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'core');
-			$this->header->addJS('jquery/jquery.tools.js', 'core');
-			$this->header->addJS('jquery/jquery.backend.js', 'core');
-		}
+		// add jquery, we will need this in every action, so add it globally
+		$this->header->addJS('jquery/jquery.js', 'core', false);
+		$this->header->addJS('jquery/jquery.ui.js', 'core', false);
+		$this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'core');
+		$this->header->addJS('jquery/jquery.tools.js', 'core', false);
+		$this->header->addJS('jquery/jquery.backend.js', 'core');
 
 		// add items that always need to be loaded
-		$this->header->addJS('utils.js', 'core', true);
-		$this->header->addJS('backend.js', 'core', true);
+		$this->header->addJS('utils.js', 'core');
+		$this->header->addJS('backend.js', 'core', false, true);
 
 		// add module js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
 		{
-			$this->header->addJS($this->getModule() . '.js', null, true);
+			$this->header->addJS($this->getModule() . '.js', null, false, true);
 		}
 
 		// add action js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
 		{
-			$this->header->addJS($this->getAction() . '.js', null, true);
+			$this->header->addJS($this->getAction() . '.js', null, false, true);
 		}
 
 		// add core css files

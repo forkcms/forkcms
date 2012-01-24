@@ -82,7 +82,7 @@ class FrontendHeader extends FrontendBaseObject
 		// add default javascript-files
 		$this->addJS('/frontend/core/js/jquery/jquery.js', false);
 		$this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
-		$this->addJS('/frontend/core/js/jquery/jquery.frontend.js', false);
+		$this->addJS('/frontend/core/js/jquery/jquery.frontend.js', true);
 		$this->addJS('/frontend/core/js/utils.js', true);
 		$this->addJS('/frontend/core/js/frontend.js', false, true);
 	}
@@ -139,6 +139,8 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		$parseThroughPHP = (bool) $parseThroughPHP;
+		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
 		if(substr($file, 0, 4) != 'http') $file = FrontendTheme::getPath($file);
@@ -479,8 +481,8 @@ class FrontendHeader extends FrontendBaseObject
 		$finalURL = FRONTEND_CACHE_URL . '/minified_css/' . $fileName;
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
-		// check that file does not yet exist (if SPOON_DEBUG is true, we should reminify every time)
-		if(!SpoonFile::exists($finalPath) || SPOON_DEBUG)
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
@@ -504,29 +506,15 @@ class FrontendHeader extends FrontendBaseObject
 		$finalURL = FRONTEND_CACHE_URL . '/minified_js/' . $fileName;
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
-		// file already exists (if SPOON_DEBUG is true, we should reminify every time
-		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		{
+			// minify the file
+			require_once PATH_LIBRARY . '/external/minify.php';
+			$css = new MinifyJS(PATH_WWW . $file);
+			$css = $css->minify($finalPath);
+		}
 
-		// grab content
-		$content = SpoonFile::getContent(PATH_WWW . $file);
-
-		// remove comments
-		$content = preg_replace('/\/\*(.*)\*\//iUs', '', $content);
-		$content = preg_replace('/([\t\w]{1,})\/\/.*/i', '', $content);
-
-		// remove tabs
-		$content = preg_replace('/\t/i', ' ', $content);
-
-		// remove faulty newlines
-		$content = preg_replace('/\r/iU', '', $content);
-
-		// remove empty lines
-		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
-
-		// store
-		SpoonFile::setContent($finalPath, $content);
-
-		// return
 		return $finalURL;
 	}
 

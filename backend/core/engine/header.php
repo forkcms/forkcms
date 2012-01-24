@@ -71,7 +71,7 @@ class BackendHeader
 	 * @param bool[optional] $minify Should the CSS be minified?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $module = null, $overwritePath = false, $minify = true, $addTimestamp = null)
+	public function addCSS($file, $module = null, $overwritePath = false, $minify = true, $addTimestamp = false)
 	{
 		$file = (string) $file;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
@@ -128,33 +128,46 @@ class BackendHeader
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addJS($file, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
+	public function addJS($file, $module = null, $minify = true, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = false)
 	{
 		$file = (string) $file;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
+		$minify = (bool) $minify;
 		$parseThroughPHP = (bool) $parseThroughPHP;
 		$overwritePath = (bool) $overwritePath;
+		$addTimestamp = (bool) $addTimestamp;
 
 		// validate parameters
 		if($parseThroughPHP && $overwritePath) throw new BackendException('parseThroughPHP and overwritePath can\'t be both true.');
 
-		// init var
-		$realPath = '';
+		// no minifying when debugging
+		if(SPOON_DEBUG) $minify = false;
+
+		// no minifying when parsing through PHP
+		if($parseThroughPHP) $minify = false;
 
 		// is the given path the real path?
-		if($overwritePath) $realPath = $file;
+		if(!$overwritePath)
+		{
+			// should we parse the js-file? as in assign variables
+			if($parseThroughPHP) $file = '/backend/js.php?module=' . $module . '&amp;file=' . $file . '&amp;language=' . BL::getWorkingLanguage();
 
-		// should we parse the js-file? as in assign variables
-		elseif($parseThroughPHP) $realPath = '/backend/js.php?module=' . $module . '&amp;file=' . $file . '&amp;language=' . BackendLanguage::getWorkingLanguage();
+			// we have to build the path, but core is a special one
+			elseif($module !== 'core') $file = '/backend/modules/' . $module . '/js/' . $file;
 
-		// we have to build the path, but core is a special one
-		elseif($module !== 'core') $realPath = '/backend/modules/' . $module . '/js/' . $file;
+			// core is special because it isn't a real module
+			else $file = '/backend/core/js/' . $file;
+		}
 
-		// core is special because it isn't a real module
-		else $realPath = '/backend/core/js/' . $file;
+		// try to minify
+		if($minify) $file = $this->minifyJS($file);
 
-		// add if not already added
-		if(!in_array(array('file' => $realPath, 'add_timestamp' => $addTimestamp), $this->jsFiles)) $this->jsFiles[] = array('file' => $realPath, 'add_timestamp' => $addTimestamp);
+		// already in array?
+		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles))
+		{
+			// add to files
+			$this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
+		}
 	}
 
 	/**
@@ -191,12 +204,37 @@ class BackendHeader
 		$finalURL = BACKEND_CACHE_URL . '/minified_css/' . $fileName;
 		$finalPath = BACKEND_CACHE_PATH . '/minified_css/' . $fileName;
 
-		// check that file does not yet exist (if SPOON_DEBUG is true, we should reminify every time)
-		if(!SpoonFile::exists($finalPath) || SPOON_DEBUG)
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
 			$css = new MinifyCSS(PATH_WWW . $file);
+			$css = $css->minify($finalPath);
+		}
+
+		return $finalURL;
+	}
+
+	/**
+	 * Minify a JS-file
+	 *
+	 * @param string $file The file to be minified.
+	 * @return string
+	 */
+	private function minifyJS($file)
+	{
+		// create unique filename
+		$fileName = md5($file) . '.js';
+		$finalURL = BACKEND_CACHE_URL . '/minified_js/' . $fileName;
+		$finalPath = BACKEND_CACHE_PATH . '/minified_js/' . $fileName;
+
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		{
+			// minify the file
+			require_once PATH_LIBRARY . '/external/minify.php';
+			$css = new MinifyJS(PATH_WWW . $file);
 			$css = $css->minify($finalPath);
 		}
 

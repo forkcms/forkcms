@@ -70,9 +70,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->loadData();
 
 		// add js
-		$this->header->addJS('jstree/jquery.tree.js');
-		$this->header->addJS('jstree/lib/jquery.cookie.js');
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js', null, false);
+		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);

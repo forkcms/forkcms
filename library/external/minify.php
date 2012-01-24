@@ -456,6 +456,8 @@ class MinifyCSS extends Minify
  *
  * This software is provided by the author "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the author be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
  *
+ * @todo This class is still very much W.I.P., please help contribute to the JS minifier.
+ *
  * @author Matthias Mullie <minify@mullie.eu>
  * @author Tijs Verkoyen <php-css-to-inline-styles@verkoyen.eu>
  * @version 1.0.0
@@ -463,9 +465,85 @@ class MinifyCSS extends Minify
  * @copyright Copyright (c) 2012, Matthias Mullie. All rights reserved.
  * @license BSD License
  */
-class MinifyJS
+class MinifyJS extends Minify
 {
+	/**
+	 * Minify the data.
+	 * Perform all of the available JS optimizations.
+	 *
+	 * @param string[optional] $path The path the data should be written to.
+	 * @return string The minified data.
+	 */
+	public function minify($path = false)
+	{
+		// init content
+		$content = '';
 
+		// loop files
+		foreach($this->data as $source => $css)
+		{
+			// combine js
+			$content .= $css;
+		}
+
+		// minify
+		$content = $this->stripComments($content);
+		$content = $this->stripWhitespace($content);
+
+		// save to path
+		if($path !== false) $this->save($content, $path);
+
+		return $content;
+	}
+
+	/**
+	 * Strip comments.
+	 *
+	 * @param string $content The file/content to strip the comments for.
+	 * @param string[optional] $path The path the data should be written to.
+	 * @return string
+	 */
+	public function stripComments($content, $path = false)
+	{
+		// load the content
+		$content = $this->load($content);
+
+		// strip comments
+		$content = preg_replace('/\/\*(.*?)\*\//s', '', $content);
+		$content = preg_replace('/([\t\w]+)\/\/.*/', '', $content);
+
+		// save to path
+		if($path !== false) $this->save($content, $path);
+
+		return $content;
+	}
+
+	/**
+	 * Strip whitespace.
+	 *
+	 * @param string $content The file/content to strip the whitespace for.
+	 * @param string[optional] $path The path the data should be written to.
+	 * @return string
+	 */
+	public function stripWhitespace($content, $path = false)
+	{
+		// load the content
+		$content = $this->load($content);
+
+		// remove tabs
+		$content = preg_replace('/\t/', ' ', $content);
+
+		// remove faulty newlines
+		$content = preg_replace('/\r/', '', $content);
+
+		// remove empty lines
+		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
+
+		// save to path
+		if($path !== false) $this->save($content, $path);
+
+		return $content;
+	}
 }
 
 /**
