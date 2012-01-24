@@ -360,28 +360,8 @@ jsBackend.ckeditor =
 		}
 	},
 
-	fixRelativeUrls: function(evt)
-	{
-		// get the editor
-		var editor = evt.editor;
-
-		// was the content changed, or is the check forced?
-		if(editor.checkDirty())
-		{
-			var content = editor.getData();
-
-			// replace absolute urls by relative
-			content = content.replace(/href=("|'){$SITE_PROTOCOL}:\/\/{$SITE_DOMAIN}(.*)\1/, 'href="$2"');
-
-			// replace with cleaned content
-			editor.setData(content);
-		}
-	},
-
 	onDialogDefinition: function(evt)
 	{
-		var editor = evt.editor
-
 		// get the dialog definition
 		var dialogDefinition = evt.data.definition;
 
@@ -411,11 +391,6 @@ jsBackend.ckeditor =
 		// specific stuff for the link-dialog
 		if(evt.data.name == 'link')
 		{
-			dialogDefinition.onOk = function(evt)
-			{
-				jsBackend.ckeditor.fixRelativeUrls({ editor: editor });
-			};
-
 			// remove the advanced tab because it is confusing fo the end-user
 			dialogDefinition.removeContents('advanced');
 
@@ -443,8 +418,8 @@ jsBackend.ckeditor =
 							domain = '{$SITE_DOMAIN}';
 							domain = domain.replace(/\/$/, '');
 
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('{$SITE_PROTOCOL}://');
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(domain + evt.data.value);
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
 						}
 				 	}
 			 	]
