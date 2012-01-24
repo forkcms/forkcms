@@ -206,7 +206,7 @@
 }
 
 	#messaging .loadingMessage p {
-		background: url(/backend/core/layout/images/big_spinner.gif) no-repeat center center;
+		background: url(../../images/big_spinner.gif) no-repeat center center;
 		min-height: 32px;
 		padding: 16px 0;
 	}

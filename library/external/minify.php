@@ -110,6 +110,9 @@ class MinifyCSS extends Minify
 		$from = rtrim(str_replace(DIRECTORY_SEPARATOR, '/', $from), '/');
 		$to = rtrim(str_replace(DIRECTORY_SEPARATOR, '/', $to), '/');
 
+		// if we're not dealing with a relative path, just return absolute
+		if(strpos($path, '/') === 0) return $path;
+
 		/*
 		 * Example:
 		 * $path = ../images/img.gif
@@ -519,7 +522,7 @@ abstract class Minify
 
 			// load data
 			$value = $this->load($data);
-			$key = $data != $value ? $data : 0;
+			$key = ($data != $value) ? $data : 0;
 
 			// initialize key
 			if(!array_key_exists($key, $this->data)) $this->data[$key] = '';

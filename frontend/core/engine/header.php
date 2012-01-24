@@ -12,6 +12,7 @@
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendHeader extends FrontendBaseObject
 {
@@ -89,7 +90,7 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Add a CSS file into the array
 	 *
-	 * @param  string $file The path for the CSS-file that should be loaded.
+	 * @param string $file The path for the CSS-file that should be loaded.
 	 * @param bool[optional] $minify Should the CSS be minified?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
@@ -97,6 +98,7 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
 		$file = FrontendTheme::getPath($file);
@@ -322,16 +324,18 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Sort function for CSS-files
 	 *
-	 * @todo this should return $this->cssFiles, making it more usable within getCssFiles
+	 * @return array
 	 */
-	private function cssSort()
+	private function cssSort($cssFiles)
 	{
+		$cssFiles = (array) $cssFiles;
+
 		// init vars
 		$i = 0;
 		$aTemp = array();
 
 		// loop files
-		foreach($this->cssFiles as $file)
+		foreach($cssFiles as $file)
 		{
 			// debug should be the last file
 			if(strpos($file['file'], 'debug.css') !== false) $aTemp['e' . $i][] = $file;
@@ -360,7 +364,7 @@ class FrontendHeader extends FrontendBaseObject
 		}
 
 		// reset property
-		$this->cssFiles = $return;
+		return $return;
 	}
 
 	/**
@@ -389,7 +393,7 @@ class FrontendHeader extends FrontendBaseObject
 	public function getCSSFiles()
 	{
 		// sort the cssfiles
-		$this->cssSort();
+		$this->cssFiles = $this->cssSort($this->cssFiles);
 
 		// fetch files
 		return $this->cssFiles;
@@ -481,7 +485,7 @@ class FrontendHeader extends FrontendBaseObject
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
 			$css = new MinifyCSS(PATH_WWW . $file);
-			$css = $css->minify(FRONTEND_CACHE_PATH . '/minified_css/' . $fileName);
+			$css = $css->minify($finalPath);
 		}
 
 		return $finalURL;
@@ -565,7 +569,7 @@ class FrontendHeader extends FrontendBaseObject
 	private function parseCSS()
 	{
 		// init var
-		$cssFiles = null;
+		$cssFiles = array();
 		$existingCSSFiles = $this->getCSSFiles();
 
 		// if there aren't any JS-files added we don't need to do something
@@ -675,7 +679,7 @@ class FrontendHeader extends FrontendBaseObject
 	private function parseJS()
 	{
 		// init var
-		$jsFiles = null;
+		$jsFiles = array();
 		$existingJSFiles = $this->getJSFiles();
 
 		// if there aren't any JS-files added we don't need to do something
