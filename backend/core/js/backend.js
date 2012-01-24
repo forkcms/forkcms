@@ -411,10 +411,10 @@ jsBackend.ckeditor =
 		// specific stuff for the link-dialog
 		if(evt.data.name == 'link')
 		{
-			dialogDefinition.onOk = function(evt) {
-				jsBackend.ckeditor.fixRelativeUrls({ editor: editor});
+			dialogDefinition.onOk = function(evt)
+			{
+				jsBackend.ckeditor.fixRelativeUrls({ editor: editor });
 			};
-
 
 			// remove the advanced tab because it is confusing fo the end-user
 			dialogDefinition.removeContents('advanced');
