@@ -104,7 +104,7 @@ class FrontendHeader extends FrontendBaseObject
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
 
-		// try to modify
+		// try to minify
 		if($minify) $file = $this->minifyCSS($file);
 
 		// in array
@@ -475,109 +475,15 @@ class FrontendHeader extends FrontendBaseObject
 		$finalURL = FRONTEND_CACHE_URL . '/minified_css/' . $fileName;
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
-		// file already exists (if SPOON_DEBUG is true, we should reminify every time)
-		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
-
-		// grab content
-		$content = SpoonFile::getContent(PATH_WWW . $file);
-
-		// get imports, for now we don't support imports with media, and imports should use url(xxx)
-		$matches = array();
-		$pattern = '/@import';
-		$pattern .=  '.*';
-		$pattern .=  'url\(';
-		$pattern .= 	'["\']?';
-		$pattern .=  		'(.*)';
-		$pattern .= 	'["\']?';
-		$pattern .= '\)';
-		$pattern .= ';/iU';
-		preg_match_all($pattern, $content, $matches);
-
-		// any imports?
-		if(!empty($matches[0]))
+		// check that file does not yet exist (if SPOON_DEBUG is true, we should reminify every time)
+		if(!SpoonFile::exists($finalPath) || SPOON_DEBUG)
 		{
-			$search = array();
-			$replace = array();
-
-			// loop the matches
-			foreach($matches[0] as $i => $import)
-			{
-				// get the path for the file that will be imported
-				$path = realpath(PATH_WWW . dirname($file) . '/' . trim($matches[1][$i], '"\''));
-
-				// only replace the import with the content if we can grab the content of the file
-				if(SpoonFile::exists($path))
-				{
-					$search[] = $import;
-					$replace[] = SpoonFile::getContent($path);
-				}
-			}
-
-			// replace the import statements
-			if(!empty($search)) $content = str_replace($search, $replace, $content);
+			// minify the file
+			require_once PATH_LIBRARY . '/external/minify.php';
+			$css = new MinifyCSS(PATH_WWW . $file);
+			$css = $css->minify(FRONTEND_CACHE_PATH . '/minified_css/' . $fileName);
 		}
 
-		// fix urls
-		$matches = array();
-		$pattern = '/url\(';
-		$pattern .= 	'["\']?';
-		$pattern .= 		'(.*?)';
-		$pattern .= 	'["\']?';
-		$pattern .= 	'\)/is';
-		$content = preg_replace($pattern, 'url("' . dirname($file) . '/$1")', $content);
-
-		// re-fix data
-		$matches = array();
-		$pattern = '/url\(';
-		$pattern .= 	'["\']?';
-		$pattern .= 		'"' . preg_quote(dirname($file), '/') . '\/(data:.*?)"';
-		$pattern .= 	'["\']?';
-		$pattern .= 	'\)/is';
-		$content = preg_replace($pattern, 'url("$1")', $content);
-
-		// remove comments
-		$content = preg_replace('/\/\*(.*?)\*\//is', '', $content);
-
-		// remove tabs
-		$content = preg_replace('/\t/i', '', $content);
-
-		// remove spaces on end of line
-		$content = preg_replace('/ \n/i', "\n", $content);
-
-		// match stuff between brackets
-		$matches = array();
-		preg_match_all('/ \{(.*)}/iUms', $content, $matches);
-
-		// are there any matches
-		if(isset($matches[0]))
-		{
-			// loop matches
-			foreach($matches[0] as $key => $match)
-			{
-				// remove faulty newlines
-				$tempContent = preg_replace('/\r/iU', '', $matches[1][$key]);
-
-				// removes real newlines
-				$tempContent = preg_replace('/\n/iU', ' ', $tempContent);
-
-				// replace the new block in the general content
-				$content = str_replace($matches[0][$key], '{' . $tempContent . '}', $content);
-			}
-		}
-
-		// remove faulty newlines
-		$content = preg_replace('/\r/iU', '', $content);
-
-		// remove empty lines
-		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
-
-		// remove newlines at start and end
-		$content = trim($content);
-
-		// save content
-		SpoonFile::setContent($finalPath, $content);
-
-		// return
 		return $finalURL;
 	}
 
