@@ -1,3 +1,10 @@
+3.2.3 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Core: snippets: made the languages to get the templates for dynamic.
+
+
 3.2.2 (2012-01-24)
 --
 Improvements:
