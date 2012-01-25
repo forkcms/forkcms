@@ -141,7 +141,7 @@ class BackendHeader
 		if($parseThroughPHP && $overwritePath) throw new BackendException('parseThroughPHP and overwritePath can\'t be both true.');
 
 		// no minifying when debugging
-		if(SPOON_DEBUG) $minify = false;
+//		if(SPOON_DEBUG) $minify = false;
 
 		// no minifying when parsing through PHP
 		if($parseThroughPHP) $minify = false;
@@ -210,7 +210,7 @@ class BackendHeader
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
 			$css = new MinifyCSS(PATH_WWW . $file);
-			$css = $css->minify($finalPath);
+			$css->minify($finalPath);
 		}
 
 		return $finalURL;
@@ -230,12 +230,12 @@ class BackendHeader
 		$finalPath = BACKEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+//		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
-			$css = new MinifyJS(PATH_WWW . $file);
-			$css = $css->minify($finalPath);
+			$js = new MinifyJS(PATH_WWW . $file);
+			$js->minify($finalPath);
 		}
 
 		return $finalURL;

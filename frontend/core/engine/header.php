@@ -487,7 +487,7 @@ class FrontendHeader extends FrontendBaseObject
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
 			$css = new MinifyCSS(PATH_WWW . $file);
-			$css = $css->minify($finalPath);
+			$css->minify($finalPath);
 		}
 
 		return $finalURL;
@@ -511,8 +511,8 @@ class FrontendHeader extends FrontendBaseObject
 		{
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
-			$css = new MinifyJS(PATH_WWW . $file);
-			$css = $css->minify($finalPath);
+			$js = new MinifyJS(PATH_WWW . $file);
+			$js->minify($finalPath);
 		}
 
 		return $finalURL;
