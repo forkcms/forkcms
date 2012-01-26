@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Core: snippets: made the languages to get the templates for dynamic.
+* Blog: fixed improper redirect that caused blog archive pagination to malfunction.
 
 
 3.2.2 (2012-01-24)
