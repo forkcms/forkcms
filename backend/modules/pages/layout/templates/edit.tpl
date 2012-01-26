@@ -43,7 +43,7 @@
 			<li><a href="#tabRedirect">{$lblRedirect|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
-			<li><a href="#tabVersions">{$lblPreviousVersions|ucfirst}</a></li>
+			<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
@@ -143,15 +143,6 @@
 		</div>
 
 		<div id="tabVersions">
-			<div class="tableHeading">
-				<div class="oneLiner">
-					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
-					<abbr class="help">(?)</abbr>
-					<div class="tooltip" style="display: none;">
-						<p>{$msgHelpRevisions}</p>
-					</div>
-				</div>
-			</div>
 			{option:drafts}
 				<div class="tableHeading">
 					<div class="oneLiner">
@@ -162,15 +153,28 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="dataGridHolder">
 					{$drafts}
 				</div>
 			{/option:drafts}
+
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
+					</div>
+				</div>
+			</div>
+
 			{option:revisions}
 			<div class="dataGridHolder">
 				{$revisions}
 			</div>
 			{/option:revisions}
+
 			{option:!revisions}
 				<p>{$msgNoRevisions}</p>
 			{/option:!revisions}

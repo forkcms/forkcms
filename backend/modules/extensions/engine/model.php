@@ -911,7 +911,7 @@ class BackendExtensionsModel
 		if($return === false) return false;
 
 		// unlink the random file
-		@unlink($path . '/' . $file);
+		SpoonFile::delete($path . '/' . $file);
 
 		return true;
 	}

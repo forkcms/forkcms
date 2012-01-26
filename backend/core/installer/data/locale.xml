@@ -6361,6 +6361,18 @@
         <translation language="fr"><![CDATA[valeur]]></translation>
         <translation language="es"><![CDATA[valor]]></translation>
       </item>
+      <item type="label" name="Versions">
+        <translation language="nl"><![CDATA[versies]]></translation>
+        <translation language="en"><![CDATA[versions]]></translation>
+        <translation language="hu"><![CDATA[verziók]]></translation>
+        <translation language="ru"><![CDATA[версия]]></translation>
+        <translation language="it"><![CDATA[versione]]></translation>
+        <translation language="tr"><![CDATA[versiyonlar]]></translation>
+        <translation language="cn"><![CDATA[版本]]></translation>
+        <translation language="de"><![CDATA[Versionen]]></translation>
+        <translation language="fr"><![CDATA[versions]]></translation>
+        <translation language="es"><![CDATA[versiones]]></translation>
+      </item>
       <item type="label" name="View">
         <translation language="nl"><![CDATA[bekijken]]></translation>
         <translation language="en"><![CDATA[view]]></translation>

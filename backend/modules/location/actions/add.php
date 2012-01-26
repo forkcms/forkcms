@@ -80,7 +80,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
 
 				// add search index
 				// @todo why is this commented out
-				// BackendSearchModel::addIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+				// BackendSearchModel::saveIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng'])
