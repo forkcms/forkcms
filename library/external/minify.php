@@ -656,32 +656,24 @@ class MinifyJS extends Minify
 		// newlines > linefeed
 		$content = str_replace(array("\r\n", "\r", "\n"), "\n", $content);
 
-		/*
-		 * Terminate lines by semicolon, unless
-		 * - the line is empty
-		 * - the line ends with a comma
-		 * - the line ends with a semicolon
-		 * - the line ends with or the next line begins with && or ||
-		 * - the line ends with or the next line begins with a curly bracket
-		 */
-		$content = preg_replace('/(?<![{};,&|])\s*\n\s*(?![{}]&|)/m', ";", $content);
-
-		// redundant whitespace > remove
-		$content = preg_replace('/(?<=[{}\[\]\(\)=><&\|;:,\?!-\+])\s*|\s*(?=[{}\[\]\(\)=><&\|;:,\?!-\+])/i', '', $content);
-		$content = preg_replace('/\s+/', ' ', $content);
+		// empty lines > collapse
+		$content = preg_replace('/^[ \t]*|[ \t]*$/m', '', $content);
+		$content = preg_replace('/\n+/m', "\n", $content);
 		$content = trim($content);
 
-		// @todo: er moet nog ietske gevonden worden voor code als dit:
-		/*
-		var test = {
-			blah
-		}    <--- HIER MOET EIGENLIJK NE FRIKKIN PUNTKOMMA ACHTER!
-
-		...
-		 */
+		// redundant whitespace > remove
+		$content = preg_replace('/(?<=[{}\[\]\(\)=><&\|;:,\?!\+-])[ \t]*|[ \t]*(?=[{}\[\]\(\)=><&\|;:,\?!\+-])/i', '', $content);
+		$content = preg_replace('/[ \t]+/', ' ', $content);
 
 		// redundant semicolons (followed by another semicolon or closing curly bracket) > remove
-		$content = preg_replace('/;(?=[;}])/', '', $content);
+		$content = preg_replace('/;\s*(?=[;}])/s', '', $content);
+
+		/*
+		 * @todo: we could remove all line feeds, but then we have to be certain that all statements are properly
+		 * terminated with a semi-colon. So we'd first have to parse the statements to see which require a semi-colon,
+		 * add it if it's not present, and then remove the line feeds. The semi-colon just before a closing curly
+		 * bracket can then also be omitted.
+		 */
 
 		// reset data if this function has not been called upon through internal methods
 		if(@func_get_arg(2) === false || @func_get_arg(3) === false)
