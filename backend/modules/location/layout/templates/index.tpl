@@ -14,17 +14,69 @@
 </div>
 
 {option:dataGrid}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblMap|ucfirst}</h3>
-		</div>
-		<div class="options">
-			{option:items}
-				<div id="map" style="height: {$settings.height}px; width: 100%;">
+	<table width="100%">
+		<tr>
+			<td id="leftColumn">
+				<div class="box">
+					<div class="heading">
+						<h3>{$lblMap|ucfirst}</h3>
+					</div>
+
+					{* Map *}
+					<div class="options">
+						{option:items}
+							<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;">
+							</div>
+						{/option:items}
+					</div>
+					<div class="options">
+						<div class="buttonHolderRight">
+							<a href="#" id="saveLiveData" class="submitButton button inputButton button mainButton">
+								<span>{$lblSave|ucfirst}</span>
+							</a>
+						</div>
+					</div>
 				</div>
-			{/option:items}
-		</div>
-	</div>
+			</td>
+
+			{form:settings}
+			<td id="rightColumn" style="width: 300px; padding-left: 10px;">
+				<div class="box">
+					<div class="heading">
+						<h3>{$lblSettings|ucfirst}</h3>
+					</div>
+					<div class="options">
+						<p>
+							<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+							{$ddmZoomLevel} {$ddmZoomLevelError}
+						</p>
+					</div>
+					<div class="options">
+						<p>
+							<label for="width">{$lblWidth|ucfirst}</label>
+							{$txtWidth} {$txtWidthError}
+						</p>
+					</div>
+					<div class="options">
+						<p>
+							<label for="height">{$lblHeight|ucfirst}</label>
+							{$txtHeight} {$txtHeightError}
+						</p>
+					</div>
+					<div class="options">
+						<p>
+							<label for="mapType">{$lblMapType|ucfirst}</label>
+							{$ddmMapType} {$ddmMapTypeError}
+						</p>
+						<div class="buttonHolderRight">
+							<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+						</div>
+					</div>
+				</div>
+			</td>
+			{/form:settings}
+		</tr>
+	</table>
 
 	<div class="dataGridHolder">
 		{$dataGrid}
@@ -35,7 +87,7 @@
 
 <script type="text/javascript">
 	var mapOptions = {
-		zoom: '{$settings.zoom_level}',
+		zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
 		type: '{$settings.map_type}',
 		center: {
 			lat: {$items.0.lat},

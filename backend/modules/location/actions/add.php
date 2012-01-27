@@ -33,7 +33,6 @@ class BackendLocationAdd extends BackendBaseActionAdd
 	{
 		$this->frm = new BackendForm('add');
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
-		$this->frm->addEditor('text');
 		$this->frm->addText('street');
 		$this->frm->addText('number');
 		$this->frm->addText('zip');
@@ -62,7 +61,6 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				// build item
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();
-				$item['text'] = $this->frm->getField('text')->getValue();
 				$item['street'] = $this->frm->getField('street')->getValue();
 				$item['number'] = $this->frm->getField('number')->getValue();
 				$item['zip'] = $this->frm->getField('zip')->getValue();

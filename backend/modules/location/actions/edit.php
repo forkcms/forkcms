@@ -58,7 +58,6 @@ class BackendLocationEdit extends BackendBaseActionEdit
 	{
 		$this->frm = new BackendForm('edit');
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
-		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addText('street', $this->record['street']);
 		$this->frm->addText('number', $this->record['number']);
 		$this->frm->addText('zip', $this->record['zip']);
@@ -106,7 +105,6 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				$item['language'] = BL::getWorkingLanguage();
 				$item['extra_id'] = $this->record['extra_id'];
 				$item['title'] = $this->frm->getField('title')->getValue();
-				$item['text'] = $this->frm->getField('text')->getValue();
 				$item['street'] = $this->frm->getField('street')->getValue();
 				$item['number'] = $this->frm->getField('number')->getValue();
 				$item['zip'] = $this->frm->getField('zip')->getValue();

@@ -29,10 +29,7 @@ class FrontendLocationIndex extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
-		// show message
 		$this->tpl->assign('locationItems', FrontendLocationModel::getAll());
-
-		// hide form
 		$this->tpl->assign('locationSettings', FrontendModel::getModuleSettings('location'));
 	}
 }

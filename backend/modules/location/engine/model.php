@@ -11,6 +11,7 @@
  * In this file we store all generic functions that we will be using in the location module
  *
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendLocationModel
 {
@@ -102,8 +103,8 @@ class BackendLocationModel
 	 */
 	public static function insert($item)
 	{
-		// get db
 		$db = BackendModel::getDB(true);
+		$item['created_on'] = BackendModel::getUTCDate();
 
 		// build extra
 		$extra = array(
@@ -155,6 +156,7 @@ class BackendLocationModel
 	public static function update($item)
 	{
 		$db = BackendModel::getDB(true);
+		$item['edited_on'] = BackendModel::getUTCDate();
 
 		// build extra
 		$extra = array(

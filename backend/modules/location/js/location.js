@@ -1,7 +1,8 @@
 /**
  * Interaction for the location module
  *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 jsBackend.location =
 {
@@ -12,24 +13,21 @@ jsBackend.location =
 	init: function()
 	{
 		if(typeof markers != 'undefined' && typeof mapOptions != 'undefined') jsBackend.location.showMap();
+		
+		// the panning save option
+		$('#saveLiveData').bind('click', jsBackend.location.saveLiveData);
 	},
 
 	addMarker: function(map, bounds, object)
 	{
-		// create position
 		position = new google.maps.LatLng(object.lat, object.lng);
-
-		// add to boundaries
 		bounds.extend(position);
 
 		// add marker
 		var marker = new google.maps.Marker(
 		{
-			// set position
 			position: position,
-			// add to map
 			map: map,
-			// set title
 			title: object.title
 		});
 
@@ -38,6 +36,34 @@ jsBackend.location =
 		{
 			// create infowindow
 			new google.maps.InfoWindow({ content: '<h1>'+ object.title +'</h1>' + object.text }).open(map, marker);
+		});
+	},
+	
+	// save the live data
+	saveLiveData: function(e)
+	{
+		e.preventDefault();
+
+		var mapZoom = jsBackend.location.map.getZoom();
+		var mapType = jsBackend.location.map.getMapTypeId();
+		var mapCenter = jsBackend.location.map.getCenter();
+		var centerLat = mapCenter.lat();
+		var centerLng = mapCenter.lng();
+		
+		$.ajax(
+		{
+			data:
+			{
+				fork: { module: 'location', action: 'save_live_location' },
+				zoom: mapZoom,
+				type: mapType,
+				centerLat: centerLat,
+				centerLng: centerLng
+			},
+			success: function(json, textStatus)
+			{
+				
+			}
 		});
 	},
 
@@ -50,25 +76,8 @@ jsBackend.location =
 		// set options
 		var options =
 		{
-			// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
-			zoom: (mapOptions.zoom == 'auto') ? 0 : mapOptions.zoom,
-
-			// set default center as first item's location
+			zoom: mapOptions.zoom,
 			center: new google.maps.LatLng(mapOptions.center.lat, mapOptions.center.lng),
-
-			// no interface, just the map
-			disableDefaultUI: true,
-
-			// no dragging the map around
-			draggable: false,
-
-			// no zooming in/out using scrollwheel
-			scrollwheel: false,
-
-			// no double click zoom
-			disableDoubleClickZoom: true,
-
-			// set map type
 			mapTypeId: eval('google.maps.MapTypeId.' + mapOptions.type)
 		};
 
