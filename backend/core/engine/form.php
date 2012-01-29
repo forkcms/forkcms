@@ -562,9 +562,17 @@ class BackendFormDate extends SpoonFormDate
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFormImage extends SpoonFormImage
 {
+	/**
+	 * Should the helpTxt span be hidden when parsing the field?
+	 *
+	 * @var	bool
+	 */
+	private $hideHelpTxt = false;
+
 	/**
 	 * This function will return the errors. It is extended so we can do image checks automatically.
 	 *
@@ -580,6 +588,16 @@ class BackendFormImage extends SpoonFormImage
 		}
 
 		return $this->errors;
+	}
+
+	/**
+	 * Hides (or shows) the help text when parsing the field.
+	 *
+	 * @param bool[optional] $on
+	 */
+	public function hideHelpTxt($on = true)
+	{
+		$this->hideHelpTxt = $on;
 	}
 
 	/**
@@ -616,7 +634,7 @@ class BackendFormImage extends SpoonFormImage
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
 
 		// add help txt if needed
-		if(mb_strpos($this->attributes['class'], 'noHelpTxt') === false)
+		if(!$this->hideHelpTxt)
 		{
 			$output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpImageFieldWithMaxFileSize', 'core'), $uploadMaxFilesize) . '</span>';
 		}
@@ -636,9 +654,27 @@ class BackendFormImage extends SpoonFormImage
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFormFile extends SpoonFormFile
 {
+	/**
+	 * Should the helpTxt span be hidden when parsing the field?
+	 *
+	 * @var	bool
+	 */
+	private $hideHelpTxt = false;
+
+	/**
+	 * Hides (or shows) the help text when parsing the field.
+	 *
+	 * @param bool[optional] $on
+	 */
+	public function hideHelpTxt($on = true)
+	{
+		$this->hideHelpTxt = $on;
+	}
+
 	/**
 	 * Parses the html for this filefield.
 	 *
@@ -673,7 +709,7 @@ class BackendFormFile extends SpoonFormFile
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
 
 		// add help txt if needed
-		if(mb_strpos($this->attributes['class'], 'noHelpTxt') === false)
+		if(!$this->hideHelpTxt)
 		{
 			if(isset($this->attributes['extension'])) $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpFileFieldWithMaxFileSize', 'core'), $this->attributes['extension'], $uploadMaxFilesize) . '</span>';
 			else $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpMaxFileSize'), $uploadMaxFilesize) . '</span>';

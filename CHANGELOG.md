@@ -2,7 +2,7 @@
 --
 Improvements:
 
-* Core: add a class 'noHelpTxt' to an image or file field to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
+* Core: added a property 'hideHelpTxt' to the BackendFormImage and BackendFormFile classes to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
 
 Bugfixes:
 
