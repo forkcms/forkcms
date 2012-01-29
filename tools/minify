@@ -70,6 +70,7 @@ function minifyJS {
 	cat ../backend/core/js/jquery/jquery.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js
 	cat ../backend/core/js/jquery/jquery.ui.js >> minified.tmp.js
+	cat ../backend/core/js/jquery/jquery.ui.dialog.patch.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js
 	cat ../backend/core/js/jquery/jquery.tools.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js

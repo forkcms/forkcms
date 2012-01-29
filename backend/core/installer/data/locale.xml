@@ -2228,6 +2228,10 @@
         <translation language="de"><![CDATA[Ungültiges Passwort.]]></translation>
         <translation language="es"><![CDATA[Contraseña invalida.]]></translation>
       </item>
+      <item type="error" name="InvalidPrice">
+        <translation language="nl"><![CDATA[Gelieve een geldig bedrag in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please insert a valid price.]]></translation>
+      </item>
       <item type="error" name="InvalidURL">
         <translation language="nl"><![CDATA[Dit is een ongeldige URL.]]></translation>
         <translation language="en"><![CDATA[This is an invalid URL.]]></translation>
@@ -3452,6 +3456,15 @@
         <translation language="nl"><![CDATA[cronjobs]]></translation>
         <translation language="de"><![CDATA[Cronjobs]]></translation>
       </item>
+      <item type="label" name="CSV">
+        <translation language="nl"><![CDATA[CSV]]></translation>
+        <translation language="en"><![CDATA[CSV]]></translation>
+        <translation language="it"><![CDATA[CSV]]></translation>
+        <translation language="de"><![CDATA[CSV]]></translation>
+        <translation language="fr"><![CDATA[CSV]]></translation>
+        <translation language="hu"><![CDATA[CSV]]></translation>
+        <translation language="es"><![CDATA[CSV]]></translation>
+      </item>
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
         <translation language="en"><![CDATA[custom URL]]></translation>
@@ -4374,6 +4387,10 @@
         <translation language="de"><![CDATA[Layout]]></translation>
         <translation language="fr"><![CDATA[layout]]></translation>
         <translation language="es"><![CDATA[layout]]></translation>
+      </item>
+      <item type="label" name="LineEnding">
+        <translation language="nl"><![CDATA[lijneinde]]></translation>
+        <translation language="en"><![CDATA[line ending]]></translation>
       </item>
       <item type="label" name="Loading">
         <translation language="nl"><![CDATA[loading]]></translation>
@@ -5829,6 +5846,10 @@
         <translation language="fr"><![CDATA[filtre de spam]]></translation>
         <translation language="es"><![CDATA[filtro de spam]]></translation>
       </item>
+      <item type="label" name="SplitCharacter">
+        <translation language="nl"><![CDATA[scheidingsteken]]></translation>
+        <translation language="en"><![CDATA[split character]]></translation>
+      </item>
       <item type="label" name="StartDate">
         <translation language="nl"><![CDATA[startdatum]]></translation>
         <translation language="en"><![CDATA[start date]]></translation>
@@ -6339,6 +6360,18 @@
         <translation language="de"><![CDATA[Wert]]></translation>
         <translation language="fr"><![CDATA[valeur]]></translation>
         <translation language="es"><![CDATA[valor]]></translation>
+      </item>
+      <item type="label" name="Versions">
+        <translation language="nl"><![CDATA[versies]]></translation>
+        <translation language="en"><![CDATA[versions]]></translation>
+        <translation language="hu"><![CDATA[verziók]]></translation>
+        <translation language="ru"><![CDATA[версия]]></translation>
+        <translation language="it"><![CDATA[versione]]></translation>
+        <translation language="tr"><![CDATA[versiyonlar]]></translation>
+        <translation language="cn"><![CDATA[版本]]></translation>
+        <translation language="de"><![CDATA[Versionen]]></translation>
+        <translation language="fr"><![CDATA[versions]]></translation>
+        <translation language="es"><![CDATA[versiones]]></translation>
       </item>
       <item type="label" name="View">
         <translation language="nl"><![CDATA[bekijken]]></translation>
@@ -7880,7 +7913,7 @@
         <translation language="es"><![CDATA[Nombre no válido.]]></translation>
       </item>
       <item type="error" name="InvalidNumber">
-        <translation language="nl"><![CDATA[Ongeldig cijfer.]]></translation>
+        <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>
         <translation language="en"><![CDATA[Invalid number.]]></translation>
         <translation language="hu"><![CDATA[Helytelen szám.]]></translation>
         <translation language="ru"><![CDATA[Неверный номер.]]></translation>
@@ -8007,8 +8040,8 @@
         <translation language="es"><![CDATA[No se ha seleccionado ningún objeto.]]></translation>
       </item>
       <item type="error" name="NoModuleLinked">
-        <translation language="nl"><![CDATA[Kan de URL niet genereren. Zorg dat deze module aan een pagina hangt.]]></translation>
-        <translation language="en"><![CDATA[Cannot generate URL. Create a page that has this module attached to it.]]></translation>
+        <translation language="nl"><![CDATA[Kan de URL niet genereren. Zorg dat deze module aan een pagina gekoppeld is.]]></translation>
+        <translation language="en"><![CDATA[Cannot generate URL. Create a page that has this module linked to it.]]></translation>
         <translation language="hu"><![CDATA[Nem lehet létrehozni URL-t. Hozz létre egy oldalt, amely ehhez a modulhoz kapcsolódik.]]></translation>
         <translation language="it"><![CDATA[Impossibile generare l'URL. Crea una pagina con questo modulo collegato.]]></translation>
         <translation language="ru"><![CDATA[Невозможно создать URL-адрес. Создайте страницу с этим модулем, для привязки.]]></translation>

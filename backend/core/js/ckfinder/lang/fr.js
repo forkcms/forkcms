@@ -2,7 +2,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file, and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -40,7 +40,7 @@ CKFinder.lang['fr'] =
 		skip			: 'Passer',
 		skipAll			: 'Passer tout',
 		makeDecision	: 'Quelle action choisir?',
-		rememberDecision: 'Se rappeller de la décision'
+		rememberDecision: 'Se rappeler de la décision'
 	},
 
 
@@ -78,7 +78,7 @@ CKFinder.lang['fr'] =
 
 	// Files
 	FileRename		: 'Entrez le nouveau nom du fichier: ',
-	FileRenameExt	: 'Êtes-vous sûr de vouloir ¨changer l\'extension de ce fichier? Le fichier pourrait devenir inutilisable.',
+	FileRenameExt	: 'Êtes-vous sûr de vouloir changer l\'extension de ce fichier? Le fichier pourrait devenir inutilisable.',
 	FileRenaming	: 'Renommage en cours...',
 	FileDelete		: 'Êtes-vous sûr de vouloir effacer le fichier "%1"?',
 	FilesLoading	: 'Chargement...',
@@ -150,16 +150,17 @@ CKFinder.lang['fr'] =
 	UploadExtIncorrect	: 'L\'extension du fichier n\'est pas autorisée dans ce dossier.',
 
 	// Flash Uploads
-	UploadLabel			: 'Files to Upload', // MISSING
-	UploadTotalFiles	: 'Total Files:', // MISSING
-	UploadTotalSize		: 'Total Size:', // MISSING
-	UploadAddFiles		: 'Add Files', // MISSING
-	UploadClearFiles	: 'Clear Files', // MISSING
-	UploadCancel		: 'Cancel Upload', // MISSING
-	UploadRemove		: 'Remove', // MISSING
-	UploadRemoveTip		: 'Remove !f', // MISSING
-	UploadUploaded		: 'Uploaded !n%', // MISSING
-	UploadProcessing	: 'Processing...', // MISSING
+	UploadLabel			: 'Fichier à envoyer',
+	UploadTotalFiles	: 'Nombre de fichiers:',
+	UploadTotalSize		: 'Poids total:',
+	UploadSend			: 'Envoyer',
+	UploadAddFiles		: 'Ajouter des fichiers',
+	UploadClearFiles	: 'Supprimer les fichiers',
+	UploadCancel		: 'Annuler l\'envoi',
+	UploadRemove		: 'Retirer',
+	UploadRemoveTip		: 'Retirer !f',
+	UploadUploaded		: 'Téléchargement !n%',
+	UploadProcessing	: 'Progression...',
 
 	// Settings Panel
 	SetTitle		: 'Configuration',
@@ -171,9 +172,10 @@ CKFinder.lang['fr'] =
 	SetDisplayDate	: 'Date',
 	SetDisplaySize	: 'Taille du fichier',
 	SetSort			: 'Classement:',
-	SetSortName		: 'par Nom de Fichier',
-	SetSortDate		: 'par Date',
-	SetSortSize		: 'par Taille',
+	SetSortName		: 'par nom de fichier',
+	SetSortDate		: 'par date',
+	SetSortSize		: 'par taille',
+	SetSortExtension		: 'par extension de fichier',
 
 	// Status Bar
 	FilesCountEmpty : '<Dossier Vide>',
@@ -207,7 +209,7 @@ CKFinder.lang['fr'] =
 	204 : 'Le fichier téléversé est corrompu.',
 	205 : 'Aucun dossier temporaire n\'est disponible sur le serveur.',
 	206 : 'Envoi interrompu pour raisons de sécurité. Le fichier contient des données de type HTML.',
-	207 : 'The uploaded file was renamed to "%1".', // MISSING
+	207 : 'Le fichier téléchargé a été renommé "%1".',
 	300 : 'Le déplacement des fichiers a échoué.',
 	301 : 'La copie des fichiers a échoué.',
 	500 : 'L\'interface de gestion des fichiers est désactivé. Contactez votre administrateur et vérifier le fichier de configuration de CKFinder.',
@@ -225,9 +227,9 @@ CKFinder.lang['fr'] =
 		FolderInvChar	: 'Le nom du dossier ne peut pas contenir les charactères suivants : \n\\ / : * ? " < > |',
 
 		PopupBlockView	: 'Il n\'a pas été possible d\'ouvrir la nouvelle fenêtre. Désactiver votre bloqueur de fenêtres pour ce site.',
-		XmlError		: 'It was not possible to properly load the XML response from the web server.', // MISSING
-		XmlEmpty		: 'It was not possible to load the XML response from the web server. The server returned an empty response.', // MISSING
-		XmlRawResponse	: 'Raw response from the server: %s' // MISSING
+		XmlError		: 'Impossible de charger correctement la réponse XML du serveur web.',
+		XmlEmpty		: 'Impossible de charger la réponse XML du serveur web. Le serveur a renvoyé une réponse vide.',
+		XmlRawResponse	: 'Réponse du serveur: %s'
 	},
 
 	// Imageresize plugin

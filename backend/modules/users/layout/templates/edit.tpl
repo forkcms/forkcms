@@ -38,7 +38,7 @@
 		<ul>
 			<li><a href="#tabProfile">{$lblProfile|ucfirst}</a></li>
 			{option:allowPasswordEdit}<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>{/option:allowPasswordEdit}
-			<li><a href="#tabInterface">{$lblInterface|ucfirst}</a></li>
+			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 		</ul>
 
@@ -74,7 +74,7 @@
 			</div>
 		</div>
 
-		<div id="tabInterface">
+		<div id="tabSettings">
 			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblInterfacePreferences|ucfirst}</h3>
@@ -95,6 +95,21 @@
 					<p>
 						<label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
 						{$ddmNumberFormat} {$ddmNumberFormatError}
+					</p>
+				</div>
+			</div>
+			<div class="subtleBox">
+				<div class="heading">
+					<h3>{$lblCSV|ucfirst}</h3>
+				</div>
+				<div class="options horizontal labelWidthLong">
+					<p>
+						<label for="csvSplitCharacter">{$lblSplitCharacter|ucfirst}</label>
+						{$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
+					</p>
+					<p>
+						<label for="csvLineEnding">{$lblLineEnding|ucfirst}</label>
+						{$ddmCsvLineEnding} {$ddmCsvLineEndingError}
 					</p>
 				</div>
 			</div>
@@ -157,11 +172,11 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:deleteAllowed}
+		{option:showUsersDelete}
 			<a href="{$var|geturl:'delete'}&amp;id={$record.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
-		{/option:deleteAllowed}
+		{/option:showUsersDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

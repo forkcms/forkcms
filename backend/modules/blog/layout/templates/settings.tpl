@@ -44,6 +44,17 @@
 		</div>
 	</div>
 
+	{option:isGod}
+	<div class="box">
+		<div class="heading">
+			<h3>{$lblImage|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<label for="showImageForm">{$chkShowImageForm} {$msgShowImageForm}</label>
+		</div>
+	</div>
+	{/option:isGod}
+
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblNotifications|ucfirst}</h3>

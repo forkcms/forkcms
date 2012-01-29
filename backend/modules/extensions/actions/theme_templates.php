@@ -66,11 +66,15 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 		// create datagrid
 		$this->dataGrid = new BackendDataGridDB(BackendExtensionsModel::QRY_BROWSE_TEMPLATES, array($this->selectedTheme));
 
-		// set colum URLs
-		$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_theme_template') . '&amp;id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_theme_template'))
+		{
+			// set colum URLs
+			$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_theme_template') . '&amp;id=[id]');
 
-		// add edit column
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_theme_template') . '&amp;id=[id]', BL::lbl('Edit'));
+			// add edit column
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_theme_template') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 	}
 
 	/**
@@ -90,7 +94,6 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign datagrid

@@ -1036,6 +1036,7 @@
  * Multiple select box
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 (function($)
 {
@@ -1049,7 +1050,9 @@
 			addLabel: 'add',
 			removeLabel: 'delete',
 			showIconOnly: false,
-			afterBuild: null
+			afterAdd: null,
+			afterBuild: null,
+			maxItems: null
 		};
 
 		// extend options
@@ -1118,6 +1121,8 @@
 				e.preventDefault();
 				e.stopPropagation();
 
+				if(options.maxItems !== null && elements.length >= options.maxItems) return;
+				
 				// add element
 				add();
 			});
@@ -1163,6 +1168,9 @@
 						// set new value
 						$('#' + id).val(elements);
 
+						// call callback if specified
+						if(options.afterAdd != null) { options.afterAdd(value); }
+
 						// rebuild element list
 						build();
 					}
@@ -1190,7 +1198,9 @@
 						html += '	<li class="oneLiner">' +
 								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
 								'		<div class="buttonHolder">' +
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+								'				<span>' + options.removeLabel + '</span></a>' +
+								'			</a>' +
 								'		</div>' +
 								'	</li>';
 
@@ -1208,7 +1218,7 @@
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
 				$('#addValue-' + id).removeClass('disabled').prop('disabled', false);
-				if($('#addValue-' + id + ' option:enabled').length == 0)
+				if($('#addValue-' + id + ' option:enabled').length == 0 || (options.maxItems !== null && elements.length >= options.maxItems))
 				{
 					$('#addButton-' + id).addClass('disabledButton');
 					$('#addValue-' + id).addClass('disabled').prop('disabled', true);

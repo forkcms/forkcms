@@ -38,6 +38,14 @@
         <translation language="hu"><![CDATA[app secret]]></translation>
         <translation language="es"><![CDATA[app secret]]></translation>
       </item>
+      <item type="label" name="MaximumWidth">
+        <translation language="nl"><![CDATA[maximale breedte]]></translation>
+        <translation language="en"><![CDATA[maximum width]]></translation>
+      </item>
+      <item type="label" name="MaximumHeight">
+        <translation language="nl"><![CDATA[maximale hoogte]]></translation>
+        <translation language="en"><![CDATA[maximum height]]></translation>
+      </item>
       <item type="label" name="SEOSettings">
         <translation language="nl"><![CDATA[SEO instellingen]]></translation>
         <translation language="en"><![CDATA[SEO settings]]></translation>
@@ -79,6 +87,14 @@
         <translation language="fr"><![CDATA[Codes d'accès pour webservices.]]></translation>
         <translation language="de"><![CDATA[Zugangscode für Webdienste.]]></translation>
         <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
+      </item>
+      <item type="message" name="HelpCkfinderMaximumWidth">
+        <translation language="nl"><![CDATA[Stel de maximale breedte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
+        <translation language="en"><![CDATA[Configure the maximum width (in pixels) that CKFinder can be opened at.]]></translation>
+      </item>
+      <item type="message" name="HelpCkfinderMaximumHeight">
+        <translation language="nl"><![CDATA[Stel de maximale hoogte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
+        <translation language="en"><![CDATA[Configure the maximum height (in pixels) that CKFinder can be opened at.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatLong">
         <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
@@ -279,8 +295,8 @@
         <translation language="es"><![CDATA[Optar por ignorar el servicio Yahoo! Directory.]]></translation>
       </item>
       <item type="message" name="HelpTimeFormat">
-        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
-        <translation language="en"><![CDATA[This format is used to display dates on the website.]]></translation>
+        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van tijdstippen in de frontend.]]></translation>
+        <translation language="en"><![CDATA[This format is used to display times on the website.]]></translation>
         <translation language="it"><![CDATA[Questo formato è usato per visualizzare le date nel sito.]]></translation>
         <translation language="ru"><![CDATA[Формат даты, используемый на сайте.]]></translation>
         <translation language="cn"><![CDATA[这个格式用于显示网站上的日期。]]></translation>

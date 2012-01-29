@@ -100,6 +100,12 @@ class SpoonFormElement
 	 */
 	public function isSubmitted()
 	{
+		// request method might not exist
+		if(!isset($_SERVER['REQUEST_METHOD']))
+		{
+			$_SERVER['REQUEST_METHOD'] = 'POST';
+		}
+
 		// post/get data
 		$data = $this->getMethod(true);
 

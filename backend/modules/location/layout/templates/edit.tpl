@@ -31,10 +31,8 @@
 				<label for="text">{$lblContent|ucfirst}</label>
 			</h3>
 		</div>
-		<div class="options">
-			<p>
-				{$txtText} {$txtTextError}
-			</p>
+		<div class="optionsRTE">
+			{$txtText} {$txtTextError}
 		</div>
 	</div>
 
@@ -67,18 +65,20 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showLocationDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+			<p>
+				{$msgConfirmDelete|sprintf:{$item.title}}
+			</p>
+		</div>
+		{/option:showLocationDelete}
+
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>
-	</div>
-
-	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-		<p>
-			{$msgConfirmDelete|sprintf:{$item.title}}
-		</p>
 	</div>
 {/form:edit}
 
@@ -98,7 +98,7 @@
 				lat: {$item.lat},
 				lng: {$item.lng},
 				title: '{$item.title}',
-				text: '{$item.text|stripnewlines}' 
+				text: '{$item.text|stripnewlines}'
 			});
 		{/option:item.lng}
 	{/option:item.lat}

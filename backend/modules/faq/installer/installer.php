@@ -95,6 +95,7 @@ class FaqInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'faq', 'delete_category');
 		$this->setActionRights(1, 'faq', 'sequence_questions');
 		$this->setActionRights(1, 'faq', 'process_feedback');
+		$this->setActionRights(1, 'faq', 'delete_feedback');
 		$this->setActionRights(1, 'faq', 'settings');
 
 		$faqId = $this->insertExtra('faq', 'block', 'Faq');

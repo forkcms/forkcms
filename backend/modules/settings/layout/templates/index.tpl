@@ -154,7 +154,7 @@
 
 	<div class="box horizontal">
 		<div class="heading">
-			<h3>CK Finder</h3>
+			<h3>CKFinder</h3>
 		</div>
 		<div class="options labelWidthLong">
 			<p>
@@ -177,7 +177,7 @@
 			</p>
 		</div>
 	</div>
-	
+
 	<div class="box horizontal">
 		<div class="heading">
 			<h3>Facebook</h3>

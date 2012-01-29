@@ -89,7 +89,7 @@ class SpoonFormTextarea extends SpoonFormInput
 			if(isset($data[$this->getName()]))
 			{
 				// value
-				$value = $data[$this->attributes['name']];
+				$value = (string) $data[$this->attributes['name']];
 
 				// maximum length?
 				if(isset($this->attributes['maxlength']) && $this->attributes['maxlength'] > 0) $value = mb_substr($value, 0, (int) $this->attributes['maxlength'], SPOON_CHARSET);
@@ -175,7 +175,7 @@ class SpoonFormTextarea extends SpoonFormInput
 		$data = $this->getMethod(true);
 
 		// validate
-		if(!(isset($data[$this->getName()]) && trim($data[$this->attributes['name']]) != ''))
+		if(!(isset($data[$this->getName()]) && trim((string) $data[$this->attributes['name']]) != ''))
 		{
 			if($error !== null) $this->setError($error);
 			return false;

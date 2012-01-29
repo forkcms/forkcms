@@ -345,10 +345,13 @@ class BackendPagesModel
 		$links = array();
 
 		// init var
-		$cachedTitles = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.navigation_title
-																FROM pages AS i
-																WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
-																AND i.language = ?', $language);
+		$cachedTitles = (array) BackendModel::getDB()->getPairs(
+			'SELECT i.id, i.navigation_title
+			 FROM pages AS i
+			 WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
+			 AND i.language = ?',
+			array($language)
+		);
 
 		// loop the types in the order we want them to appear
 		foreach(array('page', 'meta', 'footer', 'root') as $type)

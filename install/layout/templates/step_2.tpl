@@ -24,6 +24,8 @@
 				<h3><span class="{$phpVersion}">{$phpVersion}</span> PHP version</h3>
 				<p>We require at least PHP 5.2</p>
 
+				<h3><span class="{$subfolder}">{$subfolder}</span> Fork CMS can't be installed in subfolders</h3>
+
 				<h3>PHP Extensions</h3>
 				<h4><span class="{$extensionCURL}">{$extensionCURL}</span> cURL</h4>
 				<p>

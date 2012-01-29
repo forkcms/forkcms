@@ -29,7 +29,7 @@ class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
 		if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
 
 		// list id
-		$ids = (array) explode(',', rtrim($newIdSequence, ','));
+		$ids = (array) explode('|', rtrim($newIdSequence, '|'));
 
 		// loop id's and set new sequence
 		foreach($ids as $i => $id)

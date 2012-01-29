@@ -106,7 +106,12 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setColumnHidden('page_encoded');
-			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule()))
+			{
+				$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			}
 
 			// parse the datagrid
 			$this->tpl->assign('dgExitPages', $dataGrid->getContent());
@@ -123,7 +128,12 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
-			$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule()))
+			{
+				$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			}
 
 			// set headers
 			$dataGrid->setHeaderLabels(
@@ -145,7 +155,12 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setColumnHidden('page_encoded');
-			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule()))
+			{
+				$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			}
 
 			// set headers
 			$dataGrid->setHeaderLabels(

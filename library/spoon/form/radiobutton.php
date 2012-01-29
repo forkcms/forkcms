@@ -241,7 +241,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 			$data = $this->getMethod(true);
 
 			// correct
-			if(isset($data[$this->name]) && isset($this->values[$data[$this->name]])) return true;
+			if(isset($data[$this->name]) && isset($this->values[(string) $data[$this->name]])) return true;
 		}
 
 		// oh-oh

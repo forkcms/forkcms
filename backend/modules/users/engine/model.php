@@ -160,6 +160,32 @@ class BackendUsersModel
 	}
 
 	/**
+	 * Get the possible line endings for a CSV-file
+	 *
+	 * @return array
+	 */
+	public static function getCSVLineEndings()
+	{
+		return array(
+			array('\n' => '\n'),
+			array('\r\n' => '\r\n')
+		);
+	}
+
+	/**
+	 * Get the possible CSV split characters
+	 *
+	 * @return array
+	 */
+	public static function getCSVSplitCharacters()
+	{
+		return array(
+			array(';' => ';'),
+			array(',' => ',')
+		);
+	}
+
+	/**
 	 * Fetch the list of date formats including examples of these formats.
 	 *
 	 * @return array

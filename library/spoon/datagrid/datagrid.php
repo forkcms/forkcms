@@ -817,7 +817,7 @@ class SpoonDataGrid
 			$this->parseRowFunctions($record, $this->attributes['row']);
 
 			// reset row
-			$row = array('attributes' => '', 'oddAttributes' => '', 'evenAttributes' => '', 'columns' => array());
+			$row = array('attributes' => '', 'columns' => array());
 
 			// row attributes
 			$row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
@@ -836,10 +836,41 @@ class SpoonDataGrid
 			else $row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
 
 			// odd row attributes (reversed since the first $i = 0)
-			if(!SpoonFilter::isOdd($i)) $row['oddAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_odd']));
+			if(!SpoonFilter::isOdd($i)) $cycleAttributes = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_odd']));
 
 			// even row attributes
-			else $row['evenAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_even']));
+			else $cycleAttributes = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_even']));
+
+			// no longer overwrite default attributes with odd/even attributes.
+			if(!empty($row['attributes']))
+			{
+				$cycleData = array();
+				$rowData = array();
+				preg_match_all('/( (.*?)=\"(.*?)\")/', $row['attributes'], $rowData);
+				preg_match_all('/( (.*?)=\"(.*?)\")/', $cycleAttributes, $cycleData);
+
+				// go trough the attribute data to see if anything matches
+				foreach($cycleData[2] as $cycleAttribute => $cycleValue)
+				{
+					if(in_array($cycleValue, $rowData[2]))
+					{
+						$rowData[3][$cycleAttribute] .= ' ' . $cycleData[3][$cycleAttribute];
+
+						// remove the data so we can use the others to merge the arrays
+						unset($cycleData[2][$cycleAttribute], $cycleData[3][$cycleAttribute]);
+					}
+				}
+
+				// merge all the values, so we get everything we need
+				$rowData[2] = array_merge($rowData[2], $cycleData[2]);
+				$rowData[3] = array_merge($rowData[3], $cycleData[3]);
+
+				// rebuild the data
+				$row['attributes'] = $this->getHTMLAttributes(array_combine($rowData[2], $rowData[3]));
+			}
+
+			// no match, just assign the cycle attributes as the row attributes
+			else $row['attributes'] = $cycleAttributes;
 
 			// define the columns
 			$columns = array();
@@ -1655,11 +1686,12 @@ class SpoonDataGrid
 	 */
 	public function setEvenRowAttributes(array $attributes)
 	{
-		// has results
 		if($this->source->getNumResults() > 0)
 		{
-			// add to the list
-			foreach($attributes as $key => $value) $this->attributes['row_even'][(string) $key] = (string) $value;
+			foreach($attributes as $key => $value)
+			{
+				$this->attributes['row_even'][(string) $key] = (string) $value;
+			}
 		}
 	}
 
@@ -1694,7 +1726,6 @@ class SpoonDataGrid
 	 */
 	public function setOddRowAttributes(array $attributes)
 	{
-		// has results
 		if($this->source->getNumResults() > 0)
 		{
 			// add to the list

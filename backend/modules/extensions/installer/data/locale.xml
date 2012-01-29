@@ -41,7 +41,8 @@
           
             <p>
               Cronjobs roepen perdiodiek, op bepaalde tijdstippen, een script aan.<br />
-              Cronjobs kunnen ofwel commandline aangeroepen worden, alsook via je webserver.
+              Cronjobs kunnen ofwel commandline aangeroepen worden, alsook via je webserver.<br />
+              Probeer bij het instellen van cronjobs op servers met meerdere Fork CMS installaties de uitvoering van cronjobs te spreiden door de minuten parameter aan te passen.
             </p>
             <p>
               Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />
@@ -53,7 +54,8 @@
           
             <p>
               Cronjobs periodically, on a set timeframe, perform a call to script.<br />
-              Cronjobs can be executed either through commandline as well as over your webserver.
+              Cronjobs can be executed either through commandline as well as over your webserver.<br />
+              When setting cronjobs on servers with several Fork CMS installations try to spread the execution by changing the minutes parameter.
             </p>
             <p>
               Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />
@@ -517,6 +519,10 @@
         <translation language="fr"><![CDATA[La position %s est réservée.]]></translation>
         <translation language="hu"><![CDATA[A %s pozíció lefoglalva.]]></translation>
         <translation language="es"><![CDATA[La posciión %s está reservada.]]></translation>
+      </item>
+      <item type="error" name="LibraryFileAlreadyExists">
+        <translation language="nl"><![CDATA[Het library-bestand "%1$s" bestond al van een andere module. Deze module werkt mogelijk niet optimaal.]]></translation>
+        <translation language="en"><![CDATA[The library-file "%1$s" already existed by another module. This module may not function properly.]]></translation>
       </item>
       <item type="error" name="ThemeAlreadyExists">
         <translation language="nl"><![CDATA[Het thema "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>

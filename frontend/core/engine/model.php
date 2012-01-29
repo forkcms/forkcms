@@ -29,6 +29,13 @@ class FrontendModel
 	private static $moduleSettings = array();
 
 	/**
+	 * Visitor id from tracking cookie
+	 *
+	 * @var	string
+	 */
+	private static $visitorId;
+
+	/**
 	 * Add a number to the string
 	 *
 	 * @param string $string The string where the number will be appended to.
@@ -472,6 +479,25 @@ class FrontendModel
 	}
 
 	/**
+	 * Get the visitor's id (using a tracking cookie)
+	 *
+	 * @return string
+	 */
+	public static function getVisitorId()
+	{
+		// check if tracking id is fetched already
+		if(self::$visitorId !== null) return self::$visitorId;
+
+		// get/init tracking identifier
+		self::$visitorId = SpoonCookie::exists('track') ? (string) SpoonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
+
+		// set/prolong tracking cookie
+		SpoonCookie::set('track', self::$visitorId, 86400 * 365);
+
+		return self::getVisitorId();
+	}
+
+	/**
 	 * General method to check if something is spam
 	 *
 	 * @param string $content The content that was submitted.
@@ -823,16 +849,16 @@ class FrontendModel
 		// get db
 		$db = self::getDB(true);
 
-		// update if already existing
-		// @todo refactor this nasty if statement
-		if((int) $db->getVar('SELECT COUNT(*)
-									FROM hooks_subscriptions AS i
-									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
-									array($eventModule, $eventName, $module)) > 0)
-		{
-			// update
-			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
-		}
+		// check if the subscription already exists
+		$exists = (bool) $db->getVar(
+			'SELECT COUNT(*)
+			 FROM hooks_subscriptions AS i
+			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
+			array($eventModule, $eventName, $module)
+		);
+
+		// update
+		if($exists) $db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
 
 		// insert
 		else $db->insert('hooks_subscriptions', $item);

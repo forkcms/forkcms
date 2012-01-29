@@ -93,12 +93,18 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 		// set the amount of profiles
 		$this->dgGroups->setColumnFunction(array(__CLASS__, 'parseNumProfiles'), array('[id]', '[members_count]'), 'members_count');
 
-		// set column URLs
-		$this->dgGroups->setColumnURL('name', BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
-		$this->dgGroups->setColumnURL('members_count', BackendModel::createURLForAction('index') . '&amp;group=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index'))
+		{
+			$this->dgGroups->setColumnURL('members_count', BackendModel::createURLForAction('index') . '&amp;group=[id]');
+		}
 
-		// add columns
-		$this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_group'))
+		{
+			$this->dgGroups->setColumnURL('name', BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
+			$this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
+		}
 	}
 
 	/**
@@ -119,8 +125,10 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 	/**
 	 * Parse & display the page.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse datagrid
 		$this->tpl->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
 
@@ -148,8 +156,15 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 		// no items
 		else $output = $numProfiles . ' ' . BL::getLabel('Profiles');
 
-		// complete output
-		return '<a href="' . BackendModel::createURLForAction('index') . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// complete output
+			$output = '<a href="' . BackendModel::createURLForAction('index') . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
+
+		}
+
+		return $output;
 	}
 
 	/**

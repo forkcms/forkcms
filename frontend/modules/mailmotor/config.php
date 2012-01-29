@@ -28,6 +28,9 @@ class FrontendMailmotorConfig extends FrontendBaseConfig
 	 */
 	protected $disabledActions = array();
 
+	/**
+	 * @param string $module
+	 */
 	public function __construct($module)
 	{
 		parent::__construct($module);

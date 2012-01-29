@@ -3,11 +3,14 @@
 
 <div class="pageTitle">
 	<h2>{$lblStatistics|ucfirst} {$lblFor} &ldquo;{$campaign.name}&rdquo;</h2>
+
+	{option:showMailmotorExportStatisticsCampaign}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'export_statistics_campaign'}&amp;id={$campaign.id}" class="button icon iconExport" title="{$lblExportStatistics|ucfirst}">
 			<span>{$lblExportStatistics|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showMailmotorExportStatisticsCampaign}
 </div>
 
 <div class="box">
@@ -76,11 +79,13 @@
 </div>
 {/option:dataGrid}
 
+{option:showMailmotorCampaigns}
 <div class="buttonHolder">
 	<a href="{$var|geturl:'campaigns'}" class="button" title="{$lblCampaigns|ucfirst}">
 		<span>{$msgBackToCampaigns|sprintf:{$campaign.name}}</span>
 	</a>
 </div>
+{/option:showMailmotorCampaigns}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `analytics_keywords` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
-
 CREATE TABLE IF NOT EXISTS `analytics_landing_pages` (
  `id` int(11) NOT NULL auto_increment,
  `page_path` varchar(255) NOT NULL,
@@ -21,14 +20,12 @@ CREATE TABLE IF NOT EXISTS `analytics_landing_pages` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
-
 CREATE TABLE IF NOT EXISTS `analytics_pages` (
  `id` int(11) NOT NULL auto_increment,
  `page` varchar(255) NOT NULL,
  `date_viewed` datetime NOT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
 
 
 CREATE TABLE IF NOT EXISTS `analytics_referrers` (

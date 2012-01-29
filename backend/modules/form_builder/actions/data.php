@@ -119,11 +119,15 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		$this->dataGrid->setSortingColumns(array('sent_on'), 'sent_on');
 		$this->dataGrid->setSortParameter('desc');
 
-		// set colum URLs
-		$this->dataGrid->setColumnURL('sent_on', BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('data_details'))
+		{
+			// set colum URLs
+			$this->dataGrid->setColumnURL('sent_on', BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=[id]');
 
-		// add edit column
-		$this->dataGrid->addColumn('details', null, BL::getLabel('Details'), BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date'])) . '&amp;id=[id]', BL::getLabel('Details'));
+			// add edit column
+			$this->dataGrid->addColumn('details', null, BL::getLabel('Details'), BackendModel::createURLForAction('data_details', null, null, array('start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date'])) . '&amp;id=[id]', BL::getLabel('Details'));
+		}
 
 		// date
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'calculateTimeAgo'), '[sent_on]', 'sent_on', false);
@@ -154,8 +158,10 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	/**
 	 * Parse the datagrid and the reports
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 

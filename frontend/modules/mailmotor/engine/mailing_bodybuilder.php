@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+/**
+ * This builds the mailing's body
+ *
+ * @author Dave Lens <dave.lens@netlash.com>
+ */
 class MailingBodyBuilder
 {
 	/**
@@ -24,48 +36,6 @@ class MailingBodyBuilder
 	public function __construct()
 	{
 		require 'external/css_to_inline_styles.php';
-	}
-
-	/**
-	 * Adds Google UTM GET Parameters to all anchor links in the mailing
-	 *
-	 * @param string $body
-	 * @return string The given HTML content, with the UTM-vars assigned.
-	 */
-	private function processUTMParameters($body)
-	{
-		// search for all hrefs
-		preg_match_all('/href="(.*)"/isU', $body, $matches);
-
-		// check if we have matches
-		if(!isset($matches[1]) || empty($matches[1])) return $body;
-
-		// build the google vars query
-		$utm = $this->getUTMParameters();
-		$params['utm_source'] = $utm['source'];
-		$params['utm_medium'] = $utm['medium'];
-		$params['utm_campaign'] = $utm['campaign'];
-
-		// build google vars query
-		$googleQuery = http_build_query($params);
-
-		// reserve search vars
-		$search = array();
-		$replace = array();
-
-		// loop the matches
-		foreach($matches[1] as $match)
-		{
-			// ignore #
-			if(strpos($match, '#') > -1) continue;
-
-			// add results to search/replace stack
-			$search[] = 'href="' . $match . '"';
-			$replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
-		}
-
-		// replace the content HTML with the replace values
-		return str_replace($search, $replace, $body);
 	}
 
 	/**
@@ -113,32 +83,49 @@ class MailingBodyBuilder
 		return $body;
 	}
 
+	/**
+	 * Disable plaintext.
+	 */
 	public function disablePlaintext()
 	{
 		$this->plaintext = false;
 	}
 
+	/**
+	 * Enable plaintext.
+	 */
 	public function enablePlaintext()
 	{
 		$this->plaintext = true;
 	}
 
+	/**
+	 * Retrieve the CSS.
+	 */
 	public function getCSS()
 	{
 		return $this->css;
 	}
 
+	/**
+	 * Retrieve the editor content.
+	 */
 	public function getEditorContent()
 	{
 		return $this->html;
 	}
 
+	/**
+	 * Retrieve template content.
+	 */
 	public function getTemplateContent()
 	{
 		return $this->templateHtml;
 	}
 
 	/**
+	 * Get the Google UTM GET parameters.
+	 *
 	 * @return array
 	 */
 	public function getUTMParameters()
@@ -147,7 +134,9 @@ class MailingBodyBuilder
 	}
 
 	/**
-	 * @return bool If we should return a plaintext mailing or not.
+	 * Should we return a plaintext mailing or not.
+	 *
+	 * @return bool
 	 */
 	public function isPlaintext()
 	{
@@ -175,6 +164,8 @@ class MailingBodyBuilder
 	}
 
 	/**
+	 * Process the replacements.
+	 *
 	 * @param string $body
 	 * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
 	 * @return string
@@ -191,6 +182,50 @@ class MailingBodyBuilder
 	}
 
 	/**
+	 * Adds Google UTM GET parameters to all anchor links in the mailing
+	 *
+	 * @param string $body
+	 * @return string The given HTML content, with the UTM-vars assigned.
+	 */
+	private function processUTMParameters($body)
+	{
+		// search for all hrefs
+		preg_match_all('/href="(.*)"/isU', $body, $matches);
+
+		// check if we have matches
+		if(!isset($matches[1]) || empty($matches[1])) return $body;
+
+		// build the google vars query
+		$utm = $this->getUTMParameters();
+		$params['utm_source'] = $utm['source'];
+		$params['utm_medium'] = $utm['medium'];
+		$params['utm_campaign'] = $utm['campaign'];
+
+		// build google vars query
+		$googleQuery = http_build_query($params);
+
+		// reserve search vars
+		$search = array();
+		$replace = array();
+
+		// loop the matches
+		foreach($matches[1] as $match)
+		{
+			// ignore #
+			if(strpos($match, '#') > -1) continue;
+
+			// add results to search/replace stack
+			$search[] = 'href="' . $match . '"';
+			$replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
+		}
+
+		// replace the content HTML with the replace values
+		return str_replace($search, $replace, $body);
+	}
+
+	/**
+	 * Set the css.
+	 *
 	 * @param string $css The template CSS to parse through the body.
 	 */
 	public function setCSS($css)
@@ -199,6 +234,8 @@ class MailingBodyBuilder
 	}
 
 	/**
+	 * Set the editor content.
+	 *
 	 * @param string $html What the user entered in the editor in the CMS.
 	 */
 	public function setEditorContent($html)
@@ -207,6 +244,8 @@ class MailingBodyBuilder
 	}
 
 	/**
+	 * Set the template content.
+	 *
 	 * @param string $html The HTML of the template the user selected in the CMS.
 	 */
 	public function setTemplateContent($html)
@@ -215,7 +254,11 @@ class MailingBodyBuilder
 	}
 
 	/**
+	 * Set the Google UTM GET parameters.
+	 *
 	 * @param string $html What the user entered in the editor in the CMS.
+	 * @param string[optional] $source
+	 * @param string[optional] $medium
 	 */
 	public function setUTMParameters($campaign, $source = 'mailmotor', $medium = 'email')
 	{
