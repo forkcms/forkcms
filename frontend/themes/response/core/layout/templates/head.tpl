@@ -21,13 +21,10 @@
 	{* google fonts *}
 	<link href='http://fonts.googleapis.com/css?family=Pacifico|Oswald|Crimson+Text:400,400italic' rel='stylesheet' type='text/css'>
 
-	{* Stylesheets 
+	{* Stylesheets *}
 	{iteration:cssFiles}
 	<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
-	*}
-	
-	<link rel="stylesheet" href="{$THEME_URL}/core/layout/css/screen.css" />
 
 	{* HTML5, respond Javascript *}
 	<!--[if lt IE 9]>
