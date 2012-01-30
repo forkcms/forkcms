@@ -1,5 +1,9 @@
 3.2.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: added a property 'hideHelpTxt' to the BackendFormImage and BackendFormFile classes to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
+
 Bugfixes:
 
 * Core: snippets: made the languages to get the templates for dynamic.
