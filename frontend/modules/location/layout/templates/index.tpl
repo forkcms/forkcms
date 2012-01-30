@@ -23,7 +23,7 @@
 		var myOptions =
 		{
 			zoom: '{$locationSettings.zoom_level}' == 'auto' ? 0 : {$locationSettings.zoom_level},
-			center: new google.maps.LatLng({$locationItems.0.lat}, {$locationItems.0.lng}),
+			center: new google.maps.LatLng({$locationSettings.center.lat}, {$locationSettings.center.lng}),
 			mapTypeId: google.maps.MapTypeId.{$locationSettings.map_type}
 		};
 

@@ -11,17 +11,51 @@
  * This is the index-action
  *
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendLocationIndex extends FrontendBaseBlock
 {
+	/**
+	 * @var array
+	 */
+	protected $items = array(), $settings = array();
+
 	/**
 	 * Execute the extra
 	 */
 	public function execute()
 	{
 		parent::execute();
+
 		$this->loadTemplate();
+		$this->loadData();
+
 		$this->parse();
+	}
+
+	/**
+	 * Load the data
+	 */
+	protected function loadData()
+	{
+		$this->items = FrontendLocationModel::getAll();
+		$this->settings = FrontendLocationModel::getMapSettings(0);
+		$firstMarker = current($this->items);
+		if(empty($this->settings))
+		{
+			$settings = FrontendModel::getModuleSettings();
+			$this->settings = $settings['location'];
+
+			$this->settings['center']['lat'] = $firstMarker['lat'];
+			$this->settings['center']['lng'] = $firstMarker['lng'];
+		}
+
+		// no center point given yet, use the first occurance
+		if(!isset($this->settings['center']))
+		{
+			$this->settings['center']['lat'] = $firstMarker['lat'];
+			$this->settings['center']['lng'] = $firstMarker['lng'];
+		}
 	}
 
 	/**
@@ -29,7 +63,7 @@ class FrontendLocationIndex extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('locationItems', FrontendLocationModel::getAll());
-		$this->tpl->assign('locationSettings', FrontendModel::getModuleSettings('location'));
+		$this->tpl->assign('locationItems', $this->items);
+		$this->tpl->assign('locationSettings', $this->settings);
 	}
 }

@@ -5,7 +5,7 @@
 *}
 
 {option:widgetLocationItems}
-<div id="mapWidget" style="height: {$widgetLocationSettings.height_widget}px; width: {$widgetLocationSettings.width_widget}px;"></div>
+<div id="mapWidget" style="height: {$widgetLocationSettings.height}px; width: {$widgetLocationSettings.width}px;"></div>
 
 <div id="widgetLocationItemText" style="display: none;">
 	<p>{$widgetLocationItems.street} {$widgetLocationItems.number}</p>
@@ -19,16 +19,16 @@
 
 	var options =
 	{
-		zoom: '{$widgetLocationSettings.zoom_level_widget}' == 'auto' ? 0 : {$widgetLocationSettings.zoom_level_widget},
+		zoom: '{$widgetLocationSettings.zoom_level}' == 'auto' ? 0 : {$widgetLocationSettings.zoom_level},
 		center: new google.maps.LatLng({$widgetLocationItems.lat}, {$widgetLocationItems.lng}),
-		mapTypeId: google.maps.MapTypeId.{$widgetLocationSettings.map_type_widget}
+		mapTypeId: google.maps.MapTypeId.{$widgetLocationSettings.map_type}
 	};
 
 	// create map
 	var mapWidget = new google.maps.Map(document.getElementById('mapWidget'), options);
 
 	// set zoom automatically, defined by points (if allowed)
-	if('{$widgetLocationSettings.zoom_level_widget}' == 'auto') mapWidget.fitBounds(latlngBounds);
+	if('{$widgetLocationSettings.zoom_level}' == 'auto') mapWidget.fitBounds(latlngBounds);
 
 	// add marker
 	var marker = new google.maps.Marker(
