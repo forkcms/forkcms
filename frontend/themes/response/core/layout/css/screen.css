@@ -52,9 +52,6 @@ h3 { font-size: 1em; line-height: 1.8em; margin:0 0 1.8em 0; font-family: 'Oswal
 
 /* 3. Grid
 
-col width = 5.2%
-gutter = 2.8%
-
 -------------------------------------- */
 
 .holder { clear:both; overflow:hidden; }
