@@ -976,7 +976,7 @@ class SpoonICalItem
 	 */
 	public function setRecurId($value)
 	{
-		$this->recurId = (int) $recurId;
+		$this->recurId = (int) $value;
 	}
 
 

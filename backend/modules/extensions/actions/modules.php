@@ -68,15 +68,23 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// hide some columns
 		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
 
-		// set colum URLs
-		$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('detail_module'))
+		{
+			// set colum URLs
+			$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
 
-		// add details column
-		$this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+			// add details column
+			$this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+		}
 
-		// add install column
-		$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
-		$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('install_module'))
+		{
+			// add install column
+			$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
+			$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'));
+		}
 	}
 
 	/**
@@ -93,18 +101,24 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// hide some columns
 		$this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name', 'cronjobs_active'));
 
-		// set colum URLs
-		$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('detail_module'))
+		{
+			// set colum URLs
+			$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
 
-		// add details column
-		$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+			// add details column
+			$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+		}
 	}
 
 	/**
 	 * Parse the datagrids and the reports.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse data grid
 		$this->tpl->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
 		$this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());

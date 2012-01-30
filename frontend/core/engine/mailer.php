@@ -47,17 +47,17 @@ class FrontendMailer
 		$utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => SpoonFilter::urlise($subject));
 
 		// set recipient/sender headers
-		$email['to_email'] = (empty($toEmail)) ? (string) $to['email'] : $toEmail;
-		$email['to_name'] = (empty($toName)) ? (string) $to['name'] : $toName;
-		$email['from_email'] = (empty($fromEmail)) ? (string) $from['email'] : $fromEmail;
-		$email['from_name'] = (empty($fromName)) ? (string) $from['name'] : $fromName;
-		$email['reply_to_email'] = (empty($replyToEmail)) ? (string) $replyTo['email'] : $replyToEmail;
-		$email['reply_to_name'] = (empty($replyToName)) ? (string) $replyTo['name'] : $replyToName;
+		$email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;
+		$email['to_name'] = ($toName === null) ? (string) $to['name'] : $toName;
+		$email['from_email'] = ($fromEmail === null) ? (string) $from['email'] : $fromEmail;
+		$email['from_name'] = ($fromName === null) ? (string) $from['name'] : $fromName;
+		$email['reply_to_email'] = ($replyToEmail === null) ? (string) $replyTo['email'] : $replyToEmail;
+		$email['reply_to_name'] = ($replyToName === null) ? (string) $replyTo['name'] : $replyToName;
 
 		// validate
-		if(!empty($email['to_email']) && !SpoonFilter::isEmail($email['to_email'])) throw new FrontendException('Invalid e-mail address for recipient.');
-		if(!empty($email['from_email']) && !SpoonFilter::isEmail($email['from_email'])) throw new FrontendException('Invalid e-mail address for sender.');
-		if(!empty($email['reply_to_email']) && !SpoonFilter::isEmail($email['reply_to_email'])) throw new FrontendException('Invalid e-mail address for reply-to address.');
+		if(!SpoonFilter::isEmail($email['to_email'])) throw new FrontendException('Invalid e-mail address for recipient.');
+		if(!SpoonFilter::isEmail($email['from_email'])) throw new FrontendException('Invalid e-mail address for sender.');
+		if(!SpoonFilter::isEmail($email['reply_to_email'])) throw new FrontendException('Invalid e-mail address for reply-to address.');
 
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);

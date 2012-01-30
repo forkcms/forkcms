@@ -66,8 +66,9 @@ class SpoonFileCSV
 	 * @param	array[optional] $excludeColumns		The columns you want to exclude.
 	 * @param	string[optional] $delimiter			The field delimiter of the CSV.
 	 * @param	string[optional] $enclosure			The enclosure character of the CSV.
+	 * @param	string[optional] $lineEnding		The line-ending of the CSV.
 	 */
-	public static function arrayToString(array $array, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
+	public static function arrayToString(array $array, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"', $lineEnding = null)
 	{
 		// validate array
 		if(!empty($array) && !isset($array[0])) throw new SpoonFileException('Invalid array format.');
@@ -81,6 +82,7 @@ class SpoonFileCSV
 		// check for delimiter/enclosure
 		if($delimiter === null) $delimiter = self::DEFAULT_DELIMITER;
 		if($enclosure === null) $enclosure = self::DEFAULT_ENCLOSURE;
+		if($lineEnding === null) $lineEnding = PHP_EOL;
 
 		// unset the excluded columns
 		if(!empty($excludeColumns)) foreach($excludeColumns as $column) unset($columns[array_search($column, $columns)]);
@@ -89,7 +91,7 @@ class SpoonFileCSV
 		$columns = self::escapeEnclosure($columns, $enclosure);
 
 		// start the string with the columns
-		$csv = $enclosure . implode($enclosure . $delimiter . $enclosure, $columns) . $enclosure . PHP_EOL;
+		$csv = $enclosure . implode($enclosure . $delimiter . $enclosure, $columns) . $enclosure . $lineEnding;
 
 		// stop here if the array is empty
 		if(empty($array)) return $csv;
@@ -114,7 +116,7 @@ class SpoonFileCSV
 			$row = self::escapeEnclosure($row, $enclosure);
 
 			// add this row to the CSV
-			$csv .= $enclosure . implode($enclosure . $delimiter . $enclosure, (array) $row) . $enclosure . PHP_EOL;
+			$csv .= $enclosure . implode($enclosure . $delimiter . $enclosure, (array) $row) . $enclosure . $lineEnding;
 		}
 
 		// no input

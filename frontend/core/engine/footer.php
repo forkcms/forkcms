@@ -37,7 +37,7 @@ class FrontendFooter extends FrontendBaseObject
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 
 		// facebook admins given?
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
 			// build correct locale
 			switch(FRONTEND_LANGUAGE)
@@ -67,7 +67,7 @@ class FrontendFooter extends FrontendBaseObject
 				$siteHTMLFooter .= '	};' . "\n";
 			}
 			$siteHTMLFooter .= '	(function() {' . "\n";
-			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
+			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . $locale . '/all.js#xfbml=1";' . "\n";
 			$siteHTMLFooter .= '		document.getElementById(\'fb-root\').appendChild(e);' . "\n";
 			$siteHTMLFooter .= '	}());' . "\n";
 			$siteHTMLFooter .= '</script>';

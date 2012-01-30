@@ -63,7 +63,6 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign id, term

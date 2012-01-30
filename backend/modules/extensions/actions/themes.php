@@ -99,8 +99,10 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 	/**
 	 * Parse the form.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->frm->parse($this->tpl);
 
 		// parse not yet installed themes

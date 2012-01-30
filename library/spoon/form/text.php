@@ -79,7 +79,7 @@ class SpoonFormText extends SpoonFormInput
 	{
 		// redefine html & default value
 		$allowHTML = ($allowHTML !== null) ? (bool) $allowHTML : $this->isHTML;
-		$value = $this->value;
+		$value = (string) $this->value;
 
 		// contains html
 		if($this->isHTML)
@@ -336,7 +336,7 @@ class SpoonFormText extends SpoonFormInput
 		$data = $this->getMethod(true);
 
 		// validate
-		if(!(isset($data[$this->attributes['name']]) && trim($data[$this->attributes['name']]) != ''))
+		if(!(isset($data[$this->attributes['name']]) && trim((string) $data[$this->attributes['name']]) != ''))
 		{
 			if($error !== null) $this->setError($error);
 			return false;
@@ -601,6 +601,39 @@ class SpoonFormText extends SpoonFormInput
 	public function isNumeric($error = null)
 	{
 		return $this->isDigital($error);
+	}
+
+
+	/**
+	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
+	 *
+	 * @return	bool
+	 * @param	string[optional] $error			The error message to set.
+	 * @param	int[optional] $precision		The allowed number of digits after the decimal separator. Defaults to 2.
+	 * @param	bool[optional] $allowNegative	Do you want to allow negative prices? Defaults to false.
+	 * @param	bool[optional] $allowCommas		Do you want to use commas as a decimal separator? Defaults to true.
+	 */
+	public function isPrice($error = null, $precision = 2, $allowNegative = false, $allowCommas = true)
+	{
+		// filled
+		if($this->isFilled())
+		{
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isPrice($data[$this->attributes['name']], $allowCommas))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
+		}
+
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 

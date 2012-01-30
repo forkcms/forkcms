@@ -1,14 +1,91 @@
-3.2.0 (xxxx-xx-xx)
+3.2.3 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: added a property 'hideHelpTxt' to the BackendFormImage and BackendFormFile classes to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
+
+Bugfixes:
+
+* Core: snippets: made the languages to get the templates for dynamic.
+* Blog: fixed improper redirect that caused blog archive pagination to malfunction.
+
+
+3.2.2 (2012-01-24)
+--
+Improvements:
+
+* Core: added an isPrice filter, also for text fields.
+* Core: added the text color for the hover states of buttons.
+* Core: when a datagrid column has a certain column title(hidden, visible, published, active), the datagrid will now automatically detect non-visible rows and mark them this way.
+* Core: init Facebook for its JS SDK when an admin or app id is set.
+* API: Added API::isValidRequestMethod($method) that checks if the request method of an incoming API call is valid for a given API method'.
+* Analytics: Fixed the cronjobs execution time, should only run once a day.
+* Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
+* Blog: API methods are now limited to their correct request methods.
+* Extensions: improved the validation of the positions, as mention on http://forkcms.lighthouseapp.com/projects/61890/tickets/256 by Dieter W.
+* Formbuilder: altered the splitchar, so "," can be used in values for dropdowns, checkboxes or radiobuttons.
+* Pages: editor will be larger by default.
+* Search: use a saveIndex function instead of addIndex and editIndex.
+
+Bugfixes:
+
+* Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
+* Core: Click To Edit above the editor should behave from now on.
+* Core: added the options for the theme-specific editor_content.css and and screen.css that will be loaded in the editor.
+* Analytics: Fixed the labels for keywords and referrers when updating through ajax.
+* Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
+* Extensions: a notice was triggered when using invalid templatesyntax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/257.
+* Mailmotor: improve visibility of ckeditor in mailmotor.
+
+
+3.2.1 (2012-01-17)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.17
+* Core: added a generic method to output CSV-files, which uses the user-settings for splitchar and line-ending.
+* Core: it is now possible to set an empty string as recipient name in the mailers.
+* Extensions: only modules with a valid name will be included in the list of installable modules.
+* Blog: added an option for the god user to enable or disable the upload image functionallity for the blog module.
+* Installer: added a check for subfolders.
+* All: template-options for available actions are now available for all modules and thus also prefixed with the modulename.
+
+Bugfixes:
+
+* Core: added missing locale for ckeditor & ckfinder.
+* Core: when not in debugmode the dialog-patch wasn't included in the minified JS-file.
+* Pages: fixed reset previous value when editing editor block.
+* Spoon: when deleting a cookie we now set the expiration date far in the past to prevent that users with an incorrect system time can still use deleted cookies.
+* API: all illegal characters are now wrapped with CDATA tags.
+* Blog: API calls now show the most recent version of a blog title.
+
+
+3.2.0 (2012-01-10)
 --
 Improvements:
 
 * Core: integrated CKEditor into Fork CMS.
+* Core: added an extra check (parent has to be td.checkbox) for the row selection within tables in the backend.
+* Core: added cookie containing unique visitor id.
+* Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
+* Core: added maxItems and afterAdd options for the multipleSelectbox.
+* Core: added a possibility to add an extra to all pages when installing forkcms with the installer function addDefaultExtra. The extra will be added to all pages without this extra.
+* Core: you can now add items to the search index in the installer of your module.
+* Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
 * Pages: when adding an editor field, the editor will immediately open.
+* Pages: the sitemap now correctly displays subpages.
+* Extensions: modules may now also include files in /library/external. 
+* All: actions where the user has no rights for, are no longer shown.
 
 Bugfixes:
 
+* Core: fixed core template override from within module action.
+* Core: added #xfbml=1 to the Facebook connect URL so Facebook plugins also work when there's no Facebook app id given in the settings tab.
+* ContentBlocks: Fixed a bug where a hidden content block assigned to a page would trigger a PHP Notice.
 * Extensions: fixed module-warnings system.
 * Extensions: fixed module upload.
+* Users: Fixed a bug that was triggered when editing a user that was not the loggedin user and when the loggedin user was not a god user.
+* Spoon: dropdown opt-group's values were reset by the array_merge function.
 
 
 3.1.9 (2012-01-03)

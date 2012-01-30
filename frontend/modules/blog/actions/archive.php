@@ -64,7 +64,11 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		$this->month = $this->URL->getParameter(2);
 
 		// redirect /2010/6 to /2010/06 to avoid duplicate content
-		if($this->month !== null && mb_strlen($this->month) != 2) $this->redirect(FrontendNavigation::getURLForBlock('blog', 'archive') . '/' . $this->year . '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT), 301);
+		if($this->month !== null && mb_strlen($this->month) != 2)
+		{
+			$queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+			$this->redirect(FrontendNavigation::getURLForBlock('knowledgebase', 'archive') . '/' . $this->year . '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT) . $queryString, 301);
+		}
 		if(mb_strlen($this->year) != 4) $this->redirect(FrontendNavigation::getURL(404));
 
 		// redefine
@@ -85,7 +89,7 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		{
 			$this->startDate = gmmktime(00, 00, 00, $this->month, 01, $this->year);
 			$this->endDate = gmmktime(23, 59, 59, $this->month, gmdate('t', $this->startDate), $this->year);
-			$url .= '/' . $this->month;
+			$url .= '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT);
 		}
 
 		// year

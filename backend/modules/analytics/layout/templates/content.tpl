@@ -73,7 +73,12 @@
 {* Top pages *}
 <div class="dataGridHolder">
 	<div class="tableHeading">
-		<h3><a href="{$var|geturl:'all_pages'}">{$lblTopPages|ucfirst}</a></h3>
+		<h3>
+			{option:showAnalyticsAllPages}<a href="{$var|geturl:'all_pages'}">{/option:showAnalyticsAllPages}
+				{$lblTopPages|ucfirst}
+			{option:showAnalyticsAllPages}</a>{/option:showAnalyticsAllPages}
+		</h3>
+
 		<div class="buttonHolderRight">
 			<a class="button icon iconGoto linkButton" href="{$googleTopContentURL}"><span>{$lblViewReport|ucfirst}</span></a>
 		</div>
@@ -95,7 +100,12 @@
 {* Top exit pages *}
 <div class="dataGridHolder">
 	<div class="tableHeading">
-		<h3><a href="{$var|geturl:'exit_pages'}">{$lblTopExitPages|ucfirst}</a></h3>
+		<h3>
+			{option:showAnalyticsExitPages}<a href="{$var|geturl:'exit_pages'}">{/option:showAnalyticsExitPages}
+				{$lblTopExitPages|ucfirst}
+			{option:showAnalyticsExitPages}</a>{/option:showAnalyticsExitPages}
+		</h3>
+
 		<div class="buttonHolderRight">
 			<a class="button icon iconGoto linkButton" href="{$googleTopExitPagesURL}"><span>{$lblViewReport|ucfirst}</span></a>
 		</div>
@@ -117,7 +127,12 @@
 {* Top entry pages *}
 <div class="dataGridHolder">
 	<div class="tableHeading">
-		<h3><a href="{$var|geturl:'landing_pages'}">{$lblTopLandingPages|ucfirst}</a></h3>
+		<h3>
+			{option:showAnalyticsLandingPages}<a href="{$var|geturl:'landing_pages'}">{/option:showAnalyticsLandingPages}
+				{$lblTopLandingPages|ucfirst}
+			{option:showAnalyticsLandingPages}</a>{/option:showAnalyticsLandingPages}
+		</h3>
+
 		<div class="buttonHolderRight">
 			<a class="button icon iconGoto linkButton" href="{$googleTopLandingPagesURL}"><span>{$lblViewReport|ucfirst}</span></a>
 		</div>

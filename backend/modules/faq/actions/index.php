@@ -49,14 +49,19 @@ class BackendFaqIndex extends BackendBaseActionIndex
 		{
 			$dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $categoryId));
 			$dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
-			$dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 			$dataGrid->setColumnsHidden(array('category_id', 'sequence'));
-			$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 			$dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
 			$dataGrid->setColumnsSequence('dragAndDropHandle');
 			$dataGrid->setColumnAttributes('question', array('class' => 'title'));
 			$dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 			$dataGrid->setRowAttributes(array('id' => '[id]'));
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('edit'))
+			{
+				$dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+				$dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+			}
 
 			// add dataGrid to list
 			$this->dataGrids[] = array('id' => $categoryId,
@@ -73,8 +78,10 @@ class BackendFaqIndex extends BackendBaseActionIndex
 	/**
 	 * Parse the dataGrids and the reports
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse dataGrids
 		if(!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
 		$this->tpl->assign('emptyDatagrid', $this->emptyDatagrid->getContent());

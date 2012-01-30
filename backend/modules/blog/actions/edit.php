@@ -14,6 +14,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
@@ -30,6 +31,13 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	 * @var	BackendDataGrid
 	 */
 	private $dgDrafts;
+
+	/**
+	 * Is the image field allowed?
+	 *
+	 * @var bool
+	 */
+	protected $imageIsAllowed = true;
 
 	/**
 	 * Execute the action
@@ -68,6 +76,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	private function getData()
 	{
 		$this->record = (array) BackendBlogModel::get($this->id);
+		$this->imageIsAllowed = BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true);
 
 		// is there a revision specified?
 		$revisionToLoad = $this->getParameter('revision', 'int');
@@ -119,18 +128,22 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// set headers
 		$this->dgDrafts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
-		// set colum URLs
-		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
-
 		// set column-functions
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, SpoonFilter::ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
-
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set colum URLs
+			$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
+
+			// add use column
+			$this->dgDrafts->addColumn('use_draft', null, BL::lbl('UseThisDraft'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+		}
 	}
 
 	/**
@@ -161,8 +174,11 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
-		$this->frm->addImage('image');
-		$this->frm->addCheckbox('delete_image');
+		if($this->imageIsAllowed)
+		{
+			$this->frm->addImage('image');
+			$this->frm->addCheckbox('delete_image');
+		}
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -188,15 +204,19 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// set headers
 		$this->dgRevisions->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
-		// set colum URLs
-		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
-
 		// set column-functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, SpoonFilter::ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set colum URLs
+			$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
+
+			// add use column
+			$this->dgRevisions->addColumn('use_revision', null, BL::lbl('UseThisVersion'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		}
 	}
 
 	/**
@@ -204,7 +224,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// get url
@@ -224,6 +243,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
 		$this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
+
+		$this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
 
 		// assign category
 		if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
@@ -250,14 +271,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 
-			// do the image checks
-			if($this->frm->getField('image')->isFilled())
-			{
-				// image extension and mime type
-				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
-				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
-			}
-
 			// validate meta
 			$this->meta->validate();
 
@@ -279,53 +292,58 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['status'] = $status;
-				$item['image'] = $this->record['image'];
 
-				// the image path
-				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
-
-				// if the image should be deleted
-				if($this->frm->getField('delete_image')->isChecked())
+				if($this->imageIsAllowed)
 				{
-					// delete the image
-					SpoonFile::delete($imagePath . '/source/' . $item['image']);
+					$item['image'] = $this->record['image'];
 
-					// reset the name
-					$item['image'] = null;
-				}
+					// the image path
+					$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
-				// new image given?
-				if($this->frm->getField('image')->isFilled())
-				{
-					// delete the old image
-					SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
-
-					// build the image name
-					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
-
-					// upload the image
-					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
-				}
-
-				// rename the old image
-				elseif($item['image'] != null)
-				{
-					// get the old file extension
-					$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
-
-					// get the new image name
-					$newName = $this->meta->getURL() . '.' . $imageExtension;
-
-					// only change the name if there is a difference
-					if($newName != $item['image'])
+					// if the image should be deleted
+					if($this->frm->getField('delete_image')->isChecked())
 					{
-						// move the old file to the new name
-						SpoonFile::move($imagePath . '/source/' . $item['image'], $imagePath . '/source/' . $newName);
+						// delete the image
+						SpoonFile::delete($imagePath . '/source/' . $item['image']);
 
-						// assign the new name to the database
-						$item['image'] = $newName;
+						// reset the name
+						$item['image'] = null;
+					}
+
+					// new image given?
+					if($this->frm->getField('image')->isFilled())
+					{
+						// delete the old image
+						SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
+
+						// build the image name
+						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+
+						// upload the image
+						$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+					}
+
+					// rename the old image
+					elseif($item['image'] != null)
+					{
+						// get the old file extension
+						$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
+
+						// get the new image name
+						$newName = $this->meta->getURL() . '.' . $imageExtension;
+
+						// only change the name if there is a difference
+						if($newName != $item['image'])
+						{
+							// move the old file to the new name
+							SpoonFile::move($imagePath . '/source/' . $item['image'], $imagePath . '/source/' . $newName);
+
+							// assign the new name to the database
+							$item['image'] = $newName;
+						}
 					}
 				}
+				else $item['image'] = null;
 
 				// update the item
 				$item['revision_id'] = BackendBlogModel::update($item);
@@ -343,7 +361,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				if($item['status'] == 'active')
 				{
 					// edit search index
-					BackendSearchModel::editIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+					BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
 					if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') . '/' . $this->meta->getURL());

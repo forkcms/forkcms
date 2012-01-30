@@ -116,7 +116,7 @@ class SpoonFormTime extends SpoonFormInput
 			if(isset($data[$this->attributes['name']]))
 			{
 				// value
-				$value = $data[$this->attributes['name']];
+				$value = (string) $data[$this->attributes['name']];
 			}
 		}
 
@@ -136,7 +136,7 @@ class SpoonFormTime extends SpoonFormInput
 		$data = $this->getMethod(true);
 
 		// validate
-		if(!(isset($data[$this->attributes['name']]) && trim($data[$this->attributes['name']]) != ''))
+		if(!(isset($data[$this->attributes['name']]) && trim((string) $data[$this->attributes['name']]) != ''))
 		{
 			if($error !== null) $this->setError($error);
 			return false;
@@ -159,20 +159,21 @@ class SpoonFormTime extends SpoonFormInput
 		{
 			// post/get data
 			$data = $this->getMethod(true);
+			$data = (string) $data[$this->attributes['name']];
 
 			// new time
 			$time = '';
 
 			// must be exactly 5 characters
-			if(strlen($data[$this->attributes['name']]) == 5)
+			if(strlen($data) == 5)
 			{
 				// allowed characters
 				$aCharacters = array(':', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 
 				// replace every character if it's not in the list!
-				for($i = 0; $i < strlen($data[$this->attributes['name']]); $i++)
+				for($i = 0; $i < strlen($data); $i++)
 				{
-					if(in_array(substr($data[$this->attributes['name']], $i, 1), $aCharacters)) $time .= substr($data[$this->attributes['name']], $i, 1);
+					if(in_array(substr($data, $i, 1), $aCharacters)) $time .= substr($data, $i, 1);
 				}
 
 				// maxlength checks out (needs to be equal)

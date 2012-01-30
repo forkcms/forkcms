@@ -45,12 +45,15 @@
 						{$txtEmail} {$txtEmailError}
 					</p>
 				</div>
-				<div class="options">
-					<p>
+			</div>
+			<div class="options">
+				<div class="heading">
+					<h3>
 						<label for="successMessage">{$lblSuccessMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtSuccessMessage}
-					</p>
-					{option:txtSuccessMessageError}<p>{$txtSuccessMessageError}</p>{/option:txtSuccessMessageError}
+					</h3>
+				</div>
+				<div class="optionsRTE">
+					{$txtSuccessMessage} {$txtSuccessMessageError}
 				</div>
 			</div>
 		</div>
@@ -133,18 +136,18 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showFormBuilderDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+			<p>{$msgConfirmDelete|sprintf:{$name}}</p>
+		</div>
+		{/option:showFormBuilderDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>
-	</div>
-
-	{* Dialog for confirming deletion *}
-	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-		<p>{$msgConfirmDelete|sprintf:{$name}}</p>
 	</div>
 
 	{* Dialog for a textbox *}

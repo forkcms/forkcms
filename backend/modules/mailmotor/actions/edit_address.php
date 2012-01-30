@@ -156,7 +156,6 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign the active record and additional variables

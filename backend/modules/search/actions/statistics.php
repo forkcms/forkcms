@@ -54,8 +54,10 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// assign the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}

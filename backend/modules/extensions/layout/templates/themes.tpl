@@ -4,9 +4,12 @@
 <div class="pageTitle">
 	<h2>{$lblExtensions|ucfirst}: {$lblThemes}</h2>
 	<div class="buttonHolderRight">
+		{option:showExtensionsUploadTheme}
 		<a href="{$var|geturl:'upload_theme'}" class="button icon iconImport" title="{$lblUploadTheme|ucfirst}">
 			<span>{$lblUploadTheme|ucfirst}</span>
 		</a>
+		{/option:showExtensionsUploadTheme}
+
 		<a href="http://www.fork-cms.com/extensions" class="button icon iconNext" title="{$lblFindThemes|ucfirst}">
 			<span>{$lblFindThemes|ucfirst}</span>
 		</a>
@@ -28,8 +31,8 @@
 							<img src="{$installableThemes.thumbnail}" width="172" height="129" alt="{$installableThemes.label|ucfirst}" />
 							<span>{$installableThemes.label|ucfirst}</span>
 						</label>
-						<a href="{$var|geturl:'install_theme'}&theme={$installableThemes.value}" data-message-id="confirmInstall" class="askConfirmation button icon iconNext linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblInstall|ucfirst}</span></a>
-						<a href="{$var|geturl:'detail_theme'}&theme={$installableThemes.value}" class="button icon iconDetail linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblDetails|ucfirst}</span></a>
+						{option:showExtensionsInstallTheme}<a href="{$var|geturl:'install_theme'}&theme={$installableThemes.value}" data-message-id="confirmInstall" class="askConfirmation button icon iconNext linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblInstall|ucfirst}</span></a>{/option:showExtensionsInstallTheme}
+						{option:showExtensionsDetailTheme}<a href="{$var|geturl:'detail_theme'}&theme={$installableThemes.value}" class="button icon iconDetail linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblDetails|ucfirst}</span></a>{/option:showExtensionsDetailTheme}
 					</li>
 				{/iteration:installableThemes}
 			</ul>
@@ -51,7 +54,7 @@
 							<img src="{$installedThemes.thumbnail}" width="172" height="129" alt="{$installedThemes.label|ucfirst}" />
 							<span>{$installedThemes.label|ucfirst}</span>
 						</label>
-						<a href="{$var|geturl:'detail_theme'}&theme={$installedThemes.value}" class="button icon iconDetail linkButton" title="{$installedThemes.label|ucfirst}"><span>{$lblDetails|ucfirst}</span></a>
+						{option:showExtensionsDetailTheme}<a href="{$var|geturl:'detail_theme'}&theme={$installedThemes.value}" class="button icon iconDetail linkButton" title="{$installedThemes.label|ucfirst}"><span>{$lblDetails|ucfirst}</span></a>{/option:showExtensionsDetailTheme}
 					</li>
 				{/iteration:installedThemes}
 			</ul>

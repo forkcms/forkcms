@@ -156,15 +156,23 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 						// create reflection class
 						$reflection = new ReflectionClass('Backend' . SpoonFilter::toCamelCase($module) . SpoonFilter::toCamelCase($actionName));
 
-						// get the offset
-						$offset = strpos($reflection->getDocComment(), '*', 7);
+						// get the comment
+						$phpDoc = trim($reflection->getDocComment());
 
-						// get the first sentence
-						$description = substr($reflection->getDocComment(), 0, $offset);
+						if($phpDoc != '')
+						{
+							// get the offset
+							$offset = strpos($reflection->getDocComment(), '*', 7);
 
-						// replacements
-						$description = str_replace('*', '', $description);
-						$description = trim(str_replace('/', '', $description));
+							// get the first sentence
+							$description = substr($reflection->getDocComment(), 0, $offset);
+
+							// replacements
+							$description = str_replace('*', '', $description);
+							$description = trim(str_replace('/', '', $description));
+						}
+
+						else $description = '';
 
 						// assign actions to array
 						$this->actions[$module][] = array('label' => SpoonFilter::toCamelCase($actionName), 'value' => $actionName, 'description' => $description);
@@ -182,15 +190,23 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 						// create reflection class
 						$reflection = new ReflectionClass('Backend' . SpoonFilter::toCamelCase($module) . 'Ajax' . SpoonFilter::toCamelCase($actionName));
 
-						// get the offset
-						$offset = strpos($reflection->getDocComment(), '*', 7);
+						// get the comment
+						$phpDoc = trim($reflection->getDocComment());
 
-						// get the first sentence
-						$description = substr($reflection->getDocComment(), 0, $offset);
+						if($phpDoc != '')
+						{
+							// get the offset
+							$offset = strpos($reflection->getDocComment(), '*', 7);
 
-						// replacements
-						$description = str_replace('*', '', $description);
-						$description = trim(str_replace('/', '', $description));
+							// get the first sentence
+							$description = substr($reflection->getDocComment(), 0, $offset);
+
+							// replacements
+							$description = str_replace('*', '', $description);
+							$description = trim(str_replace('/', '', $description));
+						}
+
+						else $description = '';
 
 						// assign actions to array
 						$this->actions[$module][] = array('label' => SpoonFilter::toCamelCase($actionName), 'value' => $actionName, 'description' => $description);
@@ -541,7 +557,6 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 	}
 

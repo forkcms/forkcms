@@ -42,9 +42,8 @@
 				<div class="dataGridHolder">
 					<input type="hidden" name="from" value="spam" />
 					<div class="generalMessage infoMessage">
-							{$msgDeleteAllSpam}
-							<a href="{$var|geturl:'delete_spam'}">{$lblDelete|ucfirst}</a>
-						</p>
+						{$msgDeleteAllSpam}
+						<a href="{$var|geturl:'delete_spam'}">{$lblDelete|ucfirst}</a>
 					</div>
 					{$dgSpam}
 				</div>

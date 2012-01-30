@@ -50,18 +50,24 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$ddmMassAction->setOptionAttributes('delete', array('message-id' => 'confirmDelete'));
 		$this->dataGrid->setMassAction($ddmMassAction);
 
-		// add column
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
-
 		// add attributes, so the inline editing has all the needed data
 		$this->dataGrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// add column
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 	}
 
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }

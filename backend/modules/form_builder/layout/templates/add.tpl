@@ -30,15 +30,17 @@
 						{$txtEmail} {$txtEmailError}
 					</p>
 				</div>
-				<div class="options">
-					<p>
-						<label for="successMessage">{$lblSuccessMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtSuccessMessage}
-					</p>
-					{option:txtSuccessMessageError}<p>{$txtSuccessMessageError}</p>{/option:txtSuccessMessageError}
-				</div>
 			</div>
-		</div>
+			<div class="options">
+				<div class="heading">
+					<h3>
+						<label for="successMessage">{$lblSuccessMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					</h3>
+				</div>
+				<div class="optionsRTE">
+					{$txtSuccessMessage} {$txtSuccessMessageError}
+				</div>
+			</div>		</div>
 
 		<div id="tabExtra" class="box">
 			<div class="horizontal">
