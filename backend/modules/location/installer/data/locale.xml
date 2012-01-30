@@ -101,6 +101,10 @@
         <translation language="hu"><![CDATA[nagyítási szint]]></translation>
         <translation language="es"><![CDATA[nivel de zoom]]></translation>
       </item>
+      <item type="message" name="MapSaved">
+        <translation language="nl"><![CDATA[De map is opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The map is saved.]]></translation>
+      </item>
     </location>
   </backend>
 </locale>

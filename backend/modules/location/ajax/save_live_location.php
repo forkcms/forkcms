@@ -32,6 +32,13 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 
 		$center = array('lat' => $centerLat, 'lng' => $centerlng);
 
+		$generalSettings = BackendModel::getModuleSettings();
+		$generalSettings = $generalSettings['location'];
+
+		// validation
+		if($width == 0) $width = $generalSettings['width'];
+		if($height == 0) $height = $generalSettings['height'];
+
 		// no id given, this means we should update the main map
 		BackendLocationModel::setMapSetting($itemId, 'zoom_level', (string) $zoomLevel);
 		BackendLocationModel::setMapSetting($itemId, 'map_type', (string) $mapType);

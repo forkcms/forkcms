@@ -109,7 +109,7 @@
 					lat: {$items.lat},
 					lng: {$items.lng},
 					title: '{$items.title}',
-					text: '{$items.text|stripnewlines}'
+					text: '<p>{$items.street} {$items.number}</p><p>{$items.zip} {$items.city}</p>'
 				});
 			{/option:items.lng}
 		{/option:items.lat}

@@ -26,16 +26,16 @@ jsBackend.location =
 			// add listeners for the zoom level and terrain
 			google.maps.event.addListener(jsBackend.location.map, 'maptypeid_changed', jsBackend.location.setDropdownTerrain);
 			google.maps.event.addListener(jsBackend.location.map, 'zoom_changed', jsBackend.location.setDropdownZoom);
-			
+
 			// if the zoom level or map type changes in the dropdown, the map needs to change
 			$('#zoomLevel').bind('change', jsBackend.location.setMapZoom);
 			$('#mapType').bind('change', jsBackend.location.setMapTerrain);
-			
+
 			// the panning save option
 			$('#saveLiveData').bind('click', function(e)
 			{
 				e.preventDefault();
-				
+
 				// save the live map data
 				jsBackend.location.getMapData();
 				jsBackend.location.saveLiveData();
@@ -66,7 +66,7 @@ jsBackend.location =
 			}).open(map, marker);
 		});
 	},
-	
+
 	getMapData: function()
 	{
 		// get the live data
@@ -75,9 +75,9 @@ jsBackend.location =
 		jsBackend.location.center = jsBackend.location.map.getCenter();
 		jsBackend.location.centerLat = jsBackend.location.center.lat();
 		jsBackend.location.centerLng = jsBackend.location.center.lng();
+
+		// get the form data
 		jsBackend.location.mapId = parseInt($('#mapId').val());
-		
-		// @todo int validation
 		jsBackend.location.height = parseInt($('#height').val());
 		jsBackend.location.width = parseInt($('#width').val());
 	},
@@ -100,33 +100,40 @@ jsBackend.location =
 			success: function(json, textStatus)
 			{
 				// reload the page on success
-				// @todo clean message
-				if(json.code == 200) location.reload(true);
+				if(json.code == 200) 
+				{
+					var currLocation = window.location;
+					var reloadLocation = (currLocation.search.indexOf('?') >= 0) ? '&' : '?';
+					reloadLocation = currLocation + reloadLocation + 'report=map-saved';
+
+					// cleanly redirect so we can display a message
+					window.location = reloadLocation;
+				}
 			}
 		});
 	},
-	
+
 	// this will set the terrain type of the map to the dropdown
 	setDropdownTerrain: function()
 	{
 		jsBackend.location.getMapData();
 		$('#mapType').val(jsBackend.location.type.toUpperCase());
 	},
-	
+
 	// this will set the zoom level of the map to the dropdown
 	setDropdownZoom: function()
 	{
 		jsBackend.location.getMapData();
 		$('#zoomLevel').val(jsBackend.location.zoomLevel);
 	},
-	
+
 	// this will set the terrain type of the map to the dropdown
 	setMapTerrain: function()
 	{
 		jsBackend.location.type = $('#mapType').val();
 		jsBackend.location.map.setMapTypeId(jsBackend.location.type.toLowerCase());
 	},
-	
+
 	// this will set the zoom level of the map to the dropdown
 	setMapZoom: function()
 	{
