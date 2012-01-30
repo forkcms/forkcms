@@ -105,6 +105,22 @@
         <translation language="nl"><![CDATA[De map is opgeslagen.]]></translation>
         <translation language="en"><![CDATA[The map is saved.]]></translation>
       </item>
+      <item type="message" name="ShowMapUrl">
+        <translation language="nl"><![CDATA[Toon de link naar Google Maps.]]></translation>
+        <translation language="en"><![CDATA[Show the link to Google Maps.]]></translation>
+      </item>
+      <item type="message" name="ShowDirections">
+        <translation language="nl"><![CDATA[Toon de routebeschrijving.]]></translation>
+        <translation language="en"><![CDATA[Show directions.]]></translation>
+      </item>
     </location>
   </backend>
+  <frontend>
+  	<core>
+      <item type="label" name="ViewLargeMap">
+        <translation language="nl"><![CDATA[Grote kaart weergeven.]]></translation>
+        <translation language="en"><![CDATA[Display large map.]]></translation>
+      </item>
+    </core>
+  </frontend>
 </locale>

@@ -6,6 +6,9 @@
 
 {option:widgetLocationItems}
 <div id="mapWidget" style="height: {$widgetLocationSettings.height}px; width: {$widgetLocationSettings.width}px;"></div>
+{option:widgetLocationSettings.full_url}
+	<p><a href="{$widgetLocationSettings.maps_url}" title="{$lblViewLargeMap}">{$lblViewLargeMap|ucfirst}</a></p>
+{/option:widgetLocationSettings.full_url}
 
 <div id="widgetLocationItemText" style="display: none;">
 	<p>{$widgetLocationItems.street} {$widgetLocationItems.number}</p>

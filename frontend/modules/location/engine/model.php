@@ -16,6 +16,52 @@
 class FrontendLocationModel
 {
 	/**
+	 * This will build the url to google maps for a large map
+	 *
+	 * @param array $settings
+	 * @param array $markers
+	 * @return string
+	 */
+	public static function buildUrl(array $settings, array $markers = array())
+	{
+		$url = 'http://maps.google.be/?';
+
+		// add the center point
+		$url .= 'll=' . $settings['center']['lat'] . ',' . $settings['center']['lng'];
+
+		// add the zoom level
+		$url .= '&z=' . $settings['zoom_level'];
+
+		// set the map type
+		switch(strtolower($settings['map_type']))
+		{
+			case 'roadmap':
+				$url .= '&t=m';
+				break;
+			case 'hybrid':
+				$url .= '&t=h';
+				break;
+			case 'terrain':
+				$url .= '&t=p';
+				break;
+			default:
+				$url .= '&t=k';
+				break;
+		}
+
+		$pointers = array();
+		// add the markers to the url
+		foreach($markers as $marker)
+		{
+			$pointers[] = urlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
+		}
+
+		if(!empty($pointers)) $url .= '&q=' . implode('|', $pointers);
+
+		return $url;
+	}
+
+	/**
 	 * Get an item
 	 *
 	 * @param int $id The id of the item to fetch.

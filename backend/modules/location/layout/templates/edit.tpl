@@ -66,10 +66,24 @@
 						</p>
 					</div>
 
+					{* Show the full url link or not *}
+					<div class="options">
+						<p>
+							<label for="fullUrl">{$chkFullUrl} {$msgShowMapUrl|ucfirst}</label>
+						</p>
+					</div>
+
+					{* Show directions form or not *}
+					<div class="options">
+						<p>
+							<label for="directions">{$chkDirections} {$msgShowDirections|ucfirst}</label>
+						</p>
+					</div>
+
 					{* Save button *}
 					<div class="options">
 						<div class="buttonHolderRight">
-							<a href="#" id="saveLiveData" class="submitButton button inputButton button mainButton">
+							<a href="#" id="saveLiveData" class="button inputButton button mainButton">
 								<span>{$lblSave|ucfirst}</span>
 							</a>
 						</div>
@@ -143,7 +157,8 @@
 				lat: {$item.lat},
 				lng: {$item.lng},
 				title: '{$item.title}',
-				text: '<p>{$item.street} {$item.number}</p><p>{$item.zip} {$item.city}</p>'
+				text: '<p>{$item.street} {$item.number}</p><p>{$item.zip} {$item.city}</p>',
+				dragable: true
 			});
 		{/option:item.lng}
 	{/option:item.lat}

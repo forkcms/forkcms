@@ -87,6 +87,9 @@ class BackendLocationEdit extends BackendBaseActionEdit
 			$this->settings['center']['lat'] = $this->record['lat'];
 			$this->settings['center']['lng'] = $this->record['lng'];
 		}
+
+		$this->settings['full_url'] = (isset($this->settings['full_url'])) ? ($this->settings['full_url']) : false;
+		$this->settings['directions'] = (isset($this->settings['directions'])) ? ($this->settings['directions']) : false;
 	}
 
 	/**
@@ -128,6 +131,8 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		$this->settingsForm->addText('width', $this->settings['width']);
 		$this->settingsForm->addText('height', $this->settings['height']);
 		$this->settingsForm->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+		$this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
+		$this->settingsForm->addCheckbox('directions', $this->settings['directions']);
 	}
 
 	/**
@@ -195,10 +200,6 @@ class BackendLocationEdit extends BackendBaseActionEdit
 
 				// insert the item
 				$id = BackendLocationModel::update($item);
-
-				// edit search index
-				// @todo why is this commented out?
-				// BackendSearchModel::saveIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng'])

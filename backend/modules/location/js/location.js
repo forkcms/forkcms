@@ -6,19 +6,14 @@
  */
 jsBackend.location =
 {
-	bounds: null,
-	map: null,
-	zoomLevel: null,
-	type: null,
-	center: null,
-	centerLat: null,
-	centerLng: null,
-	height: null,
-	width: null,
-	mapId: null,
+	// base values
+	bounds: null, center: null, centerLat: null, centerLng: null, height: null,  
+	map: null, mapId: null, showDirections: false, showLink: false, type: null, 
+	width: null, zoomLevel: null,
 
 	init: function()
 	{
+		// only show a map when there are options and markers given
 		if(typeof markers != 'undefined' && typeof mapOptions != 'undefined') 
 		{
 			jsBackend.location.showMap();
@@ -55,7 +50,18 @@ jsBackend.location =
 			map: map,
 			title: object.title
 		});
-
+		
+		if(typeof object.dragable != 'undefined' && object.dragable)
+		{
+			marker.setDraggable(true);
+			
+			// add event listener
+			google.maps.event.addListener(marker, 'dragend', function()
+			{
+				jsBackend.location.updateMarker(marker);
+			});
+		}
+		
 		// add click event on marker
 		google.maps.event.addListener(marker, 'click', function()
 		{
@@ -80,6 +86,20 @@ jsBackend.location =
 		jsBackend.location.mapId = parseInt($('#mapId').val());
 		jsBackend.location.height = parseInt($('#height').val());
 		jsBackend.location.width = parseInt($('#width').val());
+		
+		jsBackend.location.showLink = ($('#fullUrl').attr('checked') == 'checked');
+		jsBackend.location.showDirections = ($('#directions').attr('checked') == 'checked');
+	},
+	
+	// this will refresh the page and display a certain message
+	refreshPage: function(message)
+	{
+		var currLocation = window.location;
+		var reloadLocation = (currLocation.search.indexOf('?') >= 0) ? '&' : '?';
+		reloadLocation = currLocation + reloadLocation + 'report=' + message;
+
+		// cleanly redirect so we can display a message
+		window.location = reloadLocation;
 	},
 	
 	saveLiveData: function()
@@ -95,24 +115,18 @@ jsBackend.location =
 				centerLng: jsBackend.location.centerLng,
 				height: jsBackend.location.height,
 				width: jsBackend.location.width,
-				id: jsBackend.location.mapId
+				id: jsBackend.location.mapId,
+				link: jsBackend.location.showLink,
+				directions: jsBackend.location.showDirections
 			},
 			success: function(json, textStatus)
 			{
 				// reload the page on success
-				if(json.code == 200) 
-				{
-					var currLocation = window.location;
-					var reloadLocation = (currLocation.search.indexOf('?') >= 0) ? '&' : '?';
-					reloadLocation = currLocation + reloadLocation + 'report=map-saved';
-
-					// cleanly redirect so we can display a message
-					window.location = reloadLocation;
-				}
+				if(json.code == 200) jsBackend.location.refreshPage('map-saved');
 			}
 		});
 	},
-
+	
 	// this will set the terrain type of the map to the dropdown
 	setDropdownTerrain: function()
 	{
@@ -170,6 +184,31 @@ jsBackend.location =
 		{
 			jsBackend.location.map.fitBounds(jsBackend.location.bounds);
 		}
+	},
+	
+	// this will re-set the position of a marker
+	updateMarker: function(marker)
+	{
+		jsBackend.location.getMapData();
+		
+		var lat = marker.getPosition().lat();
+		var lng = marker.getPosition().lng();
+		
+		$.ajax(
+		{
+			data:
+			{
+				fork: { module: 'location', action: 'update_marker' },
+				id: jsBackend.location.mapId,
+				lat: lat,
+				lng: lng
+			},
+			success: function(json, textStatus)
+			{
+				// reload the page on success
+				if(json.code == 200) jsBackend.location.saveLiveData();
+			}
+		});
 	}
 }
 

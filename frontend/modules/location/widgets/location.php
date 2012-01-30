@@ -11,6 +11,7 @@
  * This is the location-widget: 1 specific address
  *
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendLocationWidgetLocation extends FrontendBaseWidget
 {
@@ -58,6 +59,8 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 			$this->settings['center']['lat'] = $this->items['lat'];
 			$this->settings['center']['lng'] = $this->items['lng'];
 		}
+
+		$this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->items));
 	}
 
 	/**

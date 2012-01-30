@@ -76,10 +76,6 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				// insert the item
 				$id = BackendLocationModel::insert($item);
 
-				// add search index
-				// @todo why is this commented out
-				// BackendSearchModel::saveIndex($this->getModule(), (int) $id, array('title' => $item['title'], 'text' => $item['text']));
-
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng'])
 				{

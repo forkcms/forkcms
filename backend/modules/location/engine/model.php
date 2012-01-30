@@ -217,24 +217,27 @@ class BackendLocationModel
 		$db = BackendModel::getDB(true);
 		$item['edited_on'] = BackendModel::getUTCDate();
 
-		// build extra
-		$extra = array(
-			'id' => $item['extra_id'],
-			'module' => 'location',
-			'type' => 'widget',
-			'label' => 'Location',
-			'action' => 'location',
-			'data' => serialize(array(
-				'id' => $item['id'],
-				'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
-				'language' => $item['language'],
-				'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
-			),
-			'hidden' => 'N'
-		);
+		if(isset($item['extra_id']))
+		{
+			// build extra
+			$extra = array(
+				'id' => $item['extra_id'],
+				'module' => 'location',
+				'type' => 'widget',
+				'label' => 'Location',
+				'action' => 'location',
+				'data' => serialize(array(
+					'id' => $item['id'],
+					'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+					'language' => $item['language'],
+					'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+				),
+				'hidden' => 'N'
+			);
 
-		// update extra
-		$db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+			// update extra
+			$db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+		}
 
 		// update item
 		return $db->update('location', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));
