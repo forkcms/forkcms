@@ -24,19 +24,20 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 		// get parameters
 		$itemId = SpoonFilter::getPostValue('id', null, null, 'int');
 		$zoomLevel = trim(SpoonFilter::getPostValue('zoom', null, ''));
-		$mapType = trim(SpoonFilter::getPostValue('type', array('ROADMAP', 'SATELLITE', 'HYBRID', 'TERRAIN'), 'ROADMAP'));
+		$mapType = strtoupper(trim(SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
 		$centerLat = SpoonFilter::getPostValue('centerLat', null, '', 'float');
 		$centerlng = SpoonFilter::getPostValue('centerLng', null, '', 'float');
+		$height = SpoonFilter::getPostValue('height', null, null, 'int');
+		$width = SpoonFilter::getPostValue('width', null, null, 'int');
 
 		$center = array('lat' => $centerLat, 'lng' => $centerlng);
 
 		// no id given, this means we should update the main map
-		if($itemId == 0)
-		{
-			BackendModel::setModuleSetting('location', 'zoom_level', (string) $zoomLevel);
-			BackendModel::setModuleSetting('location', 'map_type', (string) $mapType);
-			BackendModel::setModuleSetting('location', 'center', (array) $center);
-		}
+		BackendLocationModel::setMapSetting($itemId, 'zoom_level', (string) $zoomLevel);
+		BackendLocationModel::setMapSetting($itemId, 'map_type', (string) $mapType);
+		BackendLocationModel::setMapSetting($itemId, 'center', (array) $center);
+		BackendLocationModel::setMapSetting($itemId, 'height', (int) $height);
+		BackendLocationModel::setMapSetting($itemId, 'width', (int) $width);
 
 		// output
 		$this->output(self::OK, null, FL::msg('Success'));

@@ -96,6 +96,46 @@ class BackendLocationModel
 	}
 
 	/**
+	 * Retrieve a map setting
+	 *
+	 * @param int $mapId
+	 * @param string $name
+	 * @return mixed
+	 */
+	public static function getMapSetting($mapId, $name)
+	{
+		$serializedData = (string) BackendModel::getDB()->getVar(
+			'SELECT s.value
+			 FROM location_settings AS s
+			 WHERE s.map_id = ? AND s.name = ?',
+			array((int) $mapId, (string) $name)
+		);
+
+		if($serializedData != null) return unserialize($serializedData);
+		return false;
+	}
+
+	/**
+	 * Fetch all the settings for a specific map
+	 *
+	 * @param int $mapId
+	 * @return array
+	 */
+	public static function getMapSettings($mapId)
+	{
+		$mapSettings = (array) BackendModel::getDB()->getPairs(
+			'SELECT s.name, s.value
+			 FROM location_settings AS s
+			 WHERE s.map_id = ?',
+			array((int) $mapId)
+		);
+
+		foreach($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+
+		return $mapSettings;
+	}
+
+	/**
 	 * Insert an item
 	 *
 	 * @param array $item The data of the record to insert.
@@ -145,6 +185,25 @@ class BackendLocationModel
 
 		// return the new id
 		return $item['id'];
+	}
+
+	/**
+	 * Save the map settings
+	 *
+	 * @param int $mapId
+	 * @param string $key
+	 * @param mixed $value
+	 */
+	public static function setMapSetting($mapId, $key, $value)
+	{
+		$value = serialize($value);
+
+		BackendModel::getDB(true)->execute(
+			'INSERT INTO location_settings(map_id, name, value)
+			 VALUES(?, ?, ?)
+			 ON DUPLICATE KEY UPDATE value = ?',
+			array((int) $mapId, $key, $value, $value)
+		);
 	}
 
 	/**

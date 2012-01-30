@@ -29,13 +29,6 @@
 							</div>
 						{/option:items}
 					</div>
-					<div class="options">
-						<div class="buttonHolderRight">
-							<a href="#" id="saveLiveData" class="submitButton button inputButton button mainButton">
-								<span>{$lblSave|ucfirst}</span>
-							</a>
-						</div>
-					</div>
 				</div>
 			</td>
 
@@ -45,31 +38,45 @@
 					<div class="heading">
 						<h3>{$lblSettings|ucfirst}</h3>
 					</div>
+
+					{* Zoom level *}
 					<div class="options">
 						<p>
 							<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
 							{$ddmZoomLevel} {$ddmZoomLevelError}
 						</p>
 					</div>
+
+					{* Map width *}
 					<div class="options">
 						<p>
 							<label for="width">{$lblWidth|ucfirst}</label>
 							{$txtWidth} {$txtWidthError}
 						</p>
 					</div>
+
+					{* Map height *}
 					<div class="options">
 						<p>
 							<label for="height">{$lblHeight|ucfirst}</label>
 							{$txtHeight} {$txtHeightError}
 						</p>
 					</div>
+
+					{* Map type *}
 					<div class="options">
 						<p>
 							<label for="mapType">{$lblMapType|ucfirst}</label>
 							{$ddmMapType} {$ddmMapTypeError}
 						</p>
+					</div>
+
+					{* Save button *}
+					<div class="options">
 						<div class="buttonHolderRight">
-							<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+							<a href="#" id="saveLiveData" class="submitButton button inputButton button mainButton">
+								<span>{$lblSave|ucfirst}</span>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -90,8 +97,8 @@
 		zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
 		type: '{$settings.map_type}',
 		center: {
-			lat: {$items.0.lat},
-			lng: {$items.0.lng}
+			lat: {$settings.center.lat},
+			lng: {$settings.center.lng}
 		}
 	};
 	var markers = [];

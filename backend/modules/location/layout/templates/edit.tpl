@@ -11,19 +11,74 @@
 		{$txtTitle} {$txtTitleError}
 	</p>
 
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblMap|ucfirst}</h3>
-		</div>
-		<div class="options">
-			{option:item.lat}
-				{option:item.lng}
-					<div id="map" style="height: {$settings.height_widget}px; width: 100%;">
+	<table width="100%">
+		<tr>
+			<td id="leftColumn">
+				<div class="box">
+					<div class="heading">
+						<h3>{$lblMap|ucfirst}</h3>
 					</div>
-				{/option:item.lat}
-			{/option:item.lng}
-		</div>
-	</div>
+
+					{* Map *}
+					<div class="options">
+						<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;">
+						</div>
+					</div>
+				</div>
+			</td>
+
+			{form:settings}
+			<td id="rightColumn" style="width: 300px; padding-left: 10px;">
+				<div class="box">
+					<div class="heading">
+						<h3>{$lblSettings|ucfirst}</h3>
+					</div>
+
+					{* Zoom level *}
+					<div class="options">
+						<p>
+							<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+							{$ddmZoomLevel} {$ddmZoomLevelError}
+						</p>
+					</div>
+
+					{* Map width *}
+					<div class="options">
+						<p>
+							<label for="width">{$lblWidth|ucfirst}</label>
+							{$txtWidth} {$txtWidthError}
+						</p>
+					</div>
+
+					{* Map height *}
+					<div class="options">
+						<p>
+							<label for="height">{$lblHeight|ucfirst}</label>
+							{$txtHeight} {$txtHeightError}
+						</p>
+					</div>
+
+					{* Map type *}
+					<div class="options">
+						<p>
+							<label for="mapType">{$lblMapType|ucfirst}</label>
+							{$ddmMapType} {$ddmMapTypeError}
+						</p>
+					</div>
+
+					{* Save button *}
+					<div class="options">
+						<div class="buttonHolderRight">
+							<a href="#" id="saveLiveData" class="submitButton button inputButton button mainButton">
+								<span>{$lblSave|ucfirst}</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</td>
+			{/form:settings}
+		</tr>
+	</table>
 
 	<div class="box horizontal">
 		<div class="heading">
@@ -50,6 +105,7 @@
 				<label for="country">{$lblCountry|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$ddmCountry} {$ddmCountryError}
 			</p>
+			{$hidMapId}
 		</div>
 	</div>
 
@@ -73,11 +129,11 @@
 
 <script type="text/javascript">
 	var mapOptions = {
-		zoom: 15,
+		zoom: {$settings.zoom_level},
 		type: '{$settings.map_type}',
 		center: {
-			lat: {$item.lat},
-			lng: {$item.lng}
+			lat: {$settings.center.lat},
+			lng: {$settings.center.lng}
 		}
 	};
 	var markers = [];

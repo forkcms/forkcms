@@ -12,3 +12,10 @@ CREATE TABLE IF NOT EXISTS `location` (
  `lng` float default NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `location_settings` (
+  `map_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `value` text NOT NULL,
+  PRIMARY KEY (`map_id`,`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

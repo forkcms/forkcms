@@ -23,6 +23,11 @@ class BackendLocationIndex extends BackendBaseActionIndex
 	protected $form;
 
 	/**
+	 * @var array
+	 */
+	protected $items = array(), $settings = array();
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()
@@ -32,13 +37,38 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		// add js
 		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, null, true, false);
 
-		$this->loadDataGrid();
+		$this->loadData();
 
+		$this->loadDataGrid();
 		$this->loadSettingsForm();
-		$this->validateSettingsForm();
 
 		$this->parse();
 		$this->display();
+	}
+
+	/**
+	 * Load the settings
+	 */
+	protected function loadData()
+	{
+		$this->items = BackendLocationModel::getAll();
+		$this->settings = BackendLocationModel::getMapSettings(0);
+		$firstMarker = current($this->items);
+		if(empty($this->settings))
+		{
+			$settings = BackendModel::getModuleSettings();
+			$this->settings = $settings['location'];
+
+			$this->settings['center']['lat'] = $firstMarker['lat'];
+			$this->settings['center']['lng'] = $firstMarker['lng'];
+		}
+
+		// no center point given yet, use the first occurance
+		if(!isset($this->settings['center']))
+		{
+			$this->settings['center']['lat'] = $firstMarker['lat'];
+			$this->settings['center']['lng'] = $firstMarker['lng'];
+		}
 	}
 
 	/**
@@ -63,13 +93,26 @@ class BackendLocationIndex extends BackendBaseActionIndex
 	 */
 	protected function loadSettingsForm()
 	{
+		$mapTypes = array(
+			'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
+			'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
+			'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
+			'TERRAIN' => BL::lbl('Terrain', $this->getModule())
+		);
+
+		$zoomLevels = array_combine(
+			array_merge(array('auto'), range(3, 18)),
+			array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+		);
+
 		$this->form = new BackendForm('settings');
 
 		// add map info (overview map)
-		$this->form->addDropdown('zoom_level', array_combine(array_merge(array('auto'), range(3, 18)), array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))), BackendModel::getModuleSetting($this->URL->getModule(), 'zoom_level', 'auto'));
-		$this->form->addText('width', BackendModel::getModuleSetting($this->URL->getModule(), 'width'));
-		$this->form->addText('height', BackendModel::getModuleSetting($this->URL->getModule(), 'height'));
-		$this->form->addDropdown('map_type', array('ROADMAP' => BL::lbl('Roadmap', $this->getModule()), 'SATELLITE' => BL::lbl('Satellite', $this->getModule()), 'HYBRID' => BL::lbl('Hybrid', $this->getModule()), 'TERRAIN' => BL::lbl('Terrain', $this->getModule())), BackendModel::getModuleSetting($this->URL->getModule(), 'map_type', 'roadmap'));
+		$this->form->addHidden('map_id', 0);
+		$this->form->addDropdown('zoom_level', $zoomLevels, $this->settings['zoom_level']);
+		$this->form->addText('width', $this->settings['width']);
+		$this->form->addText('height', $this->settings['height']);
+		$this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
 	}
 
 	/**
@@ -78,35 +121,12 @@ class BackendLocationIndex extends BackendBaseActionIndex
 	protected function parse()
 	{
 		parent::parse();
-		$this->form->parse($this->tpl);
 
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
-		// get settings
-		$settings = BackendModel::getModuleSettings();
-
 		// assign to template
-		$this->tpl->assign('items', BackendLocationModel::getAll());
-		$this->tpl->assign('settings', $settings['location']);
-	}
-
-	/**
-	 * Validate the settings form
-	 */
-	protected function validateSettingsForm()
-	{
-		if($this->form->isSubmitted())
-		{
-			$this->form->cleanupFields();
-
-			if($this->form->isCorrect())
-			{
-				// set our settings (overview map)
-				BackendModel::setModuleSetting($this->URL->getModule(), 'zoom_level', (string) $this->form->getField('zoom_level')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'width', (int) $this->form->getField('width')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'height', (int) $this->form->getField('height')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'map_type', (string) $this->form->getField('map_type')->getValue());
-			}
-		}
+		$this->tpl->assign('items', $this->items);
+		$this->tpl->assign('settings', $this->settings);
+		$this->form->parse($this->tpl);
 	}
 }

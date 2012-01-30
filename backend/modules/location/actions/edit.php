@@ -11,9 +11,22 @@
  * This is the edit-action, it will display a form to create a new item
  *
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendLocationEdit extends BackendBaseActionEdit
 {
+	/**
+	 * @var array
+	 */
+	protected $settings = array();
+
+	/**
+	 * The settings form
+	 *
+	 * @var BackendForm
+	 */
+	protected $settingsForm;
+
 	/**
 	 * Execute the action
 	 */
@@ -29,9 +42,13 @@ class BackendLocationEdit extends BackendBaseActionEdit
 			// add js
 			$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, null, true, false);
 
-			$this->getData();
+			$this->loadData();
+
 			$this->loadForm();
 			$this->validateForm();
+
+			$this->loadSettingsForm();
+
 			$this->parse();
 			$this->display();
 		}
@@ -43,12 +60,33 @@ class BackendLocationEdit extends BackendBaseActionEdit
 	/**
 	 * Get the data
 	 */
-	private function getData()
+	private function loadData()
 	{
 		$this->record = (array) BackendLocationModel::get($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+
+		$this->settings = BackendLocationModel::getMapSettings($this->id);
+		if(empty($this->settings))
+		{
+			$settings = BackendModel::getModuleSettings();
+			$settings = $settings['location'];
+
+			$this->settings['width'] = $settings['width_widget'];
+			$this->settings['height'] = $settings['height_widget'];
+			$this->settings['map_type'] = $settings['map_type_widget'];
+			$this->settings['zoom_level'] = $settings['zoom_level_widget'];
+			$this->settings['center']['lat'] = $this->record['lat'];
+			$this->settings['center']['lng'] = $this->record['lng'];
+		}
+
+		// no center point given yet, use the first occurance
+		if(!isset($this->settings['center']))
+		{
+			$this->settings['center']['lat'] = $this->record['lat'];
+			$this->settings['center']['lng'] = $this->record['lng'];
+		}
 	}
 
 	/**
@@ -66,17 +104,44 @@ class BackendLocationEdit extends BackendBaseActionEdit
 	}
 
 	/**
+	 * Load the settings form
+	 */
+	protected function loadSettingsForm()
+	{
+		$mapTypes = array(
+			'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
+			'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
+			'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
+			'TERRAIN' => BL::lbl('Terrain', $this->getModule())
+		);
+
+		$zoomLevels = array_combine(
+			array_merge(array('auto'), range(3, 18)),
+			array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+		);
+
+		$this->settingsForm = new BackendForm('settings');
+
+		// add map info (overview map)
+		$this->settingsForm->addHidden('map_id', $this->id);
+		$this->settingsForm->addDropdown('zoom_level', $zoomLevels, $this->settings['zoom_level']);
+		$this->settingsForm->addText('width', $this->settings['width']);
+		$this->settingsForm->addText('height', $this->settings['height']);
+		$this->settingsForm->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+	}
+
+	/**
 	 * Parse the form
 	 */
 	protected function parse()
 	{
 		parent::parse();
 
-		$settings = BackendModel::getModuleSettings();
-
 		// assign to template
 		$this->tpl->assign('item', $this->record);
-		$this->tpl->assign('settings', $settings['location']);
+		$this->tpl->assign('settings', $this->settings);
+
+		$this->settingsForm->parse($this->tpl);
 
 		// assign message if address was not be geocoded
 		if($this->record['lat'] == null || $this->record['lng'] == null) $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));

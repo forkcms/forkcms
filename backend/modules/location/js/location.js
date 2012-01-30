@@ -8,14 +8,39 @@ jsBackend.location =
 {
 	bounds: null,
 	map: null,
+	zoomLevel: null,
+	type: null,
+	center: null,
+	centerLat: null,
+	centerLng: null,
+	height: null,
+	width: null,
+	mapId: null,
 
-	// init, something like a constructor
 	init: function()
 	{
-		if(typeof markers != 'undefined' && typeof mapOptions != 'undefined') jsBackend.location.showMap();
-		
-		// the panning save option
-		$('#saveLiveData').bind('click', jsBackend.location.saveLiveData);
+		if(typeof markers != 'undefined' && typeof mapOptions != 'undefined') 
+		{
+			jsBackend.location.showMap();
+
+			// add listeners for the zoom level and terrain
+			google.maps.event.addListener(jsBackend.location.map, 'maptypeid_changed', jsBackend.location.setDropdownTerrain);
+			google.maps.event.addListener(jsBackend.location.map, 'zoom_changed', jsBackend.location.setDropdownZoom);
+			
+			// if the zoom level or map type changes in the dropdown, the map needs to change
+			$('#zoomLevel').bind('change', jsBackend.location.setMapZoom);
+			$('#mapType').bind('change', jsBackend.location.setMapTerrain);
+			
+			// the panning save option
+			$('#saveLiveData').bind('click', function(e)
+			{
+				e.preventDefault();
+				
+				// save the live map data
+				jsBackend.location.getMapData();
+				jsBackend.location.saveLiveData();
+			});
+		}
 	},
 
 	addMarker: function(map, bounds, object)
@@ -35,39 +60,80 @@ jsBackend.location =
 		google.maps.event.addListener(marker, 'click', function()
 		{
 			// create infowindow
-			new google.maps.InfoWindow({ content: '<h1>'+ object.title +'</h1>' + object.text }).open(map, marker);
+			new google.maps.InfoWindow(
+			{ 
+				content: '<h1>'+ object.title +'</h1>' + object.text 
+			}).open(map, marker);
 		});
 	},
 	
-	// save the live data
-	saveLiveData: function(e)
+	getMapData: function()
 	{
-		e.preventDefault();
-
-		var mapZoom = jsBackend.location.map.getZoom();
-		var mapType = jsBackend.location.map.getMapTypeId();
-		var mapCenter = jsBackend.location.map.getCenter();
-		var centerLat = mapCenter.lat();
-		var centerLng = mapCenter.lng();
+		// get the live data
+		jsBackend.location.zoomLevel = jsBackend.location.map.getZoom();
+		jsBackend.location.type = jsBackend.location.map.getMapTypeId();
+		jsBackend.location.center = jsBackend.location.map.getCenter();
+		jsBackend.location.centerLat = jsBackend.location.center.lat();
+		jsBackend.location.centerLng = jsBackend.location.center.lng();
+		jsBackend.location.mapId = parseInt($('#mapId').val());
 		
+		// @todo int validation
+		jsBackend.location.height = parseInt($('#height').val());
+		jsBackend.location.width = parseInt($('#width').val());
+	},
+	
+	saveLiveData: function()
+	{
 		$.ajax(
 		{
 			data:
 			{
 				fork: { module: 'location', action: 'save_live_location' },
-				zoom: mapZoom,
-				type: mapType,
-				centerLat: centerLat,
-				centerLng: centerLng
+				zoom: jsBackend.location.zoomLevel,
+				type: jsBackend.location.type,
+				centerLat: jsBackend.location.centerLat,
+				centerLng: jsBackend.location.centerLng,
+				height: jsBackend.location.height,
+				width: jsBackend.location.width,
+				id: jsBackend.location.mapId
 			},
 			success: function(json, textStatus)
 			{
-				
+				// reload the page on success
+				// @todo clean message
+				if(json.code == 200) location.reload(true);
 			}
 		});
 	},
+	
+	// this will set the terrain type of the map to the dropdown
+	setDropdownTerrain: function()
+	{
+		jsBackend.location.getMapData();
+		$('#mapType').val(jsBackend.location.type.toUpperCase());
+	},
+	
+	// this will set the zoom level of the map to the dropdown
+	setDropdownZoom: function()
+	{
+		jsBackend.location.getMapData();
+		$('#zoomLevel').val(jsBackend.location.zoomLevel);
+	},
+	
+	// this will set the terrain type of the map to the dropdown
+	setMapTerrain: function()
+	{
+		jsBackend.location.type = $('#mapType').val();
+		jsBackend.location.map.setMapTypeId(jsBackend.location.type.toLowerCase());
+	},
+	
+	// this will set the zoom level of the map to the dropdown
+	setMapZoom: function()
+	{
+		jsBackend.location.zoomLevel = $('#zoomLevel').val();
+		jsBackend.location.map.setZoom(parseInt(jsBackend.location.zoomLevel));
+	},
 
-	// init, something like a constructor
 	showMap: function()
 	{
 		// create boundaries
@@ -85,13 +151,18 @@ jsBackend.location =
 		jsBackend.location.map = new google.maps.Map(document.getElementById('map'), options);
 
 		// loop the markers
-		for(var i in markers) jsBackend.location.addMarker(jsBackend.location.map, jsBackend.location.bounds, markers[i])
-
-		// set center to the middle of our boundaries
-		jsBackend.location.map.setCenter(jsBackend.location.bounds.getCenter());
+		for(var i in markers)
+		{
+			jsBackend.location.addMarker(
+				jsBackend.location.map, jsBackend.location.bounds, markers[i]
+			);
+		}
 
 		// set zoom automatically, defined by points (if allowed)
-		if(mapOptions.zoom == 'auto') jsBackend.location.map.fitBounds(jsBackend.location.bounds);
+		if(mapOptions.zoom == 'auto') 
+		{
+			jsBackend.location.map.fitBounds(jsBackend.location.bounds);
+		}
 	}
 }
 
