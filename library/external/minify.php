@@ -47,8 +47,55 @@ class MinifyCSS extends Minify
 		// validate data
 		if($content == $source) throw new MinifyException('The data for "' . $source . '" could not be loaded, please make sure the path is correct.');
 
+		// the regex to match import statements
+		$importRegex = '/
+
+			# import statement
+			@import
+
+			# whitespace
+			\s+
+
+				# (optional) open url()
+				(?<url>url\()?
+
+					# open path enclosure
+					(?<quotes>["\'])
+
+						# fetch path
+						(?<path>
+
+							# do not fetch data uris
+							(?!(
+								["\']?
+								data:
+							))
+
+							.+
+						)
+
+					# close path enclosure
+					(?P=quotes)
+
+				# (optional) close url()
+				(?(url)\))
+
+				# (optional) trailing whitespace
+				\s*
+
+				# (optional) media statement(s)
+				(?<media>.*?)
+
+				# (optional) trailing whitespace
+				\s*
+
+			# (optional) closing semi-colon
+			;?
+
+			/ix';
+
 		// find all relative imports in css (for now we don't support imports with media, and imports should use url(xxx))
-		if(preg_match_all('/@import\s*?url\((["\']?)((?!["\']?data:).*?)\\1\)\s*?;/i', $content, $matches, PREG_SET_ORDER))
+		if(preg_match_all($importRegex, $content, $matches, PREG_SET_ORDER))
 		{
 			$search = array();
 			$replace = array();
@@ -57,8 +104,7 @@ class MinifyCSS extends Minify
 			foreach($matches as $i => $match)
 			{
 				// get the path for the file that will be imported
-				$importPath = $match[2];
-				$importPath = dirname($source) . '/' . $importPath;
+				$importPath = dirname($source) . '/' . $match['path'];
 
 				// only replace the import with the content if we can grab the content of the file
 				if(@file_exists($importPath) && is_file($importPath))
@@ -68,6 +114,9 @@ class MinifyCSS extends Minify
 
 					// fix relative paths
 					$importContent = $this->move($importPath, $source, $importContent);
+
+					// check if this is only valid for certain media
+					if($match['media']) $importContent = '@media '. $match['media'] . '{' . "\n" . $importContent . "\n" . '}';
 
 					// add to replacement array
 					$search[] = $match[0];
@@ -327,8 +376,75 @@ class MinifyCSS extends Minify
 		// validate data
 		if($content == $source) throw new MinifyException('The data for "' . $source . '" could not be loaded, please make sure the path is correct.');
 
+		// regex to match paths
+		$pathsRegex = '/
+
+		# enable possiblity of giving multiple subpatterns same name
+		(?J)
+
+		# @import "xxx" or @import url(xxx)
+
+			# import statement
+			@import
+
+			# whitespace
+			\s+
+
+				# (optional) open url()
+				(?<url>url\()?
+
+					# open path enclosure
+					(?<quotes>["\'])
+
+						# fetch path
+						(?<path>
+
+							# do not fetch data uris
+							(?!(
+								["\']?
+								data:
+							))
+
+							.+
+						)
+
+					# close path enclosure
+					(?P=quotes)
+
+				# (optional) close url()
+				(?(url)\))
+		|
+
+		# url(xxx)
+
+			# open url()
+			url\(
+
+				# open path enclosure
+				(?<quotes>["\'])?
+
+					# fetch path
+					(?<path>
+
+						# do not fetch data uris
+						(?!(
+							["\']?
+							data:
+						))
+
+						.+
+					)
+
+				# close path enclosure
+				(?(quotes)(?P=quotes))
+
+			# close url()
+			\)
+
+		/ix';
+
 		// find all relative urls in css
-		if(preg_match_all('/url\((["\']?)((?!["\']?data:).*?)\\1\)/i', $content, $matches, PREG_SET_ORDER))
+		if(preg_match_all($pathsRegex, $content, $matches, PREG_SET_ORDER))
 		{
 			$search = array();
 			$replace = array();
@@ -336,12 +452,16 @@ class MinifyCSS extends Minify
 			// loop all urls
 			foreach($matches as $match)
 			{
+				// determine if it's a url() or an @import match
+				$type = (strpos($match[0], '@import') === 0 ? 'import' : 'url');
+
 				// fix relative url
-				$url = $this->convertRelativePath($match[2], dirname($source), dirname($path));
+				$url = $this->convertRelativePath($match['path'], dirname($source), dirname($path));
 
 				// build replacement
 				$search[] = $match[0];
-				$replace[] = 'url(' . $url . ')';
+				if($type == 'url') $replace[] = 'url(' . $url . ')';
+				elseif($type == 'import') $replace[] = '@import "' . $url . '"';
 			}
 
 			// replace urls
@@ -732,8 +852,7 @@ abstract class Minify
 	public function __construct()
 	{
 		// it's possible to add the css through the constructor as well ;)
-		$arguments = func_get_args();
-		if(func_num_args()) call_user_func_array(array($this, 'add'), $arguments);
+		if(func_num_args()) call_user_func_array(array($this, 'add'), func_get_args());
 	}
 
 	/**
