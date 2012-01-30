@@ -1,41 +1,35 @@
 <div class="holder" id="doormatHolder">
-	<div id="doormat" class="row">
-		<section  class="col-6"> 
-			<h3>About me</h3>
-			<p>No one rejects, dislikes, or avoids pleasure itself, 
-			because it is pleasure, but because those who do not know how to pursue 
-			pleasure rationally encounter consequences that are extremely painful.</p>
-			<p>No one rejects, dislikes, or avoids pleasure itself, 
-			because it is pleasure, but because those who do not know how to pursue 
-			pleasure rationally encounter consequences that are extremely painful.</p>
-		</section> 
-		<section class="col-3"> 
-			<h3>Contact me</h3>
-			<p>Skype: yourname <br />
-			Mobile: 0123456789<br />
-			<a href="">yourname@yourdomain.be</a>
-			</p>
+	<div id="doormat" class="row clearfix">
+		<section  class="col-8">
+			{option:positionBottomleft}
+				{iteration:positionBottomleft}
+				{option:!positionBottomleft.blockIsHTML}
+					{$positionBottomleft.blockContent}
+				{/option:!positionBottomleft.blockIsHTML}
+				{option:positionBottomleft.blockIsHTML}
+					{$positionBottomleft.blockContent}
+				{/option:positionBottomleft.blockIsHTML}
+				{/iteration:positionBottomleft}
+			{/option:positionBottomleft}
 		</section>
-		<section class="col-3"> 
-			<h3>Follow me on</h3>
-			<p><a href="#">twitter</a><br />
-				<a href="#">dribble</a><br />
-				<a href="#">RSS feed</a><br />
-			</p>
+		<section class="col-4">
+			{option:positionBottomright}
+				{iteration:positionBottomright}
+				{option:!positionBottomright.blockIsHTML}
+					{$positionBottomright.blockContent}
+				{/option:!positionBottomright.blockIsHTML}
+				{option:positionBottomright.blockIsHTML}
+					{$positionBottomright.blockContent}
+				{/option:positionBottomright.blockIsHTML}
+				{/iteration:positionBottomright}
+			{/option:positionBottomright}
 		</section>
 	</div>
 </div>
-<div id="footerHolder">
-	<footer id="footer" class="row">
+<div id="footerHolder" class="holder">
+	<footer id="footer" class="row clearfix">
 		<div class="col-12">
-			<ul class="c3 before1">
-				<li><a class="feed" href="{$var|geturlforblock:'blog':'rss'}">{$lblSubscribeToTheRSSFeed|ucfirst}</a></li>
-				<li class="copyright">Copyright &copy; {$now|date:'Y'} {$siteTitle}</li>
-			</ul>
-			<ul id="footBranding" class="c2 before2">
-				<li><a href="http://fork-cms.be">Fork CMS</a></li>
-				<li><a href="http://fork-cms.be/extensions/themes">1950 Theme</a></li>
-			</ul>
+			<p class="copyright">Copyright &copy; {$now|date:'Y'} {$siteTitle}. Based on the <a href="http://fork-cms.be/extensions/themes">Response theme</a> by <a href="https://twitter.com/#!/simoncoudeville">Simon Coudeville</a>. Build with <a href="http://fork-cms.be">Fork CMS</a></p>
 		</div>
 	</footer>
 </div>

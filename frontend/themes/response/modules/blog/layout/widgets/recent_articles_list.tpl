@@ -4,14 +4,10 @@
 *}
 
 {option:widgetBlogRecentArticlesList}
-	<section id="blogRecentArticlesListWidget" class="mod">
-		<header class="hd">
-			<h3>{$lblRecentArticles|ucfirst}</h3>
-		</header>
-		<ul>
-			{iteration:widgetBlogRecentArticlesList}
-				<li><a href="{$widgetBlogRecentArticlesList.full_url}" title="{$widgetBlogRecentArticlesList.title}">{$widgetBlogRecentArticlesList.title}</a></li>
-			{/iteration:widgetBlogRecentArticlesList}
-		</ul>
-	</section>
+	<h3>{$lblRecentArticles|ucfirst}</h3>
+	<ul class="blognavigation">
+	{iteration:widgetBlogRecentArticlesList}
+		<li><a href="{$widgetBlogRecentArticlesList.full_url}" title="{$widgetBlogRecentArticlesList.title}">{$widgetBlogRecentArticlesList.title}</a></li>
+	{/iteration:widgetBlogRecentArticlesList}
+	</ul>
 {/option:widgetBlogRecentArticlesList}

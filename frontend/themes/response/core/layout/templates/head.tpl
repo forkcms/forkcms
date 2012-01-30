@@ -13,24 +13,26 @@
 	<meta name="keywords" content="{$metaKeywords}" />
 	{option:debug}<meta name="robots" content="noindex, nofollow" />{/option:debug}
 	{$metaCustom}
-	<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0;" />
 
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />
 	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
 
 	{* google fonts *}
-	<link href='http://fonts.googleapis.com/css?family=Crimson+Text:400,400italic,700|Oswald' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Pacifico|Oswald|Crimson+Text:400,400italic' rel='stylesheet' type='text/css'>
 
-	{* Stylesheets *}
+	{* Stylesheets 
 	{iteration:cssFiles}
 	<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
+	*}
+	
+	<link rel="stylesheet" href="{$THEME_URL}/core/layout/css/screen3.css" />
 
 	{* HTML5, respond Javascript *}
 	<!--[if lt IE 9]>
 		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<script src="js/libs/respond.min.js"></script>
+		<script src="js/respond.min.js"></script>
 	<![endif]-->
 
 	{* Site wide HTML *}

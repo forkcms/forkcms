@@ -5,9 +5,7 @@
 
 {option:widgetBlogRecentComments}
 	<section id="blogRecentCommentsWidget" class="mod">
-		<header class="hd">
 			<h3>{$lblRecentComments|ucfirst}</h3>
-		</header>
 		<ul>
 			{iteration:widgetBlogRecentComments}
 				<li>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme>
-	<name>response</name>
+	<name>Response</name>
 	<version>2.0.0</version>
 	<requirements>
 		<minimum_version>3.0.0</minimum_version>
@@ -8,7 +8,7 @@
 	<thumbnail>thumbnail.png</thumbnail>
 	<description>
 		<![CDATA[
-			The 1950 theme combines a typical fifties type treatment, colour palette and rugged textures with an open and modern look. It uses the latest, semantically rich web standards and degrades gracefully in browsers from the 1950’s. If you always wanted to get your fifties swagger back, but never got your damned time machine working, here’s your chance!
+			Response is a responsive blog theme made for Fork CMS. It is column based and easy to adjust the user's needs. A clean and simple theme to get started with Fork CMS and responsive webdesign.
 		]]>
 	</description>
 	<authors>
@@ -21,12 +21,6 @@
 	<templates>
 		<template label="Default" path="core/layout/templates/default.tpl">
 			<positions>
-				<position name="top">
-					<defaults>
-						<widget module="search" action="form" />
-					</defaults>
-				</position>
-				<position name="wide" />
 				<position name="main">
 					<defaults>
 						<widget module="blog" action="recent_articles_full" />
@@ -34,37 +28,14 @@
 				</position>
 				<position name="right">
 					<defaults>
-						<widget module="blog" action="recent_comments" />
 						<widget module="blog" action="recent_articles_list" />
 					</defaults>
 				</position>
+				<position name="bottomleft" />
+				<position name="bottomright" />
 			</positions>
 			<format>
-				[/,/,top],[wide,wide,wide],[main,main,right]
-			</format>
-		</template>
-		<template label="Home" path="core/layout/templates/home.tpl">
-			<positions>
-				<position name="top">
-					<defaults>
-						<widget module="search" action="form" />
-					</defaults>
-				</position>
-				<position name="advertisement">
-					<defaults>
-						<editor />
-					</defaults>
-				</position>
-				<position name="main" />
-				<position name="widgets">
-					<defaults>
-						<widget module="blog" action="recent_comments" />
-						<widget module="blog" action="recent_articles_list" />
-					</defaults>
-				</position>
-			</positions>
-			<format>
-				[/,top],[advertisement,advertisement],[main,main],[widgets,widgets]
+				[main,main,main,right],[bottomleft,bottomleft,bottomleft,bottomright]
 			</format>
 		</template>
 	</templates>
