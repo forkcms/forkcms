@@ -24,7 +24,7 @@ html,body,div,col,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addres
 /* 2. Type & image presets
 -------------------------------------- */
 
-body { font: 16px/1.8 "Crimson Text", georgia, serif; -webkit-text-size-adjust:none; }
+body { font: 14px/1.8 "Crimson Text", georgia, serif; -webkit-text-size-adjust:none; }
 
 img, object, embed { margin-bottom: 1.8em; max-width: 100%; }
 p img { margin-bottom: 0; }
@@ -478,7 +478,11 @@ label {
 -------------------------------------- */
 
 @media only screen and (min-width: 768px) {
-
+	
+	/* body */
+	
+	body { font-size: 16px; }
+	
 	/* grid */
 
 	.holder {
