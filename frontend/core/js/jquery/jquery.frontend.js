@@ -214,6 +214,7 @@
 							html += '<li class="shareMenuTwitter">' +
 									'	<a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
 							if(title != '') html += ' data-text="' + title + '"';
+							html += ' data-lang="' + jsFrontend.current.language + '"';
 							html += 'data-count="none">' + options.twitter.label  + '</a>';
 							html += '</li>';
 						break;
