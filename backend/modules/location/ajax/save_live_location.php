@@ -36,10 +36,16 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 		$showDirections = SpoonFilter::getPostValue('directions', array('true', 'false'), 'false', 'string');
 		$showOverview = SpoonFilter::getPostValue('showOverview', array('true', 'false'), 'true', 'string');
 
+		// reformat
 		$center = array('lat' => $centerLat, 'lng' => $centerlng);
 		$showLink = ($showLink == 'true');
 		$showDirections = ($showDirections == 'true');
 		$showOverview = ($showOverview == 'true');
+
+		// standard dimensions
+		if($width > 800) $width = 800;
+		if($width < 300) $width = $generalSettings['width'];
+		if($height < 150) $height = $generalSettings['height'];
 
 		// no id given, this means we should update the main map
 		BackendLocationModel::setMapSetting($itemId, 'zoom_level', (string) $zoomLevel);

@@ -16,16 +16,22 @@
 				{$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
 			</p>
 		</div>
-		<div class="options">
+		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 			<p>
 				<label for="widthWidget">{$lblWidth|ucfirst}</label>
 				{$txtWidthWidget} {$txtWidthWidgetError}
+				<span class="helpTxt">
+					{$msgWidthHelp|sprintf:300:800}
+				</span>
 			</p>
 		</div>
-		<div class="options">
+		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 			<p>
 				<label for="heightWidget">{$lblHeight|ucfirst}</label>
 				{$txtHeightWidget} {$txtHeightWidgetError}
+				<span class="helpTxt">
+					{$msgHeightHelp|sprintf:150}
+				</span>
 			</p>
 		</div>
 		<div class="options">

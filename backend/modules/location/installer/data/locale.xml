@@ -13,6 +13,10 @@
         <translation language="fr"><![CDATA[L'adresse n'a pas pu être convertie en coordonnées.]]></translation>
         <translation language="es"><![CDATA[La dirección no ha podido convertir en coordenadas.]]></translation>
       </item>
+      <item type="label" name="AddToMap">
+        <translation language="nl"><![CDATA[aan kaart toevoegen]]></translation>
+        <translation language="en"><![CDATA[add to map]]></translation>
+      </item>
       <item type="label" name="Auto">
         <translation language="nl"><![CDATA[automatisch]]></translation>
         <translation language="en"><![CDATA[automatic]]></translation>
@@ -90,6 +94,10 @@
         <translation language="hu"><![CDATA[terrain]]></translation>
         <translation language="es"><![CDATA[terreno]]></translation>
       </item>
+      <item type="label" name="UpdateMap">
+        <translation language="nl"><![CDATA[kaart aanpassen]]></translation>
+        <translation language="en"><![CDATA[update map]]></translation>
+      </item>
       <item type="label" name="ZoomLevel">
         <translation language="nl"><![CDATA[zoom niveau]]></translation>
         <translation language="en"><![CDATA[zoom level]]></translation>
@@ -100,6 +108,10 @@
         <translation language="fr"><![CDATA[niveau de zoom]]></translation>
         <translation language="hu"><![CDATA[nagyítási szint]]></translation>
         <translation language="es"><![CDATA[nivel de zoom]]></translation>
+      </item>
+      <item type="message" name="HeightHelp">
+        <translation language="nl"><![CDATA[minimum %1$spx]]></translation>
+        <translation language="en"><![CDATA[Minimum %1$spx]]></translation>
       </item>
       <item type="message" name="MapSaved">
         <translation language="nl"><![CDATA[De map is opgeslagen.]]></translation>
@@ -116,6 +128,10 @@
       <item type="message" name="ShowMarkerOverview">
         <translation language="nl"><![CDATA[Toon de plaatsaanduiding op de grote kaart]]></translation>
         <translation language="en"><![CDATA[Show the marker on the large map]]></translation>
+      </item>
+      <item type="message" name="WidthHelp">
+        <translation language="nl"><![CDATA[minimum %1$spx en maximum %2$spx]]></translation>
+        <translation language="en"><![CDATA[Minimum %1$spx and maximum %2$spx]]></translation>
       </item>
     </location>
   </backend>

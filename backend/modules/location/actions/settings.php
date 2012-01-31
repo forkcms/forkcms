@@ -41,6 +41,15 @@ class BackendLocationSettings extends BackendBaseActionEdit
 	}
 
 	/**
+	 * Parse the data
+	 */
+	protected function parse()
+	{
+		parent::parse();
+		$this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+	}
+
+	/**
 	 * Validates the settings form
 	 */
 	private function validateForm()
@@ -51,10 +60,18 @@ class BackendLocationSettings extends BackendBaseActionEdit
 
 			if($this->frm->isCorrect())
 			{
+				// set the base values
+				$width = (int) $this->frm->getField('width_widget')->getValue();
+				$height = (int) $this->frm->getField('height_widget')->getValue();
+
+				if($width > 800) $width = 800;
+				elseif($width < 300) $width = BackendModel::getModuleSetting('location', 'width_widget');
+				if($height < 150) $height = BackendModel::getModuleSetting('location', 'height_widget');
+
 				// set our settings (widgets)
 				BackendModel::setModuleSetting($this->URL->getModule(), 'zoom_level_widget', (string) $this->frm->getField('zoom_level_widget')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'width_widget', (int) $this->frm->getField('width_widget')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'height_widget', (int) $this->frm->getField('height_widget')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'width_widget', $width);
+				BackendModel::setModuleSetting($this->URL->getModule(), 'height_widget', $height);
 				BackendModel::setModuleSetting($this->URL->getModule(), 'map_type_widget', (string) $this->frm->getField('map_type_widget')->getValue());
 
 				// trigger event

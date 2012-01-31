@@ -5,10 +5,18 @@
 *}
 
 {option:widgetLocationItems}
+
 {option:widgetLocationSettings.directions}
-<input type="text" id="locationSearchAddress" name="locationSearchAddress" /> <input type="button" name="locationSearchRequest" onclick="setRoute()" id="locationSearchRequest" value="{$lblShowDirections|ucfirst}" />
+	<aside class="locationSearch">
+		<form>
+			<input type="text" id="locationSearchAddress" class="inputText" name="locationSearchAddress" />
+			<input type="button" name="locationSearchRequest" onclick="setRoute()" class="inputSubmit" id="locationSearchRequest" value="{$lblShowDirections|ucfirst}" />
+		</form>
+	</aside>
 {/option:widgetLocationSettings.directions}
+
 <div id="mapWidget" style="height: {$widgetLocationSettings.height}px; width: {$widgetLocationSettings.width}px;"></div>
+
 {option:widgetLocationSettings.full_url}
 	<p><a href="{$widgetLocationSettings.maps_url}" title="{$lblViewLargeMap}">{$lblViewLargeMap|ucfirst}</a></p>
 {/option:widgetLocationSettings.full_url}

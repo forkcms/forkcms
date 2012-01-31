@@ -68,6 +68,8 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
 		$this->settings = BackendLocationModel::getMapSettings($this->id);
+
+		// load the settings from the general settings
 		if(empty($this->settings))
 		{
 			$settings = BackendModel::getModuleSettings();

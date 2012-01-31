@@ -39,7 +39,7 @@
 			{$hidMapId} {$hidRedirect}
 
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblUpdateMap|ucfirst}" />
 		</div>
 		</div>
 	</div>
@@ -81,6 +81,9 @@
 					<p>
 						<label for="width">{$lblWidth|ucfirst}</label>
 						{$txtWidth} {$txtWidthError}
+						<span class="helpTxt">
+							{$msgWidthHelp|sprintf:300:800}
+						</span>
 					</p>
 				</div>
 
@@ -89,6 +92,9 @@
 					<p>
 						<label for="height">{$lblHeight|ucfirst}</label>
 						{$txtHeight} {$txtHeightError}
+						<span class="helpTxt">
+							{$msgHeightHelp|sprintf:150}
+						</span>
 					</p>
 				</div>
 

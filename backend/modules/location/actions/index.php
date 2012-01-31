@@ -54,6 +54,8 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		$this->items = BackendLocationModel::getAll();
 		$this->settings = BackendLocationModel::getMapSettings(0);
 		$firstMarker = current($this->items);
+
+		// load the settings from the general settings
 		if(empty($this->settings))
 		{
 			$settings = BackendModel::getModuleSettings();
@@ -123,6 +125,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		parent::parse();
 
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+		$this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
 
 		// assign to template
 		$this->tpl->assign('items', $this->items);

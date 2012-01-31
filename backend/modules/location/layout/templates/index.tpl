@@ -48,18 +48,24 @@
 					</div>
 
 					{* Map width *}
-					<div class="options">
+					<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 						<p>
 							<label for="width">{$lblWidth|ucfirst}</label>
 							{$txtWidth} {$txtWidthError}
+							<span class="helpTxt">
+								{$msgWidthHelp|sprintf:300:800}
+							</span>
 						</p>
 					</div>
 
 					{* Map height *}
-					<div class="options">
+					<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 						<p>
 							<label for="height">{$lblHeight|ucfirst}</label>
 							{$txtHeight} {$txtHeightError}
+							<span class="helpTxt">
+								{$msgHeightHelp|sprintf:150}
+							</span>
 						</p>
 					</div>
 
