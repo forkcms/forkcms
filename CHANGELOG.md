@@ -1,3 +1,12 @@
+3.2.4 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: integrated new CSS minifier (combine imports, import images to inline data URIs, shorten hex colors, strip whitespace, strip comments)
+* Core: integrated new JS minifier (strip whitespace, strip comments)
+* Core: replaced both different frontend & backend minifiers, by this new minifier.
+
+
 3.2.3 (2012-01-31)
 --
 Improvements:
