@@ -41,7 +41,7 @@
 #fullwidthSwitch:active
 #fullwidthSwitch:focus {
 	width: 6px;
-	background: #EAEAEA url(/backend/core/layout/images/close_w.gif) no-repeat 0 center;
+	background: #EAEAEA url(../../images/close_w.gif) no-repeat 0 center;
 }
 
 	#fullwidthSwitch.collapsed {

@@ -54,6 +54,16 @@ class BackendInit
 		ini_set('display_errors', 'On');
 
 		$this->requireGlobals();
+
+		// get last modified time for globals
+		$lastModifiedTime = @filemtime(PATH_LIBRARY . '/globals.php');
+
+		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
+		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
+
+		// define as a constant
+		define('LAST_MODIFIED_TIME', $lastModifiedTime);
+
 		$this->definePaths();
 		$this->defineURLs();
 		$this->setIncludePath();

@@ -236,7 +236,7 @@ td.num_tags {
 
 .dataGrid th {
 	font-size: 11px;
-	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 0;
+	background: url(../../images/sprites/th.gif) repeat-x 0 0;
 	border-bottom: 1px solid #B4B4B4;
 	border-right: 1px solid #BDBDBD;
 	line-height: 22px;
@@ -250,7 +250,7 @@ td.num_tags {
 
 .dataGrid th a.sortedAsc,
 .dataGrid th a.sortedDesc {
-	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 -48px;
+	background: url(../../images/sprites/th.gif) repeat-x 0 -48px;
 }
 
 .dataGrid th a.sortable:hover {
@@ -264,15 +264,15 @@ td.num_tags {
 }
 
 .dataGrid th a.sortable {
-	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -193px;
+	background: url(../../images/sprites/th.gif) no-repeat right -193px;
 }
 
 .dataGrid th a.sortedAsc {
-	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -215px;
+	background: url(../../images/sprites/th.gif) no-repeat right -215px;
 }
 
 .dataGrid th a.sortedDesc {
-	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -237px;
+	background: url(../../images/sprites/th.gif) no-repeat right -237px;
 }
 
 .dataGrid th.checkbox,
@@ -289,7 +289,7 @@ td.num_tags {
 	}
 
 .dataGrid td.rowMover a {
-	background: url(/backend/core/layout/images/move_handle.gif) no-repeat 0 0;
+	background: url(../../images/move_handle.gif) no-repeat 0 0;
 	width: 6px;
 	height: 14px;
 	display: block;
@@ -554,7 +554,7 @@ tr.isDefault td.name {
 }
 
 .sequenceByDragAndDrop tbody td.dragAndDropHandle span {
-	background: url(/backend/core/layout/images/move_handle.gif) no-repeat center center;
+	background: url(../../images/move_handle.gif) no-repeat center center;
 	display: block;
 	font-size: 0;
 	cursor: move;
