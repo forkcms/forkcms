@@ -118,8 +118,12 @@
   <frontend>
   	<core>
       <item type="label" name="ViewLargeMap">
-        <translation language="nl"><![CDATA[Grote kaart weergeven.]]></translation>
-        <translation language="en"><![CDATA[Display large map.]]></translation>
+        <translation language="nl"><![CDATA[Grote kaart weergeven]]></translation>
+        <translation language="en"><![CDATA[Display large map]]></translation>
+      </item>
+      <item type="label" name="ShowDirections">
+        <translation language="nl"><![CDATA[Route berekenen]]></translation>
+        <translation language="en"><![CDATA[Show directions]]></translation>
       </item>
     </core>
   </frontend>
