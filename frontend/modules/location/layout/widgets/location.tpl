@@ -8,7 +8,7 @@
 
 {option:widgetLocationSettings.directions}
 	<aside class="locationSearch">
-		<form>
+		<form method="get" action="">
 			<input type="text" id="locationSearchAddress" class="inputText" name="locationSearchAddress" />
 			<input type="button" name="locationSearchRequest" onclick="setRoute()" class="inputSubmit" id="locationSearchRequest" value="{$lblShowDirections|ucfirst}" />
 		</form>
@@ -53,6 +53,20 @@
 		{option:widgetLocationSettings.directions}
 			directionsDisplay = new google.maps.DirectionsRenderer();
 			directionsDisplay.setMap(mapWidget);
+
+			// show the search form
+			$('.locationSearch').show();
+
+			// calculate the route on enter
+			$('#locationSearchAddress').keypress(function(e)
+			{
+				if(e.which == 13)
+				{
+					e.preventDefault();
+					setRoute();
+				}
+			});
+
 		{/option:widgetLocationSettings.directions}
 
 		// set zoom automatically, defined by points (if allowed)

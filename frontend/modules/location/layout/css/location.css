@@ -9,6 +9,7 @@
 	padding-left: 50px; 
 	padding-top: 10px;
 	z-index: 3;
+	display: none;
 }
 
 .locationSearch form {

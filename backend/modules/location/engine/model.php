@@ -88,8 +88,8 @@ class BackendLocationModel
 		return (array) BackendModel::getDB()->getRecords(
 			'SELECT i.*
 			 FROM location AS i
-			 WHERE i.language = ?',
-			array(BL::getWorkingLanguage())
+			 WHERE i.language = ? AND i.show_overview = ?',
+			array(BL::getWorkingLanguage(), 'Y')
 		);
 	}
 
