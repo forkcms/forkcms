@@ -1,8 +1,9 @@
-3.2.3 (xxxx-xx-xx)
+3.2.3 (2012-01-31)
 --
 Improvements:
 
 * Core: added a property 'hideHelpTxt' to the BackendFormImage and BackendFormFile classes to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
+* Core: breadcrumb: added a count method.
 
 Bugfixes:
 
