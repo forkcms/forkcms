@@ -41,11 +41,9 @@ class BackendLocationModel
 			'action' => 'location'
 		);
 
-		// delete extra
 		$db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
-
-		// delete item
 		$db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
+		$db->delete('location_settings', 'map_id = ?', array((int) $id));
 	}
 
 	/**

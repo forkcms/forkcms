@@ -85,8 +85,8 @@ class FrontendLocationModel
 	public static function getAll()
 	{
 		return (array) FrontendModel::getDB()->getRecords(
-			'SELECT * FROM location WHERE language = ?',
-			array(FRONTEND_LANGUAGE)
+			'SELECT * FROM location WHERE language = ? AND show_overview = ?',
+			array(FRONTEND_LANGUAGE, 'Y')
 		);
 	}
 

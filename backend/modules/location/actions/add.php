@@ -74,20 +74,17 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				$item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
 
 				// insert the item
-				$id = BackendLocationModel::insert($item);
+				$item['id'] = BackendLocationModel::insert($item);
 
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng'])
 				{
 					// trigger event
 					BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
-
-					// redirect
-					$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
 				}
 
-				// could not geocode, redirect to edit
-				else $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $id);
+				// redirect
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&report=added&var=' . urlencode($item['title']));
 			}
 		}
 	}

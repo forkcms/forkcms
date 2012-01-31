@@ -8,8 +8,8 @@ jsBackend.location =
 {
 	// base values
 	bounds: null, center: null, centerLat: null, centerLng: null, height: null,  
-	map: null, mapId: null, showDirections: false, showLink: false, type: null, 
-	width: null, zoomLevel: null,
+	map: null, mapId: null, showDirections: false, showLink: false, showOverview: true,
+	type: null, width: null, zoomLevel: null,
 
 	init: function()
 	{
@@ -86,9 +86,10 @@ jsBackend.location =
 		jsBackend.location.mapId = parseInt($('#mapId').val());
 		jsBackend.location.height = parseInt($('#height').val());
 		jsBackend.location.width = parseInt($('#width').val());
-		
-		jsBackend.location.showLink = ($('#fullUrl').attr('checked') == 'checked');
+
 		jsBackend.location.showDirections = ($('#directions').attr('checked') == 'checked');
+		jsBackend.location.showLink = ($('#fullUrl').attr('checked') == 'checked');
+		jsBackend.location.showOverview = ($('#markerOverview').attr('checked') == 'checked');
 	},
 	
 	// this will refresh the page and display a certain message
@@ -117,12 +118,23 @@ jsBackend.location =
 				width: jsBackend.location.width,
 				id: jsBackend.location.mapId,
 				link: jsBackend.location.showLink,
-				directions: jsBackend.location.showDirections
+				directions: jsBackend.location.showDirections,
+				showOverview: jsBackend.location.showOverview
 			},
 			success: function(json, textStatus)
 			{
 				// reload the page on success
-				if(json.code == 200) jsBackend.location.refreshPage('map-saved');
+				if(json.code == 200)
+				{
+					// no redirect given, refresh the page
+					if(typeof $('input#redirect').val() == 'undefined')
+					{
+						jsBackend.location.refreshPage('map-saved');
+					}
+					
+					$('input#redirect').val('edit');
+					$('form#edit').submit();
+				}
 			}
 		});
 	},

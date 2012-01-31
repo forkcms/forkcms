@@ -104,6 +104,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		$this->frm->addText('zip', $this->record['zip']);
 		$this->frm->addText('city', $this->record['city']);
 		$this->frm->addDropdown('country', SpoonLocale::getCountries(BL::getInterfaceLanguage()), $this->record['country']);
+		$this->frm->addHidden('redirect', 'overview');
 	}
 
 	/**
@@ -133,6 +134,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		$this->settingsForm->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
 		$this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
 		$this->settingsForm->addCheckbox('directions', $this->settings['directions']);
+		$this->settingsForm->addCheckbox('marker_overview', ($this->record['show_overview'] == 'Y'));
 	}
 
 	/**
@@ -145,6 +147,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		// assign to template
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('settings', $this->settings);
+		$this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
 
 		$this->settingsForm->parse($this->tpl);
 
@@ -206,13 +209,15 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				{
 					// trigger event
 					BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-
-					// redirect
-					$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
 				}
 
-				// could not geocode, redirect to edit
-				else $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id']);
+				// redirect to the overview
+				if($this->frm->getField('redirect')->getValue() == 'overview')
+				{
+					$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
+				}
+				// redirect to the edit action
+				else $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&report=edited');
 			}
 		}
 	}

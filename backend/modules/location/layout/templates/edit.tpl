@@ -11,89 +11,6 @@
 		{$txtTitle} {$txtTitleError}
 	</p>
 
-	<table width="100%">
-		<tr>
-			<td id="leftColumn">
-				<div class="box">
-					<div class="heading">
-						<h3>{$lblMap|ucfirst}</h3>
-					</div>
-
-					{* Map *}
-					<div class="options">
-						<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;">
-						</div>
-					</div>
-				</div>
-			</td>
-
-			{form:settings}
-			<td id="rightColumn" style="width: 300px; padding-left: 10px;">
-				<div class="box">
-					<div class="heading">
-						<h3>{$lblSettings|ucfirst}</h3>
-					</div>
-
-					{* Zoom level *}
-					<div class="options">
-						<p>
-							<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
-							{$ddmZoomLevel} {$ddmZoomLevelError}
-						</p>
-					</div>
-
-					{* Map width *}
-					<div class="options">
-						<p>
-							<label for="width">{$lblWidth|ucfirst}</label>
-							{$txtWidth} {$txtWidthError}
-						</p>
-					</div>
-
-					{* Map height *}
-					<div class="options">
-						<p>
-							<label for="height">{$lblHeight|ucfirst}</label>
-							{$txtHeight} {$txtHeightError}
-						</p>
-					</div>
-
-					{* Map type *}
-					<div class="options">
-						<p>
-							<label for="mapType">{$lblMapType|ucfirst}</label>
-							{$ddmMapType} {$ddmMapTypeError}
-						</p>
-					</div>
-
-					{* Show the full url link or not *}
-					<div class="options">
-						<p>
-							<label for="fullUrl">{$chkFullUrl} {$msgShowMapUrl|ucfirst}</label>
-						</p>
-					</div>
-
-					{* Show directions form or not *}
-					<div class="options">
-						<p>
-							<label for="directions">{$chkDirections} {$msgShowDirections|ucfirst}</label>
-						</p>
-					</div>
-
-					{* Save button *}
-					<div class="options">
-						<div class="buttonHolderRight">
-							<a href="#" id="saveLiveData" class="button inputButton button mainButton">
-								<span>{$lblSave|ucfirst}</span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</td>
-			{/form:settings}
-		</tr>
-	</table>
-
 	<div class="box horizontal">
 		<div class="heading">
 			<h3>{$lblAddress|ucfirst}</h3>
@@ -119,27 +36,114 @@
 				<label for="country">{$lblCountry|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$ddmCountry} {$ddmCountryError}
 			</p>
-			{$hidMapId}
-		</div>
-	</div>
-
-	<div class="fullwidthOptions">
-		{option:showLocationDelete}
-		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-			<span>{$lblDelete|ucfirst}</span>
-		</a>
-		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-			<p>
-				{$msgConfirmDelete|sprintf:{$item.title}}
-			</p>
-		</div>
-		{/option:showLocationDelete}
+			{$hidMapId} {$hidRedirect}
 
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+		</div>
 		</div>
 	</div>
 {/form:edit}
+
+<table width="100%">
+	<tr>
+		<td id="leftColumn">
+			<div class="box">
+				<div class="heading">
+					<h3>{$lblMap|ucfirst}</h3>
+				</div>
+
+				{* Map *}
+				<div class="options">
+					<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;">
+					</div>
+				</div>
+			</div>
+		</td>
+
+		{form:settings}
+		<td id="rightColumn" style="width: 300px; padding-left: 10px;">
+			<div class="box">
+				<div class="heading">
+					<h3>{$lblSettings|ucfirst}</h3>
+				</div>
+
+				{* Zoom level *}
+				<div class="options">
+					<p>
+						<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+						{$ddmZoomLevel} {$ddmZoomLevelError}
+					</p>
+				</div>
+
+				{* Map width *}
+				<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
+					<p>
+						<label for="width">{$lblWidth|ucfirst}</label>
+						{$txtWidth} {$txtWidthError}
+					</p>
+				</div>
+
+				{* Map height *}
+				<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
+					<p>
+						<label for="height">{$lblHeight|ucfirst}</label>
+						{$txtHeight} {$txtHeightError}
+					</p>
+				</div>
+
+				{* Map type *}
+				<div class="options">
+					<p>
+						<label for="mapType">{$lblMapType|ucfirst}</label>
+						{$ddmMapType} {$ddmMapTypeError}
+					</p>
+				</div>
+
+				{* Show the full url link or not *}
+				<div class="options">
+					<p>
+						<label for="fullUrl">{$chkFullUrl} {$msgShowMapUrl}</label>
+					</p>
+				</div>
+
+				{* Show directions form or not *}
+				<div class="options">
+					<p>
+						<label for="directions">{$chkDirections} {$msgShowDirections}</label>
+					</p>
+				</div>
+
+				{* Show the map on the overview or not *}
+				<div class="options">
+					<p>
+						<label for="markerOverview">{$chkMarkerOverview} {$msgShowMarkerOverview}</label>
+					</p>
+				</div>
+			</div>
+		</td>
+		{/form:settings}
+	</tr>
+</table>
+
+<div class="fullwidthOptions">
+	{option:showLocationDelete}
+	<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<span>{$lblDelete|ucfirst}</span>
+	</a>
+	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+		<p>
+			{$msgConfirmDelete|sprintf:{$item.title}}
+		</p>
+	</div>
+	{/option:showLocationDelete}
+
+	<div class="buttonHolderRight">
+		<a href="#" id="saveLiveData" class="button mainButton">
+			<span>{$lblSave|ucfirst}</span>
+		</a>
+	</div>
+</div>
 
 <script type="text/javascript">
 	var mapOptions = {

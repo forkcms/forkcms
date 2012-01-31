@@ -34,10 +34,12 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 		$width = SpoonFilter::getPostValue('width', null, $generalSettings['width'], 'int');
 		$showLink = SpoonFilter::getPostValue('link', array('true', 'false'), 'false', 'string');
 		$showDirections = SpoonFilter::getPostValue('directions', array('true', 'false'), 'false', 'string');
+		$showOverview = SpoonFilter::getPostValue('showOverview', array('true', 'false'), 'true', 'string');
 
 		$center = array('lat' => $centerLat, 'lng' => $centerlng);
 		$showLink = ($showLink == 'true');
 		$showDirections = ($showDirections == 'true');
+		$showOverview = ($showOverview == 'true');
 
 		// no id given, this means we should update the main map
 		BackendLocationModel::setMapSetting($itemId, 'zoom_level', (string) $zoomLevel);
@@ -47,6 +49,13 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 		BackendLocationModel::setMapSetting($itemId, 'width', (int) $width);
 		BackendLocationModel::setMapSetting($itemId, 'directions', $showDirections);
 		BackendLocationModel::setMapSetting($itemId, 'full_url', $showLink);
+
+		$item = array(
+			'id' => $itemId,
+			'language' => BL::getWorkingLanguage(),
+			'show_overview' => ($showOverview) ? 'Y' : 'N'
+		);
+		BackendLocationModel::update($item);
 
 		// output
 		$this->output(self::OK, null, FL::msg('Success'));

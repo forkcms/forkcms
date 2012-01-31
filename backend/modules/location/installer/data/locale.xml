@@ -106,12 +106,16 @@
         <translation language="en"><![CDATA[The map is saved.]]></translation>
       </item>
       <item type="message" name="ShowMapUrl">
-        <translation language="nl"><![CDATA[Toon de link naar Google Maps.]]></translation>
-        <translation language="en"><![CDATA[Show the link to Google Maps.]]></translation>
+        <translation language="nl"><![CDATA[Toon de link naar Google Maps]]></translation>
+        <translation language="en"><![CDATA[Show the link to Google Maps]]></translation>
       </item>
       <item type="message" name="ShowDirections">
-        <translation language="nl"><![CDATA[Toon de routebeschrijving.]]></translation>
-        <translation language="en"><![CDATA[Show directions.]]></translation>
+        <translation language="nl"><![CDATA[Toon de routebeschrijving]]></translation>
+        <translation language="en"><![CDATA[Show directions]]></translation>
+      </item>
+      <item type="message" name="ShowMarkerOverview">
+        <translation language="nl"><![CDATA[Toon de plaatsaanduiding op de grote kaart]]></translation>
+        <translation language="en"><![CDATA[Show the marker on the large map]]></translation>
       </item>
     </location>
   </backend>

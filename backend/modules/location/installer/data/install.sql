@@ -10,6 +10,9 @@ CREATE TABLE IF NOT EXISTS `location` (
  `country` varchar(255) NOT NULL,
  `lat` float default NULL,
  `lng` float default NULL,
+ `show_overview` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+ `created_on` datetime NOT NULL,
+ `edited_on` datetime NOT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
