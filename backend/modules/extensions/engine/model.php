@@ -911,7 +911,7 @@ class BackendExtensionsModel
 		if($return === false) return false;
 
 		// unlink the random file
-		@unlink($path . '/' . $file);
+		SpoonFile::delete($path . '/' . $file);
 
 		return true;
 	}
@@ -1101,6 +1101,16 @@ class BackendExtensionsModel
 
 			// build table
 			$table[$i] = (array) explode(',', $row);
+		}
+
+		// no rows
+		if(!isset($table[0])) return false;
+
+		$columns = count($table[0]);
+
+		foreach($table as $row)
+		{
+			if(count($row) != $columns) return false;
 		}
 
 		return $table;

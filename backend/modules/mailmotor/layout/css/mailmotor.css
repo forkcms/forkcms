@@ -115,3 +115,7 @@ a.mailAnalyticsBacklink {
 .dataFilter p.lastChild {
 	padding: 0;
 }
+
+#iframeBox {
+	height: 375px;
+}

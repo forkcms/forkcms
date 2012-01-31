@@ -1,4 +1,54 @@
-3.2.1 (xxxx-xx-xx)
+3.2.4 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: integrated new CSS minifier (combine imports, import images to inline data URIs, shorten hex colors, strip whitespace, strip comments)
+* Core: integrated new JS minifier (strip whitespace, strip comments)
+* Core: replaced both different frontend & backend minifiers, by this new minifier.
+
+
+3.2.3 (2012-01-31)
+--
+Improvements:
+
+* Core: added a property 'hideHelpTxt' to the BackendFormImage and BackendFormFile classes to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
+* Core: breadcrumb: added a count method.
+
+Bugfixes:
+
+* Core: snippets: made the languages to get the templates for dynamic.
+* Blog: fixed improper redirect that caused blog archive pagination to malfunction.
+
+
+3.2.2 (2012-01-24)
+--
+Improvements:
+
+* Core: added an isPrice filter, also for text fields.
+* Core: added the text color for the hover states of buttons.
+* Core: when a datagrid column has a certain column title(hidden, visible, published, active), the datagrid will now automatically detect non-visible rows and mark them this way.
+* Core: init Facebook for its JS SDK when an admin or app id is set.
+* API: Added API::isValidRequestMethod($method) that checks if the request method of an incoming API call is valid for a given API method'.
+* Analytics: Fixed the cronjobs execution time, should only run once a day.
+* Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
+* Blog: API methods are now limited to their correct request methods.
+* Extensions: improved the validation of the positions, as mention on http://forkcms.lighthouseapp.com/projects/61890/tickets/256 by Dieter W.
+* Formbuilder: altered the splitchar, so "," can be used in values for dropdowns, checkboxes or radiobuttons.
+* Pages: editor will be larger by default.
+* Search: use a saveIndex function instead of addIndex and editIndex.
+
+Bugfixes:
+
+* Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
+* Core: Click To Edit above the editor should behave from now on.
+* Core: added the options for the theme-specific editor_content.css and and screen.css that will be loaded in the editor.
+* Analytics: Fixed the labels for keywords and referrers when updating through ajax.
+* Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
+* Extensions: a notice was triggered when using invalid templatesyntax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/257.
+* Mailmotor: improve visibility of ckeditor in mailmotor.
+
+
+3.2.1 (2012-01-17)
 --
 Improvements:
 

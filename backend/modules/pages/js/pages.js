@@ -243,6 +243,9 @@ jsBackend.pages.extras =
 				jsBackend.ckeditor.destroy();
 				jsBackend.ckeditor.load();
 
+				// resize the editor, so we have space to edit the content
+				CKEDITOR.instances['html'].resize('100%', 375);
+
 				// set content in editor
 				$('#html').val(previousContent);
 			}

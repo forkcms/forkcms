@@ -24,7 +24,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li><a href="#tabRevisions">{$lblPreviousVersions|ucfirst}</a></li>
+			<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblComments|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		</ul>
@@ -164,7 +164,7 @@
 			</table>
 		</div>
 
-		<div id="tabRevisions">
+		<div id="tabVersions">
 			{option:drafts}
 				<div class="tableHeading">
 					<div class="oneLiner">
@@ -175,25 +175,31 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="dataGridHolder">
 					{$drafts}
 				</div>
 			{/option:drafts}
-			{option:revisions}
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="tooltip" style="display: none;">
-							<p>{$msgHelpRevisions}</p>
-						</div>
+
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
 					</div>
 				</div>
-				<div class="dataGridHolder">
-					{$revisions}
-				</div>
+			</div>
+
+			{option:revisions}
+			<div class="dataGridHolder">
+				{$revisions}
+			</div>
 			{/option:revisions}
-			{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+
+			{option:!revisions}
+				<p>{$msgNoRevisions}</p>
+			{/option:!revisions}
 		</div>
 
 		<div id="tabSEO">

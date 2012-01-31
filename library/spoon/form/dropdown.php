@@ -469,9 +469,6 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// default element?
 		if(count($this->defaultElement) != 0)
 		{
-			// skip the default element
-			if(isset($this->defaultElement[1]) && $this->defaultElement[1] == $label) continue;
-
 			// create option
 			$output .= "\t" . '<option value="' . $this->defaultElement[1] . '"';
 
@@ -496,6 +493,9 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// loop all values
 		foreach($this->values as $label => $value)
 		{
+			// skip the default element
+			if(isset($this->defaultElement[1]) && $this->defaultElement[1] == $label) continue;
+
 			// value is an optgroup?
 			if($this->optionGroups[$label])
 			{

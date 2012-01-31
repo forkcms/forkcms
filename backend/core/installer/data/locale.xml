@@ -2228,6 +2228,10 @@
         <translation language="de"><![CDATA[Ungültiges Passwort.]]></translation>
         <translation language="es"><![CDATA[Contraseña invalida.]]></translation>
       </item>
+      <item type="error" name="InvalidPrice">
+        <translation language="nl"><![CDATA[Gelieve een geldig bedrag in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please insert a valid price.]]></translation>
+      </item>
       <item type="error" name="InvalidURL">
         <translation language="nl"><![CDATA[Dit is een ongeldige URL.]]></translation>
         <translation language="en"><![CDATA[This is an invalid URL.]]></translation>
@@ -6356,6 +6360,18 @@
         <translation language="de"><![CDATA[Wert]]></translation>
         <translation language="fr"><![CDATA[valeur]]></translation>
         <translation language="es"><![CDATA[valor]]></translation>
+      </item>
+      <item type="label" name="Versions">
+        <translation language="nl"><![CDATA[versies]]></translation>
+        <translation language="en"><![CDATA[versions]]></translation>
+        <translation language="hu"><![CDATA[verziók]]></translation>
+        <translation language="ru"><![CDATA[версия]]></translation>
+        <translation language="it"><![CDATA[versione]]></translation>
+        <translation language="tr"><![CDATA[versiyonlar]]></translation>
+        <translation language="cn"><![CDATA[版本]]></translation>
+        <translation language="de"><![CDATA[Versionen]]></translation>
+        <translation language="fr"><![CDATA[versions]]></translation>
+        <translation language="es"><![CDATA[versiones]]></translation>
       </item>
       <item type="label" name="View">
         <translation language="nl"><![CDATA[bekijken]]></translation>

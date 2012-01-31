@@ -12,6 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class FrontendBreadcrumb extends FrontendBaseObject
 {
@@ -111,6 +112,16 @@ class FrontendBreadcrumb extends FrontendBaseObject
 
 		// clear all
 		else $this->items = array();
+	}
+
+	/**
+	 * Count number of breadcrumbs that are already added.
+	 *
+	 * @return int
+	 */
+	public function count()
+	{
+		return count($this->items);
 	}
 
 	/**

@@ -129,33 +129,6 @@ class BackendTemplate extends SpoonTemplate
 	}
 
 	/**
-	 * Parse the authentication settings for the authenticated user
-	 */
-	private function parseAuthentication()
-	{
-		// init var
-		$db = BackendModel::getDB();
-
-		// get allowed actions
-		$allowedActions = (array) $db->getRecords(
-			'SELECT gra.module, gra.action, MAX(gra.level) AS level
-			 FROM users_sessions AS us
-			 INNER JOIN users AS u ON us.user_id = u.id
-			 INNER JOIN users_groups AS ug ON u.id = ug.user_id
-			 INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
-			 WHERE us.session_id = ? AND us.secret_key = ?
-			 GROUP BY gra.module, gra.action',
-			array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
-		);
-
-		// loop actions and assign to template
-		foreach($allowedActions as $action)
-		{
-			if($action['level'] == '7') $this->assign('show' . SpoonFilter::toCamelCase($action['module'], '_') . SpoonFilter::toCamelCase($action['action'], '_'), true);
-		}
-	}
-
-	/**
 	 * Parse the settings for the authenticated user
 	 */
 	private function parseAuthenticatedUser()
@@ -192,6 +165,33 @@ class BackendTemplate extends SpoonTemplate
 					)
 				);
 			}
+		}
+	}
+
+	/**
+	 * Parse the authentication settings for the authenticated user
+	 */
+	private function parseAuthentication()
+	{
+		// init var
+		$db = BackendModel::getDB();
+
+		// get allowed actions
+		$allowedActions = (array) $db->getRecords(
+			'SELECT gra.module, gra.action, MAX(gra.level) AS level
+			 FROM users_sessions AS us
+			 INNER JOIN users AS u ON us.user_id = u.id
+			 INNER JOIN users_groups AS ug ON u.id = ug.user_id
+			 INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
+			 WHERE us.session_id = ? AND us.secret_key = ?
+			 GROUP BY gra.module, gra.action',
+			array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+		);
+
+		// loop actions and assign to template
+		foreach($allowedActions as $action)
+		{
+			if($action['level'] == '7') $this->assign('show' . SpoonFilter::toCamelCase($action['module'], '_') . SpoonFilter::toCamelCase($action['action'], '_'), true);
 		}
 	}
 
@@ -267,7 +267,8 @@ class BackendTemplate extends SpoonTemplate
 	private function parseLabels()
 	{
 		// grab the current module
-		if($this->URL instanceof BackendURL) $currentModule = $this->URL->getModule();
+		if(Spoon::exists('url')) $currentModule = Spoon::get('url')->getModule();
+		elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
 		else $currentModule = 'core';
 
 		// init vars
