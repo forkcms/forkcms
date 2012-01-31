@@ -15,6 +15,10 @@
 			<name><![CDATA[Matthias Mullie]]></name>
 			<url><![CDATA[http://www.mullie.eu]]></url>
 		</author>
+		<author>
+			<name><![CDATA[Jelmer Snoeck]]></name>
+			<url><![CDATA[http://www.jelmersnoeck.com]]></url>
+		</author>
 	</authors>
 	<events>
 		<event application="backend" name="after_edit"><![CDATA[Triggered when a location is added.]]></event>
