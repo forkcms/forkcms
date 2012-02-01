@@ -81,6 +81,6 @@
 			if('{$locationSettings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
 		}
 
-		window.onload = initialize();
+		google.maps.event.addDomListener(window, 'load', initialize)
 	</script>
 {/option:locationItems}
