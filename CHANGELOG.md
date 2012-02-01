@@ -5,6 +5,7 @@ Improvements:
 * Core: integrated new CSS minifier (combine imports, import images to inline data URIs, shorten hex colors, strip whitespace, strip comments)
 * Core: integrated new JS minifier (strip whitespace, strip comments)
 * Core: replaced both different frontend & backend minifiers, by this new minifier.
+* Share: Twitter now uses title instead of description + language attribute added
 
 
 3.2.3 (2012-01-31)
