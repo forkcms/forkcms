@@ -7,6 +7,9 @@ Improvements:
 * Core: replaced both different frontend & backend minifiers, by this new minifier.
 * Share: Twitter now uses title instead of description + language attribute added
 
+Bugfixes:
+
+* Location: fixed a javascript error with jquery.
 
 3.2.3 (2012-01-31)
 --
