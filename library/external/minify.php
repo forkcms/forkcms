@@ -344,10 +344,10 @@ class MinifyCSS extends Minify
 			$content .= $css;
 		}
 
+		if($combineImports) $content = $this->combineImports($path, false, $content);
 		if($stripComments) $content = $this->stripComments($content);
 		if($stripWhitespace) $content = $this->stripWhitespace($content);
 		if($shortenHex) $content = $this->shortenHex($content);
-		if($combineImports) $content = $this->combineImports($path, false, $content);
 		if($importImages) $content = $this->importImages($path, false, $content);
 
 		// save to path
