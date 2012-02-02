@@ -852,7 +852,8 @@ abstract class Minify
 	public function __construct()
 	{
 		// it's possible to add the css through the constructor as well ;)
-		if(func_num_args()) call_user_func_array(array($this, 'add'), func_get_args());
+		$arguments = func_get_args();
+		if(func_num_args()) call_user_func_array(array($this, 'add'), $arguments);
 	}
 
 	/**
