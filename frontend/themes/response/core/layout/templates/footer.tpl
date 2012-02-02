@@ -29,7 +29,7 @@
 <div id="footerHolder" class="holder">
 	<footer id="footer" class="row clearfix">
 		<div class="col-12">
-			<p class="copyright">Copyright &copy; {$now|date:'Y'} {$siteTitle}. Based on the <a href="http://fork-cms.be/extensions/themes">Response theme</a> by <a href="https://twitter.com/#!/simoncoudeville">Simon Coudeville</a>. Build with <a href="http://fork-cms.be">Fork CMS</a></p>
+			<p class="copyright">Copyright &copy; {$now|date:'Y'} {$siteTitle}. Based on the <a href="http://fork-cms.be/extensions/themes">Response theme</a> by <a href="https://twitter.com/#!/simoncoudeville">Simon Coudeville</a>. Built with <a href="http://fork-cms.be">Fork CMS</a></p>
 		</div>
 	</footer>
 </div>

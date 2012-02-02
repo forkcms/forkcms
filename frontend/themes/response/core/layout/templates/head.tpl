@@ -20,11 +20,20 @@
 
 	{* google fonts *}
 	<link href='http://fonts.googleapis.com/css?family=Pacifico|Oswald|Crimson+Text:400,400italic' rel='stylesheet' type='text/css'>
-
-	{* Stylesheets *}
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic' rel='stylesheet' type='text/css'>
+	
+	{* Stylesheets 
 	{iteration:cssFiles}
 	<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
+	*}
+	
+	{* default stylesheet 
+	<link rel="stylesheet" href="{$THEME_URL}/core/layout/css/screen.css" />
+	*}
+	
+	{* alternative stylesheet *}
+	<link rel="stylesheet" href="{$THEME_URL}/core/layout/css/screen-alt.css" />
 
 	{* HTML5, respond Javascript *}
 	<!--[if lt IE 9]>
