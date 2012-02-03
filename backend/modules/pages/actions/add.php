@@ -73,7 +73,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// init var
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', false);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', false);
 
 		// fallback
 		if($defaultTemplateId === false)
@@ -103,7 +103,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('add');
@@ -266,7 +266,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
