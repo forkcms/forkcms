@@ -1080,6 +1080,9 @@ class BackendPagesModel
 				// insert link
 				$html .= '			<a href="' . BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
+				// insert subtree
+				$html .= self::getSubTree($navigation, $page['page_id']);
+
 				// end
 				$html .= '		</li>' . "\n";
 			}

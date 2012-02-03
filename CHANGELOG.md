@@ -11,6 +11,7 @@ Bugfixes:
 
 * Location: fixed a javascript error with jquery.
 * CSS: fixed Safari bug for DataGrid in Tabs #212
+* Pages: subpages in the footer are now visible in the backend.
 
 3.2.3 (2012-01-31)
 --
