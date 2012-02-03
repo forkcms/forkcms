@@ -789,6 +789,19 @@ class BackendExtensionsModel
 	}
 
 	/**
+	 * Checks if a specific module has errors or not
+	 *
+	 * @param string $module
+	 * @return bool
+	 */
+	public static function hasModuleWarnings($module)
+	{
+		$moduleInformation = self::getModuleInformation($module);
+
+		return (empty($moduleInformation['warnings'])) ? 'N' : 'Y';
+	}
+
+	/**
 	 * Inserts a new template
 	 *
 	 * @param array $template The data for the template to insert.

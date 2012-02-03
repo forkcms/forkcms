@@ -99,6 +99,10 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 			$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
 			$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
 		}
+
+		// add the greyed out option to modules that have warnings
+		$this->dataGridInstalledModules->addColumn('hidden');
+		$this->dataGridInstalledModules->setColumnFunction(array('BackendExtensionsModel', 'hasModuleWarnings'), array('[raw_name]'), array('hidden'));
 	}
 
 	/**
