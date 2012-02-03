@@ -106,7 +106,7 @@ class InstallerStep7 extends InstallerStep
 		// build variables
 		$variables = array();
 		$variables['\'<debug-mode>\''] = SpoonSession::get('debug_mode') ? 'true' : 'false';
-		$variables['<spoon-debug-email>'] = SpoonSession::get('email');
+		$variables['<spoon-debug-email>'] = SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email');
 		$variables['<database-name>'] = SpoonSession::get('db_database');
 		$variables['<database-hostname>'] = addslashes(SpoonSession::get('db_hostname'));
 		$variables['<database-username>'] = addslashes(SpoonSession::get('db_username'));
