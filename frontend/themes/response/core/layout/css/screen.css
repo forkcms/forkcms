@@ -391,7 +391,7 @@ input.inputText, input.inputPassword, input.inputSearch, input.inputDate, textar
 	   -ms-border-radius: 2px;
 	    -o-border-radius: 2px;
 	       border-radius: 2px;
-	
+	outline: none;
 }
 
 textarea {

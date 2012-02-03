@@ -352,13 +352,13 @@ p.meta {
 
 input.inputText, input.inputPassword, input.inputSearch, input.inputDate, textarea {
 	font-family: "Droid Serif", georgia, serif;
-	font-size: 0.8em;
+	font-size: 0.9em;
 	background-color: #FFFFFF;
 	border: 0 none;
 	border: 1px solid #CCC;
 	color: #666666;
 	margin: 0;
-	padding: 0.75em 0;
+	padding: 0.9em 0;
 	width: 100%;
 	text-indent: 1em;
 	-webkit-border-radius: 2px;
@@ -366,7 +366,8 @@ input.inputText, input.inputPassword, input.inputSearch, input.inputDate, textar
 	   -ms-border-radius: 2px;
 	    -o-border-radius: 2px;
 	       border-radius: 2px;
-	
+	background-color: #eae9e6;
+	outline: none;
 }
 
 textarea {
@@ -385,12 +386,14 @@ input.inputText:focus, input.inputPassword:focus, input.inputSearch:focus, input
 .inputSubmit {
 	margin:0 0 1.3em 0;
 	padding: 0.7em 1em;
-	font-size: 0.9em;
-	font-family: 'Droid Sans', arial, sans-serif;
-	font-weight: 700;
-	line-height: 2em;
-	text-transform: uppercase;
-	background: #63C;
+	font-size: 1em; 
+	line-height: 2em; 
+	margin:0 0 1em 0; 
+	font-family: 'Droid Sans', arial, sans-serif; 
+	font-weight: 700; 
+	text-transform: uppercase; 
+	letter-spacing: 0.2em;
+	background: #C44630;
 	border: none;
 	color: #fff;
 	-webkit-border-radius: 2px;
@@ -403,17 +406,18 @@ input.inputText:focus, input.inputPassword:focus, input.inputSearch:focus, input
 }
 
 .inputSubmit:hover {
-	background: #C44630;
+	background: #051320;
 }
 
 label {
 	display: block;
-	font-size: 0.8em;
+	font-size: 0.9em;
 	letter-spacing: 0.2em;
-	line-height: 2.25em;
+	line-height: 2.2222222em;
 	margin-bottom: 0;
 	list-style: none outside none;
 	text-transform: uppercase;
+	color: #697A89;
 }
 
 
