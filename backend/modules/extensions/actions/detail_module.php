@@ -80,6 +80,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 			$this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
 		}
 
+		// fetch the module information
 		$moduleInformation = BackendExtensionsModel::getModuleInformation($this->currentModule);
 		$this->information = $moduleInformation['data'];
 		$this->warnings = $this->warnings + $moduleInformation['warnings'];
