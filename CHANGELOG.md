@@ -6,6 +6,7 @@ Improvements:
 * Core: integrated new JS minifier (strip whitespace, strip comments)
 * Core: replaced both different frontend & backend minifiers, by this new minifier.
 * Share: Twitter now uses title instead of description + language attribute added
+* Core: When a user doesn't have sufficient rights to access a page, he will now be redirected with the proper error code (307).
 
 Bugfixes:
 

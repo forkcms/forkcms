@@ -175,7 +175,7 @@ class BackendURL
 					$errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
 
 					// redirect to the error page
-					SpoonHTTP::redirect($errorUrl);
+					SpoonHTTP::redirect($errorUrl, 307);
 				}
 			}
 
@@ -255,7 +255,7 @@ class BackendURL
 					}
 				}
 				// the user doesn't have access, redirect to error page
-				SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
+				SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
 			}
 
 			// we have access
@@ -265,7 +265,7 @@ class BackendURL
 				if(!BackendAuthentication::isAllowedAction($action, $module))
 				{
 					// the user hasn't access, redirect to error page
-					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
+					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
 				}
 
 				// let's do it
