@@ -342,11 +342,11 @@ class MinifyCSS extends Minify
 	 * Perform CSS optimizations.
 	 *
 	 * @param string[optional] $path The path the data should be written to.
-	 * @param boolean[optional] $stripComments Should comments be stripped?
-	 * @param boolean[optional] $stripWhitespace Should whitespace be stripped?
-	 * @param boolean[optional] $shortenHex Should hex-colors be shortened?
-	 * @param boolean[optional] $combineImports Should @imports statements be combined?
-	 * @param boolean[optional] $importFiles Should referenced files be imported?
+	 * @param bool[optional] $stripComments Should comments be stripped?
+	 * @param bool[optional] $stripWhitespace Should whitespace be stripped?
+	 * @param bool[optional] $shortenHex Should hex-colors be shortened?
+	 * @param bool[optional] $combineImports Should @imports statements be combined?
+	 * @param bool[optional] $importFiles Should referenced files be imported?
 	 * @return string The minified data.
 	 */
 	public function minify($path = false, $stripComments = true, $stripWhitespace = true, $shortenHex = true, $combineImports = true, $importFiles = true)
@@ -704,8 +704,8 @@ class MinifyJS extends Minify
 	 * Perform JS optimizations.
 	 *
 	 * @param string[optional] $path The path the data should be written to.
-	 * @param boolean[optional] $stripComments Should comments be stripped?
-	 * @param boolean[optional] $stripWhitespace Should whitespace be stripped?
+	 * @param bool[optional] $stripComments Should comments be stripped?
+	 * @param bool[optional] $stripWhitespace Should whitespace be stripped?
 	 * @return string The minified data.
 	 */
 	public function minify($path = false, $stripComments = true, $stripWhitespace = true)
@@ -920,14 +920,6 @@ abstract class Minify
 		// no file, just return the data itself
 		else return $data;
 	}
-
-	/**
-	 * Minify the data.
-	 *
-	 * @param string[optional] $path The path the data should be written to.
-	 * @return string The minified data.
-	 */
-	abstract public function minify($path = null);
 
 	/**
 	 * Save to file

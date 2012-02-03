@@ -124,6 +124,7 @@ class BackendHeader
 	 *
 	 * @param string $file The file to load.
 	 * @param string[optional] $module The module wherin the file is located.
+	 * @param bool[optional] $minify Should the module be minified?
 	 * @param bool[optional] $parseThroughPHP Should the file be parsed by PHP?
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
@@ -141,7 +142,7 @@ class BackendHeader
 		if($parseThroughPHP && $overwritePath) throw new BackendException('parseThroughPHP and overwritePath can\'t be both true.');
 
 		// no minifying when debugging
-//		if(SPOON_DEBUG) $minify = false;
+		if(SPOON_DEBUG) $minify = false;
 
 		// no minifying when parsing through PHP
 		if($parseThroughPHP) $minify = false;
@@ -230,7 +231,7 @@ class BackendHeader
 		$finalPath = BACKEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-//		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
