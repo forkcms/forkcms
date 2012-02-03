@@ -114,11 +114,11 @@ td.num_tags {
 	text-align: right;
 }
 
-/* Fix nasty safari bug when inserting a datagrid into jQuery #tabs */
+/* Fix nasty safari bug when inserting a datagrid into jQuery .tabs */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 
-	#tabs .dataGridHolder:after {
+	.tabs .dataGridHolder:after {
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
@@ -127,7 +127,7 @@ td.num_tags {
 		visibility: hidden;
 	}
 
-	#tabs .dataGrid {
+	.tabs .dataGrid {
 		max-width: 100%;
 		float: left;
 	}
