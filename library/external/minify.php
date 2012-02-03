@@ -914,14 +914,6 @@ abstract class Minify
 	}
 
 	/**
-	 * Minify the data.
-	 *
-	 * @param string[optional] $path The path the data should be written to.
-	 * @return string The minified data.
-	 */
-	abstract public function minify($path = null);
-
-	/**
 	 * Save to file
 	 *
 	 * @param string $content The minified data.
