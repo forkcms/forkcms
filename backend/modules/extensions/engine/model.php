@@ -12,6 +12,7 @@
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendExtensionsModel
 {
@@ -451,6 +452,75 @@ class BackendExtensionsModel
 	}
 
 	/**
+	 * Fetch the module information from the info.xml file.
+	 *
+	 * @param string $module
+	 * @return array
+	 */
+	public static function getModuleInformation($module)
+	{
+		// path to information file
+		$pathInfoXml = BACKEND_MODULES_PATH . '/' . $module . '/info.xml';
+
+		// the module information
+		$information = array('data' => array(), 'warnings' => array());
+
+		// information needs to exists
+		if(SpoonFile::exists($pathInfoXml))
+		{
+			try
+			{
+				// load info.xml
+				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+
+				// convert xml to useful array
+				$information['data'] = self::processModuleXml($infoXml);
+
+				// empty data (nothing useful)
+				if(empty($information['data']))
+				{
+					$information['warnings'][] = array(
+						'message' => BL::getMessage('InformationFileIsEmpty')
+					);
+				}
+
+				// check if cronjobs are installed already
+				if(isset($information['data']['cronjobs']))
+				{
+					foreach($information['data']['cronjobs'] as $cronjob)
+					{
+						if(!$cronjob['active'])
+						{
+							$information['warnings'][] = array(
+								'message' => BL::getError('CronjobsNotSet')
+							);
+						}
+						break;
+					}
+				}
+			}
+
+			// warning that the information file is corrupt
+			catch(Exception $e)
+			{
+				$information['warnings'][] = array(
+					'message' => BL::getMessage('InformationFileCouldNotBeLoaded')
+				);
+			}
+		}
+
+		// warning that the information file is missing
+		else
+		{
+			$information['warnings'][] = array(
+				'message' => BL::getMessage('InformationFileIsMissing')
+			);
+		}
+
+		return $information;
+	}
+
+	/**
 	 * Get modules based on the directory listing in the backend application.
 	 *
 	 * If a module contains a info.xml it will be parsed.
@@ -682,7 +752,7 @@ class BackendExtensionsModel
 				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 				// convert xml to useful array
-				$information = BackendExtensionsModel::processThemeXml($infoXml);
+				$information = self::processThemeXml($infoXml);
 				if(!$information) throw new BackendException('Invalid info.xml');
 			}
 
@@ -716,6 +786,19 @@ class BackendExtensionsModel
 		$records = array_merge($core, $records);
 
 		return (array) $records;
+	}
+
+	/**
+	 * Checks if a specific module has errors or not
+	 *
+	 * @param string $module
+	 * @return bool
+	 */
+	public static function hasModuleWarnings($module)
+	{
+		$moduleInformation = self::getModuleInformation($module);
+
+		return (empty($moduleInformation['warnings'])) ? 'N' : 'Y';
 	}
 
 	/**
@@ -788,7 +871,7 @@ class BackendExtensionsModel
 		$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 		// convert xml to useful array
-		$information = BackendExtensionsModel::processThemeXml($infoXml);
+		$information = self::processThemeXml($infoXml);
 		if(!$information) throw new BackendException('Invalid info.xml');
 
 		// loop templates
