@@ -116,7 +116,7 @@ class MinifyCSS extends Minify
 					$importContent = $this->move($importPath, $source, $importContent);
 
 					// check if this is only valid for certain media
-					if($match['media']) $importContent = '@media '. $match['media'] . '{' . "\n" . $importContent . "\n" . '}';
+					if($match['media']) $importContent = '@media ' . $match['media'] . '{' . "\n" . $importContent . "\n" . '}';
 
 					// add to replacement array
 					$search[] = $match[0];
@@ -313,14 +313,15 @@ class MinifyCSS extends Minify
 					switch($match[3])
 					{
 						case 'woff':
-							$replace[] = 'url(data:application/x-font-woff;base64,' . $importContent  .')';
+							$replace[] = 'url(data:application/x-font-woff;base64,' . $importContent  . ')';
 							break;
 
 						case 'svg':
-							$replace[] = 'url(data:image/svg+xml;base64,' . $importContent  .')';
+							$replace[] = 'url(data:image/svg+xml;base64,' . $importContent  . ')';
+							break;
 
 						default:
-							$replace[] = 'url(data:image/' . $match[3] . ';base64,' . $importContent  .')';
+							$replace[] = 'url(data:image/' . $match[3] . ';base64,' . $importContent  . ')';
 							break;
 					}
 				}
