@@ -268,14 +268,14 @@ class MinifyCSS extends Minify
 	}
 
 	/**
-	 * Import images into the CSS, base64-ized.
+	 * Import files into the CSS, base64-ized.
 	 * @url(image.jpg) images will be loaded and their content merged into the original file, to save HTTP requests.
 	 *
-	 * @param string $source The file to import images for.
+	 * @param string $source The file to import files for.
 	 * @param string[optional] $path The path the data should be written to.
 	 * @return string
 	 */
-	public function importImages($source, $path = false)
+	public function importFiles($source, $path = false)
 	{
 		// little "hack" for internal use
 		$content = @func_get_arg(2);
@@ -341,9 +341,14 @@ class MinifyCSS extends Minify
 	 * Perform CSS optimizations.
 	 *
 	 * @param string[optional] $path The path the data should be written to.
+	 * @param boolean[optional] $stripComments Should comments be stripped?
+	 * @param boolean[optional] $stripWhitespace Should whitespace be stripped?
+	 * @param boolean[optional] $shortenHex Should hex-colors be shortened?
+	 * @param boolean[optional] $combineImports Should @imports statements be combined?
+	 * @param boolean[optional] $importFiles Should referenced files be imported?
 	 * @return string The minified data.
 	 */
-	public function minify($path = false, $stripComments = true, $stripWhitespace = true, $shortenHex = true, $combineImports = true, $importImages = true)
+	public function minify($path = false, $stripComments = true, $stripWhitespace = true, $shortenHex = true, $combineImports = true, $importFiles = true)
 	{
 		$content = '';
 
@@ -361,7 +366,7 @@ class MinifyCSS extends Minify
 		if($stripComments) $content = $this->stripComments($content);
 		if($stripWhitespace) $content = $this->stripWhitespace($content);
 		if($shortenHex) $content = $this->shortenHex($content);
-		if($importImages) $content = $this->importImages($path, false, $content);
+		if($importFiles) $content = $this->importFiles($path, false, $content);
 
 		// save to path
 		if($path !== false) $this->save($content, $path);
@@ -698,6 +703,8 @@ class MinifyJS extends Minify
 	 * Perform JS optimizations.
 	 *
 	 * @param string[optional] $path The path the data should be written to.
+	 * @param boolean[optional] $stripComments Should comments be stripped?
+	 * @param boolean[optional] $stripWhitespace Should whitespace be stripped?
 	 * @return string The minified data.
 	 */
 	public function minify($path = false, $stripComments = true, $stripWhitespace = true)
