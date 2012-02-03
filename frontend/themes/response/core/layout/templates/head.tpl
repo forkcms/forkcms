@@ -33,7 +33,7 @@
 	*}
 	
 	{* alternative stylesheet *}
-	<link rel="stylesheet" href="{$THEME_URL}/core/layout/css/screen-alt.css" />
+	<link rel="stylesheet" href="{$THEME_URL}/core/layout/css/screen-alt2.css" />
 
 	{* HTML5, respond Javascript *}
 	<!--[if lt IE 9]>
