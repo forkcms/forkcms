@@ -128,7 +128,7 @@ class BackendBaseAction
 
 		// add core css files
 		$this->header->addCSS('reset.css', 'core');
-		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
+		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core', false, false);
 		$this->header->addCSS('screen.css', 'core');
 		$this->header->addCSS('debug.css', 'core');
 
