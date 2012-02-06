@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Jelmer Snoeck <jelmer.snoeck@siphoc.com>
  * @since		0.1.1
  */
 class SpoonHTTP
