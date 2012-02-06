@@ -478,7 +478,7 @@ class SpoonFilter
 		if($allowCommas) $value = str_replace(',', '.', (string) $value);
 
 		// trim zero characters after the decimal separator
-		if(mb_strpos($value, '.') !== false) rtrim($value, '0');
+		if(mb_strpos((string) $value, '.') !== false) rtrim($value, '0');
 
 		// validate
 		return ((string) (float) $value === (string) $value);
