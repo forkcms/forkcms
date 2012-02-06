@@ -1728,8 +1728,10 @@ class SpoonDataGrid
 	{
 		if($this->source->getNumResults() > 0)
 		{
-			// add to the list
-			foreach($attributes as $key => $value) $this->attributes['row_odd'][(string) $key] = (string) $value;
+			foreach($attributes as $key => $value)
+			{
+				$this->attributes['row_odd'][(string) $key] = (string) $value;
+			}
 		}
 	}
 
