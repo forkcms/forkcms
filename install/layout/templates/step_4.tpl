@@ -29,8 +29,8 @@
 					<span class="helpTxt">(Leave this checkbox unticked for better security and performance)</span>
 				</li>
 				<li>
-					{$chkDifferentDebugEmail} <label for="differentDebugEmail">Use a specefic debug e-mailaddress </label>
-					<span class="helpTxt">(Exception e-mails will be send to this e-mailaddress)</span>
+					{$chkDifferentDebugEmail} <label for="differentDebugEmail">Use a specific debug email address </label>
+					<span class="helpTxt">(Exception emails will be send to this email address)</span>
 				</li>
 				<li id="debugEmailHolder">
 					{$txtDebugEmail} {$txtDebugEmailError}
