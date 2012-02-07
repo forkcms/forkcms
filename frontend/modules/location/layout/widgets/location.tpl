@@ -53,8 +53,17 @@
 	// add click event on marker
 	google.maps.event.addListener(marker, 'click', function()
 	{
-		// create infowindow
-		new google.maps.InfoWindow({ content: '<h1>{$widgetLocationItems.title}</h1>' + $('#widgetLocationItemText').html() }).open(mapWidget, marker);
+		// store the content
+		var infoWindowContent = '<h1>{$widgetLocationItems.title}</h1>' + $('#widgetLocationItemText').html();
+
+		// create a new info window
+		var infoWindow = new google.maps.InfoWindow();
+
+		// put the content inside the info window
+		infoWindow.setContent(infoWindowContent);
+
+		// open it
+		infoWindow.open(mapWidget, marker);
 	});
 </script>
 {/option:widgetLocationItems}
