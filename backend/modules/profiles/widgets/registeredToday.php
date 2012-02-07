@@ -46,6 +46,6 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('profiles', $this->profiles);
+		$this->tpl->assign('today', $this->profiles);
 	}
 }
