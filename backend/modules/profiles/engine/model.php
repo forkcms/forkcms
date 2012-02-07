@@ -349,6 +349,20 @@ class BackendProfilesModel
 	}
 
 	/**
+	 * Get all profiles registered today
+	 * 
+	 * @return array
+	 */
+	public static function getRegisteredToday()
+	{
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT *
+			FROM profiles
+			WHERE registered_on >= SYSDATE() - INTERVAL 1 DAY'
+		);
+	}
+
+	/**
 	 * Get a setting for a profile.
 	 *
 	 * @param int $id Profile id.
