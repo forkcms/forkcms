@@ -12,6 +12,7 @@ Improvements:
 Bugfixes:
 
 * Location: fixed a javascript error with jquery.
+* Location: fix vertical scrollbar inside info window.
 * CSS: fixed Safari bug for DataGrid in Tabs #212
 * Pages: subpages in the footer are now visible in the backend.
 * Pages: default template wasn't used when adding a page.
