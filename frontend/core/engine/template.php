@@ -606,8 +606,6 @@ class FrontendTemplateModifiers
 	 */
 	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null, $tpl = 'navigation.tpl')
 	{
-		
-		
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
 
