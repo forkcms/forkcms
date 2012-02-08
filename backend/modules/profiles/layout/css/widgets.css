@@ -5,3 +5,11 @@
 #dashboardWidgets .content ul {
 	padding-bottom: 0;
 }
+
+#widgetProfiles .ui-tabs li {
+	font-weight: 400;
+}
+
+#widgetProfiles .ui-tabs .ui-tabs-selected {
+	font-weight: 700;
+}

@@ -63,13 +63,17 @@
 		</div>
 	</div>
 
-	<div class="content options">
-		<ul>
-			<li>{$lblNumberOfInactiveProfiles|ucfirst}: {$inactive}</li>
-			<li>{$lblNumberOfActiveProfiles|ucfirst}: {$active}</li>
-			<li>{$lblNumberOfBlockedProfiles|ucfirst}: {$blocked}</li>
-			<li>{$lblNumberOfDeletedProfiles|ucfirst}: {$deleted}</li>
-		</ul>
+	<div class="options">
+		{option:pieGraphData}
+			<div id="dataChartPieChart" class="hidden">
+				<ul class="data">
+					{iteration:pieGraphData}
+						<li><span class="label">{$pieGraphData.label}</span><span class="value">{$pieGraphData.value}</span><span class="percentage">{$pieGraphData.percentage}</span></li>
+					{/iteration:pieGraphData}
+				</ul>
+			</div>
+			<div id="chartPieChart">&nbsp;</div>
+		{/option:pieGraphData}
 	</div>
 
 	<div class="footer">
