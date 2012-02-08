@@ -32,6 +32,16 @@
 					</table>
 					{/option:profiles}
 				</div>
+				
+					<div id="dataChartBarChart" class="hidden">
+						<ul class="data">
+							{iteration:barChartData}
+								<li><span class="label">{$barChartData.label}</span><span class="value">{$barChartData.value}</span><span class="percentage">{$barChartData.percentage}</span></li>
+							{/iteration:barChartData}
+						</ul>
+					</div>
+				<div id="chartBarChart">&nbsp;</div>
+				
 			</div>
 
 			<div id="tabStatus" class="options">

@@ -35,10 +35,11 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	{
 		$this->header->addCSS('widgets.css', 'profiles');
 		$this->header->addJS('highcharts.js', 'core');
-		$this->header->addJS('registeredToday.js', 'profiles');
+		$this->header->addJS('registered_today.js', 'profiles');
 		$this->setColumn('middle');
 		$this->setPosition(0);
 		$this->loadData();
+		$this->parseBarChartData();
 		$this->parsePieChartData();
 		$this->parse();
 		$this->display();
@@ -67,6 +68,11 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$this->tpl->assign('number', $this->number);
 		$this->tpl->assign('pieGraphData', $this->graphData);
 		$this->tpl->assign('online', $this->onlineNow);
+	}
+
+	private function parseBarChartData()
+	{
+		
 	}
 
 	/**

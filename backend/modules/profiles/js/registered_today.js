@@ -24,8 +24,10 @@ jsBackend.profiles =
 
 		// variables
 		$chartPieChart = $('#chartPieChart');
+		$chartBarChart = $('#chartBarChart');
 
 		jsBackend.profiles.charts.init();
+		jsBackend.profiles.chartBarChart.init();
 		jsBackend.profiles.chartPieChart.init();
 	},
 	
@@ -58,7 +60,7 @@ jsBackend.profiles.charts =
 {
 	init: function()
 	{
-		if($chartPieChart.length > 0)
+		if($chartPieChart.length > 0 || $chartBarChart.length > 0)
 		{
 			Highcharts.setOptions(
 			{
@@ -140,6 +142,64 @@ jsBackend.profiles.chartPieChart =
 			},
 			legend: { style: { right: '10px' } },
 			series: [ {type: 'pie', data: pieChartData } ]
+		});
+	},
+
+	// destroy chart
+	destroy: function()
+	{
+		jsBackend.profiles.chartPieChart.chart.destroy();
+	}
+}
+
+jsBackend.profiles.chartBarChart =
+{
+	chart: '',
+
+	init: function()
+	{
+		if($chartBarChart.length > 0) { jsBackend.profiles.chartBarChart.create(); }
+	},
+
+	// add new chart
+	create: function()
+	{
+		$barChartData = [4,3,2,5,0,3,1];
+
+		var containerWidth = 342;
+
+		jsBackend.profiles.chartBarChart.chart = new Highcharts.Chart(
+		{
+			chart: { renderTo: 'chartBarChart', height: 200, width: containerWidth, margin: [10, 10, -30, 20] },
+			credits: { enabled: false },
+			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
+			tooltip:
+			{
+				formatter: function()
+				{
+					var percentage = String(this.point.percentage);
+					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, $.inArray('.', percentage) + 3) + '%)';
+				},
+				borderWidth: 2, shadow: false
+			},
+			plotOptions:
+			{
+				bar:
+				{
+					allowPointSelect: true,
+					dataLabels:
+					{
+						enabled: false
+					}
+				}
+			},
+			tooltip: {
+				formatter: function() {
+					return '<b>' + this.y + ' '+ this.series.name + '</b>';
+				}
+			},
+			legend: { enabled: false },
+			series: [ {name: 'registrations', data: $barChartData } ]
 		});
 	},
 
