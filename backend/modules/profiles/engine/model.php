@@ -301,8 +301,11 @@ class BackendProfilesModel
 	public static function getOnlineUsers()
 	{
 		return (array) BackendModel::getDB()->getRecords(
-			'SELECT *
-			FROM profiles'
+			'SELECT i.display_name, s.date
+			FROM profiles AS i
+			INNER JOIN Profiles_sessions as s 
+			ON i.id = s.profile_id
+			WHERE s.date > DATE_SUB(NOW(), INTERVAL 1 HOUR)'
 		);
 	}
 

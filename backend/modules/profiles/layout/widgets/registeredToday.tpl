@@ -48,6 +48,20 @@
 			</div>
 
 			<div id="tabOnline">
+				<div class="dataGridHolder">
+					{option:online}
+					<table class="dataGrid">
+						<tbody>
+							{iteration:online}
+							<tr class="{cycle:'odd':'even'}">
+								<td>{$online.display_name}</td>
+								<td class="name">{$online.date}</td>
+							</tr>
+							{/iteration:online}
+						</tbody>
+					</table>
+					{/option:online}
+				</div>
 			</div>
 
 		</div>

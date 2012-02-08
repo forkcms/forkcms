@@ -19,7 +19,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	 *
 	 * @var array
 	 */
-	private $profiles, $graphData;
+	private $profiles, $graphData, $onlineNow;
 
 	/**
 	 * Amount of profiles (& inactive, active, blocked, deleted)
@@ -54,7 +54,8 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$end = new DateTime();
 
 		$this->profiles = BackendProfilesModel::getRegisteredFromTo($start->format('Y-m-d'), $end->format('Y-m-d'));
-		$this->number = backendProfilesModel::getProfilesCount();
+		$this->number = BackendProfilesModel::getProfilesCount();
+		$this->onlineNow = BackendProfilesModel::getOnlineUsers();
 	}
 
 	/**
@@ -65,6 +66,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$this->tpl->assign('profiles', $this->profiles);
 		$this->tpl->assign('number', $this->number);
 		$this->tpl->assign('pieGraphData', $this->graphData);
+		$this->tpl->assign('online', $this->onlineNow);
 	}
 
 	/**
@@ -76,22 +78,21 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$this->active = backendProfilesModel::getProfilesWithStatusCount('active');
 		$this->blocked = backendProfilesModel::getProfilesWithStatusCount('blocked');
 		$this->deleted = backendProfilesModel::getProfilesWithStatusCount('deleted');
-		$total = $this->inactive + $this->active + $this->deleted + $this->blocked;
 
 		// build array
-		$this->parsePieChartItem(0, 'NumberOfActiveProfiles', $this->active, $total);
-		$this->parsePieChartItem(1, 'NumberOfInactiveProfiles', $this->inactive, $total);
-		$this->parsePieChartItem(2, 'NumberOfBlockedProfiles', $this->blocked, $total);
-		$this->parsePieChartItem(3, 'NumberOfDeletedProfiles', $this->deleted, $total);
+		$this->parsePieChartItem(0, 'NumberOfActiveProfiles', $this->active);
+		$this->parsePieChartItem(1, 'NumberOfInactiveProfiles', $this->inactive);
+		$this->parsePieChartItem(2, 'NumberOfBlockedProfiles', $this->blocked);
+		$this->parsePieChartItem(3, 'NumberOfDeletedProfiles', $this->deleted);
 	}
 
 	/**
 	 * adds one item to pieChartData
 	 */
-	private function parsePieChartItem($i, $label, $value, $total)
+	private function parsePieChartItem($i, $label, $value)
 	{
 		$this->graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($label, 'core')));
 		$this->graphData[$i]['value'] = $value;
-		$this->graphData[$i]['percentage'] = ($value / $total) * 100;
+		$this->graphData[$i]['percentage'] = ($value / $this->number) * 100;
 	}
 }
