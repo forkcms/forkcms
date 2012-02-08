@@ -1,3 +1,7 @@
 #dashboardWidgets .box .dataGridHolder .dataGrid {
 	border-top: 1px solid #DDD;
 }
+
+#dashboardWidgets .content ul {
+	padding-bottom: 0;
+}

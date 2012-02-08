@@ -3,6 +3,10 @@
 		<h3><a href="{$var|geturl:'index':'profiles'}">{$lblRegistered|ucfirst}</a></h3>
 	</div>
 
+	<div class="options content">
+		<p>{$lblNumberOfProfiles|ucfirst}: {$number}</p>
+	</div>
+
 	<div class="options">
 		<div id="tabs" class="tabs">
 			<ul>
@@ -57,6 +61,15 @@
 			</div>
 
 		</div>
+	</div>
+
+	<div class="content options">
+		<ul>
+			<li>{$lblNumberOfInactiveProfiles|ucfirst}: {$inactive}</li>
+			<li>{$lblNumberOfActiveProfiles|ucfirst}: {$active}</li>
+			<li>{$lblNumberOfBlockedProfiles|ucfirst}: {$blocked}</li>
+			<li>{$lblNumberOfDeletedProfiles|ucfirst}: {$deleted}</li>
+		</ul>
 	</div>
 
 	<div class="footer">

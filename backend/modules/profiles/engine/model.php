@@ -205,6 +205,20 @@ class BackendProfilesModel
 	}
 
 	/**
+	 * Gets the amount of profiles of specified status
+	 * 
+	 * @return int
+	 */
+	public static function getProfilesWithStatusCount($status)
+	{
+		return (int) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM profiles
+			 WHERE status = ?', (string) $status
+		);
+	}
+
+	/**
 	 * Encrypt a string with a salt.
 	 *
 	 * @param string $string String to encrypt.
@@ -309,6 +323,19 @@ class BackendProfilesModel
 			 INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
 			 WHERE gr.profile_id = ?',
 			(int) $id
+		);
+	}
+
+	/**
+	 * Gets the amount of users
+	 * 
+	 * @return int
+	 */
+	public static function getProfilesCount()
+	{
+		return (int) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM profiles'
 		);
 	}
 

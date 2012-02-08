@@ -22,6 +22,13 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	private $profiles, $yesterday, $allWeek;
 
 	/**
+	 * Amount of profiles (& inactive, active, blocked, deleted)
+	 * 
+	 * @var number
+	 */
+	private $number, $inactive, $active, $blocked, $deleted;
+
+	/**
 	 * Execute the widget
 	 */
 	public function execute()
@@ -42,6 +49,11 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$this->profiles = BackendProfilesModel::getRegisteredToday();
 		$this->yesterday = BackendProfilesModel::getRegisteredYesterday();
 		$this->allWeek = BackendProfilesModel::getRegisteredAllWeek();
+		$this->number = backendProfilesModel::getProfilesCount();
+		$this->inactive = backendProfilesModel::getProfilesWithStatusCount('inactive');
+		$this->active = backendProfilesModel::getProfilesWithStatusCount('active');
+		$this->blocked = backendProfilesModel::getProfilesWithStatusCount('blocked');
+		$this->deleted = backendProfilesModel::getProfilesWithStatusCount('deleted');
 	}
 
 	/**
@@ -52,5 +64,10 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$this->tpl->assign('today', $this->profiles);
 		$this->tpl->assign('yesterday', $this->yesterday);
 		$this->tpl->assign('week', $this->allWeek);
+		$this->tpl->assign('number', $this->number);
+		$this->tpl->assign('inactive', $this->inactive);
+		$this->tpl->assign('active', $this->active);
+		$this->tpl->assign('blocked', $this->blocked);
+		$this->tpl->assign('deleted', $this->deleted);
 	}
 }
