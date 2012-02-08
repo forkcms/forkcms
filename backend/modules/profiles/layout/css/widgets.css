@@ -1,4 +1,4 @@
-#dashboardWidgets .box .dataGridHolder .dataGrid, #dashboardWidgets .box .options {
+#dashboardWidgets #widgetProfiles.box .dataGridHolder .dataGrid, #tabStatus {
 	border-top: 1px solid #DDD;
 }
 

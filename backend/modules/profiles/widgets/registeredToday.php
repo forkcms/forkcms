@@ -53,7 +53,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$start->modify('-7 day');
 		$end = new DateTime();
 
-		$this->profiles = BackendProfilesModel::getRegisteredFromTo($start, $end);
+		$this->profiles = BackendProfilesModel::getRegisteredFromTo($start->format('Y-m-d'), $end->format('Y-m-d'));
 		$this->number = backendProfilesModel::getProfilesCount();
 	}
 

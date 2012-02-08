@@ -8,16 +8,49 @@ jsBackend.profiles =
 	init: function()
 	{
 		//datePicker
-		$('#fromDate').datepicker("setDate", "-7" );
-		$('#fromDate').datepicker("option", "maxDate", 0);
-		$('#toDate').datepicker("setDate", "0" );
+		$('#toDate').datepicker("setDate", "0");
 		$('#toDate').datepicker("option", "maxDate", 0);
+		$('#fromDate').datepicker("setDate", "-7" );
+		$('#fromDate').datepicker("option", "maxDate", $('#toDate').datepicker("getDate"));
+
+		$('#fromDate').datepicker().change(function()
+		{
+			jsBackend.profiles.dateChange();
+		});
+		$('#toDate').datepicker().change(function()
+		{
+			jsBackend.profiles.dateChange();
+		});
 
 		// variables
 		$chartPieChart = $('#chartPieChart');
 
 		jsBackend.profiles.charts.init();
 		jsBackend.profiles.chartPieChart.init();
+	},
+	
+	dateChange: function()
+	{
+		$('#fromDate').datepicker("option", "maxDate", $('#toDate').datepicker("getDate"));
+
+		$.ajax({
+			data:
+			{
+				fork: { module:'profiles', action: 'get_registered' },
+				from_date: $('#fromDate').val(),
+				to_date: $('#toDate').val()
+			},
+			success: function(data, message)
+			{
+				$('#tabRegistrations .dataGrid tbody').empty();
+				$i = 0;
+				$.each(data.data, function(index, value)
+				{
+					$test = (++$i%2)?'odd':'even';
+					$('#tabRegistrations .dataGrid tbody').html($('#tabRegistrations .dataGrid tbody').html() + '<tr class="' + $test + '"><td>' + value.email + '</td><td class="name">' + value.status + '</td></tr>');
+				});
+			}
+		});
 	}
 }
 
@@ -77,11 +110,11 @@ jsBackend.profiles.chartPieChart =
 			});
 		});
 
-		var containerWidth = $chartPieChart.width();
+		var containerWidth = 342;
 
 		jsBackend.profiles.chartPieChart.chart = new Highcharts.Chart(
 		{
-			chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0] },
+			chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 148, 0, 0] },
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
 			tooltip:

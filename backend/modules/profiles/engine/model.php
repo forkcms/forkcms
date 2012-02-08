@@ -294,6 +294,19 @@ class BackendProfilesModel
 	}
 
 	/**
+	 * Get all online users
+	 * 
+	 * @return array
+	 */
+	public static function getOnlineUsers()
+	{
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT *
+			FROM profiles'
+		);
+	}
+
+	/**
 	 * Get information about a profile group where a user is member of.
 	 *
 	 * @param int $id Membership id.
@@ -379,8 +392,8 @@ class BackendProfilesModel
 	/**
 	 * Get all profiles registered from start to end date
 	 * 
-	 * @param int [optional] start Amount of days before today
-	 * @param int [optional] end Amount of days before today
+	 * @param string[optional] start day
+	 * @param string [optional] end day
 	 * @return array
 	 */
 	public static function getRegisteredFromTo($start, $end)
@@ -390,7 +403,7 @@ class BackendProfilesModel
 			FROM profiles
 			WHERE registered_on
 			BETWEEN ? AND ?',
-			array($start->format('Y-m-d h:i:s'), $end->format('Y-m-d h:i:s'))
+			array($start . ' 00:00:00', $end . ' 23;59;59')
 		);
 	}
 

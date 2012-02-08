@@ -12,12 +12,12 @@
 			<ul>
 				<li><a href="#tabRegistrations">{$lblRegistrations|ucfirst}</a></li>
 				<li><a href="#tabStatus">{$lblStatus|ucfirst}</a></li>
-				<li><a href="#tabRegistered">{$lblRegistered|ucfirst}</a></li>
+				<li><a href="#tabOnline">{$lblOnline|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabRegistrations">
-				{$lblFrom|ucfirst}: <input type="text" id="fromDate" name="from_date" maxlength="10" class="inputText inputDate inputDatefieldNormal inputText" data-mask="dd/mm/yy" /> 
-				{$lblTo|ucfirst}: <input type="text" id="toDate" name="to_date" maxlength="10" class="inputText inputDate inputDatefieldNormal inputText" data-mask="dd/mm/yy" /> 
+				{$lblFrom|ucfirst}: <input type="text" id="fromDate" name="from_date" maxlength="10" class="inputText inputDatefieldNormal" data-mask="yy-mm-dd" /> 
+				{$lblTo|ucfirst}: <input type="text" id="toDate" name="to_date" maxlength="10" class="inputText inputDatefieldNormal" data-mask="yy-mm-dd"> 
 				<div class="dataGridHolder">
 					{option:profiles}
 					<table class="dataGrid">
@@ -47,7 +47,7 @@
 				{/option:pieGraphData}
 			</div>
 
-			<div id="tabRegistered">
+			<div id="tabOnline">
 			</div>
 
 		</div>
