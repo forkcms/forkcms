@@ -19,13 +19,14 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	 *
 	 * @var array
 	 */
-	private $profiles;
+	private $profiles, $yesterday, $allWeek;
 
 	/**
 	 * Execute the widget
 	 */
 	public function execute()
 	{
+		$this->header->addCSS('widgets.css', 'profiles');
 		$this->setColumn('middle');
 		$this->setPosition(0);
 		$this->loadData();
@@ -39,6 +40,8 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	private function loadData()
 	{
 		$this->profiles = BackendProfilesModel::getRegisteredToday();
+		$this->yesterday = BackendProfilesModel::getRegisteredYesterday();
+		$this->allWeek = BackendProfilesModel::getRegisteredAllWeek();
 	}
 
 	/**
@@ -47,5 +50,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	private function parse()
 	{
 		$this->tpl->assign('today', $this->profiles);
+		$this->tpl->assign('yesterday', $this->yesterday);
+		$this->tpl->assign('week', $this->allWeek);
 	}
 }
