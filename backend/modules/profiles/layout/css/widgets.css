@@ -1,4 +1,4 @@
-#dashboardWidgets .box .dataGridHolder .dataGrid {
+#dashboardWidgets .box .dataGridHolder .dataGrid, #dashboardWidgets .box .options {
 	border-top: 1px solid #DDD;
 }
 

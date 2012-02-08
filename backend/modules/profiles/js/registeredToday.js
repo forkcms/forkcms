@@ -7,6 +7,12 @@ jsBackend.profiles =
 {
 	init: function()
 	{
+		//datePicker
+		$('#fromDate').datepicker("setDate", "-7" );
+		$('#fromDate').datepicker("option", "maxDate", 0);
+		$('#toDate').datepicker("setDate", "0" );
+		$('#toDate').datepicker("option", "maxDate", 0);
+
 		// variables
 		$chartPieChart = $('#chartPieChart');
 

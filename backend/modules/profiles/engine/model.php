@@ -377,45 +377,20 @@ class BackendProfilesModel
 	}
 
 	/**
-	 * Get all profiles registered this week
+	 * Get all profiles registered from start to end date
 	 * 
+	 * @param int [optional] start Amount of days before today
+	 * @param int [optional] end Amount of days before today
 	 * @return array
 	 */
-	public static function getRegisteredAllWeek()
-	{
-		return (array) BackendModel::getDB()->getRecords(
-			'SELECT *
-			FROM profiles
-			WHERE registered_on >= SYSDATE() - INTERVAL 7 DAY'
-		);
-	}
-
-	/**
-	 * Get all profiles registered today
-	 * 
-	 * @return array
-	 */
-	public static function getRegisteredToday()
-	{
-		return (array) BackendModel::getDB()->getRecords(
-			'SELECT *
-			FROM profiles
-			WHERE registered_on >= SYSDATE() - INTERVAL 1 DAY'
-		);
-	}
-
-	/**
-	 * Get all profiles registered yesterday
-	 * 
-	 * @return array
-	 */
-	public static function getRegisteredYesterday()
+	public static function getRegisteredFromTo($start, $end)
 	{
 		return (array) BackendModel::getDB()->getRecords(
 			'SELECT *
 			FROM profiles
 			WHERE registered_on
-			BETWEEN SYSDATE() - INTERVAL 2 DAY AND SYSDATE() - INTERVAL 1 DAY'
+			BETWEEN ? AND ?',
+			array($start->format('Y-m-d h:i:s'), $end->format('Y-m-d h:i:s'))
 		);
 	}
 
