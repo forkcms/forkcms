@@ -164,27 +164,30 @@ jsBackend.profiles.chartBarChart =
 	// add new chart
 	create: function()
 	{
-		$barChartData = [4,3,2,5,0,3,1];
+		// variables
+		$barChartValues = $('#dataChartBarChart ul.data li');
+		$barChartData = [];
+		$barChartLabels = [];
+
+		$barChartValues.each(function()
+		{
+			// variables
+			$this = $(this);
+
+			$barChartData.push(parseInt($this.children('span.count').html()));
+			$barChartLabels.push(new Date($this.children('span.date').html()));
+		});
 
 		var containerWidth = 342;
 
 		jsBackend.profiles.chartBarChart.chart = new Highcharts.Chart(
 		{
-			chart: { renderTo: 'chartBarChart', height: 200, width: containerWidth, margin: [10, 10, -30, 20] },
+			chart: { renderTo: 'chartBarChart', height: 200, width: containerWidth, margin: [10, 10, 20, 20] },
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
-			tooltip:
-			{
-				formatter: function()
-				{
-					var percentage = String(this.point.percentage);
-					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, $.inArray('.', percentage) + 3) + '%)';
-				},
-				borderWidth: 2, shadow: false
-			},
 			plotOptions:
 			{
-				bar:
+				line:
 				{
 					allowPointSelect: true,
 					dataLabels:
@@ -193,10 +196,14 @@ jsBackend.profiles.chartBarChart =
 					}
 				}
 			},
+			xAxis: {
+				categories: $barChartLabels
+			},
 			tooltip: {
 				formatter: function() {
 					return '<b>' + this.y + ' '+ this.series.name + '</b>';
-				}
+				},
+				borderWidth: 2, shadow: false
 			},
 			legend: { enabled: false },
 			series: [ {name: 'registrations', data: $barChartData } ]

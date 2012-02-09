@@ -206,6 +206,24 @@ class BackendProfilesModel
 	}
 
 	/**
+	 * Gets the count of registered profiles per day between two dates
+	 * 
+	 * @param string $start
+	 * @param string $end
+	 * @return array
+	 */
+	public static function getCountRegisteredPerDay($start, $end)
+	{
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT COUNT(id) as count, DATE(registered_on) as date
+			FROM profiles
+			WHERE registered_on
+			BETWEEN ? AND ?
+			GROUP BY DATE(registered_on)',
+			array($start . ' 00:00:00', $end . ' 23;59;59'));
+	}
+
+	/**
 	 * Gets the amount of profiles of specified status
 	 * 
 	 * @return int
@@ -395,8 +413,8 @@ class BackendProfilesModel
 	/**
 	 * Get all profiles registered from start to end date
 	 * 
-	 * @param string[optional] start day
-	 * @param string [optional] end day
+	 * @param string start day
+	 * @param string end day
 	 * @return array
 	 */
 	public static function getRegisteredFromTo($start, $end)
