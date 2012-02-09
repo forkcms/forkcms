@@ -37,7 +37,8 @@ jsBackend.profiles =
 		$('#fromDate').datepicker("option", "maxDate", $('#toDate').datepicker("getDate"));
 		$('#toDate').datepicker("option", "minDate", $('#fromDate').datepicker("getDate"));
 
-		$.ajax({
+		$.ajax(
+		{
 			data:
 			{
 				fork: { module:'profiles', action: 'get_registered' },
@@ -50,13 +51,14 @@ jsBackend.profiles =
 				$i = 0;
 				$.each(data.data, function(index, value)
 				{
-					$test = (++$i%2)?'odd':'even';
-					$('#tabRegistrations .dataGrid tbody').html($('#tabRegistrations .dataGrid tbody').html() + '<tr class="' + $test + '"><td>' + value.email + '</td><td class="name">' + value.status + '</td></tr>');
+					$odd = (++$i % 2) ? 'odd' : 'even';
+					$('#tabRegistrations .dataGrid tbody').html($('#tabRegistrations .dataGrid tbody').html() + '<tr class="' + $odd + '"><td>' + value.display_name + '</td><td class="name">' + value.status + '</td></tr>');
 				});
 			}
 		});
 
-		$.ajax({
+		$.ajax(
+		{
 			data:
 			{
 				fork: { module:'profiles', action: 'get_barchart' },
@@ -197,8 +199,8 @@ jsBackend.profiles.chartBarChart =
 			$this = $(this);
 
 			$barChartData.push(parseInt($this.children('span.count').html()));
-			$parts = $this.children('span.date').html().split('-');
-			$barChartLabels.push(parseFloat($parts[1]) + "/" + parseFloat($parts[2]));
+			$date = new Date($this.children('span.date').html()*1000);
+			$barChartLabels.push($date);
 		});
 
 		var containerWidth = 342;
@@ -227,7 +229,7 @@ jsBackend.profiles.chartBarChart =
 			},
 			tooltip: {
 				formatter: function() {
-					return '<b>' + this.y + ' registrations</b>';
+					return '<b>' + this.x + '</b>';
 				},
 				borderWidth: 2, shadow: false
 			},

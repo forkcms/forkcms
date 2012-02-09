@@ -216,29 +216,30 @@ class BackendProfilesModel
 	public static function getCountRegisteredPerDay($start, $end)
 	{
 		$returnValue = (array) BackendModel::getDB()->getRecords(
-			'SELECT COUNT(id) as count, DATE(registered_on) as date
-			FROM profiles
-			WHERE registered_on
-			BETWEEN ? AND ?
-			GROUP BY DATE(registered_on)',
-			array($start . ' 00:00:00', $end . ' 23;59;59'));
+			'SELECT COUNT(id) as count, UNIX_TIMESTAMP(registered_on) as date
+			 FROM profiles
+			 WHERE UNIX_TIMESTAMP(registered_on) BETWEEN ? AND ?
+			 GROUP BY DATE(registered_on)',
+			array($start, $end)
+		);
 		
 		$startDate = $start;
 		$endDate = $end;
-		while (strtotime($startDate) <= strtotime($endDate))
+
+		// This loop includes dates without registrations
+		while ($startDate <= $endDate)
 		{
 			$containsDate = false;
 			foreach($returnValue as $item)
 			{
-				if($item['date'] == $startDate) $containsDate = true;
+				if(date('y-m-d', $item['date']) == date('y-m-d', $startDate)) $containsDate = true;
 			}
 			if($containsDate == false)
 			{
-				$addArray = array('count' => 0, 'date' => $startDate);
+				$addArray = array('count' => '0', 'date' => $startDate);
 				$returnValue[] = $addArray;
 			}
-			$startDate = strtotime("+1 day", strtotime($startDate));
-			$startDate = date("Y-m-d", $startDate);
+			$startDate = $startDate + (24 * 60 * 60);
 		}
 
 		function compare_date($a, $b)
@@ -253,7 +254,7 @@ class BackendProfilesModel
 	/**
 	 * Gets the amount of profiles of specified status
 	 * 
-	 * @param $status
+	 * @param string $status
 	 * @return int
 	 */
 	public static function getProfilesWithStatusCount($status)
@@ -261,7 +262,8 @@ class BackendProfilesModel
 		return (int) BackendModel::getDB()->getVar(
 			'SELECT COUNT(id)
 			 FROM profiles
-			 WHERE status = ?', (string) $status
+			 WHERE status = ?',
+			(string) $status
 		);
 	}
 
@@ -348,12 +350,12 @@ class BackendProfilesModel
 	{
 		return (array) BackendModel::getDB()->getRecords(
 			'SELECT i.display_name, s.date
-			FROM profiles AS i
-			INNER JOIN Profiles_sessions as s 
-			ON i.id = s.profile_id
-			WHERE s.date > DATE_SUB(NOW(), INTERVAL 1 HOUR)
-			ORDER BY s.date DESC
-			LIMIT 10'
+			 FROM profiles AS i
+			 INNER JOIN Profiles_sessions as s 
+			 ON i.id = s.profile_id
+			 WHERE s.date > DATE_SUB(NOW(), INTERVAL 1 HOUR)
+			 ORDER BY s.date DESC
+			 LIMIT 10'
 		);
 	}
 
@@ -443,20 +445,19 @@ class BackendProfilesModel
 	/**
 	 * Get all profiles registered from start to end date
 	 * 
-	 * @param string start day
-	 * @param string end day
+	 * @param string $start Start day
+	 * @param string $end End day
 	 * @return array
 	 */
 	public static function getRegisteredFromTo($start, $end)
 	{
 		return (array) BackendModel::getDB()->getRecords(
 			'SELECT *
-			FROM profiles
-			WHERE registered_on
-			BETWEEN ? AND ?
-			ORDER BY registered_on DESC
-			LIMIT 10',
-			array($start . ' 00:00:00', $end . ' 23;59;59')
+			 FROM profiles
+			 WHERE UNIX_TIMESTAMP(registered_on) BETWEEN ? AND ?
+			 ORDER BY registered_on DESC
+			 LIMIT 10',
+			array($start, $end)
 		);
 	}
 

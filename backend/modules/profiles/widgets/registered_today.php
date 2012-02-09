@@ -24,14 +24,14 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	/**
 	 * Amount of profiles (& inactive, active, blocked, deleted)
 	 * 
-	 * @var number
+	 * @var int
 	 */
 	private $number, $inactive, $active, $blocked, $deleted;
 
 	/**
 	 * Datetime start and end
 	 * 
-	 * @var datetime
+	 * @var DateTime
 	 */
 	private $start, $end;
 
@@ -42,7 +42,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	{
 		$this->header->addCSS('widgets.css', 'profiles');
 		$this->header->addJS('highcharts.js', 'core');
-		$this->header->addJS('registered_today.js', 'profiles');
+		$this->header->addJS('registered_today.js', 'profiles', null, true);
 		$this->setColumn('middle');
 		$this->setPosition(0);
 		$this->loadData();
@@ -53,7 +53,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	}
 
 	/**
-	 * adds one item to pieChartData
+	 * Adds one item to pieChartData
 	 * 
 	 * @param int $i
 	 * @param string $label The text for the label in the legend
@@ -63,7 +63,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	{
 		$this->graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($label, 'core')));
 		$this->graphData[$i]['value'] = $value;
-		$this->graphData[$i]['percentage'] = ($this->number == 0)?0:($value / $this->number) * 100;
+		$this->graphData[$i]['percentage'] = ($this->number == 0) ? 0 : ($value / $this->number) * 100;
 	}
 
 	/**
@@ -71,27 +71,25 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	 */
 	private function loadData()
 	{
-		$this->start = new DateTime();
-		$this->start->modify('-7 day');
-		$this->end = new DateTime();
+		$this->start = time() - (7 * 24 * 60 * 60);
+		$this->end = time();
 
-		$this->profiles = BackendProfilesModel::getRegisteredFromTo($this->start->format('Y-m-d'), $this->end->format('Y-m-d'));
+		$this->profiles = BackendProfilesModel::getRegisteredFromTo($this->start, $this->end);
 		$this->number = BackendProfilesModel::getProfilesCount();
 		$this->onlineNow = BackendProfilesModel::getOnlineUsers();
 	}
 
 	/**
-	 * loads the data for the barchart
+	 * Loads the data for the barchart
 	 * This is needed to create empty rows for dates without registration
 	 */
 	private function loadBarChart()
 	{
-		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start->format('y-m-d'), $this->end->format('y-m-d'));
-		
+		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start, $this->end);
 	}
 
 	/**
-	 * loads the data to make the pie-chart
+	 * Loads the data to make the pie-chart
 	 */
 	private function loadPieChartData()
 	{
