@@ -112,6 +112,6 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	{
 		$this->graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($label, 'core')));
 		$this->graphData[$i]['value'] = $value;
-		$this->graphData[$i]['percentage'] = ($value / $this->number) * 100;
+		$this->graphData[$i]['percentage'] = ($this->number == 0)?0:($value / $this->number) * 100;
 	}
 }

@@ -26,7 +26,7 @@ class ProfilesInstaller extends ModuleInstaller
 			'present' => true
 		);
 
-		$this->insertDashboardWidget('profiles', 'registeredToday', $profiles);
+		$this->insertDashboardWidget('profiles', 'registered_today', $profiles);
 	}
 
 	/**
