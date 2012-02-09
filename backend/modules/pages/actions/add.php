@@ -228,6 +228,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addRadiobutton('redirect', $redirectValues, 'none');
 		$this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown());
 		$this->frm->addText('external_redirect', null, null, null, null, true);
+		$this->frm->addCheckbox('external_redirect_target_blank');
 
 		// page info
 		$this->frm->addCheckbox('navigation_title_overwrite');

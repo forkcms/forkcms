@@ -328,6 +328,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addRadiobutton('redirect', $redirectValues, $redirectValue);
 		$this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown(), ($redirectValue == 'internal') ? $this->record['data']['internal_redirect']['page_id'] : null);
 		$this->frm->addText('external_redirect', ($redirectValue == 'external') ? $this->record['data']['external_redirect']['url'] : null, null, null, null, true);
+		$this->frm->addCheckbox('external_redirect_target_blank', (isset($this->record['data']['external_redirect']['target_blank']) && $this->record['data']['external_redirect']['target_blank'] == 'Y'));
 
 		// page info
 		$this->frm->addCheckbox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
@@ -464,7 +465,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// build data
 				if($this->frm->getField('is_action')->isChecked()) $data['is_action'] = true;
 				if($redirectValue == 'internal') $data['internal_redirect'] = array('page_id' => $this->frm->getField('internal_redirect')->getValue(), 'code' => '301');
-				if($redirectValue == 'external') $data['external_redirect'] = array('url' => $this->frm->getField('external_redirect')->getValue(), 'code' => '301');
+				if($redirectValue == 'external') $data['external_redirect'] = array('url' => $this->frm->getField('external_redirect')->getValue(), 'code' => '301', 'target_blank' => 'N');
+				if($this->frm->getField('external_redirect_target_blank')->isChecked()) $data['external_redirect']['target_blank'] = 'Y';
 
 				// build page record
 				$page['id'] = $this->record['id'];

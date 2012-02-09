@@ -57,6 +57,10 @@
         <translation language="hu"><![CDATA[external link]]></translation>
         <translation language="es"><![CDATA[enlace externo]]></translation>
       </item>
+	  <item type="label" name="ExternalRedirectTargetBlank">
+        <translation language="nl"><![CDATA[Open link in een nieuw scherm]]></translation>
+        <translation language="en"><![CDATA[Open link in a new window]]></translation>
+	  </item>
       <item type="label" name="ExtraTypeBlock">
         <translation language="nl"><![CDATA[module]]></translation>
         <translation language="en"><![CDATA[module]]></translation>
@@ -318,6 +322,10 @@
         <translation language="hu"><![CDATA[Használd ezt, ha a menü-elemet külső linkre akarod átirányítani.]]></translation>
         <translation language="es"><![CDATA[Ua esto si tienes que redirigir un elemento del menú al un sitio web externo.]]></translation>
       </item>
+	  <item type="message" name="HelpExternalRedirectTargetBlank">
+        <translation language="nl"><![CDATA[Hiermee kan je de link in nieuw browser scherm laten openen]]></translation>
+        <translation language="en"><![CDATA[Use this if you want a new browser window to open if you click this link]]></translation>
+	  </item>
       <item type="message" name="HelpInternalRedirect">
         <translation language="nl"><![CDATA[Hiermee kan je een item in het menu laten doorverwijzen naar een andere pagina binnen de website.]]></translation>
         <translation language="en"><![CDATA[Use this if you need to redirect a menu-item to another page on this website.]]></translation>

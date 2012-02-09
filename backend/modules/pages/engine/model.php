@@ -198,6 +198,7 @@ class BackendPagesModel
 					{
 						$temp['redirect_url'] = $data['external_redirect']['url'];
 						$temp['redirect_code'] = $data['external_redirect']['code'];
+						$temp['redirect_blank'] = (isset($data['external_redirect']['target_blank'])) ? $data['external_redirect']['target_blank'] : 'N';
 						$treeType = 'redirect';
 					}
 
