@@ -53,6 +53,20 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	}
 
 	/**
+	 * adds one item to pieChartData
+	 * 
+	 * @param int $i
+	 * @param string $label The text for the label in the legend
+	 * @param string $value The amount of users in the category
+	 */
+	private function formatPieChartItem($i, $label, $value)
+	{
+		$this->graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($label, 'core')));
+		$this->graphData[$i]['value'] = $value;
+		$this->graphData[$i]['percentage'] = ($this->number == 0)?0:($value / $this->number) * 100;
+	}
+
+	/**
 	 * Load the data
 	 */
 	private function loadData()
@@ -67,15 +81,13 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	}
 
 	/**
-	 * Parse into template
+	 * loads the data for the barchart
+	 * This is needed to create empty rows for dates without registration
 	 */
-	private function parse()
+	private function loadBarChart()
 	{
-		$this->tpl->assign('profiles', $this->profiles);
-		$this->tpl->assign('number', $this->number);
-		$this->tpl->assign('pieGraphData', $this->graphData);
-		$this->tpl->assign('barGraphData', $this->barChart);
-		$this->tpl->assign('online', $this->onlineNow);
+		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start->format('y-m-d'), $this->end->format('y-m-d'));
+		
 	}
 
 	/**
@@ -96,22 +108,14 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	}
 
 	/**
-	 * loads the data for the barchart
-	 * This is needed to create empty rows for dates without registration
+	 * Parse into template
 	 */
-	private function loadBarChart()
+	private function parse()
 	{
-		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start->format('y-m-d'), $this->end->format('y-m-d'));
-		
-	}
-
-	/**
-	 * adds one item to pieChartData
-	 */
-	private function formatPieChartItem($i, $label, $value)
-	{
-		$this->graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($label, 'core')));
-		$this->graphData[$i]['value'] = $value;
-		$this->graphData[$i]['percentage'] = ($this->number == 0)?0:($value / $this->number) * 100;
+		$this->tpl->assign('profiles', $this->profiles);
+		$this->tpl->assign('number', $this->number);
+		$this->tpl->assign('pieGraphData', $this->graphData);
+		$this->tpl->assign('barGraphData', $this->barChart);
+		$this->tpl->assign('online', $this->onlineNow);
 	}
 }

@@ -225,7 +225,8 @@ class BackendProfilesModel
 		
 		$startDate = $start;
 		$endDate = $end;
-		while (strtotime($startDate) <= strtotime($endDate)) {
+		while (strtotime($startDate) <= strtotime($endDate))
+		{
 			$containsDate = false;
 			foreach($returnValue as $item)
 			{
@@ -242,7 +243,7 @@ class BackendProfilesModel
 
 		function compare_date($a, $b)
 		{
-			return ($a['date']>$b['date'])?1:-1;
+			return ($a['date'] > $b['date']) ? 1 : -1;
 		}
 		usort($returnValue, 'compare_date');
 
@@ -252,6 +253,7 @@ class BackendProfilesModel
 	/**
 	 * Gets the amount of profiles of specified status
 	 * 
+	 * @param $status
 	 * @return int
 	 */
 	public static function getProfilesWithStatusCount($status)
