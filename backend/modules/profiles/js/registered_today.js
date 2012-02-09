@@ -12,6 +12,7 @@ jsBackend.profiles =
 		$('#toDate').datepicker("option", "maxDate", 0);
 		$('#fromDate').datepicker("setDate", "-7" );
 		$('#fromDate').datepicker("option", "maxDate", $('#toDate').datepicker("getDate"));
+		$('#toDate').datepicker("option", "minDate", $('#fromDate').datepicker("getDate"));
 
 		$('#fromDate').datepicker().change(function()
 		{
@@ -34,6 +35,7 @@ jsBackend.profiles =
 	dateChange: function()
 	{
 		$('#fromDate').datepicker("option", "maxDate", $('#toDate').datepicker("getDate"));
+		$('#toDate').datepicker("option", "minDate", $('#fromDate').datepicker("getDate"));
 
 		$.ajax({
 			data:
@@ -84,7 +86,7 @@ jsBackend.profiles.charts =
 		{
 			Highcharts.setOptions(
 			{
-				colors: ['#058DC7', '#50b432', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
+				colors: ['#50b432', '#ED561B', '#058DC7', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
 				title: { text: '' },
 				legend:
 				{
