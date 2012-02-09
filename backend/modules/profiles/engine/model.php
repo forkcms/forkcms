@@ -351,7 +351,9 @@ class BackendProfilesModel
 			FROM profiles AS i
 			INNER JOIN Profiles_sessions as s 
 			ON i.id = s.profile_id
-			WHERE s.date > DATE_SUB(NOW(), INTERVAL 1 HOUR)'
+			WHERE s.date > DATE_SUB(NOW(), INTERVAL 1 HOUR)
+			ORDER BY s.date DESC
+			LIMIT 10'
 		);
 	}
 

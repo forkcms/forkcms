@@ -197,7 +197,8 @@ jsBackend.profiles.chartBarChart =
 			$this = $(this);
 
 			$barChartData.push(parseInt($this.children('span.count').html()));
-			$barChartLabels.push(new Date($this.children('span.date').html()));
+			$parts = $this.children('span.date').html().split('-');
+			$barChartLabels.push(parseFloat($parts[1]) + "/" + parseFloat($parts[2]));
 		});
 
 		var containerWidth = 342;

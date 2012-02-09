@@ -1,11 +1,19 @@
 #dashboardWidgets #widgetProfiles.box .dataGridHolder .dataGrid, #tabStatus {
 	border-top: 1px solid #DDD;
 	border-bottom: 1px solid #DDD;
-	margin: 10px 0;
 }
 
 #dashboardWidgets #widgetProfiles.box .dataGridHolder {
 	border-bottom: none;
+}
+
+#dashboardWidgets #widgetProfiles.box #tabRegistrations .dataGridHolder {
+
+	margin: 10px 0;
+}
+
+#tabRegistrations input.inputDatefieldNormal {
+	width: 100px;
 }
 
 #dashboardWidgets .content ul {
