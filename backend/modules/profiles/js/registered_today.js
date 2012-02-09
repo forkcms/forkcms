@@ -219,6 +219,9 @@ jsBackend.profiles.chartBarChart =
 			xAxis: {
 				categories: $barChartLabels
 			},
+			yAxis: {
+				min: 0
+			},
 			tooltip: {
 				formatter: function() {
 					return '<b>' + this.y + ' registrations</b>';
