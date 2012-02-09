@@ -585,5 +585,47 @@
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
       </item>
     </profiles>
+    <core>
+      <item type="label" name="Registrations">
+        <translation language="nl"><![CDATA[registraties]]></translation>
+        <translation language="en"><![CDATA[registrations]]></translation>
+        <translation language="it"><![CDATA[registrazioni]]></translation>
+        <translation language="ru"><![CDATA[регистрации]]></translation>
+        <translation language="de"><![CDATA[Registrierungen]]></translation>
+        <translation language="fr"><![CDATA[inscriptions]]></translation>
+        <translation language="hu"><![CDATA[regisztrációk]]></translation>
+        <translation language="es"><![CDATA[registros]]></translation>
+      </item>
+      <item type="label" name="Status">
+        <translation language="nl"><![CDATA[status]]></translation>
+        <translation language="en"><![CDATA[status]]></translation>
+        <translation language="it"><![CDATA[estado]]></translation>
+        <translation language="ru"><![CDATA[статус]]></translation>
+        <translation language="de"><![CDATA[status]]></translation>
+        <translation language="fr"><![CDATA[statut]]></translation>
+        <translation language="hu"><![CDATA[állapot]]></translation>
+        <translation language="es"><![CDATA[estado]]></translation>
+      </item>
+      <item type="label" name="Online">
+        <translation language="nl"><![CDATA[online]]></translation>
+        <translation language="en"><![CDATA[online]]></translation>
+        <translation language="it"><![CDATA[on-line]]></translation>
+        <translation language="ru"><![CDATA[онлайн]]></translation>
+        <translation language="de"><![CDATA[online]]></translation>
+        <translation language="fr"><![CDATA[en ligne]]></translation>
+        <translation language="hu"><![CDATA[online]]></translation>
+        <translation language="es"><![CDATA[en linea]]></translation>
+      </item>
+      <item type="label" name="All Profiles">
+        <translation language="nl"><![CDATA[alle profielen]]></translation>
+        <translation language="en"><![CDATA[all profiles]]></translation>
+        <translation language="it"><![CDATA[tutti i profili]]></translation>
+        <translation language="ru"><![CDATA[всех профилей]]></translation>
+        <translation language="de"><![CDATA[alle Profile]]></translation>
+        <translation language="fr"><![CDATA[tous les profils]]></translation>
+        <translation language="hu"><![CDATA[összes profil]]></translation>
+        <translation language="es"><![CDATA[todos los perfiles]]></translation>
+      </item>
+    </core>
   </backend>
 </locale>

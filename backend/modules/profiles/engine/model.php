@@ -449,7 +449,9 @@ class BackendProfilesModel
 			'SELECT *
 			FROM profiles
 			WHERE registered_on
-			BETWEEN ? AND ?',
+			BETWEEN ? AND ?
+			ORDER BY registered_on DESC
+			LIMIT 10',
 			array($start . ' 00:00:00', $end . ' 23;59;59')
 		);
 	}
