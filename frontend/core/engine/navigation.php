@@ -156,7 +156,7 @@ class FrontendNavigation extends FrontendBaseObject
 			$temp['title'] = $data['title'];
 			$temp['navigation_title'] = $data['navigation_title'];
 			$temp['selected'] = (bool) in_array($id, self::$selectedPageIds);
-
+			$temp['redirect_blank'] = (isset($data['redirect_blank']) && $data['redirect_blank'] == 'Y') ? true : false;
 			// add
 			$return[] = $temp;
 		}
@@ -328,7 +328,10 @@ class FrontendNavigation extends FrontendBaseObject
 				if(isset($page['redirect_page_id']) && $page['redirect_page_id'] != '') $navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL((int) $page['redirect_page_id']);
 
 				// is this an external redirect?
-				if(isset($page['redirect_url']) && $page['redirect_url'] != '') $navigation[$type][$parentId][$id]['link'] = $page['redirect_url'];
+				if(isset($page['redirect_url']) && $page['redirect_url'] != ''){
+					$navigation[$type][$parentId][$id]['link'] = $page['redirect_url'];
+					$navigation[$type][$parentId][$id]['redirect_blank'] = (isset($navigation[$type][$parentId][$id]['redirect_blank']) && $navigation[$type][$parentId][$id]['redirect_blank'] == 'Y') ? true : false;
+				}
 			}
 
 			// break the loop (it is only used for the special construction with home)

@@ -134,6 +134,14 @@
 										<label for="externalRedirect" class="visuallyHidden">{$redirect.label}</label>
 										{$txtExternalRedirect} {$txtExternalRedirectError}
 										<span class="helpTxt">{$msgHelpExternalRedirect}</span>
+										<ul>
+											<li>
+											{$chkExternalRedirectTargetBlank}
+											<label for="externalRedirectTargetBlank" class="visuallyHidden">{$redirect.blank}</label>
+											{$lblExternalRedirectTargetBlank}
+											<span class="helpTxt">{$msgHelpExternalRedirectTargetBlank}</span>
+											</li>
+										</ul>
 								{/option:redirect.isExternal}
 							</li>
 						{/iteration:redirect}
