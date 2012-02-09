@@ -101,29 +101,8 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	 */
 	private function loadBarChart()
 	{
-		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start->format('Y-m-d'), $this->end->format('Y-m-d'));
-		$startDate = $this->start;
-		$endDate = $this->end;
-		while ($startDate <= $endDate) {
-			$containsDate = false;
-			foreach($this->barChart as $item)
-			{
-				if($item['date'] == $startDate->format('Y-m-d')) $containsDate = true;
-			}
-			if($containsDate == false)
-			{
-				$addArray = array('count' => 0, 'date' => $startDate->format('Y-m-d'));
-				$this->barChart[] = $addArray;
-			}
-			$startDate->modify('+1 day');
-		}
-
-		function compare_date($a, $b)
-		{
-			return ($a['date']>$b['date'])?1:-1;
-		}
-
-		usort($this->barChart, 'compare_date');
+		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start->format('y-m-d'), $this->end->format('y-m-d'));
+		
 	}
 
 	/**

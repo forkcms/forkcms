@@ -207,6 +207,7 @@ class BackendProfilesModel
 
 	/**
 	 * Gets the count of registered profiles per day between two dates
+	 * and inserts empty counts for all other days between the two dates
 	 * 
 	 * @param string $start
 	 * @param string $end
@@ -214,13 +215,38 @@ class BackendProfilesModel
 	 */
 	public static function getCountRegisteredPerDay($start, $end)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		$returnValue = (array) BackendModel::getDB()->getRecords(
 			'SELECT COUNT(id) as count, DATE(registered_on) as date
 			FROM profiles
 			WHERE registered_on
 			BETWEEN ? AND ?
 			GROUP BY DATE(registered_on)',
 			array($start . ' 00:00:00', $end . ' 23;59;59'));
+		
+		$startDate = $start;
+		$endDate = $end;
+		while (strtotime($startDate) <= strtotime($endDate)) {
+			$containsDate = false;
+			foreach($returnValue as $item)
+			{
+				if($item['date'] == $startDate) $containsDate = true;
+			}
+			if($containsDate == false)
+			{
+				$addArray = array('count' => 0, 'date' => $startDate);
+				$returnValue[] = $addArray;
+			}
+			$startDate = strtotime("+1 day", strtotime($startDate));
+			$startDate = date("Y-m-d", $startDate);
+		}
+
+		function compare_date($a, $b)
+		{
+			return ($a['date']>$b['date'])?1:-1;
+		}
+		usort($returnValue, 'compare_date');
+
+		return $returnValue;
 	}
 
 	/**

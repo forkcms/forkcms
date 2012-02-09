@@ -8,11 +8,11 @@
  */
 
 /**
- * This is the ajax-action to update the registered users
+ * This is the ajax-action to update the barchart
  *
  * @author Wouter Sioen <wouter.sioen@gmail.com>
  */
-class BackendProfilesAjaxGetRegistered extends BackendBaseAJAXAction
+class BackendProfilesAjaxGetBarchart extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
@@ -27,8 +27,8 @@ class BackendProfilesAjaxGetRegistered extends BackendBaseAJAXAction
 		$fromDate = SpoonFilter::getPostValue('from_date', null, '');
 		$toDate = SpoonFilter::getPostValue('to_date', null, '');
 		
-		$profiles = BackendProfilesModel::getRegisteredFromTo($fromDate, $toDate);
+		$counts = BackendProfilesModel::getCountRegisteredPerDay($fromDate, $toDate);
 		
-		$this->output(self::OK, $profiles);
+		$this->output(self::OK, $counts);
 	}
 }

@@ -53,6 +53,26 @@ jsBackend.profiles =
 				});
 			}
 		});
+
+		$.ajax({
+			data:
+			{
+				fork: { module:'profiles', action: 'get_barchart' },
+				from_date: $('#fromDate').val(),
+				to_date: $('#toDate').val()
+			},
+			success: function(data, message)
+			{
+				$('#dataChartBarChart ul.data').empty();
+				$i = 0;
+				$.each(data.data, function(index, value)
+				{
+					console.log(value);
+					$('#dataChartBarChart ul.data').html($('#dataChartBarChart ul.data').html() + '<li><span class="count">' + value.count + '</span><span class="date">' + value.date + '</span></li>');
+				});
+				jsBackend.profiles.chartBarChart.init();
+			}
+		});
 	}
 }
 
@@ -201,12 +221,12 @@ jsBackend.profiles.chartBarChart =
 			},
 			tooltip: {
 				formatter: function() {
-					return '<b>' + this.y + ' '+ this.series.name + '</b>';
+					return '<b>' + this.y + ' registrations</b>';
 				},
 				borderWidth: 2, shadow: false
 			},
 			legend: { enabled: false },
-			series: [ {name: 'registrations', data: $barChartData } ]
+			series: [ {name: $barChartLabels, data: $barChartData } ]
 		});
 	},
 
