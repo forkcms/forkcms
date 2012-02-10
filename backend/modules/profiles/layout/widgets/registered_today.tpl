@@ -16,8 +16,8 @@
 			</ul>
 
 			<div id="tabRegistrations">
-				{$lblFrom|ucfirst}: <input type="text" id="fromDate" name="from_date" maxlength="10" class="inputText inputDatefieldNormal" data-mask="yy-mm-dd" /> 
-				{$lblTo|ucfirst}: <input type="text" id="toDate" name="to_date" maxlength="10" class="inputText inputDatefieldNormal" data-mask="yy-mm-dd"> 
+				{$lblFrom|ucfirst}: <input type="text" id="fromDate" name="from_date" maxlength="10" class="inputText inputDatefieldNormal" /> 
+				{$lblTo|ucfirst}: <input type="text" id="toDate" name="to_date" maxlength="10" class="inputText inputDatefieldNormal" />
 				<div class="dataGridHolder">
 					{option:profiles}
 					<table class="dataGrid">

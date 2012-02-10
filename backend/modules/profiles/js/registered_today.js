@@ -42,8 +42,8 @@ jsBackend.profiles =
 			data:
 			{
 				fork: { module:'profiles', action: 'get_registered' },
-				from_date: $('#fromDate').val(),
-				to_date: $('#toDate').val()
+				from_date: ($.datepicker.formatDate('@', new Date($('#fromDate').val())) / 1000),
+				to_date: ($.datepicker.formatDate('@', new Date($('#toDate').val())) / 1000)
 			},
 			success: function(data, message)
 			{
@@ -62,8 +62,8 @@ jsBackend.profiles =
 			data:
 			{
 				fork: { module:'profiles', action: 'get_barchart' },
-				from_date: $('#fromDate').val(),
-				to_date: $('#toDate').val()
+				from_date: ($.datepicker.formatDate('@', new Date($('#fromDate').val())) / 1000),
+				to_date: ($.datepicker.formatDate('@', new Date($('#toDate').val())) / 1000)
 			},
 			success: function(data, message)
 			{
@@ -71,7 +71,6 @@ jsBackend.profiles =
 				$i = 0;
 				$.each(data.data, function(index, value)
 				{
-					console.log(value);
 					$('#dataChartBarChart ul.data').html($('#dataChartBarChart ul.data').html() + '<li><span class="count">' + value.count + '</span><span class="date">' + value.date + '</span></li>');
 				});
 				jsBackend.profiles.chartBarChart.init();
@@ -199,7 +198,7 @@ jsBackend.profiles.chartBarChart =
 			$this = $(this);
 
 			$barChartData.push(parseInt($this.children('span.count').html()));
-			$date = new Date($this.children('span.date').html()*1000);
+			$date = $this.children('span.date').html();
 			$barChartLabels.push($date);
 		});
 
@@ -207,7 +206,7 @@ jsBackend.profiles.chartBarChart =
 
 		jsBackend.profiles.chartBarChart.chart = new Highcharts.Chart(
 		{
-			chart: { renderTo: 'chartBarChart', height: 200, width: containerWidth, margin: [10, 10, 20, 20] },
+			chart: { renderTo: 'chartBarChart', height: 200, width: containerWidth, margin: [10, 10, 5, 20] },
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
 			plotOptions:
