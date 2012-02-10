@@ -1,3 +1,10 @@
+3.2.5 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Mailmotor: fix CSV address imports.
+
+
 3.2.4 (2012-02-07)
 --
 Improvements:
