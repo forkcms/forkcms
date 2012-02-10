@@ -216,8 +216,8 @@ class BackendProfilesModel
 	public static function getCountRegisteredPerDay($start, $end)
 	{
 		// Make sure the start date has time 00:00:00 and the end date 23:59:59
-		$start = mktime(0, 0, 0, date('m',$start), date('d', $start), date('Y', $start));
-		$end = mktime(23, 59, 59, date('m',$end), date('d', $end), date('Y', $end));
+		$start = mktime(0, 0, 0, date('m', $start), date('d', $start), date('Y', $start));
+		$end = mktime(23, 59, 59, date('m', $end), date('d', $end), date('Y', $end));
 
 		$returnValue = (array) BackendModel::getDB()->getRecords(
 			'SELECT COUNT(id) as count, UNIX_TIMESTAMP(registered_on) as date
@@ -231,7 +231,7 @@ class BackendProfilesModel
 		$endDate = $end;
 
 		// This loop includes dates without registrations
-		while ($startDate <= $endDate)
+		while($startDate <= $endDate)
 		{
 			$containsDate = false;
 			foreach($returnValue as $item)
@@ -244,7 +244,7 @@ class BackendProfilesModel
 				$returnValue[] = $addArray;
 			}
 			// Adds one day to the timestamp
-			$startDate = $startDate + (24 * 60 * 60);
+			$startDate += (24 * 60 * 60);
 		}
 
 		function compare_date($a, $b)
@@ -253,7 +253,8 @@ class BackendProfilesModel
 		}
 		usort($returnValue, 'compare_date');
 
-		foreach($returnValue as &$dateToFormat) {
+		foreach($returnValue as &$dateToFormat)
+		{
 			$dateToFormat['date'] = date(BackendAuthentication::getUser()->getSetting('date_format'), $dateToFormat['date']);
 		}
 

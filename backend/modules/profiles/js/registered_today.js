@@ -42,8 +42,8 @@ jsBackend.profiles =
 			data:
 			{
 				fork: { module:'profiles', action: 'get_registered' },
-				from_date: ($.datepicker.formatDate('@', new Date($('#fromDate').val())) / 1000),
-				to_date: ($.datepicker.formatDate('@', new Date($('#toDate').val())) / 1000)
+				from_date: (($.datepicker.formatDate('@', new Date($('#fromDate').val())) / 1000)  + (12 * 60 * 60)),
+				to_date: (($.datepicker.formatDate('@', new Date($('#toDate').val())) / 1000) + (12 * 60 * 60))
 			},
 			success: function(data, message)
 			{
@@ -62,8 +62,8 @@ jsBackend.profiles =
 			data:
 			{
 				fork: { module:'profiles', action: 'get_barchart' },
-				from_date: ($.datepicker.formatDate('@', new Date($('#fromDate').val())) / 1000),
-				to_date: ($.datepicker.formatDate('@', new Date($('#toDate').val())) / 1000)
+				from_date: (($.datepicker.formatDate('@', new Date($('#fromDate').val())) / 1000)  + (12 * 60 * 60)),
+				to_date: (($.datepicker.formatDate('@', new Date($('#toDate').val())) / 1000) + (12 * 60 * 60))
 			},
 			success: function(data, message)
 			{

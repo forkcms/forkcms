@@ -67,6 +67,15 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	}
 
 	/**
+	 * Loads the data for the barchart
+	 * This is needed to create empty rows for dates without registration
+	 */
+	private function loadBarChart()
+	{
+		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start, $this->end);
+	}
+
+	/**
 	 * Load the data
 	 */
 	private function loadData()
@@ -77,15 +86,6 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 		$this->profiles = BackendProfilesModel::getRegisteredFromTo($this->start, $this->end);
 		$this->number = BackendProfilesModel::getProfilesCount();
 		$this->onlineNow = BackendProfilesModel::getOnlineUsers();
-	}
-
-	/**
-	 * Loads the data for the barchart
-	 * This is needed to create empty rows for dates without registration
-	 */
-	private function loadBarChart()
-	{
-		$this->barChart = BackendProfilesModel::getCountRegisteredPerDay($this->start, $this->end);
 	}
 
 	/**
