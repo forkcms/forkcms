@@ -38,19 +38,9 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	private static $selectedPageIds = array();
 
-	/**
-	 * The path of the template to include, or that replaced the current one
-	 *
-	 * @var	string
-	 */
-	protected static $templatePath;
-
 	public function __construct()
 	{
 		parent::__construct();
-
-		// set template path
-		self::setTemplatePath(FRONTEND_PATH . '/core/layout/templates/navigation.tpl');
 
 		// set selected ids
 		$this->setSelectedPageIds();
@@ -248,9 +238,10 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param int[optional] $depth The maximum depth to parse.
 	 * @param array[optional] $excludeIds PageIDs to be excluded.
 	 * @param int[optional] $depthCounter A counter that will hold the current depth.
+	 * @param string[optional] $navigationTpl The template that will be used.
 	 * @return string
 	 */
-	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
+	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1, $navigationTpl = 'navigation.tpl')
 	{
 		// get navigation
 		$navigation = self::getNavigation();
@@ -341,8 +332,10 @@ class FrontendNavigation extends FrontendBaseObject
 		// assign navigation to template
 		$tpl->assign('navigation', $navigation[$type][$parentId]);
 
+		$templatePath = FRONTEND_PATH . '/core/layout/templates/' . (string) $navigationTpl;
+		
 		// return parsed content
-		return $tpl->getContent(self::$templatePath, true, true);
+		return $tpl->getContent($templatePath, true, true);
 	}
 
 	/**
@@ -408,16 +401,6 @@ class FrontendNavigation extends FrontendBaseObject
 
 		// fallback
 		return false;
-	}
-
-	/**
-	 * Return the current template path
-	 *
-	 * return @string
-	 */
-	public static function getTemplatePath()
-	{
-		return self::$templatePath;
 	}
 
 	/**
@@ -598,15 +581,5 @@ class FrontendNavigation extends FrontendBaseObject
 				array_pop($pages);
 			}
 		}
-	}
-
-	/**
-	 * Set the path for the template
-	 *
-	 * @param string $path The path to set.
-	 */
-	public static function setTemplatePath($path)
-	{
-		self::$templatePath = (string) $path;
 	}
 }
