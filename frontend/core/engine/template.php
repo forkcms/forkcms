@@ -530,12 +530,9 @@ class FrontendTemplateModifiers
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
-		
-		// set template
-		FrontendNavigation::setTemplatePath(FRONTEND_PATH . '/core/layout/templates/' . (string) $tpl);
 
 		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds);
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, (string) $tpl);
 
 		// return the var
 		if($return != '') return $return;
@@ -627,13 +624,10 @@ class FrontendTemplateModifiers
 		// get parent ID
 		$parentID = FrontendNavigation::getPageId($parentURL);
 
-		// set template
-		FrontendNavigation::setTemplatePath(FRONTEND_PATH . '/core/layout/templates/' . (string) $tpl);
-
 		try
 		{
 			// get HTML
-			$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds);
+			$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds, (string) $tpl);
 		}
 
 		// catch exceptions
