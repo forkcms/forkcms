@@ -1759,41 +1759,6 @@ jsBackend.permissions =
 	}
 }
 
-//$checkboxDropdownCombo.each(function()
-//{
-//	// variables
-//	$this = $(this);
-//
-//	// check if needed element exists
-//	if($this.find('input:checkbox').length > 0 && $this.find('select').length > 0)
-//	{
-//		// variables
-//		$checkbox = $this.find('input:checkbox').eq(0);
-//		$dropdown = $this.find('select').eq(0);
-//
-//		$checkbox.on('change', function(e)
-//		{
-//			// variables
-//			$combo = $(this).parents().filter($checkboxDropdownCombo);
-//			$field = $($combo.find('select')[0]);
-//			$this = $(this);
-//
-//			if($this.is(':checked'))
-//			{
-//				$field.removeClass('disabled').prop('disabled', false);
-//				$field.focus();
-//			}
-//			else $field.addClass('disabled').prop('disabled', true);
-//		});
-//
-//		if($checkbox.is(':checked')) $dropdown.removeClass('disabled').prop('disabled', false);
-//		else $dropdown.addClass('disabled').prop('disabled', true);
-//	}
-//});
-
-
-
-
 /**
  * Apply tabs
  *
