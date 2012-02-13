@@ -46,6 +46,7 @@ var jsBackend =
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
 		jsBackend.ckeditor.init();
+		jsBackend.permissions.init();
 
 		// IE fixes
 		jsBackend.selectors.init();
@@ -1715,6 +1716,83 @@ jsBackend.messages =
 		if(type == 'success') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
 	}
 }
+
+/**
+* Hande the controls for the permissions tab.
+*
+* @author	Lowie Benoot <lowie.benoot@netlash.com>
+*/
+jsBackend.permissions =
+{
+	// init, something like a constructor
+	init: function()
+	{
+		$tabPermissions = $('#tabPermissions');
+		
+		// the permissions tab exists
+		if($tabPermissions.length > 0)
+		{
+			$checkbox = $('#isSecured', $tabPermissions);
+			$container = $('#profileGroupsContainer', $tabPermissions);
+			
+			// check if the needed elements exist
+			if($checkbox.length> 0 && $checkbox.length > 0)
+			{
+				// toggle the visibility of the group checkboxes
+				$checkbox.on('change', function(e)
+				{
+					if($checkbox.is(':checked'))
+					{
+						$container.show();
+					}
+					
+					else
+					{
+						$container.hide();
+					}
+				});
+				
+				// initial hide of the group checkboxes
+				if(!$checkbox.is(':checked')) $container.hide();
+			}
+		}
+	}
+}
+
+//$checkboxDropdownCombo.each(function()
+//{
+//	// variables
+//	$this = $(this);
+//
+//	// check if needed element exists
+//	if($this.find('input:checkbox').length > 0 && $this.find('select').length > 0)
+//	{
+//		// variables
+//		$checkbox = $this.find('input:checkbox').eq(0);
+//		$dropdown = $this.find('select').eq(0);
+//
+//		$checkbox.on('change', function(e)
+//		{
+//			// variables
+//			$combo = $(this).parents().filter($checkboxDropdownCombo);
+//			$field = $($combo.find('select')[0]);
+//			$this = $(this);
+//
+//			if($this.is(':checked'))
+//			{
+//				$field.removeClass('disabled').prop('disabled', false);
+//				$field.focus();
+//			}
+//			else $field.addClass('disabled').prop('disabled', true);
+//		});
+//
+//		if($checkbox.is(':checked')) $dropdown.removeClass('disabled').prop('disabled', false);
+//		else $dropdown.addClass('disabled').prop('disabled', true);
+//	}
+//});
+
+
+
 
 /**
  * Apply tabs
