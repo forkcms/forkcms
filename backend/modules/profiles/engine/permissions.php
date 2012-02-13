@@ -17,7 +17,7 @@
 class BackendProfilesPermissions
 {
 	/**
-	 * The form instance
+	 * The form instance.
 	 *
 	 * @var	BackendForm
 	 */
@@ -36,6 +36,13 @@ class BackendProfilesPermissions
 	 * @var int
 	 */
 	protected $otherId;
+
+	/**
+	 * The current permissions.
+	 *
+	 * @var array
+	 */
+	protected $permissions = array();
 
 	/**
 	 * @param BackendForm $form An instance of Backendform, the elements will be parsed in here.
@@ -58,7 +65,7 @@ class BackendProfilesPermissions
 			$this->otherId = (int) $otherId;
 
 			// load the existing permissions
-			//$this->loadPermissions();
+			$this->loadPermissions();
 		}
 
 		$this->loadProfileGroups();
@@ -69,9 +76,21 @@ class BackendProfilesPermissions
 	{
 		if(!empty($this->groups))
 		{
-			$this->frm->addCheckbox('is_secured');
-			$this->frm->addMultiCheckbox('profile_groups', $this->groups);
+			$this->frm->addCheckbox('is_secured', !empty($this->permissions));
+			$this->frm->addMultiCheckbox('profile_groups', $this->groups, $this->permissions);
 		}
+	}
+
+	protected function loadPermissions()
+	{
+		$db = BackendModel::getDB();
+
+		$this->permissions = (array) $db->getColumn(
+			'SELECT i.group_id
+			 FROM profiles_groups_permissions AS i
+			 WHERE i.module = ? AND i.other_id = ?',
+			array($this->module, $this->otherId)
+		);
 	}
 
 	protected function loadProfileGroups()
@@ -85,24 +104,21 @@ class BackendProfilesPermissions
 		);
 	}
 
-	public function validate()
-	{
-		if($this->frm->isSubmitted())
-		{
-			if($this->frm->getField('is_secured')->getChecked())
-			{
-				if($this->frm->getField('profile_groups')->isFilled(BL::err('FieldIsRequired')));
-			}
-		}
-	}
-
 	public function save($otherId)
 	{
 		$db = BackendModel::getDB();
 		$this->otherId = (int) $otherId;
 
 		// get the groups
-		$groups = (array) $this->frm->getField('profile_groups')->getChecked();
+		if($this->frm->getField('is_secured')->getChecked())
+		{
+			$groups = (array) $this->frm->getField('profile_groups')->getChecked();
+		}
+
+		else
+		{
+			$groups = array();
+		}
 
 		// delete existing permissions
 		$db->delete(
@@ -120,6 +136,17 @@ class BackendProfilesPermissions
 		{
 			$permission['group_id'] = (int) $group;
 			$db->insert('profiles_groups_permissions', $permission);
+		}
+	}
+
+	public function validate()
+	{
+		if($this->frm->isSubmitted())
+		{
+			if($this->frm->getField('is_secured')->getChecked())
+			{
+				if($this->frm->getField('profile_groups')->isFilled(BL::err('FieldIsRequired')));
+			}
 		}
 	}
 }
