@@ -81,6 +81,9 @@ class BackendProfilesPermissions
 		}
 	}
 
+	/**
+	 * Load the current permissions for the module and otherId.
+	 */
 	protected function loadPermissions()
 	{
 		$db = BackendModel::getDB();
@@ -93,6 +96,9 @@ class BackendProfilesPermissions
 		);
 	}
 
+	/**
+	 * Load all the available profile groups.
+	 */
 	protected function loadProfileGroups()
 	{
 		$db = BackendModel::getDB();
