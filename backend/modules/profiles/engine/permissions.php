@@ -76,12 +76,12 @@ class BackendProfilesPermissions
 
 	protected function loadProfileGroups()
 	{
-		// init db
 		$db = BackendModel::getDB();
 
 		$this->groups = (array) $db->getRecords(
-			'SELECT id AS value, name AS label
-			 FROM profiles_groups'
+			'SELECT id AS value, name AS label FROM profiles_groups',
+			array(),
+			'value'
 		);
 	}
 
@@ -98,6 +98,28 @@ class BackendProfilesPermissions
 
 	public function save($otherId)
 	{
+		$db = BackendModel::getDB();
+		$this->otherId = (int) $otherId;
 
+		// get the groups
+		$groups = (array) $this->frm->getField('profile_groups')->getChecked();
+
+		// delete existing permissions
+		$db->delete(
+			'profiles_groups_permissions',
+			'module = ? AND other_id = ?',
+			array($this->module, $this->otherId)
+		);
+
+		// init the data to insert in the database
+		$permission['module'] = $this->module;
+		$permission['other_id'] = $this->otherId;
+
+		// insert the new permissions
+		foreach($groups as $group)
+		{
+			$permission['group_id'] = (int) $group;
+			$db->insert('profiles_groups_permissions', $permission);
+		}
 	}
 }
