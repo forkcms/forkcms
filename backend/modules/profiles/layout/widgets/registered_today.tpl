@@ -33,27 +33,27 @@
 					{/option:profiles}
 				</div>
 					{option:barGraphData}
-					<div id="dataChartBarChart" class="hidden">
+					<div id="dataBarChart" class="hidden">
 						<ul class="data">
 							{iteration:barGraphData}
 								<li><span class="count">{$barGraphData.count}</span><span class="date">{$barGraphData.date}</span></li>
 							{/iteration:barGraphData}
 						</ul>
 					</div>
-					<div id="chartBarChart">&nbsp;</div>
+					<div id="barChart">&nbsp;</div>
 				{/option:barGraphData}
 			</div>
 
 			<div id="tabStatus" class="options">
 				{option:pieGraphData}
-					<div id="dataChartPieChart" class="hidden">
+					<div id="dataPieChart" class="hidden">
 						<ul class="data">
 							{iteration:pieGraphData}
 								<li><span class="label">{$pieGraphData.label}</span><span class="value">{$pieGraphData.value}</span><span class="percentage">{$pieGraphData.percentage}</span></li>
 							{/iteration:pieGraphData}
 						</ul>
 					</div>
-				<div id="chartPieChart">&nbsp;</div>
+				<div id="pieChart">&nbsp;</div>
 				{/option:pieGraphData}
 			</div>
 

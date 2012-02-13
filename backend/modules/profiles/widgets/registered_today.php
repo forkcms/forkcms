@@ -42,7 +42,7 @@ class BackendProfilesWidgetRegisteredToday extends BackendBaseWidget
 	{
 		$this->header->addCSS('widgets.css', 'profiles');
 		$this->header->addJS('highcharts.js', 'core');
-		$this->header->addJS('registered_today.js', 'profiles', null, true);
+		$this->header->addJS('profiles.js', 'profiles', null, true);
 		$this->setColumn('middle');
 		$this->setPosition(0);
 		$this->loadData();
