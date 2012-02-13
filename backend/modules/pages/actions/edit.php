@@ -348,6 +348,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// set callback for generating an unique URL
 		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $isAction));
+
+		// permissions
+		$this->permissions = new BackendProfilesPermissions($this->frm, 'pages', $this->record['id']);
 	}
 
 	/**
@@ -454,6 +457,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 			// validate meta
 			$this->meta->validate();
+
+			// validate permissions
+			$this->permissions->validate();
 
 			// no errors?
 			if($this->frm->isCorrect())

@@ -39,6 +39,7 @@
 		<ul>
 			<li style="float: left;"><a href="#tabContent">{$lblContent|ucfirst}</a></li>
 			<!-- Reverse order after content tab [floatRight] -->
+			{option:profileGroups}<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>{/option:profileGroups}
 			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabRedirect">{$lblRedirect|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
@@ -328,6 +329,12 @@
 				</ul>
 			{/option:isGod}
 		</div>
+
+		{option:profileGroups}
+			<div id="tabPermissions">
+				{include:{$BACKEND_MODULES_PATH}/profiles/layout/templates/permissions.tpl}
+			</div>
+		{/option:profileGroups}
 	</div>
 
 	{*
