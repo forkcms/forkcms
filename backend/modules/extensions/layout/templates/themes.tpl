@@ -31,7 +31,14 @@
 							<img src="{$installableThemes.thumbnail}" width="172" height="129" alt="{$installableThemes.label|ucfirst}" />
 							<span>{$installableThemes.label|ucfirst}</span>
 						</label>
-						{option:showExtensionsInstallTheme}<a href="{$var|geturl:'install_theme'}&theme={$installableThemes.value}" data-message-id="confirmInstall" class="askConfirmation button icon iconNext linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblInstall|ucfirst}</span></a>{/option:showExtensionsInstallTheme}
+						{option:showExtensionsInstallTheme}
+							<a href="{$var|geturl:'install_theme'}&theme={$installableThemes.value}" data-message-id="confirmInstall{$installableThemes.value|ucfirst}" class="askConfirmation button icon iconNext linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblInstall|ucfirst}</span></a>
+							<div id="confirmInstall{$installableThemes.value|ucfirst}" title="{$lblInstall|ucfirst}?" style="display: none;">
+								<p>
+									{$msgConfirmThemeInstall}
+								</p>
+							</div>
+						{/option:showExtensionsInstallTheme}
 						{option:showExtensionsDetailTheme}<a href="{$var|geturl:'detail_theme'}&theme={$installableThemes.value}" class="button icon iconDetail linkButton" title="{$installableThemes.label|ucfirst}"><span>{$lblDetails|ucfirst}</span></a>{/option:showExtensionsDetailTheme}
 					</li>
 				{/iteration:installableThemes}
@@ -68,12 +75,6 @@
 		</div>
 	</div>
 {/form:settingsThemes}
-
-<div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
-	<p>
-		{$msgConfirmThemeInstall}
-	</p>
-</div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
