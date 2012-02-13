@@ -30,7 +30,7 @@
 				</li>
 				<li>
 					{$chkDifferentDebugEmail} <label for="differentDebugEmail">Use a specific debug email address </label>
-					<span class="helpTxt">(Exception emails will be send to this email address)</span>
+					<span class="helpTxt">(Exception emails will be sent to this email address)</span>
 				</li>
 				<li id="debugEmailHolder">
 					{$txtDebugEmail} {$txtDebugEmailError}
