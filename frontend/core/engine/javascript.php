@@ -200,7 +200,7 @@ class FrontendJavascript
 		if(!in_array((string) $value, $modules))
 		{
 			// when debug is on throw an exception
-			if(SPOON_DEBUG) throw new FrontendException('Invalid file.');
+			if(SPOON_DEBUG) throw new FrontendException('Invalid module.');
 
 			// when debug is of show a descent message
 			else exit(SPOON_DEBUG_MESSAGE);
