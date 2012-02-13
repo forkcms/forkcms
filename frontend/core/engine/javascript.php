@@ -12,6 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Frederik Heyninck <frederik@figure8.be>
  */
 class FrontendJavascript
 {
