@@ -1,3 +1,10 @@
+3.2.6 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Pages: blocks in fallback positions are now drag-and-droppable again.
+
+
 3.2.5 (2012-02-14)
 --
 Bugfixes:
