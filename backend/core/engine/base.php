@@ -155,7 +155,10 @@ class BackendBaseAction
 			else $this->tpl->assign('reportMessage', BL::msg($messageName));
 
 			// highlight an element with the given id if needed
-			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
+			if($this->getParameter('highlight'))
+			{
+				$this->tpl->assign('highlight', strip_tags($this->getParameter('highlight')));
+			}
 		}
 
 		// is there an error to show?
