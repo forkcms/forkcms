@@ -37,6 +37,8 @@ class PagesInstaller extends ModuleInstaller
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
+		$this->insertExtra('pages', 'widget', 'Navigation', 'previous_next_navigation');
+		
 		$extras['subpages_widget'] = $this->insertExtra(
 			'pages',
 			'widget',
