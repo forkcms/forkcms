@@ -165,7 +165,7 @@ class BackendBaseAction
 		if($this->getParameter('error') !== null)
 		{
 			// camelcase the string
-			$errorName = SpoonFilter::toCamelCase($this->getParameter('error'), '-');
+			$errorName = strip_tags(SpoonFilter::toCamelCase($this->getParameter('error'), '-'));
 
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
