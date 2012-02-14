@@ -1,4 +1,4 @@
-<ul class="pageNavigation">
+<ul>
 	{option:widgetPagesNavigation.previous}
 		<li class="previousLink">
 			<a href="{$widgetPagesNavigation.previous.url}" rel="prev">{$lblPreviousPage|ucfirst}: {$widgetPagesNavigation.previous.title}</a>
