@@ -516,7 +516,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the navigation html
-	 * 	syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash]]]]}
+	 * 	syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash[:tpl]]]]}
 	 *
 	 * @param string[optional] $var The variable.
 	 * @param string[optional] $type The type of navigation, possible values are: page, footer.
@@ -526,13 +526,13 @@ class FrontendTemplateModifiers
 	 * @param string[optional] $tpl The template that will be used.
 	 * @return string
 	 */
-	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null, $tpl = 'navigation.tpl')
+	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
 
 		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, (string) $tpl);
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, $tpl);
 
 		// return the var
 		if($return != '') return $return;
@@ -588,7 +588,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the subnavigation html
-	 * 	syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:'excludeIds-splitted-by-dash']]]]]}
+	 * 	syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:excludeIds-splitted-by-dash[:tpl]]]]]}
 	 *
 	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *
@@ -601,7 +601,7 @@ class FrontendTemplateModifiers
 	 * @param string[optional] $tpl The template that will be used.
 	 * @return string
 	 */
-	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null, $tpl = 'navigation.tpl')
+	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);

@@ -23,23 +23,5 @@ class FrontendPagesWidgetSitemap extends FrontendBaseWidget
 	{
 		parent::execute();
 		$this->loadTemplate();
-
-		/*
-		 * A bit dirty this; we overwrite the navigation template path of the FrontendNavigation
-		 * by a separate template for the sitemap.
-		 */
-		$widgetLayoutPath = FRONTEND_MODULES_PATH . '/pages/layout';
-		$originalTemplatePath = FrontendNavigation::getTemplatePath();
-		FrontendNavigation::setTemplatePath(FrontendTheme::getPath($widgetLayoutPath . '/templates/sitemap.tpl'));
-
-		/*
-		 * Because the scope of the template is now changed to the new sitemap.tpl, we can
-		 * store the HTML of the new, parsed scope. Afterwards we reset to the original
-		 * template (FrontendNavigation might be used again after this).
-		 */
-		$sitemapNavigationHTML = $this->tpl->getContent(FrontendTheme::getPath($widgetLayoutPath . '/widgets/sitemap.tpl'));
-		FrontendNavigation::setTemplatePath($originalTemplatePath);
-
-		return $sitemapNavigationHTML;
 	}
 }
