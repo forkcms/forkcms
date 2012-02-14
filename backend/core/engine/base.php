@@ -11,6 +11,8 @@
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Frederik Heyninck <frederik@figure8.be>
+ * @author Davy Hellemans <davy@spoon-library.com>
  */
 class BackendBaseAction
 {
