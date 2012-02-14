@@ -72,6 +72,21 @@ class BackendProfilesPermissions
 		$this->loadForm();
 	}
 
+	/**
+	 * @todo: doc
+	 */
+	private function insertPermission($groupId, $allowed)
+	{
+		$db = BackendModel::getDB();
+
+		$permission['module'] = $this->module;
+		$permission['other_id'] = $this->otherId;
+		$permission['group_id'] = (int) $groupId;
+		$permission['allowed'] = $allowed ? 'Y' : 'N';
+
+		$db->insert('profiles_groups_permissions', $permission);
+	}
+
 	protected function loadForm()
 	{
 		if(!empty($this->groups))
@@ -91,8 +106,8 @@ class BackendProfilesPermissions
 		$this->permissions = (array) $db->getColumn(
 			'SELECT i.group_id
 			 FROM profiles_groups_permissions AS i
-			 WHERE i.module = ? AND i.other_id = ?',
-			array($this->module, $this->otherId)
+			 WHERE i.module = ? AND i.other_id = ? AND i.allowed = ?',
+			array($this->module, $this->otherId, 'Y')
 		);
 	}
 
@@ -118,12 +133,12 @@ class BackendProfilesPermissions
 		// get the groups
 		if($this->frm->getField('is_secured')->getChecked())
 		{
-			$groups = (array) $this->frm->getField('profile_groups')->getChecked();
+			$allowedGroups = (array) $this->frm->getField('profile_groups')->getChecked();
 		}
 
 		else
 		{
-			$groups = array();
+			$allowedGroups = array();
 		}
 
 		// delete existing permissions
@@ -133,16 +148,23 @@ class BackendProfilesPermissions
 			array($this->module, $this->otherId)
 		);
 
-		// init the data to insert in the database
-		$permission['module'] = $this->module;
-		$permission['other_id'] = $this->otherId;
-
 		// insert the new permissions
-		foreach($groups as $group)
+		foreach($this->groups as $group)
 		{
-			$permission['group_id'] = (int) $group;
-			$db->insert('profiles_groups_permissions', $permission);
+			$this->insertPermission(
+				$group['value'],
+				in_array($group['value'], $allowedGroups)
+			);
 		}
+
+		/*
+		 * Insert a permission for the "null-group". By doing this, the item will still have
+		 * the correct security settings, even after the profile groups are deleted.
+		 */
+		$this->insertPermission(
+			null,
+			!empty($allowedGroups)
+		);
 	}
 
 	public function validate()
