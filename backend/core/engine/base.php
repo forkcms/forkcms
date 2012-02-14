@@ -139,7 +139,7 @@ class BackendBaseAction
 		}
 
 		// store var so we don't have to call this function twice
-		$var = $this->getParameter('var', 'array');
+		$var = array_map('strip_tags', $this->getParameter('var', 'array'));
 
 		// is there a report to show?
 		if($this->getParameter('report') !== null)
