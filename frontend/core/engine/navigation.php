@@ -45,7 +45,22 @@ class FrontendNavigation extends FrontendBaseObject
 		// set selected ids
 		$this->setSelectedPageIds();
 	}
-
+	
+	/**
+	 * Creates and renders a 404 page
+	 */
+	public static function dieWith404()
+	{
+		// init new 404 page
+		$page = new FrontendPage(404);
+		
+		// display the page
+		$page->display();
+		
+		// prevent further execution
+		exit;
+	}
+	
 	/**
 	 * Creates a Backend URL for a given action and module
 	 * If you don't specify a language the current language will be used.
@@ -541,7 +556,8 @@ class FrontendNavigation extends FrontendBaseObject
 		// fallback
 		return self::getURL(404, $language);
 	}
-
+	
+	
 	/**
 	 * This function lets you add ignored pages
 	 *
