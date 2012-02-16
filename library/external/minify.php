@@ -402,6 +402,7 @@ class MinifyCSS extends Minify
 		(?J)
 
 		# url(xxx)
+
 			# open url()
 			url\(
 
