@@ -401,41 +401,7 @@ class MinifyCSS extends Minify
 		# enable possiblity of giving multiple subpatterns same name
 		(?J)
 
-		# @import "xxx" or @import url(xxx)
-
-			# import statement
-			@import
-
-			# whitespace
-			\s+
-
-				# (optional) open url()
-				(?<url>url\()?
-
-					# open path enclosure
-					(?<quotes>["\'])
-
-						# fetch path
-						(?<path>
-
-							# do not fetch data uris
-							(?!(
-								["\']?
-								data:
-							))
-
-							.+
-						)
-
-					# close path enclosure
-					(?P=quotes)
-
-				# (optional) close url()
-				(?(url)\))
-		|
-
 		# url(xxx)
-
 			# open url()
 			url\(
 
@@ -451,7 +417,7 @@ class MinifyCSS extends Minify
 							data:
 						))
 
-						.+
+						.+?
 					)
 
 				# close path enclosure
@@ -459,6 +425,34 @@ class MinifyCSS extends Minify
 
 			# close url()
 			\)
+
+		|
+
+		# @import "xxx"
+
+			# import statement
+			@import
+
+			# whitespace
+			\s+
+
+				# open path enclosure
+				(?<quotes>["\'])
+
+					# fetch path
+					(?<path>
+
+						# do not fetch data uris
+						(?!(
+							["\']?
+							data:
+						))
+
+						.+?
+					)
+
+				# close path enclosure
+				(?P=quotes)
 
 		/ix';
 
