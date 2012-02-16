@@ -57,13 +57,13 @@ class MinifyCSS extends Minify
 			\s+
 
 				# (optional) open url()
-				(?<url>url\()?
+				(?P<url>url\()?
 
 					# open path enclosure
-					(?<quotes>["\'])
+					(?P<quotes>["\'])
 
 						# fetch path
-						(?<path>
+						(?P<path>
 
 							# do not fetch data uris
 							(?!(
@@ -84,7 +84,7 @@ class MinifyCSS extends Minify
 				\s*
 
 				# (optional) media statement(s)
-				(?<media>.*?)
+				(?P<media>.*?)
 
 				# (optional) trailing whitespace
 				\s*
@@ -407,10 +407,10 @@ class MinifyCSS extends Minify
 			url\(
 
 				# open path enclosure
-				(?<quotes>["\'])?
+				(?P<quotes>["\'])?
 
 					# fetch path
-					(?<path>
+					(?P<path>
 
 						# do not fetch data uris
 						(?!(
@@ -440,10 +440,10 @@ class MinifyCSS extends Minify
 				# we don\'t have to check for @import url(), because the condition above will already catch these
 
 				# open path enclosure
-				(?<quotes>["\'])
+				(?P<quotes>["\'])
 
 					# fetch path
-					(?<path>
+					(?P<path>
 
 						# do not fetch data uris
 						(?!(
