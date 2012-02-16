@@ -71,7 +71,7 @@ class MinifyCSS extends Minify
 								data:
 							))
 
-							.+
+							.+?
 						)
 
 					# close path enclosure
@@ -436,6 +436,8 @@ class MinifyCSS extends Minify
 
 			# whitespace
 			\s+
+
+				# we don\'t have to check for @import url(), because the condition above will already catch these
 
 				# open path enclosure
 				(?<quotes>["\'])
