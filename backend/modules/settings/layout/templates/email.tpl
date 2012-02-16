@@ -10,6 +10,7 @@
 		<div class="heading">
 			<h3>{$lblEmail|ucfirst}</h3>
 		</div>
+	{option:isGod}
 		<div class="options">
 			<h4><label for="mailerType">{$lblSendingEmails|ucfirst}</label></h4>
 			<p>{$msgHelpSendingEmails}</p>
@@ -24,6 +25,7 @@
 				</small>
 			</p>
 		</div>
+	{/option:isGod}
 		<div class="options">
 			<h4>{$lblFrom|ucfirst}</h4>
 			<p>{$msgHelpEmailFrom}</p>
@@ -61,6 +63,7 @@
 		</div>
 	</div>
 
+	{option:isGod}
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblSMTP|ucfirst}</h3>
@@ -81,6 +84,7 @@
 			</p>
 		</div>
 	</div>
+	{/option:isGod}
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
