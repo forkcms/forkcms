@@ -257,7 +257,7 @@ jsBackend.ckeditor =
 		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
 		// templates
-		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=en'],
+		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]={$LANGUAGE}'],
 
 		// custom vars
 		editorType: 'default',
@@ -273,9 +273,7 @@ jsBackend.ckeditor =
 		{
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
-			CKEDITOR.on('instanceCreated', jsBackend.ckeditor.onReady);
-//			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
-			CKEDITOR.on('instanceDestroyed', jsBackend.ckeditor.onDestroy);
+			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
 
 			// load the editors
 			jsBackend.ckeditor.load();
@@ -362,29 +360,6 @@ jsBackend.ckeditor =
 		}
 	},
 
-	fixRelativeUrls: function(evt)
-	{
-		// get the editor
-		var editor = evt.editor;
-
-		// was the content changed, or is the check forced?
-		if(editor.checkDirty())
-		{
-			var content = editor.getData();
-
-			// replace absolute urls by relative
-			content = content.replace(/href=("|'){$SITE_PROTOCOL}:\/\/{$SITE_DOMAIN}(.*)\1/, 'href="$2"');
-
-			// replace with cleaned content
-			editor.setData(content);
-		}
-	},
-
-	onDestroy: function(evt)
-	{
-		jsBackend.ckeditor.fixRelativeUrls({ editor: evt.editor});
-	},
-
 	onDialogDefinition: function(evt)
 	{
 		// get the dialog definition
@@ -440,11 +415,11 @@ jsBackend.ckeditor =
 						items: linkList,
 						onChange: function(evt)
 						{
-							domain = '{$SITE_DOMAIN}/';
-							domain = domain.replace('//', '/');
+							domain = '{$SITE_DOMAIN}';
+							domain = domain.replace(/\/$/, '');
 
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('{$SITE_PROTOCOL}://');
-							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(domain + evt.data.value);
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
 						}
 				 	}
 			 	]

@@ -10,7 +10,7 @@
 /**
  * This is the index-action (default), it will display the overview of blog posts
  *
- * @author Davy Hellemans <davyhellemans@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.com>
  * @author Matthias Mullie <matthias@mullie.eu>

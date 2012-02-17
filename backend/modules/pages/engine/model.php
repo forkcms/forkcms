@@ -215,7 +215,6 @@ class BackendPagesModel
 				$navigation[$page['type']][$page['parent_id']][$pageID] = $temp;
 			}
 		}
-
 		// order by URL
 		asort($keys);
 
@@ -813,8 +812,8 @@ class BackendPagesModel
 			// add to array
 			$order[$id] = $page['full_url'];
 
-			// childs of root-pages are stored under the page type
-			if($type == 'root' && isset($navigation['page'][$id]))
+			// childs of root/footer/meta-pages are stored under the page type
+			if(($type == 'root' || $type == 'footer' || $type == 'meta') && isset($navigation['page'][$id]))
 			{
 				// process subpages
 				$order = self::getOrder($navigation, 'page', $id, $order);
@@ -1079,6 +1078,9 @@ class BackendPagesModel
 
 				// insert link
 				$html .= '			<a href="' . BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
+
+				// insert subtree
+				$html .= self::getSubTree($navigation, $page['page_id']);
 
 				// end
 				$html .= '		</li>' . "\n";

@@ -22,7 +22,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// add js
-		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, null, true, false);
+		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, false, true);
 
 		$this->loadDataGrid();
 		$this->parse();

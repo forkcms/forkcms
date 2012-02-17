@@ -4,6 +4,7 @@
  * This is the detail-action it will display the details of a module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendExtensionsDetailModule extends BackendBaseActionIndex
 {
@@ -79,43 +80,10 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 			$this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
 		}
 
-		// path to information file
-		$pathInfoXml = BACKEND_MODULES_PATH . '/' . $this->currentModule . '/info.xml';
-
-		// information needs to exists
-		if(SpoonFile::exists($pathInfoXml))
-		{
-			try
-			{
-				// load info.xml
-				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
-
-				// convert xml to useful array
-				$this->information = BackendExtensionsModel::processModuleXml($infoXml);
-
-				// empty data (nothing useful)
-				if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileIsEmpty'));
-
-				// check if cronjobs are installed already
-				if(isset($this->information['cronjobs']))
-				{
-					foreach($this->information['cronjobs'] as $cronjob)
-					{
-						if(!$cronjob['active']) $this->warnings[] = array('message' => BL::getError('CronjobsNotSet'));
-						break;
-					}
-				}
-			}
-
-			// warning that the information file is corrupt
-			catch(Exception $e)
-			{
-				$this->warnings[] = array('message' => BL::getMessage('InformationFileCouldNotBeLoaded'));
-			}
-		}
-
-		// warning that the information file is missing
-		else $this->warnings[] = array('message' => BL::getMessage('InformationFileIsMissing'));
+		// fetch the module information
+		$moduleInformation = BackendExtensionsModel::getModuleInformation($this->currentModule);
+		$this->information = $moduleInformation['data'];
+		$this->warnings = $this->warnings + $moduleInformation['warnings'];
 	}
 
 	/**

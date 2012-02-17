@@ -150,36 +150,8 @@ class FrontendPage extends FrontendBaseObject
 		// assign the id so we can use it as an option
 		$this->tpl->assign('isPage' . $this->pageId, true);
 
-		// fetch variables from main template
-		$mainVariables = $this->tpl->getAssignedVariables();
-
-		// loop all positions
-		foreach($this->record['positions'] as $position => &$blocks)
-		{
-			// loop all blocks in this position
-			foreach($blocks as &$block)
-			{
-				// check for extra's that need to be reparsed
-				if(isset($block['extra']))
-				{
-					// fetch extra-specific variables
-					$extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
-
-					// assign all main variables
-					$block['extra']->getTemplate()->assignArray($mainVariables);
-
-					// overwrite with all specific variables
-					$block['extra']->getTemplate()->assignArray($extraVariables);
-
-					// parse extra
-					$block = array('blockIsHTML' => false,
-									'blockContent' => $block['extra']->getContent());
-				}
-			}
-
-			// assign position to template
-			$this->tpl->assign('position' . SpoonFilter::ucfirst($position), $blocks);
-		}
+		// the the positions to the template
+		$this->parsePositions();
 
 		// assign empty positions
 		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
@@ -322,6 +294,63 @@ class FrontendPage extends FrontendBaseObject
 			// assign
 			if(count($languages) > 1) $this->tpl->assign('languages', $languages);
 		}
+	}
+
+	/**
+	 * Parse the positions to the template
+	 */
+	protected function parsePositions()
+	{
+		// init array to store parsed positions data
+		$positions = array();
+
+		do
+		{
+			$oldPositions = $positions;
+
+			// fetch variables from main template
+			$mainVariables = $this->tpl->getAssignedVariables();
+
+			// loop all positions
+			foreach($this->record['positions'] as $position => $blocks)
+			{
+				// loop all blocks in this position
+				foreach($blocks as $i => $block)
+				{
+					// check for extra's that need to be reparsed
+					if(isset($block['extra']))
+					{
+						// fetch extra-specific variables
+						if(isset($positions[$position][$i]['variables']))
+						{
+							$extraVariables = $positions[$position][$i]['variables'];
+						}
+						else
+						{
+							$extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
+						}
+
+						// assign all main variables
+						$block['extra']->getTemplate()->assignArray($mainVariables);
+
+						// overwrite with all specific variables
+						$block['extra']->getTemplate()->assignArray($extraVariables);
+
+						// parse extra
+						$positions[$position][$i] = array(
+							'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
+							'blockIsHTML' => false,
+							'blockContent' => $block['extra']->getContent()
+						);
+					}
+					else $positions[$position][$i] = $block;
+				}
+
+				// assign position to template
+				$this->tpl->assign('position' . SpoonFilter::ucfirst($position), $positions[$position]);
+			}
+		}
+		while($oldPositions != $positions);
 	}
 
 	/**

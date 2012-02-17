@@ -14,10 +14,11 @@
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
+		var initialize = function()
+		{
 			// create boundaries
 			var latlngBounds = new google.maps.LatLngBounds();
-	
+
 			// set options
 			var options =
 			{
@@ -36,19 +37,19 @@
 				// set map type
 				mapTypeId: google.maps.MapTypeId.{$locationSettings.map_type}
 			};
-	
+
 			// create map
 			var map = new google.maps.Map(document.getElementById('map'), options);
-	
+
 			// function to add markers to the map
 			function addMarker(lat, lng, title, text)
 			{
 				// create position
 				position = new google.maps.LatLng(lat, lng);
-	
+
 				// add to boundaries
 				latlngBounds.extend(position);
-	
+
 				// add marker
 				var marker = new google.maps.Marker(
 				{
@@ -59,7 +60,7 @@
 					// set title
 					title: title
 				});
-	
+
 				// add click event on marker
 				google.maps.event.addListener(marker, 'click', function()
 				{
@@ -67,17 +68,19 @@
 					new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker);
 				});
 			}
-	
+
 			// loop items and add to map
 			{iteration:locationItems}
 				{option:locationItems.lat}{option:locationItems.lng}addMarker({$locationItems.lat}, {$locationItems.lng}, '{$locationItems.title}', $('#markerText' + {$locationItems.id}).html());{/option:locationItems.lat}{/option:locationItems.lng}
 			{/iteration:locationItems}
-	
+
 			// set center to the middle of our boundaries
 			map.setCenter(latlngBounds.getCenter());
-	
+
 			// set zoom automatically, defined by points (if allowed)
 			if('{$locationSettings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
-		});
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 {/option:locationItems}

@@ -71,6 +71,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 			// disable paging
 			$dataGrid->setPaging(false);
 
+			// set header label for reference code
+			$dataGrid->setHeaderLabels(array('name' => SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
+
 			// set column attributes for each language
 			foreach($this->filter['language'] as $lang)
 			{

@@ -130,6 +130,12 @@ class SpoonRESTClient
 			$options[CURLOPT_POSTFIELDS] = $parameters;
 		}
 
+		// custom requests
+		if($method === 'DELETE')
+		{
+			$options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
+		}
+
 		// init curl
 		$curl = curl_init($url);
 

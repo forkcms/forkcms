@@ -478,7 +478,7 @@ class SpoonFilter
 		if($allowCommas) $value = str_replace(',', '.', (string) $value);
 
 		// trim zero characters after the decimal separator
-		if(mb_strpos($value, '.') !== false) rtrim($value, '0');
+		if(mb_strpos((string) $value, '.') !== false) rtrim($value, '0');
 
 		// validate
 		return ((string) (float) $value === (string) $value);
@@ -876,7 +876,7 @@ class SpoonFilter
 			if($word == '') continue;
 
 			// first word lowercase
-			if($i == 0 && $lcfirst) $word = $word;
+			if($i == 0 && $lcfirst) $word[0] = mb_strtolower($word[0], $charset);
 
 			// convert first letter to uppercase
 			else $word[0] = mb_strtoupper($word[0], $charset);

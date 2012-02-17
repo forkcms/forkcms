@@ -290,7 +290,10 @@ class APIInit
 	private function requireGlobals()
 	{
 		// fetch config
-		$installed[] = @include_once dirname(__FILE__) . '/../../backend/cache/config/config.php';
+		@include_once dirname(__FILE__) . '/../../backend/cache/config/config.php';
+
+		// config doest not exist, use standard library location
+		if(!defined('INIT_PATH_LIBRARY')) define('INIT_PATH_LIBRARY', dirname(__FILE__) . '/../../library');
 
 		// load the globals
 		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';

@@ -9,7 +9,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li class="notImportant"><a href="#tabRevisions">{$lblPreviousVersions|ucfirst}</a></li>
+			<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
@@ -34,29 +34,26 @@
 			</fieldset>
 		</div>
 
-		<div id="tabRevisions">
-			<div class="dataGridHolder">
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="balloon balloonAlt" style="display: none;">
-							<p>{$msgHelpRevisions}</p>
-						</div>
+		<div id="tabVersions">
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
 					</div>
 				</div>
-
-				{option:revisions}{$revisions}{/option:revisions}
-				{option:!revisions}
-					<table class="dataGrid">
-						<tr>
-							<td>
-								<p>{$msgNoRevisions}</p>
-							</td>
-						</tr>
-					</table>
-				{/option:!revisions}
 			</div>
+
+			{option:revisions}
+			<div class="dataGridHolder">
+				{$revisions}
+			</div>
+			{/option:revisions}
+
+			{option:!revisions}
+				<p>{$msgNoRevisions}</p>
+			{/option:!revisions}
 		</div>
 	</div>
 

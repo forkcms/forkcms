@@ -18,6 +18,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Frederik Heyninck <frederik@figure8.be>
  */
 class FrontendTemplate extends SpoonTemplate
 {
@@ -515,22 +516,23 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the navigation html
-	 * 	syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash]]]]}
+	 * 	syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash[:tpl]]]]}
 	 *
 	 * @param string[optional] $var The variable.
 	 * @param string[optional] $type The type of navigation, possible values are: page, footer.
 	 * @param int[optional] $parentId The parent wherefore the navigation should be build.
 	 * @param int[optional] $depth The maximum depth that has to be build.
 	 * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
+	 * @param string[optional] $tpl The template that will be used.
 	 * @return string
 	 */
-	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
+	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
 
 		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds);
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, $tpl);
 
 		// return the var
 		if($return != '') return $return;
@@ -586,7 +588,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the subnavigation html
-	 * 	syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:'excludeIds-splitted-by-dash']]]]]}
+	 * 	syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:excludeIds-splitted-by-dash[:tpl]]]]]}
 	 *
 	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *
@@ -596,9 +598,10 @@ class FrontendTemplateModifiers
 	 * @param int[optional] $startDepth The depth to strat from.
 	 * @param int[optional] $endDepth The maximum depth that has to be build.
 	 * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
+	 * @param string[optional] $tpl The template that will be used.
 	 * @return string
 	 */
-	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
+	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
@@ -624,7 +627,7 @@ class FrontendTemplateModifiers
 		try
 		{
 			// get HTML
-			$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds);
+			$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds, (string) $tpl);
 		}
 
 		// catch exceptions

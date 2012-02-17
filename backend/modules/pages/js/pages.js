@@ -17,8 +17,8 @@ jsBackend.pages =
 		if(typeof templates != 'undefined')
 		{
 			// load stuff for the page
-			jsBackend.pages.template.init();
 			jsBackend.pages.extras.init();
+			jsBackend.pages.template.init();
 		}
 
 		// button to save to draft
@@ -55,8 +55,8 @@ jsBackend.pages.extras =
 		$(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
 		$(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
 
-		// make the blocks sortable
-		jsBackend.pages.extras.sortable();
+		// make the default position sortable
+		jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
 	},
 
 	// store the extra for real
@@ -515,10 +515,10 @@ jsBackend.pages.extras =
 	},
 
 	// re-order blocks
-	sortable: function()
+	sortable: function(element)
 	{
 		// make blocks sortable
-		$('div.linkedBlocks').sortable(
+		element.sortable(
 		{
 			items: '.templatePositionCurrentType',
 			tolerance: 'pointer',
@@ -629,9 +629,6 @@ jsBackend.pages.template =
 	// method to change a template
 	changeTemplate: function()
 	{
-		// destroy sortable blocks
-		$('div.linkedBlocks').sortable('destroy');
-
 		// get checked
 		var selected = $('#templateList input:radio:checked').val();
 
@@ -646,10 +643,13 @@ jsBackend.pages.template =
 		// reset HTML for the visual representation of the template
 		$('#templateVisual').html(current.html);
 		$('#templateVisualLarge').html(current.htmlLarge);
-		$('#templateVisualFallback .linkedBlocks').html('');
+		$('#templateVisualFallback .linkedBlocks').children().remove();
 		$('#templateId').val(selected);
 		$('#templateLabel, #tabTemplateLabel').html(current.label);
 
+		// make new positions sortable
+		jsBackend.pages.extras.sortable($('#templateVisualLarge div.linkedBlocks'));
+		
 		// hide fallback by default
 		$('#templateVisualFallback').hide();
 
@@ -748,9 +748,6 @@ jsBackend.pages.template =
 
 		// add new defaults at last
 		for(var i in newDefaults) jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1]);
-
-		// make the blocks sortable (again)
-		jsBackend.pages.extras.sortable();
 	},
 
 	// show the dialog to alter the selected template
