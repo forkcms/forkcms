@@ -9,6 +9,7 @@ FileETag MTime Size
 <IfModule mod_rewrite.c>
 	# nice urls
 	RewriteEngine On
+	RewriteBase /
 
 	# forbidden folders
 	RewriteRule .*\.gitignore - [F]

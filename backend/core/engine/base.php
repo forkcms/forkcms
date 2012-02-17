@@ -11,6 +11,8 @@
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Frederik Heyninck <frederik@figure8.be>
+ * @author Davy Hellemans <davy@spoon-library.com>
  */
 class BackendBaseAction
 {
@@ -103,63 +105,44 @@ class BackendBaseAction
 	 */
 	public function execute()
 	{
-		// if not in debug-mode we should include the minified versions
-		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/js/minified.js'))
-		{
-			// include the minified JS-file
-			$this->header->addJS('minified.js', 'core', false);
-		}
-
-		// in debug-mode or minified files don't exist
-		else
-		{
-			// add jquery, we will need this in every action, so add it globally
-			$this->header->addJS('jquery/jquery.js', 'core');
-			$this->header->addJS('jquery/jquery.ui.js', 'core');
-			$this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'core');
-			$this->header->addJS('jquery/jquery.tools.js', 'core');
-			$this->header->addJS('jquery/jquery.backend.js', 'core');
-		}
+		// add jquery, we will need this in every action, so add it globally
+		$this->header->addJS('jquery/jquery.js', 'core', false);
+		$this->header->addJS('jquery/jquery.ui.js', 'core', false);
+		$this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'core');
+		$this->header->addJS('jquery/jquery.tools.js', 'core', false);
+		$this->header->addJS('jquery/jquery.backend.js', 'core');
 
 		// add items that always need to be loaded
-		$this->header->addJS('utils.js', 'core', true);
-		$this->header->addJS('backend.js', 'core', true);
+		$this->header->addJS('utils.js', 'core');
+		$this->header->addJS('backend.js', 'core', false, true);
 
 		// add module js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
 		{
-			$this->header->addJS($this->getModule() . '.js', null, true);
+			$this->header->addJS($this->getModule() . '.js', null, false, true);
 		}
 
 		// add action js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
 		{
-			$this->header->addJS($this->getAction() . '.js', null, true);
+			$this->header->addJS($this->getAction() . '.js', null, false, true);
 		}
 
-		// if not in debug-mode we should include the minified version
-		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/layout/css/minified.css'))
-		{
-			$this->header->addCSS('minified.css', 'core');
-		}
-
-		// debug-mode or minified file does not exist
-		else
-		{
-			$this->header->addCSS('reset.css', 'core');
-			$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
-			$this->header->addCSS('debug.css', 'core');
-			$this->header->addCSS('screen.css', 'core');
-		}
+		// add core css files
+		$this->header->addCSS('reset.css', 'core');
+		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core', false, false);
+		$this->header->addCSS('screen.css', 'core');
+		$this->header->addCSS('debug.css', 'core');
 
 		// add module specific css
 		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
 		{
-			$this->header->addCSS($this->getModule() . '.css', null);
+			$this->header->addCSS($this->getModule() . '.css');
 		}
 
 		// store var so we don't have to call this function twice
 		$var = $this->getParameter('var', 'array');
+		if($var !== null) array_map('strip_tags', $var);
 
 		// is there a report to show?
 		if($this->getParameter('report') !== null)
@@ -168,21 +151,24 @@ class BackendBaseAction
 			$this->tpl->assign('report', true);
 
 			// camelcase the string
-			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), '-');
+			$messageName = strip_tags(SpoonFilter::toCamelCase($this->getParameter('report'), '-'));
 
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
 			else $this->tpl->assign('reportMessage', BL::msg($messageName));
 
 			// highlight an element with the given id if needed
-			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
+			if($this->getParameter('highlight'))
+			{
+				$this->tpl->assign('highlight', strip_tags($this->getParameter('highlight')));
+			}
 		}
 
 		// is there an error to show?
 		if($this->getParameter('error') !== null)
 		{
 			// camelcase the string
-			$errorName = SpoonFilter::toCamelCase($this->getParameter('error'), '-');
+			$errorName = strip_tags(SpoonFilter::toCamelCase($this->getParameter('error'), '-'));
 
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));

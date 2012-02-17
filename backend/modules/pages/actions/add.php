@@ -61,9 +61,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
-		$this->header->addJS('jstree/jquery.tree.js');
-		$this->header->addJS('jstree/lib/jquery.cookie.js');
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js', null, false);
+		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
@@ -73,7 +73,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// init var
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', false);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', false);
 
 		// fallback
 		if($defaultTemplateId === false)
@@ -103,7 +103,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('add');
@@ -266,7 +266,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
@@ -387,7 +387,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
 					// add to search index
-					BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
+					BackendSearchModel::saveIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);

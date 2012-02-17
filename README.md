@@ -3,7 +3,7 @@
 ## Install
 
 1. upload all the content into you document_root
-3. open up your browser en go to your website
+3. open up your browser and go to your website
 4. follow the steps on the screen
 5. have fun
 

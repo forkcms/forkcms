@@ -295,8 +295,8 @@
         <translation language="es"><![CDATA[Optar por ignorar el servicio Yahoo! Directory.]]></translation>
       </item>
       <item type="message" name="HelpTimeFormat">
-        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
-        <translation language="en"><![CDATA[This format is used to display dates on the website.]]></translation>
+        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van tijdstippen in de frontend.]]></translation>
+        <translation language="en"><![CDATA[This format is used to display times on the website.]]></translation>
         <translation language="it"><![CDATA[Questo formato è usato per visualizzare le date nel sito.]]></translation>
         <translation language="ru"><![CDATA[Формат даты, используемый на сайте.]]></translation>
         <translation language="cn"><![CDATA[这个格式用于显示网站上的日期。]]></translation>

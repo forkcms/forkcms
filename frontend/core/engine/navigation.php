@@ -38,19 +38,9 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	private static $selectedPageIds = array();
 
-	/**
-	 * The path of the template to include, or that replaced the current one
-	 *
-	 * @var	string
-	 */
-	protected static $templatePath;
-
 	public function __construct()
 	{
 		parent::__construct();
-
-		// set template path
-		self::setTemplatePath(FRONTEND_PATH . '/core/layout/templates/navigation.tpl');
 
 		// set selected ids
 		$this->setSelectedPageIds();
@@ -247,10 +237,11 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param int[optional] $parentId The parentID to start of.
 	 * @param int[optional] $depth The maximum depth to parse.
 	 * @param array[optional] $excludeIds PageIDs to be excluded.
+	 * @param string[optional] $tpl The template that will be used.
 	 * @param int[optional] $depthCounter A counter that will hold the current depth.
 	 * @return string
 	 */
-	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
+	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $tpl = '/core/layout/templates/navigation.tpl', $depthCounter = 1)
 	{
 		// get navigation
 		$navigation = self::getNavigation();
@@ -312,7 +303,7 @@ class FrontendNavigation extends FrontendBaseObject
 				else $navigation[$type][$parentId][$id]['nofollow'] = false;
 
 				// has children and is desired?
-				if(isset($navigation[$type][$page['page_id']]) && $page['page_id'] != 1 && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $depthCounter + 1);
+				if(isset($navigation[$type][$page['page_id']]) && $page['page_id'] != 1 && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $tpl, $depthCounter + 1);
 				else $navigation[$type][$parentId][$id]['children'] = false;
 
 				// add parent id
@@ -336,13 +327,13 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// create template
-		$tpl = new FrontendTemplate(false);
+		$navigationTpl = new FrontendTemplate(false);
 
 		// assign navigation to template
-		$tpl->assign('navigation', $navigation[$type][$parentId]);
+		$navigationTpl->assign('navigation', $navigation[$type][$parentId]);
 
 		// return parsed content
-		return $tpl->getContent(self::$templatePath, true, true);
+		return $navigationTpl->getContent(FRONTEND_PATH . (string) $tpl, true, true);
 	}
 
 	/**
@@ -408,16 +399,6 @@ class FrontendNavigation extends FrontendBaseObject
 
 		// fallback
 		return false;
-	}
-
-	/**
-	 * Return the current template path
-	 *
-	 * return @string
-	 */
-	public static function getTemplatePath()
-	{
-		return self::$templatePath;
 	}
 
 	/**
@@ -598,15 +579,5 @@ class FrontendNavigation extends FrontendBaseObject
 				array_pop($pages);
 			}
 		}
-	}
-
-	/**
-	 * Set the path for the template
-	 *
-	 * @param string $path The path to set.
-	 */
-	public static function setTemplatePath($path)
-	{
-		self::$templatePath = (string) $path;
 	}
 }

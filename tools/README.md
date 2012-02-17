@@ -58,10 +58,10 @@ The remove_cache-script will clear folders that contain cached files. And can be
 
 
 ### stats
-The stats-script will run severals scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend an PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
+The stats-script will run severals scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend & PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
 
 #### PHP Code Sniffer (phpcs.xml)
-Will contain the same as running `check_code`. It will the code against the styleguide, it will detect deprecated stuff, ... 
+Will contain the same as running `check_code`. It will check the code against the styleguide, it will detect deprecated stuff, ... 
 
 Most warnings will be about CyclomaticComplexity or NestingLevel, you can't ignore them, but some of the reported methods are complicated for a reason.
 

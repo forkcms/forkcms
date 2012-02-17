@@ -132,13 +132,26 @@ class SpoonDatabase
 		{
 			try
 			{
-				// build dsn
-				if($this->port !== null) $dsn = $this->driver . ':host=' . $this->hostname . ';port=' . $this->port . ';dbname=' . $this->database;
-				else $dsn = $this->driver . ':host=' . $this->hostname . ';dbname=' . $this->database;
+				$dsn = $this->driver;
+				$dsn .= ':host=' . $this->hostname;
+				$dsn .= ';dbname=' . $this->database;
+				$dsn .= ';user=' . $this->username;
+				$dsn .= ';password=' . $this->password;
+
+				if($this->port !== null)
+				{
+					$dsn .= ';port=' . $this->port;
+				}
 
 				// create handler
 				$this->handler = new PDO($dsn, $this->username, $this->password);
 				$this->handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+				// mysql only option
+				if($this->driver == 'mysql')
+				{
+					$this->handler->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+				}
 			}
 
 			catch(PDOException $e)
@@ -146,9 +159,6 @@ class SpoonDatabase
 				throw new SpoonDatabaseException('A database connection could not be established.', 0, $this->password);
 			}
 		}
-
-		// set nasty option
-		$this->handler->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 	}
 
 
@@ -787,7 +797,7 @@ class SpoonDatabase
 			$subKeys = array_keys($actualValues[0]);
 
 			// prefix with table name
-			array_walk($subKeys, create_function('&$key', '$key = "' . $this->quoteName($table) . '.$key";'));
+			array_walk($subKeys, array($this, 'prefixTableNames'), $table);
 
 			// build query
 			$query .= implode(', ', $subKeys) . ') VALUES ';
@@ -835,7 +845,7 @@ class SpoonDatabase
 			$numFields = count($actualValues);
 
 			// prefix with table name
-			array_walk($keys, create_function('&$key', '$key = "' . $this->quoteName($table) . '.$key";'));
+			array_walk($keys, array($this, 'prefixTableNames'), $table);
 
 			// build query
 			$query .= implode(', ', $keys) . ') VALUES (';
@@ -900,6 +910,20 @@ class SpoonDatabase
 
 		// build & execute query
 		return $this->getRecords('OPTIMIZE TABLE ' . implode(', ', array_map(array($this, 'quoteName'), $tables)));
+	}
+
+
+	/**
+	 * Prefix table names.
+	 *
+	 * @param string $key The key to be prefixed.
+	 * @param string $value The value
+	 * @param string $table The table name to prefix the key with.
+	 * @return void
+	 */
+	protected function prefixTableNames(&$key, $value, $table)
+	{
+		$key = $this->quoteName($table) . '.' . $key;
 	}
 
 
