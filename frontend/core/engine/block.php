@@ -172,7 +172,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	public function getContent()
 	{
 		// set path to template if the widget didnt return any data
-		if($this->output === null) $this->output = $this->object->getContent();
+		if($this->output === null) return $this->object->getContent();
 
 		// return possible output
 		return $this->output;
@@ -439,7 +439,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	public function getContent()
 	{
 		// set path to template if the widget didnt return any data
-		if($this->output === null) $this->output = $this->object->getContent();
+		if($this->output === null) return $this->object->getContent();
 
 		// return possible output
 		return $this->output;
