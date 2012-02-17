@@ -343,6 +343,7 @@ class FrontendPage extends FrontendBaseObject
 							'blockContent' => $block['extra']->getContent()
 						);
 					}
+					else $positions[$position][$i] = $block;
 				}
 
 				// assign position to template
