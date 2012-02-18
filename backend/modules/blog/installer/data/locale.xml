@@ -256,7 +256,7 @@
         <translation language="es"><![CDATA[Número de artículos en los artículos recientes (lista) widget]]></translation>
       </item>
       <item type="message" name="ShowImageForm">
-        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding.]]></translation>
+        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding uploaden.]]></translation>
         <translation language="en"><![CDATA[The user can upload a file.]]></translation>
       </item>
       <item type="message" name="ShowOnlyItemsInCategory">
