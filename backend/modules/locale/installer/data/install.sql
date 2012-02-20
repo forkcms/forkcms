@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS `locale` (
  `name` varchar(255) NOT NULL,
  `value` text,
  `edited_on` datetime NOT NULL,
- PRIMARY KEY (`id`)
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `language` (`language`,`application`(20),`module`(20),`type`,`name`(100))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

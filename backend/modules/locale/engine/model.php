@@ -1229,29 +1229,21 @@ class BackendLocaleModel
 						$locale['value'] = $translation;
 						$locale['edited_on'] = $date;
 
-						// found a conflict, overwrite it with the imported translation
-						if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
+						// check if translation does not yet exist, or if the translation can be overridden
+						if(!in_array($application . $module . $type . $language . $name, $currentLocale) || $overwriteConflicts)
 						{
-							// statistics
-							$statistics['imported']++;
-
-							// overwrite
-							$db->update(
-								'locale',
-								$locale,
-								'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
-								array($application, $module, $type, $language, $name)
+							$db->execute(
+								'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)
+								 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+								 ON DUPLICATE KEY UPDATE user_id = ?, value = ?, edited_on = ?',
+								array(
+									$locale['user_id'], $locale['language'], $locale['application'], $locale['module'],
+									$locale['type'], $locale['name'], $locale['value'], $locale['edited_on'],
+									$locale['user_id'], $locale['value'], $locale['edited_on'])
 							);
-						}
 
-						// insert translation that doesnt exists yet
-						elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
-						{
 							// statistics
 							$statistics['imported']++;
-
-							// insert
-							$db->insert('locale', $locale);
 						}
 					}
 				}
