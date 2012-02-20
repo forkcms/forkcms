@@ -659,7 +659,6 @@
       </item>
       <item type="error" name="IdentifierExists">
         <translation language="nl"><![CDATA[This identifier already exists.]]></translation>
-        <translation language="nl"><![CDATA[This identifier already exists.]]></translation>
         <translation language="it"><![CDATA[Questo identificatore è già esistente.]]></translation>
         <translation language="ru"><![CDATA[Этот ИД уже есть.]]></translation>
         <translation language="zh"><![CDATA[这个鉴别器已经存在。]]></translation>
