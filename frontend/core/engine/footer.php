@@ -58,6 +58,10 @@ class FrontendFooter extends FrontendBaseObject
 					$locale = 'el_GR';
 					break;
 
+				case 'ja':
+					$locale = 'ja_JP';
+					break;
+
 				case 'sv':
 					$locale = 'sv_SE';
 					break;
