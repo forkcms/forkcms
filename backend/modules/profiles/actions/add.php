@@ -15,7 +15,7 @@
 class BackendProfilesAdd extends BackendBaseActionAdd
 {
 	/**
-	 * int
+	 * @var int
 	 */
 	private $id;
 
