@@ -79,6 +79,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				$this->related[] = $item;
 			}
 		}
+		
 
 		// loop entries
 		foreach($this->related as $id => $entry)
@@ -115,11 +116,11 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	private function getTags()
 	{
 		// get page id
-		$pageId = FrontendPage::getCurrentPageId();
+		$pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
 		// array of excluded records
 		$this->exclude[] = array('module' => 'pages', 'other_id' => $pageId);
-
+		
 		// get tags for page
 		$tags = (array) FrontendTagsModel::getForItem('pages', $pageId);
 		foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
@@ -132,19 +133,22 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		{
 			// set module class
 			$class = 'Frontend' . SpoonFilter::toCamelCase($block['module']) . 'Model';
+			
+			if(is_callable(array($class, 'getIdForTags')))
+			{
+				// get record for module
+				$record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->URL);
 
-			// get record for module
-			$record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->URL);
+				// check if record exists
+				if(!$record) continue;
 
-			// check if record exists
-			if(!$record) continue;
+				// add to excluded records
+				$this->exclude[] = array('module' => $block['module'], 'other_id' => $record['id']);
 
-			// add to excluded records
-			$this->exclude[] = array('module' => $block['module'], 'other_id' => $record['id']);
-
-			// get record's tags
-			$tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);
-			foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
+				// get record's tags
+				$tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);
+				foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
+			}
 		}
 	}
 

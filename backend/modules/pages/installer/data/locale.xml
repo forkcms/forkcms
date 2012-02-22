@@ -2,6 +2,17 @@
 <locale>
   <backend>
     <pages>
+        <item type="label" name="Navigation">
+          <translation language="nl"><![CDATA[navigatie]]></translation>
+          <translation language="en"><![CDATA[navigation]]></translation>
+          <translation language="it"><![CDATA[]]></translation>
+          <translation language="ru"><![CDATA[]]></translation>
+          <translation language="cn"><![CDATA[]]></translation>
+          <translation language="de"><![CDATA[]]></translation>
+          <translation language="fr"><![CDATA[]]></translation>
+          <translation language="hu"><![CDATA[]]></translation>
+          <translation language="es"><![CDATA[]]></translation>
+        </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add page]]></translation>
@@ -474,4 +485,19 @@
       </item>
     </pages>
   </backend>
+	<frontend>
+		<core>
+			<item type="label" name="Parent">
+				<translation language="nl"><![CDATA[ouder]]></translation>
+				<translation language="en"><![CDATA[parent]]></translation>
+				<translation language="it"><![CDATA[]]></translation>
+				<translation language="ru"><![CDATA[]]></translation>
+				<translation language="cn"><![CDATA[]]></translation>
+				<translation language="de"><![CDATA[]]></translation>
+				<translation language="fr"><![CDATA[]]></translation>
+				<translation language="hu"><![CDATA[]]></translation>
+				<translation language="es"><![CDATA[]]></translation>
+			</item>
+		</core>
+	</frontend>
 </locale>

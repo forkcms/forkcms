@@ -64,7 +64,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
 		$this->frm->addText('name', $this->record['name']);
-		$this->frm->addText('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
+		$this->frm->addTextarea('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
 		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $this->record['language']);
 	}
 
