@@ -57,13 +57,13 @@ class MinifyCSS extends Minify
 			\s+
 
 				# (optional) open url()
-				(?<url>url\()?
+				(?P<url>url\()?
 
 					# open path enclosure
-					(?<quotes>["\'])
+					(?P<quotes>["\'])
 
 						# fetch path
-						(?<path>
+						(?P<path>
 
 							# do not fetch data uris
 							(?!(
@@ -71,7 +71,7 @@ class MinifyCSS extends Minify
 								data:
 							))
 
-							.+
+							.+?
 						)
 
 					# close path enclosure
@@ -84,7 +84,7 @@ class MinifyCSS extends Minify
 				\s*
 
 				# (optional) media statement(s)
-				(?<media>.*?)
+				(?P<media>.*?)
 
 				# (optional) trailing whitespace
 				\s*
@@ -401,49 +401,16 @@ class MinifyCSS extends Minify
 		# enable possiblity of giving multiple subpatterns same name
 		(?J)
 
-		# @import "xxx" or @import url(xxx)
-
-			# import statement
-			@import
-
-			# whitespace
-			\s+
-
-				# (optional) open url()
-				(?<url>url\()?
-
-					# open path enclosure
-					(?<quotes>["\'])
-
-						# fetch path
-						(?<path>
-
-							# do not fetch data uris
-							(?!(
-								["\']?
-								data:
-							))
-
-							.+
-						)
-
-					# close path enclosure
-					(?P=quotes)
-
-				# (optional) close url()
-				(?(url)\))
-		|
-
 		# url(xxx)
 
 			# open url()
 			url\(
 
 				# open path enclosure
-				(?<quotes>["\'])?
+				(?P<quotes>["\'])?
 
 					# fetch path
-					(?<path>
+					(?P<path>
 
 						# do not fetch data uris
 						(?!(
@@ -451,7 +418,7 @@ class MinifyCSS extends Minify
 							data:
 						))
 
-						.+
+						.+?
 					)
 
 				# close path enclosure
@@ -459,6 +426,36 @@ class MinifyCSS extends Minify
 
 			# close url()
 			\)
+
+		|
+
+		# @import "xxx"
+
+			# import statement
+			@import
+
+			# whitespace
+			\s+
+
+				# we don\'t have to check for @import url(), because the condition above will already catch these
+
+				# open path enclosure
+				(?P<quotes>["\'])
+
+					# fetch path
+					(?P<path>
+
+						# do not fetch data uris
+						(?!(
+							["\']?
+							data:
+						))
+
+						.+?
+					)
+
+				# close path enclosure
+				(?P=quotes)
 
 		/ix';
 

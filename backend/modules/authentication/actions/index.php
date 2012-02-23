@@ -159,8 +159,17 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				// get all modules
 				$modules = array_diff(BackendModel::getModules(), $filter);
 
-				// loop through modules and break on first allowed module
-				foreach($modules as $module) if(BackendAuthentication::isAllowedModule($module)) break;
+				// redirect to the dashboard module if possible
+				if(BackendAuthentication::isAllowedModule('dashboard')) $module = 'dashboard';
+
+				// if not allowed in the dashboard, redirect to the first allowed module
+				else
+				{
+					foreach($modules as $module)
+					{
+						if(BackendAuthentication::isAllowedModule($module)) break;
+					}
+				}
 
 				// redirect to the correct URL (URL the user was looking for or fallback)
 				$this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module)));
