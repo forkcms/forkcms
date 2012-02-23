@@ -61,7 +61,8 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 		$this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
 
 
-		if($this->isGod){
+		if($this->isGod)
+		{
 			$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
 			$this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
 
@@ -102,7 +103,8 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 			$this->frm->getField('mailer_reply_to_name')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('mailer_reply_to_email')->isEmail(BL::err('EmailIsInvalid'));
 
-			if($this->isGod){
+			if($this->isGod)
+			{
 				// SMTP type was chosen
 				if($this->frm->getField('mailer_type')->getValue() == 'smtp')
 				{
@@ -121,7 +123,8 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 				BackendModel::setModuleSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
 
 				
-				if($this->isGod){
+				if($this->isGod)
+				{
 					BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
 
 					// smtp settings
