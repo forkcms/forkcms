@@ -226,8 +226,47 @@ class FrontendNavigation extends FrontendBaseObject
 			self::$navigation[$language] = $navigation;
 		}
 
+		self::$navigation[$language] = self::applyPermissions(self::$navigation[$language]);
+
 		// return from cache
 		return self::$navigation[$language];
+	}
+
+	/**
+	 * Apply the permissions for the current user to the navigation.
+	 * It returns an array with the new navigation.
+	 *
+	 * @param array $navigation The navigation (for a certain language).
+	 * @return array
+	 */
+	private static function applyPermissions($navigation)
+	{
+		// loop the levels
+		foreach($navigation as &$level)
+		{
+			// loop parents
+			foreach($level as $parent => &$children)
+			{
+				// user has has no permissions to this parent page? (and it's not the root)
+				if($parent != 0 && !FrontendProfilesPermissions::isAllowed('pages', $parent))
+				{
+					unset($level[$parent]);
+					continue;
+				}
+
+				// loop children
+				foreach($children as $pageId => $child)
+				{
+					// user has no permissions to this page?
+					if(!FrontendProfilesPermissions::isAllowed('pages', $pageId))
+					{
+						unset($children[$pageId]);
+					}
+				}
+			}
+		}
+
+		return $navigation;
 	}
 
 	/**
@@ -333,7 +372,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$tpl->assign('navigation', $navigation[$type][$parentId]);
 
 		$templatePath = FRONTEND_PATH . '/core/layout/templates/' . (string) $navigationTpl;
-		
+
 		// return parsed content
 		return $tpl->getContent($templatePath, true, true);
 	}
