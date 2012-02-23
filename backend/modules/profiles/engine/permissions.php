@@ -75,6 +75,31 @@ class BackendProfilesPermissions
 	/**
 	 * @todo: doc
 	 */
+	private function isSecured()
+	{
+		$db = BackendModel::getDB();
+
+		$allowed = $db->getVar(
+			'SELECT i.allowed
+			 FROM profiles_groups_permissions AS i
+			 WHERE i.module = ? AND i.other_id = ? AND i.group_id = ?',
+			array($this->module, $this->otherId, 0)
+		);
+
+		if($allowed == null)
+		{
+			return false;
+		}
+
+		else
+		{
+			return $allowed == 'Y';
+		}
+	}
+
+	/**
+	 * @todo: doc
+	 */
 	private function insertPermission($groupId, $allowed)
 	{
 		$db = BackendModel::getDB();
@@ -91,7 +116,7 @@ class BackendProfilesPermissions
 	{
 		if(!empty($this->groups))
 		{
-			$this->frm->addCheckbox('is_secured', !empty($this->permissions));
+			$this->frm->addCheckbox('is_secured', $this->isSecured());
 			$this->frm->addMultiCheckbox('profile_groups', $this->groups, $this->permissions);
 		}
 	}
@@ -163,7 +188,7 @@ class BackendProfilesPermissions
 		 */
 		$this->insertPermission(
 			null,
-			!empty($allowedGroups)
+			$this->frm->getField('is_secured')->getChecked()
 		);
 	}
 
