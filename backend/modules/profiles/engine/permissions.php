@@ -24,6 +24,13 @@ class BackendProfilesPermissions
 	protected $frm;
 
 	/**
+	 * Is the profiles module installed?
+	 *
+	 * @var bool
+	 */
+	protected $isInstalled;
+
+	/**
 	 * The module.
 	 *
 	 * @var string
@@ -51,25 +58,29 @@ class BackendProfilesPermissions
 	 */
 	public function __construct(BackendForm $form, $module, $otherId = null)
 	{
-		// @todo check if the profiles module is installed and active.
+		// is the profiles module installed?
+		$this->isInstalled = in_array('profiles', BackendModel::getModules());
 
-		// set the module
-		$this->module = (string) $module;
-
-		// set the form
-		$this->frm = $form;
-
-		if($otherId !== null)
+		if($this->isInstalled)
 		{
-			// set the other id
-			$this->otherId = (int) $otherId;
+			// set the module
+			$this->module = (string) $module;
 
-			// load the existing permissions
-			$this->loadPermissions();
+			// set the form
+			$this->frm = $form;
+
+			if($otherId !== null)
+			{
+				// set the other id
+				$this->otherId = (int) $otherId;
+
+				// load the existing permissions
+				$this->loadPermissions();
+			}
+
+			$this->loadProfileGroups();
+			$this->loadForm();
 		}
-
-		$this->loadProfileGroups();
-		$this->loadForm();
 	}
 
 	/**
@@ -152,49 +163,52 @@ class BackendProfilesPermissions
 
 	public function save($otherId)
 	{
-		$db = BackendModel::getDB();
-		$this->otherId = (int) $otherId;
-
-		// get the groups
-		if($this->frm->getField('is_secured')->getChecked())
+		if($this->isInstalled)
 		{
-			$allowedGroups = (array) $this->frm->getField('profile_groups')->getChecked();
-		}
+			$db = BackendModel::getDB();
+			$this->otherId = (int) $otherId;
 
-		else
-		{
-			$allowedGroups = array();
-		}
+			// get the groups
+			if($this->frm->getField('is_secured')->getChecked())
+			{
+				$allowedGroups = (array) $this->frm->getField('profile_groups')->getChecked();
+			}
 
-		// delete existing permissions
-		$db->delete(
-			'profiles_groups_permissions',
-			'module = ? AND other_id = ?',
-			array($this->module, $this->otherId)
-		);
+			else
+			{
+				$allowedGroups = array();
+			}
 
-		// insert the new permissions
-		foreach($this->groups as $group)
-		{
+			// delete existing permissions
+			$db->delete(
+				'profiles_groups_permissions',
+				'module = ? AND other_id = ?',
+				array($this->module, $this->otherId)
+			);
+
+			// insert the new permissions
+			foreach($this->groups as $group)
+			{
+				$this->insertPermission(
+					$group['value'],
+					in_array($group['value'], $allowedGroups)
+				);
+			}
+
+			/*
+			 * Insert a permission for the "null-group". By doing this, the item will still have
+			 * the correct security settings, even after the profile groups are deleted.
+			 */
 			$this->insertPermission(
-				$group['value'],
-				in_array($group['value'], $allowedGroups)
+				null,
+				$this->frm->getField('is_secured')->getChecked()
 			);
 		}
-
-		/*
-		 * Insert a permission for the "null-group". By doing this, the item will still have
-		 * the correct security settings, even after the profile groups are deleted.
-		 */
-		$this->insertPermission(
-			null,
-			$this->frm->getField('is_secured')->getChecked()
-		);
 	}
 
 	public function validate()
 	{
-		if($this->frm->isSubmitted())
+		if($this->isInstalled && $this->frm->isSubmitted())
 		{
 			if($this->frm->getField('is_secured')->getChecked())
 			{

@@ -16,6 +16,13 @@
 class FrontendProfilesPermissions
 {
 	/**
+	 * Is the profiles module installed?
+	 *
+	 * @var bool
+	 */
+	private static $isInstalled;
+
+	/**
 	 * The permissions.
 	 *
 	 * @var array
@@ -23,7 +30,7 @@ class FrontendProfilesPermissions
 	private static $permissions = array();
 
 	/**
-	 * The profile. If it is false, it means that the user isn't logged in.
+	 * The profile objet. If it is false, it means that the user isn't logged in.
 	 *
 	 * @var mixed
 	 */
@@ -39,6 +46,12 @@ class FrontendProfilesPermissions
 	 */
 	public static function isAllowed($module, $id)
 	{
+		// if the profiles module is not installed, the user is certainly allowed
+		if(!self::isInstalled())
+		{
+			return true;
+		}
+
 		$module = (string) $module;
 		$id = (int) $id;
 
@@ -66,6 +79,21 @@ class FrontendProfilesPermissions
 
 		// if we make it to this point, the user is not allowed
 		return false;
+	}
+
+	/**
+	 * Checks if the profiles module is installed
+	 *
+	 * @return bool
+	 */
+	private static function isInstalled()
+	{
+		if(!self::$isInstalled)
+		{
+			self::$isInstalled = in_array('profiles', FrontendModel::getModules());
+		}
+
+		return self::$isInstalled;
 	}
 
 	/**
