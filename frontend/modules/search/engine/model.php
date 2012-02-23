@@ -326,6 +326,7 @@ class FrontendSearchModel
 		// prepare to send to modules
 		$moduleResults = array();
 
+		// @todo: permissions is allowed?
 		// loop the resultset
 		foreach($searchResults as $searchResult) $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
 
