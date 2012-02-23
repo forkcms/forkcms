@@ -1,3 +1,10 @@
+3.2.7 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Tags: fixed call to deprecated (removed) method, which caused "related" widget to malfunction.
+
+
 3.2.6 (2012-02-21)
 --
 Improvements:
