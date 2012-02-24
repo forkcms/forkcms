@@ -10,7 +10,7 @@
 /**
  * This class represents the permissions-object.
  * It will handle some stuff in the backend, concerning the permissions of the profiles
- * in the frontend. @todo: better explanation?
+ * in the frontend.
  *
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
@@ -84,7 +84,9 @@ class BackendProfilesPermissions
 	}
 
 	/**
-	 * @todo: doc
+	 * Is the current item secured?
+	 *
+	 * @return bool
 	 */
 	private function isSecured()
 	{
@@ -109,7 +111,10 @@ class BackendProfilesPermissions
 	}
 
 	/**
-	 * @todo: doc
+	 * Insert a permission into the database.
+	 *
+	 * @param int $groupId
+	 * @param bool $allowed
 	 */
 	private function insertPermission($groupId, $allowed)
 	{
@@ -161,6 +166,11 @@ class BackendProfilesPermissions
 		);
 	}
 
+	/**
+	 * Save the permissions.
+	 *
+	 * @param $otherId The other id that should be used for saving the permissions.
+	 */
 	public function save($otherId)
 	{
 		if($this->isInstalled)
