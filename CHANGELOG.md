@@ -1,5 +1,9 @@
 3.2.7 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.18
+
 Bugfixes:
 
 * Tags: fixed call to deprecated (removed) method, which caused "related" widget to malfunction.
