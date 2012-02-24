@@ -1733,7 +1733,7 @@ jsBackend.permissions =
 		if($tabPermissions.length > 0)
 		{
 			$checkbox = $('#isSecured', $tabPermissions);
-			$container = $('#profileGroupsContainer', $tabPermissions);
+			$container = $('#permissionsSettingsContainer', $tabPermissions);
 			
 			// check if the needed elements exist
 			if($checkbox.length> 0 && $checkbox.length > 0)

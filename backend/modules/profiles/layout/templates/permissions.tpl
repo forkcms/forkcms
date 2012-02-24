@@ -10,7 +10,11 @@
 		</p>
 
 		{option:profileGroups}
-			<div id="profileGroupsContainer">
+			<div id="permissionsSettingsContainer">
+				<p>
+					<label for="showInNavigation">{$chkShowInNavigation} {$msgShowInNavigation}</label>
+				</p>
+
 				<p><label>{$lblOnlyFor|ucfirst}</label></p>
 				<ul class="inputList">
 					{iteration:profileGroups}

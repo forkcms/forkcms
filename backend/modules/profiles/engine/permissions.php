@@ -45,7 +45,7 @@ class BackendProfilesPermissions
 	protected $otherId;
 
 	/**
-	 * The current permissions.
+	 * The permssion for the current item.
 	 *
 	 * @var array
 	 */
@@ -83,57 +83,13 @@ class BackendProfilesPermissions
 		}
 	}
 
-	/**
-	 * Is the current item secured?
-	 *
-	 * @return bool
-	 */
-	private function isSecured()
-	{
-		$db = BackendModel::getDB();
-
-		$allowed = $db->getVar(
-			'SELECT i.allowed
-			 FROM profiles_groups_permissions AS i
-			 WHERE i.module = ? AND i.other_id = ? AND i.group_id = ?',
-			array($this->module, $this->otherId, 0)
-		);
-
-		if($allowed == null)
-		{
-			return false;
-		}
-
-		else
-		{
-			return $allowed == 'Y';
-		}
-	}
-
-	/**
-	 * Insert a permission into the database.
-	 *
-	 * @param int $groupId
-	 * @param bool $allowed
-	 */
-	private function insertPermission($groupId, $allowed)
-	{
-		$db = BackendModel::getDB();
-
-		$permission['module'] = $this->module;
-		$permission['other_id'] = $this->otherId;
-		$permission['group_id'] = (int) $groupId;
-		$permission['allowed'] = $allowed ? 'Y' : 'N';
-
-		$db->insert('profiles_groups_permissions', $permission);
-	}
-
 	protected function loadForm()
 	{
 		if(!empty($this->groups))
 		{
-			$this->frm->addCheckbox('is_secured', $this->isSecured());
-			$this->frm->addMultiCheckbox('profile_groups', $this->groups, $this->permissions);
+			$this->frm->addCheckbox('is_secured', $this->permissions['is_secured']);
+			$this->frm->addCheckbox('show_in_navigation', $this->permissions['show_in_navigation']);
+			$this->frm->addMultiCheckbox('profile_groups', $this->groups, $this->permissions['groups']);
 		}
 	}
 
@@ -144,12 +100,26 @@ class BackendProfilesPermissions
 	{
 		$db = BackendModel::getDB();
 
-		$this->permissions = (array) $db->getColumn(
-			'SELECT i.group_id
+		$data = $db->getVar(
+			'SELECT i.data
 			 FROM profiles_groups_permissions AS i
-			 WHERE i.module = ? AND i.other_id = ? AND i.allowed = ?',
-			array($this->module, $this->otherId, 'Y')
+			 WHERE i.module = ? AND i.other_id = ?',
+			array($this->module, $this->otherId)
 		);
+
+		// anything found?
+		if($data !== null)
+		{
+			$this->permissions = unserialize($data);
+		}
+
+		// nothing found, create default values
+		else
+		{
+			$this->permissions['is_secured'] = false;
+			$this->permissions['groups'] = array();
+			$this->permissions['show_in_navigation'] = false;
+		}
 	}
 
 	/**
@@ -169,7 +139,7 @@ class BackendProfilesPermissions
 	/**
 	 * Save the permissions.
 	 *
-	 * @param $otherId The other id that should be used for saving the permissions.
+	 * @param int $otherId The other id that should be used for saving the permissions.
 	 */
 	public function save($otherId)
 	{
@@ -178,40 +148,27 @@ class BackendProfilesPermissions
 			$db = BackendModel::getDB();
 			$this->otherId = (int) $otherId;
 
+			// build the permissions
+			$permission['module'] = $this->module;
+			$permission['other_id'] = $this->otherId;
+			$permission['data']['is_secured'] = $this->frm->getField('is_secured')->getChecked();
+			$permission['data']['show_in_navigation'] = $this->frm->getField('show_in_navigation')->getChecked();
+			$permission['data']['groups'] = array();
+
 			// get the groups
 			if($this->frm->getField('is_secured')->getChecked())
 			{
-				$allowedGroups = (array) $this->frm->getField('profile_groups')->getChecked();
+				$permission['data']['groups'] = (array) $this->frm->getField('profile_groups')->getChecked();
 			}
 
-			else
-			{
-				$allowedGroups = array();
-			}
+			$permission['data'] = serialize($permission['data']);
 
-			// delete existing permissions
-			$db->delete(
-				'profiles_groups_permissions',
-				'module = ? AND other_id = ?',
-				array($this->module, $this->otherId)
-			);
-
-			// insert the new permissions
-			foreach($this->groups as $group)
-			{
-				$this->insertPermission(
-					$group['value'],
-					in_array($group['value'], $allowedGroups)
-				);
-			}
-
-			/*
-			 * Insert a permission for the "null-group". By doing this, the item will still have
-			 * the correct security settings, even after the profile groups are deleted.
-			 */
-			$this->insertPermission(
-				null,
-				$this->frm->getField('is_secured')->getChecked()
+			// insert the permission, or update if it already exists
+			$db->execute(
+				'INSERT INTO profiles_groups_permissions(module, other_id, data)
+				 VALUES(:module, :other_id, :data)
+				 ON DUPLICATE KEY UPDATE data = :data',
+				$permission
 			);
 		}
 	}

@@ -248,7 +248,7 @@ class FrontendNavigation extends FrontendBaseObject
 			foreach($level as $parent => &$children)
 			{
 				// user has has no permissions to this parent page? (and it's not the root)
-				if($parent != 0 && !FrontendProfilesPermissions::isAllowed('pages', $parent))
+				if($parent != 0 && !FrontendProfilesPermissions::isAllowed('pages', $parent, true))
 				{
 					unset($level[$parent]);
 					continue;
@@ -258,7 +258,7 @@ class FrontendNavigation extends FrontendBaseObject
 				foreach($children as $pageId => $child)
 				{
 					// user has no permissions to this page?
-					if(!FrontendProfilesPermissions::isAllowed('pages', $pageId))
+					if(!FrontendProfilesPermissions::isAllowed('pages', $pageId, true))
 					{
 						unset($children[$pageId]);
 					}

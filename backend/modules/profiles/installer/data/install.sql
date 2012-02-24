@@ -44,9 +44,8 @@ CREATE TABLE IF NOT EXISTS `profiles_settings` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `profiles_groups_permissions` (
-  `group_id` int(11) NOT NULL,
   `module` varchar(255) NOT NULL,
   `other_id` int(11) NOT NULL,
-  `allowed` ENUM('Y', 'N') NOT NULL,
-  PRIMARY KEY (`group_id`,`module`,`other_id`)
+  `data` TEXT NOT NULL,
+  PRIMARY KEY (`module`,`other_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

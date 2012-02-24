@@ -42,9 +42,10 @@ class FrontendProfilesPermissions
 	 *
 	 * @param string $module The module where the item belongs to.
 	 * @param int $id The id where the item belongs to.
+	 * @param bool[optional] $checkNavigation Should we also check if the user is allowed to see the item in the navigation?
 	 * @return bool
 	 */
-	public static function isAllowed($module, $id)
+	public static function isAllowed($module, $id, $checkNavigation = false)
 	{
 		// if the profiles module is not installed, the user is certainly allowed
 		if(!self::isInstalled())
@@ -59,15 +60,22 @@ class FrontendProfilesPermissions
 		self::loadProfile();
 
 		// is the item secured?
-		if(isset(self::$permissions[$module][$id]) && self::$permissions[$module][$id][0] == 'Y')
+		if(isset(self::$permissions[$module][$id]) && self::$permissions[$module][$id]['is_secured'])
 		{
+			// user is logged in?
 			if(self::$profile)
 			{
 				// is the user in one of the allowed groups?
-				foreach(self::$permissions[$module][$id] as $groupId => $allowed)
+				foreach(self::$permissions[$module][$id]['groups'] as $group)
 				{
-					if($allowed == 'Y' && self::$profile->isInGroup($groupId)) return true;
+					if(self::$profile->isInGroup($group)) return true;
 				}
+			}
+
+			// the user is now allowded, should we check if the user allowed to see the item in the navigation?
+			if($checkNavigation)
+			{
+				return self::$permissions[$module][$id]['show_in_navigation'];
 			}
 		}
 
@@ -109,25 +117,22 @@ class FrontendProfilesPermissions
 
 			// load permissions from database
 			$permissions = (array) $db->getRecords(
-				'SELECT i.*
+				'SELECT i.other_id, i.data
 				 FROM profiles_groups_permissions AS i
 				 WHERE i.module = ?',
-				array((string) $module)
+				array((string) $module),
+				'other_id'
 			);
 
 			// any permissions found?
 			if(!empty($permissions))
 			{
-				// sort and group the permissions
+				// create an array with the other id as key and the data as values
 				$sorted = array();
-				foreach($permissions as $permission)
+				foreach($permissions as $otherId => $permission)
 				{
-					if(!isset($sorted[$permission['other_id']]))
-					{
-						$sorted[$permission['other_id']] = array();
-					}
-
-					$sorted[$permission['other_id']][$permission['group_id']] = $permission['allowed'];
+					// unserialize the data
+					$sorted[$otherId] = unserialize($permission['data']);
 				}
 
 				self::$permissions[$module] = $sorted;
