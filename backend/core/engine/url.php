@@ -285,9 +285,9 @@ class BackendURL
 	/**
 	 * Set the current action
 	 *
-	 * @param string $action The action to set.
+	 * @param string $value The action to set.
 	 */
-	private function setAction($action)
+	private function setAction($value)
 	{
 		/**
 		 * For security reasons, only accept actions names that
@@ -295,12 +295,12 @@ class BackendURL
 		 * anything else than an alphabetical, numeric or
 		 * underscore in the name.
 		 */
-		if(SpoonFilter::isValidAgainstRegexp('/([^a-zA-Z0-9_])/', $action))
+		if(SpoonFilter::isValidAgainstRegexp('/([^a-zA-Z0-9_])/', $value))
 		{
-			throw new BackendException('This is an invalid action name.');
+			throw new BackendException('This (' . $value . ') is an invalid action name.');
 		}
 
-		$this->action = (string) $action;
+		$this->action = (string) $value;
 	}
 
 	/**
@@ -343,20 +343,20 @@ class BackendURL
 	/**
 	 * Set the current module
 	 *
-	 * @param string $module The module to set.
+	 * @param string $value The module to set.
 	 */
-	public function setModule($module)
+	public function setModule($value)
 	{
 		/**
 		 * For security reasons, only accept module names that
 		 * are installed module names.
 		 */
-		if(!in_array($module, BackendModel::getModules()))
+		if(!in_array($value, BackendModel::getModules()))
 		{
-			throw new BackendException('This module does not exist.');
+			throw new BackendException('This module (' . $value . ') does not exist.');
 		}
 
-		$this->module = (string) $module;
+		$this->module = (string) $value;
 	}
 
 	/**
