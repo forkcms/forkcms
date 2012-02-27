@@ -289,16 +289,7 @@ class BackendURL
 	 */
 	private function setAction($value)
 	{
-		/**
-		 * For security reasons, only accept actions names that
-		 * match this regexp. It will be triggered if there is
-		 * anything else than an alphabetical, numeric or
-		 * underscore in the name.
-		 */
-		if(SpoonFilter::isValidAgainstRegexp('/([^a-zA-Z0-9_])/', $value))
-		{
-			throw new BackendException('This (' . $value . ') is an invalid action name.');
-		}
+		BackendModel::validateActionName($value);
 
 		$this->action = (string) $value;
 	}
@@ -347,14 +338,7 @@ class BackendURL
 	 */
 	public function setModule($value)
 	{
-		/**
-		 * For security reasons, only accept module names that
-		 * are installed module names.
-		 */
-		if(!in_array($value, BackendModel::getModules()))
-		{
-			throw new BackendException('This module (' . $value . ') does not exist.');
-		}
+		BackendModel::validateModuleName($value);
 
 		$this->module = (string) $value;
 	}

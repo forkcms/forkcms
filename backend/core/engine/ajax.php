@@ -103,6 +103,8 @@ class BackendAJAX
 	 */
 	public function setAction($value)
 	{
+		BackendModel::validateActionName($value);
+
 		$this->action = (string) $value;
 	}
 

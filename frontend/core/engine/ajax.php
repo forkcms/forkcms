@@ -97,6 +97,8 @@ class FrontendAJAX
 	 */
 	public function setAction($value)
 	{
+		FrontendModel::validateActionName($value);
+
 		$this->action = (string) $value;
 	}
 
@@ -144,6 +146,8 @@ class FrontendAJAX
 	 */
 	public function setModule($value)
 	{
+		FrontendModel::validateModuleName($value);
+
 		// set property
 		$this->module = (string) $value;
 	}
