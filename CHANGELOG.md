@@ -6,6 +6,7 @@ Improvements:
 
 Bugfixes:
 
+* Core: fixed issue where media-embed would always embed the media in the last editor, not the selected one.
 * Tags: fixed call to deprecated (removed) method, which caused "related" widget to malfunction.
 
 

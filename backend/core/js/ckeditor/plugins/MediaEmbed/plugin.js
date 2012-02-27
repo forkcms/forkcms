@@ -8,7 +8,7 @@
         init: function( editor )
         {
            var me = this;
-           CKEDITOR.dialog.add( 'MediaEmbedDialog', function ()
+           CKEDITOR.dialog.add( 'MediaEmbedDialog', function (editor)
            {
               return {
                  title : 'Embed Media Dialog',
