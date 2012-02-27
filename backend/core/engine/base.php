@@ -142,7 +142,7 @@ class BackendBaseAction
 
 		// store var so we don't have to call this function twice
 		$var = $this->getParameter('var', 'array');
-		if($var !== null) array_map('strip_tags', $var);
+		if($var !== null) $var = array_map('strip_tags', $var);
 
 		// is there a report to show?
 		if($this->getParameter('report') !== null)
