@@ -138,7 +138,7 @@ class BackendCronjob
 	 */
 	public function setAction($value)
 	{
-		$value = (string) $value;
+		$value = preg_replace('/([^a-zA-Z0-9_])/', '', (string) $value);
 
 		// validate
 		if($value == '')
@@ -184,7 +184,7 @@ class BackendCronjob
 	 */
 	public function setModule($value)
 	{
-		$value = (string) $value;
+		$value = preg_replace('/([^a-zA-Z0-9_])/', '', (string) $value);
 
 		// validate
 		if($value == '')
