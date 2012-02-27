@@ -15,6 +15,13 @@
 class BackendSettingsEmail extends BackendBaseActionIndex
 {
 	/**
+	 * Is the user a god user?
+	 *
+	 * @var bool
+	 */
+	protected $isGod = false;
+
+	/**
 	 * The form instance
 	 *
 	 * @var	BackendForm
@@ -38,11 +45,11 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 	 */
 	private function loadForm()
 	{
+		$this->isGod = BackendAuthentication::getUser()->isGod();
+
 		$this->frm = new BackendForm('settingsEmail');
 
 		// email settings
-		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
-		$this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
 		$mailerFrom = BackendModel::getModuleSetting('core', 'mailer_from');
 		$this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
 		$this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
@@ -53,11 +60,20 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 		$this->frm->addText('mailer_reply_to_name', (isset($mailerReplyTo['name'])) ? $mailerReplyTo['name'] : '');
 		$this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
 
-		// smtp settings
-		$this->frm->addText('smtp_server', BackendModel::getModuleSetting('core', 'smtp_server', ''));
-		$this->frm->addText('smtp_port', BackendModel::getModuleSetting('core', 'smtp_port', 25));
-		$this->frm->addText('smtp_username', BackendModel::getModuleSetting('core', 'smtp_username', ''));
-		$this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('core', 'smtp_password', ''));
+
+		if($this->isGod)
+		{
+			$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
+			$this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
+
+			// smtp settings
+			$this->frm->addText('smtp_server', BackendModel::getModuleSetting('core', 'smtp_server', ''));
+			$this->frm->addText('smtp_port', BackendModel::getModuleSetting('core', 'smtp_port', 25));
+			$this->frm->addText('smtp_username', BackendModel::getModuleSetting('core', 'smtp_username', ''));
+			$this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('core', 'smtp_password', ''));
+		}
+
+		$this->tpl->assign('isGod', $this->isGod);
 	}
 
 	/**
@@ -87,32 +103,41 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 			$this->frm->getField('mailer_reply_to_name')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('mailer_reply_to_email')->isEmail(BL::err('EmailIsInvalid'));
 
-			// SMTP type was chosen
-			if($this->frm->getField('mailer_type')->getValue() == 'smtp')
+			if($this->isGod)
 			{
-				// server & port are required
-				$this->frm->getField('smtp_server')->isFilled(BL::err('FieldIsRequired'));
-				$this->frm->getField('smtp_port')->isFilled(BL::err('FieldIsRequired'));
+				// SMTP type was chosen
+				if($this->frm->getField('mailer_type')->getValue() == 'smtp')
+				{
+					// server & port are required
+					$this->frm->getField('smtp_server')->isFilled(BL::err('FieldIsRequired'));
+					$this->frm->getField('smtp_port')->isFilled(BL::err('FieldIsRequired'));
+				}
 			}
-
+			
 			// no errors ?
 			if($this->frm->isCorrect())
 			{
 				// e-mail settings
-				BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
 				BackendModel::setModuleSetting('core', 'mailer_from', array('name' => $this->frm->getField('mailer_from_name')->getValue(), 'email' => $this->frm->getField('mailer_from_email')->getValue()));
 				BackendModel::setModuleSetting('core', 'mailer_to', array('name' => $this->frm->getField('mailer_to_name')->getValue(), 'email' => $this->frm->getField('mailer_to_email')->getValue()));
 				BackendModel::setModuleSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
 
-				// smtp settings
-				BackendModel::setModuleSetting('core', 'smtp_server', $this->frm->getField('smtp_server')->getValue());
-				BackendModel::setModuleSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
-				BackendModel::setModuleSetting('core', 'smtp_username', $this->frm->getField('smtp_username')->getValue());
-				BackendModel::setModuleSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
+				
+				if($this->isGod)
+				{
+					BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
 
+					// smtp settings
+					BackendModel::setModuleSetting('core', 'smtp_server', $this->frm->getField('smtp_server')->getValue());
+					BackendModel::setModuleSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
+					BackendModel::setModuleSetting('core', 'smtp_username', $this->frm->getField('smtp_username')->getValue());
+					BackendModel::setModuleSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
+				}
+			
 				// assign report
 				$this->tpl->assign('report', true);
 				$this->tpl->assign('reportMessage', BL::msg('Saved'));
+				$this->tpl->assign('isGod', $this->isGod);
 			}
 		}
 	}
