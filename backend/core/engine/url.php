@@ -351,7 +351,7 @@ class BackendURL
 		 * For security reasons, only accept module names that
 		 * are installed module names.
 		 */
-		if(!in_array($module, FrontendModel::getModules()))
+		if(!in_array($module, BackendModel::getModules()))
 		{
 			throw new BackendException('This module does not exist.');
 		}
