@@ -353,9 +353,9 @@ class BackendURL
 		 * anything else than an alphabetical, numeric or
 		 * underscore in the name.
 		 */
-		if(SpoonFilter::isValidAgainstRegexp('/([^a-zA-Z0-9_])/', $module))
+		if(!in_array($module, FrontendModel::getModules()))
 		{
-			throw new BackendException('This is an invalid module name.');
+			throw new BackendException('This module does not exist.');
 		}
 
 		$this->module = (string) $module;
