@@ -349,9 +349,7 @@ class BackendURL
 	{
 		/**
 		 * For security reasons, only accept module names that
-		 * match this regexp. It will be triggered if there is
-		 * anything else than an alphabetical, numeric or
-		 * underscore in the name.
+		 * are installed module names.
 		 */
 		if(!in_array($module, FrontendModel::getModules()))
 		{
