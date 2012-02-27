@@ -964,13 +964,16 @@ class FrontendModel
 	 */
 	public static function validateModuleName($value)
 	{
-		/**
-		 * For security reasons, only accept module names that
-		 * are installed module names.
-		 */
-		if(!in_array($value, FrontendModel::getModules()))
+		if($value != '')
 		{
-			throw new BackendException('This module (' . $value . ') does not exist.');
+			/**
+			 * For security reasons, only accept module names that
+			 * are installed module names.
+			 */
+			if(!in_array($value, FrontendModel::getModules()))
+			{
+				throw new BackendException('This module (' . $value . ') does not exist.');
+			}
 		}
 	}
 }

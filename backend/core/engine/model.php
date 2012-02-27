@@ -1277,14 +1277,16 @@ class BackendModel
 	 */
 	public static function validateModuleName($value)
 	{
-		/**
-		 * For security reasons, only accept module names that
-		 * are installed module names.
-		 */
-		if(!in_array($value, BackendModel::getModules()))
+		if($value != '')
 		{
-			throw new BackendException('This module (' . $value . ') does not exist.');
+			/**
+			 * For security reasons, only accept module names that
+			 * are installed module names.
+			 */
+			if(!in_array($value, BackendModel::getModules()))
+			{
+				throw new BackendException('This module (' . $value . ') does not exist.');
+			}
 		}
-
 	}
 }
