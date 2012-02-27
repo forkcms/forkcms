@@ -243,6 +243,17 @@ class BackendBaseAction
 	 */
 	private function setAction($action)
 	{
+		/**
+		 * For security reasons, only accept actions names that
+		 * match this regexp. It will be triggered if there is
+		 * anything else than an alphabetical, numeric or
+		 * underscore in the name.
+		 */
+		if(!SpoonFilter::isValidAgainstRegexp('/([^a-zA-Z0-9_])/', $action))
+		{
+			throw new BackendException('This is an invalid action name.');
+		}
+
 		$this->action = (string) $action;
 	}
 
@@ -253,6 +264,17 @@ class BackendBaseAction
 	 */
 	private function setModule($module)
 	{
+		/**
+		 * For security reasons, only accept module names that
+		 * match this regexp. It will be triggered if there is
+		 * anything else than an alphabetical, numeric or
+		 * underscore in the name.
+		 */
+		if(!SpoonFilter::isValidAgainstRegexp('/([^a-zA-Z0-9_])/', $module))
+		{
+			throw new BackendException('This is an invalid module name.');
+		}
+
 		$this->module = (string) $module;
 	}
 }
