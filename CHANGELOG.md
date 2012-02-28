@@ -1,8 +1,9 @@
-3.2.7 (xxxx-xx-xx)
+3.2.7 (2012-02-28)
 --
 Improvements:
 
 * Core: upgraded jQueryUI to 1.8.18
+* Core: fixed XSS vulnerabilities.
 
 Bugfixes:
 
