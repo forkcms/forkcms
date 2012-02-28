@@ -160,9 +160,7 @@ class BackendURL extends BackendBaseObject
 			}
 
 			// create config-object, the constructor will do some magic
-			$config = new $configClassName();
-			$config->setModule($module);
-			$config->setPossibleActions();
+			$config = new $configClassName($module);
 
 			// set action
 			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';

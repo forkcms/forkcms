@@ -535,6 +535,17 @@ class BackendBaseConfig extends BackendBaseObject
 	protected $possibleAJAXActions = array();
 
 	/**
+	 * @param string $module The module wherefor this is the configuration-file.
+	 */
+	public function __construct($module)
+	{
+		$this->setModule($module);
+
+		// read the possible actions based on the files
+		$this->setPossibleActions();
+	}
+
+	/**
 	 * Get the default action
 	 *
 	 * @return string

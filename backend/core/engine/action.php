@@ -106,9 +106,7 @@ class BackendAction extends BackendBaseObject
 		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: ' . $configClassName . '.');
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName();
-		$this->config->setModule($this->getModule());
-		$this->config->setPossibleActions();
+		$this->config = new $configClassName($this->getModule());
 
 		// set action
 		$action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'index';
