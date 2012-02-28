@@ -72,6 +72,6 @@ class BackendErrorIndex extends BackendBaseActionIndex
 		}
 
 		// assign the correct message into the template
-		$this->tpl->assign('message', BL::err(SpoonFilter::toCamelCase($errorType, '-')));
+		$this->tpl->assign('message', BL::err(SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
 	}
 }
