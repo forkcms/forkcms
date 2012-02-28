@@ -13,22 +13,8 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendAJAX
+class BackendAJAX extends BackendBaseObject
 {
-	/**
-	 * The action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
-	/**
-	 * The module
-	 *
-	 * @var	string
-	 */
-	private $module;
-
 	public function __construct()
 	{
 		// check if the user is logged in
@@ -54,8 +40,14 @@ class BackendAJAX
 		$this->setAction($action);
 		$this->setLanguage($language);
 
+		// create URL instance, since the template modifiers need this object
+		$URL = new BackendURL();
+		$URL->setModule($this->getModule());
+
 		// create a new action
-		$action = new BackendAJAXAction($this->getAction(), $this->getModule());
+		$action = new BackendAJAXAction();
+		$action->setModule($this->getModule());
+		$action->setAction($this->getAction());
 
 		try
 		{
@@ -71,39 +63,30 @@ class BackendAJAX
 			if(SPOON_DEBUG) throw $e;
 
 			// output
-			$fakeAction = new BackendBaseAJAXAction('', '');
+			$fakeAction = new BackendBaseAJAXAction();
 			$fakeAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
 		}
 	}
 
 	/**
-	 * Get the action
-	 *
-	 * @return string
-	 */
-	public function getAction()
-	{
-		return $this->action;
-	}
-
-	/**
-	 * Get module
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
-	}
-
-	/**
 	 * Set action
 	 *
-	 * @param string $value The action to use.
+	 * @param string $action The action to use.
+	 * @param string[optional] $module The module to use.
 	 */
-	public function setAction($value)
+	public function setAction($action, $module = null)
 	{
-		$this->action = (string) $value;
+		try
+		{
+			parent::setAction($action, $module);
+		}
+
+		catch(Exception $e)
+		{
+			// output
+			$fakeAction = new BackendBaseAJAXAction();
+			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Action not allowed.');
+		}
 	}
 
 	/**
@@ -123,7 +106,7 @@ class BackendAJAX
 			SpoonHTTP::setHeadersByCode(500);
 
 			// output
-			$fakeAction = new BackendBaseAJAXAction('', '');
+			$fakeAction = new BackendBaseAJAXAction();
 			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Languages not provided.');
 		}
 
@@ -134,27 +117,21 @@ class BackendAJAX
 	/**
 	 * Set module
 	 *
-	 * @param string $value The module to use.
+	 * @param string $module The module to use.
 	 */
-	public function setModule($value)
+	public function setModule($module)
 	{
-		// set property
-		$this->module = (string) $value;
-
-		// is this module allowed?
-		if(!BackendAuthentication::isAllowedModule($this->module))
+		try
 		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
-
-			// output
-			$fakeAction = new BackendBaseAJAXAction('', '');
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Module not allowed.');
+			parent::setModule($module);
 		}
 
-		// create URL instance, since the template modifiers need this object
-		$URL = new BackendURL();
-		$URL->setModule($this->module);
+		catch(Exception $e)
+		{
+			// output
+			$fakeAction = new BackendBaseAJAXAction();
+			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Module not allowed.');
+		}
 	}
 
 	/**
@@ -170,7 +147,7 @@ class BackendAJAX
 			SpoonHTTP::setHeadersByCode(403);
 
 			// output
-			$fakeAction = new BackendBaseAJAXAction('', '');
+			$fakeAction = new BackendBaseAJAXAction();
 			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not logged in.');
 		}
 

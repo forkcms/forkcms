@@ -12,15 +12,8 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendCronjob
+class BackendCronjob extends BackendBaseObject
 {
-	/**
-	 * The action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
 	/**
 	 * The id
 	 *
@@ -34,13 +27,6 @@ class BackendCronjob
 	 * @var	string
 	 */
 	private $language;
-
-	/**
-	 * The module
-	 *
-	 * @var	string
-	 */
-	private $module;
 
 	public function __construct()
 	{
@@ -97,148 +83,14 @@ class BackendCronjob
 		BackendModel::setModuleSetting('core', 'cronjobs', array_unique($cronjobs));
 
 		// create new action
-		$action = new BackendCronjobAction($this->getAction(), $this->getModule());
-		$action->execute();
-	}
-
-	/**
-	 * Get the action
-	 *
-	 * @return string
-	 */
-	public function getAction()
-	{
-		return $this->action;
-	}
-
-	/**
-	 * Get language
-	 *
-	 * @return string
-	 */
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-
-	/**
-	 * Get module
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
-	}
-
-	/**
-	 * Set action
-	 *
-	 * @param string $value The action to load.
-	 */
-	public function setAction($value)
-	{
-		$value = preg_replace('/([^a-zA-Z0-9_])/', '', (string) $value);
-
-		// validate
-		if($value == '')
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(400);
-
-			// throw exceptions
-			throw new BackendException('Action not present.');
-		}
-
-		// set property
-		$this->action = (string) $value;
-	}
-
-	/**
-	 * Set language
-	 *
-	 * @param string $value The language to load.
-	 */
-	public function setLanguage($value)
-	{
-		// get the possible languages
-		$possibleLanguages = BackendLanguage::getWorkingLanguages();
-
-		// validate
-		if(!in_array($value, array_keys($possibleLanguages))) throw new BackendException('Invalid language.');
-
-		// set property
-		$this->language = $value;
-
-		// set the locale (we need this for the labels)
-		BackendLanguage::setLocale($this->language);
-
-		// set working language
-		BackendLanguage::setWorkingLanguage($this->language);
-	}
-
-	/**
-	 * Set module
-	 *
-	 * @param string $value The module to use.
-	 */
-	public function setModule($value)
-	{
-		$value = preg_replace('/([^a-zA-Z0-9_])/', '', (string) $value);
-
-		// validate
-		if($value == '')
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(400);
-
-			// throw exceptions
-			throw new BackendException('Module not present.');
-		}
-
-		// set property
-		$this->module = $value;
-	}
-}
-
-/**
- * This class is the real code, it creates an action, ...
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- */
-class BackendCronjobAction
-{
-	/**
-	 * The current action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
-	/**
-	 * The current module
-	 *
-	 * @var	string
-	 */
-	private $module;
-
-	/**
-	 * You have to specify the action and module so we know what to do with this instance
-	 *
-	 * @param string $action The action to load.
-	 * @param string $module The module to load.
-	 */
-	public function __construct($action, $module)
-	{
-		$this->setModule($module);
-		$this->setAction($action);
+		$this->execute();
 	}
 
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
 	 */
-	public function execute()
+	protected function execute()
 	{
 		// build action-class-name
 		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_cronjob_' . $this->getAction());
@@ -286,42 +138,74 @@ class BackendCronjobAction
 		}
 
 		// create action-object
-		$object = new $actionClassName($this->getAction(), $this->getModule());
+		$object = new $actionClassName();
+		$object->setModule($this->getModule());
+		$object->setAction($this->getAction());
 		$object->execute();
 	}
 
 	/**
-	 * Get the current action
-	 * REMARK: You should not use this method from your code, but it has to be public so we can
-	 * access it later on in the core-code
+	 * Get language
 	 *
 	 * @return string
 	 */
-	public function getAction()
+	public function getLanguage()
 	{
-		return $this->action;
-	}
-
-	/**
-	 * Get the current module
-	 * REMARK: You should not use this method from your code, but it has to be public so we can
-	 * access it later on in the core-code
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
+		return $this->language;
 	}
 
 	/**
 	 * Set the action
 	 *
 	 * @param string $action The action to load.
+	 * @param string[optional] $module The module to load.
 	 */
-	private function setAction($action)
+	public function setAction($action, $module = null)
 	{
+		// set module
+		if($module !== null) $this->setModule($module);
+
+		// check if module is set
+		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
+
+		// we can't rely on the parent setModule function, because a cronjob requires no login
+
+		// does this module exist?
+		$actions = SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs');
+		if(!in_array($action . '.php', $actions))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(403);
+
+			// throw exception
+			throw new BackendException('Action not allowed.');
+		}
+
+		// set property
 		$this->action = (string) $action;
+	}
+
+	/**
+	 * Set language
+	 *
+	 * @param string $value The language to load.
+	 */
+	public function setLanguage($value)
+	{
+		// get the possible languages
+		$possibleLanguages = BackendLanguage::getWorkingLanguages();
+
+		// validate
+		if(!in_array($value, array_keys($possibleLanguages))) throw new BackendException('Invalid language.');
+
+		// set property
+		$this->language = $value;
+
+		// set the locale (we need this for the labels)
+		BackendLanguage::setLocale($this->language);
+
+		// set working language
+		BackendLanguage::setWorkingLanguage($this->language);
 	}
 
 	/**
@@ -329,8 +213,22 @@ class BackendCronjobAction
 	 *
 	 * @param string $module The module to load.
 	 */
-	private function setModule($module)
+	public function setModule($module)
 	{
-		$this->module = (string) $module;
+		// we can't rely on the parent setModule function, because a cronjob requires no login
+
+		// does this module exist?
+		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
+		if(!in_array($module, $modules))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(403);
+
+			// throw exception
+			throw new BackendException('Module not allowed.');
+		}
+
+		// set property
+		$this->module = $module;
 	}
 }
