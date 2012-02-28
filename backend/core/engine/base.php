@@ -649,6 +649,37 @@ class BackendBaseCronjob extends BackendBaseObject
 	}
 
 	/**
+	 * Set the action
+	 *
+	 * @param string $action The action to load.
+	 * @param string[optional] $module The module to load.
+	 */
+	public function setAction($action, $module = null)
+	{
+		// set module
+		if($module !== null) $this->setModule($module);
+
+		// check if module is set
+		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
+
+		// we can't rely on the parent setModule function, because a cronjob requires no login
+
+		// does this module exist?
+		$actions = SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs');
+		if(!in_array($action . '.php', $actions))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(403);
+
+			// throw exception
+			throw new BackendException('Action not allowed.');
+		}
+
+		// set property
+		$this->action = (string) $action;
+	}
+
+	/**
 	 * Set the busy file
 	 */
 	protected function setBusyFile()
@@ -692,37 +723,6 @@ class BackendBaseCronjob extends BackendBaseObject
 
 		// if the cronjob is busy we should NOT proceed
 		if($isBusy) exit;
-	}
-
-	/**
-	 * Set the action
-	 *
-	 * @param string $action The action to load.
-	 * @param string[optional] $module The module to load.
-	 */
-	public function setAction($action, $module = null)
-	{
-		// set module
-		if($module !== null) $this->setModule($module);
-
-		// check if module is set
-		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
-
-		// we can't rely on the parent setModule function, because a cronjob requires no login
-
-		// does this module exist?
-		$actions = SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs');
-		if(!in_array($action . '.php', $actions))
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
-
-			// throw exception
-			throw new BackendException('Action not allowed.');
-		}
-
-		// set property
-		$this->action = (string) $action;
 	}
 
 	/**
