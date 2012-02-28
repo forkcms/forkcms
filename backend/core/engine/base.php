@@ -565,6 +565,30 @@ class BackendBaseConfig extends BackendBaseObject
 	}
 
 	/**
+	 * Set the module
+	 *
+	 * @param string $module The module to load.
+	 */
+	public function setModule($module)
+	{
+		// we can't rely on the parent setModule function, because at the point of config, we might not yet be logged in
+
+		// does this module exist?
+		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
+		if(!in_array($module, $modules))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(403);
+
+			// throw exception
+			throw new BackendException('Module not allowed.');
+		}
+
+		// set property
+		$this->module = $module;
+	}
+
+	/**
 	 * Set the possible actions, based on files in folder
 	 * You can disable action in the config file. (Populate $disabledActions)
 	 */
