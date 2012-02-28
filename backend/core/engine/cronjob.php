@@ -138,17 +138,7 @@ class BackendCronjob
 	 */
 	public function setAction($value)
 	{
-		$value = preg_replace('/([^a-zA-Z0-9_])/', '', (string) $value);
-
-		// validate
-		if($value == '')
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(400);
-
-			// throw exceptions
-			throw new BackendException('Action not present.');
-		}
+		BackendModel::validateActionName($value);
 
 		// set property
 		$this->action = (string) $value;
@@ -184,17 +174,7 @@ class BackendCronjob
 	 */
 	public function setModule($value)
 	{
-		$value = preg_replace('/([^a-zA-Z0-9_])/', '', (string) $value);
-
-		// validate
-		if($value == '')
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(400);
-
-			// throw exceptions
-			throw new BackendException('Module not present.');
-		}
+		BackendModel::validateModuleName($value);
 
 		// set property
 		$this->module = $value;

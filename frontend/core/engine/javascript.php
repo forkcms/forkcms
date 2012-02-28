@@ -195,17 +195,8 @@ class FrontendJavascript
 	 */
 	private function setModule($value)
 	{
-		$modules = (array) FrontendModel::getModules();
-		
-		if(!in_array((string) $value, $modules))
-		{
-			// when debug is on throw an exception
-			if(SPOON_DEBUG) throw new FrontendException('Invalid module.');
+		FrontendModel::validateModuleName($value);
 
-			// when debug is of show a descent message
-			else exit(SPOON_DEBUG_MESSAGE);
-		}
-		
 		$this->module = (string) $value;
 	}
 }

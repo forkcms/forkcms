@@ -285,11 +285,13 @@ class BackendURL
 	/**
 	 * Set the current action
 	 *
-	 * @param string $action The action to set.
+	 * @param string $value The action to set.
 	 */
-	private function setAction($action)
+	private function setAction($value)
 	{
-		$this->action = (string) $action;
+		BackendModel::validateActionName($value);
+
+		$this->action = (string) $value;
 	}
 
 	/**
@@ -332,11 +334,13 @@ class BackendURL
 	/**
 	 * Set the current module
 	 *
-	 * @param string $module The module to set.
+	 * @param string $value The module to set.
 	 */
-	public function setModule($module)
+	public function setModule($value)
 	{
-		$this->module = (string) $module;
+		BackendModel::validateModuleName($value);
+
+		$this->module = (string) $value;
 	}
 
 	/**

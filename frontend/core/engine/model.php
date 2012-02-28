@@ -937,4 +937,43 @@ class FrontendModel
 			array($eventModule, $eventName, $module)
 		);
 	}
+
+	/**
+	 * Validate the action name.
+	 *
+	 * @param string $value
+	 */
+	public static function validateActionName($value)
+	{
+		/**
+		 * For security reasons, only accept actions names that
+		 * match this regexp. It will be triggered if there is
+		 * anything else than an alphabetical, numeric or
+		 * underscore in the name.
+		 */
+		if(SpoonFilter::isValidAgainstRegexp('/([^a-zA-Z0-9_])/', $value))
+		{
+			throw new BackendException('This (' . $value . ') is an invalid action name.');
+		}
+	}
+
+	/**
+	 * Validate a module name.
+	 *
+	 * @param string $value
+	 */
+	public static function validateModuleName($value)
+	{
+		if($value != '')
+		{
+			/**
+			 * For security reasons, only accept module names that
+			 * are installed module names.
+			 */
+			if(!in_array($value, FrontendModel::getModules()))
+			{
+				throw new BackendException('This module (' . $value . ') does not exist.');
+			}
+		}
+	}
 }
