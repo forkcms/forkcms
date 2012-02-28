@@ -64,7 +64,7 @@ class BackendErrorIndex extends BackendBaseActionIndex
 				SpoonHTTP::setHeadersByCode(404);
 
 				// give a nice error, so we can detect which file is missing
-				echo 'Requested file (' . implode('?', $chunks) . ') not found.';
+				echo 'Requested file (' . htmlspecialchars($this->getParameter('querystring')) . ') not found.';
 
 				// stop script execution
 				exit;
