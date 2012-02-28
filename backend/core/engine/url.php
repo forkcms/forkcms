@@ -12,28 +12,14 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendURL
+class BackendURL extends BackendBaseObject
 {
-	/**
-	 * The current action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
 	/**
 	 * The host, will be used for cookies
 	 *
 	 * @var	string
 	 */
 	private $host;
-
-	/**
-	 * The current module
-	 *
-	 * @var	string
-	 */
-	private $module;
 
 	/**
 	 * The querystring
@@ -53,16 +39,6 @@ class BackendURL
 	}
 
 	/**
-	 * Get the current action found in the URL
-	 *
-	 * @return string
-	 */
-	public function getAction()
-	{
-		return $this->action;
-	}
-
-	/**
 	 * Get the host
 	 *
 	 * @return string
@@ -70,16 +46,6 @@ class BackendURL
 	public function getHost()
 	{
 		return $this->host;
-	}
-
-	/**
-	 * Get the current module found in the URL
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
 	}
 
 	/**
@@ -194,7 +160,9 @@ class BackendURL
 			}
 
 			// create config-object, the constructor will do some magic
-			$config = new $configClassName($module);
+			$config = new $configClassName();
+			$config->setModule($module);
+			$config->setPossibleActions();
 
 			// set action
 			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';
@@ -283,16 +251,6 @@ class BackendURL
 	}
 
 	/**
-	 * Set the current action
-	 *
-	 * @param string $action The action to set.
-	 */
-	private function setAction($action)
-	{
-		$this->action = (string) $action;
-	}
-
-	/**
 	 * Set the host
 	 *
 	 * @param string $host The host.
@@ -327,16 +285,6 @@ class BackendURL
 		if(!in_array($locale, $possibleLocale)) $locale = $default;
 
 		BackendLanguage::setLocale($locale);
-	}
-
-	/**
-	 * Set the current module
-	 *
-	 * @param string $module The module to set.
-	 */
-	public function setModule($module)
-	{
-		$this->module = (string) $module;
 	}
 
 	/**

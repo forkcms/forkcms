@@ -31,9 +31,6 @@ class BackendAction extends BackendBaseObject
 
 	/**
 	 * You have to specify the action and module so we know what to do with this instance
-	 *
-	 * @param string $action The action to load.
-	 * @param string $module The module to load.
 	 */
 	public function __construct()
 	{
@@ -109,6 +106,17 @@ class BackendAction extends BackendBaseObject
 		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: ' . $configClassName . '.');
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName($this->getModule());
+		$this->config = new $configClassName();
+		$this->config->setModule($this->getModule());
+		$this->config->setPossibleActions();
+
+		// set action
+		$action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'index';
+
+		// require the model if it exists
+		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php'))
+		{
+			require_once BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php';
+		}
 	}
 }

@@ -497,7 +497,7 @@ class BackendBaseAJAXAction extends BackendBaseObject
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendBaseConfig
+class BackendBaseConfig extends BackendBaseObject
 {
 	/**
 	 * The default action
@@ -521,13 +521,6 @@ class BackendBaseConfig
 	protected $disabledAJAXActions = array();
 
 	/**
-	 * The current loaded module
-	 *
-	 * @var	string
-	 */
-	protected $module;
-
-	/**
 	 * All the possible actions
 	 *
 	 * @var	array
@@ -542,23 +535,6 @@ class BackendBaseConfig
 	protected $possibleAJAXActions = array();
 
 	/**
-	 * @param string $module The module wherefor this is the configuration-file.
-	 */
-	public function __construct($module)
-	{
-		$this->module = (string) $module;
-
-		// require the model if it exists
-		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
-		{
-			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
-		}
-
-		// read the possible actions based on the files
-		$this->setPossibleActions();
-	}
-
-	/**
 	 * Get the default action
 	 *
 	 * @return string
@@ -566,16 +542,6 @@ class BackendBaseConfig
 	public function getDefaultAction()
 	{
 		return $this->defaultAction;
-	}
-
-	/**
-	 * Get the current loaded module
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
 	}
 
 	/**
@@ -602,10 +568,10 @@ class BackendBaseConfig
 	 * Set the possible actions, based on files in folder
 	 * You can disable action in the config file. (Populate $disabledActions)
 	 */
-	protected function setPossibleActions()
+	public function setPossibleActions()
 	{
 		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH . '/actions', '/(.*).php/');
+		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/actions', '/(.*).php/');
 
 		// loop filelist
 		foreach($actionFiles as $file)
@@ -618,7 +584,7 @@ class BackendBaseConfig
 		}
 
 		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH . '/ajax', '/(.*).php/');
+		$AJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/ajax', '/(.*).php/');
 
 		// loop filelist
 		foreach($AJAXActionFiles as $file)
