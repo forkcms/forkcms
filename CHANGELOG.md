@@ -1,3 +1,10 @@
+3.2.8 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
+
+
 3.2.7 (2012-02-28)
 --
 Improvements:
