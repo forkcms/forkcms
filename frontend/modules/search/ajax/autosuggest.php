@@ -214,7 +214,8 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 	private function validateForm()
 	{
 		// set values
-		$this->term = SpoonFilter::getPostValue('term', null, '');
+		$searchTerm = SpoonFilter::getPostValue('term', null, '');
+		$this->term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities($searchTerm);
 		$this->length = (int) SpoonFilter::getPostValue('length', null, 50);
 
 		// validate
