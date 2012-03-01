@@ -7,6 +7,7 @@ Improvements:
 Bugfixes:
 
 * Core: module validation did not take the special core module in account.
+* Core: JS module validation has been fixed.
 * XSS: Escape the input on ajax searches.
 
 

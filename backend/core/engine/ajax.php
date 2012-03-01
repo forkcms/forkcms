@@ -36,13 +36,13 @@ class BackendAJAX extends BackendBaseObject
 		$action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
 		$language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
 
+		// create URL instance, since the template modifiers need this object
+		$URL = new BackendURL();
+		$URL->setModule($module);
+
 		$this->setModule($module);
 		$this->setAction($action);
 		$this->setLanguage($language);
-
-		// create URL instance, since the template modifiers need this object
-		$URL = new BackendURL();
-		$URL->setModule($this->getModule());
 
 		// create a new action
 		$action = new BackendAJAXAction();
