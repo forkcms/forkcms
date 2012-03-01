@@ -227,7 +227,7 @@ class BackendTemplate extends SpoonTemplate
 			$this->assign('MODULE', $this->URL->getModule());
 
 			// assign the current action
-			$this->assign('ACTION', $this->URL->getAction());
+			if($this->URL->getAction() != '') $this->assign('ACTION', $this->URL->getAction());
 		}
 
 		// is the user object filled?
