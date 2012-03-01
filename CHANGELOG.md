@@ -4,6 +4,9 @@ Improvements:
 
 * Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
 
+Bugfixes:
+* Core: module validation did not take the special core module in account.
+
 
 3.2.7 (2012-02-28)
 --
