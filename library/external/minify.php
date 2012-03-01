@@ -60,7 +60,7 @@ class MinifyCSS extends Minify
 				(?P<url>url\()?
 
 					# open path enclosure
-					(?P<quotes>["\'])
+					(?P<quotes>["\']?)
 
 						# fetch path
 						(?P<path>
