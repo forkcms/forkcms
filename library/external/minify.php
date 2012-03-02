@@ -28,6 +28,8 @@
  */
 class MinifyCSS extends Minify
 {
+	const IMAGE_MAX_SIZE = 5;
+
 	/**
 	 * Combine CSS from import statements.
 	 * @import's will be loaded and their content merged into the original file, to save HTTP requests.
@@ -299,7 +301,7 @@ class MinifyCSS extends Minify
 				$path = dirname($source) . '/' . $path;
 
 				// only replace the import with the content if we can grab the content of the file
-				if(@file_exists($path) && is_file($path))
+				if(@file_exists($path) && is_file($path) && (filesize($path) <= (self::IMAGE_MAX_SIZE * 1024)))
 				{
 					// grab content
 					$importContent = @file_get_contents($path);

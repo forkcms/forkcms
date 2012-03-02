@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
+* Core: only images that are smaller then 5kb will be included in the CSS-file.
 
 Bugfixes:
 
