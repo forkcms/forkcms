@@ -246,7 +246,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// convert the CSV file to an array, and fetch the group's CM ID
-				$csv = BackendCSV::fileToArray($fileCSV->getTempFileName(), array(), array(), ';', '"');
+				$csv = BackendCSV::fileToArray($fileCSV->getTempFileName());
 
 				// process our import, and get the failed subscribers
 				$failedSubscribers = $this->processImport($csv, $values['groups']);
