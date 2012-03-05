@@ -13,15 +13,8 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendAJAXAction
+class BackendAJAXAction extends BackendBaseObject
 {
-	/**
-	 * The current action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
 	/**
 	 * The config file
 	 *
@@ -30,47 +23,13 @@ class BackendAJAXAction
 	private $config;
 
 	/**
-	 * The current module
-	 *
-	 * @var	string
-	 */
-	private $module;
-
-	/**
-	 * You have to specify the action and module so we know what to do with this instance
-	 *
-	 * @param string $action The action to load.
-	 * @param string $module The module to load.
-	 */
-	public function __construct($action, $module)
-	{
-		$this->setModule($module);
-		$this->setAction($action);
-
-		$this->loadConfig();
-		$allowed = false;
-
-		// is this an allowed action
-		if(BackendAuthentication::isAllowedAction($action, $this->getModule())) $allowed = true;
-
-		// is this an allowed AJAX-action?
-		if(!$allowed)
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
-
-			// output
-			$fakeAction = new BackendBaseAJAXAction('', '');
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not logged in.');
-		}
-	}
-
-	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
 	 */
 	public function execute()
 	{
+		$this->loadConfig();
+
 		// build action-class-name
 		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_ajax_' . $this->getAction());
 
@@ -83,28 +42,6 @@ class BackendAJAXAction
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
 		$object->execute();
-	}
-
-	/**
-	 * Get the current action
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
-	 *
-	 * @return string
-	 */
-	public function getAction()
-	{
-		return $this->action;
-	}
-
-	/**
-	 * Get the current module
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
 	}
 
 	/**
@@ -138,25 +75,5 @@ class BackendAJAXAction
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName($this->getModule());
-	}
-
-	/**
-	 * Set the action
-	 *
-	 * @param string $action The action to load.
-	 */
-	private function setAction($action)
-	{
-		$this->action = (string) $action;
-	}
-
-	/**
-	 * Set the module
-	 *
-	 * @param string $module The module to load.
-	 */
-	private function setModule($module)
-	{
-		$this->module = (string) $module;
 	}
 }

@@ -21,7 +21,10 @@ class Backend
 		new BackendTemplate();
 		new BackendNavigation();
 		new BackendHeader();
-		$action = new BackendAction($URL->getAction(), $URL->getModule());
+
+		$action = new BackendAction();
+		$action->setModule($URL->getModule());
+		$action->setAction($URL->getAction());
 		$action->execute();
 	}
 }

@@ -115,7 +115,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	private function getTags()
 	{
 		// get page id
-		$pageId = FrontendPage::getCurrentPageId();
+		$pageId = Spoon::get('page')->getId();
 
 		// array of excluded records
 		$this->exclude[] = array('module' => 'pages', 'other_id' => $pageId);

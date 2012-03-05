@@ -78,7 +78,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		{
 			// add install column
 			$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
-			$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'));
+			$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
 		}
 	}
 

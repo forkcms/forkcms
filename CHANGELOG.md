@@ -1,4 +1,32 @@
-3.2.6 (xxxx-xx-xx)
+3.2.8 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
+* Core: only images that are smaller then 5kb will be included in the CSS-file.
+
+Bugfixes:
+
+* Core: module validation did not take the special core module in account.
+* Core: JS module validation has been fixed.
+* XSS: Escape the input on ajax searches.
+
+
+3.2.7 (2012-02-28)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.18
+* Core: fixed XSS vulnerabilities.
+* Core: refactored code to unify setting/getting module/action and added additional checks for validity.
+
+Bugfixes:
+
+* Core: fixed issue where media-embed would always embed the media in the last editor, not the selected one.
+* Tags: fixed call to deprecated (removed) method, which caused "related" widget to malfunction.
+
+
+3.2.6 (2012-02-21)
 --
 Improvements:
 
