@@ -37,13 +37,14 @@
 	{
 		var twitterLoaded = false;
 		var linkedInLoaded = false;
+		var googlePlusLoaded = false;
 
 		// define defaults
 		var defaults =
 		{
 			debug: false,
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
-			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious'],
+			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious', 'googleplus'],
 			isDropdown: true,
 
 			delicious: { name: 'delicious', show: true, label: 'Delicious'},
@@ -51,7 +52,8 @@
 			facebook: { name: 'facebook', show: true, width: 90, verb: 'like', colorScheme: 'light', font : 'arial' },
 			linkedin: { name: 'linkedin', show: true, label: 'LinkedIn' },
 			netlog: { name: 'netlog', show: true, label: 'Netlog' },
-			twitter: { name: 'twitter', show: true, label: 'tweet' }
+			twitter: { name: 'twitter', show: true, label: 'tweet' },
+			googleplus: { name: 'googleplus', show: true, label: 'Google +1' }
 		};
 
 		// extend options
@@ -240,6 +242,37 @@
 							html += ' >' + options.twitter.label  + '</a>';
 							html += '</li>';
 						break;
+						
+						// google plus
+						case 'googleplus':
+							if(!googlePlusLoaded)
+							{
+								// loop all script to check if the twitter-widget is already loaded
+								$('script').each(function()
+								{
+									if($(this).attr('src') == 'https://apis.google.com/js/plusone.js') googlePlusLoaded = true;
+								});
+								
+								// not loaded?
+								if(!googlePlusLoaded)
+								{
+									// create the script tag
+									var script = document.createElement('script')
+									script.src = 'https://apis.google.com/js/plusone.js';
+									
+									// add into head
+									$('head').after(script);
+									
+									// reset var
+									googlePlusLoaded = true;
+								}
+							}
+							
+							// build & add html
+							html += '<li class="shareMenuTwitter">' +
+							'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>';
+							html += '</li>';
+							break;
 					}
 				}
 			}

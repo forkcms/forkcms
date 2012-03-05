@@ -16,6 +16,7 @@ Improvements:
 * Users: show user account statistics on dashboard (last login, last failed login, last password change & password strength).
 * API: Added a client to the API, useful for general API development and working with third parties.
 * Core: sharing widget now uses the latest linkedin sharing button.
+* Core: sharing widget now also supports Google Plus.
 
 Bugfixes:
 
