@@ -209,7 +209,8 @@
 
 						// twitter
 						case 'twitter':
-							if(!twitterLoaded) {
+							if(!twitterLoaded)
+							{
 								// loop all script to check if the twitter-widget is already loaded
 								$('script').each(function()
 								{
@@ -236,7 +237,7 @@
 									'	<a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
 							if(title != '') html += ' data-text="' + title + '"';
 							html += ' data-lang="' + jsFrontend.current.language + '"';
-							html += ' data-count="none">' + options.twitter.label  + '</a>';
+							html += ' >' + options.twitter.label  + '</a>';
 							html += '</li>';
 						break;
 					}
