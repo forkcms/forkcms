@@ -14,6 +14,7 @@ Improvements:
 * Location: revised Location-module, added some functionality.
 * Pages: added widget for previous/parent/next navigation.
 * Users: show user account statistics on dashboard (last login, last failed login, last password change & password strength).
+* API: Added a client to the API, useful for general API development and working with third parties.
 
 Bugfixes:
 
