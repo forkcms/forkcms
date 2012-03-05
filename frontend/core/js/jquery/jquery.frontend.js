@@ -36,6 +36,7 @@
 	$.fn.shareMenu = function(options)
 	{
 		var twitterLoaded = false;
+		var linkedInLoaded = false;
 
 		// define defaults
 		var defaults =
@@ -154,6 +155,29 @@
 
 						// linkedin
 						case 'linkedin':
+							if(!linkedInLoaded)
+							{
+								// loop all script to check if the twitter-widget is already loaded
+								$('script').each(function()
+								{
+									if($(this).attr('src') == 'http://platform.linkedin.com/in.js') linkedInLoaded = true;
+								});
+
+								// not loaded?
+								if(!linkedInLoaded)
+								{
+									// create the script tag
+									var script = document.createElement('script')
+									script.src = 'http://platform.linkedin.com/in.js';
+
+									// add into head
+									$('head').after(script);
+
+									// reset var
+									linkedInLoaded = true;
+								}
+							}
+
 							// build url
 							var url = 'http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(link);
 							if(title != '') url += '&title=' + title;
@@ -161,10 +185,7 @@
 
 							// add html
 							html += '<li class="shareMenuLinkedin">' +
-									'	<a href="' + url + '" target="_blank">' +
-									'		<span class="icon"></span>' +
-									'		<span class="textWrapper">' + options.linkedin.label + '</span>' +
-									'	</a>' +
+									'	<script type="IN/Share" data-url="' + url + '" data-counter="right"></script>' +
 									'</li>' + "\n";
 						break;
 
