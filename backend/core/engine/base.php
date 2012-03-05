@@ -578,14 +578,15 @@ class BackendBaseConfig extends BackendBaseObject
 	/**
 	 * Set the module
 	 *
+	 * We can't rely on the parent setModule function, because config could be called before any authentication is required.
+	 *
 	 * @param string $module The module to load.
 	 */
 	public function setModule($module)
 	{
-		// we can't rely on the parent setModule function, because at the point of config, we might not yet be logged in
-
 		// does this module exist?
 		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
+		$modules[] = 'core';
 		if(!in_array($module, $modules))
 		{
 			// set correct headers
@@ -686,6 +687,8 @@ class BackendBaseCronjob extends BackendBaseObject
 	/**
 	 * Set the action
 	 *
+	 * We can't rely on the parent setModule function, because a cronjob requires no login
+	 *
 	 * @param string $action The action to load.
 	 * @param string[optional] $module The module to load.
 	 */
@@ -697,10 +700,12 @@ class BackendBaseCronjob extends BackendBaseObject
 		// check if module is set
 		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
 
-		// we can't rely on the parent setModule function, because a cronjob requires no login
+		// path to look for actions based on the module
+		if($this->getModule() == 'core') $path = BACKEND_CORE_PATH . '/cronjobs';
+		else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
 
 		// does this module exist?
-		$actions = SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs');
+		$actions = SpoonFile::getList($path);
 		if(!in_array($action . '.php', $actions))
 		{
 			// set correct headers
@@ -763,14 +768,15 @@ class BackendBaseCronjob extends BackendBaseObject
 	/**
 	 * Set the module
 	 *
+	 * We can't rely on the parent setModule function, because a cronjob requires no login
+	 *
 	 * @param string $module The module to load.
 	 */
 	public function setModule($module)
 	{
-		// we can't rely on the parent setModule function, because a cronjob requires no login
-
 		// does this module exist?
 		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
+		$modules[] = 'core';
 		if(!in_array($module, $modules))
 		{
 			// set correct headers

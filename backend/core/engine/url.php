@@ -166,12 +166,26 @@ class BackendURL extends BackendBaseObject
 			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';
 		}
 
-		// if it is an request for a JS-file or an AJAX-file we only need the module
-		if($isJS || $isAJAX)
+		// AJAX parameters are passed via GET or POST
+		if($isAJAX)
 		{
-			$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
-			$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
-			BackendLanguage::setWorkingLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
+			$module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
+			$action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
+			$language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
+			$module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
+			$action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
+			$language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
+
+			$this->setModule($module);
+			$this->setAction($action);
+			BackendLanguage::setWorkingLanguage($language);
+		}
+
+		// JS parameters are passed via GET
+		elseif($isJS)
+		{
+			$this->setModule(isset($_GET['module']) ? $_GET['module'] : '');
+			BackendLanguage::setWorkingLanguage(isset($_GET['language']) ? $_GET['language'] : SITE_DEFAULT_LANGUAGE);
 		}
 
 		// regular request
