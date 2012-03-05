@@ -296,7 +296,7 @@ class BackendLanguage
 		try
 		{
 			// store in cookie
-			SpoonCookie::set('interface_language', $language);
+			CommonCookie::set('interface_language', $language);
 		}
 
 		// catch exceptions

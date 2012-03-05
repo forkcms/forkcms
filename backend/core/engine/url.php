@@ -39,6 +39,20 @@ class BackendURL extends BackendBaseObject
 	}
 
 	/**
+	 * Get the domain
+	 *
+	 * @return string The current domain (without www.)
+	 */
+	public function getDomain()
+	{
+		// get host
+		$host = $this->getHost();
+
+		// replace
+		return str_replace('www.', '', $host);
+	}
+
+	/**
 	 * Get the host
 	 *
 	 * @return string
@@ -288,9 +302,9 @@ class BackendURL extends BackendBaseObject
 		}
 
 		// no authenticated user, but available from a cookie
-		elseif(SpoonCookie::exists('interface_language'))
+		elseif(CommonCookie::exists('interface_language'))
 		{
-			$locale = SpoonCookie::get('interface_language');
+			$locale = CommonCookie::get('interface_language');
 		}
 
 		// validate if the requested locale is possible

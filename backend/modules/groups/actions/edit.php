@@ -341,9 +341,9 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			$this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
 
 			// show users's name, surname and nickname
-			$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'surname'), 'surname', false);
-			$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'name'), 'name', false);
-			$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+			$this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'surname'), 'surname', false);
+			$this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'name'), 'name', false);
+			$this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
 		}
 	}
 

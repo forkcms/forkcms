@@ -229,7 +229,7 @@ class FrontendURL
 				try
 				{
 					// set cookie
-					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.' . $this->getDomain());
+					CommonCookie::set('frontend_language', $language);
 				}
 
 				// fetch failed cookie
@@ -246,10 +246,10 @@ class FrontendURL
 			}
 
 			// language set in the cookie
-			elseif(SpoonCookie::exists('frontend_language') && in_array(SpoonCookie::get('frontend_language'), $redirectLanguages))
+			elseif(CommonCookie::exists('frontend_language') && in_array(CommonCookie::get('frontend_language'), $redirectLanguages))
 			{
 				// set languageId
-				$language = (string) SpoonCookie::get('frontend_language');
+				$language = (string) CommonCookie::get('frontend_language');
 
 				// redirect is needed
 				$mustRedirect = true;
@@ -265,7 +265,7 @@ class FrontendURL
 				try
 				{
 					// set cookie
-					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.' . $this->getDomain());
+					CommonCookie::set('frontend_language', $language);
 				}
 
 				// fetch failed cookie

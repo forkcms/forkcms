@@ -573,7 +573,8 @@
 		margin: 0 0 0 12px;
 	}
 
-		#users.usersAddEdit .settingsUserInfo .infoGrid th {
+		#users.usersAddEdit .settingsUserInfo .infoGrid th,
+		#widgetUsersStatistics .settingsUserInfo .infoGrid th {
 			white-space: nowrap;
 		}
 

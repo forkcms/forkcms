@@ -11,6 +11,7 @@
  * This is the index-action (default), it will display the login screen
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAuthenticationIndex extends BackendBaseActionIndex
 {
@@ -93,6 +94,9 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				if(!headers_sent()) header('400 Bad Request', true, 400);
 			}
 
+			// get the user's id
+			$userId = BackendUsersModel::getIdByEmail($txtEmail->getValue());
+
 			// all fields are ok?
 			if($txtEmail->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue())
 			{
@@ -107,6 +111,9 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 
 					// increment and store
 					SpoonSession::set('backend_login_attempts', ++$current);
+
+					// save the failed login attempt in the user's settings
+					BackendUsersModel::setSetting($userId, 'last_failed_login_attempt', time());
 
 					// show error
 					$this->tpl->assign('hasError', true);
@@ -152,6 +159,11 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				// cleanup sessions
 				SpoonSession::delete('backend_login_attempts');
 				SpoonSession::delete('backend_last_attempt');
+
+				// save the login timestamp in the user's settings
+				$lastLogin = BackendUsersModel::getSetting($userId, 'current_login');
+				BackendUsersModel::setSetting($userId, 'current_login', time());
+				if($lastLogin) BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
 
 				// create filter with modules which may not be displayed
 				$filter = array('authentication', 'error', 'core');

@@ -4,6 +4,8 @@ Improvements:
 
 * Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
 * Core: only images that are smaller then 5kb will be included in the CSS-file.
+* Core: save cookies httponly by default & automatically secure when browsing over https.
+* Core: make cache-files inaccessible over http.
 * Locale: improved existing translations.
 * Locale: added translations for Spanish (by Yéred Zabdiel)
 * Locale: added translations for Swedish (by Erik Holmquist - http://www.holmquist.de & Peter Mayertz - http://www.mayertz.se)
@@ -11,6 +13,7 @@ Improvements:
 * Locale: added translations for Lithuanian (by Rolanda Naujasdizainas - http://www.naujasdizainas.lt)
 * Location: revised Location-module, added some functionality.
 * Pages: added widget for previous/parent/next navigation.
+* Users: show user account statistics on dashboard (last login, last failed login, last password change & password strength).
 
 Bugfixes:
 
