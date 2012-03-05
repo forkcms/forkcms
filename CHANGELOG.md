@@ -4,6 +4,11 @@ Improvements:
 
 * Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
 * Core: only images that are smaller then 5kb will be included in the CSS-file.
+* Locale: improved existing translations.
+* Locale: added translations for Spanish (by Yéred Zabdiel)
+* Locale: added translations for Swedish (by Erik Holmquist - http://www.holmquist.de & Peter Mayertz - http://www.mayertz.se)
+* Locale: added translations for Ukrainian (by Манжела Борис)
+* Locale: added translations for Lithuanian (by Rolanda Naujasdizainas - http://www.naujasdizainas.lt)
 
 Bugfixes:
 

@@ -6,65 +6,88 @@
         <translation language="nl"><![CDATA[admin-ids]]></translation>
         <translation language="en"><![CDATA[admin ids]]></translation>
         <translation language="it"><![CDATA[id amministratori]]></translation>
-        <translation language="tr"><![CDATA[yönetici id]]></translation>
         <translation language="ru"><![CDATA[ID Администратора]]></translation>
         <translation language="zh"><![CDATA[管理员id]]></translation>
         <translation language="fr"><![CDATA[identifiants admin]]></translation>
         <translation language="de"><![CDATA[Admin-IDs]]></translation>
         <translation language="hu"><![CDATA[admin ids]]></translation>
         <translation language="es"><![CDATA[admin ids]]></translation>
+        <translation language="uk"><![CDATA[ID Адміністратора]]></translation>
+        <translation language="lt"><![CDATA[admino id]]></translation>
+        <translation language="tr"><![CDATA[yönetici id]]></translation>
       </item>
       <item type="label" name="ApplicationId">
         <translation language="nl"><![CDATA[toepassings-id]]></translation>
         <translation language="en"><![CDATA[application id]]></translation>
         <translation language="it"><![CDATA[id applicazione]]></translation>
-        <translation language="tr"><![CDATA[uygulama id]]></translation>
         <translation language="ru"><![CDATA[ID Приложения]]></translation>
         <translation language="zh"><![CDATA[应用程序id]]></translation>
         <translation language="fr"><![CDATA[identifiant de l'application]]></translation>
         <translation language="de"><![CDATA[Application-ID]]></translation>
         <translation language="hu"><![CDATA[application id]]></translation>
         <translation language="es"><![CDATA[id de aplicación]]></translation>
+        <translation language="uk"><![CDATA[ID Додатка]]></translation>
+        <translation language="lt"><![CDATA[aplikacijos id]]></translation>
+        <translation language="tr"><![CDATA[uygulama id]]></translation>
       </item>
       <item type="label" name="ApplicationSecret">
         <translation language="nl"><![CDATA[app secret]]></translation>
         <translation language="en"><![CDATA[app secret]]></translation>
         <translation language="it"><![CDATA[chiave segreta dell'applicazione]]></translation>
-        <translation language="tr"><![CDATA[app secret]]></translation>
         <translation language="ru"><![CDATA[Секретный код приложения]]></translation>
         <translation language="zh"><![CDATA[应用密码]]></translation>
         <translation language="fr"><![CDATA[app secret]]></translation>
         <translation language="de"><![CDATA[app secret]]></translation>
         <translation language="hu"><![CDATA[app secret]]></translation>
         <translation language="es"><![CDATA[app secret]]></translation>
+        <translation language="uk"><![CDATA[Таємний код додатка]]></translation>
+        <translation language="lt"><![CDATA[app slaptas žodis]]></translation>
+        <translation language="tr"><![CDATA[app secret]]></translation>
       </item>
-      <item type="label" name="MaximumWidth">
-        <translation language="nl"><![CDATA[maximale breedte]]></translation>
-        <translation language="en"><![CDATA[maximum width]]></translation>
+      <item type="label" name="LicenseKey">
+        <translation language="nl"><![CDATA[Licentie key]]></translation>
+        <translation language="en"><![CDATA[License key]]></translation>
+        <translation language="de"><![CDATA[Lizenz-Schlüssel]]></translation>
+        <translation language="es"><![CDATA[llave de licencia]]></translation>
+        <translation language="uk"><![CDATA[Ліцензійний ключ]]></translation>
+        <translation language="hu"><![CDATA[Licenc kulcs]]></translation>
+      </item>
+      <item type="label" name="LicenseName">
+        <translation language="nl"><![CDATA[Licentie naam]]></translation>
+        <translation language="en"><![CDATA[License name]]></translation>
+        <translation language="de"><![CDATA[Lizenz-Name]]></translation>
+        <translation language="es"><![CDATA[nombre de licencia]]></translation>
+        <translation language="uk"><![CDATA[Назва ліцензії]]></translation>
+        <translation language="hu"><![CDATA[Licenc név]]></translation>
       </item>
       <item type="label" name="MaximumHeight">
         <translation language="nl"><![CDATA[maximale hoogte]]></translation>
         <translation language="en"><![CDATA[maximum height]]></translation>
+        <translation language="de"><![CDATA[maximale Höhe]]></translation>
+        <translation language="es"><![CDATA[altura máxima]]></translation>
+        <translation language="uk"><![CDATA[Максимальна висота]]></translation>
+        <translation language="hu"><![CDATA[maximum magasság]]></translation>
+      </item>
+      <item type="label" name="MaximumWidth">
+        <translation language="nl"><![CDATA[maximale breedte]]></translation>
+        <translation language="en"><![CDATA[maximum width]]></translation>
+        <translation language="de"><![CDATA[maximale Breite]]></translation>
+        <translation language="es"><![CDATA[ancho máximo]]></translation>
+        <translation language="uk"><![CDATA[Максимальна ширина]]></translation>
+        <translation language="hu"><![CDATA[maximum szélesség]]></translation>
       </item>
       <item type="label" name="SEOSettings">
         <translation language="nl"><![CDATA[SEO instellingen]]></translation>
         <translation language="en"><![CDATA[SEO settings]]></translation>
         <translation language="it"><![CDATA[Impostazioni SEO]]></translation>
-        <translation language="tr"><![CDATA[SEO ayarları]]></translation>
         <translation language="ru"><![CDATA[Настройки SEO]]></translation>
         <translation language="zh"><![CDATA[搜索引擎优化设置]]></translation>
         <translation language="fr"><![CDATA[réglages SEO]]></translation>
         <translation language="de"><![CDATA[SEO-Einstellungen]]></translation>
         <translation language="hu"><![CDATA[SEO beállítások]]></translation>
         <translation language="es"><![CDATA[configuracion SEO]]></translation>
-      </item>
-      <item type="label" name="LicenseKey">
-        <translation language="nl"><![CDATA[Licentie key]]></translation>
-        <translation language="en"><![CDATA[License key]]></translation>
-      </item>
-      <item type="label" name="LicenseName">
-        <translation language="nl"><![CDATA[Licentie naam]]></translation>
-        <translation language="en"><![CDATA[License name]]></translation>
+        <translation language="uk"><![CDATA[Налаштування SEO]]></translation>
+        <translation language="tr"><![CDATA[SEO ayarları]]></translation>
       </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
@@ -75,7 +98,7 @@
         <translation language="fr"><![CDATA[Certains réglages ne sont pas configurés.]]></translation>
         <translation language="hu"><![CDATA[Néhény beállítás még nincs konfigurálva.]]></translation>
         <translation language="de"><![CDATA[Einige Einstellungen sind noch nicht konfiguriert.]]></translation>
-        <translation language="es"><![CDATA[Algunas configuraciones no estan configuradas aun.]]></translation>
+        <translation language="es"><![CDATA[Algunas configuraciones aún no estan configuradas.]]></translation>
       </item>
       <item type="message" name="HelpAPIKeys">
         <translation language="nl"><![CDATA[Toegangscodes voor gebruikte webservices:]]></translation>
@@ -88,13 +111,19 @@
         <translation language="de"><![CDATA[Zugangscode für Webdienste.]]></translation>
         <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
       </item>
-      <item type="message" name="HelpCkfinderMaximumWidth">
-        <translation language="nl"><![CDATA[Stel de maximale breedte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
-        <translation language="en"><![CDATA[Configure the maximum width (in pixels) that CKFinder can be opened at.]]></translation>
-      </item>
       <item type="message" name="HelpCkfinderMaximumHeight">
         <translation language="nl"><![CDATA[Stel de maximale hoogte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
         <translation language="en"><![CDATA[Configure the maximum height (in pixels) that CKFinder can be opened at.]]></translation>
+        <translation language="de"><![CDATA[Stelle die maximale Höhe (in Pixeln) ein, in der CKFinder geöffnet werden kann.]]></translation>
+        <translation language="es"><![CDATA[Configura la máxima altura (en pixeles) en que puede abrirse CKFinder.]]></translation>
+        <translation language="hu"><![CDATA[A maximum magasság (pixelben) beállítása, hogy hogy nyiljon meg a CKFinder.]]></translation>
+      </item>
+      <item type="message" name="HelpCkfinderMaximumWidth">
+        <translation language="nl"><![CDATA[Stel de maximale breedte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
+        <translation language="en"><![CDATA[Configure the maximum width (in pixels) that CKFinder can be opened at.]]></translation>
+        <translation language="de"><![CDATA[Stelle die maximale Breite (in Pixeln) ein, in der CKFinder geöffnet werden kann.]]></translation>
+        <translation language="es"><![CDATA[Configura el ancho máximo (en pixeles) en que puede abrirse CKFinder.]]></translation>
+        <translation language="hu"><![CDATA[A maximum szélesség (pixelben) beállítása, hogy hogy nyiljon meg a CKFinder.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatLong">
         <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
@@ -215,7 +244,7 @@
         <translation language="hu"><![CDATA[A nyelv kiválasztása, ahova a látogatót autómatikusan átirányítja a böngésző.]]></translation>
         <translation language="fr"><![CDATA[Choisissez les languages vers lesquels les gens seront automatiquement redirigés par leurs navigateurs.]]></translation>
         <translation language="de"><![CDATA[Wähle die Sprachen, zu denen Besucher automatisch durch deren Browser weitergeleitet werden dürfen.]]></translation>
-        <translation language="es"><![CDATA[Selecciona la lengua a la que la gente sera redirecionada automáticamente por su navegador.]]></translation>
+        <translation language="es"><![CDATA[Selecciona el idioma al que la gente será redireccionada automáticamente basado en el idioma de su navegador.]]></translation>
       </item>
       <item type="message" name="HelpScriptsFoot">
         <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
@@ -295,8 +324,8 @@
         <translation language="es"><![CDATA[Optar por ignorar el servicio Yahoo! Directory.]]></translation>
       </item>
       <item type="message" name="HelpTimeFormat">
-        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van tijdstippen in de frontend.]]></translation>
-        <translation language="en"><![CDATA[This format is used to display times on the website.]]></translation>
+        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
+        <translation language="en"><![CDATA[This format is used to display dates on the website.]]></translation>
         <translation language="it"><![CDATA[Questo formato è usato per visualizzare le date nel sito.]]></translation>
         <translation language="ru"><![CDATA[Формат даты, используемый на сайте.]]></translation>
         <translation language="zh"><![CDATA[这个格式用于显示网站上的日期。]]></translation>
@@ -314,7 +343,7 @@
         <translation language="de"><![CDATA[Noch keine Admin-IDs.]]></translation>
         <translation language="hu"><![CDATA[Nincs még admin id.]]></translation>
         <translation language="fr"><![CDATA[Pas encore d'identifiants admin]]></translation>
-        <translation language="es"><![CDATA[No hay ids de admin aun.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay ids de admin.]]></translation>
       </item>
       <item type="message" name="SendTestMail">
         <translation language="nl"><![CDATA[verstuur testmail]]></translation>
@@ -325,7 +354,7 @@
         <translation language="de"><![CDATA[sende Testmail]]></translation>
         <translation language="hu"><![CDATA[teszt e-mail küldése]]></translation>
         <translation language="fr"><![CDATA[envoyer un mail test]]></translation>
-        <translation language="es"><![CDATA[envia email de prueba]]></translation>
+        <translation language="es"><![CDATA[enviar email de prueba]]></translation>
       </item>
       <item type="message" name="SEONoFollowInComments">
         <translation language="nl"><![CDATA[<code>rel="nofollow"</code> voor links in reacties]]></translation>
@@ -342,25 +371,25 @@
         <translation language="nl"><![CDATA[dit is een test]]></translation>
         <translation language="en"><![CDATA[this is just a test]]></translation>
         <translation language="it"><![CDATA[questo è solo una prova]]></translation>
-        <translation language="tr"><![CDATA[Bu sadece bir denemedir.]]></translation>
         <translation language="ru"><![CDATA[Это просто тест.]]></translation>
         <translation language="zh"><![CDATA[这是一条测试消息]]></translation>
         <translation language="de"><![CDATA[dies ist nur ein Test]]></translation>
         <translation language="hu"><![CDATA[ez csak egy teszt]]></translation>
         <translation language="fr"><![CDATA[il s'eagit juste d'un test]]></translation>
-        <translation language="es"><![CDATA[esto es solo una prueba]]></translation>
+        <translation language="es"><![CDATA[esto sólo es una prueba]]></translation>
+        <translation language="tr"><![CDATA[Bu sadece bir denemedir.]]></translation>
       </item>
       <item type="message" name="TestWasSent">
         <translation language="nl"><![CDATA[De testmail is verzonden.]]></translation>
         <translation language="en"><![CDATA[The test email was sent.]]></translation>
         <translation language="it"><![CDATA[L'email di prova è stata inviata.]]></translation>
-        <translation language="tr"><![CDATA[Deneme emaili gönderildi.]]></translation>
         <translation language="ru"><![CDATA[Сообщение отправлено.]]></translation>
         <translation language="zh"><![CDATA[测试邮件已发送。]]></translation>
         <translation language="de"><![CDATA[Die Testmail wurde versandt.]]></translation>
         <translation language="hu"><![CDATA[A teszt e-mail elküldve.]]></translation>
         <translation language="fr"><![CDATA[L'e-mail tests a été envoyé.]]></translation>
         <translation language="es"><![CDATA[El email de prueba ha sido enviado.]]></translation>
+        <translation language="tr"><![CDATA[Deneme emaili gönderildi.]]></translation>
       </item>
       <item type="error" name="PortIsRequired">
         <translation language="nl"><![CDATA[Poort is verplicht.]]></translation>

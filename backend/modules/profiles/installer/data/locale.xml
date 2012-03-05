@@ -12,6 +12,8 @@
         <translation language="fr"><![CDATA[actif]]></translation>
         <translation language="hu"><![CDATA[aktív]]></translation>
         <translation language="es"><![CDATA[activo]]></translation>
+        <translation language="uk"><![CDATA[Активний]]></translation>
+        <translation language="lt"><![CDATA[aktyvus]]></translation>
       </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
@@ -23,6 +25,8 @@
         <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
         <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
         <translation language="es"><![CDATA[agregar grupo]]></translation>
+        <translation language="uk"><![CDATA[Додати групу]]></translation>
+        <translation language="lt"><![CDATA[nauja grupė]]></translation>
       </item>
       <item type="label" name="AddMembership">
         <translation language="nl"><![CDATA[lidmaatschap toevoegen]]></translation>
@@ -34,6 +38,8 @@
         <translation language="de"><![CDATA[Mitgliedschaft hinzufügen]]></translation>
         <translation language="hu"><![CDATA[tagság hozzáadása]]></translation>
         <translation language="es"><![CDATA[agregar miembros]]></translation>
+        <translation language="uk"><![CDATA[Додати членство]]></translation>
+        <translation language="lt"><![CDATA[nauja narystė]]></translation>
       </item>
       <item type="label" name="AddToGroup">
         <translation language="nl"><![CDATA[toevoegen aan een groep]]></translation>
@@ -45,6 +51,8 @@
         <translation language="fr"><![CDATA[ajouter à un groupe]]></translation>
         <translation language="hu"><![CDATA[csoporthoz hozzáad]]></translation>
         <translation language="es"><![CDATA[agregar a un grupo]]></translation>
+        <translation language="uk"><![CDATA[Додати групу]]></translation>
+        <translation language="lt"><![CDATA[priskirti grupei]]></translation>
       </item>
       <item type="label" name="BirthDate">
         <translation language="nl"><![CDATA[geboortedatum]]></translation>
@@ -56,6 +64,8 @@
         <translation language="fr"><![CDATA[date de naissance]]></translation>
         <translation language="hu"><![CDATA[születési idő]]></translation>
         <translation language="es"><![CDATA[fecha de nacimiento]]></translation>
+        <translation language="uk"><![CDATA[Дата народження]]></translation>
+        <translation language="lt"><![CDATA[gimimo data]]></translation>
       </item>
       <item type="label" name="Blocked">
         <translation language="nl"><![CDATA[geblokkeerd]]></translation>
@@ -67,6 +77,8 @@
         <translation language="fr"><![CDATA[bloqué]]></translation>
         <translation language="hu"><![CDATA[tiltott]]></translation>
         <translation language="es"><![CDATA[bloqueado]]></translation>
+        <translation language="uk"><![CDATA[Заблоковано]]></translation>
+        <translation language="lt"><![CDATA[blokuotas]]></translation>
       </item>
       <item type="label" name="City">
         <translation language="nl"><![CDATA[stad]]></translation>
@@ -78,6 +90,8 @@
         <translation language="fr"><![CDATA[ville]]></translation>
         <translation language="hu"><![CDATA[város]]></translation>
         <translation language="es"><![CDATA[ciudad]]></translation>
+        <translation language="uk"><![CDATA[Місто]]></translation>
+        <translation language="lt"><![CDATA[miestas]]></translation>
       </item>
       <item type="label" name="Country">
         <translation language="nl"><![CDATA[land]]></translation>
@@ -88,7 +102,9 @@
         <translation language="de"><![CDATA[Land]]></translation>
         <translation language="fr"><![CDATA[pays]]></translation>
         <translation language="hu"><![CDATA[ország]]></translation>
-        <translation language="es"><![CDATA[pais]]></translation>
+        <translation language="es"><![CDATA[país]]></translation>
+        <translation language="uk"><![CDATA[Країна]]></translation>
+        <translation language="lt"><![CDATA[šalis]]></translation>
       </item>
       <item type="label" name="Deleted">
         <translation language="nl"><![CDATA[verwijderd]]></translation>
@@ -100,6 +116,8 @@
         <translation language="fr"><![CDATA[effacé]]></translation>
         <translation language="hu"><![CDATA[törölt]]></translation>
         <translation language="es"><![CDATA[eliminado]]></translation>
+        <translation language="uk"><![CDATA[Видалено]]></translation>
+        <translation language="lt"><![CDATA[ištrintas]]></translation>
       </item>
       <item type="label" name="DisplayName">
         <translation language="nl"><![CDATA[weergave naam]]></translation>
@@ -111,6 +129,8 @@
         <translation language="de"><![CDATA[Nickname]]></translation>
         <translation language="hu"><![CDATA[becenév]]></translation>
         <translation language="es"><![CDATA[nombre mostrado]]></translation>
+        <translation language="uk"><![CDATA[Відображуване І'мя]]></translation>
+        <translation language="lt"><![CDATA[rodomas pavadinimas]]></translation>
       </item>
       <item type="label" name="EditGroup">
         <translation language="nl"><![CDATA[groep aanpassen]]></translation>
@@ -122,6 +142,7 @@
         <translation language="fr"><![CDATA[éditer le groupe]]></translation>
         <translation language="hu"><![CDATA[csoport szerkesztése]]></translation>
         <translation language="es"><![CDATA[editar grupo]]></translation>
+        <translation language="uk"><![CDATA[Редагувати групу]]></translation>
       </item>
       <item type="label" name="EditMembership">
         <translation language="nl"><![CDATA[lidmaatschap aanpassen]]></translation>
@@ -133,6 +154,7 @@
         <translation language="fr"><![CDATA[éditer l'adhésion]]></translation>
         <translation language="hu"><![CDATA[tagság szerkesztése]]></translation>
         <translation language="es"><![CDATA[editar miembro]]></translation>
+        <translation language="uk"><![CDATA[Редагувати членство]]></translation>
       </item>
       <item type="label" name="ExpiresOn">
         <translation language="nl"><![CDATA[vervalt op]]></translation>
@@ -144,6 +166,7 @@
         <translation language="fr"><![CDATA[expire le]]></translation>
         <translation language="hu"><![CDATA[lejár]]></translation>
         <translation language="es"><![CDATA[expira en]]></translation>
+        <translation language="uk"><![CDATA[Збігає]]></translation>
       </item>
       <item type="label" name="Female">
         <translation language="nl"><![CDATA[vrouw]]></translation>
@@ -155,6 +178,8 @@
         <translation language="fr"><![CDATA[femme]]></translation>
         <translation language="hu"><![CDATA[nő]]></translation>
         <translation language="es"><![CDATA[mujer]]></translation>
+        <translation language="uk"><![CDATA[Жінка]]></translation>
+        <translation language="lt"><![CDATA[moteris]]></translation>
       </item>
       <item type="label" name="FirstName">
         <translation language="nl"><![CDATA[voornaam]]></translation>
@@ -166,6 +191,8 @@
         <translation language="fr"><![CDATA[prénom]]></translation>
         <translation language="hu"><![CDATA[keresztnév]]></translation>
         <translation language="es"><![CDATA[primer nombre]]></translation>
+        <translation language="uk"><![CDATA[І'мя]]></translation>
+        <translation language="lt"><![CDATA[Vardas]]></translation>
       </item>
       <item type="label" name="Gender">
         <translation language="nl"><![CDATA[geslacht]]></translation>
@@ -177,6 +204,8 @@
         <translation language="fr"><![CDATA[genre]]></translation>
         <translation language="hu"><![CDATA[nem]]></translation>
         <translation language="es"><![CDATA[género]]></translation>
+        <translation language="uk"><![CDATA[Стать]]></translation>
+        <translation language="lt"><![CDATA[lytis]]></translation>
       </item>
       <item type="label" name="GroupName">
         <translation language="nl"><![CDATA[groep naam]]></translation>
@@ -188,6 +217,8 @@
         <translation language="fr"><![CDATA[nom de groupe]]></translation>
         <translation language="hu"><![CDATA[csoport név]]></translation>
         <translation language="es"><![CDATA[nombre del grupo]]></translation>
+        <translation language="uk"><![CDATA[Назва групи]]></translation>
+        <translation language="lt"><![CDATA[grupės pavadinimas]]></translation>
       </item>
       <item type="label" name="Groups">
         <translation language="nl"><![CDATA[groepen]]></translation>
@@ -199,6 +230,8 @@
         <translation language="fr"><![CDATA[groupes]]></translation>
         <translation language="hu"><![CDATA[csoportok]]></translation>
         <translation language="es"><![CDATA[grupos]]></translation>
+        <translation language="uk"><![CDATA[Групи]]></translation>
+        <translation language="lt"><![CDATA[grupės]]></translation>
       </item>
       <item type="label" name="Inactive">
         <translation language="nl"><![CDATA[inactief]]></translation>
@@ -210,6 +243,8 @@
         <translation language="fr"><![CDATA[inactif]]></translation>
         <translation language="hu"><![CDATA[inaktív]]></translation>
         <translation language="es"><![CDATA[inactivo]]></translation>
+        <translation language="uk"><![CDATA[Не активний]]></translation>
+        <translation language="lt"><![CDATA[neaktyvus]]></translation>
       </item>
       <item type="label" name="LastName">
         <translation language="nl"><![CDATA[achternaam]]></translation>
@@ -221,6 +256,7 @@
         <translation language="fr"><![CDATA[nom]]></translation>
         <translation language="hu"><![CDATA[vezetéknév]]></translation>
         <translation language="es"><![CDATA[apellido]]></translation>
+        <translation language="uk"><![CDATA[Прізвище]]></translation>
       </item>
       <item type="label" name="Male">
         <translation language="nl"><![CDATA[man]]></translation>
@@ -232,6 +268,7 @@
         <translation language="fr"><![CDATA[homme]]></translation>
         <translation language="hu"><![CDATA[férfi]]></translation>
         <translation language="es"><![CDATA[hombre]]></translation>
+        <translation language="uk"><![CDATA[Чеоловік]]></translation>
       </item>
       <item type="label" name="MembersCount">
         <translation language="nl"><![CDATA[leden aantal]]></translation>
@@ -243,6 +280,7 @@
         <translation language="fr"><![CDATA[nombre de membre]]></translation>
         <translation language="hu"><![CDATA[tagok száma]]></translation>
         <translation language="es"><![CDATA[números de miembros]]></translation>
+        <translation language="uk"><![CDATA[К-ть користувачів]]></translation>
       </item>
       <item type="label" name="RegisteredOn">
         <translation language="nl"><![CDATA[geregistreerd op]]></translation>
@@ -254,6 +292,7 @@
         <translation language="fr"><![CDATA[enregistré le]]></translation>
         <translation language="hu"><![CDATA[regisztrált]]></translation>
         <translation language="es"><![CDATA[registrado en]]></translation>
+        <translation language="uk"><![CDATA[Дата реєстрації]]></translation>
       </item>
       <item type="label" name="Unblock">
         <translation language="nl"><![CDATA[activeer]]></translation>
@@ -265,6 +304,7 @@
         <translation language="fr"><![CDATA[débloquer]]></translation>
         <translation language="hu"><![CDATA[felold]]></translation>
         <translation language="es"><![CDATA[desbloquear]]></translation>
+        <translation language="uk"><![CDATA[Розблокувати]]></translation>
       </item>
       <item type="label" name="Undelete">
         <translation language="nl"><![CDATA[activeer]]></translation>
@@ -276,6 +316,7 @@
         <translation language="fr"><![CDATA[annuler l'effacement]]></translation>
         <translation language="hu"><![CDATA[visszaállít]]></translation>
         <translation language="es"><![CDATA[rescuperar]]></translation>
+        <translation language="uk"><![CDATA[Поновити]]></translation>
       </item>
       <item type="message" name="ConfirmBlock">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" wil blokkeren?]]></translation>
@@ -330,6 +371,7 @@
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer ce profil du groupe "%1$s"?]]></translation>
         <translation language="de"><![CDATA[Soll dieses Profil wirklich aus der Gruppe "%1$s" entfernen willst?]]></translation>
         <translation language="hu"><![CDATA[Biztos hogy törölni akarod ezt a profilt a(z) "%1$s" csoportból?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de querer borrar este perfil del grupo "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmUnblock">
         <translation language="nl"><![CDATA[Ben je zeker dat je "%1$s" terug wil activeren?]]></translation>
