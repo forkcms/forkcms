@@ -255,9 +255,15 @@ class BackendTagsModel
 		);
 
 		// remove old links
-		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ?', $otherId);
+		if(!empty($currentTags))
+		{
+			$db->delete(
+				'modules_tags',
+				'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ? AND module = ?',
+				array($otherId, $module)
+			);
+		}
 
-		// tags provided
 		if(!empty($tags))
 		{
 			// loop tags
