@@ -13,6 +13,10 @@
         <translation language="fr"><![CDATA[L'adresse n'a pas pu être convertie en coordonnées.]]></translation>
         <translation language="es"><![CDATA[La dirección no pudo ser convertida en coordenadas.]]></translation>
       </item>
+      <item type="label" name="AddToMap">
+        <translation language="nl"><![CDATA[aan kaart toevoegen]]></translation>
+        <translation language="en"><![CDATA[add to map]]></translation>
+      </item>
       <item type="label" name="Auto">
         <translation language="nl"><![CDATA[automatisch]]></translation>
         <translation language="en"><![CDATA[automatic]]></translation>
@@ -99,6 +103,10 @@
         <translation language="es"><![CDATA[terreno]]></translation>
         <translation language="uk"><![CDATA[Місцевість]]></translation>
       </item>
+      <item type="label" name="UpdateMap">
+        <translation language="nl"><![CDATA[kaart aanpassen]]></translation>
+        <translation language="en"><![CDATA[update map]]></translation>
+      </item>
       <item type="label" name="ZoomLevel">
         <translation language="nl"><![CDATA[zoom niveau]]></translation>
         <translation language="en"><![CDATA[zoom level]]></translation>
@@ -111,6 +119,42 @@
         <translation language="es"><![CDATA[nivel de zoom]]></translation>
         <translation language="uk"><![CDATA[Ступінь наближення]]></translation>
       </item>
+      <item type="message" name="HeightHelp">
+        <translation language="nl"><![CDATA[minimum %1$spx]]></translation>
+        <translation language="en"><![CDATA[Minimum %1$spx]]></translation>
+      </item>
+      <item type="message" name="MapSaved">
+        <translation language="nl"><![CDATA[De map is opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The map is saved.]]></translation>
+      </item>
+      <item type="message" name="ShowMapUrl">
+        <translation language="nl"><![CDATA[Toon de link naar Google Maps]]></translation>
+        <translation language="en"><![CDATA[Show the link to Google Maps]]></translation>
+      </item>
+      <item type="message" name="ShowDirections">
+        <translation language="nl"><![CDATA[Toon de routebeschrijving]]></translation>
+        <translation language="en"><![CDATA[Show directions]]></translation>
+      </item>
+      <item type="message" name="ShowMarkerOverview">
+        <translation language="nl"><![CDATA[Toon de plaatsaanduiding op de grote kaart]]></translation>
+        <translation language="en"><![CDATA[Show the marker on the large map]]></translation>
+      </item>
+      <item type="message" name="WidthHelp">
+        <translation language="nl"><![CDATA[minimum %1$spx en maximum %2$spx]]></translation>
+        <translation language="en"><![CDATA[Minimum %1$spx and maximum %2$spx]]></translation>
+      </item>
     </location>
   </backend>
+  <frontend>
+  	<core>
+      <item type="label" name="ViewLargeMap">
+        <translation language="nl"><![CDATA[Grote kaart weergeven]]></translation>
+        <translation language="en"><![CDATA[Display large map]]></translation>
+      </item>
+      <item type="label" name="ShowDirections">
+        <translation language="nl"><![CDATA[Route berekenen]]></translation>
+        <translation language="en"><![CDATA[Show directions]]></translation>
+      </item>
+    </core>
+  </frontend>
 </locale>

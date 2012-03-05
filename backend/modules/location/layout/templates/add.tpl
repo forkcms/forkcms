@@ -11,17 +11,6 @@
 		{$txtTitle} {$txtTitleError}
 	</p>
 
-	<div class="box">
-		<div class="heading">
-			<h3>
-				<label for="text">{$lblContent|ucfirst}</label>
-			</h3>
-		</div>
-		<div class="optionsRTE">
-			{$txtText} {$txtTextError}
-		</div>
-	</div>
-
 	<div class="box horizontal">
 		<div class="heading">
 			<h3>{$lblAddress|ucfirst}</h3>
@@ -52,7 +41,7 @@
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddToMap|ucfirst}" />
 		</div>
 	</div>
 {/form:add}

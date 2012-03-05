@@ -11,9 +11,22 @@
  * This is the index-action (default), it will display the overview of location items
  *
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendLocationIndex extends BackendBaseActionIndex
 {
+	/**
+	 * The settings form
+	 *
+	 * @var BackendForm
+	 */
+	protected $form;
+
+	/**
+	 * @var array
+	 */
+	protected $items = array(), $settings = array();
+
 	/**
 	 * Execute the action
 	 */
@@ -24,9 +37,40 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		// add js
 		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, false, true);
 
+		$this->loadData();
+
 		$this->loadDataGrid();
+		$this->loadSettingsForm();
+
 		$this->parse();
 		$this->display();
+	}
+
+	/**
+	 * Load the settings
+	 */
+	protected function loadData()
+	{
+		$this->items = BackendLocationModel::getAll();
+		$this->settings = BackendLocationModel::getMapSettings(0);
+		$firstMarker = current($this->items);
+
+		// load the settings from the general settings
+		if(empty($this->settings))
+		{
+			$settings = BackendModel::getModuleSettings();
+			$this->settings = $settings['location'];
+
+			$this->settings['center']['lat'] = $firstMarker['lat'];
+			$this->settings['center']['lng'] = $firstMarker['lng'];
+		}
+
+		// no center point given yet, use the first occurance
+		if(!isset($this->settings['center']))
+		{
+			$this->settings['center']['lat'] = $firstMarker['lat'];
+			$this->settings['center']['lng'] = $firstMarker['lng'];
+		}
 	}
 
 	/**
@@ -47,6 +91,33 @@ class BackendLocationIndex extends BackendBaseActionIndex
 	}
 
 	/**
+	 * Load the settings form
+	 */
+	protected function loadSettingsForm()
+	{
+		$mapTypes = array(
+			'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
+			'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
+			'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
+			'TERRAIN' => BL::lbl('Terrain', $this->getModule())
+		);
+
+		$zoomLevels = array_combine(
+			array_merge(array('auto'), range(3, 18)),
+			array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))
+		);
+
+		$this->form = new BackendForm('settings');
+
+		// add map info (overview map)
+		$this->form->addHidden('map_id', 0);
+		$this->form->addDropdown('zoom_level', $zoomLevels, $this->settings['zoom_level']);
+		$this->form->addText('width', $this->settings['width']);
+		$this->form->addText('height', $this->settings['height']);
+		$this->form->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
+	}
+
+	/**
 	 * Parse the datagrid
 	 */
 	protected function parse()
@@ -54,12 +125,11 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		parent::parse();
 
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
-
-		// get settings
-		$settings = BackendModel::getModuleSettings();
+		$this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
 
 		// assign to template
-		$this->tpl->assign('items', BackendLocationModel::getAll());
-		$this->tpl->assign('settings', $settings['location']);
+		$this->tpl->assign('items', $this->items);
+		$this->tpl->assign('settings', $this->settings);
+		$this->form->parse($this->tpl);
 	}
 }

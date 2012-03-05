@@ -9,6 +9,7 @@ Improvements:
 * Locale: added translations for Swedish (by Erik Holmquist - http://www.holmquist.de & Peter Mayertz - http://www.mayertz.se)
 * Locale: added translations for Ukrainian (by Манжела Борис)
 * Locale: added translations for Lithuanian (by Rolanda Naujasdizainas - http://www.naujasdizainas.lt)
+* Location: revised Location-module, added some functionality.
 
 Bugfixes:
 

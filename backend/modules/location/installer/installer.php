@@ -49,7 +49,8 @@ class LocationInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'location', 'add');
 		$this->setActionRights(1, 'location', 'edit');
 		$this->setActionRights(1, 'location', 'delete');
-		$this->setActionRights(1, 'location', 'settings');
+		$this->setActionRights(1, 'location', 'save_live_location');
+		$this->setActionRights(1, 'location', 'update_marker');
 
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');

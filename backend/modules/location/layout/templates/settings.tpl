@@ -8,36 +8,6 @@
 {form:settings}
 	<div class="box horizontal">
 		<div class="heading">
-			<h3>{$lblGroupMap|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<p>
-				<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
-				{$ddmZoomLevel} {$ddmZoomLevelError}
-			</p>
-		</div>
-		<div class="options">
-			<p>
-				<label for="width">{$lblWidth|ucfirst}</label>
-				{$txtWidth} {$txtWidthError}
-			</p>
-		</div>
-		<div class="options">
-			<p>
-				<label for="height">{$lblHeight|ucfirst}</label>
-				{$txtHeight} {$txtHeightError}
-			</p>
-		</div>
-		<div class="options">
-			<p>
-				<label for="mapType">{$lblMapType|ucfirst}</label>
-				{$ddmMapType} {$ddmMapTypeError}
-			</p>
-		</div>
-	</div>
-
-	<div class="box horizontal">
-		<div class="heading">
 			<h3>{$lblIndividualMap|ucfirst}</h3>
 		</div>
 		<div class="options">
@@ -46,16 +16,22 @@
 				{$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
 			</p>
 		</div>
-		<div class="options">
+		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 			<p>
 				<label for="widthWidget">{$lblWidth|ucfirst}</label>
 				{$txtWidthWidget} {$txtWidthWidgetError}
+				<span class="helpTxt">
+					{$msgWidthHelp|sprintf:300:800}
+				</span>
 			</p>
 		</div>
-		<div class="options">
+		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 			<p>
 				<label for="heightWidget">{$lblHeight|ucfirst}</label>
 				{$txtHeightWidget} {$txtHeightWidgetError}
+				<span class="helpTxt">
+					{$msgHeightHelp|sprintf:150}
+				</span>
 			</p>
 		</div>
 		<div class="options">
