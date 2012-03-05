@@ -997,6 +997,10 @@
         <translation language="tr"><![CDATA[sayfalar]]></translation>
         <translation language="el"><![CDATA[σελίδες]]></translation>
       </item>
+      <item type="label" name="ParentPage">
+        <translation language="nl"><![CDATA[bovenliggende pagina]]></translation>
+        <translation language="en"><![CDATA[parent page]]></translation>
+      </item>
       <item type="label" name="Password">
         <translation language="nl"><![CDATA[wachtwoord]]></translation>
         <translation language="en"><![CDATA[password]]></translation>
