@@ -17,6 +17,7 @@ Improvements:
 * API: Added a client to the API, useful for general API development and working with third parties.
 * Core: sharing widget now uses the latest linkedin sharing button.
 * Core: sharing widget now also supports Google Plus.
+* Search: removed deprecated addIndex/editIndex from BackendSearchModel.
 
 Bugfixes:
 
