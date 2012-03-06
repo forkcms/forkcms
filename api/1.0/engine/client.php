@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Client for the Fork CMS API.
+ *
+ * @author Dave Lens <dave.lens@wijs.be>
+ */
 class APIClient extends API
 {
 	/**
@@ -107,7 +112,7 @@ class APIClient extends API
 
 			$parameters[] = array(
 				'name' => $name,
-				'label' => $name  .'-'. rand(1, 99999),
+				'label' => $name . '-' . rand(1, 99999),
 				'optional' => (substr_count($matches[2][$i], '[optional]') > 0),
 				'description' => $matches[3][$i]
 			);

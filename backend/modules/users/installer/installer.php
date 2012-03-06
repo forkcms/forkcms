@@ -85,7 +85,6 @@ class UsersInstaller extends ModuleInstaller
 	/**
 	 * Check the strength of the password
 	 *
-	 * @param string $password The password.
 	 * @return string
 	 */
 	public function checkPassword()
