@@ -12,28 +12,14 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendURL
+class BackendURL extends BackendBaseObject
 {
-	/**
-	 * The current action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
 	/**
 	 * The host, will be used for cookies
 	 *
 	 * @var	string
 	 */
 	private $host;
-
-	/**
-	 * The current module
-	 *
-	 * @var	string
-	 */
-	private $module;
 
 	/**
 	 * The querystring
@@ -53,13 +39,17 @@ class BackendURL
 	}
 
 	/**
-	 * Get the current action found in the URL
+	 * Get the domain
 	 *
-	 * @return string
+	 * @return string The current domain (without www.)
 	 */
-	public function getAction()
+	public function getDomain()
 	{
-		return $this->action;
+		// get host
+		$host = $this->getHost();
+
+		// replace
+		return str_replace('www.', '', $host);
 	}
 
 	/**
@@ -70,16 +60,6 @@ class BackendURL
 	public function getHost()
 	{
 		return $this->host;
-	}
-
-	/**
-	 * Get the current module found in the URL
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
 	}
 
 	/**
@@ -200,12 +180,26 @@ class BackendURL
 			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';
 		}
 
-		// if it is an request for a JS-file or an AJAX-file we only need the module
-		if($isJS || $isAJAX)
+		// AJAX parameters are passed via GET or POST
+		if($isAJAX)
 		{
-			$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
-			$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
-			BackendLanguage::setWorkingLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
+			$module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
+			$action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
+			$language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
+			$module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
+			$action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
+			$language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
+
+			$this->setModule($module);
+			$this->setAction($action);
+			BackendLanguage::setWorkingLanguage($language);
+		}
+
+		// JS parameters are passed via GET
+		elseif($isJS)
+		{
+			$this->setModule(isset($_GET['module']) ? $_GET['module'] : '');
+			BackendLanguage::setWorkingLanguage(isset($_GET['language']) ? $_GET['language'] : SITE_DEFAULT_LANGUAGE);
 		}
 
 		// regular request
@@ -283,16 +277,6 @@ class BackendURL
 	}
 
 	/**
-	 * Set the current action
-	 *
-	 * @param string $action The action to set.
-	 */
-	private function setAction($action)
-	{
-		$this->action = (string) $action;
-	}
-
-	/**
 	 * Set the host
 	 *
 	 * @param string $host The host.
@@ -318,25 +302,15 @@ class BackendURL
 		}
 
 		// no authenticated user, but available from a cookie
-		elseif(SpoonCookie::exists('interface_language'))
+		elseif(CommonCookie::exists('interface_language'))
 		{
-			$locale = SpoonCookie::get('interface_language');
+			$locale = CommonCookie::get('interface_language');
 		}
 
 		// validate if the requested locale is possible
 		if(!in_array($locale, $possibleLocale)) $locale = $default;
 
 		BackendLanguage::setLocale($locale);
-	}
-
-	/**
-	 * Set the current module
-	 *
-	 * @param string $module The module to set.
-	 */
-	public function setModule($module)
-	{
-		$this->module = (string) $module;
 	}
 
 	/**

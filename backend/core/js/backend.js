@@ -210,7 +210,7 @@ jsBackend.ckeditor =
 
 		// language options
 		contentsLanguage: '{$LANGUAGE}',
-		language: '{$INTERFACE_LANGUAGE}',
+		language: '{$EDITOR_LANGUAGE}',
 
 		// paste options
 		forcePasteAsPlainText: true,
@@ -1083,8 +1083,8 @@ jsBackend.controls =
 		// strong password
 		if(score >= 4) return 'strong';
 
-		// ok
-		if(score >= 2) return 'ok';
+		// average
+		if(score >= 2) return 'average';
 
 		// fallback
 		return 'weak';

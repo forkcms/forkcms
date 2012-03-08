@@ -138,7 +138,7 @@ class BackendUsersModel
 
 		// get general user data
 		$user = (array) $db->getRecord(
-			'SELECT i.id, i.email, i.active
+			'SELECT i.id, i.email, i.password, i.active
 			 FROM users AS i
 			 WHERE i.id = ?',
 			array($id)
@@ -259,6 +259,23 @@ class BackendUsersModel
 	}
 
 	/**
+	 * Fetch a user setting for a specific user
+	 *
+	 * @param int $userId The id of the user.
+	 * @param string $setting The name of the setting to get.
+	 * @return mixed
+	 */
+	public static function getSetting($userId, $setting)
+	{
+		return @unserialize(BackendModel::getDB()->getVar(
+			'SELECT value
+			 FROM users_settings
+			 WHERE user_id = ? AND name = ?',
+			array((int) $userId, (string) $setting)
+		));
+	}
+
+	/**
 	 * Fetch the list of time formats including examples of these formats.
 	 *
 	 * @return array
@@ -325,6 +342,25 @@ class BackendUsersModel
 
 		// return the new users' id
 		return $userId;
+	}
+
+	/**
+	 * Set a user setting for a specific user
+	 *
+	 * @param int $userId The id of the user.
+	 * @param string $setting The name of the setting to set.
+	 * @param string $value The value of the setting to set.
+	 * @return mixed
+	 */
+	public static function setSetting($userId, $setting, $value)
+	{
+		// insert or update
+		BackendModel::getDB(true)->execute(
+			'INSERT INTO users_settings(user_id, name, value)
+			 VALUES(?, ?, ?)
+			 ON DUPLICATE KEY UPDATE value = ?',
+			array($userId, $setting, serialize($value), serialize($value))
+		);
 	}
 
 	/**

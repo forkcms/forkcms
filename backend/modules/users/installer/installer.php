@@ -12,6 +12,7 @@
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class UsersInstaller extends ModuleInstaller
 {
@@ -38,6 +39,9 @@ class UsersInstaller extends ModuleInstaller
 			SpoonFile::setContent(PATH_WWW . '/frontend/files/backend_users/avatars/64x64/god.jpg', base64_decode($avatar64x64));
 			SpoonFile::setContent(PATH_WWW . '/frontend/files/backend_users/avatars/32x32/god.jpg', base64_decode($avatar32x32));
 
+			// get the password strength
+			$passwordStrength = $this->checkPassword();
+
 			// build settings
 			$settings['nickname'] = serialize('Fork CMS');
 			$settings['name'] = serialize('Fork');
@@ -48,6 +52,8 @@ class UsersInstaller extends ModuleInstaller
 			$settings['datetime_format'] = serialize(unserialize($settings['date_format']) . ' ' . unserialize($settings['time_format']));
 			$settings['number_format'] = serialize('dot_nothing');
 			$settings['password_key'] = serialize(uniqid());
+			$settings['password_strength'] = serialize($passwordStrength);
+			$settings['current_password_change'] = serialize(time());
 			$settings['avatar'] = serialize('god.jpg');
 
 			// build user
@@ -74,6 +80,57 @@ class UsersInstaller extends ModuleInstaller
 				$this->getDB()->insert('users_settings', array('user_id' => $user['id'], 'name' => $name, 'value' => $value));
 			}
 		}
+	}
+
+	/**
+	 * Check the strength of the password
+	 *
+	 * @return string
+	 */
+	public function checkPassword()
+	{
+		// init vars
+		$password = $this->getVariable('password');
+		$score = 0;
+		$uniqueChars = array();
+
+		// less then 4 chars is just a weak password
+		if(mb_strlen($password) <= 4) return 'weak';
+
+		// loop chars and add unique chars
+		$passwordChars = str_split($password);
+		foreach($passwordChars as $char)
+		{
+			$uniqueChars[$char] = $char;
+		}
+
+		// less then 3 unique chars is just weak
+		if(count($uniqueChars) < 3) return 'weak';
+
+		// more then 6 chars is good
+		if(mb_strlen($password) >= 6) $score++;
+
+		// more then 8 is beter
+		if(mb_strlen($password) >= 8) $score++;
+
+		// @todo
+		// upper and lowercase?
+		if(preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password)) $score += 2;
+
+		// number?
+		if(preg_match('/\d+/', $password)) $score++;
+
+		// special char?
+		if(preg_match('/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/', $password)) $score++;
+
+		// strong password
+		if($score >= 4) return 'strong';
+
+		// average
+		if($score >= 2) return 'average';
+
+		// fallback
+		return 'weak';
 	}
 
 	/**

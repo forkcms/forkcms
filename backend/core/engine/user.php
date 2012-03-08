@@ -157,23 +157,6 @@ class BackendUser
 	}
 
 	/**
-	 * Fetch a user setting for a specific user
-	 *
-	 * @param int $userId The id of the user.
-	 * @param string $setting The name of the setting to get.
-	 * @return mixed
-	 */
-	public static function getSettingByUserId($userId, $setting)
-	{
-		return @unserialize(BackendModel::getDB()->getVar(
-			'SELECT value
-			 FROM users_settings
-			 WHERE user_id = ? AND name = ?',
-			array((int) $userId, (string) $setting)
-		));
-	}
-
-	/**
 	 * Get all settings at once
 	 *
 	 * @return array

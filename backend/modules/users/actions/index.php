@@ -45,7 +45,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		}
 
 		// show the user's nickname
-		$this->dataGrid->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+		$this->dataGrid->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
 	}
 
 	/**

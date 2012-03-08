@@ -22,7 +22,8 @@ class FrontendSearchAjaxSave extends FrontendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$term = SpoonFilter::getPostValue('term', null, '');
+		$searchTerm = SpoonFilter::getPostValue('term', null, '');
+		$term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities($searchTerm);
 
 		// validate
 		if($term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');

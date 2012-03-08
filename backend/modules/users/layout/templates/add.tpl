@@ -34,7 +34,7 @@
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">{$lblNone|ucfirst}</p>
 								<p class="strength weak">{$lblWeak|ucfirst}</p>
-								<p class="strength ok">{$lblOK|ucfirst}</p>
+								<p class="strength average">{$lblAverage|ucfirst}</p>
 								<p class="strength strong">{$lblStrong|ucfirst}</p>
 							</td>
 							<td>

@@ -1,7 +1,42 @@
-3.2.7 (xxxx-xx-xx)
+3.3.0 (2012-03-06)
 --
+Improvements:
+
+* Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
+* Core: only images that are smaller then 5kb will be included in the CSS-file.
+* Core: save cookies httponly by default & automatically secure when browsing over https.
+* Core: make cache-files inaccessible over http.
+* Locale: improved existing translations.
+* Locale: added translations for Spanish (by Yéred Zabdiel)
+* Locale: added translations for Swedish (by Erik Holmquist - http://www.holmquist.de & Peter Mayertz - http://www.mayertz.se)
+* Locale: added translations for Ukrainian (by Манжела Борис)
+* Locale: added translations for Lithuanian (by Rolanda Naujasdizainas - http://www.naujasdizainas.lt)
+* Location: revised Location-module, added some functionality.
+* Pages: added widget for previous/parent/next navigation.
+* Users: show user account statistics on dashboard (last login, last failed login, last password change & password strength).
+* API: Added a client to the API, useful for general API development and working with third parties.
+* Core: sharing widget now uses the latest linkedin sharing button.
+* Core: sharing widget now also supports Google Plus.
+* Search: removed deprecated addIndex/editIndex from BackendSearchModel.
+
 Bugfixes:
 
+* Core: module validation did not take the special core module in account.
+* Core: JS module validation has been fixed.
+* Core: fix XSS vulnerability on ajax searches.
+
+
+3.2.7 (2012-02-28)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.18
+* Core: fixed XSS vulnerabilities.
+* Core: refactored code to unify setting/getting module/action and added additional checks for validity.
+
+Bugfixes:
+
+* Core: fixed issue where media-embed would always embed the media in the last editor, not the selected one.
 * Tags: fixed call to deprecated (removed) method, which caused "related" widget to malfunction.
 
 

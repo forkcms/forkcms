@@ -45,6 +45,17 @@ class GroupsInstaller extends ModuleInstaller
 
 		// insert default dashboard widget
 		$this->insertDashboardWidget('settings', 'analyse', $analyse);
+
+		// create default dashboard widget
+		$statistics = array(
+			'column' => 'left',
+			'position' => 2,
+			'hidden' => false,
+			'present' => true
+		);
+
+		// insert default dashboard widget
+		$this->insertDashboardWidget('users', 'statistics', $statistics);
 	}
 
 	/**

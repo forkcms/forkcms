@@ -26,20 +26,6 @@ class BackendSearchModel
 		 WHERE i.language = ?';
 
 	/**
-	 * @deprecated
-	 * Add an index
-	 *
-	 * @param string $module The module wherin will be searched.
-	 * @param int $otherId The id of the record.
-	 * @param  array $fields A key/value pair of fields to index.
-	 * @param string[optional] $language The frontend language for this entry.
-	 */
-	public static function addIndex($module, $otherId, array $fields, $language = null)
-	{
-		self::saveIndex($module, $otherId, $fields, $language);
-	}
-
-	/**
 	 * Delete a synonym
 	 *
 	 * @param int $id The id of the item we want to delete.
@@ -51,20 +37,6 @@ class BackendSearchModel
 
 		// invalidate the cache for search
 		self::invalidateCache();
-	}
-
-	/**
-	 * @deprecated
-	 * Edit an index
-	 *
-	 * @param string $module The module wherin will be searched.
-	 * @param int $otherId The id of the record.
-	 * @param  array $fields A key/value pair of fields to index.
-	 * @param string[optional] $language The frontend language for this entry.
-	 */
-	public static function editIndex($module, $otherId, array $fields, $language = null)
-	{
-		self::saveIndex($module, $otherId, $fields, $language);
 	}
 
 	/**

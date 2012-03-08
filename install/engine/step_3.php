@@ -67,14 +67,17 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addMultiCheckbox('languages',
 			array(
 				array('value' => 'en', 'label' => 'English'),
-				array('value' => 'cn', 'label' => 'Chinese'),
+				array('value' => 'zh', 'label' => 'Chinese'),
 				array('value' => 'nl', 'label' => 'Dutch'),
 				array('value' => 'fr', 'label' => 'French'),
 				array('value' => 'de', 'label' => 'German'),
 				array('value' => 'hu', 'label' => 'Hungarian'),
 				array('value' => 'it', 'label' => 'Italian'),
+				array('value' => 'lt', 'label' => 'Lithuanian'),
 				array('value' => 'ru', 'label' => 'Russian'),
-				array('value' => 'es', 'label' => 'Spanish')
+				array('value' => 'es', 'label' => 'Spanish'),
+				array('value' => 'sv', 'label' => 'Swedish'),
+				array('value' => 'uk', 'label' => 'Ukrainian')
 			),
 			(SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'en')
 		);
@@ -83,14 +86,17 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addMultiCheckbox('interface_languages',
 			array(
 				array('value' => 'en', 'label' => 'English'),
-				array('value' => 'cn', 'label' => 'Chinese'),
+				array('value' => 'zh', 'label' => 'Chinese'),
 				array('value' => 'nl', 'label' => 'Dutch'),
 				array('value' => 'fr', 'label' => 'French'),
 				array('value' => 'de', 'label' => 'German'),
 				array('value' => 'hu', 'label' => 'Hungarian'),
 				array('value' => 'it', 'label' => 'Italian'),
+				array('value' => 'lt', 'label' => 'Lithuanian'),
 				array('value' => 'ru', 'label' => 'Russian'),
-				array('value' => 'es', 'label' => 'Spanish')
+				array('value' => 'es', 'label' => 'Spanish'),
+				array('value' => 'sv', 'label' => 'Swedish'),
+				array('value' => 'uk', 'label' => 'Ukrainian')
 			),
 			(SpoonSession::exists('interface_languages') ? SpoonSession::get('interface_languages') : 'en')
 		);
@@ -99,14 +105,17 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addDropdown('language',
 			array(
 				'en' => 'English',
-				'cn' => 'Chinese',
+				'zh' => 'Chinese',
 				'nl' => 'Dutch',
 				'fr' => 'French',
 				'de' => 'German',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
+				'lt' => 'Lithuanian',
 				'ru' => 'Russian',
-				'es' => 'Spanish'
+				'es' => 'Spanish',
+				'sv' => 'Swedish',
+				'uk' => 'Ukrainian'
 			),
 			(SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en')
 		);
@@ -115,14 +124,17 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addDropdown('default_language',
 			array(
 				'en' => 'English',
-				'cn' => 'Chinese',
+				'zh' => 'Chinese',
 				'nl' => 'Dutch',
 				'fr' => 'French',
 				'de' => 'German',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
+				'lt' => 'Lithuanian',
 				'ru' => 'Russian',
-				'es' => 'Spanish'
+				'es' => 'Spanish',
+				'sv' => 'Swedish',
+				'uk' => 'Ukrainian'
 			),
 			(SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en')
 		);
@@ -131,14 +143,17 @@ class InstallerStep3 extends InstallerStep
 		$this->frm->addDropdown('default_interface_language',
 			array(
 				'en' => 'English',
-				'cn' => 'Chinese',
+				'zh' => 'Chinese',
 				'nl' => 'Dutch',
 				'fr' => 'French',
 				'de' => 'German',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
+				'lt' => 'Lithuanian',
 				'ru' => 'Russian',
-				'es' => 'Spanish'
+				'es' => 'Spanish',
+				'sv' => 'Swedish',
+				'uk' => 'Ukrainian'
 			),
 			(SpoonSession::exists('default_interface_language') ? SpoonSession::get('default_interface_language') : 'en')
 		);

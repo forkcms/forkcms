@@ -12,9 +12,17 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendUsersEdit extends BackendBaseActionEdit
 {
+	/**
+	 * The authenticated user
+	 *
+	 * @var	BackendUser
+	 */
+	private $authenticatedUser;
+
 	/**
 	 * The user
 	 *
@@ -49,8 +57,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 	 */
 	private function loadForm()
 	{
-		// create user object
+		// create user objects
 		$this->user = new BackendUser($this->id);
+		$this->authenticatedUser = BackendAuthentication::getUser();
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -72,7 +81,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 		// password
 		// check if we're god or same user
-		if(BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod())
+		if($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod())
 		{
 			// allow to set new password
 			$this->frm->addPassword('new_password', null, 75);
@@ -94,8 +103,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 		// permissions
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
+
 		// disable active field for current users
-		if(BackendAuthentication::getUser()->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
+		if($this->authenticatedUser->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
 		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
 		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
 	}
@@ -111,14 +121,18 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		if($this->record['settings']['avatar'] != '') $this->record['settings']['avatar'] .= '?time=' . time();
 
 		// only allow deletion of other users
-		$this->tpl->assign('showUsersDelete', BackendAuthentication::getUser()->getUserId() != $this->id && BackendAuthentication::isAllowedAction('delete'));
+		$this->tpl->assign('showUsersDelete', $this->authenticatedUser->getUserId() != $this->id && BackendAuthentication::isAllowedAction('delete'));
 
 		// assign
 		$this->tpl->assign('record', $this->record);
 		$this->tpl->assign('id', $this->id);
 
 		// assign that we're god or the same user
-		$this->tpl->assign('allowPasswordEdit', (BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod()));
+		$this->tpl->assign('allowPasswordEdit', ($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod()));
+
+		// check if we need to show the password strength and parse the label
+		$this->tpl->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
+		$this->tpl->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
 	}
 
 	/**
@@ -190,10 +204,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				// build user-array
 				$user['id'] = $this->id;
 				if(!$this->user->isGod()) $user['email'] = $fields['email']->getValue(true);
-				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
-
-				// update password (only if filled in)
-				if(isset($fields['new_password']) && $fields['new_password']->isFilled()) $user['password'] = BackendAuthentication::getEncryptedString($fields['new_password']->getValue(), $this->record['settings']['password_key']);
+				if($this->authenticatedUser->getUserId() != $this->record['id']) $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
 
 				// build settings-array
 				$settings['nickname'] = $fields['nickname']->getValue();
@@ -207,6 +218,25 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['csv_split_character'] = $fields['csv_split_character']->getValue();
 				$settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
 				$settings['api_access'] = (bool) $fields['api_access']->getChecked();
+
+				// update password (only if filled in)
+				if(isset($fields['new_password']) && $fields['new_password']->isFilled())
+				{
+					$user['password'] = BackendAuthentication::getEncryptedString($fields['new_password']->getValue(), $this->record['settings']['password_key']);
+
+					// the password has changed
+					if($this->record['password'] != $user['password'])
+					{
+						// save the login timestamp in the user's settings
+						$lastPasswordChange = BackendUsersModel::getSetting($user['id'], 'current_password_change');
+						$settings['current_password_change'] = time();
+						if($lastPasswordChange) $settings['last_password_change'] = $lastPasswordChange;
+
+						// save the password strength
+						$passwordStrength = BackendAuthentication::checkPassword($fields['new_password']->getValue());
+						$settings['password_strength'] = $passwordStrength;
+					}
+				}
 
 				// get selected groups
 				$groups = $fields['groups']->getChecked();
@@ -238,13 +268,16 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				// has the user submitted an avatar?
 				if($fields['avatar']->isFilled())
 				{
+					// init vars
+					$avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
+
 					// delete old avatar if it isn't the default-image
 					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
 					{
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/source/' . $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
 					}
 
 					// create new filename
@@ -254,13 +287,13 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					$settings['avatar'] = $filename;
 
 					// resize (128x128)
-					$fields['avatar']->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $filename, 128, 128, true, false, 100);
+					$fields['avatar']->createThumbnail($avatarsPath . '/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$fields['avatar']->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $filename, 64, 64, true, false, 100);
+					$fields['avatar']->createThumbnail($avatarsPath . '/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$fields['avatar']->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $filename, 32, 32, true, false, 100);
+					$fields['avatar']->createThumbnail($avatarsPath . '/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
 				// save changes

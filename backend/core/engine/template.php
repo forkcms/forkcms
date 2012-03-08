@@ -80,6 +80,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->parseLabels();
 		$this->parseLocale();
 		$this->parseVars();
+		$this->parseEditorLocale();
 
 		// parse headers
 		if(!$customHeaders)
@@ -227,7 +228,7 @@ class BackendTemplate extends SpoonTemplate
 			$this->assign('MODULE', $this->URL->getModule());
 
 			// assign the current action
-			$this->assign('ACTION', $this->URL->getAction());
+			if($this->URL->getAction() != '') $this->assign('ACTION', $this->URL->getAction());
 		}
 
 		// is the user object filled?
@@ -259,6 +260,29 @@ class BackendTemplate extends SpoonTemplate
 	private function parseDebug()
 	{
 		$this->assign('debug', SPOON_DEBUG);
+	}
+
+	/**
+	 * Assign locale for the editor
+	 */
+	private function parseEditorLocale()
+	{
+		// fetch current active language
+		$language = BackendLanguage::getWorkingLanguage();
+
+		// convert to format used by ckeditor/ckfinder
+		switch($language)
+		{
+			case 'zh':
+				$language = 'zh-cn';
+				break;
+
+			default:
+				break;
+		}
+
+		// assign the editor language
+		$this->assign('EDITOR_LANGUAGE', $language);
 	}
 
 	/**

@@ -124,7 +124,7 @@ class SpoonRESTClient
 		}
 
 		// specific when using POST
-		if($method == 'POST')
+		if($method == 'POST' || $method == 'DELETE')
 		{
 			$options[CURLOPT_POST] = true;
 			$options[CURLOPT_POSTFIELDS] = $parameters;

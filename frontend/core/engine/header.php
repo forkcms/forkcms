@@ -645,8 +645,28 @@ class FrontendHeader extends FrontendBaseObject
 					$locale = 'en_US';
 					break;
 
-				case 'cn':
-					$locale = 'zh-CN';
+				case 'zh':
+					$locale = 'zh_CN';
+					break;
+
+				case 'cs':
+					$locale = 'cs_CZ';
+					break;
+
+				case 'el':
+					$locale = 'el_GR';
+					break;
+
+				case 'ja':
+					$locale = 'ja_JP';
+					break;
+
+				case 'sv':
+					$locale = 'sv_SE';
+					break;
+
+				case 'uk':
+					$locale = 'uk_UA';
 					break;
 
 				default:

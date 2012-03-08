@@ -13,6 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Sam Tubbax <sam@sumocoders.be>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAuthentication
 {
@@ -36,6 +37,57 @@ class BackendAuthentication
 	 * @var	BackendUser
 	 */
 	private static $user;
+
+	/**
+	 * Check the strength of the password
+	 *
+	 * @param string $password The password.
+	 * @return string
+	 */
+	public static function checkPassword($password)
+	{
+		// init vars
+		$score = 0;
+		$uniqueChars = array();
+
+		// less then 4 chars is just a weak password
+		if(mb_strlen($password) <= 4) return 'weak';
+
+		// loop chars and add unique chars
+		$passwordChars = str_split($password);
+		foreach($passwordChars as $char)
+		{
+			$uniqueChars[$char] = $char;
+		}
+
+		// less then 3 unique chars is just weak
+		if(count($uniqueChars) < 3) return 'weak';
+
+		// more then 6 chars is good
+		if(mb_strlen($password) >= 6) $score++;
+
+		// more then 8 is beter
+		if(mb_strlen($password) >= 8) $score++;
+
+		// @todo
+		// upper and lowercase?
+		if(preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password)) $score += 2;
+
+		// number?
+		if(preg_match('/\d+/', $password)) $score++;
+
+		// special char?
+		if(preg_match('/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/', $password)) $score++;
+
+		// strong password
+		if($score >= 4) return 'strong';
+
+		// ok
+		if($score >= 2) return 'average';
+
+		// fallback
+		return 'weak';
+	}
 
 	/**
 	 * Cleanup sessions for the current user and sessions that are invalid

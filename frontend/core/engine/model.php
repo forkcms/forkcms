@@ -489,10 +489,10 @@ class FrontendModel
 		if(self::$visitorId !== null) return self::$visitorId;
 
 		// get/init tracking identifier
-		self::$visitorId = SpoonCookie::exists('track') ? (string) SpoonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
+		self::$visitorId = CommonCookie::exists('track') ? (string) CommonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
 
 		// set/prolong tracking cookie
-		SpoonCookie::set('track', self::$visitorId, 86400 * 365);
+		CommonCookie::set('track', self::$visitorId, 86400 * 365);
 
 		return self::getVisitorId();
 	}

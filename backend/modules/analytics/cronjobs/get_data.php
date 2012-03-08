@@ -249,7 +249,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
 					// set cache
 					$data['pages']['entries'] = $gaResults['entries'];
-					$data['pages']['attributes'] = array('totalResults' => $gaResults['totalResults']);
+					$data['pages']['attributes'] = array('totalResults' => isset($gaResults['totalResults']) ? $gaResults['totalResults'] : 0);
 				}
 			}
 

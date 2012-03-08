@@ -922,15 +922,27 @@ class CoreInstaller extends ModuleInstaller
 		$this->setSetting('core', 'smtp_password', $this->getVariable('smtp_password'));
 
 		// default titles
-		$siteTitles = array('en' => 'My website',
-							'cn' => '我的网站',
-							'nl' => 'Mijn website',
-							'fr' => 'Mon site web',
-							'de' => 'Meine Webseite',
-							'hu' => 'Hhonlapom',
-							'it' => 'Il mio sito web',
-							'ru' => 'мой сайт',
-							'es' => 'Mi sitio web');
+		$siteTitles = array(
+			'en' => 'My website',
+			'bg' => 'уебсайта си',
+			'zh' => '我的网站',
+			'cs' => 'můj web',
+			'nl' => 'Mijn website',
+			'fr' => 'Mon site web',
+			'de' => 'Meine Webseite',
+			'el' => 'ιστοσελίδα μου',
+			'hu' => 'Hhonlapom',
+			'it' => 'Il mio sito web',
+			'ja' => '私のウェブサイト',
+			'lt' => 'mano svetainė',
+			'pl' => 'moja strona',
+			'ro' => 'site-ul meu',
+			'ru' => 'мой сайт',
+			'es' => 'Mi sitio web',
+			'sv' => 'min hemsida',
+			'tr' => 'web siteme',
+			'uk' => 'мій сайт'
+		);
 
 		// language specific
 		foreach($this->getLanguages() as $language)

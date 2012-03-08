@@ -121,6 +121,16 @@ class FrontendInit
 			// the real matches
 			$parts = $parts[0];
 
+			// is it an application class?
+			if(isset($parts[0]) && $parts[0] == 'Common')
+			{
+				$chunks = $parts;
+				array_shift($chunks);
+				$pathToLoad = PATH_LIBRARY . '/base/' . strtolower(implode('_', $chunks)) . '.php';
+
+				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
+			}
+
 			// doublecheck that we are looking for a frontend class, of that isn't the case we should stop.
 			$root = array_shift($parts);
 			if(strtolower($root) != 'frontend') return;
