@@ -84,6 +84,9 @@ class FrontendPage extends FrontendBaseObject
 		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
+		// check if the user is allowed
+		FrontendProfilesPermissions::isAllowed('pages', $this->pageId, false, true);
+
 		// set headers if this is a 404 page
 		if($this->pageId == 404) $this->statusCode = 404;
 

@@ -43,9 +43,10 @@ class FrontendProfilesPermissions
 	 * @param string $module The module where the item belongs to.
 	 * @param int $id The id where the item belongs to.
 	 * @param bool[optional] $checkNavigation Should we also check if the user is allowed to see the item in the navigation?
+	 * @param bool[optional] $redirect Should we redirect the user if he's not allowed?
 	 * @return bool
 	 */
-	public static function isAllowed($module, $id, $checkNavigation = false)
+	public static function isAllowed($module, $id, $checkNavigation = false, $redirect = false)
 	{
 		// if the profiles module is not installed, the user is certainly allowed
 		if(!self::isInstalled())
@@ -86,6 +87,26 @@ class FrontendProfilesPermissions
 		}
 
 		// if we make it to this point, the user is not allowed
+		if($redirect)
+		{
+			// user is logged in? Redirect to the 'forbidden' page
+			if(self::$profile)
+			{
+				SpoonHTTP::redirect(FrontendNavigation::getURL(403));
+			}
+
+			// not logged in, redirect to the login page
+			else
+			{
+				$url = Spoon::get('url');
+				$queryString = urlencode('/' . $url->getQueryString());
+
+				SpoonHTTP::redirect(
+					FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . $queryString
+				);
+			}
+		}
+
 		return false;
 	}
 
