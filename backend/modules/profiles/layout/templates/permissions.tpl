@@ -6,13 +6,13 @@
 	</div>
 	<div class="options">
 		<p>
-			<label for="isSecured">{$chkIsSecured} {$msgIsSecured}</label>
+			<label for="isSecured">{$chkIsSecured} {$lblIsSecured}</label>
 		</p>
 
 		{option:profileGroups}
 			<div id="permissionsSettingsContainer">
 				<p>
-					<label for="showInNavigation">{$chkShowInNavigation} {$msgShowInNavigation}</label>
+					<label for="showInNavigation">{$chkShowInNavigation} {$lblShowInNavigation}</label>
 				</p>
 
 				<p><label>{$lblOnlyFor|ucfirst}</label></p>
