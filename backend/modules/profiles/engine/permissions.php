@@ -132,7 +132,8 @@ class BackendProfilesPermissions
 		$db = BackendModel::getDB();
 
 		$this->groups = (array) $db->getRecords(
-			'SELECT id AS value, name AS label FROM profiles_groups',
+			'SELECT id AS value, name AS label FROM profiles_groups
+			 ORDER BY label',
 			array(),
 			'value'
 		);
