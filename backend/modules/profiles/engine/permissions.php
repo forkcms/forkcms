@@ -85,10 +85,12 @@ class BackendProfilesPermissions
 
 	protected function loadForm()
 	{
+		$this->frm->addCheckbox('is_secured', $this->permissions['is_secured']);
+		$this->frm->addCheckbox('show_in_navigation', $this->permissions['show_in_navigation']);
+
 		if(!empty($this->groups))
 		{
-			$this->frm->addCheckbox('is_secured', $this->permissions['is_secured']);
-			$this->frm->addCheckbox('show_in_navigation', $this->permissions['show_in_navigation']);
+			$this->frm->addCheckbox('for_profile_groups', is_array($this->permissions['groups']));
 			$this->frm->addMultiCheckbox('profile_groups', $this->groups, $this->permissions['groups']);
 		}
 	}
@@ -117,7 +119,7 @@ class BackendProfilesPermissions
 		else
 		{
 			$this->permissions['is_secured'] = false;
-			$this->permissions['groups'] = array();
+			$this->permissions['groups'] = null;
 			$this->permissions['show_in_navigation'] = false;
 		}
 	}
@@ -153,10 +155,10 @@ class BackendProfilesPermissions
 			$permission['other_id'] = $this->otherId;
 			$permission['data']['is_secured'] = $this->frm->getField('is_secured')->getChecked();
 			$permission['data']['show_in_navigation'] = $this->frm->getField('show_in_navigation')->getChecked();
-			$permission['data']['groups'] = array();
+			$permission['data']['groups'] = null;
 
 			// get the groups
-			if($this->frm->getField('is_secured')->getChecked())
+			if($this->frm->getField('for_profile_groups')->getChecked())
 			{
 				$permission['data']['groups'] = (array) $this->frm->getField('profile_groups')->getChecked();
 			}
@@ -177,7 +179,7 @@ class BackendProfilesPermissions
 	{
 		if($this->isInstalled && $this->frm->isSubmitted())
 		{
-			if($this->frm->getField('is_secured')->getChecked())
+			if($this->frm->getField('for_profile_groups')->getChecked())
 			{
 				if($this->frm->getField('profile_groups')->isFilled(BL::err('FieldIsRequired')));
 			}

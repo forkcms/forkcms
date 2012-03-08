@@ -9,22 +9,28 @@
 			<label for="isSecured">{$chkIsSecured} {$lblIsSecured}</label>
 		</p>
 
-		{option:profileGroups}
-			<div id="permissionsSettingsContainer">
+		<div id="advancedPermissionsContainer">
+			{option:profileGroups}
 				<p>
-					<label for="showInNavigation">{$chkShowInNavigation} {$lblShowInNavigation}</label>
+					<label for="forProfileGroups">{$chkForProfileGroups} {$lblForProfileGroups}</label>
 				</p>
 
-				<p><label>{$lblOnlyFor|ucfirst}</label></p>
-				<ul class="inputList">
-					{iteration:profileGroups}
-					<li>
-						{$profileGroups.element} <label for="{$profileGroups.id}">{$profileGroups.label}</label>
-					</li>
-					{/iteration:profileGroups}
-				</ul>
-				{$chkProfileGroupsError}
-			</div>
-		{/option:profileGroups}
+				<div id="groupsContainer">
+					<p><label>{$lblOnlyFor|ucfirst}</label></p>
+					<ul class="inputList">
+						{iteration:profileGroups}
+						<li>
+							{$profileGroups.element} <label for="{$profileGroups.id}">{$profileGroups.label}</label>
+						</li>
+						{/iteration:profileGroups}
+					</ul>
+					{$chkProfileGroupsError}
+				</div>
+			{/option:profileGroups}
+
+			<p>
+				<label for="showInNavigation">{$chkShowInNavigation} {$lblShowInNavigation}</label>
+			</p>
+		</div>
 	</div>
 </div>

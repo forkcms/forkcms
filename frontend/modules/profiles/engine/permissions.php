@@ -66,14 +66,24 @@ class FrontendProfilesPermissions
 			// user is logged in?
 			if(self::$profile)
 			{
-				// is the user in one of the allowed groups?
-				foreach(self::$permissions[$module][$id]['groups'] as $group)
+				// all logged in users are allowed?
+				if(self::$permissions[$module][$id]['groups'] == null)
 				{
-					if(self::$profile->isInGroup($group)) return true;
+					return true;
+				}
+
+				// only some selected groups are allowed
+				else
+				{
+					// is the user in one of the allowed groups?
+					foreach(self::$permissions[$module][$id]['groups'] as $group)
+					{
+						if(self::$profile->isInGroup($group)) return true;
+					}
 				}
 			}
 
-			// the user is now allowded, should we check if the user allowed to see the item in the navigation?
+			// the user is not allowded, should we check if the user allowed to see the item in the navigation?
 			if($checkNavigation)
 			{
 				return self::$permissions[$module][$id]['show_in_navigation'];

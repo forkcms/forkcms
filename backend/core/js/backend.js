@@ -1732,28 +1732,53 @@ jsBackend.permissions =
 		// the permissions tab exists
 		if($tabPermissions.length > 0)
 		{
-			$checkbox = $('#isSecured', $tabPermissions);
-			$container = $('#permissionsSettingsContainer', $tabPermissions);
+			$chkIsSecured = $('#isSecured', $tabPermissions);
+			$groupsContainer = $('#groupsContainer', $tabPermissions);
+			$advancedPermissionsContainer = $('#advancedPermissionsContainer', $tabPermissions);
+			$showInNavigationContainer = $('#showInNavigationContainer', $tabPermissions);
 			
-			// check if the needed elements exist
-			if($checkbox.length> 0 && $checkbox.length > 0)
+			// is secured checkbox available?
+			if($chkIsSecured.length > 0)
 			{
 				// toggle the visibility of the group checkboxes
-				$checkbox.on('change', function(e)
+				$chkIsSecured.on('change', function()
 				{
-					if($checkbox.is(':checked'))
+					if($chkIsSecured.is(':checked'))
 					{
-						$container.show();
+						$advancedPermissionsContainer.show();
 					}
 					
 					else
 					{
-						$container.hide();
+						$advancedPermissionsContainer.hide();
 					}
 				});
 				
-				// initial hide of the group checkboxes
-				if(!$checkbox.is(':checked')) $container.hide();
+				// profile groups available?
+				if($groupsContainer.length > 0)
+				{
+					$chkForProfileGroups = $('#forProfileGroups', $tabPermissions);
+					
+					$chkForProfileGroups.on('change', function()
+					{
+						if($chkForProfileGroups.is(':checked'))
+						{
+							$groupsContainer.show();
+						}
+						
+						else
+						{
+							$groupsContainer.hide();
+						}
+					});
+					
+					// initial hide of the profile groups
+					if(!$chkForProfileGroups.is(':checked')) $groupsContainer.hide();
+				}
+				
+				
+				// initial hide of the show in navigation checkbox
+				if(!$chkIsSecured.is(':checked')) $advancedPermissionsContainer.hide();
 			}
 		}
 	}
