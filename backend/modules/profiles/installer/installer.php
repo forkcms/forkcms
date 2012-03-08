@@ -216,6 +216,21 @@ class ProfilesInstaller extends ModuleInstaller
 					array('extra_id' => $changePasswordId, 'position' => 'main'),
 					array('extra_id' => $searchId, 'position' => 'top')
 				);
+
+				// 403 Forbidden page (for the permissions)
+				$this->insertPage(
+					array(
+						'id' => 403,
+						'title' => 'Forbidden',
+						'type' => 'root',
+						'language' => $language,
+						'allow_move' => 'N',
+						'allow_delete' => 'N'
+					),
+					null,
+					array('html' => PATH_WWW . '/backend/modules/profiles/installer/data/' . $language . '/forbidden.txt'),
+					array('extra_id' => $extras['search_form'], 'position' => 'top')
+				);
 			}
 		}
 	}
