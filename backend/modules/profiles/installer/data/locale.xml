@@ -626,7 +626,8 @@
         <translation language="hu"><![CDATA[Ismeretlen művelet.]]></translation>
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
       </item>
-          <dashboard>
+    </profiles>
+    <dashboard>
       <item type="label" name="Registrations">
         <translation language="nl"><![CDATA[registraties]]></translation>
         <translation language="en"><![CDATA[registrations]]></translation>
@@ -718,6 +719,5 @@
         <translation language="es"><![CDATA[perfiles eliminados]]></translation>
       </item>
     </dashboard>
-    </profiles>
   </backend>
 </locale>
