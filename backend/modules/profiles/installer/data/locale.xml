@@ -627,5 +627,19 @@
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
       </item>
     </profiles>
+    <core>
+      <item type="label" name="IsSecured">
+        <translation language="nl"><![CDATA[dit item is beveiligd.]]></translation>
+        <translation language="en"><![CDATA[this item is secured.]]></translation>
+      </item>
+      <item type="label" name="OnlyFor">
+        <translation language="nl"><![CDATA[Enkel beschikbaar voor:]]></translation>
+        <translation language="en"><![CDATA[Only available for:]]></translation>
+      </item>
+      <item type="label" name="ShowInNavigation">
+        <translation language="nl"><![CDATA[toon in de navigatie]]></translation>
+        <translation language="en"><![CDATA[show in navigation]]></translation>
+      </item>
+    </core>
   </backend>
 </locale>
