@@ -626,6 +626,98 @@
         <translation language="hu"><![CDATA[Ismeretlen művelet.]]></translation>
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
       </item>
+          <dashboard>
+      <item type="label" name="Registrations">
+        <translation language="nl"><![CDATA[registraties]]></translation>
+        <translation language="en"><![CDATA[registrations]]></translation>
+        <translation language="it"><![CDATA[registrazioni]]></translation>
+        <translation language="ru"><![CDATA[регистрации]]></translation>
+        <translation language="de"><![CDATA[Registrierungen]]></translation>
+        <translation language="fr"><![CDATA[inscriptions]]></translation>
+        <translation language="hu"><![CDATA[regisztrációk]]></translation>
+        <translation language="es"><![CDATA[registros]]></translation>
+      </item>
+      <item type="label" name="Status">
+        <translation language="nl"><![CDATA[status]]></translation>
+        <translation language="en"><![CDATA[status]]></translation>
+        <translation language="it"><![CDATA[estado]]></translation>
+        <translation language="ru"><![CDATA[статус]]></translation>
+        <translation language="de"><![CDATA[status]]></translation>
+        <translation language="fr"><![CDATA[statut]]></translation>
+        <translation language="hu"><![CDATA[állapot]]></translation>
+        <translation language="es"><![CDATA[estado]]></translation>
+      </item>
+      <item type="label" name="Online">
+        <translation language="nl"><![CDATA[online]]></translation>
+        <translation language="en"><![CDATA[online]]></translation>
+        <translation language="it"><![CDATA[on-line]]></translation>
+        <translation language="ru"><![CDATA[онлайн]]></translation>
+        <translation language="de"><![CDATA[online]]></translation>
+        <translation language="fr"><![CDATA[en ligne]]></translation>
+        <translation language="hu"><![CDATA[online]]></translation>
+        <translation language="es"><![CDATA[en linea]]></translation>
+      </item>
+      <item type="label" name="AllProfiles">
+        <translation language="nl"><![CDATA[alle profielen]]></translation>
+        <translation language="en"><![CDATA[all profiles]]></translation>
+        <translation language="it"><![CDATA[tutti i profili]]></translation>
+        <translation language="ru"><![CDATA[всех профилей]]></translation>
+        <translation language="de"><![CDATA[alle Profile]]></translation>
+        <translation language="fr"><![CDATA[tous les profils]]></translation>
+        <translation language="hu"><![CDATA[összes profil]]></translation>
+        <translation language="es"><![CDATA[todos los perfiles]]></translation>
+      </item>
+      <item type="label" name="NumberOfProfiles">
+        <translation language="nl"><![CDATA[geregistreerde profielen]]></translation>
+        <translation language="en"><![CDATA[registered profiles]]></translation>
+        <translation language="it"><![CDATA[profili registrati]]></translation>
+        <translation language="ru"><![CDATA[зарегистрированных профайлов]]></translation>
+        <translation language="de"><![CDATA[registrierten Profilen]]></translation>
+        <translation language="fr"><![CDATA[profils enregistrés]]></translation>
+        <translation language="hu"><![CDATA[regisztrált profilok]]></translation>
+        <translation language="es"><![CDATA[perfiles registrados]]></translation>
+      </item>
+      <item type="label" name="NumberOfActiveProfiles">
+        <translation language="nl"><![CDATA[actieve profielen]]></translation>
+        <translation language="en"><![CDATA[active profiles]]></translation>
+        <translation language="it"><![CDATA[profili attivi]]></translation>
+        <translation language="ru"><![CDATA[активные профили]]></translation>
+        <translation language="de"><![CDATA[aktive Profile]]></translation>
+        <translation language="fr"><![CDATA[profils actifs]]></translation>
+        <translation language="hu"><![CDATA[aktív profilok]]></translation>
+        <translation language="es"><![CDATA[perfiles activos]]></translation>
+      </item>
+      <item type="label" name="NumberOfInactiveProfiles">
+        <translation language="nl"><![CDATA[inactieve profielen]]></translation>
+        <translation language="en"><![CDATA[inactive profiles]]></translation>
+        <translation language="it"><![CDATA[profili inattivi]]></translation>
+        <translation language="ru"><![CDATA[неактивные профили]]></translation>
+        <translation language="de"><![CDATA[inaktive Profile]]></translation>
+        <translation language="fr"><![CDATA[profils inactifs]]></translation>
+        <translation language="hu"><![CDATA[inaktív profilok]]></translation>
+        <translation language="es"><![CDATA[perfiles inactivos]]></translation>
+      </item>
+      <item type="label" name="NumberOfBlockedProfiles">
+        <translation language="nl"><![CDATA[geblokeerde profielen]]></translation>
+        <translation language="en"><![CDATA[blocked profiles]]></translation>
+        <translation language="it"><![CDATA[profili bloccati]]></translation>
+        <translation language="ru"><![CDATA[заблокированных профили]]></translation>
+        <translation language="de"><![CDATA[blockiert Profile]]></translation>
+        <translation language="fr"><![CDATA[profils bloqués]]></translation>
+        <translation language="hu"><![CDATA[blokkolt profilok]]></translation>
+        <translation language="es"><![CDATA[perfiles bloqueados]]></translation>
+      </item>
+      <item type="label" name="NumberOfDeletedProfiles">
+        <translation language="nl"><![CDATA[verwijderde profielen]]></translation>
+        <translation language="en"><![CDATA[deleted profiles]]></translation>
+        <translation language="it"><![CDATA[profili eliminati]]></translation>
+        <translation language="ru"><![CDATA[удалил профили]]></translation>
+        <translation language="de"><![CDATA[Profile gelöscht]]></translation>
+        <translation language="fr"><![CDATA[profils supprimés]]></translation>
+        <translation language="hu"><![CDATA[törölt profilok]]></translation>
+        <translation language="es"><![CDATA[perfiles eliminados]]></translation>
+      </item>
+    </dashboard>
     </profiles>
   </backend>
 </locale>

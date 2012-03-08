@@ -1,0 +1,29 @@
+#dashboardWidgets #widgetProfiles.box .dataGridHolder .dataGrid, #tabStatus {
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+}
+
+#dashboardWidgets #widgetProfiles.box .dataGridHolder {
+	border-bottom: none;
+}
+
+#dashboardWidgets #widgetProfiles.box #tabRegistrations .dataGridHolder {
+
+	margin: 10px 0;
+}
+
+#tabRegistrations input.inputDatefieldNormal {
+	width: 100px;
+}
+
+#dashboardWidgets .content ul {
+	padding-bottom: 0;
+}
+
+#widgetProfiles .ui-tabs li {
+	font-weight: 400;
+}
+
+#widgetProfiles .ui-tabs .ui-tabs-selected {
+	font-weight: 700;
+}

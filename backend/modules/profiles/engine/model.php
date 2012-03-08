@@ -11,6 +11,7 @@
  * In this file we store all generic functions that we will be using in the profiles module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Wouter Sioen <wouter.sioen@gmail.com>
  */
 class BackendProfilesModel
 {
@@ -205,6 +206,78 @@ class BackendProfilesModel
 	}
 
 	/**
+	 * Gets the count of registered profiles per day between two dates
+	 * and inserts empty counts for all other days between the two dates
+	 * 
+	 * @param string $start
+	 * @param string $end
+	 * @return array
+	 */
+	public static function getCountRegisteredPerDay($start, $end)
+	{
+		// Make sure the start date has time 00:00:00 and the end date 23:59:59
+		$start = mktime(0, 0, 0, date('m', $start), date('d', $start), date('Y', $start));
+		$end = mktime(23, 59, 59, date('m', $end), date('d', $end), date('Y', $end));
+
+		$returnValue = (array) BackendModel::getDB()->getRecords(
+			'SELECT COUNT(id) as count, UNIX_TIMESTAMP(registered_on) as date
+			 FROM profiles
+			 WHERE UNIX_TIMESTAMP(registered_on) BETWEEN ? AND ?
+			 GROUP BY DATE(registered_on)',
+			array($start, $end)
+		);
+
+		$startDate = $start;
+		$endDate = $end;
+
+		// This loop includes dates without registrations
+		while($startDate <= $endDate)
+		{
+			$containsDate = false;
+			foreach($returnValue as $item)
+			{
+				if(date('y-m-d', $item['date']) == date('y-m-d', $startDate)) $containsDate = true;
+			}
+			if($containsDate == false)
+			{
+				$addArray = array('count' => '0', 'date' => $startDate);
+				$returnValue[] = $addArray;
+			}
+			// Adds one day to the timestamp
+			$startDate += (24 * 60 * 60);
+		}
+
+		function compare_date($a, $b)
+		{
+			return ($a['date'] > $b['date']) ? 1 : -1;
+		}
+		usort($returnValue, 'compare_date');
+
+		foreach($returnValue as &$dateToFormat)
+		{
+			$dateToFormat['date'] = date(BackendAuthentication::getUser()->getSetting('date_format'), $dateToFormat['date']);
+		}
+
+		return $returnValue;
+	}
+
+	/**
+	 * Gets the amount of profiles of specified status
+	 * 
+	 * @param string $status
+	 * @return int
+	 */
+	public static function getProfilesWithStatusCount($status)
+	{
+		return (int) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM profiles
+			 WHERE status = ?',
+			(string) $status
+		);
+	}
+
+	/**
 	 * Encrypt a string with a salt.
 	 *
 	 * @param string $string String to encrypt.
@@ -278,6 +351,24 @@ class BackendProfilesModel
 		);
 	}
 
+/**
+	 * Get all online users
+	 * 
+	 * @return array
+	 */
+	public static function getOnlineUsers()
+	{
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT i.display_name, s.date
+			 FROM profiles AS i
+			 INNER JOIN Profiles_sessions as s 
+			 ON i.id = s.profile_id
+			 WHERE s.date > DATE_SUB(NOW(), INTERVAL 1 HOUR)
+			 ORDER BY s.date DESC
+			 LIMIT 10'
+		);
+	}
+
 	/**
 	 * Get information about a profile group where a user is member of.
 	 *
@@ -309,6 +400,19 @@ class BackendProfilesModel
 			 INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
 			 WHERE gr.profile_id = ?',
 			(int) $id
+		);
+	}
+
+	/**
+	 * Gets the amount of users
+	 * 
+	 * @return int
+	 */
+	public static function getProfilesCount()
+	{
+		return (int) BackendModel::getDB()->getVar(
+			'SELECT COUNT(id)
+			 FROM profiles'
 		);
 	}
 
@@ -346,6 +450,25 @@ class BackendProfilesModel
 
 		// cough up
 		return $string;
+	}
+
+	/**
+	 * Get all profiles registered from start to end date
+	 * 
+	 * @param string $start Start day
+	 * @param string $end End day
+	 * @return array
+	 */
+	public static function getRegisteredFromTo($start, $end)
+	{
+		return (array) BackendModel::getDB()->getRecords(
+			'SELECT *
+			 FROM profiles
+			 WHERE UNIX_TIMESTAMP(registered_on) BETWEEN ? AND ?
+			 ORDER BY registered_on DESC
+			 LIMIT 10',
+			array($start, $end)
+		);
 	}
 
 	/**
