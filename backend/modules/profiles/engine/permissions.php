@@ -158,7 +158,7 @@ class BackendProfilesPermissions
 			$permission['data']['groups'] = null;
 
 			// get the groups
-			if($this->frm->getField('for_profile_groups')->getChecked())
+			if(!empty($this->groups) && $this->frm->getField('for_profile_groups')->getChecked())
 			{
 				$permission['data']['groups'] = (array) $this->frm->getField('profile_groups')->getChecked();
 			}
@@ -179,7 +179,7 @@ class BackendProfilesPermissions
 	{
 		if($this->isInstalled && $this->frm->isSubmitted())
 		{
-			if($this->frm->getField('for_profile_groups')->getChecked())
+			if(!empty($this->groups) && $this->frm->getField('for_profile_groups')->getChecked())
 			{
 				if($this->frm->getField('profile_groups')->isFilled(BL::err('ProfileGroupsIsRequired')));
 			}
