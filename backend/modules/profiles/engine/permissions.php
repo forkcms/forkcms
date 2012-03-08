@@ -181,7 +181,7 @@ class BackendProfilesPermissions
 		{
 			if($this->frm->getField('for_profile_groups')->getChecked())
 			{
-				if($this->frm->getField('profile_groups')->isFilled(BL::err('FieldIsRequired')));
+				if($this->frm->getField('profile_groups')->isFilled(BL::err('ProfileGroupsIsRequired')));
 			}
 		}
 	}

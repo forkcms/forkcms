@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
+    <core>
+      <item type="label" name="ProfileGroupsIsRequired">
+        <translation language="nl"><![CDATA[Selecteer minstens 1 profielgroep]]></translation>
+        <translation language="en"><![CDATA[Select at least one profile group.]]></translation>
+      </item>
+      <item type="label" name="ForProfileGroups">
+        <translation language="nl"><![CDATA[enkel toegangkelijk voor bepaalde profielgroepen]]></translation>
+        <translation language="en"><![CDATA[only accessible for certain profile groups]]></translation>
+      </item>
+      <item type="label" name="IsSecured">
+        <translation language="nl"><![CDATA[enkel toegankelijk voor gebruikers die ingelogd zijn]]></translation>
+        <translation language="en"><![CDATA[only accessible for logged in users]]></translation>
+      </item>
+      <item type="label" name="SelectAllowedProfileGroups">
+        <translation language="nl"><![CDATA[selecteer de toegestane groepen:]]></translation>
+        <translation language="en"><![CDATA[select the allowed profile groups:]]></translation>
+      </item>
+      <item type="label" name="ShowInNavigation">
+        <translation language="nl"><![CDATA[toon in de navigatie]]></translation>
+        <translation language="en"><![CDATA[show in navigation]]></translation>
+      </item>
+      <item type="message" name="HelpShowInNavigation">
+        <translation language="nl"><![CDATA[gebruikers die geen toegang hebben tot het item zullen het item toch zien in de navigatie.]]></translation>
+        <translation language="en"><![CDATA[Users that don't have access to the item will still see the item in the navigation.]]></translation>
+      </item>
+    </core>
     <profiles>
       <item type="label" name="Active">
         <translation language="nl"><![CDATA[actief]]></translation>
@@ -627,19 +653,5 @@
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
       </item>
     </profiles>
-    <core>
-      <item type="label" name="IsSecured">
-        <translation language="nl"><![CDATA[dit item is beveiligd.]]></translation>
-        <translation language="en"><![CDATA[this item is secured.]]></translation>
-      </item>
-      <item type="label" name="OnlyFor">
-        <translation language="nl"><![CDATA[Enkel beschikbaar voor:]]></translation>
-        <translation language="en"><![CDATA[Only available for:]]></translation>
-      </item>
-      <item type="label" name="ShowInNavigation">
-        <translation language="nl"><![CDATA[toon in de navigatie]]></translation>
-        <translation language="en"><![CDATA[show in navigation]]></translation>
-      </item>
-    </core>
   </backend>
 </locale>
