@@ -120,7 +120,6 @@ jsBackend.profiles =
 			success: function(data, message)
 			{
 				$('#dataBarChart ul.data').empty();
-				$i = 0;
 				$.each(data.data, function(index, value)
 				{
 					$('#dataBarChart ul.data').html($('#dataBarChart ul.data').html() + '<li><span class="count">' + value.count + '</span><span class="date">' + value.date + '</span></li>');
@@ -239,7 +238,8 @@ jsBackend.profiles.barChart =
 				categories: $barChartLabels
 			},
 			yAxis: {
-				min: 0
+				min: 0,
+				allowDecimals: false
 			},
 			tooltip: {
 				formatter: function() {
