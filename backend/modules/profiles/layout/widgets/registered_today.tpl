@@ -45,16 +45,21 @@
 			</div>
 
 			<div id="tabStatus" class="options">
-				{option:pieGraphData}
-					<div id="dataPieChart" class="hidden">
-						<ul class="data">
-							{iteration:pieGraphData}
-								<li><span class="label">{$pieGraphData.label}</span><span class="value">{$pieGraphData.value}</span><span class="percentage">{$pieGraphData.percentage}</span></li>
-							{/iteration:pieGraphData}
-						</ul>
-					</div>
-				<div id="pieChart">&nbsp;</div>
-				{/option:pieGraphData}
+				{option:number}
+					{option:pieGraphData}
+						<div id="dataPieChart" class="hidden">
+							<ul class="data">
+								{iteration:pieGraphData}
+									<li><span class="label">{$pieGraphData.label}</span><span class="value">{$pieGraphData.value}</span><span class="percentage">{$pieGraphData.percentage}</span></li>
+								{/iteration:pieGraphData}
+							</ul>
+						</div>
+					<div id="pieChart">&nbsp;</div>
+					{/option:pieGraphData}
+				{/option:number}
+				{option:!number}
+					<p>{$lblNoRegisteredProfiles}</p>
+				{/option:!number}
 			</div>
 
 			<div id="tabOnline">
