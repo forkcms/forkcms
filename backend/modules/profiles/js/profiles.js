@@ -104,7 +104,7 @@ jsBackend.profiles =
 				$.each(data.data, function(index, value)
 				{
 					$odd = (++$i % 2) ? 'odd' : 'even';
-					$('#tabRegistrations .dataGrid tbody').html($('#tabRegistrations .dataGrid tbody').html() + '<tr class="' + $odd + '"><td>' + value.display_name + '</td><td class="name">' + value.status + '</td></tr>');
+					$('#tabRegistrations .dataGrid tbody').html($('#tabRegistrations .dataGrid tbody').html() + '<tr class="' + $odd + '"><td><a href="' + value.editLink + '">' + value.display_name + '</a></td><td class="name">' + value.status + '</td></tr>');
 				});
 			}
 		});

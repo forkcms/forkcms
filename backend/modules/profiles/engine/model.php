@@ -358,8 +358,8 @@ class BackendProfilesModel
 	 */
 	public static function getOnlineUsers()
 	{
-		return (array) BackendModel::getDB()->getRecords(
-			'SELECT i.display_name, s.date
+		$return = (array) BackendModel::getDB()->getRecords(
+			'SELECT i.id, i.display_name, s.date
 			 FROM profiles AS i
 			 INNER JOIN Profiles_sessions as s 
 			 ON i.id = s.profile_id
@@ -367,6 +367,13 @@ class BackendProfilesModel
 			 ORDER BY s.date DESC
 			 LIMIT 10'
 		);
+
+		foreach($return as &$user)
+		{
+			$user['editLink'] = BackendModel::createURLForAction('edit', 'profiles') . '&id=' . $user['id'];
+		}
+
+		return $return;
 	}
 
 	/**
@@ -461,7 +468,7 @@ class BackendProfilesModel
 	 */
 	public static function getRegisteredFromTo($start, $end)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		$return = (array) BackendModel::getDB()->getRecords(
 			'SELECT *
 			 FROM profiles
 			 WHERE UNIX_TIMESTAMP(registered_on) BETWEEN ? AND ?
@@ -469,6 +476,13 @@ class BackendProfilesModel
 			 LIMIT 10',
 			array($start, $end)
 		);
+
+		foreach($return as &$user)
+		{
+			$user['editLink'] = BackendModel::createURLForAction('edit', 'profiles') . '&id=' . $user['id'];
+		}
+
+		return $return;
 	}
 
 	/**

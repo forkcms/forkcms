@@ -28,7 +28,12 @@ class BackendProfilesAjaxGetRegistered extends BackendBaseAJAXAction
 		$toDate = SpoonFilter::getPostValue('to_date', null, '');
 		
 		$profiles = BackendProfilesModel::getRegisteredFromTo($fromDate, $toDate);
-		
+
+		foreach($profiles as &$profile)
+		{
+			$profile['editLink'] = str_replace('backend_ajax', 'private', $profile['editLink']);
+		}
+
 		$this->output(self::OK, $profiles);
 	}
 }

@@ -24,7 +24,7 @@
 						<tbody>
 							{iteration:profiles}
 							<tr class="{cycle:'odd':'even'}">
-								<td>{$profiles.display_name}</td>
+								<td><a href="{$profiles.editLink}">{$profiles.display_name}</a></td>
 								<td class="name">{$profiles.status}</td>
 							</tr>
 							{/iteration:profiles}
@@ -69,7 +69,7 @@
 							<tbody>
 								{iteration:online}
 								<tr class="{cycle:'odd':'even'}">
-									<td>{$online.display_name}</td>
+									<td><a href="{$online.editLink}">{$online.display_name}</a></td>
 									<td class="name">{$online.date}</td>
 								</tr>
 								{/iteration:online}
