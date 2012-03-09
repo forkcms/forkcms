@@ -58,20 +58,23 @@
 			</div>
 
 			<div id="tabOnline">
-				<div class="dataGridHolder">
-					{option:online}
-					<table class="dataGrid">
-						<tbody>
-							{iteration:online}
-							<tr class="{cycle:'odd':'even'}">
-								<td>{$online.display_name}</td>
-								<td class="name">{$online.date}</td>
-							</tr>
-							{/iteration:online}
-						</tbody>
-					</table>
-					{/option:online}
-				</div>
+				{option:online}
+					<div class="dataGridHolder">
+						<table class="dataGrid">
+							<tbody>
+								{iteration:online}
+								<tr class="{cycle:'odd':'even'}">
+									<td>{$online.display_name}</td>
+									<td class="name">{$online.date}</td>
+								</tr>
+								{/iteration:online}
+							</tbody>
+						</table>
+					</div>
+				{/option:online}
+				{option:!online}
+					<p>{$lblNoOnlineUsers}</p>
+				{/option:!online}
 			</div>
 
 		</div>

@@ -718,6 +718,16 @@
         <translation language="hu"><![CDATA[törölt profilok]]></translation>
         <translation language="es"><![CDATA[perfiles eliminados]]></translation>
       </item>
+      <item type="label" name="NoOnlineUsers">
+        <translation language="nl"><![CDATA[geen online gebruikers]]></translation>
+        <translation language="en"><![CDATA[no online users]]></translation>
+        <translation language="it"><![CDATA[nessun utente online]]></translation>
+        <translation language="ru"><![CDATA[нет пользователей онлайн]]></translation>
+        <translation language="de"><![CDATA[keine Online-Nutzer]]></translation>
+        <translation language="fr"><![CDATA[aucun utilisateur en ligne]]></translation>
+        <translation language="hu"><![CDATA[nincs online felhasználó]]></translation>
+        <translation language="es"><![CDATA[no hay usuarios conectados]]></translation>
+      </item>
     </dashboard>
   </backend>
 </locale>
