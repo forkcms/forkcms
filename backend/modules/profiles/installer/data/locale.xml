@@ -23,7 +23,7 @@
         <translation language="en"><![CDATA[show in navigation]]></translation>
       </item>
       <item type="message" name="HelpShowInNavigation">
-        <translation language="nl"><![CDATA[gebruikers die geen toegang hebben tot het item zullen het item toch zien in de navigatie.]]></translation>
+        <translation language="nl"><![CDATA[Gebruikers die geen toegang hebben tot het item zullen het item toch zien in de navigatie.]]></translation>
         <translation language="en"><![CDATA[Users that don't have access to the item will still see the item in the navigation.]]></translation>
       </item>
     </core>
