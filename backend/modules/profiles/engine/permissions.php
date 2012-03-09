@@ -149,7 +149,7 @@ class BackendProfilesPermissions
 			$permission['data']['groups'] = null;
 
 			// get the groups
-			if(!empty($this->groups) && $this->frm->getField('for_profile_groups')->getChecked())
+			if(!empty($this->groups) && $this->frm->getField('for_profile_groups')->getChecked() && $permission['data']['is_secured'])
 			{
 				$permission['data']['groups'] = (array) $this->frm->getField('profile_groups')->getChecked();
 			}
