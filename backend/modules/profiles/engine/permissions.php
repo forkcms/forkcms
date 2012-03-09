@@ -63,21 +63,11 @@ class BackendProfilesPermissions
 
 		if($this->isInstalled)
 		{
-			// set the module
 			$this->module = (string) $module;
-
-			// set the form
 			$this->frm = $form;
+			if($otherId !== null) $this->otherId = (int) $otherId;
 
-			if($otherId !== null)
-			{
-				// set the other id
-				$this->otherId = (int) $otherId;
-
-				// load the existing permissions
-				$this->loadPermissions();
-			}
-
+			$this->loadPermissions();
 			$this->loadProfileGroups();
 			$this->loadForm();
 		}
