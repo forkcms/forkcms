@@ -1,3 +1,12 @@
+3.3.1 (xxxx-xx-xx)
+--
+
+Bugfixes:
+
+* XSS: Escape the input on ajax searches.
+* XSS: Escaped wierd input in Locale-module
+
+
 3.3.0 (2012-03-06)
 --
 Improvements:
@@ -24,7 +33,6 @@ Bugfixes:
 * Core: module validation did not take the special core module in account.
 * Core: JS module validation has been fixed.
 * Core: fix XSS vulnerability on ajax searches.
-
 
 3.2.7 (2012-02-28)
 --
