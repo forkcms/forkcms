@@ -452,6 +452,17 @@ class BackendProfilesModel
 	}
 
 	/**
+	 * Insert a new profile.
+	 *
+	 * @param array $values The values to insert.
+	 * @return int
+	 */
+	public static function insert(array $values)
+	{
+		return (int) BackendModel::getDB(true)->insert('profiles', $values);
+	}
+
+	/**
 	 * Insert a new group.
 	 *
 	 * @param  array $values Group data.
