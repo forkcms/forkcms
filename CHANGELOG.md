@@ -1,5 +1,9 @@
 3.3.1 (xxxx-xx-xx)
 --
+Improvements:
+
+* Profiles: made it possible to add a profile.
+
 
 Bugfixes:
 
