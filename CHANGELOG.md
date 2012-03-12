@@ -3,7 +3,7 @@
 Improvements:
 
 * Profiles: made it possible to add a profile.
-
+* Core: added a Responsive example theme.
 
 Bugfixes:
 
