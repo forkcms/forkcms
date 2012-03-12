@@ -365,7 +365,7 @@ class SpoonTemplateCompiler
 						<?php echo $this->forms[\'' . $name . '\']->getField(\'form\')->parse();
 						if($this->forms[\'' . $name . '\']->getUseToken())
 						{
-							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue(); ?>" />
+							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo htmlspecialchars($this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue()); ?>" />
 						<?php } ?>';
 				}
 
@@ -379,7 +379,7 @@ class SpoonTemplateCompiler
 						<?php echo $this->forms[\'' . $name . '\']->getField(\'form\')->parse();
 						if($this->forms[\'' . $name . '\']->getUseToken())
 						{
-							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue(); ?>" />
+							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo htmlentities($this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue()); ?>" />
 						<?php } ?>';
 				}
 

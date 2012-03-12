@@ -3,8 +3,8 @@
 
 Bugfixes:
 
-* XSS: Escape the input on ajax searches.
-* XSS: Escaped wierd input in Locale-module
+* Core: Escape the input on ajax searches.
+* Core: Escaped wierd input in Locale-module
 
 
 3.3.0 (2012-03-06)
