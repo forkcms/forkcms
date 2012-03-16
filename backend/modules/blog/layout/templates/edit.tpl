@@ -116,6 +116,11 @@
 							</div>
 
 							<div class="options">
+								{$chkIsFeatured} {$chkIsFeaturedError}
+								<label for="isFeatured">{$lblFeatured|ucfirst}</label>
+							</div>
+
+							<div class="options">
 								<p class="p0"><label for="publishOnDate">{$lblPublishOn|ucfirst}</label></p>
 								<div class="oneLiner">
 									<p>
