@@ -45,3 +45,10 @@ CREATE TABLE IF NOT EXISTS `blog_posts` (
  PRIMARY KEY (`revision_id`),
  KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `blog_featured` (
+ `post_id` int(11) NOT NULL,
+ `sequence` int(11) NOT NULL,
+ PRIMARY KEY (`post_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
