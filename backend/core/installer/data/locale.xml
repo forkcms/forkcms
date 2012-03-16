@@ -458,6 +458,10 @@
         <translation language="hu"><![CDATA[GYIK]]></translation>
         <translation language="tr"><![CDATA[SSS]]></translation>
       </item>
+      <item type="label" name="FeaturedArticles">
+        <translation language="nl"><![CDATA[artikels in de kijker]]></translation>
+        <translation language="en"><![CDATA[featured articles]]></translation>
+      </item>
       <item type="label" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
