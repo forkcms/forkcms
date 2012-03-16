@@ -13,6 +13,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jeroen Van den Bossche <jeroen.vandenbossche@wijs.be>
  */
 class BlogInstaller extends ModuleInstaller
 {
@@ -112,6 +113,8 @@ class BlogInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'index');
 		$this->setActionRights(1, 'blog', 'mass_comment_action');
 		$this->setActionRights(1, 'blog', 'settings');
+		$this->setActionRights(1, 'blog', 'featured');
+		$this->setActionRights(1, 'blog', 'alter_featured_sequence');
 
 		// insert dashboard widget
 		$this->insertWidget();
@@ -119,9 +122,10 @@ class BlogInstaller extends ModuleInstaller
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
-		$this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add',	'blog/edit', 'blog/import_blogger'));
+		$this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add', 'blog/edit', 'blog/import_blogger'));
 		$this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', array('blog/edit_comment'));
-		$this->setNavigation($navigationBlogId, 'Categories', 'blog/categories', array('blog/add_category',	'blog/edit_category'));
+		$this->setNavigation($navigationBlogId, 'Categories', 'blog/categories', array('blog/add_category', 'blog/edit_category'));
+		$this->setNavigation($navigationBlogId, 'Featured', 'blog/featured');
 
 		// settings navigation
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -135,6 +139,7 @@ class BlogInstaller extends ModuleInstaller
 		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
+		$this->insertExtra('blog', 'widget', 'Featured', 'featured', null, 'N', 1006);
 
 		// get search extra id
 		$searchId = (int) $this->getDB()->getVar(
