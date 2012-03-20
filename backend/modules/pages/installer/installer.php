@@ -38,7 +38,7 @@ class PagesInstaller extends ModuleInstaller
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 		$this->insertExtra('pages', 'widget', 'Navigation', 'previous_next_navigation');
-		
+
 		$extras['subpages_widget'] = $this->insertExtra(
 			'pages',
 			'widget',
@@ -158,6 +158,7 @@ class PagesInstaller extends ModuleInstaller
 		$extras['blog_widget_archive'] = $this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
 		$extras['blog_widget_recent_articles_full'] = $this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
 		$extras['blog_widget_recent_articles_list'] = $this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
+		$extras['blog_widget_featured'] = $this->insertExtra('blog', 'widget', 'Featured', 'featured', null, 'N', 1006);
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
@@ -207,6 +208,7 @@ class PagesInstaller extends ModuleInstaller
 					array('extra_id' => $extras['blog_widget_categories'], 'position' => 'left'),
 					array('extra_id' => $extras['blog_widget_archive'], 'position' => 'left'),
 					array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
+					array('extra_id' => $extras['blog_widget_featured'], 'position' => 'left'),
 					array('extra_id' => $extras['search_form'], 'position' => 'top')
 				);
 
