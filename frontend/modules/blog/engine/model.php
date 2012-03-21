@@ -16,9 +16,26 @@
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Van den Bossche <jeroen.vandenbossche@wijs.be>
  */
 class FrontendBlogModel implements FrontendTagsInterface
 {
+	/**
+	 * Checks if a comment exists.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public static function existsComment($id)
+	{
+		return (bool) FrontendModel::getDB()->getVar(
+			'SELECT COUNT(i.id)
+			 FROM blog_comments AS i
+			 WHERE i.id = ?',
+			array((int) $id)
+		);
+	}
+
 	/**
 	 * Get an item
 	 *
