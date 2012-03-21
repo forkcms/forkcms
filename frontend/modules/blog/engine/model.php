@@ -434,8 +434,21 @@ class FrontendBlogModel implements FrontendTagsInterface
 			array((int) $id, 'published', FRONTEND_LANGUAGE)
 		);
 
+		// collect flagged comments.
+		$flaggedComments = SpoonCookie::exists('flagged_comments')
+			? SpoonCookie::get('flagged_comments')
+			: array();
+
 		// loop comments and create gravatar id
-		foreach($comments as &$row) $row['gravatar_id'] = md5($row['email']);
+		foreach($comments as &$row)
+		{
+			$row['gravatar_id'] = md5($row['email']);
+
+			if(in_array($row['id'], $flaggedComments))
+			{
+				$row['is_flagged'] = true;
+			}
+		}
 
 		// return
 		return $comments;
@@ -711,6 +724,21 @@ class FrontendBlogModel implements FrontendTagsInterface
 			 FROM blog_comments AS c
 			 WHERE c.status = ? AND c.author = ? AND c.email = ?',
 			array('published', (string) $author, (string) $email)
+		);
+	}
+
+	/**
+	 * Mark a comment as inappropriate.
+	 *
+	 * @param int $id
+	 */
+	public static function markInappropriateComment($id)
+	{
+		FrontendModel::getDB()->execute(
+			'UPDATE blog_comments
+			 SET num_flagged_inappropriate = num_flagged_inappropriate + 1
+			 WHERE id = ?',
+			array((int) $id)
 		);
 	}
 
