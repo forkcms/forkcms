@@ -138,7 +138,7 @@ class BackendUsersModel
 
 		// get general user data
 		$user = (array) $db->getRecord(
-			'SELECT i.id, i.email, i.password, i.active
+			'SELECT i.id, i.email, i.password, i.active, i.meta_id
 			 FROM users AS i
 			 WHERE i.id = ?',
 			array($id)
@@ -293,6 +293,63 @@ class BackendUsersModel
 
 		// return
 		return $possibleFormats;
+	}
+
+	/**
+	 * Retrieve the unique URL for an item
+	 *
+	 * @param string $URL The URL to base on.
+	 * @param int[optional] $id The id of the item to ignore.
+	 * @return string
+	 */
+	public static function getURL($URL, $id = null)
+	{
+		$URL = (string) $URL;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// new item
+		if($id === null)
+		{
+			// get number of categories with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM users AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE m.url = ?',
+				array($URL)
+			);
+
+			// already exists
+			if($number != 0)
+			{
+				$URL = BackendModel::addNumber($URL);
+				return self::getURL($URL);
+			}
+		}
+
+		// current category should be excluded
+		else
+		{
+			// get number of items with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
+				 FROM users AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE AND m.url = ? AND i.id != ?',
+				array($URL, $id)
+			);
+
+			// already exists
+			if($number != 0)
+			{
+				$URL = BackendModel::addNumber($URL);
+				return self::getURL($URL, $id);
+			}
+		}
+
+		return $URL;
 	}
 
 	/**
