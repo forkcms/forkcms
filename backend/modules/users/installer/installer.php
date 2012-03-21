@@ -62,6 +62,7 @@ class UsersInstaller extends ModuleInstaller
 			$user['active'] = 'Y';
 			$user['deleted'] = 'N';
 			$user['is_god'] = 'Y';
+			$user['meta_id'] = $this->insertMeta('Fork CMS', 'Fork CMS', 'Fork CMS', 'fork-cms');
 
 			// insert user
 			$user['id'] = $this->getDB()->insert('users', $user);
