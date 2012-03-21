@@ -36,8 +36,9 @@ class BackendBlogModel
 
 	const QRY_DATAGRID_BROWSE_COMMENTS =
 		'SELECT
-		 	i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
-		 	p.id AS post_id, p.title AS post_title, m.url AS post_url
+			i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+			p.id AS post_id, p.title AS post_title, m.url AS post_url,
+			i.num_flagged_inappropriate
 		 FROM blog_comments AS i
 		 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 		 INNER JOIN meta AS m ON p.meta_id = m.id
