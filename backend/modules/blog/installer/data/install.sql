@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
  `type` enum('comment','trackback') NOT NULL default 'comment',
  `status` enum('published','moderation','spam') NOT NULL default 'moderation',
  `data` text COMMENT 'Serialized array with extra data',
+ `num_flagged_inappropriate` int(11) NOT NULL,
  PRIMARY KEY (`id`),
  KEY `idx_post_id_status` (`post_id`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
