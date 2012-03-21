@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 
 CREATE TABLE IF NOT EXISTS `users` (
  `id` int(11) NOT NULL auto_increment,
+ `meta_id` int(11) NOT NULL,
  `email` varchar(255) NOT NULL,
  `password` varchar(255) NOT NULL COMMENT 'will be case-sensitive',
  `active` enum('N','Y') NOT NULL default 'Y' COMMENT 'is this user active?',
