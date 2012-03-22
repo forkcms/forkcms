@@ -1,3 +1,10 @@
+3.3.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: upgraded jQuery to 1.7.2
+
+
 3.3.1 (2012-03-13)
 --
 Improvements:
