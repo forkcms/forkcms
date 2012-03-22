@@ -4,6 +4,10 @@ Improvements:
 
 * Core: upgraded jQuery to 1.7.2
 
+Bugfixes:
+
+* Core: don't shorten hex codes surrounded by quotes in minifier; in some cases IE can't handle short hex codes.
+
 
 3.3.1 (2012-03-13)
 --
