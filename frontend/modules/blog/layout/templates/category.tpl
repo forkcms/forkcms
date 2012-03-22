@@ -14,7 +14,7 @@
 						<ul>
 							<li>
 								{* Written by *}
-								{$msgWrittenBy|ucfirst|sprintf:{$items.user_id|usersetting:'nickname'}}
+								{$msgWrittenBy|ucfirst|sprintf:{$items.author_full_url}:{$items.user_id|usersetting:'nickname'}}
 
 								{* Written on *}
 								{$lblOn} {$items.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}
