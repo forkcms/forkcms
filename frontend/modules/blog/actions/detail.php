@@ -94,6 +94,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// overwrite URLs
 		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url'];
 		$this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
+		$this->record['author_full_url'] = FrontendNavigation::getURLForBlock('blog', 'author') . '/' . $this->record['author_url'];
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 		$this->record['comments_count'] = count($this->comments);
 
