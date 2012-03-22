@@ -1753,6 +1753,10 @@
         <translation language="sv"><![CDATA[Även intressant för dig]]></translation>
         <translation language="hu"><![CDATA[Szintén érdekes neked]]></translation>
       </item>
+      <item type="message" name="ArticlesBy">
+        <translation language="nl"><![CDATA[Artikels door %1$s]]></translation>
+        <translation language="en"><![CDATA[Articles by %1$s]]></translation>
+      </item>
       <item type="message" name="AskOwnQuestion">
         <translation language="nl"><![CDATA[Antwoord niet gevonden? Stel zelf een vraag!]]></translation>
         <translation language="en"><![CDATA[Didn't find what you were looking for? Ask your own question!]]></translation>
