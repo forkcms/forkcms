@@ -506,7 +506,7 @@ class MinifyCSS extends Minify
 		$content = $this->load($content);
 
 		// shorthand hex color codes
-		$content = preg_replace('/#([0-9a-z])\\1([0-9a-z])\\2([0-9a-z])\\3/i', '#$1$2$3', $content);
+		$content = preg_replace('/(?<![\'"])#([0-9a-z])\\1([0-9a-z])\\2([0-9a-z])\\3(?![\'"])/i', '#$1$2$3', $content);
 
 		// save to path
 		if($path !== false) $this->save($content, $path);
