@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: upgraded jQuery to 1.7.2
+* Pages: added a timestamp after the linklist-file so it won't get cached by the browser.
 
 Bugfixes:
 

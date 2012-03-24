@@ -240,7 +240,8 @@ class BackendForm extends SpoonForm
 		// add the internal link lists-file
 		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
 		{
-			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js', null, false, false, true);
+			$timestamp = @filemtime(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js');
+			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js?m=' . $timestamp, null, false, false, true);
 		}
 
 		// create and return a textarea for the editor
