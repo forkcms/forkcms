@@ -619,24 +619,23 @@ class BackendModel
 				foreach($pages as $pageId => $properties)
 				{
 					// only process pages with extra_blocks
-					if(isset($properties['extra_blocks']))
-					{
-						// loop extras
-						foreach($properties['extra_blocks'] as $extra)
-						{
-							// direct link?
-							if($extra['module'] == $module && $extra['action'] == $action)
-							{
-								// exacte page was found, so return
-								return self::getURL($properties['page_id'], $language);
-							}
+					if(!isset($properties['extra_blocks'])) continue;
 
-							// correct module but no action
-							elseif($extra['module'] == $module && $extra['action'] == null)
-							{
-								// store pageId
-								$pageIdForURL = (int) $pageId;
-							}
+					// loop extras
+					foreach($properties['extra_blocks'] as $extra)
+					{
+						// direct link?
+						if($extra['module'] == $module && $extra['action'] == $action)
+						{
+							// exacte page was found, so return
+							return self::getURL($properties['page_id'], $language);
+						}
+
+						// correct module but no action
+						elseif($extra['module'] == $module && $extra['action'] == null)
+						{
+							// store pageId
+							$pageIdForURL = (int) $pageId;
 						}
 					}
 				}
