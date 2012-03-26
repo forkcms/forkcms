@@ -10,6 +10,7 @@ Bugfixes:
 
 * Core: don't shorten hex codes surrounded by quotes in minifier; in some cases IE can't handle short hex codes.
 * Location: invalid usage of getModuleSettings()
+* Core: Fix issue with multiple editor warnings.
 
 
 3.3.1 (2012-03-13)
@@ -22,7 +23,6 @@ Bugfixes:
 
 * Core: Escape the input on ajax searches.
 * Core: Escaped wierd input in Locale-module.
-* Core: Fix issue with multiple editor warnings.
 
 
 3.3.0 (2012-03-06)
