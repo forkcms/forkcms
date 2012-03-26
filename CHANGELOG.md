@@ -1,5 +1,22 @@
-3.3.1 (xxxx-xx-xx)
+3.3.2 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: upgraded jQuery to 1.7.2
+* Pages: added a timestamp after the linklist-file so it won't get cached by the browser.
+* Core: upgraded Highcharts to 2.2.1
+
+Bugfixes:
+
+* Core: don't shorten hex codes surrounded by quotes in minifier; in some cases IE can't handle short hex codes.
+* Location: invalid usage of getModuleSettings()
+
+
+3.3.1 (2012-03-13)
+--
+Improvements:
+
+* Profiles: made it possible to add a profile.
 
 Bugfixes:
 
