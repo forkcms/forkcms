@@ -349,13 +349,13 @@ jsBackend.ckeditor =
 			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push('{$msgEditorInvalidLinks|addslashes}');
 
 			// remove the previous warnings
-			$('#' + editor.element.getId() + '_warnings').remove();
+			$('#' + editor.element.getId() + '_warnings').remove(); // @todo: met dit id loopt iets mis
 
 			// any warnings?
 			if(warnings.length > 0)
 			{
 				// append the warnings after the editor
-				$('#cke_' + editor.element.getId()).after('<span id=" '+ editor.element.getId() + '_warnings" class="infoMessage editorWarning">' + warnings.join(' ') + '</span>');
+				$('#cke_' + editor.element.getId()).after('<span id="' + editor.element.getId() + '_warnings" class="infoMessage editorWarning">' + warnings.join(' ') + '</span>');
 			}
 		}
 	},

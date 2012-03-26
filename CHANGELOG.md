@@ -4,7 +4,8 @@
 Bugfixes:
 
 * Core: Escape the input on ajax searches.
-* Core: Escaped wierd input in Locale-module
+* Core: Escaped wierd input in Locale-module.
+* Core: Fix issue with multiple editor warnings.
 
 
 3.3.0 (2012-03-06)
