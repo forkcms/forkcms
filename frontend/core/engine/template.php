@@ -213,6 +213,9 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 		$this->mapModifier('getsubnavigation', array('FrontendTemplateModifiers', 'getSubNavigation'));
 
+		// parse a widget
+		$this->mapModifier('parsewidget', array('FrontendTemplateModifiers', 'parseWidget'));
+
 		// rand
 		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'random'));
 
@@ -731,6 +734,24 @@ class FrontendTemplateModifiers
 		}
 
 		return $var;
+	}
+
+	/**
+	 * Parse a widget straight from the template, rather than adding it through pages.
+	 *
+	 * @param string $var The variable.
+	 * @param string $module The module whose module we want to execute.
+	 * @param string $action The action to execute.
+	 * @param string $id The widget id (saved in data-column).
+	 */
+	public static function parseWidget($var, $module, $action, $id = null)
+	{
+		$data = $id !== null ? serialize(array('id' => $id)) : null;
+
+		// create new widget instance and return parsed content
+		$extra = new FrontendBlockWidget($module, $action, $data);
+		$extra->execute();
+		return $extra->getContent();
 	}
 
 	/**

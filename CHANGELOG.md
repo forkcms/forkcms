@@ -1,3 +1,10 @@
+3.3.3 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: added template-modifier to parse widgets.
+
+
 3.3.2 (2012-03-27)
 --
 Improvements:
