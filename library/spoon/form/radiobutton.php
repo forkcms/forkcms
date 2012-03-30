@@ -373,7 +373,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 			if(!isset($this->variables[$value['value']]['id']))
 			{
 				if(isset($this->attributes[$value['value']]['id'])) $this->variables[$value['value']]['id'] = $this->attributes[$value['value']]['id'];
-				else $this->variables[$value['value']]['id'] = SpoonFilter::toCamelCase($this->name . '_' . $value['value'], '_', true);
+				else $this->variables[$value['value']]['id'] = SpoonFilter::toCamelCase($this->name . '_' . str_replace(' ', '_', $value['value']), '_', true);
 			}
 
 			// add some custom vars

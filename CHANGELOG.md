@@ -4,6 +4,10 @@ Improvements:
 
 * Core: added template-modifier to parse widgets.
 
+Bugfixes:
+
+* Spoon: Multicheckboxes and radiobuttons could have ids with spaces in them. Fixed thx to Anysurfer.
+
 
 3.3.2 (2012-03-27)
 --
