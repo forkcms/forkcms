@@ -7,6 +7,7 @@ Improvements:
 Bugfixes:
 
 * Spoon: Multicheckboxes and radiobuttons could have ids with spaces in them. Fixed thx to Anysurfer.
+* Core: when using Fork in non-multilanguage-mode the links for the internal pages weren't generated correctly, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/285-editor-adding-intern-links-error. 
 
 
 3.3.2 (2012-03-27)
