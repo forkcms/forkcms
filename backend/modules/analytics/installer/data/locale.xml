@@ -549,13 +549,6 @@
       <item type="message" name="AnalyticsDelete">
         <translation language="nl"><![CDATA[De items zijn verwijderd]]></translation>
         <translation language="en"><![CDATA[Items are deleted]]></translation>
-        <translation language="it"><![CDATA[]]></translation>
-        <translation language="ru"><![CDATA[]]></translation>
-        <translation language="cn"><![CDATA[]]></translation>
-        <translation language="de"><![CDATA[]]></translation>
-        <translation language="hu"><![CDATA[]]></translation>
-        <translation language="fr"><![CDATA[]]></translation>
-        <translation language="es"><![CDATA[]]></translation>
       </item>
       <item type="message" name="AuthenticateAtGoogle">
         <translation language="nl"><![CDATA[Koppel uw Google account]]></translation>
