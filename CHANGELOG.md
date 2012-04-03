@@ -3,13 +3,13 @@
 Improvements:
 
 * Core: added template-modifier to parse widgets.
-* Core: upgraded the Akismet class, which fixes an error of double encoding, as mentioned on https://twitter.com/#!/tellyworth/status/180138255340142592.
 
 Bugfixes:
 
 * Spoon: Multicheckboxes and radiobuttons could have ids with spaces in them. Fixed thx to Anysurfer.
 * Core: when using Fork in non-multilanguage-mode the links for the internal pages weren't generated correctly, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/285-editor-adding-intern-links-error.
 * Spoon: The selected element for a multiple dropdown were forgotten when the form failed. 
+* Core: upgraded the Akismet class, which fixes an error of double encoding, as mentioned on https://twitter.com/#!/tellyworth/status/180138255340142592.
 
 
 3.3.2 (2012-03-27)
