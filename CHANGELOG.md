@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: added template-modifier to parse widgets.
+* Core: upgraded the Akismet class, which fixes an error of double encoding, as mentioned on https://twitter.com/#!/tellyworth/status/180138255340142592.
 
 Bugfixes:
 
