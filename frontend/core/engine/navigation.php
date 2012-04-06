@@ -288,7 +288,7 @@ class FrontendNavigation extends FrontendBaseObject
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $tpl = '/core/layout/templates/navigation.tpl', $depthCounter = 1)
 	{
 		// get navigation
-		$navigation = self::getNavigation();
+		$navigation = self::getNavigation(null, true);
 
 		// merge the exclude ids with the previously set exclude ids
 		$excludeIds = array_merge((array) $excludeIds, self::$excludedPageIds);
