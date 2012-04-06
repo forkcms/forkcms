@@ -203,9 +203,10 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get the navigation-items
 	 *
 	 * @param string[optional] $language The language wherefor the keys should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param bool[optional] $applyPermissions Should the permissions for the current user be applied to the navigation?
 	 * @return array
 	 */
-	public static function getNavigation($language = null)
+	public static function getNavigation($language = null, $applyPermissions = false)
 	{
 		// redefine
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
@@ -226,7 +227,11 @@ class FrontendNavigation extends FrontendBaseObject
 			self::$navigation[$language] = $navigation;
 		}
 
-		self::$navigation[$language] = self::applyPermissions(self::$navigation[$language]);
+		if($applyPermissions)
+		{
+			// apply the permissions for the current user to the navigation
+			self::$navigation[$language] = self::applyPermissions(self::$navigation[$language]);
+		}
 
 		// return from cache
 		return self::$navigation[$language];
