@@ -192,6 +192,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
 
 		// build query for filter
-		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);;
+		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
 	}
 }

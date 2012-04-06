@@ -102,29 +102,8 @@ class BackendLocaleModel
 	 */
 	public static function buildURLQueryByFilter($filter)
 	{
-		$query = '';
-
-		// loop filter items
-		foreach($filter as $key => $value)
-		{
-			// is it an array?
-			if(is_array($value))
-			{
-				// loop the array
-				foreach($value as $v)
-				{
-					// add to the query
-					$query .= '&' . $key . '[]=' . $v;
-				}
-			}
-
-			// not an array
-			else
-			{
-				// add to the query
-				$query .= '&' . $key . '=' . $value;
-			}
-		}
+		$query = http_build_query($filter);
+		if($query != '') $query = '&' . $query;
 
 		return $query;
 	}

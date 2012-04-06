@@ -11,6 +11,7 @@
  * Installer for the profiles module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Davy Van Vooren <davy.vanvooren@netlash.com>
  */
 class ProfilesInstaller extends ModuleInstaller
 {
@@ -32,6 +33,7 @@ class ProfilesInstaller extends ModuleInstaller
 		$this->setModuleRights(1, 'profiles');
 
 		// action rights
+		$this->setActionRights(1, 'profiles', 'add');
 		$this->setActionRights(1, 'profiles', 'add_group');
 		$this->setActionRights(1, 'profiles', 'add_profile_group');
 		$this->setActionRights(1, 'profiles', 'block');
@@ -49,6 +51,7 @@ class ProfilesInstaller extends ModuleInstaller
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$navigationProfilesId = $this->setNavigation($navigationModulesId, 'Profiles');
 		$this->setNavigation($navigationProfilesId, 'Overview', 'profiles/index', array(
+			'profiles/add',
 			'profiles/edit',
 			'profiles/add_profile_group',
 			'profiles/edit_profile_group'

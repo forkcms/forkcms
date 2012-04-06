@@ -47,7 +47,7 @@
 				</tr>
 				<tr>
 					<td colspan="3">
-						<p><small>Wens je deze nieuwsbrief niet meer te ontvangen? <a id="unsubscribeURL" href="#">Schrijf je uit</a> op de website.</small></p>
+						<p><small>Ne voulez-vous plus recevoir ce bulletin d'email? <a id="unsubscribeURL" href="#">D&eacute;sinscrivez-vous</a> sur notre site web.</small></p>
 					</td>
 				</tr>
 				<tr>

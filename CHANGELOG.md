@@ -1,3 +1,44 @@
+3.3.3 (2012-04-03)
+--
+Improvements:
+
+* Core: added template-modifier to parse widgets.
+
+Bugfixes:
+
+* Spoon: Multicheckboxes and radiobuttons could have ids with spaces in them. Fixed thx to Anysurfer.
+* Core: when using Fork in non-multilanguage-mode the links for the internal pages weren't generated correctly, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/285-editor-adding-intern-links-error.
+* Spoon: The selected element for a multiple dropdown were forgotten when the form failed. 
+* Core: upgraded the Akismet class, which fixes an error of double encoding, as mentioned on https://twitter.com/#!/tellyworth/status/180138255340142592.
+
+
+3.3.2 (2012-03-27)
+--
+Improvements:
+
+* Core: upgraded jQuery to 1.7.2
+* Pages: added a timestamp after the linklist-file so it won't get cached by the browser.
+* Core: upgraded Highcharts to 2.2.1
+
+Bugfixes:
+
+* Core: don't shorten hex codes surrounded by quotes in minifier; in some cases IE can't handle short hex codes.
+* Location: invalid usage of getModuleSettings()
+* Core: Fix issue with multiple editor warnings.
+
+
+3.3.1 (2012-03-13)
+--
+Improvements:
+
+* Profiles: made it possible to add a profile.
+
+Bugfixes:
+
+* Core: Escape the input on ajax searches.
+* Core: Escaped wierd input in Locale-module.
+
+
 3.3.0 (2012-03-06)
 --
 Improvements:
@@ -24,7 +65,6 @@ Bugfixes:
 * Core: module validation did not take the special core module in account.
 * Core: JS module validation has been fixed.
 * Core: fix XSS vulnerability on ajax searches.
-
 
 3.2.7 (2012-02-28)
 --

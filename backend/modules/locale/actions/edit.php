@@ -75,8 +75,11 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	{
 		parent::parse();
 
+		// prevent XSS
+		$filter = SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
+
 		// parse filter
-		$this->tpl->assign($this->filter);
+		$this->tpl->assign($filter);
 		$this->tpl->assign('filterQuery', $this->filterQuery);
 
 		// assign id, name

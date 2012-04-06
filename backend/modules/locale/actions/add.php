@@ -78,7 +78,11 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	protected function parse()
 	{
 		parent::parse();
-		$this->tpl->assign($this->filter);
+
+		// prevent XSS
+		$filter = SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
+
+		$this->tpl->assign($filter);
 	}
 
 	/**
@@ -94,7 +98,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->filter['value'] = $this->getParameter('value');
 
 		// build query for filter
-		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+		$this->filterQuery = '&' . http_build_query($this->filter);
 	}
 
 	/**
