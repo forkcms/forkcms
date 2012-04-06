@@ -227,12 +227,11 @@ class ProfilesInstaller extends ModuleInstaller
 						'title' => 'Forbidden',
 						'type' => 'root',
 						'language' => $language,
-						'allow_move' => 'N',
 						'allow_delete' => 'N'
 					),
 					null,
 					array('html' => PATH_WWW . '/backend/modules/profiles/installer/data/' . $language . '/forbidden.txt'),
-					array('extra_id' => $extras['search_form'], 'position' => 'top')
+					array('extra_id' => $searchId, 'position' => 'top')
 				);
 			}
 		}
