@@ -47,6 +47,43 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
+	 * Apply the permissions for the current user to the navigation.
+	 * It returns an array with the new navigation.
+	 *
+	 * @param array $navigation The navigation (for a certain language).
+	 * @return array
+	 */
+	private static function applyPermissions($navigation)
+	{
+		// loop the levels
+		foreach($navigation as &$level)
+		{
+			// loop parents
+			foreach($level as $parent => &$children)
+			{
+				// user has has no permissions to this parent page? (and it's not the root)
+				if($parent != 0 && !FrontendProfilesPermissions::isAllowed('pages', $parent, true))
+				{
+					unset($level[$parent]);
+					continue;
+				}
+
+				// loop children
+				foreach($children as $pageId => $child)
+				{
+					// user has no permissions to this page?
+					if(!FrontendProfilesPermissions::isAllowed('pages', $pageId, true))
+					{
+						unset($children[$pageId]);
+					}
+				}
+			}
+		}
+
+		return $navigation;
+	}
+
+	/**
 	 * Creates a Backend URL for a given action and module
 	 * If you don't specify a language the current language will be used.
 	 *
@@ -238,43 +275,6 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
-	 * Apply the permissions for the current user to the navigation.
-	 * It returns an array with the new navigation.
-	 *
-	 * @param array $navigation The navigation (for a certain language).
-	 * @return array
-	 */
-	private static function applyPermissions($navigation)
-	{
-		// loop the levels
-		foreach($navigation as &$level)
-		{
-			// loop parents
-			foreach($level as $parent => &$children)
-			{
-				// user has has no permissions to this parent page? (and it's not the root)
-				if($parent != 0 && !FrontendProfilesPermissions::isAllowed('pages', $parent, true))
-				{
-					unset($level[$parent]);
-					continue;
-				}
-
-				// loop children
-				foreach($children as $pageId => $child)
-				{
-					// user has no permissions to this page?
-					if(!FrontendProfilesPermissions::isAllowed('pages', $pageId, true))
-					{
-						unset($children[$pageId]);
-					}
-				}
-			}
-		}
-
-		return $navigation;
-	}
-
-	/**
 	 * Get navigation HTML
 	 *
 	 * @param string[optional] $type The type of navigation the HTML should be build for.
@@ -379,7 +379,6 @@ class FrontendNavigation extends FrontendBaseObject
 		// return parsed content
 		return $navigationTpl->getContent(FRONTEND_PATH . (string) $tpl, true, true);
 	}
-
 
 	/**
 	 * Get a menuId for an specified URL
