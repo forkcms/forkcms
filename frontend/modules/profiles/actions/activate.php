@@ -52,10 +52,10 @@ class FrontendProfilesActivate extends FrontendBaseBlock
 			}
 
 			// failure
-			else $this->redirect(FrontendNavigation::getURL(404));
+			else FrontendNavigation::dieWith404();
 		}
 
 		// missing key
-		else $this->redirect(FrontendNavigation::getURL(404));
+		else FrontendNavigation::dieWith404();
 	}
 }

@@ -49,13 +49,13 @@ class FrontendTagsDetail extends FrontendBaseBlock
 	private function getData()
 	{
 		// validate incoming parameters
-		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->URL->getParameter(1) === null) FrontendNavigation::dieWith404();
 
 		// fetch record
 		$this->record = FrontendTagsModel::get($this->URL->getParameter(1));
 
 		// validate record
-		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+		if(empty($this->record)) FrontendNavigation::dieWith404();
 
 		// fetch modules
 		$this->modules = FrontendTagsModel::getModulesForTag($this->record['id']);

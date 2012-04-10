@@ -45,13 +45,13 @@ class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 	private function getData()
 	{
 		// validate incoming parameters
-		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->URL->getParameter(1) === null) FrontendNavigation::dieWith404();
 
 		// get record
 		$this->record = FrontendBlogModel::get($this->URL->getParameter(1));
 
 		// anything found?
-		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+		if(empty($this->record)) FrontendNavigation::dieWith404();
 
 		// get articles
 		$this->items = FrontendBlogModel::getComments($this->record['id']);

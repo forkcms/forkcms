@@ -24,11 +24,23 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	private $items = array();
 
 	/**
-	 * Default constructor
+	 * Current pageId
+	 *
+	 * @var int
 	 */
-	public function __construct()
+	private $pageId;
+
+	/**
+	 * Default constructor
+	 *
+	 * @param int[optional] The current pageId
+	 */
+	public function __construct($pageId = null)
 	{
 		parent::__construct();
+
+		// store the page id
+		$this->pageId = $pageId;
 
 		// add into the reference
 		Spoon::set('breadcrumb', $this);
@@ -155,6 +167,15 @@ class FrontendBreadcrumb extends FrontendBaseObject
 
 			// add item
 			$items[] = $row;
+		}
+
+		// if we're showing a 404, set the breadcrumb manually
+		if($this->pageId === 404)
+		{
+			$items = array(
+				array('title' => 'Home', 'url' => '/'),
+				array('title' => '404', 'url' => null)
+			);
 		}
 
 		// assign

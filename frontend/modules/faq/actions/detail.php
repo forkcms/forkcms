@@ -67,13 +67,13 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	private function getData()
 	{
 		// validate incoming parameters
-		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->URL->getParameter(1) === null) FrontendNavigation::dieWith404();
 
 		// get by URL
 		$this->record = FrontendFaqModel::get($this->URL->getParameter(1));
 
 		// anything found?
-		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+		if(empty($this->record)) FrontendNavigation::dieWith404();
 
 		// overwrite URLs
 		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('faq', 'category') . '/' . $this->record['category_url'];

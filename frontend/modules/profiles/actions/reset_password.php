@@ -53,14 +53,14 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 			}
 
 			// invalid key
-			elseif($this->URL->getParameter('sent') != 'true') $this->redirect(FrontendNavigation::getURL(404));
+			elseif($this->URL->getParameter('sent') != 'true') FrontendNavigation::dieWith404();
 
 			// parse
 			$this->parse();
 		}
 
 		// no key set
-		else $this->redirect(FrontendNavigation::getURL(404));
+		else FrontendNavigation::dieWith404();
 	}
 
 	/**
