@@ -1,3 +1,11 @@
+3.3.4 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Spoon: session should be started before we can access the session.
+* Mailmotor: set action and module when initializing an AJAX action. Tx to @DoFken.
+
+
 3.3.3 (2012-04-03)
 --
 Improvements:
