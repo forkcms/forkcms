@@ -41,6 +41,10 @@ class BackendAJAXAction extends BackendBaseObject
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
+		
+		// set action and module!
+		$object->setAction($this->getAction(), $this->getModule());
+		
 		$object->execute();
 	}
 
