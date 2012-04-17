@@ -284,7 +284,7 @@
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar la página "%1$s"?]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteBlock">
-        <translation language="nl"><![CDATA[Ben je zeker dat je deze block wil verwijderen?]]></translation>
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze blok wil verwijderen?]]></translation>
         <translation language="en"><![CDATA[Are your sure you want to delete this block?]]></translation>
         <translation language="it"><![CDATA[Sei sicuro di voler eliminare questo blocco?]]></translation>
         <translation language="ru"><![CDATA[Удалить этот блок?]]></translation>
