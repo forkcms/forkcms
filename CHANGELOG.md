@@ -4,6 +4,7 @@ Bugfixes:
 
 * Spoon: session should be started before we can access the session.
 * Mailmotor: set action and module when initializing an AJAX action. Tx to @DoFken.
+* FormBulder: sort submissions by insert sequence. Reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/266-formbuilder-submissions-view-bug/
 
 
 3.3.3 (2012-04-03)

@@ -267,7 +267,8 @@ class BackendFormBuilderModel
 		$data['fields'] = (array) BackendModel::getDB()->getRecords(
 			'SELECT fdf.label, fdf.value
 			 FROM forms_data_fields AS fdf
-			 WHERE fdf.data_id = ?',
+			 WHERE fdf.data_id = ?
+			 ORDER BY fdf.id',
 			(int) $data['id']
 		);
 
