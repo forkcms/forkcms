@@ -1,3 +1,10 @@
+3.3.5 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.19
+
+
 3.3.4 (2012-04-17)
 --
 Bugfixes:
