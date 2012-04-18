@@ -937,7 +937,10 @@ class BackendExtensionsModel
 	public static function isModuleInstalled($module)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(name) FROM modules WHERE name = ?',
+			'SELECT 1
+			 FROM modules
+			 WHERE name = ?
+			 LIMIT 1',
 			(string) $module
 		);
 	}
@@ -951,9 +954,10 @@ class BackendExtensionsModel
 	public static function isTemplateInUse($templateId)
 	{
 		return (bool) BackendModel::getDB(false)->getVar(
-			'SELECT COUNT(i.template_id)
+			'SELECT 1
 			 FROM pages AS i
-			 WHERE i.template_id = ? AND i.status = ?',
+			 WHERE i.template_id = ? AND i.status = ?
+			 LIMIT 1',
 			array((int) $templateId, 'active')
 		);
 	}
@@ -967,9 +971,10 @@ class BackendExtensionsModel
 	public static function isThemeInstalled($theme)
 	{
 		return (bool) BackendModeL::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM themes_templates
-			 WHERE theme = ?',
+			 WHERE theme = ?
+			 LIMIT 1',
 			array($theme)
 		);
 	}

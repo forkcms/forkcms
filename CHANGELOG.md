@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: upgraded jQueryUI to 1.8.19
+* Core: SELECT 1 ... LIMIT 1 in favor of SELECT COUNT(*), more optimised queries.
 
 
 3.3.4 (2012-04-17)

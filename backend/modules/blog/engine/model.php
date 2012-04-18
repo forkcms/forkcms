@@ -201,9 +201,10 @@ class BackendBlogModel
 	public static function deleteCategoryAllowed($id)
 	{
 		return !(bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM blog_posts AS i
-			 WHERE i.category_id = ? AND i.language = ? AND i.status = ?',
+			 WHERE i.category_id = ? AND i.language = ? AND i.status = ?
+			 LIMIT 1',
 			array((int) $id, BL::getWorkingLanguage(), 'active')
 		);
 	}
@@ -295,9 +296,10 @@ class BackendBlogModel
 	public static function existsCategory($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM blog_categories AS i
-			 WHERE i.id = ? AND i.language = ?',
+			 WHERE i.id = ? AND i.language = ?
+			 LIMIT 1',
 			array((int) $id, BL::getWorkingLanguage())
 		);
 	}
@@ -311,9 +313,10 @@ class BackendBlogModel
 	public static function existsComment($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM blog_comments AS i
-			 WHERE i.id = ? AND i.language = ?',
+			 WHERE i.id = ? AND i.language = ?
+			 LIMIT 1',
 			array((int) $id, BL::getWorkingLanguage())
 		);
 	}
@@ -598,17 +601,14 @@ class BackendBlogModel
 		// new item
 		if($id === null)
 		{
-			// get number of categories with this URL
-			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+			// already exists
+			if((bool) $db->getVar(
+				'SELECT 1
 				 FROM blog_posts AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ?',
-				array(BL::getWorkingLanguage(), $URL)
-			);
-
-			// already exists
-			if($number != 0)
+				 WHERE i.language = ? AND m.url = ?
+				 LIMIT 1',
+				array(BL::getWorkingLanguage(), $URL)))
 			{
 				$URL = BackendModel::addNumber($URL);
 				return self::getURL($URL);
@@ -618,18 +618,16 @@ class BackendBlogModel
 		// current category should be excluded
 		else
 		{
-			// get number of items with this URL
-			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+			// already exists
+			if((bool) $db->getVar(
+				'SELECT 1
 				 FROM blog_posts AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
-				array(BL::getWorkingLanguage(), $URL, $id)
-			);
-
-			// already exists
-			if($number != 0)
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?
+				 LIMIT 1',
+				array(BL::getWorkingLanguage(), $URL, $id)))
 			{
+
 				$URL = BackendModel::addNumber($URL);
 				return self::getURL($URL, $id);
 			}
@@ -656,17 +654,14 @@ class BackendBlogModel
 		// new category
 		if($id === null)
 		{
-			// get number of categories with this URL
-			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+			// already exists
+			if((bool) $db->getVar(
+				'SELECT 1
 				 FROM blog_categories AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ?',
-				array(BL::getWorkingLanguage(), $URL)
-			);
-
-			// already exists
-			if($number != 0)
+				 WHERE i.language = ? AND m.url = ?
+				 LIMIT 1',
+				array(BL::getWorkingLanguage(), $URL)))
 			{
 				$URL = BackendModel::addNumber($URL);
 				return self::getURLForCategory($URL);
@@ -676,17 +671,14 @@ class BackendBlogModel
 		// current category should be excluded
 		else
 		{
-			// get number of items with this URL
-			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+			// already exists
+			if((bool) $db->getVar(
+				'SELECT 1
 				 FROM blog_categories AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
-				array(BL::getWorkingLanguage(), $URL, $id)
-			);
-
-			// already exists
-			if($number != 0)
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?
+				 LIMIT 1',
+				array(BL::getWorkingLanguage(), $URL, $id)))
 			{
 				$URL = BackendModel::addNumber($URL);
 				return self::getURLForCategory($URL, $id);

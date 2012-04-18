@@ -38,7 +38,7 @@ class PagesInstaller extends ModuleInstaller
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 		$this->insertExtra('pages', 'widget', 'Navigation', 'previous_next_navigation');
-		
+
 		$extras['subpages_widget'] = $this->insertExtra(
 			'pages',
 			'widget',
@@ -53,7 +53,7 @@ class PagesInstaller extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if pages already exist for this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)))
+			if(!(bool) $this->getDB()->getVar('SELECT 1 FROM pages WHERE language = ? LIMIT 1', array($language)))
 			{
 				// insert homepage
 				$this->insertPage(
@@ -175,7 +175,7 @@ class PagesInstaller extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if pages already exist for this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ? AND id > ?', array($language, 404)))
+			if(!(bool) $this->getDB()->getVar('SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1', array($language, 404)))
 			{
 				// re-insert homepage
 				$this->insertPage(

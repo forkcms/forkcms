@@ -205,9 +205,10 @@ class BackendLocaleModel
 	public static function exists($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM locale
-			 WHERE id = ?',
+			 WHERE id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -237,16 +238,18 @@ class BackendLocaleModel
 
 		// return
 		if($id !== null) return (bool) $db->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM locale
-			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?',
+			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
+			 LIMIT 1',
 			array($name, $type, $module, $language, $application, $id)
 		);
 
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM locale
-			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
+			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?
+			 LIMIT 1',
 			array($name, $type, $module, $language, $application)
 		);
 	}

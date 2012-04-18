@@ -154,9 +154,10 @@ class BackendTagsModel
 		{
 			// get number of tags with the specified url
 			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+				'SELECT 1
 				 FROM tags AS i
-				 WHERE i.url = ? AND i.language = ?',
+				 WHERE i.url = ? AND i.language = ?
+				 LIMIT 1',
 				array($URL, $language)
 			);
 
@@ -179,9 +180,10 @@ class BackendTagsModel
 
 			// get number of tags with the specified url
 			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+				'SELECT 1
 				 FROM tags AS i
-				 WHERE i.url = ? AND i.language = ? AND i.id != ?',
+				 WHERE i.url = ? AND i.language = ? AND i.id != ?
+				 LIMIT 1',
 				array($URL, $language, $id)
 			);
 

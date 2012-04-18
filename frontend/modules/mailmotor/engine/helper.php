@@ -23,10 +23,11 @@ class FrontendMailmotorCMHelper
 	public static function existsGroupByCampaignMonitorID($id)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(mg.id)
+			'SELECT 1
 			 FROM mailmotor_groups AS mg
 			 INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-			 WHERE mci.cm_id = ? AND mci.type = ?',
+			 WHERE mci.cm_id = ? AND mci.type = ?
+			 LIMIT 1',
 			array($id, 'list')
 		);
 	}

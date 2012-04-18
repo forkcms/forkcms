@@ -101,9 +101,10 @@ class BackendAnalyticsModel
 	public static function existsLandingPage($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM analytics_landing_pages
-			 WHERE id = ?',
+			 WHERE id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}

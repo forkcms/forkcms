@@ -51,9 +51,10 @@ class FrontendMailmotorModel
 	public static function exists($email)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(email)
+			'SELECT 1
 			 FROM mailmotor_addresses
-			 WHERE email = ?',
+			 WHERE email = ?
+			 LIMIT 1',
 			array((string) $email)
 		);
 	}
@@ -67,9 +68,10 @@ class FrontendMailmotorModel
 	public static function existsGroup($id)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM mailmotor_groups
-			 WHERE id = ?',
+			 WHERE id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}

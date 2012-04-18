@@ -48,9 +48,10 @@ class BackendSearchModel
 	public static function existsSynonymById($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM search_synonyms
-			 WHERE id = ?',
+			 WHERE id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -65,16 +66,18 @@ class BackendSearchModel
 	public static function existsSynonymByTerm($term, $exclude = null)
 	{
 		if($exclude == null) return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM search_synonyms
-			 WHERE term = ?',
+			 WHERE term = ?
+			 LIMIT 1',
 			array((string) $term)
 		);
 
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM search_synonyms
-			 WHERE term = ? AND id != ?',
+			 WHERE term = ? AND id != ?
+			 LIMIT 1',
 			array((string) $term, (int) $exclude)
 		);
 	}

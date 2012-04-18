@@ -122,10 +122,11 @@ class FaqInstaller extends ModuleInstaller
 
 			// check if a page for blog already exists in this language
 			if(!(bool) $this->getDB()->getVar(
-				'SELECT COUNT(p.id)
+				'SELECT 1
 				 FROM pages AS p
 				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-				 WHERE b.extra_id = ? AND p.language = ?',
+				 WHERE b.extra_id = ? AND p.language = ?
+				 LIMIT 1',
 				 array($faqId, $language)))
 			{
 				// insert page

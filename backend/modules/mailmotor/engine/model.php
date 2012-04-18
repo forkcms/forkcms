@@ -199,9 +199,10 @@ class BackendMailmotorModel
 	public static function existsAddress($email)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(ma.email)
+			'SELECT 1
 			 FROM mailmotor_addresses AS ma
-			 WHERE ma.email = ?',
+			 WHERE ma.email = ?
+			 LIMIT 1',
 			array((string) $email)
 		);
 	}
@@ -215,9 +216,10 @@ class BackendMailmotorModel
 	public static function existsCampaign($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mc.id)
+			'SELECT 1
 			 FROM mailmotor_campaigns AS mc
-			 WHERE mc.id = ?',
+			 WHERE mc.id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -231,9 +233,10 @@ class BackendMailmotorModel
 	public static function existsCampaignByName($name)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mc.id)
+			'SELECT 1
 			 FROM mailmotor_campaigns AS mc
-			 WHERE mc.name = ?',
+			 WHERE mc.name = ?
+			 LIMIT 1',
 			array((string) $name)
 		);
 	}
@@ -247,9 +250,10 @@ class BackendMailmotorModel
 	public static function existsGroup($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mg.id)
+			'SELECT 1
 			 FROM mailmotor_groups AS mg
-			 WHERE mg.id = ?',
+			 WHERE mg.id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -263,9 +267,10 @@ class BackendMailmotorModel
 	public static function existsGroupByName($name)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mg.id)
+			'SELECT 1
 			 FROM mailmotor_groups AS mg
-			 WHERE mg.name = ? AND mg.language = ?',
+			 WHERE mg.name = ? AND mg.language = ?
+			 LIMIT 1',
 			array((string) $name, BL::getWorkingLanguage())
 		);
 	}
@@ -279,9 +284,10 @@ class BackendMailmotorModel
 	public static function existsMailing($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mm.id)
+			'SELECT 1
 			 FROM mailmotor_mailings AS mm
-			 WHERE mm.id = ?',
+			 WHERE mm.id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -295,9 +301,10 @@ class BackendMailmotorModel
 	public static function existsMailingByName($name)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mm.id)
+			'SELECT 1
 			 FROM mailmotor_mailings AS mm
-			 WHERE mm.name = ?',
+			 WHERE mm.name = ?
+			 LIMIT 1',
 			array((string) $name)
 		);
 	}
@@ -310,9 +317,10 @@ class BackendMailmotorModel
 	public static function existsMailingsWithoutCampaign()
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mm.id)
+			'SELECT 1
 			 FROM mailmotor_mailings AS mm
-			 WHERE mm.campaign_id IS NOT NULL'
+			 WHERE mm.campaign_id IS NOT NULL
+			 LIMIT 1'
 		);
 	}
 
@@ -325,9 +333,10 @@ class BackendMailmotorModel
 	public static function existsSentMailingsByCampaignID($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(mm.id)
+			'SELECT 1
 			 FROM mailmotor_mailings AS mm
-			 WHERE mm.campaign_id = ? AND mm.status = ?',
+			 WHERE mm.campaign_id = ? AND mm.status = ?
+			 LIMIT 1',
 			array((int) $id, 'sent')
 		);
 	}
@@ -1417,9 +1426,10 @@ class BackendMailmotorModel
 
 		// check if there is a default group set for this language
 		// @todo refactor, this looks like shite
-		if(!(bool) $db->getVar('SELECT COUNT(mg.id)
+		if(!(bool) $db->getVar('SELECT 1
 								FROM mailmotor_groups AS mg
-								WHERE mg.is_default = ? AND mg.language = ?',
+								WHERE mg.is_default = ? AND mg.language = ?
+								LIMIT 1',
 								array('Y', BL::getWorkingLanguage())))
 		{
 			// this list will be a default list
@@ -1486,10 +1496,11 @@ class BackendMailmotorModel
 		$groupId = (int) (empty($groupId) ? self::getDefaultGroupID() : $groupId);
 
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(ma.email)
+			'SELECT 1
 			 FROM mailmotor_addresses AS ma
 			 INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
-			 WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?',
+			 WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?
+			 LIMIT 1',
 			array((string) $email, $groupId, 'subscribed')
 		);
 	}

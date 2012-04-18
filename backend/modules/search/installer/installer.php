@@ -64,11 +64,13 @@ class SearchInstaller extends ModuleInstaller
 		{
 			// check if a page for search already exists in this language
 			// @todo refactor this nasty if statement...
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
-												FROM pages AS p
-												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?',
-												array($searchId, $language)))
+			if(!(bool) $this->getDB()->getVar(
+				'SELECT 1
+				 FROM pages AS p
+				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+				 WHERE b.extra_id = ? AND p.language = ?
+				 LIMIT 1',
+				array($searchId, $language)))
 			{
 				// insert search
 				$this->insertPage(

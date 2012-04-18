@@ -851,9 +851,10 @@ class FrontendModel
 
 		// check if the subscription already exists
 		$exists = (bool) $db->getVar(
-			'SELECT COUNT(*)
+			'SELECT 1
 			 FROM hooks_subscriptions AS i
-			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
+			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
+			 LIMIT 1',
 			array($eventModule, $eventName, $module)
 		);
 

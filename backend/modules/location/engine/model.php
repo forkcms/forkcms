@@ -55,9 +55,10 @@ class BackendLocationModel
 	public static function exists($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM location AS i
-			 WHERE i.id = ? AND i.language = ?',
+			 WHERE i.id = ? AND i.language = ?
+			 LIMIT 1',
 			array((int) $id, BL::getWorkingLanguage())
 		);
 	}

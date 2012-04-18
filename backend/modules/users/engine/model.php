@@ -50,9 +50,10 @@ class BackendUsersModel
 	{
 		// no user to ignore
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.email = ? AND i.deleted = ?',
+			 WHERE i.email = ? AND i.deleted = ?
+			 LIMIT 1',
 			array((string) $email, 'Y')
 		);
 	}
@@ -74,17 +75,19 @@ class BackendUsersModel
 
 		// if the user should also be active, there should be at least one row to return true
 		if($active) return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.id = ? AND i.deleted = ?',
+			 WHERE i.id = ? AND i.deleted = ?
+			 LIMIT 1',
 			array($id, 'N')
 		);
 
 		// fallback, this doesn't take the active nor deleted status in account
 		return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.id = ?',
+			 WHERE i.id = ?
+			 LIMIT 1',
 			array($id)
 		);
 	}
@@ -107,17 +110,19 @@ class BackendUsersModel
 
 		// userid specified?
 		if($id !== null) return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.id != ? AND i.email = ?',
+			 WHERE i.id != ? AND i.email = ?
+			 LIMIT 1',
 			array($id, $email)
 		);
 
 		// no user to ignore
 		return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.email = ?',
+			 WHERE i.email = ?
+			 LIMIT 1',
 			array($email)
 		);
 	}

@@ -690,9 +690,10 @@ class FrontendBlogModel implements FrontendTagsInterface
 	public static function isModerated($author, $email)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(c.id)
+			'SELECT 1
 			 FROM blog_comments AS c
-			 WHERE c.status = ? AND c.author = ? AND c.email = ?',
+			 WHERE c.status = ? AND c.author = ? AND c.email = ?
+			 LIMIT 1',
 			array('published', (string) $author, (string) $email)
 		);
 	}

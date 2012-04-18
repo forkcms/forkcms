@@ -105,7 +105,7 @@ class ModuleInstaller
 		$name = (string) $name;
 
 		// module does not yet exists
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?', $name))
+		if(!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $name))
 		{
 			// build item
 			$item = array(
@@ -675,9 +675,10 @@ class ModuleInstaller
 
 		// check if the action already exists
 		$exists = (bool) $this->getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM groups_rights_actions
-			 WHERE group_id = ? AND module = ? AND action = ?',
+			 WHERE group_id = ? AND module = ? AND action = ?
+			 LIMIT 1',
 			array($groupId, $module, $action)
 		);
 
@@ -706,10 +707,12 @@ class ModuleInstaller
 		$module = (string) $module;
 
 		// module doesn't exist
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
-											FROM groups_rights_modules
-											WHERE group_id = ? AND module = ?',
-											array((int) $groupId, (string) $module)))
+		if(!(bool) $this->getDB()->getVar(
+			'SELECT 1
+			 FROM groups_rights_modules
+			 WHERE group_id = ? AND module = ?
+			 LIMIT 1',
+			array((int) $groupId, (string) $module)))
 		{
 			$item = array(
 				'group_id' => $groupId,
@@ -804,9 +807,10 @@ class ModuleInstaller
 		{
 			// check if this setting already exists
 			$exists = (bool) $this->getDB()->getVar(
-				'SELECT COUNT(name)
+				'SELECT 1
 				 FROM modules_settings
-				 WHERE module = ? AND name = ?',
+				 WHERE module = ? AND name = ?
+				 LIMIT 1',
 				array($module, $name)
 			);
 

@@ -70,17 +70,19 @@ class BackendContentBlocksModel
 
 		// if the item should also be active, there should be at least one row to return true
 		if((bool) $activeOnly) return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM content_blocks AS i
-			 WHERE i.id = ? AND i.status = ? AND i.language = ?',
+			 WHERE i.id = ? AND i.status = ? AND i.language = ?
+			 LIMIT 1',
 			array((int) $id, 'active', BL::getWorkingLanguage())
 		);
 
 		// fallback, this doesn't take the active status in account
 		return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM content_blocks AS i
-			 WHERE i.revision_id = ? AND i.language = ?',
+			 WHERE i.revision_id = ? AND i.language = ?
+			 LIMIT 1',
 			array((int) $id, BL::getWorkingLanguage())
 		);
 	}

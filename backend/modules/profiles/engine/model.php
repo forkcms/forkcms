@@ -98,9 +98,10 @@ class BackendProfilesModel
 	public static function exists($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(p.id)
+			'SELECT 1
 			 FROM profiles AS p
-			 WHERE p.id = ?',
+			 WHERE p.id = ?
+			 LIMIT 1',
 			(int) $id
 		);
 	}
@@ -115,9 +116,10 @@ class BackendProfilesModel
 	public static function existsByEmail($email, $id = null)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(p.id)
+			'SELECT 1
 			 FROM profiles AS p
-			 WHERE p.email = ? AND p.id != ?',
+			 WHERE p.email = ? AND p.id != ?
+			 LIMIT 1',
 			array((string) $email, (int) $id)
 		);
 	}
@@ -132,9 +134,10 @@ class BackendProfilesModel
 	public static function existsDisplayName($displayName, $id = null)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(p.id)
+			'SELECT 1
 			 FROM profiles AS p
-			 WHERE p.display_name = ? AND p.id != ?',
+			 WHERE p.display_name = ? AND p.id != ?
+			 LIMIT 1',
 			array((string) $displayName, (int) $id)
 		);
 	}
@@ -148,9 +151,10 @@ class BackendProfilesModel
 	public static function existsGroup($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(pg.id)
+			'SELECT 1
 			 FROM profiles_groups AS pg
-			 WHERE pg.id = ?',
+			 WHERE pg.id = ?
+			 LIMIT 1',
 			(int) $id
 		);
 	}
@@ -165,9 +169,10 @@ class BackendProfilesModel
 	public static function existsGroupName($groupName, $id = null)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(pg.id)
+			'SELECT 1
 			 FROM profiles_groups AS pg
-			 WHERE pg.name = ? AND pg.id != ?',
+			 WHERE pg.name = ? AND pg.id != ?
+			 LIMIT 1',
 			array((string) $groupName, (int) $id)
 		);
 	}
@@ -181,9 +186,10 @@ class BackendProfilesModel
 	public static function existsProfileGroup($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(gr.id)
+			'SELECT 1
 			 FROM profiles_groups_rights AS gr
-			 WHERE gr.id = ?',
+			 WHERE gr.id = ?
+			 LIMIT 1',
 			(int) $id
 		);
 	}
@@ -408,9 +414,10 @@ class BackendProfilesModel
 		{
 			// get number of profiles with this URL
 			$number = (int) $db->getVar(
-				'SELECT COUNT(p.id)
+				'SELECT 1
 				 FROM profiles AS p
-				 WHERE p.url = ?',
+				 WHERE p.url = ?
+				 LIMIT 1',
 				(string) $url
 			);
 
@@ -430,9 +437,10 @@ class BackendProfilesModel
 		{
 			// get number of profiles with this URL
 			$number = (int) $db->getVar(
-				'SELECT COUNT(p.id)
+				'SELECT 1
 				 FROM profiles AS p
-				 WHERE p.url = ? AND p.id != ?',
+				 WHERE p.url = ? AND p.id != ?
+				 LIMIT 1',
 				array((string) $url, (int) $id)
 			);
 
