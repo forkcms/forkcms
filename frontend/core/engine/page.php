@@ -71,7 +71,7 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	protected $statusCode = 200;
 
-	public function __construct()
+	public function __construct($pageId = null)
 	{
 		parent::__construct();
 
@@ -82,8 +82,10 @@ class FrontendPage extends FrontendBaseObject
 		Spoon::set('page', $this);
 
 		// get pageId for requested URL
-		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
-
+		$this->pageId = ($pageId === null)
+			? FrontendNavigation::getPageId(implode('/', $this->URL->getPages()))
+			: (int) $pageId;
+		
 		// set headers if this is a 404 page
 		if($this->pageId == 404) $this->statusCode = 404;
 

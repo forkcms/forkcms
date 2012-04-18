@@ -152,7 +152,7 @@ class SpoonHTTP
 
 		// redirect
 		self::setHeaders("Location: $URL");
-
+		
 		// stop execution
 		exit;
 	}
