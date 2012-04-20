@@ -45,7 +45,7 @@ class FrontendAJAX
 		$action = isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '';
 		if($action == '' && isset($_GET['action'])) $action = $_GET['action'];
 		$language = isset($_POST['fork']['language']) ? $_POST['fork']['language'] : '';
-		if($language == '' && isset($_GET['language'])) $language = $GET['language'];
+		if($language == '' && isset($_GET['language'])) $language = $_GET['language'];
 		if($language == '') $language = SITE_DEFAULT_LANGUAGE;
 
 		// set the module
