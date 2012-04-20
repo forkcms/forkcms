@@ -654,7 +654,7 @@ class SpoonFilter
 		if(mb_strpos($value, '.') !== false) rtrim($value, '0');
 
 		// no negatives allowed
-		if(!$allowNegative) return ((float) $value >= 0);
+		if(!$allowNegative) return (((float) $value >= 0) && ((string) (float) $value == $value));
 
 		// no commas allowed
 		return ((string) (float) $value === (string) $value);
