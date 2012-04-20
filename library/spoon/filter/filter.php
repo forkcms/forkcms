@@ -478,7 +478,11 @@ class SpoonFilter
 		if($allowCommas) $value = str_replace(',', '.', (string) $value);
 
 		// trim zero characters after the decimal separator
-		if(mb_strpos((string) $value, '.') !== false) rtrim($value, '0');
+		if(mb_strpos((string) $value, '.') !== false)
+		{
+			$value = rtrim($value, '0');
+			if(substr($value, -1) == '.') $value = substr($value, 0, -1);
+		}
 
 		// validate
 		return ((string) (float) $value === (string) $value);
@@ -651,7 +655,11 @@ class SpoonFilter
 		if($allowCommas) $value = str_replace(',', '.', (string) $value);
 
 		// trim zero characters after the decimal separator
-		if(mb_strpos($value, '.') !== false) rtrim($value, '0');
+		if(mb_strpos($value, '.') !== false)
+		{
+			$value = rtrim($value, '0');
+			if(substr($value, -1) == '.') $value = substr($value, 0, -1);
+		}
 
 		// no negatives allowed
 		if(!$allowNegative) return (((float) $value >= 0) && ((string) (float) $value == $value));
