@@ -485,6 +485,12 @@ class FrontendHeader extends FrontendBaseObject
 		// check that file does not yet exist or has been updated already
 		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
+			// create directory if it does not exist
+			if(!SpoonDirectory::exists(dirname($finalPath)))
+			{
+				SpoonDirectory::create(dirname($finalPath));
+			}
+
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
 			$css = new MinifyCSS(PATH_WWW . $file);
@@ -510,6 +516,12 @@ class FrontendHeader extends FrontendBaseObject
 		// check that file does not yet exist or has been updated already
 		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
+			// create directory if it does not exist
+			if(!SpoonDirectory::exists(dirname($finalPath)))
+			{
+				SpoonDirectory::create(dirname($finalPath));
+			}
+
 			// minify the file
 			require_once PATH_LIBRARY . '/external/minify.php';
 			$js = new MinifyJS(PATH_WWW . $file);
