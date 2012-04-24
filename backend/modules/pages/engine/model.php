@@ -1328,18 +1328,19 @@ class BackendPagesModel
 		else $newParent = $droppedOnPage['parent_id'];
 
 		// decide new type
-		$newType = 'page';
-		if($droppedOn == 0) $newType = 'meta';
-		if($droppedOnPage['type'] == 'meta')
+		if($droppedOn == 0)
 		{
-			if($newParent == 0) $newType = 'meta';
-			else $newType = 'page';
+			$newType = 'meta';
 		}
-		if($droppedOnPage['type'] == 'footer') $newType = 'footer';
-		if($droppedOnPage['type'] == 'root')
+
+		elseif($newParent == 0)
 		{
-			if($newParent == 0) $newType = 'root';
-			else $newType = 'page';
+			$newType = $droppedOnPage['type'];
+		}
+
+		else
+		{
+			$newType = 'page';
 		}
 
 		// calculate new sequence for items that should be moved inside
