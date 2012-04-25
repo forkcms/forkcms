@@ -1,3 +1,11 @@
+3.3.6 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Pages: child pages of footerpages had the wrong type when dropped on a footer page.
+* Formbuilder: it is now possible to use an inactive frontend language.
+
+
 3.3.5 (2012-04-24)
 --
 Improvements:
