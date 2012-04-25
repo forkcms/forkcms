@@ -269,184 +269,200 @@
  */
 (function($)
 {
-	$.fn.inlineTextEdit = function(options)
+	var tagNamesToPluginNames = {
+		input: 'inlineTextEdit',
+		textarea: 'inlineTextareaEdit'
+	};
+
+	$.each(tagNamesToPluginNames, function(tagName, pluginName)
 	{
-		// define defaults
-		var defaults =
+		$.fn[pluginName] = function(options)
 		{
-			params: {},
-			current: {},
-			extraParams: {},
-			inputClasses: 'inputText',
-			allowEmpty: false,
-			tooltip: 'click to edit',
-			afterSave: null
-		};
-
-		// extend options
-		var options = $.extend(defaults, options);
-
-		// init var
-		var editing = false;
-
-		// loop all elements
-		return this.each(function()
-		{
-			// get current object
-			var $this = $(this);
-
-			// add wrapper and tooltip
-			$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
-
-			// grab element
-			$span = $this.find('span');
-			var element = $span.eq(0);
-			var tooltip = $span.eq(1);
-
-			// bind events
-			element.bind('click focus', createElement);
-
-			tooltip.bind('click', createElement);
-
-			$this.hover(
-				function()
-				{
-					$this.addClass('inlineEditHover');
-					tooltip.show();
-				},
-				function()
-				{
-					$this.removeClass('inlineEditHover');
-					tooltip.hide();
-				}
-			);
-
-			// create an element
-			function createElement()
+			// define defaults
+			var defaults =
 			{
-				// already editing
-				if(editing) return;
+				params: {},
+				current: {},
+				extraParams: {},
+				inputClasses: 'inputText',
+				allowEmpty: false,
+				tooltip: 'click to edit',
+				afterSave: null
+			};
 
-				// set var
-				editing = true;
+			// extend options
+			var options = $.extend(defaults, options);
 
-				// grab current value
-				options.current.value = element.html();
+			// init var
+			var editing = false;
 
+			// loop all elements
+			return this.each(function()
+			{
 				// get current object
 				var $this = $(this);
 
-				// grab extra params
-				if($this.parent().data('id') != '')
-				{
-					options.current.extraParams = eval('(' + $this.parent().data('id') + ')');
-				}
+				// add wrapper and tooltip
+				$this.html('<span>' + $this.html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
 
-				// add class
-				element.addClass('inlineEditing');
-
-				// remove events
-				element.unbind('click').unbind('focus');
-
-				// replacing quotes, less than and greater than with htmlentity, otherwise the inputfield is 'broken'
-				options.current.value = utils.string.replaceAll(options.current.value, '"', '&quot;');
-
-				// set html
-				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
-
-				// store element
-				options.current.element = $(element.find('input')[0]);
-
-				// set focus
-				options.current.element.select();
+				// grab element
+				$span = $this.find('span');
+				var element = $span.eq(0);
+				var tooltip = $span.eq(1);
 
 				// bind events
-				options.current.element.bind('blur', saveElement);
-				options.current.element.keyup(function(e)
-				{
-					// handle escape
-					if(e.which == 27)
-					{
-						// reset
-						options.current.element.val(options.current.value);
+				element.bind('click focus', createElement);
 
-						// destroy
-						destroyElement();
+				tooltip.bind('click', createElement);
+
+				$this.hover(
+					function()
+					{
+						$this.addClass('inlineEditHover');
+						tooltip.show();
+					},
+					function()
+					{
+						$this.removeClass('inlineEditHover');
+						tooltip.hide();
+					}
+				);
+
+				// create an element
+				function createElement()
+				{
+					// already editing
+					if(editing) return;
+
+					// set var
+					editing = true;
+
+					// grab current value
+					options.current.value = element.html();
+
+					// get current object
+					var $this = $(this);
+
+					// grab extra params
+					if($this.parent().data('id') != '')
+					{
+						options.current.extraParams = eval('(' + $this.parent().data('id') + ')');
 					}
 
-					// save when someone presses enter
-					if(e.which == 13) saveElement();
-				});
-			}
+					// add class
+					element.addClass('inlineEditing');
 
-			// destroy the element
-			function destroyElement()
-			{
-				// get parent
-				var parent = options.current.element.parent();
+					// remove events
+					element.unbind('click').unbind('focus');
 
-				// get value and replace quotes, less than and greater than with their htmlentities
-				var newValue = options.current.element.val();
-				newValue = utils.string.replaceAll(newValue, '"', '&quot;');
-				newValue = utils.string.replaceAll(newValue, '<', '&lt;');
-				newValue = utils.string.replaceAll(newValue, '>', '&gt;');
+					// replacing quotes, less than and greater than with htmlentity, otherwise the inputfield is 'broken'
+					options.current.value = utils.string.replaceAll(options.current.value, '"', '&quot;');
 
-				// set HTML and rebind events
-				parent.html(newValue).bind('click focus', createElement);
-
-				// add class
-				parent.removeClass('inlineEditing');
-
-				// restore
-				editing = false;
-			}
-
-			// save the element
-			function saveElement()
-			{
-				// if the new value is empty and that isn't allowed, we restore the original value
-				if(!options.allowEmpty && options.current.element.val() == '')
-				{
-					options.current.element.val(options.current.value);
-				}
-
-				// is the value different from the original value
-				if(options.current.element.val() != options.current.value)
-				{
-					// add element to the params
-					options.current.extraParams['value'] = options.current.element.val();
-
-					// make the call
-					$.ajax(
+					// set html
+					if(tagName === 'input')
 					{
-						data: $.extend(options.params, options.current.extraParams),
-						success: function(data, textStatus)
-						{
-							// call callback if it is a valid callback
-							if(typeof options.afterSave == 'function') eval(options.afterSave)($this);
+						element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
+					}
+					else
+					{
+						element.html('<textarea>' + options.current.value + '</textarea>');
+						element.find('textarea').TextAreaExpander();
+					}
 
-							// destroy the element
-							destroyElement();
-						},
-						error: function(XMLHttpRequest, textStatus, errorThrown)
+					// store element
+					options.current.element = $(element.find(tagName)[0]);
+
+					// set focus
+					options.current.element.select();
+
+					// bind events
+					options.current.element.bind('blur', saveElement);
+					options.current.element.keyup(function(e)
+					{
+						// handle escape
+						if(e.which == 27)
 						{
 							// reset
 							options.current.element.val(options.current.value);
 
-							// destroy the element
+							// destroy
 							destroyElement();
-
-							// show message
-							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
+
+						// save when someone presses enter
+						if(e.which == 13 && tagName === 'input') saveElement();
 					});
 				}
 
 				// destroy the element
-				else destroyElement();
-			}
-		});
-	};
+				function destroyElement()
+				{
+					// get parent
+					var parent = options.current.element.parent();
+
+					// get value and replace quotes, less than and greater than with their htmlentities
+					var newValue = options.current.element.val();
+					newValue = utils.string.replaceAll(newValue, '"', '&quot;');
+					newValue = utils.string.replaceAll(newValue, '<', '&lt;');
+					newValue = utils.string.replaceAll(newValue, '>', '&gt;');
+
+					// set HTML and rebind events
+					parent.html(newValue).bind('click focus', createElement);
+
+					// add class
+					parent.removeClass('inlineEditing');
+
+					// restore
+					editing = false;
+				}
+
+				// save the element
+				function saveElement()
+				{
+					// if the new value is empty and that isn't allowed, we restore the original value
+					if(!options.allowEmpty && options.current.element.val() == '')
+					{
+						options.current.element.val(options.current.value);
+					}
+
+					// is the value different from the original value
+					if(options.current.element.val() != options.current.value)
+					{
+						// add element to the params
+						options.current.extraParams['value'] = options.current.element.val();
+
+						// make the call
+						$.ajax(
+						{
+							data: $.extend(options.params, options.current.extraParams),
+							success: function(data, textStatus)
+							{
+								// call callback if it is a valid callback
+								if(typeof options.afterSave == 'function') eval(options.afterSave)($this);
+
+								// destroy the element
+								destroyElement();
+							},
+							error: function(XMLHttpRequest, textStatus, errorThrown)
+							{
+								// reset
+								options.current.element.val(options.current.value);
+
+								// destroy the element
+								destroyElement();
+
+								// show message
+								jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
+							}
+						});
+					}
+
+					// destroy the element
+					else destroyElement();
+				}
+			});
+		};
+	});
 })(jQuery);
 
 /**
