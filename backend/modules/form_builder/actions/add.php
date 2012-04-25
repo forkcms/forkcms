@@ -111,7 +111,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
 
 				// set frontend locale
-				FL::setLocale(BL::getWorkingLanguage());
+				FL::setLocale(BL::getWorkingLanguage(), true);
 
 				// create submit button
 				$field['form_id'] = $id;
