@@ -130,7 +130,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 	private function parseErrorMessages()
 	{
 		// set frontend locale
-		FL::setLocale(BL::getWorkingLanguage());
+		FL::setLocale(BL::getWorkingLanguage(), true);
 
 		// assign error messages
 		$this->tpl->assign('errors', BackendFormBuilderModel::getErrors());
