@@ -29,6 +29,10 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	public function execute()
 	{
 		parent::execute();
+
+		$this->header->addJS('jquery/jquery.textarea-expander.js', 'core');
+		$this->header->addCSS('locale.css', 'locale');
+
 		$this->setFilter();
 		$this->loadForm();
 		$this->validateForm();
@@ -68,7 +72,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $isCopy ? $translation['module'] : $this->filter['module']);
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
 		$this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
-		$this->frm->addText('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
+		$this->frm->addTextArea('value', $isCopy ? $translation['value'] : $this->filter['value'], 'expand', null, null, true);
 		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
 	}
 

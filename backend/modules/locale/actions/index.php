@@ -34,6 +34,10 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	public function execute()
 	{
 		parent::execute();
+
+		$this->header->addJS('jquery/jquery.textarea-expander.js', 'core');
+		$this->header->addCSS('locale.css', 'locale');
+
 		$this->isGod = BackendAuthentication::getUser()->isGod();
 		$this->setFilter();
 		$this->loadForm();

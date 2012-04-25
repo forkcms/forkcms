@@ -34,6 +34,10 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod())
 		{
 			parent::execute();
+
+			$this->header->addJS('jquery/jquery.textarea-expander.js', 'core');
+			$this->header->addCSS('locale.css', 'locale');
+
 			$this->setFilter();
 			$this->getData();
 			$this->loadForm();
@@ -64,7 +68,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
 		$this->frm->addText('name', $this->record['name']);
-		$this->frm->addText('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
+		$this->frm->addTextArea('value', $this->record['value'], 'expand', 'inputText', 'inputTextError', true);
 		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $this->record['language']);
 	}
 
