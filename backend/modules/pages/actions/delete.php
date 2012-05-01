@@ -34,14 +34,17 @@ class BackendPagesDelete extends BackendBaseActionDelete
 			// cannot have children
 			if(BackendPagesModel::getFirstChildId($this->id) !== false) $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
 
+			$revisionId = $this->getParameter('revision_id', 'int');
+			if($revisionId == 0) $revisionId = null;
+
 			// get page (we need the title)
-			$page = BackendPagesModel::get($this->id);
+			$page = BackendPagesModel::get($this->id, $revisionId);
 
 			// valid page?
 			if(!empty($page))
 			{
 				// delete the page
-				$success = BackendPagesModel::delete($this->id);
+				$success = BackendPagesModel::delete($this->id, null, $revisionId);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));

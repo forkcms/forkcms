@@ -460,7 +460,7 @@ class BackendPagesModel
 	 * @param string[optional] $language The language wherin the page will be deleted, if not provided we will use the working language.
 	 * @return bool
 	 */
-	public static function delete($id, $language = null)
+	public static function delete($id, $language = null, $revisionId = null)
 	{
 		// redefine
 		$id = (int) $id;
@@ -470,7 +470,7 @@ class BackendPagesModel
 		$db = BackendModel::getDB(true);
 
 		// get record
-		$page = self::get($id, null, $language);
+		$page = self::get($id, $revisionId, $language);
 
 		// validate
 		if(empty($page)) return false;

@@ -1,3 +1,10 @@
+3.3.7 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Pages: made it possible to delete drafts.
+
+
 3.3.6 (2012-05-01)
 --
 Improvements:
