@@ -1,5 +1,9 @@
 3.3.6 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.20
+
 Bugfixes:
 
 * Pages: child pages of footerpages had the wrong type when dropped on a footer page.
