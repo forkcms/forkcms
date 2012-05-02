@@ -74,6 +74,8 @@ class ProfilesInstaller extends ModuleInstaller
 		$resetPasswordId = $this->insertExtra('profiles', 'block', 'ResetPassword', 'reset_password', null, 'N', 5008);
 		$resendActivationId = $this->insertExtra('profiles', 'block', 'ResendActivation', 'resend_activation', null, 'N', 5009);
 
+		$this->insertExtra('profiles', 'widget', 'LoginBox', 'login_box', null, 'N', 5010);
+
 		// get search widget id
 		$searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND action = ?', array('search', 'form'));
 

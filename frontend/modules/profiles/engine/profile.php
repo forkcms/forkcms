@@ -292,4 +292,25 @@ class FrontendProfilesProfile
 	{
 		$this->url = (string) $value;
 	}
+
+	/**
+	 * Convert the object into an array for usage in the template
+	 *
+	 * @return array
+	 */
+	public function toArray()
+	{
+		// basis info
+		$return['display_name'] = $this->getDisplayName();
+		$return['registered_on'] = $this->getRegisteredOn();
+
+		// add settings
+		foreach($this->settings as $key => $value) $return['settings'][$key] = $value;
+
+		// urls
+		$return['url']['dashboard'] = FrontendNavigation::getURLForBlock('profiles');
+		$return['url']['settings'] = FrontendNavigation::getURLForBlock('profiles', 'settings');
+
+		return $return;
+	}
 }

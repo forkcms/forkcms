@@ -1,5 +1,9 @@
 3.3.7 (xxxx-xx-xx)
 --
+Improvements:
+
+* Profiles: added a widget that shows a login-box
+
 Bugfixes:
 
 * Pages: made it possible to delete drafts.
