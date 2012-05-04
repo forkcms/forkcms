@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Pages: made it possible to delete drafts.
+* Blog: fixed the blog archive, which redirected to a false (or non-existent) url if the parameters were invalid
 
 
 3.3.6 (2012-05-01)
