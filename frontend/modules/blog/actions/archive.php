@@ -67,7 +67,7 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		if($this->month !== null && mb_strlen($this->month) != 2)
 		{
 			$queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
-			$this->redirect(FrontendNavigation::getURLForBlock('knowledgebase', 'archive') . '/' . $this->year . '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT) . $queryString, 301);
+			$this->redirect(FrontendNavigation::getURLForBlock('blog', 'archive') . '/' . $this->year . '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT) . $queryString, 301);
 		}
 		if(mb_strlen($this->year) != 4) $this->redirect(FrontendNavigation::getURL(404));
 
