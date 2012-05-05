@@ -1,5 +1,9 @@
 3.3.7 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: upgraded Highcharts to 2.2.2
+
 Bugfixes:
 
 * Pages: made it possible to delete drafts.
