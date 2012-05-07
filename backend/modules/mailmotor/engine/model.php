@@ -1179,7 +1179,6 @@ class BackendMailmotorModel
 		);
 	}
 
-
 	/**
 	 * Get all recent subscriptions
 	 *
@@ -1209,6 +1208,37 @@ class BackendMailmotorModel
 		// get record and return it
 		return (array) BackendModel::getDB()->getRecords($query, $parameters);
 	}
+
+	/**
+	 * Get all recent unsubscriptions
+	 *
+	 * @param int[optional] $limit
+	 * @return array
+	 */
+	public static function getRecentUnsubscriptions($limit = null)
+	{
+		// build query
+		$query =
+			'SELECT ma.email, mg.name, UNIX_TIMESTAMP(mag.unsubscribed_on) AS unsubscribed_on
+			 FROM mailmotor_addresses AS ma
+			 INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
+			 INNER JOIN mailmotor_groups AS mg ON mg.id = mag.group_id
+			 WHERE mag.status = ?
+			 ORDER BY mag.unsubscribed_on DESC';
+
+		$parameters = array('unsubscribed');
+
+		// limit was found
+		if(!empty($limit))
+		{
+			$query .= ' LIMIT ?';
+			$parameters[] = $limit;
+		}
+
+		// get record and return it
+		return (array) BackendModel::getDB()->getRecords($query, $parameters);
+	}
+
 	/**
 	 * Get all sent mailings
 	 *
