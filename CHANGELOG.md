@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: upgraded Highcharts to 2.2.3
+* Mailmotor: show all subscriptions for all groups.
 
 Bugfixes:
 

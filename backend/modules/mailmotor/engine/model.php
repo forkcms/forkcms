@@ -11,6 +11,7 @@
  * In this file we store all generic functions that we will be using in the mailmotor module
  *
  * @author Dave Lens <dave.lens@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class BackendMailmotorModel
 {
@@ -1178,6 +1179,36 @@ class BackendMailmotorModel
 		);
 	}
 
+
+	/**
+	 * Get all recent subscriptions
+	 *
+	 * @param int[optional] $limit
+	 * @return array
+	 */
+	public static function getRecentSubscriptions($limit = null)
+	{
+		// build query
+		$query =
+			'SELECT ma.email, mg.name, UNIX_TIMESTAMP(mag.subscribed_on) AS subscribed_on
+			 FROM mailmotor_addresses AS ma
+			 INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
+			 INNER JOIN mailmotor_groups AS mg ON mg.id = mag.group_id
+			 WHERE mag.status = ?
+			 ORDER BY mag.subscribed_on DESC';
+
+		$parameters = array('subscribed');
+
+		// limit was found
+		if(!empty($limit))
+		{
+			$query .= ' LIMIT ?';
+			$parameters[] = $limit;
+		}
+
+		// get record and return it
+		return (array) BackendModel::getDB()->getRecords($query, $parameters);
+	}
 	/**
 	 * Get all sent mailings
 	 *

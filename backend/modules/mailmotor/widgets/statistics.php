@@ -90,7 +90,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 	private function loadSubscriptions()
 	{
 		// get results
-		$results = BackendMailmotorModel::getAddressesByGroupID($this->groupId, false, self::PAGING_LIMIT);
+		$results = BackendMailmotorModel::getRecentSubscriptions(self::PAGING_LIMIT);
 
 		// there are some results
 		if(!empty($results))
@@ -102,7 +102,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 			$dataGrid->setPaging(false);
 
 			// set column functions
-			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[subscribed_on]'), 'subscribed_on', true);
 
 			// check if this action is allowed
 			if(BackendAuthentication::isAllowedAction('edit_address', 'mailmotor'))
