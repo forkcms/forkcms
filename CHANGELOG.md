@@ -2,7 +2,7 @@
 --
 Improvements:
 
-* Core: upgraded Highcharts to 2.2.2
+* Core: upgraded Highcharts to 2.2.3
 
 Bugfixes:
 
