@@ -1,3 +1,10 @@
+3.3.8 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Mailmotor: the url-parameter in the pagination should be encoded.
+
+
 3.3.7 (2012-05-08)
 --
 Improvements:
