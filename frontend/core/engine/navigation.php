@@ -47,6 +47,16 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
+	 * Creates and renders a 404 page
+	 */
+	public static function dieWith404()
+	{
+		$page = new FrontendPage(404);
+		$page->display();
+		exit;
+	}
+
+	/**
 	 * Creates a Backend URL for a given action and module
 	 * If you don't specify a language the current language will be used.
 	 *

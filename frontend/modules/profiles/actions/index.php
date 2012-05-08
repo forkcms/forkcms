@@ -35,7 +35,7 @@ class FrontendProfilesIndex extends FrontendBaseBlock
 		}
 
 		// only if you are logged in, baby.
-		else $this->redirect(FrontendNavigation::getURL(404));
+		else FrontendNavigation::dieWith404();
 	}
 }
 
