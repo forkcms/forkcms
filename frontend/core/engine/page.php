@@ -71,7 +71,12 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	protected $statusCode = 200;
 
-	public function __construct()
+	/**
+	 * Create a new FrontendPage instance for the given page ID.
+	 * If the page ID is not given, it is determined based on the URL path.
+	 * @param int $pageId
+	 */
+	public function __construct($pageId = null)
 	{
 		parent::__construct();
 
@@ -82,7 +87,9 @@ class FrontendPage extends FrontendBaseObject
 		Spoon::set('page', $this);
 
 		// get pageId for requested URL
-		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
+		$this->pageId = ($pageId === null)
+			? FrontendNavigation::getPageId(implode('/', $this->URL->getPages()))
+			: (int) $pageId;
 
 		// set headers if this is a 404 page
 		if($this->pageId == 404) $this->statusCode = 404;
@@ -203,7 +210,7 @@ class FrontendPage extends FrontendBaseObject
 		else $this->record = (array) FrontendModel::getPage($this->pageId);
 
 		// empty record (pageId doesn't exists, hope this line is never used)
-		if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
+		if(empty($this->record) && $this->pageId != 404) FrontendNavigation::showPage(404);
 
 		// init var
 		$redirect = true;
