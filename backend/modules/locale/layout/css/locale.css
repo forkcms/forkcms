@@ -1,0 +1,18 @@
+/*
+
+    Locale CSS
+
+    @package      backend
+    @subpackage   locale
+
+    @author       Peter-Jan Brone <peterjan.brone@wijs.be>
+
+*/
+
+.expand{
+	width: 260px !important;
+	padding-left: 2px;
+	padding-right: 2px;
+	margin: 2px 0px;
+	resize: none;
+}

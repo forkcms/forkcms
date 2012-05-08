@@ -27,7 +27,7 @@ jsBackend.locale.controls =
 		if($('.dataGrid td.translationValue').length > 0)
 		{
 			// bind
-			$('.dataGrid td.translationValue').inlineTextEdit(
+			$('.dataGrid td.translationValue').inlineTextareaEdit(
 			{
 				params: { fork: { action: 'save_translation' } },
 				tooltip: '{$msgClickToEdit}',
