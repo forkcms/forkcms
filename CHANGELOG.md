@@ -1,5 +1,9 @@
 3.3.8 (xxxx-xx-xx)
 --
+Improvements:
+
+* Search: don't add utm_* parameters when a search is performed, thx to timbakker79.
+
 Bugfixes:
 
 * Mailmotor: the url-parameter in the pagination should be encoded.
