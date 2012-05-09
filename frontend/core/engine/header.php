@@ -611,7 +611,7 @@ class FrontendHeader extends FrontendBaseObject
 		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
 		{
 			// build GA-tracking code
-			$trackingCode = '<script type="text/javascript">
+			$trackingCode = '<script>
 								var _gaq = [[\'_setAccount\', \'' . $webPropertyId . '\'],
 											[\'_setDomainName\', \'none\'],
 											[\'_trackPageview\'],
