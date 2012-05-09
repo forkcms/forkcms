@@ -3,6 +3,7 @@
 Improvements:
 
 * Search: don't add utm_* parameters when a search is performed, thx to timbakker79.
+* Core: detecting the browser language now use the weight, thx to Atticus.
 
 Bugfixes:
 
