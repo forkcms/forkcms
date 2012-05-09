@@ -314,6 +314,69 @@ jsFrontend.gravatar =
 }
 
 /**
+ * Locale
+ * 
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.locale = 
+{
+	initialized: false,
+	data: {},
+
+	init: function()
+	{
+		$.ajax({
+			url: '/frontend/cache/locale/' + jsFrontend.current.language + '.json',
+			type: 'GET',
+			dataType: 'json',
+			async: false,
+			success: function(data) 
+			{
+				jsFrontend.locale.data = data;
+				jsFrontend.locale.initialized = true;
+			},
+			error: function(jqXHR, textStatus, errorThrown) 
+			{
+				alert('Regenerate your locale-files.');
+			}
+		});
+
+		// store in cache
+	},
+
+	get: function(type, key)
+	{
+		// initialize if needed
+		if(!jsFrontend.locale.initialized) jsFrontend.locale.init();
+
+		// validate
+		if(typeof jsFrontend.locale.data[type][key] == 'undefined') return '{$' + type + key + '}';
+
+		return jsFrontend.locale.data[type][key];
+	},
+
+	act: function(key)
+	{
+		return jsFrontend.locale.get('act', key);
+	},
+
+	err: function(key)
+	{
+		return jsFrontend.locale.get('err', key);
+	},
+
+	lbl: function(key)
+	{
+		return jsFrontend.locale.get('lbl', key);
+	},
+
+	msg: function(key)
+	{
+		return jsFrontend.locale.get('msg', key);
+	}
+}
+
+/**
  * Search controls
  *
  * @author	Matthias Mullie <matthias@mullie.eu>
