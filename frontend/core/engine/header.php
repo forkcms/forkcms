@@ -190,6 +190,18 @@ class FrontendHeader extends FrontendBaseObject
 	}
 
 	/**
+	 * Add data into the jsData
+	 *
+	 * @param string $module	The name of the module.
+	 * @param string $key		The key whereunder the value will be stored.
+	 * @param mixed $value		The value
+	 */
+	public function addJsData($module, $key, $value)
+	{
+		$this->jsData[$module][$key] = $value;
+	}
+
+	/**
 	 * Add link
 	 *
 	 * @param array $attributes The attributes to parse.

@@ -99,7 +99,7 @@ jsFrontend.data =
 		if(!jsFrontend.data.initialized) jsFrontend.data.init();
 
 		// return
-		return jsFrontend.data.data[key];
+		return eval('jsFrontend.data.data.' + key);
 	}
 }
 
