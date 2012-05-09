@@ -8,6 +8,7 @@ Improvements:
 Bugfixes:
 
 * Mailmotor: the url-parameter in the pagination should be encoded.
+* Location: if no markers were available an JS-error was thrown.
 
 
 3.3.7 (2012-05-08)

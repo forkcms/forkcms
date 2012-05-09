@@ -55,6 +55,9 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		$this->settings = BackendLocationModel::getMapSettings(0);
 		$firstMarker = current($this->items);
 
+		// if there are no markers we reset it to the birthplace of Fork
+		if($firstMarker === false) $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+
 		// load the settings from the general settings
 		if(empty($this->settings))
 		{
