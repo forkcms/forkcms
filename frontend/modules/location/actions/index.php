@@ -27,6 +27,9 @@ class FrontendLocationIndex extends FrontendBaseBlock
 	{
 		parent::execute();
 
+		// add Google Maps
+		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true);
+
 		$this->loadTemplate();
 		$this->loadData();
 
@@ -61,6 +64,9 @@ class FrontendLocationIndex extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
+		$this->addJSData('settings', $this->settings);
+		$this->addJSData('items', $this->items);
+
 		$this->tpl->assign('locationItems', $this->items);
 		$this->tpl->assign('locationSettings', $this->settings);
 	}
