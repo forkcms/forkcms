@@ -31,6 +31,13 @@ class FrontendHeader extends FrontendBaseObject
 	private $cssFiles = array();
 
 	/**
+	 * Data that will be passed to js
+	 *
+	 * @var array
+	 */
+	private $jsData = array();
+
+	/**
 	 * The added js-files
 	 *
 	 * @var	array
@@ -621,6 +628,13 @@ class FrontendHeader extends FrontendBaseObject
 			// add to the header
 			$siteHTMLHeader .= "\n" . $trackingCode;
 		}
+
+		// store language
+		$this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
+
+		// encode and add
+		$jsData = json_encode($this->jsData);
+		$siteHTMLHeader .= "\n" . '<script>var jsData = ' . $jsData . '</script>';
 
 		// assign site wide html
 		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));

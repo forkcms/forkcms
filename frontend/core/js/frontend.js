@@ -75,6 +75,36 @@ jsFrontend.controls =
 }
 
 /**
+ * Data related methods
+ * 
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.data = 
+{
+	initialized: false,
+	data: {},
+
+	init: function()
+	{
+		// check if var is available
+		if(typeof jsData == 'undefined') alert('jsData is not available');
+
+		// populate
+		jsFrontend.data.data = jsData;
+		jsFrontend.data.initialized = true;
+	},
+
+	get: function(key)
+	{
+		// init if needed
+		if(!jsFrontend.data.initialized) jsFrontend.data.init();
+
+		// return
+		return jsFrontend.data.data[key];
+	}
+}
+
+/**
  * Facebook related
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
