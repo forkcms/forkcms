@@ -50,6 +50,9 @@ class FrontendLanguage
 			array((string) $language, (string) $application)
 		);
 
+		// init var
+		$json = array();
+
 		// start generating PHP
 		$value = '<?php' . "\n";
 		$value .= '/**' . "\n";
@@ -87,8 +90,16 @@ class FrontendLanguage
 					}
 
 					// parse
-					if($application == 'backend') $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
-					else $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+					if($application == 'backend')
+					{
+						$value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+						$json[$type][$item['module']][$item['name']] = $item['value'];
+					}
+					else
+					{
+						$value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+						$json[$type][$item['name']] = $item['value'];
+					}
 
 					// unset
 					unset($locale[$i]);
@@ -101,6 +112,7 @@ class FrontendLanguage
 
 		// store
 		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php', $value);
+		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json', json_encode($json));
 	}
 
 	/**
