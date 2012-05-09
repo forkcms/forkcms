@@ -152,6 +152,80 @@ class FrontendLanguage
 		return self::$languages['active'];
 	}
 
+	public static function parseLanguageList($languageList) 
+	{
+	    if (is_null($languageList)) {
+	        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+	            return array();
+	        }
+	        $languageList = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+
+	    }
+
+	    $languages = array();
+	    $languageRanges = explode(',', trim($languageList));
+	    foreach ($languageRanges as $languageRange) {
+	        if (preg_match('/(\*|[a-zA-Z0-9]{1,8}(?:-[a-zA-Z0-9]{1,8})*)(?:\s*;\s*q\s*=\s*(0(?:\.\d{0,3})|1(?:\.0{0,3})))?/', trim($languageRange), $match)) {
+	            if (!isset($match[2])) {
+	                $match[2] = '1.0';
+	            } else {
+	                $match[2] = (string) floatval($match[2]);
+	            }
+	            if (!isset($languages[$match[2]])) {
+	                $languages[$match[2]] = array();
+	            }
+	            $languages[$match[2]][] = strtolower($match[1]);
+	        }
+	    }
+	    krsort($languages);
+	    return $languages;
+	}
+
+	public static function findMatches($accepted, $available) 
+	{
+	    $matches = array();
+	    $any = false;
+	    foreach ($accepted as $acceptedQuality => $acceptedValues) {
+	        $acceptedQuality = floatval($acceptedQuality);
+	        if ($acceptedQuality === 0.0) continue;
+	        foreach ($available as $availableQuality => $availableValues) {
+	            $availableQuality = floatval($availableQuality);
+	            if ($availableQuality === 0.0) continue;
+	            foreach ($acceptedValues as $acceptedValue) {
+	                if ($acceptedValue === '*') {
+	                    $any = true;
+	                }
+	                foreach ($availableValues as $availableValue) {
+	                    $matchingGrade = self::matchLanguage($acceptedValue, $availableValue);
+	                    if ($matchingGrade > 0) {
+	                        $q = (string) ($acceptedQuality * $availableQuality * $matchingGrade);
+	                        if (!isset($matches[$q])) {
+	                            $matches[$q] = array();
+	                        }
+	                        if (!in_array($availableValue, $matches[$q])) {
+	                            $matches[$q][] = $availableValue;
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    if (count($matches) === 0 && $any) {
+	        $matches = $available;
+	    }
+	    krsort($matches);
+	    return $matches;
+	}
+
+	public static function matchLanguage($a, $b)
+	{
+	    $a = explode('-', $a);
+	    $b = explode('-', $b);
+	    for ($i=0, $n=min(count($a), count($b)); $i<$n; $i++) {
+	        if ($a[$i] !== $b[$i]) break;
+	    }
+	    return $i === 0 ? 0 : (float) $i / count($a);
+	}
 	/**
 	 * Get the prefered language by using the browser-language
 	 *
@@ -163,30 +237,38 @@ class FrontendLanguage
 		// browser language set
 		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2)
 		{
+			$accepted = self::parseLanguageList($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+
+			
 			// get languages
 			$redirectLanguages = self::getRedirectLanguages();
+			// transform to CSV for parsing
+			$redirectLanguages = implode(",", $redirectLanguages);
+			// parse available Fork Languages 
+			$available = self::parseLanguageList($redirectLanguages);
 
-			// prefered languages
-			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
-			// loop until result
-			foreach($browserLanguages as $language)
-			{
-				// redefine language
-				$language = substr($language, 0, 2); // first two characters
+			// find highest match between accepted browser languages and available languages
+			// note: we can do array_shift(array_shift($var)) but following strict standards you can only pass variables by reference		
+			$matches = self::findMatches($accepted, $available);
+    		$matches = array_shift($matches);
+    		$chosenOne = $matches[0];
 
-				// find possible language
-				if($forRedirect)
+			
+
+			if($forRedirect)
 				{
 					// check in the redirect-languages
-					if(in_array($language, $redirectLanguages)) return $language;
+					if(!empty($chosenOne)) return $chosenOne;
 				}
-			}
 		}
 
 		// fallback
 		return SITE_DEFAULT_LANGUAGE;
+
 	}
+
+
 
 	/**
 	 * Get an error from the language-file
