@@ -8,14 +8,13 @@ var jsFrontend =
 {
 	// datamembers
 	debug: false,
-	current:
-	{
-		language: '{$FRONTEND_LANGUAGE}'
-	},
+	current: {},
 
 	// init, something like a constructor
 	init: function()
 	{
+		jsFrontend.current.language = jsFrontend.data.get('FRONTEND_LANGUAGE');
+
 		// init stuff
 		jsFrontend.initAjax();
 
