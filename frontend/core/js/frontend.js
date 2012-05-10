@@ -372,8 +372,6 @@ jsFrontend.locale =
 				alert('Regenerate your locale-files.');
 			}
 		});
-
-		// store in cache
 	},
 
 	get: function(type, key)
