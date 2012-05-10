@@ -93,6 +93,11 @@ jsFrontend.data =
 		jsFrontend.data.initialized = true;
 	},
 
+	exists: function(key)
+	{
+		return (typeof eval('jsFrontend.data.data.' + key) != 'undefined');
+	},
+	
 	get: function(key)
 	{
 		// init if needed
