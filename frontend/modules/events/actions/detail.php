@@ -406,7 +406,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$diff = time() - (int) SpoonSession::get('events_subscription_' . $this->record['id']);
 
 				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
-				if($diff < 10 && $diff != 0) $this->frmSubscription->getField('email')->addError(FL::err('SubscriptionTimeout'));
+				if($diff < 10 && $diff != 0) $this->frmSubscription->getField('subscription_email')->addError(FL::err('SubscriptionTimeout'));
 			}
 
 			// validate required fields
