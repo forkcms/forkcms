@@ -86,7 +86,7 @@ jsFrontend.data =
 	init: function()
 	{
 		// check if var is available
-		if(typeof jsData == 'undefined') alert('jsData is not available');
+		if(typeof jsData == 'undefined') throw 'jsData is not available';
 
 		// populate
 		jsFrontend.data.data = jsData;
@@ -369,7 +369,7 @@ jsFrontend.locale =
 			},
 			error: function(jqXHR, textStatus, errorThrown) 
 			{
-				alert('Regenerate your locale-files.');
+				throw 'Regenerate your locale-files.';
 			}
 		});
 	},
