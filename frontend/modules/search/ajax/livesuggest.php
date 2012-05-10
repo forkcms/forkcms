@@ -188,25 +188,6 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		// no search term = no search
 		if(!$this->term) return;
 
-		// loop items
-		foreach($this->items as &$item)
-		{
-			// full url is set?
-			if(!isset($item['full_url'])) continue;
-
-			// build utm array
-			$utm['utm_source'] = SpoonFilter::urlise(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
-			$utm['utm_medium'] = 'fork-search';
-			$utm['utm_term'] = $this->term;
-
-			// get parameters in url already
-			if(strpos($item['full_url'], '?') !== false) $glue = '&amp;';
-			else $glue = '?';
-
-			// add utm to url
-			$item['full_url'] .= $glue . http_build_query($utm, '', '&amp;');
-		}
-
 		// assign articles
 		$this->tpl->assign('searchResults', $this->items);
 		$this->tpl->assign('searchTerm', $this->term);

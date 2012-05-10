@@ -32,7 +32,6 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		$this->header->addCSS('widgets.css', 'mailmotor');
 		$this->setColumn('right');
 		$this->setPosition(1);
-		$this->groupId = BackendMailmotorModel::getDefaultGroupID();
 		$this->parse();
 		$this->display();
 	}
@@ -90,7 +89,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 	private function loadSubscriptions()
 	{
 		// get results
-		$results = BackendMailmotorModel::getAddressesByGroupID($this->groupId, false, self::PAGING_LIMIT);
+		$results = BackendMailmotorModel::getRecentSubscriptions(self::PAGING_LIMIT);
 
 		// there are some results
 		if(!empty($results))
@@ -102,7 +101,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 			$dataGrid->setPaging(false);
 
 			// set column functions
-			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[subscribed_on]'), 'subscribed_on', true);
 
 			// check if this action is allowed
 			if(BackendAuthentication::isAllowedAction('edit_address', 'mailmotor'))
@@ -122,14 +121,14 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 	private function loadUnsubscriptions()
 	{
 		// get results
-		$results = BackendMailmotorModel::getUnsubscribedAddressesByGroupID($this->groupId, self::PAGING_LIMIT);
+		$results = BackendMailmotorModel::getRecentUnsubscriptions(self::PAGING_LIMIT);
 
 		// there are some results
 		if(!empty($results))
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setPaging(false);
-			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+			$dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[unsubscribed_on]'), 'unsubscribed_on', true);
 
 			// check if this action is allowed
 			if(BackendAuthentication::isAllowedAction('edit_address'))

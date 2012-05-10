@@ -1,5 +1,24 @@
-3.3.7 (xxxx-xx-xx)
+3.3.8 (xxxx-xx-xx)
 --
+Improvements:
+
+* Search: don't add utm_* parameters when a search is performed, thx to timbakker79.
+* Core: detecting the browser language now use the weight, thx to Atticus.
+
+Bugfixes:
+
+* Mailmotor: the url-parameter in the pagination should be encoded.
+* Location: if no markers were available an JS-error was thrown.
+
+
+3.3.7 (2012-05-08)
+--
+Improvements:
+
+* Core: upgraded Highcharts to 2.2.3
+* Mailmotor: show subscriptions for all groups.
+* Mailmotor: show unsubscription for all groups.
+
 Bugfixes:
 
 * Pages: made it possible to delete drafts.
