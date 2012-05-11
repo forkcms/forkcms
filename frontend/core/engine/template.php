@@ -750,8 +750,16 @@ class FrontendTemplateModifiers
 
 		// create new widget instance and return parsed content
 		$extra = new FrontendBlockWidget($module, $action, $data);
-		$extra->execute();
-		return $extra->getContent();
+		
+		try
+		{
+			$extra->execute();
+			return $extra->getContent();
+		}
+		catch(Exception $e)
+		{
+			return null;
+		}
 	}
 
 	/**
