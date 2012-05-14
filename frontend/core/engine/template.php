@@ -107,9 +107,13 @@ class FrontendTemplate extends SpoonTemplate
 
 		// parse vars
 		$this->parseVars();
-
-		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
+		
+		// in case of a call from parseWidget we don't need to set the headers again!
+		if(!Spoon::exists('parseWidget') || !Spoon::get('parseWidget'))
+		{
+			// parse headers
+			if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
+		}
 
 		// get template path
 		$template = FrontendTheme::getPath($template);
@@ -751,10 +755,15 @@ class FrontendTemplateModifiers
 		// create new widget instance and return parsed content
 		$extra = new FrontendBlockWidget($module, $action, $data);
 		
+		// set parseWidget because we will need it to skip setting headers in the display
+		Spoon::set('parseWidget', true);
+		
 		try
 		{
 			$extra->execute();
-			return $extra->getContent();
+			$content = $extra->getContent();
+			Spoon::set('parseWidget', null);
+			return $content;
 		}
 		catch(Exception $e)
 		{
