@@ -458,6 +458,7 @@ class BackendPagesModel
 	 *
 	 * @param int $id The id of the page to delete.
 	 * @param string[optional] $language The language wherin the page will be deleted, if not provided we will use the working language.
+	 * @param int[optional] $revisionId If specified the given revision will be deleted, used for deleting drafts.
 	 * @return bool
 	 */
 	public static function delete($id, $language = null, $revisionId = null)
