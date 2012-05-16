@@ -144,8 +144,12 @@ class BackendModel
 			$i++;
 		}
 
+		// some applications aren't real seperate applications, they are virtual applications inside the backend.
+		$namedApplication = NAMED_APPLICATION;
+		if(in_array($namedApplication, array('backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob'))) $namedApplication = 'backend';
+
 		// build the URL and return it
-		return '/' . NAMED_APPLICATION . '/' . $language . '/' . $module . '/' . $action . $querystring;
+		return '/' . $namedApplication . '/' . $language . '/' . $module . '/' . $action . $querystring;
 	}
 
 	/**
