@@ -1,5 +1,5 @@
 <?php
-// Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+// Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.html or http://ckfinder.com/license
 
 //  Defines the object for the French language.
@@ -26,7 +26,7 @@ $GLOBALS['CKFLang'] = array (
 		'204' => 'Le fichier téléversé est corrompu.',
 		'205' => 'Aucun dossier temporaire n\'est disponible sur le serveur.',
 		'206' => 'Envoi interrompu pour raisons de sécurité. Le fichier contient des données de type HTML.',
-		'207' => 'The uploaded file was renamed to "%1".',
+		'207' => 'Le fichier téléchargé a été renommé "%1".',
 		'300' => 'Le déplacement des fichiers a échoué.',
 		'301' => 'La copie des fichiers a échoué.',
 		'500' => 'L\'interface de gestion des fichiers est désactivé. Contactez votre administrateur et vérifier le fichier de configuration de CKFinder.',

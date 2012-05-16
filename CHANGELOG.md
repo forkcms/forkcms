@@ -4,6 +4,7 @@ Improvements:
 
 * Core: added a method to subscribe to events from within the installer, thx jeroendesloovere.
 * Profiles: added a widget that shows a login-box.
+* Core: upgraded CKFinder to 2.2
 
 Bugfixes:
 

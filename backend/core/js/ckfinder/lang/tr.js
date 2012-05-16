@@ -185,8 +185,10 @@ CKFinder.lang['tr'] =
 	FilesCountMany	: '%1 dosya',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/sn',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'İsteğinizi yerine getirmek mümkün değil. (Hata %1)',
@@ -272,5 +274,10 @@ CKFinder.lang['tr'] =
 	{
 		maximize : 'Büyült',
 		minimize : 'Küçült'
+	},
+
+	Gallery :
+	{
+		current : '{current} / {total} resim'
 	}
 };

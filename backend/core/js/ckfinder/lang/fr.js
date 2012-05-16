@@ -183,8 +183,10 @@ CKFinder.lang['fr'] =
 	FilesCountMany	: '%1 fichiers',
 
 	// Size and Speed
-	Kb				: '%1 ko',
-	KbPerSecond		: '%1 ko/s',
+	Kb				: '%1 Ko',
+	Mb				: '%1 Mo',
+	Gb				: '%1 Go',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'La demande n\'a pas abouti. (Erreur %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['fr'] =
 	{
 		maximize : 'Agrandir',
 		minimize : 'Minimiser'
+	},
+
+	Gallery :
+	{
+		current : 'Image {current} sur {total}'
 	}
 };

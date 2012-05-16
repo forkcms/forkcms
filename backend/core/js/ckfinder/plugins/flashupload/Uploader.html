@@ -1,4 +1,15 @@
 <html lang="en">
+<!---
+ * CKFinder
+ * ========
+ * http://ckfinder.com
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+ *
+ * The software, this file and its contents are subject to the CKFinder
+ * License. Please read the license.txt file before using, installing, copying,
+ * modifying or distribute this file or part of its contents. The contents of
+ * this file is part of the Source Code of CKFinder.
+--->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
@@ -56,7 +67,8 @@ var flashvars = {
 	totalFilesLabel : encodeURIComponent(lang.UploadTotalFiles),
 	clearButtonLabel : encodeURIComponent(lang.UploadClearFiles),
 	cancelButtonLabel : encodeURIComponent(lang.CancelBtn),
-	uploadButtonLabel : encodeURIComponent(lang.Upload),
+	closeButtonLabel : encodeURIComponent(lang.CloseBtn),
+	uploadButtonLabel : encodeURIComponent(lang.UploadSend),
 	cancelUploadButtonLabel : encodeURIComponent(lang.UploadCancel),
 	removeButtonLabel : encodeURIComponent(lang.UploadRemove),
 	removeTip : encodeURIComponent(lang.UploadRemoveTip),
@@ -83,11 +95,14 @@ function getFilterDescription() {
 }
 function getUploadUrl() {
 	var api = window.parent.api;
-	return api.getSelectedFolder().getUploadUrl() + "response_type=txt";
+	return api.getSelectedFolder().getUploadUrl() + "&response_type=txt";
 }
 function getMaxSize() {
 	var api = window.parent.api;
 	return parseInt(api.getSelectedFolder().getResourceType().maxSize, 10);
+}
+function getLang() {
+	return window.parent.api.lang;
 }
 // Name of cookies used as session identifiers and the name to be used in the URL.
 // An unfortunate requirement of flash uploader due to infamous cookie bug in Flash.

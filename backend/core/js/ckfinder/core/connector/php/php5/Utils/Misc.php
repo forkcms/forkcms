@@ -3,7 +3,7 @@
 * CKFinder
 * ========
 * http://ckfinder.com
-* Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+* Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
 *
 * The software, this file and its contents are subject to the CKFinder
 * License. Please read the license.txt file before using, installing, copying,
@@ -42,6 +42,17 @@ class CKFinder_Connector_Utils_Misc
             $errorMessage = "";
         }
         return $errorMessage;
+    }
+
+    /**
+     * Simulate the encodeURIComponent() function available in JavaScript
+     * @param string $str
+     * @return string
+     */
+    public static function encodeURIComponent($str)
+    {
+        $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+        return strtr(rawurlencode($str), $revert);
     }
 
     /**
@@ -132,6 +143,10 @@ class CKFinder_Connector_Utils_Misc
         //Default memory limit is 8MB so well stick with that.
         //To find out what yours is, view your php.ini file.
         $memoryLimit = CKFinder_Connector_Utils_Misc::returnBytes(@ini_get('memory_limit'))/$MB;
+        // There are no memory limits, nothing to do
+        if ($memoryLimit == -1) {
+          return true;
+        }
         if (!$memoryLimit) {
             $memoryLimit = 8;
         }

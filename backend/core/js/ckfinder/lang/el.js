@@ -183,8 +183,10 @@ CKFinder.lang['el'] =
 	FilesCountMany	: '%1 αρχεία',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Η ενέργεια δεν ήταν δυνατόν να εκτελεστεί. (Σφάλμα %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['el'] =
 	{
 		maximize : 'Μεγιστοποίηση',
 		minimize : 'Ελαχιστοποίηση'
+	},
+
+	Gallery :
+	{
+		current : 'Εικόνα {current} από {total}'
 	}
 };

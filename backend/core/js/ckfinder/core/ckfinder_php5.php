@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -151,7 +151,7 @@ class CKFinder
 		$url = $this->BasePath ;
 
 		// If it is a path relative to the current page.
-		if ( isset($url[0]) && $url[0] != '/' )
+		if ( isset($url[0]) && $url[0] != '/' && strpos($url, "://") === false )
 		{
 			$url = substr( $_SERVER[ 'REQUEST_URI' ], 0, strrpos( $_SERVER[ 'REQUEST_URI' ], '/' ) + 1 ) . $url ;
 		}
@@ -200,7 +200,7 @@ class CKFinder
 		$url = $this->BasePath ;
 
 		// If it is a path relative to the current page.
-		if ( isset($url[0]) && $url[0] != '/' )
+		if ( isset($url[0]) && $url[0] != '/' && strpos($url, "://") === false )
 		{
 			$url = substr( $_SERVER[ 'REQUEST_URI' ], 0, strrpos( $_SERVER[ 'REQUEST_URI' ], '/' ) + 1 ) . $url ;
 		}
