@@ -15,6 +15,7 @@ set :repository, ""					# eg: "git@github.com:sumocoders/forkcms.git"
 
 # stages
 set :stages, %w{production staging}
+set :default_stage, "staging"
 set :stage_dir, "deployment"
 
 require "capistrano/ext/multistage"
