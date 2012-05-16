@@ -10,6 +10,7 @@ Improvements:
 Bugfixes:
 
 * Core: wrong application in the virtual applactions, such as backend_ajax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/297 by Wesley Pots.
+* Pages: fixed an issue where pages that were dropped on an empty footer-tree disappeard, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/295 by Tommy Van de Velde & Lowie Benoot.
 
 
 3.3.8 (2012-05-15)

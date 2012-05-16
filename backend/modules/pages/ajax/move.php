@@ -21,18 +21,21 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 	{
 		// call parent
 		parent::execute();
+
 		// get parameters
 		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
 		$droppedOn = SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
 		$typeOfDrop = SpoonFilter::getPostValue('type', null, '');
+		$tree = SpoonFilter::getPostValue('tree', array('main', 'meta', 'footer', 'root'), '');
 
 		// validate
 		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($droppedOn === -1) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($droppedOn === -1) $this->output(self::BAD_REQUEST, null, 'no dropped_on provided');
 		if($typeOfDrop == '') $this->output(self::BAD_REQUEST, null, 'no type provided');
+		if($tree == '') $this->output(self::BAD_REQUEST, null, 'no tree provided');
 
 		// get page
-		$success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop);
+		$success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
 
 		// build cache
 		BackendPagesModel::buildCache(BL::getWorkingLanguage());
