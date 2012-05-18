@@ -20,6 +20,23 @@
 class FrontendBlogModel implements FrontendTagsInterface
 {
 	/**
+	 * Checks if an author exists.
+	 *
+	 * @param string $url The meta URL of the author.
+	 * @return bool
+	 */
+	public static function existsAuthor($url)
+	{
+		return (bool) FrontendModel::getDB()->getVar(
+			'SELECT COUNT(u.id)
+			 FROM users AS u
+			 INNER JOIN meta AS m ON u.meta_id = m.id
+			 WHERE m.url = ?',
+			array((string) $url)
+		);
+	}
+
+	/**
 	 * Get an item
 	 *
 	 * @param string $URL The URL for the item.
@@ -35,12 +52,14 @@ class FrontendBlogModel implements FrontendTagsInterface
 			 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 			 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 			 m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-			 m.url,
+			 m.url, mu.url AS author_url,
 			 m.data AS meta_data
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
+			 INNER JOIN users AS u ON i.user_id = u.id
+			 INNER JOIN meta AS mu ON u.meta_id = mu.id
 			 WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
 			 LIMIT 1',
 			array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
@@ -66,11 +85,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-			 m.url
+			 m.url, mu.url AS author_url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
+			 INNER JOIN users AS u ON i.user_id = u.id
+			 INNER JOIN meta AS mu ON u.meta_id = mu.id
 			 WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 			 ORDER BY i.publish_on DESC, i.id DESC
 			 LIMIT ?, ?',
@@ -83,6 +104,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// init var
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+		$authorLink = FrontendNavigation::getURLForBlock('blog', 'author');
 
 		// loop
 		foreach($items as $key => $row)
@@ -90,6 +112,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
+			$items[$key]['author_full_url'] = $authorLink . '/' . $row['author_url'];
 
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
@@ -174,6 +197,62 @@ class FrontendBlogModel implements FrontendTagsInterface
 	}
 
 	/**
+	 * Get all blog posts for a specific author.
+	 *
+	 * @param string $authorUrl
+	 * @param int $limit The number of items to return.
+	 * @param int $offset The number of items to skip.
+	 * @return array
+	 */
+	public static function getAllForAuthor($authorUrl, $limit = 10, $offset = 0)
+	{
+		$articles = (array) FrontendModel::getDB()->getRecords(
+			'SELECT SQL_CALC_FOUND_ROWS i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
+			 c.title AS category_title, m2.url AS category_url, i.image,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 m.url, mu.url AS author_url
+			 FROM blog_posts AS i
+			 INNER JOIN blog_categories AS c ON i.category_id = c.id
+			 INNER JOIN meta AS m ON i.meta_id = m.id
+			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
+			 INNER JOIN users AS u ON i.user_id = u.id
+			 INNER JOIN meta AS mu ON u.meta_id = mu.id
+			 WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND mu.url = ?
+			 ORDER BY i.publish_on DESC
+			 LIMIT ?, ?',
+			array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $authorUrl, (int) $offset, (int) $limit)
+		);
+
+		$num_items = (int) FrontendModel::getDB()->getVar(
+			'SELECT FOUND_ROWS()'
+		);
+
+		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
+		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+		$authorLink = FrontendNavigation::getURLForBlock('blog', 'author');
+
+		foreach($articles as $key => $row)
+		{
+			// URLs
+			$articles[$key]['full_url'] = $link . '/' . $row['url'];
+			$articles[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
+			$articles[$key]['author_full_url'] = $authorLink . '/' . $row['author_url'];
+
+			// comments
+			if($row['comments_count'] > 0) $articles[$key]['comments'] = true;
+			if($row['comments_count'] > 1) $articles[$key]['comments_multiple'] = true;
+		}
+
+		// get all tags
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($articles));
+
+		// loop tags and add to correct item
+		foreach($tags as $postId => $tags) $articles[$postId]['tags'] = $tags;
+
+		return array($articles, $num_items);
+	}
+
+	/**
 	 * Get all items in a category (at least a chunk)
 	 *
 	 * @param string $categoryURL The URL of the category to retrieve the posts for.
@@ -187,11 +266,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-			 m.url
+			 m.url, mu.url AS author_url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
+			 INNER JOIN users AS u ON i.user_id = u.id
+			 INNER JOIN meta AS mu ON u.meta_id = mu.id
 			 WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
 			 ORDER BY i.publish_on DESC
 			 LIMIT ?, ?',
@@ -204,6 +285,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// init var
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+		$authorLink = FrontendNavigation::getURLForBlock('blog', 'author');
 
 		// loop
 		foreach($items as $key => $row)
@@ -211,6 +293,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// URLs
 			$items[$key]['full_url'] = $link . '/' . $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
+			$items[$key]['author_full_url'] = $authorLink . '/' . $row['author_url'];
 
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
@@ -397,6 +480,25 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// return
 		return $stats;
+	}
+
+	/**
+	 * Get a blog author.
+	 *
+	 * @param string $url The meta URL of an author.
+	 * @return User
+	 */
+	public static function getAuthor($url)
+	{
+		$id = (int) FrontendModel::getDB()->getVar(
+			'SELECT u.id
+			 FROM users AS u
+			 INNER JOIN meta AS m ON m.id = u.meta_id
+			 WHERE m.url = ?',
+			array((string) $url)
+		);
+
+		return new FrontendUser($id);
 	}
 
 	/**
@@ -628,12 +730,14 @@ class FrontendBlogModel implements FrontendTagsInterface
 			 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 			 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 			 m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-			 m.url,
+			 m.url, mu.url AS author_url,
 			 m.data AS meta_data
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
+			 INNER JOIN users AS u ON i.user_id = u.id
+			 INNER JOIN meta AS mu ON u.meta_id = mu.id
 			 WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
 			 LIMIT 1',
 			array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL)

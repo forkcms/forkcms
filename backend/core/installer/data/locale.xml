@@ -87,6 +87,22 @@
         <translation language="tr"><![CDATA[kategorilerdeki yazılar]]></translation>
         <translation language="el"><![CDATA[άρθρα στην κατηγορία]]></translation>
       </item>
+      <item type="label" name="Author">
+        <translation language="nl"><![CDATA[auteur]]></translation>
+        <translation language="en"><![CDATA[author]]></translation>
+        <translation language="hu"><![CDATA[szerző]]></translation>
+        <translation language="it"><![CDATA[autore]]></translation>
+        <translation language="ru"><![CDATA[Автор]]></translation>
+        <translation language="zh"><![CDATA[作者]]></translation>
+        <translation language="de"><![CDATA[Autor]]></translation>
+        <translation language="fr"><![CDATA[auteur]]></translation>
+        <translation language="es"><![CDATA[autor]]></translation>
+        <translation language="lt"><![CDATA[autorius]]></translation>
+        <translation language="uk"><![CDATA[Автор]]></translation>
+        <translation language="sv"><![CDATA[författaren]]></translation>
+        <translation language="pl"><![CDATA[autor]]></translation>
+        <translation language="tr"><![CDATA[yazar]]></translation>
+      </item>
       <item type="label" name="BirthDate">
         <translation language="nl"><![CDATA[geboortedatum]]></translation>
         <translation language="en"><![CDATA[birth date]]></translation>
@@ -1737,6 +1753,10 @@
         <translation language="sv"><![CDATA[Även intressant för dig]]></translation>
         <translation language="hu"><![CDATA[Szintén érdekes neked]]></translation>
       </item>
+      <item type="message" name="ArticlesBy">
+        <translation language="nl"><![CDATA[Artikels door %1$s]]></translation>
+        <translation language="en"><![CDATA[Articles by %1$s]]></translation>
+      </item>
       <item type="message" name="AskOwnQuestion">
         <translation language="nl"><![CDATA[Antwoord niet gevonden? Stel zelf een vraag!]]></translation>
         <translation language="en"><![CDATA[Didn't find what you were looking for? Ask your own question!]]></translation>
@@ -2594,19 +2614,19 @@
         <translation language="pl"><![CDATA[Witaj, %1$s]]></translation>
       </item>
       <item type="message" name="WrittenBy">
-        <translation language="nl"><![CDATA[geschreven door %1$s]]></translation>
-        <translation language="en"><![CDATA[written by %1$s]]></translation>
-        <translation language="hu"><![CDATA[írta %1$s]]></translation>
-        <translation language="it"><![CDATA[scritto da %1$s]]></translation>
-        <translation language="fr"><![CDATA[rédigé par %1$s]]></translation>
-        <translation language="ru"><![CDATA[Автор %1$s]]></translation>
-        <translation language="zh"><![CDATA[%1$s发布]]></translation>
-        <translation language="de"><![CDATA[geschrieben von %1$s]]></translation>
-        <translation language="es"><![CDATA[escrito por %1$s]]></translation>
-        <translation language="lt"><![CDATA[autorius %1$s]]></translation>
-        <translation language="uk"><![CDATA[Автор %1$s]]></translation>
-        <translation language="sv"><![CDATA[skrivet av %1$s]]></translation>
-        <translation language="pl"><![CDATA[napisane przez %1$s]]></translation>
+        <translation language="nl"><![CDATA[geschreven door <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="en"><![CDATA[written by <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="hu"><![CDATA[írta <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="it"><![CDATA[scritto da <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="fr"><![CDATA[rédigé par <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="ru"><![CDATA[Автор <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="zh"><![CDATA[<a href="%1$s" title="%2$s">%2$s</a>发布]]></translation>
+        <translation language="de"><![CDATA[geschrieben von <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="es"><![CDATA[escrito por <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="lt"><![CDATA[autorius <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="uk"><![CDATA[Автор <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="sv"><![CDATA[skrivet av <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
+        <translation language="pl"><![CDATA[napisane przez <a href="%1$s" title="%2$s">%2$s</a>]]></translation>
       </item>
       <item type="error" name="AlreadySubscribed">
         <translation language="en"><![CDATA[This e-mail address is already subscribed to the newsletter.]]></translation>
@@ -3160,6 +3180,22 @@
         <translation language="lt"><![CDATA[komentarai-rss]]></translation>
         <translation language="sv"><![CDATA[kommentarer-på-rss]]></translation>
         <translation language="pl"><![CDATA[komentarze-w-rss]]></translation>
+      </item>
+      <item type="action" name="Author">
+        <translation language="nl"><![CDATA[auteur]]></translation>
+        <translation language="en"><![CDATA[author]]></translation>
+        <translation language="hu"><![CDATA[szerző]]></translation>
+        <translation language="it"><![CDATA[autore]]></translation>
+        <translation language="ru"><![CDATA[Автор]]></translation>
+        <translation language="zh"><![CDATA[作者]]></translation>
+        <translation language="de"><![CDATA[Autor]]></translation>
+        <translation language="fr"><![CDATA[auteur]]></translation>
+        <translation language="es"><![CDATA[autor]]></translation>
+        <translation language="lt"><![CDATA[autorius]]></translation>
+        <translation language="uk"><![CDATA[Автор]]></translation>
+        <translation language="sv"><![CDATA[författaren]]></translation>
+        <translation language="pl"><![CDATA[autor]]></translation>
+        <translation language="tr"><![CDATA[yazar]]></translation>
       </item>
       <item type="action" name="Category">
         <translation language="nl"><![CDATA[categorie]]></translation>

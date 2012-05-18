@@ -108,6 +108,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		if($this->authenticatedUser->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
 		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
 		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
+
+		// meta object
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'nickname', true);
 	}
 
 	/**
@@ -198,6 +201,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 			}
 
+			// validate meta
+			$this->meta->validate();
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
@@ -218,6 +224,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['csv_split_character'] = $fields['csv_split_character']->getValue();
 				$settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
 				$settings['api_access'] = (bool) $fields['api_access']->getChecked();
+
+				// update meta ID
+				$user['meta_id'] = $this->meta->save();
 
 				// update password (only if filled in)
 				if(isset($fields['new_password']) && $fields['new_password']->isFilled())

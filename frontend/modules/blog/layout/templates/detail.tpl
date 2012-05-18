@@ -15,7 +15,7 @@
 				<ul>
 					<li>
 						{* Written by *}
-						{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
+						{$msgWrittenBy|ucfirst|sprintf:{$item.author_full_url}:{$item.user_id|usersetting:'nickname'}}
 
 						{* Written on *}
 						{$lblOn} <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>

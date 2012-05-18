@@ -63,6 +63,9 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
 		$this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, null, 'nickname', true);
 	}
 
 	/**
@@ -75,6 +78,9 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		{
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
+
+			// validate meta
+			$this->meta->validate();
 
 			// email is present
 			if($this->frm->getField('email')->isFilled(BL::err('EmailIsRequired')))
@@ -168,6 +174,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// build user-array
 				$user['email'] = $this->frm->getField('email')->getValue();
 				$user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $settings['password_key']);
+				$user['meta_id'] = $this->meta->save();
 
 				// save the password strength
 				$passwordStrength = BackendAuthentication::checkPassword($this->frm->getField('password')->getValue(true));
