@@ -1717,27 +1717,27 @@ jsBackend.locale =
 	},
 
 	// get an error
-	err: function(key)
+	err: function(key, module)
 	{
-		return jsBackend.locale.get('err', key);
+		return jsBackend.locale.get('err', key, module);
 	},
 
 	// get a label
-	lbl: function(key)
+	lbl: function(key, module)
 	{
-		return jsBackend.locale.get('lbl', key);
+		return jsBackend.locale.get('lbl', key, module);
 	},
 
 	// get localization
-	loc: function(key)
+	loc: function(key, module)
 	{
-		return jsBackend.locale.get('loc', key);
+		return jsBackend.locale.get('loc', key, module);
 	},
 
 	// get a message
-	msg: function(key)
+	msg: function(key, module)
 	{
-		return jsBackend.locale.get('msg', key);
+		return jsBackend.locale.get('msg', key, module);
 	}
 }
 
