@@ -12,6 +12,7 @@
  *
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendLocationIndex extends FrontendBaseBlock
 {
