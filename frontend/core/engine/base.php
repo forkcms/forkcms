@@ -776,6 +776,17 @@ class FrontendBaseWidget
 	}
 
 	/**
+	 * Add data that should be available in JS
+	 *
+	 * @param string $key	The key whereunder the value will be stored.
+	 * @param mixed $value	The value to pass.
+	 */
+	public function addJSData($key, $value)
+	{
+		$this->header->addJSData($this->getModule(), $key, $value);
+	}
+
+	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
 	 */
