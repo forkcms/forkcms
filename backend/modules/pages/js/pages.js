@@ -131,7 +131,7 @@ jsBackend.pages.extras =
 		{
 			// link to edit this content, title, description & visibility
 			var editLink = '';
-			var title = '{$lblEditor|ucfirst}';
+			var title = utils.string.ucfirst(jsBackend.locale.lbl('Editor'));
 			var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
 		}
 
@@ -140,9 +140,9 @@ jsBackend.pages.extras =
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>{$lblEdit|ucfirst}</span></a>' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</span></a>' +
 								'<a href="#" class="button icon iconOnly ' + (visible ? 'iconVisible ' : 'iconInvisible ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
-								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>' +
+								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>' + utils.string.ucfirst(jsBackend.locale.lbl('DeleteBlock')) + '</span></a>' +
 							'</div>' +
 						'</div>';
 
@@ -194,7 +194,7 @@ jsBackend.pages.extras =
 			resizable: false,
 			modal: true,
 			width: 940,
-			title: '{$lblEditor|ucfirst}',
+			title: utils.string.ucfirst(jsBackend.locale.lbl('Editor')),
 			position: 'center',
 			buttons:
 			{
@@ -826,7 +826,7 @@ jsBackend.pages.tree =
 				multitree: 'all',
 				drag_copy: false
 			},
-			lang: { loading: '{$lblLoading|ucfirst}' },
+			lang: { loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading')) },
 			callback:
 			{
 				beforemove: jsBackend.pages.tree.beforeMove,
@@ -958,7 +958,7 @@ jsBackend.pages.tree =
 					if(jsBackend.debug) alert(textStatus);
 
 					// show message
-					jsBackend.messages.add('error', '{$errCantBeMoved}');
+					jsBackend.messages.add('error', jsBackend.locale.err('CantBeMoved'));
 
 					// rollback
 					$.tree.rollback(rollback);
@@ -966,7 +966,7 @@ jsBackend.pages.tree =
 				else
 				{
 					// show message
-					jsBackend.messages.add('success', '{$msgPageIsMoved}'.replace('%1$s', json.data.title));
+					jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title));
 				}
 			}
 		});

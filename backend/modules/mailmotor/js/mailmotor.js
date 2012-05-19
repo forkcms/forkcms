@@ -22,8 +22,8 @@ jsBackend.mailmotor =
 			$('form#add #email').multipleTextbox(
 			{
 				emptyMessage: '',
-				addLabel: '{$lblAdd|ucfirst}',
-				removeLabel: '{$lblDelete|ucfirst}',
+				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 				canAddNew: true
 			});
 		}
@@ -492,7 +492,7 @@ jsBackend.mailmotor.step4 =
 						modalSendInfo.show();
 
 						// replace the modal values
-						modalSendInfo.text('{$msgSendOn}'.replace('%1$s', sendOnDate).replace('%2$s', sendOnTime));
+						modalSendInfo.text(jsBackend.locale.msg('SendOn').replace('%1$s', sendOnDate).replace('%2$s', sendOnTime));
 					}
 				}
 			}

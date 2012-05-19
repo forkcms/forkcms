@@ -30,7 +30,7 @@ jsBackend.locale.controls =
 			$('.dataGrid td.translationValue').inlineTextEdit(
 			{
 				params: { fork: { action: 'save_translation' } },
-				tooltip: '{$msgClickToEdit}',
+				tooltip: jsBackend.locale.msg('ClickToEdit}',
 				afterSave: function(item)
 				{
 					if(item.find('span:empty').length == 1) item.addClass('highlighted');

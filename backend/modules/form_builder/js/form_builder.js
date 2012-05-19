@@ -36,9 +36,9 @@ jsBackend.formBuilder =
 
 		$('#email').multipleTextbox(
 		{
-			emptyMessage: '{$msgNoEmailaddresses}',
-			addLabel: '{$lblCoreAdd|ucfirst}',
-			removeLabel: '{$lblDelete|ucfirst}',
+			emptyMessage: jsBackend.locale.msg('NoEmailaddresses'),
+			addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add', 'core')),
+			removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 			canAddNew: true
 		});
 	},
@@ -219,9 +219,9 @@ jsBackend.formBuilder.fields =
 							$('input#dropdownValues').multipleTextbox(
 							{
 								splitChar: '|',
-								emptyMessage: '{$msgNoValues}',
-								addLabel: '{$lblAdd|ucfirst}',
-								removeLabel: '{$lblDelete|ucfirst}',
+								emptyMessage: jsBackend.locale.msg('NoValues'),
+								addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+								removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 								showIconOnly: true,
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
 							});
@@ -231,9 +231,9 @@ jsBackend.formBuilder.fields =
 							$('input#radiobuttonValues').multipleTextbox(
 							{
 								splitChar: '|',
-								emptyMessage: '{$msgNoValues}',
-								addLabel: '{$lblAdd|ucfirst}',
-								removeLabel: '{$lblDelete|ucfirst}',
+								emptyMessage: jsBackend.locale.msg('NoValues'),
+								addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+								removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 								showIconOnly: true,
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
 							});
@@ -243,9 +243,9 @@ jsBackend.formBuilder.fields =
 							$('input#checkboxValues').multipleTextbox(
 							{
 								splitChar: '|',
-								emptyMessage: '{$msgNoValues}',
-								addLabel: '{$lblAdd|ucfirst}',
-								removeLabel: '{$lblDelete|ucfirst}',
+								emptyMessage: jsBackend.locale.msg('NoValues'),
+								addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+								removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 								showIconOnly: true,
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
 							});
