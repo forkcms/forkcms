@@ -4,8 +4,9 @@
 	- {$locationSettings}: contains this module's settings
 *}
 
-{option:locationItems}
-	<div id="map" style="height: {$locationSettings.height}px; width: {$locationSettings.width}px;"></div>
+{option:locationItems
+	{* @remark: do not remove the parseMap-class, it is used by JS *}
+	<div id="map" class="parseMap" style="height: {$locationSettings.height}px; width: {$locationSettings.width}px;"></div>
 
 	{* Store item text in a div because JS goes bananas with multiline HTML *}
 	{iteration:locationItems}

@@ -5,60 +5,136 @@
  */
 jsFrontend.location =
 {
-	map: null,
+	map: {},
+	directionService: null,
+	directionsDisplay: null,
 		
 	// init, something like a constructor
 	init: function()
 	{
-		if($('#map').length > 0) 
+		if($('.parseMap').length > 0)
 		{
-			google.maps.event.addDomListener(window, 'load', jsFrontend.location.initMap);
-		}
-	}, 
-	
-	initMap: function()
-	{
-		// build the options
-		var options = 
-		{
-			zoom: (jsFrontend.data.get('location.settings.zoom_level') == 'auto') ? 0 : jsFrontend.data.get('location.settings.zoom_level'),
-			center: new google.maps.LatLng(jsFrontend.data.get('location.settings.center.lat'), jsFrontend.data.get('location.settings.center.lng')),
-			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('location.settings.map_type')]
-		};
-
-		// create map
-		jsFrontend.location.map = new google.maps.Map(document.getElementById('map'), options);
-		
-		var items = jsFrontend.data.get('location.items');
-
-		if(items.length > 0)
-		{
-			for(var i in items)
+			$('.parseMap').each(function()
 			{
-				jsFrontend.location.addMarker(items[i].lat, items[i].lng, items[i].title, items[i].text);
-			}
+				var id = $(this).attr('id').replace('map', '');
+				google.maps.event.addDomListener(window, 'load', jsFrontend.location.initMap(id));
+			});
 		}
 	},
 	
-	addMarker: function(lat, lng, title, text)
+	// init the map
+	initMap: function(id)
+	{
+		// define some variables we will need
+		var suffix = (id == '') ? '' : '_' + id;
+		var mapId = (id == '') ? 'general' : id;
+
+		// build the options
+		var options =
+		{
+			zoom: (jsFrontend.data.get('location.settings' + suffix + '.zoom_level') == 'auto') ? 0 : parseInt(jsFrontend.data.get('location.settings' + suffix + '.zoom_level')),
+			center: new google.maps.LatLng(jsFrontend.data.get('location.settings' + suffix + '.center.lat'), jsFrontend.data.get('location.settings' + suffix + '.center.lng')),
+			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('location.settings' + suffix + '.map_type')]
+		};
+		
+		// create map
+		jsFrontend.location.map[mapId] = new google.maps.Map(document.getElementById('map' + id), options);
+		
+		// get the items
+		var items = jsFrontend.data.get('location.items' + suffix);
+
+		// any items
+		if(items.length > 0)
+		{
+			// loop items
+			for(var i in items)
+			{
+				// add markers
+				jsFrontend.location.addMarker(mapId, items[i].lat, items[i].lng, items[i].title, items[i].text);
+			}
+		}
+		
+		// are directions enabled?
+		if(jsFrontend.data.get('location.settings' + suffix + '.directions'))
+		{
+			// create direction variables if needed
+			if(jsFrontend.location.directionsService == null) jsFrontend.location.directionsService = new google.maps.DirectionsService();
+			if(jsFrontend.location.directionsDisplay == null) jsFrontend.location.directionsDisplay = new google.maps.DirectionsRenderer();
+			
+			// bind events
+			$('#locationSearch' + id + ' form').on('submit', function(e)
+			{
+				// prevent default
+				e.preventDefault();
+				
+				// calculate & display the route
+				jsFrontend.location.setRoute(id, mapId, items[0]);
+			});
+		}
+	},
+	
+	// add a marker
+	addMarker: function(mapId, lat, lng, title, text)
 	{
 		// add the marker
 		var marker = new google.maps.Marker(
 			{
 				position: new google.maps.LatLng(lat, lng),
-				map: jsFrontend.location.map,
+				map: jsFrontend.location.map[mapId],
 				title: title
 			}
 		);
 		
 		// show infowindow on click
-		google.maps.event.addListener(marker, 'click', function() 
+		google.maps.event.addListener(marker, 'click', function()
 		{
+			var content = '<h1>' + title + '</h1>';
+			if(typeof text != 'undefined') content += text;
+			
 			new google.maps.InfoWindow(
 				{
-					content: '<h1>' + title + '</h1>' + text
+					content: content
 				}
-			).open(jsFrontend.location.map, marker);
+			).open(jsFrontend.location.map[mapId], marker);
+		});
+	},
+	
+	// calculate the route
+	setRoute: function(id, mapId, item)
+	{
+		$error = $('#locationSearchError' + id);
+		$search = $('#locationSearchAddress' + id);
+		
+		// validate
+		if($search.val() == '') $error.show();
+		else $error.hide();
+		
+		// build the position
+		var position = new google.maps.LatLng(item.lat, item.lng);
+		
+		// build request
+		var request =
+		{
+			origin: $search.val(),
+			destination: position,
+			travelMode: google.maps.DirectionsTravelMode.DRIVING
+		};
+
+		// request the rout
+		jsFrontend.location.directionsService.route(request, function(response, status)
+		{
+			// did we find a route
+			if(status == google.maps.DirectionsStatus.OK)
+			{
+				// change the map
+				jsFrontend.location.directionsDisplay.setMap(jsFrontend.location.map[mapId]);
+				
+				// render the route
+				jsFrontend.location.directionsDisplay.setDirections(response);
+			}
+			
+			// show error
+			else $error.show();
 		});
 	}
 }
