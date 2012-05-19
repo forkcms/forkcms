@@ -28,8 +28,6 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 	{
 		parent::execute();
 
-		// add the css file
-		$this->addCSS('location.css');
 
 		$this->loadTemplate();
 		$this->loadData();
