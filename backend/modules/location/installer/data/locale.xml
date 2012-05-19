@@ -155,6 +155,10 @@
         <translation language="nl"><![CDATA[Route berekenen]]></translation>
         <translation language="en"><![CDATA[Show directions]]></translation>
       </item>
+      <item type="label" name="Start">
+        <translation language="nl"><![CDATA[startpunt]]></translation>
+        <translation language="en"><![CDATA[startpoint]]></translation>
+      </item>
     </core>
   </frontend>
 </locale>
