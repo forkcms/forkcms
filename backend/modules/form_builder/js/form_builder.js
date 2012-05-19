@@ -172,44 +172,49 @@ jsBackend.formBuilder.fields =
 					modal: true,
 					width: 400,
 					buttons:
-					{
-						'{$lblSave|ucfirst}': function()
+					[
 						{
-							// save/validate by type
-							switch(id)
+							text: utils.string.ucfirst(jsBackend.locale.lbl('Save')),
+							click: function()
 							{
-								case 'textboxDialog':
-									jsBackend.formBuilder.fields.saveTextbox();
-									break;
-								case 'textareaDialog':
-									jsBackend.formBuilder.fields.saveTextarea();
-									break;
-								case 'headingDialog':
-									jsBackend.formBuilder.fields.saveHeading();
-									break;
-								case 'paragraphDialog':
-									jsBackend.formBuilder.fields.saveParagraph();
-									break;
-								case 'submitDialog':
-									jsBackend.formBuilder.fields.saveSubmit();
-									break;
-								case 'dropdownDialog':
-									jsBackend.formBuilder.fields.saveDropdown();
-									break;
-								case 'radiobuttonDialog':
-									jsBackend.formBuilder.fields.saveRadiobutton();
-									break;
-								case 'checkboxDialog':
-									jsBackend.formBuilder.fields.saveCheckbox();
-									break;
+								// save/validate by type
+								switch(id)
+								{
+									case 'textboxDialog':
+										jsBackend.formBuilder.fields.saveTextbox();
+										break;
+									case 'textareaDialog':
+										jsBackend.formBuilder.fields.saveTextarea();
+										break;
+									case 'headingDialog':
+										jsBackend.formBuilder.fields.saveHeading();
+										break;
+									case 'paragraphDialog':
+										jsBackend.formBuilder.fields.saveParagraph();
+										break;
+									case 'submitDialog':
+										jsBackend.formBuilder.fields.saveSubmit();
+										break;
+									case 'dropdownDialog':
+										jsBackend.formBuilder.fields.saveDropdown();
+										break;
+									case 'radiobuttonDialog':
+										jsBackend.formBuilder.fields.saveRadiobutton();
+										break;
+									case 'checkboxDialog':
+										jsBackend.formBuilder.fields.saveCheckbox();
+										break;
+								}
 							}
 						},
-						'{$lblCancel|ucfirst}': function()
 						{
-							$(this).dialog('close');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+							click: function()
+							{
+								$(this).dialog('close');
+							}
 						}
-					 },
-
+					],
 					// set focus on first input field
 					open: function(e)
 					{
