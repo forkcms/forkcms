@@ -1666,6 +1666,82 @@ jsBackend.layout =
 }
 
 /**
+ * Locale
+ *
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsBackend.locale =
+{
+	initialized: false,
+	data: {},
+
+	// init, something like a constructor
+	init: function()
+	{
+		$.ajax({
+			url: '/backend/cache/locale/' + jsBackend.current.language + '.json',
+			type: 'GET',
+			dataType: 'json',
+			async: false,
+			success: function(data)
+			{
+				jsBackend.locale.data = data;
+				jsBackend.locale.initialized = true;
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				throw 'Regenerate your locale-files.';
+			}
+		});
+	},
+
+	// get an item from the locale
+	get: function(type, key, module)
+	{
+		// initialize if needed
+		if(!jsBackend.locale.initialized) jsBackend.locale.init();
+
+		if(typeof module == 'undefined') module = jsBackend.current.module;
+
+		// validate
+		if(typeof jsBackend.locale.data[type][module][key] == 'undefined')
+		{
+			// not available in core?
+			if(typeof jsBackend.locale.data[type]['core'][key] == 'undefined') return '{$' + type + key + '}';
+
+			// fallback to core
+			return jsBackend.locale.data[type]['core'][key];
+		}
+
+		return jsBackend.locale.data[type][module][key];
+	},
+
+	// get an error
+	err: function(key)
+	{
+		return jsBackend.locale.get('err', key);
+	},
+
+	// get a label
+	lbl: function(key)
+	{
+		return jsBackend.locale.get('lbl', key);
+	},
+
+	// get localization
+	loc: function(key)
+	{
+		return jsBackend.locale.get('loc', key);
+	},
+
+	// get a message
+	msg: function(key)
+	{
+		return jsBackend.locale.get('msg', key);
+	}
+}
+
+/**
  * Handle form messages (action feedback: success, error, ...)
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
