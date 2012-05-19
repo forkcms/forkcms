@@ -8,7 +8,7 @@
 var jsBackend =
 {
 	// datamembers
-	debug: {option:SPOON_DEBUG}true{/option:SPOON_DEBUG}{option:!SPOON_DEBUG}false{/option:!SPOON_DEBUG},
+	debug: false,
 	current:
 	{
 		module: null,
@@ -26,6 +26,7 @@ var jsBackend =
 		var chunks = document.location.pathname.split('/');
 
 		// set some properties
+		jsBackend.debug = jsBackend.data.get('debug');
 		jsBackend.current.module = chunks[3];
 		jsBackend.current.action = chunks[4];
 		jsBackend.current.language = chunks[2];
@@ -52,7 +53,7 @@ var jsBackend =
 		jsBackend.focusfix.init();
 
 		// do not move, should be run as the last item.
-		{option:!SPOON_DEBUG}jsBackend.forms.unloadWarning();{/option:!SPOON_DEBUG}
+		if(! jsBackend.data.get('debug')) jsBackend.forms.unloadWarning();
 	},
 
 	// init ajax
@@ -198,21 +199,10 @@ jsBackend.ckeditor =
 		// layout configuration
 		bodyClass: 'content',
 		stylesSet: [],
-		contentsCss:
-		[
-			'/frontend/core/layout/css/screen.css',
-			{option:THEME_HAS_CSS}'/frontend/themes/{$THEME}/core/layout/css/screen.css',{/option:THEME_HAS_CSS}
-			'/frontend/core/layout/css/editor_content.css',
-			{option:THEME_HAS_EDITOR_CSS}'/frontend/themes/{$THEME}/core/layout/css/editor_content.css',{/option:THEME_HAS_EDITOR_CSS}
-			'/backend/core/layout/css/imports/editor.css'
-		],
-
-		// language options
-		contentsLanguage: '{$LANGUAGE}',
-		language: '{$EDITOR_LANGUAGE}',
 
 		// paste options
 		forcePasteAsPlainText: true,
+		contentsCss: [],
 
 		// buttons
 		toolbar_Full:
@@ -241,7 +231,6 @@ jsBackend.ckeditor =
 		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
 		skin: 'BootstrapCK-Skin',
 
-//		uiColor: '#FAFAFA',
 		toolbar: 'Full',
 		toolbarStartupExpanded: false,
 
@@ -257,7 +246,7 @@ jsBackend.ckeditor =
 		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
 		// templates
-		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]={$LANGUAGE}'],
+		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=' + jsBackend.current.language],
 
 		// custom vars
 		editorType: 'default',
@@ -271,6 +260,17 @@ jsBackend.ckeditor =
 		// load the editor
 		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
 		{
+			// language options
+			jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language,
+			jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language'),
+
+			// content Css
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/screen.css');
+			if(jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/screen.css');
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/editor_content.css');
+			if(jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/editor_content.css');
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/backend/core/layout/css/imports/editor.css');
+			
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
 			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
@@ -415,7 +415,7 @@ jsBackend.ckeditor =
 						items: linkList,
 						onChange: function(evt)
 						{
-							domain = '{$SITE_DOMAIN}';
+							domain = jsBackend.data.get('site.domain');
 							domain = domain.replace(/\/$/, '');
 
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
@@ -1197,6 +1197,41 @@ jsBackend.controls =
 			// rebuild the url and redirect
 			document.location.href = url;
 		});
+	}
+}
+
+/**
+ * Data related methods
+ * 
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsBackend.data = 
+{
+	initialized: false,
+	data: {},
+
+	init: function()
+	{
+		// check if var is available
+		if(typeof jsData == 'undefined') throw 'jsData is not available';
+
+		// populate
+		jsBackend.data.data = jsData;
+		jsBackend.data.initialized = true;
+	},
+
+	exists: function(key)
+	{
+		return (typeof eval('jsBackend.data.data.' + key) != 'undefined');
+	},
+	
+	get: function(key)
+	{
+		// init if needed
+		if(!jsBackend.data.initialized) jsBackend.data.init();
+
+		// return
+		return eval('jsBackend.data.data.' + key);
 	}
 }
 
