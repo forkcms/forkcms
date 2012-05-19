@@ -27,8 +27,10 @@
 		<p><a href="{$widgetLocationSettings.maps_url}" title="{$lblViewLargeMap}">{$lblViewLargeMap|ucfirst}</a></p>
 	{/option:widgetLocationSettings.full_url}
 
-	<div id="widgetLocationItemText" style="display: none;">
-		<p>{$widgetLocationItem.street} {$widgetLocationItem.number}</p>
-		<p>{$widgetLocationItem.zip} {$widgetLocationItem.city}</p>
+	<div id="markerText{$widgetLocationItem.id}" style="display: none;">
+		<address>
+			{$widgetLocationItem.street} {$widgetLocationItem.number}<br />
+			{$widgetLocationItem.zip} {$widgetLocationItem.city}
+		</address>
 	</div>
 {/option:widgetLocationItem}
