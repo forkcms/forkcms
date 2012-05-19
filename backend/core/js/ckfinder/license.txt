@@ -2,7 +2,7 @@ CKFinder License Agreement
 Version 2.0, September 2011
 ================
 http://ckfinder.com
-Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
 
 This document ("Agreement") is a legal agreement between You, either an
 individual or a Legal Entity, and CKSource – Frederico Knabben ("CKSource"),

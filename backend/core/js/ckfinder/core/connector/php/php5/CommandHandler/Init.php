@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -119,8 +119,9 @@ class CKFinder_Connector_CommandHandler_Init extends CKFinder_Connector_CommandH
             if ($max_post) {
               $phpMaxSize = $phpMaxSize ? min($phpMaxSize, $max_post) : $max_post;
             }
-            $memory_limit = CKFinder_Connector_Utils_Misc::returnBytes(ini_get('memory_limit'));
-            if ($memory_limit) {
+            //ini_get('memory_limit') only works if compiled with "--enable-memory-limit"
+            $memory_limit = CKFinder_Connector_Utils_Misc::returnBytes(@ini_get('memory_limit'));
+            if ($memory_limit && $memory_limit != -1) {
               $phpMaxSize = $phpMaxSize ? min($phpMaxSize, $memory_limit) : $memory_limit;
             }
             $_oConnInfo->addAttribute("uploadMaxSize", $phpMaxSize);

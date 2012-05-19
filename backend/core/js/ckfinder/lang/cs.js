@@ -183,8 +183,10 @@ CKFinder.lang['cs'] =
 	FilesCountMany	: '%1 souborů',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Příkaz nebylo možné dokončit. (Chyba %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['cs'] =
 	{
 		maximize : 'Maximalizovat',
 		minimize : 'Minimalizovat'
+	},
+
+	Gallery :
+	{
+		current : 'Obrázek {current} z {total}'
 	}
 };

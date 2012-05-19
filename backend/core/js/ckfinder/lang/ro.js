@@ -183,8 +183,10 @@ CKFinder.lang['ro'] =
 	FilesCountMany	: '%1 fișiere',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Nu a fost posibilă finalizarea cererii. (Eroare %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['ro'] =
 	{
 		maximize : 'Maximizare',
 		minimize : 'Minimizare'
+	},
+
+	Gallery :
+	{
+		current : 'Imaginea {current} din {total}'
 	}
 };

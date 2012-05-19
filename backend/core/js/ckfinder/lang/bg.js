@@ -183,8 +183,10 @@ CKFinder.lang['bg'] =
 	FilesCountMany	: '%1 файла',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Не е възможно да се извърши заявката. (ГРЕШКА %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['bg'] =
 	{
 		maximize : 'Максимизиране',
 		minimize : 'Минимизиране'
+	},
+
+	Gallery :
+	{
+		current : 'Снимка {current} от общо {total}'
 	}
 };

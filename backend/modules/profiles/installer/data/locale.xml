@@ -258,6 +258,10 @@
         <translation language="es"><![CDATA[apellido]]></translation>
         <translation language="uk"><![CDATA[Прізвище]]></translation>
       </item>
+      <item type="label" name="LoginBox">
+        <translation language="nl"><![CDATA[login box]]></translation>
+        <translation language="en"><![CDATA[login box]]></translation>
+      </item>
       <item type="label" name="Male">
         <translation language="nl"><![CDATA[man]]></translation>
         <translation language="en"><![CDATA[male]]></translation>
@@ -628,4 +632,16 @@
       </item>
     </profiles>
   </backend>
+  <frontend>
+    <core>
+      <item type="label" name="Settings">
+        <translation language="nl"><![CDATA[instellingen]]></translation>
+        <translation language="en"><![CDATA[settings]]></translation>
+      </item>
+      <item type="message" name="ProfilesLoggedInAs">
+        <translation language="nl"><![CDATA[Je bent aangemeld als <a href="%2$s">%1$s</a>.]]></translation>
+        <translation language="en"><![CDATA[You are logged on as <a href="%2$s">%1$s</a>.]]></translation>
+      </item>
+    </core>
+  </frontend>
 </locale>

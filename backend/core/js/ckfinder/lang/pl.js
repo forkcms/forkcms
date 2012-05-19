@@ -159,7 +159,7 @@ CKFinder.lang['pl'] =
 	UploadCancel		: 'Anuluj wysyłanie',
 	UploadRemove		: 'Usuń',
 	UploadRemoveTip		: 'Usuń !f',
-	UploadUploaded		: 'Wysłano: !n',
+	UploadUploaded		: 'Wysłano: !n%',
 	UploadProcessing	: 'Przetwarzanie...',
 
 	// Settings Panel
@@ -183,8 +183,10 @@ CKFinder.lang['pl'] =
 	FilesCountMany	: 'Ilość plików: %1',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Wykonanie operacji zakończyło się niepowodzeniem. (Błąd %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['pl'] =
 	{
 		maximize : 'Maksymalizuj',
 		minimize : 'Minimalizuj'
+	},
+
+	Gallery :
+	{
+		current : 'Obrazek {current} z {total}'
 	}
 };

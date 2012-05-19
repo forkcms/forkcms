@@ -183,8 +183,10 @@ CKFinder.lang['nl'] =
 	FilesCountMany	: '%1 bestanden',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Het was niet mogelijk om deze actie uit te voeren. (Fout %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['nl'] =
 	{
 		maximize : 'Maximaliseren',
 		minimize : 'Minimaliseren'
+	},
+
+	Gallery :
+	{
+		current : 'Afbeelding {current} van {total}'
 	}
 };

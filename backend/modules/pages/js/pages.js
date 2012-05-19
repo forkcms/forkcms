@@ -930,6 +930,9 @@ jsBackend.pages.tree =
 	// when an item is moved
 	onMove: function(node, refNode, type, tree, rollback)
 	{
+		// get the tree
+		var tree = tree.container.data('tree');
+		
 		// get pageID that has to be moved
 		var currentPageID = $(node).prop('id').replace('page-', '');
 
@@ -945,7 +948,8 @@ jsBackend.pages.tree =
 				fork: { action: 'move' },
 				id: currentPageID,
 				dropped_on: droppedOnPageID,
-				type: type
+				type: type,
+				tree: tree
 			},
 			success: function(json, textStatus)
 			{
