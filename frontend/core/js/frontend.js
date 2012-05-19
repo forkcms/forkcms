@@ -407,7 +407,7 @@ jsFrontend.locale =
 	
 	loc: function(key)
 	{
-		return jsFrontend.locale.get('lbl', key);
+		return jsFrontend.locale.get('loc', key);
 	},
 
 	msg: function(key)
