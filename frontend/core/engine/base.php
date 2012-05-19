@@ -350,10 +350,10 @@ class FrontendBaseBlock
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
 	}
 
 	/**
@@ -799,10 +799,10 @@ class FrontendBaseWidget
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
 	}
 
 	/**
