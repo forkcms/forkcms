@@ -38,6 +38,6 @@ class BackendLocationAjaxUpdateMarker extends BackendBaseAJAXAction
 		BackendLocationModel::update($updateData);
 
 		// output
-		$this->output(self::OK, null, BL::msg('Success'));
+		$this->output(self::OK);
 	}
 }
