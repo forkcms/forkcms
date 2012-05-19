@@ -54,50 +54,55 @@ jsBackend.blog.controls =
 				resizable: false,
 				modal: true,
 				buttons:
-				{
-					'{$lblOK|ucfirst}': function()
+				[
 					{
-						// hide errors
-						$categoryTitleError.hide();
-
-						$.ajax(
+						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+						click: function()
 						{
-							data:
+							// hide errors
+							$categoryTitleError.hide();
+
+							$.ajax(
 							{
-								fork: { action: 'add_category' },
-								value: $('#categoryTitle').val()
-							},
-							success: function(json, textStatus)
-							{
-								if(json.code != 200)
+								data:
 								{
-									// show error if needed
-									if(jsBackend.debug) alert(textStatus);
-
-									// show message
-									$categoryTitleError.show();
-								}
-								else
+									fork: { action: 'add_category' },
+									value: $('#categoryTitle').val()
+								},
+								success: function(json, textStatus)
 								{
-									// add and set selected
-									$categoryId.append('<option value="'+ json.data.id +'">'+ json.data.title +'</option>');
+									if(json.code != 200)
+									{
+										// show error if needed
+										if(jsBackend.debug) alert(textStatus);
 
-									// reset value
-									jsBackend.blog.controls.currentCategory = json.data.id;
+										// show message
+										$categoryTitleError.show();
+									}
+									else
+									{
+										// add and set selected
+										$categoryId.append('<option value="'+ json.data.id +'">'+ json.data.title +'</option>');
 
-									// close dialog
-									$addCategoryDialog.dialog('close');
+										// reset value
+										jsBackend.blog.controls.currentCategory = json.data.id;
+
+										// close dialog
+										$addCategoryDialog.dialog('close');
+									}
 								}
-							}
-						});
+							});
+						}
 					},
-
-					'{$lblCancel|ucfirst}': function()
 					{
-						// close the dialog
-						$(this).dialog('close');
+						text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+						click: function()
+						{
+							// close the dialog
+							$(this).dialog('close');
+						}
 					}
-				},
+				],
 				close: function(e, ui)
 				{
 					// reset value to previous selected item

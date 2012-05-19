@@ -82,7 +82,7 @@ var jsBackend =
 			if(typeof ajaxOptions.error == 'undefined')
 			{
 				// init var
-				var textStatus = '{$errSomethingWentWrong}';
+				var textStatus = jsBackend.locale.err('SomethingWentWrong');
 
 				// get real message
 				if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
@@ -314,7 +314,7 @@ jsBackend.ckeditor =
 		if($(element).ckeditorGet().config.showClickToEdit)
 		{
 			// add the click to edit div
-			if(!$(element).prev().hasClass('clickToEdit')) $(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+			if(!$(element).prev().hasClass('clickToEdit')) $(element).before('<div class="clickToEdit"><span>' + jsBackend.locale.msg('ClickToEdit') + '</span></div>');
 		}
 
 		// add the optionsRTE-class if it isn't present
@@ -343,10 +343,10 @@ jsBackend.ckeditor =
 			var warnings = [];
 
 			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) warnings.push('{$msgEditorImagesWithoutAlt|addslashes}');
+			if(content.match(/<img(.*)alt=""(.*)/im)) warnings.push(jsBackend.locale.msg('EditorImagesWithoutAlt'));
 
 			// invalid links?
-			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push('{$msgEditorInvalidLinks|addslashes}');
+			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push(jsBackend.locale.msg('EditorInvalidLinks'));
 
 			// remove the previous warnings
 			$('#' + editor.element.getId() + '_warnings').remove(); // @todo: met dit id loopt iets mis
@@ -409,9 +409,9 @@ jsBackend.ckeditor =
 				[
 				 	{
 						type: 'select',
-						label: '{$msgEditorSelectInternalPage}',
+						label: jsBackend.locale.msg('EditorSelectInternalPage'),
 						id: 'localPage',
-						title: '{$msgEditorSelectInternalPage}',
+						title: jsBackend.locale.msg('EditorSelectInternalPage'),
 						items: linkList,
 						onChange: function(evt)
 						{
@@ -689,20 +689,26 @@ jsBackend.controls =
 					resizable: false,
 					modal: true,
 					buttons:
-					{
-						'{$lblOK|ucfirst}': function()
+					[
 						{
-							// unbind the beforeunload event
-							$(window).off('beforeunload');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+							click: function()
+							{
+								// unbind the beforeunload event
+								$(window).off('beforeunload');
 
-							// goto link
-							window.location = url;
+								// goto link
+								window.location = url;
+							}
 						},
-						'{$lblCancel|ucfirst}': function()
 						{
-							$(this).dialog('close');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+							click: function()
+							{
+								$(this).dialog('close');
+							}
 						}
-					},
+					],
 					open: function(e)
 					{
 						// set focus on first button
@@ -889,20 +895,26 @@ jsBackend.controls =
 					resizable: false,
 					modal: true,
 					buttons:
-					{
-						'{$lblOK|ucfirst}': function()
+					[
 						{
-							// close dialog
-							$(this).dialog('close');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+							click: function()
+							{
+								// close dialog
+								$(this).dialog('close');
 
-							// submit the form
-							$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
+								// submit the form
+								$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
+							}
 						},
-						'{$lblCancel|ucfirst}': function()
 						{
-							$(this).dialog('close');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+							click: function()
+							{
+								$(this).dialog('close');
+							}
 						}
-					},
+					],
 					open: function(e)
 					{
 						// set focus on first button
@@ -998,7 +1010,7 @@ jsBackend.controls =
 				numbers: false,
 				lowercase: true,
 				uppercase: true,
-				generateLabel: '{$lblGenerate|ucfirst}'
+				generateLabel: utils.string.ucfirst(jsBackend.locale.lbl('Generate'))
 			});
 		}
 	},
@@ -1254,11 +1266,11 @@ jsBackend.forms =
 	datefields: function()
 	{
 		// variables
-		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
-		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
-		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
-		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
-		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
+		var dayNames = [jsBackend.locale.loc('DayLongSun'), jsBackend.locale.loc('DayLongMon'), jsBackend.locale.loc('DayLongTue'), jsBackend.locale.loc('DayLongWed'), jsBackend.locale.loc('DayLongThu'), jsBackend.locale.loc('DayLongFri'), jsBackend.locale.loc('DayLongSat}'];
+		var dayNamesMin = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat}'];
+		var dayNamesShort = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat}'];
+		var monthNames = [jsBackend.locale.loc('MonthLong1'), jsBackend.locale.loc('MonthLong2'), jsBackend.locale.loc('MonthLong3'), jsBackend.locale.loc('MonthLong4'), jsBackend.locale.loc('MonthLong5'), jsBackend.locale.loc('MonthLong6'), jsBackend.locale.loc('MonthLong7'), jsBackend.locale.loc('MonthLong8'), jsBackend.locale.loc('MonthLong9'), jsBackend.locale.loc('MonthLong10'), jsBackend.locale.loc('MonthLong11'), jsBackend.locale.loc('MonthLong12}'];
+		var monthNamesShort = [jsBackend.locale.loc('MonthShort1'), jsBackend.locale.loc('MonthShort2'), jsBackend.locale.loc('MonthShort3'), jsBackend.locale.loc('MonthShort4'), jsBackend.locale.loc('MonthShort5'), jsBackend.locale.loc('MonthShort6'), jsBackend.locale.loc('MonthShort7'), jsBackend.locale.loc('MonthShort8'), jsBackend.locale.loc('MonthShort9'), jsBackend.locale.loc('MonthShort10'), jsBackend.locale.loc('MonthShort11'), jsBackend.locale.loc('MonthShort12}'];
 		$inputDatefieldNormal = $('.inputDatefieldNormal');
 		$inputDatefieldFrom = $('.inputDatefieldFrom');
 		$inputDatefieldTill = $('.inputDatefieldTill');
@@ -1272,8 +1284,8 @@ jsBackend.forms =
 			hideIfNoPrevNext: true,
 			monthNames: monthNames,
 			monthNamesShort: monthNamesShort,
-			nextText: '{$lblNext}',
-			prevText: '{$lblPrevious}',
+			nextText: jsBackend.locale.lbl('Next'),
+			prevText: jsBackend.locale.lbl('Previous'),
 			showAnim: 'slideDown'
 		});
 
@@ -1474,10 +1486,10 @@ jsBackend.forms =
 		{
 			$('#sidebar input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags}',
-				errorMessage: '{$errAddTagBeforeSubmitting}',
-				addLabel: '{$lblAdd|ucfirst}',
-				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				emptyMessage: jsBackend.locale.msg('NoTags'),
+				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
+				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
 				params: { fork: { module: 'tags', action: 'autocomplete' } }
 			});
 		}
@@ -1485,10 +1497,10 @@ jsBackend.forms =
 		{
 			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags}',
-				errorMessage: '{$errAddTagBeforeSubmitting}',
-				addLabel: '{$lblAdd|ucfirst}',
-				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				emptyMessage: jsBackend.locale.msg('NoTags'),
+				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
+				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
 				params: { fork: { module: 'tags', action: 'autocomplete' } },
 				showIconOnly: false
 			});
@@ -1552,7 +1564,7 @@ jsBackend.forms =
 		});
 
 		// return if needed
-		if(changed) return '{$msgValuesAreChanged}';
+		if(changed) return jsBackend.locale.msg('ValuesAreChanged');
 	}
 }
 

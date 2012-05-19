@@ -389,18 +389,24 @@ jsBackend.mailmotor.step4 =
 			modal: true,
 			resizable: false,
 			buttons:
-			{
-				'{$lblSendMailing|ucfirst}': function()
+			[
 				{
-					// send the mailing
-					jsBackend.mailmotor.step4.sendMail();
+					text: utils.string.ucfirst(jsBackend.locale.lbl('SendMailing')),
+					click: function()
+					{
+						// send the mailing
+						jsBackend.mailmotor.step4.sendMail();
+					}
 				},
-				'{$lblCancel|ucfirst}': function()
 				{
-					// close the dialog
-					$(this).dialog('close');
+					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+					click: function()
+					{
+						// close the dialog
+						$(this).dialog('close');
+					}
 				}
-			}
+			]
 		});
 
 		// value of date/time has changed
