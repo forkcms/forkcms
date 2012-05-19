@@ -16,6 +16,8 @@
 	{iteration:jsFiles}<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
 	<script>
 		//<![CDATA[
+			{$jsData}
+
 			// reports
 			{option:formError}jsBackend.messages.add('error', "{$errFormError|addslashes}");{/option:formError}
 			{option:usingRevision}jsBackend.messages.add('notice', "{$msgUsingARevision|addslashes}");{/option:usingRevision}
