@@ -360,6 +360,7 @@ jsFrontend.locale =
 	initialized: false,
 	data: {},
 
+	// init, something like a constructor
 	init: function()
 	{
 		$.ajax({
@@ -379,6 +380,7 @@ jsFrontend.locale =
 		});
 	},
 
+	// get an item from the locale
 	get: function(type, key)
 	{
 		// initialize if needed
@@ -390,26 +392,31 @@ jsFrontend.locale =
 		return jsFrontend.locale.data[type][key];
 	},
 
+	// get an action
 	act: function(key)
 	{
 		return jsFrontend.locale.get('act', key);
 	},
 
+	// get an error
 	err: function(key)
 	{
 		return jsFrontend.locale.get('err', key);
 	},
 
+	// get a label
 	lbl: function(key)
 	{
 		return jsFrontend.locale.get('lbl', key);
 	},
 	
+	// get localization
 	loc: function(key)
 	{
 		return jsFrontend.locale.get('loc', key);
 	},
 
+	// get a message
 	msg: function(key)
 	{
 		return jsFrontend.locale.get('msg', key);
