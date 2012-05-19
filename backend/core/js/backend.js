@@ -1266,11 +1266,11 @@ jsBackend.forms =
 	datefields: function()
 	{
 		// variables
-		var dayNames = [jsBackend.locale.loc('DayLongSun'), jsBackend.locale.loc('DayLongMon'), jsBackend.locale.loc('DayLongTue'), jsBackend.locale.loc('DayLongWed'), jsBackend.locale.loc('DayLongThu'), jsBackend.locale.loc('DayLongFri'), jsBackend.locale.loc('DayLongSat}'];
-		var dayNamesMin = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat}'];
-		var dayNamesShort = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat}'];
-		var monthNames = [jsBackend.locale.loc('MonthLong1'), jsBackend.locale.loc('MonthLong2'), jsBackend.locale.loc('MonthLong3'), jsBackend.locale.loc('MonthLong4'), jsBackend.locale.loc('MonthLong5'), jsBackend.locale.loc('MonthLong6'), jsBackend.locale.loc('MonthLong7'), jsBackend.locale.loc('MonthLong8'), jsBackend.locale.loc('MonthLong9'), jsBackend.locale.loc('MonthLong10'), jsBackend.locale.loc('MonthLong11'), jsBackend.locale.loc('MonthLong12}'];
-		var monthNamesShort = [jsBackend.locale.loc('MonthShort1'), jsBackend.locale.loc('MonthShort2'), jsBackend.locale.loc('MonthShort3'), jsBackend.locale.loc('MonthShort4'), jsBackend.locale.loc('MonthShort5'), jsBackend.locale.loc('MonthShort6'), jsBackend.locale.loc('MonthShort7'), jsBackend.locale.loc('MonthShort8'), jsBackend.locale.loc('MonthShort9'), jsBackend.locale.loc('MonthShort10'), jsBackend.locale.loc('MonthShort11'), jsBackend.locale.loc('MonthShort12}'];
+		var dayNames = [jsBackend.locale.loc('DayLongSun'), jsBackend.locale.loc('DayLongMon'), jsBackend.locale.loc('DayLongTue'), jsBackend.locale.loc('DayLongWed'), jsBackend.locale.loc('DayLongThu'), jsBackend.locale.loc('DayLongFri'), jsBackend.locale.loc('DayLongSat')];
+		var dayNamesMin = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat')];
+		var dayNamesShort = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat')];
+		var monthNames = [jsBackend.locale.loc('MonthLong1'), jsBackend.locale.loc('MonthLong2'), jsBackend.locale.loc('MonthLong3'), jsBackend.locale.loc('MonthLong4'), jsBackend.locale.loc('MonthLong5'), jsBackend.locale.loc('MonthLong6'), jsBackend.locale.loc('MonthLong7'), jsBackend.locale.loc('MonthLong8'), jsBackend.locale.loc('MonthLong9'), jsBackend.locale.loc('MonthLong10'), jsBackend.locale.loc('MonthLong11'), jsBackend.locale.loc('MonthLong12')];
+		var monthNamesShort = [jsBackend.locale.loc('MonthShort1'), jsBackend.locale.loc('MonthShort2'), jsBackend.locale.loc('MonthShort3'), jsBackend.locale.loc('MonthShort4'), jsBackend.locale.loc('MonthShort5'), jsBackend.locale.loc('MonthShort6'), jsBackend.locale.loc('MonthShort7'), jsBackend.locale.loc('MonthShort8'), jsBackend.locale.loc('MonthShort9'), jsBackend.locale.loc('MonthShort10'), jsBackend.locale.loc('MonthShort11'), jsBackend.locale.loc('MonthShort12')];
 		$inputDatefieldNormal = $('.inputDatefieldNormal');
 		$inputDatefieldFrom = $('.inputDatefieldFrom');
 		$inputDatefieldTill = $('.inputDatefieldTill');
@@ -1713,8 +1713,6 @@ jsBackend.locale =
 		// initialize if needed
 		if(!jsBackend.locale.initialized) jsBackend.locale.init();
 
-		if(typeof module == 'undefined') module = jsBackend.current.module;
-
 		// validate
 		if(typeof jsBackend.locale.data[type][module][key] == 'undefined')
 		{
@@ -1731,24 +1729,27 @@ jsBackend.locale =
 	// get an error
 	err: function(key, module)
 	{
+		if(module == null) module = jsBackend.current.module
 		return jsBackend.locale.get('err', key, module);
 	},
 
 	// get a label
 	lbl: function(key, module)
 	{
+		if(module == null) module = jsBackend.current.module
 		return jsBackend.locale.get('lbl', key, module);
 	},
 
 	// get localization
-	loc: function(key, module)
+	loc: function(key)
 	{
-		return jsBackend.locale.get('loc', key, module);
+		return jsBackend.locale.get('loc', key, 'core');
 	},
 
 	// get a message
 	msg: function(key, module)
 	{
+		if(module == null) module = jsBackend.current.module
 		return jsBackend.locale.get('msg', key, module);
 	}
 }
