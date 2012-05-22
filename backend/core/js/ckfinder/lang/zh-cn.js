@@ -183,8 +183,10 @@ CKFinder.lang['zh-cn'] =
 	FilesCountMany	: '%1 个文件',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: '请求的操作未能完成. (错误 %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['zh-cn'] =
 	{
 		maximize : '全屏',
 		minimize : '最小化'
+	},
+
+	Gallery :
+	{
+		current : '第 {current} 个图像，共 {total} 个'
 	}
 };

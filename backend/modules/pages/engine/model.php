@@ -1013,7 +1013,7 @@ class BackendPagesModel
 
 		// start HTML
 		$html = '<h4>' . SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
-		$html .= '<div class="clearfix">' . "\n";
+		$html .= '<div class="clearfix" data-tree="main">' . "\n";
 		$html .= '	<ul>' . "\n";
 		$html .= '		<li id="page-1" rel="home">';
 
@@ -1033,7 +1033,7 @@ class BackendPagesModel
 		{
 			// meta pages
 			$html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
-			$html .= '<div class="clearfix">' . "\n";
+			$html .= '<div class="clearfix" data-tree="meta">' . "\n";
 			$html .= '	<ul>' . "\n";
 
 			// are there any meta pages
@@ -1065,7 +1065,7 @@ class BackendPagesModel
 		$html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
 
 		// start
-		$html .= '<div class="clearfix">' . "\n";
+		$html .= '<div class="clearfix" data-tree="footer">' . "\n";
 		$html .= '	<ul>' . "\n";
 
 		// are there any footer pages
@@ -1100,7 +1100,7 @@ class BackendPagesModel
 			$html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
 
 			// start
-			$html .= '<div class="clearfix">' . "\n";
+			$html .= '<div class="clearfix" data-tree="root">' . "\n";
 			$html .= '	<ul>' . "\n";
 
 			// loop the items
@@ -1287,14 +1287,16 @@ class BackendPagesModel
 	 * @param int $id The id for the page that has to be moved.
 	 * @param int $droppedOn The id for the page where to page has been dropped on.
 	 * @param string $typeOfDrop The type of drop, possible values are: before, after, inside.
+	 * @param string $tree The tree the item is dropped on, possible values are: main, meta, footer, root.
 	 * @param string[optional] $language The language to use, if not provided we will use the working language.
 	 * @return bool
 	 */
-	public static function move($id, $droppedOn, $typeOfDrop, $language = null)
+	public static function move($id, $droppedOn, $typeOfDrop, $tree, $language = null)
 	{
 		$id = (int) $id;
 		$droppedOn = (int) $droppedOn;
 		$typeOfDrop = SpoonFilter::getValue($typeOfDrop, array('before', 'after', 'inside'), 'inside');
+		$tree = SpoonFilter::getValue($tree, array('main', 'meta', 'footer', 'root'), 'inside');
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get db
@@ -1331,7 +1333,8 @@ class BackendPagesModel
 		// decide new type
 		if($droppedOn == 0)
 		{
-			$newType = 'meta';
+			if($tree == 'footer') $newType = 'footer';
+			else $newType = 'meta';
 		}
 
 		elseif($newParent == 0)

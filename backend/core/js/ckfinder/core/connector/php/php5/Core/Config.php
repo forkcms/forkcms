@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -123,6 +123,13 @@ class CKFinder_Connector_Core_Config
      * @access private
      */
     private $_checkDoubleExtension = true;
+    /**
+     * Disallow unsafe characters in file and folder names
+     *
+     * @var boolean
+     * @access private
+     */
+    private $_disallowUnsafeCharacters = false;
     /**
      * If set to true, validate image size
      *
@@ -303,6 +310,17 @@ class CKFinder_Connector_Core_Config
     }
 
     /**
+	 * Get "Disallow unsafe characters" value
+	 *
+	 * @access public
+	 * @return boolean
+	 */
+    public function getDisallowUnsafeCharacters()
+    {
+        return $this->_disallowUnsafeCharacters;
+    }
+
+    /**
 	 * Get default resource types
 	 *
 	 * @access public
@@ -479,6 +497,9 @@ class CKFinder_Connector_Core_Config
         }
         if (isset($GLOBALS['config']['CheckDoubleExtension'])) {
             $this->_checkDoubleExtension = CKFinder_Connector_Utils_Misc::booleanValue($GLOBALS['config']['CheckDoubleExtension']);
+        }
+        if (isset($GLOBALS['config']['DisallowUnsafeCharacters'])) {
+            $this->_disallowUnsafeCharacters = CKFinder_Connector_Utils_Misc::booleanValue($GLOBALS['config']['DisallowUnsafeCharacters']);
         }
         if (isset($GLOBALS['config']['SecureImageUploads'])) {
             $this->_secureImageUploads = CKFinder_Connector_Utils_Misc::booleanValue($GLOBALS['config']['SecureImageUploads']);

@@ -183,8 +183,10 @@ CKFinder.lang['es'] =
 	FilesCountMany	: '%1 ficheros',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'No ha sido posible completar la solicitud. (Error %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['es'] =
 	{
 		maximize : 'Maximizar',
 		minimize : 'Minimizar'
+	},
+
+	Gallery :
+	{
+		current : 'Imagen {current} de {total}'
 	}
 };

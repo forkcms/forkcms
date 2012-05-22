@@ -183,8 +183,10 @@ CKFinder.lang['ja'] =
 	FilesCountMany	: '%1個のファイル',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB', // MISSING
+	Gb				: '%1 GB', // MISSING
+	SizePerSecond	: '%1/s', // MISSING
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'リクエストの処理に失敗しました。 (Error %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['ja'] =
 	{
 		maximize : '最大化',
 		minimize : '最小化'
+	},
+
+	Gallery :
+	{
+		current : 'Image {current} of {total}' // MISSING
 	}
 };

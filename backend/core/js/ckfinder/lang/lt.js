@@ -183,8 +183,10 @@ CKFinder.lang['lt'] =
 	FilesCountMany	: '%1 failai',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Užklausos įvykdyti nepavyko. (Klaida %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['lt'] =
 	{
 		maximize : 'Padidinti',
 		minimize : 'Sumažinti'
+	},
+
+	Gallery :
+	{
+		current : 'Nuotrauka {current} iš {total}'
 	}
 };

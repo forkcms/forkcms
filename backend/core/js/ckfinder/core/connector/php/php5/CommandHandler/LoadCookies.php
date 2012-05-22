@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://ckfinder.com
- * Copyright (C) 2007-2011, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -60,7 +60,7 @@ class CKFinder_Connector_CommandHandler_LoadCookies extends CKFinder_Connector_C
         $this->_connectorNode->addChild($oCookiesNode);
         $i = 0;
         foreach ($_COOKIE as $name => $value) {
-            if (strpos($name, "CKFinder_") !== 0) {
+            if (!is_array($value) && strpos($name, "CKFinder_") !== 0) {
                 $oCookieNode[$i] = new Ckfinder_Connector_Utils_XmlNode("Cookie");
                 $oCookiesNode->addChild($oCookieNode[$i]);
                 $oCookieNode[$i]->addAttribute("name", $name);

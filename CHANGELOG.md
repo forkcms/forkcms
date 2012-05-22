@@ -1,3 +1,18 @@
+3.3.9 (2012-05-22)
+--
+Improvements:
+
+* Core: added a method to subscribe to events from within the installer, thx jeroendesloovere.
+* Profiles: added a widget that shows a login-box.
+* Core: upgraded CKFinder to 2.2
+* Core: upgraded CKEditor to 3.6.3
+
+Bugfixes:
+
+* Core: wrong application in the virtual applactions, such as backend_ajax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/297 by Wesley Pots.
+* Pages: fixed an issue where pages that were dropped on an empty footer-tree disappeard, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/295 by Tommy Van de Velde & Lowie Benoot.
+
+
 3.3.8 (2012-05-15)
 --
 Improvements:

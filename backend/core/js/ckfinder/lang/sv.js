@@ -183,8 +183,10 @@ CKFinder.lang['sv'] =
 	FilesCountMany	: '%1 filer',
 
 	// Size and Speed
-	Kb				: '%1 kB',
-	KbPerSecond		: '%1 kB/s',
+	Kb				: '%1 KB',
+	Mb				: '%1 MB',
+	Gb				: '%1 GB',
+	SizePerSecond	: '%1/s',
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Begäran kunde inte utföras eftersom ett fel uppstod. (Fel %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['sv'] =
 	{
 		maximize : 'Maximera',
 		minimize : 'Minimera'
+	},
+
+	Gallery :
+	{
+		current : 'Bild {current} av {total}'
 	}
 };

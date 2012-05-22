@@ -183,8 +183,10 @@ CKFinder.lang['ru'] =
 	FilesCountMany	: '%1 файлов',
 
 	// Size and Speed
-	Kb				: '%1 кБ',
-	KbPerSecond		: '%1 кБ/с',
+	Kb				: '%1 KБ',
+	Mb				: '%1 MB', // MISSING
+	Gb				: '%1 GB', // MISSING
+	SizePerSecond	: '%1/s', // MISSING
 
 	// Connector Error Messages.
 	ErrorUnknown	: 'Невозможно завершить запрос. (Ошибка %1)',
@@ -270,5 +272,10 @@ CKFinder.lang['ru'] =
 	{
 		maximize : 'Развернуть',
 		minimize : 'Свернуть'
+	},
+
+	Gallery :
+	{
+		current : 'Image {current} of {total}' // MISSING
 	}
 };
