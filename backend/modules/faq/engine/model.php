@@ -318,7 +318,7 @@ class BackendFaqModel
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ? AND i.id != ?
 				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL, $id)))
+				array(BL::getWorkingLanguage(), $url, $id)))
 			{
 				$url = BackendModel::addNumber($url);
 				return self::getURL($url, $id);
@@ -349,7 +349,7 @@ class BackendFaqModel
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ?
 				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL)))
+				array(BL::getWorkingLanguage(), $url)))
 			{
 				$url = BackendModel::addNumber($url);
 				return self::getURLForCategory($url);
@@ -364,7 +364,7 @@ class BackendFaqModel
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ? AND i.id != ?
 				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL, $id)))
+				array(BL::getWorkingLanguage(), $url, $id)))
 			{
 				$url = BackendModel::addNumber($url);
 				return self::getURLForCategory($url, $id);
