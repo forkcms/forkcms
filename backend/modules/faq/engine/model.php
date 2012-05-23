@@ -302,7 +302,7 @@ class BackendFaqModel
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 WHERE i.language = ? AND m.url = ?
 				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL)))
+				array(BL::getWorkingLanguage(), $url)))
 			{
 				$url = BackendModel::addNumber($url);
 				return self::getURL($url);
