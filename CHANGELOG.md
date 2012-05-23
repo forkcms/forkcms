@@ -1,3 +1,10 @@
+3.3.10 (xxxx-xx-xx)
+-- 
+Bugfixes:
+
+* Bugfix: FAQ: syntax error in variable name
+
+
 3.3.9 (2012-05-22)
 --
 Improvements:
