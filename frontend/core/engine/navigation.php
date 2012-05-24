@@ -302,8 +302,15 @@ class FrontendNavigation extends FrontendBaseObject
 				if($page['no_follow']) $navigation[$type][$parentId][$id]['nofollow'] = true;
 				else $navigation[$type][$parentId][$id]['nofollow'] = false;
 
-				// has children and is desired?
-				if(isset($navigation[$type][$page['page_id']]) && $page['page_id'] != 1 && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $tpl, $depthCounter + 1);
+				// meta subpages have the "page" type
+				if($type == 'meta') $subType = 'page';
+				else $subType = $type;
+
+				// fetch children if needed
+				if(isset($navigation[$subType][$page['page_id']]) && $page['page_id'] != 1 && ($depth == null || $depthCounter + 1 <= $depth))
+				{
+					$navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($subType, $page['page_id'], $depth, $excludeIds, $tpl, $depthCounter + 1);
+				}
 				else $navigation[$type][$parentId][$id]['children'] = false;
 
 				// add parent id

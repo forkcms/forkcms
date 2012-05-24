@@ -1,8 +1,12 @@
 3.3.10 (xxxx-xx-xx)
 -- 
+Improvements:
+
+* Sitemap: include the meta navigation.
+
 Bugfixes:
 
-* Bugfix: FAQ: syntax error in variable name
+* Bugfix: FAQ: syntax error in variable name.
 
 
 3.3.9 (2012-05-22)
