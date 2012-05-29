@@ -6229,6 +6229,10 @@
         <translation language="uk"><![CDATA[Ім'я]]></translation>
         <translation language="sv"><![CDATA[namn]]></translation>
       </item>
+      <item type="label" name="Navigation">
+        <translation language="nl"><![CDATA[navigatie]]></translation>
+        <translation language="en"><![CDATA[navigation]]></translation>
+      </item>
       <item type="label" name="NavigationTitle">
         <translation language="nl"><![CDATA[navigatietitel]]></translation>
         <translation language="en"><![CDATA[navigation title]]></translation>
@@ -10188,6 +10192,10 @@
         <translation language="es"><![CDATA[Tu combinación de e-mail y contraseña es incorrecta. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">¿Olvidaste tu contraseña?</a>]]></translation>
         <translation language="lt"><![CDATA[Jūsų slaptažodžio ir el.pašto kombinacija neteisinga. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Ar pamiršote slaptažodį?</a>]]></translation>
         <translation language="sv"><![CDATA[Din e-postadress och lösenord kombination är felaktig. <en href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did du forget ditt lösenord?</en>]]></translation>
+      </item>
+      <item type="error" name="InvalidInteger">
+        <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>
+        <translation language="en"><![CDATA[Invalid number.]]></translation>
       </item>
       <item type="error" name="InvalidName">
         <translation language="nl"><![CDATA[Ongeldige naam.]]></translation>

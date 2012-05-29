@@ -631,6 +631,12 @@
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
       </item>
     </profiles>
+    <core>
+      <item type="label" name="LoginBox">
+        <translation language="nl"><![CDATA[login box]]></translation>
+        <translation language="en"><![CDATA[login box]]></translation>
+      </item>
+    </core>
   </backend>
   <frontend>
     <core>

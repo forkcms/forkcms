@@ -1,3 +1,21 @@
+3.3.11 (2012-05-29)
+--
+Bugfixes:
+
+* Core: fixed typo in locale which failed the import of the initial labels
+
+
+3.3.10 (2012-05-29)
+-- 
+Improvements:
+
+* Sitemap: include the meta navigation.
+
+Bugfixes:
+
+* Bugfix: FAQ: syntax error in variable name.
+
+
 3.3.9 (2012-05-22)
 --
 Improvements:
