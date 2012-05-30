@@ -575,6 +575,28 @@ class BackendFormImage extends SpoonFormImage
 	private $hideHelpTxt = false;
 
 	/**
+	 * Generate thumbnails based on the folders in the path
+	 * Use
+	 *  - 128x128 as foldername to generate an image that where the width will be 128px and the height will be 128px
+	 *  - 128x as foldername to generate an image that where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as foldername to generate an image that where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *
+	 * @param string $path
+	 * @param string $filename
+	 */
+	public function generateThumbnails($path, $filename)
+	{
+		// create folder if needed
+		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+
+		// move the source file
+		$this->moveFile($path . '/source/' . $filename);
+
+		// generate the thumbnails
+		BackendModel::generateThumbnails($path, $path . '/source/' . $filename);
+	}
+
+	/**
 	 * This function will return the errors. It is extended so we can do image checks automatically.
 	 *
 	 * @return string

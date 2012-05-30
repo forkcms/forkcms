@@ -52,12 +52,10 @@
 							<div class="heading">
 								<h3>{$lblImage|ucfirst}</h3>
 							</div>
-							<div class="options">
+							<div class="options clearfix">
 								{option:item.image}
-								<p>
-									<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" width="500" alt="{$lblImage|ucfirst}" />
-								</p>
-								<p>
+								<p class="imageHolder">
+									<img src="{$FRONTEND_FILES_URL}/blog/images/128x128/{$item.image}" width="128" height="128" alt="{$lblImage|ucfirst}" />
 									<label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
 									{$chkDeleteImageError}
 								</p>
