@@ -319,8 +319,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 						// build the image name
 						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
 
-						// upload the image
-						$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+						// upload the image & generate thumbnails
+						$this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
 					}
 
 					// rename the old image
