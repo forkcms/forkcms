@@ -3,6 +3,7 @@
 Improvements:
 
 * Generate thumbnails based on the folders in the given path, see http://www.fork-cms.com/knowledge-base/detail/generate-thumbnails-based-on-folders.
+* Blog: better layout for the image-box.
 
 
 3.3.11 (2012-05-29)
