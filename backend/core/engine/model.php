@@ -581,6 +581,7 @@ class BackendModel
 	 * Get the thumbnail folders
 	 *
 	 * @param string $path The path
+	 * @param bool[optional] $includeSource Should the source-folder be included in the return-array.
 	 * @return array
 	 */
 	public static function getThumbnailFolders($path, $includeSource = false)
