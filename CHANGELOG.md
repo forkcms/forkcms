@@ -6,6 +6,9 @@ Improvements:
 * Blog: better layout for the image-box.
 * Core: upgraded Highcharts to 2.2.4
 
+Bugfixes:
+
+* Minify: first convert images to base64, then remove all whitespaces. Otherwise some image url's are not converted.
 
 3.3.11 (2012-05-29)
 --
