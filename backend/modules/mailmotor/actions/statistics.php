@@ -44,7 +44,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 	public function execute()
 	{
 		parent::execute();
-		$this->header->addJS('highcharts.js');
+		$this->header->addJS('highcharts.js', 'core', false);
 		$this->getData();
 		$this->loadDataGrid();
 		$this->parse();
@@ -87,11 +87,11 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 
 		// call the parent, as in create a new datagrid with the created source
 		$this->dataGrid = new BackendDataGrid($source);
-		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics') . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
+		$this->dataGrid->setURL(BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
 
 		// set headers values
 		$headers['link'] = strtoupper(BL::lbl('URL'));
-		$headers['clicks'] = ucfirst(BL::msg('ClicksAmount'));
+		$headers['clicks'] = SpoonFilter::ucfirst(BL::msg('ClicksAmount'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);
@@ -103,18 +103,24 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->dataGrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 		$this->dataGrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 
-		// add edit column
-		$this->dataGrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id, BL::lbl('Who'));
-
 		// set paging limit
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('statistics_link'))
+		{
+			// add edit column
+			$this->dataGrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id, BL::lbl('Who'));
+		}
 	}
 
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse the datagrid
 		if(!empty($this->statistics['clicked_links'])) $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 

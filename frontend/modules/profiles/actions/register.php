@@ -12,6 +12,7 @@
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendProfilesRegister extends FrontendBaseBlock
 {
@@ -151,7 +152,13 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 					$mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') . '/' . $activationKey;
 
 					// send email
-					FrontendMailer::addEmail(FL::getMessage('RegisterSubject'), FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl', $mailValues, $values['email'], $values['email']);
+					FrontendMailer::addEmail(
+						FL::getMessage('RegisterSubject'),
+						FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
+						$mailValues,
+						$values['email'],
+						''
+					);
 
 					// redirect
 					$this->redirect(SELF . '?sent=true');

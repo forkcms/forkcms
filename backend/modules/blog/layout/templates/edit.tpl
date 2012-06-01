@@ -24,20 +24,22 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li><a href="#tabRevisions">{$lblPreviousVersions|ucfirst}</a></li>
+			<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblComments|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
-			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+			<table width="100%">
 				<tr>
 					<td id="leftColumn">
 
 						{* Main content *}
 						<div class="box">
 							<div class="heading">
-								<h3>{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+								<h3>
+									<label for="text">{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								</h3>
 							</div>
 							<div class="optionsRTE">
 								{$txtText} {$txtTextError}
@@ -45,18 +47,17 @@
 						</div>
 
 						{* Image *}
+						{option:imageIsAllowed}
 						<div class="box">
 							<div class="heading">
 								<h3>{$lblImage|ucfirst}</h3>
 							</div>
-							<div class="options">
+							<div class="options clearfix">
 								{option:item.image}
-								<p>
-									<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" width="500" alt="{$lblImage|ucfirst}" />
-								</p>
-								<p>
-									<label for="deleteImage">{$lblDelete|ucfirst}</label>
-									{$chkDeleteImage} {$chkDeleteImageError}
+								<p class="imageHolder">
+									<img src="{$FRONTEND_FILES_URL}/blog/images/128x128/{$item.image}" width="128" height="128" alt="{$lblImage|ucfirst}" />
+									<label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
+									{$chkDeleteImageError}
 								</p>
 								{/option:item.image}
 								<p>
@@ -65,12 +66,15 @@
 								</p>
 							</div>
 						</div>
+						{/option:imageIsAllowed}
 
 						{* Summary *}
 						<div class="box">
 							<div class="heading">
 								<div class="oneLiner">
-									<h3>{$lblSummary|ucfirst}</h3>
+									<h3>
+										<label for="introduction">{$lblSummary|ucfirst}</label>
+									</h3>
 									<abbr class="help">(?)</abbr>
 									<div class="tooltip" style="display: none;">
 										<p>{$msgHelpSummary}</p>
@@ -149,7 +153,7 @@
 		</div>
 
 		<div id="tabPermissions">
-			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+			<table width="100%">
 				<tr>
 					<td>
 						{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label>
@@ -158,7 +162,7 @@
 			</table>
 		</div>
 
-		<div id="tabRevisions">
+		<div id="tabVersions">
 			{option:drafts}
 				<div class="tableHeading">
 					<div class="oneLiner">
@@ -169,25 +173,31 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="dataGridHolder">
 					{$drafts}
 				</div>
 			{/option:drafts}
-			{option:revisions}
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="tooltip" style="display: none;">
-							<p>{$msgHelpRevisions}</p>
-						</div>
+
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
 					</div>
 				</div>
-				<div class="dataGridHolder">
-					{$revisions}
-				</div>
+			</div>
+
+			{option:revisions}
+			<div class="dataGridHolder">
+				{$revisions}
+			</div>
 			{/option:revisions}
-			{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+
+			{option:!revisions}
+				<p>{$msgNoRevisions}</p>
+			{/option:!revisions}
 		</div>
 
 		<div id="tabSEO">
@@ -196,19 +206,22 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showBlogDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+
+		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+			<p>
+				{$msgConfirmDelete|sprintf:{$item.title}}
+			</p>
+		</div>
+		{/option:showBlogDelete}
+
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
 			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
-	</div>
-
-	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-		<p>
-			{$msgConfirmDelete|sprintf:{$item.title}}
-		</p>
 	</div>
 
 	<div id="addCategoryDialog" class="forkForms" title="{$lblAddCategory|ucfirst}" style="display: none;">

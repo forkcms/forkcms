@@ -14,6 +14,14 @@
  */
 class FrontendFooter extends FrontendBaseObject
 {
+	public function __construct()
+	{
+		parent::__construct();
+
+		// store in reference
+		Spoon::set('footer', $this);
+	}
+
 	/**
 	 * Parse the footer into the template
 	 */
@@ -29,7 +37,7 @@ class FrontendFooter extends FrontendBaseObject
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 
 		// facebook admins given?
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
 			// build correct locale
 			switch(FRONTEND_LANGUAGE)
@@ -38,8 +46,28 @@ class FrontendFooter extends FrontendBaseObject
 					$locale = 'en_US';
 					break;
 
-				case 'cn':
-					$locale = 'zh-CN';
+				case 'zh':
+					$locale = 'zh_CN';
+					break;
+
+				case 'cs':
+					$locale = 'cs_CZ';
+					break;
+
+				case 'el':
+					$locale = 'el_GR';
+					break;
+
+				case 'ja':
+					$locale = 'ja_JP';
+					break;
+
+				case 'sv':
+					$locale = 'sv_SE';
+					break;
+
+				case 'uk':
+					$locale = 'uk_UA';
 					break;
 
 				default:
@@ -59,7 +87,7 @@ class FrontendFooter extends FrontendBaseObject
 				$siteHTMLFooter .= '	};' . "\n";
 			}
 			$siteHTMLFooter .= '	(function() {' . "\n";
-			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
+			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . $locale . '/all.js#xfbml=1";' . "\n";
 			$siteHTMLFooter .= '		document.getElementById(\'fb-root\').appendChild(e);' . "\n";
 			$siteHTMLFooter .= '	}());' . "\n";
 			$siteHTMLFooter .= '</script>';

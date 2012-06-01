@@ -52,7 +52,7 @@
 .box .heading,
 .widget .heading {
 	background: #E4E4E4;
-	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 -97px;
+	background: url(../../images/sprites/th.gif) repeat-x 0 -97px;
 	border: 1px solid #D7D7D7;
 	border-color: #BDBDBD;
 	padding: 6px 12px;
@@ -297,7 +297,7 @@
 		font-size: 11px;
 	}
 
-.box h3 {
+.box h3, .box h3 label {
 	margin: 0;
 	padding: 0;
 	color: #000;
@@ -456,6 +456,11 @@ div#pageTitle {
 		visibility: hidden;
 	}
 
+	.pageTitle h2 label {
+		font-size: 14px; 
+		font-weight: 700;
+	}
+	
 /*
 	Center message
 */

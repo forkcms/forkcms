@@ -12,28 +12,14 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendURL
+class BackendURL extends BackendBaseObject
 {
-	/**
-	 * The current action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
 	/**
 	 * The host, will be used for cookies
 	 *
 	 * @var	string
 	 */
 	private $host;
-
-	/**
-	 * The current module
-	 *
-	 * @var	string
-	 */
-	private $module;
 
 	/**
 	 * The querystring
@@ -53,13 +39,17 @@ class BackendURL
 	}
 
 	/**
-	 * Get the current action found in the URL
+	 * Get the domain
 	 *
-	 * @return string
+	 * @return string The current domain (without www.)
 	 */
-	public function getAction()
+	public function getDomain()
 	{
-		return $this->action;
+		// get host
+		$host = $this->getHost();
+
+		// replace
+		return str_replace('www.', '', $host);
 	}
 
 	/**
@@ -70,16 +60,6 @@ class BackendURL
 	public function getHost()
 	{
 		return $this->host;
-	}
-
-	/**
-	 * Get the current module found in the URL
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
 	}
 
 	/**
@@ -161,7 +141,22 @@ class BackendURL
 			 */
 			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php'))
 			{
-				throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
+				// in debug mode we want to see the error
+				if(SPOON_DEBUG) throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
+
+				else
+				{
+					// @todo	don't use redirects for error, we should have something like an invoke method.
+
+					// build the url
+					$errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed';
+
+					// add the querystring, it will be processed by the error-handler
+					$errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
+
+					// redirect to the error page
+					SpoonHTTP::redirect($errorUrl, 307);
+				}
 			}
 
 			// build config-object-name
@@ -185,118 +180,100 @@ class BackendURL
 			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';
 		}
 
-		// if it is an request for a JS-file or an AJAX-file we only need the module
-		if($isJS || $isAJAX)
+		// AJAX parameters are passed via GET or POST
+		if($isAJAX)
 		{
-			// set the module
-			$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
+			$module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
+			$action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
+			$language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
+			$module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
+			$action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
+			$language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
 
-			// set the action
-			$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
+			$this->setModule($module);
+			$this->setAction($action);
+			BackendLanguage::setWorkingLanguage($language);
+		}
 
-			// set the language
-			BackendLanguage::setWorkingLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
+		// JS parameters are passed via GET
+		elseif($isJS)
+		{
+			$this->setModule(isset($_GET['module']) ? $_GET['module'] : '');
+			BackendLanguage::setWorkingLanguage(isset($_GET['language']) ? $_GET['language'] : SITE_DEFAULT_LANGUAGE);
 		}
 
 		// regular request
-		else
-		{
-			// the person isn't logged in? or the module doesn't require authentication
-			if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
-			{
-				// redirect to login
-				SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode('/' . $this->getQueryString()));
-			}
-
-			// the person is logged in
-			else
-			{
-				// does our user has access to this module?
-				if(!BackendAuthentication::isAllowedModule($module))
-				{
-					// if the module is the dashboard redirect to the first allowed module
-					if($module == 'dashboard')
-					{
-						// require navigation-file
-						require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
-
-						// loop the navigation to find the first allowed module
-						foreach($navigation as $key => $value)
-						{
-							// split up chunks
-							list($module, $action) = explode('/', $value['url']);
-
-							// user allowed?
-							if(BackendAuthentication::isAllowedModule($module))
-							{
-								// redirect to the page
-								SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
-							}
-						}
-					}
-					// the user doesn't have access, redirect to error page
-					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
-				}
-
-				// we have access
-				else
-				{
-					// can our user execute the requested action?
-					if(!BackendAuthentication::isAllowedAction($action, $module))
-					{
-						// the user hasn't access, redirect to error page
-						SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
-					}
-
-					// let's do it
-					else
-					{
-						// set the working language, this is not the interface language
-						BackendLanguage::setWorkingLanguage($language);
-
-						// is the user authenticated
-						if(BackendAuthentication::getUser()->isAuthenticated())
-						{
-							// set interface language based on the user preferences
-							BackendLanguage::setLocale(
-								BackendAuthentication::getUser()->getSetting('interface_language', 'en')
-							);
-						}
-
-						// no authenticated user
-						else
-						{
-							// init var
-							$interfaceLanguage = BackendModel::getModuleSetting('core', 'default_interface_language');
-
-							// override with cookie value if that exists
-							if(SpoonCookie::exists('interface_language') && in_array(SpoonCookie::get('interface_language'), array_keys(BackendLanguage::getInterfaceLanguages())))
-							{
-								// set interface language based on the perons' cookies
-								$interfaceLanguage = SpoonCookie::get('interface_language');
-							}
-
-							// set interface language
-							BackendLanguage::setLocale($interfaceLanguage);
-						}
-
-						// set current module
-						$this->setModule($module);
-						$this->setAction($action);
-					}
-				}
-			}
-		}
+		else $this->processRegularRequest($module, $action, $language);
 	}
 
 	/**
-	 * Set the current action
+	 * Process a regular request
 	 *
-	 * @param string $action The action to set.
+	 * @param string $module The requested module.
+	 * @param string $action The requested action.
+	 * @param strring $language The requested language.
 	 */
-	private function setAction($action)
+	private function processRegularRequest($module, $action, $language)
 	{
-		$this->action = (string) $action;
+		// the person isn't logged in? or the module doesn't require authentication
+		if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
+		{
+			// redirect to login
+			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode('/' . $this->getQueryString()));
+		}
+
+		// the person is logged in
+		else
+		{
+			// does our user has access to this module?
+			if(!BackendAuthentication::isAllowedModule($module))
+			{
+				// if the module is the dashboard redirect to the first allowed module
+				if($module == 'dashboard')
+				{
+					// require navigation-file
+					require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
+
+					// loop the navigation to find the first allowed module
+					foreach($navigation as $key => $value)
+					{
+						// split up chunks
+						list($module, $action) = explode('/', $value['url']);
+
+						// user allowed?
+						if(BackendAuthentication::isAllowedModule($module))
+						{
+							// redirect to the page
+							SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
+						}
+					}
+				}
+				// the user doesn't have access, redirect to error page
+				SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
+			}
+
+			// we have access
+			else
+			{
+				// can our user execute the requested action?
+				if(!BackendAuthentication::isAllowedAction($action, $module))
+				{
+					// the user hasn't access, redirect to error page
+					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
+				}
+
+				// let's do it
+				else
+				{
+					// set the working language, this is not the interface language
+					BackendLanguage::setWorkingLanguage($language);
+
+					$this->setLocale();
+					$this->setModule($module);
+					$this->setAction($action);
+				}
+			}
+		}
 	}
 
 	/**
@@ -310,13 +287,30 @@ class BackendURL
 	}
 
 	/**
-	 * Set the current module
-	 *
-	 * @param string $module The module to set.
+	 * Set the locale
 	 */
-	public function setModule($module)
+	private function setLocale()
 	{
-		$this->module = (string) $module;
+		$default = BackendModel::getModuleSetting('core', 'default_interface_language');
+		$locale = $default;
+		$possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
+
+		// is the user authenticated
+		if(BackendAuthentication::getUser()->isAuthenticated())
+		{
+			$locale = BackendAuthentication::getUser()->getSetting('interface_language', $default);
+		}
+
+		// no authenticated user, but available from a cookie
+		elseif(CommonCookie::exists('interface_language'))
+		{
+			$locale = CommonCookie::get('interface_language');
+		}
+
+		// validate if the requested locale is possible
+		if(!in_array($locale, $possibleLocale)) $locale = $default;
+
+		BackendLanguage::setLocale($locale);
 	}
 
 	/**
@@ -326,6 +320,18 @@ class BackendURL
 	 */
 	private function setQueryString($queryString)
 	{
-		$this->queryString = trim((string) $queryString, '/');
+		$queryString = trim((string) $queryString, '/');
+
+		// replace GET with encoded GET in the queryString to prevent XSS
+		if(isset($_GET) && !empty($_GET))
+		{
+			// strip GET from the queryString
+			list($queryString) = explode('?', $queryString, 2);
+
+			// readd
+			$queryString = $queryString . '?' . http_build_query($_GET);
+		}
+
+		$this->queryString = $queryString;
 	}
 }

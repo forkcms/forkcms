@@ -50,7 +50,7 @@ jsBackend.controls =
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
 				// bind keypress
-				$('#'+ id).on('keyup', function()
+				$(document).on('keyup', '#'+ id, function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
@@ -186,7 +186,7 @@ jsBackend.layout =
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.dataGrid();
 
-		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
+		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
@@ -196,21 +196,21 @@ jsBackend.layout =
 	dataFilter: function()
 	{
 		// add last child and first child for IE
-		$('.datafilter tbody td:first-child').addClass('firstChild');
-		$('.datafilter tbody td:last-child').addClass('lastChild');
+		$('.dataFilter tbody td:first-child').addClass('firstChild');
+		$('.dataFilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;
 
 		// loop group
-		$('.datafilter tbody .options').each(function()
+		$('.dataFilter tbody .options').each(function()
 		{
 			// taller?
 			if($(this).height() > tallest) tallest = $(this).height();
 		});
 
 		// set new height
-		$('.datafilter tbody .options').height(tallest);
+		$('.dataFilter tbody .options').height(tallest);
 	},
 
 	// datagrid layout

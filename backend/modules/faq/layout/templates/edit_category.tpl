@@ -13,7 +13,7 @@
 		</ul>
 
 		<div id="tabContent">
-			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+			<table width="100%">
 				<tr>
 					<td id="leftColumn">
 						<p>
@@ -31,7 +31,7 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:deleteAllowed}
+		{option:showFaqDeleteCategory}
 			<a href="{$var|geturl:'delete_category'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
@@ -40,7 +40,8 @@
 					{$msgConfirmDeleteCategory|sprintf:{$item.title}}
 				</p>
 			</div>
-		{/option:deleteAllowed}
+		{/option:showFaqDeleteCategory}
+
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>

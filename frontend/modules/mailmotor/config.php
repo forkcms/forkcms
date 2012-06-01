@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-require_once 'engine/helper.php';
-
 /**
  * This is the configuration-object
  *
@@ -29,4 +27,23 @@ class FrontendMailmotorConfig extends FrontendBaseConfig
 	 * @var	array
 	 */
 	protected $disabledActions = array();
+
+	/**
+	 * @param string $module
+	 */
+	public function __construct($module)
+	{
+		parent::__construct($module);
+
+		$this->loadEngineFiles();
+	}
+
+	/**
+	 * Loads additional engine files and helpers
+	 */
+	protected function loadEngineFiles()
+	{
+		require_once 'engine/helper.php';
+		require_once 'engine/mailing_bodybuilder.php';
+	}
 }

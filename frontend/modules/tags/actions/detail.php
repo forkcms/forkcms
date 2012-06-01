@@ -81,7 +81,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 			$items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
 
 			// add into results array
-			if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::lbl(ucfirst($module)), 'items' => $items);
+			if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::lbl(SpoonFilter::ucfirst($module)), 'items' => $items);
 		}
 	}
 
@@ -98,5 +98,8 @@ class FrontendTagsDetail extends FrontendBaseBlock
 
 		// update breadcrumb
 		$this->breadcrumb->addElement($this->record['name']);
+
+		// tag-pages don't have any SEO-value, so don't index them
+		$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
 	}
 }

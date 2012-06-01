@@ -125,7 +125,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// edit search index
-				if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
+				BackendSearchModel::saveIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);

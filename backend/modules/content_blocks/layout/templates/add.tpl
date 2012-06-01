@@ -7,22 +7,26 @@
 
 {form:add}
 	<p>
+		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 	</p>
 
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblContent|ucfirst}</h3>
-		</div>
-		<div class="content">
-			<fieldset>
-				<p style="position: relative;">
+	<div class="content">
+		<fieldset>
+			<div class="box">
+				<div class="heading">
+					<h3>
+						<label for="text">{$lblContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					</h3>
+				</div>
+				<div class="optionsRTE">
 					{$txtText} {$txtTextError}
-				</p>
-				{option:ddmTemplate}<p>{$lblTemplate|ucfirst} <label for="template">{$ddmTemplate} {$ddmTemplateError}</label></p>{/option:ddmTemplate}
-				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label></p>
-			</fieldset>
-		</div>
+				</div>
+			</div>
+
+			{option:ddmTemplate}<p>{$lblTemplate|ucfirst} <label for="template">{$ddmTemplate} {$ddmTemplateError}</label></p>{/option:ddmTemplate}
+			<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label></p>
+		</fieldset>
 	</div>
 
 	<div class="fullwidthOptions">

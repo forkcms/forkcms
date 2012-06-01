@@ -3,17 +3,20 @@
 
 <div class="pageTitle">
 	<h2>{$lblGroups|ucfirst}</h2>
+
+	{option:showProfilesAddGroup}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_group'}" class="button icon iconAdd">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showProfilesAddGroup}
 </div>
 
 <div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">
-			<table cellspacing="0" cellpadding="0" border="0">
+			<table>
 				<tbody>
 					<tr>
 						<td>

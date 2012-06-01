@@ -16,7 +16,7 @@
 {/option:warnings}
 
 {option:information}
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+	<table width="100%">
 		<tr>
 			<td id="leftColumn">
 				{option:information.description}
@@ -90,7 +90,7 @@
 	</table>
 {/option:information}
 
-{option:isInstallable}
+{option:showExtensionsInstallTheme}
 <div class="fullwidthOptions">
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'install_theme'}&amp;theme={$name}" data-message-id="confirmInstall" class="askConfirmation button mainButton">
@@ -98,7 +98,7 @@
 		</a>
 	</div>
 </div>
-{/option:isInstallable}
+{/option:showExtensionsInstallTheme}
 
 <div id="confirmInstall" title="{$lblInstall|ucfirst}?" style="display: none;">
 	<p>

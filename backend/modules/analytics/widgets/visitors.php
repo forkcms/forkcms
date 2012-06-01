@@ -33,7 +33,7 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		$this->header->addCSS('widgets.css', 'analytics');
 
 		// add highchart javascript
-		$this->header->addJS('highcharts.js', 'analytics');
+		$this->header->addJS('highcharts.js', 'core', false);
 		$this->header->addJS('analytics.js', 'analytics');
 
 		$this->parse();
@@ -63,7 +63,7 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 				// build graph data array
 				$graphData[$i] = array();
 				$graphData[$i]['title'] = $metric;
-				$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+				$graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 				$graphData[$i]['i'] = $i + 1;
 				$graphData[$i]['data'] = array();
 

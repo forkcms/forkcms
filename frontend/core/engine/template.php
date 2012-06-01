@@ -18,9 +18,17 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Frederik Heyninck <frederik@figure8.be>
  */
 class FrontendTemplate extends SpoonTemplate
 {
+	/**
+	 * Should we add slashes to each value?
+	 *
+	 * @var bool
+	 */
+	private $addSlashes = false;
+
 	/**
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
@@ -101,7 +109,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->parseVars();
 
 		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
 
 		// get template path
 		$template = FrontendTheme::getPath($template);
@@ -205,6 +213,9 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 		$this->mapModifier('getsubnavigation', array('FrontendTemplateModifiers', 'getSubNavigation'));
 
+		// parse a widget
+		$this->mapModifier('parsewidget', array('FrontendTemplateModifiers', 'parseWidget'));
+
 		// rand
 		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'random'));
 
@@ -214,6 +225,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
 		$this->mapModifier('camelcase', array('SpoonFilter', 'toCamelCase'));
+		$this->mapModifier('stripnewlines', array('FrontendTemplateModifiers', 'stripNewlines'));
 
 		// dates
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
@@ -304,17 +316,43 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
+		$actions = FrontendLanguage::getActions();
+		$errors = FrontendLanguage::getErrors();
+		$labels = FrontendLanguage::getLabels();
+		$messages = FrontendLanguage::getMessages();
+
+		// execute addslashes on the values for the locale, will be used in JS
+		if($this->addSlashes)
+		{
+			foreach($actions as &$value)
+			{
+				if(!is_array($value)) $value = addslashes($value);
+			}
+			foreach($errors as &$value)
+			{
+				if(!is_array($value)) $value = addslashes($value);
+			}
+			foreach($labels as &$value)
+			{
+				if(!is_array($value)) $value = addslashes($value);
+			}
+			foreach($messages as &$value)
+			{
+				if(!is_array($value)) $value = addslashes($value);
+			}
+		}
+
 		// assign actions
-		$this->assignArray(FrontendLanguage::getActions(), 'act');
+		$this->assignArray($actions, 'act');
 
 		// assign errors
-		$this->assignArray(FrontendLanguage::getErrors(), 'err');
+		$this->assignArray($errors, 'err');
 
 		// assign labels
-		$this->assignArray(FrontendLanguage::getLabels(), 'lbl');
+		$this->assignArray($labels, 'lbl');
 
 		// assign messages
-		$this->assignArray(FrontendLanguage::getMessages(), 'msg');
+		$this->assignArray($messages, 'msg');
 	}
 
 	/**
@@ -334,10 +372,10 @@ class FrontendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $locale['locMonthLong' . ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $locale['locMonthShort' . ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $locale['locDayLong' . ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $locale['locDayShort' . ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $locale['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $locale['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $locale['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $locale['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($locale);
@@ -353,6 +391,16 @@ class FrontendTemplate extends SpoonTemplate
 
 		// assign current timestamp
 		$this->assign('timestamp', time());
+	}
+
+	/**
+	 * Should we execute addSlashed on the locale?
+	 *
+	 * @param bool[optional] $on Enable addslashes.
+	 */
+	public function setAddSlashes($on = true)
+	{
+		$this->addSlashes = (bool) $on;
 	}
 }
 
@@ -407,7 +455,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Format a number as currency
-	 * 	syntax: {$var|formatcurrency[:<currency>][:<decimals>]}
+	 * 	syntax: {$var|formatcurrency[:currency[:decimals]]}
 	 *
 	 * @param string $var The string to form.
 	 * @param string[optional] $currency The currency to will be used to format the number.
@@ -430,7 +478,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Format a number as a float
-	 * @later	grab settings from database
+	 * 	syntax: {$var|formatfloat[:decimals]}
 	 *
 	 * @param float $number The number to format.
 	 * @param int[optional] $decimals The number of decimals.
@@ -471,22 +519,23 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the navigation html
-	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>]}
+	 * 	syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash[:tpl]]]]}
 	 *
 	 * @param string[optional] $var The variable.
 	 * @param string[optional] $type The type of navigation, possible values are: page, footer.
 	 * @param int[optional] $parentId The parent wherefore the navigation should be build.
 	 * @param int[optional] $depth The maximum depth that has to be build.
 	 * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
+	 * @param string[optional] $tpl The template that will be used.
 	 * @return string
 	 */
-	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
+	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
 
 		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds);
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, $tpl);
 
 		// return the var
 		if($return != '') return $return;
@@ -497,7 +546,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get a given field for a page-record
-	 * 	syntax: {$var|getpageinfo:404:'title'}
+	 * 	syntax: {$var|getpageinfo:pageId[:field[:language]]}
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param int $pageId The id of the page to build the URL for.
@@ -526,6 +575,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Fetch the path for an include (theme file if available, core file otherwise)
+	 * 	syntax: {$var|getpath:file}
 	 *
 	 * @param string $var The variable.
 	 * @param string $file The base path.
@@ -541,7 +591,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the subnavigation html
-	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:'<excludeIds-splitted-by-dash>']}
+	 * 	syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:excludeIds-splitted-by-dash[:tpl]]]]]}
 	 *
 	 * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
 	 *
@@ -551,9 +601,10 @@ class FrontendTemplateModifiers
 	 * @param int[optional] $startDepth The depth to strat from.
 	 * @param int[optional] $endDepth The maximum depth that has to be build.
 	 * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
+	 * @param string[optional] $tpl The template that will be used.
 	 * @return string
 	 */
-	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
+	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
 	{
 		// build excludeIds
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
@@ -579,7 +630,7 @@ class FrontendTemplateModifiers
 		try
 		{
 			// get HTML
-			$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds);
+			$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds, (string) $tpl);
 		}
 
 		// catch exceptions
@@ -597,7 +648,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the URL for a given pageId & language
-	 * 	syntax: {$var|geturl:404}
+	 * 	syntax: {$var|geturl:pageId[:language]}
 	 *
 	 * @param string $var The string passed from the template.
 	 * @param int $pageId The id of the page to build the URL for.
@@ -617,7 +668,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the URL for a give module & action combination
-	 * 	syntax: {$var|geturlforblock:<module>:<action>:<language>}
+	 * 	syntax: {$var|geturlforblock:module[:action[:language]]}
 	 *
 	 * @param string $var The string passed from the template.
 	 * @param string $module The module wherefor the URL should be build.
@@ -639,6 +690,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Fetch an URL based on an extraId
+	 * 	syntax: {$var|geturlforextraid:extraId[:language]}
 	 *
 	 * @param string $var The string passed from the template.
 	 * @param int $extraId The id of the extra.
@@ -657,6 +709,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Highlights all strings in <code> tags.
+	 * 	syntax: {$var|highlight}
 	 *
 	 * @param string $var The string passed from the template.
 	 * @return string
@@ -684,7 +737,26 @@ class FrontendTemplateModifiers
 	}
 
 	/**
+	 * Parse a widget straight from the template, rather than adding it through pages.
+	 *
+	 * @param string $var The variable.
+	 * @param string $module The module whose module we want to execute.
+	 * @param string $action The action to execute.
+	 * @param string $id The widget id (saved in data-column).
+	 */
+	public static function parseWidget($var, $module, $action, $id = null)
+	{
+		$data = $id !== null ? serialize(array('id' => $id)) : null;
+
+		// create new widget instance and return parsed content
+		$extra = new FrontendBlockWidget($module, $action, $data);
+		$extra->execute();
+		return $extra->getContent();
+	}
+
+	/**
 	 * Get a random var between a min and max
+	 * 	syntax: {$var|rand:min:max}
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param int $min The miminum random number.
@@ -701,8 +773,20 @@ class FrontendTemplateModifiers
 	}
 
 	/**
+	 * Convert a multiline string into a string without newlines so it can be handles by JS
+	 * syntax: {$var|stripnewlines}
+	 *
+	 * @param string $var The variable that should be processed.
+	 * @return string
+	 */
+	public static function stripNewlines($var)
+	{
+		return str_replace(array("\n", "\r"), '', $var);
+	}
+
+	/**
 	 * Formats a timestamp as a string that indicates the time ago
-	 * 	syntax: {$var|timeAgo}
+	 * 	syntax: {$var|timeago}
 	 *
 	 * @param string[optional] $var A UNIX-timestamp that will be formated as a time-ago-string.
 	 * @return string
@@ -720,7 +804,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Truncate a string
-	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
+	 * 	syntax: {$var|truncate:max-length[:append-hellip]}
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param int $length The maximum length of the truncated string.
@@ -757,7 +841,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the value for a user-setting
-	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
+	 * 	syntax {$var|usersetting:setting[:userId]}
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param string $setting The name of the setting you want.

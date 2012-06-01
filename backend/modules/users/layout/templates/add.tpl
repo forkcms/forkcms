@@ -29,12 +29,12 @@
 						</p>
 						{$txtPasswordError}
 					</div>
-					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">{$lblNone|ucfirst}</p>
 								<p class="strength weak">{$lblWeak|ucfirst}</p>
-								<p class="strength ok">{$lblOK|ucfirst}</p>
+								<p class="strength average">{$lblAverage|ucfirst}</p>
 								<p class="strength strong">{$lblStrong|ucfirst}</p>
 							</td>
 							<td>
@@ -98,6 +98,21 @@
 					</p>
 				</div>
 			</div>
+			<div class="subtleBox">
+				<div class="heading">
+					<h3>{$lblCSV|ucfirst}</h3>
+				</div>
+				<div class="options horizontal labelWidthLong">
+					<p>
+						<label for="csvSplitCharacter">{$lblSplitCharacter|ucfirst}</label>
+						{$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
+					</p>
+					<p>
+						<label for="csvLineEnding">{$lblLineEnding|ucfirst}</label>
+						{$ddmCsvLineEnding} {$ddmCsvLineEndingError}
+					</p>
+				</div>
+			</div>
 		</div>
 
 		<div id="tabPermissions">
@@ -108,7 +123,7 @@
 				<div class="options last">
 					<ul class="inputList">
 						<li>{$chkActive} <label for="active">{$msgHelpActive}</label> {$chkActiveError}</li>
-						<li>{$chkApiAccess} <label for="api_access">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
+						<li>{$chkApiAccess} <label for="apiAccess">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
 					</ul>
 					<p>{$lblGroups|ucfirst}</p>
 					<ul id="groupList" class="inputList">

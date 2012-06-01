@@ -26,4 +26,8 @@
 		<event application="backend" name="after_add_landing_page"><![CDATA[Triggered when a landing page is added.]]></event>
 		<event application="backend" name="after_delete_landing_page"><![CDATA[Triggered when a landing page is deleted.]]></event>
 	</events>
+	<cronjobs>
+		<cronjob minute="33" hour="0" day-of-month="*" month="*" day-of-week="*" action="get_data"><![CDATA[Fetches the requested data from the Google Analytics API.]]></cronjob>
+		<cronjob minute="34" hour="0" day-of-month="*" month="*" day-of-week="*" action="get_traffic_sources"><![CDATA[Fetches the traffic sources from the Google Analytics API.]]></cronjob>
+	</cronjobs>
 </module>

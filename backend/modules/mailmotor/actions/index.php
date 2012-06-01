@@ -93,7 +93,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		if(!empty($this->campaign)) $this->dgQueuedMailings->setColumnHidden('campaign_name');
 
 		// set headers values
-		$headers['sent'] = ucfirst(BL::lbl('WillBeSentOn'));
+		$headers['sent'] = SpoonFilter::ucfirst(BL::lbl('WillBeSentOn'));
 
 		// set headers
 		$this->dgQueuedMailings->setHeaderLabels($headers);
@@ -114,10 +114,23 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->dgQueuedMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
 		$this->dgQueuedMailings->setColumnFunction('date', array('Y-m-d @ H:i', '[send_on]'), 'sent', true);
 
-		// add delete column
-		$this->dgQueuedMailings->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('copy') . '&amp;id=[id]', BL::lbl('Copy'), array('class' => 'button icon iconMailAdd linkButton'));
-		$this->dgQueuedMailings->addColumnAction('edit_mailing_campaign', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]', BL::lbl('EditMailingCampaign'), array('class' => 'button icon iconFolderEdit linkButton'));
-		$this->dgQueuedMailings->addColumnAction('statistics', null, BL::lbl('Statistics'), BackendModel::createURLForAction('statistics') . '&amp;id=[id]', BL::lbl('Statistics'), array('class' => 'button icon iconStats linkButton'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('copy'))
+		{
+			$this->dgQueuedMailings->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('copy') . '&amp;id=[id]', BL::lbl('Copy'), array('class' => 'button icon iconMailAdd linkButton'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_mailing_campaign'))
+		{
+			$this->dgQueuedMailings->addColumnAction('edit_mailing_campaign', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]', BL::lbl('EditMailingCampaign'), array('class' => 'button icon iconFolderEdit linkButton'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('statistics'))
+		{
+			$this->dgQueuedMailings->addColumnAction('statistics', null, BL::lbl('Statistics'), BackendModel::createURLForAction('statistics') . '&amp;id=[id]', BL::lbl('Statistics'), array('class' => 'button icon iconStats linkButton'));
+		}
 
 		// add styles
 		$this->dgQueuedMailings->setColumnAttributes('name', array('class' => 'title'));
@@ -181,10 +194,23 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->dgSentMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
 		$this->dgSentMailings->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
 
-		// add delete column
-		$this->dgSentMailings->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('copy') . '&amp;id=[id]', BL::lbl('Copy'), array('class' => 'button icon iconMailAdd linkButton'));
-		$this->dgSentMailings->addColumnAction('edit_mailing_campaign', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]', BL::lbl('EditMailingCampaign'), array('class' => 'button icon iconFolderEdit linkButton'));
-		$this->dgSentMailings->addColumnAction('statistics', null, BL::lbl('Statistics'), BackendModel::createURLForAction('statistics') . '&amp;id=[id]', BL::lbl('Statistics'), array('class' => 'button icon iconStats linkButton'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('copy'))
+		{
+			$this->dgSentMailings->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('copy') . '&amp;id=[id]', BL::lbl('Copy'), array('class' => 'button icon iconMailAdd linkButton'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_mailing_campaign'))
+		{
+			$this->dgSentMailings->addColumnAction('edit_mailing_campaign', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]', BL::lbl('EditMailingCampaign'), array('class' => 'button icon iconFolderEdit linkButton'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('statistics'))
+		{
+			$this->dgSentMailings->addColumnAction('statistics', null, BL::lbl('Statistics'), BackendModel::createURLForAction('statistics') . '&amp;id=[id]', BL::lbl('Statistics'), array('class' => 'button icon iconStats linkButton'));
+		}
 
 		// add styles
 		$this->dgUnsentMailings->setColumnAttributes('name', array('class' => 'title'));
@@ -221,8 +247,15 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->dgUnsentMailings->setSortingColumns(array('name', 'campaign_name', 'created_on', 'language'), 'created_on');
 		$this->dgUnsentMailings->setSortParameter('desc');
 
-		// set colum URLs
-		$this->dgUnsentMailings->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set colum URLs
+			$this->dgUnsentMailings->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+
+			// add edit column
+			$this->dgUnsentMailings->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 
 		// add the multicheckbox column
 		$this->dgUnsentMailings->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
@@ -236,9 +269,6 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->dgUnsentMailings->setColumnFunction(array('BackendMailmotorIndex', 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
 		$this->dgUnsentMailings->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
-		// add delete column
-		$this->dgUnsentMailings->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
-
 		// add styles
 		$this->dgUnsentMailings->setColumnAttributes('name', array('class' => 'title'));
 
@@ -249,8 +279,10 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// a campaign was found, so parse the campaign record
 		if(!empty($this->campaign)) $this->tpl->assign($this->campaign);
 
@@ -273,6 +305,6 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 */
 	public static function setCampaignLink($id, $name)
 	{
-		return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : ucfirst(BL::lbl('NoCampaign'));
+		return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
 	}
 }

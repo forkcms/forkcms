@@ -65,7 +65,7 @@ class FormBuilderInstaller extends ModuleInstaller
 			$form = array();
 			$form['language'] = $language;
 			$form['user_id'] = $this->getDefaultUserID();
-			$form['name'] = ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend'));
+			$form['name'] = SpoonFilter::ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend'));
 			$form['method'] = 'database_email';
 			$form['email'] = serialize(array($this->getVariable('email')));
 			$form['success_message'] = $this->getLocale('ContactMessageSent', 'core', $language, 'msg', 'frontend');
@@ -77,13 +77,13 @@ class FormBuilderInstaller extends ModuleInstaller
 			// create submit button
 			$field['form_id'] = $formId;
 			$field['type'] = 'submit';
-			$field['settings'] = serialize(array('values' => ucfirst($this->getLocale('Send', 'core', $language, 'lbl', 'frontend'))));
+			$field['settings'] = serialize(array('values' => SpoonFilter::ucfirst($this->getLocale('Send', 'core', $language, 'lbl', 'frontend'))));
 			$this->getDB()->insert('forms_fields', $field);
 
 			// create name field
 			$field['form_id'] = $formId;
 			$field['type'] = 'textbox';
-			$field['settings'] = serialize(array('label' => ucfirst($this->getLocale('Name', 'core', $language, 'lbl', 'frontend'))));
+			$field['settings'] = serialize(array('label' => SpoonFilter::ucfirst($this->getLocale('Name', 'core', $language, 'lbl', 'frontend'))));
 			$nameId = $this->getDB()->insert('forms_fields', $field);
 
 			// name validation
@@ -95,7 +95,7 @@ class FormBuilderInstaller extends ModuleInstaller
 			// create email field
 			$field['form_id'] = $formId;
 			$field['type'] = 'textbox';
-			$field['settings'] = serialize(array('label' => ucfirst($this->getLocale('Email', 'core', $language, 'lbl', 'frontend'))));
+			$field['settings'] = serialize(array('label' => SpoonFilter::ucfirst($this->getLocale('Email', 'core', $language, 'lbl', 'frontend'))));
 			$emailId = $this->getDB()->insert('forms_fields', $field);
 
 			// email validation
@@ -107,7 +107,7 @@ class FormBuilderInstaller extends ModuleInstaller
 			// create message field
 			$field['form_id'] = $formId;
 			$field['type'] = 'textarea';
-			$field['settings'] = serialize(array('label' => ucfirst($this->getLocale('Message', 'core', $language, 'lbl', 'frontend'))));
+			$field['settings'] = serialize(array('label' => SpoonFilter::ucfirst($this->getLocale('Message', 'core', $language, 'lbl', 'frontend'))));
 			$messageId = $this->getDB()->insert('forms_fields', $field);
 
 			// name validation
@@ -121,7 +121,7 @@ class FormBuilderInstaller extends ModuleInstaller
 
 			// insert contact page
 			$this->insertPage(
-				array('title' => ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend')),
+				array('title' => SpoonFilter::ucfirst($this->getLocale('Contact', 'core', $language, 'lbl', 'frontend')),
 				'parent_id' => 1,
 				'language' => $language),
 				null,

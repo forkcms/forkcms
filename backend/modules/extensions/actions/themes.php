@@ -81,13 +81,15 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 		foreach($themes as &$record)
 		{
 			// reformat custom variables
-			$record['variables'] = array('thumbnail' => $record['thumbnail']);
+			$record['variables']['thumbnail'] = $record['thumbnail'];
+			$record['variables']['installed'] = $record['installed'];
+			$record['variables']['installable'] = $record['installable'];
 
 			// set selected template
 			if($record['value'] == $selected) $record['variables']['selected'] = true;
 
-			// unset the language field
-			unset($record['thumbnail']);
+			// unset the variable field
+			unset($record['thumbnail'], $record['installed'], $record['installable']);
 		}
 
 		// templates
@@ -97,8 +99,10 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 	/**
 	 * Parse the form.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->frm->parse($this->tpl);
 
 		// parse not yet installed themes
@@ -169,15 +173,14 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
 						// loop new templates
 						foreach($newTemplates as $newTemplateId => $newTemplate)
 						{
-							// check if we have a matching template
-							if($oldTemplate['path'] == $newTemplate['path'])
-							{
-								// switch template
-								BackendPagesModel::updatePagesTemplates($oldTemplateId, $newTemplateId);
+							// if the templates don't match we can skip this one
+							if($oldTemplate['path'] != $newTemplate['path']) continue;
 
-								// break loop
-								continue 2;
-							}
+							// switch template
+							BackendPagesModel::updatePagesTemplates($oldTemplateId, $newTemplateId);
+
+							// break loop
+							continue 2;
 						}
 
 						// getting here meant we found no matching template for the new theme; pick first theme's template as default

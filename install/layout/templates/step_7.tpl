@@ -3,7 +3,7 @@
 <h2>Installation complete</h2>
 <p>Fork CMS is installed! You can now log in using:</p>
 
-<table border="0" cellspacing="0" cellpadding="0" class="infoGrid">
+<table class="infoGrid">
 	<tr>
 		<th>Your e-mail</th>
 		<td>{$email}</td>
@@ -22,5 +22,23 @@
 	<a class="button" href="../">View your new website</a>
 	<a class="button" href="../private">Log in to Fork CMS</a>
 </div>
+
+{option:warnings}
+	<div class="generalMessage infoMessage">
+		<p><strong>There are some warnings for following module(s):</strong></p>
+		{iteration:warnings}
+			<ul>
+				<li>
+					<strong>{$warnings.module}</strong>
+					<ul>
+						{iteration:warnings.warnings}
+							<li>- {$warnings.warnings.message}</li>
+						{/iteration:warnings.warnings}
+					</ul>
+				</li>
+			</ul>
+		{/iteration:warnings}
+	</div>
+{/option:warnings}
 
 {include:{$PATH_WWW}/install/layout/templates/foot.tpl}

@@ -7,7 +7,7 @@
 
 {form:add}
 	<div class="dataFilter">
-		<table cellspacing="0" cellpadding="0" border="0">
+		<table>
 			<tbody>
 				<tr>
 					<td>
@@ -41,11 +41,13 @@
 </div>
 {/option:dataGrid}
 
+{option:showMailmotorStatistics}
 <div class="buttonHolderLeft">
 	<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="button" title="{$lblAddGroup|ucfirst}">
 		<span>{$msgBackToStatistics|sprintf:{$mailing.name}}</span>
 	</a>
 </div>
+{/option:showMailmotorStatistics}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

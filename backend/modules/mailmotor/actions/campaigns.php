@@ -36,8 +36,8 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		$this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_CAMPAIGNS);
 
 		// set headers values
-		$headers['name'] = ucfirst(BL::lbl('Title'));
-		$headers['created_on'] = ucfirst(BL::lbl('Created'));
+		$headers['name'] = SpoonFilter::ucfirst(BL::lbl('Title'));
+		$headers['created_on'] = SpoonFilter::ucfirst(BL::lbl('Created'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);
@@ -45,9 +45,6 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('name', 'created_on'), 'name');
 		$this->dataGrid->setSortParameter('desc');
-
-		// set column URLs
-		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
 
 		// add the multicheckbox column
 		$this->dataGrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
@@ -73,13 +70,22 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 
 		// set paging limit
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index'))
+		{
+			// set column URLs
+			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
+		}
 	}
 
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 

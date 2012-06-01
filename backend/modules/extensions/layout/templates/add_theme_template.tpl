@@ -10,6 +10,7 @@
 		<div class="options">
 			<p>
 				<label for="file">{$msgPathToTemplate|ucfirst}</label>
+				<label for="theme" class="visuallyHidden">{$lblTheme|ucfirst}</label>
 				{$ddmTheme}<small><code>/core/layout/templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
 				<span class="helpTxt">{$msgHelpTemplateLocation}</span>
 			</p>
@@ -73,7 +74,9 @@
 
 	<div class="box horizontal">
 		<div class="heading">
-			<h3>{$lblLayout|ucfirst}</h3>
+			<h3>
+				<label for="format">{$lblLayout|ucfirst}</label>
+			</h3>
 		</div>
 
 		<div id="templateLayout" class="options clearfix">

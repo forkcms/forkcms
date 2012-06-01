@@ -12,6 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Frederik Heyninck <frederik@figure8.be>
  */
 class FrontendJavascript
 {
@@ -52,6 +53,9 @@ class FrontendJavascript
 
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new FrontendTemplate();
+
+		// enable addslashes on each locale
+		$tpl->setAddSlashes(true);
 
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
@@ -191,6 +195,17 @@ class FrontendJavascript
 	 */
 	private function setModule($value)
 	{
+		$modules = (array) FrontendModel::getModules();
+		
+		if(!in_array((string) $value, $modules))
+		{
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('Invalid module.');
+
+			// when debug is of show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
+		}
+		
 		$this->module = (string) $value;
 	}
 }

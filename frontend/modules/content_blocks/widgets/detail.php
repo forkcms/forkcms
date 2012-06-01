@@ -6,6 +6,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 {
@@ -17,25 +18,44 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 	private $item;
 
 	/**
+	 * Assign the template path
+	 *
+	 * @return string
+	 */
+	private function assignTemplate()
+	{
+		$template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/default.tpl');
+
+		// is the content block visible?
+		if(!empty($this->item))
+		{
+			// check if the given template exists
+			try
+			{
+				$template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/' . $this->item['template']);
+			}
+
+			// template does not exist; use the default template
+			catch(FrontendException $e)
+			{
+				// do nothing
+			}
+		}
+
+		// set a default text so we don't see the template data
+		else $this->item['text'] = '';
+
+		return $template;
+	}
+
+	/**
 	 * Execute the extra
 	 */
 	public function execute()
 	{
 		parent::execute();
 		$this->loadData();
-
-		// check if the given template exists
-		try
-		{
-			$template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/' . $this->item['template']);
-		}
-
-		// template does not exist; assume default.tpl
-		catch(FrontendException $e)
-		{
-			$template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/default.tpl');
-		}
-
+		$template = $this->assignTemplate();
 		$this->loadTemplate($template);
 		$this->parse();
 	}

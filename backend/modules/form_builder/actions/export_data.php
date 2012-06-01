@@ -82,28 +82,6 @@ class BackendFormBuilderExportData extends BackendBaseAction
 	}
 
 	/**
-	 * Create the CSV.
-	 */
-	private function createCsv()
-	{
-		// create csv
-		$csv = SpoonFileCSV::arrayToString($this->rows, $this->columnHeaders);
-
-		// set headers for download
-		$headers[] = 'Content-type: application/csv; charset=utf-8';
-		$headers[] = 'Content-Disposition: attachment; filename="' . date('Ymd_His') . '.csv"';
-		$headers[] = 'Content-Length: ' . strlen($csv);
-		$headers[] = 'Pragma: no-cache';
-
-		// overwrite the headers
-		SpoonHTTP::setHeaders($headers);
-
-		// output
-		echo $csv;
-		exit;
-	}
-
-	/**
 	 * Execute the action.
 	 */
 	public function execute()
@@ -116,7 +94,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 			parent::execute();
 			$this->setFilter();
 			$this->setItems();
-			$this->createCsv();
+			BackendCSV::outputCSV(date('Ymd_His') . '.csv', $this->rows, $this->columnHeaders);
 		}
 
 		// no item found, redirect to index, because somebody is fucking with our url
@@ -173,8 +151,8 @@ class BackendFormBuilderExportData extends BackendBaseAction
 	private function setItems()
 	{
 		// init header labels
-		$lblSessionId = ucfirst(BL::lbl('SessionId'));
-		$lblSentOn = ucfirst(BL::lbl('SentOn'));
+		$lblSessionId = SpoonFilter::ucfirst(BL::lbl('SessionId'));
+		$lblSentOn = SpoonFilter::ucfirst(BL::lbl('SentOn'));
 		$this->columnHeaders = array($lblSessionId, $lblSentOn);
 
 		// fetch query and parameters

@@ -123,7 +123,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	}
 
 	/**
-	 * Get all actions
+	 * Get the actions
 	 */
 	private function getActions()
 	{
@@ -158,15 +158,23 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 						// create reflection class
 						$reflection = new ReflectionClass('Backend' . SpoonFilter::toCamelCase($module) . SpoonFilter::toCamelCase($actionName));
 
-						// get the offset
-						$offset = strpos($reflection->getDocComment(), '*', 7);
+						// get the comment
+						$phpDoc = trim($reflection->getDocComment());
 
-						// get the first sentence
-						$description = substr($reflection->getDocComment(), 0, $offset);
+						if($phpDoc != '')
+						{
+							// get the offset
+							$offset = strpos($reflection->getDocComment(), '*', 7);
 
-						// replacements
-						$description = str_replace('*', '', $description);
-						$description = trim(str_replace('/', '', $description));
+							// get the first sentence
+							$description = substr($reflection->getDocComment(), 0, $offset);
+
+							// replacements
+							$description = str_replace('*', '', $description);
+							$description = trim(str_replace('/', '', $description));
+						}
+
+						else $description = '';
 
 						// assign actions to array
 						$this->actions[$module][] = array('label' => SpoonFilter::toCamelCase($actionName), 'value' => $actionName, 'description' => $description);
@@ -184,15 +192,23 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 						// create reflection class
 						$reflection = new ReflectionClass('Backend' . SpoonFilter::toCamelCase($module) . 'Ajax' . SpoonFilter::toCamelCase($actionName));
 
-						// get the offset
-						$offset = strpos($reflection->getDocComment(), '*', 7);
+						// get the comment
+						$phpDoc = trim($reflection->getDocComment());
 
-						// get the first sentence
-						$description = substr($reflection->getDocComment(), 0, $offset);
+						if($phpDoc != '')
+						{
+							// get the offset
+							$offset = strpos($reflection->getDocComment(), '*', 7);
 
-						// replacements
-						$description = str_replace('*', '', $description);
-						$description = trim(str_replace('/', '', $description));
+							// get the first sentence
+							$description = substr($reflection->getDocComment(), 0, $offset);
+
+							// replacements
+							$description = str_replace('*', '', $description);
+							$description = trim(str_replace('/', '', $description));
+						}
+
+						else $description = '';
 
 						// assign actions to array
 						$this->actions[$module][] = array('label' => SpoonFilter::toCamelCase($actionName), 'value' => $actionName, 'description' => $description);
@@ -227,7 +243,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	}
 
 	/**
-	 * Get all widgets
+	 * Get the widgets
 	 */
 	private function getWidgets()
 	{
@@ -310,21 +326,25 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 	{
 		$this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
 
-		// add columns
-		$this->dataGridUsers->addColumn('nickname', ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->dataGridUsers->addColumn('surname', ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-		$this->dataGridUsers->addColumn('name', ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit', 'users'))
+		{
+			// add columns
+			$this->dataGridUsers->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+			$this->dataGridUsers->addColumn('surname', SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+			$this->dataGridUsers->addColumn('name', SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
-		// add column URL
-		$this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+			// add column URL
+			$this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
 
-		// set columns sequence
-		$this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
+			// set columns sequence
+			$this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
 
-		// show users's name, surname and nickname
-		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'surname'), 'surname', false);
-		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'name'), 'name', false);
-		$this->dataGridUsers->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+			// show users's name, surname and nickname
+			$this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'surname'), 'surname', false);
+			$this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'name'), 'name', false);
+			$this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
+		}
 	}
 
 	/**
@@ -359,7 +379,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 
 					// add widget checkboxes
 					$widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'], isset($selectedWidgets[$j]) ? $selectedWidgets[$j] : null)->parse() . '</span>';
-					$widgetBoxes[$j]['widget'] = $widget['label'];
+					$widgetBoxes[$j]['widget'] = '<label for="widgets' . SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
 					$widgetBoxes[$j]['description'] = $widget['description'];
 				}
 			}
@@ -389,8 +409,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 					if(!in_array($action['group'], $addedBundles))
 					{
 						// assign bundled action boxes
-						$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($action['group']), in_array($action['value'], $selectedActions))->parse() . '</span>';
-						$actionBoxes[$key]['actions'][$i]['action'] = ucfirst($action['group']);
+						$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($action['group']), in_array($action['value'], $selectedActions))->parse();
+						$actionBoxes[$key]['actions'][$i]['action'] = SpoonFilter::ucfirst($action['group']);
 						$actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
 						// add the group to the added bundles
@@ -402,8 +422,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 				else
 				{
 					// assign action boxes
-					$actionBoxes[$key]['actions'][$i]['checkbox'] = '<span>' . $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'], in_array($action['value'], $selectedActions))->parse() . '</span>';
-					$actionBoxes[$key]['actions'][$i]['action'] = $action['label'];
+					$actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'], in_array($action['value'], $selectedActions))->parse();
+					$actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
 					$actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
 				}
 			}
@@ -413,7 +433,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			{
 				// create datagrid
 				$widgetGrid = new BackendDataGridArray($widgetBoxes);
-				$widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>'));
+				$widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /></span>'));
 
 				// get content
 				$widgets = $widgetGrid->getContent();
@@ -428,6 +448,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			// get content of datagrids
 			$permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
 			$permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
+			$permissionBoxes[$key]['id'] = SpoonFilter::toCamelCase($module['label']);
 
 		}
 
@@ -449,6 +470,9 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->tpl->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
 		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('groupName', $this->record['name']);
+
+		// only allow deletion of empty groups
+		$this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('delete'));
 	}
 
 	/**
@@ -735,10 +759,10 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 					foreach($this->frm->getFields() as $field)
 					{
 						// field exists?
-						if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . ucfirst($key))
+						if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key))
 						{
 							// add to bundled actions
-							$bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . ucfirst($key));
+							$bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key));
 						}
 					}
 				}

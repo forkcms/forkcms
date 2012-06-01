@@ -19,7 +19,7 @@
 textarea {
 	font-size: 12px;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
-	background: #FFF url(/backend/core/layout/images/ds.png) repeat-x;
+	background: #FFF url(../../images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
 	-webkit-transition: background-color 0.28s linear;
@@ -34,7 +34,7 @@ textarea {
 }
 
 	textarea.inputEditor {
-		/* Reset border-radius for tinyMCE textareas */
+		/* Reset border-radius for editor textareas */
 		-moz-border-radius: 0;
 		-webkit-border-radius: 0;
 		border-radius: 0;
@@ -182,6 +182,12 @@ input[type="submit"] {
 		*top: -1px; /* IE7 */
 	}
 
+	/* Don't use position absolute when these inputs are used in a datagridHolder inside an inputList */
+	.forkForms .inputList .datagridHolder .inputRadio,
+	.forkForms .inputList .datagridHolder .inputCheckbox {
+		position: static;
+	}
+
 	#urlManager ul {
 		margin: 0 0 8px;
 	}
@@ -221,6 +227,17 @@ input[type="submit"] {
 	font-weight: 700;
 	color: #4A4A4A;
 }
+
+	.forkForms .dataGrid td label {
+		font-weight: normal;
+		width: auto;
+		line-height: inherit;
+		display: inline;
+		float: none;
+		padding-right: inherit;
+		font-size: inherit;
+		color: inherit;
+	}
 
 .forkForms p label {
 	display: block;
@@ -280,7 +297,7 @@ input[type="submit"] {
 	padding-left: 155px;
 }
 
-.forkForms abbr { cursor: help; }
+.forkForms abbr { cursor: help; border: none; }
 
 .forkForms .fakeP:after,
 .forkForms p:after,
@@ -362,3 +379,5 @@ input[type="submit"] {
 .multipleSelectWrapper ul li span { float: left; display: block; padding-right: 18px; line-height: 25px; }
 
 .placeholder { color: #AAA !important; }
+
+.forkForms .imageHolder { float: left; margin-right: 12px; padding: 0; }

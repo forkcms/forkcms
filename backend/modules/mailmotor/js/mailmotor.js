@@ -1,7 +1,7 @@
 /**
  * Interaction for the mailmotor
  *
- * @author	Matthias Mullie <matthias@netlash.com>
+ * @author	Dave Lens <dave@netlash.com>
  */
 jsBackend.mailmotor =
 {
@@ -49,8 +49,7 @@ jsBackend.mailmotor.charts =
 					symbolPadding: 12,
 					symbolWidth: 10,
 					itemStyle: { cursor: 'pointer', color: '#000', lineHeight: '18px' },
-					itemHoverStyle: { color: '#666' },
-					style: { right: '0', top: '0', bottom: 'auto', left: 'auto' }
+					itemHoverStyle: { color: '#666' }
 				}
 			});
 		}
@@ -102,11 +101,11 @@ jsBackend.mailmotor.chartPieChart =
 					allowPointSelect: true,
 					dataLabels:
 					{
-						enabled: false,
+						enabled: false
 					}
 				}
 			},
-			legend: { style: { right: '10px' } },
+			legend: { enabled: false },
 			series: [ { type: 'pie', data: pieChartData } ]
 		});
 	}
@@ -156,7 +155,7 @@ jsBackend.mailmotor.linkAccount =
 		});
 
 		// link account button clicked
-		$confirm.on('click', function(e)
+		$(document).on('click', '#linkAccount', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -293,7 +292,7 @@ jsBackend.mailmotor.resizing =
 				{
 					left: 0,
 					position:'absolute',
-					top: iframe.position().top
+					top: $iframe.position().top
 				});
 
 				// height should be the height of the iframe
@@ -314,9 +313,9 @@ jsBackend.mailmotor.step3 =
 	init: function()
 	{
 		// cache objects
-		$iframe = $('#contentBox');
-		$iframeBox = $('#iframeBox');
-		$form = $('#step3');
+		var $iframe = $('#contentBox');
+		var $iframeBox = $('#iframeBox');
+		var $form = $('#step3');
 
 		// only continue if the iframe is ready
 		$iframe.load(function()
@@ -327,7 +326,7 @@ jsBackend.mailmotor.step3 =
 			// give the iframebox the height of the body contents
 			$iframeBox.height(body.height());
 
-			$form.submit(function(e)
+			$form.on('submit', function(e)
 			{
 				// prevent the form from submitting
 				e.preventDefault();
@@ -335,34 +334,7 @@ jsBackend.mailmotor.step3 =
 				// set variables
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
-				var textareaValue = iframe[0].contentWindow.getTinyMCEContent();
-
-				// remove tiny fields added to the body by naughty tinyMCE
-				body.find('.mceListBoxMenu').remove();
-				body.find('.mceEditor').remove();
-				body.find('.clickToEdit').remove();
-
-				/*
-					This may seem strange, but here's why I did it like this:
-					Some templates caused tinymce().getContent() to return the entire TinyMCE codes.
-					If we add the textarea's value after the textarea, and then remove it, we don't
-					run into this problem.
-				*/
-				var textarea = body.find('#contentHtml');
-
-				/*
-					By escaping the textareaValue below, we ensure that entities will remain intact.
-					in mailmotor/detail.php on the frontend, we do a rawurlencode of the contents,
-					so CampaignMonitor receives the HTML contents with parsed entities.
-				*/
-				textarea.after(escape(textareaValue));
-				textarea.remove();
-
-				// set iframe variables
-				var bodyHTML = body.html();
-
-				// we unescape the entire HTML so the user won't panic whilst the ajax is loading
-				body.html(unescape(body.html()));
+				var textareaValue = $iframe[0].contentWindow.getEditorContent();
 
 				// make the call
 				$.ajax(
@@ -373,8 +345,7 @@ jsBackend.mailmotor.step3 =
 						mailing_id: variables.mailingId,
 						subject: subject,
 						content_plain: plainText,
-						content_html: textareaValue,
-						full_content_html: bodyHTML
+						content_html: textareaValue
 					},
 					success: function(data, textStatus)
 					{

@@ -140,7 +140,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * The default constructor
 	 *
-	 * @return	void
 	 * @param	string $title			The title off the feed.
 	 * @param	string $id				The id of the feed (URI).
 	 * @param	array[optional] $items	An array with SpoonFeedRSSItems.
@@ -159,7 +158,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Add an author for the feed.
 	 *
-	 * @return	void
 	 * @param	array $author	The author values (name, email, uri).
 	 */
 	public function addAuthor($author)
@@ -171,7 +169,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Add a category for the feed.
 	 *
-	 * @return	void
 	 * @param	array $category		The category with all the properties.
 	 */
 	public function addCategory($category)
@@ -183,7 +180,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Add a contributor for the feed.
 	 *
-	 * @return	void
 	 * @param	string $name	The name of the contributor.
 	 * @param	string $email	The email of the contributor.
 	 * @param	string $uri		The uri of the contributor.
@@ -192,18 +188,17 @@ class SpoonFeedAtomRSS
 	{
 		// create array
 		$contributor['name'] = (string) $name;
-		if($scheme != null) $contributor['email'] = (string) $email;
-		if($label != null) $contributor['uri'] = (string) $uri;
+		if($email != null) $contributor['email'] = (string) $email;
+		if($uri != null) $contributor['uri'] = (string) $uri;
 
 		// add property
-		$this->contributors[] = $category;
+		$this->contributors[] = $contributor;
 	}
 
 
 	/**
 	 * Add an item to the feed.
 	 *
-	 * @return	void
 	 * @param	SpoonFeedAtomRSSItem $item		A SpoonFeedAtomRSSItem that represents a single article in the feed.
 	 */
 	public function addItem(SpoonFeedAtomRSSItem $item)
@@ -215,7 +210,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Add a link for the feed.
 	 *
-	 * @return	void
 	 * @param	array $link		The link with all the properties.
 	 */
 	public function addLink($link)
@@ -698,7 +692,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the charset.
 	 *
-	 * @return	void
 	 * @param	string[optional] $charset	The charset that should be used. Possible charsets can be found in spoon.php.
 	 */
 	public function setCharset($charset = 'utf-8')
@@ -710,7 +703,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the generator for the feed.
 	 *
-	 * @return	void
 	 * @param	string[optional] $generator		The generator of the feed, if not given "Spoon/<SpoonVersion>" will be used.
 	 */
 	public function setGenerator($generator = null)
@@ -722,7 +714,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the icon for the feed.
 	 *
-	 * @return	void
 	 * @param	string $icon	The url for the icon .
 	 */
 	public function setIcon($icon)
@@ -734,7 +725,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the id (URI).
 	 *
-	 * @return	void
 	 * @param	string $id	The id (URI) of the item (example: http://example.com/blog/1234).
 	 */
 	public function setId($id)
@@ -753,7 +743,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the icon for the feed.
 	 *
-	 * @return	void
 	 * @param	string $logo	The url for the logo .
 	 */
 	public function setLogo($logo)
@@ -765,7 +754,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the rights for the feed.
 	 *
-	 * @return	void
 	 * @param	string $rights	Conveys information about rights, e.g. copyrights, held in and over the feed.
 	 */
 	public function setRights($rights)
@@ -777,7 +765,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the subtitle for the feed.
 	 *
-	 * @return	void
 	 * @param	string $subtitle	The subtitle of the feed.
 	 */
 	public function setSubtitle($subtitle)
@@ -789,7 +776,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the title for the feed.
 	 *
-	 * @return	void
 	 * @param	string $title	The title of the feed.
 	 */
 	public function setTitle($title)
@@ -801,7 +787,6 @@ class SpoonFeedAtomRSS
 	/**
 	 * Set the updated date.
 	 *
-	 * @return	void
 	 * @param	int $updatedDate	The updated date as a UNIX-timestamp.
 	 */
 	public function setUpdatedDate($updatedDate)

@@ -89,7 +89,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 						if(isset($row['url'], $row['name'], $row['module']))
 						{
 							// add
-							$items[] = array('module' => ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
+							$items[] = array('module' => SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
 						}
 					}
 				}
@@ -100,9 +100,9 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		$this->dgUsage = new BackendDataGridArray($items);
 		$this->dgUsage->setPaging(false);
 		$this->dgUsage->setColumnsHidden(array('url'));
-		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::lbl('Title')), 'url' => ''));
-		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::lbl('Edit')));
-		$this->dgUsage->addColumn('edit', null, ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
+		$this->dgUsage->setHeaderLabels(array('name' => SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => ''));
+		$this->dgUsage->setColumnURL('name', '[url]', SpoonFilter::ucfirst(BL::lbl('Edit')));
+		$this->dgUsage->addColumn('edit', null, SpoonFilter::ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
 	}
 
 	/**

@@ -64,7 +64,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
 		$this->frm->addText('name', $this->record['name']);
-		$this->frm->addText('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
+		$this->frm->addTextarea('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
 		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $this->record['language']);
 	}
 
@@ -75,8 +75,11 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	{
 		parent::parse();
 
+		// prevent XSS
+		$filter = SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
+
 		// parse filter
-		$this->tpl->assign($this->filter);
+		$this->tpl->assign($filter);
 		$this->tpl->assign('filterQuery', $this->filterQuery);
 
 		// assign id, name

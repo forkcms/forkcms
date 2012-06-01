@@ -68,7 +68,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setPagingLimit(30);
 
 		// header labels
-		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
+		$this->dgPublished->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
@@ -82,10 +82,6 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
 		$this->dgPublished->setSortParameter('desc');
 
-		// add column
-		$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
-
 		// hide columns
 		$this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
 
@@ -95,6 +91,23 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeletePublished'));
 		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamPublished'));
 		$this->dgPublished->setMassAction($ddmMassAction);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_comment'))
+		{
+			$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
+		{
+			$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
+		}
+
+
+		/*
+		 * DataGrid for the comments that are awaiting moderation.
+		 */
 
 		// datagrid for the comments that are awaiting moderation
 		$this->dgModeration = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('moderation', BL::getWorkingLanguage(), 'active'));
@@ -106,7 +119,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
-		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
+		$this->dgModeration->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
@@ -120,10 +133,6 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
 		$this->dgModeration->setSortParameter('desc');
 
-		// add column
-		$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
-
 		// hide columns
 		$this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');
 
@@ -133,6 +142,19 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
 		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamModeration'));
 		$this->dgModeration->setMassAction($ddmMassAction);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_comment'))
+		{
+			$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
+		{
+			$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
+		}
+
 
 		/*
 		 * DataGrid for the comments that are marked as spam
@@ -146,7 +168,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setPagingLimit(30);
 
 		// header labels
-		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
+		$this->dgSpam->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgSpam->setMassActionCheckboxes('checkbox', '[id]');
@@ -160,9 +182,6 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
 		$this->dgSpam->setSortParameter('desc');
 
-		// add column
-		$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
-
 		// hide columns
 		$this->dgSpam->setColumnsHidden('post_id', 'post_title', 'post_url');
 
@@ -171,13 +190,21 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$ddmMassAction->setAttribute('id', 'actionSpam');
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteSpam'));
 		$this->dgSpam->setMassAction($ddmMassAction);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
+		{
+			$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
+		}
 	}
 
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// published datagrid and num results
 		$this->tpl->assign('dgPublished', ($this->dgPublished->getNumResults() != 0) ? $this->dgPublished->getContent() : false);
 		$this->tpl->assign('numPublished', $this->dgPublished->getNumResults());

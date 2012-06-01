@@ -4,9 +4,9 @@
 <div class="pageTitle">
 	<h2>{$lblEmailAddresses|ucfirst}{option:group} {$lblFor} {$lblGroup} &ldquo;{$group.name}&rdquo;{/option:group}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add_address'}{option:group}&amp;group_id={$group.id}{/option:group}" class="button icon iconMailAdd"><span>{$lblAddEmail|ucfirst}</span></a>
-		<a href="{$var|geturl:'import_addresses'}{option:group}&amp;group_id={$group.id}{/option:group}" class="button icon iconFolderAdd"><span>{$lblImportAddresses|ucfirst}</span></a>
-		<a href="{$var|geturl:'export_addresses'}&amp;id={option:!group}all{/option:!group}{option:group}{$group.id}{/option:group}" class="button icon iconExport"><span>{$lblExportAddresses|ucfirst}</span></a>
+		{option:showMailmotorAddAddress}<a href="{$var|geturl:'add_address'}{option:group}&amp;group_id={$group.id}{/option:group}" class="button icon iconMailAdd"><span>{$lblAddEmail|ucfirst}</span></a>{/option:showMailmotorAddAddress}
+		{option:showMailmotorImportAddresses}<a href="{$var|geturl:'import_addresses'}{option:group}&amp;group_id={$group.id}{/option:group}" class="button icon iconFolderAdd"><span>{$lblImportAddresses|ucfirst}</span></a>{/option:showMailmotorImportAddresses}
+		{option:showMailmotorExportAddresses}<a href="{$var|geturl:'export_addresses'}&amp;id={option:!group}all{/option:!group}{option:group}{$group.id}{/option:group}" class="button icon iconExport"><span>{$lblExportAddresses|ucfirst}</span></a>{/option:showMailmotorExportAddresses}
 	</div>
 </div>
 
@@ -21,7 +21,7 @@
 	{form:filter}
 		{$hidGroupId}
 		<div class="dataFilter">
-			<table cellspacing="0" cellpadding="0" border="0">
+			<table>
 				<tbody>
 					<tr>
 						<td>

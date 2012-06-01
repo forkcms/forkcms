@@ -46,7 +46,7 @@ class SpoonTemplateModifiers
 										'stripslashes' => 'stripslashes',
 										'substring' => 'substr',
 										'trim' => 'trim',
-										'ucfirst' => 'ucfirst',
+										'ucfirst' => array('SpoonFilter', 'ucfirst'),
 										'ucwords' => 'ucwords',
 										'uppercase' => array('SpoonTemplateModifiers', 'uppercase'));
 
@@ -76,12 +76,18 @@ class SpoonTemplateModifiers
 	 * Formats a language specific date.
 	 *
 	 * @return	string						The formatted date according to the timestamp, format and provided language.
-	 * @param	int $timestamp				The timestamp that you want to apply the format to.
+	 * @param	mixed $timestamp			The timestamp or date that you want to apply the format to.
 	 * @param	string[optional] $format	The optional format that you want to apply on the provided timestamp.
 	 * @param	string[optional] $language	The optional language that you want this format in (Check SpoonLocale for the possible languages).
 	 */
 	public static function date($timestamp, $format = 'Y-m-d H:i:s', $language = 'en')
 	{
+		if(is_string($timestamp) && !is_numeric($timestamp))
+		{
+			// use strptime if you want to restrict the input format
+			$timestamp = strtotime($timestamp);
+		}
+
 		return SpoonDate::getDate($format, $timestamp, $language);
 	}
 

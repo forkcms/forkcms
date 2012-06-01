@@ -8,59 +8,35 @@
 {form:settings}
 	<div class="box horizontal">
 		<div class="heading">
-			<h3>{$lblGroupMap|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<p>
-				<label for="zoom_level">{$lblZoomLevel|ucfirst}</label>
-				{$ddmZoomLevel} {$ddmZoomLevelError}
-			</p>
-		</div>
-		<div class="options">
-			<p>
-				<label for="width">{$lblWidth|ucfirst}</label>
-				{$txtWidth} {$txtWidthError}
-			</p>
-		</div>
-		<div class="options">
-			<p>
-				<label for="height">{$lblHeight|ucfirst}</label>
-				{$txtHeight} {$txtHeightError}
-			</p>
-		</div>
-		<div class="options">
-			<p>
-				<label for="map_type">{$lblMapType|ucfirst}</label>
-				{$ddmMapType} {$ddmMapTypeError}
-			</p>
-		</div>
-	</div>
-
-	<div class="box horizontal">
-		<div class="heading">
 			<h3>{$lblIndividualMap|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<p>
-				<label for="zoom_level_widget">{$lblZoomLevel|ucfirst}</label>
+				<label for="zoomLevelWidget">{$lblZoomLevel|ucfirst}</label>
 				{$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
 			</p>
 		</div>
-		<div class="options">
+		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 			<p>
-				<label for="width_widget">{$lblWidth|ucfirst}</label>
+				<label for="widthWidget">{$lblWidth|ucfirst}</label>
 				{$txtWidthWidget} {$txtWidthWidgetError}
+				<span class="helpTxt">
+					{$msgWidthHelp|sprintf:300:800}
+				</span>
 			</p>
 		</div>
-		<div class="options">
+		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
 			<p>
-				<label for="height_widget">{$lblHeight|ucfirst}</label>
+				<label for="heightWidget">{$lblHeight|ucfirst}</label>
 				{$txtHeightWidget} {$txtHeightWidgetError}
+				<span class="helpTxt">
+					{$msgHeightHelp|sprintf:150}
+				</span>
 			</p>
 		</div>
 		<div class="options">
 			<p>
-				<label for="map_type_widget">{$lblMapType|ucfirst}</label>
+				<label for="mapTypeWidget">{$lblMapType|ucfirst}</label>
 				{$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
 			</p>
 		</div>

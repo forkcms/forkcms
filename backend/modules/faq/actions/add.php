@@ -62,7 +62,6 @@ class BackendFaqAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// get url
@@ -107,7 +106,7 @@ class BackendFaqAdd extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
 				// add search index
-				if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
+				BackendSearchModel::saveIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
 			}
 		}

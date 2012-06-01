@@ -117,7 +117,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Default constructor.
 	 *
-	 * @return	void
 	 * @param	string $title		The title for the item.
 	 * @param	string $id			The id of the item (URI).
 	 * @param	string $summary		The summary for the item.
@@ -134,7 +133,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Add an author for the item.
 	 *
-	 * @return	void
 	 * @param	array $author	The author values (name, email, uri).
 	 */
 	public function addAuthor($author)
@@ -146,7 +144,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Add a category for the item.
 	 *
-	 * @return	void
 	 * @param	array $category		The category with all the properties.
 	 */
 	public function addCategory($category)
@@ -158,7 +155,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Add a contributor for the item.
 	 *
-	 * @return	void
 	 * @param	string $name	The name of the contributor.
 	 * @param	string $email	The email of the contributor.
 	 * @param	string $uri		The uri of the contributor.
@@ -167,18 +163,17 @@ class SpoonFeedAtomRSSItem
 	{
 		// create array
 		$contributor['name'] = (string) $name;
-		if($scheme != null) $contributor['email'] = (string) $email;
-		if($label != null) $contributor['uri'] = (string) $uri;
+		if($email != null) $contributor['email'] = (string) $email;
+		if($uri != null) $contributor['uri'] = (string) $uri;
 
 		// add property
-		$this->contributors[] = $category;
+		$this->contributors[] = $contributor;
 	}
 
 
 	/**
 	 * Add a link for the item.
 	 *
-	 * @return	void
 	 * @param	array $link		The link with all the properties.
 	 */
 	public function addLink($link)
@@ -541,7 +536,7 @@ class SpoonFeedAtomRSSItem
 		if(isset($item->published)) $rssItem->setPublicationDate((int) strtotime($item->published));
 
 		// set rights
-		if(isset($XML->rights)) $RSS->setRights((string) $XML->rights);
+		if(isset($XML->rights)) $rssItem->setRights((string) $XML->rights);
 
 		return $rssItem;
 	}
@@ -550,7 +545,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the author.
 	 *
-	 * @return	void
 	 * @param	string $author	The author of the item.
 	 */
 	public function setAuthor($author)
@@ -562,7 +556,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the content.
 	 *
-	 * @return	void
 	 * @param	string $content		The content of the item.
 	 */
 	public function setContent($content)
@@ -574,7 +567,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the id (URI).
 	 *
-	 * @return	void
 	 * @param	string $id	The id (URI) of the item (example: http://example.com/blog/1234).
 	 */
 	public function setId($id)
@@ -593,7 +585,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the publication date.
 	 *
-	 * @return	void
 	 * @param	int $publicationDate	The publication date as a UNIX-timestamp.
 	 */
 	public function setPublicationDate($publicationDate)
@@ -605,7 +596,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the rights for the item.
 	 *
-	 * @return	void
 	 * @param	string $rights	Conveys information about rights, e.g. copyrights, held in and over the item.
 	 */
 	public function setRights($rights)
@@ -617,7 +607,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the summary.
 	 *
-	 * @return	void
 	 * @param	string $summary		The content of the item.
 	 */
 	public function setSummary($summary)
@@ -629,7 +618,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the title.
 	 *
-	 * @return	void
 	 * @param	string $title	The title of the item.
 	 */
 	public function setTitle($title)
@@ -641,7 +629,6 @@ class SpoonFeedAtomRSSItem
 	/**
 	 * Set the updated date.
 	 *
-	 * @return	void
 	 * @param	int $updatedDate	The updated date as a UNIX-timestamp.
 	 */
 	public function setUpdatedDate($updatedDate)

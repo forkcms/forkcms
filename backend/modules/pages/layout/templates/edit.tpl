@@ -7,17 +7,23 @@
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
+			{option:showPagesAdd}
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 				<span>{$lblAdd|ucfirst}</span>
 			</a>
+			{/option:showPagesAdd}
+
 			{option:!item.is_hidden}
 				<a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" class="button icon iconZoom previewButton targetBlank">
 					<span>{$lblView|ucfirst}</span>
 				</a>
 			{/option:!item.is_hidden}
+
+			{option:showPagesIndex}
 			<a href="{$var|geturl:'index'}" class="button icon iconBack">
 				<span>{$lblOverview|ucfirst}</span>
 			</a>
+			{/option:showPagesIndex}
 		</div>
 	</div>
 
@@ -37,7 +43,7 @@
 			<li><a href="#tabRedirect">{$lblRedirect|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
-			<li><a href="#tabVersions">{$lblPreviousVersions|ucfirst}</a></li>
+			<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
@@ -60,7 +66,7 @@
 							{$msgFallbackInfo}
 						</div>
 
-						<table cellspacing="10" cellpadding="0" border="0">
+						<table cellspacing="10">
 							<tbody>
 								<tr>
 									<td data-position="fallback" id="templatePosition-fallback" colspan="1" class="box">
@@ -119,11 +125,13 @@
 							<li>
 								<label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
 								{option:redirect.isInternal}
+										<label for="internalRedirect" class="visuallyHidden">{$redirect.label}</label>
 										{$ddmInternalRedirect} {$ddmInternalRedirectError}
 										<span class="helpTxt">{$msgHelpInternalRedirect}</span>
 								{/option:redirect.isInternal}
 
 								{option:redirect.isExternal}
+										<label for="externalRedirect" class="visuallyHidden">{$redirect.label}</label>
 										{$txtExternalRedirect} {$txtExternalRedirectError}
 										<span class="helpTxt">{$msgHelpExternalRedirect}</span>
 								{/option:redirect.isExternal}
@@ -135,15 +143,6 @@
 		</div>
 
 		<div id="tabVersions">
-			<div class="tableHeading">
-				<div class="oneLiner">
-					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
-					<abbr class="help">(?)</abbr>
-					<div class="tooltip" style="display: none;">
-						<p>{$msgHelpRevisions}</p>
-					</div>
-				</div>
-			</div>
 			{option:drafts}
 				<div class="tableHeading">
 					<div class="oneLiner">
@@ -154,15 +153,28 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="dataGridHolder">
 					{$drafts}
 				</div>
 			{/option:drafts}
+
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
+					</div>
+				</div>
+			</div>
+
 			{option:revisions}
 			<div class="dataGridHolder">
 				{$revisions}
 			</div>
 			{/option:revisions}
+
 			{option:!revisions}
 				<p>{$msgNoRevisions}</p>
 			{/option:!revisions}
@@ -181,6 +193,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkPageTitleOverwrite}
+							<label for="pageTitle" class="visuallyHidden">{$lblPageTitle|ucfirst}</label>
 							{$txtPageTitle} {$txtPageTitleError}
 						</li>
 					</ul>
@@ -191,6 +204,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkNavigationTitleOverwrite}
+							<label for="navigationTitle" class="visuallyHidden">{$lblNavigationTitle|ucfirst}</label>
 							{$txtNavigationTitle} {$txtNavigationTitleError}
 						</li>
 					</ul>
@@ -209,6 +223,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkMetaDescriptionOverwrite}
+							<label for="metaDescription" class="visuallyHidden">{$lblDescription|ucfirst}</label>
 							{$txtMetaDescription} {$txtMetaDescriptionError}
 						</li>
 					</ul>
@@ -219,6 +234,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkMetaKeywordsOverwrite}
+							<label for="metaKeywords" class="visuallyHidden">{$lblKeywords|ucfirst}</label>
 							{$txtMetaKeywords} {$txtMetaKeywordsError}
 						</li>
 					</ul>
@@ -244,6 +260,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
+							<label for="url" class="visuallyHidden">{$lblCustomURL|ucfirst}</label>
 							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
@@ -284,7 +301,9 @@
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>{$lblTags|ucfirst}</h3>
+					<h3>
+						<label for="addValue-tags">{$lblTags|ucfirst}</label>
+					</h3>
 				</div>
 				<div class="options">
 					{$txtTags} {$txtTagsError}
@@ -295,14 +314,19 @@
 		<div id="tabSettings">
 			<ul class="inputList">
 				{iteration:hidden}
-				<li>
-					{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label>
-				</li>
+					<li>{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label></li>
 				{/iteration:hidden}
 			</ul>
 			<p>
 				<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
 			</p>
+			{option:isGod}
+				<ul class="inputList">
+					{iteration:allow}
+						<li>{$allow.chkAllow} <label for="{$allow.id}">{$allow.label}</label></li>
+					{/iteration:allow}
+				</ul>
+			{/option:isGod}
 		</div>
 	</div>
 
@@ -374,14 +398,14 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:showDelete}
-			<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		{option:showPagesDelete}
+			<a href="{$var|geturl:'delete'}&amp;id={$item.id}&revision_id={$item.revision_id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 				<p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
 			</div>
-		{/option:showDelete}
+		{/option:showPagesDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
@@ -390,9 +414,24 @@
 	</div>
 {/form:edit}
 
+<div class="box" id="blockHtml" style="display: none;">
+	<div class="blockContentHTML optionsRTE">
+		<fieldset>
+			<div class="generalMessage singleMessage infoMessage">
+				{$msgContentSaveWarning}
+			</div>
+			<div class="heading">
+				<h3>{$lblEditor|ucfirst}</h3>
+			</div>
+			{$txtHtml}
+			{$txtHtmlError}
+		</fieldset>
+	</div>
+</div>
+
 <script type="text/javascript">
 	//<![CDATA[
-		// the ID of the page
+		//the ID of the page
 		var pageID = {$item.id};
 
 		// all the possible templates
@@ -406,6 +445,9 @@
 		// the extra's, but in a way we can access them based on their ID
 		var extrasById = {};
 		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+
+		// indicator that the default blocks may not be set on pageload
+		var initDefaults = false;
 
 		// fix selected state in the tree
 		var selectedId = 'page-'+ pageID;

@@ -36,20 +36,32 @@ class BackendFaqCategories extends BackendBaseActionIndex
 	{
 		// create dataGrid
 		$this->dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
-		$this->dataGrid->setHeaderLabels(array('num_items' => ucfirst(BL::lbl('Amount'))));
+		$this->dataGrid->setHeaderLabels(array('num_items' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
 		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
-		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
 		$this->dataGrid->setRowAttributes(array('id' => '[id]'));
 		$this->dataGrid->setPaging(false);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index'))
+		{
+			$this->dataGrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_category'))
+		{
+			$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 	}
 
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 

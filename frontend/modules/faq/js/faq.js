@@ -20,10 +20,10 @@ jsFrontend.faq.feedback =
 	init: function()
 	{
 		// useful status has been changed
-		$('#usefullY, #usefullN').on('click', function()
+		$('#usefulY, #usefulN').on('click', function()
 		{
 			// get useful status
-			var useful = ($('#usefullY').attr('checked') ? true : false);
+			var useful = ($('#usefulY').attr('checked') ? true : false);
 
 			// show or hide the form
 			if(useful) { $('form#feedback').submit(); }

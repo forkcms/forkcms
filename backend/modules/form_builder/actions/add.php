@@ -111,12 +111,12 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
 
 				// set frontend locale
-				FL::setLocale(BL::getWorkingLanguage());
+				FL::setLocale(BL::getWorkingLanguage(), true);
 
 				// create submit button
 				$field['form_id'] = $id;
 				$field['type'] = 'submit';
-				$field['settings'] = serialize(array('values' => ucfirst(FL::getLabel('Send'))));
+				$field['settings'] = serialize(array('values' => SpoonFilter::ucfirst(FL::getLabel('Send'))));
 				BackendFormBuilderModel::insertField($field);
 
 				// everything is saved, so redirect to the editform

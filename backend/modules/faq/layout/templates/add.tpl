@@ -6,6 +6,7 @@
 </div>
 
 {form:add}
+	<label for="title">{$lblQuestion|ucfirst}</label>
 	{$txtTitle} {$txtTitleError}
 
 	<div id="pageUrl">
@@ -22,12 +23,14 @@
 		</ul>
 
 		<div id="tabContent">
-			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+			<table width="100%">
 				<tr>
 					<td id="leftColumn">
 						<div class="box">
 							<div class="heading">
-								<h3>{$lblAnswer|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+								<h3>
+									<label for="answer">{$lblAnswer|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								</h3>
 							</div>
 							<div class="optionsRTE">
 								{$txtAnswer} {$txtAnswerError}

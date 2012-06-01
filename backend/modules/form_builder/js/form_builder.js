@@ -31,7 +31,7 @@ jsBackend.formBuilder =
 		if($selectMethod.length > 0)
 		{
 			jsBackend.formBuilder.handleMethodField();
-			$selectMethod.on('change', jsBackend.formBuilder.handleMethodField);
+			$(document).on('change', 'select#method', jsBackend.formBuilder.handleMethodField);
 		}
 
 		$('#email').multipleTextbox(
@@ -86,6 +86,9 @@ jsBackend.formBuilder.fields =
 		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'save_field' } };
 		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
 
+		// init errors
+		if(typeof defaultErrorMessages != 'undefined') jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
+
 		// bind
 		jsBackend.formBuilder.fields.bindDialogs();
 		jsBackend.formBuilder.fields.bindValidation();
@@ -100,7 +103,7 @@ jsBackend.formBuilder.fields =
 	bindDelete: function()
 	{
 		// get all delete buttons
-		$('.deleteField').on('click', function(e)
+		$(document).on('click', '.deleteField', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -114,7 +117,7 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.ParamsDelete,
+					data: $.extend(jsBackend.formBuilder.fields.paramsDelete,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						field_id: id
@@ -201,7 +204,10 @@ jsBackend.formBuilder.fields =
 									break;
 							}
 						},
-						'{$lblCancel|ucfirst}': function(){ $(this).dialog('close'); }
+						'{$lblCancel|ucfirst}': function()
+						{
+							$(this).dialog('close');
+						}
 					 },
 
 					// set focus on first input field
@@ -212,6 +218,7 @@ jsBackend.formBuilder.fields =
 						{
 							$('input#dropdownValues').multipleTextbox(
 							{
+								splitChar: '|',
 								emptyMessage: '{$msgNoValues}',
 								addLabel: '{$lblAdd|ucfirst}',
 								removeLabel: '{$lblDelete|ucfirst}',
@@ -223,6 +230,7 @@ jsBackend.formBuilder.fields =
 						{
 							$('input#radiobuttonValues').multipleTextbox(
 							{
+								splitChar: '|',
 								emptyMessage: '{$msgNoValues}',
 								addLabel: '{$lblAdd|ucfirst}',
 								removeLabel: '{$lblDelete|ucfirst}',
@@ -234,22 +242,13 @@ jsBackend.formBuilder.fields =
 						{
 							$('input#checkboxValues').multipleTextbox(
 							{
+								splitChar: '|',
 								emptyMessage: '{$msgNoValues}',
 								addLabel: '{$lblAdd|ucfirst}',
 								removeLabel: '{$lblDelete|ucfirst}',
 								showIconOnly: true,
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
 							});
-						}
-						else if(id == 'paragraphDialog')
-						{
-							// we want other buttons
-							tinyMCE.activeEditor.settings.theme_advanced_buttons1 = 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor';
-							tinyMCE.activeEditor.settings.theme_advanced_buttons2 = 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes';
-							tinyMCE.activeEditor.settings.theme_advanced_buttons3 = '';
-
-							// create tinymce control
-							tinyMCE.execCommand('mceAddControl', false, 'paragraph');
 						}
 
 						// focus on first input element
@@ -265,13 +264,6 @@ jsBackend.formBuilder.fields =
 						// no items message
 						jsBackend.formBuilder.fields.toggleNoItems();
 
-						// unload tinymce
-						if(tinyMCE.getInstanceById('paragraph'))
-						{
-							tinyMCE.execCommand('mceSetContent', false, 'paragraph');
-							tinyMCE.execCommand('mceRemoveControl', false, 'paragraph');
-						}
-
 						// reset
 						jsBackend.formBuilder.fields.resetDialog(id);
 
@@ -283,7 +275,7 @@ jsBackend.formBuilder.fields =
 		});
 
 		// bind clicks
-		$('.openFieldDialog').on('click', function(e)
+		$(document).on('click', '.openFieldDialog', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -322,7 +314,7 @@ jsBackend.formBuilder.fields =
 					data: $.extend(jsBackend.formBuilder.fields.paramsSequence,
 					{
 						form_id: jsBackend.formBuilder.formId,
-						new_id_sequence: newIdSequence.join(',')
+						new_id_sequence: newIdSequence.join('|')
 					}),
 					success: function(data, textStatus)
 					{
@@ -361,7 +353,7 @@ jsBackend.formBuilder.fields =
 	bindEdit: function()
 	{
 		// get all delete buttons
-		$('.editField').on('click', function(e)
+		$(document).on('click', '.editField', function(e)
 		{
 			// prevent default
 			e.preventDefault();
@@ -451,7 +443,7 @@ jsBackend.formBuilder.fields =
 								// fill in form
 								$('#dropdownId').val(data.data.field.id);
 								$('#dropdownLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
-								$('#dropdownValues').val(data.data.field.settings.values.join(','));
+								$('#dropdownValues').val(data.data.field.settings.values.join('|'));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -489,7 +481,7 @@ jsBackend.formBuilder.fields =
 								// fill in form
 								$('#radiobuttonId').val(data.data.field.id);
 								$('#radiobuttonLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
-								$('#radiobuttonValues').val(data.data.field.settings.values.join(','));
+								$('#radiobuttonValues').val(data.data.field.settings.values.join('|'));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -527,7 +519,7 @@ jsBackend.formBuilder.fields =
 								// fill in form
 								$('#checkboxId').val(data.data.field.id);
 								$('#checkboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
-								$('#checkboxValues').val(data.data.field.settings.values.join(','));
+								$('#checkboxValues').val(data.data.field.settings.values.join('|'));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -621,7 +613,7 @@ jsBackend.formBuilder.fields =
 			// init
 			jsBackend.formBuilder.fields.handleValidation(wrapper);
 
-			// on change
+			// on change	@todo	test me plz.
 			$(wrapper).find('select:first').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 			$(wrapper).find('input:checkbox').on('change', function() { jsBackend.formBuilder.fields.handleValidation(wrapper); });
 		});
@@ -668,7 +660,7 @@ jsBackend.formBuilder.fields =
 	multipleTextboxCallback: function(id)
 	{
 		// init
-		var items = $('#'+ id).val().split(',');
+		var items = $('#'+ id).val().split('|');
 		var defaultElement = $('select[rel='+ id + ']');
 		var selectedValue = $(defaultElement).find(':selected').val();
 
@@ -911,9 +903,6 @@ jsBackend.formBuilder.fields =
 	 */
 	saveParagraph: function()
 	{
-		// save tiny mce
-		tinyMCE.triggerSave();
-
 		// init vars
 		var fieldId = $('#paragraphId').val();
 		var type = 'paragraph';
@@ -1054,7 +1043,7 @@ jsBackend.formBuilder.fields =
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
 				type: type,
-				values: values
+				values: value
 			}),
 			success: function(data, textStatus)
 			{

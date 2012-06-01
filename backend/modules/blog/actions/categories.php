@@ -35,32 +35,38 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		$this->dataGrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, array('active', BL::getWorkingLanguage()));
 
 		// set headers
-		$this->dataGrid->setHeaderLabels(array('num_items' => ucfirst(BL::lbl('Amount'))));
+		$this->dataGrid->setHeaderLabels(array('num_items' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
 
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('title', 'num_items'), 'title');
 
-		// set column URLs
-		$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
-
 		// convert the count into a readable and clickable one
 		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
-
-		// add column
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// disable paging
 		$this->dataGrid->setPaging(false);
 
 		// add attributes, so the inline editing has all the needed data
 		$this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_category'))
+		{
+			// set column URLs
+			$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+
+			// add column
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 	}
 
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 

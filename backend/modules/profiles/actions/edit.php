@@ -68,8 +68,8 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 	{
 		// gender dropdown values
 		$genderValues = array(
-			'male' => ucfirst(BL::getLabel('Male')),
-			'female' => ucfirst(BL::getLabel('Female'))
+			'male' => SpoonFilter::ucfirst(BL::getLabel('Male')),
+			'female' => SpoonFilter::ucfirst(BL::getLabel('Female'))
 		);
 
 		// birthdate dropdown values
@@ -129,14 +129,18 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		// disable paging
 		$this->dgGroups->setPaging(false);
 
-		// set column URLs
-		$this->dgGroups->setColumnURL('group_name', BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id);
-
 		// set column function
 		$this->dgGroups->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[expires_on]'), 'expires_on', true);
 
-		// edit column
-		$this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id, BL::getLabel('Edit'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_profile_group'))
+		{
+			// set column URLs
+			$this->dgGroups->setColumnURL('group_name', BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id);
+
+			// edit column
+			$this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id, BL::getLabel('Edit'));
+		}
 	}
 
 	/**
@@ -144,7 +148,6 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign the active record and additional variables

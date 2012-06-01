@@ -11,9 +11,18 @@
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendUsersEdit extends BackendBaseActionEdit
 {
+	/**
+	 * The authenticated user
+	 *
+	 * @var	BackendUser
+	 */
+	private $authenticatedUser;
+
 	/**
 	 * The user
 	 *
@@ -48,8 +57,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 	 */
 	private function loadForm()
 	{
-		// create user object
+		// create user objects
 		$this->user = new BackendUser($this->id);
+		$this->authenticatedUser = BackendAuthentication::getUser();
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -61,22 +71,17 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		foreach($groups as $group) $checkedGroups[] = $group['id'];
 
 		// create elements
+		// profile
 		$this->frm->addText('email', $this->record['email'], 255);
 		if($this->user->isGod()) $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
-		$this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
-		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
-		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $this->user->getSetting('date_format'));
-		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $this->user->getSetting('time_format'));
-		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), $this->user->getSetting('number_format', 'dot_nothing'));
+		$this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
 		$this->frm->addImage('avatar');
-		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
-		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
 
+		// password
 		// check if we're god or same user
-		if(BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod())
+		if($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod())
 		{
 			// allow to set new password
 			$this->frm->addPassword('new_password', null, 75);
@@ -87,8 +92,22 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
 		}
 
+		// settings
+		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
+		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $this->user->getSetting('date_format'));
+		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $this->user->getSetting('time_format'));
+		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), $this->user->getSetting('number_format', 'dot_nothing'));
+
+		$this->frm->addDropDown('csv_split_character', BackendUsersModel::getCSVSplitCharacters(), $this->user->getSetting('csv_split_character'));
+		$this->frm->addDropDown('csv_line_ending', BackendUsersModel::getCSVLineEndings(), $this->user->getSetting('csv_line_ending'));
+
+		// permissions
+		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
+
 		// disable active field for current users
-		if(BackendAuthentication::getUser()->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
+		if($this->authenticatedUser->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
+		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
+		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
 	}
 
 	/**
@@ -102,14 +121,18 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		if($this->record['settings']['avatar'] != '') $this->record['settings']['avatar'] .= '?time=' . time();
 
 		// only allow deletion of other users
-		if(BackendAuthentication::getUser()->getUserId() != $this->id) $this->tpl->assign('deleteAllowed', true);
+		$this->tpl->assign('showUsersDelete', $this->authenticatedUser->getUserId() != $this->id && BackendAuthentication::isAllowedAction('delete'));
 
 		// assign
 		$this->tpl->assign('record', $this->record);
 		$this->tpl->assign('id', $this->id);
 
 		// assign that we're god or the same user
-		$this->tpl->assign('allowPasswordEdit', (BackendAuthentication::getUser()->getUserId() == $this->id || BackendAuthentication::getUser()->isGod()));
+		$this->tpl->assign('allowPasswordEdit', ($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod()));
+
+		// check if we need to show the password strength and parse the label
+		$this->tpl->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
+		$this->tpl->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
 	}
 
 	/**
@@ -122,54 +145,55 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		{
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
+			$fields = $this->frm->getFields();
 
 			// email is present
 			if(!$this->user->isGod())
 			{
-				if($this->frm->getField('email')->isFilled(BL::err('EmailIsRequired')))
+				if($fields['email']->isFilled(BL::err('EmailIsRequired')))
 				{
 					// is this an email-address
-					if($this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid')))
+					if($fields['email']->isEmail(BL::err('EmailIsInvalid')))
 					{
 						// was this emailaddress deleted before
-						if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue()))
+						if(BackendUsersModel::emailDeletedBefore($fields['email']->getValue()))
 						{
-							$this->frm->getField('email')->addError(sprintf(BL::err('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
+							$fields['email']->addError(sprintf(BL::err('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $fields['email']->getValue()))));
 						}
 
 						// email already exists
-						elseif(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id))
+						elseif(BackendUsersModel::existsEmail($fields['email']->getValue(), $this->id))
 						{
-							$this->frm->getField('email')->addError(BL::err('EmailAlreadyExists'));
+							$fields['email']->addError(BL::err('EmailAlreadyExists'));
 						}
 					}
 				}
 			}
 
 			// required fields
-			if($this->user->isGod() && $this->frm->getField('email')->getValue() != '' && $this->user->getEmail() != $this->frm->getField('email')->getValue()) $this->frm->getField('email')->addError(BL::err('CantChangeGodsEmail'));
-			if(!$this->user->isGod()) $this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid'));
-			$this->frm->getField('nickname')->isFilled(BL::err('NicknameIsRequired'));
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
-			$this->frm->getField('surname')->isFilled(BL::err('SurnameIsRequired'));
-			$this->frm->getField('interface_language')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('date_format')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
-			$this->frm->getField('groups')->isFilled(BL::err('FieldIsRequired'));
-			if($this->frm->getField('new_password')->isFilled())
+			if($this->user->isGod() && $fields['email']->getValue() != '' && $this->user->getEmail() != $fields['email']->getValue()) $fields['email']->addError(BL::err('CantChangeGodsEmail'));
+			if(!$this->user->isGod()) $fields['email']->isEmail(BL::err('EmailIsInvalid'));
+			$fields['nickname']->isFilled(BL::err('NicknameIsRequired'));
+			$fields['name']->isFilled(BL::err('NameIsRequired'));
+			$fields['surname']->isFilled(BL::err('SurnameIsRequired'));
+			$fields['interface_language']->isFilled(BL::err('FieldIsRequired'));
+			$fields['date_format']->isFilled(BL::err('FieldIsRequired'));
+			$fields['time_format']->isFilled(BL::err('FieldIsRequired'));
+			$fields['number_format']->isFilled(BL::err('FieldIsRequired'));
+			$fields['groups']->isFilled(BL::err('FieldIsRequired'));
+			if(isset($fields['new_password']) && $fields['new_password']->isFilled())
 			{
-				if($this->frm->getField('new_password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::err('ValuesDontMatch'));
+				if($fields['new_password']->getValue() !== $fields['confirm_password']->getValue()) $fields['confirm_password']->addError(BL::err('ValuesDontMatch'));
 			}
 
 			// validate avatar
-			if($this->frm->getField('avatar')->isFilled())
+			if($fields['avatar']->isFilled())
 			{
 				// correct extension
-				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
+				if($fields['avatar']->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
 				{
 					// correct mimetype?
-					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
+					$fields['avatar']->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
 
 			}
@@ -179,25 +203,43 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			{
 				// build user-array
 				$user['id'] = $this->id;
-				if(!$this->user->isGod()) $user['email'] = $this->frm->getField('email')->getValue(true);
-				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $user['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
-
-				// update password (only if filled in)
-				if($this->frm->getField('new_password')->isFilled()) $user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('new_password')->getValue(), $this->record['settings']['password_key']);
+				if(!$this->user->isGod()) $user['email'] = $fields['email']->getValue(true);
+				if($this->authenticatedUser->getUserId() != $this->record['id']) $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
 
 				// build settings-array
-				$settings['nickname'] = $this->frm->getField('nickname')->getValue();
-				$settings['name'] = $this->frm->getField('name')->getValue();
-				$settings['surname'] = $this->frm->getField('surname')->getValue();
-				$settings['interface_language'] = $this->frm->getField('interface_language')->getValue();
-				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
-				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
+				$settings['nickname'] = $fields['nickname']->getValue();
+				$settings['name'] = $fields['name']->getValue();
+				$settings['surname'] = $fields['surname']->getValue();
+				$settings['interface_language'] = $fields['interface_language']->getValue();
+				$settings['date_format'] = $fields['date_format']->getValue();
+				$settings['time_format'] = $fields['time_format']->getValue();
 				$settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
-				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
-				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
+				$settings['number_format'] = $fields['number_format']->getValue();
+				$settings['csv_split_character'] = $fields['csv_split_character']->getValue();
+				$settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
+				$settings['api_access'] = (bool) $fields['api_access']->getChecked();
+
+				// update password (only if filled in)
+				if(isset($fields['new_password']) && $fields['new_password']->isFilled())
+				{
+					$user['password'] = BackendAuthentication::getEncryptedString($fields['new_password']->getValue(), $this->record['settings']['password_key']);
+
+					// the password has changed
+					if($this->record['password'] != $user['password'])
+					{
+						// save the login timestamp in the user's settings
+						$lastPasswordChange = BackendUsersModel::getSetting($user['id'], 'current_password_change');
+						$settings['current_password_change'] = time();
+						if($lastPasswordChange) $settings['last_password_change'] = $lastPasswordChange;
+
+						// save the password strength
+						$passwordStrength = BackendAuthentication::checkPassword($fields['new_password']->getValue());
+						$settings['password_strength'] = $passwordStrength;
+					}
+				}
 
 				// get selected groups
-				$groups = $this->frm->getField('groups')->getChecked();
+				$groups = $fields['groups']->getChecked();
 
 				// init var
 				$newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
@@ -224,31 +266,34 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['dashboard_sequence'] = $newSequence;
 
 				// has the user submitted an avatar?
-				if($this->frm->getField('avatar')->isFilled())
+				if($fields['avatar']->isFilled())
 				{
+					// init vars
+					$avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
+
 					// delete old avatar if it isn't the default-image
 					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
 					{
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/source/' . $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+						SpoonFile::delete($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
 					}
 
 					// create new filename
-					$filename = rand(0,3) . '_' . $user['id'] . '.' . $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) . '_' . $user['id'] . '.' . $fields['avatar']->getExtension();
 
 					// add into settings to update
 					$settings['avatar'] = $filename;
 
 					// resize (128x128)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $filename, 128, 128, true, false, 100);
+					$fields['avatar']->createThumbnail($avatarsPath . '/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $filename, 64, 64, true, false, 100);
+					$fields['avatar']->createThumbnail($avatarsPath . '/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $filename, 32, 32, true, false, 100);
+					$fields['avatar']->createThumbnail($avatarsPath . '/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
 				// save changes

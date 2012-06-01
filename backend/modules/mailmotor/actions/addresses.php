@@ -86,7 +86,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		$filename = end($explodedFilename);
 
 		// set headers for download
-		$headers[] = 'Content-type: application/csv; charset=utf-8';
+		$headers[] = 'Content-type: application/csv; charset=' . SPOON_CHARSET;
 		$headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
 		$headers[] = 'Pragma: no-cache';
 
@@ -133,7 +133,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		if(!empty($this->group)) $this->dataGrid->setURL('&group_id=' . $this->group['id'], true);
 
 		// set headers values
-		$headers['created_on'] = ucfirst(BL::lbl('Created'));
+		$headers['created_on'] = SpoonFilter::ucfirst(BL::lbl('Created'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);
@@ -183,8 +183,10 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// CSV parameter (this is set when an import partially fails)
 		$csv = $this->getParameter('csv');
 		$download = $this->getParameter('download', 'bool', false);

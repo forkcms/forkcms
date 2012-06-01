@@ -19,6 +19,13 @@
 class BackendBlogAdd extends BackendBaseActionAdd
 {
 	/**
+	 * Is the image field allowed?
+	 *
+	 * @var bool
+	 */
+	protected $imageIsAllowed = true;
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()
@@ -35,6 +42,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	 */
 	private function loadForm()
 	{
+		$this->imageIsAllowed = BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true);
+
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
@@ -43,7 +52,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 		// get categories
 		$categories = BackendBlogModel::getCategories();
-		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
+		$categories['new_category'] = SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
@@ -57,7 +66,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
-		$this->frm->addImage('image');
+		if($this->imageIsAllowed) $this->frm->addImage('image');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -69,6 +78,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	protected function parse()
 	{
 		parent::parse();
+		$this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
 
 		// get url
 		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
@@ -100,12 +110,15 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 			if($this->frm->getField('category_id')->getValue() == 'new_category') $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
 
-			// validate the image
-			if($this->frm->getField('image')->isFilled())
+			if($this->imageIsAllowed)
 			{
-				// image extension and mime type
-				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
-				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
+				// validate the image
+				if($this->frm->getField('image')->isFilled())
+				{
+					// image extension and mime type
+					$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
+					$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
+				}
 			}
 
 			// validate meta
@@ -130,17 +143,24 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['num_comments'] = 0;
 				$item['status'] = $status;
 
-				// the image path
-				$imagePath = FRONTEND_FILES_PATH . '/blog/images';
-
-				// validate the image
-				if($this->frm->getField('image')->isFilled())
+				if($this->imageIsAllowed)
 				{
-					// build the image name
-					$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+					// the image path
+					$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
-					// upload the image
-					$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+					// create folders if needed
+					if(!SpoonDirectory::exists($imagePath . '/source')) SpoonDirectory::create($imagePath . '/source');
+					if(!SpoonDirectory::exists($imagePath . '/128x128')) SpoonDirectory::create($imagePath . '/128x128');
+
+					// image provided?
+					if($this->frm->getField('image')->isFilled())
+					{
+						// build the image name
+						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+
+						// upload the image & generate thumbnails
+						$this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
+					}
 				}
 
 				// insert the item
@@ -156,7 +176,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				if($item['status'] == 'active')
 				{
 					// add search index
-					if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+					BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
 					if(BackendModel::getModuleSetting($this->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->meta->getURL());

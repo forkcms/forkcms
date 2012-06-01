@@ -51,7 +51,7 @@
 }
 
 .ac_loading {
-	background: #FFF url(/backend/core/layout/images/spinner.gif) no-repeat right center;
+	background: #FFF url(../../images/spinner.gif) no-repeat right center;
 }
 
 .ac_over {

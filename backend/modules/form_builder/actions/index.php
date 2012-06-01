@@ -32,20 +32,28 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		$this->dataGrid = new BackendDataGridDB(BackendFormBuilderModel::QRY_BROWSE, BL::getWorkingLanguage());
-		$this->dataGrid->setHeaderLabels(array('email' => ucfirst(BL::getLabel('Recipient')), 'sent_forms' => ''));
+		$this->dataGrid->setHeaderLabels(array('email' => SpoonFilter::ucfirst(BL::getLabel('Recipient')), 'sent_forms' => ''));
 		$this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
-		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'formatRecipients'), array('[email]'), 'email');
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'getLocale'), array('Method_[method]'), 'method');
 		$this->dataGrid->setColumnFunction(array('BackendFormBuilderIndex', 'parseNumForms'), array('[id]', '[sent_forms]'), 'sent_forms');
-		$this->dataGrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::getLabel('Edit'));
+
+		// check if edit action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+			$this->dataGrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::getLabel('Edit'));
+		}
 	}
 
 	/**
 	 * Parse the datagrid and the reports
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
+		// add datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
@@ -71,7 +79,13 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 		// no forms sent
 		else $output = sprintf(BL::getMessage('SentForms'), $sentForms);
 
-		// output
-		return '<a href="' . BackendModel::createURLForAction('data') . '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
+		// check if data action is allowed
+		if(BackendAuthentication::isAllowedAction('data', 'form_builder'))
+		{
+			// output
+			$output = '<a href="' . BackendModel::createURLForAction('data') . '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
+		}
+
+		return $output;
 	}
 }

@@ -111,7 +111,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// user sequence provided?
 						$column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
 						$position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
-						$title = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(SpoonFilter::toCamelCase($widgetName));
+						$title = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(SpoonFilter::toCamelCase($widgetName));
 						$templatePath = $instance->getTemplatePath();
 
 						// reset template path
@@ -137,8 +137,10 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 	/**
 	 * Parse the page with its widgets.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// show report
 		if($this->getParameter('password_reset') == 'success')
 		{

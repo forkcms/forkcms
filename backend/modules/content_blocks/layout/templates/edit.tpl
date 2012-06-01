@@ -9,7 +9,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li class="notImportant"><a href="#tabRevisions">{$lblPreviousVersions|ucfirst}</a></li>
+			<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
@@ -18,45 +18,51 @@
 					<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtTitle} {$txtTitleError}
 				</p>
-				<p style="position: relative;">
-					<label for="text">{$lblContent|ucfirst}</label>
-					{$txtText} {$txtTextError}
-				</p>
+
+				<div class="box">
+					<div class="heading">
+						<h3>
+							<label for="text">{$lblContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						</h3>
+					</div>
+					<div class="optionsRTE">
+						{$txtText} {$txtTextError}
+					</div>
+				</div>
 				{option:ddmTemplate}<p>{$lblTemplate|ucfirst} <label for="template">{$ddmTemplate} {$ddmTemplateError}</label></p>{/option:ddmTemplate}
 				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label></p>
 			</fieldset>
 		</div>
 
-		<div id="tabRevisions">
-			<div class="dataGridHolder">
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="balloon balloonAlt" style="display: none;">
-							<p>{$msgHelpRevisions}</p>
-						</div>
+		<div id="tabVersions">
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
 					</div>
 				</div>
-
-				{option:revisions}{$revisions}{/option:revisions}
-				{option:!revisions}
-					<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
-						<tr>
-							<td>
-								<p>{$msgNoRevisions}</p>
-							</td>
-						</tr>
-					</table>
-				{/option:!revisions}
 			</div>
+
+			{option:revisions}
+			<div class="dataGridHolder">
+				{$revisions}
+			</div>
+			{/option:revisions}
+
+			{option:!revisions}
+				<p>{$msgNoRevisions}</p>
+			{/option:!revisions}
 		</div>
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showContentBlocksDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+		{/option:showContentBlocksDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

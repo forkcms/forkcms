@@ -35,7 +35,7 @@
 					{form:linkProfile}
 					<div class="oneLiner fakeP">
 						<p>
-							{$ddmTableId}
+							{$ddmTableId} {option:tableIdError}<br /><span class="formerror">{$tableIdError}</span>{/option:tableIdError}
 						</p>
 						<div class="buttonHolder">
 							<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$lblLinkThisProfile|ucfirst}" />
@@ -61,7 +61,7 @@
 			</p>
 			<div class="buttonHolder">
 				<a href="{$var|geturl:'settings'}&amp;remove=table_id" data-message-id="confirmDeleteTableId" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveProfileLink}</span></a>
-				<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$lblViewStatistics|ucfirst}</span></a>
+				{option:showAnalyticsIndex}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$lblViewStatistics|ucfirst}</span></a>{/option:showAnalyticsIndex}
 			</div>
 		{/option:EverythingIsPresent}
 

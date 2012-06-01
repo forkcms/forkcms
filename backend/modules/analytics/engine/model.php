@@ -46,18 +46,22 @@ class BackendAnalyticsModel
 	{
 		$warnings = array();
 
-		// analytics session token
-		if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('settings', 'analytics'))
 		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
-		}
+			// analytics session token
+			if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+			}
 
-		// analytics table id (only show this error if no other exist)
-		if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
-		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+			// analytics table id (only show this error if no other exist)
+			if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+			}
 		}
 
 		return $warnings;
@@ -97,9 +101,10 @@ class BackendAnalyticsModel
 	public static function existsLandingPage($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM analytics_landing_pages
-			 WHERE id = ?',
+			 WHERE id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -492,7 +497,7 @@ class BackendAnalyticsModel
 		foreach($matches as $item)
 		{
 			// trim item
-			$item = explode('", "', trim($item," \n\r\t\""));
+			$item = explode('", "', trim($item," \n\r\t\"]"));
 
 			// build cache list
 			$cacheList[$item[1]] = $item[0];
@@ -1029,8 +1034,12 @@ class BackendAnalyticsModel
 		// put parameters into a string
 		$extraParameters = (empty($extraParameters) ? '' : '&' . http_build_query($extraParameters));
 
-		// redirect to loading page which will get the needed data based on the current action
-		SpoonHTTP::redirect(BackendModel::createURLForAction('loading') . '&redirect_action=' . $action . $extraParameters);
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('loading', 'analytics'))
+		{
+			// redirect to loading page which will get the needed data based on the current action
+			SpoonHTTP::redirect(BackendModel::createURLForAction('loading') . '&redirect_action=' . $action . $extraParameters);
+		}
 	}
 
 	/**
@@ -1071,7 +1080,7 @@ class BackendAnalyticsModel
 	 */
 	public static function writeCacheFile(array $data, $startTimestamp, $endTimestamp)
 	{
-		$xml = "<?xml version='1.0' encoding='UTF-8'?>\n";
+		$xml = "<?xml version='1.0' encoding='" . SPOON_CHARSET . "'?>\n";
 		$xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
 
 		// loop data

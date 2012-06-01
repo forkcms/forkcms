@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
+	<name>core</name>
+	<version>3.2.0</version>
+	<requirements />
+	<description>
+		<![CDATA[The Fork CMS core.]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Tijs Verkoyen]]></name>
+			<url><![CDATA[http://www.sumocoders.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Matthias Mullie]]></name>
+			<url><![CDATA[http://www.mullie.eu]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Dieter Vanden Eynde]]></name>
+			<url><![CDATA[http://www.dieterve.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Davy Hellemans]]></name>
+			<url><![CDATA[http://blog.bauffman.be]]></url>
+		</author>
+	</authors>
 	<events>
 		<event application="backend" name="after_email_queued"><![CDATA[Triggered when a mail is added into the mail-queue.]]></event>
 		<event application="backend" name="after_email_sent"><![CDATA[Triggered when a mail is sent.]]></event>
 		<event application="frontend" name="after_facebook_initialization"><![CDATA[Triggered when the facebook instance is initialized.]]></event>
 		<event application="frontend" name="after_email_queued"><![CDATA[Triggered when a mail is added into the mail-queue.]]></event>
 		<event application="frontend" name="after_email_sent"><![CDATA[Triggered when a mail is sent.]]></event>
+		<event application="frontend" name="after_page_processed"><![CDATA[Triggered after a page has been processed.]]></event>
 	</events>
+	<cronjobs>
+		<cronjob minute="*" hour="*" day-of-month="*" month="*" day-of-week="*" action="process_queued_hooks"><![CDATA[Processes queued hooks.]]></cronjob>
+		<cronjob minute="*" hour="*" day-of-month="*" month="*" day-of-week="*" action="send_queued_emails"><![CDATA[Sends queued emails.]]></cronjob>
+	</cronjobs>
 </module>

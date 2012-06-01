@@ -7,7 +7,7 @@
 	<div class="inner">
 		<header class="hd">
 			<h1>{$category.title}</h1>
-		</div>
+		</header>
 		<div class="bd">
 			{option:questions}
 				<section class="mod">

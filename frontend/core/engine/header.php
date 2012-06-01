@@ -12,9 +12,17 @@
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class FrontendHeader extends FrontendBaseObject
 {
+	/**
+	 * The canonical URL
+	 *
+	 * @var string
+	 */
+	private $canonical;
+
 	/**
 	 * The added css-files
 	 *
@@ -65,7 +73,7 @@ class FrontendHeader extends FrontendBaseObject
 		Spoon::set('header', $this);
 
 		// add some default CSS files
-		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css');
+		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css', false);
 		$this->addCSS('/frontend/core/layout/css/screen.css');
 
 		// debug stylesheet
@@ -74,7 +82,7 @@ class FrontendHeader extends FrontendBaseObject
 		// add default javascript-files
 		$this->addJS('/frontend/core/js/jquery/jquery.js', false);
 		$this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
-		$this->addJS('/frontend/core/js/jquery/jquery.frontend.js', false);
+		$this->addJS('/frontend/core/js/jquery/jquery.frontend.js', true);
 		$this->addJS('/frontend/core/js/utils.js', true);
 		$this->addJS('/frontend/core/js/frontend.js', false, true);
 	}
@@ -82,7 +90,7 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Add a CSS file into the array
 	 *
-	 * @param  string $file The path for the CSS-file that should be loaded.
+	 * @param string $file The path for the CSS-file that should be loaded.
 	 * @param bool[optional] $minify Should the CSS be minified?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
@@ -90,6 +98,7 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
 		$file = FrontendTheme::getPath($file);
@@ -97,7 +106,7 @@ class FrontendHeader extends FrontendBaseObject
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
 
-		// try to modify
+		// try to minify
 		if($minify) $file = $this->minifyCSS($file);
 
 		// in array
@@ -130,6 +139,8 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		$parseThroughPHP = (bool) $parseThroughPHP;
+		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
 		if(substr($file, 0, 4) != 'http') $file = FrontendTheme::getPath($file);
@@ -315,16 +326,19 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Sort function for CSS-files
 	 *
-	 * @todo this should return $this->cssFiles, making it more usable within getCssFiles
+	 * @param $cssFiles The css files to sort.
+	 * @return array
 	 */
-	private function cssSort()
+	private function cssSort($cssFiles)
 	{
+		$cssFiles = (array) $cssFiles;
+
 		// init vars
 		$i = 0;
 		$aTemp = array();
 
 		// loop files
-		foreach($this->cssFiles as $file)
+		foreach($cssFiles as $file)
 		{
 			// debug should be the last file
 			if(strpos($file['file'], 'debug.css') !== false) $aTemp['e' . $i][] = $file;
@@ -353,7 +367,7 @@ class FrontendHeader extends FrontendBaseObject
 		}
 
 		// reset property
-		$this->cssFiles = $return;
+		return $return;
 	}
 
 	/**
@@ -382,7 +396,7 @@ class FrontendHeader extends FrontendBaseObject
 	public function getCSSFiles()
 	{
 		// sort the cssfiles
-		$this->cssSort();
+		$this->cssFiles = $this->cssSort($this->cssFiles);
 
 		// fetch files
 		return $this->cssFiles;
@@ -468,73 +482,21 @@ class FrontendHeader extends FrontendBaseObject
 		$finalURL = FRONTEND_CACHE_URL . '/minified_css/' . $fileName;
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
-		// file already exists (if SPOON_DEBUG is true, we should reminify every time)
-		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
-
-		// grab content
-		$content = SpoonFile::getContent(PATH_WWW . $file);
-
-		// fix urls
-		$matches = array();
-		$pattern = '/url\(';
-		$pattern .= 	'["\']?';
-		$pattern .= 		'(.*?)';
-		$pattern .= 	'["\']?';
-		$pattern .= 	'\)/is';
-		$content = preg_replace($pattern, 'url("' . dirname($file) . '/$1")', $content);
-
-		// re-fix data
-		$matches = array();
-		$pattern = '/url\(';
-		$pattern .= 	'["\']?';
-		$pattern .= 		'"' . preg_quote(dirname($file), '/') . '\/(data:.*?)"';
-		$pattern .= 	'["\']?';
-		$pattern .= 	'\)/is';
-		$content = preg_replace($pattern, 'url("$1")', $content);
-
-		// remove comments
-		$content = preg_replace('/\/\*(.*?)\*\//is', '', $content);
-
-		// remove tabs
-		$content = preg_replace('/\t/i', '', $content);
-
-		// remove spaces on end of line
-		$content = preg_replace('/ \n/i', "\n", $content);
-
-		// match stuff between brackets
-		$matches = array();
-		preg_match_all('/ \{(.*)}/iUms', $content, $matches);
-
-		// are there any matches
-		if(isset($matches[0]))
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
-			// loop matches
-			foreach($matches[0] as $key => $match)
+			// create directory if it does not exist
+			if(!SpoonDirectory::exists(dirname($finalPath)))
 			{
-				// remove faulty newlines
-				$tempContent = preg_replace('/\r/iU', '', $matches[1][$key]);
-
-				// removes real newlines
-				$tempContent = preg_replace('/\n/iU', ' ', $tempContent);
-
-				// replace the new block in the general content
-				$content = str_replace($matches[0][$key], '{' . $tempContent . '}', $content);
+				SpoonDirectory::create(dirname($finalPath));
 			}
+
+			// minify the file
+			require_once PATH_LIBRARY . '/external/minify.php';
+			$css = new MinifyCSS(PATH_WWW . $file);
+			$css->minify($finalPath);
 		}
 
-		// remove faulty newlines
-		$content = preg_replace('/\r/iU', '', $content);
-
-		// remove empty lines
-		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
-
-		// remove newlines at start and end
-		$content = trim($content);
-
-		// save content
-		SpoonFile::setContent($finalPath, $content);
-
-		// return
 		return $finalURL;
 	}
 
@@ -551,29 +513,21 @@ class FrontendHeader extends FrontendBaseObject
 		$finalURL = FRONTEND_CACHE_URL . '/minified_js/' . $fileName;
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
-		// file already exists (if SPOON_DEBUG is true, we should reminify every time
-		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		{
+			// create directory if it does not exist
+			if(!SpoonDirectory::exists(dirname($finalPath)))
+			{
+				SpoonDirectory::create(dirname($finalPath));
+			}
 
-		// grab content
-		$content = SpoonFile::getContent(PATH_WWW . $file);
+			// minify the file
+			require_once PATH_LIBRARY . '/external/minify.php';
+			$js = new MinifyJS(PATH_WWW . $file);
+			$js->minify($finalPath);
+		}
 
-		// remove comments
-		$content = preg_replace('/\/\*(.*)\*\//iUs', '', $content);
-		$content = preg_replace('/([\t\w]{1,})\/\/.*/i', '', $content);
-
-		// remove tabs
-		$content = preg_replace('/\t/i', ' ', $content);
-
-		// remove faulty newlines
-		$content = preg_replace('/\r/iU', '', $content);
-
-		// remove empty lines
-		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
-
-		// store
-		SpoonFile::setContent($finalPath, $content);
-
-		// return
 		return $finalURL;
 	}
 
@@ -616,7 +570,7 @@ class FrontendHeader extends FrontendBaseObject
 	private function parseCSS()
 	{
 		// init var
-		$cssFiles = null;
+		$cssFiles = array();
 		$existingCSSFiles = $this->getCSSFiles();
 
 		// if there aren't any JS-files added we don't need to do something
@@ -703,8 +657,28 @@ class FrontendHeader extends FrontendBaseObject
 					$locale = 'en_US';
 					break;
 
-				case 'cn':
-					$locale = 'zh-CN';
+				case 'zh':
+					$locale = 'zh_CN';
+					break;
+
+				case 'cs':
+					$locale = 'cs_CZ';
+					break;
+
+				case 'el':
+					$locale = 'el_GR';
+					break;
+
+				case 'ja':
+					$locale = 'ja_JP';
+					break;
+
+				case 'sv':
+					$locale = 'sv_SE';
+					break;
+
+				case 'uk':
+					$locale = 'uk_UA';
 					break;
 
 				default:
@@ -726,7 +700,7 @@ class FrontendHeader extends FrontendBaseObject
 	private function parseJS()
 	{
 		// init var
-		$jsFiles = null;
+		$jsFiles = array();
 		$existingJSFiles = $this->getJSFiles();
 
 		// if there aren't any JS-files added we don't need to do something
@@ -820,9 +794,62 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private function parseSeo()
 	{
+		// any canonical URL provided?
+		if($this->canonical != '') $url = $this->canonical;
+
+		else
+		{
+			// get the chunks of the current url
+			$urlChunks = parse_url($this->URL->getQueryString());
+
+			// a canonical url should contain the domain. So make sure you redirect your website to a single url with .htaccess
+			$url = rtrim(SITE_URL, '/');
+			if(isset($urlChunks['port'])) $url .= ':' . $urlChunks['port'];
+			if(isset($urlChunks['path'])) $url .= '/' . $urlChunks['path'];
+
+			// any items provided through GET?
+			if(isset($urlChunks['query']))
+			{
+				// the items we should add into the canonical url
+				$itemsToAdd = array('page');
+				$addToUrl = array();
+
+				// loop all items in GET and check if we should ignore them
+				foreach($_GET as $key => $value)
+				{
+					if(in_array($key, $itemsToAdd)) $addToUrl[$key] = $value;
+				}
+
+				// add GET-params
+				if(!empty($addToUrl)) $url .= '?' . http_build_query($addToUrl);
+			}
+		}
+
+		// prevent against xss
+		$url = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($url) : SpoonFilter::htmlentities($url);
+
+		// canonical
+		$this->addLink(array('rel' => 'canonical', 'href' => $url));
+
 		// noodp, noydir
 		if(FrontendModel::getModuleSetting('core', 'seo_noodp', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noodp'));
 		if(FrontendModel::getModuleSetting('core', 'seo_noydir', false)) $this->addMetaData(array('name' => 'robots', 'content' => 'noydir'));
+	}
+
+	/**
+	 * Set the canonical URL
+	 *
+	 * @param string $url The Canonical URL.
+	 */
+	public function setCanonicalUrl($url)
+	{
+		$url = (string) $url;
+
+		// convert relative url
+		if(substr($url, 0, 1) == '/') $url = SITE_URL . $url;
+
+		// store
+		$this->canonical = $url;
 	}
 
 	/**

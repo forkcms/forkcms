@@ -107,14 +107,14 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		{
 			if($item['type'] == 'block')
 			{
-				$blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
-				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
+				$blocks[$item['id']] = SpoonFilter::ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = SpoonFilter::ucfirst($item['data']['extra_label']);
 			}
 
 			elseif($item['type'] == 'widget')
 			{
-				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . ucfirst(BL::lbl($item['label']));
-				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+				$widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . SpoonFilter::ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
 			}
 		}
 
@@ -123,8 +123,8 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		asort($widgets, SORT_STRING);
 
 		// create array
-		$defaultExtras = array('' => array(0 => ucfirst(BL::lbl('Editor'))),
-								ucfirst(BL::lbl('Widgets')) => $widgets);
+		$defaultExtras = array('' => array(0 => SpoonFilter::ucfirst(BL::lbl('Editor'))),
+								SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets);
 
 		// create default position field
 		$position = array();
@@ -203,7 +203,6 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
-		// call parent
 		parent::parse();
 
 		// assign form errors
@@ -231,47 +230,54 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 
 			// init var
 			$table = BackendExtensionsModel::templateSyntaxToArray($syntax);
-			$html = BackendExtensionsModel::buildTemplateHTML($syntax);
-			$cellCount = 0;
-			$first = true;
-			$errors = array();
 
-			// loop rows
-			foreach($table as $row)
+			// validate the syntax
+			if($table === false) $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+
+			else
 			{
-				// first row defines the cellcount
-				if($first) $cellCount = count($row);
+				$html = BackendExtensionsModel::buildTemplateHTML($syntax);
+				$cellCount = 0;
+				$first = true;
+				$errors = array();
 
-				// not same number of cells
-				if(count($row) != $cellCount)
+				// loop rows
+				foreach($table as $row)
 				{
-					// add error
-					$errors[] = BL::err('InvalidTemplateSyntax');
+					// first row defines the cellcount
+					if($first) $cellCount = count($row);
 
-					// stop
-					break;
-				}
-
-				// doublecheck position names
-				foreach($row as $cell)
-				{
-					// ignore unavailable space
-					if($cell != '/')
+					// not same number of cells
+					if(count($row) != $cellCount)
 					{
-						// not alphanumeric -> error
-						if(!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+						// add error
+						$errors[] = BL::err('InvalidTemplateSyntax');
 
-						// can't build proper html -> error
-						elseif(substr_count($html, '#position-' . $cell) != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+						// stop
+						break;
 					}
+
+					// doublecheck position names
+					foreach($row as $cell)
+					{
+						// ignore unavailable space
+						if($cell != '/')
+						{
+							// not alphanumeric -> error
+							if(!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+
+							// can't build proper html -> error
+							elseif(substr_count($html, '"#position-' . $cell . '"') != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+						}
+					}
+
+					// reset
+					$first = false;
 				}
 
-				// reset
-				$first = false;
+				// add errors
+				if($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
 			}
-
-			// add errors
-			if($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
 
 			// no errors?
 			if($this->frm->isCorrect())

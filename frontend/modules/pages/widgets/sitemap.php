@@ -11,6 +11,8 @@
  * This is a widget wherin the sitemap lives
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias.mullie@netlash.com>
+ * @author Dave Lens <dave.lens@netlash.com>
  */
 class FrontendPagesWidgetSitemap extends FrontendBaseWidget
 {

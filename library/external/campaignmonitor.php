@@ -544,7 +544,7 @@ class CampaignMonitor
 		}
 
 		// redefine
-		$url = (string) $url .'.'. $this->responseFormat;;
+		$url = (string) $url .'.'. $this->responseFormat;
 		$parameters = (array) $parameters;
 		$method = (string) $method;
 		$expectJSON = (bool) $expectJSON;
@@ -813,7 +813,7 @@ class CampaignMonitor
 			foreach($record['CustomFields']['SubscriberCustomField'] as $field)
 			{
 				// set values
-				$results[$i]['custom_fields'][$field['Key']] = $field['Value'];
+				$results[$key]['custom_fields'][$field['Key']] = $field['Value'];
 			}
 		}
 
@@ -1448,7 +1448,7 @@ class CampaignMonitor
 		$results = array();
 
 		// loop the records
-		foreach($records as $record)
+		foreach($records as $key => $record)
 		{
 			// set result values
 			$results[$key]['campaign_id'] = $record['CampaignID'];

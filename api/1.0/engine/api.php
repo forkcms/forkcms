@@ -11,6 +11,7 @@
  * This class defines the API.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 class API
 {
@@ -200,11 +201,27 @@ class API
 			// a string?
 			if(is_string($input))
 			{
-				// check if value contains special chars, if so wrap in CDATA
-				if(substr_count($input, '&') > 0 || substr_count($input, '<') > 0 || substr_count($input, '>') > 0)
+				// characters that require a cdata wrapper
+				$illegalCharacters = array('&', '<', '>', '"', '\'');
+
+				// default we dont wrap with cdata tags
+				$wrapCdata = false;
+
+				// find illegal characters in input string
+				foreach($illegalCharacters as $character)
 				{
-					$element->appendChild(new DOMCdataSection($input));
+					if(stripos($input, $character) !== false)
+					{
+						// wrap input with cdata
+						$wrapCdata = true;
+
+						// no need to search further
+						break;
+					}
 				}
+
+				// check if value contains illegal chars, if so wrap in CDATA
+				if($wrapCdata) $element->appendChild(new DOMCdataSection($input));
 
 				// just regular element
 				else $element->appendChild(new DOMText($input));
@@ -301,6 +318,24 @@ class API
 	}
 
 	/**
+	 * This is called in backend/modules/<module>/engine/api.php to limit certain calls to
+	 * a given request method.
+	 *
+	 * @param string $method
+	 * @return bool
+	 */
+	public static function isValidRequestMethod($method)
+	{
+		if($method !== $_SERVER['REQUEST_METHOD'])
+		{
+			$message = 'Illegal request method, only ' . $method . ' allowed for this method';
+			self::output(self::BAD_REQUEST, array('message' => $message));
+		}
+
+		return true;
+	}
+
+	/**
 	 * Output the return
 	 *
 	 * @param int $statusCode The status code.
@@ -352,7 +387,7 @@ class API
 
 		// set correct headers
 		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
+		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
 		// output JSON
 		echo json_encode($JSON);
@@ -377,7 +412,7 @@ class API
 		$version = $pathChunks[count($pathChunks) - 2];
 
 		// init XML
-		$XML = new DOMDocument('1.0', 'utf-8');
+		$XML = new DOMDocument('1.0', SPOON_CHARSET);
 
 		// set some properties
 		$XML->preserveWhiteSpace = false;
@@ -400,7 +435,7 @@ class API
 
 		// set correct headers
 		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: text/xml;charset=utf-8');
+		SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
 
 		// output XML
 		echo $XML->saveXML();

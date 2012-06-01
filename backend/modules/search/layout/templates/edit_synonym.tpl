@@ -12,7 +12,7 @@
 			{$txtTerm} {$txtTermError}
 		</p>
 		<div class="fakeP">
-			<label for="synonym">{$lblSynonyms|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			<label for="addValue-synonym">{$lblSynonyms|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			<div class="itemAdder">
 				{$txtSynonym} {$txtSynonymError}
 			</div>
@@ -20,14 +20,17 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showSearchDeleteSynonym}
 		<a href="{$var|geturl:'delete_synonym'}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
-		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
-		</div>
 		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 			<p>{$msgConfirmDeleteSynonym|sprintf:{$term}}</p>
+		</div>
+		{/option:showSearchDeleteSynonym}
+
+		<div class="buttonHolderRight">
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
 {/form:editItem}

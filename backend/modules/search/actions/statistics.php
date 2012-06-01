@@ -40,7 +40,7 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 		$this->dataGrid->addColumn('referrer', BL::lbl('Referrer'));
 
 		// header labels
-		$this->dataGrid->setHeaderLabels(array('time' => ucfirst(BL::lbl('SearchedOn'))));
+		$this->dataGrid->setHeaderLabels(array('time' => SpoonFilter::ucfirst(BL::lbl('SearchedOn'))));
 
 		// set column function
 		$this->dataGrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
@@ -54,8 +54,10 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// assign the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}

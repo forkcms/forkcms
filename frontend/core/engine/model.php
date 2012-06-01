@@ -15,11 +15,25 @@
 class FrontendModel
 {
 	/**
-	 * cached module-settings
+	 * Cached modules
+	 *
+	 * @var	array
+	 */
+	private static $modules = array();
+
+	/**
+	 * Cached module-settings
 	 *
 	 * @var	array
 	 */
 	private static $moduleSettings = array();
+
+	/**
+	 * Visitor id from tracking cookie
+	 *
+	 * @var	string
+	 */
+	private static $visitorId;
 
 	/**
 	 * Add a number to the string
@@ -96,6 +110,65 @@ class FrontendModel
 	}
 
 	/**
+	 * Get plain text for a given text
+	 *
+	 * @param string $text The text to convert.
+	 * @param bool[optional] $includeAHrefs Should the url be appended after the link-text?
+	 * @param bool[optional] $includeImgAlts Should the alt tag be inserted for images?
+	 * @return string
+	 */
+	public static function convertToPlainText($text, $includeAHrefs = true, $includeImgAlts = true)
+	{
+		// remove tabs, line feeds and carriage returns
+		$text = str_replace(array("\t", "\n", "\r"), '', $text);
+
+		// remove the head-, style- and script-tags and all their contents
+		$text = preg_replace('|\<head[^>]*\>(.*\n*)\</head\>|isU', '', $text);
+		$text = preg_replace('|\<style[^>]*\>(.*\n*)\</style\>|isU', '', $text);
+		$text = preg_replace('|\<script[^>]*\>(.*\n*)\</script\>|isU', '', $text);
+
+		// put back some new lines where needed
+		$text = preg_replace('#(\<(h1|h2|h3|h4|h5|h6|p|ul|ol)[^\>]*\>.*\</(h1|h2|h3|h4|h5|h6|p|ul|ol)\>)#isU', "\n$1", $text);
+
+		// replace br tags with newlines
+		$text = preg_replace('#(\<br[^\>]*\>)#isU', "\n", $text);
+
+		// replace links with the inner html of the link with the url between ()
+		// eg.: <a href="http://site.domain.com">My site</a> => My site (http://site.domain.com)
+		if($includeAHrefs) $text = preg_replace('|<a.*href="(.*)".*>(.*)</a>|isU', '$2 ($1)', $text);
+
+		// replace images with their alternative content
+		// eg. <img src="path/to/the/image.jpg" alt="My image" /> => My image
+		if($includeImgAlts) $text = preg_replace('|\<img[^>]*alt="(.*)".*/\>|isU', '$1', $text);
+
+		// decode html entities
+		$text = html_entity_decode($text, ENT_QUOTES, 'ISO-8859-15');
+
+		// remove space characters at the beginning and end of each line and clear lines with nothing but spaces
+		$text = preg_replace('/^\s*|\s*$|^\s*$/m', '', $text);
+
+		// strip tags
+		$text = strip_tags($text, '<h1><h2><h3><h4><h5><h6><p><li>');
+
+		// format heading, paragraphs and list items
+		$text = preg_replace('|\<h[123456]([^\>]*)\>(.*)\</h[123456]\>|isU', "\n** $2 **\n", $text);
+		$text = preg_replace('|\<p([^\>]*)\>(.*)\</p\>|isU', "$2\n", $text);
+		$text = preg_replace('|\<li([^\>]*)\>\n*(.*)\n*\</li\>|isU', "- $2\n", $text);
+
+		// replace 3 and more line breaks in a row by 2 line breaks
+		$text = preg_replace('/\n{3,}/', "\n\n", $text);
+
+		// use php contant for new lines
+		$text = str_replace("\n", PHP_EOL, $text);
+
+		// trim line breaks at the beginning and ending of the text
+		$text = trim($text, PHP_EOL);
+
+		// return the plain text
+		return $text;
+	}
+
+	/**
 	 * Generate a totally random but readable/speakable password
 	 *
 	 * @param int[optional] $length The maximum length for the password to generate.
@@ -163,6 +236,26 @@ class FrontendModel
 
 		// return db-object
 		return Spoon::get('database');
+	}
+
+	/**
+	 * Get the modules
+	 *
+	 * @return array
+	 */
+	public static function getModules()
+	{
+		// validate cache
+		if(empty(self::$modules))
+		{
+			// get all modules
+			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
+
+			// add modules to the cache
+			foreach($modules as $module) self::$modules[] = $module;
+		}
+
+		return self::$modules;
 	}
 
 	/**
@@ -339,25 +432,30 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->getRecords(
-			'SELECT pe.id AS extra_id, pb.html,
+		$blocks = (array) $db->getRecords(
+			'SELECT pe.id AS extra_id, pb.html, pb.position,
 			 pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 			 FROM pages_blocks AS pb
 			 INNER JOIN pages AS p ON p.revision_id = pb.revision_id
 			 LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-			 WHERE pb.revision_id = ? AND p.status = ?
-			 ORDER BY pb.id',
-			array('N', $record['revision_id'], 'active')
+			 WHERE pb.revision_id = ?
+			 ORDER BY pb.position, pb.sequence',
+			array('N', $record['revision_id'])
 		);
 
+		// init positions
+		$record['positions'] = array();
+
 		// loop blocks
-		foreach($record['blocks'] as $index => $row)
+		foreach($blocks as $block)
 		{
 			// unserialize data if it is available
-			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
+			if(isset($block['data'])) $block['data'] = unserialize($block['data']);
+
+			// save to position
+			$record['positions'][$block['position']][] = $block;
 		}
 
-		// return page record
 		return $record;
 	}
 
@@ -378,6 +476,25 @@ class FrontendModel
 
 		// timestamp given
 		return gmdate($format, (int) $timestamp);
+	}
+
+	/**
+	 * Get the visitor's id (using a tracking cookie)
+	 *
+	 * @return string
+	 */
+	public static function getVisitorId()
+	{
+		// check if tracking id is fetched already
+		if(self::$visitorId !== null) return self::$visitorId;
+
+		// get/init tracking identifier
+		self::$visitorId = CommonCookie::exists('track') ? (string) CommonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
+
+		// set/prolong tracking cookie
+		CommonCookie::set('track', self::$visitorId, 86400 * 365);
+
+		return self::getVisitorId();
 	}
 
 	/**
@@ -532,6 +649,73 @@ class FrontendModel
 	}
 
 	/**
+	 * Push a notification to Microsoft's notifications-server
+	 *
+	 * @param string $title The title for the tile to send.
+	 * @param string[optional] $count The count for the tile to send.
+	 * @param string[optional] $image The image for the tile to send.
+	 * @param string[optional] $backTitle The title for the tile backtround to send.
+	 * @param string[optional] $backText The text for the tile background to send.
+	 * @param string[optional] $backImage The image for the tile background to send.
+	 * @param string[optional] $tile The secondary tile to update.
+	 * @param string[optional] $uri The application uri to navigate to.
+	 */
+	public static function pushToMicrosoftApp($title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $tile = null, $uri = null)
+	{
+		// get ForkAPI-keys
+		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
+		$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+
+		// no keys, so stop here
+		if($publicKey == '' || $privateKey == '') return;
+
+		// get all microsoft channel uri's
+		$channelUris = (array) FrontendModel::getDB()->getColumn(
+			'SELECT s.value
+			 FROM users AS i
+			 INNER JOIN users_settings AS s
+			 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
+			array('Y', 'N', 'microsoft_channel_uri', 'N;')
+		);
+
+		// no devices, so stop here
+		if(empty($channelUris)) return;
+
+		// init var
+		$uris = array();
+
+		// loop devices
+		foreach($channelUris as $row)
+		{
+			// unserialize
+			$row = unserialize($row);
+
+			// loop and add
+			foreach($row as $item) $uris[] = $item;
+		}
+
+		// no channel uri's, so stop here
+		if(empty($uris)) return;
+
+		// require the class
+		require_once PATH_LIBRARY . '/external/fork_api.php';
+
+		// create instance
+		$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+		try
+		{
+			// push
+			$forkAPI->microsoftPush($uris, $title, $count, $image, $backTitle, $backText, $backImage, $tile, $uri);
+		}
+
+		catch(Exception $e)
+		{
+			if(SPOON_DEBUG) throw $e;
+		}
+	}
+
+	/**
 	 * Store a modulesetting
 	 *
 	 * @param string $module The module wherefor a setting has to be stored.
@@ -665,16 +849,17 @@ class FrontendModel
 		// get db
 		$db = self::getDB(true);
 
-		// update if already existing
-		// @todo refactor this nasty if statement
-		if((int) $db->getVar('SELECT COUNT(*)
-									FROM hooks_subscriptions AS i
-									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
-									array($eventModule, $eventName, $module)) > 0)
-		{
-			// update
-			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
-		}
+		// check if the subscription already exists
+		$exists = (bool) $db->getVar(
+			'SELECT 1
+			 FROM hooks_subscriptions AS i
+			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
+			 LIMIT 1',
+			array($eventModule, $eventName, $module)
+		);
+
+		// update
+		if($exists) $db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
 
 		// insert
 		else $db->insert('hooks_subscriptions', $item);

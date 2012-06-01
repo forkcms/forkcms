@@ -37,6 +37,8 @@ class PagesInstaller extends ModuleInstaller
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
+		$this->insertExtra('pages', 'widget', 'Navigation', 'previous_next_navigation');
+
 		$extras['subpages_widget'] = $this->insertExtra(
 			'pages',
 			'widget',
@@ -51,7 +53,7 @@ class PagesInstaller extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if pages already exist for this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)))
+			if(!(bool) $this->getDB()->getVar('SELECT 1 FROM pages WHERE language = ? LIMIT 1', array($language)))
 			{
 				// insert homepage
 				$this->insertPage(
@@ -59,7 +61,7 @@ class PagesInstaller extends ModuleInstaller
 						'id' => 1,
 						'parent_id' => 0,
 						'template_id' => $this->getTemplateId('home'),
-						'title' => ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
 						'language' => $language,
 						'allow_move' => 'N',
 						'allow_delete' => 'N'
@@ -73,7 +75,7 @@ class PagesInstaller extends ModuleInstaller
 				$this->insertPage(
 					array(
 						'id' => 2,
-						'title' => ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Sitemap', 'core', $language, 'lbl', 'frontend')),
 						'type' => 'footer',
 						'language' => $language
 					),
@@ -87,7 +89,7 @@ class PagesInstaller extends ModuleInstaller
 				$this->insertPage(
 					array(
 						'id' => 3,
-						'title' => ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'core', $language, 'lbl', 'frontend')),
 						'type' => 'footer',
 						'language' => $language
 					),
@@ -173,7 +175,7 @@ class PagesInstaller extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if pages already exist for this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ? AND id > ?', array($language, 404)))
+			if(!(bool) $this->getDB()->getVar('SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1', array($language, 404)))
 			{
 				// re-insert homepage
 				$this->insertPage(
@@ -181,7 +183,7 @@ class PagesInstaller extends ModuleInstaller
 						'id' => 1,
 						'parent_id' => 0,
 						'template_id' => $this->getTemplateId('home'),
-						'title' => ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Home', 'core', $language, 'lbl', 'backend')),
 						'language' => $language,
 						'allow_move' => 'N',
 						'allow_delete' => 'N'
@@ -196,7 +198,7 @@ class PagesInstaller extends ModuleInstaller
 				// blog
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('Blog', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Blog', 'core', $language, 'lbl', 'frontend')),
 						'language' => $language
 					),
 					null,
@@ -211,7 +213,7 @@ class PagesInstaller extends ModuleInstaller
 				// about us parent
 				$aboutUsId = $this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')
+						'title' => SpoonFilter::ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')
 					),
 					'parent_id' => 1,
 					'language' => $language),
@@ -223,7 +225,7 @@ class PagesInstaller extends ModuleInstaller
 				// location
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('Location', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('Location', 'core', $language, 'lbl', 'frontend')),
 						'parent_id' => $aboutUsId,
 						'language' => $language
 					),
@@ -236,7 +238,7 @@ class PagesInstaller extends ModuleInstaller
 				// about us child
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
+						'title' => SpoonFilter::ucfirst($this->getLocale('AboutUs', 'core', $language, 'lbl', 'frontend')),
 						'parent_id' => $aboutUsId,
 						'language' => $language
 					),
@@ -249,7 +251,7 @@ class PagesInstaller extends ModuleInstaller
 				// history
 				$this->insertPage(
 					array(
-						'title' => ucfirst($this->getLocale('History', 'core', $language, 'lbl', 'frontend')
+						'title' => SpoonFilter::ucfirst($this->getLocale('History', 'core', $language, 'lbl', 'frontend')
 					),
 					'parent_id' => 1,
 					'language' => $language),

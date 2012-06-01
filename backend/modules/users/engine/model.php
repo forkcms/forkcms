@@ -50,9 +50,10 @@ class BackendUsersModel
 	{
 		// no user to ignore
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.email = ? AND i.deleted = ?',
+			 WHERE i.email = ? AND i.deleted = ?
+			 LIMIT 1',
 			array((string) $email, 'Y')
 		);
 	}
@@ -74,17 +75,19 @@ class BackendUsersModel
 
 		// if the user should also be active, there should be at least one row to return true
 		if($active) return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.id = ? AND i.deleted = ?',
+			 WHERE i.id = ? AND i.deleted = ?
+			 LIMIT 1',
 			array($id, 'N')
 		);
 
 		// fallback, this doesn't take the active nor deleted status in account
 		return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.id = ?',
+			 WHERE i.id = ?
+			 LIMIT 1',
 			array($id)
 		);
 	}
@@ -107,17 +110,19 @@ class BackendUsersModel
 
 		// userid specified?
 		if($id !== null) return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.id != ? AND i.email = ?',
+			 WHERE i.id != ? AND i.email = ?
+			 LIMIT 1',
 			array($id, $email)
 		);
 
 		// no user to ignore
 		return (bool) $db->getVar(
-			'SELECT COUNT(i.id)
+			'SELECT 1
 			 FROM users AS i
-			 WHERE i.email = ?',
+			 WHERE i.email = ?
+			 LIMIT 1',
 			array($email)
 		);
 	}
@@ -138,7 +143,7 @@ class BackendUsersModel
 
 		// get general user data
 		$user = (array) $db->getRecord(
-			'SELECT i.id, i.email, i.active
+			'SELECT i.id, i.email, i.password, i.active
 			 FROM users AS i
 			 WHERE i.id = ?',
 			array($id)
@@ -157,6 +162,32 @@ class BackendUsersModel
 
 		// return
 		return $user;
+	}
+
+	/**
+	 * Get the possible line endings for a CSV-file
+	 *
+	 * @return array
+	 */
+	public static function getCSVLineEndings()
+	{
+		return array(
+			array('\n' => '\n'),
+			array('\r\n' => '\r\n')
+		);
+	}
+
+	/**
+	 * Get the possible CSV split characters
+	 *
+	 * @return array
+	 */
+	public static function getCSVSplitCharacters()
+	{
+		return array(
+			array(';' => ';'),
+			array(',' => ',')
+		);
 	}
 
 	/**
@@ -233,6 +264,23 @@ class BackendUsersModel
 	}
 
 	/**
+	 * Fetch a user setting for a specific user
+	 *
+	 * @param int $userId The id of the user.
+	 * @param string $setting The name of the setting to get.
+	 * @return mixed
+	 */
+	public static function getSetting($userId, $setting)
+	{
+		return @unserialize(BackendModel::getDB()->getVar(
+			'SELECT value
+			 FROM users_settings
+			 WHERE user_id = ? AND name = ?',
+			array((int) $userId, (string) $setting)
+		));
+	}
+
+	/**
 	 * Fetch the list of time formats including examples of these formats.
 	 *
 	 * @return array
@@ -299,6 +347,25 @@ class BackendUsersModel
 
 		// return the new users' id
 		return $userId;
+	}
+
+	/**
+	 * Set a user setting for a specific user
+	 *
+	 * @param int $userId The id of the user.
+	 * @param string $setting The name of the setting to set.
+	 * @param string $value The value of the setting to set.
+	 * @return mixed
+	 */
+	public static function setSetting($userId, $setting, $value)
+	{
+		// insert or update
+		BackendModel::getDB(true)->execute(
+			'INSERT INTO users_settings(user_id, name, value)
+			 VALUES(?, ?, ?)
+			 ON DUPLICATE KEY UPDATE value = ?',
+			array($userId, $setting, serialize($value), serialize($value))
+		);
 	}
 
 	/**

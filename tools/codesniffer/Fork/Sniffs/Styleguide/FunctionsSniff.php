@@ -122,7 +122,7 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 					// validate variable
 					if($variable !== trim($variable))
 					{
-						$phpcsFile->addError('Something wrong with the variable in the PHPDoc. We expact @param[space]<type>[space]<variable>...', $i);
+						$phpcsFile->addError('Something wrong with the variable in the PHPDoc. We expect @param[space]<type>[space]<variable>...', $i);
 					}
 
 					/*

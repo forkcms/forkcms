@@ -87,7 +87,7 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		}
 
 		// parse the datagrid
-		return (!empty($results) ? $dataGrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="dataGrid"><tr><td>' . BL::msg('NoReferrers') . '</td></tr></table>');
+		return (!empty($results) ? $dataGrid->getContent() : '<table class="dataGrid"><tr><td>' . BL::msg('NoKeywords') . '</td></tr></table>');
 	}
 
 	/**
@@ -105,6 +105,6 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		}
 
 		// parse the datagrid
-		return (!empty($results) ? $dataGrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="dataGrid"><tr><td>' . BL::msg('NoKeywords') . '</td></tr></table>');
+		return (!empty($results) ? $dataGrid->getContent() : '<table class="dataGrid"><tr><td>' . BL::msg('NoReferrers') . '</td></tr></table>');
 	}
 }

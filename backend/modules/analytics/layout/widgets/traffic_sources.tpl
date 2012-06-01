@@ -25,7 +25,7 @@
 					{/option:dgAnalyticsReferrers}
 
 					{option:!dgAnalyticsReferrers}
-						<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+						<table class="dataGrid">
 							<tr>
 								<td>{$msgNoReferrers}</td>
 							</tr>
@@ -42,7 +42,7 @@
 					{/option:dgAnalyticsKeywords}
 
 					{option:!dgAnalyticsKeywords}
-						<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+						<table class="dataGrid">
 							<tr>
 								<td>{$msgNoKeywords}</td>
 							</tr>
@@ -56,7 +56,7 @@
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'index':'analytics'}" class="button"><span>{$lblAllStatistics|ucfirst}</span></a>
 			<a href="#refresh" id="refreshTrafficSources" class="submitButton button inputButton mainButton iconLink icon iconRefresh"><span></span></a>
-			<div id="settingsUrl" class="hidden">{$settingsUrl}</div>
+			{option:settingsUrl}<div id="settingsUrl" class="hidden">{$settingsUrl}</div>{/option:settingsUrl}
 		</div>
 	</div>
 </div>

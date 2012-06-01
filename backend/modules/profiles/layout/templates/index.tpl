@@ -3,12 +3,16 @@
 
 <div class="pageTitle">
 	<h2>{$lblProfiles|ucfirst}</h2>
+
+	<div class="buttonHolderRight">
+		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}"><span>{$lblAdd|ucfirst}</span></a>
+	</div>
 </div>
 
 <div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">
-			<table cellspacing="0" cellpadding="0" border="0">
+			<table>
 				<tbody>
 					<tr>
 						<td>

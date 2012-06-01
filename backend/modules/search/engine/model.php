@@ -11,6 +11,7 @@
  * In this file we store all generic functions that we will be using in the search module
  *
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendSearchModel
 {
@@ -23,42 +24,6 @@ class BackendSearchModel
 		'SELECT UNIX_TIMESTAMP(i.time) AS time, i.term, i.data
 		 FROM search_statistics AS i
 		 WHERE i.language = ?';
-
-	/**
-	 * Add an index
-	 *
-	 * @param string $module The module wherin will be searched.
-	 * @param int $otherId The id of the record.
-	 * @param  array $fields A key/value pair of fields to index.
-	 * @param string[optional] $language The frontend language for this entry.
-	 */
-	public static function addIndex($module, $otherId, array $fields, $language = null)
-	{
-		// module exists?
-		if(!in_array('search', BackendModel::getModules())) return;
-
-		// no fields?
-		if(empty($fields)) return;
-
-		// set language
-		if(!$language) $language = BL::getWorkingLanguage();
-
-		// get db
-		$db = BackendModel::getDB(true);
-
-		// insert search index
-		foreach($fields as $field => $value)
-		{
-			// reformat value
-			$value = strip_tags((string) $value);
-
-			// insert in db
-			$db->insert('search_index', array('module' => (string) $module, 'other_id' => (int) $otherId, 'language' => (string) $language, 'field' => (string) $field, 'value' => $value, 'active' => 'Y'));
-		}
-
-		// invalidate the cache for search
-		self::invalidateCache();
-	}
 
 	/**
 	 * Delete a synonym
@@ -75,47 +40,6 @@ class BackendSearchModel
 	}
 
 	/**
-	 * Edit an index
-	 *
-	 * @param string $module The module wherin will be searched.
-	 * @param int $otherId The id of the record.
-	 * @param  array $fields A key/value pair of fields to index.
-	 * @param string[optional] $language The frontend language for this entry.
-	 */
-	public static function editIndex($module, $otherId, array $fields, $language = null)
-	{
-		// module exists?
-		if(!in_array('search', BackendModel::getModules())) return;
-
-		// no fields?
-		if(empty($fields)) return;
-
-		// set language
-		if(!$language) $language = BL::getWorkingLanguage();
-
-		// get db
-		$db = BackendModel::getDB(true);
-
-		// insert search index
-		foreach($fields as $field => $value)
-		{
-			// reformat value
-			$value = strip_tags((string) $value);
-
-			// update search index
-			$db->execute(
-				'INSERT INTO search_index (module, other_id, language, field, value, active)
-				 VALUES (?, ?, ?, ?, ?, ?)
-				 ON DUPLICATE KEY UPDATE value = ?, active = ?',
-				array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
-			);
-		}
-
-		// invalidate the cache for search
-		self::invalidateCache();
-	}
-
-	/**
 	 * Check if a synonym exists
 	 *
 	 * @param int $id The id of the item we're looking for.
@@ -124,9 +48,10 @@ class BackendSearchModel
 	public static function existsSynonymById($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM search_synonyms
-			 WHERE id = ?',
+			 WHERE id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -141,16 +66,18 @@ class BackendSearchModel
 	public static function existsSynonymByTerm($term, $exclude = null)
 	{
 		if($exclude == null) return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM search_synonyms
-			 WHERE term = ?',
+			 WHERE term = ?
+			 LIMIT 1',
 			array((string) $term)
 		);
 
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM search_synonyms
-			 WHERE term = ? AND id != ?',
+			 WHERE term = ? AND id != ?
+			 LIMIT 1',
 			array((string) $term, (int) $exclude)
 		);
 	}
@@ -249,6 +176,47 @@ class BackendSearchModel
 
 		// delete indexes
 		BackendModel::getDB(true)->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((string) $module, (int) $otherId, (string) $language));
+
+		// invalidate the cache for search
+		self::invalidateCache();
+	}
+
+	/**
+	 * Edit an index
+	 *
+	 * @param string $module The module wherin will be searched.
+	 * @param int $otherId The id of the record.
+	 * @param  array $fields A key/value pair of fields to index.
+	 * @param string[optional] $language The frontend language for this entry.
+	 */
+	public static function saveIndex($module, $otherId, array $fields, $language = null)
+	{
+		// module exists?
+		if(!in_array('search', BackendModel::getModules())) return;
+
+		// no fields?
+		if(empty($fields)) return;
+
+		// set language
+		if(!$language) $language = BL::getWorkingLanguage();
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// insert search index
+		foreach($fields as $field => $value)
+		{
+			// reformat value
+			$value = strip_tags((string) $value);
+
+			// update search index
+			$db->execute(
+				'INSERT INTO search_index (module, other_id, language, field, value, active)
+				 VALUES (?, ?, ?, ?, ?, ?)
+				 ON DUPLICATE KEY UPDATE value = ?, active = ?',
+				array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
+			);
+		}
 
 		// invalidate the cache for search
 		self::invalidateCache();

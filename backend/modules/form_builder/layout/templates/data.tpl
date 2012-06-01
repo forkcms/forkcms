@@ -5,8 +5,8 @@
 	<h2>{$lblFormBuilder|ucfirst}: {$lblFormData|sprintf:{$name}}</h2>
 
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
-		<a href="{$var|geturl:'export_data'}&id={$id}&amp;start_date={$start_date}&amp;end_date={$end_date}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+		{option:showFormBuilderIndex}<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>{/option:showFormBuilderIndex}
+		{option:showFormBuilderExportData}<a href="{$var|geturl:'export_data'}&id={$id}&amp;start_date={$start_date}&amp;end_date={$end_date}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>{/option:showFormBuilderExportData}
 	</div>
 </div>
 
@@ -16,13 +16,13 @@
 
 			<input type="hidden" name="id" value="{$id}" />
 
-			<table cellspacing="0" cellpadding="0" border="0">
+			<table>
 				<tbody>
 					<tr>
 						<td>
 							<div class="options">
 								<p>
-									<label for="start_date">{$lblStartDate|ucfirst}</label>
+									<label for="startDate">{$lblStartDate|ucfirst}</label>
 									{$txtStartDate} {$txtStartDateError}
 								</p>
 							</div>
@@ -30,7 +30,7 @@
 						<td>
 							<div class="options">
 								<p>
-									<label for="end_date">{$lblEndDate|ucfirst}</label>
+									<label for="endDate">{$lblEndDate|ucfirst}</label>
 									{$txtEndDate} {$txtEndDateError}
 								</p>
 							</div>

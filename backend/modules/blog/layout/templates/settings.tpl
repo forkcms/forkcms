@@ -15,11 +15,11 @@
 			{$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
 		</div>
 		<div class="options">
-			<label for="recentArticlesNumberOfItems">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
+			<label for="recentArticlesFullNumberOfItems">{$msgNumItemsInRecentArticlesFull|ucfirst}</label>
 			{$ddmRecentArticlesFullNumberOfItems} {$ddmRecentArticlesFullNumberOfItemsError}
 		</div>
 		<div class="options">
-			<label for="recentArticlesNumberOfItems">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
+			<label for="recentArticlesListNumberOfItems">{$msgNumItemsInRecentArticlesList|ucfirst}</label>
 			{$ddmRecentArticlesListNumberOfItems} {$ddmRecentArticlesListNumberOfItemsError}
 		</div>
 	</div>
@@ -44,14 +44,25 @@
 		</div>
 	</div>
 
+	{option:isGod}
+	<div class="box">
+		<div class="heading">
+			<h3>{$lblImage|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<label for="showImageForm">{$chkShowImageForm} {$msgShowImageForm}</label>
+		</div>
+	</div>
+	{/option:isGod}
+
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblNotifications|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<ul class="inputList p0">
-				<li><label for="notifyOnNewCommentToModerate">{$chkNotifyByEmailOnNewCommentToModerate} {$msgNotifyByEmailOnNewCommentToModerate|ucfirst}</label></li>
-				<li><label for="notifyOnNewComment">{$chkNotifyByEmailOnNewComment} {$msgNotifyByEmailOnNewComment|ucfirst}</label></li>
+				<li><label for="notifyByEmailOnNewCommentToModerate">{$chkNotifyByEmailOnNewCommentToModerate} {$msgNotifyByEmailOnNewCommentToModerate|ucfirst}</label></li>
+				<li><label for="notifyByEmailOnNewComment">{$chkNotifyByEmailOnNewComment} {$msgNotifyByEmailOnNewComment|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>

@@ -13,6 +13,7 @@
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendPagesEdit extends BackendBaseActionEdit
 {
@@ -36,6 +37,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 * @var	array
 	 */
 	private $extras = array();
+
+	/**
+	 * Is the current user a god user?
+	 *
+	 * @var bool
+	 */
+	private $isGod = false;
 
 	/**
 	 * The positions
@@ -62,11 +70,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->loadData();
 
 		// add js
- 		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
- 		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
- 		$this->header->addJS('jstree/jquery.tree.js');
- 		$this->header->addJS('jstree/lib/jquery.cookie.js');
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js', null, false);
+		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
@@ -102,6 +108,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	{
 		// get record
 		$this->id = $this->getParameter('id', 'int');
+		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// check if something went wrong
 		if($this->id === null || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
@@ -164,20 +171,24 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setPaging(false);
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
-
-		// set colum URLs
-		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
+		$this->dgDrafts->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set column-functions
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
-
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set colum URLs
+			$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
+
+			// add use column
+			$this->dgDrafts->addColumn('use_draft', null, BL::lbl('UseThisDraft'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+		}
 	}
 
 	/**
@@ -186,7 +197,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -196,8 +207,26 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+		$this->frm->addEditor('html');
 		$this->frm->addHidden('template_id', $this->record['template_id']);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
+
+		// a god user should be able to adjust the detailed settings for a page easily
+		if($this->isGod)
+		{
+			// init some vars
+			$items = array('move', 'children', 'edit', 'delete');
+			$checked = array();
+			$values = array();
+
+			foreach($items as $value)
+			{
+				$values[] = array('label' => BL::msg(SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+				if(isset($this->record['allow_' . $value]) && $this->record['allow_' . $value] == 'Y') $checked[] = $value;
+			}
+
+			$this->frm->addMultiCheckbox('allow', $values, $checked);
+		}
 
 		// build prototype block
 		$block['index'] = 0;
@@ -292,9 +321,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		if(isset($this->record['data']['internal_redirect']['page_id'])) $redirectValue = 'internal';
 		if(isset($this->record['data']['external_redirect']['url'])) $redirectValue = 'external';
 		$redirectValues = array(
-			array('value' => 'none', 'label' => ucfirst(BL::lbl('None'))),
-			array('value' => 'internal', 'label' => ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
-			array('value' => 'external', 'label' => ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
+			array('value' => 'none', 'label' => SpoonFilter::ucfirst(BL::lbl('None'))),
+			array('value' => 'internal', 'label' => SpoonFilter::ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
+			array('value' => 'external', 'label' => SpoonFilter::ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
 		);
 		$this->frm->addRadiobutton('redirect', $redirectValues, $redirectValue);
 		$this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown(), ($redirectValue == 'internal') ? $this->record['data']['internal_redirect']['page_id'] : null);
@@ -336,17 +365,21 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
-
-		// set colum URLs
-		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
+		$this->dgRevisions->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit'))
+		{
+			// set colum URLs
+			$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
+
+			// add use column
+			$this->dgRevisions->addColumn('use_revision', null, BL::lbl('UseThisVersion'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		}
 	}
 
 	/**
@@ -354,12 +387,15 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// set
 		$this->record['url'] = $this->meta->getURL();
 		if($this->id == 1) $this->record['url'] = '';
 
 		// parse some variables
 		$this->tpl->assign('item', $this->record);
+		$this->tpl->assign('isGod', $this->isGod);
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('positions', $this->positions);
 		$this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
@@ -374,14 +410,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		if(BackendPagesModel::getFirstChildId($this->record['id']) !== false) $showDelete = false;
 		if(!$this->record['delete_allowed']) $showDelete = false;
 
+		// allowed?
+		if(!BackendAuthentication::isAllowedAction('delete', $this->getModule())) $showDelete = false;
+
 		// show delete button
-		$this->tpl->assign('showDelete', $showDelete);
+		$this->tpl->assign('showPagesDelete', $showDelete);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
-
-		// parse the form
-		$this->frm->parse($this->tpl);
 
 		// parse datagrids
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
@@ -453,6 +489,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['sequence'] = $this->record['sequence'];
 				$page['data'] = ($data !== null) ? serialize($data) : null;
 
+				if($this->isGod)
+				{
+					$page['allow_move'] = (in_array('move', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_children'] = (in_array('children', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_edit'] = (in_array('edit', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_delete'] = (in_array('delete', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+				}
+
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
 
@@ -460,10 +504,10 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['revision_id'] = BackendPagesModel::update($page);
 
 				// loop blocks
-				foreach($this->blocksContent as $i => &$block)
+				foreach($this->blocksContent as $i => $block)
 				{
 					// add page revision id to blocks
-					$block['revision_id'] = $page['revision_id'];
+					$this->blocksContent[$i]['revision_id'] = $page['revision_id'];
 
 					// validate blocks, only save blocks for valid positions
 					if(!in_array($block['position'], $this->templates[$this->frm->getField('template_id')->getValue()]['data']['names'])) unset($this->blocksContent[$i]);
@@ -484,18 +528,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// active
 				if($page['status'] == 'active')
 				{
-					// edit search index
-					if(is_callable(array('BackendSearchModel', 'editIndex')))
-					{
-						// init var
-						$text = '';
+					// init var
+					$text = '';
 
-						// build search-text
-						foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
+					// build search-text
+					foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
-						// add
-						BackendSearchModel::editIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
-					}
+					// add to search index
+					BackendSearchModel::saveIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=edited&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);

@@ -41,7 +41,7 @@
 #fullwidthSwitch:active
 #fullwidthSwitch:focus {
 	width: 6px;
-	background: #EAEAEA url(/backend/core/layout/images/close_w.gif) no-repeat 0 center;
+	background: #EAEAEA url(../../images/close_w.gif) no-repeat 0 center;
 }
 
 	#fullwidthSwitch.collapsed {
@@ -573,7 +573,8 @@
 		margin: 0 0 0 12px;
 	}
 
-		#users.usersAddEdit .settingsUserInfo .infoGrid th {
+		#users.usersAddEdit .settingsUserInfo .infoGrid th,
+		#widgetUsersStatistics .settingsUserInfo .infoGrid th {
 			white-space: nowrap;
 		}
 
@@ -744,7 +745,7 @@
 	#locale.localeIndex #name { width: 260px; }
 	#locale.localeIndex select { width: 140px; }
 
-	#locale.localeIndex .datafilter .help {
+	#locale.localeIndex .dataFilter .help {
 		top: 5px;
 		margin-left: 0;
 	}

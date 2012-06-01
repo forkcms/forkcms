@@ -22,11 +22,18 @@
 			</ul>
 
 			<h3>Debug mode</h3>
-			<p>Warning: debug mode is only usefull when developing on Fork CMS.</p>
+			<p>Warning: debug mode is only useful when developing on Fork CMS.</p>
 			<ul class="inputList noPadding">
 				<li>
 					{$chkDebugMode} <label for="debugMode">Enable debug mode </label>
 					<span class="helpTxt">(Leave this checkbox unticked for better security and performance)</span>
+				</li>
+				<li>
+					{$chkDifferentDebugEmail} <label for="differentDebugEmail">Use a specific debug email address </label>
+					<span class="helpTxt">(Exception emails will be sent to this email address)</span>
+				</li>
+				<li id="debugEmailHolder">
+					{$txtDebugEmail} {$txtDebugEmailError}
 				</li>
 			</ul>
 		</div>

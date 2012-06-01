@@ -60,6 +60,9 @@ class BackendJavascript
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new BackendTemplate();
 
+		// enable addslashes on each locale
+		$tpl->setAddSlashes(true);
+
 		// display
 		$tpl->display($path, true);
 	}
@@ -111,7 +114,7 @@ class BackendJavascript
 			SpoonHTTP::setHeadersByCode(400);
 
 			// when debug is on throw an exception
-			if(SPOON_DEBUG) throw new FrontendException('Invalid file.');
+			if(SPOON_DEBUG) throw new BackendException('Invalid file.');
 
 			// when debug is of show a descent message
 			else exit(SPOON_DEBUG_MESSAGE);
@@ -147,7 +150,7 @@ class BackendJavascript
 			SpoonHTTP::setHeadersByCode(400);
 
 			// when debug is on throw an exception
-			if(SPOON_DEBUG) throw new FrontendException('Invalid file.');
+			if(SPOON_DEBUG) throw new BackendException('Invalid file.');
 
 			// when debug is of show a descent message
 			else exit(SPOON_DEBUG_MESSAGE);
@@ -160,7 +163,7 @@ class BackendJavascript
 			SpoonHTTP::setHeadersByCode(404);
 
 			// when debug is on throw an exception
-			if(SPOON_DEBUG) throw new FrontendException('File not present.');
+			if(SPOON_DEBUG) throw new BackendException('File not present.');
 
 			// when debug is of show a descent message
 			else exit(SPOON_DEBUG_MESSAGE);

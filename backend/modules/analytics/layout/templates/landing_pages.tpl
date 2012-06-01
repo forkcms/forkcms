@@ -3,11 +3,14 @@
 
 <div class="pageTitle">
 	<h2>{$lblLandingPages|ucfirst}</h2>
+
+	{option:showAnalyticsAddLandingPage}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add_landing_page'}" class="button icon iconAdd" title="{$lblAddLandingPage|ucfirst}">
 			<span>{$lblAddLandingPage|ucfirst}</span>
 		</a>
 	</div>
+	{/option:showAnalyticsAddLandingPage}
 </div>
 
 <div class="box">
@@ -21,7 +24,7 @@
 				{/option:dgPages}
 
 				{option:!dgPages}
-					<table border="0" cellspacing="0" cellpadding="0" class="dataGrid">
+					<table class="dataGrid">
 						<tr>
 							<td>{$msgNoLandingPages}</td>
 						</tr>

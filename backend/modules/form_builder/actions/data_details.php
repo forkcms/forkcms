@@ -55,8 +55,10 @@ class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 	/**
 	 * Parse
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// form info
 		$this->tpl->assign('name', $this->record['name']);
 		$this->tpl->assign('formId', $this->record['id']);

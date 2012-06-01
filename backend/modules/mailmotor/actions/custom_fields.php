@@ -69,7 +69,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->dataGrid = new BackendDataGridArray($this->group['custom_fields']);
 
 		// set headers values
-		$headers['name'] = ucfirst(BL::lbl('Title'));
+		$headers['name'] = SpoonFilter::ucfirst(BL::lbl('Title'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);
@@ -96,8 +96,10 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
@@ -120,6 +122,6 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$hasSentMailings = (BackendMailmotorModel::existsSentMailingsByCampaignID($id) > 0) ? true : false;
 
 		// return the result
-		return ($hasSentMailings) ? $html : '';
+		return ($hasSentMailings && BackendAuthentication::isAllowedAction('statistics_campaign')) ? $html : '';
 	}
 }

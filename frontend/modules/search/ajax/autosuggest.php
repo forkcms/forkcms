@@ -185,21 +185,6 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		// format data
 		foreach($this->items as &$item)
 		{
-			// full url is set?
-			if(!isset($item['full_url'])) continue;
-
-			// build utm array
-			$utm['utm_source'] = SpoonFilter::urlise(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
-			$utm['utm_medium'] = 'fork-search';
-			$utm['utm_term'] = $this->term;
-
-			// get parameters in url already
-			if(strpos($item['full_url'], '?') !== false) $glue = '&';
-			else $glue = '?';
-
-			// add utm to url
-			$item['full_url'] .= $glue . http_build_query($utm, '', '&');
-
 			// format description
 			$item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? mb_substr(strip_tags($item['text']), 0, $this->length, SPOON_CHARSET) . '…' : $item['text']) : '';
 		}
@@ -214,7 +199,8 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 	private function validateForm()
 	{
 		// set values
-		$this->term = SpoonFilter::getPostValue('term', null, '');
+		$searchTerm = SpoonFilter::getPostValue('term', null, '');
+		$this->term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities($searchTerm);
 		$this->length = (int) SpoonFilter::getPostValue('length', null, 50);
 
 		// validate

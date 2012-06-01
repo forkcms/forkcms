@@ -24,6 +24,7 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		0.1.1
  */
 class SpoonFormDropdown extends SpoonFormAttributes
@@ -269,17 +270,21 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			// post/get data
 			$data = $this->getMethod(true);
 
+
 			// multiple
 			if(!$this->single)
 			{
+				// get the name
+				$name = substr($this->attributes['name'], 0, -2);
+
 				// field has been submitted
-				if(isset($data[$this->attributes['name']]) && is_array($data[$this->attributes['name']]) && count($data[$this->attributes['name']]) != 0)
+				if(isset($data[$name]) && is_array($data[$name]) && count($data[$name]) != 0)
 				{
 					// reset selected
 					$this->selected = array();
 
 					// loop elements and add the value to the array
-					foreach($data[$this->attributes['name']] as $label => $value) $this->selected[] = $value;
+					foreach($data[$name] as $label => $value) $this->selected[] = $value;
 				}
 			}
 
@@ -301,18 +306,18 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// post/get data
 		$data = $this->getMethod(true);
 
-		// allowed values
-		$allowedValues = array();
-
 		// loop initial values and fill the array of allowed values
+		$allowedValues = array();
 		foreach($this->values as $key => $value)
 		{
 			// the current key represents an optgroup
 			if(is_array($value))
-				$allowedValues = array_merge($allowedValues, $value);
+			{
+				foreach($value as $key2 => $value2) $allowedValues[$key2] = $value2;
+			}
 
-			else
-				$allowedValues[$key] = $value;
+			// single value
+			else $allowedValues[$key] = $value;
 		}
 
 		// submitted field
@@ -492,6 +497,9 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// loop all values
 		foreach($this->values as $label => $value)
 		{
+			// skip the default element
+			if(isset($this->defaultElement[1]) && $this->defaultElement[1] == $label) continue;
+
 			// value is an optgroup?
 			if($this->optionGroups[$label])
 			{
@@ -610,6 +618,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	public function setDefaultElement($label, $value = null)
 	{
 		$this->defaultElement = array((string) $label, (string) $value);
+		if($value !== null) $this->values[$value] = (string) $label;
 		return $this;
 	}
 

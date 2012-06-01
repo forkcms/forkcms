@@ -65,7 +65,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 
@@ -106,7 +106,12 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setColumnHidden('page_encoded');
-			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule()))
+			{
+				$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			}
 
 			// parse the datagrid
 			$this->tpl->assign('dgExitPages', $dataGrid->getContent());
@@ -123,11 +128,16 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
-			$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule()))
+			{
+				$dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			}
 
 			// set headers
 			$dataGrid->setHeaderLabels(
-				array('page_path' => ucfirst(BL::lbl('Page')))
+				array('page_path' => SpoonFilter::ucfirst(BL::lbl('Page')))
 			);
 
 			// parse the datagrid
@@ -145,11 +155,16 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		{
 			$dataGrid = new BackendDataGridArray($results);
 			$dataGrid->setColumnHidden('page_encoded');
-			$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule()))
+			{
+				$dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+			}
 
 			// set headers
 			$dataGrid->setHeaderLabels(
-				array('pageviews_percentage' => '% ' . ucfirst(BL::lbl('Pageviews')))
+				array('pageviews_percentage' => '% ' . SpoonFilter::ucfirst(BL::lbl('Pageviews')))
 			);
 
 			// parse the datagrid

@@ -14,6 +14,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class InstallerStep7 extends InstallerStep
 {
@@ -105,7 +106,7 @@ class InstallerStep7 extends InstallerStep
 		// build variables
 		$variables = array();
 		$variables['\'<debug-mode>\''] = SpoonSession::get('debug_mode') ? 'true' : 'false';
-		$variables['<spoon-debug-email>'] = SpoonSession::get('email');
+		$variables['<spoon-debug-email>'] = SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email');
 		$variables['<database-name>'] = SpoonSession::get('db_database');
 		$variables['<database-hostname>'] = addslashes(SpoonSession::get('db_hostname'));
 		$variables['<database-username>'] = addslashes(SpoonSession::get('db_username'));
@@ -248,6 +249,9 @@ class InstallerStep7 extends InstallerStep
 	 */
 	public function execute()
 	{
+		// extend execution limit
+		set_time_limit(0);
+
 		// validate all previous steps
 		if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
 
@@ -305,6 +309,12 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function installModules()
 	{
+		// The default extras to add to every page after installation of all modules and to add to the default templates.
+		$defaultExtras = array();
+
+		// init var
+		$warnings = array();
+
 		/**
 		 * First we need to install the core. All the linked modules, settings and sql tables are
 		 * being installed.
@@ -333,6 +343,14 @@ class InstallerStep7 extends InstallerStep
 
 		// install the core
 		$installer->install();
+
+		// add the warnings
+		$moduleWarnings = $installer->getWarnings();
+		if(!empty($moduleWarnings)) $warnings[] = array('module' => 'core', 'warnings' => $moduleWarnings);
+
+		// add the default extras
+		$moduleDefaultExtras = $installer->getDefaultExtras();
+		if(!empty($moduleDefaultExtras)) array_merge($defaultExtras, $moduleDefaultExtras);
 
 		// variables passed to module installers
 		$variables = array();
@@ -371,8 +389,53 @@ class InstallerStep7 extends InstallerStep
 
 				// install the module
 				$installer->install();
+
+				// add the warnings
+				$moduleWarnings = $installer->getWarnings();
+				if(!empty($moduleWarnings)) $warnings[] = array('module' => $module, 'warnings' => $moduleWarnings);
+
+				// add the default extras
+				$moduleDefaultExtras = $installer->getDefaultExtras();
+				if(!empty($moduleDefaultExtras)) $defaultExtras = array_merge($defaultExtras, $moduleDefaultExtras);
 			}
 		}
+
+		// loop default extras
+		foreach($defaultExtras as $extra)
+		{
+			// get pages without this extra
+			$revisionIds = $this->db->getColumn(
+				'SELECT i.revision_id
+				 FROM pages AS i
+				 WHERE i.revision_id NOT IN (
+				 	SELECT DISTINCT b.revision_id
+				 	FROM pages_blocks AS b
+				 	WHERE b.extra_id = ?
+					GROUP BY b.revision_id
+				 )',
+				array($extra['id'])
+			);
+
+			// build insert array for this extra
+			$insertExtras = array();
+			foreach($revisionIds as $revisionId)
+			{
+				$insertExtras[] = array(
+					'revision_id' => $revisionId,
+					'position' => $extra['position'],
+					'extra_id' => $extra['id'],
+					'created_on' => gmdate('Y-m-d H:i:s'),
+					'edited_on' => gmdate('Y-m-d H:i:s'),
+					'visible' => 'Y'
+				);
+			}
+
+			// insert block
+			$this->db->insert('pages_blocks', $insertExtras);
+		}
+
+		// parse the warnings
+		$this->tpl->assign('warnings', $warnings);
 	}
 
 	/**
@@ -401,6 +464,6 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function validateForm()
 	{
-		return (InstallerStep2::isAllowed() && InstallerStep3::isAllowed() && InstallerStep4::isAllowed() && InstallerStep5::isAllowed());
+		return InstallerStep6::isAllowed();
 	}
 }

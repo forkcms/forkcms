@@ -281,10 +281,15 @@ class SpoonFile
 	 * @param	string $source				Path of the source file.
 	 * @param	string $destination			Path of the destination.
 	 * @param 	bool[optional] $overwrite	Should an existing file be overwritten?
-	 * @param	int[optional] $chmod		Chmod mode that should be applied on the file/directory.
+	 * @param	int[optional] $chmod		Chmod mode that should be applied on the file/directory. Defaults to 0777 (+rwx for all) for directories and 0666 (+rw for all) for files.
 	 */
-	public static function move($source, $destination, $overwrite = true, $chmod = 0777)
+	public static function move($source, $destination, $overwrite = true, $chmod = null)
 	{
+		if($chmod === null)
+		{
+			$chmod = is_dir($source) ? 0777 : 0666;
+		}
+
 		return SpoonDirectory::move($source, $destination, $overwrite, $chmod);
 	}
 
@@ -299,7 +304,7 @@ class SpoonFile
 	 * @param	bool[optional] $append		Should the content be appended if the file already exists?
 	 * @param	int[optional] $chmod		Mode that should be applied on the file.
 	 */
-	public static function setContent($filename, $content, $createFile = true, $append = false, $chmod = 0777)
+	public static function setContent($filename, $content, $createFile = true, $append = false, $chmod = 0666)
 	{
 		// redefine vars
 		$filename = (string) $filename;
@@ -311,7 +316,7 @@ class SpoonFile
 		if(!$createFile && self::exists($filename)) throw new SpoonFileException('The file "' . $filename . '" doesn\'t exist');
 
 		// create directory recursively if needed
-		SpoonDirectory::create(dirname($filename), $chmod, true);
+		SpoonDirectory::create(dirname($filename));
 
 		// create file & open for writing
 		$handler = ($append) ? @fopen($filename, 'a') : @fopen($filename, 'w');

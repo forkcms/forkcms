@@ -84,7 +84,12 @@ class BackendFormBuilderModel
 
 		// @todo refactor me...
 		// keep trying till its unique
-		while((int) BackendModel::getDb()->getVar('SELECT COUNT(i.id) FROM forms AS i WHERE i.identifier = ?', $identifier) > 0);
+		while((int) BackendModel::getDb()->getVar(
+			'SELECT 1
+			 FROM forms AS i
+			 WHERE i.identifier = ?
+			 LIMIT 1',
+			$identifier) > 0);
 
 		return $identifier;
 	}
@@ -170,7 +175,12 @@ class BackendFormBuilderModel
 	 */
 	public static function exists($id)
 	{
-		return (BackendModel::getDB()->getVar('SELECT COUNT(f.id) FROM forms AS f WHERE f.id = ?', (int) $id) >= 1);
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT 1
+			 FROM forms AS f
+			 WHERE f.id = ?
+			 LIMIT 1',
+			(int) $id);
 	}
 
 	/**
@@ -181,7 +191,12 @@ class BackendFormBuilderModel
 	 */
 	public static function existsData($id)
 	{
-		return (BackendModel::getDB()->getVar('SELECT COUNT(fd.id) FROM forms_data AS fd WHERE fd.id = ?', (int) $id) >= 1);
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT 1
+			 FROM forms_data AS fd
+			 WHERE fd.id = ?
+			 LIMIT 1',
+			(int) $id);
 	}
 
 	/**
@@ -196,10 +211,23 @@ class BackendFormBuilderModel
 		$id = (int) $id;
 
 		// exists
-		if($formId === null) return (BackendModel::getDB()->getVar('SELECT COUNT(ff.id) FROM forms_fields AS ff WHERE ff.id = ?', $id) >= 1);
+		if($formId === null)
+		{
+			return (bool) BackendModel::getDB()->getVar(
+				'SELECT 1
+				 FROM forms_fields AS ff
+				 WHERE ff.id = ?
+				 LIMIT 1',
+				$id);
+		}
 
 		// exists and ignore an id
-		return (BackendModel::getDB()->getVar('SELECT COUNT(ff.id) FROM forms_fields AS ff WHERE ff.id = ? AND ff.form_id = ?', array($id, (int) $formId)) >= 1);
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT 1
+			 FROM forms_fields AS ff
+			 WHERE ff.id = ? AND ff.form_id = ?
+			 LIMIT 1',
+			array($id, (int) $formId));
 	}
 
 	/**
@@ -214,10 +242,23 @@ class BackendFormBuilderModel
 		$identifier = (string) $identifier;
 
 		// exists
-		if($ignoreId === null) return (BackendModel::getDB()->getVar('SELECT COUNT(f.id) FROM forms AS f WHERE f.identifier = ?', $identifier) >= 1);
+		if($ignoreId === null)
+		{
+			return (bool) BackendModel::getDB()->getVar(
+				'SELECT 1
+				 FROM forms AS f
+				 WHERE f.identifier = ?
+				 LIMIT 1',
+				$identifier);
+		}
 
 		// exists and ignore an id
-		else return (BackendModel::getDB()->getVar('SELECT COUNT(f.id) FROM forms AS f WHERE f.identifier = ? AND f.id != ?', array($identifier, (int) $ignoreId)) >= 1);
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT 1
+			 FROM forms AS f
+			 WHERE f.identifier = ? AND f.id != ?
+			 LIMIT 1',
+			array($identifier, (int) $ignoreId));
 	}
 
 	/**
@@ -267,7 +308,8 @@ class BackendFormBuilderModel
 		$data['fields'] = (array) BackendModel::getDB()->getRecords(
 			'SELECT fdf.label, fdf.value
 			 FROM forms_data_fields AS fdf
-			 WHERE fdf.data_id = ?',
+			 WHERE fdf.data_id = ?
+			 ORDER BY fdf.id',
 			(int) $data['id']
 		);
 
@@ -388,11 +430,11 @@ class BackendFormBuilderModel
 	public static function getLocale($name, $type = 'label', $application = 'backend')
 	{
 		$name = SpoonFilter::toCamelCase($name);
-		$class = ucfirst($application) . 'Language';
-		$function = 'get' . ucfirst($type);
+		$class = SpoonFilter::ucfirst($application) . 'Language';
+		$function = 'get' . SpoonFilter::ucfirst($type);
 
 		// execute and return value
-		return ucfirst(call_user_func_array(array($class, $function), array($name)));
+		return SpoonFilter::ucfirst(call_user_func_array(array($class, $function), array($name)));
 	}
 
 	/**
@@ -620,7 +662,7 @@ class FormBuilderHelper
 			elseif($field['type'] == 'checkbox' || $field['type'] == 'radiobutton')
 			{
 				// name (prefixed by type)
-				$name = ($field['type'] == 'checkbox') ? 'chk' . ucfirst($fieldName) : 'rbt' . ucfirst($fieldName);
+				$name = ($field['type'] == 'checkbox') ? 'chk' . SpoonFilter::ucfirst($fieldName) : 'rbt' . SpoonFilter::ucfirst($fieldName);
 
 				// rebuild so the html is stored in a general name (and not rbtName)
 				foreach($fieldHTML as &$item) $item['field'] = $item[$name];

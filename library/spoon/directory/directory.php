@@ -36,14 +36,18 @@ class SpoonDirectory
 	 * @param	string $destination			The full path to the destination.
 	 * @param	bool[optional] $overwrite	If the destination already exists, should we overwrite?
 	 * @param	bool[optional] $strict		If strict is true, exceptions will be thrown when an error occures.
-	 * @param 	int[optional] $chmod		Mode that will be applied on the file/directory.
+	 * @param	int[optional] $chmod		Chmod mode that should be applied on the directory/file. Defaults to 0777 (+rwx for all) for directories and 0666 (+rw for all) for files.
 	 */
-	public static function copy($source, $destination, $overwrite = true, $strict = true, $chmod = 0777)
+	public static function copy($source, $destination, $overwrite = true, $strict = true, $chmod = null)
 	{
 		// redefine vars
 		$source = (string) $source;
 		$destination = (string) $destination;
 		$return = true;
+		if($chmod === null)
+		{
+			$chmod = is_dir($source) ? 0777 : 0666;
+		}
 
 		// validation
 		if($strict)
@@ -396,14 +400,18 @@ class SpoonDirectory
 	 * @param	string $source				Path of the source directory.
 	 * @param	string $destination			Path of the destination.
 	 * @param 	bool[optional] $overwrite	Should an existing directory be overwritten?
-	 * @param	int[optional] $chmod		Mode that should be applied on the directory.
+	 * @param	int[optional] $chmod		Chmod mode that should be applied on the directory/file. Defaults to 0777 (+rwx for all) for directories and 0666 (+rw for all) for files.
 	 */
-	public static function move($source, $destination, $overwrite = true, $chmod = 0777)
+	public static function move($source, $destination, $overwrite = true, $chmod = null)
 	{
 		// redefine vars
 		$source = (string) $source;
 		$destination = (string) $destination;
 		$overwrite = (bool) $overwrite;
+		if($chmod === null)
+		{
+			$chmod = is_dir($source) ? 0777 : 0666;
+		}
 
 		// validation
 		if(!file_exists($source)) throw new SpoonDirectoryException('The given path (' . $source . ') doesn\'t exist.');

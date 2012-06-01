@@ -6,9 +6,12 @@
 
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblAdd}</h2>
+
+		{option:showPagesIndex}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
+		{/option:showPagesIndex}
 	</div>
 
 	<p id="pagesPageTitle">
@@ -49,7 +52,7 @@
 							{$msgFallbackInfo}
 						</div>
 
-						<table cellspacing="10" cellpadding="0" border="0">
+						<table cellspacing="10">
 							<tbody>
 								<tr>
 									<td data-position="fallback" id="templatePosition-fallback" colspan="1" class="box">
@@ -112,6 +115,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkPageTitleOverwrite}
+							<label for="pageTitle" class="visuallyHidden">{$lblPageTitle|ucfirst}</label>
 							{$txtPageTitle} {$txtPageTitleError}
 						</li>
 					</ul>
@@ -122,6 +126,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkNavigationTitleOverwrite}
+							<label for="navigationTitle" class="visuallyHidden">{$lblNavigationTitle|ucfirst}</label>
 							{$txtNavigationTitle} {$txtNavigationTitleError}
 						</li>
 					</ul>
@@ -140,6 +145,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkMetaDescriptionOverwrite}
+							<label for="metaDescription" class="visuallyHidden">{$lblDescription|ucfirst}</label>
 							{$txtMetaDescription} {$txtMetaDescriptionError}
 						</li>
 					</ul>
@@ -150,6 +156,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkMetaKeywordsOverwrite}
+							<label for="metaKeywords" class="visuallyHidden">{$lblKeywords|ucfirst}</label>
 							{$txtMetaKeywords} {$txtMetaKeywordsError}
 						</li>
 					</ul>
@@ -175,6 +182,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
+							<label for="url" class="visuallyHidden">{$lblCustomURL|ucfirst}</label>
 							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
@@ -215,7 +223,9 @@
 		<div id="tabTags">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>{$lblTags|ucfirst}</h3>
+					<h3>
+						<label for="addValue-tags">{$lblTags|ucfirst}</label>
+					</h3>
 				</div>
 				<div class="options">
 					{$txtTags} {$txtTagsError}
@@ -235,11 +245,13 @@
 							<li>
 								<label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
 								{option:redirect.isInternal}
+										<label for="internalRedirect" class="visuallyHidden">{$redirect.label}</label>
 										{$ddmInternalRedirect} {$ddmInternalRedirectError}
 										<span class="helpTxt">{$msgHelpInternalRedirect}</span>
 								{/option:redirect.isInternal}
 
 								{option:redirect.isExternal}
+										<label for="externalRedirect" class="visuallyHidden">{$redirect.label}</label>
 										{$txtExternalRedirect} {$txtExternalRedirectError}
 										<span class="helpTxt">{$msgHelpExternalRedirect}</span>
 								{/option:redirect.isExternal}
@@ -258,14 +270,19 @@
 				<div class="options">
 					<ul class="inputList">
 						{iteration:hidden}
-						<li>
-							{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label>
-						</li>
+							<li>{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label></li>
 						{/iteration:hidden}
 					</ul>
 					<p>
 						<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
 					</p>
+					{option:isGod}
+						<ul class="inputList">
+							{iteration:allow}
+								<li>{$allow.chkAllow} <label for="{$allow.id}">{$allow.label}</label></li>
+							{/iteration:allow}
+						</ul>
+					{/option:isGod}
 				</div>
 			</div>
 		</div>
@@ -347,6 +364,21 @@
 	</div>
 {/form:add}
 
+<div class="box" id="blockHtml" style="display: none;">
+	<div class="blockContentHTML optionsRTE">
+		<fieldset>
+			<div class="generalMessage singleMessage infoMessage">
+				{$msgContentSaveWarning}
+			</div>
+			<div class="heading">
+				<h3>{$lblEditor|ucfirst}</h3>
+			</div>
+			{$txtHtml}
+			{$txtHtmlError}
+		</fieldset>
+	</div>
+</div>
+
 <script type="text/javascript">
 	//<![CDATA[
 		// all the possible templates
@@ -360,6 +392,9 @@
 		// the extra's, but in a way we can access them based on their ID
 		var extrasById = {};
 		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+
+		// indicator that the default blocks may be set on pageload
+		var initDefaults = true;
 	//]]>
 </script>
 

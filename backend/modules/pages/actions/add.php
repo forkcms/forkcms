@@ -13,6 +13,7 @@
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendPagesAdd extends BackendBaseActionAdd
 {
@@ -22,6 +23,13 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 * @var	array
 	 */
 	private $blocksContent = array();
+
+	/**
+	 * Is the current user a god user?
+	 *
+	 * @var bool
+	 */
+	private $isGod = false;
 
 	/**
 	 * The positions
@@ -53,20 +61,19 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
-		$this->header->addJS('jstree/jquery.tree.js');
-		$this->header->addJS('jstree/lib/jquery.cookie.js');
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+		$this->header->addJS('jstree/jquery.tree.js', null, false);
+		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
 		// get the templates
 		$this->templates = BackendExtensionsModel::getTemplates();
+		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// init var
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', false);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', false);
 
 		// fallback
 		if($defaultTemplateId === false)
@@ -96,7 +103,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('add');
@@ -106,8 +113,26 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+		$this->frm->addEditor('html');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
+
+		// a god user should be able to adjust the detailed settings for a page easily
+		if($this->isGod)
+		{
+			// init some vars
+			$items = array('move', 'children', 'edit', 'delete');
+			$checked = array();
+			$values = array();
+
+			foreach($items as $value)
+			{
+				$values[] = array('label' => BL::msg(SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+				$checked[] = $value;
+			}
+
+			$this->frm->addMultiCheckbox('allow', $values, $checked);
+		}
 
 		// build prototype block
 		$block['index'] = 0;
@@ -196,9 +221,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// redirect
 		$redirectValues = array(
-			array('value' => 'none', 'label' => ucfirst(BL::lbl('None'))),
-			array('value' => 'internal', 'label' => ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
-			array('value' => 'external', 'label' => ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
+			array('value' => 'none', 'label' => SpoonFilter::ucfirst(BL::lbl('None'))),
+			array('value' => 'internal', 'label' => SpoonFilter::ucfirst(BL::lbl('InternalLink')), 'variables' => array('isInternal' => true)),
+			array('value' => 'external', 'label' => SpoonFilter::ucfirst(BL::lbl('ExternalLink')), 'variables' => array('isExternal' => true)),
 		);
 		$this->frm->addRadiobutton('redirect', $redirectValues, 'none');
 		$this->frm->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown());
@@ -229,8 +254,11 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
+		$this->tpl->assign('isGod', $this->isGod);
 		$this->tpl->assign('positions', $this->positions);
 		$this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
@@ -238,7 +266,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
@@ -313,6 +341,14 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
 				$page['data'] = ($data !== null) ? serialize($data) : null;
 
+				if($this->isGod)
+				{
+					$page['allow_move'] = (in_array('move', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_children'] = (in_array('children', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_edit'] = (in_array('edit', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+					$page['allow_delete'] = (in_array('delete', (array) $this->frm->getField('allow')->getValue())) ? 'Y' : 'N';
+				}
+
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
 
@@ -320,10 +356,10 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['revision_id'] = BackendPagesModel::insert($page);
 
 				// loop blocks
-				foreach($this->blocksContent as $i => &$block)
+				foreach($this->blocksContent as $i => $block)
 				{
 					// add page revision id to blocks
-					$block['revision_id'] = $page['revision_id'];
+					$this->blocksContent[$i]['revision_id'] = $page['revision_id'];
 
 					// validate blocks, only save blocks for valid positions
 					if(!in_array($block['position'], $this->templates[$this->frm->getField('template_id')->getValue()]['data']['names'])) unset($this->blocksContent[$i]);
@@ -344,18 +380,14 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// active
 				if($page['status'] == 'active')
 				{
-					// add search index
-					if(is_callable(array('BackendSearchModel', 'addIndex')))
-					{
-						// init var
-						$text = '';
+					// init var
+					$text = '';
 
-						// build search-text
-						foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
+					// build search-text
+					foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
-						// add
-						BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
-					}
+					// add to search index
+					BackendSearchModel::saveIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);

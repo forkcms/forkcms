@@ -4,7 +4,7 @@
 		<img src="/backend/core/layout/images/spinner.gif" width="16" height="16" alt="loading" />
 	</div>
 
-	{iteration:jsFiles}<script src="{$jsFiles.path}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
+	{iteration:jsFiles}<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
 	<script>
 		//<![CDATA[
 			{option:formError}jsBackend.messages.add('error', "{$errFormError|addslashes}");{/option:formError}

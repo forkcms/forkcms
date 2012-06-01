@@ -102,29 +102,8 @@ class BackendLocaleModel
 	 */
 	public static function buildURLQueryByFilter($filter)
 	{
-		$query = '';
-
-		// loop filter items
-		foreach($filter as $key => $value)
-		{
-			// is it an array?
-			if(is_array($value))
-			{
-				// loop the array
-				foreach($value as $v)
-				{
-					// add to the query
-					$query .= '&' . $key . '[]=' . $v;
-				}
-			}
-
-			// not an array
-			else
-			{
-				// add to the query
-				$query .= '&' . $key . '=' . $value;
-			}
-		}
+		$query = http_build_query($filter);
+		if($query != '') $query = '&' . $query;
 
 		return $query;
 	}
@@ -137,7 +116,7 @@ class BackendLocaleModel
 	 */
 	public static function createXMLForExport(array $items)
 	{
-		$xml = new DOMDocument('1.0', 'utf-8');
+		$xml = new DOMDocument('1.0', SPOON_CHARSET);
 
 		// set some properties
 		$xml->preserveWhiteSpace = false;
@@ -226,9 +205,10 @@ class BackendLocaleModel
 	public static function exists($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM locale
-			 WHERE id = ?',
+			 WHERE id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -258,16 +238,18 @@ class BackendLocaleModel
 
 		// return
 		if($id !== null) return (bool) $db->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM locale
-			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?',
+			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
+			 LIMIT 1',
 			array($name, $type, $module, $language, $application, $id)
 		);
 
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM locale
-			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
+			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?
+			 LIMIT 1',
 			array($name, $type, $module, $language, $application)
 		);
 	}
@@ -607,7 +589,7 @@ class BackendLocaleModel
 							foreach($data['module_specific'] as $module)
 							{
 								// if the error isn't found add it to the list
-								if(substr_count(BL::err($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::err($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -641,7 +623,7 @@ class BackendLocaleModel
 								}
 
 								// doesn't exists
-								if(!$exists) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 						break;
@@ -655,7 +637,7 @@ class BackendLocaleModel
 							foreach($data['module_specific'] as $module)
 							{
 								// if the label isn't found add it to the list
-								if(substr_count(BL::lbl($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::lbl($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -689,7 +671,7 @@ class BackendLocaleModel
 								}
 
 								// doesn't exists
-								if(!$exists) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 						break;
@@ -703,7 +685,7 @@ class BackendLocaleModel
 							foreach($data['module_specific'] as $module)
 							{
 								// if the message isn't found add it to the list
-								if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -737,13 +719,15 @@ class BackendLocaleModel
 								}
 
 								// doesn't exists
-								if(!$exists) $nonExisting[] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 						break;
 				}
 			}
 		}
+
+		ksort($nonExisting);
 
 		// return
 		return $nonExisting;
@@ -869,26 +853,28 @@ class BackendLocaleModel
 				{
 					case 'act':
 						// if the action isn't available add it to the list
-						if(FL::act($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::act($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 
 					case 'err':
 						// if the error isn't available add it to the list
-						if(FL::err($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::err($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 
 					case 'lbl':
 						// if the label isn't available add it to the list
-						if(FL::lbl($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::lbl($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 
 					case 'msg':
 						// if the message isn't available add it to the list
-						if(FL::msg($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::msg($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 				}
 			}
 		}
+
+		ksort($nonExisting);
 
 		return $nonExisting;
 	}
@@ -998,7 +984,11 @@ class BackendLocaleModel
 	private static function getTree($path, array $tree = array())
 	{
 		// paths that should be ignored
-		$ignore = array(BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/tiny_mce', FRONTEND_CACHE_PATH);
+		$ignore = array(
+			BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/ckeditor',
+			BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/ckfinder',
+			FRONTEND_CACHE_PATH
+		);
 
 		// get modules
 		$modules = BackendModel::getModules();
@@ -1080,7 +1070,7 @@ class BackendLocaleModel
 		$labels = $types;
 
 		// loop and build labels
-		foreach($labels as &$row) $row = ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+		foreach($labels as &$row) $row = SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
 
 		// build array
 		return array_combine($types, $labels);
@@ -1100,7 +1090,7 @@ class BackendLocaleModel
 		$labels = $aTypes;
 
 		// loop and build labels
-		foreach($labels as &$row) $row = ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+		foreach($labels as &$row) $row = SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
 
 		// build array
 		$aTypes = array_combine($aTypes, $labels);
@@ -1141,8 +1131,8 @@ class BackendLocaleModel
 
 		// set defaults if necessary
 		// we can't simply use these right away, because this function is also calles by the installer, which does not have Backend-functions
-		if($frontendLanguages === null) $frontendLanguages = BL::getWorkingLanguages();
-		if($backendLanguages === null) $backendLanguages = BL::getInterfaceLanguages();
+		if($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
+		if($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
 		if($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
 		if($date === null) $date = BackendModel::getUTCDate();
 
@@ -1221,29 +1211,21 @@ class BackendLocaleModel
 						$locale['value'] = $translation;
 						$locale['edited_on'] = $date;
 
-						// found a conflict, overwrite it with the imported translation
-						if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
+						// check if translation does not yet exist, or if the translation can be overridden
+						if(!in_array($application . $module . $type . $language . $name, $currentLocale) || $overwriteConflicts)
 						{
-							// statistics
-							$statistics['imported']++;
-
-							// overwrite
-							$db->update(
-								'locale',
-								$locale,
-								'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
-								array($application, $module, $type, $language, $name)
+							$db->execute(
+								'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)
+								 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+								 ON DUPLICATE KEY UPDATE user_id = ?, value = ?, edited_on = ?',
+								array(
+									$locale['user_id'], $locale['language'], $locale['application'], $locale['module'],
+									$locale['type'], $locale['name'], $locale['value'], $locale['edited_on'],
+									$locale['user_id'], $locale['value'], $locale['edited_on'])
 							);
-						}
 
-						// insert translation that doesnt exists yet
-						elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
-						{
 							// statistics
 							$statistics['imported']++;
-
-							// insert
-							$db->insert('locale', $locale);
 						}
 					}
 				}

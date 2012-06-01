@@ -189,6 +189,11 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 		// create elements
 		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
+
+		// since we know the term just here we should set the canonical url here
+		$canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('search');
+		if(isset($_GET['q']) && $_GET['q'] != '') $canonicalUrl .= '?q=' . $_GET['q'];
+		$this->header->setCanonicalUrl($canonicalUrl);
 	}
 
 	/**
@@ -201,25 +206,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 		// no search term = no search
 		if(!$this->term) return;
-
-		// loop items
-		foreach($this->items as &$item)
-		{
-			// full url is set?
-			if(!isset($item['full_url'])) continue;
-
-			// build utm array
-			$utm['utm_source'] = SpoonFilter::urlise(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
-			$utm['utm_medium'] = 'fork-search';
-			$utm['utm_term'] = $this->term;
-
-			// get parameters in url already
-			if(strpos($item['full_url'], '?') !== false) $glue = '&amp;';
-			else $glue = '?';
-
-			// add utm to url
-			$item['full_url'] .= $glue . http_build_query($utm, '', '&amp;');
-		}
 
 		// assign articles
 		$this->tpl->assign('searchResults', $this->items);

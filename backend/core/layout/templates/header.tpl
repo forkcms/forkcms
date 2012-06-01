@@ -1,6 +1,6 @@
 <div id="headerHolder">
 	<h1><a href="/{option:SITE_MULTILANGUAGE}{$LANGUAGE}{/option:SITE_MULTILANGUAGE}" title="{$lblVisitWebsite|ucfirst}">{$SITE_TITLE}</a></h1>
-	<table cellspacing="0" cellpadding="0" id="header">
+	<table id="header">
 		<tr>
 			<td id="navigation">
 				{$var|getmainnavigation}
@@ -35,9 +35,7 @@
 							<span class="arrow">&#x25BC;</span>
 						</a>
 						<ul class="hidden" id="ddAccount">
-							<li><a href="{$authenticatedUserEditUrl}">{$lblEditProfile|ucfirst}</a></li>
-							{* <li><a rel="external" href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li> *}
-							{*<li><a rel="external" href="/docs">{$lblDeveloper|ucfirst}</a></li>*}
+							{option:authenticatedUserEditUrl}<li><a href="{$authenticatedUserEditUrl}">{$lblEditProfile|ucfirst}</a></li>{/option:authenticatedUserEditUrl}
 							<li class="lastChild"><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a></li>
 						</ul>
 					</li>

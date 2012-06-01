@@ -51,6 +51,7 @@ a.button:hover,
 a.button:active,
 a.button:focus,
 a.button.focus {
+	color: #3A3A3A;
 	background: #FFF;
 	background: -moz-linear-gradient(top, #c5c5c5 0%, #dddddd 4.5454545%, #f7f7f7 95.454545%, #ffffff 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c5c5c5), color-stop(4.5454545%,#dddddd), color-stop(95.454545%,#f7f7f7), color-stop(100%,#ffffff));
@@ -97,7 +98,7 @@ a.button span {
 a.icon span {
 	padding: 0 0 0 18px !important;
 	display: block;
-	background-image: url(/backend/core/layout/images/sprites/fork_icons.png);
+	background-image: url(../../images/sprites/fork_icons.png);
 	background-repeat: no-repeat;
 	overflow: hidden;
 }
@@ -177,7 +178,7 @@ a.icon span {
 		text-indent: -9000px;
 		overflow: hidden;
 		display: block;
-		background-image: url(/backend/core/layout/images/sprites/fork_icons.png);
+		background-image: url(../../images/sprites/fork_icons.png);
 		background-repeat: no-repeat;
 	}
 
@@ -262,7 +263,7 @@ a.icon span {
 */
 
 .ui-icon-closethick {
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat 0 -220px;
+	background: url(../../images/sprites/fork_icons.png) no-repeat 0 -220px;
 }
 
 /*

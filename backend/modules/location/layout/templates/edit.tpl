@@ -11,30 +11,6 @@
 		{$txtTitle} {$txtTitleError}
 	</p>
 
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblMap|ucfirst}</h3>
-		</div>
-		<div class="options">
-			{option:item.lat}
-			{option:item.lng}
-				<div id="map" style="height: {$settings.height_widget}px; width: 100%;"></div>
-			{/option:item.lat}
-			{/option:item.lng}
-		</div>
-	</div>
-
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblContent|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<p>
-				{$txtText} {$txtTextError}
-			</p>
-		</div>
-	</div>
-
 	<div class="box horizontal">
 		<div class="heading">
 			<h3>{$lblAddress|ucfirst}</h3>
@@ -60,76 +36,146 @@
 				<label for="country">{$lblCountry|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$ddmCountry} {$ddmCountryError}
 			</p>
-		</div>
-	</div>
+			{$hidMapId} {$hidRedirect}
 
-	<div id="itemText" style="display: none;">{$item.text}</div>
-
-	{option:item.lat}
-	{option:item.lng}
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		<script type="text/javascript">
-			// create position
-			var position = new google.maps.LatLng({$item.lat}, {$item.lng});
-
-			// create boundaries and add position
-			var latlngBounds = new google.maps.LatLngBounds(position);
-
-			// set options
-			var options =
-			{
-				// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
-				zoom: 15,
-				// set default center as first item's location
-				center: new google.maps.LatLng({$item.lat}, {$item.lng}),
-				// no interface, just the map
-				disableDefaultUI: true,
-				// no dragging the map around
-				draggable: false,
-				// no zooming in/out using scrollwheel
-				scrollwheel: false,
-				// no double click zoom
-				disableDoubleClickZoom: true,
-				// set map type
-				mapTypeId: google.maps.MapTypeId.{$settings.map_type_widget}
-			};
-
-			// create map
-			var map = new google.maps.Map(document.getElementById('map'), options);
-
-			// add marker
-			var marker = new google.maps.Marker(
-			{
-				position: position,
-				map: map,
-				title: '{$item.title}'
-			});
-
-			// add click event on marker
-			google.maps.event.addListener(marker, 'click', function()
-			{
-				// create infowindow
-				new google.maps.InfoWindow({ content: '<h1>{$item.title}</h1>' + $('#itemText').html() }).open(map, marker);
-			});
-		</script>
-	{/option:item.lng}
-	{/option:item.lat}
-
-	<div class="fullwidthOptions">
-		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-			<span>{$lblDelete|ucfirst}</span>
-		</a>
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblUpdateMap|ucfirst}" />
+		</div>
 		</div>
 	</div>
+{/form:edit}
 
+<table width="100%">
+	<tr>
+		<td id="leftColumn">
+			<div class="box">
+				<div class="heading">
+					<h3>{$lblMap|ucfirst}</h3>
+				</div>
+
+				{* Map *}
+				<div class="options">
+					<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;">
+					</div>
+				</div>
+			</div>
+		</td>
+
+		{form:settings}
+		<td id="rightColumn" style="width: 300px; padding-left: 10px;">
+			<div class="box">
+				<div class="heading">
+					<h3>{$lblSettings|ucfirst}</h3>
+				</div>
+
+				{* Zoom level *}
+				<div class="options">
+					<p>
+						<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+						{$ddmZoomLevel} {$ddmZoomLevelError}
+					</p>
+				</div>
+
+				{* Map width *}
+				<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
+					<p>
+						<label for="width">{$lblWidth|ucfirst}</label>
+						{$txtWidth} {$txtWidthError}
+						<span class="helpTxt">
+							{$msgWidthHelp|sprintf:300:800}
+						</span>
+					</p>
+				</div>
+
+				{* Map height *}
+				<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
+					<p>
+						<label for="height">{$lblHeight|ucfirst}</label>
+						{$txtHeight} {$txtHeightError}
+						<span class="helpTxt">
+							{$msgHeightHelp|sprintf:150}
+						</span>
+					</p>
+				</div>
+
+				{* Map type *}
+				<div class="options">
+					<p>
+						<label for="mapType">{$lblMapType|ucfirst}</label>
+						{$ddmMapType} {$ddmMapTypeError}
+					</p>
+				</div>
+
+				{* Show the full url link or not *}
+				<div class="options">
+					<p>
+						<label for="fullUrl">{$chkFullUrl} {$msgShowMapUrl}</label>
+					</p>
+				</div>
+
+				{* Show directions form or not *}
+				<div class="options">
+					<p>
+						<label for="directions">{$chkDirections} {$msgShowDirections}</label>
+					</p>
+				</div>
+
+				{* Show the map on the overview or not *}
+				<div class="options">
+					<p>
+						<label for="markerOverview">{$chkMarkerOverview} {$msgShowMarkerOverview}</label>
+					</p>
+				</div>
+			</div>
+		</td>
+		{/form:settings}
+	</tr>
+</table>
+
+<div class="fullwidthOptions">
+	{option:showLocationDelete}
+	<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<span>{$lblDelete|ucfirst}</span>
+	</a>
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 		<p>
 			{$msgConfirmDelete|sprintf:{$item.title}}
 		</p>
 	</div>
-{/form:edit}
+	{/option:showLocationDelete}
+
+	<div class="buttonHolderRight">
+		<a href="#" id="saveLiveData" class="button mainButton">
+			<span>{$lblSave|ucfirst}</span>
+		</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var mapOptions =
+	{
+		zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
+		type: '{$settings.map_type}',
+		center:
+		{
+			lat: {$settings.center.lat},
+			lng: {$settings.center.lng}
+		}
+	};
+	var markers = [];
+	{option:item.lat}
+		{option:item.lng}
+			markers.push(
+			{
+				lat: {$item.lat},
+				lng: {$item.lng},
+				title: '{$item.title}',
+				text: '<p>{$item.street} {$item.number}</p><p>{$item.zip} {$item.city}</p>',
+				dragable: true
+			});
+		{/option:item.lng}
+	{/option:item.lat}
+</script>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

@@ -172,6 +172,8 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		if(!isset($this->sessionToken))
 		{
 			// show the link to the google account authentication form
@@ -216,6 +218,11 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 					$frm = new BackendForm('linkProfile', BackendModel::createURLForAction(), 'get');
 					$frm->addDropdown('table_id', $accounts);
 					$frm->parse($this->tpl);
+
+					if($frm->isSubmitted())
+					{
+						if($frm->getField('table_id')->getValue() == '0') $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
+					}
 
 					// parse accounts
 					$this->tpl->assign('accounts', true);

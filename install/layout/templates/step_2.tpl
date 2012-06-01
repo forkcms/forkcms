@@ -24,6 +24,8 @@
 				<h3><span class="{$phpVersion}">{$phpVersion}</span> PHP version</h3>
 				<p>We require at least PHP 5.2</p>
 
+				<h3><span class="{$subfolder}">{$subfolder}</span> Fork CMS can't be installed in subfolders</h3>
+
 				<h3>PHP Extensions</h3>
 				<h4><span class="{$extensionCURL}">{$extensionCURL}</span> cURL</h4>
 				<p>
@@ -127,10 +129,10 @@
 
 				<h4><span class="{$fileSystemLibrary}">{$fileSystemLibrary}</span> {$PATH_LIBRARY}</h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
-{*
+
 				<h4><span class="{$fileSystemLibraryExternal}">{$fileSystemLibraryExternal}</span> {$PATH_LIBRARY}/external</h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
-*}
+
 				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install</h4>
 				<p>This location must be writable for the installer.</p>
 

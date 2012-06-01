@@ -10,6 +10,7 @@
 		<div class="options">
 			<p>
 				<label for="file">{$msgPathToTemplate|ucfirst}</label>
+				<label for="theme" class="visuallyHidden">{$lblTheme|ucfirst}</label>
 				{$ddmTheme}<small><code>/core/layout/templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
 				<span class="helpTxt">{$msgHelpTemplateLocation}</span>
 			</p>
@@ -73,7 +74,9 @@
 
 	<div class="box horizontal">
 		<div class="heading">
-			<h3>{$lblLayout|ucfirst}</h3>
+			<h3>
+				<label for="format">{$lblLayout|ucfirst}</label>
+			</h3>
 		</div>
 
 		<div id="templateLayout" class="options clearfix">
@@ -117,11 +120,12 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:deleteAllowed}
+		{option:showExtensionsDeleteThemeTemplate}
 			<a href="{$var|geturl:'delete_theme_template'}&amp;id={$template.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
-		{/option:deleteAllowed}
+		{/option:showExtensionsDeleteThemeTemplate}
+
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>

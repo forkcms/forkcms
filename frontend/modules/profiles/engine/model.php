@@ -40,9 +40,10 @@ class FrontendProfilesModel
 	public static function existsByEmail($email, $ignoreId = null)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(p.id)
+			'SELECT 1
 			 FROM profiles AS p
-			 WHERE p.email = ? AND p.id != ?',
+			 WHERE p.email = ? AND p.id != ?
+			 LIMIT 1',
 			array((string) $email, (int) $ignoreId)
 		);
 	}
@@ -57,9 +58,10 @@ class FrontendProfilesModel
 	public static function existsDisplayName($displayName, $id = null)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(p.id)
+			'SELECT 1
 			 FROM profiles AS p
-			 WHERE p.id != ? AND p.display_name = ?',
+			 WHERE p.id != ? AND p.display_name = ?
+			 LIMIT 1',
 			array((int) $id, (string) $displayName)
 		);
 	}
@@ -203,7 +205,7 @@ class FrontendProfilesModel
 		$displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
 		// urlise
-		$url = (string) $displayName;
+		$url = (string) SpoonFilter::urlise($displayName);
 
 		// get db
 		$db = FrontendModel::getDB();
@@ -213,9 +215,10 @@ class FrontendProfilesModel
 		{
 			// get number of profiles with this URL
 			$number = (int) $db->getVar(
-				'SELECT COUNT(p.id)
+				'SELECT 1
 				 FROM profiles AS p
-				 WHERE p.url = ?',
+				 WHERE p.url = ?
+				 LIMIT 1',
 				(string) $url
 			);
 
@@ -235,9 +238,10 @@ class FrontendProfilesModel
 		{
 			// get number of profiles with this URL
 			$number = (int) $db->getVar(
-				'SELECT COUNT(p.id)
+				'SELECT 1
 				 FROM profiles AS p
-				 WHERE p.url = ? AND p.id != ?',
+				 WHERE p.url = ? AND p.id != ?
+				 LIMIT 1',
 				array((string) $url, (int) $id)
 			);
 

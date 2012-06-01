@@ -44,7 +44,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 	public function execute()
 	{
 		parent::execute();
-		$this->header->addJS('highcharts.js');
+		$this->header->addJS('highcharts.js', 'core', false);
 		$this->getData();
 		$this->loadDataGrid();
 		$this->parse();
@@ -80,10 +80,10 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		// call the parent, as in create a new datagrid with the created source
 		$this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $this->id));
 		$this->dataGrid->setColumnsHidden(array('campaign_id', 'campaign_name', 'status'));
-		$this->dataGrid->setURL(BackendModel::createURLForAction('statistics_campaign') . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
+		$this->dataGrid->setURL(BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
 
 		// set headers values
-		$headers['sent'] = ucfirst(BL::lbl('Sent'));
+		$headers['sent'] = SpoonFilter::ucfirst(BL::lbl('Sent'));
 
 		// set headers
 		$this->dataGrid->setHeaderLabels($headers);
@@ -91,21 +91,27 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('name', 'sent'), 'name');
 
-		// set url for mailing name
-		$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
-
 		// set column functions
 		$this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
 
 		// set paging limit
 		$this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('statistics'))
+		{
+			// set url for mailing name
+			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
+		}
 	}
 
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse the datagrid
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 

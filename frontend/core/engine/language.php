@@ -167,10 +167,28 @@ class FrontendLanguage
 			$redirectLanguages = self::getRedirectLanguages();
 
 			// prefered languages
-			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			$acceptedLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			$browserLanguages = array();
+
+			foreach($acceptedLanguages as $language)
+			{
+				$qPos = strpos($language, 'q=');
+				$weight = 1;
+
+				if($qPos !== false)
+				{
+					$endPos = strpos($language, ';', $qPos);
+					$weight = ($endPos === false) ? (float) substr($language, $qPos + 2) : (float) substr($language, $qPos + 2, $endPos);
+				}
+
+				$browserLanguages[$language] = $weight;
+			}
+
+			// sort by weight
+			arsort($browserLanguages);
 
 			// loop until result
-			foreach($browserLanguages as $language)
+			foreach(array_keys($browserLanguages) as $language)
 			{
 				// redefine language
 				$language = substr($language, 0, 2); // first two characters

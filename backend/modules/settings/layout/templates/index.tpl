@@ -19,7 +19,9 @@
 
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblWebsiteTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+			<h3>
+				<label for="siteTitle">{$lblWebsiteTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			</h3>
 		</div>
 		<div class="options">
 			{$txtSiteTitle} {$txtSiteTitleError}
@@ -39,7 +41,7 @@
 		</div>
 		<div class="options">
 			<div class="textareaHolder">
-				<p class="p0"><label for="siteHtmlHeader">End of <code>&lt;body&gt;</code> script(s)</label></p>
+				<p class="p0"><label for="siteHtmlFooter">End of <code>&lt;body&gt;</code> script(s)</label></p>
 				{$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
 				<span class="helpTxt">{$msgHelpScriptsFoot}</span>
 			</div>
@@ -52,7 +54,7 @@
 		</div>
 		<div class="options">
 			<p>{$msgHelpLanguages}</p>
-			<ul class="inputList pb0">
+			<ul id="activeLanguages" class="inputList pb0">
 				{iteration:activeLanguages}
 					<li>{$activeLanguages.chkActiveLanguages} <label for="{$activeLanguages.id}">{$activeLanguages.label|ucfirst}{option:activeLanguages.default} ({$lblDefault}){/option:activeLanguages.default}</label></li>
 				{/iteration:activeLanguages}
@@ -60,7 +62,7 @@
 		</div>
 		<div class="options">
 			<p>{$msgHelpRedirectLanguages}</p>
-			<ul class="inputList pb0">
+			<ul id="redirectLanguages" class="inputList pb0">
 				{iteration:redirectLanguages}
 					<li>{$redirectLanguages.chkRedirectLanguages} <label for="{$redirectLanguages.id}">{$redirectLanguages.label|ucfirst}{option:redirectLanguages.default} ({$lblDefault}){/option:redirectLanguages.default}</label></li>
 				{/iteration:redirectLanguages}
@@ -111,7 +113,7 @@
 		<div class="content">
 			<p>{$msgHelpAPIKeys}</p>
 			<div class="dataGridHolder">
-				<table border="0" cellspacing="0" cellpadding="0" class="dataGrid dynamicStriping">
+				<table class="dataGrid dynamicStriping">
 					<thead>
 						<tr>
 							<th class="title" style="width: 20%;"><span>{$lblName|ucfirst}</span></th>
@@ -152,11 +154,37 @@
 
 	<div class="box horizontal">
 		<div class="heading">
+			<h3>CKFinder</h3>
+		</div>
+		<div class="options labelWidthLong">
+			<p>
+				<label for="ckfinderLicenseName">{$lblLicenseName|ucfirst}</label>
+				{$txtCkfinderLicenseName} {$txtCkfinderLicenseNameError}
+			</p>
+			<p>
+				<label for="ckfinderLicenseKey">{$lblLicenseKey|ucfirst}</label>
+				{$txtCkfinderLicenseKey} {$txtCkfinderLicenseKeyError}
+			</p>
+			<p>
+				<label for="ckfinderImageMaxWidth">{$lblMaximumWidth|ucfirst}</label>
+				{$txtCkfinderImageMaxWidth} {$txtCkfinderImageMaxWidthError}
+				<span class="helpTxt">{$msgHelpCkfinderMaximumWidth}</span>
+			</p>
+			<p>
+				<label for="ckfinderImageMaxHeight">{$lblMaximumHeight|ucfirst}</label>
+				{$txtCkfinderImageMaxHeight} {$txtCkfinderImageMaxHeightError}
+				<span class="helpTxt">{$msgHelpCkfinderMaximumHeight}</span>
+			</p>
+		</div>
+	</div>
+
+	<div class="box horizontal">
+		<div class="heading">
 			<h3>Facebook</h3>
 		</div>
 		<div class="options labelWidthLong">
 			<p>
-				<label for="facebookAdminIds">{$lblAdminIds|ucfirst}</label>
+				<label for="addValue-facebookAdminIds">{$lblAdminIds|ucfirst}</label>
 				<span style="float: left;">
 					{$txtFacebookAdminIds} {$txtFacebookAdminIdsError}
 				</span>
