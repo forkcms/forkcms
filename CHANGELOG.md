@@ -4,6 +4,7 @@ Improvements:
 
 * Generate thumbnails based on the folders in the given path, see http://www.fork-cms.com/knowledge-base/detail/generate-thumbnails-based-on-folders.
 * Blog: better layout for the image-box.
+* Core: upgraded Highcharts to 2.2.4
 
 
 3.3.11 (2012-05-29)
