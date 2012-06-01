@@ -49,8 +49,7 @@ jsBackend.mailmotor.charts =
 					symbolPadding: 12,
 					symbolWidth: 10,
 					itemStyle: { cursor: 'pointer', color: '#000', lineHeight: '18px' },
-					itemHoverStyle: { color: '#666' },
-					style: { right: '0', top: '0', bottom: 'auto', left: 'auto' }
+					itemHoverStyle: { color: '#666' }
 				}
 			});
 		}
@@ -106,7 +105,7 @@ jsBackend.mailmotor.chartPieChart =
 					}
 				}
 			},
-			legend: { style: { right: '10px' } },
+			legend: { enabled: false },
 			series: [ { type: 'pie', data: pieChartData } ]
 		});
 	}
