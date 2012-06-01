@@ -9,6 +9,8 @@ Improvements:
 Bugfixes:
 
 * Minify: first convert images to base64, then remove all whitespaces. Otherwise some image url's are not converted.
+* Formbuilder: datestart & dateend were wrong after sorting, as mention on http://forkcms.lighthouseapp.com/projects/61890/tickets/303, thx Jeroen Desloovere.
+
 
 3.3.11 (2012-05-29)
 --
