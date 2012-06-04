@@ -53,22 +53,21 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
 	private function loadData()
 	{
 		// get the current page id
-		if(!SITE_MULTILANGUAGE) $pageId = FrontendNavigation::getPageId($this->URL->getQueryString());
-		else $pageId = FrontendNavigation::getPageId(substr($this->URL->getQueryString(), 3));
+		$pageId = Spoon::get('page')->getId();
 
 		$navigation = FrontendNavigation::getNavigation();
 		$pageInfo = FrontendNavigation::getPageInfo($pageId);
 
 		$this->navigation = array();
-		
+
 		if(isset($navigation['page'][$pageInfo['parent_id']]))
 		{
 			$pages = $navigation['page'][$pageInfo['parent_id']];
-			
+
 			// store
 			$pagesPrev = $pages;
 			$pagesNext = $pages;
-			
+
 			// check for current id
 			foreach($pagesNext as $key => $value)
 			{
@@ -87,11 +86,27 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
 			// get previous page
 			$this->navigation['previous'] = prev($pagesPrev);
 
+
+			if($this->navigation['previous'])
+			{
+				if(SITE_MULTILANGUAGE) $this->navigation['previous']['full_url'] = FRONTEND_LANGUAGE . '/' . $this->navigation['previous']['full_url'];
+			}
+
+
 			// get next page
 			$this->navigation['next'] = next($pagesNext);
-			
+			if($this->navigation['next'])
+			{
+				if(SITE_MULTILANGUAGE) $this->navigation['next']['full_url'] = FRONTEND_LANGUAGE . '/' . $this->navigation['next']['full_url'];
+			}
+
 			// get parent page
 			$this->navigation['parent'] = FrontendNavigation::getPageInfo($pageInfo['parent_id']);
+			if($this->navigation['parent'])
+			{
+				if(SITE_MULTILANGUAGE) $this->navigation['parent']['full_url'] = FRONTEND_LANGUAGE . '/' . $this->navigation['parent']['full_url'];
+			}
+
 		}
 	}
 
