@@ -2,10 +2,11 @@
 --
 Improvements:
 
-* Generate thumbnails based on the folders in the given path, see http://www.fork-cms.com/knowledge-base/detail/generate-thumbnails-based-on-folders.
+* Core: Generate thumbnails based on the folders in the given path, see http://www.fork-cms.com/knowledge-base/detail/generate-thumbnails-based-on-folders.
 * Blog: better layout for the image-box.
 * Core: upgraded Highcharts to 2.2.4
-* Profiles: base the URL on the display-name instead of the id
+* Profiles: base the URL on the display-name instead of the id.
+* Core: default extension and mimetype-validation for image-field.
 
 Bugfixes:
 

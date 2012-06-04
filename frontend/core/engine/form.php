@@ -239,8 +239,9 @@ class FrontendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputFile inputImage';
 		$classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
 
-		// create and return an imagefield
-		return parent::addImage($name, $class, $classError);
+		// add element
+		$this->add(new FrontendFormImage($name, $class, $classError));
+		return $this->getField($name);
 	}
 
 	/**
@@ -638,5 +639,52 @@ class FrontendFormDate extends SpoonFormDate
 		 * and truth will out!
 		 */
 		return true;
+	}
+}
+
+/**
+ * This is our extended version of SpoonFormImage
+ *
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+class FrontendFormImage extends SpoonFormImage
+{
+	/**
+	 * Generate thumbnails based on the folders in the path
+	 * Use
+	 *  - 128x128 as foldername to generate an image that where the width will be 128px and the height will be 128px
+	 *  - 128x as foldername to generate an image that where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as foldername to generate an image that where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *
+	 * @param string $path
+	 * @param string $filename
+	 */
+	public function generateThumbnails($path, $filename)
+	{
+		// create folder if needed
+		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+
+		// move the source file
+		$this->moveFile($path . '/source/' . $filename);
+
+		// generate the thumbnails
+		FrontendModel::generateThumbnails($path, $path . '/source/' . $filename);
+	}
+
+	/**
+	 * This function will return the errors. It is extended so we can do image checks automatically.
+	 *
+	 * @return string
+	 */
+	public function getErrors()
+	{
+		// do an image validation
+		if($this->isFilled())
+		{
+			$this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), FL::err('JPGGIFAndPNGOnly'));
+			$this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), FL::err('JPGGIFAndPNGOnly'));
+		}
+
+		return $this->errors;
 	}
 }
