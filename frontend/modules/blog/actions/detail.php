@@ -152,7 +152,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// add additional OpenGraph data
 			$this->header->addOpenGraphData('title', $this->record['title'], true);
 			$this->header->addOpenGraphData('type', 'article', true);
-			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'], true);
+			$this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
 			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
 			$this->header->addOpenGraphData('description', $this->record['title'], true);
 		}
@@ -172,7 +172,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
 		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
-		$this->header->setCanonicalUrl(FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url']);
+		$this->header->setCanonicalUrl($this->record['full_url']);
 
 		// assign article
 		$this->tpl->assign('item', $this->record);
@@ -266,7 +266,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$comment['data'] = serialize(array('server' => $_SERVER));
 
 				// get URL for article
-				$permaLink = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
+				$permaLink = $this->record['full_url'];
 				$redirectLink = $permaLink;
 
 				// is moderation enabled
