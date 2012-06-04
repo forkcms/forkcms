@@ -133,7 +133,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 					$profileId = FrontendProfilesModel::insert($values);
 
 					// use the profile id as url until we have an actual url
-					FrontendProfilesModel::update($profileId, array('url' => FrontendProfilesModel::getUrl($profileId)));
+					FrontendProfilesModel::update($profileId, array('url' => FrontendProfilesModel::getUrl($values['display_name'])));
 
 					// trigger event
 					FrontendModel::triggerEvent('profiles', 'after_register', array('id' => $profileId));

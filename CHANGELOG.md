@@ -2,9 +2,18 @@
 --
 Improvements:
 
-* Generate thumbnails based on the folders in the given path, see http://www.fork-cms.com/knowledge-base/detail/generate-thumbnails-based-on-folders.
+* Core: Generate thumbnails based on the folders in the given path, see http://www.fork-cms.com/knowledge-base/detail/generate-thumbnails-based-on-folders.
 * Blog: better layout for the image-box.
 * Core: upgraded Highcharts to 2.2.4
+* Profiles: base the URL on the display-name instead of the id.
+* Core: default extension and mimetype-validation for image-field.
+* Core: made it possible to set cookies with the utils.js (Remark: not compatible with SpoonCookie)
+* Core: minifier will include svg & woff alsways as raw data.
+
+Bugfixes:
+
+* Minify: first convert images to base64, then remove all whitespaces. Otherwise some image url's are not converted.
+* Formbuilder: datestart & dateend were wrong after sorting, as mention on http://forkcms.lighthouseapp.com/projects/61890/tickets/303, thx Jeroen Desloovere.
 
 
 3.3.11 (2012-05-29)

@@ -299,9 +299,10 @@ class MinifyCSS extends Minify
 				// get the path for the file that will be imported
 				$path = $match[2];
 				$path = dirname($source) . '/' . $path;
+				$extension = $match[3];
 
 				// only replace the import with the content if we can grab the content of the file
-				if(@file_exists($path) && is_file($path) && (filesize($path) <= (self::IMAGE_MAX_SIZE * 1024)))
+				if(@file_exists($path) && is_file($path) && (filesize($path) <= (self::IMAGE_MAX_SIZE * 1024) || in_array($extension, array('svg', 'woff'))))
 				{
 					// grab content
 					$importContent = @file_get_contents($path);
@@ -366,10 +367,10 @@ class MinifyCSS extends Minify
 		}
 
 		if($combineImports) $content = $this->combineImports($path, false, $content);
-		if($stripComments) $content = $this->stripComments($content);
-		if($stripWhitespace) $content = $this->stripWhitespace($content);
 		if($shortenHex) $content = $this->shortenHex($content);
 		if($importFiles) $content = $this->importFiles($path, false, $content);
+		if($stripComments) $content = $this->stripComments($content);
+		if($stripWhitespace) $content = $this->stripWhitespace($content);
 
 		// save to path
 		if($path !== false) $this->save($content, $path);

@@ -2915,6 +2915,20 @@
         <translation language="sv"><![CDATA[Detta är en ogiltig URL.]]></translation>
         <translation language="pl"><![CDATA[To jest nieprawidłowy adres URL.]]></translation>
       </item>
+      <item type="error" name="JPGGIFAndPNGOnly">
+        <translation language="nl"><![CDATA[Enkel jpg, gif, png]]></translation>
+        <translation language="en"><![CDATA[Only jpg, gif, png]]></translation>
+        <translation language="hu"><![CDATA[Csak jpg, gif, png]]></translation>
+        <translation language="ru"><![CDATA[Только JPG, GIF, PNG]]></translation>
+        <translation language="it"><![CDATA[Solo jpg, gif, png]]></translation>
+        <translation language="zh"><![CDATA[支持jpg/gif/png格式]]></translation>
+        <translation language="fr"><![CDATA[Jpg, gif, png seulement]]></translation>
+        <translation language="de"><![CDATA[Nur jp(e)g, gif und png-Dateien sind erlaubt.]]></translation>
+        <translation language="es"><![CDATA[Solo jpg, gif, png]]></translation>
+        <translation language="lt"><![CDATA[Tik jpg, gif, png]]></translation>
+        <translation language="sv"><![CDATA[Endast jpg, gif, png]]></translation>
+        <translation language="tr"><![CDATA[Sadece JPG, GIF, PNG]]></translation>
+      </item>
       <item type="error" name="MessageIsRequired">
         <translation language="nl"><![CDATA[Bericht is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[Message is a required field.]]></translation>
