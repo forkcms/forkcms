@@ -7,6 +7,7 @@ Improvements:
 * Core: upgraded Highcharts to 2.2.4
 * Profiles: base the URL on the display-name instead of the id.
 * Core: default extension and mimetype-validation for image-field.
+* Core: made it possible to set cookies with the utils.js (Remark: not compatible with SpoonCookie)
 
 Bugfixes:
 
