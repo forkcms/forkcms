@@ -299,9 +299,10 @@ class MinifyCSS extends Minify
 				// get the path for the file that will be imported
 				$path = $match[2];
 				$path = dirname($source) . '/' . $path;
+				$extension = $match[3];
 
 				// only replace the import with the content if we can grab the content of the file
-				if(@file_exists($path) && is_file($path) && (filesize($path) <= (self::IMAGE_MAX_SIZE * 1024)))
+				if(@file_exists($path) && is_file($path) && (filesize($path) <= (self::IMAGE_MAX_SIZE * 1024) || in_array($extension, array('svg', 'woff'))))
 				{
 					// grab content
 					$importContent = @file_get_contents($path);

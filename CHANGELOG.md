@@ -8,6 +8,7 @@ Improvements:
 * Profiles: base the URL on the display-name instead of the id.
 * Core: default extension and mimetype-validation for image-field.
 * Core: made it possible to set cookies with the utils.js (Remark: not compatible with SpoonCookie)
+* Core: minifier will include svg & woff alsways as raw data.
 
 Bugfixes:
 
