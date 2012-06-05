@@ -1,3 +1,10 @@
+3.3.13 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Core: Use the title of the active page record in the editor link list.
+
+
 3.3.12 (2012-06-05)
 --
 Improvements:
@@ -24,7 +31,7 @@ Bugfixes:
 
 
 3.3.10 (2012-05-29)
--- 
+--
 Improvements:
 
 * Sitemap: include the meta navigation.
@@ -117,7 +124,7 @@ Bugfixes:
 
 * Spoon: Multicheckboxes and radiobuttons could have ids with spaces in them. Fixed thx to Anysurfer.
 * Core: when using Fork in non-multilanguage-mode the links for the internal pages weren't generated correctly, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/285-editor-adding-intern-links-error.
-* Spoon: The selected element for a multiple dropdown were forgotten when the form failed. 
+* Spoon: The selected element for a multiple dropdown were forgotten when the form failed.
 * Core: upgraded the Akismet class, which fixes an error of double encoding, as mentioned on https://twitter.com/#!/tellyworth/status/180138255340142592.
 
 
@@ -212,7 +219,7 @@ Bugfixes:
 * Core: you can now override the template for sub navigation and the navigation: {$var|getnavigation:'page':{$page.id}:2:null:null:'/core/layout/templates/subnavigation.tpl'}
 * Extensions: installing a pre-uploaded theme from the themes overview now installs the selected theme instead of the last theme.
 * Mailmotor: fix CSV address imports.
-* Pages: include footer/meta subpages in the linkedlist. 
+* Pages: include footer/meta subpages in the linkedlist.
 
 
 3.2.4 (2012-02-07)
@@ -312,7 +319,7 @@ Improvements:
 * Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
 * Pages: when adding an editor field, the editor will immediately open.
 * Pages: the sitemap now correctly displays subpages.
-* Extensions: modules may now also include files in /library/external. 
+* Extensions: modules may now also include files in /library/external.
 * All: actions where the user has no rights for, are no longer shown.
 
 Bugfixes:
@@ -385,7 +392,7 @@ Improvements:
 * Core: the direct actions are no longer shown in the navigation.
 * Core: don't add a timestamp to the urls of well known libraries in the backend.
 * Core: automagic canonical-urls.
-* Core: added a new modifier stripnewlines which will remove all newlines in a string, so JS can handle it. 
+* Core: added a new modifier stripnewlines which will remove all newlines in a string, so JS can handle it.
 * Core: added schema.org properties in the default HTML and in the Triton-theme.
 * Locale: added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
 * Locale: the missing items are now sorted by application, type, module and name.
@@ -406,14 +413,14 @@ Bugfixes:
 --
 Bugfixes:
 
-* Analytics: when refreshing the traffic sources a parseerror was thrown, as reported by Wouter H. on http://forkcms.lighthouseapp.com/projects/61890/tickets/231 
+* Analytics: when refreshing the traffic sources a parseerror was thrown, as reported by Wouter H. on http://forkcms.lighthouseapp.com/projects/61890/tickets/231
 
 
 3.1.4 (2011-11-29)
 --
 Improvements:
 
-* Core: upgraded jQuery to 1.7.1  
+* Core: upgraded jQuery to 1.7.1
 * Core: upgraded jQuery Tools to 1.2.6
 * Core: direct action pages get prefilled meta information again.
 * Users: when adding a user and there is only one group it will be checked by default.
@@ -444,7 +451,7 @@ Bugfixes:
 * Extensions: prevented PHP warnings when no info.xml is available.
 * Core: fixed an issue with drag and drop in the backend.
 * Locale: importing other languages then EN is possible again.
-* Core: fixed an issue with the user-dropdown. 
+* Core: fixed an issue with the user-dropdown.
 * Formbuilder: fixed an issues with the default error messages.
 * Blog: deleting a blog image caused a SQL error.
 * Core: upgraded the YUI-compressor to 2.4.7, see https://github.com/yui/yuicompressor/blob/master/doc/CHANGELOG.
@@ -489,7 +496,7 @@ Improvements:
 * Core: Upgraded TinyMCE to 3.4.7
 * Core: TinyMCE now includes all languages that are possible in the interface-language-dropdown.
 * Core: the keys when asking for a locale item now get camelcased so you can add enum values f.e. when using them in a datagrid.
-* Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere. 
+* Formbuilder: made it possible to add multiple receivers, as requested by Jeroen De Sloovere.
 * Pages: added a widget that shows the subpages as blocks with their title and meta description.
 
 Bugfixes:
@@ -682,7 +689,7 @@ Improvements:
 Improvements:
 
 * Core: backend navigation is now dynamically generated. Module installers can set their navigation tree.
-* Core: improved default-filtering in locale. From now on frontend and all types are default. 
+* Core: improved default-filtering in locale. From now on frontend and all types are default.
 * Core: return id of inserted mail.
 * Pages: sitemap page will now also display child pages.
 
@@ -860,13 +867,13 @@ Bugfixes:
 * Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
 * Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
 * Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
-* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions. 
+* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions.
 * Bugfix: improve "incomplete" (autocomplete) searching for multiple words (only the last word should be considered incomplete.)
 * Bugfix: removed empty widgets, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/150.
 * Bugfix: hover-event wasn't unbind correctly when sorting the widgets was done.
 * Bugfix: importing addresses into the mailmotor was borked, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/143.
 * Bugfix: focusFirst was focusing on an element on hidden tabs, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/153.
-* Bugfix: click on tab wasn't working decent in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/154. 
+* Bugfix: click on tab wasn't working decent in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/154.
 * Bugfix: page-revisions were interfering with blog-revisions, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/151.
 * Bugfix: theme-css is now loaded again into TinyMCE.
 * Bugfix: only remove language from querystring when we have multiple languages.
@@ -902,7 +909,7 @@ Improvements:
 * Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.
 * Blog: in the dropdown to filter on a category the count is now included.
 * Blog: when canceling adding a new category the previous selected one will be reselected, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/147
-* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
+* Pages: Redirecting to childpages (if there is no content) will now use 301-code.
 * Pages: implemented drafts, similar to Blog.
 * Pages: when changing templates the textual-content isn't deleted anymore.
 * Locale: you can now import/export locale from/to xml. The installers also use xml's.
@@ -975,7 +982,7 @@ Improvements:
 * Core: Integrated Facebook in the frontend, when an Facebook-app is configured, a facebook-instance will be available in the reference (Spoon::getObjectReference('facebook')). When the user has granted the correct permission you will be able to communicate with Facebook as that user.
 * Bugfix: changing a page template to a template with more blocks caused an exception.
 * Pages: use the new Triton theme when installing a new Fork with example data.
-* Pages: hidden pages don't have the view-button anymore, as requested on http://forkcms.lighthouseapp.com/projects/61890/tickets/123 
+* Pages: hidden pages don't have the view-button anymore, as requested on http://forkcms.lighthouseapp.com/projects/61890/tickets/123
 * Bugfix: Metanavigation subpages not shown in backend, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/129
 * Dashboard: Fixed issue with dashboard that wasn't scalling anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/130
 * When FB-admin-ids are given, the facebook-statistics-tag is added on all pages
