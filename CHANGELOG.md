@@ -1,4 +1,11 @@
-3.3.12 (xxxx-xx-xx)
+3.3.13 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded to jQuery UI 1.8.21
+
+
+3.3.12 (2012-06-05)
 --
 Improvements:
 
@@ -8,7 +15,7 @@ Improvements:
 * Profiles: base the URL on the display-name instead of the id.
 * Core: default extension and mimetype-validation for image-field.
 * Core: made it possible to set cookies with the utils.js (Remark: not compatible with SpoonCookie)
-* Core: minifier will include svg & woff alsways as raw data.
+* Core: minifier will always include svg & woff as raw data.
 
 Bugfixes:
 
