@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: Upgraded to jQuery UI 1.8.21
+* Core: Upgraded Highcharts to 2.2.5
 
 
 3.3.12 (2012-06-05)
