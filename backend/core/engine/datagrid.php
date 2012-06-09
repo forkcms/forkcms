@@ -17,6 +17,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendDataGrid extends SpoonDataGrid
 {
@@ -80,7 +81,7 @@ class BackendDataGrid extends SpoonDataGrid
 	public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
 		// known actions that should have a button
-		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam', 'install')))
+		if(in_array($name, array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install')))
 		{
 			// rebuild value, it should have special markup
 			$value = '<a href="' . $URL . '" class="button icon icon' . SpoonFilter::toCamelCase($name) . ' linkButton">
@@ -94,7 +95,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if(in_array($name, array('use_revision', 'use_draft')))
 		{
 			// rebuild value, it should have special markup
-			$value = '<a href="' . $URL . '" class="button icon' . SpoonFilter::toCamelCase($name) . '">
+			$value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' . SpoonFilter::toCamelCase($name) . '">
 						<span>' . $value . '</span>
 					</a>';
 
@@ -106,7 +107,7 @@ class BackendDataGrid extends SpoonDataGrid
 		parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
 		// known actions
-		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam', 'install', 'use_revision', 'use_draft')))
+		if(in_array($name, array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install', 'use_revision', 'use_draft')))
 		{
 			// add special attributes for actions we know
 			$this->setColumnAttributes($name, array('class' => 'action action' . SpoonFilter::toCamelCase($name)));
@@ -158,6 +159,26 @@ class BackendDataGrid extends SpoonDataGrid
 	}
 
 	/**
+	 * Enable the grey out functionallity. This will see if we have a column that matches our set.
+	 * If so, it will call the BackendDatagridFunction with the type and value so we can parse the data.
+	 */
+	public function enableGreyingOut()
+	{
+		$allowedColumns = array('hidden', 'visible', 'active', 'published');
+		$allColumns = $this->getColumns();
+
+		foreach($allowedColumns as $column)
+		{
+			// we have a match, set the row function
+			if(array_search($column, $allColumns) !== false)
+			{
+				$this->setColumnHidden($column);
+				$this->setRowFunction(array('BackendDatagridFunctions', 'greyOut'), array($column, '[' . $column . ']'), array($column));
+			}
+		}
+	}
+
+	/**
 	 * Enable drag and drop for the current datagrid
 	 */
 	public function enableSequenceByDragAndDrop()
@@ -196,6 +217,13 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// has paging & more than 1 page
 		elseif($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) $this->tpl->assign('footer', true);
+
+		// set the odd and even classes
+		$this->setOddRowAttributes(array('class' => 'odd'));
+		$this->setEvenRowAttributes(array('class' => 'even'));
+
+		// enable greying out
+		$this->enableGreyingOut();
 
 		// execute parent
 		return parent::getContent();
@@ -792,18 +820,48 @@ class BackendDataGridFunctions
 		// get settings
 		$avatar = $user->getSetting('avatar', 'no-avatar.gif');
 		$nickname = $user->getSetting('nickname');
+		$allowed = BackendAuthentication::isAllowedAction('edit', 'users');
 
 		// build html
 		$html = '<div class="dataGridAvatar">' . "\n";
 		$html .= '	<div class="avatar av24">' . "\n";
-		$html .= '		<a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . "\n";
+		if($allowed) $html .= '		<a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . "\n";
 		$html .= '			<img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
-		$html .= '		</a>' . "\n";
+		if($allowed) $html .= '		</a>' . "\n";
 		$html .= '	</div>';
 		$html .= '	<p><a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
 		$html .= '</div>';
 
 		return $html;
+	}
+
+	/**
+	 * This will grey out certain rows from comon columns. These columns are:
+	 *
+	 * 'visible', 'hidden', 'active', 'published'
+	 *
+	 * @param string $type The type of column. This is given since some columns can have different meanings than others.
+	 * @param string $value
+	 * @param array $attributes
+	 */
+	public static function greyOut($type, $value, array $attributes = array())
+	{
+		// the base class
+		$grayedOutClass = 'grayedOut';
+
+		switch($type)
+		{
+			case 'visible':
+			case 'active':
+			case 'published':
+				if($value == 'N') return array('class' => $grayedOutClass);
+				break;
+			case 'hidden':
+				if($value == 'Y') return array('class' => $grayedOutClass);
+				break;
+		}
+
+		return array();
 	}
 
 	/**

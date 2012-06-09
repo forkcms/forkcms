@@ -115,6 +115,27 @@ $(document).ready(function()
 
 
 	/*
+	 * Step 4 - modules
+	 */
+
+	if($('#differentDebugEmail').is(':checked')) $('#debugEmailHolder').show();
+
+	// multiple languages
+	$('#differentDebugEmail').on('change', function()
+	{
+		if($('#differentDebugEmail').is(':checked'))
+		{
+			$('#debugEmailHolder').show();
+			$('#debugEmail').focus();
+		}
+		else
+		{
+			$('#debugEmailHolder').hide();
+		}
+	});
+
+
+	/*
 	 * Step 5 - DB configuration
 	 */
 

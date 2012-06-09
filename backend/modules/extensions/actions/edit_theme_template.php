@@ -73,13 +73,14 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 
 		// determine if deleting is allowed
 		$deleteAllowed = true;
-		if($this->record['id'] == BackendModel::getModuleSetting($this->getModule(), 'default_template')) $deleteAllowed = false;
+		if($this->record['id'] == BackendModel::getModuleSetting('pages', 'default_template')) $deleteAllowed = false;
 		elseif(count(BackendExtensionsModel::getTemplates()) == 1) $deleteAllowed = false;
 		elseif($inUse) $deleteAllowed = false;
+		elseif(!BackendAuthentication::isAllowedAction('delete_theme_template')) $deleteAllowed = false;
 
 		// assign
 		$this->tpl->assign('inUse', $inUse);
-		$this->tpl->assign('deleteAllowed', $deleteAllowed);
+		$this->tpl->assign('showExtensionsDeleteThemeTemplate', $deleteAllowed);
 	}
 
 	/**
@@ -91,7 +92,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// init var
-		$defaultId = BackendModel::getModuleSetting($this->getModule(), 'default_template');
+		$defaultId = BackendModel::getModuleSetting('pages', 'default_template');
 
 		// build available themes
 		$themes = array();
@@ -263,47 +264,54 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 
 			// init var
 			$table = BackendExtensionsModel::templateSyntaxToArray($syntax);
-			$html = BackendExtensionsModel::buildTemplateHTML($syntax);
-			$cellCount = 0;
-			$first = true;
-			$errors = array();
 
-			// loop rows
-			foreach($table as $row)
+			// validate the syntax
+			if($table === false) $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+
+			else
 			{
-				// first row defines the cellcount
-				if($first) $cellCount = count($row);
+				$html = BackendExtensionsModel::buildTemplateHTML($syntax);
+				$cellCount = 0;
+				$first = true;
+				$errors = array();
 
-				// not same number of cells
-				if(count($row) != $cellCount)
+				// loop rows
+				foreach($table as $row)
 				{
-					// add error
-					$errors[] = BL::err('InvalidTemplateSyntax');
+					// first row defines the cellcount
+					if($first) $cellCount = count($row);
 
-					// stop
-					break;
-				}
-
-				// doublecheck position names
-				foreach($row as $cell)
-				{
-					// ignore unavailable space
-					if($cell != '/')
+					// not same number of cells
+					if(count($row) != $cellCount)
 					{
-						// not alphanumeric -> error
-						if(!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+						// add error
+						$errors[] = BL::err('InvalidTemplateSyntax');
 
-						// can't build proper html -> error
-						elseif(substr_count($html, '#position-' . $cell) != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+						// stop
+						break;
 					}
+
+					// doublecheck position names
+					foreach($row as $cell)
+					{
+						// ignore unavailable space
+						if($cell != '/')
+						{
+							// not alphanumeric -> error
+							if(!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+
+							// can't build proper html -> error
+							elseif(substr_count($html, '"#position-' . $cell . '"') != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+						}
+					}
+
+					// reset
+					$first = false;
 				}
 
-				// reset
-				$first = false;
+				// add errors
+				if($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
 			}
-
-			// add errors
-			if($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -323,7 +331,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 				$item['data'] = serialize($item['data']);
 
 				// if this is the default template make the template active
-				if(BackendModel::getModuleSetting($this->getModule(), 'default_template') == $this->record['id']) $item['active'] = 'Y';
+				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $item['active'] = 'Y';
 
 				// if the template is in use we can't de-activate it
 				if(BackendExtensionsModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
@@ -335,7 +343,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_template', array('item' => $item));
 
 				// set default template
-				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
+				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
 
 				// update all existing pages using this template to add the newly inserted block(s)
 				if(BackendExtensionsModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->frm->getField('overwrite')->getChecked());

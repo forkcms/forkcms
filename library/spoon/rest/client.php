@@ -75,7 +75,7 @@ class SpoonRESTClient
 		if(!function_exists('curl_init')) throw new SpoonFileException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
 
 		// init var
-		$allowedMethods = array('GET', 'POST');
+		$allowedMethods = array('GET', 'POST', 'DELETE');
 
 		// redefine
 		$url = (string) $url;
@@ -124,10 +124,16 @@ class SpoonRESTClient
 		}
 
 		// specific when using POST
-		if($method == 'POST')
+		if($method == 'POST' || $method == 'DELETE')
 		{
 			$options[CURLOPT_POST] = true;
 			$options[CURLOPT_POSTFIELDS] = $parameters;
+		}
+
+		// custom requests
+		if($method === 'DELETE')
+		{
+			$options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
 		}
 
 		// init curl

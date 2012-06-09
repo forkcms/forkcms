@@ -165,11 +165,13 @@ class BlogInstaller extends ModuleInstaller
 			$this->setSetting('blog', 'rss_description_' . $language, '');
 
 			// check if a page for blog already exists in this language
-			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
-												FROM pages AS p
-												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?',
-												array($blogId, $language)))
+			if(!(bool) $this->getDB()->getVar(
+				'SELECT 1
+				 FROM pages AS p
+				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+				 WHERE b.extra_id = ? AND p.language = ?
+				 LIMIT 1',
+				array($blogId, $language)))
 			{
 				$this->insertPage(
 					array('title' => 'Blog', 'language' => $language),
@@ -197,7 +199,12 @@ class BlogInstaller extends ModuleInstaller
 		$db = $this->getDB();
 
 		// check if blogposts already exist in this language
-		if(!(bool) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)))
+		if(!(bool) $db->getVar(
+			'SELECT 1
+			 FROM blog_posts
+			 WHERE language = ?
+			 LIMIT 1',
+			array($language)))
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array(
@@ -243,7 +250,7 @@ class BlogInstaller extends ModuleInstaller
 				'language' => $language,
 				'created_on' => gmdate('Y-m-d H:i:00'),
 				'author' => 'Matthias Mullie',
-				'email' => 'matthias@fork-cms.com',
+				'email' => 'forkcms-sample@mullie.eu',
 				'website' => 'http://www.mullie.eu',
 				'text' => 'cool!',
 				'type' => 'comment',
@@ -257,7 +264,7 @@ class BlogInstaller extends ModuleInstaller
 				'language' => $language,
 				'created_on' => gmdate('Y-m-d H:i:00'),
 				'author' => 'Davy Hellemans',
-				'email' => 'davy@spoon-library.com',
+				'email' => 'forkcms-sample@spoon-library.com',
 				'website' => 'http://www.spoon-library.com',
 				'text' => 'awesome!',
 				'type' => 'comment',
@@ -271,7 +278,7 @@ class BlogInstaller extends ModuleInstaller
 				'language' => $language,
 				'created_on' => gmdate('Y-m-d H:i:00'),
 				'author' => 'Tijs Verkoyen',
-				'email' => 'tijs@sumocoders.be',
+				'email' => 'forkcms-sample@sumocoders.be',
 				'website' => 'http://www.sumocoders.be',
 				'text' => 'wicked!',
 				'type' => 'comment',

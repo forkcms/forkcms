@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendExtensionsModel
 {
@@ -163,29 +171,37 @@ class BackendExtensionsModel
 		$akismetModules = self::getModulesThatRequireAkismet();
 		$googleMapsModules = self::getModulesThatRequireGoogleMaps();
 
-		// check if the akismet key is available if there are modules that require it
-		if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index', 'settings'))
 		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
-		}
-
-		// check if the google maps key is available if there are modules that require it
-		if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
-		{
-			// add warning
-			$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
-		}
-
-		// check if there are cronjobs that are not yet set
-		$modules = BackendExtensionsModel::getModules();
-		foreach($modules as $module)
-		{
-			if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+			// check if the akismet key is available if there are modules that require it
+			if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
-				break;
+				$warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
+			}
+
+			// check if the google maps key is available if there are modules that require it
+			if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '')
+			{
+				// add warning
+				$warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
+			}
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('modules', 'extensions'))
+		{
+			// check if there are cronjobs that are not yet set
+			$modules = BackendExtensionsModel::getModules();
+			foreach($modules as $module)
+			{
+				if(isset($module['cronjobs_active']) && !$module['cronjobs_active'])
+				{
+					// add warning
+					$warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+					break;
+				}
 			}
 		}
 
@@ -436,6 +452,75 @@ class BackendExtensionsModel
 	}
 
 	/**
+	 * Fetch the module information from the info.xml file.
+	 *
+	 * @param string $module
+	 * @return array
+	 */
+	public static function getModuleInformation($module)
+	{
+		// path to information file
+		$pathInfoXml = BACKEND_MODULES_PATH . '/' . $module . '/info.xml';
+
+		// the module information
+		$information = array('data' => array(), 'warnings' => array());
+
+		// information needs to exists
+		if(SpoonFile::exists($pathInfoXml))
+		{
+			try
+			{
+				// load info.xml
+				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+
+				// convert xml to useful array
+				$information['data'] = self::processModuleXml($infoXml);
+
+				// empty data (nothing useful)
+				if(empty($information['data']))
+				{
+					$information['warnings'][] = array(
+						'message' => BL::getMessage('InformationFileIsEmpty')
+					);
+				}
+
+				// check if cronjobs are installed already
+				if(isset($information['data']['cronjobs']))
+				{
+					foreach($information['data']['cronjobs'] as $cronjob)
+					{
+						if(!$cronjob['active'])
+						{
+							$information['warnings'][] = array(
+								'message' => BL::getError('CronjobsNotSet')
+							);
+						}
+						break;
+					}
+				}
+			}
+
+			// warning that the information file is corrupt
+			catch(Exception $e)
+			{
+				$information['warnings'][] = array(
+					'message' => BL::getMessage('InformationFileCouldNotBeLoaded')
+				);
+			}
+		}
+
+		// warning that the information file is missing
+		else
+		{
+			$information['warnings'][] = array(
+				'message' => BL::getMessage('InformationFileIsMissing')
+			);
+		}
+
+		return $information;
+	}
+
+	/**
 	 * Get modules based on the directory listing in the backend application.
 	 *
 	 * If a module contains a info.xml it will be parsed.
@@ -448,7 +533,7 @@ class BackendExtensionsModel
 		$installedModules = (array) BackendModel::getDB()->getRecords('SELECT name FROM modules', null, 'name');
 
 		// get modules present on the filesystem
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
+		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH, false, null, '/^[a-zA-Z0-9_]+$/');
 
 		// all modules that are managable in the backend
 		$managableModules = array();
@@ -667,7 +752,7 @@ class BackendExtensionsModel
 				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 				// convert xml to useful array
-				$information = BackendExtensionsModel::processThemeXml($infoXml);
+				$information = self::processThemeXml($infoXml);
 				if(!$information) throw new BackendException('Invalid info.xml');
 			}
 
@@ -704,6 +789,19 @@ class BackendExtensionsModel
 	}
 
 	/**
+	 * Checks if a specific module has errors or not
+	 *
+	 * @param string $module
+	 * @return bool
+	 */
+	public static function hasModuleWarnings($module)
+	{
+		$moduleInformation = self::getModuleInformation($module);
+
+		return (empty($moduleInformation['warnings'])) ? 'N' : 'Y';
+	}
+
+	/**
 	 * Inserts a new template
 	 *
 	 * @param array $template The data for the template to insert.
@@ -718,8 +816,9 @@ class BackendExtensionsModel
 	 * Install a module.
 	 *
 	 * @param string $module The name of the module to be installed.
+	 * @param array $information Warnings from the upload of the module.
 	 */
-	public static function installModule($module)
+	public static function installModule($module, array $warnings = array())
 	{
 		// we need the installer
 		require_once BACKEND_CORE_PATH . '/installer/installer.php';
@@ -743,9 +842,16 @@ class BackendExtensionsModel
 		// execute installation
 		$installer->install();
 
+		// add the warnings
+		foreach($warnings as $warning) $installer->addWarning($warning);
+
 		// save the warnings in session for later use
-		$warnings = array('module' => $module, 'warnings' => $installer->getWarnings());
-		SpoonSession::set('installer_warnings', $warnings);
+		if($installer->getWarnings())
+		{
+			$warnings = SpoonSession::exists('installer_warnings') ? SpoonSession::get('installer_warnings') : array();
+			$warnings = array_merge($warnings, array('module' => $module, 'warnings' => $installer->getWarnings()));
+			SpoonSession::set('installer_warnings', $warnings);
+		}
 
 		// clear the cache so locale (and so much more) gets rebuilt
 		self::clearCache();
@@ -765,7 +871,7 @@ class BackendExtensionsModel
 		$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
 		// convert xml to useful array
-		$information = BackendExtensionsModel::processThemeXml($infoXml);
+		$information = self::processThemeXml($infoXml);
 		if(!$information) throw new BackendException('Invalid info.xml');
 
 		// loop templates
@@ -831,7 +937,10 @@ class BackendExtensionsModel
 	public static function isModuleInstalled($module)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT COUNT(name) FROM modules WHERE name = ?',
+			'SELECT 1
+			 FROM modules
+			 WHERE name = ?
+			 LIMIT 1',
 			(string) $module
 		);
 	}
@@ -845,9 +954,10 @@ class BackendExtensionsModel
 	public static function isTemplateInUse($templateId)
 	{
 		return (bool) BackendModel::getDB(false)->getVar(
-			'SELECT COUNT(i.template_id)
+			'SELECT 1
 			 FROM pages AS i
-			 WHERE i.template_id = ? AND i.status = ?',
+			 WHERE i.template_id = ? AND i.status = ?
+			 LIMIT 1',
 			array((int) $templateId, 'active')
 		);
 	}
@@ -861,9 +971,10 @@ class BackendExtensionsModel
 	public static function isThemeInstalled($theme)
 	{
 		return (bool) BackendModeL::getDB()->getVar(
-			'SELECT COUNT(id)
+			'SELECT 1
 			 FROM themes_templates
-			 WHERE theme = ?',
+			 WHERE theme = ?
+			 LIMIT 1',
 			array($theme)
 		);
 	}
@@ -888,7 +999,7 @@ class BackendExtensionsModel
 		if($return === false) return false;
 
 		// unlink the random file
-		@unlink($path . '/' . $file);
+		SpoonFile::delete($path . '/' . $file);
 
 		return true;
 	}
@@ -1078,6 +1189,16 @@ class BackendExtensionsModel
 
 			// build table
 			$table[$i] = (array) explode(',', $row);
+		}
+
+		// no rows
+		if(!isset($table[0])) return false;
+
+		$columns = count($table[0]);
+
+		foreach($table as $row)
+		{
+			if(count($row) != $columns) return false;
 		}
 
 		return $table;

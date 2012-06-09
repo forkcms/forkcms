@@ -111,9 +111,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
 		// init vars
-		$author = (SpoonCookie::exists('comment_author')) ? SpoonCookie::get('comment_author') : null;
-		$email = (SpoonCookie::exists('comment_email')) ? SpoonCookie::get('comment_email') : null;
-		$website = (SpoonCookie::exists('comment_website')) ? SpoonCookie::get('comment_website') : 'http://';
+		$author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
+		$email = (CommonCookie::exists('comment_email') && SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
+		$website = (CommonCookie::exists('comment_website') && SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
 		// create elements
 		$this->frm->addText('author', $author);
@@ -144,7 +144,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 		{
 			// add specified image
-			$this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
+			if(isset($this->record['image']) && $this->record['image'] != '') $this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
 
 			// add images from content
 			$this->header->extractOpenGraphImages($this->record['text']);
@@ -152,7 +152,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// add additional OpenGraph data
 			$this->header->addOpenGraphData('title', $this->record['title'], true);
 			$this->header->addOpenGraphData('type', 'article', true);
-			$this->header->addOpenGraphData('url', SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'], true);
+			$this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
 			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
 			$this->header->addOpenGraphData('description', $this->record['title'], true);
 		}
@@ -172,7 +172,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
 		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
-		$this->header->setCanonicalUrl(FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url']);
+		$this->header->setCanonicalUrl($this->record['full_url']);
 
 		// assign article
 		$this->tpl->assign('item', $this->record);
@@ -266,7 +266,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$comment['data'] = serialize(array('server' => $_SERVER));
 
 				// get URL for article
-				$permaLink = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
+				$permaLink = $this->record['full_url'];
 				$redirectLink = $permaLink;
 
 				// is moderation enabled
@@ -322,9 +322,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// store author-data in cookies
 				try
 				{
-					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
-					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
-					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
+					CommonCookie::set('comment_author', $author);
+					CommonCookie::set('comment_email', $email);
+					CommonCookie::set('comment_website', $website);
 				}
 				catch(Exception $e)
 				{

@@ -34,6 +34,9 @@ class SpoonSession
 	 */
 	public static function delete()
 	{
+		// start session if needed
+		if(!session_id()) self::start();
+
 		// loop all arguments
 		foreach(func_get_args() as $argument)
 		{

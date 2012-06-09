@@ -120,11 +120,12 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:deleteAllowed}
+		{option:showExtensionsDeleteThemeTemplate}
 			<a href="{$var|geturl:'delete_theme_template'}&amp;id={$template.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
-		{/option:deleteAllowed}
+		{/option:showExtensionsDeleteThemeTemplate}
+
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>

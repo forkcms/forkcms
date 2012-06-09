@@ -12,6 +12,7 @@
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <matthias@mullie.eu>
  */
 class BackendHeader
 {
@@ -55,34 +56,64 @@ class BackendHeader
 
 	/**
 	 * Add a CSS-file.
-	 * If you don't specify a module, the current one will be used
-	 * If you set overwritePath to true we expect a full path (It has to start with a slash '/')
 	 *
-	 * @param string $fileName The name of the file to load.
+	 * If you don't specify a module, the current one will be used to automatically create the path to the file.
+	 * Automatic creation of the filename will result in
+	 *   /backend/modules/MODULE/layout/css/FILE (for modules)
+	 *   /backend/core/layout/css/FILE (for core)
+	 *
+	 * If you set overwritePath to true, the above-described automatic path creation will not happend, instead the
+	 * file-parameter will be used as path; which we then expect to be a full path (It has to start with a slash '/')
+	 *
+	 * @param string $file The name of the file to load.
 	 * @param string[optional] $module The module wherin the file is located.
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
+	 * @param bool[optional] $minify Should the CSS be minified?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($fileName, $module = null, $overwritePath = false, $addTimestamp = null)
+	public function addCSS($file, $module = null, $overwritePath = false, $minify = true, $addTimestamp = false)
 	{
-		$fileName = (string) $fileName;
+		$file = (string) $file;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$overwritePath = (bool) $overwritePath;
+		$minify = (bool) $minify;
+		$addTimestamp = (bool) $addTimestamp;
 
 		// init var
 		$realPath = '';
 
-		// is the given path the real path?
-		if($overwritePath) $realPath = $fileName;
+		// no actual path given: create
+		if(!$overwritePath)
+		{
+			// we have to build the path, but core is a special one
+			if($module !== 'core') $file = '/backend/modules/' . $module . '/layout/css/' . $file;
 
-		// we have to build the path, but core is a special one
-		elseif($module !== 'core') $realPath = '/backend/modules/' . $module . '/layout/css/' . $fileName;
+			// core is special because it isn't a real module
+			else $file = '/backend/core/layout/css/' . $file;
+		}
 
-		// core is special because it isn't a real module
-		else $realPath = '/backend/core/layout/css/' . $fileName;
+		// no minifying when debugging
+		if(SPOON_DEBUG) $minify = false;
 
-		// add if not already added
-		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
+		// try to minify
+		if($minify) $file = $this->minifyCSS($file);
+
+		// in array
+		$inArray = false;
+
+		// check if the file already exists in the array
+		foreach($this->cssFiles as $row) if($row['file'] == $file) $inArray = true;
+
+		// add to array if it isn't there already
+		if(!$inArray)
+		{
+			// build temporary array
+			$temp['file'] = (string) $file;
+			$temp['add_timestamp'] = $addTimestamp;
+
+			// add to files
+			$this->cssFiles[] = $temp;
+		}
 	}
 
 	/**
@@ -91,104 +122,208 @@ class BackendHeader
 	 * If you set parseThroughPHP to true, the JS will be parsed by PHP (labels and vars will be assignes)
 	 * If you set overwritePath to true we expect a full path (It has to start with a /)
 	 *
-	 * @param string $fileName The file to load.
+	 * @param string $file The file to load.
 	 * @param string[optional] $module The module wherin the file is located.
+	 * @param bool[optional] $minify Should the module be minified?
 	 * @param bool[optional] $parseThroughPHP Should the file be parsed by PHP?
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addJS($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
+	public function addJS($file, $module = null, $minify = true, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = false)
 	{
-		$fileName = (string) $fileName;
+		$file = (string) $file;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
+		$minify = (bool) $minify;
 		$parseThroughPHP = (bool) $parseThroughPHP;
 		$overwritePath = (bool) $overwritePath;
+		$addTimestamp = (bool) $addTimestamp;
 
 		// validate parameters
 		if($parseThroughPHP && $overwritePath) throw new BackendException('parseThroughPHP and overwritePath can\'t be both true.');
 
-		// init var
-		$realPath = '';
+		// no minifying when debugging
+		if(SPOON_DEBUG) $minify = false;
+
+		// no minifying when parsing through PHP
+		if($parseThroughPHP) $minify = false;
 
 		// is the given path the real path?
-		if($overwritePath) $realPath = $fileName;
+		if(!$overwritePath)
+		{
+			// should we parse the js-file? as in assign variables
+			if($parseThroughPHP) $file = '/backend/js.php?module=' . $module . '&amp;file=' . $file . '&amp;language=' . BL::getWorkingLanguage();
 
-		// should we parse the js-file? as in assign variables
-		elseif($parseThroughPHP) $realPath = '/backend/js.php?module=' . $module . '&amp;file=' . $fileName . '&amp;language=' . BackendLanguage::getWorkingLanguage();
+			// we have to build the path, but core is a special one
+			elseif($module !== 'core') $file = '/backend/modules/' . $module . '/js/' . $file;
 
-		// we have to build the path, but core is a special one
-		elseif($module !== 'core') $realPath = '/backend/modules/' . $module . '/js/' . $fileName;
+			// core is special because it isn't a real module
+			else $file = '/backend/core/js/' . $file;
+		}
 
-		// core is special because it isn't a real module
-		else $realPath = '/backend/core/js/' . $fileName;
+		// try to minify
+		if($minify) $file = $this->minifyJS($file);
 
-		// add if not already added
-		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->jsFiles)) $this->jsFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
+		// already in array?
+		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles))
+		{
+			// add to files
+			$this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
+		}
 	}
 
 	/**
-	 * Parse the JS, CSS files and meta-info into the head of the HTML-document
+	 * Get all added CSS files
+	 *
+	 * @return array
+	 */
+	public function getCSSFiles()
+	{
+		// fetch files
+		return $this->cssFiles;
+	}
+
+	/**
+	 * get all added javascript files
+	 *
+	 * @return array
+	 */
+	public function getJSFiles()
+	{
+		return $this->jsFiles;
+	}
+
+	/**
+	 * Minify a CSS-file
+	 *
+	 * @param string $file The file to be minified.
+	 * @return string
+	 */
+	private function minifyCSS($file)
+	{
+		// create unique filename
+		$fileName = md5($file) . '.css';
+		$finalURL = BACKEND_CACHE_URL . '/minified_css/' . $fileName;
+		$finalPath = BACKEND_CACHE_PATH . '/minified_css/' . $fileName;
+
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		{
+			// minify the file
+			require_once PATH_LIBRARY . '/external/minify.php';
+			$css = new MinifyCSS(PATH_WWW . $file);
+			$css->minify($finalPath);
+		}
+
+		return $finalURL;
+	}
+
+	/**
+	 * Minify a JS-file
+	 *
+	 * @param string $file The file to be minified.
+	 * @return string
+	 */
+	private function minifyJS($file)
+	{
+		// create unique filename
+		$fileName = md5($file) . '.js';
+		$finalURL = BACKEND_CACHE_URL . '/minified_js/' . $fileName;
+		$finalPath = BACKEND_CACHE_PATH . '/minified_js/' . $fileName;
+
+		// check that file does not yet exist or has been updated already
+		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		{
+			// minify the file
+			require_once PATH_LIBRARY . '/external/minify.php';
+			$js = new MinifyJS(PATH_WWW . $file);
+			$js->minify($finalPath);
+		}
+
+		return $finalURL;
+	}
+
+	/**
+	 * Parse the header into the template
 	 */
 	public function parse()
 	{
+		// parse CSS
+		$this->parseCSS();
+
+		// parse JS
+		$this->parseJS();
+	}
+
+	/**
+	 * Parse the CSS-files
+	 */
+	public function parseCSS()
+	{
+		// init var
 		$cssFiles = array();
-		$jsFiles = array();
+		$existingCSSFiles = $this->getCSSFiles();
 
-		// get last modified time for the header template
-		$lastModifiedTime = @filemtime($this->tpl->getCompileDirectory() . '/' . md5(realpath(BACKEND_CORE_PATH . '/layout/templates/header.tpl')) . '_header.tpl.php');
-
-		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
-		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
-
-		// if there aren't any CSS-files added we don't need to do something
-		if(!empty($this->cssFiles))
+		// if there aren't any JS-files added we don't need to do something
+		if(!empty($existingCSSFiles))
 		{
-			// loop the CSS-files and add the modified-time
-			foreach($this->cssFiles as $file)
+			foreach($existingCSSFiles as $file)
 			{
 				// add lastmodified time
-				if($file['add_timestamp'] !== false) $file['path'] .= (strpos($file['path'], '?') !== false) ? '&m=' . $lastModifiedTime : '?m=' . $lastModifiedTime;
+				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
 
 				// add
-				$cssFiles[] = array('path' => $file['path']);
+				$cssFiles[] = $file;
 			}
 		}
 
-		// assign CSS-files
+		// css-files
 		$this->tpl->assign('cssFiles', $cssFiles);
+	}
+
+	/**
+	 * Parse the JS-files
+	 */
+	public function parseJS()
+	{
+		$jsFiles = array();
+		$existingJSFiles = $this->getJSFiles();
 
 		// if there aren't any JS-files added we don't need to do something
-		if(!empty($this->jsFiles))
+		if(!empty($existingJSFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
 			$ignoreCache = array(
 				'/backend/core/js/jquery/jquery.js',
 				'/backend/core/js/jquery/jquery.ui.js',
+				'/backend/core/js/ckeditor/jquery.ui.dialog.patch.js',
 				'/backend/core/js/jquery/jquery.tools.js',
 				'/backend/core/js/jquery/jquery.backend.js',
-				'/backend/core/js/tiny_mce/tiny_mce.js'
+				'/backend/core/js/ckeditor/ckeditor.js',
+				'/backend/core/js/ckeditor/adapters/jquery.js',
+				'/backend/core/js/ckfinder/ckfinder.js'
 			);
 
-			foreach($this->jsFiles as $file)
+			foreach($existingJSFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $jsFiles[] = array('path' => $file['path']);
+				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $file = array('file' => $file['file']);
 
-				// make the file uncacheble
+				// make the file uncachable
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['path'], 0, 11) == '/backend/js') $jsFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
+					if(substr($file['file'], 0, 11) == '/frontend/js') $file = array('file' => $file['file'] . '&amp;m=' . time());
 
 					// add lastmodified time
 					else
 					{
-						if(strpos($file['path'], '?') !== false) $path = $file['path'] . '&m=' . $lastModifiedTime;
-						else $path = $file['path'] . '?m=' . $lastModifiedTime ;
-
-						$jsFiles[] = array('path' => $path);
+						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+						$file = array('file' => $file['file'] . $modifiedTime);
 					}
 				}
+
+				// add
+				$jsFiles[] = $file;
 			}
 		}
 

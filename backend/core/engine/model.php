@@ -81,10 +81,14 @@ class BackendModel
 		// check if debug-mode is active
 		if(SPOON_DEBUG) $warnings[] = array('message' => BL::err('DebugModeIsActive'));
 
-		// check if the fork API keys are available
-		if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('index', 'settings'))
 		{
-			$warnings[] = array('message' => sprintf(BL::err('ForkAPIKeys'), BackendModel::createURLForAction('settings', 'index')));
+			// check if the fork API keys are available
+			if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
+			{
+				$warnings[] = array('message' => sprintf(BL::err('ForkAPIKeys'), BackendModel::createURLForAction('index', 'settings')));
+			}
 		}
 
 		// check for extensions warnings
@@ -140,8 +144,12 @@ class BackendModel
 			$i++;
 		}
 
+		// some applications aren't real seperate applications, they are virtual applications inside the backend.
+		$namedApplication = NAMED_APPLICATION;
+		if(in_array($namedApplication, array('backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob'))) $namedApplication = 'backend';
+
 		// build the URL and return it
-		return '/' . NAMED_APPLICATION . '/' . $language . '/' . $module . '/' . $action . $querystring;
+		return '/' . $namedApplication . '/' . $language . '/' . $module . '/' . $action . $querystring;
 	}
 
 	/**
@@ -286,6 +294,35 @@ class BackendModel
 		}
 
 		return $string;
+	}
+
+	/**
+	 * Generate thumbnails based on the folders in the path
+	 * Use
+	 *  - 128x128 as foldername to generate an image where the width will be 128px and the height will be 128px
+	 *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
+	 *
+	 * @param string $path The path wherin the thumbnail-folders will be stored.
+	 * @param string $sourceFile The location of the source file.
+	 */
+	public static function generateThumbnails($path, $sourcefile)
+	{
+		// get folder listing
+		$folders = self::getThumbnailFolders($path);
+		$filename = basename($sourcefile);
+
+		// loop folders
+		foreach($folders as $folder)
+		{
+			// generate the thumbnail
+			$thumbnail = new SpoonThumbnail($sourcefile, $folder['width'], $folder['height']);
+			$thumbnail->setAllowEnlargement(true);
+
+			// if the width & height are specified we should ignore the aspect ratio
+			if($folder['width'] !== null && $folder['height'] !== null) $thumbnail->setForceOriginalAspectRatio(false);
+			$thumbnail->parseToFile($folder['path'] . '/' . $filename);
+		}
 	}
 
 	/**
@@ -541,6 +578,49 @@ class BackendModel
 	}
 
 	/**
+	 * Get the thumbnail folders
+	 *
+	 * @param string $path The path
+	 * @param bool[optional] $includeSource Should the source-folder be included in the return-array.
+	 * @return array
+	 */
+	public static function getThumbnailFolders($path, $includeSource = false)
+	{
+		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
+
+		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
+
+		$return = array();
+
+		foreach($folders as $folder)
+		{
+			$item = array();
+			$chunks = explode('x', $folder, 2);
+
+			// skip invalid items
+			if(count($chunks) != 2 && !$includeSource) continue;
+
+			$item['dirname'] = $folder;
+			$item['path'] = $path . '/' . $folder;
+			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
+			if($folder == 'source')
+			{
+				$item['width'] = null;
+				$item['height'] = null;
+			}
+			else
+			{
+				$item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
+				$item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
+			}
+
+			$return[] = $item;
+		}
+
+		return $return;
+	}
+
+	/**
 	 * Fetch the list of time formats including examples of these formats.
 	 *
 	 * @return array
@@ -615,24 +695,23 @@ class BackendModel
 				foreach($pages as $pageId => $properties)
 				{
 					// only process pages with extra_blocks
-					if(isset($properties['extra_blocks']))
-					{
-						// loop extras
-						foreach($properties['extra_blocks'] as $extra)
-						{
-							// direct link?
-							if($extra['module'] == $module && $extra['action'] == $action)
-							{
-								// exacte page was found, so return
-								return self::getURL($properties['page_id'], $language);
-							}
+					if(!isset($properties['extra_blocks'])) continue;
 
-							// correct module but no action
-							elseif($extra['module'] == $module && $extra['action'] == null)
-							{
-								// store pageId
-								$pageIdForURL = (int) $pageId;
-							}
+					// loop extras
+					foreach($properties['extra_blocks'] as $extra)
+					{
+						// direct link?
+						if($extra['module'] == $module && $extra['action'] == $action)
+						{
+							// exacte page was found, so return
+							return self::getURL($properties['page_id'], $language);
+						}
+
+						// correct module but no action
+						elseif($extra['module'] == $module && $extra['action'] == null)
+						{
+							// store pageId
+							$pageIdForURL = (int) $pageId;
 						}
 					}
 				}
@@ -1159,16 +1238,17 @@ class BackendModel
 		// get db
 		$db = self::getDB(true);
 
-		// update if already existing
-		// @todo refactor
-		if((int) $db->getVar('SELECT COUNT(*)
-									FROM hooks_subscriptions AS i
-									WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?',
-									array($eventModule, $eventName, $module)) > 0)
-		{
-			// update
-			$db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
-		}
+		// check if the subscription already exists
+		$exists = (bool) $db->getVar(
+			'SELECT 1
+			 FROM hooks_subscriptions AS i
+			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
+			 LIMIT 1',
+			array($eventModule, $eventName, $module)
+		);
+
+		// update
+		if($exists) $db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
 
 		// insert
 		else $db->insert('hooks_subscriptions', $item);

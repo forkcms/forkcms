@@ -232,11 +232,19 @@ class BackendForm extends SpoonForm
 		$classError = 'inputEditorError ' . (string) $classError;
 		$HTML = (bool) $HTML;
 
-		// we add JS because we need TinyMCE
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
+		// we add JS because we need CKEditor
+		$this->header->addJS('ckeditor/ckeditor.js', 'core', false);
+		$this->header->addJS('ckeditor/adapters/jquery.js', 'core', false);
+		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 
-		// create and return a textarea for TinyMCE
+		// add the internal link lists-file
+		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
+		{
+			$timestamp = @filemtime(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js');
+			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js?m=' . $timestamp, null, false, false, true);
+		}
+
+		// create and return a textarea for the editor
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
 	}
 
@@ -554,9 +562,67 @@ class BackendFormDate extends SpoonFormDate
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFormImage extends SpoonFormImage
 {
+	/**
+	 * Should the helpTxt span be hidden when parsing the field?
+	 *
+	 * @var	bool
+	 */
+	private $hideHelpTxt = false;
+
+	/**
+	 * Generate thumbnails based on the folders in the path
+	 * Use
+	 *  - 128x128 as foldername to generate an image that where the width will be 128px and the height will be 128px
+	 *  - 128x as foldername to generate an image that where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as foldername to generate an image that where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *
+	 * @param string $path
+	 * @param string $filename
+	 */
+	public function generateThumbnails($path, $filename)
+	{
+		// create folder if needed
+		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+
+		// move the source file
+		$this->moveFile($path . '/source/' . $filename);
+
+		// generate the thumbnails
+		BackendModel::generateThumbnails($path, $path . '/source/' . $filename);
+	}
+
+	/**
+	 * This function will return the errors. It is extended so we can do image checks automatically.
+	 *
+	 * @return string
+	 */
+	public function getErrors()
+	{
+		// do an image validation
+		if($this->isFilled())
+		{
+			$this->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly'));
+			$this->isAllowedMimeType(array('image/jpeg', 'image/gif', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
+		}
+
+		return $this->errors;
+	}
+
+	/**
+	 * Hides (or shows) the help text when parsing the field.
+	 *
+	 * @param bool[optional] $on
+	 */
+	public function hideHelpTxt($on = true)
+	{
+		$this->hideHelpTxt = $on;
+	}
+
 	/**
 	 * Parses the html for this filefield.
 	 *
@@ -589,7 +655,12 @@ class BackendFormImage extends SpoonFormImage
 
 		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
-		$output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpImageFieldWithMaxFileSize', 'core'), $uploadMaxFilesize) . '</span>';
+
+		// add help txt if needed
+		if(!$this->hideHelpTxt)
+		{
+			$output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpImageFieldWithMaxFileSize', 'core'), $uploadMaxFilesize) . '</span>';
+		}
 
 		// parse to template
 		if($template !== null)
@@ -606,9 +677,27 @@ class BackendFormImage extends SpoonFormImage
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFormFile extends SpoonFormFile
 {
+	/**
+	 * Should the helpTxt span be hidden when parsing the field?
+	 *
+	 * @var	bool
+	 */
+	private $hideHelpTxt = false;
+
+	/**
+	 * Hides (or shows) the help text when parsing the field.
+	 *
+	 * @param bool[optional] $on
+	 */
+	public function hideHelpTxt($on = true)
+	{
+		$this->hideHelpTxt = $on;
+	}
+
 	/**
 	 * Parses the html for this filefield.
 	 *
@@ -641,8 +730,13 @@ class BackendFormFile extends SpoonFormFile
 
 		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
-		if(isset($this->attributes['extension'])) $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpFileFieldWithMaxFileSize', 'core'), $this->attributes['extension'], $uploadMaxFilesize) . '</span>';
-		else $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpMaxFileSize'), $uploadMaxFilesize) . '</span>';
+
+		// add help txt if needed
+		if(!$this->hideHelpTxt)
+		{
+			if(isset($this->attributes['extension'])) $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpFileFieldWithMaxFileSize', 'core'), $this->attributes['extension'], $uploadMaxFilesize) . '</span>';
+			else $output .= '<span class="helpTxt">' . sprintf(BL::getMessage('HelpMaxFileSize'), $uploadMaxFilesize) . '</span>';
+		}
 
 		// parse to template
 		if($template !== null)

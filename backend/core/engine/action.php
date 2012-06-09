@@ -13,28 +13,14 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendAction
+class BackendAction extends BackendBaseObject
 {
-	/**
-	 * The current action
-	 *
-	 * @var	string
-	 */
-	private $action;
-
 	/**
 	 * The config file
 	 *
 	 * @var	BackendBaseConfig
 	 */
 	private $config;
-
-	/**
-	 * The current module
-	 *
-	 * @var	string
-	 */
-	private $module;
 
 	/**
 	 * BackendTemplate
@@ -45,25 +31,11 @@ class BackendAction
 
 	/**
 	 * You have to specify the action and module so we know what to do with this instance
-	 *
-	 * @param string $action The action to load.
-	 * @param string $module The module to load.
 	 */
-	public function __construct($action, $module)
+	public function __construct()
 	{
 		// grab stuff from the reference and store them in this object (for later/easy use)
 		$this->tpl = Spoon::get('template');
-
-		$this->setModule($module);
-		$this->setAction($action);
-
-		$this->loadConfig();
-
-		// is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
-		if(!in_array($this->getAction(), $this->config->getPossibleActions()))
-		{
-			throw new BackendException('This is an invalid action (' . $this->getAction() . ').');
-		}
 	}
 
 	/**
@@ -72,6 +44,14 @@ class BackendAction
 	 */
 	public function execute()
 	{
+		$this->loadConfig();
+
+		// is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
+		if(!in_array($this->getAction(), $this->config->getPossibleActions()))
+		{
+			throw new BackendException('This is an invalid action (' . $this->getAction() . ').');
+		}
+
 		// build action-class-name
 		$actionClassName = SpoonFilter::toCamelCase('backend_' . $this->getModule() . '_' . $this->getAction());
 
@@ -94,28 +74,6 @@ class BackendAction
 		// create action-object
 		$object = new $actionClassName();
 		$object->execute();
-	}
-
-	/**
-	 * Get the current action
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
-	 *
-	 * @return string
-	 */
-	public function getAction()
-	{
-		return $this->action;
-	}
-
-	/**
-	 * Get the current module
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
-	 *
-	 * @return string
-	 */
-	public function getModule()
-	{
-		return $this->module;
 	}
 
 	/**
@@ -149,25 +107,14 @@ class BackendAction
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName($this->getModule());
-	}
 
-	/**
-	 * Set the action
-	 *
-	 * @param string $action The action to load.
-	 */
-	private function setAction($action)
-	{
-		$this->action = (string) $action;
-	}
+		// set action
+		$action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'index';
 
-	/**
-	 * Set the module
-	 *
-	 * @param string $module The module to load.
-	 */
-	private function setModule($module)
-	{
-		$this->module = (string) $module;
+		// require the model if it exists
+		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php'))
+		{
+			require_once BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php';
+		}
 	}
 }

@@ -5,20 +5,25 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 
-	<title>Fork 2.0.0 test - Fork CMS</title>
+	<title>Fork CMS - mailing</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 
+	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/backend/modules/mailmotor/layout/css/iframe.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/imports/tinymce.css" />
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.js"></script>
+	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.dialog.patch.js"></script>
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.tools.js"></script>
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.backend.js"></script>
-	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=backend.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=utils.js&amp;language=nl&amp;m=1272467798"></script>
-	<script type="text/javascript" src="/backend/core/js/tiny_mce/jquery.tinymce.js"></script>
+	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=backend.js&amp;language=nl"></script>
+	<script type="text/javascript" src="/backend/js.php?module=core&amp;file=utils.js&amp;language=nl"></script>
+	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=mailmotor.js&amp;language=nl"></script>
+	<script type="text/javascript" src="/backend/core/js/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="/backend/core/js/ckeditor/adapters/jquery.js"></script>
+	<script type="text/javascript" src="/backend/core/js/ckfinder/ckfinder.js"></script>
+	<script type="text/javascript" src="/frontend/cache/navigation/editor_link_list_{$LANGUAGE}.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 			var variables = new Array();
@@ -29,21 +34,13 @@
 				templateCSSURL: '{$template.url_css}'
 			};
 
-			function getTinyMCEContent()
+			// we need this method so we can easily access the editor's contents outside the iframe.
+			function getEditorContent()
 			{
-				/*
-					this cleans the tinyMCE and moves the current content to the textarea
-					first parameter determines whether or not to skip cleanup, second
-					if we should skip the callback method
-				*/
-				tinyMCE.triggerSave(false, true);
-
-				// return the content
-				return $('.inputEditor').tinymce().getContent();
+				return $('.inputEditorNewsletter').val();
 			}
 		//]]>
 	</script>
-	<script type="text/javascript" src="/backend/js.php?module=mailmotor&amp;file=tiny_mce_config.js&amp;language={$LANGUAGE}"></script>
 </head>
 <body id="content" class="edit addEdit">
 	{$templateHtml}

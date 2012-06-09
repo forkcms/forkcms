@@ -126,3 +126,8 @@ h3 {
 		width: 100px;
 		border: none;
 	}
+	
+#debugEmailHolder
+{
+	display: none;
+}

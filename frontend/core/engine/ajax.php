@@ -39,14 +39,23 @@ class FrontendAJAX
 
 	public function __construct()
 	{
+		// get vars
+		$module = isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '';
+		if($module == '' && isset($_GET['module'])) $module = $_GET['module'];
+		$action = isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '';
+		if($action == '' && isset($_GET['action'])) $action = $_GET['action'];
+		$language = isset($_POST['fork']['language']) ? $_POST['fork']['language'] : '';
+		if($language == '' && isset($_GET['language'])) $language = $_GET['language'];
+		if($language == '') $language = SITE_DEFAULT_LANGUAGE;
+
 		// set the module
-		$this->setModule(isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '');
+		$this->setModule($module);
 
 		// set the action
-		$this->setAction(isset($_POST['fork']['action']) ? $_POST['fork']['action'] : '');
+		$this->setAction($action);
 
 		// set the language
-		$this->setLanguage(isset($_POST['fork']['language']) ? $_POST['fork']['language'] : SITE_DEFAULT_LANGUAGE);
+		$this->setLanguage($language);
 
 		// create a new action
 		$action = new FrontendAJAXAction($this->getAction(), $this->getModule());

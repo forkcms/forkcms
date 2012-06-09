@@ -1,0 +1,14 @@
+/*
+ * CKEditor will have no heading here, so top border can be show
+ */
+span.cke_skin_BootstrapCK-Skin,
+span.cke_skin_BootstrapCK-Skin:focus {
+	border-top: 1px solid #DDD !important;
+}
+
+/*
+ * Toolbar will always be available, so always add border
+ */
+.cke_skin_BootstrapCK-Skin .cke_contents iframe {
+	border-top: 1px solid #DDD !important;
+}

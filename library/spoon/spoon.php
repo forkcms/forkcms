@@ -197,8 +197,11 @@ class Spoon
 		var_dump($var);
 		$output = ob_get_clean();
 
-		// no xdebug installed
-		if(!extension_loaded('xdebug'))
+		// Make sure var_dump is not overridden by Xdebug before tweaking its output.
+		// Note that all truthy INI values ("On", "true", 1) are returned as "1" by ini_get().
+		$hasXdebugVarDump = extension_loaded('xdebug') && ini_get('xdebug.overload_var_dump') === '1';
+
+		if(!$hasXdebugVarDump)
 		{
 			$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
 			$output = '<pre>' . htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) . '</pre>';

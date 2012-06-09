@@ -16,6 +16,23 @@ jsBackend.settings =
 		});
 
 		$('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection);
+
+		$('#activeLanguages input:checkbox').on('change', jsBackend.settings.changeActiveLanguage).change();
+	},
+
+	changeActiveLanguage: function(e)
+	{
+		var $this = $(this);
+
+		// only go on if the item isn't disabled by default
+		if(!$this.attr('disabled'))
+		{
+			// grab other element
+			var $other = $('#' + $this.attr('id').replace('active_', 'redirect_'));
+
+			if($this.is(':checked')) $other.attr('disabled', false);
+			else $other.attr('checked', false).attr('disabled', true);
+		}
 	},
 
 	testEmailConnection: function(e)

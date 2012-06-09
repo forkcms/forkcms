@@ -1,0 +1,382 @@
+/*
+
+    Editor related backend CSS
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomasdeceuninck@netlash.com>
+                  Tijs Verkoyen <tijs@sumocoders.be>
+                  Matthias Mullie <matthias@mullie.eu>
+    @since        2.0
+
+*/
+
+/*
+	"Click to edit" message on Editors;
+*/
+
+.options, .optionsRTE {
+	position: relative;
+}
+
+.options:hover .clickToEdit,
+.optionsRTE:hover .clickToEdit {
+	-webkit-transition: opacity 0.45s linear;
+	-moz-transition: opacity 0.45s linear;
+	-o-transition: opacity 0.45s linear;
+	transition: opacity 0.45s linear;
+	/* @inc .opaque */
+	-ms-filter: "alpha(opacity=100)";
+	filter: alpha(opacity=100);
+	-khtml-opacity: 1;
+	-moz-opacity: 1;
+	opacity: 1;
+}
+
+.clickToEdit {
+	position: absolute;
+	opacity: 0;
+	height: 20px;
+	color: #808080;
+	width: 100%;
+	text-align: center;
+	/* @inc .transparent */
+	-ms-filter: "alpha(opacity=0)";
+	filter: alpha(opacity=0);
+	-khtml-opacity: 0;
+	-moz-opacity: 0;
+	opacity: 0;
+}
+
+	.options .clickToEdit,
+	.optionsRTE .clickToEdit {
+		top: 127px;
+	}
+
+.clickToEdit {
+	pointer-events: none;
+}
+
+	.clickToEdit span {
+		background: #666;
+		background: rgba(0,0,0,0.6);
+		color: #FFF;
+		display: block;
+		margin: 0 auto;
+		width: 100px;
+		padding: 4px 9px;
+		line-height: 1;
+		font-size: 12px;
+		font-weight: 700;
+
+		/* @inc .rc */
+		-moz-border-radius: 4px
+		-webkit-border-radius: 4px;
+		border-radius: 4px;
+	}
+
+.editorWarning { display: inline-block; margin-top: 3px; }
+
+
+/*
+	Override BootstrapCK-Skin style
+*/
+
+/*
+	Set ui color
+*/
+	
+.cke_skin_BootstrapCK-Skin .cke_wrapper {
+	background: #FAFAFA !important;
+}
+	
+/*
+	Improve corners & border
+*/
+.cke_skin_BootstrapCK-Skin,
+.cke_skin_BootstrapCK-Skin:focus {
+	padding: 0 0 1px 0 !important;
+	border: 1px solid #DDD !important;
+	border-top: 0 !important;
+	border-radius: 0 !important;
+	border-bottom-left-radius: 4px !important;
+}
+
+.cke_skin_BootstrapCK-Skin .cke_wrapper {
+	border-radius: 0 !important;
+}
+
+.cke_skin_BootstrapCK-Skin .cke_contents iframe {
+	border: 0 !important;
+	border-radius: 0 !important;
+}
+
+.cke_skin_BootstrapCK-Skin .cke_focus .cke_contents iframe {
+	border-top: 1px solid #DDD !important;
+}
+
+/*
+	Fix toolbox padding
+*/
+.cke_skin_BootstrapCK-Skin .cke_toolbox {
+	padding: 5px !important;
+}
+
+/*
+	Editor show have white background
+*/
+.cke_skin_BootstrapCK-Skin .cke_bottom,
+.cke_skin_BootstrapCK-Skin .cke_contents {
+	background-color: #FFF !important;
+}
+
+/*
+	Re-position resizer (due to padding-bottom on container, it's badly positioned now)
+*/
+.cke_skin_BootstrapCK-Skin .cke_editor .cke_resizer {
+	margin-right: 1px !important;
+	height: 12px !important;
+	width: 12px !important;
+	margin-top: 0 !important;
+}
+
+/*
+	Set hover & active color for buttons
+*/
+.cke_skin_BootstrapCK-Skin .cke_button a.cke_on {
+	background-color: #E7F0F8 !important;
+}
+
+.cke_skin_BootstrapCK-Skin .cke_button a:hover,
+.cke_skin_BootstrapCK-Skin .cke_button a:focus,
+.cke_skin_BootstrapCK-Skin .cke_button a:active {
+	background-color: #F1F5FA !important;
+}
+
+/*
+	Don't show collapser
+ */
+.cke_skin_BootstrapCK-Skin a.cke_toolbox_collapser {
+	display: none !important;
+}
+
+/*
+	Don't show the little upper border when editor is not focussed
+ */
+.cke_skin_BootstrapCK-Skin .cke_editor {
+	display: table !important;
+}
+
+/*
+	Fix dialog background
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog {
+	background-color: #FFF !important;
+}
+
+/*
+	Fork-style font
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog label {
+	color: #4A4A4A !important;
+	font-weight: 700 !important;
+	font-size: 11px !important;
+}
+
+/*
+	Fork font
+*/
+cke_skin_BootstrapCK-Skin .cke_dialog * {
+    color: #666666 !important;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,sans-serif !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+}
+
+/*
+	Fork-style buttons
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog_footer_buttons {
+	margin: 0 0 !important;
+}
+
+.cke_skin_BootstrapCK-Skin a.cke_dialog_ui_button span {
+	margin: 0 !important;
+	font-weight: 700 !important;
+	font-size: 11px !important;
+	color: #3A3A3A !important;
+}
+
+.cke_skin_BootstrapCK-Skin a.cke_dialog_ui_button_ok span {
+	color: #FFF !important;
+}
+
+.cke_skin_BootstrapCK-Skin a.cke_dialog_ui_button {
+	height: 22px !important;
+	line-height: 22px !important;
+	white-space: nowrap !important;
+	text-decoration: none !important;
+	border: none !important;
+	color: #3A3A3A !important;
+	font-weight: 700 !important;
+	float: left !important;
+	padding: 0 6px !important;
+	text-shadow: 1px 1px 1px rgba(255,255,255,0.25) !important;
+	background-repeat: repeat-x !important;
+	background-position: right -132px !important;
+	overflow: hidden !important;
+	border: 1px solid #B0B0B0 !important;
+	background: #EEE !important;
+	background: -moz-linear-gradient(top, #ffffff 0%, #f7f7f7 4.5454545%, #dddddd 95.454545%, #c5c5c5 100%) !important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(4.5454545%,#f7f7f7), color-stop(95.454545%,#dddddd), color-stop(100%,#c5c5c5)) !important;
+	background: -webkit-linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%) !important;
+	background: -o-linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%) !important;
+	background: -ms-linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%) !important;
+	background: linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%) !important;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c5c5c5',GradientType=0 ) !important;
+
+	/* @inc .secondaryContent */
+	font-size: 11px !important;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif !important;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px !important;
+	-webkit-border-radius: 4px !important;
+	border-radius: 4px !important;
+}
+
+.cke_skin_BootstrapCK-Skin a.cke_dialog_ui_button_ok {
+	color: #FFF !important;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.25) !important;
+	border: 1px solid #366EAC !important;
+	background: #8db7e7 !important;
+	background: -moz-linear-gradient(top, #8db7e7 0%, #5e9ce1 4.5454545%, #2f79ca 95.454545%, #215996 100%) !important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8db7e7), color-stop(4.5454545%,#5e9ce1), color-stop(95.454545%,#2f79ca), color-stop(100%,#215996)) !important;
+	background: -webkit-linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%) !important;
+	background: -o-linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%) !important;
+	background: -ms-linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%) !important;
+	background: linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%) !important;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8db7e7', endColorstr='#215996',GradientType=0 ) !important;
+}
+
+/*
+	No fugly focus state
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog_ui_input_text:focus,
+.cke_skin_BootstrapCK-Skin .cke_rcombo .cke_on a {
+	box-shadow: none !important;
+	-moz-outline-radius: 5px !important;
+	outline: 2px solid #C2DEFF !important;
+	border-color: #456b99 !important;
+	color: #000 !important;
+}
+
+/*
+	Improve form elements
+*/
+/* @todo: reset dropdowns so they take default browser/os style */
+.cke_skin_BootstrapCK-Skin .cke_dialog_ui_input_select {
+	background: auto !important;
+	border: 0 0 !important;
+	border-radius: 0 0 !important;
+}
+
+/*
+	Make dialog prettier
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog_body {
+	border: 1px solid #DDD !important;
+	border-radius: 4px !important;
+	background: #FAFAFA !important;
+}
+
+/*
+	Fork-style tabs
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog_contents {
+	margin: 30px 0 0 0 !important;
+	margin-top: 33px !important;
+	border-top: 1px solid #DDD !important;
+}
+
+.cke_skin_BootstrapCK-Skin .cke_dialog_tabs {
+	margin: 10px 10px 0 10px !important;
+	padding: 0 0 !important;
+	height: 23px !important;
+}
+
+.cke_skin_BootstrapCK-Skin .cke_dialog_tab,
+.cke_skin_BootstrapCK-Skin .cke_dialog_tab:hover {
+    background: #F6F6F6 !important;
+    border-bottom-width: 0 !important;
+    float: left !important;
+    margin: 0 3px 1px 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    border: 1px solid #CCCCCC !important;
+    font-weight: bold !important;
+    outline: medium none !important;
+    border-top-left-radius: 4px !important;
+    border-top-right-radius: 4px !important;
+    border-bottom: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,sans-serif !important;
+    font-size: 11px !important;
+    padding: 4px 12px 0 12px !important;
+    line-height: 1.4 !important;
+    cursor: pointer !important;
+    color: #2244BB !important;
+    height: 18px !important;
+    display: block-inline !important;
+}
+
+.cke_skin_BootstrapCK-Skin a.cke_dialog_tab_selected {
+    background: #FFF !important;
+    color: #000 !important;
+	padding-bottom: 1px !important;
+}
+
+/*
+	Make footer smaller
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog_footer {
+	padding: 0 10px 10px 10px !important;
+	border-top: 0 !important;
+	border-radius: 0 0 !important;
+	background: #FFF !important;
+}
+
+/*
+	Re-position resizer
+*/
+.cke_skin_BootstrapCK-Skin .cke_dialog .cke_resizer {
+	position: absolute !important;
+	bottom: 1px !important;
+	right: 1px !important;
+}
+
+/*
+	Don't show styles, we don't want users to use faulty elements just because "they seem to look better" or "they draw more attention"
+*/
+.cke_panel_listItem p,
+.cke_panel_listItem h1,
+.cke_panel_listItem h2,
+.cke_panel_listItem h3,
+.cke_panel_listItem h4,
+.cke_panel_listItem h5,
+.cke_panel_listItem h6,
+.cke_panel_listItem pre {
+	font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,Arial,sans-serif !important;
+	color: #000 !important;
+	padding: 0 !important;
+}
+
+.cke_panel_listItem h1 { font-size: 2em !important; }
+.cke_panel_listItem h2 { font-size: 1.8em !important; }
+.cke_panel_listItem h3 { font-size: 1.6em !important; }
+.cke_panel_listItem h4 { font-size: 1.4em !important; }
+.cke_panel_listItem h5 { font-size: 1.2em !important; }
+.cke_panel_listItem h6 { font-size: 1em !important; }

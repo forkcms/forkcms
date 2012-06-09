@@ -19,7 +19,7 @@
 
 	.wizard ul {
 		height: 32px;
-		background: url(/backend/core/layout/images/sprites/wizard.png) repeat-x 0 -1px;
+		background: url(../../images/sprites/wizard.png) repeat-x 0 -1px;
 		border: 1px solid #ddd;
 
 		/* @inc .rc */
@@ -34,7 +34,7 @@
 			line-height: 34px;
 			position: relative;
 			top: -1px;
-			background: url(/backend/core/layout/images/sprites/wizard.png) no-repeat right -140px;
+			background: url(../../images/sprites/wizard.png) no-repeat right -140px;
 			color: #666;
 		}
 
@@ -60,17 +60,17 @@
 			}
 
 		.wizard li.beforeSelected {
-			background: url(/backend/core/layout/images/sprites/wizard.png) no-repeat right -70px;
+			background: url(../../images/sprites/wizard.png) no-repeat right -70px;
 		}
 
 
 		.wizard li.selected {
-			background: url(/backend/core/layout/images/sprites/wizard.png) repeat-x 0 -35px;
+			background: url(../../images/sprites/wizard.png) repeat-x 0 -35px;
 		}
 
 			.wizard li.selected a {
 				font-weight: 700;
-				background: url(/backend/core/layout/images/sprites/wizard.png) no-repeat right -105px;
+				background: url(../../images/sprites/wizard.png) no-repeat right -105px;
 			}
 
 		.wizard li.selected.firstChild {
@@ -79,7 +79,7 @@
 
 			.wizard li.selected.firstChild b {
 				padding: 0 19px 0 11px;
-				background: url(/backend/core/layout/images/sprites/wizard.png) no-repeat 0 -175px;
+				background: url(../../images/sprites/wizard.png) no-repeat 0 -175px;
 			}
 
 .selectThumbList li {
@@ -132,23 +132,23 @@
 		text-align: center;
 		font-weight: 700;
 		height: 18px;
-		background: url(/backend/core/layout/images/newsletter_normal.png);
+		background: url(../../images/newsletter_normal.png);
 		cursor: pointer;
 	}
 
 	.selectThumbList li:hover label span,
 	.selectThumbList li:active label span {
 		color: #000 !important;
-		background: url(/backend/core/layout/images/newsletter_active.png);
+		background: url(../../images/newsletter_active.png);
 	}
 
 	.selectThumbList li.selected label span {
-		background: url(/backend/core/layout/images/newsletter_hover.png);
+		background: url(../../images/newsletter_hover.png);
 	}
 
 	.selectThumbList li.selected:hover label span,
 	.selectThumbList li.selected:active label span {
-		background: url(/backend/core/layout/images/newsletter_hover.png);
+		background: url(../../images/newsletter_hover.png);
 	}
 
 	.selectThumbList li.selected span {

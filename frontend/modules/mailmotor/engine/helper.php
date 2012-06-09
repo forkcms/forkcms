@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 /**
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
@@ -16,10 +23,11 @@ class FrontendMailmotorCMHelper
 	public static function existsGroupByCampaignMonitorID($id)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(mg.id)
+			'SELECT 1
 			 FROM mailmotor_groups AS mg
 			 INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-			 WHERE mci.cm_id = ? AND mci.type = ?',
+			 WHERE mci.cm_id = ? AND mci.type = ?
+			 LIMIT 1',
 			array($id, 'list')
 		);
 	}
@@ -123,7 +131,7 @@ class FrontendMailmotorCMHelper
 
 		// set groupID
 		$groupId = !empty($groupId) ? $groupId : FrontendMailmotorModel::getDefaultGroupID();
-		
+
 		// get campaign monitor list id
 		$listId = self::getCampaignMonitorID('list', $groupId);
 

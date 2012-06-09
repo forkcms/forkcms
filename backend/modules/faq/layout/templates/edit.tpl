@@ -95,11 +95,14 @@
 					<p>
 						{$feedback.text}
 					</p>
+
+					{option:showFaqDeleteFeedback}
 					<p>
 						<a href="{$var|geturl:'delete_feedback'}&amp;id={$feedback.id}" class="button linkButton icon iconDelete">
 							<span>{$lblDelete|ucfirst}</span>
 						</a>
 					</p>
+					{/option:showFaqDeleteFeedback}
 				</div>
 			</div>
 			{/iteration:feedback}
@@ -118,9 +121,12 @@
 	</div>
 
 	<div class="fullwidthOptions">
+		{option:showFaqDelete}
 		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
+		{/option:showFaqDelete}
+
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
 		</div>

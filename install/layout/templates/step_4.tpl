@@ -28,6 +28,13 @@
 					{$chkDebugMode} <label for="debugMode">Enable debug mode </label>
 					<span class="helpTxt">(Leave this checkbox unticked for better security and performance)</span>
 				</li>
+				<li>
+					{$chkDifferentDebugEmail} <label for="differentDebugEmail">Use a specific debug email address </label>
+					<span class="helpTxt">(Exception emails will be sent to this email address)</span>
+				</li>
+				<li id="debugEmailHolder">
+					{$txtDebugEmail} {$txtDebugEmailError}
+				</li>
 			</ul>
 		</div>
 		<div class="fullwidthOptions">

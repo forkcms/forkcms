@@ -42,24 +42,27 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$checkedGroups = (count($groups) == 1) ? $groups[0]['value'] : null;
 
 		// create elements
+		// profile
 		$this->frm->addText('email', null, 255);
-		$this->frm->addPassword('password', null, 75, 'inputText inputPassword passwordGenerator', 'inputTextError inputPasswordError passwordGenerator');
-		$this->frm->addPassword('confirm_password', null, 75);
-		$this->frm->addText('nickname', null, 24);
+		$this->frm->addPassword('password', null, 75, 'inputText inputPassword passwordGenerator', 'inputTextError inputPasswordError passwordGenerator')->setAttributes(array('autocomplete' => 'off'));
+		$this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
 		$this->frm->addText('name', null, 255);
 		$this->frm->addText('surname', null, 255);
+		$this->frm->addText('nickname', null, 24);
+		$this->frm->addImage('avatar');
+
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), BackendModel::getModuleSetting('core', 'default_interface_language'));
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
 		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing'));
-		$this->frm->addImage('avatar');
+
+		$this->frm->addDropDown('csv_split_character', BackendUsersModel::getCSVSplitCharacters());
+		$this->frm->addDropDown('csv_line_ending', BackendUsersModel::getCSVLineEndings());
+
+		// permissons
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
 		$this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
-
-		// disable autocomplete
-		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));
-		$this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
 	}
 
 	/**
@@ -128,7 +131,10 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
 				$settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
 				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
+				$settings['csv_split_character'] = $this->frm->getField('csv_split_character')->getValue();
+				$settings['csv_line_ending'] = $this->frm->getField('csv_line_ending')->getValue();
 				$settings['password_key'] = uniqid();
+				$settings['current_password_change'] = time();
 				$settings['avatar'] = 'no-avatar.gif';
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
@@ -162,6 +168,10 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// build user-array
 				$user['email'] = $this->frm->getField('email')->getValue();
 				$user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $settings['password_key']);
+
+				// save the password strength
+				$passwordStrength = BackendAuthentication::checkPassword($this->frm->getField('password')->getValue(true));
+				$settings['password_strength'] = $passwordStrength;
 
 				// save changes
 				$user['id'] = (int) BackendUsersModel::insert($user, $settings);

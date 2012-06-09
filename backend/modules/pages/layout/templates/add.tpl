@@ -6,9 +6,12 @@
 
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblAdd}</h2>
+
+		{option:showPagesIndex}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
+		{/option:showPagesIndex}
 	</div>
 
 	<p id="pagesPageTitle">
@@ -360,6 +363,21 @@
 		</div>
 	</div>
 {/form:add}
+
+<div class="box" id="blockHtml" style="display: none;">
+	<div class="blockContentHTML optionsRTE">
+		<fieldset>
+			<div class="generalMessage singleMessage infoMessage">
+				{$msgContentSaveWarning}
+			</div>
+			<div class="heading">
+				<h3>{$lblEditor|ucfirst}</h3>
+			</div>
+			{$txtHtml}
+			{$txtHtmlError}
+		</fieldset>
+	</div>
+</div>
 
 <script type="text/javascript">
 	//<![CDATA[

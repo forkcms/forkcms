@@ -137,8 +137,10 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 	/**
 	 * Parse the page with its widgets.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// show report
 		if($this->getParameter('password_reset') == 'success')
 		{

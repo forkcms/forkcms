@@ -29,6 +29,26 @@
 						<th>{$lblEmail|ucfirst}:</th>
 						<td>{$record.email}</td>
 					</tr>
+					<tr>
+						<th>{$lblLastLogin|ucfirst}:</th>
+						<td>
+							{option:record.settings.last_login}{$record.settings.last_login|date:'{$authenticatedUserDateFormat} {$authenticatedUserTimeFormat}':{$INTERFACE_LANGUAGE}}{/option:record.settings.last_login}
+							{option:!record.settings.last_login}{$lblNoPreviousLogin}{/option:!record.settings.last_login}
+						</td>
+					</tr>
+					{option:record.settings.last_failed_login_attempt}
+						<tr>
+							<th>{$lblLastFailedLoginAttempt|ucfirst}:</th>
+							<td>{$record.settings.last_failed_login_attempt|date:'{$authenticatedUserDateFormat} {$authenticatedUserTimeFormat}':{$INTERFACE_LANGUAGE}}</td>
+						</tr>
+					{/option:record.settings.last_failed_login_attempt}
+					<tr>
+						<th>{$lblLastPasswordChange|ucfirst}:</th>
+						<td>
+							{option:record.settings.last_password_change}{$record.settings.last_password_change|date:'{$authenticatedUserDateFormat} {$authenticatedUserTimeFormat}':{$INTERFACE_LANGUAGE}}{/option:record.settings.last_password_change}
+							{option:!record.settings.last_password_change}{$lblNever}{/option:!record.settings.last_password_change}
+						</td>
+					</tr>
 				</table>
 			</td>
 		</tr>
@@ -38,7 +58,7 @@
 		<ul>
 			<li><a href="#tabProfile">{$lblProfile|ucfirst}</a></li>
 			{option:allowPasswordEdit}<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>{/option:allowPasswordEdit}
-			<li><a href="#tabInterface">{$lblInterface|ucfirst}</a></li>
+			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 		</ul>
 
@@ -74,7 +94,7 @@
 			</div>
 		</div>
 
-		<div id="tabInterface">
+		<div id="tabSettings">
 			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblInterfacePreferences|ucfirst}</h3>
@@ -98,10 +118,39 @@
 					</p>
 				</div>
 			</div>
+			<div class="subtleBox">
+				<div class="heading">
+					<h3>{$lblCSV|ucfirst}</h3>
+				</div>
+				<div class="options horizontal labelWidthLong">
+					<p>
+						<label for="csvSplitCharacter">{$lblSplitCharacter|ucfirst}</label>
+						{$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
+					</p>
+					<p>
+						<label for="csvLineEnding">{$lblLineEnding|ucfirst}</label>
+						{$ddmCsvLineEnding} {$ddmCsvLineEndingError}
+					</p>
+				</div>
+			</div>
 		</div>
 
 		{option:allowPasswordEdit}
 		<div id="tabPassword">
+			{option:showPasswordStrength}
+				<div class="subtleBox settingsUserInfo">
+					<div class="heading">
+						<h3>{$lblCurrentPassword|ucfirst}</h3>
+					</div>
+					<div class="options">
+						<p>
+							<label>{$lblPasswordStrength|ucfirst}</label>
+							<span class="strength {$record.settings.password_strength}">{$passwordStrengthLabel|ucfirst}</span>
+						</p>
+					</div>
+				</div>
+			{/option:showPasswordStrength}
+
 			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblChangePassword|ucfirst}</h3>
@@ -116,7 +165,7 @@
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">/</p>
 								<p class="strength weak">{$lblWeak|ucfirst}</p>
-								<p class="strength ok">{$lblOK|ucfirst}</p>
+								<p class="strength average">{$lblAverage|ucfirst}</p>
 								<p class="strength strong">{$lblStrong|ucfirst}</p>
 							</td>
 							<td>
@@ -157,11 +206,11 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		{option:deleteAllowed}
+		{option:showUsersDelete}
 			<a href="{$var|geturl:'delete'}&amp;id={$record.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
-		{/option:deleteAllowed}
+		{/option:showUsersDelete}
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

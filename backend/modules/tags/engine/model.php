@@ -154,9 +154,10 @@ class BackendTagsModel
 		{
 			// get number of tags with the specified url
 			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+				'SELECT 1
 				 FROM tags AS i
-				 WHERE i.url = ? AND i.language = ?',
+				 WHERE i.url = ? AND i.language = ?
+				 LIMIT 1',
 				array($URL, $language)
 			);
 
@@ -179,9 +180,10 @@ class BackendTagsModel
 
 			// get number of tags with the specified url
 			$number = (int) $db->getVar(
-				'SELECT COUNT(i.id)
+				'SELECT 1
 				 FROM tags AS i
-				 WHERE i.url = ? AND i.language = ? AND i.id != ?',
+				 WHERE i.url = ? AND i.language = ? AND i.id != ?
+				 LIMIT 1',
 				array($URL, $language, $id)
 			);
 
@@ -255,9 +257,15 @@ class BackendTagsModel
 		);
 
 		// remove old links
-		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ?', $otherId);
+		if(!empty($currentTags))
+		{
+			$db->delete(
+				'modules_tags',
+				'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ? AND module = ?',
+				array($otherId, $module)
+			);
+		}
 
-		// tags provided
 		if(!empty($tags))
 		{
 			// loop tags
@@ -313,7 +321,7 @@ class BackendTagsModel
 		}
 
 		// add to search index
-		BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
+		BackendSearchModel::saveIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
 
 		// decrement number
 		foreach($currentTags as $tag => $tagId)

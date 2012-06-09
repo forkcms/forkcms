@@ -34,7 +34,7 @@
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">{$lblNone|ucfirst}</p>
 								<p class="strength weak">{$lblWeak|ucfirst}</p>
-								<p class="strength ok">{$lblOK|ucfirst}</p>
+								<p class="strength average">{$lblAverage|ucfirst}</p>
 								<p class="strength strong">{$lblStrong|ucfirst}</p>
 							</td>
 							<td>
@@ -95,6 +95,21 @@
 					<p>
 						<label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
 						{$ddmNumberFormat} {$ddmNumberFormatError}
+					</p>
+				</div>
+			</div>
+			<div class="subtleBox">
+				<div class="heading">
+					<h3>{$lblCSV|ucfirst}</h3>
+				</div>
+				<div class="options horizontal labelWidthLong">
+					<p>
+						<label for="csvSplitCharacter">{$lblSplitCharacter|ucfirst}</label>
+						{$ddmCsvSplitCharacter} {$ddmCsvSplitCharacterError}
+					</p>
+					<p>
+						<label for="csvLineEnding">{$lblLineEnding|ucfirst}</label>
+						{$ddmCsvLineEnding} {$ddmCsvLineEndingError}
 					</p>
 				</div>
 			</div>

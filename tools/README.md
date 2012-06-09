@@ -58,17 +58,17 @@ The remove_cache-script will clear folders that contain cached files. And can be
 
 
 ### stats
-The stats-script will run severals scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend an PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
+The stats-script will run severals scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend & PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
 
 #### PHP Code Sniffer (phpcs.xml)
-Will contain the same as running `check_code`. It will the code against the styleguide, it will detect deprecated stuff, ... 
+Will contain the same as running `check_code`. It will check the code against the styleguide, it will detect deprecated stuff, ... 
 
 Most warnings will be about CyclomaticComplexity or NestingLevel, you can't ignore them, but some of the reported methods are complicated for a reason.
 
 #### PHP Mess Detection (phpmd.xml)
 Basicaly PHP Mess Detection is a spin-off of PHP Depend (see below) it will also check the code for possible bugs, suboptimal code, ... Once again it is important to intepret the result, not everything that is reported means that the code is bad.
 
-<small>Remark: it seems like PHP Mess Detection ignores the --ignore parameter, so all TinyMCE-crap-code is included, you can ignore all the errors about files inside the tiny_mce-folder</small>
+<small>Remark: it seems like PHP Mess Detection ignores the --ignore parameter, so all editor-crap-code is included, you can ignore all the errors about files inside the ckeditor and ckfinder-folder</small>
 
 #### PHP Depend (pdepend.xml, pdepend_chart.svg, pdepend_pyramid.svg)
 PHP Depend is a tool that performs code analysis. It calculates the software metrics, each number represents a aspect of the code.

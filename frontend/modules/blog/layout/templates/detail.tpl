@@ -133,7 +133,7 @@
 						<p>
 							<input class="inputSubmit" type="submit" name="comment" value="{$msgComment|ucfirst}" />
 						</p>
-					{/form:commentForm}
+					{/form:commentsForm}
 				</div>
 			</div>
 		</section>

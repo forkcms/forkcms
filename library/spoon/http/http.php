@@ -23,10 +23,31 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Jelmer Snoeck <jelmer.snoeck@siphoc.com>
  * @since		0.1.1
  */
 class SpoonHTTP
 {
+	/**
+	 * Redirect codes
+	 *
+	 * @var array
+	 */
+	protected static $codes = array(
+		200 => '200 OK',
+		301 => '301 Moved Permanently',
+		302 => '302 Found',
+		304 => '304 Not Modified',
+		307 => '307 Temporary Redirect',
+		400 => '400 Bad Request',
+		401 => '401 Unauthorized',
+		403 => '403 Forbidden',
+		404 => '404 Not Found',
+		410 => '410 Gone',
+		500 => '500 Internal Server Error',
+		501 => '501 Not Implemented',
+	);
+
 	/**
 	 * Get content from an URL.
 	 *
@@ -114,14 +135,14 @@ class SpoonHTTP
 	 * Redirect the browser with an optional delay and stop script execution.
 	 *
 	 * @param	string $URL				The URL or page to redirect to.
-	 * @param	int[optional] $code		The redirect code. Only 301 (moved permanently) and 302 (found) are allowed.
+	 * @param	int[optional] $code		The redirect code.
 	 * @param	int[optional] $delay	A delay, expressed in seconds.
 	 */
 	public static function redirect($URL, $code = 302, $delay = null)
 	{
 		// redefine url
 		$URL = (string) $URL;
-		$code = SpoonFilter::getValue($code, array(301, 302), 302, 'int');
+		$code = SpoonFilter::getValue($code, array_keys(self::$codes), 302, 'int');
 
 		// redirect headers
 		self::setHeadersByCode($code);
@@ -163,26 +184,12 @@ class SpoonHTTP
 	 */
 	public static function setHeadersByCode($code = 200)
 	{
-		// allowed status codes
-		$codes[200] = '200 OK';
-		$codes[301] = '301 Moved Permanently';
-		$codes[302] = '302 Found';
-		$codes[304] = '304 Not Modified';
-		$codes[307] = '307 Temporary Redirect';
-		$codes[400] = '400 Bad Request';
-		$codes[401] = '401 Unauthorized';
-		$codes[403] = '403 Forbidden';
-		$codes[404] = '404 Not Found';
-		$codes[410] = '410 Gone';
-		$codes[500] = '500 Internal Server Error';
-		$codes[501] = '501 Not Implemented';
-
 		// code
 		$code = (int) $code;
-		if(!isset($codes[$code])) $code = 200;
+		if(!isset(self::$codes[$code])) $code = 200;
 
 		// set header
-		self::setHeaders('HTTP/1.1 ' . $codes[$code]);
+		self::setHeaders('HTTP/1.1 ' . self::$codes[$code]);
 	}
 }
 

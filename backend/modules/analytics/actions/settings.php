@@ -172,6 +172,8 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		if(!isset($this->sessionToken))
 		{
 			// show the link to the google account authentication form

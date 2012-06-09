@@ -46,7 +46,7 @@ class SpoonCookie
 					unset($_COOKIE[(string) $key]);
 
 					// unset cookie
-					setcookie((string) $key, null, time() - 3600);
+					setcookie((string) $key, null, 1);
 				}
 			}
 
@@ -57,7 +57,7 @@ class SpoonCookie
 				unset($_COOKIE[(string) $argument]);
 
 				// unset cookie
-				setcookie((string) $argument, null, time() - 3600);
+				setcookie((string) $argument, null, 1);
 			}
 		}
 	}

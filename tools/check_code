@@ -16,4 +16,4 @@ type -P phpcs &>/dev/null || { echo "PHP CodeSniffer is not installed, run 'pear
 base_dir="$(dirname "$0")/..";
 
 # run it
-phpcs -v --standard="../tools/codesniffer/Fork" --ignore=../backend/core/js/tiny_mce,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external,../library/spoon --extensions=php --report=full "${@:-..}"
+phpcs -v --standard="../tools/codesniffer/Fork" --ignore=../backend/core/js/ckeditor,../backend/core/js/ckfinder,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external,../library/spoon --extensions=php --report=full "${@:-..}"

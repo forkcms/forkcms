@@ -54,6 +54,16 @@ class BackendInit
 		ini_set('display_errors', 'On');
 
 		$this->requireGlobals();
+
+		// get last modified time for globals
+		$lastModifiedTime = @filemtime(PATH_LIBRARY . '/globals.php');
+
+		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
+		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
+
+		// define as a constant
+		define('LAST_MODIFIED_TIME', $lastModifiedTime);
+
 		$this->definePaths();
 		$this->defineURLs();
 		$this->setIncludePath();
@@ -80,6 +90,7 @@ class BackendInit
 
 		// exceptions
 		$exceptions['backend'] = BACKEND_CORE_PATH . '/engine/backend.php';
+		$exceptions['backendbaseobject'] = BACKEND_CORE_PATH . '/engine/base.php';
 		$exceptions['backendajaxaction'] = BACKEND_CORE_PATH . '/engine/ajax_action.php';
 		$exceptions['backendbaseajaxaction'] = BACKEND_CORE_PATH . '/engine/base.php';
 		$exceptions['backenddatagriddb'] = BACKEND_CORE_PATH . '/engine/datagrid.php';
@@ -111,9 +122,18 @@ class BackendInit
 			// split in parts
 			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
 
-
 			// the real matches
 			$parts = $parts[0];
+
+			// is it an application class?
+			if(isset($parts[0]) && $parts[0] == 'Common')
+			{
+				$chunks = $parts;
+				array_shift($chunks);
+				$pathToLoad = PATH_LIBRARY . '/base/' . strtolower(implode('_', $chunks)) . '.php';
+
+				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
+			}
 
 			// get root path constant and see if it exists
 			$rootPath = strtoupper(array_shift($parts)) . '_PATH';
@@ -339,7 +359,10 @@ class BackendInit
 	private function requireGlobals()
 	{
 		// fetch config
-		$installed[] = @include_once dirname(__FILE__) . '/cache/config/config.php';
+		@include_once dirname(__FILE__) . '/cache/config/config.php';
+
+		// config doest not exist, use standard library location
+		if(!defined('INIT_PATH_LIBRARY')) define('INIT_PATH_LIBRARY', dirname(__FILE__) . '/../library');
 
 		// load the globals
 		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';

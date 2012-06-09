@@ -69,11 +69,13 @@
 						<h3 class="floater">{$lblGroups|ucfirst}</h3>
 					</div>
 
+					{option:showProfilesAddProfileGroup}
 					<div class="buttonHolderRight">
 						<a href="{$var|geturl:'add_profile_group'}&amp;id={$profile.id}" class="button icon iconAdd" title="{$lblAddGroup|ucfirst}">
 							<span>{$lblAddGroup|ucfirst}</span>
 						</a>
 					</div>
+					{/option:showProfilesAddProfileGroup}
 				</div>
 
 				{option:dgGroups}{$dgGroups}{/option:dgGroups}
@@ -87,6 +89,7 @@
 	<div class="fullwidthOptions">
 		{* Depending on the status of the profile, we want to show a delete button or a undelete button*}
 
+		{option:showProfilesDelete}
 		{option:deleted}
 			<a href="{$var|geturl:'delete'}&amp;id={$profile.id}" data-message-id="confirmUndelete" class="askConfirmation button linkButton icon iconApprove">
 				<span>{$lblUndelete|ucfirst}</span>
@@ -98,9 +101,11 @@
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 		{/option:!deleted}
+		{/option:showProfilesDelete}
 
 		{* Depending on the status of the profile, we want to show a block button or a unblock button*}
 
+		{option:showProfilesBlock}
 		{option:blocked}
 			<a href="{$var|geturl:'block'}&amp;id={$profile.id}" data-message-id="confirmUnblock" class="askConfirmation button linkButton icon iconApprove">
 				<span>{$lblUnblock|ucfirst}</span>
@@ -112,6 +117,7 @@
 				<span>{$lblBlock|ucfirst}</span>
 			</a>
 		{/option:!blocked}
+		{/option:showProfilesBlock}
 
 		<div class="buttonHolderRight">
 			<input id="saveButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

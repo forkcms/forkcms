@@ -109,7 +109,7 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 		}
 
 		// split
-		if($type == 'dropdown' || $type == 'radiobutton' || $type == 'checkbox') $values = (array) explode(',', $values);
+		if($type == 'dropdown' || $type == 'radiobutton' || $type == 'checkbox') $values = (array) explode('|', $values);
 
 		/**
 		 * Save!

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>location</name>
-	<version>1.0.0</version>
+	<version>2.0.0</version>
 	<requirements>
-		<minimum_version>2.0.0</minimum_version>
+		<minimum_version>3.2.2</minimum_version>
 	</requirements>
 	<description>
 		<![CDATA[
@@ -14,6 +14,10 @@
 		<author>
 			<name><![CDATA[Matthias Mullie]]></name>
 			<url><![CDATA[http://www.mullie.eu]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Jelmer Snoeck]]></name>
+			<url><![CDATA[http://www.jelmersnoeck.com]]></url>
 		</author>
 	</authors>
 	<events>

@@ -4,6 +4,7 @@
  * This is the modules-action, it will display the overview of modules.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendExtensionsModules extends BackendBaseActionIndex
 {
@@ -28,9 +29,11 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 	public function execute()
 	{
 		parent::execute();
+
 		$this->loadData();
 		$this->loadDataGridInstalled();
 		$this->loadDataGridInstallable();
+
 		$this->parse();
 		$this->display();
 	}
@@ -59,24 +62,24 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// create datagrid
 		$this->dataGridInstallableModules = new BackendDataGridArray($this->installableModules);
 
-		// sorting columns
 		$this->dataGridInstallableModules->setSortingColumns(array('raw_name'));
-
-		// set header labels
 		$this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => SpoonFilter::ucfirst(BL::getLabel('Name'))));
-
-		// hide some columns
 		$this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
 
-		// set colum URLs
-		$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('detail_module'))
+		{
+			$this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
+			$this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+		}
 
-		// add details column
-		$this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
-
-		// add install column
-		$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
-		$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'));
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('install_module'))
+		{
+			// add install column
+			$this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
+			$this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
+		}
 	}
 
 	/**
@@ -87,24 +90,28 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 		// create datagrid
 		$this->dataGridInstalledModules = new BackendDataGridArray($this->installedModules);
 
-		// sorting columns
 		$this->dataGridInstalledModules->setSortingColumns(array('name'));
-
-		// hide some columns
 		$this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name', 'cronjobs_active'));
 
-		// set colum URLs
-		$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('detail_module'))
+		{
+			$this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
+			$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+		}
 
-		// add details column
-		$this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+		// add the greyed out option to modules that have warnings
+		$this->dataGridInstalledModules->addColumn('hidden');
+		$this->dataGridInstalledModules->setColumnFunction(array('BackendExtensionsModel', 'hasModuleWarnings'), array('[raw_name]'), array('hidden'));
 	}
 
 	/**
 	 * Parse the datagrids and the reports.
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// parse data grid
 		$this->tpl->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
 		$this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());

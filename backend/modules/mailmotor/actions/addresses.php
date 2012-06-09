@@ -183,8 +183,10 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// CSV parameter (this is set when an import partially fails)
 		$csv = $this->getParameter('csv');
 		$download = $this->getParameter('download', 'bool', false);

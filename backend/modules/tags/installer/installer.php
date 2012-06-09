@@ -55,10 +55,13 @@ class TagsInstaller extends ModuleInstaller
 		{
 			// check if a page for tags already exists in this language
 			// @todo refactor this if statement
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
-												FROM pages AS p
-												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?', array($tagsID, $language)) == 0)
+			if(!(bool) $this->getDB()->getVar(
+				'SELECT 1
+				 FROM pages AS p
+				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+				 WHERE b.extra_id = ? AND p.language = ?
+				 LIMIT 1',
+				array($tagsID, $language)))
 			{
 				// insert contact page
 				$this->insertPage(

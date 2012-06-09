@@ -53,8 +53,7 @@ class FrontendPagesWidgetSubpages extends FrontendBaseWidget
 	private function loadData()
 	{
 		// get the current page id
-		if(!SITE_MULTILANGUAGE) $pageId = FrontendNavigation::getPageId($this->URL->getQueryString());
-		else $pageId = FrontendNavigation::getPageId(substr($this->URL->getQueryString(), 3));
+		$pageId = Spoon::get('page')->getId();
 
 		// fetch the items
 		$this->items = FrontendPagesModel::getSubpages($pageId);

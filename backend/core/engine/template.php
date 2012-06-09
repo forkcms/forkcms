@@ -60,6 +60,9 @@ class BackendTemplate extends SpoonTemplate
 
 		// map custom modifiers
 		$this->mapCustomModifiers();
+
+		// parse authentication levels
+		$this->parseAuthentication();
 	}
 
 	/**
@@ -77,6 +80,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->parseLabels();
 		$this->parseLocale();
 		$this->parseVars();
+		$this->parseEditorLocale();
 
 		// parse headers
 		if(!$customHeaders)
@@ -148,16 +152,47 @@ class BackendTemplate extends SpoonTemplate
 				$this->assign('authenticatedUser' . SpoonFilter::toCamelCase($key), $setting);
 			}
 
-			// assign special vars
-			$this->assign(
-				'authenticatedUserEditUrl',
-				BackendModel::createURLForAction(
-					'edit',
-					'users',
-					null,
-					array('id' => BackendAuthentication::getUser()->getUserId())
-				)
-			);
+			// check if this action is allowed
+			if(BackendAuthentication::isAllowedAction('edit', 'users'))
+			{
+				// assign special vars
+				$this->assign(
+					'authenticatedUserEditUrl',
+					BackendModel::createURLForAction(
+						'edit',
+						'users',
+						null,
+						array('id' => BackendAuthentication::getUser()->getUserId())
+					)
+				);
+			}
+		}
+	}
+
+	/**
+	 * Parse the authentication settings for the authenticated user
+	 */
+	private function parseAuthentication()
+	{
+		// init var
+		$db = BackendModel::getDB();
+
+		// get allowed actions
+		$allowedActions = (array) $db->getRecords(
+			'SELECT gra.module, gra.action, MAX(gra.level) AS level
+			 FROM users_sessions AS us
+			 INNER JOIN users AS u ON us.user_id = u.id
+			 INNER JOIN users_groups AS ug ON u.id = ug.user_id
+			 INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
+			 WHERE us.session_id = ? AND us.secret_key = ?
+			 GROUP BY gra.module, gra.action',
+			array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+		);
+
+		// loop actions and assign to template
+		foreach($allowedActions as $action)
+		{
+			if($action['level'] == '7') $this->assign('show' . SpoonFilter::toCamelCase($action['module'], '_') . SpoonFilter::toCamelCase($action['action'], '_'), true);
 		}
 	}
 
@@ -193,7 +228,7 @@ class BackendTemplate extends SpoonTemplate
 			$this->assign('MODULE', $this->URL->getModule());
 
 			// assign the current action
-			$this->assign('ACTION', $this->URL->getAction());
+			if($this->URL->getAction() != '') $this->assign('ACTION', $this->URL->getAction());
 		}
 
 		// is the user object filled?
@@ -228,12 +263,36 @@ class BackendTemplate extends SpoonTemplate
 	}
 
 	/**
+	 * Assign locale for the editor
+	 */
+	private function parseEditorLocale()
+	{
+		// fetch current active language
+		$language = BackendLanguage::getWorkingLanguage();
+
+		// convert to format used by ckeditor/ckfinder
+		switch($language)
+		{
+			case 'zh':
+				$language = 'zh-cn';
+				break;
+
+			default:
+				break;
+		}
+
+		// assign the editor language
+		$this->assign('EDITOR_LANGUAGE', $language);
+	}
+
+	/**
 	 * Assign the labels
 	 */
 	private function parseLabels()
 	{
 		// grab the current module
-		if($this->URL instanceof BackendURL) $currentModule = $this->URL->getModule();
+		if(Spoon::exists('url')) $currentModule = Spoon::get('url')->getModule();
+		elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
 		else $currentModule = 'core';
 
 		// init vars
@@ -422,6 +481,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a number as a float
+	 * syntax: {$var|formatfloat}
 	 *
 	 * @param float $number The number to format.
 	 * @param int[optional] $decimals The number of decimals.
@@ -543,6 +603,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Get a random var between a min and max
+	 * syntax: {$var|rand:min:max}
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param int $min The minimum number.
@@ -569,6 +630,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Convert this string into a well formed label.
+	 * 	syntax: {$var|tolabel}
 	 *
 	 * @param string $value The value to convert to a label.
 	 * @return string
@@ -580,7 +642,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Truncate a string
-	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
+	 * 	syntax: {$var|truncate:max-length[:append-hellip]}
 	 *
 	 * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
 	 * @param int $length The maximum length of the truncated string.

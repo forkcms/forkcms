@@ -68,7 +68,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $isCopy ? $translation['module'] : $this->filter['module']);
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
 		$this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
-		$this->frm->addText('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
+		$this->frm->addTextarea('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
 		$this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
 	}
 
@@ -78,7 +78,11 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	protected function parse()
 	{
 		parent::parse();
-		$this->tpl->assign($this->filter);
+
+		// prevent XSS
+		$filter = SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
+
+		$this->tpl->assign($filter);
 	}
 
 	/**
@@ -94,7 +98,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->filter['value'] = $this->getParameter('value');
 
 		// build query for filter
-		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+		$this->filterQuery = '&' . http_build_query($this->filter);
 	}
 
 	/**

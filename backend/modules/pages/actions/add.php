@@ -61,11 +61,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// add js
-		$this->header->addJS('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJS('tiny_mce/tiny_mce_config.js', 'core', true);
-		$this->header->addJS('jstree/jquery.tree.js', null, false, false, false);
-		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false, false, false);
-		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false, false, false);
+		$this->header->addJS('jstree/jquery.tree.js', null, false);
+		$this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
@@ -75,7 +73,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// init var
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', false);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', false);
 
 		// fallback
 		if($defaultTemplateId === false)
@@ -105,7 +103,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('add');
@@ -115,6 +113,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+		$this->frm->addEditor('html');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 
@@ -255,6 +254,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('isGod', $this->isGod);
@@ -265,7 +266,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('formErrors', (string) $this->frm->getErrors());
 
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting($this->getModule(), 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
@@ -386,7 +387,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					foreach($this->blocksContent as $block) $text .= ' ' . $block['html'];
 
 					// add to search index
-					BackendSearchModel::addIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
+					BackendSearchModel::saveIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);

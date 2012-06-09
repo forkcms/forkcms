@@ -45,7 +45,7 @@ var jsBackend =
 		jsBackend.messages.init();
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
-		jsBackend.tinyMCE.init();
+		jsBackend.ckeditor.init();
 
 		// IE fixes
 		jsBackend.selectors.init();
@@ -182,6 +182,338 @@ jsBackend.balloons =
 		element.css('position', 'absolute').css('top', topValue).css('left', leftValue);
 	}
 }
+
+/**
+ * CK Editor related objects
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Matthias Mullie <matthias@mullie.eu>
+ */
+jsBackend.ckeditor =
+{
+	defaultConfig:
+	{
+		customConfig: '',
+
+		// layout configuration
+		bodyClass: 'content',
+		stylesSet: [],
+		contentsCss:
+		[
+			'/frontend/core/layout/css/screen.css',
+			{option:THEME_HAS_CSS}'/frontend/themes/{$THEME}/core/layout/css/screen.css',{/option:THEME_HAS_CSS}
+			'/frontend/core/layout/css/editor_content.css',
+			{option:THEME_HAS_EDITOR_CSS}'/frontend/themes/{$THEME}/core/layout/css/editor_content.css',{/option:THEME_HAS_EDITOR_CSS}
+			'/backend/core/layout/css/imports/editor.css'
+		],
+
+		// language options
+		contentsLanguage: '{$LANGUAGE}',
+		language: '{$EDITOR_LANGUAGE}',
+
+		// paste options
+		forcePasteAsPlainText: true,
+
+		// buttons
+		toolbar_Full:
+		[
+			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
+			{ name: 'clipboard', items: ['Undo', 'Redo'] },
+			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
+			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+			{ name: 'insert', items : ['Table', '-', 'Image', 'MediaEmbed', '-', 'SpecialChar'] },
+			{ name: 'document', items: ['Templates', 'Maximize', 'Source'] },
+			{ name: 'styles', items : ['Format', 'Styles'] }
+		],
+
+		// buttons specific for the newsletter
+		toolbar_Newsletter:
+		[
+   			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
+   			{ name: 'clipboard', items: ['Undo', 'Redo'] },
+   			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
+   			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+   			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar'] },
+   			{ name: 'document', items: ['Templates', 'Source'] },
+   			{ name: 'styles', items : ['Format'] }
+   		],
+
+		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
+		skin: 'BootstrapCK-Skin',
+
+//		uiColor: '#FAFAFA',
+		toolbar: 'Full',
+		toolbarStartupExpanded: false,
+
+		// entities
+		entities: false,
+		entities_greek: false,
+		entities_latin: false,
+
+		// load some extra plugins
+		extraPlugins: 'stylesheetparser,MediaEmbed',
+
+		// remove useless plugins
+		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
+
+		// templates
+		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]={$LANGUAGE}'],
+
+		// custom vars
+		editorType: 'default',
+		showClickToEdit: true,
+		toggleToolbar: true
+	},
+
+	// initialize the editor
+	init: function()
+	{
+		// load the editor
+		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
+		{
+			// bind on some global events
+			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
+			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
+
+			// load the editors
+			jsBackend.ckeditor.load();
+		}
+	},
+
+	destroy: function()
+	{
+		// the destroy will trigger errors, but it will actually be destroyed just fine!
+		try
+		{
+			$.each(CKEDITOR.instances, function(i, value) { value.destroy(); });
+		}
+		catch(err) {}
+	},
+
+	load: function()
+	{
+		// extend the editor config
+		var editorConfig = $.extend({}, jsBackend.ckeditor.defaultConfig);
+
+		// specific config for the newsletter
+		var newsletterConfig = $.extend({}, jsBackend.ckeditor.defaultConfig,
+		{
+			showClickToEdit: false,
+			toolbar: 'Newsletter',
+			toolbarStartupExpanded: true,
+			toggleToolbar: false
+		});
+
+		// bind on inputEditor and inputEditorError
+		$('textarea.inputEditor, textarea.inputEditorError').ckeditor(jsBackend.ckeditor.callback, editorConfig);
+		$('textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').ckeditor(jsBackend.ckeditor.callback, newsletterConfig);
+	},
+
+	callback: function(element)
+	{
+		if($(element).ckeditorGet().config.showClickToEdit)
+		{
+			// add the click to edit div
+			if(!$(element).prev().hasClass('clickToEdit')) $(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+		}
+
+		// add the optionsRTE-class if it isn't present
+		if(!$(element).parent('div, p').hasClass('optionsRTE')) $(element).parent('div, p').addClass('optionsRTE');
+
+		// add the CKFinder
+		CKFinder.setupCKEditor(null,
+		{
+			basePath: '/backend/core/js/ckfinder',
+			width: 800
+		});
+	},
+
+	checkContent: function(evt)
+	{
+		// get the editor
+		var editor = evt.editor;
+
+		// on initalisation we should force the check, which will be passed in the data-container
+		var forced = (typeof evt.forced == 'boolean') ? evt.forced : false;
+
+		// was the content changed, or is the check forced?
+		if(editor.checkDirty() || forced)
+		{
+			var content = editor.getData();
+			var warnings = [];
+
+			// no alt?
+			if(content.match(/<img(.*)alt=""(.*)/im)) warnings.push('{$msgEditorImagesWithoutAlt|addslashes}');
+
+			// invalid links?
+			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push('{$msgEditorInvalidLinks|addslashes}');
+
+			// remove the previous warnings
+			$('#' + editor.element.getId() + '_warnings').remove(); // @todo: met dit id loopt iets mis
+
+			// any warnings?
+			if(warnings.length > 0)
+			{
+				// append the warnings after the editor
+				$('#cke_' + editor.element.getId()).after('<span id="' + editor.element.getId() + '_warnings" class="infoMessage editorWarning">' + warnings.join(' ') + '</span>');
+			}
+		}
+	},
+
+	onDialogDefinition: function(evt)
+	{
+		// get the dialog definition
+		var dialogDefinition = evt.data.definition;
+
+		// specific stuff for the image-dialog
+		if(evt.data.name == 'image')
+		{
+			// remove the advanced tab because it is confusing fo the end-user
+			dialogDefinition.removeContents('advanced');
+
+			// remove the upload tab because we like our users to think about the place of their images
+			dialogDefinition.removeContents('Upload');
+
+			// remove the Link tab because there is no point of using two interfaces for the same outcome
+			dialogDefinition.removeContents('Link');
+
+			// get the info tab
+			var infoTab = dialogDefinition.getContents('info');
+
+			// remove fields we don't want to use, because they will mess up the layout
+			infoTab.remove('txtBorder');
+			infoTab.remove('txtHSpace');
+			infoTab.remove('txtVSpace');
+			infoTab.remove('txtBorder');
+			infoTab.remove('cmbAlign');
+		}
+
+		// specific stuff for the link-dialog
+		if(evt.data.name == 'link')
+		{
+			// remove the advanced tab because it is confusing fo the end-user
+			dialogDefinition.removeContents('advanced');
+
+			// remove the upload tab because we like our users to think about the place of their images
+			dialogDefinition.removeContents('upload');
+
+			// get the info tab
+			var infoTab = dialogDefinition.getContents('info');
+
+			// add a new element
+			infoTab.add(
+			{
+				type: 'vbox',
+				id: 'localPageOptions',
+				children:
+				[
+				 	{
+						type: 'select',
+						label: '{$msgEditorSelectInternalPage}',
+						id: 'localPage',
+						title: '{$msgEditorSelectInternalPage}',
+						items: linkList,
+						onChange: function(evt)
+						{
+							domain = '{$SITE_DOMAIN}';
+							domain = domain.replace(/\/$/, '');
+
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
+						}
+				 	}
+			 	]
+			});
+		}
+
+		// specific stuff for the table-dialog
+		if(evt.data.name == 'table')
+		{
+			// remove the advanced tab because it is confusing fo the end-user
+			dialogDefinition.removeContents('advanced');
+
+			// get the info tab
+			var infoTab = dialogDefinition.getContents('info');
+
+			// remove fields we don't want to use, because they will mess up the layout
+			infoTab.remove('txtBorder');
+			infoTab.remove('cmbAlign');
+			infoTab.remove('txtCellSpace');
+			infoTab.remove('txtCellPad');
+
+			// set a beter default for the width
+			infoTab.get('txtWidth')['default'] = '100%';
+		}
+	},
+
+	onBlur: function(evt)
+	{
+		// current element
+		var $currentElement = $(document.activeElement);
+		var outsideEditor = true;
+
+		// check if the current active elements is an element related to an editor
+		if(typeof $currentElement.attr('id') != 'undefined' && $currentElement.attr('id').indexOf('cke_') >= 0) outsideEditor = false;
+		else if(typeof $currentElement.attr('class') != 'undefined' && $currentElement.attr('class').indexOf('cke_') >= 0) outsideEditor = false;
+
+		// focus outside the editor?
+		if(outsideEditor)
+		{
+			if(evt.editor.config.showClickToEdit)
+			{
+				// show the click to edit
+				$('#cke_' + evt.editor.name).siblings('div.clickToEdit').show();
+			}
+
+			if(evt.editor.config.toggleToolbar)
+			{
+				// hide the toolbar
+				$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
+				$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
+				if($toolbox.is(':visible'))
+				{
+					$toolbox.hide();
+					$collapser.addClass('cke_toolbox_collapser_min');
+				}
+			}
+		}
+
+		// check the content
+		jsBackend.ckeditor.checkContent(evt);
+	},
+
+	onFocus: function(evt)
+	{
+		if(evt.editor.config.showClickToEdit)
+		{
+			// hide the click to edit
+			$('#cke_' + evt.editor.name).siblings('div.clickToEdit').hide();
+		}
+
+		if(evt.editor.config.toggleToolbar)
+		{
+			// show the toolbar
+			$toolbox = $('#cke_top_' + evt.editor.name + ' .cke_toolbox');
+			$collapser = $('#cke_top_' + evt.editor.name + ' .cke_toolbox_collapser');
+			if($toolbox.is(':hidden'))
+			{
+				$toolbox.show();
+				$collapser.removeClass('cke_toolbox_collapser_min');
+			}
+		}
+	},
+
+	onReady: function(evt)
+	{
+		// bind on blur and focus
+		evt.editor.on('blur', jsBackend.ckeditor.onBlur);
+		evt.editor.on('focus', jsBackend.ckeditor.onFocus);
+
+		// force the content check
+		jsBackend.ckeditor.checkContent({ editor: evt.editor, forced: true });
+	}
+}
+
 
 /**
  * Handle form functionality
@@ -556,7 +888,8 @@ jsBackend.controls =
 					draggable: false,
 					resizable: false,
 					modal: true,
-					buttons: {
+					buttons:
+					{
 						'{$lblOK|ucfirst}': function()
 						{
 							// close dialog
@@ -573,7 +906,7 @@ jsBackend.controls =
 					open: function(e)
 					{
 						// set focus on first button
-						if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
+						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
 					}
 				});
 			}
@@ -660,14 +993,13 @@ jsBackend.controls =
 		if($passwordGenerator.length > 0)
 		{
 			$passwordGenerator.passwordGenerator(
-				{
-					length: 8,
-					numbers: false,
-					lowercase: true,
-					uppercase: true,
-					generateLabel: '{$lblGenerate|ucfirst}'
-				}
-			);
+			{
+				length: 8,
+				numbers: false,
+				lowercase: true,
+				uppercase: true,
+				generateLabel: '{$lblGenerate|ucfirst}'
+			});
 		}
 	},
 
@@ -726,7 +1058,7 @@ jsBackend.controls =
 		// loop chars and add unique chars
 		for(var i = 0; i<string.length; i++)
 		{
-			if($.inArray(string.charAt(i), uniqueChars) == -1) { uniqueChars.push(string.charAt(i)); }
+			if($.inArray(string.charAt(i), uniqueChars) == -1) uniqueChars.push(string.charAt(i));
 		}
 
 		// less then 3 unique chars is just weak
@@ -750,8 +1082,8 @@ jsBackend.controls =
 		// strong password
 		if(score >= 4) return 'strong';
 
-		// ok
-		if(score >= 2) return 'ok';
+		// average
+		if(score >= 2) return 'average';
 
 		// fallback
 		return 'weak';
@@ -781,13 +1113,22 @@ jsBackend.controls =
 	bindTableCheckbox: function()
 	{
 		// set classes
-		$('tr td input:checkbox:checked').each(function() { $(this).parents().filter('tr').eq(0).addClass('selected'); });
+		$('tr td.checkbox input.inputCheckbox:checked').each(function()
+		{
+			if(!$(this).parents('table').hasClass('noSelectedState'))
+			{
+				$(this).parents().filter('tr').eq(0).addClass('selected');
+			}
+		});
 
 		// bind change-events
-		$(document).on('change', 'tr td input:checkbox', function(e)
+		$(document).on('change', 'tr td.checkbox input.inputCheckbox:checkbox', function(e)
 		{
-			if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
-			else $(this).parents().filter('tr').eq(0).removeClass('selected');
+			if(!$(this).parents('table').hasClass('noSelectedState'))
+			{
+				if($(this).is(':checked')) $(this).parents().filter('tr').eq(0).addClass('selected');
+				else $(this).parents().filter('tr').eq(0).removeClass('selected');
+			}
 		});
 	},
 
@@ -947,7 +1288,8 @@ jsBackend.forms =
 			var value = $(this).val();
 
 			// set options
-			$this.datepicker('option', {
+			$this.datepicker('option',
+			{
 				dateFormat: data.mask,
 				firstDate: data.firstday
 			}).datepicker('setDate', value);
@@ -964,7 +1306,8 @@ jsBackend.forms =
 			var value = $(this).val();
 
 			// set options
-			$this.datepicker('option', {
+			$this.datepicker('option',
+			{
 				dateFormat: data.mask, firstDay: data.firstday,
 				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 			}).datepicker('setDate', value);
@@ -1187,9 +1530,6 @@ jsBackend.forms =
 		// initialize var
 		var changed = false;
 
-		// save editors to the textarea-fields
-		if(typeof tinyMCE != 'undefined') tinyMCE.triggerSave();
-
 		// loop fields
 		$('.checkBeforeUnload').each(function()
 		{
@@ -1287,7 +1627,7 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 3).replace(/\./g, ''));
 
 			// lower than 19?
-			if(version < 19) { showWarning = true; }
+			if(version < 19) showWarning = true;
 		}
 
 		// check opera
@@ -1297,7 +1637,7 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
 			// lower than 9?
-			if(version < 9) { showWarning = true; }
+			if(version < 9) showWarning = true;
 		}
 
 		// check safari, should be webkit when using 1.4
@@ -1307,7 +1647,7 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 3));
 
 			// lower than 1.4?
-			if(version < 400) { showWarning = true; }
+			if(version < 400) showWarning = true;
 		}
 
 		// check IE
@@ -1317,11 +1657,11 @@ jsBackend.layout =
 			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
 			// lower or equal than 6
-			if(version <= 6) { showWarning = true; }
+			if(version <= 6) showWarning = true;
 		}
 
 		// show warning if needed
-		if(showWarning) { $('#showBrowserWarning').show(); }
+		if(showWarning) $('#showBrowserWarning').show();
 	}
 }
 
@@ -1371,8 +1711,8 @@ jsBackend.messages =
 		$('#'+ uniqueId).fadeIn();
 
 		// timeout
-		if(type == 'notice') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
-		if(type == 'success') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
+		if(type == 'notice') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
+		if(type == 'success') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
 	}
 }
 
@@ -1394,7 +1734,8 @@ jsBackend.tabs =
 
 			$('.tabs .ui-tabs-panel').each(function()
 			{
-				if($(this).find('.formError').length > 0) {
+				if($(this).find('.formError').length > 0)
+				{
 					$($('.ui-tabs-nav a[href="#'+ $(this).attr('id') +'"]').parent()).addClass('ui-state-error');
 				}
 			});
@@ -1432,97 +1773,6 @@ jsBackend.tabs =
 				e.preventDefault();
 				$('.tabs').tabs('select', $(this).attr('href'));
 			});
-		}
-	}
-}
-
-/**
- * Apply TinyMCE
- *
- * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Matthias Mullie <matthias@mullie.eu>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
- */
-jsBackend.tinyMCE =
-{
-	// init, something like a constructor
-	init: function()
-	{
-		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit}</span></div>');
-
-		// bind click on the element
-		$(document).on('click', '.clickToEdit', function(e)
-		{
-			// get id
-			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
-
-			// validate id
-			if(typeof id != undefined)
-			{
-				// show the toolbar
-				$('#'+ id + '_external').show();
-
-				// set focus to the editor
-				tinyMCE.get(id).focus();
-			}
-		});
-	},
-
-	// format text (after retrieving it from the editor)
-	afterSave: function(editor, object)
-	{
-		// create dom tree
-		var $tmp = $('<div />').html(object.content);
-
-		// remove target="_self"
-		$tmp.find('a[target=_self]').removeAttr('target');
-
-		// replace target="_blank" with class="targetBlank"
-		$tmp.find('a[target=_blank]').addClass('targetBlank').removeAttr('target');
-
-		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
-		editor.setContent(utils.string.xhtml($tmp.html()));
-	},
-
-	// format text (before placing it in the editor)
-	loadContent: function(editor, object)
-	{
-		// create dom tree
-		var $tmp = $('<div />').html(object.content);
-
-		// replace target="_blank" with class="targetBlank"
-		$tmp.find('a.targetBlank').removeClass('targetBlank').attr('target', '_blank');
-
-		// resave (use editor.setContent() over object.content =, because the latter won't let TinyMCE cleanup messy IE-html)
-		editor.setContent(utils.string.xhtml($tmp.html()));
-
-		// check content
-		jsBackend.tinyMCE.checkContent(editor);
-	},
-
-	// custom content checks
-	checkContent: function(editor)
-	{
-		if(editor.isDirty())
-		{
-			var content = editor.getContent();
-			var warnings = [];
-
-			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt}'); }
-
-			// invalid links?
-			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks}'); }
-
-			// any warnings?
-			if(warnings.length > 0)
-			{
-				if($('#' + editor.id + '_warnings').length > 0) $('#' + editor.id + '_warnings').html(warnings.join(' '));
-				else $('#' + editor.id + '_parent').after('<span id="'+ editor.id + '_warnings' +'" class="infoMessage editorWarning">'+ warnings.join(' ') + '</span>');
-			}
-
-			// no warnings
-			else $('#' + editor.id + '_warnings').remove();
 		}
 	}
 }
@@ -1659,7 +1909,7 @@ jsBackend.tableSequenceByDragAndDrop =
 							$table.find('tr:odd').addClass('even');
 
 							// alert the user
-							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+							if(data.code != 200 && jsBackend.debug) alert(data.message);
 
 							// show message
 							jsBackend.messages.add('success', 'Changed order successfully.');

@@ -204,7 +204,10 @@ jsBackend.formBuilder.fields =
 									break;
 							}
 						},
-						'{$lblCancel|ucfirst}': function(){ $(this).dialog('close'); }
+						'{$lblCancel|ucfirst}': function()
+						{
+							$(this).dialog('close');
+						}
 					 },
 
 					// set focus on first input field
@@ -215,6 +218,7 @@ jsBackend.formBuilder.fields =
 						{
 							$('input#dropdownValues').multipleTextbox(
 							{
+								splitChar: '|',
 								emptyMessage: '{$msgNoValues}',
 								addLabel: '{$lblAdd|ucfirst}',
 								removeLabel: '{$lblDelete|ucfirst}',
@@ -226,6 +230,7 @@ jsBackend.formBuilder.fields =
 						{
 							$('input#radiobuttonValues').multipleTextbox(
 							{
+								splitChar: '|',
 								emptyMessage: '{$msgNoValues}',
 								addLabel: '{$lblAdd|ucfirst}',
 								removeLabel: '{$lblDelete|ucfirst}',
@@ -237,22 +242,13 @@ jsBackend.formBuilder.fields =
 						{
 							$('input#checkboxValues').multipleTextbox(
 							{
+								splitChar: '|',
 								emptyMessage: '{$msgNoValues}',
 								addLabel: '{$lblAdd|ucfirst}',
 								removeLabel: '{$lblDelete|ucfirst}',
 								showIconOnly: true,
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
 							});
-						}
-						else if(id == 'paragraphDialog')
-						{
-							// we want other buttons
-							tinyMCE.activeEditor.settings.theme_advanced_buttons1 = 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor';
-							tinyMCE.activeEditor.settings.theme_advanced_buttons2 = 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes';
-							tinyMCE.activeEditor.settings.theme_advanced_buttons3 = '';
-
-							// create tinymce control
-							tinyMCE.execCommand('mceAddControl', false, 'paragraph');
 						}
 
 						// focus on first input element
@@ -267,13 +263,6 @@ jsBackend.formBuilder.fields =
 					{
 						// no items message
 						jsBackend.formBuilder.fields.toggleNoItems();
-
-						// unload tinymce
-						if(tinyMCE.getInstanceById('paragraph'))
-						{
-							tinyMCE.execCommand('mceSetContent', false, 'paragraph');
-							tinyMCE.execCommand('mceRemoveControl', false, 'paragraph');
-						}
 
 						// reset
 						jsBackend.formBuilder.fields.resetDialog(id);
@@ -325,7 +314,7 @@ jsBackend.formBuilder.fields =
 					data: $.extend(jsBackend.formBuilder.fields.paramsSequence,
 					{
 						form_id: jsBackend.formBuilder.formId,
-						new_id_sequence: newIdSequence.join(',')
+						new_id_sequence: newIdSequence.join('|')
 					}),
 					success: function(data, textStatus)
 					{
@@ -454,7 +443,7 @@ jsBackend.formBuilder.fields =
 								// fill in form
 								$('#dropdownId').val(data.data.field.id);
 								$('#dropdownLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
-								$('#dropdownValues').val(data.data.field.settings.values.join(','));
+								$('#dropdownValues').val(data.data.field.settings.values.join('|'));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -492,7 +481,7 @@ jsBackend.formBuilder.fields =
 								// fill in form
 								$('#radiobuttonId').val(data.data.field.id);
 								$('#radiobuttonLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
-								$('#radiobuttonValues').val(data.data.field.settings.values.join(','));
+								$('#radiobuttonValues').val(data.data.field.settings.values.join('|'));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -530,7 +519,7 @@ jsBackend.formBuilder.fields =
 								// fill in form
 								$('#checkboxId').val(data.data.field.id);
 								$('#checkboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
-								$('#checkboxValues').val(data.data.field.settings.values.join(','));
+								$('#checkboxValues').val(data.data.field.settings.values.join('|'));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -671,7 +660,7 @@ jsBackend.formBuilder.fields =
 	multipleTextboxCallback: function(id)
 	{
 		// init
-		var items = $('#'+ id).val().split(',');
+		var items = $('#'+ id).val().split('|');
 		var defaultElement = $('select[rel='+ id + ']');
 		var selectedValue = $(defaultElement).find(':selected').val();
 
@@ -914,9 +903,6 @@ jsBackend.formBuilder.fields =
 	 */
 	saveParagraph: function()
 	{
-		// save tiny mce
-		tinyMCE.triggerSave();
-
 		// init vars
 		var fieldId = $('#paragraphId').val();
 		var type = 'paragraph';

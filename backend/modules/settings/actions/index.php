@@ -72,6 +72,12 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addText('facebook_application_id', BackendModel::getModuleSetting('core', 'facebook_app_id', null));
 		$this->frm->addText('facebook_application_secret', BackendModel::getModuleSetting('core', 'facebook_app_secret', null));
 
+		// ckfinder
+		$this->frm->addText('ckfinder_license_name', BackendModel::getModuleSetting('core', 'ckfinder_license_name', null));
+		$this->frm->addText('ckfinder_license_key', BackendModel::getModuleSetting('core', 'ckfinder_license_key', null));
+		$this->frm->addText('ckfinder_image_max_width', BackendModel::getModuleSetting('core', 'ckfinder_image_max_width', 1600));
+		$this->frm->addText('ckfinder_image_max_height', BackendModel::getModuleSetting('core', 'ckfinder_image_max_height', 1200));
+
 		// api keys
 		$this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('core', 'fork_api_public_key', null));
 		$this->frm->addText('fork_api_private_key', BackendModel::getModuleSetting('core', 'fork_api_private_key', null));
@@ -97,7 +103,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$redirectAttributes['id'] = 'redirect_language_' . $abbreviation;
 
 			// fetch label
-			$label = BL::msg(mb_strtoupper($abbreviation), 'core');
+			$label = BL::lbl(mb_strtoupper($abbreviation), 'core');
 
 			// default may not be unselected
 			if($defaultLanguage)
@@ -130,8 +136,10 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 	/**
 	 * Parse the form
 	 */
-	private function parse()
+	protected function parse()
 	{
+		parent::parse();
+
 		// show options
 		if($this->needsAkismet) $this->tpl->assign('needsAkismet', true);
 		if($this->needsGoogleMaps) $this->tpl->assign('needsGoogleMaps', true);
@@ -215,6 +223,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				}
 			}
 
+			if($this->frm->getField('ckfinder_image_max_width')->isFilled()) $this->frm->getField('ckfinder_image_max_width')->isInteger(BL::err('InvalidInteger'));
+			if($this->frm->getField('ckfinder_image_max_height')->isFilled()) $this->frm->getField('ckfinder_image_max_height')->isInteger(BL::err('InvalidInteger'));
+
 			// no errors ?
 			if($this->frm->isCorrect())
 			{
@@ -227,6 +238,12 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setModuleSetting('core', 'facebook_admin_ids', ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField('facebook_admin_ids')->getValue() : null);
 				BackendModel::setModuleSetting('core', 'facebook_app_id', ($this->frm->getField('facebook_application_id')->isFilled()) ? $this->frm->getField('facebook_application_id')->getValue() : null);
 				BackendModel::setModuleSetting('core', 'facebook_app_secret', ($this->frm->getField('facebook_application_secret')->isFilled()) ? $this->frm->getField('facebook_application_secret')->getValue() : null);
+
+				// ckfinder settings
+				BackendModel::setModuleSetting('core', 'ckfinder_license_name', ($this->frm->getField('ckfinder_license_name')->isFilled()) ? $this->frm->getField('ckfinder_license_name')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'ckfinder_license_key', ($this->frm->getField('ckfinder_license_key')->isFilled()) ? $this->frm->getField('ckfinder_license_key')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'ckfinder_image_max_width', ($this->frm->getField('ckfinder_image_max_width')->isFilled()) ? $this->frm->getField('ckfinder_image_max_width')->getValue() : 1600);
+				BackendModel::setModuleSetting('core', 'ckfinder_image_max_height', ($this->frm->getField('ckfinder_image_max_height')->isFilled()) ? $this->frm->getField('ckfinder_image_max_height')->getValue() : 1200);
 
 				// api keys
 				BackendModel::setModuleSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
@@ -244,10 +261,15 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 				// before we save the languages, we need to ensure that each language actually exists and may be chosen.
 				$languages = array(SITE_DEFAULT_LANGUAGE);
+				$activeLanguages = array_unique(array_merge($languages, $this->frm->getField('active_languages')->getValue()));
+				$redirectLanguages = array_unique(array_merge($languages, $this->frm->getField('redirect_languages')->getValue()));
+
+				// cleanup redirect-languages, by removing the values that aren't present in the active languages
+				$redirectLanguages = array_intersect($redirectLanguages, $activeLanguages);
 
 				// save active languages
-				BackendModel::setModuleSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('active_languages')->getValue())));
-				BackendModel::setModuleSetting('core', 'redirect_languages', array_unique(array_merge($languages, $this->frm->getField('redirect_languages')->getValue())));
+				BackendModel::setModuleSetting('core', 'active_languages', $activeLanguages);
+				BackendModel::setModuleSetting('core', 'redirect_languages', $redirectLanguages);
 
 				// domains may not contain www, http or https. Therefor we must loop and create the list of domains.
 				$siteDomains = array();

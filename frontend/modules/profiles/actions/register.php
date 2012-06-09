@@ -133,7 +133,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 					$profileId = FrontendProfilesModel::insert($values);
 
 					// use the profile id as url until we have an actual url
-					FrontendProfilesModel::update($profileId, array('url' => FrontendProfilesModel::getUrl($profileId)));
+					FrontendProfilesModel::update($profileId, array('url' => FrontendProfilesModel::getUrl($values['display_name'])));
 
 					// trigger event
 					FrontendModel::triggerEvent('profiles', 'after_register', array('id' => $profileId));
@@ -152,7 +152,13 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 					$mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') . '/' . $activationKey;
 
 					// send email
-					FrontendMailer::addEmail(FL::getMessage('RegisterSubject'), FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl', $mailValues, $values['email'], $values['display_name']);
+					FrontendMailer::addEmail(
+						FL::getMessage('RegisterSubject'),
+						FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
+						$mailValues,
+						$values['email'],
+						''
+					);
 
 					// redirect
 					$this->redirect(SELF . '?sent=true');

@@ -11,6 +11,7 @@
  * Installer for the profiles module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Davy Van Vooren <davy.vanvooren@netlash.com>
  */
 class ProfilesInstaller extends ModuleInstaller
 {
@@ -32,6 +33,7 @@ class ProfilesInstaller extends ModuleInstaller
 		$this->setModuleRights(1, 'profiles');
 
 		// action rights
+		$this->setActionRights(1, 'profiles', 'add');
 		$this->setActionRights(1, 'profiles', 'add_group');
 		$this->setActionRights(1, 'profiles', 'add_profile_group');
 		$this->setActionRights(1, 'profiles', 'block');
@@ -49,6 +51,7 @@ class ProfilesInstaller extends ModuleInstaller
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$navigationProfilesId = $this->setNavigation($navigationModulesId, 'Profiles');
 		$this->setNavigation($navigationProfilesId, 'Overview', 'profiles/index', array(
+			'profiles/add',
 			'profiles/edit',
 			'profiles/add_profile_group',
 			'profiles/edit_profile_group'
@@ -71,6 +74,8 @@ class ProfilesInstaller extends ModuleInstaller
 		$resetPasswordId = $this->insertExtra('profiles', 'block', 'ResetPassword', 'reset_password', null, 'N', 5008);
 		$resendActivationId = $this->insertExtra('profiles', 'block', 'ResendActivation', 'resend_activation', null, 'N', 5009);
 
+		$this->insertExtra('profiles', 'widget', 'LoginBox', 'login_box', null, 'N', 5010);
+
 		// get search widget id
 		$searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND action = ?', array('search', 'form'));
 
@@ -79,11 +84,14 @@ class ProfilesInstaller extends ModuleInstaller
 		{
 			// only add pages if profiles isnt linked anywhere
 			// @todo refactor me, syntax sucks atm
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
-												FROM pages AS p
-												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												INNER JOIN modules_extras AS e ON e.id = b.extra_id
-												WHERE e.module = ? AND p.language = ?', array('profiles', $language)) == 0)
+			if(!(bool) $this->getDB()->getVar(
+				'SELECT 1
+				 FROM pages AS p
+				 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+				 INNER JOIN modules_extras AS e ON e.id = b.extra_id
+				 WHERE e.module = ? AND p.language = ?
+				 LIMIT 1',
+				array('profiles', $language)))
 			{
 				// activate page
 				$this->insertPage(

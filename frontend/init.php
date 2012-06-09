@@ -121,6 +121,16 @@ class FrontendInit
 			// the real matches
 			$parts = $parts[0];
 
+			// is it an application class?
+			if(isset($parts[0]) && $parts[0] == 'Common')
+			{
+				$chunks = $parts;
+				array_shift($chunks);
+				$pathToLoad = PATH_LIBRARY . '/base/' . strtolower(implode('_', $chunks)) . '.php';
+
+				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
+			}
+
 			// doublecheck that we are looking for a frontend class, of that isn't the case we should stop.
 			$root = array_shift($parts);
 			if(strtolower($root) != 'frontend') return;
@@ -315,7 +325,10 @@ class FrontendInit
 	private function requireGlobals()
 	{
 		// fetch config
-		$installed[] = @include_once dirname(__FILE__) . '/cache/config/config.php';
+		@include_once dirname(__FILE__) . '/cache/config/config.php';
+
+		// config doest not exist, use standard library location
+		if(!defined('INIT_PATH_LIBRARY')) define('INIT_PATH_LIBRARY', dirname(__FILE__) . '/../library');
 
 		// load the globals
 		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';

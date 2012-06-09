@@ -306,8 +306,8 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
-		// apply method
-		$return = htmlentities($value, $quoteStyle, $charset);
+		// apply htmlentities
+		$return = htmlentities((string) $value, $quoteStyle, $charset);
 
 		/**
 		 * PHP doesn't replace a backslash to its html entity since this is something
@@ -334,7 +334,7 @@ class SpoonFilter
 		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
 		// apply method
-		return html_entity_decode($value, $quoteStyle, $charset);
+		return html_entity_decode((string) $value, $quoteStyle, $charset);
 	}
 
 
@@ -351,7 +351,7 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// apply method
-		return htmlspecialchars($value, ENT_QUOTES, $charset);
+		return htmlspecialchars((string) $value, ENT_QUOTES, $charset);
 	}
 
 
@@ -363,7 +363,7 @@ class SpoonFilter
 	 */
 	public static function htmlspecialcharsDecode($value)
 	{
-		return htmlspecialchars_decode($value, ENT_QUOTES);
+		return htmlspecialchars_decode((string) $value, ENT_QUOTES);
 	}
 
 
@@ -474,18 +474,25 @@ class SpoonFilter
 	 */
 	public static function isFloat($value, $allowCommas = false)
 	{
-		// no commas allowed
-		if(!$allowCommas) return ((string) (float) $value === (string) $value);
+		// replace commas if needed
+		if($allowCommas) $value = str_replace(',', '.', (string) $value);
 
-		// replace commas with dots
-		return ((string) (float) str_replace(',', '.', (string) $value) === str_replace(',', '.', (string) $value));
+		// trim zero characters after the decimal separator
+		if(mb_strpos((string) $value, '.') !== false)
+		{
+			$value = rtrim($value, '0');
+			if(substr($value, -1) == '.') $value = substr($value, 0, -1);
+		}
+
+		// validate
+		return ((string) (float) $value === (string) $value);
 	}
 
 
 	/**
 	 * Checks if the value is greather than a given minimum.
 	 *
-	 * @return	bool			true if the value is greather then, false if not.
+	 * @return	bool				true if the value is greather then, false if not.
 	 * @param	float $minimum		The minimum as a float.
 	 * @param	float $value		The value to validate.
 	 */
@@ -629,6 +636,36 @@ class SpoonFilter
 	public static function isOdd($value)
 	{
 		return !self::isEven((int) $value);
+	}
+
+
+	/**
+	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
+	 *
+	 * @return	bool
+	 * @param 	string $value					The value to validate.
+	 * @param	string[optional] $error			The error message to set.
+	 * @param	int[optional] $precision		The allowed number of digits after the decimal separator. Defaults to 2.
+	 * @param	bool[optional] $allowNegative	Do you want to allow negative prices? Defaults to false.
+	 * @param	bool[optional] $allowCommas		Do you want to use commas as a decimal separator? Defaults to true.
+	 */
+	public static function isPrice($value, $precision = 2, $allowNegative = false, $allowCommas = true)
+	{
+		// replace commas if needed
+		if($allowCommas) $value = str_replace(',', '.', (string) $value);
+
+		// trim zero characters after the decimal separator
+		if(mb_strpos($value, '.') !== false)
+		{
+			$value = rtrim($value, '0');
+			if(substr($value, -1) == '.') $value = substr($value, 0, -1);
+		}
+
+		// no negatives allowed
+		if(!$allowNegative) return (((float) $value >= 0) && ((string) (float) $value == $value));
+
+		// no commas allowed
+		return ((string) (float) $value === (string) $value);
 	}
 
 
@@ -834,11 +871,8 @@ class SpoonFilter
 	 */
 	public static function toCamelCase($value, $separator = '_', $lcfirst = false, $charset = null)
 	{
-		// init vars
-		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
-
-		// init var
 		$string = '';
+		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// fetch words
 		$words = explode((string) $separator, (string) $value);
@@ -849,13 +883,12 @@ class SpoonFilter
 			// skip empty words
 			if($word == '') continue;
 
-			// if it is the first word and we should use lowercase for the first word
-			if($i == 0 && $lcfirst) $word = $word;
+			// first word lowercase
+			if($i == 0 && $lcfirst) $word[0] = mb_strtolower($word[0], $charset);
 
 			// convert first letter to uppercase
 			else $word[0] = mb_strtoupper($word[0], $charset);
 
-			// append
 			$string .= $word;
 		}
 

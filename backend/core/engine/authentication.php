@@ -12,6 +12,8 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Sam Tubbax <sam@sumocoders.be>
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendAuthentication
 {
@@ -35,6 +37,57 @@ class BackendAuthentication
 	 * @var	BackendUser
 	 */
 	private static $user;
+
+	/**
+	 * Check the strength of the password
+	 *
+	 * @param string $password The password.
+	 * @return string
+	 */
+	public static function checkPassword($password)
+	{
+		// init vars
+		$score = 0;
+		$uniqueChars = array();
+
+		// less then 4 chars is just a weak password
+		if(mb_strlen($password) <= 4) return 'weak';
+
+		// loop chars and add unique chars
+		$passwordChars = str_split($password);
+		foreach($passwordChars as $char)
+		{
+			$uniqueChars[$char] = $char;
+		}
+
+		// less then 3 unique chars is just weak
+		if(count($uniqueChars) < 3) return 'weak';
+
+		// more then 6 chars is good
+		if(mb_strlen($password) >= 6) $score++;
+
+		// more then 8 is beter
+		if(mb_strlen($password) >= 8) $score++;
+
+		// @todo
+		// upper and lowercase?
+		if(preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password)) $score += 2;
+
+		// number?
+		if(preg_match('/\d+/', $password)) $score++;
+
+		// special char?
+		if(preg_match('/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/', $password)) $score++;
+
+		// strong password
+		if($score >= 4) return 'strong';
+
+		// ok
+		if($score >= 2) return 'average';
+
+		// fallback
+		return 'weak';
+	}
 
 	/**
 	 * Cleanup sessions for the current user and sessions that are invalid
@@ -108,7 +161,7 @@ class BackendAuthentication
 	 * @param string $module The module wherin the action is located.
 	 * @return bool
 	 */
-	public static function isAllowedAction($action, $module)
+	public static function isAllowedAction($action = null, $module = null)
 	{
 		// GOD's rule them all!
 		if(self::getUser()->isGod()) return true;
@@ -116,13 +169,16 @@ class BackendAuthentication
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
 		$alwaysAllowed = array(
 			'dashboard' => array('index' => 7),
-			'core' => array('generate_url' => 7),
+			'core' => array('generate_url' => 7, 'content_css' => 7, 'templates' => 7),
 			'error' => array('index' => 7),
 			'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7)
 		);
 
-		$action = (string) $action;
-		$module = (string) $module;
+		// grab the URL from the reference
+		$URL = Spoon::get('url');
+
+		$action = ($action !== null) ? (string) $action : $URL->getAction();
+		$module = ($module !== null) ? (string) $module : $URL->getModule();
 
 		// is this action an action that doesn't require authentication?
 		if(isset($alwaysAllowed[$module][$action])) return true;
@@ -141,12 +197,13 @@ class BackendAuthentication
 
 			// get allowed actions
 			$allowedActionsRows = (array) $db->getRecords(
-				'SELECT gra.module, gra.action, gra.level
+				'SELECT gra.module, gra.action, MAX(gra.level) AS level
 				 FROM users_sessions AS us
 				 INNER JOIN users AS u ON us.user_id = u.id
 				 INNER JOIN users_groups AS ug ON u.id = ug.user_id
 				 INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
-				 WHERE us.session_id = ? AND us.secret_key = ?',
+				 WHERE us.session_id = ? AND us.secret_key = ?
+				 GROUP BY gra.module, gra.action',
 				array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
 			);
 
@@ -197,7 +254,7 @@ class BackendAuthentication
 
 			// get allowed modules
 			$allowedModules = $db->getColumn(
-				'SELECT grm.module
+				'SELECT DISTINCT grm.module
 				 FROM users_sessions AS us
 				 INNER JOIN users AS u ON us.user_id = u.id
 				 INNER JOIN users_groups AS ug ON u.id = ug.user_id

@@ -1,11 +1,11 @@
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td>
-			<!-- tinymce -->
-				<textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditor">
+			<!-- editor -->
+				<textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditorNewsletter">
 					{$contentHtml}
 				</textarea>
-			<!-- /tinymce -->
+			<!-- /editor -->
 		</td>
 	</tr>
 	<tr>
@@ -14,7 +14,7 @@
 	</tr>
 	<tr>
 		<td>
-			<p><small>Wens je deze nieuwsbrief niet meer te ontvangen? <a id="unsubscribeURL" href="#">Schrijf je uit</a> op de website.</small></p>
+			<p><small>Ne voulez-vous plus recevoir ce bulletin d'email? <a id="unsubscribeURL" href="#">D&eacute;sinscrivez-vous</a> sur notre site web.</small></p>
 		</td>
 	</tr>
 </table>

@@ -1,4 +1,352 @@
-3.1.8 (xxxx-xx-xx)
+3.3.13 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded to jQuery UI 1.8.21
+* Core: Upgraded Highcharts to 2.2.5
+
+
+3.3.12 (2012-06-05)
+--
+Improvements:
+
+* Core: Generate thumbnails based on the folders in the given path, see http://www.fork-cms.com/knowledge-base/detail/generate-thumbnails-based-on-folders.
+* Blog: better layout for the image-box.
+* Core: upgraded Highcharts to 2.2.4
+* Profiles: base the URL on the display-name instead of the id.
+* Core: default extension and mimetype-validation for image-field.
+* Core: made it possible to set cookies with the utils.js (Remark: not compatible with SpoonCookie)
+* Core: minifier will always include svg & woff as raw data.
+
+Bugfixes:
+
+* Minify: first convert images to base64, then remove all whitespaces. Otherwise some image url's are not converted.
+* Formbuilder: datestart & dateend were wrong after sorting, as mention on http://forkcms.lighthouseapp.com/projects/61890/tickets/303, thx Jeroen Desloovere.
+
+
+3.3.11 (2012-05-29)
+--
+Bugfixes:
+
+* Core: fixed typo in locale which failed the import of the initial labels
+
+
+3.3.10 (2012-05-29)
+-- 
+Improvements:
+
+* Sitemap: include the meta navigation.
+
+Bugfixes:
+
+* Bugfix: FAQ: syntax error in variable name.
+
+
+3.3.9 (2012-05-22)
+--
+Improvements:
+
+* Core: added a method to subscribe to events from within the installer, thx jeroendesloovere.
+* Profiles: added a widget that shows a login-box.
+* Core: upgraded CKFinder to 2.2
+* Core: upgraded CKEditor to 3.6.3
+
+Bugfixes:
+
+* Core: wrong application in the virtual applactions, such as backend_ajax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/297 by Wesley Pots.
+* Pages: fixed an issue where pages that were dropped on an empty footer-tree disappeard, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/295 by Tommy Van de Velde & Lowie Benoot.
+
+
+3.3.8 (2012-05-15)
+--
+Improvements:
+
+* Search: don't add utm_* parameters when a search is performed, thx to timbakker79.
+* Core: detecting the browser language now use the weight, thx to Atticus.
+
+Bugfixes:
+
+* Mailmotor: the url-parameter in the pagination should be encoded.
+* Location: if no markers were available an JS-error was thrown.
+
+
+3.3.7 (2012-05-08)
+--
+Improvements:
+
+* Core: upgraded Highcharts to 2.2.3
+* Mailmotor: show subscriptions for all groups.
+* Mailmotor: show unsubscription for all groups.
+
+Bugfixes:
+
+* Pages: made it possible to delete drafts.
+* Blog: fixed the blog archive, which redirected to a false (or non-existent) url if the parameters were invalid
+
+
+3.3.6 (2012-05-01)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.20
+
+Bugfixes:
+
+* Pages: child pages of footerpages had the wrong type when dropped on a footer page.
+* Formbuilder: it is now possible to use an inactive frontend language.
+
+
+3.3.5 (2012-04-24)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.19
+* Core: SELECT 1 ... LIMIT 1 in favor of SELECT COUNT(*), more optimised queries.
+* Spoon: merged changes.
+* Core: create minify cache folders if they do not exist.
+
+
+3.3.4 (2012-04-17)
+--
+Bugfixes:
+
+* Spoon: session should be started before we can access the session.
+* Mailmotor: set action and module when initializing an AJAX action. Tx to @DoFken.
+* FormBulder: sort submissions by insert sequence. Reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/266-formbuilder-submissions-view-bug/
+
+
+3.3.3 (2012-04-03)
+--
+Improvements:
+
+* Core: added template-modifier to parse widgets.
+
+Bugfixes:
+
+* Spoon: Multicheckboxes and radiobuttons could have ids with spaces in them. Fixed thx to Anysurfer.
+* Core: when using Fork in non-multilanguage-mode the links for the internal pages weren't generated correctly, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/285-editor-adding-intern-links-error.
+* Spoon: The selected element for a multiple dropdown were forgotten when the form failed. 
+* Core: upgraded the Akismet class, which fixes an error of double encoding, as mentioned on https://twitter.com/#!/tellyworth/status/180138255340142592.
+
+
+3.3.2 (2012-03-27)
+--
+Improvements:
+
+* Core: upgraded jQuery to 1.7.2
+* Pages: added a timestamp after the linklist-file so it won't get cached by the browser.
+* Core: upgraded Highcharts to 2.2.1
+
+Bugfixes:
+
+* Core: don't shorten hex codes surrounded by quotes in minifier; in some cases IE can't handle short hex codes.
+* Location: invalid usage of getModuleSettings()
+* Core: Fix issue with multiple editor warnings.
+
+
+3.3.1 (2012-03-13)
+--
+Improvements:
+
+* Profiles: made it possible to add a profile.
+
+Bugfixes:
+
+* Core: Escape the input on ajax searches.
+* Core: Escaped wierd input in Locale-module.
+
+
+3.3.0 (2012-03-06)
+--
+Improvements:
+
+* Core: added some JS to automatically add a .filled class on all form fields that are being filled out.
+* Core: only images that are smaller then 5kb will be included in the CSS-file.
+* Core: save cookies httponly by default & automatically secure when browsing over https.
+* Core: make cache-files inaccessible over http.
+* Locale: improved existing translations.
+* Locale: added translations for Spanish (by Yéred Zabdiel)
+* Locale: added translations for Swedish (by Erik Holmquist - http://www.holmquist.de & Peter Mayertz - http://www.mayertz.se)
+* Locale: added translations for Ukrainian (by Манжела Борис)
+* Locale: added translations for Lithuanian (by Rolanda Naujasdizainas - http://www.naujasdizainas.lt)
+* Location: revised Location-module, added some functionality.
+* Pages: added widget for previous/parent/next navigation.
+* Users: show user account statistics on dashboard (last login, last failed login, last password change & password strength).
+* API: Added a client to the API, useful for general API development and working with third parties.
+* Core: sharing widget now uses the latest linkedin sharing button.
+* Core: sharing widget now also supports Google Plus.
+* Search: removed deprecated addIndex/editIndex from BackendSearchModel.
+
+Bugfixes:
+
+* Core: module validation did not take the special core module in account.
+* Core: JS module validation has been fixed.
+* Core: fix XSS vulnerability on ajax searches.
+
+3.2.7 (2012-02-28)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.18
+* Core: fixed XSS vulnerabilities.
+* Core: refactored code to unify setting/getting module/action and added additional checks for validity.
+
+Bugfixes:
+
+* Core: fixed issue where media-embed would always embed the media in the last editor, not the selected one.
+* Tags: fixed call to deprecated (removed) method, which caused "related" widget to malfunction.
+
+
+3.2.6 (2012-02-21)
+--
+Improvements:
+
+* Core: it is now possible to use positions inside modules' templates.
+* Backend: first page after login will always be dashboard (if allowed).
+* Core: application specific config files are now optional.
+
+Bugfixes:
+
+* Pages: blocks in fallback positions are now drag-and-droppable again.
+* Core: minifier now also works on PHP <5.2.2.
+* Core: fixed bug in minifier where @import url("xxx") would fail.
+
+
+3.2.5 (2012-02-14)
+--
+Bugfixes:
+
+* Core: fixed LFI vulnerability.
+* Core: you can now override the template for sub navigation and the navigation: {$var|getnavigation:'page':{$page.id}:2:null:null:'/core/layout/templates/subnavigation.tpl'}
+* Extensions: installing a pre-uploaded theme from the themes overview now installs the selected theme instead of the last theme.
+* Mailmotor: fix CSV address imports.
+* Pages: include footer/meta subpages in the linkedlist. 
+
+
+3.2.4 (2012-02-07)
+--
+Improvements:
+
+* Core: integrated new CSS minifier (combine imports, import images to inline data URIs, shorten hex colors, strip whitespace, strip comments)
+* Core: integrated new JS minifier (strip whitespace, strip comments)
+* Core: replaced both different frontend & backend minifiers, by this new minifier.
+* Share: Twitter now uses title instead of description + language attribute added
+* Core: When a user doesn't have sufficient rights to access a page, he will now be redirected with the proper error code (307).
+* Extensions: Modules with warnings will now be greyed out so they can be spotted easily.
+
+Bugfixes:
+
+* Location: fixed a javascript error with jquery.
+* Location: fix vertical scrollbar inside info window.
+* CSS: fixed Safari bug for DataGrid in Tabs #212
+* Pages: subpages in the footer are now visible in the backend.
+* Pages: default template wasn't used when adding a page.
+
+
+3.2.3 (2012-01-31)
+--
+Improvements:
+
+* Core: added a property 'hideHelpTxt' to the BackendFormImage and BackendFormFile classes to prevent the helpTxt span from appearing (handy for such form fields in a datagrid for instance).
+* Core: breadcrumb: added a count method.
+
+Bugfixes:
+
+* Core: snippets: made the languages to get the templates for dynamic.
+* Blog: fixed improper redirect that caused blog archive pagination to malfunction.
+
+
+3.2.2 (2012-01-24)
+--
+Improvements:
+
+* Core: added an isPrice filter, also for text fields.
+* Core: added the text color for the hover states of buttons.
+* Core: when a datagrid column has a certain column title(hidden, visible, published, active), the datagrid will now automatically detect non-visible rows and mark them this way.
+* Core: init Facebook for its JS SDK when an admin or app id is set.
+* API: Added API::isValidRequestMethod($method) that checks if the request method of an incoming API call is valid for a given API method'.
+* Analytics: Fixed the cronjobs execution time, should only run once a day.
+* Blog, content blocks, pages: replaced the buttons for the use of versions or drafts by links with icons for consistency.
+* Blog: API methods are now limited to their correct request methods.
+* Extensions: improved the validation of the positions, as mention on http://forkcms.lighthouseapp.com/projects/61890/tickets/256 by Dieter W.
+* Formbuilder: altered the splitchar, so "," can be used in values for dropdowns, checkboxes or radiobuttons.
+* Pages: editor will be larger by default.
+* Search: use a saveIndex function instead of addIndex and editIndex.
+
+Bugfixes:
+
+* Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
+* Core: Click To Edit above the editor should behave from now on.
+* Core: added the options for the theme-specific editor_content.css and and screen.css that will be loaded in the editor.
+* Analytics: Fixed the labels for keywords and referrers when updating through ajax.
+* Extensions: Made clear in cronjob info text that cronjob execution times have to be spread on servers with multiple fork installations.
+* Extensions: a notice was triggered when using invalid templatesyntax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/257.
+* Mailmotor: improve visibility of ckeditor in mailmotor.
+
+
+3.2.1 (2012-01-17)
+--
+Improvements:
+
+* Core: upgraded jQueryUI to 1.8.17
+* Core: added a generic method to output CSV-files, which uses the user-settings for splitchar and line-ending.
+* Core: it is now possible to set an empty string as recipient name in the mailers.
+* Extensions: only modules with a valid name will be included in the list of installable modules.
+* Blog: added an option for the god user to enable or disable the upload image functionallity for the blog module.
+* Installer: added a check for subfolders.
+* All: template-options for available actions are now available for all modules and thus also prefixed with the modulename.
+
+Bugfixes:
+
+* Core: added missing locale for ckeditor & ckfinder.
+* Core: when not in debugmode the dialog-patch wasn't included in the minified JS-file.
+* Pages: fixed reset previous value when editing editor block.
+* Spoon: when deleting a cookie we now set the expiration date far in the past to prevent that users with an incorrect system time can still use deleted cookies.
+* API: all illegal characters are now wrapped with CDATA tags.
+* Blog: API calls now show the most recent version of a blog title.
+
+
+3.2.0 (2012-01-10)
+--
+Improvements:
+
+* Core: integrated CKEditor into Fork CMS.
+* Core: added an extra check (parent has to be td.checkbox) for the row selection within tables in the backend.
+* Core: added cookie containing unique visitor id.
+* Core: add a class 'noSelectedState' to the table of a dataGrid to prevent the selected state to show for every row in the datagrid with a checked checkbox.
+* Core: added maxItems and afterAdd options for the multipleSelectbox.
+* Core: added a possibility to add an extra to all pages when installing forkcms with the installer function addDefaultExtra. The extra will be added to all pages without this extra.
+* Core: you can now add items to the search index in the installer of your module.
+* Core: fixed core engine url notice in frontend/ and backend/ (Notice: Undefined offset: 1) by removing an unused $get var.
+* Pages: when adding an editor field, the editor will immediately open.
+* Pages: the sitemap now correctly displays subpages.
+* Extensions: modules may now also include files in /library/external. 
+* All: actions where the user has no rights for, are no longer shown.
+
+Bugfixes:
+
+* Core: fixed core template override from within module action.
+* Core: added #xfbml=1 to the Facebook connect URL so Facebook plugins also work when there's no Facebook app id given in the settings tab.
+* ContentBlocks: Fixed a bug where a hidden content block assigned to a page would trigger a PHP Notice.
+* Extensions: fixed module-warnings system.
+* Extensions: fixed module upload.
+* Users: Fixed a bug that was triggered when editing a user that was not the loggedin user and when the loggedin user was not a god user.
+* Spoon: dropdown opt-group's values were reset by the array_merge function.
+
+
+3.1.9 (2012-01-03)
+--
+Improvements:
+
+* Core: the frontend CSS-minifier supports @import-statements from now on.
+* Core: you can't select redirect-languages that aren't active.
+
+Bugfixes:
+
+* Blog: meta should be deleted before the items are deleted.
+
+
+3.1.8 (2011-12-27)
 --
 Improvements:
 
@@ -18,6 +366,7 @@ Bugfixes:
 * Tags: the url for a tag that contains spaces wasn't calculated correctly, mentioned by czytom on http://forkcms.lighthouseapp.com/projects/61890/tickets/244
 * Mailmotor: also replace https while linking the account
 * Formbuilder: changing the value of the submitbutton wasn't working, mentioned by phill on http://forkcms.lighthouseapp.com/projects/61890/tickets/252.
+* Installer: show the warning when library/external is not readable.
 
 
 3.1.7 (2011-12-20)

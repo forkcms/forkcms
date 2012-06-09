@@ -75,6 +75,9 @@ class FrontendPage extends FrontendBaseObject
 	{
 		parent::__construct();
 
+		// set tracking cookie
+		FrontendModel::getVisitorId();
+
 		// add reference
 		Spoon::set('page', $this);
 
@@ -107,6 +110,24 @@ class FrontendPage extends FrontendBaseObject
 
 		// display
 		$this->display();
+
+		// trigger event
+		FrontendModel::triggerEvent(
+			'core',
+			'after_page_processed',
+			array(
+				'id' => $this->getId(),
+				'record' => $this->getRecord(),
+				'statusCode' => $this->getStatusCode(),
+				'sessionId' => SpoonSession::getSessionId(),
+				'visitorId' => FrontendModel::getVisitorId(),
+				'SESSION' => $_SESSION,
+				'COOKIE' => $_COOKIE,
+				'GET' => $_GET,
+				'POST' => $_POST,
+				'SERVER' => $_SERVER
+			)
+		);
 	}
 
 	/**
@@ -129,36 +150,8 @@ class FrontendPage extends FrontendBaseObject
 		// assign the id so we can use it as an option
 		$this->tpl->assign('isPage' . $this->pageId, true);
 
-		// fetch variables from main template
-		$mainVariables = $this->tpl->getAssignedVariables();
-
-		// loop all positions
-		foreach($this->record['positions'] as $position => &$blocks)
-		{
-			// loop all blocks in this position
-			foreach($blocks as &$block)
-			{
-				// check for extra's that need to be reparsed
-				if(isset($block['extra']))
-				{
-					// fetch extra-specific variables
-					$extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
-
-					// assign all main variables
-					$block['extra']->getTemplate()->assignArray($mainVariables);
-
-					// overwrite with all specific variables
-					$block['extra']->getTemplate()->assignArray($extraVariables);
-
-					// parse extra
-					$block = array('blockIsHTML' => false,
-									'blockContent' => $block['extra']->getContent());
-				}
-			}
-
-			// assign position to template
-			$this->tpl->assign('position' . SpoonFilter::ucfirst($position), $blocks);
-		}
+		// the the positions to the template
+		$this->parsePositions();
 
 		// assign empty positions
 		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
@@ -169,18 +162,6 @@ class FrontendPage extends FrontendBaseObject
 
 		// output
 		$this->tpl->display($this->templatePath, false, true);
-	}
-
-	/**
-	 * Get the current page id
-	 *
-	 * @return int
-	 * @deprecated deprecated since version 3.1.8 - will be removed in version 3.2.x
-	 */
-	public static function getCurrentPageId()
-	{
-		$page = Spoon::get('page');
-		return $page->getId();
 	}
 
 	/**
@@ -316,6 +297,63 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
+	 * Parse the positions to the template
+	 */
+	protected function parsePositions()
+	{
+		// init array to store parsed positions data
+		$positions = array();
+
+		do
+		{
+			$oldPositions = $positions;
+
+			// fetch variables from main template
+			$mainVariables = $this->tpl->getAssignedVariables();
+
+			// loop all positions
+			foreach($this->record['positions'] as $position => $blocks)
+			{
+				// loop all blocks in this position
+				foreach($blocks as $i => $block)
+				{
+					// check for extra's that need to be reparsed
+					if(isset($block['extra']))
+					{
+						// fetch extra-specific variables
+						if(isset($positions[$position][$i]['variables']))
+						{
+							$extraVariables = $positions[$position][$i]['variables'];
+						}
+						else
+						{
+							$extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
+						}
+
+						// assign all main variables
+						$block['extra']->getTemplate()->assignArray($mainVariables);
+
+						// overwrite with all specific variables
+						$block['extra']->getTemplate()->assignArray($extraVariables);
+
+						// parse extra
+						$positions[$position][$i] = array(
+							'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
+							'blockIsHTML' => false,
+							'blockContent' => $block['extra']->getContent()
+						);
+					}
+					else $positions[$position][$i] = $block;
+				}
+
+				// assign position to template
+				$this->tpl->assign('position' . SpoonFilter::ucfirst($position), $positions[$position]);
+			}
+		}
+		while($oldPositions != $positions);
+	}
+
+	/**
 	 * Processes the extras linked to the page
 	 */
 	protected function processExtras()
@@ -325,6 +363,9 @@ class FrontendPage extends FrontendBaseObject
 		{
 			// execute
 			$extra->execute();
+
+			// overwrite the template
+			if(is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
 
 			// assign the variables from this extra to the main template
 			$this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
@@ -377,9 +418,6 @@ class FrontendPage extends FrontendBaseObject
 					{
 						// create new instance
 						$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
-
-						// overwrite the template
-						if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
 					}
 
 					// widget

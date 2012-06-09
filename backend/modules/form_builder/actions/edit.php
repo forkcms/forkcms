@@ -101,7 +101,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addText('heading');
 
 		// paragraph dialog
-		$this->frm->addTextarea('paragraph');
+		$this->frm->addEditor('paragraph');
 		$this->frm->getField('paragraph')->setAttribute('cols', 30);
 
 		// submit dialog
@@ -114,6 +114,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 	protected function parse()
 	{
 		$this->parseFields();
+
 		parent::parse();
 
 		$this->tpl->assign('id', $this->record['id']);
@@ -129,7 +130,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 	private function parseErrorMessages()
 	{
 		// set frontend locale
-		FL::setLocale(BL::getWorkingLanguage());
+		FL::setLocale(BL::getWorkingLanguage(), true);
 
 		// assign error messages
 		$this->tpl->assign('errors', BackendFormBuilderModel::getErrors());

@@ -1,0 +1,2 @@
+the file /plugins/stylesheetparser/plugin.js was altered, so don't upgrade it, unless you are sure the bug regarding sheet.rules is fixed!
+the file /plugins/MediaEmbed/plugin.js was alterd, so don't upgrade it, unless you are sure the bug regarding multiple editor instances is fixed!

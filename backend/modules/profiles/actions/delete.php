@@ -40,8 +40,8 @@ class BackendProfilesDelete extends BackendBaseActionDelete
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_reactivate', array('id' => $this->id));
 
-				// report
-				$report = 'undeleted';
+				// redirect
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-undeleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
 			}
 
 			// profile is active
@@ -53,12 +53,9 @@ class BackendProfilesDelete extends BackendBaseActionDelete
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_delete_profile', array('id' => $this->id));
 
-				// report
-				$report = 'deleted';
+				// redirect
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-deleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
 			}
-
-			// redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-' . $report . '&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
 		}
 
 		// profile does not exists

@@ -3,6 +3,7 @@
  *
  * @author	Annelies Vanextergem <annelies@netlash.com>
  * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.analytics =
 {
@@ -43,8 +44,7 @@ jsBackend.analytics.charts =
 					symbolPadding: 12,
 					symbolWidth: 10,
 					itemStyle: { cursor: 'pointer', color: '#000', lineHeight: '18px' },
-					itemHoverStyle: { color: '#666' },
-					style: { right: '0', top: '0', bottom: 'auto', left: 'auto' }
+					itemHoverStyle: { color: '#666' }
 				}
 			});
 		}
@@ -108,7 +108,7 @@ jsBackend.analytics.chartPieChart =
 					showInLegend: true
 				}
 			},
-			legend: { style: { right: '10px' } },
+			legend: { align: 'right' },
 			series: [ {type: 'pie', data: pieChartData } ]
 		});
 	},
@@ -175,7 +175,8 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 				column: { pointPadding: 0.2, borderWidth: 0 },
 				series: { fillOpacity: 0.3 }
 			},
-			series: [{name: metric1Name, data: metric1Data, type: 'area' }, { name: metric2Name, data: metric2Data }]
+			series: [{name: metric1Name, data: metric1Data, type: 'area' }, { name: metric2Name, data: metric2Data }],
+			legend: { layout: 'horizontal', verticalAlign: 'top' }
 		});
 	},
 
@@ -234,7 +235,8 @@ jsBackend.analytics.chartSingleMetricPerDay =
 				column: { pointPadding: 0.2, borderWidth: 0 },
 				series: { fillOpacity: 0.3 }
 			},
-			series: [{ name: singleMetricName, data: singleMetricData }]
+			series: [{ name: singleMetricName, data: singleMetricData }],
+			legend: { layout: 'horizontal', verticalAlign: 'top' }
 		});
 	},
 
@@ -299,7 +301,8 @@ jsBackend.analytics.chartWidget =
 				column: { pointPadding: 0.2, borderWidth: 0 },
 				series: { fillOpacity: 0.3 }
 			},
-			series: [ { name: metric1Name, data: metric1Data, type: 'area' }, { name: metric2Name, data: metric2Data } ]
+			series: [ { name: metric1Name, data: metric1Data, type: 'area' }, { name: metric2Name, data: metric2Data } ],
+			legend: { enabled: false }
 		});
 	},
 
