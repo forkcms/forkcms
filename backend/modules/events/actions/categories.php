@@ -52,7 +52,7 @@ class BackendEventsCategories extends BackendBaseActionIndex
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}

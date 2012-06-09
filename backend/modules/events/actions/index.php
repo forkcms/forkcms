@@ -61,7 +61,7 @@ class BackendEventsIndex extends BackendBaseActionIndex
 	/**
 	 * Parse all datagrids
 	 */
-	private function parse()
+	protected function parse()
 	{
 		// parse the datagrid for the drafts
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);

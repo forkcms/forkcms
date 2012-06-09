@@ -159,7 +159,7 @@ class BackendEventsSubscriptions extends BackendBaseActionIndex
 	/**
 	 * Parse & display the page
 	 */
-	private function parse()
+	protected function parse()
 	{
 		// published datagrid and num results
 		$this->tpl->assign('dgPublished', ($this->dgPublished->getNumResults() != 0) ? $this->dgPublished->getContent() : false);
