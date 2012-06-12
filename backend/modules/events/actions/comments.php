@@ -81,10 +81,6 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgPublished->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
 		$this->dgPublished->setSortParameter('desc');
 
-		// add column
-		$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
-
 		// hide columns
 		$this->dgPublished->setColumnsHidden('event_id', 'event_title', 'event_url');
 
@@ -95,6 +91,18 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
 		$this->dgPublished->setMassAction($ddmMassAction);
 
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_comment'))
+		{
+			$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
+		{
+			$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
+		}
+		
 		// datagrid for the comments that are awaiting moderation
 		$this->dgModeration = new BackendDataGridDB(BackendEventsModel::QRY_DATAGRID_BROWSE_COMMENTS, array('moderation', BL::getWorkingLanguage()));
 
@@ -119,10 +127,6 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgModeration->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
 		$this->dgModeration->setSortParameter('desc');
 
-		// add column
-		$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
-
 		// hide columns
 		$this->dgModeration->setColumnsHidden('event_id', 'event_title', 'event_url');
 
@@ -132,6 +136,19 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
 		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
 		$this->dgModeration->setMassAction($ddmMassAction);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_comment'))
+		{
+			$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
+		{
+			$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
+		}
+
 
 		/*
 		 * DataGrid for the comments that are marked as spam
@@ -159,9 +176,6 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$this->dgSpam->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
 		$this->dgSpam->setSortParameter('desc');
 
-		// add column
-		$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
-
 		// hide columns
 		$this->dgSpam->setColumnsHidden('event_id', 'event_title', 'event_url');
 
@@ -171,6 +185,12 @@ class BackendEventsComments extends BackendBaseActionIndex
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
 		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
 		$this->dgSpam->setMassAction($ddmMassAction);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
+		{
+			$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
+		}
 	}
 
 	/**
@@ -178,6 +198,8 @@ class BackendEventsComments extends BackendBaseActionIndex
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		// published datagrid and num results
 		$this->tpl->assign('dgPublished', ($this->dgPublished->getNumResults() != 0) ? $this->dgPublished->getContent() : false);
 		$this->tpl->assign('numPublished', $this->dgPublished->getNumResults());

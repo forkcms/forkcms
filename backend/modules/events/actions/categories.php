@@ -36,9 +36,6 @@ class BackendEventsCategories extends BackendBaseActionIndex
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('title'), 'title');
 
-		// add column
-		$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
-
 		// row function
 		$this->dataGrid->setRowFunction(array('BackendEventsCategories', 'setDefault'), array('[id]'));
 
@@ -47,6 +44,16 @@ class BackendEventsCategories extends BackendBaseActionIndex
 
 		// add attributes, so the inline editing has all the needed data
 		$this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('edit_category'))
+		{
+			// set column URLs
+			$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+
+			// add column
+			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+		}
 	}
 
 	/**
@@ -54,6 +61,8 @@ class BackendEventsCategories extends BackendBaseActionIndex
 	 */
 	protected function parse()
 	{
+		parent::parse();
+
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 
