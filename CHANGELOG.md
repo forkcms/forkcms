@@ -8,6 +8,10 @@ Bugfixes:
 
 * Core: Use the title of the active page record in the editor link list.
 
+Bugfixes:
+
+* Mailmotor: don't use array_unshift to get the campaigns since this will create a new array and thus new keys.
+
 
 3.3.12 (2012-06-05)
 --
