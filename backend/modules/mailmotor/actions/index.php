@@ -112,7 +112,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// set column functions
 		$this->dgQueuedMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
-		$this->dgQueuedMailings->setColumnFunction('date', array('Y-m-d @ H:i', '[send_on]'), 'sent', true);
+		$this->dgQueuedMailings->setColumnFunction('date', array('Y-m-d @ H:i', '[sent]'), 'sent', true);
 
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction('copy'))
