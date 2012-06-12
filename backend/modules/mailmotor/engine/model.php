@@ -737,7 +737,7 @@ class BackendMailmotorModel
 		);
 
 		// prepend an additional option
-		array_unshift($record, SpoonFilter::ucfirst(BL::lbl('NoCampaign')));
+		$record = array('0' => SpoonFilter::ucfirst(BL::lbl('NoCampaign'))) + $record;
 
 		return $record;
 	}
