@@ -11,6 +11,7 @@ Bugfixes:
 Bugfixes:
 
 * Mailmotor: don't use array_unshift to get the campaigns since this will create a new array and thus new keys.
+* Mailmotor: don't use the send_on column, use sent instead (send_on is renamed to sent).
 
 
 3.3.12 (2012-06-05)
