@@ -734,8 +734,8 @@ class BackendPagesModel
 		return (int) BackendModel::getDB()->getVar(
 			'SELECT revision_id
 			 FROM pages AS i
-			 WHERE i.id = ? AND i.language = ? AND i.status = ?',
-			array($id, $language, 'active')
+			 WHERE i.id = ? AND i.language = ? AND (i.status = ? OR i.status = ?)',
+			array($id, $language, 'active', 'draft')
 		);
 	}
 

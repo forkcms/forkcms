@@ -1,3 +1,10 @@
+3.3.14 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Pages: fix a bug where draft versions couldn't be deleted.
+
+
 3.3.13 (2012-06-12)
 --
 Improvements:
