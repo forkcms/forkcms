@@ -97,6 +97,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 			{
 				// build item
 				$item['id'] = $this->id;
+				$item['extra_id'] = $this->record['extra_id'];
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['meta_id'] = $this->meta->save(true);
 

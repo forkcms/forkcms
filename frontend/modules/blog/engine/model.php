@@ -49,14 +49,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// unserialize
 		if(isset($return['meta_data'])) $return['meta_data'] = @unserialize($return['meta_data']);
 
-		// image?
-		if(isset($return['image']))
-		{
-			$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
-
-			foreach($folders as $folder) $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
-		}
-
 		// return
 		return $return;
 	}
@@ -91,7 +83,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// init var
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
-		$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
 		// loop
 		foreach($items as $key => $row)
@@ -103,12 +94,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
-
-			// image?
-			if(isset($row['image']))
-			{
-				foreach($folders as $folder) $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
-			}
 		}
 
 		// get all tags
@@ -219,7 +204,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// init var
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
-		$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
 		// loop
 		foreach($items as $key => $row)
@@ -231,12 +215,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
-
-			// image?
-			if(isset($row['image']))
-			{
-				foreach($folders as $folder) $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
-			}
 		}
 
 		// get all tags
@@ -268,6 +246,63 @@ class FrontendBlogModel implements FrontendTagsInterface
 	}
 
 	/**
+	 * Get all items (at least a chunk)
+	 * 
+	 * @param int $id the id of the category
+	 * @param int[optional] $limit The number of items to get.
+	 * @param int[optional] $offset The offset.
+	 * @return array
+	 */
+	public static function getAllForCategoryID($id, $limit = 10, $offset = 0)
+	{
+		$items = (array) FrontendModel::getDB()->getRecords(
+			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
+			 c.title AS category_title, m2.url AS category_url, i.image,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 m.url
+			 FROM blog_posts AS i
+			 INNER JOIN blog_categories AS c ON i.category_id = c.id
+			 INNER JOIN meta AS m ON i.meta_id = m.id
+			 INNER JOIN meta AS m2 ON c.meta_id = m2.id
+			 WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.id = ?
+			 ORDER BY i.publish_on DESC, i.id DESC
+			 LIMIT ?, ?',
+			array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (int) $id, (int) $offset, (int) $limit), 'id'
+		);
+
+		// no results?
+		if(empty($items)) return array();
+
+		// init var
+		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
+		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+
+		// loop
+		foreach($items as $key => $row)
+		{
+			// URLs
+			$items[$key]['full_url'] = $link . '/' . $row['url'];
+			$items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
+
+			// comments
+			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
+			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
+		}
+
+		// get all tags
+		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
+
+		// loop tags and add to correct item
+		foreach($tags as $postId => $tags)
+		{
+			if(isset($items[$postId])) $items[$postId]['tags'] = $tags;
+		}
+
+		// return
+		return $items;
+	}
+
+	/**
 	 * Get all items between a start and end-date
 	 *
 	 * @param int $start The start date as a UNIX-timestamp.
@@ -286,7 +321,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// get the items
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-			 c.title AS category_title, m2.url AS category_url, i.image,
+			 c.title AS category_title, m2.url AS category_url,
 			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 			 m.url
 			 FROM blog_posts AS i
@@ -304,7 +339,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// init var
 		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
-		$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
 		// loop
 		foreach($items as $key => $row)
@@ -315,12 +349,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
-
-			// image?
-			if(isset($row['image']))
-			{
-				foreach($folders as $folder) $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
-			}
 		}
 
 		// get all tags
@@ -476,18 +504,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 		{
 			// init var
 			$link = FrontendNavigation::getURLForBlock('blog', 'detail');
-			$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
 			// reset url
-			foreach($items as &$row)
-			{
-				$row['full_url'] = $link . '/' . $row['url'] . '?gn=' . str_pad($row['id'], 3, '0', STR_PAD_LEFT);
-							// image?
-				if(isset($row['image']))
-				{
-					foreach($folders as $folder) $row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
-				}
-			}
+			foreach($items as &$row) $row['full_url'] = $link . '/' . $row['url'];
 		}
 
 		// return
@@ -728,10 +747,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 	public static function isModerated($author, $email)
 	{
 		return (bool) FrontendModel::getDB()->getVar(
-			'SELECT 1
+			'SELECT COUNT(c.id)
 			 FROM blog_comments AS c
-			 WHERE c.status = ? AND c.author = ? AND c.email = ?
-			 LIMIT 1',
+			 WHERE c.status = ? AND c.author = ? AND c.email = ?',
 			array('published', (string) $author, (string) $email)
 		);
 	}
