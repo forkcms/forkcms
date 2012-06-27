@@ -11,7 +11,6 @@
 ## Bugs
 
 If you encounter any bugs, please post a bug report to the [bugtracker](http://bugtracker.fork-cms.com).
-
 If you're stuck or would like to discuss Fork CMS, check out the [forum](http://forum.fork-cms.com)!
 
 ## Discussion
