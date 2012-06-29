@@ -101,7 +101,7 @@
 					{/iteration:subscriptions}
 				</div>
 			</div>
-		</div>
+		</section>
 	{/option:subscriptions}
 	{option:item.allow_subscriptions}
 		<div id="eventsSubscribeForm" class="mod">
