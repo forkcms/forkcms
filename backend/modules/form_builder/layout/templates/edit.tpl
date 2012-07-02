@@ -102,6 +102,7 @@
 							<ul>
 								<li id="textboxSelector"><a href="#textbox" rel="textboxDialog" class="openFieldDialog">{$lblTextbox|ucfirst}</a></li>
 								<li id="textareaSelector"><a href="#textarea" rel="textareaDialog" class="openFieldDialog">{$lblTextarea|ucfirst}</a></li>
+								<li id="dateSelector"><a href="#date" rel="dateDialog" class="openFieldDialog">{$lblDate|ucfirst}</a></li>
 								<li id="dropdownSelector"><a href="#dropdown" rel="dropdownDialog" class="openFieldDialog">{$lblDropdown|ucfirst}</a></li>
 								<li id="checkboxSelector"><a href="#checkbox" rel="checkboxDialog" class="openFieldDialog">{$lblCheckbox|ucfirst}</a></li>
 								<li id="radiobuttonSelector"><a href="#radiobutton" rel="radiobuttonDialog" class="openFieldDialog">{$lblRadiobutton|ucfirst}</a></li>
@@ -265,6 +266,45 @@
 							<label for="textareaErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtTextareaErrorMessage}
 							<span id="textareaErrorMessageError" class="formError" style="display: none;"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{* Dialog for a date *}
+	<div id="dateDialog" title="{$lblDate|ucfirst}" class="dialog" style="display: none;">
+		<input type="hidden" name="date_id" id="dateId" value="" />
+
+		<div class="tabs forkForms">
+			<ul>
+				<li><a href="#tabDateBasic">{$lblBasic|ucfirst}</a></li>
+				<li><a href="#tabDateProperties">{$lblProperties|ucfirst}</a></li>
+			</ul>
+
+			<div id="tabDateBasic" class="box">
+				<div class="horizontal">
+					<div class="options">
+						<p>
+							<label for="dateLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtDateLabel}
+							<span id="dateLabelError" class="formError" style="display: none;"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div id="tabDateProperties" class="box">
+				<div class="horizontal">
+					<div class="validation options">
+						<p class="p0">
+							<label for="dateRequired">{$lblRequiredField|ucfirst}</label>
+							{$chkDateRequired}
+						</p>
+						<p class="validationRequiredErrorMessage hidden">
+							<label for="dateRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtDateRequiredErrorMessage}
+							<span id="dateRequiredErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
 					</div>
 				</div>

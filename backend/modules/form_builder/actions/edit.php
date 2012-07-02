@@ -76,6 +76,12 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addText('textarea_validation_parameter');
 		$this->frm->addText('textarea_error_message');
 
+		// date dialog
+		$this->frm->addText('date_label');
+		$this->frm->addCheckbox('date_required');
+		$this->frm->addText('date_required_error_message');
+		$this->frm->addText('date_error_message');
+
 		// dropdown dialog
 		$this->frm->addText('dropdown_label');
 		$this->frm->addText('dropdown_values');
