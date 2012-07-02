@@ -611,6 +611,17 @@ class FormBuilderHelper
 				$fieldHTML = $chk->parse();
 			}
 
+			// date
+			elseif($field['type'] == 'date')
+			{
+				// create element
+				$txt = $frm->addDate($fieldName, $defaultValues);
+				$txt->setAttribute('disabled', 'disabled');
+
+				// get content
+				$fieldHTML = $txt->parse();
+			}
+
 			// textbox
 			elseif($field['type'] == 'textbox')
 			{

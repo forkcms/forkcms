@@ -193,6 +193,9 @@ jsBackend.formBuilder.fields =
 								case 'submitDialog':
 									jsBackend.formBuilder.fields.saveSubmit();
 									break;
+								case 'dateDialog':
+									jsBackend.formBuilder.fields.saveDate();
+									break;
 								case 'dropdownDialog':
 									jsBackend.formBuilder.fields.saveDropdown();
 									break;
@@ -435,6 +438,17 @@ jsBackend.formBuilder.fields =
 
 								// show dialog
 								$('#textareaDialog').dialog('open');
+							}
+
+							// textbox edit
+							else if(data.data.field.type == 'date')
+							{
+								// fill in form
+								$('#dateId').val(data.data.field.id);
+								$('#dateLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
+
+								// show dialog
+								$('#dateDialog').dialog('open');
 							}
 
 							// dropdown edit
@@ -759,6 +773,71 @@ jsBackend.formBuilder.fields =
 
 						// close console box
 						$('#checkboxDialog').dialog('close');
+					}
+				}
+
+				// show error message
+				else jsBackend.messages.add('error', textStatus);
+
+				// alert the user
+				if(data.code != 200 && jsBackend.debug) alert(data.message);
+			}
+		});
+	},
+
+	/**
+	 * Handle date save
+	 */
+	saveDate: function()
+	{
+		// init vars
+		var fieldId = $('#dateId').val();
+		var type = 'date';
+		var label = $('#dateLabel').val();
+		var required = ($('#dateRequired').is(':checked') ? 'Y' : 'N');
+		var requiredErrorMessage = $('#dateRequiredErrorMessage').val();
+		var errorMessage = $('#dateErrorMessage').val();
+
+		// make the call
+		$.ajax(
+		{
+			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			{
+				form_id: jsBackend.formBuilder.formId,
+				field_id: fieldId,
+				type: type,
+				label: label,
+				required: required,
+				required_error_message: requiredErrorMessage,
+				error_message: errorMessage
+			}),
+			success: function(data, textStatus)
+			{
+				// success
+				if(data.code == 200)
+				{
+					// clear errors
+					$('.formError').html('');
+
+					// form contains errors
+					if(typeof data.data.errors != 'undefined')
+					{
+						// assign errors
+						if(typeof data.data.errors.label != 'undefined') $('#dateLabelError').html(data.data.errors.label);
+						if(typeof data.data.errors.required_error_message != 'undefined') $('#dateRequiredErrorMessageError').html(data.data.errors.required_error_message);
+
+						// toggle error messages
+						jsBackend.formBuilder.fields.toggleValidationErrors('dateDialog');
+					}
+
+					// saved!
+					else
+					{
+						// append field html
+						jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
+
+						// close console box
+						$('#dateDialog').dialog('close');
 					}
 				}
 

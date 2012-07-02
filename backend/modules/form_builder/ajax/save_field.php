@@ -24,7 +24,7 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 		// get parameters
 		$formId = SpoonFilter::getPostValue('form_id', null, '', 'int');
 		$fieldId = SpoonFilter::getPostValue('field_id', null, '', 'int');
-		$type = SpoonFilter::getPostValue('type', array('checkbox', 'dropdown', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'), '', 'string');
+		$type = SpoonFilter::getPostValue('type', (array) BackendModel::getDB()->getEnumValues('forms_fields', 'type'), '', 'string');
 		$label = trim(SpoonFilter::getPostValue('label', null, '', 'string'));
 		$values = trim(SpoonFilter::getPostValue('values', null, '', 'string'));
 		$defaultValues = trim(SpoonFilter::getPostValue('default_values', null, '', 'string'));
@@ -70,6 +70,13 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 
 		// validate submit button
 		elseif($type == 'submit' && $values == '') $errors['values'] = BL::getError('ValueIsRequired');
+
+		// validate date
+		elseif($type == 'textbox')
+		{
+			if($label == '') $errors['label'] = BL::getError('LabelIsRequired');
+			if($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+		}
 
 		// validate dropdown
 		elseif($type == 'dropdown')

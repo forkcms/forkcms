@@ -187,6 +187,16 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$item['html'] = $chk->parse();
 				}
 
+				// date
+				elseif($field['type'] == 'date')
+				{
+					// create element
+					$txt = $this->frm->addDate($item['name'], $defaultValues);
+
+					// get content
+					$item['html'] = $txt->parse();
+				}
+
 				// textbox
 				elseif($field['type'] == 'textbox')
 				{
