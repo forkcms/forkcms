@@ -7,6 +7,7 @@ Improvements:
 * Core: Upgraded Highcharts to 2.3.2
 * Core: Upgraded CKFinder to 2.3.0
 * Formbuilder: added API-methods.
+* FAQ: Setting for "one category" added, so user only has 1 category in the website + the category title is hidden in the frontend (for smaller websites).
 
 Bugfixes:
 
