@@ -108,6 +108,7 @@ class FaqInstaller extends ModuleInstaller
 		$this->setSetting('faq', 'spamfilter', false);
 		$this->setSetting('faq', 'allow_feedback', false);
 		$this->setSetting('faq', 'allow_own_question', false);
+		$this->setSetting('faq', 'allow_multiple_categories', true);
 		$this->setSetting('faq', 'send_email_on_new_feedback', false);
 
 		foreach($this->getLanguages() as $language)

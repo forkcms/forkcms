@@ -1,3 +1,10 @@
+3.3.14 (xxxx-xx-xx)
+--
+Improvements:
+
+* FAQ: Setting for "one category" added, so user only has 1 category in the website + the category title is hidden in the frontend (for smaller websites).
+
+
 3.3.13 (2012-06-12)
 --
 Improvements:
