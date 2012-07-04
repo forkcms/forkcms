@@ -13,6 +13,7 @@
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author SIESQO <info@siesqo.be>
  */
 class BackendFaqAddCategory extends BackendBaseActionAdd
 {
@@ -23,11 +24,18 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	{
 		parent::execute();
 
-		$this->loadForm();
-		$this->validateForm();
+		// adding category allowed
+		if(BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true))
+		{
+			$this->loadForm();
+			$this->validateForm();
+	
+			$this->parse();
+			$this->display();
+		}
 
-		$this->parse();
-		$this->display();
+		// only one category allowed
+		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=only-one-category-allowed');
 	}
 
 	/**

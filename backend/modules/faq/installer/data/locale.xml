@@ -5,7 +5,6 @@
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
         <translation language="en"><![CDATA[add question]]></translation>
-        <translation language="ru"><![CDATA[добавить вопрос]]></translation>
         <translation language="es"><![CDATA[agregar pregunta]]></translation>
         <translation language="de"><![CDATA[Frage hinzufügen]]></translation>
         <translation language="uk"><![CDATA[Додати запитання]]></translation>
@@ -30,7 +29,6 @@
       <item type="label" name="AllowFeedback">
         <translation language="nl"><![CDATA[feedback toelaten]]></translation>
         <translation language="en"><![CDATA[allow feedback]]></translation>
-        <translation language="ru"><![CDATA[разрешить обратную связь]]></translation>
         <translation language="es"><![CDATA[permitir retroalimentación]]></translation>
         <translation language="de"><![CDATA[Feedback erlauben]]></translation>
         <translation language="uk"><![CDATA[Дозволити відгуки]]></translation>
@@ -38,10 +36,13 @@
         <translation language="lt"><![CDATA[leisti atsiliepimus]]></translation>
         <translation language="sv"><![CDATA[tillåt återkoppling]]></translation>
       </item>
+      <item type="label" name="AllowMultipleCategories">
+        <translation language="nl"><![CDATA[meerdere categorieën toestaan]]></translation>
+        <translation language="en"><![CDATA[multiple categories allowed]]></translation>
+      </item>
       <item type="label" name="AllowOwnQuestion">
         <translation language="nl"><![CDATA[gebruikersvragen toelaten]]></translation>
         <translation language="en"><![CDATA[allow user questions]]></translation>
-        <translation language="ru"><![CDATA[Разрешить пользователю задавать вопросы]]></translation>
         <translation language="es"><![CDATA[permitir preguntas de usuarios]]></translation>
         <translation language="de"><![CDATA[Benutzerfragen erlauben]]></translation>
         <translation language="uk"><![CDATA[Дозволити користувацькі запитання]]></translation>
@@ -66,7 +67,6 @@
       <item type="label" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
-        <translation language="ru"><![CDATA[обратная связь]]></translation>
         <translation language="es"><![CDATA[retroalimentación]]></translation>
         <translation language="de"><![CDATA[Feedback]]></translation>
         <translation language="uk"><![CDATA[Відгук]]></translation>
@@ -76,16 +76,13 @@
       </item>
       <item type="label" name="Fråga">
         <translation language="sv"><![CDATA[fråga]]></translation>
-        <translation language="ru"><![CDATA[вопрос]]></translation>
       </item>
       <item type="label" name="Frågor">
         <translation language="sv"><![CDATA[frågor]]></translation>
-        <translation language="ru"><![CDATA[вопросы]]></translation>
       </item>
       <item type="label" name="ItemsPerCategory">
         <translation language="nl"><![CDATA[items per categorie]]></translation>
         <translation language="en"><![CDATA[items per category]]></translation>
-        <translation language="ru"><![CDATA[записей в категории]]></translation>
         <translation language="es"><![CDATA[objetos por categoría]]></translation>
         <translation language="de"><![CDATA[Einträge pro Kategorie]]></translation>
         <translation language="uk"><![CDATA[Кількість для категорії]]></translation>
@@ -95,7 +92,6 @@
       <item type="label" name="Process">
         <translation language="nl"><![CDATA[verwerken]]></translation>
         <translation language="en"><![CDATA[process]]></translation>
-        <translation language="ru"><![CDATA[процесс]]></translation>
         <translation language="es"><![CDATA[proceso]]></translation>
         <translation language="de"><![CDATA[verarbeiten]]></translation>
         <translation language="uk"><![CDATA[Процес]]></translation>
@@ -117,7 +113,6 @@
       <item type="label" name="Questions">
         <translation language="nl"><![CDATA[vragen]]></translation>
         <translation language="en"><![CDATA[questions]]></translation>
-        <translation language="ru"><![CDATA[вопросы]]></translation>
         <translation language="es"><![CDATA[preguntas]]></translation>
         <translation language="de"><![CDATA[Fragen]]></translation>
         <translation language="uk"><![CDATA[Запитання]]></translation>
@@ -126,7 +121,6 @@
       <item type="label" name="SendEmailOnNewFeedback">
         <translation language="nl"><![CDATA[stuur een email als er nieuwe feedback is]]></translation>
         <translation language="en"><![CDATA[send an email if there is new feedback]]></translation>
-        <translation language="ru"><![CDATA[уведомить по email, если есть новые сообщения]]></translation>
         <translation language="es"><![CDATA[enviar un email si hay retroalimentación nueva.]]></translation>
         <translation language="de"><![CDATA[E-Mail senden falls neues Feedback vorhanden]]></translation>
         <translation language="uk"><![CDATA[Надіслати e-mail якщо буде відгук]]></translation>
@@ -160,11 +154,14 @@
       <item type="error" name="DeleteCategoryNotAllowed">
         <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
         <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>
-        <translation language="ru"><![CDATA[Невозможно удалить категорию "%1$s".]]></translation>
         <translation language="es"><![CDATA[No esta permitido eliminar la categoría "%1$s".]]></translation>
         <translation language="de"><![CDATA[Es ist nicht erlaubt die Kategorie "%1$s" zu löschen.]]></translation>
         <translation language="hu"><![CDATA[Nem megendegett, hogy töröld a(z) "%1$s" kategóriát.]]></translation>
         <translation language="sv"><![CDATA[Det inte tillåtet till ta bort kategorin "%1$s".]]></translation>
+      </item>
+      <item type="error" name="OnlyOneCategoryAllowed">
+        <translation language="nl"><![CDATA[Het gebruik van meerdere categorieën is niet toegelaten.]]></translation>
+        <translation language="en"><![CDATA[The use of multiple categories is not allowed.]]></translation>
       </item>
       <item type="error" name="QuestionIsRequired">
         <translation language="nl"><![CDATA[De vraag is verplicht.]]></translation>
@@ -181,7 +178,6 @@
       <item type="message" name="EditCategory">
         <translation language="nl"><![CDATA[Bewerk categorie "%1$s"]]></translation>
         <translation language="en"><![CDATA[Edit category "%1$s"]]></translation>
-        <translation language="ru"><![CDATA[Редактирование категории "%1$s"]]></translation>
         <translation language="es"><![CDATA[Editar categoría "%1$s"]]></translation>
         <translation language="de"><![CDATA[Bearbeite Kategorie "%1$s"]]></translation>
         <translation language="hu"><![CDATA["%1$s" kategória szerkesztése]]></translation>
@@ -202,16 +198,14 @@
       <item type="message" name="FeedbackInfo">
         <translation language="nl"><![CDATA[Dit zijn alle berichten achtergelaten door bezoekers die dit antwoord niet nuttig vonden.]]></translation>
         <translation language="en"><![CDATA[These are all the messages from visitors who did't find this answer useful.]]></translation>
-        <translation language="ru"><![CDATA[These are all the messages from visitors who did't find this answer useful.]]></translation>
         <translation language="de"><![CDATA[Das sind alle Mitteilungen von Besuchern, die diese Antwort nicht hilfreich fanden.]]></translation>
         <translation language="es"><![CDATA[Estos son los mensajes de todos los visitantes que no encontraro útil esta respuesta.]]></translation>
         <translation language="hu"><![CDATA[Ez az összes üzenet a látogatóktól, akik nem találták hasznosnak a választ.]]></translation>
-        <translation language="sv"><![CDATA[Все сообщения посетителей, которые не считают этот ответ полезным.]]></translation>
+        <translation language="sv"><![CDATA[Dessa är alla meddelanden från besökare som inte ansåg detta svar användbart.]]></translation>
       </item>
       <item type="message" name="HelpSpamFilter">
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in feedback en gebruikersvragen te vermijden.]]></translation>
         <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam in feedback and user questions.]]></translation>
-        <translation language="ru"><![CDATA[Включение встроенного спамфильтра (Akismet) чтобы избежать спама в обратной связи и вопросах пользователей.]]></translation>
         <translation language="es"><![CDATA[Activar el filtro anti-spam incorporado (Akismet) para ayudar a evitar el spam en feedback y preguntas de usuarios.]]></translation>
         <translation language="de"><![CDATA[Aktiviere den eingebauten Spamfilter (Akismet) um Spam in den Benutzerfragen und im Feedback zu vermeiden.]]></translation>
         <translation language="hu"><![CDATA[A beépített spamszűrő (Akismet) engedélyezése, hogy segítse elkerülni a spam visszajelzést és felhasználói kérdést.]]></translation>
@@ -232,7 +226,6 @@
       <item type="message" name="NoFeedbackItems">
         <translation language="nl"><![CDATA[Er zijn momenteel geen feedback berichten.]]></translation>
         <translation language="en"><![CDATA[There are no feedback comments at the moment.]]></translation>
-        <translation language="ru"><![CDATA[В данный момент нет сообщений.]]></translation>
         <translation language="de"><![CDATA[Es gibt im Moment noch keine Feedback-Kommentare.]]></translation>
         <translation language="es"><![CDATA[No hay comentarios de retroalimentación por el momento.]]></translation>
         <translation language="hu"><![CDATA[Nincsenek még visszajelzés hozzászólások jelen pillanatban.]]></translation>
@@ -253,7 +246,6 @@
       <item type="message" name="NumMostReadItems">
         <translation language="nl"><![CDATA[Aantal meest gelezen items]]></translation>
         <translation language="en"><![CDATA[Number of most read items]]></translation>
-        <translation language="ru"><![CDATA[Количество самых читаемых записей]]></translation>
         <translation language="es"><![CDATA[Número de objetos más leídos]]></translation>
         <translation language="de"><![CDATA[Anzahl der meistgelesenen Fragen]]></translation>
         <translation language="hu"><![CDATA[Legolvasottabb elemek száma]]></translation>
@@ -262,7 +254,6 @@
       <item type="message" name="NumRelatedItems">
         <translation language="nl"><![CDATA[Aantal gerelateerde items]]></translation>
         <translation language="en"><![CDATA[Number of related items]]></translation>
-        <translation language="ru"><![CDATA[Количество связанных записей]]></translation>
         <translation language="es"><![CDATA[Número de objetos relacionados]]></translation>
         <translation language="de"><![CDATA[Anzahl an verwandten Fragen]]></translation>
         <translation language="hu"><![CDATA[Kapcsolódó elemek száma]]></translation>
@@ -271,7 +262,6 @@
       <item type="message" name="Processed">
         <translation language="nl"><![CDATA[De feedback is verwerkt.]]></translation>
         <translation language="en"><![CDATA[The feedback is processed.]]></translation>
-        <translation language="ru"><![CDATA[Обратная связь обрабатывается.]]></translation>
         <translation language="es"><![CDATA[La retroalimentación es procesada.]]></translation>
         <translation language="de"><![CDATA[Das Feedback wird verarbeitet.]]></translation>
         <translation language="hu"><![CDATA[A visszajelzés feldolgozva.]]></translation>
@@ -279,4 +269,12 @@
       </item>
     </faq>
   </backend>
+  <frontend>
+  	<core>
+      <item type="message" name="OtherQuestions">
+        <translation language="nl"><![CDATA[Andere vragen]]></translation>
+        <translation language="en"><![CDATA[Other questions]]></translation>
+      </item>
+	</core>
+  </frontend>
 </locale>

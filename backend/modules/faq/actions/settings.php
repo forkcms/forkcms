@@ -39,6 +39,7 @@ class BackendFaqSettings extends BackendBaseActionEdit
 		$this->frm->addDropdown('overview_number_of_items_per_category', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items_per_category', 10));
 		$this->frm->addDropdown('most_read_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getModuleSetting($this->URL->getModule(), 'most_read_num_items', 10));
 		$this->frm->addDropdown('related_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getModuleSetting($this->URL->getModule(), 'related_num_items', 3));
+		$this->frm->addCheckbox('allow_multiple_categories', BackendModel::getModuleSetting($this->URL->getModule(), 'allow_multiple_categories', false));
 		$this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
 		$this->frm->addCheckbox('allow_feedback', BackendModel::getModuleSetting($this->URL->getModule(), 'allow_feedback', false));
 		$this->frm->addCheckbox('allow_own_question', BackendModel::getModuleSetting($this->URL->getModule(), 'allow_own_question', false));
@@ -65,6 +66,7 @@ class BackendFaqSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items_per_category', (int) $this->frm->getField('overview_number_of_items_per_category')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'most_read_num_items', (int) $this->frm->getField('most_read_number_of_items')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'related_num_items', (int) $this->frm->getField('related_number_of_items')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'allow_multiple_categories', (bool) $this->frm->getField('allow_multiple_categories')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'allow_feedback', (bool) $this->frm->getField('allow_feedback')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'allow_own_question', (bool) $this->frm->getField('allow_own_question')->getValue());
