@@ -175,7 +175,36 @@ class BackendBlogModel
 
 		// get item
 		$item = self::getCategory($id);
+		
+		// build extra
+		$extra = array(
+			'id' => $item['extra_id'], 
+			'module' => 'blog', 
+			'type' => 'widget', 
+			'action' => 'posts_per_category'
+		);
 
+		// delete extra
+		$db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', 
+			array(
+				$extra['id'], 
+				$extra['module'], 
+				$extra['type'], 
+				$extra['action']
+		));
+
+		// update blocks with this item linked
+		$db->update('pages_blocks',
+		array(
+			'extra_id' => null,
+			'html' => ''),
+			'extra_id = ?',
+			array(
+				$item['extra_id']
+			)
+		);
+
+		
 		if(!empty($item))
 		{
 			// delete meta
@@ -201,10 +230,9 @@ class BackendBlogModel
 	public static function deleteCategoryAllowed($id)
 	{
 		return !(bool) BackendModel::getDB()->getVar(
-			'SELECT 1
+			'SELECT COUNT(id)
 			 FROM blog_posts AS i
-			 WHERE i.category_id = ? AND i.language = ? AND i.status = ?
-			 LIMIT 1',
+			 WHERE i.category_id = ? AND i.language = ? AND i.status = ?',
 			array((int) $id, BL::getWorkingLanguage(), 'active')
 		);
 	}
@@ -296,10 +324,9 @@ class BackendBlogModel
 	public static function existsCategory($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT 1
+			'SELECT COUNT(id)
 			 FROM blog_categories AS i
-			 WHERE i.id = ? AND i.language = ?
-			 LIMIT 1',
+			 WHERE i.id = ? AND i.language = ?',
 			array((int) $id, BL::getWorkingLanguage())
 		);
 	}
@@ -313,10 +340,9 @@ class BackendBlogModel
 	public static function existsComment($id)
 	{
 		return (bool) BackendModel::getDB()->getVar(
-			'SELECT 1
+			'SELECT COUNT(id)
 			 FROM blog_comments AS i
-			 WHERE i.id = ? AND i.language = ?
-			 LIMIT 1',
+			 WHERE i.id = ? AND i.language = ?',
 			array((int) $id, BL::getWorkingLanguage())
 		);
 	}
@@ -601,14 +627,17 @@ class BackendBlogModel
 		// new item
 		if($id === null)
 		{
-			// already exists
-			if((bool) $db->getVar(
-				'SELECT 1
+			// get number of categories with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
 				 FROM blog_posts AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ?
-				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL)))
+				 WHERE i.language = ? AND m.url = ?',
+				array(BL::getWorkingLanguage(), $URL)
+			);
+
+			// already exists
+			if($number != 0)
 			{
 				$URL = BackendModel::addNumber($URL);
 				return self::getURL($URL);
@@ -618,16 +647,18 @@ class BackendBlogModel
 		// current category should be excluded
 		else
 		{
-			// already exists
-			if((bool) $db->getVar(
-				'SELECT 1
+			// get number of items with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
 				 FROM blog_posts AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ? AND i.id != ?
-				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL, $id)))
-			{
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
+				array(BL::getWorkingLanguage(), $URL, $id)
+			);
 
+			// already exists
+			if($number != 0)
+			{
 				$URL = BackendModel::addNumber($URL);
 				return self::getURL($URL, $id);
 			}
@@ -654,14 +685,17 @@ class BackendBlogModel
 		// new category
 		if($id === null)
 		{
-			// already exists
-			if((bool) $db->getVar(
-				'SELECT 1
+			// get number of categories with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
 				 FROM blog_categories AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ?
-				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL)))
+				 WHERE i.language = ? AND m.url = ?',
+				array(BL::getWorkingLanguage(), $URL)
+			);
+
+			// already exists
+			if($number != 0)
 			{
 				$URL = BackendModel::addNumber($URL);
 				return self::getURLForCategory($URL);
@@ -671,14 +705,17 @@ class BackendBlogModel
 		// current category should be excluded
 		else
 		{
-			// already exists
-			if((bool) $db->getVar(
-				'SELECT 1
+			// get number of items with this URL
+			$number = (int) $db->getVar(
+				'SELECT COUNT(i.id)
 				 FROM blog_categories AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
-				 WHERE i.language = ? AND m.url = ? AND i.id != ?
-				 LIMIT 1',
-				array(BL::getWorkingLanguage(), $URL, $id)))
+				 WHERE i.language = ? AND m.url = ? AND i.id != ?',
+				array(BL::getWorkingLanguage(), $URL, $id)
+			);
+
+			// already exists
+			if($number != 0)
 			{
 				$URL = BackendModel::addNumber($URL);
 				return self::getURLForCategory($URL, $id);
@@ -720,9 +757,51 @@ class BackendBlogModel
 
 		// meta given?
 		if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
+		
+		// build extra
+		$extra = array(
+			'module' => 'blog', 
+			'type' => 'widget', 
+			'label' => 'blog', 
+			'action' => 'posts_per_category', 
+			'data' => NULL, 
+			'hidden' => 'N', 
+			'sequence' => $db->getVar(
+				'SELECT MAX(i.sequence) + 1
+				 FROM modules_extras AS i
+				 WHERE i.module = ?', 
+				array('links')
+		));
+
+		if(is_null($extra['sequence'])) $extra['sequence'] = $db->getVar(
+			'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
+			 FROM modules_extras AS i'
+		);
+
+		// insert extra
+		$item['extra_id'] = $db->insert('modules_extras', $extra);
+		$extra['id'] = $item['extra_id'];
 
 		// create category
 		$item['id'] = $db->insert('blog_categories', $item);
+
+		// update extra (item id is now known)
+		$extra['data'] = serialize(array(
+			'id' => $item['id'], 
+			'extra_label' => $item['title'], 
+			'language' => $item['language'], 
+			'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id']
+		));
+
+		$db->update(
+			'modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', 
+			array(
+				$extra['id'], 
+				$extra['module'], 
+				$extra['type'], 
+				$extra['action']
+			)
+		);
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
@@ -838,7 +917,25 @@ class BackendBlogModel
 	{
 		// get db
 		$db = BackendModel::getDB(true);
+		
+		// build extra
+		$extra = array(
+			'id' => $item['extra_id'], 
+			'module' => 'blog', 
+			'type' => 'widget', 
+			'label' => 'blog', 
+			'action' => 'posts_per_category', 
+			'data' => serialize(array(
+									'id' => $item['id'], 
+									'extra_label' => $item['title'], 
+									'language' => $item['language'], 
+									'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])), 
+									'hidden' => 'N'
+		);
 
+		// update extra
+		$db->update('modules_extras', $extra, 'id = ? ', array($item['extra_id']));
+		
 		// update category
 		$updated = $db->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
 
