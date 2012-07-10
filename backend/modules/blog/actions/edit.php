@@ -15,6 +15,7 @@
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jeroen Van den Bossche <jeroen.vandenbossche@wijs.be>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
@@ -179,6 +180,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->addImage('image');
 			$this->frm->addCheckbox('delete_image');
 		}
+		$this->frm->addCheckbox('is_featured', $this->record['is_featured'] === 'Y' ? true : false);
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -352,6 +354,23 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					}
 				}
 				else $item['image'] = null;
+
+				// add this article as featured?
+				if($this->record['is_featured'] === 'N' && $this->frm->getField('is_featured')->isChecked())
+				{
+					$featuredArticle = array(
+						'post_id' => $item['id'],
+						'sequence' => BackendBlogModel::getMaximumSequence() + 1
+					);
+
+					BackendBlogModel::insertFeaturedArticle($featuredArticle);
+				}
+
+				// remove article from featured?
+				elseif($this->record['is_featured'] === 'Y' && !$this->frm->getField('is_featured')->isChecked())
+				{
+					BackendBlogModel::deleteFeaturedArticle($item['id']);
+				}
 
 				// update the item
 				$item['revision_id'] = BackendBlogModel::update($item);

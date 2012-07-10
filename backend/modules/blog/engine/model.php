@@ -14,6 +14,7 @@
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jeroen Van den Bossche <jeroen.vandenbossche@wijs.be>
  */
 class BackendBlogModel
 {
@@ -93,6 +94,13 @@ class BackendBlogModel
 		 FROM blog_posts AS i
 		 WHERE i.status = ? AND i.id = ? AND i.language = ?
 		 ORDER BY i.edited_on DESC';
+
+	const QRY_DATAGRID_BROWSE_FEATURED =
+		'SELECT i.id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments, f.sequence, i.hidden
+		 FROM blog_posts AS i
+		 INNER JOIN blog_featured AS f ON i.id = f.post_id
+		 WHERE i.status = ? AND i.language = ?
+		 ORDER BY f.sequence ASC';
 
 	/**
 	 * Checks the settings and optionally returns an array with warnings
@@ -247,6 +255,16 @@ class BackendBlogModel
 	}
 
 	/**
+	 * Deletes a featured article entry.
+	 *
+	 * @param int $id The ID of the blog post.
+	 */
+	public static function deleteFeaturedArticle($id)
+	{
+		BackendModel::getDB(true)->delete('blog_featured', 'post_id = ?', (int) $id);
+	}
+
+	/**
 	 * Delete all spam
 	 */
 	public static function deleteSpamComments()
@@ -322,6 +340,22 @@ class BackendBlogModel
 	}
 
 	/**
+	 * Checks if an article is featured.
+	 *
+	 * @param int $id The ID of the blog post.
+	 * @return bool
+	 */
+	public static function existsFeaturedArticle($id)
+	{
+		return (bool) BackendModel::getDB()->getVar(
+			'SELECT COUNT(f.post_id)
+			 FROM blog_featured AS f
+			 WHERE f.post_id = ?',
+			array((int) $id)
+		);
+	}
+
+	/**
 	 * Get all data for a given id
 	 *
 	 * @param int $id The Id of the item to fetch?
@@ -329,13 +363,18 @@ class BackendBlogModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		$article = (array) BackendModel::getDB()->getRecord(
 			'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
 			 WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?',
 			array((int) $id, 'active', 'draft', BL::getWorkingLanguage())
 		);
+
+		// get featured status.
+		$article['is_featured'] = self::existsFeaturedArticle($id) ? 'Y' : 'N';
+
+		return $article;
 	}
 
 	/**
@@ -567,6 +606,16 @@ class BackendBlogModel
 	}
 
 	/**
+	 * Get the maximum sequence
+	 *
+	 * @return int
+	 */
+	public static function getMaximumSequence()
+	{
+		return (int) BackendModel::getDB()->getVar('SELECT MAX(sequence) FROM blog_featured LIMIT 1');
+	}
+
+	/**
 	 * Get all data for a given revision
 	 *
 	 * @param int $id The id of the item.
@@ -729,6 +778,16 @@ class BackendBlogModel
 
 		// return the id
 		return $item['id'];
+	}
+
+	/**
+ 	 * Inserts a featured article.
+	 *
+	 * @param array $article The article to insert (post_id & sequence).
+	 */
+	public static function insertFeaturedArticle(array $article)
+	{
+		BackendModel::getDB(true)->insert('blog_featured', $article);
 	}
 
 	/**
@@ -918,5 +977,16 @@ class BackendBlogModel
 			// invalidate the cache for blog
 			foreach($languages as $language) BackendModel::invalidateFrontendCache('blog', $language);
 		}
+	}
+
+	/**
+ 	 * Updates a sequence of a featured article.
+	 *
+	 * @param int $id The ID of the blog post.
+	 * @param array $item The item to update.
+	 */
+	public static function updateSequence($id, array $item)
+	{
+		BackendModel::getDB(true)->update('blog_featured', $item, 'post_id = ?', (int) $id);
 	}
 }

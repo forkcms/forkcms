@@ -109,6 +109,10 @@
         <translation language="uk"><![CDATA[Не розподілені блоки]]></translation>
         <translation language="lt"><![CDATA[nepriskirti blokai]]></translation>
       </item>
+      <item type="label" name="Featured">
+        <translation language="nl"><![CDATA[in de kijker]]></translation>
+        <translation language="en"><![CDATA[featured]]></translation>
+      </item>
       <item type="label" name="Footer">
         <translation language="nl"><![CDATA[footer navigatie]]></translation>
         <translation language="en"><![CDATA[footer navigation]]></translation>

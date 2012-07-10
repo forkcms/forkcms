@@ -16,6 +16,7 @@
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Van den Bossche <jeroen.vandenbossche@wijs.be>
  */
 class FrontendBlogModel implements FrontendTagsInterface
 {
@@ -451,6 +452,26 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// return
 		return $comments;
+	}
+
+	/**
+	 * Collects a number of featured articles.
+	 *
+	 * @param int[optional] $limit The number of items to return.
+	 * @return array
+	 */
+	public static function getFeatured($limit = 5)
+	{
+		return (array) FrontendModel::getDB()->getRecords(
+			'SELECT p.title, UNIX_TIMESTAMP(p.publish_on) AS publish_on, m.url
+			 FROM blog_posts AS p
+			 INNER JOIN meta AS m ON m.id = p.meta_id
+			 INNER JOIN blog_featured AS f ON f.post_id = p.id
+			 WHERE p.status = ? AND p.language = ? AND p.hidden = ? AND p.publish_on <= ?
+			 ORDER BY f.sequence ASC
+			 LIMIT ?',
+			array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (int) $limit)
+		);
 	}
 
 	/**

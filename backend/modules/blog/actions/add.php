@@ -10,11 +10,12 @@
 /**
  * This is the add-action, it will display a form to create a new item
  *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dave Lens <dave.lens@netlash.com>
+ * @author Davy Hellemans <davy.hellemans@wijs.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer.snoeck@wijs.be>
+ * @author Jeroen Van den Bossche <jeroen.vandenbossche@wijs.be>
  */
 class BackendBlogAdd extends BackendBaseActionAdd
 {
@@ -67,6 +68,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
 		if($this->imageIsAllowed) $this->frm->addImage('image');
+		$this->frm->addCheckbox('is_featured');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -161,6 +163,17 @@ class BackendBlogAdd extends BackendBaseActionAdd
 						// upload the image & generate thumbnails
 						$this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
 					}
+				}
+
+				// is this article tagged as featured?
+				if($this->frm->getField('is_featured')->isChecked())
+				{
+					$featuredArticle = array(
+						'post_id' => $item['id'],
+						'sequence' => BackendBlogModel::getMaximumSequence() + 1
+					);
+
+					BackendBlogModel::insertFeaturedArticle($featuredArticle);
 				}
 
 				// insert the item
