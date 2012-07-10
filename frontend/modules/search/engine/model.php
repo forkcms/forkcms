@@ -327,7 +327,16 @@ class FrontendSearchModel
 		$moduleResults = array();
 
 		// loop the resultset
-		foreach($searchResults as $searchResult) $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+		foreach($searchResults as $key => $searchResult)
+		{
+			// is the user allowed to view this searchresult?
+			$allowed = FrontendProfilesPermissions::isAllowed($searchResult['module'], $searchResult['other_id'], true);
+
+			if($allowed)
+			{
+				$moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+			}
+		}
 
 		// pass the results to the modules
 		foreach($moduleResults as $module => $otherIds)
@@ -413,7 +422,16 @@ class FrontendSearchModel
 			$moduleResults = array();
 
 			// loop the resultset
-			foreach($searchResults as $searchResult) $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+			foreach($searchResults as $searchResult)
+			{
+				// is the user allowed to view this searchresult?
+				$allowed = FrontendProfilesPermissions::isAllowed($searchResult['module'], $searchResult['other_id'], true);
+
+				if($allowed)
+				{
+					$moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+				}
+			}
 
 			// pass the results to the modules
 			foreach($moduleResults as $module => $otherIds)

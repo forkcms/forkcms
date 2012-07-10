@@ -46,6 +46,7 @@ var jsBackend =
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
 		jsBackend.ckeditor.init();
+		jsBackend.permissions.init();
 
 		// IE fixes
 		jsBackend.selectors.init();
@@ -1713,6 +1714,73 @@ jsBackend.messages =
 		// timeout
 		if(type == 'notice') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
 		if(type == 'success') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
+	}
+}
+
+/**
+* Hande the controls for the permissions tab.
+*
+* @author	Lowie Benoot <lowie.benoot@netlash.com>
+*/
+jsBackend.permissions =
+{
+	// init, something like a constructor
+	init: function()
+	{
+		$tabPermissions = $('#tabPermissions');
+		
+		// the permissions tab exists
+		if($tabPermissions.length > 0)
+		{
+			$chkIsSecured = $('#isSecured', $tabPermissions);
+			$groupsContainer = $('#groupsContainer', $tabPermissions);
+			$advancedPermissionsContainer = $('#advancedPermissionsContainer', $tabPermissions);
+			$showInNavigationContainer = $('#showInNavigationContainer', $tabPermissions);
+			
+			// is secured checkbox available?
+			if($chkIsSecured.length > 0)
+			{
+				// toggle the visibility of the group checkboxes
+				$chkIsSecured.on('change', function()
+				{
+					if($chkIsSecured.is(':checked'))
+					{
+						$advancedPermissionsContainer.show();
+					}
+					
+					else
+					{
+						$advancedPermissionsContainer.hide();
+					}
+				});
+				
+				// profile groups available?
+				if($groupsContainer.length > 0)
+				{
+					$chkForProfileGroups = $('#forProfileGroups', $tabPermissions);
+					
+					$chkForProfileGroups.on('change', function()
+					{
+						if($chkForProfileGroups.is(':checked'))
+						{
+							$groupsContainer.show();
+						}
+						
+						else
+						{
+							$groupsContainer.hide();
+						}
+					});
+					
+					// initial hide of the profile groups
+					if(!$chkForProfileGroups.is(':checked')) $groupsContainer.hide();
+				}
+				
+				
+				// initial hide of the show in navigation checkbox
+				if(!$chkIsSecured.is(':checked')) $advancedPermissionsContainer.hide();
+			}
+		}
 	}
 }
 

@@ -26,6 +26,7 @@
 		<ul>
 			<li style="float: left;"><a href="#tabContent">{$lblContent|ucfirst}</a></li>
 			<!-- Reverse order after content tab [floatRight] -->
+			{option:chkIsSecured}<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>{/option:chkIsSecured}
 			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabRedirect">{$lblRedirect|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
@@ -286,6 +287,12 @@
 				</div>
 			</div>
 		</div>
+
+		{option:chkIsSecured}
+			<div id="tabPermissions">
+				{include:{$BACKEND_MODULES_PATH}/profiles/layout/templates/permissions.tpl}
+			</div>
+		{/option:chkIsSecured}
 	</div>
 
 	{*

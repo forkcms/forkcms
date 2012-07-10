@@ -55,7 +55,7 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
 		// get the current page id
 		$pageId = Spoon::get('page')->getId();
 
-		$navigation = FrontendNavigation::getNavigation();
+		$navigation = FrontendNavigation::getNavigation(null, true);
 		$pageInfo = FrontendNavigation::getPageInfo($pageId);
 
 		$this->navigation = array();

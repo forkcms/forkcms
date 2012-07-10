@@ -247,6 +247,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// set callback for generating an unique URL
 		$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
+
+		// permissions
+		$this->permissions = new BackendProfilesPermissions($this->frm, $this->URL->getModule());
 	}
 
 	/**
@@ -305,6 +308,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 			// validate meta
 			$this->meta->validate();
+
+			// validate permissions
+			$this->permissions->validate();
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -373,6 +379,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+
+				// save permissions
+				$this->permissions->save($page['id']);
 
 				// build the cache
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());

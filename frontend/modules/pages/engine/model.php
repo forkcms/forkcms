@@ -78,7 +78,18 @@ class FrontendPagesModel implements FrontendTagsInterface
 		if(!empty($items))
 		{
 			// reset url
-			foreach($items as &$row) $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+			foreach($items as $key => $row)
+			{
+				if(FrontendProfilesPermissions::isAllowed('pages', $row['id']))
+				{
+					$items[$key]['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+				}
+
+				else
+				{
+					unset($items[$key]);
+				}
+			}
 		}
 
 		// return

@@ -47,6 +47,43 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
+	 * Apply the permissions for the current user to the navigation.
+	 * It returns an array with the new navigation.
+	 *
+	 * @param array $navigation The navigation (for a certain language).
+	 * @return array
+	 */
+	private static function applyPermissions($navigation)
+	{
+		// loop the levels
+		foreach($navigation as &$level)
+		{
+			// loop parents
+			foreach($level as $parent => &$children)
+			{
+				// user has has no permissions to this parent page? (and it's not the root)
+				if($parent != 0 && !FrontendProfilesPermissions::isAllowed('pages', $parent, true))
+				{
+					unset($level[$parent]);
+					continue;
+				}
+
+				// loop children
+				foreach($children as $pageId => $child)
+				{
+					// user has no permissions to this page?
+					if(!FrontendProfilesPermissions::isAllowed('pages', $pageId, true))
+					{
+						unset($children[$pageId]);
+					}
+				}
+			}
+		}
+
+		return $navigation;
+	}
+
+	/**
 	 * Creates a Backend URL for a given action and module
 	 * If you don't specify a language the current language will be used.
 	 *
@@ -203,9 +240,10 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get the navigation-items
 	 *
 	 * @param string[optional] $language The language wherefor the keys should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param bool[optional] $applyPermissions Should the permissions for the current user be applied to the navigation?
 	 * @return array
 	 */
-	public static function getNavigation($language = null)
+	public static function getNavigation($language = null, $applyPermissions = false)
 	{
 		// redefine
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
@@ -226,6 +264,12 @@ class FrontendNavigation extends FrontendBaseObject
 			self::$navigation[$language] = $navigation;
 		}
 
+		if($applyPermissions)
+		{
+			// apply the permissions for the current user to the navigation
+			self::$navigation[$language] = self::applyPermissions(self::$navigation[$language]);
+		}
+
 		// return from cache
 		return self::$navigation[$language];
 	}
@@ -244,7 +288,7 @@ class FrontendNavigation extends FrontendBaseObject
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $tpl = '/core/layout/templates/navigation.tpl', $depthCounter = 1)
 	{
 		// get navigation
-		$navigation = self::getNavigation();
+		$navigation = self::getNavigation(null, true);
 
 		// merge the exclude ids with the previously set exclude ids
 		$excludeIds = array_merge((array) $excludeIds, self::$excludedPageIds);
