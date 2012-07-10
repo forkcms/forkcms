@@ -206,13 +206,24 @@ class BackendModel
 	 * Delete a page extra by its id
 	 *
 	 * @param int $id The id of the extra to delete.
+	 * @param bool $deleteBlock Should the block be deleted? Default is false.
 	 */
-	public static function deleteExtraById($id)
+	public static function deleteExtraById($id, $deleteBlock = false)
 	{
 		$id = (int) $id;
+		$deleteBlock = (bool) $deleteBlock;
+
+		// delete the blocks
+		if($deleteBlock)
+		{
+			BackendModel::getDB(true)->delete('pages_blocks', 'extra_id = ?', $id);
+		}
 
 		// unset blocks
-		BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
+		else
+		{
+			BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
+		}
 
 		// delete extra
 		BackendModel::getDB(true)->delete('modules_extras', 'id = ?', $id);
