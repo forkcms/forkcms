@@ -587,4 +587,16 @@ class FrontendNavigation extends FrontendBaseObject
 			}
 		}
 	}
+
+	/**
+	 * Creates and renders a page with given page ID
+	 *
+	 * @param int $id The ID of the page to be rendered.
+	 */
+	public static function showPage($id)
+	{
+		$page = new FrontendPage($id);
+		$page->display();
+		exit;
+	}
 }
