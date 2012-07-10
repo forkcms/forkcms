@@ -99,6 +99,7 @@ class FrontendInit
 		$exceptions['frontendblockextra'] = FRONTEND_CORE_PATH . '/engine/block.php';
 		$exceptions['frontendblockwidget'] = FRONTEND_CORE_PATH . '/engine/block.php';
 		$exceptions['frontendtemplatecompiler'] = FRONTEND_CORE_PATH . '/engine/template_compiler.php';
+		$exceptions['frontendmailtofriend'] = FRONTEND_CORE_PATH . '/engine/mail_to_friend.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];

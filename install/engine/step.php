@@ -13,6 +13,7 @@
  * @author Davy Hellemans <davy@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class InstallerStep
 {
@@ -30,7 +31,7 @@ class InstallerStep
 	 * @var array
 	 */
 	protected $modules = array(
-		'required' => array('locale', 'settings', 'users', 'groups', 'extensions', 'pages', 'search', 'content_blocks', 'tags'),
+		'required' => array('locale', 'settings', 'users', 'groups', 'extensions', 'pages', 'search', 'content_blocks', 'tags', 'mail_to_friend'),
 		'hidden' => array('authentication', 'dashboard', 'error'),
 		'optional' => array()
 	);

@@ -50,6 +50,10 @@
 				{option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
 				{$item.text}
 			</div>
+
+			{* Mail to friend *}
+			{include:core/layout/templates/mailtofriend.tpl}
+
 			<footer class="ft">
 				<ul class="pageNavigation">
 					{option:navigation.previous}
