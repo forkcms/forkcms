@@ -90,6 +90,9 @@
 									{option:comments.website}</a>{/option:comments.website}
 									{$lblWrote}
 									<time itemprop="commentTime" datetime="{$comments.created_on|date:'Y-m-d\TH:i:s'}">{$comments.created_on|timeago}</time>
+									{option:!comments.is_flagged}
+										<a href="#" class="markInappropriate" data-id="{$comments.id}" title="{$lblInappropriate|ucfirst}">{$lblInappropriate|ucfirst}</a>
+									{/option:!comments.is_flagged}
 								</p>
 								<div class="commentText content" itemprop="commentText">
 									{$comments.text|cleanupplaintext}

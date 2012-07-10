@@ -618,6 +618,10 @@
         <translation language="pl"><![CDATA[w]]></translation>
         <translation language="el"><![CDATA[σε]]></translation>
       </item>
+      <item type="label" name="Inappropriate">
+        <translation language="en"><![CDATA[inappropriate]]></translation>
+        <translation language="nl"><![CDATA[ongepast]]></translation>
+      </item>
       <item type="label" name="InTheCategory">
         <translation language="nl"><![CDATA[in de categorie]]></translation>
         <translation language="en"><![CDATA[in category]]></translation>
@@ -772,6 +776,10 @@
         <translation language="pl"><![CDATA[mężczyzna]]></translation>
         <translation language="tr"><![CDATA[erkek]]></translation>
         <translation language="el"><![CDATA[άνδρας]]></translation>
+      </item>
+      <item type="message" name="MarkedAsInappropriate">
+        <translation language="nl"><![CDATA[Gemarkeerd als ongepast.]]></translation>
+        <translation language="en"><![CDATA[Marked as inappropriate.]]></translation>
       </item>
       <item type="label" name="Message">
         <translation language="nl"><![CDATA[bericht]]></translation>

@@ -16,9 +16,26 @@
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Van den Bossche <jeroen.vandenbossche@wijs.be>
  */
 class FrontendBlogModel implements FrontendTagsInterface
 {
+	/**
+	 * Checks if a comment exists.
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public static function existsComment($id)
+	{
+		return (bool) FrontendModel::getDB()->getVar(
+			'SELECT COUNT(i.id)
+			 FROM blog_comments AS i
+			 WHERE i.id = ?',
+			array((int) $id)
+		);
+	}
+
 	/**
 	 * Get an item
 	 *
@@ -446,8 +463,21 @@ class FrontendBlogModel implements FrontendTagsInterface
 			array((int) $id, 'published', FRONTEND_LANGUAGE)
 		);
 
+		// collect flagged comments.
+		$flaggedComments = SpoonCookie::exists('flagged_comments')
+			? SpoonCookie::get('flagged_comments')
+			: array();
+
 		// loop comments and create gravatar id
-		foreach($comments as &$row) $row['gravatar_id'] = md5($row['email']);
+		foreach($comments as &$row)
+		{
+			$row['gravatar_id'] = md5($row['email']);
+
+			if(in_array($row['id'], $flaggedComments))
+			{
+				$row['is_flagged'] = true;
+			}
+		}
 
 		// return
 		return $comments;
@@ -733,6 +763,21 @@ class FrontendBlogModel implements FrontendTagsInterface
 			 WHERE c.status = ? AND c.author = ? AND c.email = ?
 			 LIMIT 1',
 			array('published', (string) $author, (string) $email)
+		);
+	}
+
+	/**
+	 * Mark a comment as inappropriate.
+	 *
+	 * @param int $id
+	 */
+	public static function markInappropriateComment($id)
+	{
+		FrontendModel::getDB()->execute(
+			'UPDATE blog_comments
+			 SET num_flagged_inappropriate = num_flagged_inappropriate + 1
+			 WHERE id = ?',
+			array((int) $id)
 		);
 	}
 
