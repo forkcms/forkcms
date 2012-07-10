@@ -1,3 +1,10 @@
+3.3.14 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded CKFinder to 2.2.2
+
+
 3.3.13 (2012-06-12)
 --
 Improvements:
