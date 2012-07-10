@@ -47,6 +47,55 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
+	 * This method will generate all the full urls for an array with items.
+	 *
+	 * @example
+	 *
+	 * $data = array(
+	 * 		'url' => 'first-blogpost',
+	 * 		'cat_url' => 'first-category',
+	 * 		'title' => 'First blogpost',
+	 * 		'category_id' => 1
+	 * );
+	 *
+	 * buildFullUrls($data, 'blog', 'category', 'cat_url', 'category_url');
+	 * will return
+	 *
+	 * $data = array(
+	 * 		'url' => 'first-blogpost',
+	 * 		'cat_url' => 'first-category',
+	 * 		'category_url' => '/blog/category/first-category',
+	 * 		'title' => 'First blogpost',
+	 * 		'category_id' => 1
+	 * );
+	 *
+	 * @return	array
+	 * @param	array $data							The records to convert the url for.
+	 * @param	string $module						The module to create the url for.
+	 * @param	string[optional] $action			The action to link to.
+	 * @param	string[optional] $actionUrlKey		The array key to get the action url from
+	 * @param	string[optional] $fullUrlKey		The array key to place the full url in.
+	 */
+	public static function buildFullUrls(array $data, $module, $action = 'detail', $actionUrlKey = 'url', $fullUrlKey = 'full_url')
+	{
+		// no entries
+		if(empty($data)) return array();
+
+		// if the provided last element is an array, recursivly build the url
+		if(is_array(current($data)))
+		{
+			foreach($data as &$item) $item = self::buildFullUrl($item, $module, $action, $actionUrlKey, $fullUrlKey);
+		}
+
+		// this is not a multidimensional array, set the full url if the fetch url is given
+		elseif(isset($data[$actionUrlKey])) $data[$fullUrlKey] = self::getURLForBlock($module, $action) . '/' . $data[$actionUrlKey];
+
+		// return
+		return $data;
+	}
+
+
+	/**
 	 * Creates a Backend URL for a given action and module
 	 * If you don't specify a language the current language will be used.
 	 *
