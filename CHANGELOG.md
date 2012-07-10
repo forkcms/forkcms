@@ -4,6 +4,10 @@ Improvements:
 
 * Core: Upgraded CKFinder to 2.2.2
 
+Bugfixes:
+
+* Mailmotor: couldn't select a template in IE7/IE8 because hidden elements can't be targeted.
+
 
 3.3.13 (2012-06-12)
 --
