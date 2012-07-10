@@ -348,8 +348,8 @@ class BackendPagesModel
 			'SELECT i.id, i.navigation_title
 			 FROM pages AS i
 			 WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
-			 AND i.language = ?',
-			array($language)
+			 AND i.language = ? AND i.status = ?',
+			array($language, 'active')
 		);
 
 		// loop the types in the order we want them to appear
