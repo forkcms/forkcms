@@ -21,3 +21,8 @@
 	padding-top: 12px;
 	border-top: 0;
 }
+
+/* IE8 cant target hidden elements */
+.selectThumbList li input {
+	visibility: visible;
+}
