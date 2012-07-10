@@ -1,5 +1,9 @@
 3.3.14 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: Upgraded CKFinder to 2.2.2
+
 Bugfixes:
 
 * Pages: fix a bug where draft versions couldn't be deleted.
