@@ -1,3 +1,16 @@
+3.3.14 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded CKFinder to 2.2.2
+
+Bugfixes:
+
+* Mailmotor: couldn't select a template in IE7/IE8 because hidden elements can't be targeted.
+* Pages: fix a bug where draft versions couldn't be deleted.
+* Core: Use the title of the active page record in the editor link list.
+
+
 3.3.13 (2012-06-12)
 --
 Improvements:
