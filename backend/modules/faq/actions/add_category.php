@@ -22,20 +22,14 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	 */
 	public function execute()
 	{
+		// only one category allowed, so we redirect
+		if(!BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true)) $this->redirect(BackendModel::createURLForAction('categories') . '&error=only-one-category-allowed');
+
 		parent::execute();
-
-		// adding category allowed
-		if(BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true))
-		{
-			$this->loadForm();
-			$this->validateForm();
-	
-			$this->parse();
-			$this->display();
-		}
-
-		// only one category allowed
-		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=only-one-category-allowed');
+		$this->loadForm();
+		$this->validateForm();
+		$this->parse();
+		$this->display();
 	}
 
 	/**
