@@ -181,9 +181,7 @@
 							}
 
 							// build url
-							var url = 'http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(link);
-							if(title != '') url += '&title=' + title;
-							if(description != '') url += '&summary=' + description;
+							var url = encodeURIComponent(link);
 
 							// add html
 							html += '<li class="shareMenuLinkedin">' +
@@ -242,7 +240,7 @@
 							html += ' >' + options.twitter.label  + '</a>';
 							html += '</li>';
 						break;
-						
+
 						// google plus
 						case 'googleplus':
 							if(!googlePlusLoaded)
@@ -252,22 +250,22 @@
 								{
 									if($(this).attr('src') == 'https://apis.google.com/js/plusone.js') googlePlusLoaded = true;
 								});
-								
+
 								// not loaded?
 								if(!googlePlusLoaded)
 								{
 									// create the script tag
 									var script = document.createElement('script')
 									script.src = 'https://apis.google.com/js/plusone.js';
-									
+
 									// add into head
 									$('head').after(script);
-									
+
 									// reset var
 									googlePlusLoaded = true;
 								}
 							}
-							
+
 							// build & add html
 							html += '<li class="shareMenuTwitter">' +
 							'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>';
