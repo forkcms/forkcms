@@ -8,6 +8,8 @@ Bugfixes:
 
 * Pages: fix a bug where draft versions couldn't be deleted.
 * Mailmotor: couldn't select a template in IE7/IE8 because hidden elements can't be targeted.
+* Core: Use the title of the active page record in the editor link list.
+* Core: share-plugin wasn't using the correct URL for LinkedIn-shares.
 
 
 3.3.13 (2012-06-12)
