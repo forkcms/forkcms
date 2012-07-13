@@ -1,8 +1,9 @@
-3.3.14 (xxxx-xx-xx)
+3.4.0 (xxxx-xx-xx)
 --
 Improvements:
 
 * Core: Upgraded CKFinder to 2.2.2
+* Core: new way of passing data/locale into javascript, see: http://www.fork-cms.com/knowledge-base/detail/passing-data-from-php-to-javascript.
 
 Bugfixes:
 
