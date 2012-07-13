@@ -2915,6 +2915,20 @@
         <translation language="sv"><![CDATA[Detta är en ogiltig URL.]]></translation>
         <translation language="pl"><![CDATA[To jest nieprawidłowy adres URL.]]></translation>
       </item>
+      <item type="error" name="JPGGIFAndPNGOnly">
+        <translation language="nl"><![CDATA[Enkel jpg, gif, png]]></translation>
+        <translation language="en"><![CDATA[Only jpg, gif, png]]></translation>
+        <translation language="hu"><![CDATA[Csak jpg, gif, png]]></translation>
+        <translation language="ru"><![CDATA[Только JPG, GIF, PNG]]></translation>
+        <translation language="it"><![CDATA[Solo jpg, gif, png]]></translation>
+        <translation language="zh"><![CDATA[支持jpg/gif/png格式]]></translation>
+        <translation language="fr"><![CDATA[Jpg, gif, png seulement]]></translation>
+        <translation language="de"><![CDATA[Nur jp(e)g, gif und png-Dateien sind erlaubt.]]></translation>
+        <translation language="es"><![CDATA[Solo jpg, gif, png]]></translation>
+        <translation language="lt"><![CDATA[Tik jpg, gif, png]]></translation>
+        <translation language="sv"><![CDATA[Endast jpg, gif, png]]></translation>
+        <translation language="tr"><![CDATA[Sadece JPG, GIF, PNG]]></translation>
+      </item>
       <item type="error" name="MessageIsRequired">
         <translation language="nl"><![CDATA[Bericht is een verplicht veld.]]></translation>
         <translation language="en"><![CDATA[Message is a required field.]]></translation>
@@ -6228,6 +6242,10 @@
         <translation language="lt"><![CDATA[vardas]]></translation>
         <translation language="uk"><![CDATA[Ім'я]]></translation>
         <translation language="sv"><![CDATA[namn]]></translation>
+      </item>
+      <item type="label" name="Navigation">
+        <translation language="nl"><![CDATA[navigatie]]></translation>
+        <translation language="en"><![CDATA[navigation]]></translation>
       </item>
       <item type="label" name="NavigationTitle">
         <translation language="nl"><![CDATA[navigatietitel]]></translation>
@@ -10188,6 +10206,10 @@
         <translation language="es"><![CDATA[Tu combinación de e-mail y contraseña es incorrecta. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">¿Olvidaste tu contraseña?</a>]]></translation>
         <translation language="lt"><![CDATA[Jūsų slaptažodžio ir el.pašto kombinacija neteisinga. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Ar pamiršote slaptažodį?</a>]]></translation>
         <translation language="sv"><![CDATA[Din e-postadress och lösenord kombination är felaktig. <en href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did du forget ditt lösenord?</en>]]></translation>
+      </item>
+      <item type="error" name="InvalidInteger">
+        <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>
+        <translation language="en"><![CDATA[Invalid number.]]></translation>
       </item>
       <item type="error" name="InvalidName">
         <translation language="nl"><![CDATA[Ongeldige naam.]]></translation>

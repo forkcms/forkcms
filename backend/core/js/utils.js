@@ -53,7 +53,7 @@ utils.cookies =
 		var cookiesEnabled = (navigator.cookieEnabled) ? true : false;
 
 		// unknown property?
-		if(typeof navigator.cookieEanbled == 'undefined' && !cookiesEnabled)
+		if(typeof navigator.cookieEnabled == 'undefined' && !cookiesEnabled)
 		{
 			// try to set a cookie
 			document.cookie = 'testcookie';
@@ -79,11 +79,20 @@ utils.cookies =
 		{
 			var cookie = cookies[i];
 			while(cookie.charAt(0) == ' ') cookie = cookie.substring(1, cookie.length);
-			if(cookie.indexOf(name) == 0) return cookie.substring(name.lenght, cookie.length);
+			if(cookie.indexOf(name) == 0) return cookie.substring(name.length, cookie.length);
 		}
 
 		// fallback
 		return null;
+	},
+	
+	setCookie: function(name, value, days)
+	{
+		if(typeof days == 'undefined') days = 7;
+		
+		var expireDate = new Date();
+		expireDate.setDate(expireDate.getDate() + days);
+		document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/';
 	}
 }
 
@@ -244,7 +253,6 @@ utils.string =
 	replaceAll: function(value, needle, replacement)
 	{
 		if(value == undefined) return '';
-
 		return value.replace(new RegExp(needle, 'g'), replacement);
 	},
 

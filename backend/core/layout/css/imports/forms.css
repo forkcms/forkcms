@@ -379,3 +379,5 @@ input[type="submit"] {
 .multipleSelectWrapper ul li span { float: left; display: block; padding-right: 18px; line-height: 25px; }
 
 .placeholder { color: #AAA !important; }
+
+.forkForms .imageHolder { float: left; margin-right: 12px; padding: 0; }

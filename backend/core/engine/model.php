@@ -206,13 +206,24 @@ class BackendModel
 	 * Delete a page extra by its id
 	 *
 	 * @param int $id The id of the extra to delete.
+	 * @param bool $deleteBlock Should the block be deleted? Default is false.
 	 */
-	public static function deleteExtraById($id)
+	public static function deleteExtraById($id, $deleteBlock = false)
 	{
 		$id = (int) $id;
+		$deleteBlock = (bool) $deleteBlock;
+
+		// delete the blocks
+		if($deleteBlock)
+		{
+			BackendModel::getDB(true)->delete('pages_blocks', 'extra_id = ?', $id);
+		}
 
 		// unset blocks
-		BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
+		else
+		{
+			BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
+		}
 
 		// delete extra
 		BackendModel::getDB(true)->delete('modules_extras', 'id = ?', $id);
@@ -294,6 +305,35 @@ class BackendModel
 		}
 
 		return $string;
+	}
+
+	/**
+	 * Generate thumbnails based on the folders in the path
+	 * Use
+	 *  - 128x128 as foldername to generate an image where the width will be 128px and the height will be 128px
+	 *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
+	 *
+	 * @param string $path The path wherin the thumbnail-folders will be stored.
+	 * @param string $sourceFile The location of the source file.
+	 */
+	public static function generateThumbnails($path, $sourcefile)
+	{
+		// get folder listing
+		$folders = self::getThumbnailFolders($path);
+		$filename = basename($sourcefile);
+
+		// loop folders
+		foreach($folders as $folder)
+		{
+			// generate the thumbnail
+			$thumbnail = new SpoonThumbnail($sourcefile, $folder['width'], $folder['height']);
+			$thumbnail->setAllowEnlargement(true);
+
+			// if the width & height are specified we should ignore the aspect ratio
+			if($folder['width'] !== null && $folder['height'] !== null) $thumbnail->setForceOriginalAspectRatio(false);
+			$thumbnail->parseToFile($folder['path'] . '/' . $filename);
+		}
 	}
 
 	/**
@@ -546,6 +586,49 @@ class BackendModel
 		}
 
 		return $possibleFormats;
+	}
+
+	/**
+	 * Get the thumbnail folders
+	 *
+	 * @param string $path The path
+	 * @param bool[optional] $includeSource Should the source-folder be included in the return-array.
+	 * @return array
+	 */
+	public static function getThumbnailFolders($path, $includeSource = false)
+	{
+		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
+
+		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
+
+		$return = array();
+
+		foreach($folders as $folder)
+		{
+			$item = array();
+			$chunks = explode('x', $folder, 2);
+
+			// skip invalid items
+			if(count($chunks) != 2 && !$includeSource) continue;
+
+			$item['dirname'] = $folder;
+			$item['path'] = $path . '/' . $folder;
+			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
+			if($folder == 'source')
+			{
+				$item['width'] = null;
+				$item['height'] = null;
+			}
+			else
+			{
+				$item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
+				$item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
+			}
+
+			$return[] = $item;
+		}
+
+		return $return;
 	}
 
 	/**

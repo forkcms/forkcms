@@ -147,9 +147,26 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	 */
 	private function loadForm()
 	{
+		$startDate = '';
+		$endDate = '';
+
+		if(isset($this->filter['start_date']) && $this->filter['start_date'] != '')
+		{
+			$chunks = explode('/', $this->filter['start_date']);
+			$startDate = (int) mktime(0, 0, 0, (int) $chunks[1], (int) $chunks[0], (int) $chunks[2]);
+			if($startDate == 0) $startDate = '';
+		}
+
+		if(isset($this->filter['end_date']) && $this->filter['end_date'] != '')
+		{
+			$chunks = explode('/', $this->filter['end_date']);
+			$endDate = (int) mktime(0, 0, 0, (int) $chunks[1], (int) $chunks[0], (int) $chunks[2]);
+			if($endDate == 0) $endDate = '';
+		}
+
 		$this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
-		$this->frm->addDate('start_date', $this->filter['start_date']);
-		$this->frm->addDate('end_date', $this->filter['end_date']);
+		$this->frm->addDate('start_date', $startDate);
+		$this->frm->addDate('end_date', $endDate);
 
 		// manually parse fields
 		$this->frm->parse($this->tpl);

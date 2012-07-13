@@ -300,6 +300,10 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// the image path
 					$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
+					// create folders if needed
+					if(!SpoonDirectory::exists($imagePath . '/source')) SpoonDirectory::create($imagePath . '/source');
+					if(!SpoonDirectory::exists($imagePath . '/128x128')) SpoonDirectory::create($imagePath . '/128x128');
+
 					// if the image should be deleted
 					if($this->frm->getField('delete_image')->isChecked())
 					{
@@ -319,8 +323,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 						// build the image name
 						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
 
-						// upload the image
-						$this->frm->getField('image')->moveFile($imagePath . '/source/' . $item['image']);
+						// upload the image & generate thumbnails
+						$this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
 					}
 
 					// rename the old image
@@ -335,8 +339,12 @@ class BackendBlogEdit extends BackendBaseActionEdit
 						// only change the name if there is a difference
 						if($newName != $item['image'])
 						{
-							// move the old file to the new name
-							SpoonFile::move($imagePath . '/source/' . $item['image'], $imagePath . '/source/' . $newName);
+							// loop folders
+							foreach(BackendModel::getThumbnailFolders($imagePath, true) as $folder)
+							{
+								// move the old file to the new name
+								SpoonFile::move($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
+							}
 
 							// assign the new name to the database
 							$item['image'] = $newName;
