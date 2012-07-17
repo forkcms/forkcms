@@ -41,6 +41,9 @@ class BackendLocaleModel
 			array((string) $language, (string) $application)
 		);
 
+		// init var
+		$json = array();
+
 		// start generating PHP
 		$value = '<?php' . "\n\n";
 		$value .= '/**' . "\n";
@@ -78,8 +81,16 @@ class BackendLocaleModel
 					}
 
 					// parse
-					if($application == 'backend') $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
-					else $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+					if($application == 'backend')
+					{
+						$value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+						$json[$type][$item['module']][$item['name']] = $item['value'];
+					}
+					else
+					{
+						$value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+						$json[$type][$item['name']] = $item['value'];
+					}
 
 					// unset
 					unset($locale[$i]);
@@ -92,6 +103,23 @@ class BackendLocaleModel
 
 		// store
 		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php', $value);
+
+		// get months
+		$monthsLong = SpoonLocale::getMonths($language, false);
+		$monthsShort = SpoonLocale::getMonths($language, true);
+
+		// get days
+		$daysLong = SpoonLocale::getWeekDays($language, false, 'sunday');
+		$daysShort = SpoonLocale::getWeekDays($language, true, 'sunday');
+
+		// build labels
+		foreach($monthsLong as $key => $value) $json['loc']['core']['MonthLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $json['loc']['core']['MonthShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $json['loc']['core']['DayLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $json['loc']['core']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
+
+		// store
+		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json', json_encode($json));
 	}
 
 	/**

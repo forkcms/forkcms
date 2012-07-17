@@ -82,6 +82,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			BackendModel::setModuleSetting($this->getModule(), 'account_name', null);
 			BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
 			BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
+			BackendModel::setModuleSetting($this->getModule(), 'web_property_id', null);
 
 			// remove cache files
 			BackendAnalyticsModel::removeCacheFiles();

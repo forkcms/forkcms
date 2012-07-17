@@ -99,9 +99,6 @@ class FrontendTemplate extends SpoonTemplate
 		// parse the label
 		$this->parseLabels();
 
-		// parse locale
-		$this->parseLocale();
-
 		// parse date/time formats
 		$this->parseDateTimeFormats();
 
@@ -353,32 +350,6 @@ class FrontendTemplate extends SpoonTemplate
 
 		// assign messages
 		$this->assignArray($messages, 'msg');
-	}
-
-	/**
-	 * Parse the locale (things like months, days, ...)
-	 */
-	private function parseLocale()
-	{
-		// init vars
-		$locale = array();
-
-		// get months
-		$monthsLong = SpoonLocale::getMonths(FRONTEND_LANGUAGE, false);
-		$monthsShort = SpoonLocale::getMonths(FRONTEND_LANGUAGE, true);
-
-		// get days
-		$daysLong = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, false, 'sunday');
-		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
-
-		// build labels
-		foreach($monthsLong as $key => $value) $locale['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $locale['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $locale['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $locale['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
-
-		// assign
-		$this->assignArray($locale);
 	}
 
 	/**

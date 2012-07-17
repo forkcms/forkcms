@@ -12,6 +12,7 @@
  *
  * @author Matthias Mullie <matthias@mullie.eu>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendLocationWidgetLocation extends FrontendBaseWidget
 {
@@ -27,8 +28,8 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 	{
 		parent::execute();
 
-		// add the css file
-		$this->addCSS('location.css');
+		// add Google Maps
+		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true);
 
 		$this->loadTemplate();
 		$this->loadData();
@@ -41,7 +42,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 	 */
 	protected function loadData()
 	{
-		$this->items = FrontendLocationModel::get($this->data['id']);
+		$this->item = FrontendLocationModel::get($this->data['id']);
 		$this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
 		if(empty($this->settings))
 		{
@@ -51,18 +52,18 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 			$this->settings['height'] = $settings['height_widget'];
 			$this->settings['map_type'] = $settings['map_type_widget'];
 			$this->settings['zoom_level'] = $settings['zoom_level_widget'];
-			$this->settings['center']['lat'] = $this->items['lat'];
-			$this->settings['center']['lng'] = $this->items['lng'];
+			$this->settings['center']['lat'] = $this->item['lat'];
+			$this->settings['center']['lng'] = $this->item['lng'];
 		}
 
 		// no center point given yet, use the first occurance
 		if(!isset($this->settings['center']))
 		{
-			$this->settings['center']['lat'] = $this->items['lat'];
-			$this->settings['center']['lng'] = $this->items['lng'];
+			$this->settings['center']['lat'] = $this->item['lat'];
+			$this->settings['center']['lng'] = $this->item['lng'];
 		}
 
-		$this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->items));
+		$this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->item));
 	}
 
 	/**
@@ -70,10 +71,11 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		// show message
-		$this->tpl->assign('widgetLocationItem', $this->items);
 
-		// hide form
+		$this->addJSData('settings_' . $this->item['id'], $this->settings);
+		$this->addJSData('items_' . $this->item['id'], array($this->item));
+
+		$this->tpl->assign('widgetLocationItem', $this->item);
 		$this->tpl->assign('widgetLocationSettings', $this->settings);
 	}
 }
