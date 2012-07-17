@@ -1,4 +1,4 @@
-3.4.0 (xxxx-xx-xx)
+3.4.0 (2012-07-17)
 --
 Improvements:
 
