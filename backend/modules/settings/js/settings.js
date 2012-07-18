@@ -9,9 +9,9 @@ jsBackend.settings =
 	{
 		$('#facebookAdminIds').multipleTextbox(
 		{
-			emptyMessage: '{$msgNoAdminIds}',
-			addLabel: '{$lblAdd|ucfirst}',
-			removeLabel: '{$lblDelete|ucfirst}',
+			emptyMessage: utils.string.ucfirst(jsBackend.locale.msg('NoAdminIds')),
+			addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+			removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 			canAddNew: true
 		});
 

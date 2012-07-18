@@ -191,18 +191,18 @@ class BackendBaseAction extends BackendBaseObject
 
 		// add items that always need to be loaded
 		$this->header->addJS('utils.js', 'core');
-		$this->header->addJS('backend.js', 'core', false, true);
+		$this->header->addJS('backend.js', 'core');
 
 		// add module js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
 		{
-			$this->header->addJS($this->getModule() . '.js', null, false, true);
+			$this->header->addJS($this->getModule() . '.js');
 		}
 
 		// add action js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
 		{
-			$this->header->addJS($this->getAction() . '.js', null, false, true);
+			$this->header->addJS($this->getAction() . '.js');
 		}
 
 		// add core css files

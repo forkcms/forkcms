@@ -12,4 +12,18 @@
 	{iteration:cssFiles}<link rel="stylesheet" href="{$cssFiles.file}" />{$CRLF}{$TAB}{/iteration:cssFiles}
 	<!--[if IE 7]><link rel="stylesheet" href="/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
 	<!--[if IE 8]><link rel="stylesheet" href="/backend/core/layout/css/conditionals/ie8.css" /><![endif]-->
+
+	{iteration:jsFiles}<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
+	<script>
+		//<![CDATA[
+			{$jsData}
+
+			// reports
+			{option:formError}jsBackend.messages.add('error', "{$errFormError|addslashes}");{/option:formError}
+			{option:usingRevision}jsBackend.messages.add('notice', "{$msgUsingARevision|addslashes}");{/option:usingRevision}
+			{option:usingDraft}jsBackend.messages.add('notice', "{$msgUsingADraft|addslashes}");{/option:usingDraft}
+			{option:report}jsBackend.messages.add('success', "{$reportMessage|addslashes}");{/option:report}
+			{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage|addslashes}");{/option:errorMessage}
+		//]]>
+	</script>
 </head>

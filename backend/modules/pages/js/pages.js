@@ -131,7 +131,7 @@ jsBackend.pages.extras =
 		{
 			// link to edit this content, title, description & visibility
 			var editLink = '';
-			var title = '{$lblEditor|ucfirst}';
+			var title = utils.string.ucfirst(jsBackend.locale.lbl('Editor'));
 			var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
 		}
 
@@ -140,9 +140,9 @@ jsBackend.pages.extras =
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>{$lblEdit|ucfirst}</span></a>' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</span></a>' +
 								'<a href="#" class="button icon iconOnly ' + (visible ? 'iconVisible ' : 'iconInvisible ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
-								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>{$lblDeleteBlock|ucfirst}</span></a>' +
+								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>' + utils.string.ucfirst(jsBackend.locale.lbl('DeleteBlock')) + '</span></a>' +
 							'</div>' +
 						'</div>';
 
@@ -194,33 +194,39 @@ jsBackend.pages.extras =
 			resizable: false,
 			modal: true,
 			width: 940,
-			title: '{$lblEditor|ucfirst}',
+			title: utils.string.ucfirst(jsBackend.locale.lbl('Editor')),
 			position: 'center',
 			buttons:
-			{
-				'{$lblOK|ucfirst}': function()
+			[
 				{
-					// grab the content
-					var content = $('#html').val();
+					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+					click: function()
+					{
+						// grab the content
+						var content = $('#html').val();
 
-					// save content
-					jsBackend.pages.extras.setContent(index, content);
+						// save content
+						jsBackend.pages.extras.setContent(index, content);
 
-					// edit content = template is no longer original
-					jsBackend.pages.template.original = false;
+						// edit content = template is no longer original
+						jsBackend.pages.template.original = false;
 
-					// close dialog
-					$(this).dialog('close');
+						// close dialog
+						$(this).dialog('close');
+					}
 				},
-				'{$lblCancel|ucfirst}': function()
 				{
-					// reset content
-					jsBackend.pages.extras.setContent(index, previousContent);
+					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+					click: function()
+					{
+						// reset content
+						jsBackend.pages.extras.setContent(index, previousContent);
 
-					// close the dialog
-					$(this).dialog('close');
+						// close the dialog
+						$(this).dialog('close');
+					}
 				}
-			},
+			],
 			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
 			close: function(e, ui)
 			{
@@ -443,34 +449,40 @@ jsBackend.pages.extras =
 				modal: true,
 				width: 500,
 				buttons:
-				{
-					'{$lblOK|ucfirst}': function()
+				[
 					{
-						// fetch the selected extra id
-						var selectedExtraId = $('#extraExtraId').val();
-
-						// add the extra
-						var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
-
-						// add a block = template is no longer original
-						jsBackend.pages.template.original = false;
-
-						// close dialog
-						$(this).dialog('close');
-
-						// if the added block was an editor, show the editor immediately
-						if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
+						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+						click: function()
 						{
-							$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+							// fetch the selected extra id
+							var selectedExtraId = $('#extraExtraId').val();
+
+							// add the extra
+							var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
+
+							// add a block = template is no longer original
+							jsBackend.pages.template.original = false;
+
+							// close dialog
+							$(this).dialog('close');
+
+							// if the added block was an editor, show the editor immediately
+							if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
+							{
+								$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+							}
 						}
 					},
-					'{$lblCancel|ucfirst}': function()
 					{
-						// close the dialog
-						$(this).dialog('close');
+						text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+						click: function()
+						{
+							// close the dialog
+							$(this).dialog('close');
+						}
 					}
-				}
-			 });
+				]
+			});
 		}
 	},
 
@@ -492,25 +504,31 @@ jsBackend.pages.extras =
 				resizable: false,
 				modal: true,
 				buttons:
-				{
-					'{$lblOK|ucfirst}': function()
+				[
 					{
-						// delete this block
-						jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
+						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+						click: function()
+						{
+							// delete this block
+							jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
 
-						// delete a block = template is no longer original
-						jsBackend.pages.template.original = false;
+							// delete a block = template is no longer original
+							jsBackend.pages.template.original = false;
 
-						// close dialog
-						$(this).dialog('close');
+							// close dialog
+							$(this).dialog('close');
+						}
 					},
-					'{$lblCancel|ucfirst}': function()
 					{
-						// close the dialog
-						$(this).dialog('close');
+						text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+						click: function()
+						{
+							// close the dialog
+							$(this).dialog('close');
+						}
 					}
-				 }
-			 });
+				]
+			});
 		}
 	},
 
@@ -649,7 +667,7 @@ jsBackend.pages.template =
 
 		// make new positions sortable
 		jsBackend.pages.extras.sortable($('#templateVisualLarge div.linkedBlocks'));
-		
+
 		// hide fallback by default
 		$('#templateVisualFallback').hide();
 
@@ -763,25 +781,31 @@ jsBackend.pages.template =
 			modal: true,
 			width: 940,
 			buttons:
-			{
-				'{$lblOK|ucfirst}': function()
+			[
 				{
-					if($('#templateList input:radio:checked').val() != $('#templateId').val())
+					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+					click: function()
 					{
-						// change the template for real
-						jsBackend.pages.template.changeTemplate();
-					}
+						if($('#templateList input:radio:checked').val() != $('#templateId').val())
+						{
+							// change the template for real
+							jsBackend.pages.template.changeTemplate();
+						}
 
-					// close dialog
-					$(this).dialog('close');
+						// close dialog
+						$(this).dialog('close');
+					}
 				},
-				'{$lblCancel|ucfirst}': function()
 				{
-					// close the dialog
-					$(this).dialog('close');
+					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+					click: function()
+					{
+						// close the dialog
+						$(this).dialog('close');
+					}
 				}
-			 }
-		 });
+			]
+		});
 	}
 }
 
@@ -826,7 +850,7 @@ jsBackend.pages.tree =
 				multitree: 'all',
 				drag_copy: false
 			},
-			lang: { loading: '{$lblLoading|ucfirst}' },
+			lang: { loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading')) },
 			callback:
 			{
 				beforemove: jsBackend.pages.tree.beforeMove,
@@ -932,7 +956,7 @@ jsBackend.pages.tree =
 	{
 		// get the tree
 		var tree = tree.container.data('tree');
-		
+
 		// get pageID that has to be moved
 		var currentPageID = $(node).prop('id').replace('page-', '');
 
@@ -958,7 +982,7 @@ jsBackend.pages.tree =
 					if(jsBackend.debug) alert(textStatus);
 
 					// show message
-					jsBackend.messages.add('error', '{$errCantBeMoved}');
+					jsBackend.messages.add('error', jsBackend.locale.err('CantBeMoved'));
 
 					// rollback
 					$.tree.rollback(rollback);
@@ -966,7 +990,7 @@ jsBackend.pages.tree =
 				else
 				{
 					// show message
-					jsBackend.messages.add('success', '{$msgPageIsMoved}'.replace('%1$s', json.data.title));
+					jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title));
 				}
 			}
 		});

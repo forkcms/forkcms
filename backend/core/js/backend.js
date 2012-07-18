@@ -8,7 +8,7 @@
 var jsBackend =
 {
 	// datamembers
-	debug: {option:SPOON_DEBUG}true{/option:SPOON_DEBUG}{option:!SPOON_DEBUG}false{/option:!SPOON_DEBUG},
+	debug: false,
 	current:
 	{
 		module: null,
@@ -26,6 +26,7 @@ var jsBackend =
 		var chunks = document.location.pathname.split('/');
 
 		// set some properties
+		jsBackend.debug = jsBackend.data.get('debug');
 		jsBackend.current.module = chunks[3];
 		jsBackend.current.action = chunks[4];
 		jsBackend.current.language = chunks[2];
@@ -52,7 +53,7 @@ var jsBackend =
 		jsBackend.focusfix.init();
 
 		// do not move, should be run as the last item.
-		{option:!SPOON_DEBUG}jsBackend.forms.unloadWarning();{/option:!SPOON_DEBUG}
+		if(! jsBackend.data.get('debug')) jsBackend.forms.unloadWarning();
 	},
 
 	// init ajax
@@ -82,7 +83,7 @@ var jsBackend =
 			if(typeof ajaxOptions.error == 'undefined')
 			{
 				// init var
-				var textStatus = '{$errSomethingWentWrong}';
+				var textStatus = jsBackend.locale.err('SomethingWentWrong');
 
 				// get real message
 				if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
@@ -198,21 +199,10 @@ jsBackend.ckeditor =
 		// layout configuration
 		bodyClass: 'content',
 		stylesSet: [],
-		contentsCss:
-		[
-			'/frontend/core/layout/css/screen.css',
-			{option:THEME_HAS_CSS}'/frontend/themes/{$THEME}/core/layout/css/screen.css',{/option:THEME_HAS_CSS}
-			'/frontend/core/layout/css/editor_content.css',
-			{option:THEME_HAS_EDITOR_CSS}'/frontend/themes/{$THEME}/core/layout/css/editor_content.css',{/option:THEME_HAS_EDITOR_CSS}
-			'/backend/core/layout/css/imports/editor.css'
-		],
-
-		// language options
-		contentsLanguage: '{$LANGUAGE}',
-		language: '{$EDITOR_LANGUAGE}',
 
 		// paste options
 		forcePasteAsPlainText: true,
+		contentsCss: [],
 
 		// buttons
 		toolbar_Full:
@@ -241,7 +231,6 @@ jsBackend.ckeditor =
 		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
 		skin: 'BootstrapCK-Skin',
 
-//		uiColor: '#FAFAFA',
 		toolbar: 'Full',
 		toolbarStartupExpanded: false,
 
@@ -257,7 +246,7 @@ jsBackend.ckeditor =
 		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
 		// templates
-		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]={$LANGUAGE}'],
+		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=' + jsBackend.current.language],
 
 		// custom vars
 		editorType: 'default',
@@ -271,6 +260,17 @@ jsBackend.ckeditor =
 		// load the editor
 		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
 		{
+			// language options
+			jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language,
+			jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language'),
+
+			// content Css
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/screen.css');
+			if(jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/screen.css');
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/editor_content.css');
+			if(jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/editor_content.css');
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/backend/core/layout/css/imports/editor.css');
+			
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
 			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
@@ -314,7 +314,7 @@ jsBackend.ckeditor =
 		if($(element).ckeditorGet().config.showClickToEdit)
 		{
 			// add the click to edit div
-			if(!$(element).prev().hasClass('clickToEdit')) $(element).before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+			if(!$(element).prev().hasClass('clickToEdit')) $(element).before('<div class="clickToEdit"><span>' + jsBackend.locale.msg('ClickToEdit') + '</span></div>');
 		}
 
 		// add the optionsRTE-class if it isn't present
@@ -343,10 +343,10 @@ jsBackend.ckeditor =
 			var warnings = [];
 
 			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) warnings.push('{$msgEditorImagesWithoutAlt|addslashes}');
+			if(content.match(/<img(.*)alt=""(.*)/im)) warnings.push(jsBackend.locale.msg('EditorImagesWithoutAlt'));
 
 			// invalid links?
-			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push('{$msgEditorInvalidLinks|addslashes}');
+			if(content.match(/href=("|')\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)\1/im)) warnings.push(jsBackend.locale.msg('EditorInvalidLinks'));
 
 			// remove the previous warnings
 			$('#' + editor.element.getId() + '_warnings').remove(); // @todo: met dit id loopt iets mis
@@ -409,13 +409,13 @@ jsBackend.ckeditor =
 				[
 				 	{
 						type: 'select',
-						label: '{$msgEditorSelectInternalPage}',
+						label: jsBackend.locale.msg('EditorSelectInternalPage'),
 						id: 'localPage',
-						title: '{$msgEditorSelectInternalPage}',
+						title: jsBackend.locale.msg('EditorSelectInternalPage'),
 						items: linkList,
 						onChange: function(evt)
 						{
-							domain = '{$SITE_DOMAIN}';
+							domain = jsBackend.data.get('site.domain');
 							domain = domain.replace(/\/$/, '');
 
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
@@ -689,20 +689,26 @@ jsBackend.controls =
 					resizable: false,
 					modal: true,
 					buttons:
-					{
-						'{$lblOK|ucfirst}': function()
+					[
 						{
-							// unbind the beforeunload event
-							$(window).off('beforeunload');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+							click: function()
+							{
+								// unbind the beforeunload event
+								$(window).off('beforeunload');
 
-							// goto link
-							window.location = url;
+								// goto link
+								window.location = url;
+							}
 						},
-						'{$lblCancel|ucfirst}': function()
 						{
-							$(this).dialog('close');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+							click: function()
+							{
+								$(this).dialog('close');
+							}
 						}
-					},
+					],
 					open: function(e)
 					{
 						// set focus on first button
@@ -889,20 +895,26 @@ jsBackend.controls =
 					resizable: false,
 					modal: true,
 					buttons:
-					{
-						'{$lblOK|ucfirst}': function()
+					[
 						{
-							// close dialog
-							$(this).dialog('close');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+							click: function()
+							{
+								// close dialog
+								$(this).dialog('close');
 
-							// submit the form
-							$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
+								// submit the form
+								$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
+							}
 						},
-						'{$lblCancel|ucfirst}': function()
 						{
-							$(this).dialog('close');
+							text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+							click: function()
+							{
+								$(this).dialog('close');
+							}
 						}
-					},
+					],
 					open: function(e)
 					{
 						// set focus on first button
@@ -998,7 +1010,7 @@ jsBackend.controls =
 				numbers: false,
 				lowercase: true,
 				uppercase: true,
-				generateLabel: '{$lblGenerate|ucfirst}'
+				generateLabel: utils.string.ucfirst(jsBackend.locale.lbl('Generate'))
 			});
 		}
 	},
@@ -1189,6 +1201,41 @@ jsBackend.controls =
 }
 
 /**
+ * Data related methods
+ * 
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsBackend.data = 
+{
+	initialized: false,
+	data: {},
+
+	init: function()
+	{
+		// check if var is available
+		if(typeof jsData == 'undefined') throw 'jsData is not available';
+
+		// populate
+		jsBackend.data.data = jsData;
+		jsBackend.data.initialized = true;
+	},
+
+	exists: function(key)
+	{
+		return (typeof eval('jsBackend.data.data.' + key) != 'undefined');
+	},
+	
+	get: function(key)
+	{
+		// init if needed
+		if(!jsBackend.data.initialized) jsBackend.data.init();
+
+		// return
+		return eval('jsBackend.data.data.' + key);
+	}
+}
+
+/**
  * Backend effects
  *
  * @author	Dieter Vanden Eynde <dieter@dieterve.be>
@@ -1254,11 +1301,11 @@ jsBackend.forms =
 	datefields: function()
 	{
 		// variables
-		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
-		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
-		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
-		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
-		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
+		var dayNames = [jsBackend.locale.loc('DayLongSun'), jsBackend.locale.loc('DayLongMon'), jsBackend.locale.loc('DayLongTue'), jsBackend.locale.loc('DayLongWed'), jsBackend.locale.loc('DayLongThu'), jsBackend.locale.loc('DayLongFri'), jsBackend.locale.loc('DayLongSat')];
+		var dayNamesMin = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat')];
+		var dayNamesShort = [jsBackend.locale.loc('DayShortSun'), jsBackend.locale.loc('DayShortMon'), jsBackend.locale.loc('DayShortTue'), jsBackend.locale.loc('DayShortWed'), jsBackend.locale.loc('DayShortThu'), jsBackend.locale.loc('DayShortFri'), jsBackend.locale.loc('DayShortSat')];
+		var monthNames = [jsBackend.locale.loc('MonthLong1'), jsBackend.locale.loc('MonthLong2'), jsBackend.locale.loc('MonthLong3'), jsBackend.locale.loc('MonthLong4'), jsBackend.locale.loc('MonthLong5'), jsBackend.locale.loc('MonthLong6'), jsBackend.locale.loc('MonthLong7'), jsBackend.locale.loc('MonthLong8'), jsBackend.locale.loc('MonthLong9'), jsBackend.locale.loc('MonthLong10'), jsBackend.locale.loc('MonthLong11'), jsBackend.locale.loc('MonthLong12')];
+		var monthNamesShort = [jsBackend.locale.loc('MonthShort1'), jsBackend.locale.loc('MonthShort2'), jsBackend.locale.loc('MonthShort3'), jsBackend.locale.loc('MonthShort4'), jsBackend.locale.loc('MonthShort5'), jsBackend.locale.loc('MonthShort6'), jsBackend.locale.loc('MonthShort7'), jsBackend.locale.loc('MonthShort8'), jsBackend.locale.loc('MonthShort9'), jsBackend.locale.loc('MonthShort10'), jsBackend.locale.loc('MonthShort11'), jsBackend.locale.loc('MonthShort12')];
 		$inputDatefieldNormal = $('.inputDatefieldNormal');
 		$inputDatefieldFrom = $('.inputDatefieldFrom');
 		$inputDatefieldTill = $('.inputDatefieldTill');
@@ -1272,8 +1319,8 @@ jsBackend.forms =
 			hideIfNoPrevNext: true,
 			monthNames: monthNames,
 			monthNamesShort: monthNamesShort,
-			nextText: '{$lblNext}',
-			prevText: '{$lblPrevious}',
+			nextText: jsBackend.locale.lbl('Next'),
+			prevText: jsBackend.locale.lbl('Previous'),
 			showAnim: 'slideDown'
 		});
 
@@ -1474,10 +1521,10 @@ jsBackend.forms =
 		{
 			$('#sidebar input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags}',
-				errorMessage: '{$errAddTagBeforeSubmitting}',
-				addLabel: '{$lblAdd|ucfirst}',
-				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				emptyMessage: jsBackend.locale.msg('NoTags'),
+				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
+				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
 				params: { fork: { module: 'tags', action: 'autocomplete' } }
 			});
 		}
@@ -1485,10 +1532,10 @@ jsBackend.forms =
 		{
 			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
 			{
-				emptyMessage: '{$msgNoTags}',
-				errorMessage: '{$errAddTagBeforeSubmitting}',
-				addLabel: '{$lblAdd|ucfirst}',
-				removeLabel: '{$lblDeleteThisTag|ucfirst}',
+				emptyMessage: jsBackend.locale.msg('NoTags'),
+				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
+				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
+				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
 				params: { fork: { module: 'tags', action: 'autocomplete' } },
 				showIconOnly: false
 			});
@@ -1552,7 +1599,7 @@ jsBackend.forms =
 		});
 
 		// return if needed
-		if(changed) return '{$msgValuesAreChanged}';
+		if(changed) return jsBackend.locale.msg('ValuesAreChanged');
 	}
 }
 
@@ -1662,6 +1709,83 @@ jsBackend.layout =
 
 		// show warning if needed
 		if(showWarning) $('#showBrowserWarning').show();
+	}
+}
+
+/**
+ * Locale
+ *
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsBackend.locale =
+{
+	initialized: false,
+	data: {},
+
+	// init, something like a constructor
+	init: function()
+	{
+		$.ajax({
+			url: '/backend/cache/locale/' + jsBackend.current.language + '.json',
+			type: 'GET',
+			dataType: 'json',
+			async: false,
+			success: function(data)
+			{
+				jsBackend.locale.data = data;
+				jsBackend.locale.initialized = true;
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				throw 'Regenerate your locale-files.';
+			}
+		});
+	},
+
+	// get an item from the locale
+	get: function(type, key, module)
+	{
+		// initialize if needed
+		if(!jsBackend.locale.initialized) jsBackend.locale.init();
+
+		// validate
+		if(typeof jsBackend.locale.data[type][module][key] == 'undefined')
+		{
+			// not available in core?
+			if(typeof jsBackend.locale.data[type]['core'][key] == 'undefined') return '{$' + type + key + '}';
+
+			// fallback to core
+			return jsBackend.locale.data[type]['core'][key];
+		}
+
+		return jsBackend.locale.data[type][module][key];
+	},
+
+	// get an error
+	err: function(key, module)
+	{
+		if(module == null) module = jsBackend.current.module
+		return jsBackend.locale.get('err', key, module);
+	},
+
+	// get a label
+	lbl: function(key, module)
+	{
+		if(module == null) module = jsBackend.current.module
+		return jsBackend.locale.get('lbl', key, module);
+	},
+
+	// get localization
+	loc: function(key)
+	{
+		return jsBackend.locale.get('loc', key, 'core');
+	},
+
+	// get a message
+	msg: function(key, module)
+	{
+		if(module == null) module = jsBackend.current.module
+		return jsBackend.locale.get('msg', key, module);
 	}
 }
 

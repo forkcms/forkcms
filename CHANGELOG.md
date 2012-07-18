@@ -1,8 +1,16 @@
-3.3.14 (xxxx-xx-xx)
+3.4.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded to CKEditor 3.6.4
+
+
+3.4.0 (2012-07-17)
 --
 Improvements:
 
 * Core: Upgraded CKFinder to 2.2.2
+* Core: new way of passing data/locale into javascript, see: http://www.fork-cms.com/knowledge-base/detail/passing-data-from-php-to-javascript.
 
 Bugfixes:
 
@@ -10,6 +18,7 @@ Bugfixes:
 * Pages: fix a bug where draft versions couldn't be deleted.
 * Core: Use the title of the active page record in the editor link list.
 * Core: share-plugin wasn't using the correct URL for LinkedIn-shares.
+* Analytics: remove GA webproperty id when unlinking your GA account. This caused a tracking code to be set even if the account was unlinked.
 
 
 3.3.13 (2012-06-12)
