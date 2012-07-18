@@ -31,6 +31,13 @@ class FrontendHeader extends FrontendBaseObject
 	private $cssFiles = array();
 
 	/**
+	 * Data that will be passed to js
+	 *
+	 * @var array
+	 */
+	private $jsData = array();
+
+	/**
 	 * The added js-files
 	 *
 	 * @var	array
@@ -84,7 +91,7 @@ class FrontendHeader extends FrontendBaseObject
 		$this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
 		$this->addJS('/frontend/core/js/jquery/jquery.frontend.js', true);
 		$this->addJS('/frontend/core/js/utils.js', true);
-		$this->addJS('/frontend/core/js/frontend.js', false, true);
+		$this->addJS('/frontend/core/js/frontend.js', false);
 	}
 
 	/**
@@ -180,6 +187,18 @@ class FrontendHeader extends FrontendBaseObject
 			// add to files
 			$this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
 		}
+	}
+
+	/**
+	 * Add data into the jsData
+	 *
+	 * @param string $module	The name of the module.
+	 * @param string $key		The key whereunder the value will be stored.
+	 * @param mixed $value		The value
+	 */
+	public function addJsData($module, $key, $value)
+	{
+		$this->jsData[$module][$key] = $value;
 	}
 
 	/**
@@ -604,7 +623,7 @@ class FrontendHeader extends FrontendBaseObject
 		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
 		{
 			// build GA-tracking code
-			$trackingCode = '<script type="text/javascript">
+			$trackingCode = '<script>
 								var _gaq = [[\'_setAccount\', \'' . $webPropertyId . '\'],
 											[\'_setDomainName\', \'none\'],
 											[\'_trackPageview\'],
@@ -621,6 +640,13 @@ class FrontendHeader extends FrontendBaseObject
 			// add to the header
 			$siteHTMLHeader .= "\n" . $trackingCode;
 		}
+
+		// store language
+		$this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
+
+		// encode and add
+		$jsData = json_encode($this->jsData);
+		$siteHTMLHeader .= "\n" . '<script>var jsData = ' . $jsData . '</script>';
 
 		// assign site wide html
 		$this->tpl->assign('siteHTMLHeader', trim($siteHTMLHeader));

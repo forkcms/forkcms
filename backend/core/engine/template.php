@@ -80,7 +80,6 @@ class BackendTemplate extends SpoonTemplate
 		$this->parseLabels();
 		$this->parseLocale();
 		$this->parseVars();
-		$this->parseEditorLocale();
 
 		// parse headers
 		if(!$customHeaders)
@@ -243,15 +242,6 @@ class BackendTemplate extends SpoonTemplate
 
 		// assign some variable constants (such as site-title)
 		$this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
-
-		// theme
-		if(BackendModel::getModuleSetting('core', 'theme') !== null)
-		{
-			$this->assign('THEME', BackendModel::getModuleSetting('core', 'theme'));
-			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme'));
-			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css')));
-			$this->assign('THEME_HAS_EDITOR_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css')));
-		}
 	}
 
 	/**
@@ -260,29 +250,6 @@ class BackendTemplate extends SpoonTemplate
 	private function parseDebug()
 	{
 		$this->assign('debug', SPOON_DEBUG);
-	}
-
-	/**
-	 * Assign locale for the editor
-	 */
-	private function parseEditorLocale()
-	{
-		// fetch current active language
-		$language = BackendLanguage::getWorkingLanguage();
-
-		// convert to format used by ckeditor/ckfinder
-		switch($language)
-		{
-			case 'zh':
-				$language = 'zh-cn';
-				break;
-
-			default:
-				break;
-		}
-
-		// assign the editor language
-		$this->assign('EDITOR_LANGUAGE', $language);
 	}
 
 	/**

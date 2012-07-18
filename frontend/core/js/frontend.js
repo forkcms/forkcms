@@ -8,14 +8,13 @@ var jsFrontend =
 {
 	// datamembers
 	debug: false,
-	current:
-	{
-		language: '{$FRONTEND_LANGUAGE}'
-	},
+	current: {},
 
 	// init, something like a constructor
 	init: function()
 	{
+		jsFrontend.current.language = jsFrontend.data.get('FRONTEND_LANGUAGE');
+
 		// init stuff
 		jsFrontend.initAjax();
 
@@ -75,6 +74,41 @@ jsFrontend.controls =
 }
 
 /**
+ * Data related methods
+ * 
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.data = 
+{
+	initialized: false,
+	data: {},
+
+	init: function()
+	{
+		// check if var is available
+		if(typeof jsData == 'undefined') throw 'jsData is not available';
+
+		// populate
+		jsFrontend.data.data = jsData;
+		jsFrontend.data.initialized = true;
+	},
+
+	exists: function(key)
+	{
+		return (typeof eval('jsFrontend.data.data.' + key) != 'undefined');
+	},
+	
+	get: function(key)
+	{
+		// init if needed
+		if(!jsFrontend.data.initialized) jsFrontend.data.init();
+
+		// return
+		return eval('jsFrontend.data.data.' + key);
+	}
+}
+
+/**
  * Facebook related
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
@@ -127,90 +161,93 @@ jsFrontend.forms =
 	// initialize the datefields
 	datefields: function()
 	{
-		var dayNames = ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'];
-		var dayNamesMin = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
-		var dayNamesShort = ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'];
-		var monthNames = ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'];
-		var monthNamesShort = ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'];
-
 		var $inputDatefields = $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange')
 		var $inputDatefieldNormal = $('.inputDatefieldNormal');
 		var $inputDatefieldFrom = $('.inputDatefieldFrom');
 		var $inputDatefieldTill = $('.inputDatefieldTill');
 		var $inputDatefieldRange = $('.inputDatefieldRange');
 
-		$inputDatefields.datepicker({
-			dayNames: dayNames,
-			dayNamesMin: dayNamesMin,
-			dayNamesShort: dayNamesShort,
-			hideIfNoPrevNext: true,
-			monthNames: monthNames,
-			monthNamesShort: monthNamesShort,
-			nextText: '{$lblNext}',
-			prevText: '{$lblPrevious}',
-			showAnim: 'slideDown'
-		});
-
-		// the default, nothing special
-		$inputDatefieldNormal.each(function()
+		if($inputDatefields.length > 0)
 		{
-			// get data
-			var data = $(this).data();
-			var value = $(this).val();
-
-			// set options
-			$(this).datepicker('option', {
-				dateFormat: data.mask,
-				firstDay: data.firstday
-			}).datepicker('setDate', value);
-		});
-
-		// datefields that have a certain startdate
-		$inputDatefieldFrom.each(function()
-		{
-			// get data
-			var data = $(this).data();
-			var value = $(this).val();
-
-			// set options
-			$(this).datepicker('option', {
-				dateFormat: data.mask, firstDay: data.firstday,
-				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
-			}).datepicker('setDate', value);
-		});
-
-		// datefields that have a certain enddate
-		$inputDatefieldTill.each(function()
-		{
-			// get data
-			var data = $(this).data();
-			var value = $(this).val();
-
-			// set options
-			$(this).datepicker('option',
+			var dayNames = [jsFrontend.locale.loc('DayLongSun'), jsFrontend.locale.loc('DayLongMon'), jsFrontend.locale.loc('DayLongTue'), jsFrontend.locale.loc('DayLongWed'), jsFrontend.locale.loc('DayLongThu'), jsFrontend.locale.loc('DayLongFri'), jsFrontend.locale.loc('DayLongSat')];
+			var dayNamesMin = [jsFrontend.locale.loc('DayShortSun'), jsFrontend.locale.loc('DayShortMon'), jsFrontend.locale.loc('DayShortTue'), jsFrontend.locale.loc('DayShortWed'), jsFrontend.locale.loc('DayShortThu'), jsFrontend.locale.loc('DayShortFri'), jsFrontend.locale.loc('DayShortSat')];
+			var dayNamesShort = [jsFrontend.locale.loc('DayShortSun'), jsFrontend.locale.loc('DayShortMon'), jsFrontend.locale.loc('DayShortTue'), jsFrontend.locale.loc('DayShortWed'), jsFrontend.locale.loc('DayShortThu'), jsFrontend.locale.loc('DayShortFri'), jsFrontend.locale.loc('DayShortSat')];
+			var monthNames = [jsFrontend.locale.loc('MonthLong1'), jsFrontend.locale.loc('MonthLong2'), jsFrontend.locale.loc('MonthLong3'), jsFrontend.locale.loc('MonthLong4'), jsFrontend.locale.loc('MonthLong5'), jsFrontend.locale.loc('MonthLong6'), jsFrontend.locale.loc('MonthLong7'), jsFrontend.locale.loc('MonthLong8'), jsFrontend.locale.loc('MonthLong9'), jsFrontend.locale.loc('MonthLong10'), jsFrontend.locale.loc('MonthLong11'), jsFrontend.locale.loc('MonthLong12')];
+			var monthNamesShort = [jsFrontend.locale.loc('MonthShort1'), jsFrontend.locale.loc('MonthShort2'), jsFrontend.locale.loc('MonthShort3'), jsFrontend.locale.loc('MonthShort4'), jsFrontend.locale.loc('MonthShort5'), jsFrontend.locale.loc('MonthShort6'), jsFrontend.locale.loc('MonthShort7'), jsFrontend.locale.loc('MonthShort8'), jsFrontend.locale.loc('MonthShort9'), jsFrontend.locale.loc('MonthShort10'), jsFrontend.locale.loc('MonthShort11'), jsFrontend.locale.loc('MonthShort12')];
+		
+			$inputDatefields.datepicker({
+				dayNames: dayNames,
+				dayNamesMin: dayNamesMin,
+				dayNamesShort: dayNamesShort,
+				hideIfNoPrevNext: true,
+				monthNames: monthNames,
+				monthNamesShort: monthNamesShort,
+				nextText: jsFrontend.locale.lbl('Next'),
+				prevText: jsFrontend.locale.lbl('Previous'),
+				showAnim: 'slideDown'
+			});
+	
+			// the default, nothing special
+			$inputDatefieldNormal.each(function()
 			{
-				dateFormat: data.mask,
-				firstDay: data.firstday,
-				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
-			}).datepicker('setDate', value);
-		});
-
-		// datefields that have a certain range
-		$inputDatefieldRange.each(function()
-		{
-			// get data
-			var data = $(this).data();
-			var value = $(this).val();
-
-			// set options
-			$(this).datepicker('option',
+				// get data
+				var data = $(this).data();
+				var value = $(this).val();
+	
+				// set options
+				$(this).datepicker('option', {
+					dateFormat: data.mask,
+					firstDay: data.firstday
+				}).datepicker('setDate', value);
+			});
+	
+			// datefields that have a certain startdate
+			$inputDatefieldFrom.each(function()
 			{
-				dateFormat: data.mask,
-				firstDay: data.firstday,
-				minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
-				maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
-			}).datepicker('setDate', value);
-		});
+				// get data
+				var data = $(this).data();
+				var value = $(this).val();
+	
+				// set options
+				$(this).datepicker('option', {
+					dateFormat: data.mask, firstDay: data.firstday,
+					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
+				}).datepicker('setDate', value);
+			});
+	
+			// datefields that have a certain enddate
+			$inputDatefieldTill.each(function()
+			{
+				// get data
+				var data = $(this).data();
+				var value = $(this).val();
+	
+				// set options
+				$(this).datepicker('option',
+				{
+					dateFormat: data.mask,
+					firstDay: data.firstday,
+					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
+				}).datepicker('setDate', value);
+			});
+	
+			// datefields that have a certain range
+			$inputDatefieldRange.each(function()
+			{
+				// get data
+				var data = $(this).data();
+				var value = $(this).val();
+	
+				// set options
+				$(this).datepicker('option',
+				{
+					dateFormat: data.mask,
+					firstDay: data.firstday,
+					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
+				}).datepicker('setDate', value);
+			});
+		}
 	},
 
 	// placeholder fallback for browsers that don't support placeholder
@@ -310,6 +347,79 @@ jsFrontend.gravatar =
 				}
 			}
 		});
+	}
+}
+
+/**
+ * Locale
+ * 
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsFrontend.locale = 
+{
+	initialized: false,
+	data: {},
+
+	// init, something like a constructor
+	init: function()
+	{
+		$.ajax({
+			url: '/frontend/cache/locale/' + jsFrontend.current.language + '.json',
+			type: 'GET',
+			dataType: 'json',
+			async: false,
+			success: function(data) 
+			{
+				jsFrontend.locale.data = data;
+				jsFrontend.locale.initialized = true;
+			},
+			error: function(jqXHR, textStatus, errorThrown) 
+			{
+				throw 'Regenerate your locale-files.';
+			}
+		});
+	},
+
+	// get an item from the locale
+	get: function(type, key)
+	{
+		// initialize if needed
+		if(!jsFrontend.locale.initialized) jsFrontend.locale.init();
+
+		// validate
+		if(typeof jsFrontend.locale.data[type][key] == 'undefined') return '{$' + type + key + '}';
+
+		return jsFrontend.locale.data[type][key];
+	},
+
+	// get an action
+	act: function(key)
+	{
+		return jsFrontend.locale.get('act', key);
+	},
+
+	// get an error
+	err: function(key)
+	{
+		return jsFrontend.locale.get('err', key);
+	},
+
+	// get a label
+	lbl: function(key)
+	{
+		return jsFrontend.locale.get('lbl', key);
+	},
+	
+	// get localization
+	loc: function(key)
+	{
+		return jsFrontend.locale.get('loc', key);
+	},
+
+	// get a message
+	msg: function(key)
+	{
+		return jsFrontend.locale.get('msg', key);
 	}
 }
 

@@ -24,6 +24,13 @@ class BackendHeader
 	private $cssFiles = array();
 
 	/**
+	 * Data that will be passed to js
+	 *
+	 * @var array
+	 */
+	private $jsData = array();
+
+	/**
 	 * All added JS-files
 	 *
 	 * @var	array
@@ -169,6 +176,18 @@ class BackendHeader
 			// add to files
 			$this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
 		}
+	}
+
+	/**
+	 * Add data into the jsData
+	 *
+	 * @param string $module	The name of the module.
+	 * @param string $key		The key whereunder the value will be stored.
+	 * @param mixed $value		The value
+	 */
+	public function addJsData($module, $key, $value)
+	{
+		$this->jsData[$module][$key] = $value;
 	}
 
 	/**
@@ -329,5 +348,28 @@ class BackendHeader
 
 		// assign JS-files
 		$this->tpl->assign('jsFiles', $jsFiles);
+
+		// some default stuff
+		$this->jsData['debug'] = SPOON_DEBUG;
+		$this->jsData['site']['domain'] = SITE_DOMAIN;
+
+		// is the user object filled?
+		if(BackendAuthentication::getUser()->isAuthenticated())
+		{
+			$this->jsData['editor']['language'] = (string) BackendAuthentication::getUser()->getSetting('interface_language');
+		}
+
+		// theme
+		if(BackendModel::getModuleSetting('core', 'theme') !== null)
+		{
+			$this->jsData['theme']['theme'] = BackendModel::getModuleSetting('core', 'theme');
+			$this->jsData['theme']['path'] = FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme');
+			$this->jsData['theme']['has_css'] = (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css'));
+			$this->jsData['theme']['has_editor_css'] = (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css'));
+		}
+
+		// encode and add
+		$jsData = json_encode($this->jsData);
+		$this->tpl->assign('jsData', 'var jsData = ' . $jsData . ';' . "\n");
 	}
 }

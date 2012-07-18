@@ -47,7 +47,7 @@ jsBackend.dashboard =
 		// bind before unload event
 		$(window).on('beforeunload', function()
 		{
-			return '{$msgValuesAreChanged}';
+			return jsBackend.locale.msg('ValuesAreChanged');
 		});
 
 		// hide edit text

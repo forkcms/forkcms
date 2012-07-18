@@ -327,6 +327,17 @@ class FrontendBaseBlock
 	}
 
 	/**
+	 * Add data that should be available in JS
+	 *
+	 * @param string $key	The key whereunder the value will be stored.
+	 * @param mixed $value	The value to pass.
+	 */
+	public function addJSData($key, $value)
+	{
+		$this->header->addJSData($this->getModule(), $key, $value);
+	}
+
+	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
 	 */
@@ -339,10 +350,10 @@ class FrontendBaseBlock
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
 	}
 
 	/**
@@ -765,6 +776,17 @@ class FrontendBaseWidget
 	}
 
 	/**
+	 * Add data that should be available in JS
+	 *
+	 * @param string $key	The key whereunder the value will be stored.
+	 * @param mixed $value	The value to pass.
+	 */
+	public function addJSData($key, $value)
+	{
+		$this->header->addJSData($this->getModule(), $key, $value);
+	}
+
+	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
 	 */
@@ -777,10 +799,10 @@ class FrontendBaseWidget
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
 	}
 
 	/**

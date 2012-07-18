@@ -34,7 +34,7 @@ jsBackend.faq =
 		// reset initial empty grids
 		$('table.emptyGrid').each(function(){
 			$(this).find('td').parent().remove();
-			$(this).append('<tr class="noQuestions"><td colspan="' + $(this).find('th').length + '">{$msgNoQuestionInCategory}</td></tr>');
+			$(this).append('<tr class="noQuestions"><td colspan="' + $(this).find('th').length + '">' + jsBackend.locale.msg('NoQuestionInCategory') +'</td></tr>');
 			$(this).removeClass('emptyGrid');
 		});
 
@@ -107,7 +107,7 @@ jsBackend.faq =
 								// if there are no records -> show message
 								if($('div#dataGrid-' + fromCategoryId + ' table.dataGrid tr').length == 1)
 								{
-									$('div#dataGrid-' + fromCategoryId + ' table.dataGrid').append('<tr class="noQuestions"><td colspan="3">{$msgNoQuestionInCategory}</td></tr>');
+									$('div#dataGrid-' + fromCategoryId + ' table.dataGrid').append('<tr class="noQuestions"><td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td></tr>');
 								}
 
 								// check empty categories
