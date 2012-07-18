@@ -1,3 +1,10 @@
+3.4.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded to CKEditor 3.6.4
+
+
 3.4.0 (2012-07-17)
 --
 Improvements:
