@@ -4,6 +4,10 @@ Improvements:
 
 * Core: Upgraded to CKEditor 3.6.4
 
+Bugfixes:
+
+* Core: applied http://dev.ckeditor.com/ticket/8832 to the stylesheetparse because CKEditor triggerd an JS-error in FF14.
+
 
 3.4.0 (2012-07-17)
 --
