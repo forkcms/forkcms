@@ -270,7 +270,7 @@ jsBackend.ckeditor =
 			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/editor_content.css');
 			if(jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/editor_content.css');
 			jsBackend.ckeditor.defaultConfig.contentsCss.push('/backend/core/layout/css/imports/editor.css');
-			
+
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
 			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
@@ -1202,10 +1202,10 @@ jsBackend.controls =
 
 /**
  * Data related methods
- * 
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsBackend.data = 
+jsBackend.data =
 {
 	initialized: false,
 	data: {},
@@ -1224,7 +1224,7 @@ jsBackend.data =
 	{
 		return (typeof eval('jsBackend.data.data.' + key) != 'undefined');
 	},
-	
+
 	get: function(key)
 	{
 		// init if needed
@@ -1749,7 +1749,7 @@ jsBackend.locale =
 		if(!jsBackend.locale.initialized) jsBackend.locale.init();
 
 		// validate
-		if(typeof jsBackend.locale.data[type][module][key] == 'undefined')
+		if( typeof jsBackend.locale.data[type] == 'undefined' || typeof jsBackend.locale.data[type][module] == 'undefined' || typeof jsBackend.locale.data[type][module][key] == 'undefined')
 		{
 			// not available in core?
 			if(typeof jsBackend.locale.data[type]['core'][key] == 'undefined') return '{$' + type + key + '}';
