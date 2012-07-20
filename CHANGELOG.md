@@ -6,6 +6,7 @@ Improvements:
 * Profiles: rewrote method for inserting/multiple settings.
 * Profiles: ask a display name in the register-step.
 * Profiles: redirect to login if the profile isn't logged in on a settings-page.
+* Profiles: added a modifier for fetching a profile setting.
 
 Bugfixes:
 
