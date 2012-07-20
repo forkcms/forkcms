@@ -220,6 +220,47 @@ class FrontendProfilesProfile
 	}
 
 	/**
+	 * Load a profile by URL
+	 *
+	 * @param string $url
+	 */
+	public function loadProfileByUrl($url)
+	{
+		// get profile data
+		$profileData = (array) FrontendModel::getDB()->getRecord(
+			'SELECT p.id, p.email, p.status, p.display_name, UNIX_TIMESTAMP(p.registered_on) AS registered_on
+			 FROM profiles AS p
+			 WHERE p.url = ?',
+			(string) $url
+		);
+
+		// set properties
+		$this->setId($profileData['id']);
+		$this->setEmail($profileData['email']);
+		$this->setStatus($profileData['status']);
+		$this->setDisplayName($profileData['display_name']);
+		$this->setRegisteredOn($profileData['registered_on']);
+
+		// get the groups (only the ones we still have access to)
+		$this->groups = (array) FrontendModel::getDB()->getPairs(
+			'SELECT pg.id, pg.name
+			 FROM profiles_groups AS pg
+			 INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
+			 WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
+			array(':id' => (int) $this->getId())
+		);
+
+		$this->settings = (array) FrontendModel::getDB()->getPairs(
+			'SELECT i.name, i.value
+			 FROM profiles_settings AS i
+			 WHERE i.profile_id = ?',
+			 $this->getId()
+		);
+
+		foreach($this->settings as &$value) $value = unserialize($value);
+	}
+
+	/**
 	 * Set a display name.
 	 *
 	 * @param string $value Display name value.
