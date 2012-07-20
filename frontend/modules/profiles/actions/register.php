@@ -53,6 +53,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 	private function loadForm()
 	{
 		$this->frm = new FrontendForm('register', null, null, 'registerForm');
+		$this->frm->addText('display_name');
 		$this->frm->addText('email');
 		$this->frm->addPassword('password', null, null, 'inputText showPasswordInput');
 		$this->frm->addCheckbox('show_password');
@@ -86,6 +87,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 		if($this->frm->isSubmitted())
 		{
 			// get fields
+			$txtDisplayName = $this->frm->getField('display_name');
 			$txtEmail = $this->frm->getField('email');
 			$txtPassword = $this->frm->getField('password');
 
@@ -121,7 +123,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 				$values['email'] = $txtEmail->getValue();
 				$values['password'] = FrontendProfilesModel::getEncryptedString($txtPassword->getValue(), $settings['salt']);
 				$values['status'] = 'inactive';
-				$values['display_name'] = $txtEmail->getValue();
+				$values['display_name'] = $txtDisplayName->getValue();
 				$values['registered_on'] = FrontendModel::getUTCDate();
 
 				/*
