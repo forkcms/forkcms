@@ -4,6 +4,7 @@ Improvements:
 
 * Core: Upgraded to CKEditor 3.6.4
 * Profiles: rewrote method for inserting/multiple settings.
+* Profiles: ask a display name in the register-step.
 
 Bugfixes:
 
