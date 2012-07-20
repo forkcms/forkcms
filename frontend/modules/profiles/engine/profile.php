@@ -195,7 +195,7 @@ class FrontendProfilesProfile
 	{
 		// get profile data
 		$profileData = (array) FrontendModel::getDB()->getRecord(
-			'SELECT p.id, p.email, p.status, p.display_name, UNIX_TIMESTAMP(p.registered_on) AS registered_on
+			'SELECT p.id, p.email, p.status, p.display_name, p.url, UNIX_TIMESTAMP(p.registered_on) AS registered_on
 			 FROM profiles AS p
 			 WHERE p.id = ?',
 			(int) $id
@@ -203,6 +203,7 @@ class FrontendProfilesProfile
 
 		// set properties
 		$this->setId($profileData['id']);
+		$this->setUrl($profileData['url']);
 		$this->setEmail($profileData['email']);
 		$this->setStatus($profileData['status']);
 		$this->setDisplayName($profileData['display_name']);
@@ -327,6 +328,7 @@ class FrontendProfilesProfile
 		// urls
 		$return['url']['dashboard'] = FrontendNavigation::getURLForBlock('profiles');
 		$return['url']['settings'] = FrontendNavigation::getURLForBlock('profiles', 'settings');
+		$return['url']['url'] = $this->getUrl();
 
 		return $return;
 	}
