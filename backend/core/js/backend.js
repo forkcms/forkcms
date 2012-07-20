@@ -1751,16 +1751,23 @@ jsBackend.locale =
 			jsBackend.locale.init();
 		}
 
+		// value to use when the translation was not found
+		var missingTranslation = '{$' + type + key + '}';
+
 		// validate
-		if(typeof jsBackend.locale.data[type][module] == 'undefined' || typeof jsBackend.locale.data[type][module][key] == 'undefined')
+		if(jsBackend.locale.data == null || !jsBackend.locale.data.hasOwnProperty(type) || jsBackend.locale.data[type] == null)
 		{
-			// not available in core?
-			if(typeof jsBackend.locale.data[type]['core'][key] == 'undefined')
+			return missingTranslation;
+		}
+
+		// if the translation does not exist for the given module, try to fall back to the core
+		if(!jsBackend.locale.data[type].hasOwnProperty(module) || jsBackend.locale.data[type][module] == null || !jsBackend.locale.data[type][module].hasOwnProperty(key) || jsBackend.locale.data[type][module][key] == null)
+		{
+			if(!jsBackend.locale.data[type].hasOwnProperty('core') || jsBackend.locale.data[type]['core'] == null || !jsBackend.locale.data[type]['core'].hasOwnProperty(key) || jsBackend.locale.data[type]['core'][key] == null)
 			{
-				return '{$' + type + key + '}';
+				return missingTranslation;
 			}
 
-			// fallback to core
 			return jsBackend.locale.data[type]['core'][key];
 		}
 
