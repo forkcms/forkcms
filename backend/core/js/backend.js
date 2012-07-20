@@ -1750,28 +1750,29 @@ jsBackend.locale =
 		{
 			jsBackend.locale.init();
 		}
+		var data = jsBackend.locale.data;
 
 		// value to use when the translation was not found
 		var missingTranslation = '{$' + type + key + '}';
 
 		// validate
-		if(jsBackend.locale.data == null || !jsBackend.locale.data.hasOwnProperty(type) || jsBackend.locale.data[type] == null)
+		if(data == null || !data.hasOwnProperty(type) || data[type] == null)
 		{
 			return missingTranslation;
 		}
 
 		// if the translation does not exist for the given module, try to fall back to the core
-		if(!jsBackend.locale.data[type].hasOwnProperty(module) || jsBackend.locale.data[type][module] == null || !jsBackend.locale.data[type][module].hasOwnProperty(key) || jsBackend.locale.data[type][module][key] == null)
+		if(!data[type].hasOwnProperty(module) || data[type][module] == null || !data[type][module].hasOwnProperty(key) || data[type][module][key] == null)
 		{
-			if(!jsBackend.locale.data[type].hasOwnProperty('core') || jsBackend.locale.data[type]['core'] == null || !jsBackend.locale.data[type]['core'].hasOwnProperty(key) || jsBackend.locale.data[type]['core'][key] == null)
+			if(!data[type].hasOwnProperty('core') || data[type]['core'] == null || !data[type]['core'].hasOwnProperty(key) || data[type]['core'][key] == null)
 			{
 				return missingTranslation;
 			}
 
-			return jsBackend.locale.data[type]['core'][key];
+			return data[type]['core'][key];
 		}
 
-		return jsBackend.locale.data[type][module][key];
+		return data[type][module][key];
 	},
 
 	// get an error
