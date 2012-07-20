@@ -34,8 +34,14 @@ class FrontendProfilesIndex extends FrontendBaseBlock
 			$this->loadTemplate();
 		}
 
-		// only if you are logged in, baby.
-		else $this->redirect(FrontendNavigation::getURL(404));
+		// profile not logged in
+		else
+		{
+			$this->redirect(
+				FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles'),
+				307
+			);
+		}
 	}
 }
 
