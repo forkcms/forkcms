@@ -62,7 +62,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			SpoonFile::setContent($filename, 'busy' . $counter);
 
 			// return status
-			$this->output(self::OK, array('status' => 'busy'), 'Data is being retrieved. (' . $counter . ')');
+			$this->output(self::OK, array('status' => 'busy', 'temp' => $status), 'Data is being retrieved. (' . $counter . ')');
 		}
 
 		// unauthorized status

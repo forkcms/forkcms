@@ -12,12 +12,6 @@
 		</div>
 	</div>
 </div>
-
-{option:redirect}<div id="redirect" class="hidden">{$redirect}</div>{/option:redirect}
-<div id="redirectGet" class="hidden">{$redirectGet}</div>
-<div id="settingsUrl" class="hidden">{$settingsUrl}</div>
-<div id="page" class="hidden">{$page}</div>
-<div id="identifier" class="hidden">{$identifier}</div>
 <div id="statusError" class="hidden">{$msgGetDataError}</div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

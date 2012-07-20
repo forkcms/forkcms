@@ -330,8 +330,8 @@ jsBackend.analytics.loading =
 			$longLoader.show();
 
 			// get the page to get data for
-			var page = $('#page').html();
-			var identifier = $('#identifier').html();
+			var page = jsBackend.data.get('analytics.data.page');
+			var identifier = jsBackend.data.get('analytics.data.identifier');
 
 			// save data
 			jsBackend.analytics.loading.page = page;
@@ -364,14 +364,14 @@ jsBackend.analytics.loading =
 			success: function(data, textStatus)
 			{
 				// redirect
-				if(data.data.status == 'unauthorized') { window.location = $('#settingsUrl').html(); }
+				if(data.data.status == 'unauthorized') { window.location = jsBackend.data.get('analytics.data.settingsUrl'); }
 
 				if(data.code == 200)
 				{
 					// get redirect url
 					var url = document.location.protocol +'//'+ document.location.host;
-					url += $('#redirect').html();
-					if($('#redirectGet').html() != '') url += '&' + $('#redirectGet').html();
+					if(jsBackend.data.exists('analytics.data.redirect')) url += jsBackend.data.get('analytics.data.redirect');
+					if(jsBackend.data.exists('analytics.data.redirectGet')) url += '&' + jsBackend.data.get('analytics.data.redirectGet');
 
 					// redirect
 					if(data.data.status == 'done') window.location = url;
