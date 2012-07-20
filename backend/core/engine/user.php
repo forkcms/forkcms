@@ -221,7 +221,15 @@ class BackendUser
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
 		if(empty($userData)) throw new BackendException('user (' . $userId . ') can\'t be loaded.');
 
+		$groupId = (int) $db->getVar(
+        	'SELECT group_id
+        	 FROM users_groups
+        	 WHERE user_id = ?',
+        	array((int) $userId)
+		);
+
 		// set properties
+		$this->setGroupId($groupId);
 		$this->setUserId($userData['id']);
 		$this->setEmail($userData['email']);
 		$this->setSessionId($userData['session_id']);
