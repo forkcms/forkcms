@@ -46,7 +46,13 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 		}
 
 		// profile not logged in
-		else $this->redirect(FrontendNavigation::getURL(404));
+		else
+		{
+			$this->redirect(
+				FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'settings'),
+				307
+			);
+		}
 	}
 
 	/**
