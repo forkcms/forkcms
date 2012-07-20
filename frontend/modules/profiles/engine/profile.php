@@ -274,6 +274,23 @@ class FrontendProfilesProfile
 	}
 
 	/**
+	 * Insert or update multiple profile settings.
+	 *
+	 * @param array $values Settings in key=>value form.
+	 */
+	public function setSettings(array $values)
+	{
+		// set settings
+		FrontendProfilesModel::setSettings($this->getId(), $values);
+
+		// add settings to cache
+		foreach($values as $key => $value)
+		{
+			$this->settings[$key] = $value;
+		}
+	}
+
+	/**
 	 * Set a profile status.
 	 *
 	 * @param string $value Status.
