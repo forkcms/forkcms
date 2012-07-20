@@ -346,7 +346,7 @@ class FrontendProfilesModel
 	 * Insert or update multiple profile settings.
 	 *
 	 * @param int $id Profile id.
-	 * @param array $values Settings in key=>valye form.
+	 * @param array $values Settings in key=>value form.
 	 */
 	public static function setSettings($id, array $values)
 	{
