@@ -37,7 +37,6 @@ class BackendMailmotorCopy extends BackendBaseAction
 			$mailing['send_on'] = null;
 			$mailing['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 			$mailing['edited_on'] = $mailing['created_on'];
-			$mailing['data'] = serialize($mailing['data']);
 			unset($mailing['recipients'], $mailing['id'], $mailing['cm_id'], $mailing['send_on_raw']);
 
 			// set groups
