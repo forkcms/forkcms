@@ -14,6 +14,7 @@ Bugfixes:
 * Core: extra validation for jsBackend.locale.get.
 * Analytics: collecting live data wasn't working on iOS-devices, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/311.
 * Blog: feedburner-url wasn't used in the widget, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/308.
+* Core: JS messages were triggered before the document was ready.
 
 
 3.4.0 (2012-07-17)
