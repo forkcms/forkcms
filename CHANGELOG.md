@@ -1,3 +1,22 @@
+3.4.1 (2012-07-24)
+--
+Improvements:
+
+* Core: Upgraded to CKEditor 3.6.4
+* Profiles: rewrote method for inserting/multiple settings.
+* Profiles: ask a display name in the register-step.
+* Profiles: redirect to login if the profile isn't logged in on a settings-page.
+* Profiles: added a modifier for fetching a profile setting.
+
+Bugfixes:
+
+* Core: applied http://dev.ckeditor.com/ticket/8832 to the stylesheetparse because CKEditor triggerd an JS-error in FF14.
+* Core: extra validation for jsBackend.locale.get.
+* Analytics: collecting live data wasn't working on iOS-devices, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/311.
+* Blog: feedburner-url wasn't used in the widget, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/308.
+* Core: JS messages were triggered before the document was ready.
+
+
 3.4.0 (2012-07-17)
 --
 Improvements:
