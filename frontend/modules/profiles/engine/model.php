@@ -346,12 +346,26 @@ class FrontendProfilesModel
 	 * Insert or update multiple profile settings.
 	 *
 	 * @param int $id Profile id.
-	 * @param array $values Settings in key=>valye form.
+	 * @param array $values Settings in key=>value form.
 	 */
 	public static function setSettings($id, array $values)
 	{
-		// go over settings
-		foreach($values as $key => $value) self::setSetting($id, $key, $value);
+		// build parameters
+		$parameters = array();
+		foreach($values as $key => $value)
+		{
+			$parameters[] = $id;
+			$parameters[] = $key;
+			$parameters[] = serialize($value);
+		}
+
+		// build the query
+		$query = 'INSERT INTO profiles_settings(profile_id, name, value)
+				  VALUES';
+		$query .= rtrim(str_repeat('(?, ?, ?), ', count($values)), ', ') . ' ';
+		$query .= 'ON DUPLICATE KEY UPDATE value = VALUES(value)';
+
+		FrontendModel::getDB(true)->execute($query, $parameters);
 	}
 
 	/**

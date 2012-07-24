@@ -270,7 +270,7 @@ jsBackend.ckeditor =
 			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/editor_content.css');
 			if(jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/editor_content.css');
 			jsBackend.ckeditor.defaultConfig.contentsCss.push('/backend/core/layout/css/imports/editor.css');
-			
+
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
 			CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady);
@@ -1202,10 +1202,10 @@ jsBackend.controls =
 
 /**
  * Data related methods
- * 
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsBackend.data = 
+jsBackend.data =
 {
 	initialized: false,
 	data: {},
@@ -1224,7 +1224,7 @@ jsBackend.data =
 	{
 		return (typeof eval('jsBackend.data.data.' + key) != 'undefined');
 	},
-	
+
 	get: function(key)
 	{
 		// init if needed
@@ -1746,19 +1746,33 @@ jsBackend.locale =
 	get: function(type, key, module)
 	{
 		// initialize if needed
-		if(!jsBackend.locale.initialized) jsBackend.locale.init();
+		if(!jsBackend.locale.initialized)
+		{
+			jsBackend.locale.init();
+		}
+		var data = jsBackend.locale.data;
+
+		// value to use when the translation was not found
+		var missingTranslation = '{$' + type + key + '}';
 
 		// validate
-		if(typeof jsBackend.locale.data[type][module][key] == 'undefined')
+		if(data == null || !data.hasOwnProperty(type) || data[type] == null)
 		{
-			// not available in core?
-			if(typeof jsBackend.locale.data[type]['core'][key] == 'undefined') return '{$' + type + key + '}';
-
-			// fallback to core
-			return jsBackend.locale.data[type]['core'][key];
+			return missingTranslation;
 		}
 
-		return jsBackend.locale.data[type][module][key];
+		// if the translation does not exist for the given module, try to fall back to the core
+		if(!data[type].hasOwnProperty(module) || data[type][module] == null || !data[type][module].hasOwnProperty(key) || data[type][module][key] == null)
+		{
+			if(!data[type].hasOwnProperty('core') || data[type]['core'] == null || !data[type]['core'].hasOwnProperty(key) || data[type]['core'][key] == null)
+			{
+				return missingTranslation;
+			}
+
+			return data[type]['core'][key];
+		}
+
+		return data[type][module][key];
 	},
 
 	// get an error

@@ -95,21 +95,24 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 		// update date_viewed for this page
 		BackendAnalyticsModel::updatePageDateViewed($this->pageId);
 
-		// parse redirect link
-		$this->tpl->assign('redirectGet', (isset($page) ? 'page=' . $page : ''));
-		$this->tpl->assign('page', $this->redirectAction);
-		$this->tpl->assign('identifier', ($this->pageId != '' ? $this->pageId . '_' : '') . $this->identifier);
+		$data = array();
+		$data['redirectGet'] = (isset($page) ? 'page=' . $page : '');
+		$data['page'] = $this->redirectAction;
+		$data['identifier'] = ($this->pageId != '' ? $this->pageId . '_' : '') . $this->identifier;
 
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction($this->redirectAction, $this->getModule()))
 		{
-			$this->tpl->assign('redirect', BackendModel::createURLForAction($this->redirectAction));
+			$data['redirect'] = BackendModel::createURLForAction($this->redirectAction);
 		}
 
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction('settings', $this->getModule()))
 		{
-			$this->tpl->assign('settingsUrl', BackendModel::createURLForAction('settings'));
+			$data['settingsUrl'] = BackendModel::createURLForAction('settings');
 		}
+
+		// parse redirect link
+		$this->header->addJsData('analytics', 'data', $data);
 	}
 }

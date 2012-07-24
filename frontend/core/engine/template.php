@@ -241,6 +241,9 @@ class FrontendTemplate extends SpoonTemplate
 
 		// debug stuff
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));
+
+		// profiles
+		$this->mapModifier('profilesetting', array('FrontendTemplateModifiers', 'profileSetting'));
 	}
 
 	/**
@@ -723,6 +726,31 @@ class FrontendTemplateModifiers
 		$extra = new FrontendBlockWidget($module, $action, $data);
 		$extra->execute();
 		return $extra->getContent();
+	}
+
+	/**
+	 * Output a profile setting
+	 *
+	 * @param string $var The variable
+	 * @param string $name The name of the setting
+	 * @return string
+	 */
+	public static function profileSetting($var, $name)
+	{
+		$profile = FrontendProfilesModel::get((int) $var);
+		if($profile === false) return '';
+
+		// convert into array
+		$profile = $profile->toArray();
+
+		// @remark I know this is dirty, but I couldn't find a better way.
+		if(in_array($name, array('display_name', 'registered_on', 'full_url')) && isset($profile[$name]))
+		{
+			return $profile[$name];
+		}
+
+		elseif(isset($profile['settings'][$name])) return $profile['settings'][$name];
+		else return '';
 	}
 
 	/**

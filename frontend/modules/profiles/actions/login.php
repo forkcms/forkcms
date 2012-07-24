@@ -39,7 +39,14 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 		}
 
 		// profile already logged in
-		else $this->redirect(SITE_URL);
+		else
+		{
+			// querystring
+			$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
+
+			// redirect
+			$this->redirect($queryString);
+		}
 	}
 
 	/**
