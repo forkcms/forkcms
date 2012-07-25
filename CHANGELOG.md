@@ -1,3 +1,10 @@
+3.4.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded to jQuery UI 1.8.22
+
+
 3.4.1 (2012-07-24)
 --
 Improvements:
