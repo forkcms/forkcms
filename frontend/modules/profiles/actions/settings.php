@@ -46,7 +46,13 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 		}
 
 		// profile not logged in
-		else $this->redirect(FrontendNavigation::getURL(404));
+		else
+		{
+			$this->redirect(
+				FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'settings'),
+				307
+			);
+		}
 	}
 
 	/**
@@ -192,6 +198,7 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 			{
 				// init
 				$values = array();
+				$settings = array();
 
 				// has there been a valid display name change request?
 				if($this->profile->getDisplayName() !== $txtDisplayName->getValue() && $nameChanges <= FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES)
@@ -203,31 +210,33 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 					$values['url'] = FrontendProfilesModel::getUrl($txtDisplayName->getValue(), $this->profile->getId());
 
 					// update display name count
-					$this->profile->setSetting('display_name_changes', $nameChanges + 1);
+					$settings['display_name_changes'] = $nameChanges + 1;
 				}
 
 				// update values
 				if(!empty($values)) FrontendProfilesModel::update($this->profile->getId(), $values);
 
-				// bday is filled in
+				// build settings
+				$settings['first_name'] = $txtFirstName->getValue();
+				$settings['last_name'] = $txtLastName->getValue();
+				$settings['city'] = $txtCity->getValue();
+				$settings['country'] = $ddmCountry->getValue();
+				$settings['gender'] = $ddmGender->getValue();
+
+				// birthday is filled in
 				if($ddmYear->isFilled())
 				{
 					// mysql format
-					$birthDate = $ddmYear->getValue() . '-';
-					$birthDate .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT) . '-';
-					$birthDate .= str_pad($ddmDay->getValue(), 2, '0', STR_PAD_LEFT);
+					$settings['birth_date'] = $ddmYear->getValue() . '-';
+					$settings['birth_date'] .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT) . '-';
+					$settings['birth_date'] .= str_pad($ddmDay->getValue(), 2, '0', STR_PAD_LEFT);
 				}
 
 				// not filled in
-				else $birthDate = null;
+				else $settings['birth_date'] = null;
 
-				// update settings
-				$this->profile->setSetting('first_name', $txtFirstName->getValue());
-				$this->profile->setSetting('last_name', $txtLastName->getValue());
-				$this->profile->setSetting('city', $txtCity->getValue());
-				$this->profile->setSetting('country', $ddmCountry->getValue());
-				$this->profile->setSetting('gender', $ddmGender->getValue());
-				$this->profile->setSetting('birth_date', $birthDate);
+				// save settings
+				$this->profile->setSettings($settings);
 
 				// trigger event
 				FrontendModel::triggerEvent('profiles', 'after_saved_settings', array('id' => $this->profile->getId()));
