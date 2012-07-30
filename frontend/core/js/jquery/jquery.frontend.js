@@ -267,10 +267,10 @@
 							}
 
 							// build & add html
-							html += '<li class="shareMenuTwitter">' +
+							html += '<li class="shareMenuGoogleplus">' +
 							'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>';
 							html += '</li>';
-							break;
+						break;
 					}
 				}
 			}
