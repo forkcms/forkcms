@@ -767,6 +767,9 @@ class FrontendTemplateModifiers
 		}
 		catch(Exception $e)
 		{
+			// if we are debugging, we want to see the exception
+			if(SPOON_DEBUG) throw $e;
+
 			return null;
 		}
 	}
