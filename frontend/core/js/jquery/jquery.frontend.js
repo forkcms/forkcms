@@ -55,7 +55,7 @@
 			netlog: { name: 'netlog', show: true, label: 'Netlog' },
 			twitter: { name: 'twitter', show: true, label: 'tweet' },
 			googleplus: { name: 'googleplus', show: true, label: 'Google +1' },
-			pinterest: { name: 'pinterest', show: true, label: 'Pin it', countLayout: 'horizontal' } //countLayout: horizontal/vertical/none
+			pinterest: { name: 'pinterest', show: true, label: 'Pin it', countLayout: 'horizontal' } // possible values for countLayout: horizontal/vertical/none
 		};
 
 		// extend options
