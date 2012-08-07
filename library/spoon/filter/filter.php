@@ -510,6 +510,7 @@ class SpoonFilter
 	 */
 	public static function isInteger($value)
 	{
+		if(is_array($value)) return false;
 		return ((string) (int) $value == (string) $value);
 	}
 
