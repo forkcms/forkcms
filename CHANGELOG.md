@@ -1,3 +1,11 @@
+3.4.3 (xxxx-xx-xx)
+--
+
+Bugfixes:
+
+* Core: fixed some issues related to PHP 5.4.
+
+
 3.4.2 (2012-07-31)
 --
 Improvements:
