@@ -123,8 +123,27 @@ class SpoonTemplate
 	 */
 	public function assign($variable, $value = null)
 	{
+
 		// regular function use
-		if($value !== null && $variable != '') $this->variables[(string) $variable] = $value;
+		if($value !== null && $variable != '')
+		{
+			// an array?
+			if(is_array($variable))
+			{
+				// loop array
+				foreach($variable as $key => $variableName)
+				{
+					// value provided?
+					if(isset($value[$key]))
+					{
+						$this->variables[(string) $variableName] = $value[$key];
+					}
+				}
+			}
+
+			// not an array
+			else $this->variables[(string) $variable] = $value;
+		}
 
 		// only 1 argument
 		else
