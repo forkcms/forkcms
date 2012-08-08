@@ -4,6 +4,7 @@
 Bugfixes:
 
 * Core: fixed some issues related to PHP 5.4.
+* Profiles: fixed locale.js conflict with backend.js.
 
 
 3.4.2 (2012-07-31)
