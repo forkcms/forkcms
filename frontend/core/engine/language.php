@@ -114,12 +114,12 @@ class FrontendLanguage
 		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php', $value);
 
 		// get months
-		$monthsLong = SpoonLocale::getMonths(FRONTEND_LANGUAGE, false);
-		$monthsShort = SpoonLocale::getMonths(FRONTEND_LANGUAGE, true);
+		$monthsLong = SpoonLocale::getMonths($language, false);
+		$monthsShort = SpoonLocale::getMonths($language, true);
 
 		// get days
-		$daysLong = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, false, 'sunday');
-		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
+		$daysLong = SpoonLocale::getWeekDays($language, false, 'sunday');
+		$daysShort = SpoonLocale::getWeekDays($language, true, 'sunday');
 
 		// build labels
 		foreach($monthsLong as $key => $value) $json['loc']['MonthLong' . SpoonFilter::ucfirst($key)] = $value;
