@@ -5,6 +5,7 @@ Bugfixes:
 
 * Core: fixed some issues related to PHP 5.4.
 * Locale: fixed locale.js conflict with backend.js.
+* Core: use language parameter when rebuilding cache, instead of unavailable constant.
 
 
 3.4.2 (2012-07-31)
