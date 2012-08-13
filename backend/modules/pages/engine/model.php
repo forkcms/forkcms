@@ -1566,7 +1566,12 @@ class BackendPagesModel
 			else
 			{
 				// set new page revision id
-				foreach($blocksContent as &$block) $block['revision_id'] = $page['revision_id'];
+				foreach($blocksContent as &$block)
+				{
+					$block['revision_id'] = $page['revision_id'];
+					$block['created_on'] = BackendModel::getUTCDate(null, $block['created_on']);
+					$block['edited_on'] = BackendModel::getUTCDate(null, $block['edited_on']);
+				}
 			}
 
 			// insert the blocks
