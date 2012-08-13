@@ -6,6 +6,7 @@ Bugfixes:
 * Core: fixed some issues related to PHP 5.4.
 * Locale: fixed locale.js conflict with backend.js.
 * Core: use language parameter when rebuilding cache, instead of unavailable constant.
+* Pages: issue when changing themes, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/314.
 
 
 3.4.2 (2012-07-31)
