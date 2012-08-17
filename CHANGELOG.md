@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: Upgraded to jQuery 1.8
+* Core: Upgraded to jQuery UI 1.8.23
 
 
 Bugfixes:
