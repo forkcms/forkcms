@@ -39,15 +39,13 @@ class BackendMailmotorCMHelper
 	 * Creates a new client
 	 *
 	 * @param string $companyName The client company name.
-	 * @param string $contactName The personal name of the principle contact for this client.
-	 * @param string $email An email address to which this client will be sent application-related emails.
 	 * @param string[optional] $country This client’s country.
 	 * @param string[optional] $timezone Client timezone for tracking and reporting data.
 	 */
-	public static function createClient($companyName, $contactName, $email, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
+	public static function createClient($companyName, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
 	{
 		// create client
-		$clientId = self::getCM()->createClient($companyName, $contactName, $email, $country, $timezone);
+		$clientId = self::getCM()->createClient($companyName, $country, $timezone);
 
 		// add client ID as a module setting for mailmotor
 		BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $clientId);
@@ -996,14 +994,12 @@ class BackendMailmotorCMHelper
 	 * Updates a client
 	 *
 	 * @param string $companyName The client company name.
-	 * @param string $contactName The personal name of the principle contact for this client.
-	 * @param string $email An email address to which this client will be sent application-related emails.
 	 * @param string[optional] $country This client’s country.
 	 * @param string[optional] $timezone Client timezone for tracking and reporting data.
 	 */
-	public static function updateClient($companyName, $contactName, $email, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
+	public static function updateClient($companyName, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
 	{
-		self::getCM()->updateClientBasics($companyName, $contactName, $email, $country, $timezone);
+		self::getCM()->updateClientBasics($companyName, $country, $timezone);
 	}
 
 	/**
