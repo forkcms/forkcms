@@ -2,7 +2,7 @@
 --
 Improvements:
 
-* Core: Upgraded to BackendDataGridFunctions::showImage to support width and height.
+* Core: Upgraded to BackendDataGridFunctions::showImage to support a href, width and height.
 
 Bugfixes:
 
