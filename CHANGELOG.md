@@ -1,5 +1,9 @@
 3.4.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: Upgraded to jQuery 1.8
+
 
 Bugfixes:
 
