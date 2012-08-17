@@ -3,25 +3,25 @@
  *
  * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
  */
-jsBackend.locale =
+jsBackend.translations =
 {
 	init: function()
 	{
-		jsBackend.locale.controls.init();
+		jsBackend.translations.controls.init();
 	}
 }
 
-jsBackend.locale.controls =
+jsBackend.translations.controls =
 {
 	init: function()
 	{
 		if($('select#application').length > 0 && $('select#module').length > 0)
 		{
 			// bind
-			$('select#application').on('change', jsBackend.locale.controls.enableDisableModules);
+			$('select#application').on('change', jsBackend.translations.controls.enableDisableModules);
 
 			// call to start
-			jsBackend.locale.controls.enableDisableModules();
+			jsBackend.translations.controls.enableDisableModules();
 		}
 
 		if($('.dataGrid td.translationValue').length > 0)
@@ -63,4 +63,4 @@ jsBackend.locale.controls =
 	}
 }
 
-$(jsBackend.locale.init);
+$(jsBackend.translations.init);

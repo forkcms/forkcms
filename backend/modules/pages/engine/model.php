@@ -215,6 +215,7 @@ class BackendPagesModel
 				$navigation[$page['type']][$page['parent_id']][$pageID] = $temp;
 			}
 		}
+
 		// order by URL
 		asort($keys);
 
@@ -976,10 +977,10 @@ class BackendPagesModel
 			 LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
 			 LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
 			 WHERE i.parent_id IN (' . implode(', ', $ids) . ')
-			 	AND i.status = ? AND i.language = ? AND i.hidden = ?
+			 	AND i.status = ? AND i.language = ?
 			 GROUP BY i.revision_id
 			 ORDER BY i.sequence ASC',
-			array('block', 'active', $language, 'N'), 'id'
+			array('block', 'active', $language), 'id'
 		);
 
 		// get the childIDs
@@ -1566,7 +1567,12 @@ class BackendPagesModel
 			else
 			{
 				// set new page revision id
-				foreach($blocksContent as &$block) $block['revision_id'] = $page['revision_id'];
+				foreach($blocksContent as &$block)
+				{
+					$block['revision_id'] = $page['revision_id'];
+					$block['created_on'] = BackendModel::getUTCDate(null, $block['created_on']);
+					$block['edited_on'] = BackendModel::getUTCDate(null, $block['edited_on']);
+				}
 			}
 
 			// insert the blocks
