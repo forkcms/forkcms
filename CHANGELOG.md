@@ -1,5 +1,8 @@
 3.4.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: Upgraded to BackendDataGridFunctions::showImage to support width and height.
 
 Bugfixes:
 
