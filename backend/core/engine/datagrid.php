@@ -870,20 +870,31 @@ class BackendDataGridFunctions
 	 * @param string $path The path to the image.
 	 * @param string $image The filename of the image.
 	 * @param string[optional] $title The title (will be used as alt).
+	 * @param int[optional] $url The url where you want the image to link to.
 	 * @param int[optional] $width The width for the image you want to use.
 	 * @param int[optional] $height The height for the image you want to use.
 	 * @return string
 	 */
-	public static function showImage($path, $image, $title = '', $width = null, $height = null)
+	public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null)
 	{
-		$size = '';
+		// init vars
+		$html = $size = '';
 		$path = (string) $path;
 		$image = (string) $image;
 		$title = (string) $title;
 		if((int) $width) $size .= ' width="' . (int) $width . '"';
 		if((int) $height) $size .= ' height="' . (int) $height . '"';
 
-		return '<img src="' . $path . '/' . $image . '" alt="' . $title . '"' . $size . ' />';
+		// add a to html
+		if(!empty($url)) $html = '<a href="' . (string) $url . '" title="' . $title . '">';
+
+		// add image to html
+		$html .= '<img src="' . $path . '/' . $image . '" alt="' . $title . '"' . $size . ' />';
+
+		// close a
+		if(!empty($url)) $html .= '</a>';
+
+		return $html;
 	}
 
 	/**
