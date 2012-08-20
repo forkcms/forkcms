@@ -1,5 +1,10 @@
 3.4.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: Upgraded to jQuery 1.8
+* Core: Upgraded to jQuery UI 1.8.23
+
 
 Bugfixes:
 
@@ -7,6 +12,7 @@ Bugfixes:
 * Locale: fixed locale.js conflict with backend.js.
 * Core: use language parameter when rebuilding cache, instead of unavailable constant.
 * Pages: issue when changing themes, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/314.
+* Pages: hidden pages weren't visible in the tree.
 
 
 3.4.2 (2012-07-31)
