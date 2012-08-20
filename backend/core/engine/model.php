@@ -230,6 +230,26 @@ class BackendModel
 	}
 
 	/**
+	 * Delete all extras for a certain value in the data array of that module_extra.
+	 *
+	 * @param string $module 			The module for the extra.
+	 * @param string $field 			The field of the data you want to check the value for.
+	 * @param string $value 			The value to check the field for.
+	 * @param string [optional]$action 	The action you want to filter on.
+	 */
+	public function deleteExtrasForData($module, $field, $value)
+	{
+		// get ids
+		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value);
+	
+		// delete extras
+		if(!empty($ids)) BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+	
+		// invalidate the cache for the module
+		BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+	}
+
+	/**
 	 * Generate a totally random but readable/speakable password
 	 *
 	 * @param int[optional] $length The maximum length for the password to generate.
