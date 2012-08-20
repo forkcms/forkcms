@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Core: Added functions to manage modules_extras, can be used for custom widgets.
 * Core: Upgraded to jQuery 1.8
 * Core: Upgraded to jQuery UI 1.8.23
 
