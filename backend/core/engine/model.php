@@ -1422,4 +1422,30 @@ class BackendModel
 			array($eventModule, $eventName, $module)
 		);
 	}
+
+	/**
+	 * Update extra
+	 * 
+	 * @param int $id			The id for the extra.
+	 * @param string $key		The key you want to update.
+	 * @param string $value 	The new value.
+	 */
+	public static function updateExtra($id, $key, $value)
+	{
+		// error checking the key
+		if(!in_array((string) $key, array('label', 'action', 'data', 'hidden', 'sequence')))
+		{
+			throw new BackendException('The key ' . $key . ' can\'t be updated.');
+		}
+
+		// init item
+		$item = array();
+
+		// build item
+		$item[(string) $key] = (string) $value;
+
+		// update the extra
+		BackendModel::getDB(true)->update('modules_extras', $item, 'id = ?', array((int) $id));
+	}
+
 }
