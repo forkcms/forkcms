@@ -487,6 +487,7 @@ class BackendModel
 		return $result;
 	}
 
+	/**
 	 * Get the page-keys
 	 *
 	 * @param string[optional] $language The language to use, if not provided we will use the working language.
@@ -1448,4 +1449,31 @@ class BackendModel
 		BackendModel::getDB(true)->update('modules_extras', $item, 'id = ?', array((int) $id));
 	}
 
+	/**
+	 * Update extra data
+	 *
+	 * @param int $id			The id for the extra.
+	 * @param string $key		The key in the data you want to update.
+	 * @param string $value		The new value.
+	 */
+	public static function updateExtraData($id, $key, $value)
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get data
+		$data = (string) $db->getVar('SELECT i.data
+									  FROM modules_extras AS i
+									  WHERE i.id = ?',
+									  array((int) $id));
+
+		// unserialize data
+		$data = unserialize($data);
+
+		// built item
+		$data[(string) $key] = (string) $value;
+
+		// update value
+		$db->update('modules_extras', array('data' => serialize($data)), 'id = ?', array((int) $id));
+	}
 }
