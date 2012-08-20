@@ -422,6 +422,29 @@ class BackendModel
 	}
 
 	/**
+	 * Get extras
+	 *
+	 * @param array $ids 	The ids of the modules_extras to get.
+	 * @return array		
+	 */
+	public static function getExtras($ids)
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+	
+		// loop and cast to integers
+		foreach($ids as &$id) $id = (int) $id;
+	
+		// create an array with an equal amount of questionmarks as ids provided
+		$extraIdPlaceHolders = array_fill(0, count($ids), '?');
+	
+		// get extras
+		return (array) $db->getRecords('SELECT i.*
+										FROM modules_extras AS i
+										WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
+										$ids);
+	}
+	
 	 * Get the page-keys
 	 *
 	 * @param string[optional] $language The language to use, if not provided we will use the working language.
