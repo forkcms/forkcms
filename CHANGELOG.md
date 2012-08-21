@@ -4,7 +4,8 @@ Improvements:
 
 * Core: Upgraded to jQuery 1.8
 * Core: Upgraded to jQuery UI 1.8.23
-* Blog: added blog.comments.delete in the API.
+* Blog: Added blog.comments.delete in the API.
+* Core: return-format for the API can be specified through Accept-header, GET or POST.
 
 
 Bugfixes:
