@@ -4,6 +4,7 @@ Improvements:
 
 * Core: Upgraded to jQuery 1.8
 * Core: Upgraded to jQuery UI 1.8.23
+* Blog: added blog.comments.delete in the API.
 
 
 Bugfixes:

@@ -85,6 +85,25 @@ class BackendBlogAPI
 		}
 	}
 
+
+	/**
+	 * Delete comment(s).
+	 *
+	 * @param string $id The id/ids of the comment(s) to update.
+	 */
+	public static function commentsDelete($id)
+	{
+		// authorize
+		if(API::authorize() && API::isValidRequestMethod('POST'))
+		{
+			// redefine
+			if(!is_array($id)) $id = (array) explode(',', $id);
+
+			// update statuses
+			BackendBlogModel::deleteComments($id);
+		}
+	}
+
 	/**
 	 * Get a single comment
 	 *
