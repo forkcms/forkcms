@@ -7,7 +7,6 @@ Improvements:
 * Blog: Added blog.comments.delete in the API.
 * Core: return-format for the API can be specified through Accept-header, GET or POST.
 
-
 Bugfixes:
 
 * Core: fixed some issues related to PHP 5.4.
@@ -15,6 +14,7 @@ Bugfixes:
 * Core: use language parameter when rebuilding cache, instead of unavailable constant.
 * Pages: issue when changing themes, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/314.
 * Pages: hidden pages weren't visible in the tree.
+* Core: backend used working language instead of interface language for javascript translations.
 
 
 3.4.2 (2012-07-31)
