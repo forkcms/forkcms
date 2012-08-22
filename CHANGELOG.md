@@ -15,6 +15,7 @@ Bugfixes:
 * Pages: issue when changing themes, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/314.
 * Pages: hidden pages weren't visible in the tree.
 * Core: backend used working language instead of interface language for javascript translations.
+* Core: editor-templates weren't loaded because the language wasn't set at the point the default config is defined.
 
 
 3.4.2 (2012-07-31)
