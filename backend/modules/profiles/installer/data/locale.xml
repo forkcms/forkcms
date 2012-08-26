@@ -261,6 +261,7 @@
       <item type="label" name="LoginBox">
         <translation language="nl"><![CDATA[login box]]></translation>
         <translation language="en"><![CDATA[login box]]></translation>
+        <translation language="ru"><![CDATA[Окно авторизации]]></translation>
       </item>
       <item type="label" name="Male">
         <translation language="nl"><![CDATA[man]]></translation>
@@ -635,6 +636,7 @@
       <item type="label" name="LoginBox">
         <translation language="nl"><![CDATA[login box]]></translation>
         <translation language="en"><![CDATA[login box]]></translation>
+        <translation language="ru"><![CDATA[окно авторизации]]></translation>
       </item>
     </core>
   </backend>
@@ -643,10 +645,12 @@
       <item type="label" name="Settings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>
+        <translation language="ru"><![CDATA[настройки]]></translation>
       </item>
       <item type="message" name="ProfilesLoggedInAs">
         <translation language="nl"><![CDATA[Je bent aangemeld als <a href="%2$s">%1$s</a>.]]></translation>
         <translation language="en"><![CDATA[You are logged on as <a href="%2$s">%1$s</a>.]]></translation>
+        <translation language="ru"><![CDATA[Вы вошли как <a href="%2$s">%1$s</a>.]]></translation>
       </item>
     </core>
   </frontend>
