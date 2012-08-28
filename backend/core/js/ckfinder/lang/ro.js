@@ -75,16 +75,18 @@ CKFinder.lang['ro'] =
 	FolderDelete	: 'Ești sigur că vrei să ștergi dosarul "%1"?',
 	FolderRenaming	: ' (Redenumire...)',
 	FolderDeleting	: ' (Ștergere...)',
+	DestinationFolder	: 'Destination Folder', // MISSING
 
 	// Files
 	FileRename		: 'Te rugăm să introduci numele nou al fișierului: ',
 	FileRenameExt	: 'Ești sigur că vrei să schimbi extensia fișierului? Fișierul poate deveni inutilizabil.',
 	FileRenaming	: 'Redenumire...',
 	FileDelete		: 'Ești sigur că vrei să ștergi fișierul "%1"?',
+	FilesDelete	: 'Are you sure you want to delete %1 files?', // MISSING
 	FilesLoading	: 'Încărcare...',
 	FilesEmpty		: 'Dosarul este gol.',
-	FilesMoved		: 'Fișierul %1 mutat la %2:%3.',
-	FilesCopied		: 'Fișierul %1 copiat la %2:%3.',
+	DestinationFile	: 'Destination File', // MISSING
+	SkippedFiles	: 'List of skipped files:', // MISSING
 
 	// Basket
 	BasketFolder		: 'Coș',
@@ -93,13 +95,21 @@ CKFinder.lang['ro'] =
 	BasketOpenFolder	: 'Deschide dosarul părinte',
 	BasketTruncateConfirm : 'Sigur dorești să elimini toate fișierele din coș?',
 	BasketRemoveConfirm	: 'Sigur dorești să elimini fișierul "%1" din coș?',
+	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?', // MISSING
 	BasketEmpty			: 'Niciun fișier în coș, trage și așează cu mouse-ul.',
 	BasketCopyFilesHere	: 'Copiază fișiere din coș',
 	BasketMoveFilesHere	: 'Mută fișiere din coș',
 
-	BasketPasteErrorOther	: 'Fișierul %s eroare: %e',
-	BasketPasteMoveSuccess	: 'Următoarele fișiere au fost mutate: %s',
-	BasketPasteCopySuccess	: 'Următoarele fișiere au fost copiate: %s',
+	// Global messages
+	OperationCompletedSuccess	: 'Operation completed successfully.', // MISSING
+	OperationCompletedErrors		: 'Operation completed with errors.', // MISSING
+	FileError				: '%s: %e', // MISSING
+
+	// Move and Copy files
+	MovedFilesNumber		: 'Number of files moved: %s.', // MISSING
+	CopiedFilesNumber	: 'Number of files copied: %s.', // MISSING
+	MoveFailedList		: 'The following files could not be moved:<br />%s', // MISSING
+	CopyFailedList		: 'The following files could not be copied:<br />%s', // MISSING
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: 'Încarcă',
@@ -118,9 +128,10 @@ CKFinder.lang['ro'] =
 	NewSubFolder	: 'Subdosar nou',
 	Rename			: 'Redenumește',
 	Delete			: 'Șterge',
+	DeleteFiles		: 'Delete Files', // MISSING
 
-	CopyDragDrop	: 'Copiază fișierul aici',
-	MoveDragDrop	: 'Mută fișierul aici',
+	CopyDragDrop	: 'Copiază aici',
+	MoveDragDrop	: 'Mută aici',
 
 	// Dialogs
 	RenameDlgTitle		: 'Redenumește',
@@ -130,6 +141,7 @@ CKFinder.lang['ro'] =
 
 	FileOverwrite	: 'Suprascriere',
 	FileAutorename	: 'Auto-redenumire',
+	ManuallyRename	: 'Manually rename', // MISSING
 
 	// Generic
 	OkBtn		: 'OK',
@@ -201,6 +213,7 @@ CKFinder.lang['ro'] =
 	105 : 'Extensie fișier invalidă.',
 	109 : 'Cerere invalidă.',
 	110 : 'Eroare necunoscută.',
+	111 : 'It was not possible to complete the request due to resulting file size.', // MISSING
 	115 : 'Există deja un fișier sau un dosar cu același nume.',
 	116 : 'Dosar negăsit. Te rog împrospătează și încearcă din nou.',
 	117 : 'Fișier negăsit. Te rog împrospătează lista de fișiere și încearcă din nou.',
@@ -224,6 +237,8 @@ CKFinder.lang['ro'] =
 		FileEmpty		: 'Numele fișierului nu poate fi gol.',
 		FileExists		: 'Fișierul %s există deja.',
 		FolderEmpty		: 'Numele dosarului nu poate fi gol.',
+		FolderExists	: 'Folder %s already exists.', // MISSING
+		FolderNameExists	: 'Folder already exists.', // MISSING
 
 		FileInvChar		: 'Numele fișierului nu poate conține niciunul din următoarele caractere: \n\\ / : * ? " < > |',
 		FolderInvChar	: 'Numele dosarului nu poate conține niciunul din următoarele caractere: \n\\ / : * ? " < > |',
@@ -277,5 +292,16 @@ CKFinder.lang['ro'] =
 	Gallery :
 	{
 		current : 'Imaginea {current} din {total}'
+	},
+
+	Zip :
+	{
+		extractHereLabel	: 'Extract here', // MISSING
+		extractToLabel		: 'Extract to...', // MISSING
+		downloadZipLabel	: 'Download as zip', // MISSING
+		compressZipLabel	: 'Compress to zip', // MISSING
+		removeAndExtract	: 'Remove existing and extract', // MISSING
+		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
+		extractSuccess		: 'File extracted successfully.' // MISSING
 	}
 };

@@ -84,9 +84,9 @@ class CKFinder_Connector_CommandHandler_RenameFolder extends CKFinder_Connector_
         }
 
         //let's calculate new folder name
-        $newFolderPath = dirname($oldFolderPath).DIRECTORY_SEPARATOR.$newFolderName.DIRECTORY_SEPARATOR;
+        $newFolderPath = dirname($oldFolderPath).'/'.$newFolderName.'/';
 
-        if (file_exists(rtrim($newFolderPath, DIRECTORY_SEPARATOR))) {
+        if (file_exists(rtrim($newFolderPath, '/'))) {
             $this->_errorHandler->throwError(CKFINDER_CONNECTOR_ERROR_ALREADY_EXIST);
         }
 

@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: Upgraded Highcharts to 2.3.0
+* Core: Upgraded CKFinder to 2.3.0
 
 
 3.4.3 (2012-08-28)

@@ -88,7 +88,7 @@ class CKFinder_Connector_CommandHandler_DownloadFile extends CKFinder_Connector_
             header("Content-Disposition: attachment; filename=\"" . $encodedName. "\"");
         }
         header("Content-Length: " . filesize($filePath));
-        CKFinder_Connector_Utils_FileSystem::readfileChunked($filePath);
+        CKFinder_Connector_Utils_FileSystem::sendFile($filePath);
         exit;
     }
 }

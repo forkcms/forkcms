@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Geçersiz dosya uzantısı.',
 		'109' => 'Geçersiz istek.',
 		'110' => 'Bilinmeyen hata.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Aynı isimde bir dosya ya da klasör zaten var.',
 		'116' => 'Klasör bulunamadı. Lütfen yenileyin ve tekrar deneyin.',
 		'117' => 'Dosya bulunamadı. Lütfen dosya listesini yenileyin ve tekrar deneyin.',

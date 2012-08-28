@@ -89,6 +89,8 @@ class CKFinder_Connector_CommandHandler_Init extends CKFinder_Connector_CommandH
         if ($_thumbnailsEnabled) {
             $_oConnInfo->addAttribute("thumbsUrl", $_thumbnailsConfig->getUrl());
             $_oConnInfo->addAttribute("thumbsDirectAccess", $_thumbnailsConfig->getDirectAccess() ? "true" : "false" );
+            $_oConnInfo->addAttribute("thumbsWidth", $_thumbnailsConfig->getMaxWidth());
+            $_oConnInfo->addAttribute("thumbsHeight", $_thumbnailsConfig->getMaxHeight());
         }
         $_imagesConfig = $_config->getImagesConfig();
         $_oConnInfo->addAttribute("imgWidth", $_imagesConfig->getMaxWidth());
@@ -148,8 +150,8 @@ class CKFinder_Connector_CommandHandler_Init extends CKFinder_Connector_CommandH
                     $_oResourceType[$i]->addAttribute("url", $_oTypeInfo->getUrl());
                     $_oResourceType[$i]->addAttribute("allowedExtensions", implode(",", $_oTypeInfo->getAllowedExtensions()));
                     $_oResourceType[$i]->addAttribute("deniedExtensions", implode(",", $_oTypeInfo->getDeniedExtensions()));
-                    $_oResourceType[$i]->addAttribute("hash", substr(md5($_oTypeInfo->getDirectory()), 0, 16));
-                    $_oResourceType[$i]->addAttribute("hasChildren", CKFinder_Connector_Utils_FileSystem::hasChildren($_oTypeInfo->getDirectory()) ? "true" : "false");
+                    $_oResourceType[$i]->addAttribute("hash", $_oTypeInfo->getHash());
+                    $_oResourceType[$i]->addAttribute("hasChildren", CKFinder_Connector_Utils_FileSystem::hasChildren('/', $_oTypeInfo) ? "true" : "false");
                     $_oResourceType[$i]->addAttribute("acl", $_aclMask);
                     $maxSize = $_oTypeInfo->getMaxSize();
                     if ($phpMaxSize) {

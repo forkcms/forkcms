@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Nedozvoljena vrsta datoteke.',
 		'109' => 'Nedozvoljen zahtjev.',
 		'110' => 'Nepoznata greška.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Datoteka ili direktorij s istim nazivom već postoji.',
 		'116' => 'Direktorij nije pronađen. Osvježite stranicu i pokušajte ponovo.',
 		'117' => 'Datoteka nije pronađena. Osvježite listu datoteka i pokušajte ponovo.',
