@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Érvénytelen fájl kiterjesztés.',
 		'109' => 'Érvénytelen kérés.',
 		'110' => 'Ismeretlen hiba.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'A fálj vagy mappa már létezik ezen a néven.',
 		'116' => 'Mappa nem található. Kérjük frissítsen és próbálja újra.',
 		'117' => 'Fájl nem található. Kérjük frissítsen és próbálja újra.',

@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Sobimatu faililaiend.',
 		'109' => 'Vigane päring.',
 		'110' => 'Tundmatu viga.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Sellenimeline fail või kaust on juba olemas.',
 		'116' => 'Kausta ei leitud. Palun värskenda lehte ja proovi uuesti.',
 		'117' => 'Faili ei leitud. Palun värskenda lehte ja proovi uuesti.',

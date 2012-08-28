@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Ongeldige bestandsextensie.',
 		'109' => 'Ongeldige aanvraag.',
 		'110' => 'Onbekende fout.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Er bestaat al een bestand of map met deze naam.',
 		'116' => 'Map niet gevonden, vernieuw de mappenlijst of kies een andere map.',
 		'117' => 'Bestand niet gevonden, vernieuw de mappenlijst of kies een andere map.',

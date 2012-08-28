@@ -75,16 +75,18 @@ CKFinder.lang['ja'] =
 	FolderDelete	: '本当にフォルダ「"%1"」を削除してもよろしいですか？',
 	FolderRenaming	: ' (リネーム中...)',
 	FolderDeleting	: ' (削除中...)',
+	DestinationFolder	: 'Destination Folder', // MISSING
 
 	// Files
 	FileRename		: '新しいファイル名を入力してください: ',
 	FileRenameExt	: 'ファイルが使えなくなる可能性がありますが、本当に拡張子を変更してもよろしいですか？',
 	FileRenaming	: 'リネーム中...',
 	FileDelete		: '本当に「"%1"」を削除してもよろしいですか？',
+	FilesDelete	: 'Are you sure you want to delete %1 files?', // MISSING
 	FilesLoading	: '読み込み中...',
 	FilesEmpty		: 'ファイルがありません',
-	FilesMoved		: ' %1 は %2:%3 に移動されました',
-	FilesCopied		: ' %1 cは %2:%3 にコピーされました',
+	DestinationFile	: 'Destination File', // MISSING
+	SkippedFiles	: 'List of skipped files:', // MISSING
 
 	// Basket
 	BasketFolder		: 'Basket',
@@ -93,13 +95,21 @@ CKFinder.lang['ja'] =
 	BasketOpenFolder	: '親フォルダを開く',
 	BasketTruncateConfirm : '本当にバスケットの中身を空にしますか？',
 	BasketRemoveConfirm	: '本当に「"%1"」をバスケットから削除しますか？',
+	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?', // MISSING
 	BasketEmpty			: 'バスケットの中にファイルがありません。このエリアにドラッグ＆ドロップして追加することができます。',
 	BasketCopyFilesHere	: 'バスケットからファイルをコピー',
 	BasketMoveFilesHere	: 'バスケットからファイルを移動',
 
-	BasketPasteErrorOther	: 'ファイル %s のエラー： %e',
-	BasketPasteMoveSuccess	: '以下のファイルが移動されました: %s',
-	BasketPasteCopySuccess	: '以下のファイルがコピーされました: %s',
+	// Global messages
+	OperationCompletedSuccess	: 'Operation completed successfully.', // MISSING
+	OperationCompletedErrors		: 'Operation completed with errors.', // MISSING
+	FileError				: '%s: %e', // MISSING
+
+	// Move and Copy files
+	MovedFilesNumber		: 'Number of files moved: %s.', // MISSING
+	CopiedFilesNumber	: 'Number of files copied: %s.', // MISSING
+	MoveFailedList		: 'The following files could not be moved:<br />%s', // MISSING
+	CopyFailedList		: 'The following files could not be copied:<br />%s', // MISSING
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: 'アップロード',
@@ -118,6 +128,7 @@ CKFinder.lang['ja'] =
 	NewSubFolder	: '新しいフォルダに入れる',
 	Rename			: 'ファイル名の変更',
 	Delete			: '削除',
+	DeleteFiles		: 'Delete Files', // MISSING
 
 	CopyDragDrop	: 'コピーするファイルをここにドロップしてください',
 	MoveDragDrop	: '移動するファイルをここにドロップしてください',
@@ -130,6 +141,7 @@ CKFinder.lang['ja'] =
 
 	FileOverwrite	: '上書き',
 	FileAutorename	: 'A自動でリネーム',
+	ManuallyRename	: 'Manually rename', // MISSING
 
 	// Generic
 	OkBtn		: 'OK',
@@ -201,6 +213,7 @@ CKFinder.lang['ja'] =
 	105 : '拡張子が正しくありません。',
 	109 : '不正なリクエストです。',
 	110 : '不明なエラーが発生しました。',
+	111 : 'It was not possible to complete the request due to resulting file size.', // MISSING
 	115 : '同じ名前のファイル/フォルダがすでに存在しています。',
 	116 : 'フォルダが見つかりませんでした。ページを更新して再度お試し下さい。',
 	117 : 'ファイルが見つかりませんでした。ページを更新して再度お試し下さい。',
@@ -224,6 +237,8 @@ CKFinder.lang['ja'] =
 		FileEmpty		: 'ファイル名を入力してください',
 		FileExists		: ' %s はすでに存在しています。別の名前を入力してください。',
 		FolderEmpty		: 'フォルダ名を入力してください',
+		FolderExists	: 'Folder %s already exists.', // MISSING
+		FolderNameExists	: 'Folder already exists.', // MISSING
 
 		FileInvChar		: 'ファイルに以下の文字は使えません: \n\\ / : * ? " < > |',
 		FolderInvChar	: 'フォルダに以下の文字は使えません: \n\\ / : * ? " < > |',
@@ -277,5 +292,16 @@ CKFinder.lang['ja'] =
 	Gallery :
 	{
 		current : 'Image {current} of {total}' // MISSING
+	},
+
+	Zip :
+	{
+		extractHereLabel	: 'Extract here', // MISSING
+		extractToLabel		: 'Extract to...', // MISSING
+		downloadZipLabel	: 'Download as zip', // MISSING
+		compressZipLabel	: 'Compress to zip', // MISSING
+		removeAndExtract	: 'Remove existing and extract', // MISSING
+		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
+		extractSuccess		: 'File extracted successfully.' // MISSING
 	}
 };

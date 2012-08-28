@@ -1,8 +1,14 @@
 3.4.4 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: Upgraded Highcharts to 2.3.0
+* Core: Upgraded CKFinder to 2.3.0
+
 Bugfixes:
 
 * Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
+
 
 3.4.3 (2012-08-28)
 --

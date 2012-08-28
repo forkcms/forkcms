@@ -75,16 +75,18 @@ CKFinder.lang['sv'] =
 	FolderDelete	: 'Är du säker på att du vill radera mappen "%1"?',
 	FolderRenaming	: ' (Byter mappens namn...)',
 	FolderDeleting	: ' (Raderar...)',
+	DestinationFolder	: 'Destination Folder', // MISSING
 
 	// Files
 	FileRename		: 'Skriv det nya filnamnet: ',
 	FileRenameExt	: 'Är du säker på att du vill ändra filändelsen? Filen kan bli oanvändbar.',
 	FileRenaming	: 'Byter filnamn...',
 	FileDelete		: 'Är du säker på att du vill radera filen "%1"?',
+	FilesDelete	: 'Are you sure you want to delete %1 files?', // MISSING
 	FilesLoading	: 'Laddar...',
 	FilesEmpty		: 'Mappen är tom.',
-	FilesMoved		: 'Filen %1 flyttad till %2:%3.',
-	FilesCopied		: 'Filen %1 kopierad till %2:%3.',
+	DestinationFile	: 'Destination File', // MISSING
+	SkippedFiles	: 'List of skipped files:', // MISSING
 
 	// Basket
 	BasketFolder		: 'Filkorg',
@@ -93,13 +95,21 @@ CKFinder.lang['sv'] =
 	BasketOpenFolder	: 'Öppna överliggande mapp',
 	BasketTruncateConfirm : 'Vill du verkligen ta bort alla filer från korgen?',
 	BasketRemoveConfirm	: 'Vill du verkligen ta bort filen "%1" från korgen?',
+	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?', // MISSING
 	BasketEmpty			: 'Inga filer i korgen, dra och släpp några.',
 	BasketCopyFilesHere	: 'Kopiera filer från korgen',
 	BasketMoveFilesHere	: 'Flytta filer från korgen',
 
-	BasketPasteErrorOther	: 'Fil %s fel: %e',
-	BasketPasteMoveSuccess	: 'Följande filer flyttades: %s',
-	BasketPasteCopySuccess	: 'Följande filer kopierades: %s',
+	// Global messages
+	OperationCompletedSuccess	: 'Operation completed successfully.', // MISSING
+	OperationCompletedErrors		: 'Operation completed with errors.', // MISSING
+	FileError				: '%s: %e', // MISSING
+
+	// Move and Copy files
+	MovedFilesNumber		: 'Number of files moved: %s.', // MISSING
+	CopiedFilesNumber	: 'Number of files copied: %s.', // MISSING
+	MoveFailedList		: 'The following files could not be moved:<br />%s', // MISSING
+	CopyFailedList		: 'The following files could not be copied:<br />%s', // MISSING
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: 'Ladda upp',
@@ -118,9 +128,10 @@ CKFinder.lang['sv'] =
 	NewSubFolder	: 'Ny Undermapp',
 	Rename			: 'Byt namn',
 	Delete			: 'Radera',
+	DeleteFiles		: 'Delete Files', // MISSING
 
-	CopyDragDrop	: 'Kopiera filen hit',
-	MoveDragDrop	: 'Flytta filen hit',
+	CopyDragDrop	: 'Kopiera hit',
+	MoveDragDrop	: 'Flytta hit',
 
 	// Dialogs
 	RenameDlgTitle		: 'Byt namn',
@@ -130,6 +141,7 @@ CKFinder.lang['sv'] =
 
 	FileOverwrite	: 'Skriv över',
 	FileAutorename	: 'Auto-namnändring',
+	ManuallyRename	: 'Manually rename', // MISSING
 
 	// Generic
 	OkBtn		: 'OK',
@@ -201,6 +213,7 @@ CKFinder.lang['sv'] =
 	105 : 'Ogiltig filändelse.',
 	109 : 'Ogiltig begäran.',
 	110 : 'Okänt fel.',
+	111 : 'It was not possible to complete the request due to resulting file size.', // MISSING
 	115 : 'En fil eller mapp med aktuellt namn finns redan.',
 	116 : 'Mappen kunde inte hittas. Var god uppdatera sidan och försök igen.',
 	117 : 'Filen kunde inte hittas. Var god uppdatera sidan och försök igen.',
@@ -224,6 +237,8 @@ CKFinder.lang['sv'] =
 		FileEmpty		: 'Filnamnet får inte vara tomt.',
 		FileExists		: 'Filen %s finns redan.',
 		FolderEmpty		: 'Mappens namn får inte vara tomt.',
+		FolderExists	: 'Folder %s already exists.', // MISSING
+		FolderNameExists	: 'Folder already exists.', // MISSING
 
 		FileInvChar		: 'Filnamnet får inte innehålla något av följande tecken: \n\\ / : * ? " < > |',
 		FolderInvChar	: 'Mappens namn får inte innehålla något av följande tecken: \n\\ / : * ? " < > |',
@@ -277,5 +292,16 @@ CKFinder.lang['sv'] =
 	Gallery :
 	{
 		current : 'Bild {current} av {total}'
+	},
+
+	Zip :
+	{
+		extractHereLabel	: 'Extract here', // MISSING
+		extractToLabel		: 'Extract to...', // MISSING
+		downloadZipLabel	: 'Download as zip', // MISSING
+		compressZipLabel	: 'Compress to zip', // MISSING
+		removeAndExtract	: 'Remove existing and extract', // MISSING
+		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
+		extractSuccess		: 'File extracted successfully.' // MISSING
 	}
 };
