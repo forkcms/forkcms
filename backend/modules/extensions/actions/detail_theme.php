@@ -3,7 +3,7 @@
 /**
  * This is the detail-action it will display the details of a theme.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 {

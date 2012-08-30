@@ -10,7 +10,7 @@
 /**
  * This action will delete a synonym
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 {

@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendLocationConfig extends FrontendBaseConfig
 {

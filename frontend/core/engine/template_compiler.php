@@ -10,7 +10,7 @@
 /**
  * This is our extended version of SpoonTemplateCompiler
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendTemplateCompiler extends SpoonTemplateCompiler
 {

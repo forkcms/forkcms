@@ -10,7 +10,7 @@
 /**
  * This is the configuration-object for the core
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendCoreConfig extends BackendBaseConfig
 {

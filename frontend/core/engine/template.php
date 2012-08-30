@@ -17,7 +17,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Frederik Heyninck <frederik@figure8.be>
  */
 class FrontendTemplate extends SpoonTemplate
