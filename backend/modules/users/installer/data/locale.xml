@@ -15,6 +15,22 @@
         <translation language="uk"><![CDATA[Додати кокистувача]]></translation>
         <translation language="lt"><![CDATA[naujas narys]]></translation>
       </item>
+      <item type="label" name="LastLogin">
+        <translation language="nl"><![CDATA[laatste login]]></translation>
+        <translation language="en"><![CDATA[last login]]></translation>
+      </item>
+      <item type="label" name="LastPasswordChange">
+        <translation language="nl"><![CDATA[laatste wachtwoordwijziging]]></translation>
+        <translation language="en"><![CDATA[latest passwordchange]]></translation>
+      </item>
+      <item type="label" name="Never">
+        <translation language="nl"><![CDATA[nooit]]></translation>
+        <translation language="en"><![CDATA[never]]></translation>
+      </item>
+      <item type="label" name="NoPreviousLogin">
+        <translation language="nl"><![CDATA[geen vorige login]]></translation>
+        <translation language="en"><![CDATA[no previous login]]></translation>
+      </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The user "%1$s" was added.]]></translation>
