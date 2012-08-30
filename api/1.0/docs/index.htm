@@ -34,7 +34,12 @@
 			<li><a href="#blog_comments_update">blog.comments.update</a></li>
 			<li><a href="#blog_comments_update_status">blog.comments.updateStatus</a></li>
 		</ul>
-
+		<ul>
+			<li><a href="#form_builder_get_all">form_builder.getAll</a></li>
+			<li><a href="#form_builder_entries_delete">form_builder.entries.delete</a></li>
+			<li><a href="#form_builder_entries_get">form_builder.entries.get</a></li>
+			<li><a href="#form_builder_entries_get_by_id">form_builder.entries.getById</a></li>
+		</ul>
 
 		<h2>Core</h2>
 		<h3 id="core_getapikey">core.getAPIKey</h3>
@@ -71,6 +76,14 @@
 
 
 		<h2>Blog</h2>
+		<h3 id="blog_comments_delete">blog.comments.delete</h3>
+		<p>Delete multiple comments at once.</p>
+
+		<h4>Parameters</h4>
+		<dl>
+			<dt>id <small>string</small></dt><dd>The id/ids of the comment(s) to update.</dd>
+		</dl>
+
 		<h3 id="blog_comments_get">blog.comments.get</h3>
 		<p>Get the comments.</p>
 		<h4>Parameters</h4>
@@ -113,6 +126,46 @@
 			<dt>id <small>array</small></dt><dd>The id/ids of the comment(s) to update.</dd>
 			<dt>status <small>string</small></dt><dd>The new status for the comment. Possible values are: published, moderation, spam.</dd>
 		</dl>
+
+		<h2>FormBuilder</h2>
+		<h3 id="form_builder_get_all">form_builder.getAll</h3>
+		<p>Get a list of all the forms</p>
+		<h4>Parameters</h4>
+		<dl>
+			<dt>limit <small>int (optional)</small></dt><dd>The maximum number of items to retrieve.</dd>
+			<dt>offset <small>int (optional)</small></dt><dd>The offset.</dd>
+		</dl>
+		<h4>Return</h4>
+		<p>An array with the forms.</p>
+
+		<h3 id="form_builder_entries_delete">form_builder.entries.delete</h3>
+		<p>Get a list of all the forms</p>
+		<h4>Parameters</h4>
+		<dl>
+			<dt>id <small>int (optional)</small></dt><dd>The id of the entry.</dd>
+		</dl>
+		<h4>Return</h4>
+		<p>An array with the forms.</p>
+
+		<h3 id="form_builder_entries_get">form_builder.entries.get</h3>
+		<p>Get the list of entries for a form</p>
+		<h4>Parameters</h4>
+		<dl>
+			<dt>id <small>int (optional)</small></dt><dd>The id of the form.</dd>
+			<dt>limit <small>int (optional)</small></dt><dd>The maximum number of items to retrieve.</dd>
+			<dt>offset <small>int (optional)</small></dt><dd>The offset.</dd>
+		</dl>
+		<h4>Return</h4>
+		<p>An array with the forms.</p>
+
+		<h3 id="form_builder_entries_get_by_id">form_builder.entries.getById</h3>
+		<p>Get a single entry</p>
+		<h4>Parameters</h4>
+		<dl>
+			<dt>id <small>int (optional)</small></dt><dd>The id of the entry.</dd>
+		</dl>
+		<h4>Return</h4>
+		<p>An array with the data of the entry.</p>
 	</div>
 </body>
 </html>

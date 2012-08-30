@@ -356,4 +356,14 @@ class CKFinder_Connector_Core_ResourceTypeConfig
 
         return true;
     }
+
+    /**
+     * Generate hash for current resource type
+     *
+     * @access public
+     * @return string 16 digit hash
+     */
+    public function getHash(){
+      return substr(md5($this->getDirectory()), 0, 16);
+    }
 }

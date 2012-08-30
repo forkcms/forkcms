@@ -215,6 +215,7 @@ class BackendPagesModel
 				$navigation[$page['type']][$page['parent_id']][$pageID] = $temp;
 			}
 		}
+
 		// order by URL
 		asort($keys);
 
@@ -976,10 +977,10 @@ class BackendPagesModel
 			 LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
 			 LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
 			 WHERE i.parent_id IN (' . implode(', ', $ids) . ')
-			 	AND i.status = ? AND i.language = ? AND i.hidden = ?
+			 	AND i.status = ? AND i.language = ?
 			 GROUP BY i.revision_id
 			 ORDER BY i.sequence ASC',
-			array('block', 'active', $language, 'N'), 'id'
+			array('block', 'active', $language), 'id'
 		);
 
 		// get the childIDs
