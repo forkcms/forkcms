@@ -23,10 +23,19 @@
 	<div class="options">
 		{option:Wizard}
 			{option:NoSessionToken}
-				<p>{$msgLinkGoogleAccount}</p>
-				<div class="buttonHolder">
-					<a href="{$googleAccountAuthenticationForm}" class="submitButton button inputButton"><span>{$msgAuthenticateAtGoogle}</span></a>
-				</div>
+				{form:apiKey}
+					<p>{$msgLinkGoogleAccount}</p>
+
+					<div class="inputList">
+						<label for="key">{$lblApiKey|ucfirst}</label>
+						{$txtKey} {$txtKeyError}
+					</div>
+
+					<div class="buttonHolder">
+						<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$msgAuthenticateAtGoogle}" />
+					</div>
+
+				{/form:apiKey}
 			{/option:NoSessionToken}
 
 			{option:NoTableId}

@@ -75,16 +75,18 @@ CKFinder.lang['ru'] =
 	FolderDelete	: 'Вы уверены, что хотите удалить папку "%1"?',
 	FolderRenaming	: ' (Переименовываю...)',
 	FolderDeleting	: ' (Удаляю...)',
+	DestinationFolder	: 'Destination Folder', // MISSING
 
 	// Files
 	FileRename		: 'Пожалуйста, введите новое имя файла: ',
 	FileRenameExt	: 'Вы уверены, что хотите изменить расширение файла? Файл может стать недоступным.',
 	FileRenaming	: 'Переименовываю...',
 	FileDelete		: 'Вы уверены, что хотите удалить файл "%1"?',
+	FilesDelete	: 'Are you sure you want to delete %1 files?', // MISSING
 	FilesLoading	: 'Загрузка...',
 	FilesEmpty		: 'Пустая папка',
-	FilesMoved		: 'Файл %1 перемещен в %2:%3.',
-	FilesCopied		: 'Файл %1 скопирован в %2:%3.',
+	DestinationFile	: 'Destination File', // MISSING
+	SkippedFiles	: 'List of skipped files:', // MISSING
 
 	// Basket
 	BasketFolder		: 'Корзина',
@@ -93,13 +95,21 @@ CKFinder.lang['ru'] =
 	BasketOpenFolder	: 'Перейти в папку этого файла',
 	BasketTruncateConfirm : 'Вы точно хотите очистить корзину?',
 	BasketRemoveConfirm	: 'Вы точно хотите убрать файл "%1" из корзины?',
+	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?', // MISSING
 	BasketEmpty			: 'В корзине пока нет файлов, добавьте новые с помощью драг-н-дропа (перетащите файл в корзину).',
 	BasketCopyFilesHere	: 'Скопировать файл из корзины',
 	BasketMoveFilesHere	: 'Переместить файл из корзины',
 
-	BasketPasteErrorOther	: 'Произошла ошибка при обработке файла %s: %e',
-	BasketPasteMoveSuccess	: 'Файлы перемещены: %s',
-	BasketPasteCopySuccess	: 'Файлы скопированы: %s',
+	// Global messages
+	OperationCompletedSuccess	: 'Operation completed successfully.', // MISSING
+	OperationCompletedErrors		: 'Operation completed with errors.', // MISSING
+	FileError				: '%s: %e', // MISSING
+
+	// Move and Copy files
+	MovedFilesNumber		: 'Number of files moved: %s.', // MISSING
+	CopiedFilesNumber	: 'Number of files copied: %s.', // MISSING
+	MoveFailedList		: 'The following files could not be moved:<br />%s', // MISSING
+	CopyFailedList		: 'The following files could not be copied:<br />%s', // MISSING
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: 'Загрузить файл',
@@ -118,6 +128,7 @@ CKFinder.lang['ru'] =
 	NewSubFolder	: 'Новая папка',
 	Rename			: 'Переименовать',
 	Delete			: 'Удалить',
+	DeleteFiles		: 'Delete Files', // MISSING
 
 	CopyDragDrop	: 'Копировать',
 	MoveDragDrop	: 'Переместить',
@@ -130,6 +141,7 @@ CKFinder.lang['ru'] =
 
 	FileOverwrite	: 'Заменить файл',
 	FileAutorename	: 'Автоматически переименовывать',
+	ManuallyRename	: 'Manually rename', // MISSING
 
 	// Generic
 	OkBtn		: 'ОК',
@@ -201,6 +213,7 @@ CKFinder.lang['ru'] =
 	105 : 'Неверное расширение файла.',
 	109 : 'Неверный запрос.',
 	110 : 'Неизвестная ошибка.',
+	111 : 'It was not possible to complete the request due to resulting file size.', // MISSING
 	115 : 'Файл или папка с таким именем уже существует.',
 	116 : 'Папка не найдена. Пожалуйста, обновите вид папок и попробуйте еще раз.',
 	117 : 'Файл не найден. Пожалуйста, обновите список файлов и попробуйте еще раз.',
@@ -224,6 +237,8 @@ CKFinder.lang['ru'] =
 		FileEmpty		: 'Имя файла не может быть пустым.',
 		FileExists		: 'Файл %s уже существует.',
 		FolderEmpty		: 'Имя папки не может быть пустым.',
+		FolderExists	: 'Folder %s already exists.', // MISSING
+		FolderNameExists	: 'Folder already exists.', // MISSING
 
 		FileInvChar		: 'Имя файла не может содержать любой из перечисленных символов: \n\\ / : * ? " < > |',
 		FolderInvChar	: 'Имя папки не может содержать любой из перечисленных символов: \n\\ / : * ? " < > |',
@@ -277,5 +292,16 @@ CKFinder.lang['ru'] =
 	Gallery :
 	{
 		current : 'Image {current} of {total}' // MISSING
+	},
+
+	Zip :
+	{
+		extractHereLabel	: 'Extract here', // MISSING
+		extractToLabel		: 'Extract to...', // MISSING
+		downloadZipLabel	: 'Download as zip', // MISSING
+		compressZipLabel	: 'Compress to zip', // MISSING
+		removeAndExtract	: 'Remove existing and extract', // MISSING
+		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
+		extractSuccess		: 'File extracted successfully.' // MISSING
 	}
 };

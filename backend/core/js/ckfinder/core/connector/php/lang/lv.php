@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Neatļauts faila paplašinājums.',
 		'109' => 'Nederīgs pieprasījums.',
 		'110' => 'Nezināma kļūda.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Fails vai mape ar šādu nosaukumu jau pastāv.',
 		'116' => 'Mape nav atrasta. Lūdzu pārlādējiet šo logu un mēģiniet vēlreiz.',
 		'117' => 'Fails nav atrasts. Lūdzu pārlādējiet failu sarakstu un mēģiniet vēlreiz.',

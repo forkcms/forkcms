@@ -1,4 +1,16 @@
-3.4.3 (xxxx-xx-xx)
+3.4.4 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Upgraded Highcharts to 2.3.0
+* Core: Upgraded CKFinder to 2.3.0
+
+Bugfixes:
+
+* Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
+
+
+3.4.3 (2012-08-28)
 --
 Improvements:
 
@@ -6,7 +18,7 @@ Improvements:
 * Core: Upgraded to jQuery UI 1.8.23
 * Blog: Added blog.comments.delete in the API.
 * Core: return-format for the API can be specified through Accept-header, GET or POST.
-
+* Core: jQuery sharing widget will now merge options recursively (deep copy).
 
 Bugfixes:
 
@@ -15,6 +27,8 @@ Bugfixes:
 * Core: use language parameter when rebuilding cache, instead of unavailable constant.
 * Pages: issue when changing themes, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/314.
 * Pages: hidden pages weren't visible in the tree.
+* Core: backend used working language instead of interface language for javascript translations.
+* Core: editor-templates weren't loaded because the language wasn't set at the point the default config is defined.
 
 
 3.4.2 (2012-07-31)

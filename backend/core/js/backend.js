@@ -246,7 +246,7 @@ jsBackend.ckeditor =
 		removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
 		// templates
-		templates_files: ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=' + jsBackend.current.language],
+		templates_files: [],
 
 		// custom vars
 		editorType: 'default',
@@ -257,6 +257,9 @@ jsBackend.ckeditor =
 	// initialize the editor
 	init: function()
 	{
+		// the language isn't know before this init-method is called, so we set the url for the template-files just now
+		jsBackend.ckeditor.defaultConfig.templates_files = ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=' + jsBackend.current.language];
+
 		// load the editor
 		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
 		{
@@ -1726,7 +1729,7 @@ jsBackend.locale =
 	init: function()
 	{
 		$.ajax({
-			url: '/backend/cache/locale/' + jsBackend.current.language + '.json',
+			url: '/backend/cache/locale/' + jsBackend.data.get('interface_language') + '.json',
 			type: 'GET',
 			dataType: 'json',
 			async: false,

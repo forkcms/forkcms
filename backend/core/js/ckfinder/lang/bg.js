@@ -75,16 +75,18 @@ CKFinder.lang['bg'] =
 	FolderDelete	: 'Сигурни ли сте, че желаете да изтриете папката "%1"?',
 	FolderRenaming	: ' (Преименуване...)',
 	FolderDeleting	: ' (Изтриване...)',
+	DestinationFolder	: 'Destination Folder', // MISSING
 
 	// Files
 	FileRename		: 'Моля въведете име на файл: ',
 	FileRenameExt	: 'Сигурни ли сте, че желаете да промените файловото разширение? Файлът може да стане неизползваем.',
 	FileRenaming	: 'Преименуване...',
 	FileDelete		: 'Сигурни ли сте, че желаете да изтриете "%1"?',
+	FilesDelete	: 'Are you sure you want to delete %1 files?', // MISSING
 	FilesLoading	: 'Зареждане...',
 	FilesEmpty		: 'Папката е празна.',
-	FilesMoved		: 'Файлът %1 е преместен в %2:%3.',
-	FilesCopied		: 'Файлът %1 е копиран в %2:%3.',
+	DestinationFile	: 'Destination File', // MISSING
+	SkippedFiles	: 'List of skipped files:', // MISSING
 
 	// Basket
 	BasketFolder		: 'Кошница',
@@ -93,13 +95,21 @@ CKFinder.lang['bg'] =
 	BasketOpenFolder	: 'Отвори основната папка',
 	BasketTruncateConfirm : 'Наиситина ли желаете да премахнете всичко файлове от кошницата?',
 	BasketRemoveConfirm	: 'Наистина ли желаете да премахнете файла "%1" от кошницата?',
+	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?', // MISSING
 	BasketEmpty			: 'Няма файлове в кошницата.',
 	BasketCopyFilesHere	: 'Копиране на файлове от кошницата',
 	BasketMoveFilesHere	: 'Местене на файлове от кошницата',
 
-	BasketPasteErrorOther	: 'Проблем с файла %s: %e',
-	BasketPasteMoveSuccess	: 'Следните файлове са преместени: %s',
-	BasketPasteCopySuccess	: 'Следните файлове са копирани: %s',
+	// Global messages
+	OperationCompletedSuccess	: 'Operation completed successfully.', // MISSING
+	OperationCompletedErrors		: 'Operation completed with errors.', // MISSING
+	FileError				: '%s: %e', // MISSING
+
+	// Move and Copy files
+	MovedFilesNumber		: 'Number of files moved: %s.', // MISSING
+	CopiedFilesNumber	: 'Number of files copied: %s.', // MISSING
+	MoveFailedList		: 'The following files could not be moved:<br />%s', // MISSING
+	CopyFailedList		: 'The following files could not be copied:<br />%s', // MISSING
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: 'Качване',
@@ -118,9 +128,10 @@ CKFinder.lang['bg'] =
 	NewSubFolder	: 'Нов подпапка',
 	Rename			: 'Преименуване',
 	Delete			: 'Изтриване',
+	DeleteFiles		: 'Delete Files', // MISSING
 
-	CopyDragDrop	: 'Копиране на файловете тук',
-	MoveDragDrop	: 'Местене на файловете тук',
+	CopyDragDrop	: 'Копиране тук',
+	MoveDragDrop	: 'Местене тук',
 
 	// Dialogs
 	RenameDlgTitle		: 'Преименуване',
@@ -130,6 +141,7 @@ CKFinder.lang['bg'] =
 
 	FileOverwrite	: 'Препокриване',
 	FileAutorename	: 'Авто-преименуване',
+	ManuallyRename	: 'Manually rename', // MISSING
 
 	// Generic
 	OkBtn		: 'ОК',
@@ -201,6 +213,7 @@ CKFinder.lang['bg'] =
 	105 : 'Невалидно файлово разширение.',
 	109 : 'Невалидна заявка.',
 	110 : 'Неизвестна грешка.',
+	111 : 'It was not possible to complete the request due to resulting file size.', // MISSING
 	115 : 'Файл или папка със същото име вече съществува.',
 	116 : 'Папката не е намерена, опреснете и опитайте отново.',
 	117 : 'Файлът не е намерен, опреснете и опитайте отново.',
@@ -224,6 +237,8 @@ CKFinder.lang['bg'] =
 		FileEmpty		: 'Името на файла не може да празно.',
 		FileExists		: 'Файлът %s вече е наличен.',
 		FolderEmpty		: 'Името на папката не може да празно.',
+		FolderExists	: 'Folder %s already exists.', // MISSING
+		FolderNameExists	: 'Folder already exists.', // MISSING
 
 		FileInvChar		: 'Името на файла не може да съдържа следните знаци: \n\\ / : * ? " < > |',
 		FolderInvChar	: 'Името на папката не може да съдържа следните знаци: \n\\ / : * ? " < > |',
@@ -277,5 +292,16 @@ CKFinder.lang['bg'] =
 	Gallery :
 	{
 		current : 'Снимка {current} от общо {total}'
+	},
+
+	Zip :
+	{
+		extractHereLabel	: 'Extract here', // MISSING
+		extractToLabel		: 'Extract to...', // MISSING
+		downloadZipLabel	: 'Download as zip', // MISSING
+		compressZipLabel	: 'Compress to zip', // MISSING
+		removeAndExtract	: 'Remove existing and extract', // MISSING
+		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
+		extractSuccess		: 'File extracted successfully.' // MISSING
 	}
 };

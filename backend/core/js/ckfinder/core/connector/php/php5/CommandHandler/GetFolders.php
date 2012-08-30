@@ -82,7 +82,8 @@ class CKFinder_Connector_CommandHandler_GetFolders extends CKFinder_Connector_Co
             $i=0;
             foreach ($files as $file) {
                 $oAcl = $_config->getAccessControlConfig();
-                $aclMask = $oAcl->getComputedMask($this->_currentFolder->getResourceTypeName(), $this->_currentFolder->getClientPath() . $file . "/");
+                $folderPath = $this->_currentFolder->getClientPath() . $file . "/";
+                $aclMask = $oAcl->getComputedMask($this->_currentFolder->getResourceTypeName(), $folderPath);
 
                 if (($aclMask & CKFINDER_CONNECTOR_ACL_FOLDER_VIEW) != CKFINDER_CONNECTOR_ACL_FOLDER_VIEW) {
                     continue;
@@ -95,7 +96,7 @@ class CKFinder_Connector_CommandHandler_GetFolders extends CKFinder_Connector_Co
                 $oFolderNode[$i] = new Ckfinder_Connector_Utils_XmlNode("Folder");
                 $oFoldersNode->addChild($oFolderNode[$i]);
                 $oFolderNode[$i]->addAttribute("name", CKFinder_Connector_Utils_FileSystem::convertToConnectorEncoding($file));
-                $oFolderNode[$i]->addAttribute("hasChildren", CKFinder_Connector_Utils_FileSystem::hasChildren($_sServerDir . $file) ? "true" : "false");
+                $oFolderNode[$i]->addAttribute("hasChildren", CKFinder_Connector_Utils_FileSystem::hasChildren($folderPath, $resourceTypeInfo) ? "true" : "false");
                 $oFolderNode[$i]->addAttribute("acl", $aclMask);
 
                 $i++;
