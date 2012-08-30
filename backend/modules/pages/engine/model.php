@@ -503,6 +503,9 @@ class BackendPagesModel
 		// delete page and the revisions
 		if(!empty($revisionIDs)) $db->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
 
+		// delete tags
+		BackendTagsModel::saveTags($id, '', 'pages');
+
 		// return
 		return true;
 	}
