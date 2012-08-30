@@ -31,7 +31,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod())
+		if($this->id !== null && BackendLocaleModel::exists($this->id))
 		{
 			parent::execute();
 			$this->setFilter();
