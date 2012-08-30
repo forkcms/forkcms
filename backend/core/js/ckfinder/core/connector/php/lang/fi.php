@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Virheellinen tiedostotarkenne.',
 		'109' => 'Virheellinen pyyntö.',
 		'110' => 'Tuntematon virhe.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Samanniminen tiedosto tai kansio on jo olemassa.',
 		'116' => 'Kansiota ei löydy. Yritä uudelleen kansiopäivityksen jälkeen.',
 		'117' => 'Tiedostoa ei löydy. Yritä uudelleen kansiopäivityksen jälkeen.',

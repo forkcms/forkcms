@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Nieprawidłowe rozszerzenie.',
 		'109' => 'Nieprawiłowe żądanie.',
 		'110' => 'Niezidentyfikowany błąd.',
+		'111' => 'Wykonanie operacji nie powiodło się z powodu zbyt dużego rozmiaru pliku wynikowego.',
 		'115' => 'Plik lub folder o podanej nazwie już istnieje.',
 		'116' => 'Nie znaleziono folderu. Odśwież panel i spróbuj ponownie.',
 		'117' => 'Nie znaleziono pliku. Odśwież listę plików i spróbuj ponownie.',

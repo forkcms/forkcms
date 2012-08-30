@@ -75,16 +75,18 @@ CKFinder.lang['en'] =
 	FolderDelete	: 'Are you sure you want to delete the "%1" folder?',
 	FolderRenaming	: ' (Renaming...)',
 	FolderDeleting	: ' (Deleting...)',
+	DestinationFolder	: 'Destination Folder',
 
 	// Files
 	FileRename		: 'Please type the new file name: ',
 	FileRenameExt	: 'Are you sure you want to change the file extension? The file may become unusable.',
 	FileRenaming	: 'Renaming...',
 	FileDelete		: 'Are you sure you want to delete the file "%1"?',
+	FilesDelete	: 'Are you sure you want to delete %1 files?',
 	FilesLoading	: 'Loading...',
 	FilesEmpty		: 'The folder is empty.',
-	FilesMoved		: 'File %1 moved to %2:%3.',
-	FilesCopied		: 'File %1 copied to %2:%3.',
+	DestinationFile	: 'Destination File',
+	SkippedFiles	: 'List of skipped files:',
 
 	// Basket
 	BasketFolder		: 'Basket',
@@ -93,13 +95,21 @@ CKFinder.lang['en'] =
 	BasketOpenFolder	: 'Open Parent Folder',
 	BasketTruncateConfirm : 'Do you really want to remove all files from the basket?',
 	BasketRemoveConfirm	: 'Do you really want to remove the file "%1" from the basket?',
+	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?',
 	BasketEmpty			: 'No files in the basket, drag and drop some.',
 	BasketCopyFilesHere	: 'Copy Files from Basket',
 	BasketMoveFilesHere	: 'Move Files from Basket',
 
-	BasketPasteErrorOther	: 'File %s error: %e',
-	BasketPasteMoveSuccess	: 'The following files were moved: %s',
-	BasketPasteCopySuccess	: 'The following files were copied: %s',
+	// Global messages
+	OperationCompletedSuccess	: 'Operation completed successfully.',
+	OperationCompletedErrors		: 'Operation completed with errors.',
+	FileError				: '%s: %e',
+
+	// Move and Copy files
+	MovedFilesNumber		: 'Number of files moved: %s.',
+	CopiedFilesNumber	: 'Number of files copied: %s.',
+	MoveFailedList		: 'The following files could not be moved:<br />%s',
+	CopyFailedList		: 'The following files could not be copied:<br />%s',
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: 'Upload',
@@ -118,9 +128,10 @@ CKFinder.lang['en'] =
 	NewSubFolder	: 'New Subfolder',
 	Rename			: 'Rename',
 	Delete			: 'Delete',
+	DeleteFiles		: 'Delete Files',
 
-	CopyDragDrop	: 'Copy File Here',
-	MoveDragDrop	: 'Move File Here',
+	CopyDragDrop	: 'Copy Here',
+	MoveDragDrop	: 'Move Here',
 
 	// Dialogs
 	RenameDlgTitle		: 'Rename',
@@ -130,6 +141,7 @@ CKFinder.lang['en'] =
 
 	FileOverwrite	: 'Overwrite',
 	FileAutorename	: 'Auto-rename',
+	ManuallyRename	: 'Manually rename',
 
 	// Generic
 	OkBtn		: 'OK',
@@ -201,6 +213,7 @@ CKFinder.lang['en'] =
 	105 : 'Invalid file extension.',
 	109 : 'Invalid request.',
 	110 : 'Unknown error.',
+	111 : 'It was not possible to complete the request due to resulting file size.',
 	115 : 'A file or folder with the same name already exists.',
 	116 : 'Folder not found. Please refresh and try again.',
 	117 : 'File not found. Please refresh the files list and try again.',
@@ -224,6 +237,8 @@ CKFinder.lang['en'] =
 		FileEmpty		: 'The file name cannot be empty.',
 		FileExists		: 'File %s already exists.',
 		FolderEmpty		: 'The folder name cannot be empty.',
+		FolderExists	: 'Folder %s already exists.',
+		FolderNameExists	: 'Folder already exists.',
 
 		FileInvChar		: 'The file name cannot contain any of the following characters: \n\\ / : * ? " < > |',
 		FolderInvChar	: 'The folder name cannot contain any of the following characters: \n\\ / : * ? " < > |',
@@ -277,5 +292,16 @@ CKFinder.lang['en'] =
 	Gallery :
 	{
 		current : 'Image {current} of {total}'
+	},
+
+	Zip :
+	{
+		extractHereLabel	: 'Extract here',
+		extractToLabel		: 'Extract to...',
+		downloadZipLabel	: 'Download as zip',
+		compressZipLabel	: 'Compress to zip',
+		removeAndExtract	: 'Remove existing and extract',
+		extractAndOverwrite	: 'Extract overwriting existing files',
+		extractSuccess		: 'File extracted successfully.'
 	}
 };

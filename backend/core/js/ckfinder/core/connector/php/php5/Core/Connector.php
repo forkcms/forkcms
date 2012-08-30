@@ -87,7 +87,7 @@ class CKFinder_Connector_Core_Connector
 
             case 'CopyFiles':
             case 'CreateFolder':
-            case 'DeleteFile':
+            case 'DeleteFiles':
             case 'DeleteFolder':
             case 'GetFiles':
             case 'GetFolders':

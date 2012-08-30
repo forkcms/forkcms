@@ -16,13 +16,13 @@
 		}
 	</style>
 </head>
-<body>
+<body class="CKFinderFrameWindow">
 	<div id="ckfinder"></div>
 	<script type="text/javascript">
+//<![CDATA[
 (function()
 {
-		var config = {
-		};
+		var config = {};
 		var get = CKFinder.tools.getUrlParam;
 		var getBool = function( v )
 		{
@@ -40,12 +40,11 @@
 			var win = window.opener || window;
 			try
 			{
-				while ( (!win.CKFinder || !win.CKFinder._.instanceConfig[tmp]) && win != window.top )
+				while ( ( !win.CKFinder || !win.CKFinder._.instanceConfig[ tmp ] ) && win != window.top )
 					win = win.parent;
 
-				if ( win.CKFinder._.instanceConfig[tmp] ) {
-					config = win.CKFinder._.instanceConfig[tmp];
-				}
+				if ( win.CKFinder._.instanceConfig[ tmp ] )
+					config = CKFINDER.tools.extend( {}, win.CKFinder._.instanceConfig[ tmp ] );
 			}
 			catch(e) {}
 		}
@@ -138,6 +137,7 @@
 		var ckfinder = new CKFinder( config );
 		ckfinder.replace( 'ckfinder', config );
 })();
+//]]>
 	</script>
 </body>
 </html>

@@ -10,17 +10,31 @@
  *
  * Based on the classes of Tijs Verkoyen (http://classes.verkoyen.eu).
  *
- * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author Annelies Van Extergem <annelies@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class GoogleAnalytics
 {
-	// internal constant to enable/disable debugging
+	/*
+	 * Internal constant to enable/disable debugging.
+	 *
+	 * @var bool
+	 */
 	const DEBUG = false;
 
+	/**
+	 * End point for Analytics data access.
+	 *
+	 * @var string
+	 */
+	const API_URL = 'https://www.googleapis.com/analytics/v2.4';
 
-	// api url
-	const API_URL = 'https://www.google.com/analytics/feeds';
-
+	/**
+	 * API key needed to make calls since v2.4.
+	 *
+	 * @var string
+	 */
+	private $apiKey;
 
 	/**
 	 * cURL instance
@@ -29,7 +43,6 @@ class GoogleAnalytics
 	 */
 	private $curl;
 
-
 	/**
 	 * The session token
 	 *
@@ -37,14 +50,12 @@ class GoogleAnalytics
 	 */
 	private $sessionToken = null;
 
-
 	/**
 	 * The table id
 	 *
 	 * @var	string
 	 */
 	private $tableId = null;
-
 
 	/**
 	 * Creates an instance of GoogleAnalytics, setting the session token and table id.
@@ -59,7 +70,6 @@ class GoogleAnalytics
 		$this->setTableId($tableId);
 	}
 
-
 	/**
 	 * Destroy cURL instance.
 	 *
@@ -69,7 +79,6 @@ class GoogleAnalytics
 	{
 		if($this->curl != null) curl_close($this->curl);
 	}
-
 
 	/**
 	 * Make a call to the given URL with the given token.
@@ -83,6 +92,10 @@ class GoogleAnalytics
 		// redefine parameters
 		$URL = (string) $URL;
 		$token = (string) $token;
+
+		// append API Key, needed since v2.4
+		$URL .= (stripos($URL, '?') !== false) ? '&' : '?';
+		$URL .= 'key=' . $this->apiKey;
 
 		// set options
 		$options[CURLOPT_URL] = $URL;
@@ -152,7 +165,6 @@ class GoogleAnalytics
 		return $response;
 	}
 
-
 	/**
 	 * Get all website profiles and their account(s).
 	 *
@@ -164,13 +176,17 @@ class GoogleAnalytics
 		// try to make the call
 		try
 		{
-			$response = $this->doCall(self::API_URL .'/accounts/default', $sessionToken);
+			/*
+			 * The "~all/webproperties/~all/profiles" is to specify that the call should also
+			 * return webproperties. We need the webproperty to be able to set the GA tracking code.
+			 */
+			$response = $this->doCall(self::API_URL . '/management/accounts/~all/webproperties/~all/profiles', $sessionToken);
 		}
 
 		// catch possible exception
 		catch(Exception $e)
 		{
-			return array();
+			throw $e;
 		}
 
 		// no accounts - return an empty array
@@ -214,7 +230,6 @@ class GoogleAnalytics
 		return (array) $profiles;
 	}
 
-
 	/**
 	 * Makes a call to Google.
 	 *
@@ -238,7 +253,7 @@ class GoogleAnalytics
 		$parameters = (array) $parameters;
 
 		// build url
-		$URL = self::API_URL .'/data?ids='. $this->tableId;
+		$URL = self::API_URL .'/data?ids=ga:'. $this->tableId;
 		$URL .= '&metrics='. implode(',', $metrics);
 		$URL .= '&start-date='. $startDate;
 		$URL .= '&end-date='. $endDate;
@@ -310,7 +325,6 @@ class GoogleAnalytics
 		return $results;
 	}
 
-
 	/**
 	 * Get a session token based on a one-time token.
 	 *
@@ -332,7 +346,6 @@ class GoogleAnalytics
 		return $sessionToken;
 	}
 
-
 	/**
 	 * Gets the table id
 	 *
@@ -343,6 +356,13 @@ class GoogleAnalytics
 		return $this->tableId;
 	}
 
+	/**
+	 * @param string $key
+	 */
+	public function setApiKey($key)
+	{
+		$this->apiKey = (string) $key;
+	}
 
 	/**
 	 * Set the session token to make calls with
@@ -355,7 +375,6 @@ class GoogleAnalytics
 		$this->sessionToken = (isset($sessionToken) ? (string) $sessionToken : null);
 	}
 
-
 	/**
 	 * Set the table id to get data from
 	 *
@@ -367,7 +386,6 @@ class GoogleAnalytics
 		$this->tableId = (isset($tableId) ? (string) $tableId : null);
 	}
 }
-
 
 /**
  * GoogleAnalyticsException class

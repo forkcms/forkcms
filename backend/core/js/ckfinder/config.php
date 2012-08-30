@@ -95,8 +95,8 @@ $config['Thumbnails'] = array(
 
 // set the maximum size of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.
 $config['Images'] = array(
-	'maxWidth' => BackendModel::getModuleSetting('core', 'ckfinder_image_max_width'), 
-	'maxHeight' => BackendModel::getModuleSetting('core', 'ckfinder_image_max_height'), 
+	'maxWidth' => BackendModel::getModuleSetting('core', 'ckfinder_image_max_width'),
+	'maxHeight' => BackendModel::getModuleSetting('core', 'ckfinder_image_max_height'),
 	'quality' => 100
 );
 
@@ -125,12 +125,12 @@ $config['AccessControl'][] = array(
 	'role' => '*',
 	'resourceType' => '*',
 	'folder' => '/',
-	
+
 	'folderView' => true,
 	'folderCreate' => true,
 	'folderRename' => true,
 	'folderDelete' => true,
-	
+
 	'fileView' => true,
 	'fileUpload' => true,
 	'fileRename' => true,
@@ -260,9 +260,23 @@ will be automatically converted to ASCII letters.
 */
 $config['ForceAscii'] = false;
 
+/*
+Send files using X-Sendfile module
+Mod X-Sendfile (or similar) is avalible on Apache2, Nginx, Cherokee, Lighttpd
+
+Enabling X-Sendfile option can potentially cause security issue.
+ - server path to the file may be send to the browser with X-Sendfile header
+ - if server is not configured properly files will be send with 0 length
+
+For more complex configuration options visit our Developer's Guide
+  http://docs.cksource.com/CKFinder_2.x/Developers_Guide/PHP
+*/
+$config['XSendfile'] = false;
+
 
 include_once "plugins/imageresize/plugin.php";
 include_once "plugins/fileeditor/plugin.php";
+include_once "plugins/zip/plugin.php";
 
 $config['plugin_imageresize']['smallThumb'] = '90x90';
 $config['plugin_imageresize']['mediumThumb'] = '120x120';
