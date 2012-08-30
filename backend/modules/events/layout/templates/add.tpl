@@ -133,7 +133,7 @@
 							<div class="options">
 								<ul class="inputList">
 									<li>
-										<label for="inThePicture">{$chkInThePicture} {$msgInThePicture}</label>
+										<label for="inThePicture">{$chkInThePicture} {$lblInThePicture|ucfirst}</label>
 									</li>
 								</ul>
 							</div>
