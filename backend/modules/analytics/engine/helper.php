@@ -325,12 +325,16 @@ class BackendAnalyticsHelper
 		// get session token and table id
 		$sessionToken = BackendModel::getModuleSetting('analytics', 'session_token', null);
 		$tableId = BackendModel::getModuleSetting('analytics', 'table_id', null);
+		$apiKey = BackendModel::getModuleSetting('analytics', 'api_key', null);
 
 		// require the GoogleAnalytics class
 		require_once 'external/google_analytics.php';
 
+		$ga = new GoogleAnalytics($sessionToken, $tableId);
+		$ga->setApiKey($apiKey);
+
 		// get and return an instance
-		return new GoogleAnalytics($sessionToken, $tableId);
+		return $ga;
 	}
 
 	/**

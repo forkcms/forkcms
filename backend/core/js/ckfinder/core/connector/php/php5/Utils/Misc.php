@@ -225,7 +225,7 @@ class CKFinder_Connector_Utils_Misc
         foreach ($haystack as $key => $val) {
             $lcase[$key] = strtolower($val);
         }
-        return in_array($needle, $lcase);
+        return in_array(strtolower($needle), $lcase);
     }
 
     /**

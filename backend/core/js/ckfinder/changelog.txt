@@ -3,6 +3,37 @@ CKFinder Changelog
 http://ckfinder.com
 Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
 
+### Version 2.3
+- Added the new Maximize plugin.
+- Multiple file selection: copying / moving / deleting / selecting multiple files is now possible.
+- When no other selection function defined, double clicking a file will now execute the View command.
+- File editor plugin was upgraded to use CodeMirror 2. C# support was added.
+- It is now possible to select a file on startup by using the config.startupPath configuration.
+- Added a new configuration option, config.sidebarWidth, to change the initial width of the sidebar (where the folders pane is located) with ease.
+- The name of the file is now displayed when hovering over a file.
+- Added a new API method, api.addFolderDropMenuOption, to add new options to the menu that opens once files are dropped into a folder.
+- Added an option for plugins to specify if a toolbar button should be disabled when basket is empty.
+- Added new translation: Catalan.
+- Updated translations: Hebrew.
+- Fixed: Thumbnails of custom sizes are now displayed correctly at the files list.
+- Fixed: Files from the right resource type will be shown at the second opening of CKFinder via CKEditor.
+- Fixed: Impossible to set height of CKFinder when using SetupCKEditor().
+- Fixed: Extension is now uneditable in the ImageResize dialog window.
+- Fixed: Hitting F5 and CTRL+R inside a CKFinder popup will not close the window.
+- Fixed: IE will not show an error on the console when opening Developer Tools when inside the popup.
+- Fixed: The "onbeforeunload" event of the host document will now be preserved.
+- Fixed: The "Resize" dialog window looks better on Webkit.
+- Fixed: The thumbnail inside the "Resize" dialog window is now limited in size.
+- Fixed: An hidden CKFinder instance will now have correct height when shown.
+- Fixed: The rememberLastFolder configuration now works when opening CKFinder as a popup.
+- Fixed: In forced IE7 compatibility mode, IE8 did not display dialogs correctly.
+- Fixed: It is now possible to use a callback for the Basket's context menu and toolbar labels, as well as custom language strings.
+- Fixed: Layout may appear broken after upload.
+- Fixed: IE 10: Compatibility with latest beta version.
+- Fixed: Thumbnails were left in the old location when files were moved.
+[PHP] - Added a new Zip plugin, that can create and extract zip archives and allows to download a folder or multiple files as a zip package.
+[PHP] - Dropped support for PHP 4.x.
+
 ### Version 2.2.2
 - Fixed: The new Chrome 20 is again causing issues with finder.popup(). The new fix should work for all future versions of Chrome.
 

@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Extensão de arquivo inválida.',
 		'109' => 'Solicitação inválida.',
 		'110' => 'Erro desconhecido.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Uma arquivo ou pasta já existe com esse nome.',
 		'116' => 'Pasta não encontrada. Atualize e tente novamente.',
 		'117' => 'Arquivo não encontrado. Atualize a lista de arquivos e tente novamente.',

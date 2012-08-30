@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Neplatná přípona souboru.',
 		'109' => 'Neplatný požadavek.',
 		'110' => 'Neznámá chyba.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Soubor nebo složka se stejným názvem již existuje.',
 		'116' => 'Složka nenalezena, prosím obnovte a zkuste znovu.',
 		'117' => 'Soubor nenalezen, prosím obnovte seznam souborů a zkuste znovu.',

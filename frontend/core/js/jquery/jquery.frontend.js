@@ -59,7 +59,7 @@
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		var options = $.extend(true, defaults, options);
 
 		return this.each(function()
 		{
