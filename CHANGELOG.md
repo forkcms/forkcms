@@ -2,7 +2,7 @@
 --
 Improvements:
 
-* Core: Upgraded Highcharts to 2.3.1
+* Core: Upgraded Highcharts to 2.3.2
 * Core: Upgraded CKFinder to 2.3.0
 * Formbuilder: added API-methods.
 
