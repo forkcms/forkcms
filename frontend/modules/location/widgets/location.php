@@ -10,7 +10,7 @@
 /**
  * This is the location-widget: 1 specific address
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */

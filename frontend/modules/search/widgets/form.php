@@ -10,7 +10,7 @@
 /**
  * This is a widget with the search form
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendSearchWidgetForm extends FrontendBaseWidget
 {

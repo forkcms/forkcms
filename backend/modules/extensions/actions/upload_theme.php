@@ -4,7 +4,7 @@
  * This is the theme upload-action.
  * It will install a theme via a compressed zip file.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 {

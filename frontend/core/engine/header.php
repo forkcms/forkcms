@@ -12,7 +12,7 @@
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendHeader extends FrontendBaseObject
 {
