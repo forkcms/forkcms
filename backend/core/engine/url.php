@@ -246,6 +246,20 @@ class BackendURL extends BackendBaseObject
 							// redirect to the page
 							SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
 						}
+
+						// loop the children of the navigation too, to find an allowed module
+						foreach($value['children'] as $childKey => $childValue)
+						{
+							// split up chunks
+							list($childModule, $childAction) = explode('/', $childValue['url']);
+
+							// user allowed?
+							if(BackendAuthentication::isAllowedModule($childModule))
+							{
+								// redirect to the page
+								SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $childValue['url']);
+							}
+						}
 					}
 				}
 				// the user doesn't have access, redirect to error page
