@@ -60,6 +60,9 @@ class FrontendMailer
 		if(!SpoonFilter::isEmail($email['reply_to_email'])) throw new FrontendException('Invalid e-mail address for reply-to address.');
 
 		// build array
+		$email['to_name'] = SpoonFilter::htmlentitiesDecode($email['to_name']);
+		$email['from_name'] = SpoonFilter::htmlentitiesDecode($email['from_name']);
+		$email['reply_to_name'] = SpoonFilter::htmlentitiesDecode($email['reply_to_name']);
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
 		if($isRawHTML) $email['html'] = $template;
 		else $email['html'] = self::getTemplateContent($template, $variables);

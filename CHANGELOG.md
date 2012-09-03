@@ -2,11 +2,13 @@
 --
 Improvements:
 
-* Core: Upgraded Highcharts to 2.3.0
+* Core: Upgraded Highcharts to 2.3.2
 * Core: Upgraded CKFinder to 2.3.0
+* Formbuilder: added API-methods.
 
 Bugfixes:
 
+* Mailer: The names are now decoded, so bugs with apostrofs in names are fixed. Thx to siesqo
 * Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
 
 

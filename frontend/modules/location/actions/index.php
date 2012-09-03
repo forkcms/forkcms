@@ -10,7 +10,7 @@
 /**
  * This is the index-action, it has an overview of locations.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */

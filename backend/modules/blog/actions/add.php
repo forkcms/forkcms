@@ -13,7 +13,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendBlogAdd extends BackendBaseActionAdd

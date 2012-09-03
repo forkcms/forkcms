@@ -10,7 +10,7 @@
 /**
  * Installer for the faq module
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */

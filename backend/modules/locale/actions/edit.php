@@ -12,7 +12,7 @@
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendLocaleEdit extends BackendBaseActionEdit
 {
@@ -31,7 +31,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod())
+		if($this->id !== null && BackendLocaleModel::exists($this->id))
 		{
 			parent::execute();
 			$this->setFilter();

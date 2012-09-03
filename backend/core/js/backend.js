@@ -188,7 +188,7 @@ jsBackend.balloons =
  * CK Editor related objects
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Matthias Mullie <matthias@mullie.eu>
+ * @author	Matthias Mullie <forkcms@mullie.eu>
  */
 jsBackend.ckeditor =
 {

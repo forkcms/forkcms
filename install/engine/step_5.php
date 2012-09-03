@@ -12,7 +12,7 @@
  *
  * @author Davy Hellemans <davy@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class InstallerStep5 extends InstallerStep
 {

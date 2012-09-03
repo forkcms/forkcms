@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendPagesModel
 {
@@ -502,6 +502,9 @@ class BackendPagesModel
 
 		// delete page and the revisions
 		if(!empty($revisionIDs)) $db->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+
+		// delete tags
+		BackendTagsModel::saveTags($id, '', 'pages');
 
 		// return
 		return true;

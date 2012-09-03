@@ -11,7 +11,7 @@
  * In this file we store all generic functions that we will be using in the faq module
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */

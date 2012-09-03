@@ -10,7 +10,7 @@
 /**
  * This class will take care of functionality pertaining themes.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendTheme
 {

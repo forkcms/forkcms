@@ -17,7 +17,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Frederik Heyninck <frederik@figure8.be>
  */
 class FrontendTemplate extends SpoonTemplate
@@ -104,9 +104,13 @@ class FrontendTemplate extends SpoonTemplate
 
 		// parse vars
 		$this->parseVars();
-
-		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
+		
+		// in case of a call from parseWidget we don't need to set the headers again!
+		if(!Spoon::exists('parseWidget') || !Spoon::get('parseWidget'))
+		{
+			// parse headers
+			if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
+		}
 
 		// get template path
 		$template = FrontendTheme::getPath($template);
@@ -724,8 +728,24 @@ class FrontendTemplateModifiers
 
 		// create new widget instance and return parsed content
 		$extra = new FrontendBlockWidget($module, $action, $data);
-		$extra->execute();
-		return $extra->getContent();
+		
+		// set parseWidget because we will need it to skip setting headers in the display
+		Spoon::set('parseWidget', true);
+		
+		try
+		{
+			$extra->execute();
+			$content = $extra->getContent();
+			Spoon::set('parseWidget', null);
+			return $content;
+		}
+		catch(Exception $e)
+		{
+			// if we are debugging, we want to see the exception
+			if(SPOON_DEBUG) throw $e;
+
+			return null;
+		}
 	}
 
 	/**
