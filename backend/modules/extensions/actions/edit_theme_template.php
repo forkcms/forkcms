@@ -322,6 +322,9 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['active'] = $this->frm->getField('active')->getChecked() ? 'Y' : 'N';
+
+				// copy data from previous version, otherwise default_extras from other languages are overwritten
+				$item['data'] = $this->record['data'];
 				$item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
 				$item['data']['names'] = $this->names;
 				$item['data']['default_extras'] = $this->extras;
