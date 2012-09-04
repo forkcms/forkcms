@@ -259,12 +259,10 @@ class CampaignMonitor
 	 *
 	 * @return	string
 	 * @param	string $companyName		The client company name.
-	 * @param	string $contactName		The personal name of the principle contact for this client.
-	 * @param	string $email			An email address to which this client will be sent application-related emails.
 	 * @param	string $country			This client’s country.
 	 * @param	string $timezone		Client timezone for tracking and reporting data.
 	 */
-	public function createClient($companyName, $contactName, $email, $country, $timezone)
+	public function createClient($companyName, $country, $timezone)
 	{
 		// fetch the country list
 		$countries = $this->getCountries();
@@ -278,8 +276,6 @@ class CampaignMonitor
 
 		// set parameters
 		$parameters['CompanyName'] = (string) $companyName;
-		$parameters['ContactName'] = (string) $contactName;
-		$parameters['EmailAddress'] = (string) $email;
 		$parameters['Country'] = (string) $country;
 		$parameters['Timezone'] = (string) $timezone;
 
@@ -1051,7 +1047,6 @@ class CampaignMonitor
 		// reserve variable
 		$result = array();
 		$details = $record['BasicDetails'];
-		$access = $record['AccessDetails'];
 		$billing = $record['BillingDetails'];
 
 		// basic details
@@ -1062,10 +1057,6 @@ class CampaignMonitor
 		$result['email'] = $details['EmailAddress'];
 		$result['country'] = $details['Country'];
 		$result['timezone'] = $details['TimeZone'];
-
-		// access info
-		$result['username'] = empty($access['Username']) ? null : $access['Username'];
-		$result['access_level'] = empty($access['AccessLevel']) ? null : $access['AccessLevel'];
 
 		// billing info
 		$result['can_purchase_credits'] = $billing['CanPurchaseCredits'];
@@ -2019,13 +2010,11 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $companyName			The client company name.
-	 * @param	string $contactName			The personal name of the principle contact for this client.
-	 * @param	string $email				An email address to which this client will be sent application-related emails.
 	 * @param	string $country				This client's country.
 	 * @param	string $timezone			Client timezone for tracking and reporting data.
 	 * @param	string[optional] $clientId	The client ID to update.
 	 */
-	public function updateClientBasics($companyName, $contactName, $email, $country, $timezone, $clientId = null)
+	public function updateClientBasics($companyName, $country, $timezone, $clientId = null)
 	{
 		// set ID
 		$clientId = empty($clientId) ? $this->getClientId() : $clientId;
@@ -2042,8 +2031,6 @@ class CampaignMonitor
 
 		// set parameters
 		$parameters['CompanyName'] = (string) $companyName;
-		$parameters['ContactName'] = (string) $contactName;
-		$parameters['EmailAddress'] = (string) $email;
 		$parameters['Country'] = (string) $country;
 		$parameters['Timezone'] = (string) $timezone;
 
