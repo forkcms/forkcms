@@ -11,6 +11,7 @@ Bugfixes:
 * Mailer: The names are now decoded, so bugs with apostrofs in names are fixed. Thx to siesqo
 * Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
 * Themes: templates extras_data from other languages was overwritten.
+* Themes: incorrect block index was set when deleting a position causing all default blocks to be unlinked.
 
 
 3.4.3 (2012-08-28)
