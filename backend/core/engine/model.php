@@ -461,22 +461,24 @@ class BackendModel
 		$key = (string) $key;
 		$value = (string) $value;
 		$result = array();
-	
+
 		// get all possible extras
-		$items = (array) BackendModel::getDB(true)->getPairs('SELECT i.id, i.data
-															  FROM modules_extras AS i
-															  WHERE i.module = ? AND i.data != ?',
-															  array($module, 'NULL'));
-	
+		$items = (array) BackendModel::getDB(true)->getPairs(
+			'SELECT i.id, i.data
+			 FROM modules_extras AS i
+			 WHERE i.module = ? AND i.data != ?',
+			 array($module, 'NULL')
+		);
+
 		// stop here when no items
 		if(empty($items)) return $result;
-	
+
 		// loop items
 		foreach($items as $id => $data)
 		{
 			// unserialize data
 			$data = unserialize($data);
-	
+
 			// check if the field is present in the data and add it to result
 			if(isset($data[$key]) && $data[$key] == $value)
 			{
@@ -484,7 +486,7 @@ class BackendModel
 				$result[] = $id;
 			}
 		}
-	
+
 		return $result;
 	}
 
@@ -1463,10 +1465,12 @@ class BackendModel
 		$db = BackendModel::getDB(true);
 
 		// get data
-		$data = (string) $db->getVar('SELECT i.data
-									  FROM modules_extras AS i
-									  WHERE i.id = ?',
-									  array((int) $id));
+		$data = (string) $db->getVar(
+			'SELECT i.data
+			 FROM modules_extras AS i
+			 WHERE i.id = ?',
+			 array((int) $id)
+		);
 
 		// unserialize data
 		$data = unserialize($data);
