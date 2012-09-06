@@ -15,54 +15,6 @@
 class BackendFormBuilderAPI
 {
 	/**
-	 * Get a list of all the forms
-	 *
-	 * @param int[optional] $limit The maximum number of items to retrieve.
-	 * @param int[optional] $offset The offset.
-	 * @return array
-	 */
-	public static function getAll($limit = 30, $offset = 0)
-	{
-		if(API::authorize() && API::isValidRequestMethod('GET'))
-		{
-			// redefine
-			$limit = (int) $limit;
-			$offset = (int) $offset;
-
-			// validate
-			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
-
-			$forms = (array) BackendModel::getDB()->getRecords(
-				'SELECT i.id, i.language, i.name, i.method, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
-				 FROM forms AS i
-				 ORDER BY i.created_on DESC
-				 LIMIT ?, ?',
-				array($offset, $limit)
-			);
-
-			$return = array('forms' => null);
-
-			foreach($forms as $row)
-			{
-				$item['form'] = array();
-
-				// set attributes
-				$item['form']['@attributes']['id'] = $row['id'];
-				$item['form']['@attributes']['created_on'] = date('c', $row['created_on']);
-				$item['form']['@attributes']['language'] = $row['language'];
-
-				// set content
-				$item['form']['name'] = $row['name'];
-				$item['form']['method'] = $row['method'];
-
-				$return['forms'][] = $item;
-			}
-
-			return $return;
-		}
-	}
-
-	/**
 	 * Delete entry/entries.
 	 *
 	 * @param string $id The id/ids of the entries(s) to delete.
@@ -79,7 +31,6 @@ class BackendFormBuilderAPI
 			BackendFormBuilderModel::deleteData($id);
 		}
 	}
-
 
 	/**
 	 * Get the entries for a form
@@ -235,6 +186,54 @@ class BackendFormBuilderAPI
 					'value' => $value,
 					'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox'
 				));
+			}
+
+			return $return;
+		}
+	}
+
+	/**
+	 * Get a list of all the forms
+	 *
+	 * @param int[optional] $limit The maximum number of items to retrieve.
+	 * @param int[optional] $offset The offset.
+	 * @return array
+	 */
+	public static function getAll($limit = 30, $offset = 0)
+	{
+		if(API::authorize() && API::isValidRequestMethod('GET'))
+		{
+			// redefine
+			$limit = (int) $limit;
+			$offset = (int) $offset;
+
+			// validate
+			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+
+			$forms = (array) BackendModel::getDB()->getRecords(
+				'SELECT i.id, i.language, i.name, i.method, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+				 FROM forms AS i
+				 ORDER BY i.created_on DESC
+				 LIMIT ?, ?',
+				array($offset, $limit)
+			);
+
+			$return = array('forms' => null);
+
+			foreach($forms as $row)
+			{
+				$item['form'] = array();
+
+				// set attributes
+				$item['form']['@attributes']['id'] = $row['id'];
+				$item['form']['@attributes']['created_on'] = date('c', $row['created_on']);
+				$item['form']['@attributes']['language'] = $row['language'];
+
+				// set content
+				$item['form']['name'] = $row['name'];
+				$item['form']['method'] = $row['method'];
+
+				$return['forms'][] = $item;
 			}
 
 			return $return;

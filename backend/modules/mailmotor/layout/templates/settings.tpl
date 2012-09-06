@@ -151,14 +151,6 @@
 					{$txtCompanyName} {$txtCompanyNameError}
 				</p>
 				<p>
-					<label for="contactName">{$lblContactName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtContactName} {$txtContactNameError}
-				</p>
-				<p>
-					<label for="contactEmail">{$lblEmailAddress|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtContactEmail} {$txtContactEmailError}
-				</p>
-				<p>
 					<label for="countries">{$lblCountry|ucfirst}</label>
 					{$ddmCountries} {$ddmCountriesError}
 				</p>

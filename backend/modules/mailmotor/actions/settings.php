@@ -65,7 +65,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$cm = new CampaignMonitor($url, $username, $password, 10);
 
 			// create client
-			$clientID = $cm->createClient($record['company_name'], $record['contact_name'], $record['contact_email'], $record['country'], $timezones[$record['timezone']]);
+			$clientID = $cm->createClient($record['company_name'], $record['country'], $timezones[$record['timezone']]);
 
 			// store ID in a setting
 			if(!empty($clientID)) BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $clientID);
@@ -162,8 +162,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 			// add fields for campaignmonitor client ID
 			$this->frmClient->addText('company_name', $this->settings['cm_client_company_name']);
-			$this->frmClient->addText('contact_name', $this->settings['cm_client_contact_name']);
-			$this->frmClient->addText('contact_email', $this->settings['cm_client_contact_email']);
 			$this->frmClient->addDropdown('countries', $countries, $this->settings['cm_client_country']);
 			$this->frmClient->addDropdown('timezones', $timezones, $this->settings['cm_client_timezone']);
 		}
@@ -253,7 +251,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$cm = new CampaignMonitor($url, $username, $password, 10, $this->clientID);
 
 			// update the client
-			$cm->updateClientBasics($record['company_name'], $record['contact_name'], $record['contact_email'], $record['country'], $timezones[$record['timezone']]);
+			$cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']]);
 		}
 		catch(Exception $e)
 		{
@@ -298,8 +296,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		if($this->frmClient->isSubmitted())
 		{
 			$this->frmClient->getField('company_name')->isFilled(BL::err('FieldIsRequired'));
-			$this->frmClient->getField('contact_email')->isFilled(BL::err('FieldIsRequired'));
-			$this->frmClient->getField('contact_name')->isFilled(BL::err('FieldIsRequired'));
 			$this->frmClient->getField('countries')->isFilled(BL::err('FieldIsRequired'));
 			$this->frmClient->getField('timezones')->isFilled(BL::err('FieldIsRequired'));
 
@@ -309,8 +305,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				// get the client settings from the install
 				$client = array();
 				$client['company_name'] = $this->frmClient->getField('company_name')->getValue();
-				$client['contact_name'] = $this->frmClient->getField('contact_name')->getValue();
-				$client['contact_email'] = $this->frmClient->getField('contact_email')->getValue();
 				$client['country'] = $this->frmClient->getField('countries')->getValue();
 				$client['timezone'] = $this->frmClient->getField('timezones')->getValue();
 
@@ -322,8 +316,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 					// store the client info in our database
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_name', $client['contact_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_email', $client['contact_email']);
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
@@ -345,8 +337,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 					// store the client info in our database
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_name', $client['contact_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_contact_email', $client['contact_email']);
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
