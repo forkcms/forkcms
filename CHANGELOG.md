@@ -12,6 +12,7 @@ Bugfixes:
 * Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
 * Themes: templates extras_data from other languages was overwritten.
 * Themes: incorrect block index was set when deleting a position causing all default blocks to be unlinked.
+* Core: exceptions were not displayed on CLI when SPOON_DEBUG was off. A minimal debug message was added.
 
 
 3.4.3 (2012-08-28)
