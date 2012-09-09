@@ -44,7 +44,6 @@ class Autoloader
 		$exceptions['backenddatagridfunctions'] = PATH_WWW . '/backend/core/engine/datagrid.php';
 		$exceptions['backendbaseconfig'] = PATH_WWW . '/backend/core/engine/base.php';
 		$exceptions['backendbasecronjob'] = PATH_WWW . '/backend/core/engine/base.php';
-		$exceptions['backendpagesmodel'] = PATH_WWW . '/backend/core/pages/engine/model.php';
 		$exceptions['fl'] = PATH_WWW . '/frontend/core/engine/language.php';
 		$exceptions['bl'] = PATH_WWW . '/backend/core/language.php';
 		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
