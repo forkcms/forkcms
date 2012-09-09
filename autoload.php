@@ -19,10 +19,7 @@ class Autoloader
 	 */
 	public function load($className)
 	{
-		// redefine
 		$className = strtolower((string) $className);
-
-		// init var
 		$pathToLoad = '';
 
 		// exceptions
@@ -57,6 +54,9 @@ class Autoloader
 		// backend
 		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = PATH_WWW . '/backend/core/engine/' . str_replace('backend', '', $className) . '.php';
 
+		// common
+		elseif(substr($className, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $className) . '.php';
+
 		// file check in core
 		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
 
@@ -71,16 +71,6 @@ class Autoloader
 
 			// the real matches
 			$parts = $parts[0];
-
-			// is it an application class?
-			if(isset($parts[0]) && $parts[0] == 'Common')
-			{
-				$chunks = $parts;
-				array_shift($chunks);
-				$pathToLoad = PATH_LIBRARY . '/base/' . strtolower(implode('_', $chunks)) . '.php';
-
-				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
-			}
 
 			// root path based on the application we are trying to load
 			$root = array_shift($parts);
