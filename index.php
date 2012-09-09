@@ -8,6 +8,7 @@
  */
 
 // require
+require_once 'autoload.php';
 require_once 'routing.php';
 
 // create new instance
