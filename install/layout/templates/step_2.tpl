@@ -90,6 +90,12 @@
 					different image formats. More information can be found on: <a href="http://php.net/gd">http://php.net/gd</a>.
 				</p>
 
+				<h4><span class="{$extensionJSON}">{$extensionJSON}</span> json</h4>
+				<p>
+					This extension implements the JavaScript Object Notation (JSON) data-interchange format. The decoding is handled by a parser
+					based on the JSON_checker by Douglas Crockford. More information can be found on: <a href="http://php.net/json">http://php.net/json</a>.
+				</p>
+
 				<h3>PHP ini-settings</h3>
 				<h4><span class="{$settingsSafeMode}">{$settingsSafeMode}</span> Safe Mode</h4>
 				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>

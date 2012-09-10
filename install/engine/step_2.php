@@ -67,8 +67,8 @@ class InstallerStep2 extends InstallerStep
 		// fetch the PHP version.
 		$version = (int) str_replace('.', '', PHP_VERSION);
 
-		// we require at least PHP 5.2.x
-		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.2.0-whatever', '>='), self::STATUS_ERROR);
+		// we require at least PHP 5.3.2
+		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.3.2-whatever', '>='), self::STATUS_ERROR);
 
 		// Fork can't be installed in subfolders, so we should check that.
 		self::checkRequirement('subfolder', (substr($_SERVER['REQUEST_URI'], 0, 18) == '/install/index.php'), self::STATUS_ERROR);
@@ -107,6 +107,9 @@ class InstallerStep2 extends InstallerStep
 
 		// check for gd extension and correct version
 		self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'), self::STATUS_ERROR);
+
+		// check for JSON extension
+		self::checkRequirement('extensionJSON', extension_loaded('json'), self::STATUS_ERROR);
 
 		/*
 		 * A couple of php.ini settings should be configured in a specific way to make sure that
