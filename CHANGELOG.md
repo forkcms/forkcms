@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Location: Fixed location widget. When debug = false, google wasn't loaded correctly. Thx to siesqo
 * Core: Upgraded Highcharts to 2.3.2
 * Core: Upgraded CKFinder to 2.3.0
 * Formbuilder: added API-methods.

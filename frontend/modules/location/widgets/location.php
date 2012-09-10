@@ -29,7 +29,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 		parent::execute();
 
 		// add Google Maps
-		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true);
+		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
 
 		$this->loadTemplate();
 		$this->loadData();
