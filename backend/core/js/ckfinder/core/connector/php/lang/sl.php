@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Napačna končnica datoteke.',
 		'109' => 'Napačna zahteva.',
 		'110' => 'Neznana napaka.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Datoteka ali mapa s tem imenom že obstaja.',
 		'116' => 'Mapa ni najdena. Prosimo osvežite okno in poskusite znova.',
 		'117' => 'Datoteka ni najdena. Prosimo osvežite seznam datotek in poskusite znova.',

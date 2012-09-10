@@ -344,7 +344,26 @@ class API
 	public static function output($statusCode, array $data = null)
 	{
 		// get output format
-		$output = SpoonFilter::getGetValue('format', array('xml', 'json'), 'xml');
+		$allowedFormats = array('xml', 'json');
+
+		// use XML as a default
+		$output = 'xml';
+
+		// use the accept header if it is provided
+		if(isset($_SERVER['HTTP_ACCEPT']))
+		{
+			$acceptHeader = strtolower($_SERVER['HTTP_ACCEPT']);
+			if(substr_count($acceptHeader, 'text/xml') > 0) $output = 'xml';
+			if(substr_count($acceptHeader, 'application/xml') > 0) $output = 'xml';
+			if(substr_count($acceptHeader, 'text/json') > 0) $output = 'json';
+			if(substr_count($acceptHeader, 'application/json') > 0) $output = 'json';
+		}
+
+		// format specified as a GET-parameter will overrule the one provided through the accept headers
+		$output = SpoonFilter::getGetValue('format', $allowedFormats, $output);
+
+		// if the format was specified in the POST it will overrule all previous formats
+		$output = SpoonFilter::getPostValue('format', $allowedFormats, $output);
 
 		// return in the requested format
 		switch($output)

@@ -75,16 +75,18 @@ CKFinder.lang['zh-cn'] =
 	FolderDelete	: '您确定要删除文件夹 "%1" 吗?',
 	FolderRenaming	: ' (正在重命名...)',
 	FolderDeleting	: ' (正在删除...)',
+	DestinationFolder	: 'Destination Folder', // MISSING
 
 	// Files
 	FileRename		: '请输入新文件名: ',
 	FileRenameExt	: '如果改变文件扩展名，可能会导致文件不可用。\r\n确定要更改吗？',
 	FileRenaming	: '正在重命名...',
 	FileDelete		: '您确定要删除文件 "%1" 吗?',
+	FilesDelete	: 'Are you sure you want to delete %1 files?', // MISSING
 	FilesLoading	: '加载中...',
 	FilesEmpty		: '空文件夹',
-	FilesMoved		: '文件 %1 已移动至 %2:%3.',
-	FilesCopied		: '文件 %1 已拷贝至 %2:%3.',
+	DestinationFile	: 'Destination File', // MISSING
+	SkippedFiles	: 'List of skipped files:', // MISSING
 
 	// Basket
 	BasketFolder		: '临时文件夹',
@@ -93,13 +95,21 @@ CKFinder.lang['zh-cn'] =
 	BasketOpenFolder	: '打开临时文件夹',
 	BasketTruncateConfirm : '确认清空临时文件夹?',
 	BasketRemoveConfirm	: '确认从临时文件夹中移除文件 "%1"？',
+	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?', // MISSING
 	BasketEmpty			: '临时文件夹为空, 可拖放文件至其中.',
 	BasketCopyFilesHere	: '从临时文件夹复制至此',
 	BasketMoveFilesHere	: '从临时文件夹移动至此',
 
-	BasketPasteErrorOther	: '文件 %s 出错: %e',
-	BasketPasteMoveSuccess	: '已移动以下文件: %s',
-	BasketPasteCopySuccess	: '已拷贝以下文件: %s',
+	// Global messages
+	OperationCompletedSuccess	: 'Operation completed successfully.', // MISSING
+	OperationCompletedErrors		: 'Operation completed with errors.', // MISSING
+	FileError				: '%s: %e', // MISSING
+
+	// Move and Copy files
+	MovedFilesNumber		: 'Number of files moved: %s.', // MISSING
+	CopiedFilesNumber	: 'Number of files copied: %s.', // MISSING
+	MoveFailedList		: 'The following files could not be moved:<br />%s', // MISSING
+	CopyFailedList		: 'The following files could not be copied:<br />%s', // MISSING
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: '上传',
@@ -118,6 +128,7 @@ CKFinder.lang['zh-cn'] =
 	NewSubFolder	: '创建子文件夹',
 	Rename			: '重命名',
 	Delete			: '删除',
+	DeleteFiles		: 'Delete Files', // MISSING
 
 	CopyDragDrop	: '将文件复制至此',
 	MoveDragDrop	: '将文件移动至此',
@@ -130,6 +141,7 @@ CKFinder.lang['zh-cn'] =
 
 	FileOverwrite	: '自动覆盖重名',
 	FileAutorename	: '自动重命名重名',
+	ManuallyRename	: 'Manually rename', // MISSING
 
 	// Generic
 	OkBtn		: '确定',
@@ -201,6 +213,7 @@ CKFinder.lang['zh-cn'] =
 	105 : '无效的扩展名.',
 	109 : '无效请求.',
 	110 : '未知错误.',
+	111 : 'It was not possible to complete the request due to resulting file size.', // MISSING
 	115 : '存在重名的文件或文件夹.',
 	116 : '文件夹不存在. 请刷新后再试.',
 	117 : '文件不存在. 请刷新列表后再试.',
@@ -224,6 +237,8 @@ CKFinder.lang['zh-cn'] =
 		FileEmpty		: '文件名不能为空.',
 		FileExists		: '文件 %s 已存在.',
 		FolderEmpty		: '文件夹名称不能为空.',
+		FolderExists	: 'Folder %s already exists.', // MISSING
+		FolderNameExists	: 'Folder already exists.', // MISSING
 
 		FileInvChar		: '文件名不能包含以下字符: \n\\ / : * ? " < > |',
 		FolderInvChar	: '文件夹名称不能包含以下字符: \n\\ / : * ? " < > |',
@@ -277,5 +292,16 @@ CKFinder.lang['zh-cn'] =
 	Gallery :
 	{
 		current : '第 {current} 个图像，共 {total} 个'
+	},
+
+	Zip :
+	{
+		extractHereLabel	: 'Extract here', // MISSING
+		extractToLabel		: 'Extract to...', // MISSING
+		downloadZipLabel	: 'Download as zip', // MISSING
+		compressZipLabel	: 'Compress to zip', // MISSING
+		removeAndExtract	: 'Remove existing and extract', // MISSING
+		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
+		extractSuccess		: 'File extracted successfully.' // MISSING
 	}
 };

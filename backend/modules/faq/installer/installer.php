@@ -10,7 +10,7 @@
 /**
  * Installer for the faq module
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
@@ -108,6 +108,7 @@ class FaqInstaller extends ModuleInstaller
 		$this->setSetting('faq', 'spamfilter', false);
 		$this->setSetting('faq', 'allow_feedback', false);
 		$this->setSetting('faq', 'allow_own_question', false);
+		$this->setSetting('faq', 'allow_multiple_categories', true);
 		$this->setSetting('faq', 'send_email_on_new_feedback', false);
 
 		foreach($this->getLanguages() as $language)

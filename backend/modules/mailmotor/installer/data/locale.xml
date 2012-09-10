@@ -333,6 +333,7 @@
       </item>
       <item type="message" name="HelpPrice">
         <translation language="en"><![CDATA[eg. 0.01]]></translation>
+        <translation language="ru"><![CDATA[прим. 0.01]]></translation>
         <translation language="nl"><![CDATA[vb 0.01]]></translation>
         <translation language="de"><![CDATA[z.B. 0.01]]></translation>
         <translation language="es"><![CDATA[ej. 0.01]]></translation>
@@ -1323,6 +1324,7 @@
       </item>
       <item type="label" name="PerCampaign">
         <translation language="en"><![CDATA[per campaign]]></translation>
+        <translation language="ru"><![CDATA[для компании]]></translation>
         <translation language="nl"><![CDATA[per campagne]]></translation>
         <translation language="de"><![CDATA[pro Kampagne]]></translation>
         <translation language="es"><![CDATA[por campaña]]></translation>
@@ -1367,6 +1369,7 @@
       </item>
       <item type="label" name="Prices">
         <translation language="en"><![CDATA[prices]]></translation>
+        <translation language="ru"><![CDATA[цены]]></translation>
         <translation language="nl"><![CDATA[prijzen]]></translation>
         <translation language="de"><![CDATA[Preise]]></translation>
         <translation language="es"><![CDATA[precios]]></translation>

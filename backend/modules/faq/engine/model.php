@@ -11,7 +11,7 @@
  * In this file we store all generic functions that we will be using in the faq module
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
@@ -71,12 +71,21 @@ class BackendFaqModel
 	 */
 	public static function deleteCategoryAllowed($id)
 	{
-		return (BackendModel::getDB()->getVar(
+		// get result
+		$result = (BackendModel::getDB()->getVar(
 			'SELECT 1
 			 FROM faq_questions AS i
 			 WHERE i.category_id = ? AND i.language = ?
 			 LIMIT 1',
 			 array((int) $id, BL::getWorkingLanguage())) == 0);
+
+		// exception
+		if(!BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true) && self::getCategoryCount() == 1)
+		{
+			return false;
+		}
+
+		else return $result;
 	}
 
 	/**
@@ -234,6 +243,20 @@ class BackendFaqModel
 			 FROM faq_categories AS i
 			 WHERE i.id = ? AND i.language = ?',
 			 array((int) $id, BL::getWorkingLanguage()));
+	}
+
+	/**
+	 * Fetch the category count
+	 *
+	 * @return int
+	 */
+	public static function getCategoryCount()
+	{
+		return (int) BackendModel::getDB()->getVar(
+			'SELECT COUNT(i.id)
+			 FROM faq_categories AS i
+			 WHERE i.language = ?',
+			 array(BL::getWorkingLanguage()));
 	}
 
 	/**

@@ -10,7 +10,7 @@
 /**
  * This action will display a form to search
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendSearchIndex extends FrontendBaseBlock
 {

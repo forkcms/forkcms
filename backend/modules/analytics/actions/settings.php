@@ -11,7 +11,7 @@
  * This is the settings-action, it will display a form to set general analytics settings
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class BackendAnalyticsSettings extends BackendBaseActionEdit
 {
@@ -21,6 +21,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 * @var	string
 	 */
 	private $accountName;
+
+	/**
+	 * API key needed by the API.
+	 *
+	 * @var string
+	 */
+	private $apiKey;
 
 	/**
 	 * All website profiles
@@ -96,6 +103,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		$this->accountName = BackendModel::getModuleSetting($this->getModule(), 'account_name', null);
 		$this->tableId = BackendModel::getModuleSetting($this->getModule(), 'table_id', null);
 		$this->profileTitle = BackendModel::getModuleSetting($this->getModule(), 'profile_title', null);
+		$this->apiKey = BackendModel::getModuleSetting($this->getModule(), 'api_key', null);
 
 		// no session token
 		if(!isset($this->sessionToken))
@@ -122,8 +130,22 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			// get google analytics instance
 			$ga = BackendAnalyticsHelper::getGoogleAnalyticsInstance();
 
-			// get all possible profiles in this account
-			$this->profiles = $ga->getAnalyticsAccountList($this->sessionToken);
+			try
+			{
+				// get all possible profiles in this account
+				$this->profiles = $ga->getAnalyticsAccountList($this->sessionToken);
+			}
+			catch(GoogleAnalyticsException $e)
+			{
+				// bad request, probably means the API key is wrong
+				if($e->getCode() == '400')
+				{
+					// reset token so we can alter the API key
+					BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
+
+					$this->redirect(BackendModel::createURLForAction('settings') . '&error=invalid-api-key');
+				}
+			}
 
 			// not authorized
 			if($this->profiles == 'UNAUTHORIZED')
@@ -153,7 +175,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 					{
 						// save table id and account title
 						$this->tableId = $tableId;
-						$this->accountName = $profiles[$this->tableId]['accountName'];
+						$this->accountName = $profiles[$this->tableId]['profileName'];
 						$this->profileTitle = $profiles[$this->tableId]['title'];
 						$webPropertyId = $profiles[$this->tableId]['webPropertyId'];
 
@@ -185,12 +207,26 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$redirectUrl = SITE_URL . '/' . (strpos($this->URL->getQueryString(), '?') === false ? $this->URL->getQueryString() : substr($this->URL->getQueryString(), 0, strpos($this->URL->getQueryString(), '?')));
 			$googleAccountAuthenticationForm = sprintf(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_URL, urlencode($redirectUrl), urlencode(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE));
 
-			// parse the link to the google account authentication form
-			$this->tpl->assign('googleAccountAuthenticationForm', $googleAccountAuthenticationForm);
+			// create form
+			$frm = new BackendForm('apiKey');
+			$frm->addText('key', $this->apiKey);
+
+			if($frm->isSubmitted())
+			{
+				$frm->getField('key')->isFilled(BL::err('FieldIsRequired'));
+
+				if($frm->isCorrect())
+				{
+					BackendModel::setModuleSetting($this->getModule(), 'api_key', $frm->getField('key')->getValue());
+					$this->redirect($googleAccountAuthenticationForm);
+				}
+			}
+
+			$frm->parse($this->tpl);
 		}
 
 		// session token is present but no table id
-		if(isset($this->sessionToken) && isset($this->profiles) && !isset($this->tableId))
+		elseif(isset($this->sessionToken) && isset($this->profiles) && !isset($this->tableId))
 		{
 			// show all possible accounts with their profiles
 			$this->tpl->assign('NoTableId', true);
@@ -206,7 +242,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 				// prepare accounts array
 				foreach((array) $this->profiles as $profile)
 				{
-					$accounts[$profile['accountName']][$profile['tableId']] = $profile['title'];
+					$accounts[$profile['profileName']][$profile['tableId']] = $profile['title'];
 				}
 
 				// there are accounts
@@ -232,7 +268,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		}
 
 		// everything is fine
-		if(isset($this->sessionToken) && isset($this->tableId) && isset($this->accountName))
+		elseif(isset($this->sessionToken) && isset($this->tableId) && isset($this->accountName))
 		{
 			// show the linked account
 			$this->tpl->assign('EverythingIsPresent', true);

@@ -1,10 +1,33 @@
-3.4.3 (xxxx-xx-xx)
+3.4.4 (xxxx-xx-xx)
 --
 Improvements:
 
+* Location: Fixed location widget. When debug = false, google wasn't loaded correctly. Thx to siesqo
+* Users: User can't change its own rights when not allowed to view the index.
+* Core: Upgraded Highcharts to 2.3.2
+* Core: Upgraded CKFinder to 2.3.0
+* Formbuilder: added API-methods.
+* FAQ: Setting for "one category" added, so user only has 1 category in the website + the category title is hidden in the frontend (for smaller websites).
+
+Bugfixes:
+
+* Mailer: The names are now decoded, so bugs with apostrofs in names are fixed. Thx to siesqo
+* Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
+* Themes: templates extras_data from other languages was overwritten.
+* Themes: incorrect block index was set when deleting a position causing all default blocks to be unlinked.
+* Core: exceptions were not displayed on CLI when SPOON_DEBUG was off. A minimal debug message was added.
+
+
+3.4.3 (2012-08-28)
+--
+Improvements:
+
+* Core: Added functions to manage modules_extras, can be used for custom widgets.
 * Core: Upgraded to jQuery 1.8
 * Core: Upgraded to jQuery UI 1.8.23
-
+* Blog: Added blog.comments.delete in the API.
+* Core: return-format for the API can be specified through Accept-header, GET or POST.
+* Core: jQuery sharing widget will now merge options recursively (deep copy).
 
 Bugfixes:
 
@@ -13,6 +36,8 @@ Bugfixes:
 * Core: use language parameter when rebuilding cache, instead of unavailable constant.
 * Pages: issue when changing themes, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/314.
 * Pages: hidden pages weren't visible in the tree.
+* Core: backend used working language instead of interface language for javascript translations.
+* Core: editor-templates weren't loaded because the language wasn't set at the point the default config is defined.
 
 
 3.4.2 (2012-07-31)
@@ -50,8 +75,8 @@ Improvements:
 
 Bugfixes:
 
-* Pages: fix a bug where draft versions couldn't be deleted.
 * Mailmotor: couldn't select a template in IE7/IE8 because hidden elements can't be targeted.
+* Pages: fix a bug where draft versions couldn't be deleted.
 * Core: Use the title of the active page record in the editor link list.
 * Core: share-plugin wasn't using the correct URL for LinkedIn-shares.
 * Analytics: remove GA webproperty id when unlinking your GA account. This caused a tracking code to be set even if the account was unlinked.
@@ -63,9 +88,6 @@ Improvements:
 
 * Core: Upgraded to jQuery UI 1.8.21
 * Core: Upgraded Highcharts to 2.2.5
-Bugfixes:
-
-* Core: Use the title of the active page record in the editor link list.
 
 Bugfixes:
 

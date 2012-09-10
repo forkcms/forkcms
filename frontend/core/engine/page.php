@@ -11,7 +11,7 @@
  * Frontend page class, this class will handle everything on a page
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendPage extends FrontendBaseObject
 {

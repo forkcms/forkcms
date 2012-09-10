@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Estyniad ffeil annilys.',
 		'109' => 'Cais annilys.',
 		'110' => 'Gwall anhysbys.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'Mae ffeil neu ffolder gyda\'r un enw yn bodoli yn barod.',
 		'116' => 'Methu â darganfod y ffolder. Adfywiwch a cheisio eto.',
 		'117' => 'Methu â darganfod y ffeil. Adfywiwch y rhestr ffeiliau a cheisio eto.',

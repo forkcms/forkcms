@@ -10,7 +10,7 @@
 /**
  * This is the autocomplete-action, it will output a list of searches that start with a certain string.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
 {

@@ -57,6 +57,7 @@ class CKFinder_Connector_CommandHandler_MoveFiles extends CKFinder_Connector_Com
         $currentResourceTypeConfig = $this->_currentFolder->getResourceTypeConfig();
         $_config =& CKFinder_Connector_Core_Factory::getInstance("Core_Config");
         $_aclConfig = $_config->getAccessControlConfig();
+        $_thumbnailsConfig = $_config->getThumbnailsConfig();
         $aclMasks = array();
         $_resourceTypeConfig = array();
 
@@ -172,6 +173,9 @@ class CKFinder_Connector_CommandHandler_MoveFiles extends CKFinder_Connector_Com
                     }
                 }
 
+                $_thumbsServerPath = CKFinder_Connector_Utils_FileSystem::combinePaths($_thumbnailsConfig->getDirectory(), $_config->getResourceTypeConfig($type)->getName());
+                $thumbPath = CKFinder_Connector_Utils_FileSystem::combinePaths($_thumbsServerPath, $path.$name);
+
                 //$overwrite
                 // finally, no errors so far, we may attempt to copy a file
                 // protection against copying files to itself
@@ -195,6 +199,7 @@ class CKFinder_Connector_CommandHandler_MoveFiles extends CKFinder_Connector_Com
                                 continue;
                             }
                             else {
+                                CKFinder_Connector_Utils_FileSystem::unlink($thumbPath);
                                 $moved++;
                             }
                         }
@@ -221,6 +226,7 @@ class CKFinder_Connector_CommandHandler_MoveFiles extends CKFinder_Connector_Com
                             continue;
                         }
                         else {
+                            CKFinder_Connector_Utils_FileSystem::unlink($thumbPath);
                             $moved++;
                         }
                     }
@@ -237,6 +243,7 @@ class CKFinder_Connector_CommandHandler_MoveFiles extends CKFinder_Connector_Com
                         continue;
                     }
                     else {
+                        CKFinder_Connector_Utils_FileSystem::unlink($thumbPath);
                         $moved++;
                     }
                 }

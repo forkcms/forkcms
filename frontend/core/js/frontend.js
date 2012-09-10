@@ -426,7 +426,7 @@ jsFrontend.locale =
 /**
  * Search controls
  *
- * @author	Matthias Mullie <matthias@mullie.eu>
+ * @author	Matthias Mullie <forkcms@mullie.eu>
  */
 jsFrontend.search =
 {

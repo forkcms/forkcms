@@ -30,6 +30,20 @@
         <translation language="lt"><![CDATA[visa statistika]]></translation>
         <translation language="sv"><![CDATA[alla statistik]]></translation>
       </item>
+      <item type="label" name="ApiKey">
+        <translation language="nl"><![CDATA[API key]]></translation>
+        <translation language="en"><![CDATA[API key]]></translation>
+        <translation language="hu"><![CDATA[API key]]></translation>
+        <translation language="it"><![CDATA[API key]]></translation>
+        <translation language="ru"><![CDATA[API ключ]]></translation>
+        <translation language="zh"><![CDATA[API key]]></translation>
+        <translation language="de"><![CDATA[API key]]></translation>
+        <translation language="fr"><![CDATA[API key]]></translation>
+        <translation language="es"><![CDATA[API key]]></translation>
+        <translation language="uk"><![CDATA[API key]]></translation>
+        <translation language="lt"><![CDATA[API key]]></translation>
+        <translation language="sv"><![CDATA[API key]]></translation>
+      </item>
       <item type="label" name="AverageTimeOnPage">
         <translation language="nl"><![CDATA[gemiddelde tijd op pagina]]></translation>
         <translation language="en"><![CDATA[average time on page]]></translation>
@@ -483,6 +497,7 @@
       </item>
       <item type="label" name="Visit">
         <translation language="sv"><![CDATA[besök]]></translation>
+        <translation language="ru"><![CDATA[посетить]]></translation>
       </item>
       <item type="label" name="Visits">
         <translation language="nl"><![CDATA[bezoeken]]></translation>
@@ -549,6 +564,7 @@
       <item type="message" name="AnalyticsDelete">
         <translation language="nl"><![CDATA[De items zijn verwijderd]]></translation>
         <translation language="en"><![CDATA[Items are deleted]]></translation>
+        <translation language="ru"><![CDATA[Данные будут удалены]]></translation>
       </item>
       <item type="message" name="AuthenticateAtGoogle">
         <translation language="nl"><![CDATA[Koppel uw Google account]]></translation>

@@ -23,6 +23,15 @@
 			{$ddmRelatedNumberOfItems} {$ddmRelatedNumberOfItemsError}
 		</div>
 	</div>
+    
+    <div class="box">
+		<div class="heading">
+			<h3>{$lblCategories|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<label for="allowMultipleCategories">{$chkAllowMultipleCategories} {$lblAllowMultipleCategories|ucfirst}</label>
+		</div>
+    </div>
 
 	<div class="box">
 		<div class="heading">

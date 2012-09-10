@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Ugyldig filtype.',
 		'109' => 'Ugyldig anmodning.',
 		'110' => 'Ukendt fejl.',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => 'En fil eller mappe med det samme navn eksisterer allerede.',
 		'116' => 'Mappen blev ikke fundet. Opdatér listen eller prøv igen.',
 		'117' => 'Filen blev ikke fundet. Opdatér listen eller prøv igen.',

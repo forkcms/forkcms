@@ -12,7 +12,7 @@
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendHeader
 {
@@ -349,9 +349,18 @@ class BackendHeader
 		// assign JS-files
 		$this->tpl->assign('jsFiles', $jsFiles);
 
+		// fetch preferred interface language
+		if(BackendAuthentication::getUser()->isAuthenticated())
+		{
+			$interfaceLanguage = (string) BackendAuthentication::getUser()->getSetting('interface_language');
+		}
+		else $interfaceLanguage = BL::getInterfaceLanguage();
+
 		// some default stuff
 		$this->jsData['debug'] = SPOON_DEBUG;
 		$this->jsData['site']['domain'] = SITE_DOMAIN;
+		$this->jsData['editor']['language'] = $interfaceLanguage;
+		$this->jsData['interface_language'] = $interfaceLanguage;
 
 		// is the user object filled?
 		if(BackendAuthentication::getUser()->isAuthenticated())

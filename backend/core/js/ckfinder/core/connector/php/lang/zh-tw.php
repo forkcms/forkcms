@@ -16,6 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => '無法上傳：不合法的副檔名 !',
 		'109' => '不合法的請求 !',
 		'110' => '不明錯誤 !',
+		'111' => 'It was not possible to complete the request due to resulting file size.',
 		'115' => '檔案或目錄名稱重複 !',
 		'116' => '找不到目錄 ! 請先重新整理 , 然後再試一次 !',
 		'117' => '找不到檔案 ! 請先重新整理 , 然後再試一次 !',
