@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Users: Users can't change its own rights when not allowed to view the index action.
 * Core: Upgraded Highcharts to 2.3.2
 * Core: Upgraded CKFinder to 2.3.0
 * Formbuilder: added API-methods.
