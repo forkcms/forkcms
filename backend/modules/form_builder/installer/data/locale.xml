@@ -89,6 +89,7 @@
       <item type="label" name="Details">
         <translation language="nl"><![CDATA[details]]></translation>
         <translation language="en"><![CDATA[details]]></translation>
+        <translation language="ru"><![CDATA[детали]]></translation>
         <translation language="es"><![CDATA[detalles]]></translation>
         <translation language="de"><![CDATA[Details]]></translation>
         <translation language="uk"><![CDATA[Деталі]]></translation>
@@ -600,6 +601,7 @@
       </item>
       <item type="message" name="Borttagen">
         <translation language="sv"><![CDATA[formulär "%1$s" var borttagen.]]></translation>
+        <translation language="ru"><![CDATA[форма "%1$s" удалена.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je het formulier "%1$s" en al zijn inzendingen wil verwijderen?]]></translation>
