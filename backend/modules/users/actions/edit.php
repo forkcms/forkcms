@@ -68,7 +68,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// create user objects
 		$this->user = new BackendUser($this->id);
 		$this->authenticatedUser = BackendAuthentication::getUser();
-		$this->allowUserRights = (($this->authenticatedUser->getUserId() != $this->id || BackendAuthentication::isAllowedAction('index')) || $this->authenticatedUser->isGod()) ? true : false;
+		$this->allowUserRights = (($this->authenticatedUser->getUserId() != $this->id || BackendAuthentication::isAllowedAction('index')) || $this->authenticatedUser->isGod());
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -259,13 +259,13 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				{
 					// get selected groups
 					$groups = $fields['groups']->getChecked();
-	
+
 					// init var
 					$newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
-	
+
 					// loop through groups and collect all dashboard widget sequences
 					foreach($groups as $group) $sequences[] = BackendGroupsModel::getSetting($group, 'dashboard_sequence');
-	
+
 					// loop through sequences
 					foreach($sequences as $sequence)
 					{
@@ -280,7 +280,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 							}
 						}
 					}
-	
+
 					// add new sequence to settings
 					$settings['dashboard_sequence'] = $newSequence;
 				}
