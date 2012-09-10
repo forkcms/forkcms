@@ -1,0 +1,17 @@
+{
+    "hash": "bc97fd98ce1ca302382a3354b85198e4",
+    "packages": [
+        {
+            "package": "symfony/dependency-injection",
+            "version": "v2.1.0"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ]
+}
