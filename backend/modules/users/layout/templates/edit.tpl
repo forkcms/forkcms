@@ -59,7 +59,7 @@
 			<li><a href="#tabProfile">{$lblProfile|ucfirst}</a></li>
 			{option:allowPasswordEdit}<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>{/option:allowPasswordEdit}
 			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
-			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
+			{option:allowUserRights}<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>{/option:allowUserRights}
 		</ul>
 
 		<div id="tabProfile">
@@ -182,6 +182,7 @@
 		</div>
 		{/option:allowPasswordEdit}
 
+		{option:allowUserRights}
 		<div id="tabPermissions">
 			<div class="subtleBox">
 				<div class="heading">
@@ -203,6 +204,7 @@
 				</div>
 			</div>
 		</div>
+        {/option:allowUserRights}
 	</div>
 
 	<div class="fullwidthOptions">
