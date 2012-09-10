@@ -58,7 +58,7 @@ class Autoloader
 		elseif(substr($className, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $className) . '.php';
 
 		// file check in core
-		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
+		if($pathToLoad != '' && file_exists($pathToLoad)) require_once $pathToLoad;
 
 		// check if module file exists
 		else
@@ -99,7 +99,7 @@ class Autoloader
 					$pathToLoad = $root . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
 
 					// if it exists, load it!
-					if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+					if($pathToLoad != '' && file_exists($pathToLoad))
 					{
 						require_once $pathToLoad;
 						break;
