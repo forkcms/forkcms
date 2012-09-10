@@ -1,1 +1,1 @@
-<p>Enter your question and contact information and we'll get back to you as soon as possible.</p>
+<p>Укажите ваш вопрос и контактные данные, и мы свяжемся с вами как можно скорее.</p>

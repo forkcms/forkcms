@@ -30,6 +30,7 @@
       <item type="message" name="ConfirmModuleInstall">
         <translation language="nl"><![CDATA[Ben je zeker dat je de module "%1$s" wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Вы действительно хотите установить модуль "%1$s"?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de instalar el módulo "%1$s"?]]></translation>
         <translation language="de"><![CDATA[Möchtest du das Modul "%1$s" wirklich installieren?]]></translation>
         <translation language="hu"><![CDATA[Biztos telepíted a(z) "%1$s" modult?]]></translation>
@@ -38,6 +39,7 @@
       <item type="message" name="ConfirmThemeInstall">
         <translation language="nl"><![CDATA[Ben je zeker dat je dit thema wil installeren?]]></translation>
         <translation language="en"><![CDATA[Are you sure you want to install this theme?]]></translation>
+        <translation language="ru"><![CDATA[Вы действительно хотите установить эту тему?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de instalar el tema "%1$s"?]]></translation>
         <translation language="de"><![CDATA[Möchtest du dieses Theme wirklich installieren?]]></translation>
         <translation language="hu"><![CDATA[Biztos telepíted a(z) "%1$s" sablont?]]></translation>
@@ -58,6 +60,7 @@
       	  
      	]]></translation>
         <translation language="en"><![CDATA[                      <p>              Cronjobs periodically, on a set timeframe, perform a call to script.<br />              Cronjobs can be executed either through commandline as well as over your webserver.<br />              When setting cronjobs on servers with several Fork CMS installations try to spread the execution by changing the minutes parameter.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
+        <translation language="ru"><![CDATA[                      <p>              Планировщик задач периодически в заданное время будет выполнять специальные скрипты.<br />              Планировщик задач может быть запущен в командной строке на вашем сервере.<br />              Если на сервере несколько Fork CMS, советуем для каждой установить иное время.            </p>            <p>              Командная строка: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />              Веб-сервер: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
         <translation language="de"><![CDATA[                      <p>              Cronjobs senden periodisch, nach einem gesetzten Zeitintervall, einen Aufruf an einen Skript.<br />              Cronjobs können über die Commandline und über den Webserver direkt ausgeführt werden.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
         <translation language="es"><![CDATA[<p>Los Cronjobs realizan periódicamente, en un tiempo determinado, una llamada para un script.<br />Los Cronjobs puede ser ejecutados a través de la línea de comando o a través de tu servidor web.<br />Cuando configures cronjobs en servidores con varias instalaciones de Fork CMS intenta distanciar la ejecución cambiando el parametro de minutos.</p><p>Línea de comando: <small>php %1$s/backend/cronjob.php module=<i>module</i>action=<i>action</i></small><br />Servidor Web: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small></p>      	       	]]></translation>
         <translation language="lt"><![CDATA[Kronoinformacija]]></translation>
@@ -90,6 +93,7 @@
       <item type="message" name="HelpInstallableThemes">
         <translation language="nl"><![CDATA[Klik op een thema om het te installeren.]]></translation>
         <translation language="en"><![CDATA[Click a theme to install it.]]></translation>
+        <translation language="ru"><![CDATA[Кликните по теме оформления, для её установки]]></translation>
         <translation language="es"><![CDATA[Da click sobre un tema para instalarlo.]]></translation>
         <translation language="de"><![CDATA[Klick ein Theme an, um es zu installieren.]]></translation>
         <translation language="hu"><![CDATA[Klikk a sablon telepítéséhez.]]></translation>
@@ -157,6 +161,7 @@
       <item type="message" name="InformationFileCouldNotBeLoaded">
         <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
         <translation language="en"><![CDATA[A info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
+        <translation language="ru"><![CDATA[Файл info.xml присутствует, но не может быть загружен. Проверьте содержимое файла XML.]]></translation>
         <translation language="es"><![CDATA[Un archivo info.xml está presente pero no se ha podido cargar. Verifica si el contenido es XML válido.]]></translation>
         <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, konnte aber nicht geladen werden. Überprüfe, dass es sich um eine gültige XML Datei handelt.]]></translation>
         <translation language="hu"><![CDATA[Az info.xml fájl létezik, de nem töltődött be. Ellenőrizd, hogy valid XML e a tartalom.]]></translation>
@@ -165,6 +170,7 @@
       <item type="message" name="InformationFileIsEmpty">
         <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
         <translation language="en"><![CDATA[A info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
+        <translation language="ru"><![CDATA[Файл info.xml присутствует, но либо пустой, либо содержит неправильную информацию.]]></translation>
         <translation language="es"><![CDATA[Un archivo info.xml está presente pero esta vacio o bien no contiene información valiosa.]]></translation>
         <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, ist aber entweder leer oder enthält keine brauchbaren Informationen.]]></translation>
         <translation language="hu"><![CDATA[Az info.xml létezik, de nem üres vagy nem tartalmaz értékes információt.]]></translation>
@@ -173,6 +179,7 @@
       <item type="message" name="InformationFileIsMissing">
         <translation language="nl"><![CDATA[Er is geen informatie beschikbaar.]]></translation>
         <translation language="en"><![CDATA[There is no information available.]]></translation>
+        <translation language="ru"><![CDATA[Необходимая информация отсутствует.]]></translation>
         <translation language="es"><![CDATA[No hay información disponible.]]></translation>
         <translation language="de"><![CDATA[Es sind keine Informationen verfügbar.]]></translation>
         <translation language="hu"><![CDATA[Nincs elérhető információ.]]></translation>
@@ -181,6 +188,7 @@
       <item type="message" name="InformationModuleIsNotInstalled">
         <translation language="nl"><![CDATA[Deze module is nog niet geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[This module is not yet installed.]]></translation>
+        <translation language="ru"><![CDATA[Данный модуль еще не установлен.]]></translation>
         <translation language="es"><![CDATA[Este módulo no está instalado aun.]]></translation>
         <translation language="de"><![CDATA[Dieses Modul ist noch nicht installiert.]]></translation>
         <translation language="hu"><![CDATA[Ez a modul nem lett telepítve.]]></translation>
@@ -189,6 +197,7 @@
       <item type="message" name="InformationThemeIsNotInstalled">
         <translation language="nl"><![CDATA[Dit thema is nog niet geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[This theme is not yet installed.]]></translation>
+        <translation language="ru"><![CDATA[Данная тема оформления еще не установлена​​.]]></translation>
         <translation language="es"><![CDATA[Este tema no está instalado aun.]]></translation>
         <translation language="de"><![CDATA[Dieses Theme ist noch nicht installiert.]]></translation>
         <translation language="hu"><![CDATA[Ez a sablon nem lett telepítve.]]></translation>
@@ -197,6 +206,7 @@
       <item type="message" name="Module">
         <translation language="nl"><![CDATA[module "%1$s"]]></translation>
         <translation language="en"><![CDATA[module "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[модуль "%1$s"]]></translation>
         <translation language="es"><![CDATA[módulo "%1$s"]]></translation>
         <translation language="de"><![CDATA[Modul "%1$s"]]></translation>
         <translation language="hu"><![CDATA["%1$s" modul]]></translation>
@@ -205,6 +215,7 @@
       <item type="message" name="ModuleInstalled">
         <translation language="nl"><![CDATA[De module "%1$s" werd geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
+        <translation language="ru"><![CDATA[Модуль "%1$s" успешно установлен.]]></translation>
         <translation language="es"><![CDATA[El módulo "%1$s" fue instalado.]]></translation>
         <translation language="de"><![CDATA[Das Modul "%1$s" wurde installiert.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" modul telepítve.]]></translation>
@@ -213,6 +224,7 @@
       <item type="message" name="ModulesNotWritable">
         <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de modules mappen. Controleer of je schrijfrechten hebt op de modules map in alle applicaties.]]></translation>
         <translation language="en"><![CDATA[We do not have write rights to the modules folders. Check if you have write rights on the modules folders in all applications.]]></translation>
+        <translation language="ru"><![CDATA[Каталог модулей не имеет прав на запись. Проверьте, правильно ли выставлены права на каталог модулей во всех приложениях.]]></translation>
         <translation language="es"><![CDATA[No tenemos permiso de escritura para la carpeta de módulos. Comprueba si tienes permisos de escritura en la carpeta de módulos (modules) en todas las aplicaciones.]]></translation>
         <translation language="de"><![CDATA[Es fehlen Schreibrechte für die Modul-Ordner. Bitte überprüfe die Schreibrechte der Ordner "modules" in den Ordnern "frontend" und "backend".]]></translation>
         <translation language="hu"><![CDATA[Jelenleg nincs írási joga a moduls mappának. Ellenőrizd, hogy rendelkezik e írási jogosultsággal a moduls mappa minden alkalmazáshoz.]]></translation>
@@ -221,6 +233,7 @@
       <item type="message" name="ModulesWarnings">
         <translation language="nl"><![CDATA[Er zijn waarschuwingen voor volgende module(s)]]></translation>
         <translation language="en"><![CDATA[There are some warnings for following module(s)]]></translation>
+        <translation language="ru"><![CDATA[Есть некоторые предупреждения для следующих модулей]]></translation>
         <translation language="de"><![CDATA[Es gibt einige Warnhinweise für folgende(s) Modul(e)]]></translation>
         <translation language="es"><![CDATA[Hay algunas advertencias para el(los) siguiente(s) módulo(s)]]></translation>
         <translation language="hu"><![CDATA[Van néhány hiba a következő modul(ok)ban]]></translation>
@@ -229,6 +242,7 @@
       <item type="message" name="NoModulesInstalled">
         <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[No modules installed.]]></translation>
+        <translation language="ru"><![CDATA[Нет установленных модулей.]]></translation>
         <translation language="de"><![CDATA[Es sind keine Module installiert.]]></translation>
         <translation language="es"><![CDATA[Ningún módulo está instalado.]]></translation>
         <translation language="hu"><![CDATA[Nincs modul telepítve.]]></translation>
@@ -237,6 +251,7 @@
       <item type="message" name="NoThemes">
         <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
         <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="ru"><![CDATA[Нет доступных тем формления.]]></translation>
         <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
         <translation language="es"><![CDATA[Ningún tema está disponible.]]></translation>
         <translation language="hu"><![CDATA[A sablon nem elérhető.]]></translation>
@@ -269,6 +284,7 @@
       <item type="message" name="Theme">
         <translation language="nl"><![CDATA[thema "%1$s"]]></translation>
         <translation language="en"><![CDATA[theme "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[тема "%1$s"]]></translation>
         <translation language="es"><![CDATA[tema "%1$s"]]></translation>
         <translation language="de"><![CDATA[Theme "%1$s"]]></translation>
         <translation language="hu"><![CDATA["%1$s" sablon]]></translation>
@@ -277,6 +293,7 @@
       <item type="message" name="ThemeInstalled">
         <translation language="nl"><![CDATA[Het thema "%1$s" werd geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[The theme "%1$s" was installed.]]></translation>
+        <translation language="ru"><![CDATA[Тема "%1$s" успешно установлена.]]></translation>
         <translation language="es"><![CDATA[El tema "%1$s" fue instalado.]]></translation>
         <translation language="de"><![CDATA[Das Theme "%1$s" wurde installiert.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon telepítve.]]></translation>
@@ -285,6 +302,7 @@
       <item type="message" name="ThemesNotWritable">
         <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de themes map. Controleer of je schrijfrechten hebt op de themes map in de frontend-applicatie.]]></translation>
         <translation language="en"><![CDATA[We do not have write rights to the themes folder. Check if you have write rights on the themes folders in the frontend-application.]]></translation>
+        <translation language="ru"><![CDATA[Каталог тем оформления не имеет прав на запись. Проверьте, правильно ли выставлены права на каталог во всех приложениях.]]></translation>
         <translation language="es"><![CDATA[No tenemos permiso de escritura en la carpeta de temas. Comprueba si tienes permiso de escritura en la carpeta de temas en la frontend-application.]]></translation>
         <translation language="de"><![CDATA[Wir haben keine Schreibrechte im Themes-Ordner. Überprüfe die Schreibrechte des Ordners "Themes", der sich im Ordner "Frontend" befindet.]]></translation>
         <translation language="hu"><![CDATA[Jelenleg nincs írási joga a themes mappának. Ellenőrizd, hogy rendelkezik e írási jogosultsággal a themes mappa a frontend-alkalmazáshoz.]]></translation>
@@ -299,6 +317,7 @@
 			</ul>
 		]]></translation>
         <translation language="en"><![CDATA[        	Your server is missing the required PHP "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>" class. Fork CMS needs this class to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
+        <translation language="ru"><![CDATA[        	На вашем сервере не установлен необходимый PHP класс "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>". Fork CMS нуждается в этом классе, чтобы была возможность распаковки загруженного модуля.<br /><br />			<ul>				<li>Обратитесь к администратору сервера с этим сообщением.</li>				<li>Или распакуйте ZIP на ваш компьютер и загрузите каталоги вручную (Скорее всего через FTP).</li>			</ul>		]]></translation>
         <translation language="de"><![CDATA[Dem Server fehlt die benötigte PHP Klasse "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>". Fork CMS benötigt diese Klasse, um das von dir hochgeladene Modul zu entpacken.<br /><br />			<ul>				<li>Kontaktiere deinen Server-Administrator mit dieser Nachricht.</li>				<li>Oder entpacke das ZIP-Archiv auf deinem Computer und lade die Ordner manuell (per FTP) in das Root-Verzeichnis deiner Website.</li>			</ul>		]]></translation>
         <translation language="es"><![CDATA[A tu servidor le falta la clase PHP <a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>". Fork CMS necesita esta clase para poder desempaquetar el módulo subido.<br /><br /><ul><li>Contacta a tu administrador de servidor con el mensaje anterior.</li><li>O desempaqueta el archivo ZIP en tu computadora y sube los archivos manualmente (preferentemente vía FTP) a la raíz de tu sitio web.</li></ul>]]></translation>
         <translation language="hu"><![CDATA[        	Your server is missing the required PHP "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>" class. Fork CMS needs this class to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
@@ -312,6 +331,7 @@
 			</ul>
 		]]></translation>
         <translation language="en"><![CDATA[        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
+        <translation language="ru"><![CDATA[        	На вашем сервере не установлено необходимое PHP расширение "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>". Fork CMS нуждается в этом расширении, чтобы балы возможность распаковки загруженного модуля.<br /><br />			<ul>				<li>Обратитесь к администратору сервера с этим сообщением.</li>				<li>Или распакуйте ZIP на ваш компьютер и загрузите каталоги вручную (Скорее всего через FTP).</li>			</ul>		]]></translation>
         <translation language="es"><![CDATA[        	        	Tu servidor no encuentra la extensión PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" requerida. Fork CMS necesita esta extensión para descomprimir los modulos subidos.<br /><br />			<ul>				<li>Contacta tu administrador de servidor con el mensaje de arriba.</li>				<li>O descomprime el archivo ZIP en tu PC y sube las carpetas manualmente (via FTP) a la raiz de tu sitio web.</li>			</ul>					]]></translation>
         <translation language="de"><![CDATA[Deinem Server felt die benötigte PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" Erweiterung. Fork CMS benötigt diese Erweiterung um hochgeladene Module zu entpacken.<br /><br />			<ul>				<li>Kontaktiere deinen Server-Administrator mit der obigen Nachricht.</li>				<li>Oder entpacke das ZIP Archiv auf deinem Computer und lade es manuell (per FTP-Programm) hoch.</li></ul>]]></translation>
         <translation language="hu"><![CDATA[        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
@@ -333,6 +353,7 @@
       <item type="label" name="Authors">
         <translation language="nl"><![CDATA[auteurs]]></translation>
         <translation language="en"><![CDATA[authors]]></translation>
+        <translation language="ru"><![CDATA[авторы]]></translation>
         <translation language="es"><![CDATA[autores]]></translation>
         <translation language="de"><![CDATA[Autoren]]></translation>
         <translation language="uk"><![CDATA[Автори]]></translation>
@@ -357,6 +378,7 @@
       <item type="label" name="Events">
         <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
         <translation language="en"><![CDATA[events (hooks)]]></translation>
+        <translation language="ru"><![CDATA[события (hooks)]]></translation>
         <translation language="es"><![CDATA[eventos (hooks)]]></translation>
         <translation language="de"><![CDATA[Events (hooks)]]></translation>
         <translation language="hu"><![CDATA[események (horog)]]></translation>
@@ -365,6 +387,7 @@
       <item type="label" name="FindModules">
         <translation language="nl"><![CDATA[vind modules]]></translation>
         <translation language="en"><![CDATA[find modules]]></translation>
+        <translation language="ru"><![CDATA[поиск модулей]]></translation>
         <translation language="es"><![CDATA[encontrar módulos]]></translation>
         <translation language="de"><![CDATA[Module finden]]></translation>
         <translation language="uk"><![CDATA[Знайти модулі]]></translation>
@@ -375,6 +398,7 @@
       <item type="label" name="FindThemes">
         <translation language="nl"><![CDATA[vind thema's]]></translation>
         <translation language="en"><![CDATA[find themes]]></translation>
+        <translation language="ru"><![CDATA[поиск тем оформления]]></translation>
         <translation language="es"><![CDATA[encontrar temas]]></translation>
         <translation language="de"><![CDATA[Themes finden]]></translation>
         <translation language="uk"><![CDATA[Знайти теми]]></translation>
@@ -385,6 +409,7 @@
       <item type="label" name="Install">
         <translation language="nl"><![CDATA[installeer]]></translation>
         <translation language="en"><![CDATA[install]]></translation>
+        <translation language="ru"><![CDATA[установить]]></translation>
         <translation language="es"><![CDATA[instalar]]></translation>
         <translation language="de"><![CDATA[installieren]]></translation>
         <translation language="uk"><![CDATA[Встановити]]></translation>
@@ -395,6 +420,7 @@
       <item type="label" name="InstallableModules">
         <translation language="nl"><![CDATA[niet geïnstalleerde modules]]></translation>
         <translation language="en"><![CDATA[not installed modules]]></translation>
+        <translation language="ru"><![CDATA[Неустановленные модули]]></translation>
         <translation language="es"><![CDATA[módulos no instalados]]></translation>
         <translation language="de"><![CDATA[nicht installierte Module]]></translation>
         <translation language="uk"><![CDATA[Немає встановлених модулів]]></translation>
@@ -404,6 +430,7 @@
       <item type="label" name="InstallableThemes">
         <translation language="nl"><![CDATA[niet geïnstalleerde thema's']]></translation>
         <translation language="en"><![CDATA[not installed themes]]></translation>
+        <translation language="ru"><![CDATA[Неустановленные темы оформления]]></translation>
         <translation language="es"><![CDATA[temas no instalados]]></translation>
         <translation language="de"><![CDATA[nicht installierte Themes]]></translation>
         <translation language="uk"><![CDATA[Немає встановлених тем]]></translation>
@@ -413,6 +440,7 @@
       <item type="label" name="InstalledModules">
         <translation language="nl"><![CDATA[geïnstalleerde modules]]></translation>
         <translation language="en"><![CDATA[installed modules]]></translation>
+        <translation language="ru"><![CDATA[установленные модули]]></translation>
         <translation language="es"><![CDATA[módulos instalados]]></translation>
         <translation language="de"><![CDATA[installierte Module]]></translation>
         <translation language="uk"><![CDATA[Встановлені модулі]]></translation>
@@ -422,6 +450,7 @@
       <item type="label" name="InstalledThemes">
         <translation language="nl"><![CDATA[geïnstalleerde thema's']]></translation>
         <translation language="en"><![CDATA[installed themes]]></translation>
+        <translation language="ru"><![CDATA[установленные темы оформления]]></translation>
         <translation language="es"><![CDATA[temas instalados]]></translation>
         <translation language="de"><![CDATA[installierte Themes]]></translation>
         <translation language="uk"><![CDATA[Встановлені теми]]></translation>
@@ -444,6 +473,7 @@
       <item type="label" name="Theme">
         <translation language="nl"><![CDATA[thema]]></translation>
         <translation language="en"><![CDATA[theme]]></translation>
+        <translation language="ru"><![CDATA[тема]]></translation>
         <translation language="de"><![CDATA[Theme]]></translation>
         <translation language="es"><![CDATA[tema]]></translation>
         <translation language="uk"><![CDATA[Тема]]></translation>
@@ -453,6 +483,7 @@
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>
+        <translation language="ru"><![CDATA[загрузить модуль]]></translation>
         <translation language="es"><![CDATA[subir módulo]]></translation>
         <translation language="de"><![CDATA[Modul hochladen]]></translation>
         <translation language="uk"><![CDATA[Завантажити модуль]]></translation>
@@ -462,6 +493,7 @@
       <item type="label" name="UploadTheme">
         <translation language="nl"><![CDATA[thema opladen]]></translation>
         <translation language="en"><![CDATA[upload theme]]></translation>
+        <translation language="ru"><![CDATA[загрузить тему]]></translation>
         <translation language="es"><![CDATA[subir tema]]></translation>
         <translation language="de"><![CDATA[Theme hochladen]]></translation>
         <translation language="uk"><![CDATA[Завантажити тему]]></translation>
@@ -471,6 +503,7 @@
       <item type="label" name="Version">
         <translation language="nl"><![CDATA[versie]]></translation>
         <translation language="en"><![CDATA[version]]></translation>
+        <translation language="ru"><![CDATA[версия]]></translation>
         <translation language="es"><![CDATA[versión]]></translation>
         <translation language="de"><![CDATA[Version]]></translation>
         <translation language="uk"><![CDATA[Версія]]></translation>
@@ -480,6 +513,7 @@
       <item type="error" name="AlreadyInstalled">
         <translation language="nl"><![CDATA["%1$s" is reeds geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA["%1$s" is already installed.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" уже установлен.]]></translation>
         <translation language="es"><![CDATA["%1$s" ya está instalada.]]></translation>
         <translation language="de"><![CDATA["%1$s" ist bereits installiert.]]></translation>
         <translation language="hu"><![CDATA["%1$s" feltelepítve.]]></translation>
@@ -488,6 +522,7 @@
       <item type="error" name="CorruptedFile">
         <translation language="nl"><![CDATA[Het geüploade bestand is geen geldig ZIP bestand en kon niet worden uitgepakt.]]></translation>
         <translation language="en"><![CDATA[The uploaded file is not a valid ZIP file and could not be extracted.]]></translation>
+        <translation language="ru"><![CDATA[Загруженный файл не является допустимым ZIP файлом и не может быть извлечен.]]></translation>
         <translation language="es"><![CDATA[El arhivo ZIP subido no es válido y no puede ser extraído.]]></translation>
         <translation language="de"><![CDATA[Die hochgeladene Datei konnte nicht entpackt werden, es scheint sich nicht um eine gültige ZIP-Datei zu handeln.]]></translation>
         <translation language="hu"><![CDATA[A feltöltött fájl nem érvényes ZIP fájl és nem kell kicsomagolni.]]></translation>
@@ -496,6 +531,7 @@
       <item type="error" name="CronjobsNotSet">
         <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld. <a href="%1$s">Configureer</a>]]></translation>
         <translation language="en"><![CDATA[Not all cronjobs are set. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="ru"><![CDATA[Планировщик задач не установлен. <a href="%1$s">Сконфигурировать</a>]]></translation>
         <translation language="de"><![CDATA[Es wurden noch nicht alle Cronjobs eingestestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
         <translation language="es"><![CDATA[No todos los cronjobs están configurados. <a href="%1$s">Configurar</a>]]></translation>
         <translation language="lt"><![CDATA[Ne visi cron darbai yra <a href="%1$s">įjungti</a>]]></translation>
@@ -529,6 +565,7 @@
       <item type="error" name="FileContentsIsUseless">
         <translation language="nl"><![CDATA[We vonden geen module in het geüploade bestand. Controleer de inhoud.]]></translation>
         <translation language="en"><![CDATA[We could not find a module in the uploaded file. Verify the contents.]]></translation>
+        <translation language="ru"><![CDATA[Мы не смогли найти модуль в загруженном файле. Проверьте содержимое.]]></translation>
         <translation language="es"><![CDATA[No pudimos encontrar un módulo en el archivo subido. Verifica el contenido.]]></translation>
         <translation language="de"><![CDATA[Wir konnten kein Modul in der hochgeladenen Datei finden. Bitte überprüfe den Inhalt.]]></translation>
         <translation language="hu"><![CDATA[Nem találtunk modult a feltöltött fájlban. Ellenőrizd a tartalmat.]]></translation>
@@ -537,6 +574,7 @@
       <item type="error" name="FileIsEmpty">
         <translation language="nl"><![CDATA[Het bestand is leeg. Controleer de inhoud.]]></translation>
         <translation language="en"><![CDATA[The file is empty. Verify the contents.]]></translation>
+        <translation language="ru"><![CDATA[Файл пустой. Проверьте содержимое.]]></translation>
         <translation language="es"><![CDATA[El archivo está vacio. Verifica el contenido.]]></translation>
         <translation language="de"><![CDATA[Diese Datei ist leer. Bitte überprüfe den Inhalt.]]></translation>
         <translation language="hu"><![CDATA[A fájl üres. Ellenőrizd a tartalmat.]]></translation>
@@ -557,6 +595,7 @@
       <item type="error" name="LibraryFileAlreadyExists">
         <translation language="nl"><![CDATA[Het library-bestand "%1$s" bestond al van een andere module. Deze module werkt mogelijk niet optimaal.]]></translation>
         <translation language="en"><![CDATA[The library-file "%1$s" already existed by another module. This module may not function properly.]]></translation>
+        <translation language="ru"><![CDATA[Библиотека-файл "%1$s" уже существует в другом модуле. Этот модуль не может функционировать должным образом.]]></translation>
         <translation language="de"><![CDATA[Die Library-Datei "%1$s" existiert bereits von einem anderen Modul. Dieses Modul funktioniert eventuell nicht korrekt.]]></translation>
         <translation language="es"><![CDATA[El archivo de biblioteca "%1$s" ya existe para otro módulo. Este módulo puede no funcionar correctamente.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" könyvár-fájl már létezik egy modulban. Ez a modul nem működik rendesen.]]></translation>
@@ -564,6 +603,7 @@
       <item type="error" name="ModuleAlreadyExists">
         <translation language="nl"><![CDATA[De module "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
         <translation language="en"><![CDATA[The module "%1$s" already exists, you can not upload it again.]]></translation>
+        <translation language="ru"><![CDATA[Модуль "%1$s" уже существует, вы не можете загрузить его снова.]]></translation>
         <translation language="es"><![CDATA[El módulo "%1$s" ya existe, no puedes subirlo otra vez.]]></translation>
         <translation language="de"><![CDATA[Das Modul "%1$s" existiert bereits, du kannst es nicht erneut hochladen.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" modul már létezik, nem töltheted fel újból.]]></translation>
@@ -584,6 +624,7 @@
       <item type="error" name="NoInformationFile">
         <translation language="nl"><![CDATA[We konden geen info.xml bestanden vinden voor "%1$s".]]></translation>
         <translation language="en"><![CDATA[We could not find an info.xml file for "%1$s".]]></translation>
+        <translation language="ru"><![CDATA[Мы не смогли найти info.xml в "%1$s".]]></translation>
         <translation language="es"><![CDATA[No hemos podido encontrar un archivo info.xml para "%1$s".]]></translation>
         <translation language="de"><![CDATA[Für "%1$s" konnte keine info.xml gefunden werden.]]></translation>
         <translation language="hu"><![CDATA[Nem találtunk info.xml fájlt a(z) "%1$s"-nál/nél.]]></translation>
@@ -592,6 +633,7 @@
       <item type="error" name="NoInstallerFile">
         <translation language="nl"><![CDATA[We konden geen installer voor de module "%1$s" vinden.]]></translation>
         <translation language="en"><![CDATA[We could not find an installer for the module "%1$s".]]></translation>
+        <translation language="ru"><![CDATA[Мы не смогли найти файл установки в модуле "%1$s".]]></translation>
         <translation language="de"><![CDATA[Für das Modul "%1$s" konnte kein Installer gefunden werden.]]></translation>
         <translation language="es"><![CDATA[No pudimos encontrar un instalador para el módulo "%1$s".]]></translation>
         <translation language="hu"><![CDATA[Nem találtunk telepítőt a(z) "%1$s" modulnál.]]></translation>
@@ -612,6 +654,7 @@
       <item type="error" name="NoThemes">
         <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
         <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="ru"><![CDATA[нет доступных тем оформления.]]></translation>
         <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
         <translation language="es"><![CDATA[No hay temas disponibles.]]></translation>
         <translation language="hu"><![CDATA[Nincs elérhető sablon.]]></translation>
@@ -632,6 +675,7 @@
       <item type="error" name="ThemeAlreadyExists">
         <translation language="nl"><![CDATA[Het thema "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
         <translation language="en"><![CDATA[The theme "%1$s" already exists, you can not upload it again.]]></translation>
+        <translation language="ru"><![CDATA[Тема "%1$s" уже существует, вы не можете загрузить её снова.]]></translation>
         <translation language="es"><![CDATA[El tema "%1$s" existe actualmente, No puedes subirlo de nuevo.]]></translation>
         <translation language="de"><![CDATA[Das Theme "%1$s" existiert bereits, du kannst es nicht erneut hochladen.]]></translation>
         <translation language="hu"><![CDATA[A(z) "%1$s" sablon már létezik, nem töltheted fel újból.]]></translation>
@@ -640,6 +684,7 @@
       <item type="error" name="ThemeNameDoesntMatch">
         <translation language="nl"><![CDATA[De thema mapnaam komt niet overeen met de themanaam in info.xml.]]></translation>
         <translation language="en"><![CDATA[The theme's folder name doesn't match the theme name in info.xml.]]></translation>
+        <translation language="ru"><![CDATA[Название каталога темы не совпадает с названием, определенным в файле info.xml.]]></translation>
         <translation language="es"><![CDATA[El nombre de la carpeta del tema no coincide con el nombre del tema en info.xml.]]></translation>
         <translation language="de"><![CDATA[Der Theme-Ordner-Name und Theme-Name in der info.xml stimmen nicht überein.]]></translation>
         <translation language="hu"><![CDATA[A sablon neve nem egyezik az info.xml sablon névvel.]]></translation>
