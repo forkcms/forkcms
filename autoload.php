@@ -112,3 +112,6 @@ class Autoloader
 
 // register the autoloader
 spl_autoload_register(array(new Autoloader(), 'load'));
+
+// use vender generated autoloader
+require 'vendor/autoload.php';
