@@ -236,16 +236,15 @@ class BackendModel
 	 * @param string $module 			The module for the extra.
 	 * @param string $field 			The field of the data you want to check the value for.
 	 * @param string $value 			The value to check the field for.
-	 * @param string [optional]$action 	The action you want to filter on.
 	 */
 	public function deleteExtrasForData($module, $field, $value)
 	{
 		// get ids
 		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value);
-	
+
 		// delete extras
 		if(!empty($ids)) BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
-	
+
 		// invalidate the cache for the module
 		BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
 	}
@@ -426,26 +425,26 @@ class BackendModel
 	 * Get extras
 	 *
 	 * @param array $ids 	The ids of the modules_extras to get.
-	 * @return array		
+	 * @return array
 	 */
 	public static function getExtras($ids)
 	{
 		// get db
 		$db = BackendModel::getDB(true);
-	
+
 		// loop and cast to integers
 		foreach($ids as &$id) $id = (int) $id;
-	
+
 		// create an array with an equal amount of questionmarks as ids provided
 		$extraIdPlaceHolders = array_fill(0, count($ids), '?');
-	
+
 		// get extras
 		return (array) $db->getRecords('SELECT i.*
 										FROM modules_extras AS i
 										WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
 										$ids);
 	}
-	
+
 	/**
 	 * Get extras for data
 	 *
@@ -1429,7 +1428,7 @@ class BackendModel
 
 	/**
 	 * Update extra
-	 * 
+	 *
 	 * @param int $id			The id for the extra.
 	 * @param string $key		The key you want to update.
 	 * @param string $value 	The new value.
