@@ -35,9 +35,6 @@ class APIInit
 		// set type
 		$this->type = $type;
 
-		// set some ini-options
-		ini_set('memory_limit', '64M');
-
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 

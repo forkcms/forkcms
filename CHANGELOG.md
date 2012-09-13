@@ -1,10 +1,14 @@
-3.4.4 (xxxx-xx-xx)
+3.4.4 (2012-09-12)
 --
 Improvements:
 
+* Location: Fixed location widget. When debug = false, google wasn't loaded correctly. Thx to siesqo
+* Users: User can't change its own rights when not allowed to view the index.
 * Core: Upgraded Highcharts to 2.3.2
 * Core: Upgraded CKFinder to 2.3.0
 * Formbuilder: added API-methods.
+* FAQ: Setting for "one category" added, so user only has 1 category in the website + the category title is hidden in the frontend (for smaller websites).
+* Core: removed ini_set's. Let the server handle this.
 
 Bugfixes:
 
@@ -19,6 +23,7 @@ Bugfixes:
 --
 Improvements:
 
+* Core: Added functions to manage modules_extras, can be used for custom widgets.
 * Core: Upgraded to jQuery 1.8
 * Core: Upgraded to jQuery UI 1.8.23
 * Blog: Added blog.comments.delete in the API.

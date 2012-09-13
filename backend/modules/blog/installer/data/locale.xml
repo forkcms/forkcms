@@ -285,6 +285,7 @@
       <item type="message" name="ShowImageForm">
         <translation language="nl"><![CDATA[De gebruiker mag een afbeelding.]]></translation>
         <translation language="en"><![CDATA[The user can upload a file.]]></translation>
+        <translation language="ru"><![CDATA[Пользователь может загрузить файл.]]></translation>
         <translation language="de"><![CDATA[Der Benutzer kann eine Datei hochladen.]]></translation>
         <translation language="es"><![CDATA[El usuario puede subir un archivo.]]></translation>
         <translation language="hu"><![CDATA[A felhasználó tölthet fel fájlt.]]></translation>
