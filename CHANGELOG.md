@@ -1,3 +1,10 @@
+3.4.5 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Users: Added fix so users can't edit other profiles.
+
+
 3.4.4 (2012-09-12)
 --
 Improvements:
