@@ -50,7 +50,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		{
 			parent::execute();
 			$this->record = (array) BackendUsersModel::get($this->id);
-			$this->loadForm();			
+			$this->loadForm();
 			$this->validateForm();
 			$this->parse();
 			$this->display();
