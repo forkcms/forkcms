@@ -77,95 +77,42 @@ class InstallerStep2 extends InstallerStep
 		 * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
 		 * extensions, we can't guarantee that everything will work.
 		 */
-
-		// check for cURL extension
 		self::checkRequirement('extensionCURL', extension_loaded('curl'), self::STATUS_ERROR);
-
-		// check for libxml extension
 		self::checkRequirement('extensionLibXML', extension_loaded('libxml'), self::STATUS_ERROR);
-
-		// check for DOM extension
 		self::checkRequirement('extensionDOM', extension_loaded('dom'), self::STATUS_ERROR);
-
-		// check for SimpleXML extension
 		self::checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'), self::STATUS_ERROR);
-
-		// check for SPL extension
 		self::checkRequirement('extensionSPL', extension_loaded('SPL'), self::STATUS_ERROR);
-
-		// check for PDO extension
 		self::checkRequirement('extensionPDO', extension_loaded('PDO'), self::STATUS_ERROR);
-
-		// check for MySQL driver
 		self::checkRequirement('extensionPDOMySQL', extension_loaded('PDO') && in_array('mysql', PDO::getAvailableDrivers()), self::STATUS_ERROR);
-
-		// check for mbstring extension
 		self::checkRequirement('extensionMBString', extension_loaded('mbstring'), self::STATUS_ERROR);
-
-		// check for iconv extension
 		self::checkRequirement('extensionIconv', extension_loaded('iconv'), self::STATUS_ERROR);
-
-		// check for gd extension and correct version
 		self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'), self::STATUS_ERROR);
-
-		// check for JSON extension
 		self::checkRequirement('extensionJSON', extension_loaded('json'), self::STATUS_ERROR);
 
 		/*
 		 * A couple of php.ini settings should be configured in a specific way to make sure that
 		 * they don't intervene with Fork CMS.
 		 */
-
-		// check for safe mode
 		self::checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', self::STATUS_WARNING);
-
-		// check for open basedir
 		self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
 
 		/*
 		 * Make sure the filesystem is prepared for the installation and everything can be read/
 		 * written correctly.
 		 */
-		// check if the backend-cache-directory is writable
 		self::checkRequirement('fileSystemBackendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/'), self::STATUS_ERROR);
-
-		// check if the backend-modules-directory is writable
 		self::checkRequirement('fileSystemBackendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/backend/modules/'), self::STATUS_WARNING);
-
-		// check if the frontend-cache-directory is writable
 		self::checkRequirement('fileSystemFrontendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/'), self::STATUS_ERROR);
-
-		// check if the frontend-files-directory is writable
 		self::checkRequirement('fileSystemFrontendFiles', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/'), self::STATUS_ERROR);
-
-		// check if the frontend-modules-directory is writable
 		self::checkRequirement('fileSystemFrontendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/modules/'), self::STATUS_WARNING);
-
-		// check if the frontend-themes-directory is writable
 		self::checkRequirement('fileSystemFrontendThemes', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/themes/'), self::STATUS_WARNING);
-
-		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);
-
-		// check if the external-directory is writable
 		self::checkRequirement('fileSystemLibraryExternal', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external'), self::STATUS_WARNING);
-
-		// check if the installer-directory is writable
 		self::checkRequirement('fileSystemInstaller', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'), self::STATUS_ERROR);
-
-		// does the config.base.php file exist
 		self::checkRequirement('fileSystemConfig', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/config.base.php') && is_readable(PATH_LIBRARY . '/config.base.php'), self::STATUS_ERROR);
-
-		// does the globals.base.php file exist
 		self::checkRequirement('fileSystemGlobals', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals.base.php') && is_readable(PATH_LIBRARY . '/globals.base.php'), self::STATUS_ERROR);
-
-		// does the globals_backend.base.php file exist
 		self::checkRequirement('fileSystemGlobalsBackend', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_backend.base.php') && is_readable(PATH_LIBRARY . '/globals_backend.base.php'), self::STATUS_ERROR);
-
-		// does the globals_frontend.base.php file exist
 		self::checkRequirement('fileSystemGlobalsFrontend', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_frontend.base.php') && is_readable(PATH_LIBRARY . '/globals_frontend.base.php'), self::STATUS_ERROR);
-
-		// library path exists
 		self::checkRequirement('fileSystemPathLibrary', defined('PATH_LIBRARY') && PATH_LIBRARY != '', self::STATUS_ERROR);
 
 		/*
