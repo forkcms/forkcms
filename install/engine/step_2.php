@@ -94,6 +94,7 @@ class InstallerStep2 extends InstallerStep
 		 */
 		self::checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', self::STATUS_WARNING);
 		self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
+		self::checkRequirement('settingsDateTimezone', (ini_get('date.timezone') == '' || (in_array(date_default_timezone_get(), DateTimeZone::listIdentifiers()))), self::STATUS_WARNING);
 
 		/*
 		 * Make sure the filesystem is prepared for the installation and everything can be read/

@@ -110,6 +110,9 @@
 				<h4><span class="{$settingsOpenBasedir}">{$settingsOpenBasedir}</span> Open Basedir</h4>
 				<p>For forward compability we highly recommend you not to use open_basedir.</p>
 
+                <h4><span class="{$settingsDateTimezone}">{$settingsDateTimezone}</span> date.timezone</h4>
+                <p>date.timezone setting must be set. Make sure your default timezone is supported by your installation of PHP. Check for typos in your php.ini file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.</p>
+
 				<h3>Webserver</h3>
 				<h4><span class="{$modRewrite}">{$modRewrite}</span> mod_rewrite</h4>
 				<p>
