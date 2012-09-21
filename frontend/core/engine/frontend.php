@@ -11,45 +11,61 @@
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
  *
+ * @todo make this an interface implementation.
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Frontend
 {
-	public function __construct()
-	{
-		$this->initializeFacebook();
+    /**
+     * @var FrontendPage
+     */
+    private $page;
 
-		new FrontendURL();
-		new FrontendTemplate();
-		new FrontendPage();
-	}
+    public function __construct()
+    {
+        $this->initializeFacebook();
 
-	/**
-	 * Initialize Facebook
-	 */
-	private function initializeFacebook()
-	{
-		// get settings
-		$facebookApplicationId = FrontendModel::getModuleSetting('core', 'facebook_app_id');
-		$facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
+        new FrontendURL();
+        new FrontendTemplate();
+        $this->page = new FrontendPage();
+    }
 
-		// needed data available?
-		if($facebookApplicationId != '' && $facebookApplicationSecret != '')
-		{
-			// require
-			require_once 'external/facebook.php';
+    /**
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function display()
+    {
+        return $this->page->display();
+    }
 
-			// create instance
-			$facebook = new Facebook($facebookApplicationSecret, $facebookApplicationId);
+    /**
+     * Initialize Facebook
+     */
+    private function initializeFacebook()
+    {
+        // get settings
+        $facebookApplicationId = FrontendModel::getModuleSetting('core', 'facebook_app_id');
+        $facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
 
-			// get the cookie, this will set the access token.
-			$facebook->getCookie();
+        // needed data available?
+        if($facebookApplicationId != '' && $facebookApplicationSecret != '')
+        {
+            // require
+            require_once 'external/facebook.php';
 
-			// store in reference
-			Spoon::set('facebook', $facebook);
+            // create instance
+            $facebook = new Facebook($facebookApplicationSecret, $facebookApplicationId);
 
-			// trigger event
-			FrontendModel::triggerEvent('core', 'after_facebook_initialization');
-		}
-	}
+            // get the cookie, this will set the access token.
+            $facebook->getCookie();
+
+            // store in reference
+            Spoon::set('facebook', $facebook);
+
+            // trigger event
+            FrontendModel::triggerEvent('core', 'after_facebook_initialization');
+        }
+    }
 }

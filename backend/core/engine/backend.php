@@ -11,20 +11,35 @@
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
  *
+ * @todo make this an interface implementation.
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class Backend
 {
-	public function __construct()
-	{
-		$URL = new BackendURL();
-		new BackendTemplate();
-		new BackendNavigation();
-		new BackendHeader();
+    /**
+     * @var BackendAction
+     */
+    private $action;
 
-		$action = new BackendAction();
-		$action->setModule($URL->getModule());
-		$action->setAction($URL->getAction());
-		$action->execute();
-	}
+    public function __construct()
+    {
+        $URL = new BackendURL();
+        new BackendTemplate();
+        new BackendNavigation();
+        new BackendHeader();
+
+        $this->action = new BackendAction();
+        $this->action->setModule($URL->getModule());
+        $this->action->setAction($URL->getAction());
+    }
+
+    /**
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function display()
+    {
+        return $this->action->execute();
+    }
 }

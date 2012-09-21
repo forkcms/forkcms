@@ -62,11 +62,8 @@ class FrontendInit
 		$this->setIncludePath();
 		$this->setDebugging();
 
-		// require spoon
-		require_once 'spoon/spoon.php';
-
 		$this->requireFrontendClasses();
-		SpoonFilter::disableMagicQuotes();
+		//SpoonFilter::disableMagicQuotes();
 	}
 
 	/**
