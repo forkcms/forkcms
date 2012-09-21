@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This class will be the base of the objects used in the cms
@@ -318,7 +319,7 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function redirect($URL)
 	{
-		SpoonHTTP::redirect(str_replace('&amp;', '&', (string) $URL));
+		return new RedirectResponse($URL, 302, SpoonHTTP::getHeadersList());
 	}
 }
 
