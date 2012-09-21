@@ -305,7 +305,7 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 				if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('theme_templates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+				return $this->redirect(BackendModel::createURLForAction('theme_templates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

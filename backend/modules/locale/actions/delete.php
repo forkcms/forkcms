@@ -49,11 +49,11 @@ class BackendLocaleDelete extends BackendBaseActionDelete
 			$redirectUrl = BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name'] . ' (' . strtoupper($this->record['language']) . ')') . $this->filterQuery;
 
 			// item was deleted, so redirect
-			$this->redirect($redirectUrl);
+			return $this->redirect($redirectUrl);
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**

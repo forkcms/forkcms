@@ -41,7 +41,7 @@ class BackendProfilesDelete extends BackendBaseActionDelete
 				BackendModel::triggerEvent($this->getModule(), 'after_reactivate', array('id' => $this->id));
 
 				// redirect
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-undeleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
+				return $this->redirect(BackendModel::createURLForAction('index') . '&report=profile-undeleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
 			}
 
 			// profile is active
@@ -54,11 +54,11 @@ class BackendProfilesDelete extends BackendBaseActionDelete
 				BackendModel::triggerEvent($this->getModule(), 'after_delete_profile', array('id' => $this->id));
 
 				// redirect
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=profile-deleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
+				return $this->redirect(BackendModel::createURLForAction('index') . '&report=profile-deleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
 			}
 		}
 
 		// profile does not exists
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

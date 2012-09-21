@@ -67,16 +67,16 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		if($this->month !== null && mb_strlen($this->month) != 2)
 		{
 			$queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
-			$this->redirect(FrontendNavigation::getURLForBlock('blog', 'archive') . '/' . $this->year . '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT) . $queryString, 301);
+			return $this->redirect(FrontendNavigation::getURLForBlock('blog', 'archive') . '/' . $this->year . '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT) . $queryString, 301);
 		}
-		if(mb_strlen($this->year) != 4) $this->redirect(FrontendNavigation::getURL(404));
+		if(mb_strlen($this->year) != 4) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// redefine
 		$this->year = (int) $this->year;
 		if($this->month !== null) $this->month = (int) $this->month;
 
 		// validate parameters
-		if($this->year == 0 || $this->month === 0) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->year == 0 || $this->month === 0) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// requested page
 		$requestedPage = $this->URL->getParameter('page', 'int', 1);
@@ -108,7 +108,7 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
 		// redirect if the request page doesn't exists
-		if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+		if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// populate calculated fields in pagination
 		$this->pagination['requested_page'] = $requestedPage;

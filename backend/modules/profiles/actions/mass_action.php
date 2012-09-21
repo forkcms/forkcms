@@ -29,7 +29,7 @@ class BackendProfilesMassAction extends BackendBaseAction
 		$newGroupId = SpoonFilter::getGetValue('newGroup', array_keys(BackendProfilesModel::getGroups()), '');
 
 		// no ids provided
-		if(empty($ids)) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-profiles-selected');
+		if(empty($ids)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=no-profiles-selected');
 
 		// delete the given profiles
 		if($action === 'delete')
@@ -42,7 +42,7 @@ class BackendProfilesMassAction extends BackendBaseAction
 		elseif($action === 'addToGroup')
 		{
 			// no group id provided
-			if($newGroupId == '') $this->redirect(BackendModel::createURLForAction('index') . '&error=no-group-selected');
+			if($newGroupId == '') return $this->redirect(BackendModel::createURLForAction('index') . '&error=no-group-selected');
 
 			// set new status
 			foreach($ids as $id)
@@ -71,13 +71,13 @@ class BackendProfilesMassAction extends BackendBaseAction
 		}
 
 		// unknown action
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=unknown-action');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=unknown-action');
 
 		// report
 		$report = (count($ids) > 1 ? 'profiles-' : 'profile-') . $report;
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('index', null, null, array(
+		return $this->redirect(BackendModel::createURLForAction('index', null, null, array(
 			'offset' => SpoonFilter::getGetValue('offset', null, ''),
 			'order' => SpoonFilter::getGetValue('order', null, ''),
 			'sort' => SpoonFilter::getGetValue('sort', null, ''),

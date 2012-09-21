@@ -60,7 +60,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if(!BackendMailmotorModel::existsCampaign($this->id)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
+		if(!BackendMailmotorModel::existsCampaign($this->id)) return $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
 
 		// store mailing
 		$this->campaign = BackendMailmotorModel::getCampaign($this->id);
@@ -69,7 +69,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->statistics = BackendMailmotorCMHelper::getStatisticsByCampaignID($this->id, true);
 
 		// no stats found
-		if($this->statistics === false || empty($this->statistics)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=no-statistics-loaded');
+		if($this->statistics === false || empty($this->statistics)) return $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=no-statistics-loaded');
 	}
 
 	/**

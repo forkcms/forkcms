@@ -74,7 +74,7 @@ class BackendProfilesAddGroup extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_add_group', array('item' => $values));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('groups') . '&report=group-added&var=' . urlencode($values['name']) . '&highlight=row-' . $id);
+				return $this->redirect(BackendModel::createURLForAction('groups') . '&report=group-added&var=' . urlencode($values['name']) . '&highlight=row-' . $id);
 			}
 		}
 	}

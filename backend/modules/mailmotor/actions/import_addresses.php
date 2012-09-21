@@ -102,7 +102,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
 
 		// if no groups are found, redirect to overview
-		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
+		if(empty($groups)) return $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
 
 		// add radiobuttons for groups
 		$this->frm->addRadiobutton('groups', $groups, (empty($this->groupId) ? null : $this->groupId));
@@ -261,7 +261,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 					BackendModel::triggerEvent($this->getModule(), 'after_import_address');
 
 					// redirect to success message
-					$this->redirect(BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']));
+					return $this->redirect(BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']));
 				}
 
 				else
@@ -274,7 +274,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 					BackendModel::triggerEvent($this->getModule(), 'after_import_address_with_failed_items', array('failed' => $failedSubscribers));
 
 					// redirect to failed message with an additional parameter to display a download link to the report-csv form cache.
-					$this->redirect(BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' . count($failedSubscribers) . '&csv=' . $csvFile);
+					return $this->redirect(BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' . count($failedSubscribers) . '&csv=' . $csvFile);
 				}
 			}
 		}

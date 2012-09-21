@@ -43,7 +43,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		}
 
 		// no item found or the user is not god , throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -173,7 +173,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+				return $this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
 			}
 		}
 	}

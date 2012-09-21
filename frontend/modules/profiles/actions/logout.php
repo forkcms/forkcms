@@ -27,6 +27,6 @@ class FrontendProfilesLogout extends FrontendBaseBlock
 		FrontendModel::triggerEvent('profiles', 'after_logout');
 
 		// redirect
-		$this->redirect(SITE_URL);
+		return $this->redirect(SITE_URL);
 	}
 }

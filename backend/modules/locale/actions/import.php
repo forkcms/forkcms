@@ -90,7 +90,7 @@ class BackendLocaleImport extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_import', array('statistics' => $statistics));
 
 				// everything is imported, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
+				return $this->redirect(BackendModel::createURLForAction('index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
 			}
 		}
 	}

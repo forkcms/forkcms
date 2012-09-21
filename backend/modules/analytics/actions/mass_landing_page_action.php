@@ -25,7 +25,7 @@ class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
 		// no id's provided
 		if(!isset($_GET['id']))
 		{
-			$this->redirect(BackendModel::createURLForAction('landing_pages') . '&error=no-items-selected');
+			return $this->redirect(BackendModel::createURLForAction('landing_pages') . '&error=no-items-selected');
 		}
 
 		// at least one id
@@ -36,6 +36,6 @@ class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('landing_pages') . '&report=' . $action);
+		return $this->redirect(BackendModel::createURLForAction('landing_pages') . '&report=' . $action);
 	}
 }

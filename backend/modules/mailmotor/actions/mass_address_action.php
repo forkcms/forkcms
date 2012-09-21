@@ -76,7 +76,7 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 		BackendModel::triggerEvent($this->getModule(), 'after_delete_addresses');
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
+		return $this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
 	}
 
 	/**
@@ -91,8 +91,8 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 		$this->groupId = SpoonFilter::getGetValue('group_id', null, '');
 
 		// no id's provided
-		if(!$action) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-action-selected');
-		if(!isset($_GET['emails'])) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-items-selected');
+		if(!$action) return $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-action-selected');
+		if(!isset($_GET['emails'])) return $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-items-selected');
 
 		// at least one id
 		else

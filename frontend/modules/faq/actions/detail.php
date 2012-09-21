@@ -67,13 +67,13 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	private function getData()
 	{
 		// validate incoming parameters
-		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->URL->getParameter(1) === null) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// get by URL
 		$this->record = FrontendFaqModel::get($this->URL->getParameter(1));
 
 		// anything found?
-		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+		if(empty($this->record)) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// overwrite URLs
 		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('faq', 'category') . '/' . $this->record['category_url'];
@@ -207,7 +207,7 @@ class FrontendFaqDetail extends FrontendBaseBlock
 						if(FrontendModel::isSpam($text, $variables['question_link']))
 						{
 							// set the status to spam
-							$this->redirect($this->record['full_url'] . '/' . FL::getAction('Spam'));
+							return $this->redirect($this->record['full_url'] . '/' . FL::getAction('Spam'));
 						}
 					}
 
@@ -229,7 +229,7 @@ class FrontendFaqDetail extends FrontendBaseBlock
 				FrontendModel::triggerEvent('faq', 'after_add_feedback', array('comment' => $text));
 
 				// save status
-				$this->redirect($this->record['full_url'] . '/' . FL::getAction('Success'));
+				return $this->redirect($this->record['full_url'] . '/' . FL::getAction('Success'));
 			}
 		}
 

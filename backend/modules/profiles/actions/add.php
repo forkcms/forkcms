@@ -185,7 +185,7 @@ class BackendProfilesAdd extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id);
+				return $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id);
 			}
 		}
 	}

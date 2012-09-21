@@ -161,7 +161,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if($this->pagination['num_pages'] == 0) $this->pagination['num_pages'] = 1;
 
 		// redirect if the request page doesn't exist
-		if($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// debug mode = no cache
 		if(!SPOON_DEBUG)

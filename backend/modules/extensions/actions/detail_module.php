@@ -65,7 +65,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 		}
 
 		// no item found, redirect to index, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
 	}
 
 	/**

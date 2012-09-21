@@ -41,7 +41,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -56,7 +56,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		$this->campaigns = (array) BackendMailmotorModel::getCampaignsAsPairs();
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if(empty($this->record)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -110,7 +110,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($this->record['name']) . '&highlight=id-' . $item['id']);
+				return $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($this->record['name']) . '&highlight=id-' . $item['id']);
 			}
 		}
 	}

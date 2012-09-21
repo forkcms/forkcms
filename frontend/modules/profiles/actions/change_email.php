@@ -48,7 +48,7 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
 		// profile not logged in
 		else
 		{
-			$this->redirect(
+			return $this->redirect(
 				FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_email'),
 				307
 			);
@@ -138,7 +138,7 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
 				FrontendModel::triggerEvent('profiles', 'after_change_email', array('id' => $this->profile->getId()));
 
 				// redirect
-				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_email') . '?sent=true');
+				return $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_email') . '?sent=true');
 			}
 
 			// show errors

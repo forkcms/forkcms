@@ -116,7 +116,7 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add_landing_page', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('landing_pages') . '&report=saved&var=' . urlencode($item['page_path']));
+				return $this->redirect(BackendModel::createURLForAction('landing_pages') . '&report=saved&var=' . urlencode($item['page_path']));
 			}
 		}
 	}

@@ -111,7 +111,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->isGod = BackendAuthentication::getUser()->isGod();
 
 		// check if something went wrong
-		if($this->id === null || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if($this->id === null || !BackendPagesModel::exists($this->id)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
 		// get the record
 		$this->record = BackendPagesModel::get($this->id);
@@ -538,14 +538,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					BackendSearchModel::saveIndex($this->getModule(), $page['id'], array('title' => $page['title'], 'text' => $text));
 
 					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=edited&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);
+					return $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=edited&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);
 				}
 
 				// draft
 				elseif($page['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id'] . '&draft=' . $page['revision_id']);
+					return $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id'] . '&draft=' . $page['revision_id']);
 				}
 			}
 		}

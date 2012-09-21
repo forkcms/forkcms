@@ -137,7 +137,7 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_import_groups');
 
 				// redirect to the index
-				$this->redirect(BackendModel::createURLForAction('index', $this->getModule()) . '&report=groups-imported&var[]=' . count($this->externalGroups) . '&var[]=' . $subscribersTotal);
+				return $this->redirect(BackendModel::createURLForAction('index', $this->getModule()) . '&report=groups-imported&var[]=' . count($this->externalGroups) . '&var[]=' . $subscribersTotal);
 			}
 		}
 	}

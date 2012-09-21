@@ -32,7 +32,7 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			$user = new BackendUser($this->id);
 
 			// God-users can't be deleted
-			if($user->isGod()) $this->redirect(BackendModel::createURLForAction('index') . '&error=cant-delete-god');
+			if($user->isGod()) return $this->redirect(BackendModel::createURLForAction('index') . '&error=cant-delete-god');
 
 			// delete item
 			BackendUsersModel::delete($this->id);
@@ -41,10 +41,10 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . $user->getSetting('nickname'));
+			return $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . $user->getSetting('nickname'));
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

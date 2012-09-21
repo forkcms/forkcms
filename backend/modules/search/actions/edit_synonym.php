@@ -34,7 +34,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exception
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -102,7 +102,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_synonym', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=edited-synonym&var=' . urlencode($item['term']) . '&highlight=row-' . $item['id']);
+				return $this->redirect(BackendModel::createURLForAction('synonyms') . '&report=edited-synonym&var=' . urlencode($item['term']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

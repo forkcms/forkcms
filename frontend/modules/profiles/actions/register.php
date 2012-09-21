@@ -44,7 +44,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 		elseif($this->URL->getParameter('sent') == true) $this->parse();
 
 		// already logged in, so you can not register
-		else $this->redirect(SITE_URL);
+		else return $this->redirect(SITE_URL);
 	}
 
 	/**
@@ -163,7 +163,7 @@ class FrontendProfilesRegister extends FrontendBaseBlock
 					);
 
 					// redirect
-					$this->redirect(SELF . '?sent=true');
+					return $this->redirect(SELF . '?sent=true');
 				}
 
 				// catch exceptions

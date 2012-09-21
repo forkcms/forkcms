@@ -38,17 +38,17 @@ class BackendExtensionsInstallTheme extends BackendBaseActionIndex
 				BackendExtensionsModel::installTheme($this->currentTheme);
 
 				// redirect to index with a success message
-				$this->redirect(BackendModel::createURLForAction('themes') . '&report=theme-installed&var=' . $this->currentTheme);
+				return $this->redirect(BackendModel::createURLForAction('themes') . '&report=theme-installed&var=' . $this->currentTheme);
 			}
 			catch(Exception $e)
 			{
 				// redirect to index with a success message
-				$this->redirect(BackendModel::createURLForAction('themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
+				return $this->redirect(BackendModel::createURLForAction('themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
 			}
 		}
 
 		// no item found, redirect to index, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('themes') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('themes') . '&error=non-existing');
 	}
 
 	/**
@@ -59,13 +59,13 @@ class BackendExtensionsInstallTheme extends BackendBaseActionIndex
 		// already installed
 		if(BackendExtensionsModel::isThemeInstalled($this->currentTheme))
 		{
-			$this->redirect(BackendModel::createURLForAction('themes') . '&error=already-installed&var=' . $this->currentTheme);
+			return $this->redirect(BackendModel::createURLForAction('themes') . '&error=already-installed&var=' . $this->currentTheme);
 		}
 
 		// no information file present
 		if(!SpoonFile::exists(FRONTEND_PATH . '/themes/' . $this->currentTheme . '/info.xml'))
 		{
-			$this->redirect(BackendModel::createURLForAction('themes') . '&error=no-information-file&var=' . $this->currentTheme);
+			return $this->redirect(BackendModel::createURLForAction('themes') . '&error=no-information-file&var=' . $this->currentTheme);
 		}
 	}
 }

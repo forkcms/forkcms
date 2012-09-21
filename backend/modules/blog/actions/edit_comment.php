@@ -33,7 +33,7 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exception, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -46,7 +46,7 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 		$this->record = (array) BackendBlogModel::getComment($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if(empty($this->record)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -102,7 +102,7 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_comment', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . SpoonFilter::toCamelCase($item['status']));
+				return $this->redirect(BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . SpoonFilter::toCamelCase($item['status']));
 			}
 		}
 	}

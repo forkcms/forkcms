@@ -37,10 +37,10 @@ class BackendContentBlocksDelete extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
+			return $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
 		}
 
 		// no item found, redirect to the overview with an error
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

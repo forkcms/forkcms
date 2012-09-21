@@ -84,7 +84,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				}
 
 				// redirect
-				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&report=added&var=' . urlencode($item['title']));
+				return $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&report=added&var=' . urlencode($item['title']));
 			}
 		}
 	}

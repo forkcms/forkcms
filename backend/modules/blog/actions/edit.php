@@ -66,7 +66,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exception, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -108,7 +108,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if(empty($this->record)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -389,7 +389,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
 
 				// everything is saved, so redirect to the overview
-				$this->redirect($redirectUrl);
+				return $this->redirect($redirectUrl);
 			}
 		}
 	}

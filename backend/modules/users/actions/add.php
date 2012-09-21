@@ -205,7 +205,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $user));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
+				return $this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
 			}
 		}
 	}

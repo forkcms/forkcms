@@ -143,7 +143,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 					// reset token so we can alter the API key
 					BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
 
-					$this->redirect(BackendModel::createURLForAction('settings') . '&error=invalid-api-key');
+					return $this->redirect(BackendModel::createURLForAction('settings') . '&error=invalid-api-key');
 				}
 			}
 
@@ -154,7 +154,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
 
 				// redirect to the settings page without parameters
-				$this->redirect(BackendModel::createURLForAction('settings'));
+				return $this->redirect(BackendModel::createURLForAction('settings'));
 			}
 
 			// everything went fine
@@ -218,7 +218,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 				if($frm->isCorrect())
 				{
 					BackendModel::setModuleSetting($this->getModule(), 'api_key', $frm->getField('key')->getValue());
-					$this->redirect($googleAccountAuthenticationForm);
+					return $this->redirect($googleAccountAuthenticationForm);
 				}
 			}
 

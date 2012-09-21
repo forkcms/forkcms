@@ -64,7 +64,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	private function getData()
 	{
 		// validate incoming parameters
-		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->URL->getParameter(1) === null) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// load revision
 		if($this->URL->getParameter('revision', 'int') != 0)
@@ -80,7 +80,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		else $this->record = FrontendBlogModel::get($this->URL->getParameter(1));
 
 		// anything found?
-		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+		if(empty($this->record)) return $this->redirect(FrontendNavigation::getURL(404));
 
 		// get comments
 		$this->comments = FrontendBlogModel::getComments($this->record['id']);
@@ -332,7 +332,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				}
 
 				// redirect
-				$this->redirect($redirectLink);
+				return $this->redirect($redirectLink);
 			}
 		}
 	}

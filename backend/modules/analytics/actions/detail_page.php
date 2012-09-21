@@ -25,7 +25,7 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		$this->pagePath = $this->getParameter('page', 'string');
 		if($this->pagePath === null)
 		{
-			$this->redirect(BackendModel::createURLForAction('content'));
+			return $this->redirect(BackendModel::createURLForAction('content'));
 		}
 
 		$this->parse();

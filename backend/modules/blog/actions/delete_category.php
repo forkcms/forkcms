@@ -40,14 +40,14 @@ class BackendBlogDeleteCategory extends BackendBaseActionDelete
 				BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('id' => $this->id));
 
 				// category was deleted, so redirect
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
+				return $this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
 			}
 
 			// delete category not allowed
-			else $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
+			else return $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
+		else return $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
 	}
 }

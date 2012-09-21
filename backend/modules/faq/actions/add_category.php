@@ -23,7 +23,7 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 	public function execute()
 	{
 		// only one category allowed, so we redirect
-		if(!BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true)) $this->redirect(BackendModel::createURLForAction('categories') . '&error=only-one-category-allowed');
+		if(!BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true)) return $this->redirect(BackendModel::createURLForAction('categories') . '&error=only-one-category-allowed');
 
 		parent::execute();
 		$this->loadForm();
@@ -71,7 +71,7 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+				return $this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

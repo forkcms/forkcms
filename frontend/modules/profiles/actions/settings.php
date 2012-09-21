@@ -48,7 +48,7 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 		// profile not logged in
 		else
 		{
-			$this->redirect(
+			return $this->redirect(
 				FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'settings'),
 				307
 			);
@@ -242,7 +242,7 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 				FrontendModel::triggerEvent('profiles', 'after_saved_settings', array('id' => $this->profile->getId()));
 
 				// redirect
-				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'settings') . '?sent=true');
+				return $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'settings') . '?sent=true');
 			}
 
 			// show errors

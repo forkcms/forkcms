@@ -47,7 +47,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->group = BackendMailmotorModel::getGroup($id);
 
 		// group doesn't exist
-		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+		if(empty($this->group)) return $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 
 		// no custom fields for this group
 		if(empty($this->group['custom_fields'])) $this->group['custom_fields'] = array();
