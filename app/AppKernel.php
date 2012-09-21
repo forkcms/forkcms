@@ -21,14 +21,14 @@ require_once __DIR__ . '/routing.php';
  */
 class AppKernel implements HttpKernelInterface
 {
-    /**
-     * @var ApplicationRouting
-     */
-    private $router;
+	/**
+	 * @var ApplicationRouting
+	 */
+	private $router;
 
-    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
-    {
-        $this->router = new ApplicationRouting($request);
-        return $this->router->handleRequest();
-    }
+	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
+	{
+		$this->router = new ApplicationRouting($request);
+		return $this->router->handleRequest();
+	}
 }

@@ -18,28 +18,28 @@
  */
 class Backend
 {
-    /**
-     * @var BackendAction
-     */
-    private $action;
+	/**
+	 * @var BackendAction
+	 */
+	private $action;
 
-    public function __construct()
-    {
-        $URL = new BackendURL();
-        new BackendTemplate();
-        new BackendNavigation();
-        new BackendHeader();
+	public function __construct()
+	{
+		$URL = new BackendURL();
+		new BackendTemplate();
+		new BackendNavigation();
+		new BackendHeader();
 
-        $this->action = new BackendAction();
-        $this->action->setModule($URL->getModule());
-        $this->action->setAction($URL->getAction());
-    }
+		$this->action = new BackendAction();
+		$this->action->setModule($URL->getModule());
+		$this->action->setAction($URL->getAction());
+	}
 
-    /**
-     * @return Symfony\Component\HttpFoundation\Response
-     */
-    public function display()
-    {
-        return $this->action->execute();
-    }
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
+	{
+		return $this->action->execute();
+	}
 }
