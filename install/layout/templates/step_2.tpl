@@ -96,6 +96,13 @@
 					based on the JSON_checker by Douglas Crockford. More information can be found on: <a href="http://php.net/json">http://php.net/json</a>.
 				</p>
 
+                <h4><span class="{$extensionPCRE}">{$extensionPCRE}</span> PCRE (8.0+)</h4>
+                <p>
+                    The PCRE library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5,
+					with just a few differences (see below). The current implementation corresponds to Perl 5.005. More information can be found on:
+					<a href="http://php.net/pcre">http://php.net/json</a>. We require at least 8.0.
+                </p>
+
 				<h3>PHP ini-settings</h3>
 				<h4><span class="{$settingsSafeMode}">{$settingsSafeMode}</span> Safe Mode</h4>
 				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>

@@ -85,6 +85,8 @@ class InstallerStep2 extends InstallerStep
 		self::checkRequirement('extensionIconv', extension_loaded('iconv'), self::STATUS_ERROR);
 		self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'), self::STATUS_ERROR);
 		self::checkRequirement('extensionJSON', extension_loaded('json'), self::STATUS_ERROR);
+		$pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
+		self::checkRequirement('extensionPCRE', (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)), self::STATUS_ERROR);
 
 		/*
 		 * A couple of php.ini settings should be configured in a specific way to make sure that
