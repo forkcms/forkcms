@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * This class will be the base of the objects used in onsite
  *
@@ -596,6 +598,8 @@ class FrontendBaseBlock
 	public function redirect($URL, $code = 302)
 	{
 		SpoonHTTP::redirect((string) $URL, (int) $code);
+		// @todo: use correct redirectResponse
+		// return new RedirectResponse($URL, $code, SpoonHTTP::getHeadersList());
 	}
 
 	/**
