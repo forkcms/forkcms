@@ -97,6 +97,15 @@ class InstallerStep2 extends InstallerStep
 		self::checkRequirement('settingsDateTimezone', (ini_get('date.timezone') == '' || (in_array(date_default_timezone_get(), DateTimeZone::listIdentifiers()))), self::STATUS_WARNING);
 
 		/*
+		 * Some functions should be available
+		 */
+		self::checkRequirement('functionJsonEncode', function_exists('json_encode'), self::STATUS_ERROR);
+		self::checkRequirement('functionSessionStart', function_exists('session_start'), self::STATUS_ERROR);
+		self::checkRequirement('functionCtypeAlpha', function_exists('ctype_alpha'), self::STATUS_ERROR);
+		self::checkRequirement('functionTokenGetAll', function_exists('token_get_all'), self::STATUS_ERROR);
+		self::checkRequirement('functionSimplexmlImportDom', function_exists('simplexml_import_dom'), self::STATUS_ERROR);
+
+		/*
 		 * Make sure the filesystem is prepared for the installation and everything can be read/
 		 * written correctly.
 		 */
