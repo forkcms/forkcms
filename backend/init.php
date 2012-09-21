@@ -73,11 +73,6 @@ class BackendInit
 	 */
 	private function definePaths()
 	{
-		// fix the Application setting
-		if($this->type == 'backend_ajax') define('APPLICATION', 'backend');
-		if($this->type == 'backend_js') define('APPLICATION', 'backend');
-		if($this->type == 'backend_cronjob') define('APPLICATION', 'backend');
-
 		// general paths
 		define('BACKEND_PATH', PATH_WWW . '/' . APPLICATION);
 		define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');

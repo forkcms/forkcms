@@ -9,8 +9,6 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-// require
-// @todo this is wrong. It will break our install validating.
 require_once 'autoload.php';
 
 $kernel = new AppKernel();

@@ -66,24 +66,52 @@ class ApplicationRouting
 	 */
 	public function handleRequest()
 	{
-		switch(APPLICATION)
+		$applicationName = APPLICATION;
+
+		/**
+		 * Our ajax and cronjobs don't go trough the index.php file at the
+		 * moment. Because of this we need to add some extra validation.
+		 */
+		if(strpos($this->request->getRequestUri(), 'ajax.php') !== false)
+		{
+			$applicationName .= '_ajax';
+		}
+		elseif(strpos($this->request->getRequestUri(), 'cronjob.php') !== false)
+		{
+			$applicationName .= '_cronjob';
+		}
+
+		switch($applicationName)
 		{
 			case 'frontend':
+			case 'frontend_ajax':
 				require_once __DIR__ . '/../frontend/init.php';
 
-				new FrontendInit(APPLICATION);
-				$application = new Frontend();
+				new FrontendInit($applicationName);
+
+				if($applicationName == 'frontend') $application = new Frontend();
+				else $application = new FrontendAJAX();
+
 				break;
 			case 'backend':
+			case 'backend_ajax':
+			case 'backend_cronjob':
 				require_once __DIR__ . '/../backend/init.php';
 
-				new BackendInit(APPLICATION);
-				$application = new Backend();
+				new BackendInit($applicationName);
+
+				if($applicationName == 'backend') $application = new Backend();
+				elseif($applicationName == 'backend_ajax')
+				{
+					$application = new BackendAJAX();
+				}
+				else $application = new BackendCronjob();
+
 				break;
 			case 'api':
 				require_once __DIR__ . '/../api/1.0/init.php';
 
-				new APIInit(APPLICATION);
+				new APIInit($applicationName);
 				new API();
 				break;
 		}

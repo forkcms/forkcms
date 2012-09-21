@@ -71,10 +71,6 @@ class FrontendInit
 	 */
 	private function definePaths()
 	{
-		// fix the Application setting
-		if($this->type == 'frontend_js') define('APPLICATION', 'frontend');
-		elseif($this->type == 'frontend_ajax') define('APPLICATION', 'frontend');
-
 		// general paths
 		define('FRONTEND_PATH', PATH_WWW . '/' . APPLICATION);
 		define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
