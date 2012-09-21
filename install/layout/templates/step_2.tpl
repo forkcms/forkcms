@@ -22,7 +22,7 @@
 			{/option:!error}
 			<div id="requirementsInformation">
 				<h3><span class="{$phpVersion}">{$phpVersion}</span> PHP version</h3>
-				<p>We require at least PHP 5.2</p>
+				<p>PHP version must be at least 5.3.3, Before using Fork CMS, upgrade your PHP installation, preferably to the latest version. PHP version must not be 5.3.16 as Symfony won't work properly with it.</p>
 
 				<h3><span class="{$subfolder}">{$subfolder}</span> Fork CMS can't be installed in subfolders</h3>
 

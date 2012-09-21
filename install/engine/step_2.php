@@ -61,14 +61,11 @@ class InstallerStep2 extends InstallerStep
 
 		/*
 		 * At first we're going to check to see if the PHP version meets the minimum requirements
-		 * for Fork CMS.
+		 * for Fork CMS. We require at least PHP 5.3.3, but not 5.3.16, because Symfony won't work properly
 		 */
-
-		// fetch the PHP version.
-		$version = (int) str_replace('.', '', PHP_VERSION);
-
-		// we require at least PHP 5.3.2
-		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.3.2-whatever', '>='), self::STATUS_ERROR);
+		$installedPhpVersion = phpversion();
+		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.3.3', '>='), self::STATUS_ERROR);
+		self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.3.16', '!='), self::STATUS_ERROR);
 
 		// Fork can't be installed in subfolders, so we should check that.
 		self::checkRequirement('subfolder', (substr($_SERVER['REQUEST_URI'], 0, 18) == '/install/index.php'), self::STATUS_ERROR);
