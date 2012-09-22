@@ -73,7 +73,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		catch(Exception $e)
 		{
 			// add an error to the email field
-			return $this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
+			$this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
 		}
 	}
 
@@ -256,7 +256,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		catch(Exception $e)
 		{
 			// add an error to the email field
-			return $this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
+			$this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
 		}
 	}
 
@@ -282,7 +282,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
 
 				// redirect to the settings page
-				return $this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
 			}
 		}
 	}
@@ -323,7 +323,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
 
 					// redirect to a custom success message
-					return $this->redirect(BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue());
+					$this->redirect(BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue());
 				}
 
 				// client ID was already set
@@ -347,7 +347,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
 
 					// redirect to the settings page
-					return $this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient');
+					$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient');
 				}
 			}
 		}
@@ -411,7 +411,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_general_settings');
 
 				// redirect to the settings page
-				return $this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabGeneral');
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabGeneral');
 			}
 		}
 	}

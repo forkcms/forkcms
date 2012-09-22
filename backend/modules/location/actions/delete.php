@@ -41,10 +41,10 @@ class BackendLocationDelete extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
 			// user was deleted, so redirect
-			return $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
 		}
 
 		// something went wrong
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

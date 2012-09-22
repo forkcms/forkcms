@@ -36,10 +36,10 @@ class BackendGroupsDelete extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
 			// item was deleted, so redirect
-			return $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name']));
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name']));
 		}
 
 		// no item found, redirect to the overview with an error
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

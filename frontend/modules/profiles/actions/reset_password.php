@@ -53,14 +53,14 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 			}
 
 			// invalid key
-			elseif($this->URL->getParameter('sent') != 'true') return $this->redirect(FrontendNavigation::getURL(404));
+			elseif($this->URL->getParameter('sent') != 'true') $this->redirect(FrontendNavigation::getURL(404));
 
 			// parse
 			$this->parse();
 		}
 
 		// no key set
-		else return $this->redirect(FrontendNavigation::getURL(404));
+		else $this->redirect(FrontendNavigation::getURL(404));
 	}
 
 	/**
@@ -128,7 +128,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 				FrontendModel::triggerEvent('profiles', 'after_reset_password', array('id' => $profileId));
 
 				// redirect
-				return $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(0) . '?sent=true');
+				$this->redirect(FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(0) . '?sent=true');
 			}
 
 			// show errors

@@ -130,7 +130,7 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 		// no point continueing if the mailing record is not set
 		if(empty($this->mailing))
 		{
-			return $this->redirect(FrontendNavigation::getURL(404));
+			$this->redirect(FrontendNavigation::getURL(404));
 		}
 	}
 

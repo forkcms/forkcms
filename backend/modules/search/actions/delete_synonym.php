@@ -38,10 +38,10 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_delete_synonym', array('id' => $this->id));
 
 			// item was deleted, so redirect
-			return $this->redirect(BackendModel::createURLForAction('synonyms') . '&report=deleted-synonym&var=' . urlencode($this->record['term']));
+			$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=deleted-synonym&var=' . urlencode($this->record['term']));
 		}
 
 		// something went wrong
-		else return $this->redirect(BackendModel::createURLForAction('synonyms') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('synonyms') . '&error=non-existing');
 	}
 }

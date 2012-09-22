@@ -37,10 +37,10 @@ class BackendFaqDeleteCategory extends BackendBaseActionDelete
 				BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('item' => $this->record));
 
 				// category was deleted, so redirect
-				return $this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
 			}
-			else return $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
+			else $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
 		}
-		else return $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
 	}
 }

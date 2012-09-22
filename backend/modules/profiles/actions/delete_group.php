@@ -39,10 +39,10 @@ class BackendProfilesDeleteGroup extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_delete_group', array('id' => $this->id));
 
 			// group was deleted, so redirect
-			return $this->redirect(BackendModel::createURLForAction('groups') . '&report=deleted&var=' . urlencode($group['name']));
+			$this->redirect(BackendModel::createURLForAction('groups') . '&report=deleted&var=' . urlencode($group['name']));
 		}
 
 		// group does not exists
-		else return $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 	}
 }

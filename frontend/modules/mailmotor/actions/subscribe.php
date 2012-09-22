@@ -85,7 +85,7 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 					FrontendModel::triggerEvent('mailmotor', 'after_subscribe', array('email' => $email->getValue()));
 
 					// redirect
-					return $this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') . '?sent=true#subscribeForm');
+					$this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') . '?sent=true#subscribeForm');
 				}
 				catch(Exception $e)
 				{

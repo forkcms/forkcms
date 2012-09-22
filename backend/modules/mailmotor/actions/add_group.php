@@ -89,7 +89,7 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add_group', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}
 		}
 	}

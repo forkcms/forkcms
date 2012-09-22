@@ -46,7 +46,7 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 		$this->group = BackendMailmotorModel::getGroup($id);
 
 		// group doesn't exist
-		if(empty($this->group)) return $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 	}
 
 	/**
@@ -107,11 +107,11 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 				catch(Exception $e)
 				{
 					// redirect with a custom error
-					return $this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode($e->getMessage()));
+					$this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode($e->getMessage()));
 				}
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode($txtName->getValue()) . '&highlight=id-' . $this->group['id']);
+				$this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode($txtName->getValue()) . '&highlight=id-' . $this->group['id']);
 			}
 		}
 	}

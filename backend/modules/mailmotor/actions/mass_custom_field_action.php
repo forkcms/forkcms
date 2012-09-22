@@ -61,7 +61,7 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 		BackendMailmotorModel::updateCustomFields($groupFields, $this->group['id']);
 
 		// redirect
-		return $this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=deleted-custom-fields&var=' . $this->group['name']);
+		$this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=deleted-custom-fields&var=' . $this->group['name']);
 	}
 
 	/**
@@ -84,9 +84,9 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 		$redirectURL = BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'];
 
 		// no id's provided
-		if(!$action) return $this->redirect($redirectURL . '&error=no-action-selected');
-		if(!isset($_GET['fields'])) return $this->redirect($redirectURL . '&error=no-items-selected');
-		if(empty($this->group)) return $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+		if(!$action) $this->redirect($redirectURL . '&error=no-action-selected');
+		if(!isset($_GET['fields'])) $this->redirect($redirectURL . '&error=no-items-selected');
+		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 
 		// at least one id
 		else

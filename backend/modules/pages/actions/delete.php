@@ -32,7 +32,7 @@ class BackendPagesDelete extends BackendBaseActionDelete
 			$success = false;
 
 			// cannot have children
-			if(BackendPagesModel::getFirstChildId($this->id) !== false) return $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
+			if(BackendPagesModel::getFirstChildId($this->id) !== false) $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
 
 			$revisionId = $this->getParameter('revision_id', 'int');
 			if($revisionId == 0) $revisionId = null;
@@ -57,11 +57,11 @@ class BackendPagesDelete extends BackendBaseActionDelete
 			}
 
 			// page is deleted, so redirect to the overview
-			if($success) return $this->redirect(BackendModel::createURLForAction('index') . '&id=' . $page['parent_id'] . '&report=deleted&var=' . urlencode($page['title']));
-			else return $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
+			if($success) $this->redirect(BackendModel::createURLForAction('index') . '&id=' . $page['parent_id'] . '&report=deleted&var=' . urlencode($page['title']));
+			else $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
 		}
 
 		// something went wrong
-		else return $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
 	}
 }

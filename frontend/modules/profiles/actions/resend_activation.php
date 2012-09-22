@@ -30,7 +30,7 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
 		}
 
 		// profile logged in
-		else return $this->redirect(FrontendNavigation::getURL(404));
+		else $this->redirect(FrontendNavigation::getURL(404));
 	}
 
 	/**
@@ -118,7 +118,7 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
 				);
 
 				// redirect
-				return $this->redirect(SELF . '?sent=true');
+				$this->redirect(SELF . '?sent=true');
 			}
 
 			// show errors

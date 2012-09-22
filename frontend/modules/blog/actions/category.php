@@ -65,7 +65,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$requestedPage = $this->URL->getParameter('page', 'int', 1);
 
 		// validate category
-		if($requestedCategory == 'false') return $this->redirect(FrontendNavigation::getURL(404));
+		if($requestedCategory == 'false') $this->redirect(FrontendNavigation::getURL(404));
 
 		// set category
 		$this->category = $categories[$possibleCategories[$requestedCategory]];
@@ -79,7 +79,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
 		// redirect if the request page doesn't exists
-		if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) return $this->redirect(FrontendNavigation::getURL(404));
+		if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
 
 		// populate calculated fields in pagination
 		$this->pagination['requested_page'] = $requestedPage;

@@ -43,11 +43,11 @@ class BackendExtensionsInstallModule extends BackendBaseActionIndex
 			BackendExtensionsModel::installModule($this->currentModule);
 
 			// redirect to index with a success message
-			return $this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
+			$this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
 		}
 
 		// no item found, redirect to index, because somebody is fucking with our url
-		else return $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('modules') . '&error=non-existing');
 	}
 
 	/**
@@ -58,13 +58,13 @@ class BackendExtensionsInstallModule extends BackendBaseActionIndex
 		// already installed
 		if(BackendExtensionsModel::isModuleInstalled($this->currentModule))
 		{
-			return $this->redirect(BackendModel::createURLForAction('modules') . '&error=already-installed&var=' . $this->currentModule);
+			$this->redirect(BackendModel::createURLForAction('modules') . '&error=already-installed&var=' . $this->currentModule);
 		}
 
 		// no installer class present
 		if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/installer.php'))
 		{
-			return $this->redirect(BackendModel::createURLForAction('modules') . '&error=no-installer-file&var=' . $this->currentModule);
+			$this->redirect(BackendModel::createURLForAction('modules') . '&error=no-installer-file&var=' . $this->currentModule);
 		}
 	}
 }

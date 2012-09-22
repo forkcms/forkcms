@@ -45,7 +45,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 			$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
 			// redirect
-			return $this->redirect($queryString);
+			$this->redirect($queryString);
 		}
 	}
 
@@ -128,7 +128,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 				$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
 				// redirect
-				return $this->redirect($queryString);
+				$this->redirect($queryString);
 			}
 		}
 	}

@@ -625,7 +625,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $group));
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
 			}
 		}
 	}

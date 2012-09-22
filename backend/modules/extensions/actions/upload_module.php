@@ -213,7 +213,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 				// by now, the module has already been installed in processZipFile()
 
 				// redirect with fireworks
-				return $this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $moduleName . '&highlight=row-module_' . $moduleName);
+				$this->redirect(BackendModel::createURLForAction('modules') . '&report=module-installed&var=' . $moduleName . '&highlight=row-module_' . $moduleName);
 			}
 		}
 	}

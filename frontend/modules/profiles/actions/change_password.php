@@ -48,7 +48,7 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
 		// profile not logged in
 		else
 		{
-			return $this->redirect(
+			$this->redirect(
 				FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_password'),
 				307
 			);
@@ -127,7 +127,7 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
 				FrontendModel::triggerEvent('profiles', 'after_change_password', array('id' => $this->profile->getId()));
 
 				// redirect
-				return $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_password') . '?sent=true');
+				$this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_password') . '?sent=true');
 			}
 
 			// show errors

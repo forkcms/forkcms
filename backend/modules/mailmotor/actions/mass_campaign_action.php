@@ -25,7 +25,7 @@ class BackendMailmotorMassCampaignAction extends BackendBaseAction
 		$action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
 		// no id's provided
-		if(!isset($_GET['id'])) return $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=no-items-selected');
+		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=no-items-selected');
 
 		// at least one id
 		else
@@ -44,6 +44,6 @@ class BackendMailmotorMassCampaignAction extends BackendBaseAction
 		}
 
 		// redirect
-		return $this->redirect(BackendModel::createURLForAction('campaigns') . '&report=delete-campaigns');
+		$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=delete-campaigns');
 	}
 }

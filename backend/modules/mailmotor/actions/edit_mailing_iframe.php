@@ -38,7 +38,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -53,7 +53,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		$this->template = BackendMailmotorModel::getTemplate($this->record['language'], $this->record['template']);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -80,7 +80,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		require 'external/css_to_inline_styles.php';
 
 		// template content is empty
-		if(!isset($this->template['content'])) return $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=2&exclude_id=' . $this->id . '&error=template-does-not-exist');
+		if(!isset($this->template['content'])) $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=2&exclude_id=' . $this->id . '&error=template-does-not-exist');
 
 		// set CSS object
 		$css = new CSSToInlineStyles($this->template['content'], $this->template['css']);

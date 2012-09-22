@@ -169,7 +169,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
 				BackendExtensionsModel::installTheme($themeName);
 
 				// redirect with fireworks
-				return $this->redirect(BackendModel::createURLForAction('themes') . '&report=theme-installed&var=' . $themeName);
+				$this->redirect(BackendModel::createURLForAction('themes') . '&report=theme-installed&var=' . $themeName);
 			}
 		}
 	}

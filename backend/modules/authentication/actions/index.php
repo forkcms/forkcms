@@ -30,7 +30,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		// check if the user is really logged on
 		if(BackendAuthentication::getUser()->isAuthenticated())
 		{
-			return $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard')));
+			$this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard')));
 		}
 
 		parent::execute();
@@ -184,7 +184,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				}
 
 				// redirect to the correct URL (URL the user was looking for or fallback)
-				return $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module)));
+				$this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module)));
 			}
 		}
 

@@ -34,10 +34,10 @@ class BackendAnalyticsDeleteLandingPage extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_delete_landing_page', array('id' => $this->id));
 
 			// item was deleted, so redirect
-			return $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['page_path']));
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['page_path']));
 		}
 
 		// something went wrong
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

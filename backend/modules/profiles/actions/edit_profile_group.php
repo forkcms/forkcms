@@ -46,11 +46,11 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 			}
 
 			// no item found, throw an exception, because somebody is fucking with our URL
-			else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+			else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 		}
 
 		// no item found, throw an exception, because somebody is fucking with our URL
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -136,7 +136,7 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_profile_edit_groups', array('id' => $this->id));
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');
 			}
 		}
 	}

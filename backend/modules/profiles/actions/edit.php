@@ -49,7 +49,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, redirect to index, because somebody is fucking with our URL
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -277,7 +277,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($values['email']) . '&highlight=row-' . $this->id);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($values['email']) . '&highlight=row-' . $this->id);
 			}
 		}
 	}

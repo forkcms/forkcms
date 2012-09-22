@@ -91,7 +91,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our url
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**

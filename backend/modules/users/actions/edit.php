@@ -57,7 +57,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our URL
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -329,14 +329,14 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				if(!BackendAuthentication::isAllowedAction('index'))
 				{
 					// everything is saved, so redirect to the edit page
-					return $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&report=edited&var=' . $settings['nickname']);
+					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&report=edited&var=' . $settings['nickname']);
 				}
 
 				// can view other users
 				else
 				{
 					// everything is saved, so redirect to the overview
-					return $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
+					$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
 				}
 			}
 		}

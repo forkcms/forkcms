@@ -235,7 +235,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$this->record = BackendGroupsModel::get($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
 		$this->getWidgets();
 		$this->getActions();
@@ -794,7 +794,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
 			}
 		}
 	}

@@ -63,10 +63,10 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
 
 			// item was deleted, so redirect
-			return $this->redirect($redirectUrl);
+			$this->redirect($redirectUrl);
 		}
 
 		// something went wrong
-		else return $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

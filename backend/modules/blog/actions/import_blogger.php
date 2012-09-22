@@ -496,7 +496,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 				SpoonFile::delete(FRONTEND_FILES_PATH . '/blogger.xml');
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
 			}
 		}
 	}

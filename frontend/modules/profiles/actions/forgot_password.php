@@ -38,7 +38,7 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 		}
 
 		// already logged in, redirect to settings
-		else return $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
+		else $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
 	}
 
 	/**
@@ -124,7 +124,7 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 				);
 
 				// redirect
-				return $this->redirect(SELF . '?sent=true');
+				$this->redirect(SELF . '?sent=true');
 			}
 
 			// show errors

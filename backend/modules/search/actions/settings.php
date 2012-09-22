@@ -140,7 +140,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_changed_settings');
 
 				// redirect to the settings page
-				return $this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}
 		}
 	}

@@ -42,7 +42,7 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 		}
 
 		// no item found, redirect to index, because somebody is fucking with our URL
-		else return $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 	}
 
 	/**
@@ -112,7 +112,7 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_group', array('item' => $values));
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('groups') . '&report=group-saved&var=' . urlencode($values['name']) . '&highlight=row-' . $this->id);
+				$this->redirect(BackendModel::createURLForAction('groups') . '&report=group-saved&var=' . urlencode($values['name']) . '&highlight=row-' . $this->id);
 			}
 		}
 	}

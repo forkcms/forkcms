@@ -62,8 +62,8 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$this->linkURL = $this->getParameter('url');
 
 		// does the item exist
-		if(!BackendMailmotorModel::existsMailing($id)) return $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
-		if($this->linkURL == '') return $this->redirect(BackendModel::createURLForAction('statistics') . '&id=' . $id . '&error=link-does-not-exist');
+		if(!BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
+		if($this->linkURL == '') $this->redirect(BackendModel::createURLForAction('statistics') . '&id=' . $id . '&error=link-does-not-exist');
 
 		// fetch the statistics
 		$this->statistics = BackendMailmotorCMHelper::getStatistics($id, true);
@@ -72,7 +72,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$this->mailing = BackendMailmotorModel::getMailing($id);
 
 		// no stats found
-		if($this->statistics === false) return $this->redirect(BackendModel::createURLForAction('index') . '&error=no-statistics-loaded');
+		if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-statistics-loaded');
 	}
 
 	/**
@@ -171,7 +171,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 				}
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('statistics_link') . '&url=' . $this->linkURL . '&mailing_id=' . $this->mailing['id'] . '&report=group-added&var=' . urlencode($item['name']) . '&highlight=id-' . $this->mailing['id']);
+				$this->redirect(BackendModel::createURLForAction('statistics_link') . '&url=' . $this->linkURL . '&mailing_id=' . $this->mailing['id'] . '&report=group-added&var=' . urlencode($item['name']) . '&highlight=id-' . $this->mailing['id']);
 			}
 		}
 	}

@@ -46,7 +46,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
 
 		// if no groups are found, redirect to overview
-		if(empty($groups)) return $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no_groups');
+		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no_groups');
 
 		// add checkboxes for groups
 		$this->frm->addMultiCheckbox('groups', $groups, $this->groupId);
@@ -106,7 +106,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 				BackendModel::triggerEvent($this->getModule(), 'after_add_address', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				return $this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added');
+				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added');
 			}
 		}
 	}
