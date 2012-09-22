@@ -112,7 +112,7 @@ class ApplicationRouting
 				require_once __DIR__ . '/../api/1.0/init.php';
 
 				new APIInit($applicationName);
-				new API();
+				$application = new API();
 				break;
 		}
 

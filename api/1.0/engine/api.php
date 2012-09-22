@@ -7,11 +7,14 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * This class defines the API.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class API
 {
@@ -21,6 +24,11 @@ class API
 	const FORBIDDEN = 403;
 	const ERROR = 500;
 	const NOT_FOUND = 404;
+
+	/**
+	 * @var string
+	 */
+	protected static $content;
 
 	public function __construct()
 	{
@@ -317,6 +325,15 @@ class API
 		return true;
 	}
 
+	public function display()
+	{
+		$content = self::$content;
+
+		return new Response(
+			$content, 200, SpoonHttp::getHeadersList()
+		);
+	}
+
 	/**
 	 * This is called in backend/modules/<module>/engine/api.php to limit certain calls to
 	 * a given request method.
@@ -409,10 +426,7 @@ class API
 		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
 		// output JSON
-		echo json_encode($JSON);
-
-		// stop script execution
-		exit;
+		self::$content = json_encode($JSON);
 	}
 
 	/**
@@ -457,9 +471,6 @@ class API
 		SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
 
 		// output XML
-		echo $XML->saveXML();
-
-		// stop script execution
-		exit;
+		self::$content = $XML->saveXML();
 	}
 }
