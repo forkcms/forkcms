@@ -1,3 +1,10 @@
+3.5.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* With the 3.5.0 release, Fork CMS will be available under the MIT-license.
+
+
 3.4.4 (2012-09-12)
 --
 Improvements:
