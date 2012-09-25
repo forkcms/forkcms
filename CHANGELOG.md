@@ -4,6 +4,10 @@ Improvements:
 
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 
+Bugfixes:
+
+* Users: Added fix so users can't edit other profiles.
+
 
 3.4.4 (2012-09-12)
 --
