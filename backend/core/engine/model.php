@@ -236,11 +236,12 @@ class BackendModel
 	 * @param string $module 			The module for the extra.
 	 * @param string $field 			The field of the data you want to check the value for.
 	 * @param string $value 			The value to check the field for.
+	 * @param string[optional] $action 	In case you want to search for a certain action.
 	 */
-	public function deleteExtrasForData($module, $field, $value)
+	public function deleteExtrasForData($module, $field, $value, $action = null)
 	{
 		// get ids
-		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value);
+		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value, $action);
 
 		// delete extras
 		if(!empty($ids)) BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
