@@ -243,11 +243,15 @@ class BackendModel
 		// get ids
 		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value, $action);
 
-		// delete extras
-		if(!empty($ids)) BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+		// we have extras
+		if(!empty($ids))
+		{
+			// delete extras
+			BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
 
-		// invalidate the cache for the module
-		BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+			// invalidate the cache for the module
+			BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+		}
 	}
 
 	/**
