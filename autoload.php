@@ -26,21 +26,9 @@ class Autoloader
 		// @todo - exceptions should be reduced to a minimum
 		$exceptions = array();
 		$exceptions['frontend'] = PATH_WWW . '/frontend/core/engine/frontend.php';
-		$exceptions['frontendbaseajaxaction'] = PATH_WWW . '/frontend/core/engine/base.php';
-		$exceptions['frontendbaseconfig'] = PATH_WWW . '/frontend/core/engine/base.php';
-		$exceptions['frontendbaseobject'] = PATH_WWW . '/frontend/core/engine/base.php';
-		$exceptions['frontendblockextra'] = PATH_WWW . '/frontend/core/engine/block.php';
-		$exceptions['frontendblockwidget'] = PATH_WWW . '/frontend/core/engine/block.php';
 		$exceptions['frontendtemplatecompiler'] = PATH_WWW . '/frontend/core/engine/template_compiler.php';
 		$exceptions['backend'] = PATH_WWW . '/backend/core/engine/backend.php';
-		$exceptions['backendbaseobject'] = PATH_WWW . '/backend/core/engine/base.php';
 		$exceptions['backendajaxaction'] = PATH_WWW . '/backend/core/engine/ajax_action.php';
-		$exceptions['backendbaseajaxaction'] = PATH_WWW . '/backend/core/engine/base.php';
-		$exceptions['backenddatagriddb'] = PATH_WWW . '/backend/core/engine/datagrid.php';
-		$exceptions['backenddatagridarray'] = PATH_WWW . '/backend/core/engine/datagrid.php';
-		$exceptions['backenddatagridfunctions'] = PATH_WWW . '/backend/core/engine/datagrid.php';
-		$exceptions['backendbaseconfig'] = PATH_WWW . '/backend/core/engine/base.php';
-		$exceptions['backendbasecronjob'] = PATH_WWW . '/backend/core/engine/base.php';
 		$exceptions['fl'] = PATH_WWW . '/frontend/core/engine/language.php';
 		$exceptions['bl'] = PATH_WWW . '/backend/core/language.php';
 		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
@@ -48,8 +36,20 @@ class Autoloader
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
 
+		// frontend base
+		elseif(substr($className, 0, 12) == 'frontendbase') $pathToLoad = PATH_WWW . '/frontend/core/engine/base.php';
+
+		// frontend block
+		elseif(substr($className, 0, 13) == 'frontendblock') $pathToLoad = PATH_WWW . '/frontend/core/engine/block.php';
+
 		// frontend
 		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = PATH_WWW . '/frontend/core/engine/' . str_replace('frontend', '', $className) . '.php';
+
+		// backend base
+		elseif(substr($className, 0, 11) == 'backendbase') $pathToLoad = PATH_WWW . '/backend/core/engine/base.php';
+
+		// backend datagrid
+		elseif(substr($className, 0, 15) == 'backenddatagrid') $pathToLoad = PATH_WWW . '/backend/core/engine/datagrid.php';
 
 		// backend
 		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = PATH_WWW . '/backend/core/engine/' . str_replace('backend', '', $className) . '.php';
