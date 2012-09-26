@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+require_once '../autoload.php';
 require_once 'init.php';
 
 new BackendInit('backend_ajax');
