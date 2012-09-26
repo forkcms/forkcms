@@ -35,8 +35,10 @@ class Autoloader
 		// is it an exception?
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
 
-		elseif(substr($className, 0, 12) == 'frontendbase') $pathToLoad = PATH_WWW . '/frontend/core/engine/base.php';
+		// if it is a Spoon-class we can stop using this autoloader
+		elseif(substr($className, 0, 5) == 'spoon') return;
 
+		elseif(substr($className, 0, 12) == 'frontendbase') $pathToLoad = PATH_WWW . '/frontend/core/engine/base.php';
 		elseif(substr($className, 0, 13) == 'frontendblock') $pathToLoad = PATH_WWW . '/frontend/core/engine/block.php';
 		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = PATH_WWW . '/frontend/core/engine/' . str_replace('frontend', '', $className) . '.php';
 		elseif(substr($className, 0, 11) == 'backendbase') $pathToLoad = PATH_WWW . '/backend/core/engine/base.php';
