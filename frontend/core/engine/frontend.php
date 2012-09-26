@@ -12,6 +12,7 @@
  * We create all needed instances.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Reclamebureau Siesqo <info@siesqo.be>
  */
 class Frontend
 {
@@ -40,10 +41,11 @@ class Frontend
 			require_once 'external/facebook.php';
 
 			// create instance
-			$facebook = new Facebook($facebookApplicationSecret, $facebookApplicationId);
-
-			// get the cookie, this will set the access token.
-			$facebook->getCookie();
+			$facebook = new Facebook(array(
+			   'appId' => $facebookApplicationId,
+			   'secret' => $facebookApplicationSecret,
+			   'cookie' => true
+			));
 
 			// store in reference
 			Spoon::set('facebook', $facebook);
