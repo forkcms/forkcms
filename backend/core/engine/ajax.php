@@ -12,8 +12,9 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendAJAX extends BackendBaseObject
+class BackendAJAX extends BackendBaseObject implements ApplicationInterface
 {
 	/**
 	 * The executed action.
