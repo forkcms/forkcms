@@ -376,19 +376,23 @@ class FrontendInit
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// add callback for the spoon exceptionhandler
-			switch($this->type)
+			// don't overrule if there is already an exception handler defined
+			if(!defined('SPOON_EXCEPTION_CALLBACK'))
 			{
-				case 'backend_ajax':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-					break;
+				// add callback for the spoon exceptionhandler
+				switch($this->type)
+				{
+					case 'backend_ajax':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
+						break;
 
-				case 'backend_js':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-					break;
+					case 'backend_js':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
+						break;
 
-				default:
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+					default:
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+				}
 			}
 		}
 	}
