@@ -60,6 +60,11 @@ class BackendPagesModel
 	 */
 	public static function buildCache($language = null)
 	{
+		// clear compiled templates
+		$templateObject = new SpoonTemplate();
+		$templateObject->setCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
+		$templateObject->clearCompiled();
+
 		// redefine
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
