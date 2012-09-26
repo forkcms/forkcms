@@ -239,7 +239,7 @@ class BackendInit
 		switch($this->type)
 		{
 			case 'backend_ajax':
-				require_once PATH_WWW . '/routing.php';
+				require_once PATH_WWW . '/app/routing.php';
 				break;
 		}
 	}

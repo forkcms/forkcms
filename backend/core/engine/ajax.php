@@ -15,6 +15,11 @@
  */
 class BackendAJAX extends BackendBaseObject
 {
+	/**
+	 * The executed action.
+	 */
+	protected $executeAction;
+
 	public function __construct()
 	{
 		// check if the user is logged in
@@ -52,6 +57,7 @@ class BackendAJAX extends BackendBaseObject
 		try
 		{
 			$action->execute();
+			$this->executedAction = $action;
 		}
 
 		catch(Exception $e)
@@ -65,7 +71,16 @@ class BackendAJAX extends BackendBaseObject
 			// output
 			$fakeAction = new BackendBaseAJAXAction();
 			$fakeAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
+			$this->executedAction = $fakeAction;
 		}
+	}
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getResponse()
+	{
+		return $this->executedAction->getContent();
 	}
 
 	/**

@@ -40,6 +40,11 @@ class BackendBaseObject
 	protected $module;
 
 	/**
+	 * @var int
+	 */
+	protected $statusCode = 200;
+
+	/**
 	 * Get the action
 	 *
 	 * @return string
@@ -77,7 +82,7 @@ class BackendBaseObject
 		if(!BackendAuthentication::isAllowedAction($action, $this->getModule()))
 		{
 			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
+			$this->statusCode = 403;
 
 			// throw exception
 			throw new BackendException('Action not allowed.');
@@ -97,8 +102,7 @@ class BackendBaseObject
 		// is this module allowed?
 		if(!BackendAuthentication::isAllowedModule($module))
 		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
+			$this->statusCode = 403;
 
 			// throw exception
 			throw new BackendException('Module not allowed.');
@@ -122,7 +126,7 @@ class BackendBaseObject
 	{
 		return new Response(
 			$this->content,
-			200, SpoonHttp::getHeadersList()
+			$this->statusCode, SpoonHttp::getHeadersList()
 		);
 	}
 }
@@ -498,6 +502,22 @@ class BackendBaseAJAXAction extends BackendBaseObject
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getContent()
+	{
+		return $this->content;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStatusCode()
+	{
+		return $this->statusCode;
+	}
+
+	/**
 	 * Output an answer to the browser
 	 *
 	 * @param int $statusCode The status code for the response, use the available constants. (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
@@ -514,12 +534,11 @@ class BackendBaseAJAXAction extends BackendBaseObject
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 
 		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json');
 
 		// output JSON to the browser
-		echo json_encode($response);
-		exit;
+		$this->content = json_encode($response);
+		$this->statusCode = $statusCode;
 	}
 }
 
