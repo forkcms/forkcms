@@ -11,12 +11,10 @@
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
  *
- * @todo make this an interface implementation.
- *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class Backend
+class Backend implements ApplicationInterface
 {
 	/**
 	 * @var BackendAction
@@ -38,7 +36,7 @@ class Backend
 	/**
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */
-	public function display()
+	public function getResponse()
 	{
 		return $this->action->execute();
 	}

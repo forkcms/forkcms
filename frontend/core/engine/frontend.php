@@ -11,12 +11,10 @@
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
  *
- * @todo make this an interface implementation.
- *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class Frontend
+class Frontend implements ApplicationInterface
 {
 	/**
 	 * @var FrontendPage
@@ -35,7 +33,7 @@ class Frontend
 	/**
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */
-	public function display()
+	public function getResponse()
 	{
 		return $this->page->display();
 	}

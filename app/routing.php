@@ -116,7 +116,7 @@ class ApplicationRouting
 				break;
 		}
 
-		return $application->display();
+		return $application->getResponse();
 	}
 
 	/**

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class API
+class API implements ApplicationInterface
 {
 	// statuses
 	const OK = 200;
@@ -325,7 +325,10 @@ class API
 		return true;
 	}
 
-	public function display()
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getResponse()
 	{
 		$content = self::$content;
 

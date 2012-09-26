@@ -46,6 +46,7 @@ class Autoloader
 		$exceptions['fl'] = PATH_WWW . '/frontend/core/engine/language.php';
 		$exceptions['bl'] = PATH_WWW . '/backend/core/language.php';
 		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
+		$exceptions['applicationinterface'] = PATH_WWW . '/app/ApplicationInterface.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
