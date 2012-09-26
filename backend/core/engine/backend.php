@@ -12,9 +12,15 @@
  * We create all needed instances and execute the requested action
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class Backend
+class Backend implements ApplicationInterface
 {
+	/**
+	 * @var BackendAction
+	 */
+	private $action;
+
 	public function __construct()
 	{
 		$URL = new BackendURL();
@@ -22,9 +28,16 @@ class Backend
 		new BackendNavigation();
 		new BackendHeader();
 
-		$action = new BackendAction();
-		$action->setModule($URL->getModule());
-		$action->setAction($URL->getAction());
-		$action->execute();
+		$this->action = new BackendAction();
+		$this->action->setModule($URL->getModule());
+		$this->action->setAction($URL->getAction());
+	}
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getResponse()
+	{
+		return $this->action->execute();
 	}
 }

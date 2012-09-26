@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/library/globals.php';
+
 /*
  * This file is part of Fork CMS.
  *
@@ -44,6 +46,7 @@ class Autoloader
 		$exceptions['fl'] = PATH_WWW . '/frontend/core/engine/language.php';
 		$exceptions['bl'] = PATH_WWW . '/backend/core/language.php';
 		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
+		$exceptions['applicationinterface'] = PATH_WWW . '/app/ApplicationInterface.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
@@ -115,3 +118,11 @@ spl_autoload_register(array(new Autoloader(), 'load'));
 
 // use vender generated autoloader
 require 'vendor/autoload.php';
+
+// @todo we also need the autoloader of spoon before we start our application (so we can define services)
+set_include_path(__DIR__ . '/library' . PATH_SEPARATOR . get_include_path());
+require_once 'spoon/spoon.php';
+
+require_once 'bootstrap.php';
+
+require_once __DIR__ . '/app/AppKernel.php';

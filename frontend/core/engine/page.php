@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Frontend page class, this class will handle everything on a page
  *
@@ -108,9 +110,6 @@ class FrontendPage extends FrontendBaseObject
 		// store statistics
 		$this->storeStatistics();
 
-		// display
-		$this->display();
-
 		// trigger event
 		FrontendModel::triggerEvent(
 			'core',
@@ -161,7 +160,10 @@ class FrontendPage extends FrontendBaseObject
 		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
 
 		// output
-		$this->tpl->display($this->templatePath, false, true);
+		return new Response(
+			$this->tpl->getContent($this->templatePath, false, true),
+			200, SpoonHttp::getHeadersList()
+		);
 	}
 
 	/**

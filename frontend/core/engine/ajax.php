@@ -13,8 +13,9 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class FrontendAJAX
+class FrontendAJAX implements ApplicationInterface
 {
 	/**
 	 * The action
@@ -22,6 +23,11 @@ class FrontendAJAX
 	 * @var	string
 	 */
 	private $action;
+
+	/**
+	 * The action that will be executed.
+	 */
+	protected $executeAction;
 
 	/**
 	 * The language
@@ -64,6 +70,7 @@ class FrontendAJAX
 		{
 			// execute the action
 			$action->execute();
+			$this->executeAction = $action;
 		}
 
 		catch(Exception $e)
@@ -76,6 +83,7 @@ class FrontendAJAX
 
 			// output the exceptions-message as an error
 			$fakeAction->output(FrontendBaseAJAXAction::ERROR, null, $e->getMessage());
+			$this->executeAction = $fakeAction;
 		}
 	}
 
@@ -97,6 +105,14 @@ class FrontendAJAX
 	public function getModule()
 	{
 		return $this->module;
+	}
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getResponse()
+	{
+		return $this->executeAction->getResponse();
 	}
 
 	/**
@@ -188,6 +204,11 @@ class FrontendAJAXAction
 	private $module;
 
 	/**
+	 * The executed action.
+	 */
+	protected $object;
+
+	/**
 	 * @param string $action The action that should be executed.
 	 * @param string $module The module that wherein the action is available.
 	 */
@@ -224,13 +245,13 @@ class FrontendAJAXAction
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$object = new $actionClassName($this->getAction(), $this->getModule());
+		$this->object = new $actionClassName($this->getAction(), $this->getModule());
 
 		// validate if the execute-method is callable
-		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
+		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
-		call_user_func(array($object, 'execute'));
+		call_user_func(array($this->object, 'execute'));
 	}
 
 	/**
@@ -253,6 +274,14 @@ class FrontendAJAXAction
 	public function getModule()
 	{
 		return $this->module;
+	}
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getResponse()
+	{
+		return $this->object->getResponse();
 	}
 
 	/**

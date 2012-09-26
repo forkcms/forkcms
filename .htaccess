@@ -36,6 +36,10 @@ FileETag MTime Size
 	RewriteCond %{REQUEST_URI} ^/backend/$
 	RewriteRule . /index.php [NC,L]
 
+	# api is an existing folder, but it should be handled as all urls
+	RewriteCond %{REQUEST_URI} ^/api/1.0/$
+	RewriteRule . index.php [NC,L]
+
 	# handle urls
 	RewriteCond %{REQUEST_URI} !^$
 	RewriteCond %{REQUEST_FILENAME} !-f

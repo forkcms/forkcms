@@ -62,11 +62,8 @@ class FrontendInit
 		$this->setIncludePath();
 		$this->setDebugging();
 
-		// require spoon
-		require_once 'spoon/spoon.php';
-
 		$this->requireFrontendClasses();
-		SpoonFilter::disableMagicQuotes();
+		//SpoonFilter::disableMagicQuotes();
 	}
 
 	/**
@@ -74,10 +71,6 @@ class FrontendInit
 	 */
 	private function definePaths()
 	{
-		// fix the Application setting
-		if($this->type == 'frontend_js') define('APPLICATION', 'frontend');
-		elseif($this->type == 'frontend_ajax') define('APPLICATION', 'frontend');
-
 		// general paths
 		define('FRONTEND_PATH', PATH_WWW . '/' . APPLICATION);
 		define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
@@ -282,19 +275,23 @@ class FrontendInit
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// add callback for the spoon exceptionhandler
-			switch($this->type)
+			// don't overrule if there is already an exception handler defined
+			if(!defined('SPOON_EXCEPTION_CALLBACK'))
 			{
-				case 'backend_ajax':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-					break;
+				// add callback for the spoon exceptionhandler
+				switch($this->type)
+				{
+					case 'backend_ajax':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
+						break;
 
-				case 'backend_js':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-					break;
+					case 'backend_js':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
+						break;
 
-				default:
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+					default:
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+				}
 			}
 		}
 	}

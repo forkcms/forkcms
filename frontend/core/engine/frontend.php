@@ -12,16 +12,30 @@
  * We create all needed instances.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class Frontend
+class Frontend implements ApplicationInterface
 {
+	/**
+	 * @var FrontendPage
+	 */
+	private $page;
+
 	public function __construct()
 	{
 		$this->initializeFacebook();
 
 		new FrontendURL();
 		new FrontendTemplate();
-		new FrontendPage();
+		$this->page = new FrontendPage();
+	}
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getResponse()
+	{
+		return $this->page->display();
 	}
 
 	/**

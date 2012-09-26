@@ -73,11 +73,6 @@ class BackendInit
 	 */
 	private function definePaths()
 	{
-		// fix the Application setting
-		if($this->type == 'backend_ajax') define('APPLICATION', 'backend');
-		if($this->type == 'backend_js') define('APPLICATION', 'backend');
-		if($this->type == 'backend_cronjob') define('APPLICATION', 'backend');
-
 		// general paths
 		define('BACKEND_PATH', PATH_WWW . '/' . APPLICATION);
 		define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
@@ -244,7 +239,7 @@ class BackendInit
 		switch($this->type)
 		{
 			case 'backend_ajax':
-				require_once PATH_WWW . '/routing.php';
+				require_once PATH_WWW . '/app/routing.php';
 				break;
 		}
 	}
@@ -300,6 +295,9 @@ class BackendInit
 
 			// show errors on the screen
 			ini_set('display_errors', 'On');
+
+			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
+			set_error_handler(array('BackendInit', 'errorHandler'));
 		}
 
 		// debugging disabled
@@ -311,19 +309,23 @@ class BackendInit
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// add callback for the spoon exceptionhandler
-			switch($this->type)
+			// don't overrule if there is already an exception handler defined
+			if(!defined('SPOON_EXCEPTION_CALLBACK'))
 			{
-				case 'backend_ajax':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-					break;
+				// add callback for the spoon exceptionhandler
+				switch($this->type)
+				{
+					case 'backend_ajax':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
+						break;
 
-				case 'backend_js':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-					break;
+					case 'backend_js':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
+						break;
 
-				default:
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+					default:
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+				}
 			}
 		}
 	}

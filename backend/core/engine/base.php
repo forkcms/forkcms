@@ -7,10 +7,14 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * This class will be the base of the objects used in the cms
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendBaseObject
 {
@@ -22,11 +26,23 @@ class BackendBaseObject
 	protected $action;
 
 	/**
+	 * The actual output
+	 *
+	 * @var string
+	 */
+	protected $content;
+
+	/**
 	 * The current module
 	 *
 	 * @var	string
 	 */
 	protected $module;
+
+	/**
+	 * @var int
+	 */
+	protected $statusCode = 200;
 
 	/**
 	 * Get the action
@@ -66,7 +82,7 @@ class BackendBaseObject
 		if(!BackendAuthentication::isAllowedAction($action, $this->getModule()))
 		{
 			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
+			$this->statusCode = 403;
 
 			// throw exception
 			throw new BackendException('Action not allowed.');
@@ -86,8 +102,7 @@ class BackendBaseObject
 		// is this module allowed?
 		if(!BackendAuthentication::isAllowedModule($module))
 		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
+			$this->statusCode = 403;
 
 			// throw exception
 			throw new BackendException('Module not allowed.');
@@ -95,6 +110,24 @@ class BackendBaseObject
 
 		// set property
 		$this->module = $module;
+	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Response
+	 */
+	public function getContent()
+	{
+		return new Response(
+			$this->content,
+			$this->statusCode, SpoonHttp::getHeadersList()
+		);
 	}
 }
 
@@ -174,7 +207,7 @@ class BackendBaseAction extends BackendBaseObject
 			$template = BACKEND_MODULE_PATH . '/layout/templates/' . $this->URL->getAction() . '.tpl';
 		}
 
-		$this->tpl->display($template);
+		$this->content = $this->tpl->getContent($template);
 	}
 
 	/**
@@ -290,7 +323,9 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function redirect($URL)
 	{
-		SpoonHTTP::redirect(str_replace('&amp;', '&', (string) $URL));
+		SpoonHTTP::redirect((string) $URL);
+		// @todo: use correct redirectResponse
+		// return new RedirectResponse($URL, 302, SpoonHTTP::getHeadersList());
 	}
 }
 
@@ -467,6 +502,22 @@ class BackendBaseAJAXAction extends BackendBaseObject
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getContent()
+	{
+		return $this->content;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStatusCode()
+	{
+		return $this->statusCode;
+	}
+
+	/**
 	 * Output an answer to the browser
 	 *
 	 * @param int $statusCode The status code for the response, use the available constants. (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
@@ -483,12 +534,11 @@ class BackendBaseAJAXAction extends BackendBaseObject
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 
 		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json');
 
 		// output JSON to the browser
-		echo json_encode($response);
-		exit;
+		$this->content = json_encode($response);
+		$this->statusCode = $statusCode;
 	}
 }
 
