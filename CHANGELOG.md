@@ -3,6 +3,7 @@
 Improvements:
 
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
+* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 
 Bugfixes:
 

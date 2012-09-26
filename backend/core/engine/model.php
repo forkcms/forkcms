@@ -236,17 +236,22 @@ class BackendModel
 	 * @param string $module 			The module for the extra.
 	 * @param string $field 			The field of the data you want to check the value for.
 	 * @param string $value 			The value to check the field for.
+	 * @param string[optional] $action 	In case you want to search for a certain action.
 	 */
-	public function deleteExtrasForData($module, $field, $value)
+	public function deleteExtrasForData($module, $field, $value, $action = null)
 	{
 		// get ids
-		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value);
+		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value, $action);
 
-		// delete extras
-		if(!empty($ids)) BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+		// we have extras
+		if(!empty($ids))
+		{
+			// delete extras
+			BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
 
-		// invalidate the cache for the module
-		BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+			// invalidate the cache for the module
+			BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+		}
 	}
 
 	/**
@@ -448,12 +453,13 @@ class BackendModel
 	/**
 	 * Get extras for data
 	 *
-	 * @param string $module 	The module for the extra.
-	 * @param string $key 		The key of the data you want to check the value for.
-	 * @param string $value 	The value to check the key for.
-	 * @return array			The ids for the extras.
+	 * @param string $module 			The module for the extra.
+	 * @param string $key 				The key of the data you want to check the value for.
+	 * @param string $value 			The value to check the key for.
+	 * @param string[optional] $action 	In case you want to search for a certain action.
+	 * @return array					The ids for the extras.
 	 */
-	public static function getExtrasForData($module, $key, $value)
+	public static function getExtrasForData($module, $key, $value, $action = null)
 	{
 		// init variables
 		$module = (string) $module;
@@ -461,13 +467,27 @@ class BackendModel
 		$value = (string) $value;
 		$result = array();
 
-		// get all possible extras
-		$items = (array) BackendModel::getDB(true)->getPairs(
-			'SELECT i.id, i.data
-			 FROM modules_extras AS i
-			 WHERE i.module = ? AND i.data != ?',
-			 array($module, 'NULL')
-		);
+		if($action)
+		{
+			// get all possible extras
+			$items = (array) BackendModel::getDB(true)->getPairs(
+				'SELECT i.id, i.data
+				 FROM modules_extras AS i
+				 WHERE i.module = ? AND i.action = ? AND i.data != ?',
+				 array($module, (string) $action, 'NULL')
+			);
+		}
+
+		else
+		{
+			// get all possible extras
+			$items = (array) BackendModel::getDB(true)->getPairs(
+				'SELECT i.id, i.data
+				 FROM modules_extras AS i
+				 WHERE i.module = ? AND i.data != ?',
+				 array($module, 'NULL')
+			);
+		}
 
 		// stop here when no items
 		if(empty($items)) return $result;
