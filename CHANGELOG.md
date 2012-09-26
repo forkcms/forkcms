@@ -1,3 +1,16 @@
+3.5.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* With the 3.5.0 release, Fork CMS will be available under the MIT-license.
+* Core: allow people to define their own errorhandler.
+
+Bugfixes:
+
+* Users: Added fix so users can't edit other profiles.
+* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
+
+
 3.4.4 (2012-09-12)
 --
 Improvements:

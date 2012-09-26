@@ -2041,7 +2041,7 @@ jsBackend.tableSequenceByDragAndDrop =
 								$table.sortable('cancel');
 
 								// show message
-								jsBackend.messages.add('error', 'alter sequence failed.');
+								jsBackend.messages.add('error', jsBackend.locale.err('AlterSequenceFailed'));
 							}
 
 							// redo odd-even
@@ -2053,12 +2053,12 @@ jsBackend.tableSequenceByDragAndDrop =
 							if(data.code != 200 && jsBackend.debug) alert(data.message);
 
 							// show message
-							jsBackend.messages.add('success', 'Changed order successfully.');
+							jsBackend.messages.add('success', jsBackend.locale.msg('ChangedOrderSuccessfully'));
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown)
 						{
 							// init var
-							var textStatus = 'alter sequence failed.';
+							var textStatus = jsBackend.locale.err('AlterSequenceFailed');
 
 							// get real message
 							if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
