@@ -8742,6 +8742,10 @@
         <translation language="lt"><![CDATA[Bulgariškai]]></translation>
         <translation language="sv"><![CDATA[Bulgariska]]></translation>
       </item>
+      <item type="message" name="ChangedOrderSuccessfully">
+        <translation language="nl"><![CDATA[Volgorde succesvol gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[Changed order successfully.]]></translation>
+      </item>
       <item type="message" name="ClickToEdit">
         <translation language="nl"><![CDATA[Klik om te wijzigen.]]></translation>
         <translation language="en"><![CDATA[Click to edit]]></translation>
@@ -10015,6 +10019,10 @@
         <translation language="es"><![CDATA[Solo carácteres alfanumericos son aceptados.]]></translation>
         <translation language="lt"><![CDATA[Tik raidės>]]></translation>
         <translation language="sv"><![CDATA[Endast alfanumeriska tecken är tillåtna.]]></translation>
+      </item>
+      <item type="error" name="AlterSequenceFailed">
+        <translation language="nl"><![CDATA[Volgorde wijzigen mislukt.]]></translation>
+        <translation language="en"><![CDATA[Alter sequence failed.]]></translation>
       </item>
       <item type="error" name="AuthorIsRequired">
         <translation language="nl"><![CDATA[Gelieve een auteur in te geven.]]></translation>
