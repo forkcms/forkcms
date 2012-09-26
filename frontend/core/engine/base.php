@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -942,11 +943,23 @@ class FrontendBaseAJAXAction
 	protected $action;
 
 	/**
+	 * The actual content.
+	 *
+	 * @var string
+	 */
+	protected $content;
+
+	/**
 	 * The current module
 	 *
 	 * @var	string
 	 */
 	protected $module;
+
+	/**
+	 * @var int
+	 */
+	protected $statusCode;
 
 	/**
 	 * @param string $action The action to use.
@@ -988,6 +1001,17 @@ class FrontendBaseAJAXAction
 	}
 
 	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getResponse()
+	{
+		return new Response(
+			$this->content, $this->statusCode,
+			SpoonHTTP::getHeadersList()
+		);
+	}
+
+	/**
 	 * Outputs an answer to the browser
 	 *
 	 * @param int $statusCode The status code to use, use one of the available constants (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
@@ -1004,14 +1028,11 @@ class FrontendBaseAJAXAction
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 
 		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
 		// output JSON to the browser
-		echo json_encode($response);
-
-		// stop script execution
-		exit;
+		$this->content = json_encode($response);
+		$this->statusCode = $statusCode;
 	}
 
 	/**
