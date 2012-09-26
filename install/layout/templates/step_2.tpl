@@ -22,7 +22,7 @@
 			{/option:!error}
 			<div id="requirementsInformation">
 				<h3><span class="{$phpVersion}">{$phpVersion}</span> PHP version</h3>
-				<p>We require at least PHP 5.2</p>
+				<p>PHP version must be at least 5.3.3, Before using Fork CMS, upgrade your PHP installation, preferably to the latest version. PHP version must not be 5.3.16 as Symfony won't work properly with it.</p>
 
 				<h3><span class="{$subfolder}">{$subfolder}</span> Fork CMS can't be installed in subfolders</h3>
 
@@ -90,12 +90,44 @@
 					different image formats. More information can be found on: <a href="http://php.net/gd">http://php.net/gd</a>.
 				</p>
 
+				<h4><span class="{$extensionJSON}">{$extensionJSON}</span> json</h4>
+				<p>
+					This extension implements the JavaScript Object Notation (JSON) data-interchange format. The decoding is handled by a parser
+					based on the JSON_checker by Douglas Crockford. More information can be found on: <a href="http://php.net/json">http://php.net/json</a>.
+				</p>
+
+                <h4><span class="{$extensionPCRE}">{$extensionPCRE}</span> PCRE (8.0+)</h4>
+                <p>
+                    The PCRE library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5,
+					with just a few differences (see below). The current implementation corresponds to Perl 5.005. More information can be found on:
+					<a href="http://php.net/pcre">http://php.net/json</a>. We require at least 8.0.
+                </p>
+
 				<h3>PHP ini-settings</h3>
 				<h4><span class="{$settingsSafeMode}">{$settingsSafeMode}</span> Safe Mode</h4>
 				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>
 
 				<h4><span class="{$settingsOpenBasedir}">{$settingsOpenBasedir}</span> Open Basedir</h4>
 				<p>For forward compability we highly recommend you not to use open_basedir.</p>
+
+                <h4><span class="{$settingsDateTimezone}">{$settingsDateTimezone}</span> date.timezone</h4>
+                <p>date.timezone setting must be set. Make sure your default timezone is supported by your installation of PHP. Check for typos in your php.ini file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.</p>
+
+				<h3>Functions</h3>
+				<h4><span class="{$functionJsonEncode}">{$functionJsonEncode}</span> json_encode</h4>
+				<p>json_encode() must be available, install and enable the JSON extension.</p>
+
+				<h4><span class="{$functionSessionStart}">{$functionSessionStart}</span> session_start</h4>
+				<p>session_start() must be available, install and enable the session extension.</p>
+
+				<h4><span class="{$functionCtypeAlpha}">{$functionCtypeAlpha}</span> ctype_alpha</h4>
+				<p>ctype_alpha() must be available, install and enable the ctype extension.</p>
+
+				<h4><span class="{$functionTokenGetAll}">{$functionTokenGetAll}</span> token_get_all</h4>
+				<p>token_get_all() must be available, install and enable the Tokenizer extension.</p>
+
+				<h4><span class="{$functionSimplexmlImportDom}">{$functionSimplexmlImportDom}</span> simplexml_import_dom</h4>
+				<p>simplexml_import_dom() must be available, install and enable the SimpleXML extension.</p>
 
 				<h3>Webserver</h3>
 				<h4><span class="{$modRewrite}">{$modRewrite}</span> mod_rewrite</h4>
