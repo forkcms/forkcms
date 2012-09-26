@@ -34,9 +34,6 @@ class BackendInit
 		if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
 		$this->type = $type;
 
-		// register the autoloader
-		spl_autoload_register(array('BackendInit', 'autoLoader'));
-
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
@@ -69,102 +66,6 @@ class BackendInit
 
 		$this->requireBackendClasses();
 		SpoonFilter::disableMagicQuotes();
-	}
-
-	/**
-	 * Autoloader for the backend
-	 *
-	 * @param string $className The name of the class to require.
-	 */
-	public static function autoLoader($className)
-	{
-		$className = strtolower((string) $className);
-
-		// init var
-		$pathToLoad = '';
-
-		// exceptions
-		$exceptions['backend'] = BACKEND_CORE_PATH . '/engine/backend.php';
-		$exceptions['backendbaseobject'] = BACKEND_CORE_PATH . '/engine/base.php';
-		$exceptions['backendajaxaction'] = BACKEND_CORE_PATH . '/engine/ajax_action.php';
-		$exceptions['backendbaseajaxaction'] = BACKEND_CORE_PATH . '/engine/base.php';
-		$exceptions['backenddatagriddb'] = BACKEND_CORE_PATH . '/engine/datagrid.php';
-		$exceptions['backenddatagridarray'] = BACKEND_CORE_PATH . '/engine/datagrid.php';
-		$exceptions['backenddatagridfunctions'] = BACKEND_CORE_PATH . '/engine/datagrid.php';
-		$exceptions['backendbaseconfig'] = BACKEND_CORE_PATH . '/engine/base.php';
-		$exceptions['backendbasecronjob'] = BACKEND_CORE_PATH . '/engine/base.php';
-		$exceptions['backendpagesmodel'] = BACKEND_MODULES_PATH . '/pages/engine/model.php';
-		$exceptions['fl'] = FRONTEND_CORE_PATH . '/engine/language.php';
-
-		// is it an exception
-		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
-
-		// backend
-		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = BACKEND_CORE_PATH . '/engine/' . str_replace('backend', '', $className) . '.php';
-
-		// frontend
-		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH . '/engine/' . str_replace('frontend', '', $className) . '.php';
-
-		// file check in core
-		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
-
-		// check if module file exists
-		else
-		{
-			// we'll need the original class name again, with the uppercase characters
-			$className = func_get_arg(0);
-
-			// split in parts
-			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
-
-			// the real matches
-			$parts = $parts[0];
-
-			// is it an application class?
-			if(isset($parts[0]) && $parts[0] == 'Common')
-			{
-				$chunks = $parts;
-				array_shift($chunks);
-				$pathToLoad = PATH_LIBRARY . '/base/' . strtolower(implode('_', $chunks)) . '.php';
-
-				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
-			}
-
-			// get root path constant and see if it exists
-			$rootPath = strtoupper(array_shift($parts)) . '_PATH';
-			if(!defined($rootPath)) return;
-
-			foreach($parts as $i => $part)
-			{
-				// skip the first
-				if($i == 0) continue;
-
-				// action
-				$action = strtolower(implode('_', $parts));
-
-				// module
-				$module = '';
-				for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
-
-				// fix action & module
-				$action = substr($action, strlen($module));
-				$module = substr($module, 0, -1);
-
-				// check the actions, engine & widgets directories
-				foreach(array('actions', 'engine', 'widgets') as $dir)
-				{
-					// file to be loaded
-					$pathToLoad = constant($rootPath) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
-
-					// if it exists, load it!
-					if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
-					{
-						require_once $pathToLoad;
-						break 2;
-					}
-				}
-			}
-		}
 	}
 
 	/**
