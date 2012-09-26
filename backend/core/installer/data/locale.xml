@@ -8742,9 +8742,18 @@
         <translation language="lt"><![CDATA[Bulgariškai]]></translation>
         <translation language="sv"><![CDATA[Bulgariska]]></translation>
       </item>
-      <item type="message" name="ChangedOrderSuccessfully">
+	  <item type="message" name="ChangedOrderSuccessfully">
+        <translation language="hu"><![CDATA[Megváltozott rend sikeresen.]]></translation>
+        <translation language="fr"><![CDATA[Afin changé avec succès.]]></translation>
+        <translation language="de"><![CDATA[Ændret rækkefølge med succes.]]></translation>
         <translation language="nl"><![CDATA[Volgorde succesvol gewijzigd.]]></translation>
         <translation language="en"><![CDATA[Changed order successfully.]]></translation>
+        <translation language="it"><![CDATA[Cambiato ordine con successo.]]></translation>
+        <translation language="ru"><![CDATA[Изменен порядок успешно.]]></translation>
+        <translation language="uk"><![CDATA[Змінено порядок успішно.]]></translation>
+        <translation language="es"><![CDATA[Para cambiado correctamente.]]></translation>
+        <translation language="lt"><![CDATA[Pasikeitė sėkmingai.]]></translation>
+        <translation language="sv"><![CDATA[Ändrad att framgångsrikt.]]></translation>
       </item>
       <item type="message" name="ClickToEdit">
         <translation language="nl"><![CDATA[Klik om te wijzigen.]]></translation>
@@ -10020,9 +10029,18 @@
         <translation language="lt"><![CDATA[Tik raidės>]]></translation>
         <translation language="sv"><![CDATA[Endast alfanumeriska tecken är tillåtna.]]></translation>
       </item>
-      <item type="error" name="AlterSequenceFailed">
+	  <item type="error" name="AlterSequenceFailed">
         <translation language="nl"><![CDATA[Volgorde wijzigen mislukt.]]></translation>
         <translation language="en"><![CDATA[Alter sequence failed.]]></translation>
+        <translation language="hu"><![CDATA[Alter szekvenciát sikerült.]]></translation>
+        <translation language="it"><![CDATA[Alter sequenza non riuscita.]]></translation>
+        <translation language="ru"><![CDATA[Изменить последовательность не удалось.]]></translation>
+        <translation language="zh"><![CDATA[改變序列失敗。]]></translation>
+        <translation language="fr"><![CDATA[Alter séquence échoué.]]></translation>
+        <translation language="de"><![CDATA[Alter Sequenz fehlgeschlagen.]]></translation>
+        <translation language="es"><![CDATA[Alteran la secuencia fallado.]]></translation>
+        <translation language="lt"><![CDATA[Nepavyko pakeisti seka.]]></translation>
+        <translation language="sv"><![CDATA[Alter sekvens misslyckades.]]></translation>
       </item>
       <item type="error" name="AuthorIsRequired">
         <translation language="nl"><![CDATA[Gelieve een auteur in te geven.]]></translation>
