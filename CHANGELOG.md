@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Facebook: replaced external Facebook class by Official Facebook PHP SDK.
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 
 Bugfixes:
