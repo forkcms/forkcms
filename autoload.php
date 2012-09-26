@@ -19,7 +19,7 @@ class Autoloader
 	 */
 	public function load($className)
 	{
-		$className = strtolower((string) $className);
+		$unifiedClassName = strtolower((string) $className);
 		$pathToLoad = '';
 
 		// exceptions
@@ -33,18 +33,18 @@ class Autoloader
 		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
 
 		// is it an exception?
-		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
+		if(isset($exceptions[$unifiedClassName])) $pathToLoad = $exceptions[$unifiedClassName];
 
 		// if it is a Spoon-class we can stop using this autoloader
-		elseif(substr($className, 0, 5) == 'spoon') return;
+		elseif(substr($unifiedClassName, 0, 5) == 'spoon') return;
 
-		elseif(substr($className, 0, 12) == 'frontendbase') $pathToLoad = PATH_WWW . '/frontend/core/engine/base.php';
-		elseif(substr($className, 0, 13) == 'frontendblock') $pathToLoad = PATH_WWW . '/frontend/core/engine/block.php';
-		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = PATH_WWW . '/frontend/core/engine/' . str_replace('frontend', '', $className) . '.php';
-		elseif(substr($className, 0, 11) == 'backendbase') $pathToLoad = PATH_WWW . '/backend/core/engine/base.php';
-		elseif(substr($className, 0, 15) == 'backenddatagrid') $pathToLoad = PATH_WWW . '/backend/core/engine/datagrid.php';
-		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = PATH_WWW . '/backend/core/engine/' . str_replace('backend', '', $className) . '.php';
-		elseif(substr($className, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $className) . '.php';
+		elseif(substr($unifiedClassName, 0, 12) == 'frontendbase') $pathToLoad = PATH_WWW . '/frontend/core/engine/base.php';
+		elseif(substr($unifiedClassName, 0, 13) == 'frontendblock') $pathToLoad = PATH_WWW . '/frontend/core/engine/block.php';
+		elseif(substr($unifiedClassName, 0, 8) == 'frontend') $pathToLoad = PATH_WWW . '/frontend/core/engine/' . str_replace('frontend', '', $unifiedClassName) . '.php';
+		elseif(substr($unifiedClassName, 0, 11) == 'backendbase') $pathToLoad = PATH_WWW . '/backend/core/engine/base.php';
+		elseif(substr($unifiedClassName, 0, 15) == 'backenddatagrid') $pathToLoad = PATH_WWW . '/backend/core/engine/datagrid.php';
+		elseif(substr($unifiedClassName, 0, 7) == 'backend') $pathToLoad = PATH_WWW . '/backend/core/engine/' . str_replace('backend', '', $unifiedClassName) . '.php';
+		elseif(substr($unifiedClassName, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $unifiedClassName) . '.php';
 
 		// file check in core
 		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
@@ -52,9 +52,6 @@ class Autoloader
 		// check if module file exists
 		else
 		{
-			// we'll need the original class name again, with the uppercases
-			$className = func_get_arg(0);
-
 			// split in parts, if nothing is found we stop processing
 			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
 
