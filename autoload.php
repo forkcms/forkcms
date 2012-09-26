@@ -23,7 +23,6 @@ class Autoloader
 		$pathToLoad = '';
 
 		// exceptions
-		// @todo - exceptions should be reduced to a minimum
 		$exceptions = array();
 		$exceptions['frontend'] = PATH_WWW . '/frontend/core/engine/frontend.php';
 		$exceptions['frontendtemplatecompiler'] = PATH_WWW . '/frontend/core/engine/template_compiler.php';
@@ -33,28 +32,16 @@ class Autoloader
 		$exceptions['bl'] = PATH_WWW . '/backend/core/language.php';
 		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
 
-		// is it an exception
+		// is it an exception?
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
 
-		// frontend base
 		elseif(substr($className, 0, 12) == 'frontendbase') $pathToLoad = PATH_WWW . '/frontend/core/engine/base.php';
 
-		// frontend block
 		elseif(substr($className, 0, 13) == 'frontendblock') $pathToLoad = PATH_WWW . '/frontend/core/engine/block.php';
-
-		// frontend
 		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = PATH_WWW . '/frontend/core/engine/' . str_replace('frontend', '', $className) . '.php';
-
-		// backend base
 		elseif(substr($className, 0, 11) == 'backendbase') $pathToLoad = PATH_WWW . '/backend/core/engine/base.php';
-
-		// backend datagrid
 		elseif(substr($className, 0, 15) == 'backenddatagrid') $pathToLoad = PATH_WWW . '/backend/core/engine/datagrid.php';
-
-		// backend
 		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = PATH_WWW . '/backend/core/engine/' . str_replace('backend', '', $className) . '.php';
-
-		// common
 		elseif(substr($className, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $className) . '.php';
 
 		// file check in core
