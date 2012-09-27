@@ -467,27 +467,26 @@ class BackendModel
 		$value = (string) $value;
 		$result = array();
 
+		// init query
+		$query = 'SELECT i.id, i.data
+				 FROM modules_extras AS i
+				 WHERE i.module = ? AND i.data != ?';
+
+		// init parameters
+		$parameters = array($module, 'NULL');
+
+		// we have an action
 		if($action)
 		{
-			// get all possible extras
-			$items = (array) BackendModel::getDB(true)->getPairs(
-				'SELECT i.id, i.data
-				 FROM modules_extras AS i
-				 WHERE i.module = ? AND i.action = ? AND i.data != ?',
-				 array($module, (string) $action, 'NULL')
-			);
+			// redefine query
+			$query .= ' AND i.action = ?';
+
+			// add action to parameters
+			$parameters[] = (string) $action);
 		}
 
-		else
-		{
-			// get all possible extras
-			$items = (array) BackendModel::getDB(true)->getPairs(
-				'SELECT i.id, i.data
-				 FROM modules_extras AS i
-				 WHERE i.module = ? AND i.data != ?',
-				 array($module, 'NULL')
-			);
-		}
+		// get items
+		$items = (array) BackendModel::getDB(true)->getPairs($query, $parameters);
 
 		// stop here when no items
 		if(empty($items)) return $result;
