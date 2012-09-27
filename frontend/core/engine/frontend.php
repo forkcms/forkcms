@@ -12,7 +12,7 @@
  * We create all needed instances.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Reclamebureau Siesqo <info@siesqo.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Frontend
 {
