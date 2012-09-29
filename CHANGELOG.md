@@ -4,6 +4,7 @@ Improvements:
 
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
+* Core: switched to the offcial Facebook SDK, inspired on the pull request of Jeroen.
 
 Bugfixes:
 
