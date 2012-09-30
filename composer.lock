@@ -1,5 +1,5 @@
 {
-    "hash": "06d26075ff74480b2ab0206b1befe127",
+    "hash": "55fe37a77c4a0e014941ff0972dbdaba",
     "packages": [
         {
             "name": "facebook/php-sdk",
@@ -43,6 +43,45 @@
                 "facebook",
                 "sdk"
             ]
+        },
+        {
+            "name": "tijsverkoyen/akismet",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tijsverkoyen/Akismet",
+                "reference": "2818389f9481f4179601be40caf49d7bd546d466"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/tijsverkoyen/Akismet/zipball/2818389f9481f4179601be40caf49d7bd546d466",
+                "reference": "2818389f9481f4179601be40caf49d7bd546d466",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*"
+            },
+            "time": "1349013292",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "akismet@verkoyen.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Akismet is a wrapper-class to communicate with the Akismet API.",
+            "homepage": "https://github.com/tijsverkoyen/Akismet"
         }
     ],
     "packages-dev": null,
@@ -51,6 +90,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "facebook/php-sdk": 20
+        "facebook/php-sdk": 20,
+        "tijsverkoyen/akismet": 20
     }
 }
