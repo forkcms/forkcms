@@ -27,9 +27,14 @@ FileETag MTime Size
 	RewriteRule backend/cache/logs - [F]
 	RewriteRule backend/cache/navigation - [F]
 
+	# one url to rule them alle
+	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
+	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
+	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
+
 	# backend is an existing folder, but it should be handled as all urls
 	RewriteCond %{REQUEST_URI} ^/backend/$
-	RewriteRule . index.php [NC,L]
+	RewriteRule . /index.php [NC,L]
 
 	# api is an existing folder, but it should be handled as all urls
 	RewriteCond %{REQUEST_URI} ^/api/1.0/$
@@ -39,7 +44,7 @@ FileETag MTime Size
 	RewriteCond %{REQUEST_URI} !^$
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . index.php [NC,L]
+	RewriteRule . /index.php [NC,L]
 
 	# set environment variable to let PHP know that urls are being rewritten
 	RewriteRule .* - [E=MOD_REWRITE:1]

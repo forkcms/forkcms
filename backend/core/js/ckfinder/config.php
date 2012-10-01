@@ -13,6 +13,7 @@
  */
 
 // require
+require '../../../../../../../autoload.php';
 require '../../../../../../init.php';
 
 // define the application
