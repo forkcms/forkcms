@@ -32,6 +32,27 @@ class FrontendTheme
 		$detect = new Mobile_Detect();
 		$device = array();
 
+		if(CommonCookie::exists('USER_DEVICE'))
+		{
+			$userdevice = CommonCookie::get('USER_DEVICE');
+
+			switch($userdevice)
+			{
+				case 'mobile':
+					$device['mobile'] = array('android' => true);
+					break;
+
+				case 'tablet':
+					$device['tablet'] = array('android' => true);
+					break;
+
+				default:
+					$device['desktop'] = true;
+			}
+
+			return $device;
+		}
+
 		if($detect->isMobile())
 		{
 			$device['mobile'] = array();
