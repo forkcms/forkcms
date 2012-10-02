@@ -27,7 +27,7 @@ class BackendLocaleModel
 	public static function buildCache($language, $application)
 	{
 		// get db
-		$db = Spoon::get('database');
+		$db = BackendModel::getDB();
 
 		// get types
 		$types = $db->getEnumValues('locale', 'type');

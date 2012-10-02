@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
@@ -16,15 +19,32 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class Backend
+class Backend implements ContainerAwareInterface
 {
 	/**
 	 * @var BackendAction
 	 */
 	private $action;
 
-	public function __construct()
+	/**
+	 * The service container
+	 *
+	 * @var ContainerInterface
+	 */
+	private $container;
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
 	{
+		return $this->action->execute();
+	}
+
+	public function initialize()
+	{
+		BackendModel::setContainer($this->container);
+
 		$URL = new BackendURL();
 		new BackendTemplate();
 		new BackendNavigation();
@@ -36,10 +56,10 @@ class Backend
 	}
 
 	/**
-	 * @return Symfony\Component\HttpFoundation\Response
+	 * @param ContainerInterface $container
 	 */
-	public function display()
+	public function setContainer(ContainerInterface $container = null)
 	{
-		return $this->action->execute();
+		$this->container = $container;
 	}
 }

@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Application routing
@@ -34,6 +35,13 @@ class ApplicationRouting
 	);
 
 	/**
+	 * Dependency Injection container builder
+	 *
+	 * @var ContainerBuilder
+	 */
+	private $container;
+
+	/**
 	 * The actual request, formatted as a Symfony object.
 	 *
 	 * @var Request
@@ -41,9 +49,14 @@ class ApplicationRouting
 	private $request;
 
 
-	public function __construct(Request $request)
+	/**
+	 * @param Request $request
+	 * @param ContainerInterface $container
+	 */
+	public function __construct(Request $request, ContainerBuilder $container)
 	{
 		$this->request = $request;
+		$this->container = $container;
 
 		// process querystring
 		$this->processQueryString();
@@ -115,6 +128,10 @@ class ApplicationRouting
 				$application = new API();
 				break;
 		}
+
+		// Load the page and pass along the service container
+		$application->setContainer($this->container);
+		$application->initialize();
 
 		return $application->display();
 	}

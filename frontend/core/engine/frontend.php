@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
@@ -15,22 +18,21 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class Frontend
+class Frontend implements ContainerAwareInterface
 {
+	/**
+	 * The service container
+	 *
+	 * @var ContainerInterface
+	 */
+	private $container;
+
 	/**
 	 * @var FrontendPage
 	 */
 	private $page;
-
-	public function __construct()
-	{
-		$this->initializeFacebook();
-
-		new FrontendURL();
-		new FrontendTemplate();
-		$this->page = new FrontendPage();
-	}
 
 	/**
 	 * @return Symfony\Component\HttpFoundation\Response
@@ -38,6 +40,28 @@ class Frontend
 	public function display()
 	{
 		return $this->page->display();
+	}
+
+	/**
+	 * Initializes the entire frontend; prelaod FB, URL, template and the requested page.
+	 */
+	public function initialize()
+	{
+		// @todo this is fairly dirty, but we can't just make an object out of frontendmodel
+		FrontendModel::setContainer($this->container);
+
+		$this->initializeFacebook();
+		new FrontendURL();
+		new FrontendTemplate();
+
+		/*
+		 * At this point we will load the rest of the page.
+		 * This method exists because the service container needs to be set before
+		 * the page's functionality gets loaded.
+		 */
+		$this->page = new FrontendPage();
+		$this->page->setContainer($this->container);
+		$this->page->load();
 	}
 
 	/**
@@ -67,5 +91,13 @@ class Frontend
 			// trigger event
 			FrontendModel::triggerEvent('core', 'after_facebook_initialization');
 		}
+	}
+
+	/**
+	 * @param ContainerInterface $container
+	 */
+	public function setContainer(ContainerInterface $container = null)
+	{
+		$this->container = $container;
 	}
 }

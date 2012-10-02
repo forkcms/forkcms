@@ -7,14 +7,18 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * FrontendAJAX
  * This class will handle AJAX-related stuff
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendAJAX
+class FrontendAJAX implements ContainerAwareInterface
 {
 	/**
 	 * The action
@@ -22,6 +26,13 @@ class FrontendAJAX
 	 * @var	string
 	 */
 	private $action;
+
+	/**
+	 * The service container
+	 *
+	 * @var ContainerInterface
+	 */
+	private $container;
 
 	/**
 	 * The language
@@ -37,8 +48,10 @@ class FrontendAJAX
 	 */
 	private $module;
 
-	public function __construct()
+	public function initialize()
 	{
+		FrontendModel::setContainer($this->container);
+
 		// get vars
 		$module = isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '';
 		if($module == '' && isset($_GET['module'])) $module = $_GET['module'];
@@ -107,6 +120,14 @@ class FrontendAJAX
 	public function setAction($value)
 	{
 		$this->action = (string) $value;
+	}
+
+	/**
+	 * @param ContainerInterface $container
+	 */
+	public function setContainer(ContainerInterface $container = null)
+	{
+		$this->container = $container;
 	}
 
 	/**
