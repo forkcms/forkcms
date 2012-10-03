@@ -14,25 +14,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
  *
- * @todo make this an interface implementation.
- *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class Backend implements ContainerAwareInterface
+class Backend extends BackendBaseObject
 {
-	/**
-	 * @var BackendAction
-	 */
-	private $action;
-
-	/**
-	 * The service container
-	 *
-	 * @var ContainerInterface
-	 */
-	private $container;
-
 	/**
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */
@@ -43,6 +30,11 @@ class Backend implements ContainerAwareInterface
 
 	public function initialize()
 	{
+		/*
+		 * @todo
+		 * In the long run models should not be a collection of static methods.
+		 * This should be considered temporary until that time comes.
+		 */
 		BackendModel::setContainer($this->container);
 
 		$URL = new BackendURL();
@@ -53,13 +45,6 @@ class Backend implements ContainerAwareInterface
 		$this->action = new BackendAction();
 		$this->action->setModule($URL->getModule());
 		$this->action->setAction($URL->getAction());
-	}
-
-	/**
-	 * @param ContainerInterface $container
-	 */
-	public function setContainer(ContainerInterface $container = null)
-	{
-		$this->container = $container;
+		$this->action->setContainer($this->container);
 	}
 }

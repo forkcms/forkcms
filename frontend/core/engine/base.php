@@ -62,7 +62,6 @@ class FrontendBaseObject implements ContainerAwareInterface
 		return $this->container;
 	}
 
-
 	/**
 	 * @param ContainerInterface $container
 	 */

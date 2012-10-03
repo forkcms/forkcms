@@ -7,24 +7,15 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * This class will handle AJAX-related stuff
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class BackendAJAX extends BackendBaseObject implements ContainerAwareInterface
+class BackendAJAX extends BackendBaseObject
 {
-	/**
-	 * The service container
-	 *
-	 * @var ContainerInterface
-	 */
-	private $container;
-
 	public function initialize()
 	{
 		BackendModel::setContainer($this->container);
@@ -55,11 +46,13 @@ class BackendAJAX extends BackendBaseObject implements ContainerAwareInterface
 		$this->setModule($module);
 		$this->setAction($action);
 		$this->setLanguage($language);
+		$this->setContainer($this->container);
 
 		// create a new action
 		$action = new BackendAJAXAction();
 		$action->setModule($this->getModule());
 		$action->setAction($this->getAction());
+		$action->setContainer($this->container);
 
 		try
 		{
@@ -99,14 +92,6 @@ class BackendAJAX extends BackendBaseObject implements ContainerAwareInterface
 			$fakeAction = new BackendBaseAJAXAction();
 			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Action not allowed.');
 		}
-	}
-
-	/**
-	 * @param ContainerInterface $container
-	 */
-	public function setContainer(ContainerInterface $container = null)
-	{
-		$this->container = $container;
 	}
 
 	/**

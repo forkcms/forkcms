@@ -47,7 +47,11 @@ class Frontend implements ContainerAwareInterface
 	 */
 	public function initialize()
 	{
-		// @todo this is fairly dirty, but we can't just make an object out of frontendmodel
+		/*
+		 * @todo
+		 * In the long run models should not be a collection of static methods.
+		 * This should be considered temporary until that time comes.
+		 */
 		FrontendModel::setContainer($this->container);
 
 		$this->initializeFacebook();

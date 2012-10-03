@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -15,9 +17,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class BackendBaseObject
+class BackendBaseObject implements ContainerAwareInterface
 {
+	/**
+	 * The service container
+	 *
+	 * @var ContainerInterface
+	 */
+	protected $container;
+
 	/**
 	 * The current action
 	 *
@@ -47,6 +57,16 @@ class BackendBaseObject
 	public function getAction()
 	{
 		return $this->action;
+	}
+
+	/**
+	 * Returns the service container object
+	 *
+	 * return ContainerInterface
+	 */
+	public function getContainer()
+	{
+		return $this->container;
 	}
 
 	/**
@@ -85,6 +105,14 @@ class BackendBaseObject
 
 		// set property
 		$this->action = (string) $action;
+	}
+
+	/**
+	 * @param ContainerInterface $container
+	 */
+	public function setContainer(ContainerInterface $container = null)
+	{
+		$this->container = $container;
 	}
 
 	/**
