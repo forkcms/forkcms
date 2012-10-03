@@ -13,6 +13,7 @@ require_once PATH_WWW . '/app/BaseModel.php';
  * In this file we store all generic functions that we will be using in the frontend.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class FrontendModel extends BaseModel
 {

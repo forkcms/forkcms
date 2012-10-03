@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * @author Davy Hellemans <davy@netlash.com>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class ApplicationRouting
 {

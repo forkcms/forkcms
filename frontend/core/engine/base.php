@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * This class will be the base of the objects used in onsite
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class FrontendBaseObject implements ContainerAwareInterface
 {
@@ -227,6 +228,7 @@ class FrontendBaseConfig
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class FrontendBaseBlock extends FrontendBaseObject
 {

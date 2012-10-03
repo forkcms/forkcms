@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class FrontendPage extends FrontendBaseObject
 {
