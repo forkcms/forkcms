@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendPage extends FrontendBaseObject implements ContainerAwareInterface
+class FrontendPage extends FrontendBaseObject
 {
 	/**
 	 * Breadcrumb instance
@@ -25,13 +23,6 @@ class FrontendPage extends FrontendBaseObject implements ContainerAwareInterface
 	 * @var FrontendBreadcrumb
 	 */
 	protected $breadcrumb;
-
-	/**
-	 * Service container
-	 *
-	 * @var ContainerInterface
-	 */
-	protected $container;
 
 	/**
 	 * Array of extras linked to this page
@@ -177,16 +168,6 @@ class FrontendPage extends FrontendBaseObject implements ContainerAwareInterface
 			$this->tpl->getContent($this->templatePath, false, true),
 			200, SpoonHttp::getHeadersList()
 		);
-	}
-
-	/**
-	 * Returns the service container object
-	 *
-	 * return ContainerInterface
-	 */
-	public function getContainer()
-	{
-		return $this->container;
 	}
 
 	/**
@@ -386,7 +367,8 @@ class FrontendPage extends FrontendBaseObject implements ContainerAwareInterface
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
-			// execute
+			// all extras extend FrontendBaseObject, that implements ContainerAwareInterface
+			$extra->setContainer($this->getContainer());
 			$extra->execute();
 
 			// overwrite the template
@@ -469,14 +451,6 @@ class FrontendPage extends FrontendBaseObject implements ContainerAwareInterface
 				}
 			}
 		}
-	}
-
-	/**
-	 * @param ContainerInterface $container
-	 */
-	public function setContainer(ContainerInterface $container = null)
-	{
-		$this->container = $container;
 	}
 
 	/**

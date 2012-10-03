@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -14,8 +16,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendBaseObject
+class FrontendBaseObject implements ContainerAwareInterface
 {
+	/**
+	 * The service container
+	 *
+	 * @var ContainerInterface
+	 */
+	protected $container;
+
 	/**
 	 * Template instance
 	 *
@@ -40,6 +49,30 @@ class FrontendBaseObject
 
 		// get URL from reference
 		$this->URL = Spoon::get('url');
+	}
+
+	/**
+	 * Returns the service container object
+	 *
+	 * return ContainerInterface
+	 */
+	public function getContainer()
+	{
+		return $this->container;
+	}
+
+
+	/**
+	 * @param ContainerInterface $container
+	 */
+	public function setContainer(ContainerInterface $container = null)
+	{
+		$this->container = $container;
+	}
+
+	public function getDB()
+	{
+		return $this->getContainer()->get('database');
 	}
 }
 
@@ -195,7 +228,7 @@ class FrontendBaseConfig
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendBaseBlock
+class FrontendBaseBlock extends FrontendBaseObject
 {
 	/**
 	 * The current action

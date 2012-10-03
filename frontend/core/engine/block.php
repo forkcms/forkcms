@@ -73,6 +73,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	protected $templatePath = '';
 
 	/**
+	 * @param ContainerInterface $container The service container to load
 	 * @param string $module The module to load.
 	 * @param string $action The action to load.
 	 * @param mixed[optional] $data The data that was passed from the database.
@@ -110,6 +111,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 		// create action-object
 		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+		$this->object->setContainer($this->getContainer());
 
 		// validate if the execute-method is callable
 		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
