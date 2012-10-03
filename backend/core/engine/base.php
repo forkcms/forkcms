@@ -60,6 +60,16 @@ class BackendBaseObject implements ContainerAwareInterface
 	}
 
 	/**
+	 * Return the database object from the service container
+	 *
+	 * @return SpoonDatabase
+	 */
+	public function getDB()
+	{
+		return $this->getContainer()->get('database');
+	}
+
+	/**
 	 * Returns the service container object
 	 *
 	 * return ContainerInterface
