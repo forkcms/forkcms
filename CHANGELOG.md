@@ -6,6 +6,7 @@ Improvements:
 * Core: allow people to define their own errorhandler.
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
 * Start using Composer to handle dependencies. See more info in the README.md.
+* Core: Akismet and CssToinlineStyles are now installed with Composer.
 
 Bugfixes:
 

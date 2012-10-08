@@ -588,9 +588,6 @@ class FrontendModel
 		// invalid key, so we can't detect spam
 		if($akismetKey === '') return false;
 
-		// require the class
-		require_once PATH_LIBRARY . '/external/akismet.php';
-
 		// create new instance
 		$akismet = new Akismet($akismetKey, SITE_URL);
 

@@ -76,9 +76,6 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 	 */
 	private function parseTemplateContent()
 	{
-		// require the css to inline styles parser
-		require 'external/css_to_inline_styles.php';
-
 		// template content is empty
 		if(!isset($this->template['content'])) $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=2&exclude_id=' . $this->id . '&error=template-does-not-exist');
 
