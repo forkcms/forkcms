@@ -78,6 +78,9 @@ class FrontendPage extends FrontendBaseObject
 		// set tracking cookie
 		FrontendModel::getVisitorId();
 
+		// set user device cookie
+		$this->setDevice();
+
 		// add reference
 		Spoon::set('page', $this);
 
@@ -443,6 +446,36 @@ class FrontendPage extends FrontendBaseObject
 					);
 				}
 			}
+		}
+	}
+
+	/**
+	* Set a cookie that contains the type of device being 
+	* used to view the site.
+	* If the device has been set by the user.
+	*/
+	private function setDevice()
+	{
+		$url = Spoon::get('url');
+		$device = $url->getParameter('set_device', 'string');
+
+		if(!empty($device))
+		{
+			switch($device)
+			{
+				case 'mobile':
+					CommonCookie::set('USER_DEVICE', 'mobile', 86400);
+					break;
+
+				case 'tablet':
+					CommonCookie::set('USER_DEVICE', 'tablet', 86400);
+					break;
+
+				default:
+					CommonCookie::set('USER_DEVICE', 'desktop', 86400);
+			}
+
+			SpoonHTTP::redirect(preg_replace('#(\?.*)?$#', '', SELF));
 		}
 	}
 
