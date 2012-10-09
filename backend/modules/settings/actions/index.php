@@ -188,9 +188,6 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				// key has changed
 				if($this->frm->getField('akismet_key')->getValue() != BackendModel::getModuleSetting('core', 'akismet_key', null))
 				{
-					 // load akismet
-					 require_once PATH_LIBRARY . '/external/akismet.php';
-
 					 // create instance
 					$akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
 

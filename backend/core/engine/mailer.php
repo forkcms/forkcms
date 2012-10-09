@@ -193,9 +193,6 @@ class BackendMailer
 		$replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 		$content = str_replace($search, $replace, $content);
 
-		// require CSSToInlineStyles
-		require_once 'external/css_to_inline_styles.php';
-
 		// create instance
 		$cssToInlineStyles = new CSSToInlineStyles();
 
