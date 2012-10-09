@@ -83,4 +83,4 @@ define('PATH_LIBRARY', '<path-library>');
 define('ERRBIT_API_KEY', '');
 
 // require our sumo-class
-require_once PATH_WWW . '/external/sumo.php';
+require_once PATH_LIBRARY . '/external/sumo.php';
