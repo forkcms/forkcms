@@ -7,6 +7,9 @@ Improvements:
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
 * Start using Composer to handle dependencies. See more info in the README.md.
 * Core: Akismet and CssToinlineStyles are now installed with Composer.
+* Core: Upgraded Highcharts to 2.3.3
+* Core: Upgraded to jQuery UI 1.8.24
+* Core: Upgraded to CKEditor 3.6.5
 
 Bugfixes:
 

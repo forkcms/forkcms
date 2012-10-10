@@ -27,7 +27,7 @@ FileETag MTime Size
 	RewriteRule backend/cache/logs - [F]
 	RewriteRule backend/cache/navigation - [F]
 
-	# one url to rule them alle
+	# one url to rule them all
 	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
 	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
