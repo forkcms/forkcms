@@ -1,6 +1,7 @@
 {
 	"name": "forkcms/forkcms",
 	"description": "Fork is an open source CMS that will rock your world.",
+	"license": "MIT",
 	"require": {
 		"facebook/php-sdk": "dev-master",
 		"tijsverkoyen/akismet": "dev-master",
