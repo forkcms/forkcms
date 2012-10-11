@@ -444,6 +444,7 @@
       </item>
       <item type="label" name="ES">
         <translation language="lt"><![CDATA[Ispaniškai]]></translation>
+        <translation language="ru"><![CDATA[Испанский]]></translation>
       </item>
       <item type="label" name="Faq">
         <translation language="nl"><![CDATA[FAQ]]></translation>
@@ -461,6 +462,7 @@
       <item type="label" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
+        <translation language="ru"><![CDATA[Обратная связь]]></translation>
         <translation language="fr"><![CDATA[feedback]]></translation>
         <translation language="es"><![CDATA[Retroalimentación]]></translation>
         <translation language="de"><![CDATA[Feedback]]></translation>
@@ -738,6 +740,7 @@
       </item>
       <item type="label" name="LT">
         <translation language="lt"><![CDATA[Lietuviškai]]></translation>
+        <translation language="ru"><![CDATA[Литовский]]></translation>
       </item>
       <item type="label" name="MainNavigation">
         <translation language="nl"><![CDATA[hoofdnavigatie]]></translation>
@@ -810,6 +813,7 @@
       <item type="label" name="MostReadQuestions">
         <translation language="nl"><![CDATA[Meest bekeken vragen]]></translation>
         <translation language="en"><![CDATA[Most read questions]]></translation>
+        <translation language="ru"><![CDATA[Наиболее читаемые вопросы]]></translation>
         <translation language="fr"><![CDATA[Questions les plus vus]]></translation>
         <translation language="es"><![CDATA[Preguntas más Leídas]]></translation>
         <translation language="de"><![CDATA[Meistgelesene Fragen]]></translation>
@@ -922,6 +926,7 @@
       <item type="label" name="No">
         <translation language="nl"><![CDATA[nee]]></translation>
         <translation language="en"><![CDATA[no]]></translation>
+        <translation language="ru"><![CDATA[нет]]></translation>
         <translation language="fr"><![CDATA[non]]></translation>
         <translation language="es"><![CDATA[No]]></translation>
         <translation language="de"><![CDATA[nein]]></translation>
@@ -1000,6 +1005,7 @@
       <item type="label" name="ParentPage">
         <translation language="nl"><![CDATA[bovenliggende pagina]]></translation>
         <translation language="en"><![CDATA[parent page]]></translation>
+        <translation language="ru"><![CDATA[родительская страница]]></translation>
       </item>
       <item type="label" name="Password">
         <translation language="nl"><![CDATA[wachtwoord]]></translation>
@@ -1087,6 +1093,7 @@
       <item type="label" name="Question">
         <translation language="nl"><![CDATA[vraag]]></translation>
         <translation language="en"><![CDATA[question]]></translation>
+        <translation language="ru"><![CDATA[вопрос]]></translation>
         <translation language="fr"><![CDATA[question]]></translation>
         <translation language="es"><![CDATA[pregunta]]></translation>
         <translation language="de"><![CDATA[Frage]]></translation>
@@ -1098,6 +1105,7 @@
       <item type="label" name="Questions">
         <translation language="nl"><![CDATA[vragen]]></translation>
         <translation language="en"><![CDATA[questions]]></translation>
+        <translation language="ru"><![CDATA[вопросы]]></translation>
         <translation language="fr"><![CDATA[questions]]></translation>
         <translation language="es"><![CDATA[preguntas]]></translation>
         <translation language="de"><![CDATA[Fragen]]></translation>
@@ -1362,6 +1370,7 @@
       <item type="label" name="Share">
         <translation language="nl"><![CDATA[delen]]></translation>
         <translation language="en"><![CDATA[share]]></translation>
+        <translation language="ru"><![CDATA[поделиться]]></translation>
         <translation language="fr"><![CDATA[partager]]></translation>
         <translation language="de"><![CDATA[share]]></translation>
         <translation language="lt"><![CDATA[dalintis]]></translation>
@@ -1517,6 +1526,7 @@
       <item type="label" name="ToFaqOverview">
         <translation language="nl"><![CDATA[naar het FAQ overzicht]]></translation>
         <translation language="en"><![CDATA[to the FAQ overview]]></translation>
+        <translation language="ru"><![CDATA[обзор FAQ]]></translation>
         <translation language="fr"><![CDATA[au l'ensemble de FAQ]]></translation>
         <translation language="es"><![CDATA[al resumen del FAQ]]></translation>
         <translation language="de"><![CDATA[zur Fragen-Übersicht]]></translation>
@@ -1620,6 +1630,7 @@
       <item type="label" name="Yes">
         <translation language="nl"><![CDATA[ja]]></translation>
         <translation language="en"><![CDATA[yes]]></translation>
+        <translation language="ru"><![CDATA[да]]></translation>
         <translation language="fr"><![CDATA[oui]]></translation>
         <translation language="es"><![CDATA[Sí]]></translation>
         <translation language="de"><![CDATA[ja]]></translation>
@@ -1664,6 +1675,7 @@
       <item type="label" name="YourEmail">
         <translation language="nl"><![CDATA[jouw e-mailadres]]></translation>
         <translation language="en"><![CDATA[your e-mail address]]></translation>
+        <translation language="ru"><![CDATA[ваш e-mail адрес]]></translation>
         <translation language="fr"><![CDATA[votre adresse e-mail]]></translation>
         <translation language="es"><![CDATA[tu dirección e-mail]]></translation>
         <translation language="de"><![CDATA[deine E-Mail-Adresse]]></translation>
@@ -1691,6 +1703,7 @@
       <item type="label" name="YourName">
         <translation language="nl"><![CDATA[jouw naam]]></translation>
         <translation language="en"><![CDATA[your name]]></translation>
+        <translation language="ru"><![CDATA[ваше имя]]></translation>
         <translation language="fr"><![CDATA[votre nom]]></translation>
         <translation language="es"><![CDATA[tu nombre]]></translation>
         <translation language="de"><![CDATA[dein Name]]></translation>
@@ -1702,6 +1715,7 @@
       <item type="label" name="YourQuestion">
         <translation language="nl"><![CDATA[jouw vraag]]></translation>
         <translation language="en"><![CDATA[your question]]></translation>
+        <translation language="ru"><![CDATA[ваш вопрос]]></translation>
         <translation language="fr"><![CDATA[votre question]]></translation>
         <translation language="es"><![CDATA[tu pregunta]]></translation>
         <translation language="de"><![CDATA[deine Frage]]></translation>
@@ -1729,6 +1743,7 @@
       <item type="message" name="AlsoInteresting">
         <translation language="nl"><![CDATA[Ook interessant voor jou]]></translation>
         <translation language="en"><![CDATA[Also interesting for you]]></translation>
+        <translation language="ru"><![CDATA[Также вас заинтересует]]></translation>
         <translation language="fr"><![CDATA[Également intéressant pour vous]]></translation>
         <translation language="es"><![CDATA[También podría interesarte]]></translation>
         <translation language="de"><![CDATA[Folgendes könnte für dich auch von Interesse sein:]]></translation>
@@ -1740,6 +1755,7 @@
       <item type="message" name="AskOwnQuestion">
         <translation language="nl"><![CDATA[Antwoord niet gevonden? Stel zelf een vraag!]]></translation>
         <translation language="en"><![CDATA[Didn't find what you were looking for? Ask your own question!]]></translation>
+        <translation language="ru"><![CDATA[Не нашли того, что искали? Задать свой ​​вопрос!]]></translation>
         <translation language="fr"><![CDATA[Vous n'avez pas trouvé ce que vous cherchez? Posez votre propre question!]]></translation>
         <translation language="es"><![CDATA[¿No encuentras lo que buscas? ¡Realizar tu propia pregunta!]]></translation>
         <translation language="de"><![CDATA[Nix passendes gefunden? Stell selbst eine Frage!]]></translation>
@@ -2009,6 +2025,7 @@
       <item type="message" name="FaqFeedbackSubject">
         <translation language="nl"><![CDATA[Er is feedback op "%1$s"]]></translation>
         <translation language="en"><![CDATA[There is feedback on "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Это ответ на "%1$s"]]></translation>
         <translation language="fr"><![CDATA[Il y a des commentaires sur "%1$s"]]></translation>
         <translation language="es"><![CDATA[hay un feedback en "%1$s"]]></translation>
         <translation language="de"><![CDATA[Es gibt Feedback zu "%1$s"]]></translation>
@@ -2020,6 +2037,7 @@
       <item type="message" name="FaqNoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen vragen.]]></translation>
         <translation language="en"><![CDATA[There are no questions yet.]]></translation>
+        <translation language="ru"><![CDATA[Пока нет вопросов.]]></translation>
         <translation language="fr"><![CDATA[Il n'ya pas encore de questions.]]></translation>
         <translation language="es"><![CDATA[No hay preguntas aun.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Fragen.]]></translation>
@@ -2031,6 +2049,7 @@
       <item type="message" name="FaqOwnQuestionSubject">
         <translation language="nl"><![CDATA[Een vraag van %1$s.]]></translation>
         <translation language="en"><![CDATA[A question from %1$s.]]></translation>
+        <translation language="ru"><![CDATA[Вопрос от %1$s.]]></translation>
         <translation language="fr"><![CDATA[Une question de %1$s.]]></translation>
         <translation language="es"><![CDATA[Una pregunta de %1$s.]]></translation>
         <translation language="de"><![CDATA[Eine Frage von %1$s.]]></translation>
@@ -2042,6 +2061,7 @@
       <item type="message" name="Feedback">
         <translation language="nl"><![CDATA[Ben je geholpen met dit antwoord?]]></translation>
         <translation language="en"><![CDATA[Was this answer helpful?]]></translation>
+        <translation language="ru"><![CDATA[Был ли этот ответ полезным?]]></translation>
         <translation language="fr"><![CDATA[Cette réponse était utile?]]></translation>
         <translation language="es"><![CDATA[¿Te sirvió esta pregunta?]]></translation>
         <translation language="de"><![CDATA[War diese Antwort hilfreich?]]></translation>
@@ -2053,6 +2073,7 @@
       <item type="message" name="FeedbackSuccess">
         <translation language="nl"><![CDATA[Je feedback werd verstuurd.]]></translation>
         <translation language="en"><![CDATA[Your feedback has been sent.]]></translation>
+        <translation language="ru"><![CDATA[Ваше сообщение успешно отправлено.]]></translation>
         <translation language="fr"><![CDATA[Vos commentaires ont été envoyés.]]></translation>
         <translation language="es"><![CDATA[Tu feedback ha sido enviado.]]></translation>
         <translation language="de"><![CDATA[Dein Feedback wurde übermittelt.]]></translation>
@@ -2247,6 +2268,7 @@
       <item type="message" name="HowToImprove">
         <translation language="nl"><![CDATA[Hoe kunnen we dit antwoord verbeteren?]]></translation>
         <translation language="en"><![CDATA[How can we improve this answer?]]></translation>
+        <translation language="ru"><![CDATA[Как можно улучшить этот ответ?]]></translation>
         <translation language="fr"><![CDATA[Comment pouvons-nous améliorer cette réponse?]]></translation>
         <translation language="es"><![CDATA[¿Cómo podemos mejorar esta pregunta?]]></translation>
         <translation language="de"><![CDATA[Wie können wir diese Antwort besser machen?]]></translation>
@@ -2318,6 +2340,7 @@
       </item>
       <item type="message" name="NoSlideshowInCategory">
         <translation language="de"><![CDATA[Es gibt keine Slideshows in dieser Kategorie.]]></translation>
+        <translation language="ru"><![CDATA[Нет слайдов в этой категории.]]></translation>
         <translation language="lt"><![CDATA[Nėra skaidrių demonstracijų šioje kategorijoje.]]></translation>
       </item>
       <item type="message" name="NotificationSubject">
@@ -2338,6 +2361,7 @@
       <item type="message" name="OwnQuestionSuccess">
         <translation language="nl"><![CDATA[Je vraag werd verzonden. We geven je zo snel mogelijk een antwoord.]]></translation>
         <translation language="en"><![CDATA[Your question has been sent. We'll give you an answer as soon as possible.]]></translation>
+        <translation language="ru"><![CDATA[Ваш вопрос отправлен. Мы дадим вам ответ в кратчайшие сроки.]]></translation>
         <translation language="fr"><![CDATA[Votre question a été envoyée. Nous allons vous donner une réponse dès que possible.]]></translation>
         <translation language="es"><![CDATA[Tu pregunta ha sido enviada. Te responderemos lo más pronto como nos sea posible.]]></translation>
         <translation language="de"><![CDATA[Deine Frage wurde übermittelt. Wir werden sie schnellstmöglich beantworten.]]></translation>
@@ -2349,6 +2373,7 @@
       <item type="message" name="QuestionsInSameCategory">
         <translation language="nl"><![CDATA[Andere vragen in deze categorie]]></translation>
         <translation language="en"><![CDATA[Other questions in this category]]></translation>
+        <translation language="ru"><![CDATA[Другие вопросы в этой категории]]></translation>
         <translation language="fr"><![CDATA[Autres questions dans cette catégorie]]></translation>
         <translation language="es"><![CDATA[Otras preguntas en esta categoría]]></translation>
         <translation language="de"><![CDATA[Weitere Fragen dieser Kategorie]]></translation>
@@ -2436,6 +2461,7 @@
       <item type="message" name="RelatedQuestions">
         <translation language="nl"><![CDATA[Lees ook]]></translation>
         <translation language="en"><![CDATA[Also read]]></translation>
+        <translation language="ru"><![CDATA[Также прочтите]]></translation>
         <translation language="fr"><![CDATA[Lisez aussi]]></translation>
         <translation language="es"><![CDATA[Lee tambien]]></translation>
         <translation language="de"><![CDATA[Lies auch]]></translation>
@@ -2807,6 +2833,7 @@
       <item type="error" name="FeedbackIsRequired">
         <translation language="nl"><![CDATA[Gelieve feedback te geven.]]></translation>
         <translation language="en"><![CDATA[Please provide feedback.]]></translation>
+        <translation language="ru"><![CDATA[Пожалуйста, укажите ваше сообщение.]]></translation>
         <translation language="fr"><![CDATA[S'il vous plaît fournir une rétroaction.]]></translation>
         <translation language="es"><![CDATA[Por favor escribe un feedback.]]></translation>
         <translation language="de"><![CDATA[Bitte geben sie ein Feedback.]]></translation>
@@ -2818,6 +2845,7 @@
       <item type="error" name="FeedbackSpam">
         <translation language="nl"><![CDATA[Jouw feedback werd als spam gemarkeerd.]]></translation>
         <translation language="en"><![CDATA[Your feedback was marked as spam.]]></translation>
+        <translation language="ru"><![CDATA[Ваше сообщение было помечено как спам.]]></translation>
         <translation language="fr"><![CDATA[Vos commentaires a été marqué comme spam.]]></translation>
         <translation language="es"><![CDATA[Tu feedback ha sido marcado como spam.]]></translation>
         <translation language="de"><![CDATA[Dein Feedback wurde als Spam eingestuft.]]></translation>
@@ -2874,6 +2902,7 @@
       <item type="error" name="InvalidNumber">
         <translation language="nl"><![CDATA[Gelieve een geldig getal in te geven.]]></translation>
         <translation language="de"><![CDATA[Bitte trag eine gültige Nummer ein.]]></translation>
+        <translation language="ru"><![CDATA[Пожалуйста, укажите число.]]></translation>
         <translation language="lt"><![CDATA[Neteisingas numeris.]]></translation>
       </item>
       <item type="error" name="InvalidPassword">
@@ -2894,6 +2923,7 @@
       <item type="error" name="InvalidPrice">
         <translation language="nl"><![CDATA[Gelieve een geldig bedrag in te geven.]]></translation>
         <translation language="en"><![CDATA[Please insert a valid price.]]></translation>
+        <translation language="ru"><![CDATA[Пожалуйста, укажите правильную цену.]]></translation>
         <translation language="lt"><![CDATA[Prašome įrašyti teisingą kainą.]]></translation>
         <translation language="de"><![CDATA[Bitte gib einen gültigen Preis an.]]></translation>
         <translation language="uk"><![CDATA[Будь ласка, вкажіть ціну]]></translation>
@@ -2977,6 +3007,7 @@
       <item type="error" name="OwnQuestionSpam">
         <translation language="nl"><![CDATA[Jouw vraag werd als spam gemarkeerd.]]></translation>
         <translation language="en"><![CDATA[Your question was marked as spam.]]></translation>
+        <translation language="ru"><![CDATA[Ваш вопрос был помечен как спам.]]></translation>
         <translation language="fr"><![CDATA[Votre question a été marqué comme spam.]]></translation>
         <translation language="es"><![CDATA[Tupregunta ha sido marcada como spam.]]></translation>
         <translation language="de"><![CDATA[Deine Frage wurde als Spam eingestuft.]]></translation>
@@ -3079,6 +3110,7 @@
       <item type="error" name="QuestionIsRequired">
         <translation language="nl"><![CDATA[Gelieve een vraag te formuleren.]]></translation>
         <translation language="en"><![CDATA[Please provide a question.]]></translation>
+        <translation language="ru"><![CDATA[Пожалуйста, укажите ваш вопрос.]]></translation>
         <translation language="fr"><![CDATA[S'il vous plaît fournir une question.]]></translation>
         <translation language="es"><![CDATA[Por favor escribe una pregunta.]]></translation>
         <translation language="de"><![CDATA[Bitte gib eine Frage ein.]]></translation>
@@ -3153,7 +3185,7 @@
         <translation language="hu"><![CDATA[archivum]]></translation>
         <translation language="it"><![CDATA[archivio]]></translation>
         <translation language="fr"><![CDATA[archive]]></translation>
-        <translation language="ru"><![CDATA[archive]]></translation>
+        <translation language="ru"><![CDATA[архив]]></translation>
         <translation language="zh"><![CDATA[归档]]></translation>
         <translation language="de"><![CDATA[archiv]]></translation>
         <translation language="lt"><![CDATA[archyvas]]></translation>
@@ -3167,7 +3199,7 @@
         <translation language="hu"><![CDATA[hozzaszolasok-rss-en]]></translation>
         <translation language="it"><![CDATA[commenti-su-rss]]></translation>
         <translation language="fr"><![CDATA[commentaires-sur-rss]]></translation>
-        <translation language="ru"><![CDATA[comments-on-rss]]></translation>
+        <translation language="ru"><![CDATA[RSS-лента-комментариев]]></translation>
         <translation language="zh"><![CDATA[文章评论rss]]></translation>
         <translation language="de"><![CDATA[kommentare-zu-rss]]></translation>
         <translation language="es"><![CDATA[comentarios-en-rss]]></translation>
@@ -3181,7 +3213,7 @@
         <translation language="hu"><![CDATA[kategoria]]></translation>
         <translation language="it"><![CDATA[categoria]]></translation>
         <translation language="fr"><![CDATA[categorie]]></translation>
-        <translation language="ru"><![CDATA[category]]></translation>
+        <translation language="ru"><![CDATA[категория]]></translation>
         <translation language="zh"><![CDATA[分类]]></translation>
         <translation language="de"><![CDATA[kategorie]]></translation>
         <translation language="es"><![CDATA[categoría]]></translation>
@@ -3196,7 +3228,7 @@
         <translation language="hu"><![CDATA[hozzaszolas]]></translation>
         <translation language="it"><![CDATA[commento]]></translation>
         <translation language="fr"><![CDATA[commentaire]]></translation>
-        <translation language="ru"><![CDATA[comment]]></translation>
+        <translation language="ru"><![CDATA[комментарий]]></translation>
         <translation language="zh"><![CDATA[评论]]></translation>
         <translation language="de"><![CDATA[kommentar]]></translation>
         <translation language="es"><![CDATA[comentario]]></translation>
@@ -3211,7 +3243,7 @@
         <translation language="hu"><![CDATA[hozzaszolasok]]></translation>
         <translation language="it"><![CDATA[commenti]]></translation>
         <translation language="fr"><![CDATA[commentaires]]></translation>
-        <translation language="ru"><![CDATA[comments]]></translation>
+        <translation language="ru"><![CDATA[комментарии]]></translation>
         <translation language="zh"><![CDATA[评论]]></translation>
         <translation language="de"><![CDATA[kommentare]]></translation>
         <translation language="es"><![CDATA[comentarios]]></translation>
@@ -3226,7 +3258,7 @@
         <translation language="hu"><![CDATA[hozzaszolasok-rss]]></translation>
         <translation language="it"><![CDATA[commenti-rss]]></translation>
         <translation language="fr"><![CDATA[commentaires-rss]]></translation>
-        <translation language="ru"><![CDATA[comments-rss]]></translation>
+        <translation language="ru"><![CDATA[rss-комментарии]]></translation>
         <translation language="zh"><![CDATA[全部评论rss]]></translation>
         <translation language="de"><![CDATA[kommentar-rss]]></translation>
         <translation language="es"><![CDATA[comentarios-rss]]></translation>
@@ -3241,7 +3273,7 @@
         <translation language="hu"><![CDATA[reszlet]]></translation>
         <translation language="it"><![CDATA[dettagli]]></translation>
         <translation language="fr"><![CDATA[detail]]></translation>
-        <translation language="ru"><![CDATA[detail]]></translation>
+        <translation language="ru"><![CDATA[подробнее]]></translation>
         <translation language="zh"><![CDATA[detail]]></translation>
         <translation language="de"><![CDATA[detail]]></translation>
         <translation language="es"><![CDATA[detalle]]></translation>
@@ -3253,6 +3285,7 @@
       <item type="action" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
+        <translation language="ru"><![CDATA[обратная-связь]]></translation>
         <translation language="fr"><![CDATA[feedback]]></translation>
         <translation language="es"><![CDATA[retroalimentación]]></translation>
         <translation language="de"><![CDATA[feedback]]></translation>
@@ -3263,6 +3296,7 @@
       <item type="action" name="OwnQuestion">
         <translation language="nl"><![CDATA[stel-jouw-vraag]]></translation>
         <translation language="en"><![CDATA[ask-your-question]]></translation>
+        <translation language="ru"><![CDATA[задайте-ваш-вопрос]]></translation>
         <translation language="fr"><![CDATA[posez-votre-question]]></translation>
         <translation language="es"><![CDATA[realiza-tu-pregunta]]></translation>
         <translation language="de"><![CDATA[stell-deine-frage]]></translation>
@@ -3276,7 +3310,7 @@
         <translation language="hu"><![CDATA[elonezet]]></translation>
         <translation language="it"><![CDATA[anteprima]]></translation>
         <translation language="fr"><![CDATA[apercu]]></translation>
-        <translation language="ru"><![CDATA[preview]]></translation>
+        <translation language="ru"><![CDATA[предварительный-просмотр]]></translation>
         <translation language="zh"><![CDATA[预览]]></translation>
         <translation language="de"><![CDATA[vorschau]]></translation>
         <translation language="es"><![CDATA[vista-previa]]></translation>
@@ -3303,6 +3337,7 @@
       <item type="action" name="Spam">
         <translation language="nl"><![CDATA[spam]]></translation>
         <translation language="en"><![CDATA[spam]]></translation>
+        <translation language="ru"><![CDATA[спам]]></translation>
         <translation language="fr"><![CDATA[spam]]></translation>
         <translation language="es"><![CDATA[spam]]></translation>
         <translation language="de"><![CDATA[spam]]></translation>
@@ -3316,7 +3351,7 @@
         <translation language="hu"><![CDATA[feliratkozas]]></translation>
         <translation language="it"><![CDATA[abbonati]]></translation>
         <translation language="fr"><![CDATA[inscription]]></translation>
-        <translation language="ru"><![CDATA[subscribe]]></translation>
+        <translation language="ru"><![CDATA[подписка]]></translation>
         <translation language="zh"><![CDATA[订阅]]></translation>
         <translation language="de"><![CDATA[abonnieren]]></translation>
         <translation language="es"><![CDATA[subscribir]]></translation>
@@ -3328,6 +3363,7 @@
       <item type="action" name="Success">
         <translation language="nl"><![CDATA[succes]]></translation>
         <translation language="en"><![CDATA[success]]></translation>
+        <translation language="ru"><![CDATA[успешно]]></translation>
         <translation language="fr"><![CDATA[succès]]></translation>
         <translation language="es"><![CDATA[exito]]></translation>
         <translation language="de"><![CDATA[erfolg]]></translation>
@@ -3341,7 +3377,7 @@
         <translation language="hu"><![CDATA[leiratkozas]]></translation>
         <translation language="it"><![CDATA[cancella-abbonamento]]></translation>
         <translation language="fr"><![CDATA[desinscription]]></translation>
-        <translation language="ru"><![CDATA[unsubscribe]]></translation>
+        <translation language="ru"><![CDATA[отписка]]></translation>
         <translation language="zh"><![CDATA[退订]]></translation>
         <translation language="de"><![CDATA[abbestellen]]></translation>
         <translation language="es"><![CDATA[Darse-de-baja]]></translation>
@@ -3530,6 +3566,7 @@
       </item>
       <item type="label" name="Aktivera">
         <translation language="sv"><![CDATA[aktivera]]></translation>
+        <translation language="ru"><![CDATA[активировать]]></translation>
       </item>
       <item type="label" name="AllAddresses">
         <translation language="en"><![CDATA[all e-mail addresses]]></translation>
@@ -3598,6 +3635,7 @@
       <item type="label" name="AllQuestions">
         <translation language="nl"><![CDATA[alle vragen]]></translation>
         <translation language="en"><![CDATA[all questions]]></translation>
+        <translation language="ru"><![CDATA[все вопросы]]></translation>
         <translation language="de"><![CDATA[alle Fragen]]></translation>
         <translation language="lt"><![CDATA[visi klausimai]]></translation>
         <translation language="uk"><![CDATA[Всі питання]]></translation>
@@ -3812,13 +3850,16 @@
       </item>
       <item type="label" name="Artikel">
         <translation language="sv"><![CDATA[artikel]]></translation>
+        <translation language="ru"><![CDATA[статья]]></translation>
       </item>
       <item type="label" name="Artiklar">
         <translation language="sv"><![CDATA[artiklar]]></translation>
+        <translation language="ru"><![CDATA[статьи]]></translation>
       </item>
       <item type="label" name="AskOwnQuestion">
         <translation language="nl"><![CDATA[stel jouw vraag]]></translation>
         <translation language="en"><![CDATA[ask own question]]></translation>
+        <translation language="ru"><![CDATA[Задайте свой пароль]]></translation>
         <translation language="es"><![CDATA[hacerse una pregunta]]></translation>
         <translation language="de"><![CDATA[eigene Frage stellen]]></translation>
         <translation language="lt"><![CDATA[užduoti klausimą]]></translation>
@@ -3889,6 +3930,7 @@
       <item type="label" name="Average">
         <translation language="nl"><![CDATA[gemiddeld]]></translation>
         <translation language="en"><![CDATA[average]]></translation>
+        <translation language="ru"><![CDATA[средний]]></translation>
       </item>
       <item type="label" name="Back">
         <translation language="nl"><![CDATA[terug]]></translation>
@@ -3923,6 +3965,7 @@
       </item>
       <item type="label" name="Beskrivning">
         <translation language="sv"><![CDATA[beskrivning]]></translation>
+        <translation language="ru"><![CDATA[описание]]></translation>
       </item>
       <item type="label" name="BG">
         <translation language="zh"><![CDATA[比利时语]]></translation>
@@ -4444,6 +4487,7 @@
       </item>
       <item type="label" name="Cronjob">
         <translation language="en"><![CDATA[cronjob]]></translation>
+        <translation language="ru"><![CDATA[Планировщик задач]]></translation>
         <translation language="nl"><![CDATA[cronjob]]></translation>
         <translation language="de"><![CDATA[Cronjob]]></translation>
         <translation language="lt"><![CDATA[Užplanuotas veiksmas]]></translation>
@@ -4454,6 +4498,7 @@
       </item>
       <item type="label" name="Cronjobs">
         <translation language="en"><![CDATA[cronjobs]]></translation>
+        <translation language="ru"><![CDATA[Планируемые задачи]]></translation>
         <translation language="nl"><![CDATA[cronjobs]]></translation>
         <translation language="de"><![CDATA[Cronjobs]]></translation>
         <translation language="lt"><![CDATA[Užplanuoti veiksmai]]></translation>
@@ -4465,6 +4510,7 @@
       <item type="label" name="CS">
         <translation language="nl"><![CDATA[Tsjechisch]]></translation>
         <translation language="en"><![CDATA[Czech]]></translation>
+        <translation language="ru"><![CDATA[Чешский]]></translation>
         <translation language="de"><![CDATA[Tschechisch]]></translation>
         <translation language="lt"><![CDATA[Čekiškai]]></translation>
         <translation language="uk"><![CDATA[чеська]]></translation>
@@ -4475,6 +4521,7 @@
       <item type="label" name="CSV">
         <translation language="nl"><![CDATA[CSV]]></translation>
         <translation language="en"><![CDATA[CSV]]></translation>
+        <translation language="ru"><![CDATA[CSV]]></translation>
         <translation language="it"><![CDATA[CSV]]></translation>
         <translation language="de"><![CDATA[CSV]]></translation>
         <translation language="fr"><![CDATA[CSV]]></translation>
@@ -4488,6 +4535,7 @@
       <item type="label" name="CurrentPassword">
         <translation language="nl"><![CDATA[huidig wachtwoord]]></translation>
         <translation language="en"><![CDATA[current password]]></translation>
+        <translation language="ru"><![CDATA[текущий пароль]]></translation>
       </item>
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
@@ -4509,7 +4557,7 @@
         <translation language="en"><![CDATA[dashboard]]></translation>
         <translation language="hu"><![CDATA[vezérlőpult]]></translation>
         <translation language="it"><![CDATA[dashboard]]></translation>
-        <translation language="ru"><![CDATA[Панель Управления]]></translation>
+        <translation language="ru"><![CDATA[Панель управления]]></translation>
         <translation language="zh"><![CDATA[控制面板]]></translation>
         <translation language="de"><![CDATA[Dashboard]]></translation>
         <translation language="fr"><![CDATA[tableau de bord]]></translation>
@@ -4843,6 +4891,7 @@
       <item type="label" name="EL">
         <translation language="nl"><![CDATA[Grieks]]></translation>
         <translation language="en"><![CDATA[Greek]]></translation>
+        <translation language="ru"><![CDATA[Греческий]]></translation>
         <translation language="de"><![CDATA[Griechisch]]></translation>
         <translation language="lt"><![CDATA[Graikiškai]]></translation>
         <translation language="uk"><![CDATA[грецька]]></translation>
@@ -5002,6 +5051,7 @@
       <item type="label" name="Extensions">
         <translation language="nl"><![CDATA[extensions]]></translation>
         <translation language="en"><![CDATA[extensions]]></translation>
+        <translation language="ru"><![CDATA[расширения]]></translation>
         <translation language="es"><![CDATA[extensiones]]></translation>
         <translation language="de"><![CDATA[Erweiterungen]]></translation>
         <translation language="lt"><![CDATA[plėtiniai]]></translation>
@@ -5043,6 +5093,7 @@
       <item type="label" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
+        <translation language="ru"><![CDATA[обратная связь]]></translation>
         <translation language="de"><![CDATA[Feedback]]></translation>
         <translation language="lt"><![CDATA[atsiliepimai]]></translation>
         <translation language="uk"><![CDATA[Відгук]]></translation>
@@ -5476,6 +5527,7 @@
       </item>
       <item type="label" name="Innehåll">
         <translation language="sv"><![CDATA[innehåll]]></translation>
+        <translation language="ru"><![CDATA[содержание]]></translation>
       </item>
       <item type="label" name="Interface">
         <translation language="nl"><![CDATA[interface]]></translation>
@@ -5552,6 +5604,7 @@
       </item>
       <item type="label" name="JA">
         <translation language="en"><![CDATA[Japanese]]></translation>
+        <translation language="ru"><![CDATA[Японский]]></translation>
         <translation language="nl"><![CDATA[Japans]]></translation>
         <translation language="sv"><![CDATA[Japanska]]></translation>
       </item>
@@ -5670,14 +5723,17 @@
       <item type="label" name="LastFailedLoginAttempt">
         <translation language="nl"><![CDATA[laatste mislukte aanmelding]]></translation>
         <translation language="en"><![CDATA[last failed login attempt]]></translation>
+        <translation language="ru"><![CDATA[Последняя неудачная авторизация]]></translation>
       </item>
       <item type="label" name="LastLogin">
         <translation language="nl"><![CDATA[laatste aanmelding]]></translation>
         <translation language="en"><![CDATA[last login]]></translation>
+        <translation language="ru"><![CDATA[Последняя авторизация]]></translation>
       </item>
       <item type="label" name="LastPasswordChange">
         <translation language="nl"><![CDATA[laatste aanpassing wachtwoord]]></translation>
         <translation language="en"><![CDATA[last password change]]></translation>
+        <translation language="ru"><![CDATA[Последняя смена пароля]]></translation>
       </item>
       <item type="label" name="LastSaved">
         <translation language="nl"><![CDATA[laatst opgeslagen]]></translation>
@@ -5724,6 +5780,7 @@
       <item type="label" name="LineEnding">
         <translation language="nl"><![CDATA[lijneinde]]></translation>
         <translation language="en"><![CDATA[line ending]]></translation>
+        <translation language="ru"><![CDATA[Окончание линии]]></translation>
         <translation language="lt"><![CDATA[eilutės pabaiga]]></translation>
         <translation language="de"><![CDATA[Zeilenende]]></translation>
         <translation language="es"><![CDATA[final de línea]]></translation>
@@ -5832,6 +5889,7 @@
       <item type="label" name="LT">
         <translation language="nl"><![CDATA[Litouws]]></translation>
         <translation language="en"><![CDATA[Lithuanian]]></translation>
+        <translation language="ru"><![CDATA[Литовский]]></translation>
         <translation language="de"><![CDATA[Litauisch]]></translation>
         <translation language="lt"><![CDATA[Lietuviškai]]></translation>
         <translation language="uk"><![CDATA[литовська]]></translation>
@@ -6166,6 +6224,7 @@
       <item type="label" name="MostReadQuestions">
         <translation language="nl"><![CDATA[meest gelezen vragen]]></translation>
         <translation language="en"><![CDATA[most read questions]]></translation>
+        <translation language="ru"><![CDATA[Наиболее читаемые вопросы]]></translation>
         <translation language="es"><![CDATA[preguntas más leídas]]></translation>
         <translation language="de"><![CDATA[meistgelesene Fragen]]></translation>
         <translation language="lt"><![CDATA[skaitomiausi klausimai]]></translation>
@@ -6246,6 +6305,7 @@
       <item type="label" name="Navigation">
         <translation language="nl"><![CDATA[navigatie]]></translation>
         <translation language="en"><![CDATA[navigation]]></translation>
+        <translation language="ru"><![CDATA[навигация]]></translation>
       </item>
       <item type="label" name="NavigationTitle">
         <translation language="nl"><![CDATA[navigatietitel]]></translation>
@@ -6264,6 +6324,7 @@
       <item type="label" name="Never">
         <translation language="nl"><![CDATA[nooit]]></translation>
         <translation language="en"><![CDATA[never]]></translation>
+        <translation language="ru"><![CDATA[никогда]]></translation>
       </item>
       <item type="label" name="NewPassword">
         <translation language="nl"><![CDATA[nieuw wachtwoord]]></translation>
@@ -6382,6 +6443,7 @@
       <item type="label" name="NoPreviousLogin">
         <translation language="nl"><![CDATA[geen eerdere aanmelding]]></translation>
         <translation language="en"><![CDATA[no previous login]]></translation>
+        <translation language="ru"><![CDATA[нет предыдущих авторизаций]]></translation>
       </item>
       <item type="label" name="NoTheme">
         <translation language="nl"><![CDATA[geen thema]]></translation>
@@ -6603,6 +6665,7 @@
       <item type="label" name="PasswordStrength">
         <translation language="nl"><![CDATA[wachtwoord sterkte]]></translation>
         <translation language="en"><![CDATA[password strength]]></translation>
+        <translation language="ru"><![CDATA[Надежность пароля]]></translation>
       </item>
       <item type="label" name="PerDay">
         <translation language="nl"><![CDATA[per dag]]></translation>
@@ -7202,6 +7265,7 @@
       <item type="label" name="RO">
         <translation language="nl"><![CDATA[Roemeens]]></translation>
         <translation language="en"><![CDATA[Romanian]]></translation>
+        <translation language="ru"><![CDATA[Румынский]]></translation>
         <translation language="lt"><![CDATA[Romanian]]></translation>
         <translation language="de"><![CDATA[Rumänisch]]></translation>
         <translation language="es"><![CDATA[Rumano]]></translation>
@@ -7496,6 +7560,7 @@
       </item>
       <item type="label" name="Slideshow">
         <translation language="de"><![CDATA[Slideshow]]></translation>
+        <translation language="ru"><![CDATA[Слайд-шоу]]></translation>
         <translation language="lt"><![CDATA[Skaidrės]]></translation>
       </item>
       <item type="label" name="SMTP">
@@ -7617,6 +7682,7 @@
       <item type="label" name="SplitCharacter">
         <translation language="nl"><![CDATA[scheidingsteken]]></translation>
         <translation language="en"><![CDATA[split character]]></translation>
+        <translation language="ru"><![CDATA[символ разделения]]></translation>
         <translation language="lt"><![CDATA[padalijimo simbolis]]></translation>
         <translation language="de"><![CDATA[Split-Character]]></translation>
         <translation language="es"><![CDATA[Separar caracter]]></translation>
@@ -7641,6 +7707,7 @@
       </item>
       <item type="label" name="Statisics">
         <translation language="sv"><![CDATA[statistik]]></translation>
+        <translation language="ru"><![CDATA[статистика]]></translation>
       </item>
       <item type="label" name="Statistics">
         <translation language="nl"><![CDATA[statistieken]]></translation>
@@ -7706,6 +7773,7 @@
       <item type="label" name="Subpages">
         <translation language="nl"><![CDATA[subpagina's]]></translation>
         <translation language="en"><![CDATA[subpages]]></translation>
+        <translation language="ru"><![CDATA[подстраницы]]></translation>
         <translation language="de"><![CDATA[Unterseiten]]></translation>
         <translation language="lt"><![CDATA[šakninis puslapis]]></translation>
         <translation language="es"><![CDATA[subpáginas]]></translation>
@@ -7757,6 +7825,7 @@
       </item>
       <item type="label" name="Summering">
         <translation language="sv"><![CDATA[summering]]></translation>
+        <translation language="ru"><![CDATA[летнее содержание]]></translation>
       </item>
       <item type="label" name="Surname">
         <translation language="nl"><![CDATA[achternaam]]></translation>
@@ -7775,6 +7844,7 @@
       <item type="label" name="SV">
         <translation language="nl"><![CDATA[Zweeds]]></translation>
         <translation language="en"><![CDATA[Swedish]]></translation>
+        <translation language="ru"><![CDATA[Шведский]]></translation>
         <translation language="lt"><![CDATA[Švediškai]]></translation>
         <translation language="de"><![CDATA[Schwedisch]]></translation>
         <translation language="es"><![CDATA[Sueco]]></translation>
@@ -8129,6 +8199,7 @@
       <item type="label" name="UK">
         <translation language="nl"><![CDATA[Oekraïens]]></translation>
         <translation language="en"><![CDATA[Ukrainian]]></translation>
+        <translation language="ru"><![CDATA[Украинский]]></translation>
         <translation language="lt"><![CDATA[Ukrainiečių]]></translation>
         <translation language="de"><![CDATA[Ukrainisch]]></translation>
         <translation language="uk"><![CDATA[українська]]></translation>
@@ -8285,7 +8356,7 @@
         <translation language="nl"><![CDATA[waarde]]></translation>
         <translation language="en"><![CDATA[value]]></translation>
         <translation language="hu"><![CDATA[érték]]></translation>
-        <translation language="ru"><![CDATA[Важность]]></translation>
+        <translation language="ru"><![CDATA[Значение]]></translation>
         <translation language="it"><![CDATA[valore]]></translation>
         <translation language="zh"><![CDATA[值]]></translation>
         <translation language="de"><![CDATA[Wert]]></translation>
@@ -8300,7 +8371,7 @@
         <translation language="nl"><![CDATA[versies]]></translation>
         <translation language="en"><![CDATA[versions]]></translation>
         <translation language="hu"><![CDATA[verziók]]></translation>
-        <translation language="ru"><![CDATA[версия]]></translation>
+        <translation language="ru"><![CDATA[Версии]]></translation>
         <translation language="it"><![CDATA[versione]]></translation>
         <translation language="de"><![CDATA[Versionen]]></translation>
         <translation language="fr"><![CDATA[versions]]></translation>
@@ -8413,6 +8484,7 @@
       </item>
       <item type="label" name="Webbplats">
         <translation language="sv"><![CDATA[webbplats]]></translation>
+        <translation language="ru"><![CDATA[Веб-сайт]]></translation>
       </item>
       <item type="label" name="WebmasterEmail">
         <translation language="nl"><![CDATA[e-mailadres webmaster]]></translation>
@@ -8669,6 +8741,19 @@
         <translation language="es"><![CDATA[Búlgaro]]></translation>
         <translation language="lt"><![CDATA[Bulgariškai]]></translation>
         <translation language="sv"><![CDATA[Bulgariska]]></translation>
+      </item>
+	  <item type="message" name="ChangedOrderSuccessfully">
+        <translation language="hu"><![CDATA[Megváltozott rend sikeresen.]]></translation>
+        <translation language="fr"><![CDATA[Afin changé avec succès.]]></translation>
+        <translation language="de"><![CDATA[Ændret rækkefølge med succes.]]></translation>
+        <translation language="nl"><![CDATA[Volgorde succesvol gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[Changed order successfully.]]></translation>
+        <translation language="it"><![CDATA[Cambiato ordine con successo.]]></translation>
+        <translation language="ru"><![CDATA[Изменен порядок успешно.]]></translation>
+        <translation language="uk"><![CDATA[Змінено порядок успішно.]]></translation>
+        <translation language="es"><![CDATA[Para cambiado correctamente.]]></translation>
+        <translation language="lt"><![CDATA[Pasikeitė sėkmingai.]]></translation>
+        <translation language="sv"><![CDATA[Ändrad att framgångsrikt.]]></translation>
       </item>
       <item type="message" name="ClickToEdit">
         <translation language="nl"><![CDATA[Klik om te wijzigen.]]></translation>
@@ -9026,6 +9111,7 @@
       <item type="message" name="EditorSelectInternalPage">
         <translation language="nl"><![CDATA[Selecteer interne pagina]]></translation>
         <translation language="en"><![CDATA[Select internal page]]></translation>
+        <translation language="ru"><![CDATA[Выберите внутреннюю страницу]]></translation>
         <translation language="lt"><![CDATA[Pasirinkite puslapį išorėje]]></translation>
         <translation language="de"><![CDATA[Interne Seite auswählen]]></translation>
         <translation language="es"><![CDATA[Seleccionar página interna]]></translation>
@@ -9188,6 +9274,7 @@
       <item type="message" name="HelpFileFieldWithMaxFileSize">
         <translation language="nl"><![CDATA[Enkel bestanden met de extensie %1$s zijn toegelaten, maximum toegelaten bestandsgrootte: %2$s.]]></translation>
         <translation language="en"><![CDATA[Only files with the extension %1$s are allowed, maximum file size: %2$s.]]></translation>
+        <translation language="ru"><![CDATA[Разрешены файлы с расширением %1$s, максимальный размер файла: %2$s.]]></translation>
         <translation language="es"><![CDATA[Solo archivos con la extension %1$s son aceptados, peso máximo del archivo: %2$s.]]></translation>
         <translation language="de"><![CDATA[Nur Dateien mit der Endung %1$s sind erlaubt, maximale Dateigröße: %2$s.]]></translation>
         <translation language="lt"><![CDATA[Only files with the extension %1$s are allowed, maximim file size: %2$s.]]></translation>
@@ -9457,6 +9544,7 @@
       </item>
       <item type="message" name="LT">
         <translation language="lt"><![CDATA[Lietuviškai]]></translation>
+        <translation language="ru"><![CDATA[Литовский]]></translation>
       </item>
       <item type="message" name="MSG">
         <translation language="nl"><![CDATA[bericht]]></translation>
@@ -9533,6 +9621,7 @@
       <item type="message" name="NoFeedback">
         <translation language="nl"><![CDATA[Er is nog geen feedback.]]></translation>
         <translation language="en"><![CDATA[There is no feedback yet.]]></translation>
+        <translation language="ru"><![CDATA[Нет новых обращений.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch kein Feedback.]]></translation>
         <translation language="lt"><![CDATA[Atsiliepimų dar nėra]]></translation>
         <translation language="es"><![CDATA[Aún no hay retroalimentación.]]></translation>
@@ -9940,6 +10029,19 @@
         <translation language="lt"><![CDATA[Tik raidės>]]></translation>
         <translation language="sv"><![CDATA[Endast alfanumeriska tecken är tillåtna.]]></translation>
       </item>
+	  <item type="error" name="AlterSequenceFailed">
+        <translation language="nl"><![CDATA[Volgorde wijzigen mislukt.]]></translation>
+        <translation language="en"><![CDATA[Alter sequence failed.]]></translation>
+        <translation language="hu"><![CDATA[Alter szekvenciát sikerült.]]></translation>
+        <translation language="it"><![CDATA[Alter sequenza non riuscita.]]></translation>
+        <translation language="ru"><![CDATA[Изменить последовательность не удалось.]]></translation>
+        <translation language="zh"><![CDATA[改變序列失敗。]]></translation>
+        <translation language="fr"><![CDATA[Alter séquence échoué.]]></translation>
+        <translation language="de"><![CDATA[Alter Sequenz fehlgeschlagen.]]></translation>
+        <translation language="es"><![CDATA[Alteran la secuencia fallado.]]></translation>
+        <translation language="lt"><![CDATA[Nepavyko pakeisti seka.]]></translation>
+        <translation language="sv"><![CDATA[Alter sekvens misslyckades.]]></translation>
+      </item>
       <item type="error" name="AuthorIsRequired">
         <translation language="nl"><![CDATA[Gelieve een auteur in te geven.]]></translation>
         <translation language="en"><![CDATA[Please provide an author.]]></translation>
@@ -10210,6 +10312,7 @@
       <item type="error" name="InvalidInteger">
         <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>
         <translation language="en"><![CDATA[Invalid number.]]></translation>
+        <translation language="ru"><![CDATA[Неверный номер.]]></translation>
       </item>
       <item type="error" name="InvalidName">
         <translation language="nl"><![CDATA[Ongeldige naam.]]></translation>
@@ -10406,8 +10509,7 @@
         <translation language="en"><![CDATA[No items were selected.]]></translation>
         <translation language="hu"><![CDATA[Nincs elem kiválasztva.]]></translation>
         <translation language="it"><![CDATA[Nessun elemento selezionato.]]></translation>
-        <translation language="ru"><![CDATA[Записи не выбраны.
-]]></translation>
+        <translation language="ru"><![CDATA[Записи не выбраны.]]></translation>
         <translation language="zh"><![CDATA[没有项目被选中。]]></translation>
         <translation language="fr"><![CDATA[Aucun élément n'a été sélectionné.]]></translation>
         <translation language="de"><![CDATA[Es waren keine Einträge ausgewählt.]]></translation>

@@ -35,12 +35,6 @@ class APIInit
 		// set type
 		$this->type = $type;
 
-		// register the autoloader
-		spl_autoload_register(array('APIInit', 'autoLoader'));
-
-		// set some ini-options
-		ini_set('memory_limit', '64M');
-
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
@@ -63,89 +57,6 @@ class APIInit
 		$this->requireAPIClasses();
 		SpoonFilter::disableMagicQuotes();
 		$this->initSession();
-	}
-
-	/**
-	 * Autoloader for the backend
-	 *
-	 * @param string $className The name of the class to require.
-	 */
-	public static function autoLoader($className)
-	{
-		// redefine
-		$className = strtolower((string) $className);
-
-		// init var
-		$pathToLoad = '';
-
-		// exceptions
-		$exceptions = array();
-		$exceptions['bl'] = BACKEND_CORE_PATH . '/engine/language.php';
-		$exceptions['api'] = API_CORE_PATH . '/1.0/engine/api.php';
-
-		// is it an exception
-		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
-
-		// backend
-		elseif(substr($className, 0, 7) == 'backend')
-		{
-			$pathToLoad = BACKEND_CORE_PATH . '/engine/' . str_replace('backend', '', $className) . '.php';
-		}
-
-		// frontend
-		elseif(substr($className, 0, 8) == 'frontend')
-		{
-			$pathToLoad = FRONTEND_CORE_PATH . '/engine/' . str_replace('frontend', '', $className) . '.php';
-		}
-
-		// file check in core
-		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
-
-		// check if module file exists
-		else
-		{
-			// we'll need the original class name again, with the uppercases
-			$className = func_get_arg(0);
-
-			// split in parts
-			if(preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts))
-			{
-				// the real matches
-				$parts = $parts[0];
-
-				// get root path constant and see if it exists
-				$rootPath = strtoupper(array_shift($parts)) . '_PATH';
-				if(defined($rootPath))
-				{
-					foreach($parts as $i => $part)
-					{
-						// skip the first
-						if($i == 0) continue;
-
-						// action
-						$action = strtolower(implode('_', $parts));
-
-						// module
-						$module = '';
-						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
-
-						// fix action & module
-						$action = substr($action, strlen($module));
-						$module = substr($module, 0, -1);
-
-						// file to be loaded
-						$pathToLoad = constant($rootPath) . '/modules/' . $module . '/engine/' . $action . '.php';
-
-						// if it exists, load it!
-						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
-						{
-							require_once $pathToLoad;
-							break;
-						}
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -351,19 +262,23 @@ class APIInit
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// add callback for the spoon exceptionhandler
-			switch($this->type)
+			// don't overrule if there is already an exception handler defined
+			if(!defined('SPOON_EXCEPTION_CALLBACK'))
 			{
-				case 'backend_ajax':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-					break;
+				// add callback for the spoon exceptionhandler
+				switch($this->type)
+				{
+					case 'backend_ajax':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
+						break;
 
-				case 'backend_js':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-					break;
+					case 'backend_js':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
+						break;
 
-				default:
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+					default:
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+				}
 			}
 		}
 	}

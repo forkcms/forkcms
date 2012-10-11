@@ -10,7 +10,7 @@
 /**
  * In this file we store all generic functions that we will be using in the search module
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  */
 class BackendSearchModel

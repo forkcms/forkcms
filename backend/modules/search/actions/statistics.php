@@ -10,7 +10,7 @@
 /**
  * This is the statistics-action, it will display the overview of search statistics
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendSearchStatistics extends BackendBaseActionIndex
 {

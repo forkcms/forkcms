@@ -10,7 +10,7 @@
 /**
  * This is the settings-action, it will display a form to set general search settings
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendSearchSettings extends BackendBaseActionEdit
 {

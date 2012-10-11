@@ -27,15 +27,20 @@ FileETag MTime Size
 	RewriteRule backend/cache/logs - [F]
 	RewriteRule backend/cache/navigation - [F]
 
+	# one url to rule them all
+	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
+	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
+	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
+
 	# backend is an existing folder, but it should be handled as all urls
 	RewriteCond %{REQUEST_URI} ^/backend/$
-	RewriteRule . index.php [NC,L]
+	RewriteRule . /index.php [NC,L]
 
 	# handle urls
 	RewriteCond %{REQUEST_URI} !^$
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . index.php [NC,L]
+	RewriteRule . /index.php [NC,L]
 
 	# set environment variable to let PHP know that urls are being rewritten
 	RewriteRule .* - [E=MOD_REWRITE:1]
@@ -45,7 +50,7 @@ FileETag MTime Size
 <IfModule mod_expires.c>
 	ExpiresActive On
 	<FilesMatch "\.(ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|eot)$">
-		ExpiresDefault "access plus 1 month" 
+		ExpiresDefault "access plus 1 month"
 	</FilesMatch>
 </IfModule>
 
@@ -54,7 +59,7 @@ FileETag MTime Size
 	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript
 
 	# these browsers do not support deflate
-	BrowserMatch ^Mozilla/4 gzip-only-text/html 
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
 	BrowserMatch ^Mozilla/4.0[678] no-gzip
 	BrowserMatch bMSIE !no-gzip !gzip-only-text/html
 

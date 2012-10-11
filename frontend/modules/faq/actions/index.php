@@ -59,5 +59,6 @@ class FrontendFaqIndex extends FrontendBaseBlock
 	private function parse()
 	{
 		$this->tpl->assign('faqCategories', (array) $this->items);
+		$this->tpl->assign('allowMultipleCategories', FrontendModel::getModuleSetting('faq', 'allow_multiple_categories', true));
 	}
 }

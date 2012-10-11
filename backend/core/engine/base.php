@@ -10,7 +10,7 @@
 /**
  * This class will be the base of the objects used in the cms
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendBaseObject
 {

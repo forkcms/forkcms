@@ -10,7 +10,7 @@
 /**
  * This is the autosuggest-action, it will output a list of results for a certain search
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 {

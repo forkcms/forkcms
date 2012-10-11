@@ -21,7 +21,7 @@ require_once 'step_7.php';
  * Fork Installer
  *
  * @author Davy Hellemans <davy@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class Installer
 {

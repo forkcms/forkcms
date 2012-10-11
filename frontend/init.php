@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendInit
 {
@@ -34,14 +34,6 @@ class FrontendInit
 		// check if this is a valid type
 		if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
 		$this->type = $type;
-
-		// register the autoloader
-		spl_autoload_register(array('FrontendInit', 'autoLoader'));
-
-		// set some ini-options
-		ini_set('pcre.backtrack_limit', 999999999);
-		ini_set('pcre.recursion_limit', 999999999);
-		ini_set('memory_limit', '64M');
 
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
@@ -75,97 +67,6 @@ class FrontendInit
 
 		$this->requireFrontendClasses();
 		SpoonFilter::disableMagicQuotes();
-	}
-
-	/**
-	 * Autoloader for the frontend
-	 *
-	 * @param string $className The name of the class to require.
-	 */
-	public static function autoLoader($className)
-	{
-		// redefine
-		$className = strtolower((string) $className);
-
-		// init var
-		$pathToLoad = '';
-
-		// exceptions
-		$exceptions = array();
-		$exceptions['frontend'] = FRONTEND_CORE_PATH . '/engine/frontend.php';
-		$exceptions['frontendbaseajaxaction'] = FRONTEND_CORE_PATH . '/engine/base.php';
-		$exceptions['frontendbaseconfig'] = FRONTEND_CORE_PATH . '/engine/base.php';
-		$exceptions['frontendbaseobject'] = FRONTEND_CORE_PATH . '/engine/base.php';
-		$exceptions['frontendblockextra'] = FRONTEND_CORE_PATH . '/engine/block.php';
-		$exceptions['frontendblockwidget'] = FRONTEND_CORE_PATH . '/engine/block.php';
-		$exceptions['frontendtemplatecompiler'] = FRONTEND_CORE_PATH . '/engine/template_compiler.php';
-
-		// is it an exception
-		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
-
-		// frontend
-		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH . '/engine/' . str_replace('frontend', '', $className) . '.php';
-
-		// file check in core
-		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
-
-		// check if module file exists
-		else
-		{
-			// we'll need the original class name again, with the uppercases
-			$className = func_get_arg(0);
-
-			// split in parts, if nothing is found we stop processing
-			if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
-
-			// the real matches
-			$parts = $parts[0];
-
-			// is it an application class?
-			if(isset($parts[0]) && $parts[0] == 'Common')
-			{
-				$chunks = $parts;
-				array_shift($chunks);
-				$pathToLoad = PATH_LIBRARY . '/base/' . strtolower(implode('_', $chunks)) . '.php';
-
-				if(SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
-			}
-
-			// doublecheck that we are looking for a frontend class, of that isn't the case we should stop.
-			$root = array_shift($parts);
-			if(strtolower($root) != 'frontend') return;
-
-			foreach($parts as $i => $part)
-			{
-				// skip the first
-				if($i == 0) continue;
-
-				// action
-				$action = strtolower(implode('_', $parts));
-
-				// module
-				$module = '';
-				for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
-
-				// fix action & module
-				$action = substr($action, strlen($module));
-				$module = substr($module, 0, -1);
-
-				// check the actions, engine & widgets directories
-				foreach(array('actions', 'engine', 'widgets') as $dir)
-				{
-					// file to be loaded
-					$pathToLoad = FRONTEND_PATH . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
-
-					// if it exists, load it!
-					if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
-					{
-						require_once $pathToLoad;
-						break;
-					}
-				}
-			}
-		}
 	}
 
 	/**
@@ -381,19 +282,23 @@ class FrontendInit
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// add callback for the spoon exceptionhandler
-			switch($this->type)
+			// don't overrule if there is already an exception handler defined
+			if(!defined('SPOON_EXCEPTION_CALLBACK'))
 			{
-				case 'backend_ajax':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-					break;
+				// add callback for the spoon exceptionhandler
+				switch($this->type)
+				{
+					case 'backend_ajax':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
+						break;
 
-				case 'backend_js':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-					break;
+					case 'backend_js':
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
+						break;
 
-				default:
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+					default:
+						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+				}
 			}
 		}
 	}

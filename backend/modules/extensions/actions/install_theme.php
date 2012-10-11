@@ -4,7 +4,7 @@
  * This is the theme install-action.
  * It will install the theme given via the "theme" GET parameter.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendExtensionsInstallTheme extends BackendBaseActionIndex
 {

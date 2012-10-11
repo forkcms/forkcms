@@ -3,15 +3,17 @@
 	- {$item}: contains data about the question
 	- {$related}: the related items
 *}
-<div id="blogDetail">
+<div id="faqDetail">
 	<article class="mod article">
 		<div class="inner">
 			<header class="hd">
 				<h1>{$item.question}</h1>
+                {option:settings.allow_multiple_categories}
 				<ul>
 					<li>
 						{* Category*}
-						{$lblIn|ucfirst} {$lblThe} {$lblCategory} <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
+						{$lblIn|ucfirst} {$lblThe} {$lblCategory} <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>
+                        {option:!item.tags}.{/option:!item.tags}
 
 						{* Tags*}
 						{option:item.tags}
@@ -22,6 +24,21 @@
 						{/option:item.tags}
 					</li>
 				</ul>
+                {/option:settings.allow_multiple_categories}
+
+				{* Tags *}
+                {option:!settings.allow_multiple_categories}
+                    {option:item.tags}
+                    <ul>
+                        <li>
+                            {$lblWith} {$lblThe} {$lblTags}
+                            {iteration:item.tags}
+                                <a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
+                            {/iteration:item.tags}
+                        </li>
+                    </ul>
+                    {/option:item.tags}
+                {/option:!settings.allow_multiple_categories}
 			</header>
 			<div class="bd content">
 				{$item.answer}
@@ -30,10 +47,11 @@
 	</article>
 
 	{option:inSameCategory}
-		<section id="blogRelatedItems" class="mod">
+		<section id="faqRelatedItems" class="mod">
 			<div class="inner">
 				<header class="hd">
-					<h3>{$msgQuestionsInSameCategory|ucfirst}</h3>
+                	{option:settings.allow_multiple_categories}<h3>{$msgQuestionsInSameCategory|ucfirst}</h3>{/option:settings.allow_multiple_categories}
+                	{option:!settings.allow_multiple_categories}<h3>{$msgOtherQuestions|ucfirst}</h3>{/option:!settings.allow_multiple_categories}
 				</header>
 				<div class="bd content">
 					<ul>
@@ -47,7 +65,7 @@
 	{/option:inSameCategory}
 
 	{option:related}
-		<section id="blogRelatedItems" class="mod">
+		<section id="faqRelatedItems" class="mod">
 			<div class="inner">
 				<header class="hd">
 					<h3>{$msgRelatedQuestions|ucfirst}</h3>

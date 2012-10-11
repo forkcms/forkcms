@@ -13,9 +13,17 @@
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author SIESQO <info@siesqo.be>
  */
 class BackendFaqCategories extends BackendBaseActionIndex
 {
+	/**
+	 * Deny the use of multiple categories
+	 *
+	 * @param bool
+	 */
+	private $multipleCategoriesAllowed;
+
 	/**
 	 * Execute the action
 	 */
@@ -34,10 +42,14 @@ class BackendFaqCategories extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
+		// are multiple categories allowed?
+		$this->multipleCategoriesAllowed = BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true);
+
 		// create dataGrid
 		$this->dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
 		$this->dataGrid->setHeaderLabels(array('num_items' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
-		$this->dataGrid->enableSequenceByDragAndDrop();
+		if($this->multipleCategoriesAllowed) $this->dataGrid->enableSequenceByDragAndDrop();
+		else $this->dataGrid->setColumnsHidden(array('sequence'));
 		$this->dataGrid->setRowAttributes(array('id' => '[id]'));
 		$this->dataGrid->setPaging(false);
 
@@ -63,6 +75,13 @@ class BackendFaqCategories extends BackendBaseActionIndex
 		parent::parse();
 
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+
+		// check if this action is allowed
+		if(BackendAuthentication::isAllowedAction('add_category') && $this->multipleCategoriesAllowed)
+		{
+			$this->tpl->assign('showFaqAddCategory', true);
+		}
+		else $this->tpl->assign('showFaqAddCategory', false);
 	}
 
 	/**

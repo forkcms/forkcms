@@ -1,0 +1,136 @@
+{
+    "hash": "ab962600f83980fcdde233e03c9d4fcb",
+    "packages": [
+        {
+            "name": "facebook/php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/facebook/facebook-php-sdk.git",
+                "reference": "v3.2.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/facebook/facebook-php-sdk/zipball/v3.2.0",
+                "reference": "v3.2.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*",
+                "ext-json": "*"
+            },
+            "time": "1344965300",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Facebook",
+                    "homepage": "https://github.com/facebook/facebook-php-sdk/contributors"
+                }
+            ],
+            "description": "Facebook PHP SDK",
+            "homepage": "https://github.com/facebook/facebook-php-sdk",
+            "keywords": [
+                "facebook",
+                "sdk"
+            ]
+        },
+        {
+            "name": "tijsverkoyen/akismet",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tijsverkoyen/Akismet",
+                "reference": "43f297883e727f30234c07ae34b1b65826c7087f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/tijsverkoyen/Akismet/zipball/43f297883e727f30234c07ae34b1b65826c7087f",
+                "reference": "43f297883e727f30234c07ae34b1b65826c7087f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*"
+            },
+            "time": "1349014712",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "akismet@verkoyen.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Akismet is a wrapper-class to communicate with the Akismet API.",
+            "homepage": "https://github.com/tijsverkoyen/Akismet"
+        },
+        {
+            "name": "tijsverkoyen/css-to-inline-styles",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tijsverkoyen/CssToInlineStyles",
+                "reference": "fc2f1c5e7817351f0fba62c71c1791d19bb9cc08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/tijsverkoyen/CssToInlineStyles/zipball/fc2f1c5e7817351f0fba62c71c1791d19bb9cc08",
+                "reference": "fc2f1c5e7817351f0fba62c71c1791d19bb9cc08",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*"
+            },
+            "time": "1349015591",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "css_to_inline_styles@verkoyen.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
+            "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "facebook/php-sdk": 20,
+        "tijsverkoyen/akismet": 20,
+        "tijsverkoyen/css-to-inline-styles": 20
+    }
+}

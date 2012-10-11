@@ -13,6 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Siesqo <info@siesqo.be>
  */
 class BackendUsersEdit extends BackendBaseActionEdit
 {
@@ -22,6 +23,13 @@ class BackendUsersEdit extends BackendBaseActionEdit
 	 * @var	BackendUser
 	 */
 	private $authenticatedUser;
+
+	/**
+	 * Can only edit his own profile
+	 *
+	 * @var	bool
+	 */
+	private $allowUserRights;
 
 	/**
 	 * The user
@@ -60,6 +68,13 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// create user objects
 		$this->user = new BackendUser($this->id);
 		$this->authenticatedUser = BackendAuthentication::getUser();
+		$this->allowUserRights = ((BackendAuthentication::isAllowedAction('index') || $this->authenticatedUser->getUserId() != $this->id) || $this->authenticatedUser->isGod());
+
+		// redirect to error page when not allowed to edit other profiles
+		if(!$this->authenticatedUser->isGod() && ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('index')))
+		{
+			$this->redirect(BackendModel::createURLForAction('error') . '&type=not-allowed');
+		}
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -104,10 +119,14 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// permissions
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 
-		// disable active field for current users
-		if($this->authenticatedUser->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
-		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
-		$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
+		// only when GOD or when you can edit other users
+		if($this->allowUserRights)
+		{
+			// disable active field for current users
+			if($this->authenticatedUser->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
+			$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
+			$this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
+		}
 	}
 
 	/**
@@ -129,6 +148,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 		// assign that we're god or the same user
 		$this->tpl->assign('allowPasswordEdit', ($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod()));
+
+		// assign that you can edit the user rights
+		$this->tpl->assign('allowUserRights', $this->allowUserRights);
 
 		// check if we need to show the password strength and parse the label
 		$this->tpl->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
@@ -180,7 +202,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$fields['date_format']->isFilled(BL::err('FieldIsRequired'));
 			$fields['time_format']->isFilled(BL::err('FieldIsRequired'));
 			$fields['number_format']->isFilled(BL::err('FieldIsRequired'));
-			$fields['groups']->isFilled(BL::err('FieldIsRequired'));
+			if($this->allowUserRights) $fields['groups']->isFilled(BL::err('FieldIsRequired'));
 			if(isset($fields['new_password']) && $fields['new_password']->isFilled())
 			{
 				if($fields['new_password']->getValue() !== $fields['confirm_password']->getValue()) $fields['confirm_password']->addError(BL::err('ValuesDontMatch'));
@@ -217,7 +239,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['number_format'] = $fields['number_format']->getValue();
 				$settings['csv_split_character'] = $fields['csv_split_character']->getValue();
 				$settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
-				$settings['api_access'] = (bool) $fields['api_access']->getChecked();
+				$settings['api_access'] = ($this->allowUserRights) ? (bool) $fields['api_access']->getChecked() : $this->record['settings']['api_access'];
 
 				// update password (only if filled in)
 				if(isset($fields['new_password']) && $fields['new_password']->isFilled())
@@ -238,32 +260,36 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					}
 				}
 
-				// get selected groups
-				$groups = $fields['groups']->getChecked();
-
-				// init var
-				$newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
-
-				// loop through groups and collect all dashboard widget sequences
-				foreach($groups as $group) $sequences[] = BackendGroupsModel::getSetting($group, 'dashboard_sequence');
-
-				// loop through sequences
-				foreach($sequences as $sequence)
+				// get user groups when allowed to edit
+				if($this->allowUserRights)
 				{
-					// loop through modules inside a sequence
-					foreach($sequence as $moduleKey => $module)
+					// get selected groups
+					$groups = $fields['groups']->getChecked();
+
+					// init var
+					$newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
+
+					// loop through groups and collect all dashboard widget sequences
+					foreach($groups as $group) $sequences[] = BackendGroupsModel::getSetting($group, 'dashboard_sequence');
+
+					// loop through sequences
+					foreach($sequences as $sequence)
 					{
-						// loop through widgets inside a module
-						foreach($module as $widgetKey => $widget)
+						// loop through modules inside a sequence
+						foreach($sequence as $moduleKey => $module)
 						{
-							// if widget present set true
-							if($widget['present']) $newSequence[$moduleKey][$widgetKey]['present'] = true;
+							// loop through widgets inside a module
+							foreach($module as $widgetKey => $widget)
+							{
+								// if widget present set true
+								if($widget['present']) $newSequence[$moduleKey][$widgetKey]['present'] = true;
+							}
 						}
 					}
-				}
 
-				// add new sequence to settings
-				$settings['dashboard_sequence'] = $newSequence;
+					// add new sequence to settings
+					$settings['dashboard_sequence'] = $newSequence;
+				}
 
 				// has the user submitted an avatar?
 				if($fields['avatar']->isFilled())
@@ -300,13 +326,24 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				BackendUsersModel::update($user, $settings);
 
 				// save groups
-				BackendGroupsModel::insertMultipleGroups($this->id, $groups);
+				if($this->allowUserRights) BackendGroupsModel::insertMultipleGroups($this->id, $groups);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $user));
 
-				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
+				// can only edit own profile
+				if(!BackendAuthentication::isAllowedAction('index'))
+				{
+					// everything is saved, so redirect to the edit page
+					$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&report=edited&var=' . $settings['nickname']);
+				}
+
+				// can view other users
+				else
+				{
+					// everything is saved, so redirect to the overview
+					$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
+				}
 			}
 		}
 	}

@@ -14,7 +14,7 @@
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendBlogModel implements FrontendTagsInterface

@@ -61,6 +61,9 @@ class BackendMailer
 		if(!SpoonFilter::isEmail($email['reply_to_email'])) throw new BackendException('Invalid e-mail address for reply-to address.');
 
 		// build array
+		$email['to_name'] = SpoonFilter::htmlentitiesDecode($email['to_name']);
+		$email['from_name'] = SpoonFilter::htmlentitiesDecode($email['from_name']);
+		$email['reply_to_name'] = SpoonFilter::htmlentitiesDecode($email['reply_to_name']);
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
 		if($isRawHTML) $email['html'] = $template;
 		else $email['html'] = self::getTemplateContent($template, $variables);
@@ -189,9 +192,6 @@ class BackendMailer
 		$search = array('href="/', 'src="/');
 		$replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 		$content = str_replace($search, $replace, $content);
-
-		// require CSSToInlineStyles
-		require_once 'external/css_to_inline_styles.php';
 
 		// create instance
 		$cssToInlineStyles = new CSSToInlineStyles();

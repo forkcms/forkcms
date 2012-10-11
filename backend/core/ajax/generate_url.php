@@ -10,7 +10,7 @@
 /**
  * This action will generate a valid url based upon the submitted url.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 {

@@ -10,7 +10,7 @@
 /**
  * Installer for the location module
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class LocationInstaller extends ModuleInstaller
 {

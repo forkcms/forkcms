@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendBlockExtra extends FrontendBaseObject
 {
@@ -324,7 +324,7 @@ class FrontendBlockExtra extends FrontendBaseObject
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendBlockWidget extends FrontendBaseObject
 {
@@ -399,6 +399,9 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
+
+		// when including a widget from the template modifier, this wasn't checked yet
+		if(!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php')) throw new FrontendException('The actionfile is not present');
 
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
 		require_once $frontendModulePath . '/widgets/' . $this->getAction() . '.php';

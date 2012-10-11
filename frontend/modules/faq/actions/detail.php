@@ -114,11 +114,11 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	private function parse()
 	{
 		// add to breadcrumb
-		$this->breadcrumb->addElement($this->record['category_title'], $this->record['category_full_url']);
+		if($this->settings['allow_multiple_categories']) $this->breadcrumb->addElement($this->record['category_title'], $this->record['category_full_url']);
 		$this->breadcrumb->addElement($this->record['question']);
 
 		// set meta
-		$this->header->setPageTitle($this->record['category_title']);
+		if($this->settings['allow_multiple_categories']) $this->header->setPageTitle($this->record['category_title']);
 		$this->header->setPageTitle($this->record['question']);
 
 		// assign article

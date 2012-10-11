@@ -10,7 +10,7 @@
 /**
  * This action will delete an item
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendLocationDelete extends BackendBaseActionDelete
 {

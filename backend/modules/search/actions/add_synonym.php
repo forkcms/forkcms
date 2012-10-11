@@ -11,7 +11,7 @@
  * BackendSearchAddSynonym
  * This is the add-action, it will display a form to create a new synonym
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendSearchAddSynonym extends BackendBaseActionAdd
 {

@@ -10,7 +10,7 @@
 /**
  * This is a widget with the related items based on tags
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class FrontendTagsWidgetRelated extends FrontendBaseWidget

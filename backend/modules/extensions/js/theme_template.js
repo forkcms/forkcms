@@ -1,7 +1,7 @@
 /**
  * Interaction for the pages templates
  *
- * @author	Matthias Mullie <matthias@mullie.eu>
+ * @author	Matthias Mullie <forkcms@mullie.eu>
  */
 jsBackend.template =
 {
@@ -133,7 +133,7 @@ jsBackend.template =
 			$('.defaultBlock', this).each(function(i)
 			{
 				// fetch block index
-				var blockIndex = $(this).prevAll('div.defaultBlock').length + 1;
+				var blockIndex = $(this).prevAll('div.defaultBlock').length;
 
 				// update for id & name
 				$('select[id^=type]', this).attr('id', 'type' + positionIndex + blockIndex).attr('name', 'type_' + positionIndex + '_' + blockIndex);

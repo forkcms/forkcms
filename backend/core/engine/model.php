@@ -12,6 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Reclamebureau Siesqo <info@siesqo.be>
  */
 class BackendModel
 {
@@ -230,6 +231,25 @@ class BackendModel
 	}
 
 	/**
+	 * Delete all extras for a certain value in the data array of that module_extra.
+	 *
+	 * @param string $module 			The module for the extra.
+	 * @param string $field 			The field of the data you want to check the value for.
+	 * @param string $value 			The value to check the field for.
+	 */
+	public function deleteExtrasForData($module, $field, $value)
+	{
+		// get ids
+		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value);
+
+		// delete extras
+		if(!empty($ids)) BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+
+		// invalidate the cache for the module
+		BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+	}
+
+	/**
 	 * Generate a totally random but readable/speakable password
 	 *
 	 * @param int[optional] $length The maximum length for the password to generate.
@@ -399,6 +419,74 @@ class BackendModel
 		}
 
 		return Spoon::get('database');
+	}
+
+	/**
+	 * Get extras
+	 *
+	 * @param array $ids 	The ids of the modules_extras to get.
+	 * @return array
+	 */
+	public static function getExtras($ids)
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// loop and cast to integers
+		foreach($ids as &$id) $id = (int) $id;
+
+		// create an array with an equal amount of questionmarks as ids provided
+		$extraIdPlaceHolders = array_fill(0, count($ids), '?');
+
+		// get extras
+		return (array) $db->getRecords('SELECT i.*
+										FROM modules_extras AS i
+										WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
+										$ids);
+	}
+
+	/**
+	 * Get extras for data
+	 *
+	 * @param string $module 	The module for the extra.
+	 * @param string $key 		The key of the data you want to check the value for.
+	 * @param string $value 	The value to check the key for.
+	 * @return array			The ids for the extras.
+	 */
+	public static function getExtrasForData($module, $key, $value)
+	{
+		// init variables
+		$module = (string) $module;
+		$key = (string) $key;
+		$value = (string) $value;
+		$result = array();
+
+		// get all possible extras
+		$items = (array) BackendModel::getDB(true)->getPairs(
+			'SELECT i.id, i.data
+			 FROM modules_extras AS i
+			 WHERE i.module = ? AND i.data != ?',
+			 array($module, 'NULL')
+		);
+
+		// stop here when no items
+		if(empty($items)) return $result;
+
+		// loop items
+		foreach($items as $id => $data)
+		{
+			// unserialize data
+			$data = unserialize($data);
+
+			// check if the field is present in the data and add it to result
+			if(isset($data[$key]) && $data[$key] == $value)
+			{
+				// add id to result
+				$result[] = $id;
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -1147,9 +1235,6 @@ class BackendModel
 		// invalid key, so we can't detect spam
 		if($akismetKey === '') return false;
 
-		// require the class
-		require_once PATH_LIBRARY . '/external/akismet.php';
-
 		// create new instance
 		$akismet = new Akismet($akismetKey, SITE_URL);
 
@@ -1197,9 +1282,6 @@ class BackendModel
 
 		// invalid key, so we can't detect spam
 		if($akismetKey === '') return false;
-
-		// require the class
-		require_once PATH_LIBRARY . '/external/akismet.php';
 
 		// create new instance
 		$akismet = new Akismet($akismetKey, SITE_URL);
@@ -1336,5 +1418,60 @@ class BackendModel
 			'hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
 			array($eventModule, $eventName, $module)
 		);
+	}
+
+	/**
+	 * Update extra
+	 *
+	 * @param int $id			The id for the extra.
+	 * @param string $key		The key you want to update.
+	 * @param string $value 	The new value.
+	 */
+	public static function updateExtra($id, $key, $value)
+	{
+		// error checking the key
+		if(!in_array((string) $key, array('label', 'action', 'data', 'hidden', 'sequence')))
+		{
+			throw new BackendException('The key ' . $key . ' can\'t be updated.');
+		}
+
+		// init item
+		$item = array();
+
+		// build item
+		$item[(string) $key] = (string) $value;
+
+		// update the extra
+		BackendModel::getDB(true)->update('modules_extras', $item, 'id = ?', array((int) $id));
+	}
+
+	/**
+	 * Update extra data
+	 *
+	 * @param int $id			The id for the extra.
+	 * @param string $key		The key in the data you want to update.
+	 * @param string $value		The new value.
+	 */
+	public static function updateExtraData($id, $key, $value)
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get data
+		$data = (string) $db->getVar(
+			'SELECT i.data
+			 FROM modules_extras AS i
+			 WHERE i.id = ?',
+			 array((int) $id)
+		);
+
+		// unserialize data
+		$data = unserialize($data);
+
+		// built item
+		$data[(string) $key] = (string) $value;
+
+		// update value
+		$db->update('modules_extras', array('data' => serialize($data)), 'id = ?', array((int) $id));
 	}
 }

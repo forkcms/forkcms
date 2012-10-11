@@ -36,6 +36,10 @@
         <translation language="lt"><![CDATA[leisti atsiliepimus]]></translation>
         <translation language="sv"><![CDATA[tillåt återkoppling]]></translation>
       </item>
+      <item type="label" name="AllowMultipleCategories">
+        <translation language="nl"><![CDATA[meerdere categorieën toestaan]]></translation>
+        <translation language="en"><![CDATA[multiple categories allowed]]></translation>
+      </item>
       <item type="label" name="AllowOwnQuestion">
         <translation language="nl"><![CDATA[gebruikersvragen toelaten]]></translation>
         <translation language="en"><![CDATA[allow user questions]]></translation>
@@ -155,6 +159,10 @@
         <translation language="hu"><![CDATA[Nem megendegett, hogy töröld a(z) "%1$s" kategóriát.]]></translation>
         <translation language="sv"><![CDATA[Det inte tillåtet till ta bort kategorin "%1$s".]]></translation>
       </item>
+      <item type="error" name="OnlyOneCategoryAllowed">
+        <translation language="nl"><![CDATA[Het gebruik van meerdere categorieën is niet toegelaten.]]></translation>
+        <translation language="en"><![CDATA[The use of multiple categories is not allowed.]]></translation>
+      </item>
       <item type="error" name="QuestionIsRequired">
         <translation language="nl"><![CDATA[De vraag is verplicht.]]></translation>
         <translation language="en"><![CDATA[The question is required.]]></translation>
@@ -261,4 +269,12 @@
       </item>
     </faq>
   </backend>
+  <frontend>
+  	<core>
+      <item type="message" name="OtherQuestions">
+        <translation language="nl"><![CDATA[Andere vragen]]></translation>
+        <translation language="en"><![CDATA[Other questions]]></translation>
+      </item>
+	</core>
+  </frontend>
 </locale>

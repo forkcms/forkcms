@@ -1,7 +1,7 @@
 /**
  * Interaction for the pages templates
  *
- * @author	Matthias Mullie <matthias@mullie.eu>
+ * @author	Matthias Mullie <forkcms@mullie.eu>
  */
 jsBackend.templates =
 {

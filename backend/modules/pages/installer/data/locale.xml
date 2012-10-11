@@ -5,6 +5,7 @@
         <item type="label" name="Navigation">
           <translation language="nl"><![CDATA[navigatie]]></translation>
           <translation language="en"><![CDATA[navigation]]></translation>
+          <translation language="ru"><![CDATA[навигация]]></translation>
         </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
@@ -235,6 +236,7 @@
       <item type="message" name="AllowChildren">
         <translation language="nl"><![CDATA[Deze pagina mag subpagina's bevatten.]]></translation>
         <translation language="en"><![CDATA[This page can have subpages.]]></translation>
+        <translation language="ru"><![CDATA[Страница может иметь подстраницы.]]></translation>
         <translation language="de"><![CDATA[Diese Seite kann Unterseiten haben.]]></translation>
         <translation language="es"><![CDATA[Esta págna puede tener subpáginas.]]></translation>
         <translation language="hu"><![CDATA[Ezen az oldalon lehetnek aloldalak.]]></translation>
@@ -242,6 +244,7 @@
       <item type="message" name="AllowDelete">
         <translation language="nl"><![CDATA[Deze pagina mag verwijderd worden.]]></translation>
         <translation language="en"><![CDATA[This page can be deleted.]]></translation>
+        <translation language="ru"><![CDATA[Страница может быть удалена.]]></translation>
         <translation language="de"><![CDATA[Diese Seite kann gelöscht werden.]]></translation>
         <translation language="es"><![CDATA[Esta página puede eliminarse.]]></translation>
         <translation language="hu"><![CDATA[Ez az oldal törölhető.]]></translation>
@@ -249,6 +252,7 @@
       <item type="message" name="AllowEdit">
         <translation language="nl"><![CDATA[Deze pagina mag bewerkt worden.]]></translation>
         <translation language="en"><![CDATA[This page can be edited.]]></translation>
+        <translation language="ru"><![CDATA[Страница может быть отредактирована.]]></translation>
         <translation language="de"><![CDATA[Diese Seite kann bearbeitet werden.]]></translation>
         <translation language="es"><![CDATA[Esta página puede editarse.]]></translation>
         <translation language="hu"><![CDATA[Ez az oldal szerkeszthető.]]></translation>
@@ -256,6 +260,7 @@
       <item type="message" name="AllowMove">
         <translation language="nl"><![CDATA[Deze pagina mag verplaatst worden naar een andere positie.]]></translation>
         <translation language="en"><![CDATA[The position of this page can be changed.]]></translation>
+        <translation language="ru"><![CDATA[Положение страницы может быть изменено.]]></translation>
         <translation language="de"><![CDATA[Die Position dieser Seite kann geändert werden.]]></translation>
         <translation language="es"><![CDATA[La posición de esta página puede cambiarse.]]></translation>
         <translation language="hu"><![CDATA[A pozíció az oldalon változtatható.]]></translation>
@@ -521,6 +526,7 @@
 			<item type="label" name="Parent">
 				<translation language="nl"><![CDATA[ouder]]></translation>
 				<translation language="en"><![CDATA[parent]]></translation>
+				<translation language="ru"><![CDATA[родитель]]></translation>
 			</item>
 		</core>
 	</frontend>

@@ -404,7 +404,7 @@ class BackendProfilesModel
 		$displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
 		// urlise
-		$url = (string) $displayName;
+		$url = SpoonFilter::urlise($displayName);
 
 		// get db
 		$db = BackendModel::getDB();

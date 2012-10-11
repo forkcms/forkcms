@@ -10,7 +10,7 @@
 /**
  * Installer for the search module
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class SearchInstaller extends ModuleInstaller

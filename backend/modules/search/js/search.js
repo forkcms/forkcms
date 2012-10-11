@@ -1,7 +1,7 @@
 /**
  * All methods related to the search
  *
- * @author	Matthias Mullie <matthias@mullie.eu>
+ * @author	Matthias Mullie <forkcms@mullie.eu>
  */
 jsBackend.search =
 {

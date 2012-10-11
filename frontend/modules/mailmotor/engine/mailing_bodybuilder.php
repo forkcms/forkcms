@@ -33,11 +33,6 @@ class MailingBodyBuilder
 		'medium' => '',
 	);
 
-	public function __construct()
-	{
-		require 'external/css_to_inline_styles.php';
-	}
-
 	/**
 	 * Builds and returns the generated mailing body HTML or plaintext.
 	 *

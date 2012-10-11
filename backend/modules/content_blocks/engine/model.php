@@ -12,7 +12,7 @@
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class BackendContentBlocksModel
@@ -201,7 +201,7 @@ class BackendContentBlocksModel
 			'id' => $item['id'],
 			'extra_label' => $item['title'],
 			'language' => $item['language'],
-			'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+			'edit_url' => BackendModel::createURLForAction('edit', 'content_blocks', $item['language']) . '&id=' . $item['id'])
 		);
 		$db->update(
 			'modules_extras',

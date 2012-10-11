@@ -1,20 +1,48 @@
-3.4.4 (xxxx-xx-xx)
+3.5.0 (xxxx-xx-xx)
 --
 Improvements:
 
-* Core: Upgraded Highcharts to 2.3.1
-* Core: Upgraded CKFinder to 2.3.0
-* Formbuilder: added API-methods.
+* With the 3.5.0 release, Fork CMS will be available under the MIT-license.
+* Core: allow people to define their own errorhandler.
+* Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
+* Start using Composer to handle dependencies. See more info in the README.md.
+* Core: Akismet and CssToinlineStyles are now installed with Composer.
+* Core: Upgraded Highcharts to 2.3.3
+* Core: Upgraded to jQuery UI 1.8.24
+* Core: Upgraded to CKEditor 3.6.5
 
 Bugfixes:
 
+* Users: Added fix so users can't edit other profiles.
+* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
+
+
+3.4.4 (2012-09-12)
+--
+Improvements:
+
+* Location: Fixed location widget. When debug = false, google wasn't loaded correctly. Thx to siesqo
+* Users: User can't change its own rights when not allowed to view the index.
+* Core: Upgraded Highcharts to 2.3.2
+* Core: Upgraded CKFinder to 2.3.0
+* Formbuilder: added API-methods.
+* FAQ: Setting for "one category" added, so user only has 1 category in the website + the category title is hidden in the frontend (for smaller websites).
+* Core: removed ini_set's. Let the server handle this.
+
+Bugfixes:
+
+* Mailer: The names are now decoded, so bugs with apostrofs in names are fixed. Thx to siesqo
 * Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
+* Themes: templates extras_data from other languages was overwritten.
+* Themes: incorrect block index was set when deleting a position causing all default blocks to be unlinked.
+* Core: exceptions were not displayed on CLI when SPOON_DEBUG was off. A minimal debug message was added.
 
 
 3.4.3 (2012-08-28)
 --
 Improvements:
 
+* Core: Added functions to manage modules_extras, can be used for custom widgets.
 * Core: Upgraded to jQuery 1.8
 * Core: Upgraded to jQuery UI 1.8.23
 * Blog: Added blog.comments.delete in the API.

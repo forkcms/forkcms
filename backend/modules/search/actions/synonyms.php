@@ -10,7 +10,7 @@
 /**
  * This is the synonyms-action, it will display the overview of search synonyms
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendSearchSynonyms extends BackendBaseActionIndex
 {

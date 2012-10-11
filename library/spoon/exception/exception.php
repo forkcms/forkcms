@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		0.1.1
  */
 class SpoonException extends Exception
@@ -86,8 +87,7 @@ class SpoonException extends Exception
 }
 
 
-// Redefine the exception handler if we are not running in the command line.
-if(!Spoon::inCli()) set_exception_handler('exceptionHandler');
+set_exception_handler('exceptionHandler');
 
 
 /**
@@ -113,6 +113,7 @@ function exceptionHandler($exception)
 	// request uri?
 	if(!isset($_SERVER['HTTP_HOST'])) $_SERVER['HTTP_HOST'] = '';
 	if(!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = '';
+	if(!isset($_SERVER['REQUEST_METHOD'])) $_SERVER['REQUEST_METHOD'] = '';
 
 	// user agent
 	$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '<i>(Unknown)</i>';
@@ -371,8 +372,17 @@ function exceptionHandler($exception)
 	// default exception handling
 	else
 	{
+		// on CLI we have no use for 2000 lines long report, show short info
+		if(Spoon::inCli())
+		{
+			echo $name . "\n";
+			echo 'Message: ' . $exception->getMessage() . "\n";
+			echo 'File: ' . $exception->getFile() . "\n";
+			echo 'Line: ' . $exception->getLine() . "\n";
+		}
+
 		// debugging enabled (show output)
-		if(SPOON_DEBUG) echo $output;
+		elseif(SPOON_DEBUG) echo $output;
 
 		// debugging disabled
 		else echo SPOON_DEBUG_MESSAGE;

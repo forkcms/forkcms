@@ -10,7 +10,7 @@
 /**
  * This is the save-action, it will save the searched term in the statistics
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendSearchAjaxSave extends FrontendBaseAJAXAction
 {

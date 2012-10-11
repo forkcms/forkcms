@@ -5,7 +5,7 @@
 
 
 {option:!faqCategories}
-	<div id="blogIndex">
+	<div id="faqIndex">
 		<section class="mod">
 			<div class="inner">
 				<div class="bd content">
@@ -17,8 +17,9 @@
 {/option:!faqCategories}
 
 {option:faqCategories}
-	<section id="faq" class="mod">
+	<section id="faqIndex" class="mod">
 		<div class="inner">
+        	{option:allowMultipleCategories}
 			<div class="hd">
 				<ul>
 					{iteration:faqCategories}
@@ -26,13 +27,16 @@
 					{/iteration:faqCategories}
 				</ul>
 			</div>
+        	{/option:allowMultipleCategories}
 			<div class="bd">
 				{iteration:faqCategories}
 					<section class="mod">
 						<div class="inner">
+                        	{option:allowMultipleCategories}
 							<header class="hd">
 								<h3 id="{$faqCategories.url}"><a href="{$faqCategories.full_url}" title="{$faqCategories.title}">{$faqCategories.title}</a></h3>
 							</header>
+                            {/option:allowMultipleCategories}
 
 							<div class="bd content">
 								<ul>

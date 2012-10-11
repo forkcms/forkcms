@@ -10,7 +10,7 @@
 /**
  * This is the location-widget: 1 specific address
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -29,7 +29,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 		parent::execute();
 
 		// add Google Maps
-		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true);
+		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
 
 		$this->loadTemplate();
 		$this->loadData();

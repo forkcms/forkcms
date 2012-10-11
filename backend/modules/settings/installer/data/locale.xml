@@ -47,6 +47,7 @@
       <item type="label" name="LicenseKey">
         <translation language="nl"><![CDATA[Licentie key]]></translation>
         <translation language="en"><![CDATA[License key]]></translation>
+        <translation language="ru"><![CDATA[Лицензионный ключ]]></translation>
         <translation language="de"><![CDATA[Lizenz-Schlüssel]]></translation>
         <translation language="es"><![CDATA[llave de licencia]]></translation>
         <translation language="uk"><![CDATA[Ліцензійний ключ]]></translation>
@@ -55,6 +56,7 @@
       <item type="label" name="LicenseName">
         <translation language="nl"><![CDATA[Licentie naam]]></translation>
         <translation language="en"><![CDATA[License name]]></translation>
+        <translation language="ru"><![CDATA[Название лицензии]]></translation>
         <translation language="de"><![CDATA[Lizenz-Name]]></translation>
         <translation language="es"><![CDATA[nombre de licencia]]></translation>
         <translation language="uk"><![CDATA[Назва ліцензії]]></translation>
@@ -63,6 +65,7 @@
       <item type="label" name="MaximumHeight">
         <translation language="nl"><![CDATA[maximale hoogte]]></translation>
         <translation language="en"><![CDATA[maximum height]]></translation>
+        <translation language="ru"><![CDATA[максимальная высота]]></translation>
         <translation language="de"><![CDATA[maximale Höhe]]></translation>
         <translation language="es"><![CDATA[altura máxima]]></translation>
         <translation language="uk"><![CDATA[Максимальна висота]]></translation>
@@ -71,6 +74,7 @@
       <item type="label" name="MaximumWidth">
         <translation language="nl"><![CDATA[maximale breedte]]></translation>
         <translation language="en"><![CDATA[maximum width]]></translation>
+        <translation language="ru"><![CDATA[максимальная ширина]]></translation>
         <translation language="de"><![CDATA[maximale Breite]]></translation>
         <translation language="es"><![CDATA[ancho máximo]]></translation>
         <translation language="uk"><![CDATA[Максимальна ширина]]></translation>
@@ -114,6 +118,7 @@
       <item type="message" name="HelpCkfinderMaximumHeight">
         <translation language="nl"><![CDATA[Stel de maximale hoogte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
         <translation language="en"><![CDATA[Configure the maximum height (in pixels) that CKFinder can be opened at.]]></translation>
+        <translation language="ru"><![CDATA[Настроить максимальную высоту (в пикселях) можно в CKFinder.]]></translation>
         <translation language="de"><![CDATA[Stelle die maximale Höhe (in Pixeln) ein, in der CKFinder geöffnet werden kann.]]></translation>
         <translation language="es"><![CDATA[Configura la máxima altura (en pixeles) en que puede abrirse CKFinder.]]></translation>
         <translation language="hu"><![CDATA[A maximum magasság (pixelben) beállítása, hogy hogy nyiljon meg a CKFinder.]]></translation>
@@ -121,6 +126,7 @@
       <item type="message" name="HelpCkfinderMaximumWidth">
         <translation language="nl"><![CDATA[Stel de maximale breedte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
         <translation language="en"><![CDATA[Configure the maximum width (in pixels) that CKFinder can be opened at.]]></translation>
+        <translation language="ru"><![CDATA[Настроить максимальную ширину (в пикселях) можно в CKFinder.]]></translation>
         <translation language="de"><![CDATA[Stelle die maximale Breite (in Pixeln) ein, in der CKFinder geöffnet werden kann.]]></translation>
         <translation language="es"><![CDATA[Configura el ancho máximo (en pixeles) en que puede abrirse CKFinder.]]></translation>
         <translation language="hu"><![CDATA[A maximum szélesség (pixelben) beállítása, hogy hogy nyiljon meg a CKFinder.]]></translation>

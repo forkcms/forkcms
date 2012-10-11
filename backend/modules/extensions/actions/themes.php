@@ -10,7 +10,7 @@
 /**
  * This is the themes-action, it will display the overview of modules.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendExtensionsThemes extends BackendBaseActionIndex
 {

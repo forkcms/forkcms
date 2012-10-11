@@ -13,9 +13,17 @@
  * @remark:	IMPORTANT existing data will be removed, this feature is also expiremental!
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Sam Tubbax <sam@sumocoders.be>
  */
 class BackendPagesCopy extends BackendBaseActionDelete
 {
+	/**
+	 * The languages
+	 *
+	 * @var string
+	 */
+	private $from, $to;
+
 	/**
 	 * Execute the action
 	 */
@@ -25,22 +33,67 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		parent::execute();
 
 		// get parameters
-		$from = $this->getParameter('from');
-		$to = $this->getParameter('to');
+		$this->from = $this->getParameter('from');
+		$this->to = $this->getParameter('to');
 
 		// validate
-		if($from == '') throw new BackendException('Specify a from-parameter.');
-		if($to == '') throw new BackendException('Specify a to-parameter.');
+		if($this->from == '') throw new BackendException('Specify a from-parameter.');
+		if($this->to == '') throw new BackendException('Specify a to-parameter.');
 
 		// get db
 		$db = BackendModel::getDB(true);
+
+
+		// copy the contentblocks
+		$contentBlocks = $db->getRecords('SELECT * FROM content_blocks WHERE language = ? AND status = "active"', $this->from);
+		$oldIds = array();
+		$newIds = array();
+
+		$i = 1;
+		foreach($contentBlocks as $contentBlock)
+		{
+			$oldId = $contentBlock['extra_id'];
+			$newBlock = array();
+			$newBlock['id'] = BackendContentBlocksModel::getMaximumId() + $i;
+			$newBlock['language'] = $this->to;
+			$newBlock['created_on'] = BackendModel::getUTCDate();
+			$newBlock['edited_on'] = BackendModel::getUTCDate();
+			$newBlock['status'] = $contentBlock['status'];
+			$newBlock['user_id'] = BackendAuthentication::getUser()->getUserId();
+			$newBlock['template'] = $contentBlock['template'];
+			$newBlock['title'] = $contentBlock['title'];
+			$newBlock['text'] = $contentBlock['text'];
+			$newBlock['hidden'] = $contentBlock['hidden'];
+
+			$newId = BackendContentBlocksModel::insert($newBlock);
+
+			// save ids for later
+			$oldIds[] = $oldId;
+			$newIds[$oldId] = $newId;
+
+			$i++;
+		}
+
+		$contentBlockIds = array();
+		// get the extra Ids for the content blocks
+		if(!empty($newIds))
+		{
+			$contenBlockExtraIds = (array) $db->getRecords('SELECT revision_id, extra_id FROM content_blocks WHERE revision_id IN (' . implode(',', $newIds) . ')');
+			foreach($newIds as $oldId => $newId)
+			{
+				foreach($contenBlockExtraIds as $extraId)
+				{
+					if($extraId['revision_id'] == $newId) $contentBlockIds[$oldId] = $extraId['extra_id'];
+				}
+			}
+		}
 
 		// get all old pages
 		$ids = $db->getColumn(
 			'SELECT id
 			 FROM pages AS i
 			 WHERE i.language = ? AND i.status = ?',
-			array($to, 'active')
+			array($this->to, 'active')
 		);
 
 		// any old pages
@@ -57,7 +110,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 					'SELECT i.revision_id
 					 FROM pages AS i
 					 WHERE i.id = ? AND i.language = ?',
-					array($id, $to)
+					array($id, $this->to)
 				);
 
 				// get meta ids
@@ -65,7 +118,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 					'SELECT i.meta_id
 					 FROM pages AS i
 					 WHERE i.id = ? AND i.language = ?',
-					array($id, $to)
+					array($id, $this->to)
 				);
 
 				// delete meta records
@@ -80,21 +133,21 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		}
 
 		// delete search indexes
-		$db->delete('search_index', 'module = ? AND language = ?', array('pages', $to));
+		$db->delete('search_index', 'module = ? AND language = ?', array('pages', $this->to));
 
 		// get all active pages
 		$ids = BackendModel::getDB()->getColumn(
 			'SELECT id
 			 FROM pages AS i
 			 WHERE i.language = ? AND i.status = ?',
-			array($from, 'active')
+			array($this->from, 'active')
 		);
 
 		// loop
 		foreach($ids as $id)
 		{
 			// get data
-			$sourceData = BackendPagesModel::get($id, null, $from);
+			$sourceData = BackendPagesModel::get($id, null, $this->from);
 
 			// get and build meta
 			$meta = $db->getRecord(
@@ -114,7 +167,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 			$page['parent_id'] = $sourceData['parent_id'];
 			$page['template_id'] = $sourceData['template_id'];
 			$page['meta_id'] = (int) $db->insert('meta', $meta);
-			$page['language'] = $to;
+			$page['language'] = $this->to;
 			$page['type'] = $sourceData['type'];
 			$page['title'] = $sourceData['title'];
 			$page['navigation_title'] = $sourceData['navigation_title'];
@@ -139,7 +192,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 			$hasBlock = ($sourceData['has_extra'] == 'Y');
 
 			// get the blocks
-			$sourceBlocks = BackendPagesModel::getBlocks($id, null, $from);
+			$sourceBlocks = BackendPagesModel::getBlocks($id, null, $this->from);
 
 			// loop blocks
 			foreach($sourceBlocks as $sourceBlock)
@@ -149,6 +202,11 @@ class BackendPagesCopy extends BackendBaseActionDelete
 				$block['revision_id'] = $revisionId;
 				$block['created_on'] = BackendModel::getUTCDate();
 				$block['edited_on'] = BackendModel::getUTCDate();
+
+				if(in_array($block['extra_id'], $oldIds))
+				{
+					$block['extra_id'] = $contentBlockIds[$block['extra_id']];
+				}
 
 				// add block
 				$blocks[] = $block;
@@ -167,17 +225,17 @@ class BackendPagesCopy extends BackendBaseActionDelete
 				foreach($blocks as $block) $text .= ' ' . $block['html'];
 
 				// add
-				BackendSearchModel::saveIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text), $to);
+				BackendSearchModel::saveIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text), $this->to);
 			}
 
 			// get tags
-			$tags = BackendTagsModel::getTags('pages', $id, 'string', $from);
+			$tags = BackendTagsModel::getTags('pages', $id, 'string', $this->from);
 
 			// save tags
 			if($tags != '') BackendTagsModel::saveTags($page['id'], $tags, 'pages');
 		}
 
 		// build cache
-		BackendPagesModel::buildCache($to);
+		BackendPagesModel::buildCache($this->to);
 	}
 }

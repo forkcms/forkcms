@@ -10,7 +10,7 @@
 /**
  * This is the edit synonym action, it will display a form to edit an existing synonym.
  *
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendSearchEditSynonym extends BackendBaseActionEdit
 {

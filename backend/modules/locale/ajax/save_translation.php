@@ -11,7 +11,7 @@
  * This action will update a translation using AJAX
  *
  * @author Lowie Benoot <lowie.benoot@netlash.com>
- * @author Matthias Mullie <matthias@mullie.eu>
+ * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 {

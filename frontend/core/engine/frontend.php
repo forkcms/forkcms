@@ -36,14 +36,16 @@ class Frontend
 		// needed data available?
 		if($facebookApplicationId != '' && $facebookApplicationSecret != '')
 		{
-			// require
-			require_once 'external/facebook.php';
+			$config = array(
+				'appId' => $facebookApplicationId,
+				'secret' => $facebookApplicationSecret,
+			);
 
 			// create instance
-			$facebook = new Facebook($facebookApplicationSecret, $facebookApplicationId);
+			$facebook = new Facebook($config);
 
-			// get the cookie, this will set the access token.
-			$facebook->getCookie();
+			// grab the signed request, if a user is logged in the access token will be set
+			$facebook->getSignedRequest();
 
 			// store in reference
 			Spoon::set('facebook', $facebook);
