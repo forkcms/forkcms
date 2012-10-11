@@ -1256,7 +1256,7 @@
 				if(index > -1) elements.splice(index, 1);
 
 				// set new value
-				$('#' + id).val(elements.join(options.splitChar));
+				$('#' + id).val(elements);
 
 				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', false);
 
