@@ -29,7 +29,7 @@ class Autoloader
 		$exceptions['backend'] = PATH_WWW . '/backend/core/engine/backend.php';
 		$exceptions['backendajaxaction'] = PATH_WWW . '/backend/core/engine/ajax_action.php';
 		$exceptions['fl'] = PATH_WWW . '/frontend/core/engine/language.php';
-		$exceptions['bl'] = PATH_WWW . '/backend/core/language.php';
+		$exceptions['bl'] = PATH_WWW . '/backend/core/engine/language.php';
 		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
 
 		// is it an exception?

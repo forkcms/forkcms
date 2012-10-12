@@ -1,5 +1,7 @@
 <?php
 
+require_once '../../../autoload.php';
+
 /**
  * Client for the Fork CMS API.
  *
@@ -19,10 +21,6 @@ class APIClient extends API
 
 	public function __construct()
 	{
-		require_once 'spoon/form/form.php';
-		require_once 'spoon/form/button.php';
-		require_once 'spoon/template/template.php';
-
 		$this->tpl = new SpoonTemplate();
 		$this->tpl->setForceCompile(true);
 		$this->tpl->setCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
