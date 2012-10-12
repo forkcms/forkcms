@@ -232,12 +232,12 @@ class BackendBlogModel
 		$itemIds = (array) $db->getColumn(
 			'SELECT i.post_id
 			 FROM blog_comments AS i
-			 WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ') AND i.language = ?',
-			array_merge($ids, array(BL::getWorkingLanguage()))
+			 WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
+			$ids
 		);
 
 		// update record
-		$db->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
+		$db->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
 		// recalculate the comment count
 		if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
