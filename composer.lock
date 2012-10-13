@@ -1,9 +1,9 @@
 {
-    "hash": "ab962600f83980fcdde233e03c9d4fcb",
+    "hash": "962a3776a1f0463d53ea1bcd4d0d656e",
     "packages": [
         {
             "name": "facebook/php-sdk",
-            "version": "dev-master",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "git://github.com/facebook/facebook-php-sdk.git",
@@ -20,7 +20,7 @@
                 "ext-curl": "*",
                 "ext-json": "*"
             },
-            "time": "1344965300",
+            "time": "2012-08-14 10:28:20",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -46,23 +46,23 @@
         },
         {
             "name": "tijsverkoyen/akismet",
-            "version": "dev-master",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/Akismet",
-                "reference": "43f297883e727f30234c07ae34b1b65826c7087f"
+                "reference": "1.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/tijsverkoyen/Akismet/zipball/43f297883e727f30234c07ae34b1b65826c7087f",
-                "reference": "43f297883e727f30234c07ae34b1b65826c7087f",
+                "url": "https://github.com/tijsverkoyen/Akismet/zipball/1.0.8",
+                "reference": "1.0.8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0",
                 "ext-curl": "*"
             },
-            "time": "1349014712",
+            "time": "2012-10-13 10:45:14",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -85,23 +85,23 @@
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
-            "version": "dev-master",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/CssToInlineStyles",
-                "reference": "fc2f1c5e7817351f0fba62c71c1791d19bb9cc08"
+                "reference": "1.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/tijsverkoyen/CssToInlineStyles/zipball/fc2f1c5e7817351f0fba62c71c1791d19bb9cc08",
-                "reference": "fc2f1c5e7817351f0fba62c71c1791d19bb9cc08",
+                "url": "https://github.com/tijsverkoyen/CssToInlineStyles/zipball/1.0.6",
+                "reference": "1.0.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0",
                 "ext-curl": "*"
             },
-            "time": "1349015591",
+            "time": "2012-10-13 10:49:09",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -128,9 +128,7 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "facebook/php-sdk": 20,
-        "tijsverkoyen/akismet": 20,
-        "tijsverkoyen/css-to-inline-styles": 20
-    }
+    "stability-flags": [
+
+    ]
 }

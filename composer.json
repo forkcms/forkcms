@@ -1,7 +1,7 @@
 {
 	"require": {
-		"facebook/php-sdk": "dev-master",
-		"tijsverkoyen/akismet": "dev-master",
-		"tijsverkoyen/css-to-inline-styles": "dev-master"
+		"facebook/php-sdk": "3.2.*",
+		"tijsverkoyen/akismet": "1.0.*",
+		"tijsverkoyen/css-to-inline-styles": "1.0.*"
 	}
 }
