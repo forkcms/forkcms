@@ -191,7 +191,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				if($this->frm->getField('akismet_key')->getValue() != BackendModel::getModuleSetting('core', 'akismet_key', null))
 				{
 					 // create instance
-					$akismet = new \TijsVerkoyen\Akismet\Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
+					$akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
 
 					// invalid key
 					if(!$akismet->verifyKey()) $this->frm->getField('akismet_key')->setError(BL::err('InvalidAPIKey'));
