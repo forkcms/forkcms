@@ -21,5 +21,5 @@ set :stage_dir, "deployment"
 
 require "capistrano/ext/multistage"
 require "sumodev_deploy"
-require "forkcms_3_deploy"
-require "forkcms_3_deploy/defaults"
+require "forkcms_deploy"
+require "forkcms_deploy/defaults"
