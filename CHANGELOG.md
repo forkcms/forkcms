@@ -16,6 +16,7 @@ Bugfixes:
 
 * Users: Added fix so users can't edit other profiles.
 * SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
+* DataGrid: do not overwrite existing row attributes when greying out a row.
 
 
 3.4.4 (2012-09-12)
