@@ -88,17 +88,6 @@ abstract class Kernel implements HttpKernelInterface
 	 */
 	public function loadEnvironmentConfiguration($environment)
 	{
-		$globalsFile = PATH_WWW . '/app/config/globals_' . $environment . '.php';
-
-		if(!file_exists($globalsFile))
-		{
-			throw new Exception($globalsFile . ' does not exist.');
-		}
-
-		// @todo expand and check for all necessary globals
-		if(!defined('DB_TYPE'))
-		{
-			require_once $globalsFile;
-		}
+		// @todo
 	}
 }
