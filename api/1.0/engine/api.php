@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 /**
  * This class defines the API.
  *
