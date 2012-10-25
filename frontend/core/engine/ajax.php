@@ -7,9 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * FrontendAJAX
  * This class will handle AJAX-related stuff
@@ -18,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendAJAX implements ContainerAwareInterface
+class FrontendAJAX extends FrontendKernelLoader
 {
 	/**
 	 * The action
@@ -26,13 +23,6 @@ class FrontendAJAX implements ContainerAwareInterface
 	 * @var	string
 	 */
 	private $action;
-
-	/**
-	 * The service container
-	 *
-	 * @var ContainerInterface
-	 */
-	private $container;
 
 	/**
 	 * The language
@@ -50,7 +40,12 @@ class FrontendAJAX implements ContainerAwareInterface
 
 	public function initialize()
 	{
-		FrontendModel::setContainer($this->container);
+		/*
+		 * @todo
+		 * In the long run models should not be a collection of static methods.
+		 * This should be considered temporary until that time comes.
+		 */
+		FrontendModel::setContainer($this->getKernel()->getContainer());
 
 		// get vars
 		$module = isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '';

@@ -368,8 +368,8 @@ class FrontendPage extends FrontendBaseObject
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
-			// all extras extend FrontendBaseObject, that implements ContainerAwareInterface
-			$extra->setContainer($this->getContainer());
+			// all extras extend FrontendBaseObject, which extends FrontendKernelLoader
+			$extra->setKernel($this->getKernel());
 			$extra->execute();
 
 			// overwrite the template

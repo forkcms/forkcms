@@ -7,9 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
@@ -20,15 +17,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class Frontend implements ContainerAwareInterface
+class Frontend extends FrontendKernelLoader
 {
-	/**
-	 * The service container
-	 *
-	 * @var ContainerInterface
-	 */
-	private $container;
-
 	/**
 	 * @var FrontendPage
 	 */
@@ -44,6 +34,9 @@ class Frontend implements ContainerAwareInterface
 
 	/**
 	 * Initializes the entire frontend; prelaod FB, URL, template and the requested page.
+	 *
+	 * This method exists because the service container needs to be set before
+	 * the page's functionality gets loaded.
 	 */
 	public function initialize()
 	{
@@ -52,19 +45,15 @@ class Frontend implements ContainerAwareInterface
 		 * In the long run models should not be a collection of static methods.
 		 * This should be considered temporary until that time comes.
 		 */
-		FrontendModel::setContainer($this->container);
+		FrontendModel::setContainer($this->getKernel()->getContainer());
 
 		$this->initializeFacebook();
 		new FrontendURL();
 		new FrontendTemplate();
 
-		/*
-		 * At this point we will load the rest of the page.
-		 * This method exists because the service container needs to be set before
-		 * the page's functionality gets loaded.
-		 */
+		// Load the rest of the page.
 		$this->page = new FrontendPage();
-		$this->page->setContainer($this->container);
+		$this->page->setKernel($this->getKernel());
 		$this->page->load();
 	}
 
@@ -95,13 +84,5 @@ class Frontend implements ContainerAwareInterface
 			// trigger event
 			FrontendModel::triggerEvent('core', 'after_facebook_initialization');
 		}
-	}
-
-	/**
-	 * @param ContainerInterface $container
-	 */
-	public function setContainer(ContainerInterface $container = null)
-	{
-		$this->container = $container;
 	}
 }

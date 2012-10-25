@@ -8,7 +8,6 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Application routing
@@ -36,11 +35,9 @@ class ApplicationRouting
 	);
 
 	/**
-	 * Dependency Injection container builder
-	 *
-	 * @var ContainerBuilder
+	 * @var Kernel
 	 */
-	private $container;
+	private $kernel;
 
 	/**
 	 * The actual request, formatted as a Symfony object.
@@ -49,17 +46,15 @@ class ApplicationRouting
 	 */
 	private $request;
 
-
 	/**
 	 * @param Request $request
-	 * @param ContainerInterface $container
+	 * @param Kernel $kernel
 	 */
-	public function __construct(Request $request, ContainerBuilder $container)
+	public function __construct(Request $request, Kernel $kernel)
 	{
 		$this->request = $request;
-		$this->container = $container;
+		$this->kernel = $kernel;
 
-		// process querystring
 		$this->processQueryString();
 	}
 
@@ -130,8 +125,12 @@ class ApplicationRouting
 				break;
 		}
 
-		// Load the page and pass along the service container
-		$application->setContainer($this->container);
+		// Load the page and pass along the application kernel
+		// @todo this is backwards. The kernel IS our application's core.
+		// This step is needed to bubble our container all the way to the action.
+		// Once we switch to bundles, the kernel will boot those bundles and pass the container.
+		// The kernel object itself is stored as a singleton in said container.
+		$application->setKernel($this->kernel);
 		$application->initialize();
 
 		return $application->display();

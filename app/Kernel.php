@@ -51,6 +51,16 @@ abstract class Kernel implements HttpKernelInterface
 		{
 			$this->loadEnvironmentConfiguration($this->environment);
 		}
+
+		$this->initializeContainer();
+	}
+
+	/**
+	 * @return ContainerInterface
+	 */
+	public function getContainer()
+	{
+		return $this->container;
 	}
 
 	/**
@@ -80,6 +90,34 @@ abstract class Kernel implements HttpKernelInterface
 			'kernel.debug' => $this->debug, // @todo in time, remove SPOON_DEBUG
 			'kernel.environment' => $this->environment,
 			// @todo moar info (paths, list of bundles,...)
+		);
+	}
+
+	/**
+	 * This will load a cached version of the service container, or build one from scratch.
+	 */
+	public function initializeContainer()
+	{
+		$this->container = $this->getContainerBuilder();
+
+		// load parameters config
+		$this->container->setParameter('database.type', DB_TYPE);
+		$this->container->setParameter('database.hostname', DB_HOSTNAME);
+		$this->container->setParameter('database.port', DB_PORT);
+		$this->container->setParameter('database.username', DB_USERNAME);
+		$this->container->setParameter('database.password', DB_PASSWORD);
+		$this->container->setParameter('database.database', DB_DATABASE);
+
+		$this->container->register('database', 'SpoonDatabase')
+						->addArgument('%database.type%')
+						->addArgument('%database.hostname%')
+						->addArgument('%database.username%')
+						->addArgument('%database.password%')
+						->addArgument('%database.database%')
+						->addArgument('%database.port%');
+
+		$this->container->get('database')->execute(
+			'SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"'
 		);
 	}
 

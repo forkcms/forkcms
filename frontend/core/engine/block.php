@@ -112,7 +112,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 		// create action-object
 		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
-		$this->object->setContainer($this->getContainer());
+		$this->object->setKernel($this->getKernel());
 
 		// validate if the execute-method is callable
 		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
@@ -414,6 +414,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 		// create action-object
 		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+		$this->object->setKernel($this->getKernel());
 
 		// validate if the execute-method is callable
 		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
