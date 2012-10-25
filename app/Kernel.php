@@ -7,9 +7,17 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderResolver;
+use Symfony\Component\Config\Loader\DelegatingLoader;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
@@ -18,7 +26,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-abstract class Kernel implements HttpKernelInterface
+abstract class Kernel implements KernelInterface
 {
 	/**
 	 * @var ContainerBuilder
@@ -82,13 +90,14 @@ abstract class Kernel implements HttpKernelInterface
 	/**
 	 * @return array
 	 */
-	public function getKernelParameters()
+	protected function getKernelParameters()
 	{
 		// @todo load names of active bundles
 
 		return array(
-			'kernel.debug' => $this->debug, // @todo in time, remove SPOON_DEBUG
-			'kernel.environment' => $this->environment,
+			'kernel_debug' => $this->debug, // @todo in time, remove SPOON_DEBUG
+			'kernel_environment' => $this->environment,
+			'kernel_server_protocol' => (strpos($_SERVER['SERVER_PROTOCOL'], 'HTTPS') === false),
 			// @todo moar info (paths, list of bundles,...)
 		);
 	}
@@ -96,36 +105,52 @@ abstract class Kernel implements HttpKernelInterface
 	/**
 	 * This will load a cached version of the service container, or build one from scratch.
 	 */
-	public function initializeContainer()
+	protected function initializeContainer()
 	{
 		$this->container = $this->getContainerBuilder();
 
 		// load parameters config
-		$this->container->setParameter('database.type', DB_TYPE);
-		$this->container->setParameter('database.hostname', DB_HOSTNAME);
-		$this->container->setParameter('database.port', DB_PORT);
-		$this->container->setParameter('database.username', DB_USERNAME);
-		$this->container->setParameter('database.password', DB_PASSWORD);
-		$this->container->setParameter('database.database', DB_DATABASE);
-
-		$this->container->register('database', 'SpoonDatabase')
-						->addArgument('%database.type%')
-						->addArgument('%database.hostname%')
-						->addArgument('%database.username%')
-						->addArgument('%database.password%')
-						->addArgument('%database.database%')
-						->addArgument('%database.port%');
-
-		$this->container->get('database')->execute(
-			'SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"'
-		);
+		$this->registerContainerConfiguration($this->getContainerLoader($this->container));
+		$this->registerServices();
 	}
 
 	/**
-	 * @param string $environment
+	 * @param ContainerInterface $container The service container
+	 * @return DelegatingLoader
 	 */
-	public function loadEnvironmentConfiguration($environment)
+	public function getContainerLoader(ContainerInterface $container)
 	{
-		// @todo
+		/**
+		 * The FileLocator used here is one from HttpKernel, so it understands Kernel context
+		 * and automatically looks for the right path.
+		 */
+		$locator = new FileLocator($this);
+		$resolver = new LoaderResolver(array(
+			new YamlFileLoader($container, $locator)
+			// @todo depending on what we need, this should be expanded.
+		));
+		return new DelegatingLoader($resolver);
 	}
+
+	/**
+	 * @todo
+	 * These methods need to be present in order to answer to interface requirements.
+	 * Most are only relevant when bundles are present, so we can't use them yet.
+	 */
+	public function boot(){}
+	public function getBundle($name, $first = true){}
+	public function getBundles(){}
+	public function getCacheDir(){}
+	public function getCharset(){}
+	public function getLogDir(){}
+	public function getName(){}
+	public function getRootDir(){}
+	public function getStartTime(){}
+	public function isClassInActiveBundle($class){}
+	public function isDebug(){}
+	public function locateResource($name, $dir = null, $first = true){}
+	public function registerBundles(){}
+	public function shutdown(){}
+	public function serialize($name){}
+	public function unserialize($value){}
 }

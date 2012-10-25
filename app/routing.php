@@ -126,10 +126,12 @@ class ApplicationRouting
 		}
 
 		// Load the page and pass along the application kernel
+		//
 		// @todo this is backwards. The kernel IS our application's core.
 		// This step is needed to bubble our container all the way to the action.
+		//
 		// Once we switch to bundles, the kernel will boot those bundles and pass the container.
-		// The kernel object itself is stored as a singleton in said container.
+		// The kernel object itself will then be stored as a singleton in said container.
 		$application->setKernel($this->kernel);
 		$application->initialize();
 

@@ -1,6 +1,53 @@
 {
-    "hash": "65fb69c75045d7426d84da77e846bc6c",
+    "hash": "e8637b817ff14426b6915186d822141e",
     "packages": [
+        {
+            "name": "symfony/config",
+            "version": "v2.1.2",
+            "target-dir": "Symfony/Component/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Config",
+                "reference": "v2.1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Config/zipball/v2.1.2",
+                "reference": "v2.1.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-08-22 06:48:41",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Config": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
+            "homepage": "http://symfony.com"
+        },
         {
             "name": "symfony/dependency-injection",
             "version": "v2.1.2",
@@ -27,7 +74,7 @@
                 "symfony/yaml": "2.1.*",
                 "symfony/config": "2.1.*"
             },
-            "time": "2012-09-17 20:41:57",
+            "time": "2012-09-17 16:41:57",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -81,7 +128,7 @@
                 "symfony/dependency-injection": "2.1.*",
                 "symfony/http-kernel": "2.1.*"
             },
-            "time": "2012-09-10 10:53:42",
+            "time": "2012-09-10 06:53:42",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -128,7 +175,7 @@
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-09-18 16:09:52",
+            "time": "2012-09-18 12:09:52",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -196,7 +243,7 @@
                 "symfony/dependency-injection": "2.1.*",
                 "symfony/finder": "2.1.*"
             },
-            "time": "2012-09-20 07:13:00",
+            "time": "2012-09-20 03:13:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -223,6 +270,53 @@
                 }
             ],
             "description": "Symfony HttpKernel Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.1.2",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml",
+                "reference": "v2.1.0-RC2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Yaml/zipball/v2.1.0-RC2",
+                "reference": "v2.1.0-RC2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-08-22 06:48:41",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com"
         }
     ],
