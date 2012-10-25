@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -19,15 +17,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class BackendBaseObject implements ContainerAwareInterface
+class BackendBaseObject extends BackendKernelLoader
 {
-	/**
-	 * The service container
-	 *
-	 * @var ContainerInterface
-	 */
-	protected $container;
-
 	/**
 	 * The current action
 	 *
@@ -60,6 +51,16 @@ class BackendBaseObject implements ContainerAwareInterface
 	}
 
 	/**
+	 * Returns the service container object
+	 *
+	 * return ContainerInterface
+	 */
+	public function getContainer()
+	{
+		return $this->getKernel()->getContainer();
+	}
+
+	/**
 	 * Return the database object from the service container
 	 *
 	 * @return SpoonDatabase
@@ -67,16 +68,6 @@ class BackendBaseObject implements ContainerAwareInterface
 	public function getDB()
 	{
 		return $this->getContainer()->get('database');
-	}
-
-	/**
-	 * Returns the service container object
-	 *
-	 * return ContainerInterface
-	 */
-	public function getContainer()
-	{
-		return $this->container;
 	}
 
 	/**
@@ -115,14 +106,6 @@ class BackendBaseObject implements ContainerAwareInterface
 
 		// set property
 		$this->action = (string) $action;
-	}
-
-	/**
-	 * @param ContainerInterface $container
-	 */
-	public function setContainer(ContainerInterface $container = null)
-	{
-		$this->container = $container;
 	}
 
 	/**

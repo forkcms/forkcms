@@ -35,7 +35,7 @@ class Backend extends BackendBaseObject
 		 * In the long run models should not be a collection of static methods.
 		 * This should be considered temporary until that time comes.
 		 */
-		BackendModel::setContainer($this->container);
+		BackendModel::setContainer($this->getKernel()->getContainer());
 
 		$URL = new BackendURL();
 		new BackendTemplate();
@@ -45,6 +45,6 @@ class Backend extends BackendBaseObject
 		$this->action = new BackendAction();
 		$this->action->setModule($URL->getModule());
 		$this->action->setAction($URL->getAction());
-		$this->action->setContainer($this->container);
+		$this->action->setKernel($this->getKernel());
 	}
 }
