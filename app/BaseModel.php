@@ -31,6 +31,19 @@ class BaseModel
 	 */
 	public static function getDB($write = false)
 	{
+		// If the container is not set at this point it probably means we're in the Fork installer
+		if(self::$container === null)
+		{
+			// Make sure we don't create multiple connections in the installation process
+			if(!Spoon::exists('database'))
+			{
+				require_once PATH_LIBRARY . '/globals.php';
+				Spoon::set('database', new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT));
+			}
+
+			return Spoon::get('database');
+		}
+
 		return self::$container->get('database');
 	}
 

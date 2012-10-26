@@ -101,27 +101,12 @@ class InstallerStep7 extends InstallerStep
 	/**
 	 * Creates the configuration files
 	 */
-	private function createConfigurationFiles()
+	private function createPHPConfig()
 	{
-		// build variables
-		$variables = array();
-		$variables['\'<debug-mode>\''] = SpoonSession::get('debug_mode') ? 'true' : 'false';
-		$variables['<spoon-debug-email>'] = SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email');
-		$variables['<database-name>'] = SpoonSession::get('db_database');
-		$variables['<database-hostname>'] = addslashes(SpoonSession::get('db_hostname'));
-		$variables['<database-username>'] = addslashes(SpoonSession::get('db_username'));
-		$variables['<database-password>'] = addslashes(SpoonSession::get('db_password'));
-		$variables['<database-port>'] = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306;
-		$variables['<site-domain>'] = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local';
-		$variables['<site-default-title>'] = 'Fork CMS';
-		$variables['\'<site-multilanguage>\''] = SpoonSession::get('multiple_languages') ? 'true' : 'false';
-		$variables['<path-www>'] = PATH_WWW;
-		$variables['<path-library>'] = PATH_LIBRARY;
-		$variables['<site-default-language>'] = SpoonSession::get('default_language');
-		$variables['<action-group-tag>'] = '@actiongroup';
-		$variables['<action-rights-level>'] = 7;
+		// these variables should be parsed inside the config file(s).
+		$variables = $this->getConfigurationVariables();
 
-		// globals files
+		// map the config templates to their destination filename
 		$configurationFiles = array(
 			'globals.base.php' => 'globals.php',
 			'globals_frontend.base.php' => 'globals_frontend.php',
@@ -150,6 +135,33 @@ class InstallerStep7 extends InstallerStep
 		// write the file
 		SpoonFile::setContent(PATH_WWW . '/backend/cache/config/config.php', $globalsContent);
 		SpoonFile::setContent(PATH_WWW . '/frontend/cache/config/config.php', $globalsContent);
+	}
+
+	/**
+	 * Writes a config file to app/config/parameters.yml.
+	 */
+	private function createYAMLConfig()
+	{
+		// these variables should be parsed inside the config file(s).
+		$variables = $this->getConfigurationVariables();
+
+		// map the config templates to their destination filename
+		$yamlFiles = array(
+			PATH_LIBRARY . '/parameters.base.yml' => PATH_WWW . '/app/config/parameters.yml',
+		);
+
+		foreach($yamlFiles as $sourceFilename => $destinationFilename)
+		{
+			$yamlContent = SpoonFile::getContent($sourceFilename);
+			$yamlContent = str_replace(
+				array_keys($variables),
+				array_values($variables),
+				$yamlContent
+			);
+
+			// write app/config/parameters.yml
+			SpoonFile::setContent($destinationFilename, $yamlContent);
+		}
 	}
 
 	/**
@@ -259,7 +271,8 @@ class InstallerStep7 extends InstallerStep
 		$this->deleteCachedData();
 
 		// create configuration files
-		$this->createConfigurationFiles();
+		$this->createPHPConfig();
+		$this->createYAMLConfig();
 
 		// init database
 		$this->initDatabase();
@@ -284,6 +297,30 @@ class InstallerStep7 extends InstallerStep
 
 		// show output
 		$this->tpl->display('layout/templates/step_7.tpl');
+	}
+
+	/**
+	 * @return array A list of variables that should be parsed into the configuration file(s).
+	 */
+	protected function getConfigurationVariables()
+	{
+		return array(
+			'<debug-mode>'				=> SpoonSession::get('debug_mode') ? 'true' : 'false',
+			'<debug-email>'				=> SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email'),
+			'<database-name>'			=> SpoonSession::get('db_database'),
+			'<database-host>'			=> addslashes(SpoonSession::get('db_hostname')),
+			'<database-user>'			=> addslashes(SpoonSession::get('db_username')),
+			'<database-password>'		=> addslashes(SpoonSession::get('db_password')),
+			'<database-port>'			=> (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306,
+			'<site-domain>'				=> (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
+			'<site-default-title>'		=> 'Fork CMS',
+			'<site-multilanguage>'		=> SpoonSession::get('multiple_languages') ? 'true' : 'false',
+			'<site-default-language>'	=> SpoonSession::get('default_language'),
+			'<path-www>'				=> PATH_WWW,
+			'<path-library>'			=> PATH_LIBRARY,
+			'<action-group-tag>'		=> '@actiongroup',
+			'<action-rights-level>'		=> 7
+		);
 	}
 
 	/**

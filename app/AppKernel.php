@@ -56,16 +56,12 @@ class AppKernel extends Kernel
 	 */
 	public function registerServices()
 	{
-		// @todo for now, parameter loading is disabled until globals are in YAML
-		$container = $this->getContainer();
-		$container->setParameter('database_driver', DB_TYPE);
-		$container->setParameter('database_host', DB_HOSTNAME);
-		$container->setParameter('database_port', DB_PORT);
-		$container->setParameter('database_user', DB_USERNAME);
-		$container->setParameter('database_password', DB_PASSWORD);
-		$container->setParameter('database_name', DB_DATABASE);
-
-		$container->register('database', 'SpoonDatabase')
+		/**
+		 * @todo
+		 * In symfony, the doctrine layer gets registered through app/config/config.yml.
+		 * The bundles itself call it into life when needed.
+		 */
+		$this->getContainer()->register('database', 'SpoonDatabase')
 			->addArgument('%database_driver%')
 			->addArgument('%database_host%')
 			->addArgument('%database_user%')
