@@ -352,6 +352,7 @@ class ModuleInstaller
 			if($xml !== false)
 			{
 				// import locale
+				require_once BACKEND_CORE_PATH . '/engine/model.php';
 				require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
 				BackendLocaleModel::importXML($xml, $overwriteConflicts, $this->getLanguages(), $this->getInterfaceLanguages(), $this->getDefaultUserID(), gmdate('Y-m-d H:i:s'));
 			}
