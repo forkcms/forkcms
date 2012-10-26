@@ -56,7 +56,7 @@ class AppKernel extends Kernel
 	 */
 	public function registerServices()
 	{
-		// @todo for now, config loading is disabled until globals are in YAML
+		// @todo for now, parameter loading is disabled until globals are in YAML
 		$container = $this->getContainer();
 		$container->setParameter('database_driver', DB_TYPE);
 		$container->setParameter('database_host', DB_HOSTNAME);
@@ -66,16 +66,19 @@ class AppKernel extends Kernel
 		$container->setParameter('database_name', DB_DATABASE);
 
 		$container->register('database', 'SpoonDatabase')
-						->addArgument('%database_driver%')
-						->addArgument('%database_host%')
-						->addArgument('%database_user%')
-						->addArgument('%database_password%')
-						->addArgument('%database_name%')
-						->addArgument('%database_port%');
-
-		$container->get('database')->execute(
-			'SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"'
-		);
+			->addArgument('%database_driver%')
+			->addArgument('%database_host%')
+			->addArgument('%database_user%')
+			->addArgument('%database_password%')
+			->addArgument('%database_name%')
+			->addArgument('%database_port%')
+			->addMethodCall(
+				'execute',
+				array(
+					'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
+					array('charset' => 'utf8')
+				)
+			);
 	}
 }
 
