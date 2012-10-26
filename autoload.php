@@ -1,5 +1,12 @@
 <?php
 
+$globalsFile = __DIR__ . '/library/globals.php';
+
+if(!file_exists($globalsFile))
+{
+	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/install');
+}
+
 require_once __DIR__ . '/library/globals.php';
 
 /*
