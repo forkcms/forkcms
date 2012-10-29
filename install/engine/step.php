@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * The base-class for all installer-steps
  *
@@ -14,7 +16,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class InstallerStep
+class InstallerStep extends FrontendKernelLoader
 {
 	/**
 	 * Form
@@ -56,6 +58,20 @@ class InstallerStep
 	{
 		// set setp
 		$this->step = (int) $step;
+	}
+
+	/**
+	 * Initialize the base models and the required step objects.
+	 */
+	public function initialize()
+	{
+		/*
+		 * @todo
+		 * In the long run models should not be a collection of static methods.
+		 * This should be considered temporary until that time comes.
+		 */
+		FrontendModel::setContainer($this->getKernel()->getContainer());
+		BackendModel::setContainer($this->getKernel()->getContainer());
 
 		// skip step 1
 		if($this->step > 1)
@@ -75,10 +91,20 @@ class InstallerStep
 			if(defined('PATH_WWW')) $this->tpl->assign('PATH_WWW', PATH_WWW);
 
 			// create form
-			$this->frm = new SpoonForm('step' . $step, 'index.php?step=' . $step);
+			$this->frm = new SpoonForm('step' . $this->step, 'index.php?step=' . $this->step);
 			$this->frm->setParameter('class', 'forkForms submitWithLink');
 			$this->frm->setParameter('id', 'installForm');
 		}
+	}
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
+	{
+		$stepTemplate = __DIR__ . '/../layout/templates/step_' . $this->step . '.tpl';
+		$stepContent = $this->tpl->getContent($stepTemplate, false, true);
+		return new Response($stepContent, 200, SpoonHttp::getHeadersList());
 	}
 
 	/**

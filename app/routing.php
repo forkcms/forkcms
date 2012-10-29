@@ -31,7 +31,8 @@ class ApplicationRouting
 		'' => self::DEFAULT_APPLICATION,
 		'private' => 'backend',
 		'backend' => 'backend',
-		'api' => 'api'
+		'api' => 'api',
+		'install' => 'install'
 	);
 
 	/**
@@ -122,6 +123,22 @@ class ApplicationRouting
 
 				new APIInit($applicationName);
 				$application = new API();
+				break;
+
+			case 'install':
+				session_start();
+
+				// set a default timezone if no one was set by PHP.ini
+				if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
+
+				// require the installer class
+				require_once __DIR__ . '/../install/engine/installer.php';
+
+				// we'll be using utf-8
+				header('Content-type: text/html;charset=utf8');
+
+				// run instance
+				$application = new Installer();
 				break;
 		}
 

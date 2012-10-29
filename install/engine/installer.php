@@ -8,6 +8,7 @@
  */
 
 // load substantial steps
+require_once __DIR__ . '/../../frontend/core/engine/kernelloader.php';
 require_once 'step.php';
 require_once 'step_1.php';
 require_once 'step_2.php';
@@ -23,7 +24,7 @@ require_once 'step_7.php';
  * @author Davy Hellemans <davy@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class Installer
+class Installer extends FrontendKernelLoader
 {
 	/**
 	 * The current step number
@@ -33,31 +34,38 @@ class Installer
 	private $step;
 
 	/**
-	 * Class constructor.
+	 * Only checks if this Fork is already installed
 	 */
 	public function __construct()
 	{
-		// already installed
-		if(file_exists('cache/installed.txt')) exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
+		if(file_exists('cache/installed.txt'))
+		{
+			exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
+		}
+	}
 
-		// define the current step
+	/**
+	 * Initializes the installation process
+	 */
+	public function initialize()
+	{
 		$this->setStep();
-
-		// execute step
-		$this->execute();
 	}
 
 	/**
 	 * Executes the proper step
 	 */
-	private function execute()
+	public function display()
 	{
 		// step class name
 		$class = 'InstallerStep' . $this->step;
 
 		// create & execute instance
 		$instance = new $class($this->step);
+		$instance->setKernel($this->getKernel());
+		$instance->initialize();
 		$instance->execute();
+		return $instance->display();
 	}
 
 	/**

@@ -53,8 +53,6 @@ abstract class Kernel implements KernelInterface
 		$this->environment = $environment;
 		$this->debug = $debug;
 
-		require_once PATH_WWW . '/library/globals.php';
-
 		if($environment !== null)
 		{
 			$this->loadEnvironmentConfiguration($this->environment);

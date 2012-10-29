@@ -294,9 +294,6 @@ class InstallerStep7 extends InstallerStep
 
 		// clear session
 		SpoonSession::destroy();
-
-		// show output
-		$this->tpl->display('layout/templates/step_7.tpl');
 	}
 
 	/**

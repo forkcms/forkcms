@@ -4,10 +4,14 @@ $globalsFile = __DIR__ . '/library/globals.php';
 
 if(!file_exists($globalsFile))
 {
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/install');
+	// if no globals file is present yet, we just need these two constants for the autoloader
+	define('PATH_WWW', __DIR__);
+	define('PATH_LIBRARY', PATH_WWW . '/library');
 }
-
-require_once __DIR__ . '/library/globals.php';
+else
+{
+	require_once $globalsFile;
+}
 
 /*
  * This file is part of Fork CMS.
