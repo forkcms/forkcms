@@ -8,7 +8,6 @@
  */
 
 // load substantial steps
-require_once __DIR__ . '/../../frontend/core/engine/kernelloader.php';
 require_once 'step.php';
 require_once 'step_1.php';
 require_once 'step_2.php';
@@ -24,7 +23,7 @@ require_once 'step_7.php';
  * @author Davy Hellemans <davy@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class Installer extends FrontendKernelLoader
+class Installer extends KernelLoader
 {
 	/**
 	 * The current step number

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendBaseObject extends FrontendKernelLoader
+class FrontendBaseObject extends KernelLoader
 {
 	/**
 	 * Template instance

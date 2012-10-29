@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class InstallerStep extends FrontendKernelLoader
+class InstallerStep extends KernelLoader
 {
 	/**
 	 * Form

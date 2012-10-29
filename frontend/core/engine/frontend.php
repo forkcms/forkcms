@@ -17,7 +17,7 @@
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class Frontend extends FrontendKernelLoader
+class Frontend extends KernelLoader
 {
 	/**
 	 * @var FrontendPage

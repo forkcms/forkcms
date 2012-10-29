@@ -15,7 +15,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendAJAX extends FrontendKernelLoader
+class FrontendAJAX extends KernelLoader
 {
 	/**
 	 * The action

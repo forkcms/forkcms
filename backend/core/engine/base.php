@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class BackendBaseObject extends BackendKernelLoader
+class BackendBaseObject extends KernelLoader
 {
 	/**
 	 * The current action

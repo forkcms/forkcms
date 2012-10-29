@@ -368,7 +368,7 @@ class FrontendPage extends FrontendBaseObject
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
-			// all extras extend FrontendBaseObject, which extends FrontendKernelLoader
+			// all extras extend FrontendBaseObject, which extends KernelLoader
 			$extra->setKernel($this->getKernel());
 			$extra->execute();
 
