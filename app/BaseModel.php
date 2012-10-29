@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * The base model's responsability is to provide getDB() functionality to
  * both FrontendModel and BackendModel.
  *
- * This is class exists for the sole purpose of not breaking the current models implementation.
+ * This class exists for the sole purpose of not breaking the current models implementation.
  * In the long run models should not be a collection of static methods.
  *
  * @author Dave Lens <dave.lens@wijs.be>
