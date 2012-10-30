@@ -28,8 +28,16 @@ class BackendCronjob extends BackendBaseObject
 	 */
 	private $language;
 
-	public function __construct()
+	public function initialize()
 	{
+		/*
+		 * @todo
+		 * In the long run models should not be a collection of static methods.
+		 * This should be considered temporary until that time comes.
+		 */
+		FrontendModel::setContainer($this->getKernel()->getContainer());
+		BackendModel::setContainer($this->getKernel()->getContainer());
+
 		// because some cronjobs will be run on the command line we should pass parameters
 		if(isset($_SERVER['argv']))
 		{
