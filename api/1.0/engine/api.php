@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * This class defines the API.
  *
@@ -14,7 +16,7 @@
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class API
+class API extends KernelLoader
 {
 	// statuses
 	const OK = 200;
@@ -28,8 +30,16 @@ class API
 	 */
 	protected static $content;
 
-	public function __construct()
+	public function initialize()
 	{
+		/*
+		 * @todo
+		 * In the long run models should not be a collection of static methods.
+		 * This should be considered temporary until that time comes.
+		 */
+		FrontendModel::setContainer($this->getKernel()->getContainer());
+		BackendModel::setContainer($this->getKernel()->getContainer());
+
 		// simulate $_REQUEST
 		$parameters = array_merge($_GET, $_POST);
 
