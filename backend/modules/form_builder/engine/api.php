@@ -50,7 +50,10 @@ class BackendFormBuilderAPI
 			$offset = (int) $offset;
 
 			// validate
-			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+			if($limit > 10000)
+			{
+				return API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+			}
 
 			$fields = (array) BackendModel::getDB()->getRecords(
 				'SELECT i.type, i.settings
@@ -145,7 +148,10 @@ class BackendFormBuilderAPI
 			);
 
 			// any entries?
-			if(empty($entries)) API::output(API::ERROR, array('message' => 'Not found.'));
+			if(empty($entries))
+			{
+				return API::output(API::ERROR, array('message' => 'Not found.'));
+			}
 
 			$return = array('entry' => null);
 
@@ -208,7 +214,10 @@ class BackendFormBuilderAPI
 			$offset = (int) $offset;
 
 			// validate
-			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+			if($limit > 10000)
+			{
+				return API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+			}
 
 			$forms = (array) BackendModel::getDB()->getRecords(
 				'SELECT i.id, i.language, i.name, i.method, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on

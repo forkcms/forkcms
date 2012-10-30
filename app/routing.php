@@ -125,7 +125,19 @@ class ApplicationRouting
 				require_once __DIR__ . '/../api/1.0/init.php';
 
 				new APIInit($applicationName);
-				$application = new API();
+
+				$queryString = $this->getQueryString();
+				$chunks = explode('/', $queryString);
+
+				if(array_key_exists(2, $chunks) && $chunks[2] === 'client')
+				{
+					require_once __DIR__ . '/../api/1.0/engine/client.php';
+					$application = new APIClient();
+				}
+				else
+				{
+					$application = new API();
+				}
 				break;
 
 			case 'install':
@@ -159,12 +171,21 @@ class ApplicationRouting
 	}
 
 	/**
+	 * Retrieves the request URI from the request object
+	 *
+	 * @return string
+	 */
+	private function getQueryString()
+	{
+		return trim($this->request->getRequestUri(), '/');
+	}
+
+	/**
 	 * Process the querystring to define the application
 	 */
 	private function processQueryString()
 	{
-		// get querystring
-		$queryString = trim($this->request->getRequestUri(), '/');
+		$queryString = $this->getQueryString();
 
 		// split into chunks
 		$chunks = explode('/', $queryString);

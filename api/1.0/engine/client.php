@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Client for the Fork CMS API.
  *
@@ -17,8 +26,16 @@ class APIClient extends API
 	 */
 	private $modules;
 
-	public function __construct()
+	public function initialize()
 	{
+		/*
+		 * @todo
+		 * In the long run models should not be a collection of static methods.
+		 * This should be considered temporary until that time comes.
+		 */
+		FrontendModel::setContainer($this->getKernel()->getContainer());
+		BackendModel::setContainer($this->getKernel()->getContainer());
+
 		require_once 'spoon/form/form.php';
 		require_once 'spoon/form/button.php';
 		require_once 'spoon/template/template.php';
@@ -30,15 +47,18 @@ class APIClient extends API
 		$this->loadModules();
 		$this->parse();
 		$this->display();
-
 	}
 
 	/**
-	 * Displays the parsed client template.
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
-	protected function display()
+	public function display()
 	{
-		$this->tpl->display('layout/templates/index.tpl');
+		$content = $this->tpl->getContent(__DIR__ . '/../client/layout/templates/index.tpl');
+
+		return new Response(
+			$content, 200, SpoonHttp::getHeadersList()
+		);
 	}
 
 	/**
