@@ -56,9 +56,10 @@ class SpoonFormHidden extends SpoonFormAttributes
 	/**
 	 * Retrieve the initial or submitted value.
 	 *
+	 * @param	bool[optional] $allowHTML	Is HTML allowed?
 	 * @return	string
 	 */
-	public function getValue()
+	public function getValue($allowHTML = null)
 	{
 		// redefine default value
 		$value = $this->value;
@@ -74,7 +75,7 @@ class SpoonFormHidden extends SpoonFormAttributes
 			{
 				// value
 				$value = (string) $data[$this->attributes['name']];
-				$value = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($value) : SpoonFilter::htmlentities($value);
+				if(!$allowHTML) $value = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($value) : SpoonFilter::htmlentities($value);
 			}
 		}
 
