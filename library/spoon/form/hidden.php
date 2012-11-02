@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  * @since		1.0.0
  */
 class SpoonFormHidden extends SpoonFormAttributes
@@ -55,9 +56,10 @@ class SpoonFormHidden extends SpoonFormAttributes
 	/**
 	 * Retrieve the initial or submitted value.
 	 *
+	 * @param	bool[optional] $allowHTML	Is HTML allowed?
 	 * @return	string
 	 */
-	public function getValue()
+	public function getValue($allowHTML = null)
 	{
 		// redefine default value
 		$value = $this->value;
@@ -73,6 +75,7 @@ class SpoonFormHidden extends SpoonFormAttributes
 			{
 				// value
 				$value = (string) $data[$this->attributes['name']];
+				if(!$allowHTML) $value = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($value) : SpoonFilter::htmlentities($value);
 			}
 		}
 

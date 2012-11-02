@@ -74,7 +74,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 		$action = rtrim($action, '/');
 
 		// cough up action
-		return SITE_URL . '/' . $action;
+		return '/' . $action;
 	}
 
 	/**
