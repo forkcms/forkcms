@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  * @since		1.0.0
  */
 class SpoonFormHidden extends SpoonFormAttributes
@@ -73,6 +74,7 @@ class SpoonFormHidden extends SpoonFormAttributes
 			{
 				// value
 				$value = (string) $data[$this->attributes['name']];
+				$value = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($value) : SpoonFilter::htmlentities($value);
 			}
 		}
 
