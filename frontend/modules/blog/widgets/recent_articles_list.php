@@ -38,5 +38,6 @@ class FrontendBlogWidgetRecentArticlesList extends FrontendBaseWidget
 
 		// assign comments
 		$this->tpl->assign('widgetBlogRecentArticlesList', FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_list_num_items', 5)));
+		$this->tpl->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
 	}
 }
