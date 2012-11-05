@@ -482,7 +482,7 @@ class BackendModel
 			$query .= ' AND i.action = ?';
 
 			// add action to parameters
-			$parameters[] = (string) $action);
+			$parameters[] = (string) $action;
 		}
 
 		// get items
