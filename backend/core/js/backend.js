@@ -1795,7 +1795,7 @@ jsBackend.locale =
 	// get localization
 	loc: function(key)
 	{
-		return jsBackend.locale.get('loc', key, 'core');
+		return jsBackend.locale.get('loc', key);
 	},
 
 	// get a message
