@@ -174,7 +174,7 @@ class SpoonTemplateCompiler
 		if(!$this->parsed)
 		{
 			// while developing, you might want to know about the undefined indexes
-			$errorReporting = (SPOON_DEBUG) ? 'E_ALL | E_STRICT' : 'E_WARNING';
+			$errorReporting = (SPOON_DEBUG) ? 'E_ALL | E_STRICT' : 0;
 			$displayErrors = (SPOON_DEBUG) ? 'On' : 'Off';
 
 			// add to the list of parsed files
