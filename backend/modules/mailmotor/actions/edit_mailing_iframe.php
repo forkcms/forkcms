@@ -1,5 +1,7 @@
 <?php
 
+use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
 /*
  * This file is part of Fork CMS.
  *
