@@ -1,5 +1,7 @@
 <?php
 
+use \TijsVerkoyen\Akismet\Akismet;
+
 /*
  * This file is part of Fork CMS.
  *
