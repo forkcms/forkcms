@@ -15,7 +15,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-// You can optionally add an environment here, with debug status
+// In symfony, you define an environment + debug status here
 // $kernel = new AppKernel('dev', true);
 $kernel = new AppKernel();
 $request = Request::createFromGlobals();
