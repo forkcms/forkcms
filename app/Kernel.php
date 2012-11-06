@@ -84,13 +84,18 @@ abstract class Kernel implements KernelInterface
 	 */
 	protected function getKernelParameters()
 	{
-		// @todo load names of active bundles
+		// This is also where symfony loads and stores the names of the active bundles
 
+		/**
+		 * Debug status and environment are params of the Kernel constructor, and
+		 * are set via a separate front controller.
+		 *
+		 * Fork sets them directly in /app/config/parameters.yml through the installer.
+		 * We can add additional non-installer related configuration options here.
+		 */
 		return array(
-			'kernel.debug' => $this->debug, // @todo in time, remove SPOON_DEBUG
-			'kernel.environment' => $this->environment,
-			'kernel.server_protocol' => (strpos($_SERVER['SERVER_PROTOCOL'], 'HTTPS') === false),
-			// @todo moar info (paths, list of bundles,...)
+			//'kernel.debug' => $this->debug,
+			//'kernel.environment' => $this->environment,
 		);
 	}
 

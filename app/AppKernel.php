@@ -28,6 +28,41 @@ class AppKernel extends Kernel
 	private $router;
 
 	/**
+	 * This will disappear in time in favour of container-driven parameters.
+	 * @deprecated
+	 */
+	protected function defineForkConstants()
+	{
+		$container = $this->getContainer();
+
+		if(!defined('SPOON_DEBUG'))
+		{
+			define('SPOON_DEBUG', $container->getParameter('fork.debug'));
+			define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
+			define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
+			define('SPOON_CHARSET', $container->getParameter('fork.charset'));
+		}
+
+		if(!defined('PATH_WWW'))
+		{
+			define('PATH_WWW', $container->getParameter('site.path_www'));
+			define('PATH_LIBRARY', $container->getParameter('site.path_library'));
+		}
+
+		define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
+		define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
+		define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
+		define('SITE_DOMAIN', $container->getParameter('site.domain'));
+		define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
+		define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
+
+		define('FORK_VERSION', $container->getParameter('fork.version'));
+
+		define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
+		define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
+	}
+
+	/**
 	 * Handles a request to convert into a response.
 	 * When $catch is true, the implementation must catch all exceptions
 	 * and do its best to convert them to a Response instance.
@@ -50,6 +85,9 @@ class AppKernel extends Kernel
 
 		// load the general config.yml
 		$loader->load(__DIR__ . '/config/config.yml');
+
+		// define Fork constants
+		$this->defineForkConstants();
 	}
 
 	/**

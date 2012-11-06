@@ -99,45 +99,6 @@ class InstallerStep7 extends InstallerStep
 	}
 
 	/**
-	 * Creates the configuration files
-	 */
-	private function createPHPConfig()
-	{
-		// these variables should be parsed inside the config file(s).
-		$variables = $this->getConfigurationVariables();
-
-		// map the config templates to their destination filename
-		$configurationFiles = array(
-			'globals.base.php' => 'globals.php',
-			'globals_frontend.base.php' => 'globals_frontend.php',
-			'globals_backend.base.php' => 'globals_backend.php'
-		);
-
-		// loop files
-		foreach($configurationFiles as $sourceFilename => $destinationFilename)
-		{
-			// grab content
-			$globalsContent = SpoonFile::getContent(PATH_LIBRARY . '/' . $sourceFilename);
-
-			// assign the variables
-			$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
-
-			// write the file
-			SpoonFile::setContent(PATH_LIBRARY . '/' . $destinationFilename, $globalsContent);
-		}
-
-		// general configuration file
-		$globalsContent = SpoonFile::getContent(PATH_LIBRARY . '/config.base.php');
-
-		// assign the variables
-		$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
-
-		// write the file
-		SpoonFile::setContent(PATH_WWW . '/backend/cache/config/config.php', $globalsContent);
-		SpoonFile::setContent(PATH_WWW . '/frontend/cache/config/config.php', $globalsContent);
-	}
-
-	/**
 	 * Writes a config file to app/config/parameters.yml.
 	 */
 	private function createYAMLConfig()
@@ -277,7 +238,6 @@ class InstallerStep7 extends InstallerStep
 		$this->deleteCachedData();
 
 		// create configuration files
-		$this->createPHPConfig();
 		$this->createYAMLConfig();
 
 		// init database
@@ -315,6 +275,7 @@ class InstallerStep7 extends InstallerStep
 			'<database-user>'			=> addslashes(SpoonSession::get('db_username')),
 			'<database-password>'		=> addslashes(SpoonSession::get('db_password')),
 			'<database-port>'			=> (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306,
+			'<site-protocol>'			=> isset($_SERVER['SERVER_PROTOCOL']) ? (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') : 'http',
 			'<site-domain>'				=> (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
 			'<site-default-title>'		=> 'Fork CMS',
 			'<site-multilanguage>'		=> SpoonSession::get('multiple_languages') ? 'true' : 'false',

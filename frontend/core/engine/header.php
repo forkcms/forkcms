@@ -912,10 +912,10 @@ class FrontendHeader extends FrontendBaseObject
 			else
 			{
 				// if the current pagetitle is empty we should add the sitetitle
-				if($this->pageTitle == '') $this->pageTitle = $value . SITE_TITLE_SEPERATOR . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+				if($this->pageTitle == '') $this->pageTitle = $value . ' -  ' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 
 				// prepend the value to the current pagetitle
-				else $this->pageTitle = $value . SITE_TITLE_SEPERATOR . $this->pageTitle;
+				else $this->pageTitle = $value . ' - ' . $this->pageTitle;
 			}
 		}
 	}
