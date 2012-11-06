@@ -45,6 +45,9 @@ class AppKernel extends Kernel
 	 */
 	public function registerContainerConfiguration(LoaderInterface $loader)
 	{
+		// this prevents the installer from bitching that config.yml cannot load parameters.yml
+		if(!file_exists(__DIR__ . '/config/parameters.yml')) return;
+
 		// @todo this should load an environment-specific config as a replacement of our globals.php
 		//$loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
 		$loader->load(__DIR__ . '/config/config.yml');
