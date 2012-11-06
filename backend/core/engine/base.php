@@ -61,16 +61,6 @@ class BackendBaseObject extends KernelLoader
 	}
 
 	/**
-	 * Return the database object from the service container
-	 *
-	 * @return SpoonDatabase
-	 */
-	public function getDB()
-	{
-		return $this->getContainer()->get('database');
-	}
-
-	/**
 	 * Get module
 	 *
 	 * @return string

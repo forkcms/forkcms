@@ -52,17 +52,6 @@ class FrontendBaseObject extends KernelLoader
 	{
 		return $this->getKernel()->getContainer();
 	}
-
-	/**
-	 * Return the database object from the service container
-	 *
-	 * @return SpoonDatabase
-	 */
-	public function getDB()
-	{
-		return $this->getContainer()->get('database');
-	}
-
 }
 
 /**
