@@ -5,26 +5,29 @@
 		<input type="hidden" name="step" value="2" />
 		<div class="horizontal">
 			{option:error}
-			<div>
-				<div class="formMessage errorMessage">
-					<p>Your server doesn't meet the minimum requirements to run Fork CMS.</p>
+				<div>
+					<div class="formMessage errorMessage">
+						<p>Your server doesn't meet the minimum requirements to run Fork CMS.</p>
+					</div>
 				</div>
-			</div>
 			{/option:error}
 			{option:!error}
-			{option:warning}
-			<div>
-				<div class="formMessage warningMessage">
-					<p>Your server might not run Fork CMS properly.</p>
-				</div>
-			</div>
-			{/option:warning}
+				{option:warning}
+					<div>
+						<div class="formMessage warningMessage">
+							<p>Your server might not run Fork CMS properly.</p>
+						</div>
+					</div>
+				{/option:warning}
 			{/option:!error}
 			<div id="requirementsInformation">
 				<h3><span class="{$phpVersion}">{$phpVersion}</span> PHP version</h3>
 				<p>PHP version must be at least 5.3.3, Before using Fork CMS, upgrade your PHP installation, preferably to the latest version. PHP version must not be 5.3.16 as Symfony won't work properly with it.</p>
 
 				<h3><span class="{$subfolder}">{$subfolder}</span> Fork CMS can't be installed in subfolders</h3>
+
+				<h3><span class="{$dependencies}">{$dependencies}</span> Dependencies</h3>
+				<p>Fork has some dependencies, it seems they aren't installed. Did you run <code>composer install</code>?</p>
 
 				<h3>PHP Extensions</h3>
 				<h4><span class="{$extensionCURL}">{$extensionCURL}</span> cURL</h4>
