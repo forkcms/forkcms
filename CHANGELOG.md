@@ -11,6 +11,7 @@ Improvements:
 * Core: Upgraded to jQuery UI 1.8.24
 * Core: Upgraded to CKEditor 3.6.5
 * FormBuilder: do not prefix the site URL to the form action to prevent submitting to another domain.
+* Core: starting to use namespaces for the external classes that use namespaces.
 
 Bugfixes:
 
