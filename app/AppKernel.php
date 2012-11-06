@@ -48,8 +48,7 @@ class AppKernel extends Kernel
 		// this prevents the installer from bitching that config.yml cannot load parameters.yml
 		if(!file_exists(__DIR__ . '/config/parameters.yml')) return;
 
-		// @todo this should load an environment-specific config as a replacement of our globals.php
-		//$loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
+		// load the general config.yml
 		$loader->load(__DIR__ . '/config/config.yml');
 	}
 
@@ -65,12 +64,12 @@ class AppKernel extends Kernel
 		 * The bundles itself call it into life when needed.
 		 */
 		$this->getContainer()->register('database', 'SpoonDatabase')
-			->addArgument('%database_driver%')
-			->addArgument('%database_host%')
-			->addArgument('%database_user%')
-			->addArgument('%database_password%')
-			->addArgument('%database_name%')
-			->addArgument('%database_port%')
+			->addArgument('%database.driver%')
+			->addArgument('%database.host%')
+			->addArgument('%database.user%')
+			->addArgument('%database.password%')
+			->addArgument('%database.name%')
+			->addArgument('%database.port%')
 			->addMethodCall(
 				'execute',
 				array(
