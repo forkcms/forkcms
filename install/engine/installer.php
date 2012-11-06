@@ -23,7 +23,7 @@ require_once 'step_7.php';
  * @author Davy Hellemans <davy@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class Installer extends KernelLoader
+class Installer extends KernelLoader implements ApplicationInterface
 {
 	/**
 	 * The current step number

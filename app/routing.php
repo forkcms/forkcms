@@ -54,6 +54,7 @@ class ApplicationRouting
 	public function __construct(Request $request, Kernel $kernel)
 	{
 		// this class is used in most Fork applications to bubble down the Kernel object
+		require_once __DIR__ . '/ApplicationInterface.php';
 		require_once __DIR__ . '/KernelLoader.php';
 
 		$this->request = $request;

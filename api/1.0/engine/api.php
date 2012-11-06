@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class API extends KernelLoader
+class API extends KernelLoader implements ApplicationInterface
 {
 	// statuses
 	const OK = 200;

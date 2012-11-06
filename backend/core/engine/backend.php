@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class Backend extends BackendBaseObject
+class Backend extends KernelLoader implements ApplicationInterface
 {
 	/**
 	 * @return Symfony\Component\HttpFoundation\Response
