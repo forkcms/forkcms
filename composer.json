@@ -5,6 +5,7 @@
 	"require": {
 		"facebook/php-sdk": "3.2.*",
 		"tijsverkoyen/akismet": "1.1.*",
-		"tijsverkoyen/css-to-inline-styles": "1.1.*"
+		"tijsverkoyen/css-to-inline-styles": "1.1.*",
+		"spoon/library": "1.3.*"
 	}
 }
