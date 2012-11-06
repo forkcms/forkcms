@@ -69,6 +69,21 @@ class InstallerStep2 extends InstallerStep
 		// Fork can't be installed in subfolders, so we should check that.
 		self::checkRequirement('subfolder', (substr($_SERVER['REQUEST_URI'], 0, 18) == '/install/index.php'), self::STATUS_ERROR);
 
+		// Vendors?
+		$vendorFolders = array();
+		$handle = @opendir(PATH_WWW . '/vendor');
+		if($handle)
+		{
+			while(($item = readdir($handle)) !== false)
+			{
+				if(!in_array($item, array('.', '..')) && is_dir(PATH_WWW . '/vendor/' . $item))
+				{
+					$vendorFolders[] = $item;
+				}
+			}
+		}
+		self::checkRequirement('dependencies', (!empty($vendorFolders)), self::STATUS_ERROR);
+
 		/*
 		 * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
 		 * extensions, we can't guarantee that everything will work.

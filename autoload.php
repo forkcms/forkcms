@@ -100,4 +100,4 @@ class Autoloader
 spl_autoload_register(array(new Autoloader(), 'load'));
 
 // require the composer autoloader
-require_once 'vendor/autoload.php';
+if(file_exists('vendor/autoload.php')) require_once 'vendor/autoload.php';
