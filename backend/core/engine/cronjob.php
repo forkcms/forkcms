@@ -28,16 +28,12 @@ class BackendCronjob extends BackendBaseObject
 	 */
 	private $language;
 
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the page's functionality gets loaded.
+	 */
 	public function initialize()
 	{
-		/*
-		 * @todo
-		 * In the long run models should not be a collection of static methods.
-		 * This should be considered temporary until that time comes.
-		 */
-		FrontendModel::setContainer($this->getKernel()->getContainer());
-		BackendModel::setContainer($this->getKernel()->getContainer());
-
 		// because some cronjobs will be run on the command line we should pass parameters
 		if(isset($_SERVER['argv']))
 		{
@@ -146,7 +142,7 @@ class BackendCronjob extends BackendBaseObject
 		}
 
 		// create action-object
-		$object = new $actionClassName();
+		$object = new $actionClassName($this->getKernel());
 		$object->setModule($this->getModule());
 		$object->setAction($this->getAction());
 		$object->execute();

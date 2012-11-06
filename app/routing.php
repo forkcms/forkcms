@@ -95,80 +95,122 @@ class ApplicationRouting
 			$applicationName .= '_cronjob';
 		}
 
+		// Pave the way for the application we'll need to load.
+		// This initializes basic functionality and retrieves the correct class to instantiate.
 		switch($applicationName)
 		{
 			case 'frontend':
 			case 'frontend_ajax':
-				require_once __DIR__ . '/../frontend/init.php';
-
-				new FrontendInit($applicationName);
-
-				if($applicationName == 'frontend') $application = new Frontend();
-				else $application = new FrontendAJAX();
-
+				$applicationClass = $this->initializeFrontend($applicationName);
 				break;
 			case 'backend':
 			case 'backend_ajax':
 			case 'backend_cronjob':
-				require_once __DIR__ . '/../backend/init.php';
-
-				new BackendInit($applicationName);
-
-				if($applicationName == 'backend') $application = new Backend();
-				elseif($applicationName == 'backend_ajax')
-				{
-					$application = new BackendAJAX();
-				}
-				else $application = new BackendCronjob();
-
+				$applicationClass = $this->initializeBackend($applicationName);
 				break;
 			case 'api':
-				require_once __DIR__ . '/../api/1.0/init.php';
-
-				new APIInit($applicationName);
-
-				$queryString = $this->getQueryString();
-				$chunks = explode('/', $queryString);
-
-				if(array_key_exists(2, $chunks) && $chunks[2] === 'client')
-				{
-					require_once __DIR__ . '/../api/1.0/engine/client.php';
-					$application = new APIClient();
-				}
-				else
-				{
-					$application = new API();
-				}
+				$applicationClass = $this->initializeAPI($applicationName);
 				break;
-
 			case 'install':
-				session_start();
-
-				// set a default timezone if no one was set by PHP.ini
-				if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
-
-				// require the installer class
-				require_once __DIR__ . '/../install/engine/installer.php';
-
-				// we'll be using utf-8
-				header('Content-type: text/html;charset=utf8');
-
-				// run instance
-				$application = new Installer();
+				$applicationClass = $this->initializeInstaller();
 				break;
 		}
 
-		// Load the page and pass along the application kernel
-		//
-		// @todo this is backwards. The kernel IS our application's core.
-		// This step is needed to bubble our container all the way to the action.
-		//
-		// Once we switch to bundles, the kernel will boot those bundles and pass the container.
-		// The kernel object itself will then be stored as a singleton in said container.
-		$application->setKernel($this->kernel);
+		/**
+		 * Load the page and pass along the application kernel
+		 * This step is needed to bubble our container all the way to the action.
+		 *
+		 * Once we switch to bundles, the kernel will boot those bundles and pass the container.
+		 * The kernel object itself will then be stored as a singleton in said container, same
+		 * as in Symfony.
+		 */
+		$application = new $applicationClass($this->kernel);
+		$application->passContainerToModels();
 		$application->initialize();
-
 		return $application->display();
+	}
+
+	/**
+	 * @param string $app The name of the application to load (ex. backend_ajax)
+	 * @return string The name of the application class we need to instantiate.
+	 */
+	protected function initializeAPI($app)
+	{
+		$queryString = $this->getQueryString();
+		$chunks = explode('/', $queryString);
+		$apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
+
+		require_once __DIR__ . '/../api/' . $apiVersion . '/init.php';
+		new APIInit($app);
+
+		// The client was requested
+		if(array_key_exists(2, $chunks) && $chunks[2] === 'client')
+		{
+			require_once __DIR__ . '/../api/' . $apiVersion . '/engine/client.php';
+			$applicationClass = 'APIClient';
+		}
+		// The regular API was requested
+		else
+		{
+			$applicationClass = 'API';
+		}
+
+		return $applicationClass;
+	}
+
+	/**
+	 * @return string The name of the application class we need to instantiate.
+	 */
+	protected function initializeInstaller()
+	{
+		session_start();
+
+		// set a default timezone if no one was set by PHP.ini
+		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
+
+		// require the installer class
+		require_once __DIR__ . '/../install/engine/installer.php';
+
+		// we'll be using utf-8
+		header('Content-type: text/html;charset=utf8');
+
+		return 'Installer';
+	}
+
+	/**
+	 * @param string $app The name of the application to load (ex. backend_ajax)
+	 * @return string The name of the application class we need to instantiate.
+	 */
+	protected function initializeBackend($app)
+	{
+		require_once __DIR__ . '/../backend/init.php';
+		new BackendInit($app);
+
+		switch($app)
+		{
+			case 'backend_ajax':
+				$applicationClass = 'BackendAJAX';
+				break;
+			case 'backend_cronjob':
+				$applicationClass = 'BackendCronjob';
+				break;
+			default:
+				$applicationClass = 'Backend';
+		}
+
+		return $applicationClass;
+	}
+
+	/**
+	 * @param string $app The name of the application to load (ex. frontend_ajax)
+	 * @return string The name of the application class we need to instantiate.
+	 */
+	protected function initializeFrontend($app)
+	{
+		require_once __DIR__ . '/../frontend/init.php';
+		new FrontendInit($app);
+
+		return ($app === 'frontend_ajax') ? 'FrontendAJAX' : 'Frontend';
 	}
 
 	/**

@@ -34,13 +34,17 @@ class Installer extends KernelLoader implements ApplicationInterface
 
 	/**
 	 * Only checks if this Fork is already installed
+	 *
+	 * @param Kernel $kernel
 	 */
-	public function __construct()
+	public function __construct($kernel)
 	{
 		if(file_exists('cache/installed.txt'))
 		{
 			exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
 		}
+
+		parent::__construct($kernel);
 	}
 
 	/**

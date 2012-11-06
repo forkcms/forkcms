@@ -18,8 +18,6 @@ class BackendAJAX extends BackendBaseObject
 {
 	public function initialize()
 	{
-		BackendModel::setContainer($this->getKernel()->getContainer());
-
 		// check if the user is logged in
 		$this->validateLogin();
 
@@ -48,10 +46,9 @@ class BackendAJAX extends BackendBaseObject
 		$this->setLanguage($language);
 
 		// create a new action
-		$action = new BackendAJAXAction();
+		$action = new BackendAJAXAction($this->getKernel());
 		$action->setModule($this->getModule());
 		$action->setAction($this->getAction());
-		$action->setKernel($this->getKernel());
 
 		try
 		{

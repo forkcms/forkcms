@@ -26,16 +26,12 @@ class APIClient extends API
 	 */
 	private $modules;
 
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the rest of API functionality gets loaded.
+	 */
 	public function initialize()
 	{
-		/*
-		 * @todo
-		 * In the long run models should not be a collection of static methods.
-		 * This should be considered temporary until that time comes.
-		 */
-		FrontendModel::setContainer($this->getKernel()->getContainer());
-		BackendModel::setContainer($this->getKernel()->getContainer());
-
 		require_once 'spoon/form/form.php';
 		require_once 'spoon/form/button.php';
 		require_once 'spoon/template/template.php';

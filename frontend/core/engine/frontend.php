@@ -31,20 +31,13 @@ class Frontend extends KernelLoader implements ApplicationInterface
 	}
 
 	/**
-	 * Initializes the entire frontend; prelaod FB, URL, template and the requested page.
+	 * Initializes the entire frontend; preload FB, URL, template and the requested page.
 	 *
 	 * This method exists because the service container needs to be set before
 	 * the page's functionality gets loaded.
 	 */
 	public function initialize()
 	{
-		/*
-		 * @todo
-		 * In the long run models should not be a collection of static methods.
-		 * This should be considered temporary until that time comes.
-		 */
-		FrontendModel::setContainer($this->getKernel()->getContainer());
-
 		$this->initializeFacebook();
 		new FrontendURL();
 		new FrontendTemplate();

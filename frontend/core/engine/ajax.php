@@ -38,15 +38,12 @@ class FrontendAJAX extends KernelLoader
 	 */
 	private $module;
 
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the request's functionality gets loaded.
+	 */
 	public function initialize()
 	{
-		/*
-		 * @todo
-		 * In the long run models should not be a collection of static methods.
-		 * This should be considered temporary until that time comes.
-		 */
-		FrontendModel::setContainer($this->getKernel()->getContainer());
-
 		// get vars
 		$module = isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '';
 		if($module == '' && isset($_GET['module'])) $module = $_GET['module'];

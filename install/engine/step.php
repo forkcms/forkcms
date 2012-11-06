@@ -65,14 +65,6 @@ class InstallerStep extends KernelLoader
 	 */
 	public function initialize()
 	{
-		/*
-		 * @todo
-		 * In the long run models should not be a collection of static methods.
-		 * This should be considered temporary until that time comes.
-		 */
-		FrontendModel::setContainer($this->getKernel()->getContainer());
-		BackendModel::setContainer($this->getKernel()->getContainer());
-
 		// skip step 1
 		if($this->step > 1)
 		{

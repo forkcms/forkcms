@@ -20,11 +20,32 @@ class KernelLoader
 	protected $kernel;
 
 	/**
+	 * @param Kernel $kernel
+	 */
+	public function __construct($kernel)
+	{
+		$this->setKernel($kernel);
+	}
+
+	/**
 	 * @return Kernel
 	 */
 	public function getKernel()
 	{
 		return $this->kernel;
+	}
+
+	/**
+	 * This is fairly dirty, but so is having static method classes for models.
+	 * Consider this a temporary solution until we have genuine models available.
+	 */
+	public function passContainerToModels()
+	{
+		require_once __DIR__ . '/../frontend/core/engine/model.php';
+		FrontendModel::setContainer($this->getKernel()->getContainer());
+
+		require_once __DIR__ . '/../backend/core/engine/model.php';
+		BackendModel::setContainer($this->getKernel()->getContainer());
 	}
 
 	/**

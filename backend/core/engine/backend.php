@@ -25,15 +25,12 @@ class Backend extends KernelLoader implements ApplicationInterface
 		return $this->action->execute();
 	}
 
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the page's functionality gets loaded.
+	 */
 	public function initialize()
 	{
-		/*
-		 * @todo
-		 * In the long run models should not be a collection of static methods.
-		 * This should be considered temporary until that time comes.
-		 */
-		BackendModel::setContainer($this->getKernel()->getContainer());
-
 		$URL = new BackendURL();
 		new BackendTemplate();
 		new BackendNavigation();

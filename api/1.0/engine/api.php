@@ -31,16 +31,14 @@ class API extends KernelLoader implements ApplicationInterface
 	 */
 	protected static $content;
 
+	/**
+	 * Initializes the entire API; extract class+method from the request, call, and output.
+	 *
+	 * This method exists because the service container needs to be set before
+	 * the rest of API functionality gets loaded.
+	 */
 	public function initialize()
 	{
-		/*
-		 * @todo
-		 * In the long run models should not be a collection of static methods.
-		 * This should be considered temporary until that time comes.
-		 */
-		FrontendModel::setContainer($this->getKernel()->getContainer());
-		BackendModel::setContainer($this->getKernel()->getContainer());
-
 		// simulate $_REQUEST
 		$parameters = array_merge($_GET, $_POST);
 
