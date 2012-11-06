@@ -5,3 +5,4 @@
 .*.swp
 backend/cache/navigation/
 vendor/
+app/config/parameters.yml

@@ -7,12 +7,17 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * This class will be the base of the objects used in the cms
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class BackendBaseObject
+class BackendBaseObject extends KernelLoader
 {
 	/**
 	 * The current action
@@ -20,6 +25,13 @@ class BackendBaseObject
 	 * @var	string
 	 */
 	protected $action;
+
+	/**
+	 * The actual output
+	 *
+	 * @var string
+	 */
+	protected $content;
 
 	/**
 	 * The current module
@@ -36,6 +48,16 @@ class BackendBaseObject
 	public function getAction()
 	{
 		return $this->action;
+	}
+
+	/**
+	 * Returns the service container object
+	 *
+	 * return ContainerInterface
+	 */
+	public function getContainer()
+	{
+		return $this->getKernel()->getContainer();
 	}
 
 	/**
@@ -95,6 +117,24 @@ class BackendBaseObject
 
 		// set property
 		$this->module = $module;
+	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Response
+	 */
+	public function getContent()
+	{
+		return new Response(
+			$this->content,
+			200, SpoonHttp::getHeadersList()
+		);
 	}
 }
 
@@ -174,7 +214,7 @@ class BackendBaseAction extends BackendBaseObject
 			$template = BACKEND_MODULE_PATH . '/layout/templates/' . $this->URL->getAction() . '.tpl';
 		}
 
-		$this->tpl->display($template);
+		$this->content = $this->tpl->getContent($template);
 	}
 
 	/**
@@ -290,7 +330,9 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function redirect($URL)
 	{
-		SpoonHTTP::redirect(str_replace('&amp;', '&', (string) $URL));
+		SpoonHTTP::redirect((string) $URL);
+		// @todo: use correct redirectResponse
+		// return new RedirectResponse($URL, 302, SpoonHTTP::getHeadersList());
 	}
 }
 

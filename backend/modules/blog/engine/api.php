@@ -52,7 +52,10 @@ class BackendBlogAPI
 			$offset = (int) $offset;
 
 			// validate
-			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+			if($limit > 10000)
+			{
+				return API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+			}
 
 			// get comments
 			$comments = (array) BackendModel::getDB()->getRecords(
@@ -177,7 +180,10 @@ class BackendBlogAPI
 			if($authorWebsite !== null) $authorWebsite = (string) $authorWebsite;
 
 			// validate
-			if($status === null && $text === null && $authorName === null && $authorEmail === null && $authorWebsite === null) API::output(API::ERROR, array('message' => 'No data provided.'));
+			if($status === null && $text === null && $authorName === null && $authorEmail === null && $authorWebsite === null)
+			{
+				return API::output(API::ERROR, array('message' => 'No data provided.'));
+			}
 
 			// update
 			if($text !== null || $authorName !== null || $authorEmail != null || $authorWebsite !== null)

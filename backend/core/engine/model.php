@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+require_once PATH_WWW . '/app/BaseModel.php';
+
 /**
  * In this file we store all generic functions that we will be using in the backend.
  *
@@ -14,7 +16,7 @@
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Reclamebureau Siesqo <info@siesqo.be>
  */
-class BackendModel
+class BackendModel extends BaseModel
 {
 	/**
 	 * The keys and structural data for pages
@@ -392,33 +394,6 @@ class BackendModel
 		}
 
 		return $possibleFormats;
-	}
-
-	/**
-	 * Get (or create and get) a database-connection
-	 * If the database wasn't stored in the reference before we will create it and add it
-	 *
-	 * @param bool[optional] $write Do you want the write-connection or not?
-	 * @return SpoonDatabase
-	 */
-	public static function getDB($write = false)
-	{
-		$write = (bool) $write;
-
-		// do we have a db-object ready?
-		if(!Spoon::exists('database'))
-		{
-			// create instance
-			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
-
-			// utf8 compliance & MySQL-timezone
-			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-			// store
-			Spoon::set('database', $db);
-		}
-
-		return Spoon::get('database');
 	}
 
 	/**

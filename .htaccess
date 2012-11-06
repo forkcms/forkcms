@@ -32,8 +32,8 @@ FileETag MTime Size
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
 	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
 
-	# backend is an existing folder, but it should be handled as all urls
-	RewriteCond %{REQUEST_URI} ^/backend/$
+	# backend/install/api are existing dirs, but should all pass via the front controller
+	RewriteCond %{REQUEST_URI} ^/(backend|install|api(\/\d.\d)?(\/client)?)/$
 	RewriteRule . /index.php [NC,L]
 
 	# handle urls

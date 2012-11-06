@@ -1,5 +1,18 @@
 <?php
 
+$globalsFile = __DIR__ . '/library/globals.php';
+
+if(!file_exists($globalsFile))
+{
+	// if no globals file is present yet, we just need these two constants for the autoloader
+	define('PATH_WWW', __DIR__);
+	define('PATH_LIBRARY', PATH_WWW . '/library');
+}
+else
+{
+	require_once $globalsFile;
+}
+
 /*
  * This file is part of Fork CMS.
  *
@@ -115,3 +128,10 @@ spl_autoload_register(array(new Autoloader(), 'load'));
 
 // use vender generated autoloader
 require 'vendor/autoload.php';
+
+// @todo we also need the autoloader of spoon before we start our application (so we can define services)
+set_include_path(__DIR__ . '/library' . PATH_SEPARATOR . get_include_path());
+require_once 'spoon/spoon.php';
+
+require_once __DIR__ . '/app/AppKernel.php';
+require_once __DIR__ . '/app/bootstrap.php';

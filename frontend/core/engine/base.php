@@ -7,12 +7,15 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * This class will be the base of the objects used in onsite
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendBaseObject
+class FrontendBaseObject extends KernelLoader
 {
 	/**
 	 * Template instance
@@ -38,6 +41,16 @@ class FrontendBaseObject
 
 		// get URL from reference
 		$this->URL = Spoon::get('url');
+	}
+
+	/**
+	 * Returns the service container object
+	 *
+	 * return ContainerInterface
+	 */
+	public function getContainer()
+	{
+		return $this->getKernel()->getContainer();
 	}
 }
 
@@ -192,8 +205,9 @@ class FrontendBaseConfig
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendBaseBlock
+class FrontendBaseBlock extends FrontendBaseObject
 {
 	/**
 	 * The current action
@@ -596,6 +610,8 @@ class FrontendBaseBlock
 	public function redirect($URL, $code = 302)
 	{
 		SpoonHTTP::redirect((string) $URL, (int) $code);
+		// @todo: use correct redirectResponse
+		// return new RedirectResponse($URL, $code, SpoonHTTP::getHeadersList());
 	}
 
 	/**
@@ -665,7 +681,7 @@ class FrontendBaseBlock
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendBaseWidget
+class FrontendBaseWidget extends FrontendBaseObject
 {
 	/**
 	 * The current action

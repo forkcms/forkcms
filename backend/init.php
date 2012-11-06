@@ -64,7 +64,6 @@ class BackendInit
 		// require spoon
 		require_once 'spoon/spoon.php';
 
-		$this->requireBackendClasses();
 		SpoonFilter::disableMagicQuotes();
 	}
 
@@ -73,11 +72,6 @@ class BackendInit
 	 */
 	private function definePaths()
 	{
-		// fix the Application setting
-		if($this->type == 'backend_ajax') define('APPLICATION', 'backend');
-		if($this->type == 'backend_js') define('APPLICATION', 'backend');
-		if($this->type == 'backend_cronjob') define('APPLICATION', 'backend');
-
 		// general paths
 		define('BACKEND_PATH', PATH_WWW . '/' . APPLICATION);
 		define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
@@ -233,20 +227,6 @@ class BackendInit
 		// output
 		echo '// ' . $exception->getMessage();
 		exit;
-	}
-
-	/**
-	 * Require all needed classes
-	 */
-	private function requireBackendClasses()
-	{
-		// for specific types, specific files should be loaded
-		switch($this->type)
-		{
-			case 'backend_ajax':
-				require_once PATH_WWW . '/routing.php';
-				break;
-		}
 	}
 
 	/**

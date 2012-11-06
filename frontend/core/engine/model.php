@@ -7,12 +7,15 @@
  * file that was distributed with this source code.
  */
 
+require_once PATH_WWW . '/app/BaseModel.php';
+
 /**
  * In this file we store all generic functions that we will be using in the frontend.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendModel
+class FrontendModel extends BaseModel
 {
 	/**
 	 * Cached modules
@@ -237,34 +240,6 @@ class FrontendModel
 			if($folder['width'] !== null && $folder['height'] !== null) $thumbnail->setForceOriginalAspectRatio(false);
 			$thumbnail->parseToFile($folder['path'] . '/' . $filename);
 		}
-	}
-
-	/**
-	 * Get (or create and get) a database-connection
-	 * @later split the write and read connection
-	 *
-	 * @param bool[optional] $write Do you want the write-connection or not?
-	 * @return SpoonDatabase
-	 */
-	public static function getDB($write = false)
-	{
-		$write = (bool) $write;
-
-		// do we have a db-object ready?
-		if(!Spoon::exists('database'))
-		{
-			// create instance
-			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
-
-			// utf8 compliance & MySQL-timezone
-			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-			// store
-			Spoon::set('database', $db);
-		}
-
-		// return db-object
-		return Spoon::get('database');
 	}
 
 	/**
