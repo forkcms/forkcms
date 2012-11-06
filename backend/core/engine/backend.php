@@ -7,9 +7,6 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
