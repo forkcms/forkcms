@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-require_once PATH_WWW . '/app/BaseModel.php';
+require_once __DIR__ . '/../../../app/BaseModel.php';
 
 /**
  * In this file we store all generic functions that we will be using in the backend.

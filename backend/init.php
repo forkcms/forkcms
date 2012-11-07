@@ -45,7 +45,12 @@ class BackendInit
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		$this->requireGlobals();
+		// Fork has not yet been installed
+		$installer = dirname(__FILE__) . '/../install/cache';
+		if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
+		{
+			header('Location: /install');
+		}
 
 		// get last modified time for globals
 		$lastModifiedTime = @filemtime(PATH_LIBRARY . '/globals.php');
@@ -227,41 +232,6 @@ class BackendInit
 		// output
 		echo '// ' . $exception->getMessage();
 		exit;
-	}
-
-	/**
-	 * Require globals-file
-	 */
-	private function requireGlobals()
-	{
-		// fetch config
-		@include_once dirname(__FILE__) . '/cache/config/config.php';
-
-		// config doest not exist, use standard library location
-		if(!defined('INIT_PATH_LIBRARY')) define('INIT_PATH_LIBRARY', dirname(__FILE__) . '/../library');
-
-		// load the globals
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_backend.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_frontend.php';
-
-		// something could not be loaded
-		if(in_array(false, $installed))
-		{
-			// installation folder
-			$installer = dirname(__FILE__) . '/../install/cache';
-
-			// Fork has not yet been installed
-			if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
-			{
-				// redirect to installer
-				header('Location: /install');
-			}
-
-			// we can nog load configuration file, however we can not run installer
-			echo 'Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.';
-			exit;
-		}
 	}
 
 	/**

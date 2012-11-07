@@ -1,18 +1,5 @@
 <?php
 
-$globalsFile = __DIR__ . '/library/globals.php';
-
-if(!file_exists($globalsFile))
-{
-	// if no globals file is present yet, we just need these two constants for the autoloader
-	define('PATH_WWW', __DIR__);
-	define('PATH_LIBRARY', PATH_WWW . '/library');
-}
-else
-{
-	require_once $globalsFile;
-}
-
 /*
  * This file is part of Fork CMS.
  *
@@ -38,37 +25,49 @@ class Autoloader
 		// exceptions
 		// @todo - exceptions should be reduced to a minimum
 		$exceptions = array();
-		$exceptions['frontend'] = PATH_WWW . '/frontend/core/engine/frontend.php';
-		$exceptions['frontendbaseajaxaction'] = PATH_WWW . '/frontend/core/engine/base.php';
-		$exceptions['frontendbaseconfig'] = PATH_WWW . '/frontend/core/engine/base.php';
-		$exceptions['frontendbaseobject'] = PATH_WWW . '/frontend/core/engine/base.php';
-		$exceptions['frontendblockextra'] = PATH_WWW . '/frontend/core/engine/block.php';
-		$exceptions['frontendblockwidget'] = PATH_WWW . '/frontend/core/engine/block.php';
-		$exceptions['frontendtemplatecompiler'] = PATH_WWW . '/frontend/core/engine/template_compiler.php';
-		$exceptions['backend'] = PATH_WWW . '/backend/core/engine/backend.php';
-		$exceptions['backendbaseobject'] = PATH_WWW . '/backend/core/engine/base.php';
-		$exceptions['backendajaxaction'] = PATH_WWW . '/backend/core/engine/ajax_action.php';
-		$exceptions['backendbaseajaxaction'] = PATH_WWW . '/backend/core/engine/base.php';
-		$exceptions['backenddatagriddb'] = PATH_WWW . '/backend/core/engine/datagrid.php';
-		$exceptions['backenddatagridarray'] = PATH_WWW . '/backend/core/engine/datagrid.php';
-		$exceptions['backenddatagridfunctions'] = PATH_WWW . '/backend/core/engine/datagrid.php';
-		$exceptions['backendbaseconfig'] = PATH_WWW . '/backend/core/engine/base.php';
-		$exceptions['backendbasecronjob'] = PATH_WWW . '/backend/core/engine/base.php';
-		$exceptions['fl'] = PATH_WWW . '/frontend/core/engine/language.php';
-		$exceptions['bl'] = PATH_WWW . '/backend/core/language.php';
-		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
+		$exceptions['frontend'] = __DIR__ . '/frontend/core/engine/frontend.php';
+		$exceptions['frontendbaseajaxaction'] = __DIR__ . '/frontend/core/engine/base.php';
+		$exceptions['frontendbaseconfig'] = __DIR__ . '/frontend/core/engine/base.php';
+		$exceptions['frontendbaseobject'] = __DIR__ . '/frontend/core/engine/base.php';
+		$exceptions['frontendblockextra'] = __DIR__ . '/frontend/core/engine/block.php';
+		$exceptions['frontendblockwidget'] = __DIR__ . '/frontend/core/engine/block.php';
+		$exceptions['frontendtemplatecompiler'] = __DIR__ . '/frontend/core/engine/template_compiler.php';
+		$exceptions['backend'] = __DIR__ . '/backend/core/engine/backend.php';
+		$exceptions['backendbaseobject'] = __DIR__ . '/backend/core/engine/base.php';
+		$exceptions['backendajaxaction'] = __DIR__ . '/backend/core/engine/ajax_action.php';
+		$exceptions['backendbaseajaxaction'] = __DIR__ . '/backend/core/engine/base.php';
+		$exceptions['backenddatagriddb'] = __DIR__ . '/backend/core/engine/datagrid.php';
+		$exceptions['backenddatagridarray'] = __DIR__ . '/backend/core/engine/datagrid.php';
+		$exceptions['backenddatagridfunctions'] = __DIR__ . '/backend/core/engine/datagrid.php';
+		$exceptions['backendbaseconfig'] = __DIR__ . '/backend/core/engine/base.php';
+		$exceptions['backendbasecronjob'] = __DIR__ . '/backend/core/engine/base.php';
+		$exceptions['fl'] = __DIR__ . '/frontend/core/engine/language.php';
+		$exceptions['bl'] = __DIR__ . '/backend/core/language.php';
+		$exceptions['api'] = __DIR__ . '/api/1.0/engine/api.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
 
 		// frontend
-		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = PATH_WWW . '/frontend/core/engine/' . str_replace('frontend', '', $className) . '.php';
+		elseif(substr($className, 0, 8) == 'frontend')
+		{
+			$filename = str_replace('frontend', '', $className) . '.php';
+			$pathToLoad = __DIR__ . '/frontend/core/engine/' . $filename;
+		}
 
 		// backend
-		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = PATH_WWW . '/backend/core/engine/' . str_replace('backend', '', $className) . '.php';
+		elseif(substr($className, 0, 7) == 'backend')
+		{
+			$filename = str_replace('backend', '', $className) . '.php';
+			$pathToLoad = __DIR__ . '/backend/core/engine/' . $filename;
+		}
 
 		// common
-		elseif(substr($className, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $className) . '.php';
+		elseif(substr($className, 0, 6) == 'common')
+		{
+			$filename = str_replace('common', '', $className) . '.php';
+			$pathToLoad = __DIR__ . '/library/base/' . $filename;
+		}
 
 		// file check in core
 		if($pathToLoad != '' && file_exists($pathToLoad)) require_once $pathToLoad;
@@ -87,7 +86,7 @@ class Autoloader
 
 			// root path based on the application we are trying to load
 			$root = array_shift($parts);
-			$root = PATH_WWW . '/' . strtolower($root);
+			$root = __DIR__ . '/' . strtolower($root);
 
 			foreach($parts as $i => $part)
 			{

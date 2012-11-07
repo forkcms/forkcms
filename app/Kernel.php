@@ -42,8 +42,7 @@ abstract class Kernel implements KernelInterface
 	 * To mirror symfony, $environment should not be optional, but for now we have no reason
 	 * to actually do this because we can't use the profiler.
 	 *
-	 * Debugging is added to mirror Symfony, but does not actually do anything at this moment,
-	 * I used it to fill up the container with some kernel settings.
+	 * Debugging is added to mirror Symfony, but does not actually do anything at this moment.
 	 *
 	 * @param string[optional] $environment
 	 * @param bool[optional] $debug
@@ -52,11 +51,6 @@ abstract class Kernel implements KernelInterface
 	{
 		$this->environment = $environment;
 		$this->debug = $debug;
-
-		if($environment !== null)
-		{
-			$this->loadEnvironmentConfiguration($this->environment);
-		}
 
 		$this->initializeContainer();
 	}
@@ -90,13 +84,18 @@ abstract class Kernel implements KernelInterface
 	 */
 	protected function getKernelParameters()
 	{
-		// @todo load names of active bundles
+		// This is also where symfony loads and stores the names of the active bundles
 
+		/**
+		 * Debug status and environment are params of the Kernel constructor, and
+		 * are set via a separate front controller.
+		 *
+		 * Fork sets them directly in /app/config/parameters.yml through the installer.
+		 * We can add additional non-installer related configuration options here.
+		 */
 		return array(
-			'kernel_debug' => $this->debug, // @todo in time, remove SPOON_DEBUG
-			'kernel_environment' => $this->environment,
-			'kernel_server_protocol' => (strpos($_SERVER['SERVER_PROTOCOL'], 'HTTPS') === false),
-			// @todo moar info (paths, list of bundles,...)
+			//'kernel.debug' => $this->debug,
+			//'kernel.environment' => $this->environment,
 		);
 	}
 

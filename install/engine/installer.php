@@ -52,6 +52,12 @@ class Installer extends KernelLoader implements ApplicationInterface
 	 */
 	public function initialize()
 	{
+		if(!defined('SPOON_DEBUG'))
+		{
+			define('SPOON_DEBUG', false);
+			define('SPOON_CHARSET', 'utf-8');
+		}
+
 		$this->setStep();
 	}
 

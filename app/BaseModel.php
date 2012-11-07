@@ -26,10 +26,9 @@ class BaseModel
 	private static $container;
 
 	/**
-	 * @param bool[optional] $write
 	 * @deprecated
 	 */
-	public static function getDB($write = false)
+	public static function getDB()
 	{
 		return self::$container->get('database');
 	}

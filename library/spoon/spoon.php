@@ -25,7 +25,7 @@ define('SPOON_VERSION', '1.3.0');
  */
 if(!defined('SPOON_DEBUG'))
 {
-	define('SPOON_DEBUG', true);
+	//define('SPOON_DEBUG', true);
 }
 
 /*
@@ -34,7 +34,7 @@ if(!defined('SPOON_DEBUG'))
  */
 if(!defined('SPOON_DEBUG_MESSAGE'))
 {
-	define('SPOON_DEBUG_MESSAGE', 'There seems to be an issue with this page.');
+	//define('SPOON_DEBUG_MESSAGE', 'There seems to be an issue with this page.');
 }
 
 /*
@@ -43,7 +43,7 @@ if(!defined('SPOON_DEBUG_MESSAGE'))
  */
 if(!defined('SPOON_DEBUG_EMAIL'))
 {
-	define('SPOON_DEBUG_EMAIL', '');
+	//define('SPOON_DEBUG_EMAIL', '');
 }
 
 /*
@@ -62,7 +62,7 @@ if(!defined('SPOON_EXCEPTION_CALLBACK'))
  */
 if(!defined('SPOON_CHARSET'))
 {
-	define('SPOON_CHARSET', 'iso-8859-1');
+	//define('SPOON_CHARSET', 'iso-8859-1');
 }
 
 /*
