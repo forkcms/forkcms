@@ -14,7 +14,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendInit
+class FrontendInit extends KernelLoader
 {
 	/**
 	 * Current type
@@ -26,7 +26,7 @@ class FrontendInit
 	/**
 	 * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
 	 */
-	public function __construct($type)
+	public function initialize($type)
 	{
 		$allowedTypes = array('frontend', 'frontend_ajax', 'frontend_js');
 		$type = (string) $type;

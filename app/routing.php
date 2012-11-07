@@ -141,7 +141,8 @@ class ApplicationRouting
 		$apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
 
 		require_once __DIR__ . '/../api/' . $apiVersion . '/init.php';
-		new APIInit($app);
+		$init = new APIInit($this->kernel);
+		$init->initialize($app);
 
 		// The client was requested
 		if(array_key_exists(2, $chunks) && $chunks[2] === 'client')
@@ -184,7 +185,8 @@ class ApplicationRouting
 	protected function initializeBackend($app)
 	{
 		require_once __DIR__ . '/../backend/init.php';
-		new BackendInit($app);
+		$init = new BackendInit($this->kernel);
+		$init->initialize($app);
 
 		switch($app)
 		{
@@ -208,7 +210,8 @@ class ApplicationRouting
 	protected function initializeFrontend($app)
 	{
 		require_once __DIR__ . '/../frontend/init.php';
-		new FrontendInit($app);
+		$init = new FrontendInit($this->kernel);
+		$init->initialize($app);
 
 		return ($app === 'frontend_ajax') ? 'FrontendAJAX' : 'Frontend';
 	}

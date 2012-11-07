@@ -13,7 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendInit
+class BackendInit extends KernelLoader
 {
 	/**
 	 * Current type
@@ -25,7 +25,7 @@ class BackendInit
 	/**
 	 * @param string $type The type of init to load, possible values are: backend, backend_ajax, backend_cronjob, backend_js.
 	 */
-	public function __construct($type)
+	public function initialize($type)
 	{
 		$allowedTypes = array('backend', 'backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob');
 		$type = (string) $type;

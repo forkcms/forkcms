@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class APIInit
+class APIInit extends KernelLoader
 {
 	/**
 	 * Current type
@@ -24,7 +24,7 @@ class APIInit
 	/**
 	 * @param string $type The type of init to load, possible values: backend, backend_ajax, backend_cronjob, backend_js
 	 */
-	public function __construct($type)
+	public function initialize($type)
 	{
 		$allowedTypes = array('api');
 		$type = (string) $type;
