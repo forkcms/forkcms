@@ -51,16 +51,6 @@ class BackendBaseObject extends KernelLoader
 	}
 
 	/**
-	 * Returns the service container object
-	 *
-	 * return ContainerInterface
-	 */
-	public function getContainer()
-	{
-		return $this->getKernel()->getContainer();
-	}
-
-	/**
 	 * Get module
 	 *
 	 * @return string

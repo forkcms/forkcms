@@ -42,16 +42,6 @@ class FrontendBaseObject extends KernelLoader
 		// get URL from reference
 		$this->URL = Spoon::get('url');
 	}
-
-	/**
-	 * Returns the service container object
-	 *
-	 * return ContainerInterface
-	 */
-	public function getContainer()
-	{
-		return $this->getKernel()->getContainer();
-	}
 }
 
 /**

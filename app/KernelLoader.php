@@ -28,6 +28,14 @@ class KernelLoader
 	}
 
 	/**
+	 * @return ContainerInterface
+	 */
+	public function getContainer()
+	{
+		return $this->getKernel()->getContainer();
+	}
+
+	/**
 	 * @return Kernel
 	 */
 	public function getKernel()
