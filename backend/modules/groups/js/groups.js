@@ -3,7 +3,7 @@
  *
  * @author	Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.groups =
 {
