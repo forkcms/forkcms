@@ -93,9 +93,6 @@ class BackendURL extends BackendBaseObject
 		// split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
 		$chunks = (array) explode('/', trim($processedQueryString, '/'));
 
-		// check if this is a request for a JS-file
-		$isJS = (isset($chunks[1]) && $chunks[1] == 'js.php');
-
 		// check if this is a request for a AJAX-file
 		$isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax.php');
 
@@ -107,7 +104,7 @@ class BackendURL extends BackendBaseObject
 		}
 
 		// no language provided?
-		if($language == '' && !$isJS && !$isAJAX)
+		if($language == '' && !$isAJAX)
 		{
 			// remove first element
 			array_shift($chunks);
@@ -123,7 +120,7 @@ class BackendURL extends BackendBaseObject
 		if(isset($chunks[3]) && $chunks[3] != '') $action = $chunks[3];
 
 		// no action passed through URL
-		elseif(!$isJS && !$isAJAX)
+		elseif(!$isAJAX)
 		{
 			// check if module path is not yet defined
 			if(!defined('BACKEND_MODULE_PATH'))
@@ -193,13 +190,6 @@ class BackendURL extends BackendBaseObject
 			$this->setModule($module);
 			$this->setAction($action);
 			BackendLanguage::setWorkingLanguage($language);
-		}
-
-		// JS parameters are passed via GET
-		elseif($isJS)
-		{
-			$this->setModule(isset($_GET['module']) ? $_GET['module'] : '');
-			BackendLanguage::setWorkingLanguage(isset($_GET['language']) ? $_GET['language'] : SITE_DEFAULT_LANGUAGE);
 		}
 
 		// regular request
