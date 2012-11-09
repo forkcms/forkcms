@@ -311,10 +311,9 @@ class FrontendBaseBlock
 	 * @param  string $file The path to the javascript-file that should be loaded.
 	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
 	 * @param bool[optional] $minify Should the file be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
+	public function addJS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
 	{
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
@@ -323,7 +322,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJS($file, $minify, $parseThroughPHP, $addTimestamp);
+		$this->header->addJS($file, $minify, $addTimestamp);
 	}
 
 	/**
@@ -761,9 +760,8 @@ class FrontendBaseWidget
 	 * @param  string $file The path to the javascript-file that should be loaded.
 	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
 	 * @param bool[optional] $minify Should the file be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 */
-	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	public function addJS($file, $overwritePath = false, $minify = true)
 	{
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
@@ -772,7 +770,7 @@ class FrontendBaseWidget
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJS($file, $minify, $parseThroughPHP);
+		$this->header->addJS($file, $minify);
 	}
 
 	/**
