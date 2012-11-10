@@ -481,11 +481,15 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// reset url
 			foreach($items as &$row)
 			{
-				$row['full_url'] = $link . '/' . $row['url'] . '?gn=' . str_pad($row['id'], 3, '0', STR_PAD_LEFT);
-							// image?
+				$row['full_url'] = $link . '/' . $row['url'];
+
+				// image?
 				if(isset($row['image']))
 				{
-					foreach($folders as $folder) $row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+					foreach($folders as $folder)
+					{
+						$row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+					}
 				}
 			}
 		}

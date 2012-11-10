@@ -1,7 +1,7 @@
 /**
  * Interaction for the mailmotor
  *
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.profiles =
 {

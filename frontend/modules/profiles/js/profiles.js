@@ -1,7 +1,7 @@
 /**
  * Interaction for the profiles module
  *
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsFrontend.profiles = {
 	/**
