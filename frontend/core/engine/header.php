@@ -820,6 +820,14 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private function parseSeo()
 	{
+		// when on the homepage of the default language, set the clean site url as canonical, because of redirect fix
+		$queryString = trim($this->URL->getQueryString(), '/');
+		$language = FrontendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+		if($queryString == $language)
+		{
+			$this->canonical = rtrim(SITE_URL, '/');
+		}
+
 		// any canonical URL provided?
 		if($this->canonical != '') $url = $this->canonical;
 

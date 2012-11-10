@@ -24,6 +24,7 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Siesqo <info@siesqo.be>
  * @since		1.1.0
  */
 class SpoonLocale
@@ -33,7 +34,7 @@ class SpoonLocale
 	 *
 	 * @var	array
 	 */
-	private static $languages = array('de', 'en', 'es', 'fr', 'nl');
+	private static $languages = array('de', 'en', 'es', 'fr', 'nl', 'it');
 
 
 	/**
@@ -93,6 +94,93 @@ class SpoonLocale
 
 
 	/**
+	 * Fetch the name of a continent based on the code.
+	 *
+	 * @return	array						An array with all known continents in the requested language.
+	 * @param	string $code				The official continents-code.
+	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
+	 */
+	public static function getContinent($code, $language = 'en')
+	{
+		// init vars
+		$code = (string) $code;
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/' . $language . '.php';
+
+		// doesn't exist
+		if(!isset($locale['continents'][$code])) throw new SpoonLocaleException('There is no continent with the code: ' . $code);
+
+		// fetch countries
+		return $locale['continents'][$code];
+	}
+
+
+	/**
+	 * Retrieve the list of continents.
+	 *
+	 * @return	array						An array with all known continents in the requested language.
+	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
+	 */
+	public static function getContinents($language = 'en')
+	{
+		// init vars
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/' . $language . '.php';
+
+		// fetch countries
+		return $locale['continents'];
+	}
+
+
+	/**
+	 * Retrieve continent for the country.
+	 *
+	 * @return	array							The continent-code.
+	 * @param	string $code					The official country-code.
+	 * @param	string[optional] $language		The language to use (available languages can be found in SpoonLocale).
+	 * @param	bool[optional] $returnLocale	Should we return the locale for continent? Default = true
+	 */
+	public static function getContinentForCountry($code, $language = 'en', $returnLocale = true)
+	{
+		// init vars
+		$continentCountries = array();
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+		$returnLocale = (bool) $returnLocale;
+
+		// fetch file
+		require 'data/' . $language . '.php';
+		require 'data/continent_countries.php';
+
+		// define contintents
+		$continents = $locale['continents'];
+
+		// loop all continents
+		foreach($continents as $key => $label)
+		{
+			// the country is in this continent
+			if(in_array($code, $continentCountries[$key]))
+			{
+				// return label, or key
+				return ($returnLocale) ? $label : $key;
+
+				// stop here
+				break;
+			}
+		}
+
+		// no continent for this country found
+		return false;
+	}
+
+
+	/**
 	 * Retrieve the list of countries.
 	 *
 	 * @return	array						An array with all known countries in the requested language.
@@ -109,6 +197,46 @@ class SpoonLocale
 
 		// fetch countries
 		return $locale['countries'];
+	}
+
+
+	/**
+	 * Retrieve the list of countries for a continent.
+	 *
+	 * @return	array						An array with all known continents in the requested language.
+	 * @param	string $continent			The continent you want all countries from.
+	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
+	 */
+	public static function getCountriesForContinent($continent, $language = 'en')
+	{
+		// init vars
+		$continentCountries = array();
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+		$results = array();
+
+		// fetch file
+		require 'data/' . $language . '.php';
+		require 'data/continent_countries.php';
+
+		// doesn't exist
+		if(!isset($continentCountries[$continent])) throw new SpoonLocaleException('There is no continent with the name: ' . $continent);
+
+		// fetch countries
+		$countries = $continentCountries[$continent];
+
+		// loop all countries for the continent
+		foreach($countries as $code)
+		{
+			// add country to results
+			$results[$code] = $locale['countries'][$code];
+		}
+
+		// sort the results alphabetical
+		asort($results);
+
+		// return re
+		return $results;
 	}
 
 

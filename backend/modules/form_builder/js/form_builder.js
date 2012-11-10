@@ -2,7 +2,7 @@
  * Javascript for building forms
  *
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.formBuilder =

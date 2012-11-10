@@ -3,7 +3,7 @@
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 var jsBackend =
 {
@@ -522,7 +522,7 @@ jsBackend.ckeditor =
  * Handle form functionality
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.controls =
 {
@@ -1243,7 +1243,7 @@ jsBackend.data =
  *
  * @author	Dieter Vanden Eynde <dieter@dieterve.be>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.effects =
 {
@@ -1285,7 +1285,7 @@ jsBackend.effects =
  * Backend forms
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.forms =
 {
@@ -1610,7 +1610,7 @@ jsBackend.forms =
  * Do custom layout/interaction stuff
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.layout =
 {
@@ -1795,7 +1795,7 @@ jsBackend.locale =
 	// get localization
 	loc: function(key)
 	{
-		return jsBackend.locale.get('loc', key, 'core');
+		return jsBackend.locale.get('loc', key);
 	},
 
 	// get a message
@@ -1810,7 +1810,7 @@ jsBackend.locale =
  * Handle form messages (action feedback: success, error, ...)
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.messages =
 {
@@ -1862,7 +1862,7 @@ jsBackend.messages =
  *
  * @author	Jan Moessen <jan@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.tabs =
 {
@@ -1922,7 +1922,7 @@ jsBackend.tabs =
  * Apply tooltip
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.tooltip =
 {
@@ -1943,7 +1943,7 @@ jsBackend.tooltip =
  * Handle browsers with impaired CSS selector support
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.selectors =
 {
@@ -1962,7 +1962,7 @@ jsBackend.selectors =
  * Fix focus/blur events on impaired browsers
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.focusfix =
 {

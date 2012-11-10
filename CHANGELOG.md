@@ -11,6 +11,8 @@ Improvements:
 * Core: Upgraded to jQuery UI 1.8.24
 * Core: Upgraded to CKEditor 3.6.5
 * FormBuilder: do not prefix the site URL to the form action to prevent submitting to another domain.
+* Core: starting to use namespaces for the external classes that use namespaces.
+* Core: upgraded Spoon
 
 Bugfixes:
 
@@ -18,6 +20,7 @@ Bugfixes:
 * SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
 * DataGrid: do not overwrite existing row attributes when greying out a row.
 * Form: encode html entities in hidden field values to prevent XSS.
+* Mailmotor: add jsData to iframe template.
 
 
 3.4.4 (2012-09-12)

@@ -270,7 +270,6 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			// post/get data
 			$data = $this->getMethod(true);
 
-
 			// multiple
 			if(!$this->single)
 			{

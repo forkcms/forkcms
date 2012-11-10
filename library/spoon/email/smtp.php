@@ -112,7 +112,7 @@ class SpoonEmailSMTP
 		if(!$this->connect()) throw new SpoonEmailException('Connection to host ' . $this->host . ':' . $this->port . ' failed.');
 
 		// say hi to the host
-		if(!$this->helo()) throw new SpoonEmailException('HELO went wrong: SMTP code ' . $this->repliedCode);
+		if(!$this->helo($this->host)) throw new SpoonEmailException('HELO went wrong: SMTP code ' . $this->repliedCode);
 
 		// initialize security layer
 		switch($this->security)

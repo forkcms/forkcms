@@ -2,7 +2,7 @@
  * Interaction for the dashboard in the analytics module
  *
  * @author	Annelies Vanextergem <annelies@netlash.com>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsBackend.analyticsDashboard =
 {

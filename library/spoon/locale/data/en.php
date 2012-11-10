@@ -3,6 +3,15 @@
 // initialize variable
 $locale = array();
 
+// continents
+$locale['continents']['africa'] = 'Africa';
+$locale['continents']['antarctica'] = 'Antartic';
+$locale['continents']['asia'] = 'Asia';
+$locale['continents']['europe'] = 'Europe';
+$locale['continents']['northAmerica'] = 'North America';
+$locale['continents']['oceania'] = 'Oceania';
+$locale['continents']['southAmerica'] = 'South America';
+
 // countries
 $locale['countries'] = array();
 $locale['countries']['AF'] = 'Afghanistan';

@@ -54,7 +54,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		{
 			$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
-			foreach($folders as $folder) $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
+			foreach($folders as $folder) $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $return['image'];
 		}
 
 		// return
@@ -107,7 +107,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// image?
 			if(isset($row['image']))
 			{
-				foreach($folders as $folder) $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+				foreach($folders as $folder) $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $row['image'];
 			}
 		}
 
@@ -486,7 +486,10 @@ class FrontendBlogModel implements FrontendTagsInterface
 				// image?
 				if(isset($row['image']))
 				{
-					foreach($folders as $folder) $row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+					foreach($folders as $folder)
+					{
+						$row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+					}
 				}
 			}
 		}
