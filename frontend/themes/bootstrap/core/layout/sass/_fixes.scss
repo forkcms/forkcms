@@ -24,3 +24,7 @@ a {
 		width: 100%; /* Reset the width, make sure we use the full available width */
 	}
 }
+
+.formError {
+	@extend .help-inline;
+}
