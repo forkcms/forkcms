@@ -17,3 +17,10 @@ a {
 		@include border-radius();
 	}
 }
+
+.alert {
+	&.fullWidthAlert {
+		margin: 0;
+		width: 100%; /* Reset the width, make sure we use the full available width */
+	}
+}
