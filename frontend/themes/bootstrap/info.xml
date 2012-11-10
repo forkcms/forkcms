@@ -46,5 +46,19 @@
 				[/,/,/,top,/],[slideshow,slideshow,slideshow,slideshow,slideshow],[/,features,features,features,/],[/,main,main,main,/]
 			</format>
 		</template>
+		<template label="Sidebar" path="core/layout/templates/sidebar.tpl">
+			<positions>
+				<position name="main" />
+				<position name="right" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top,/],[/,main,main,right,/],[/,main,main,right,/],[/,main,main,/,/]
+			</format>
+		</template>
 	</templates>
 </theme>

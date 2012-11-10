@@ -37,11 +37,11 @@
 		</div>
 	</div>
 
-	<div id="main" class="container marketing">
+	<div id="main" class="container">
 		{include:core/layout/templates/breadcrumb.tpl}
 
 		<div class="row">
-			<div class="span12">
+			<div class="span9">
 				{* Page title *}
 				{option:!hideContentTitle}
 					<header class="page-header">
@@ -51,20 +51,30 @@
 
 				{* Main position *}
 				{iteration:positionMain}
-					<div class="row">
-						<div class="span12">
-							{option:positionMain.blockIsHTML}
-								{$positionMain.blockContent}
-							{/option:positionMain.blockIsHTML}
-							{option:!positionMain.blockIsHTML}
-								{$positionMain.blockContent}
-							{/option:!positionMain.blockIsHTML}
-						</div>
-					</div>
+					{option:positionMain.blockIsHTML}
+						{$positionMain.blockContent}
+					{/option:positionMain.blockIsHTML}
+					{option:!positionMain.blockIsHTML}
+						{$positionMain.blockContent}
+					{/option:!positionMain.blockIsHTML}
 				{/iteration:positionMain}
 			</div>
+			<div class="span3">
+				<div class="row">
+					{* Right position *}
+					{iteration:positionRight}
+						<div class="span3">
+							{option:positionRight.blockIsHTML}
+								{$positionRight.blockContent}
+							{/option:positionRight.blockIsHTML}
+							{option:!positionRight.blockIsHTML}
+								{$positionRight.blockContent}
+							{/option:!positionRight.blockIsHTML}
+						</div>
+					{/iteration:positionRight}
+				</div>
+			</div>
 		</div>
-
 		{include:core/layout/templates/footer.tpl}
 	</div>
 </body>
