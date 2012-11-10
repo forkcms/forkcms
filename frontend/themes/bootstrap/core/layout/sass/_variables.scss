@@ -1,0 +1,21 @@
+// Scaffolding
+$bodyBackground: #FFF;
+$textColor: #333;
+
+// Links
+$linkColor: #08c;
+$linkColorHover: darken($linkColor, 15%);
+
+// Typography
+$sansFontFamily: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$serifFontFamily: Georgia, "Times New Roman", Times, serif;
+$monoFontFamily: Monaco, Menlo, Consolas, "Courier New", monospace;
+
+$baseFontSize: 14px;
+$baseFontFamily: $sansFontFamily;
+$baseLineHeight: 20px;
+$altFontFamily: $serifFontFamily;
+
+// Sprite icons path
+$iconSpritePath: image-url("glyphicons-halflings.png");
+$iconWhiteSpritePath: image-url("glyphicons-halflings-white.png");
