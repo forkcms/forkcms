@@ -84,7 +84,6 @@
 			{option:positionMain.blockIsHTML}
 				<hr class="featurette-divider">
 				{$positionMain.blockContent}
-
 			{/option:positionMain.blockIsHTML}
 			{option:!positionMain.blockIsHTML}
 				{$positionMain.blockContent}

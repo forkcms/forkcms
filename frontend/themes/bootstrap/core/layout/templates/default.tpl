@@ -40,22 +40,9 @@
 	<div id="main" class="container marketing">
 		{include:core/layout/templates/breadcrumb.tpl}
 
-		{option:positionFeatures}
-			<div class="row">
-				{iteration:positionFeatures}
-					{option:positionFeatures.blockIsHTML}
-						{$positionFeatures.blockContent}
-					{/option:positionFeatures.blockIsHTML}
-					{option:!positionFeatures.blockIsHTML}
-						{$positionFeatures.blockContent}
-					{/option:!positionFeatures.blockIsHTML}
-				{/iteration:positionFeatures}
-			</div>
-		{/option:positionFeatures}
-
 		{* Page title *}
 		{option:!hideContentTitle}
-			<header class="mainTitle">
+			<header class="page-header">
 				<h1>{$page.title}</h1>
 			</header>
 		{/option:!hideContentTitle}
@@ -63,9 +50,7 @@
 		{* Main position *}
 		{iteration:positionMain}
 			{option:positionMain.blockIsHTML}
-				<hr class="featurette-divider">
 				{$positionMain.blockContent}
-
 			{/option:positionMain.blockIsHTML}
 			{option:!positionMain.blockIsHTML}
 				{$positionMain.blockContent}
