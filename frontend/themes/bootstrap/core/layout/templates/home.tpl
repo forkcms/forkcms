@@ -72,13 +72,6 @@
 			</div>
 		{/option:positionFeatures}
 
-		{* Page title *}
-		{option:!hideContentTitle}
-			<header class="mainTitle">
-				<h1>{$page.title}</h1>
-			</header>
-		{/option:!hideContentTitle}
-
 		{* Main position *}
 		{iteration:positionMain}
 			{option:positionMain.blockIsHTML}

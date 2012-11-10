@@ -4,7 +4,7 @@
 	- {$searchTerm}: the term that has been searched for
 *}
 {option:searchTerm}
-	<section id="searchResults">
+	<section id="searchResults" itemscope itemtype="http://schema.org/SearchResultsPage">
 		{option:!searchResults}
 			<div class="alert">
 				{$msgSearchNoItems}
@@ -13,16 +13,16 @@
 		{option:searchResults}
 			<div class="media">
 				{iteration:searchResults}
-					<section class="media-body">
+					<section class="media-body" >
 						<header>
-							<h3 class="media-heading">
-								<a href="{$searchResults.full_url}">
+							<h3 class="media-heading" itemprop="name">
+								<a href="{$searchResults.full_url}" itemprop="url">
 									{$searchResults.title}
 								</a>
 							</h3>
 						</header>
-						{option:!searchResults.introduction}<div>{$searchResults.text|truncate:200|cleanupplaintext}</div>{/option:!searchResults.introduction}
-						{option:searchResults.introduction}<div>{$searchResults.introduction}</div>{/option:searchResults.introduction}
+						{option:!searchResults.introduction}<div itemprop="description">{$searchResults.text|truncate:200|cleanupplaintext}</div>{/option:!searchResults.introduction}
+						{option:searchResults.introduction}<div itemprop="description">{$searchResults.introduction}</div>{/option:searchResults.introduction}
 					</section>
 				{/iteration:searchResults}
 			</div>

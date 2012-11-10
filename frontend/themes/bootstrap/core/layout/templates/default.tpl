@@ -43,7 +43,7 @@
 		{* Page title *}
 		{option:!hideContentTitle}
 			<header class="page-header">
-				<h1>{$page.title}</h1>
+				<h1 itemprop="name">{$page.title}</h1>
 			</header>
 		{/option:!hideContentTitle}
 
