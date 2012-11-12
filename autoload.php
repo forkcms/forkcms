@@ -96,8 +96,8 @@ class Autoloader
 	}
 }
 
-// register the autoloader
-spl_autoload_register(array(new Autoloader(), 'load'));
-
 // require the composer autoloader
 require_once 'vendor/autoload.php';
+
+// register the autoloader
+spl_autoload_register(array(new Autoloader(), 'load'));
