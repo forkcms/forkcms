@@ -85,7 +85,7 @@ class Autoloader
 					$pathToLoad = $root . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
 
 					// if it exists, load it!
-					if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+					if($pathToLoad != '' && file_exists($pathToLoad))
 					{
 						require_once $pathToLoad;
 						break;
