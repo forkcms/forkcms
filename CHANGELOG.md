@@ -13,6 +13,7 @@ Improvements:
 * FormBuilder: do not prefix the site URL to the form action to prevent submitting to another domain.
 * Core: starting to use namespaces for the external classes that use namespaces.
 * Core: upgraded Spoon
+* Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
 
 Bugfixes:
 
