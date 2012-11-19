@@ -340,6 +340,10 @@ class FrontendHeader extends FrontendBaseObject
 
 		// add to metadata
 		$this->addMetaData(array('property' => 'og:image', 'content' => $image), $overwrite, array('property', 'content'));
+		if(SITE_PROTOCOL == 'https')
+		{
+			$this->addMetaData(array('property' => 'og:image:secure_url', 'content' => $image), $overwrite, array('property', 'content'));
+		}
 	}
 
 	/**
