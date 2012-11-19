@@ -329,7 +329,7 @@ class FrontendHeader extends FrontendBaseObject
 		$image = str_replace(SITE_URL, '', $image);
 
 		// check if it no longer points to an absolute uri
-		if(substr($image, 0, 7) != 'http://')
+		if(substr($image, 0, 7) != SITE_PROTOCOL . '://')
 		{
 			// check if image exists
 			if(!SpoonFile::exists(PATH_WWW . $image)) return;
