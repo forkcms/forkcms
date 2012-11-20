@@ -1,10 +1,17 @@
 {
-	"name": "forkcms/forkcms",
-	"description": "Fork is an open source CMS that will rock your world.",
-	"license": "MIT",
-	"require": {
-		"facebook/php-sdk": "3.2.*",
-		"tijsverkoyen/akismet": "1.1.*",
-		"tijsverkoyen/css-to-inline-styles": "1.1.*"
-	}
+    "name": "forkcms/forkcms",
+    "description": "Fork is an open source CMS that will rock your world.",
+    "keywords": ["cms"],
+    "homepage": "http://www.fork-cms.com/",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.2",
+        "facebook/php-sdk": "3.2.*",
+        "tijsverkoyen/akismet": "1.1.*",
+        "tijsverkoyen/css-to-inline-styles": "1.1.*",
+        "symfony/dependency-injection": "2.1.*",
+        "symfony/http-kernel": "2.1.*",
+        "symfony/config": "2.1.*",
+        "symfony/yaml": "2.1.*"
+    }
 }

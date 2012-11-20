@@ -12,16 +12,40 @@
  * We create all needed instances.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class Frontend
+class Frontend extends KernelLoader implements ApplicationInterface
 {
-	public function __construct()
+	/**
+	 * @var FrontendPage
+	 */
+	private $page;
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
+	{
+		return $this->page->display();
+	}
+
+	/**
+	 * Initializes the entire frontend; preload FB, URL, template and the requested page.
+	 *
+	 * This method exists because the service container needs to be set before
+	 * the page's functionality gets loaded.
+	 */
+	public function initialize()
 	{
 		$this->initializeFacebook();
-
 		new FrontendURL();
 		new FrontendTemplate();
-		new FrontendPage();
+
+		// Load the rest of the page.
+		$this->page = new FrontendPage();
+		$this->page->setKernel($this->getKernel());
+		$this->page->load();
 	}
 
 	/**

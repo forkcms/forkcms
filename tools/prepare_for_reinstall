@@ -25,8 +25,6 @@ rm -f `find ../backend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.
 rm -f `find ../backend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ../backend/cache/logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f ../library/globals.php
-rm -f ../library/globals_frontend.php
-rm -f ../library/globals_backend.php
+rm -f ../app/config/parameters.yml
 
 echo 'All done! Ready for reinstall.'

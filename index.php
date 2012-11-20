@@ -7,9 +7,4 @@
  * file that was distributed with this source code.
  */
 
-// require
-require_once 'autoload.php';
-require_once 'routing.php';
-
-// create new instance
-$app = new ApplicationRouting();
+require_once __DIR__ . '/autoload.php';

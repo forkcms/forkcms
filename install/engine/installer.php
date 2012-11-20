@@ -23,7 +23,7 @@ require_once 'step_7.php';
  * @author Davy Hellemans <davy@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class Installer
+class Installer extends KernelLoader implements ApplicationInterface
 {
 	/**
 	 * The current step number
@@ -33,31 +33,48 @@ class Installer
 	private $step;
 
 	/**
-	 * Class constructor.
+	 * Only checks if this Fork is already installed
+	 *
+	 * @param Kernel $kernel
 	 */
-	public function __construct()
+	public function __construct($kernel)
 	{
-		// already installed
-		if(file_exists('cache/installed.txt')) exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
+		if(file_exists('cache/installed.txt'))
+		{
+			exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
+		}
 
-		// define the current step
+		parent::__construct($kernel);
+	}
+
+	/**
+	 * Initializes the installation process
+	 */
+	public function initialize()
+	{
+		if(!defined('SPOON_DEBUG'))
+		{
+			define('SPOON_DEBUG', false);
+			define('SPOON_CHARSET', 'utf-8');
+		}
+
 		$this->setStep();
-
-		// execute step
-		$this->execute();
 	}
 
 	/**
 	 * Executes the proper step
 	 */
-	private function execute()
+	public function display()
 	{
 		// step class name
 		$class = 'InstallerStep' . $this->step;
 
 		// create & execute instance
 		$instance = new $class($this->step);
+		$instance->setKernel($this->getKernel());
+		$instance->initialize();
 		$instance->execute();
+		return $instance->display();
 	}
 
 	/**

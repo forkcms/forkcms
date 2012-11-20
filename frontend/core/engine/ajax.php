@@ -13,8 +13,9 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendAJAX
+class FrontendAJAX extends KernelLoader
 {
 	/**
 	 * The action
@@ -37,7 +38,11 @@ class FrontendAJAX
 	 */
 	private $module;
 
-	public function __construct()
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the request's functionality gets loaded.
+	 */
+	public function initialize()
 	{
 		// get vars
 		$module = isset($_POST['fork']['module']) ? $_POST['fork']['module'] : '';
@@ -107,6 +112,14 @@ class FrontendAJAX
 	public function setAction($value)
 	{
 		$this->action = (string) $value;
+	}
+
+	/**
+	 * @param ContainerInterface $container
+	 */
+	public function setContainer(ContainerInterface $container = null)
+	{
+		$this->container = $container;
 	}
 
 	/**

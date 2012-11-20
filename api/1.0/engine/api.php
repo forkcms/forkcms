@@ -7,22 +7,37 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * This class defines the API.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class API
+class API extends KernelLoader implements ApplicationInterface
 {
 	// statuses
 	const OK = 200;
 	const BAD_REQUEST = 400;
+	const NOT_AUTHORIZED = 401;
 	const FORBIDDEN = 403;
 	const ERROR = 500;
 	const NOT_FOUND = 404;
 
-	public function __construct()
+	/**
+	 * @var string
+	 */
+	protected static $content;
+
+	/**
+	 * Initializes the entire API; extract class+method from the request, call, and output.
+	 *
+	 * This method exists because the service container needs to be set before
+	 * the rest of API functionality gets loaded.
+	 */
+	public function initialize()
 	{
 		// simulate $_REQUEST
 		$parameters = array_merge($_GET, $_POST);
@@ -30,27 +45,33 @@ class API
 		// validate parameters
 		if(!isset($parameters['method']))
 		{
-			self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
+			return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
 		}
 
 		// check GET
 		$method = SpoonFilter::getValue($parameters['method'], null, '');
 
 		// validate
-		if($method == '') self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
+		if($method == '')
+		{
+			return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
+		}
 
 		// process method
 		$chunks = (array) explode('.', $method, 2);
 
 		// validate method
-		if(!isset($chunks[1])) self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+		if(!isset($chunks[1]))
+		{
+			return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+		}
 
 		// build the path to the backend API file
 		if($chunks[0] == 'core') $path = BACKEND_CORE_PATH . '/engine/api.php';
 		else $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
 
 		// check if the fille is present? If it isn't present there is a problem
-		if(!SpoonFile::exists($path)) self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+		if(!SpoonFile::exists($path)) return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
 
 		// build config-object-name
 		$className = 'Backend' . SpoonFilter::toCamelCase($chunks[0]) . 'API';
@@ -62,7 +83,7 @@ class API
 		// validate if the method exists
 		if(!is_callable(array($className, $methodName)))
 		{
-			self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+			return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
 		}
 
 		// call the method
@@ -103,7 +124,7 @@ class API
 				// check if the parameter is available
 				if(!$parameter->isOptional() && !isset($parameters[$name]))
 				{
-					self::output(self::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
+					return self::output(self::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
 				}
 
 				// add not-passed arguments
@@ -133,7 +154,10 @@ class API
 			$data = (array) call_user_func_array(array($className, $methodName), (array) $arguments);
 
 			// output
-			self::output(self::OK, $data);
+			if(self::$content === null)
+			{
+				self::output(self::OK, $data);
+			}
 		}
 
 		// catch exceptions
@@ -150,7 +174,7 @@ class API
 			}
 
 			// output
-			self::output(500, array('message' => $e->getMessage()));
+			return self::output(500, array('message' => $e->getMessage()));
 		}
 	}
 
@@ -284,9 +308,13 @@ class API
 		if($secret == '') $secret = SpoonFilter::getPostValue('secret', null, '');
 
 		// check if needed elements are available
-		if($email == '') self::output(self::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
-		if($nonce == '') self::output(self::BAD_REQUEST, array('message' => 'No nonce-parameter provided.'));
-		if($secret == '') self::output(self::BAD_REQUEST, array('message' => 'No secret-parameter provided.'));
+		if($email === '' || $nonce === '' || $secret === '')
+		{
+			return self::output(
+				self::NOT_AUTHORIZED,
+				array('message' => 'Not authorized.')
+			);
+		}
 
 		// get the user
 		$user = new BackendUser(null, $email);
@@ -301,7 +329,7 @@ class API
 		// no API-access
 		if(!$apiAccess)
 		{
-			self::output(
+			return self::output(
 				self::FORBIDDEN,
 				array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.')
 			);
@@ -311,10 +339,20 @@ class API
 		$hash = BackendAuthentication::getEncryptedString($email . $apiKey, $nonce);
 
 		// output
-		if($secret != $hash) self::output(self::FORBIDDEN, array('message' => 'Invalid secret.'));
+		if($secret != $hash) return self::output(self::FORBIDDEN, array('message' => 'Invalid secret.'));
 
 		// return
 		return true;
+	}
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
+	{
+		return new Response(
+			self::$content, 200, SpoonHttp::getHeadersList()
+		);
 	}
 
 	/**
@@ -329,7 +367,7 @@ class API
 		if($method !== $_SERVER['REQUEST_METHOD'])
 		{
 			$message = 'Illegal request method, only ' . $method . ' allowed for this method';
-			self::output(self::BAD_REQUEST, array('message' => $message));
+			return self::output(self::BAD_REQUEST, array('message' => $message));
 		}
 
 		return true;
@@ -377,6 +415,8 @@ class API
 			default:
 				self::outputXML($statusCode, $data);
 		}
+
+		return ($statusCode === 200);
 	}
 
 	/**
@@ -397,7 +437,7 @@ class API
 		// build array
 		$JSON = array();
 		$JSON['meta']['status_code'] = $statusCode;
-		$JSON['meta']['status'] = ($statusCode == 200) ? 'ok' : 'error';
+		$JSON['meta']['status'] = ($statusCode === 200) ? 'ok' : 'error';
 		$JSON['meta']['version'] = FORK_VERSION;
 		$JSON['meta']['endpoint'] = SITE_URL . '/api/' . $version;
 
@@ -409,10 +449,7 @@ class API
 		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
 		// output JSON
-		echo json_encode($JSON);
-
-		// stop script execution
-		exit;
+		self::$content = json_encode($JSON);
 	}
 
 	/**
@@ -457,9 +494,6 @@ class API
 		SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
 
 		// output XML
-		echo $XML->saveXML();
-
-		// stop script execution
-		exit;
+		self::$content = $XML->saveXML();
 	}
 }

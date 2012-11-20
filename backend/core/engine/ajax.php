@@ -12,10 +12,11 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class BackendAJAX extends BackendBaseObject
 {
-	public function __construct()
+	public function initialize()
 	{
 		// check if the user is logged in
 		$this->validateLogin();
@@ -45,7 +46,7 @@ class BackendAJAX extends BackendBaseObject
 		$this->setLanguage($language);
 
 		// create a new action
-		$action = new BackendAJAXAction();
+		$action = new BackendAJAXAction($this->getKernel());
 		$action->setModule($this->getModule());
 		$action->setAction($this->getAction());
 
