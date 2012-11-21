@@ -14,9 +14,15 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class Backend extends KernelLoader implements ApplicationInterface
 {
+	/**
+	 * @var BackendAction
+	 */
+	private $action;
+
 	/**
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */
