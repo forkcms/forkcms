@@ -25,6 +25,8 @@ class BackendAJAXAction extends BackendBaseObject
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function execute()
 	{
@@ -41,11 +43,10 @@ class BackendAJAXAction extends BackendBaseObject
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
-		
-		// set action and module!
 		$object->setAction($this->getAction(), $this->getModule());
-		
 		$object->execute();
+
+		return $object->getContent();
 	}
 
 	/**

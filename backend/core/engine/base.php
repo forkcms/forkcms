@@ -482,6 +482,7 @@ class BackendBaseActionDelete extends BackendBaseAction
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class BackendBaseAJAXAction extends BackendBaseObject
 {
@@ -492,10 +493,33 @@ class BackendBaseAJAXAction extends BackendBaseObject
 
 	/**
 	 * Execute the action
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the children
+		return $this->getContent();
+	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getContent()
+	{
+		$statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
+
+		return new Response(
+			json_encode($this->content),
+			$statusCode,
+			array('content-type' => 'application/json')
+		);
 	}
 
 	/**
@@ -507,20 +531,11 @@ class BackendBaseAJAXAction extends BackendBaseObject
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
-		// redefine
 		$statusCode = (int) $statusCode;
 		if($message !== null) $message = (string) $message;
 
-		// create response array
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
-
-		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json');
-
-		// output JSON to the browser
-		echo json_encode($response);
-		exit;
+		$this->content = $response;
 	}
 }
 
