@@ -693,17 +693,8 @@ class BackendBaseCronjob extends BackendBaseObject
 		SpoonFile::delete($path);
 	}
 
-	/**
-	 * Execute the action
-	 */
 	public function execute()
 	{
-		// check if model exists
-		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
-		{
-			// the model exists, so we require it
-			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
-		}
 	}
 
 	/**
