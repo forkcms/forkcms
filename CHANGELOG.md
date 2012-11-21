@@ -14,6 +14,12 @@ Improvements:
 * Core: starting to use namespaces for the external classes that use namespaces.
 * Core: upgraded Spoon
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
+* Core: merged all autoloaders in to one autoload.php.
+* Core: added the Symfony HttpFoundation and HttpKernel components via an AppKernel.
+* Core: added the Symfony DependencyInjection component to handle our services and config.
+* Core: the AppKernel is passed to all actions/models which contains the DI container.
+* Core: one frontcontroller which routes all requests (actions, ajax, cronjobs, ...)
+* Core: replaced globals*.php config files with app/config/config.yml.
 
 Bugfixes:
 
