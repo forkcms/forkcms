@@ -238,7 +238,7 @@ class BackendModel
 	 * @param string $value 			The value to check the field for.
 	 * @param string[optional] $action 	In case you want to search for a certain action.
 	 */
-	public function deleteExtrasForData($module, $field, $value, $action = null)
+	public static function deleteExtrasForData($module, $field, $value, $action = null)
 	{
 		// get ids
 		$ids = self::getExtrasForData((string) $module, (string) $field, (string) $value, $action);
