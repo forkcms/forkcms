@@ -595,7 +595,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 	 * Redirect to a given URL
 	 *
 	 * @param string $URL The URL whereto will be redirected.
-	 * @param int[optional] $code The redirect code, default is 307 which means this is a temporary redirect.
+	 * @param int[optional] $code The redirect code, default is 302 which means this is a temporary redirect.
 	 */
 	public function redirect($URL, $code = 302)
 	{
