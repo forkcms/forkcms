@@ -599,9 +599,15 @@ class FrontendBaseBlock extends FrontendBaseObject
 	 */
 	public function redirect($URL, $code = 302)
 	{
-		SpoonHTTP::redirect((string) $URL, (int) $code);
-		// @todo: use correct redirectResponse
-		// return new RedirectResponse($URL, $code, SpoonHTTP::getHeadersList());
+		$response = new RedirectResponse(
+			$URL, $code, SpoonHTTP::getHeadersList()
+		);
+
+		/*
+		 * Since we've got some nested action structure, we'll send this
+		 * response directly after creating.
+		 */
+		$response->send();
 	}
 
 	/**

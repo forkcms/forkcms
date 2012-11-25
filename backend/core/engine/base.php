@@ -320,9 +320,15 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function redirect($URL)
 	{
-		SpoonHTTP::redirect((string) $URL);
-		// @todo: use correct redirectResponse
-		// return new RedirectResponse($URL, 302, SpoonHTTP::getHeadersList());
+		$response = new RedirectResponse(
+			$URL, 302, SpoonHTTP::getHeadersList()
+		);
+
+		/*
+		 * Since we've got some nested action structure, we'll send this
+		 * response directly after creating.
+		 */
+		$response->send();
 	}
 }
 
