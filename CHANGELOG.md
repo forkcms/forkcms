@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
@@ -14,6 +15,7 @@ Improvements:
 * Core: starting to use namespaces for the external classes that use namespaces.
 * Core: upgraded Spoon
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
+* Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
 
 Bugfixes:
 
