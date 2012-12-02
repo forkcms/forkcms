@@ -19,6 +19,7 @@ Improvements:
 
 Bugfixes:
 
+* Location: Google needs to be loaded before location.js, thx to siesqo
 * Users: Added fix so users can't edit other profiles.
 * SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
 * DataGrid: do not overwrite existing row attributes when greying out a row.
