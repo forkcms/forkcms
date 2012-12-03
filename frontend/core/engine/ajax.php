@@ -14,8 +14,9 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dave Lens <dave.lens@wijs.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class FrontendAJAX extends KernelLoader
+class FrontendAJAX extends KernelLoader implements ApplicationInterface
 {
 	/**
 	 * The action
@@ -23,6 +24,11 @@ class FrontendAJAX extends KernelLoader
 	 * @var	string
 	 */
 	private $action;
+
+	/**
+	 * @var FrontendAJAXAction
+	 */
+	private $ajaxAction;
 
 	/**
 	 * The language
@@ -39,6 +45,14 @@ class FrontendAJAX extends KernelLoader
 	private $module;
 
 	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
+	{
+		return $this->ajaxAction->execute();
+	}
+
+	/**
 	 * This method exists because the service container needs to be set before
 	 * the request's functionality gets loaded.
 	 */
@@ -53,34 +67,19 @@ class FrontendAJAX extends KernelLoader
 		if($language == '' && isset($_GET['language'])) $language = $_GET['language'];
 		if($language == '') $language = SITE_DEFAULT_LANGUAGE;
 
-		// set the module
-		$this->setModule($module);
-
-		// set the action
-		$this->setAction($action);
-
-		// set the language
-		$this->setLanguage($language);
-
-		// create a new action
-		$action = new FrontendAJAXAction($this->getAction(), $this->getModule());
-
 		try
 		{
-			// execute the action
-			$action->execute();
+			$this->setModule($module);
+			$this->setAction($action);
+			$this->setLanguage($language);
+
+			$this->ajaxAction = new FrontendAJAXAction($this->getAction(), $this->getModule());
 		}
 
 		catch(Exception $e)
 		{
-			// if we are debugging, we obviously want to see the exception
-			if(SPOON_DEBUG) throw $e;
-
-			// create fake action
-			$fakeAction = new FrontendBaseAJAXAction('', '');
-
-			// output the exceptions-message as an error
-			$fakeAction->output(FrontendBaseAJAXAction::ERROR, null, $e->getMessage());
+			$this->ajaxAction = new FrontendBaseAJAXAction('', '');
+			$this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $e->getMessage());
 		}
 	}
 
@@ -115,14 +114,6 @@ class FrontendAJAX extends KernelLoader
 	}
 
 	/**
-	 * @param ContainerInterface $container
-	 */
-	public function setContainer(ContainerInterface $container = null)
-	{
-		$this->container = $container;
-	}
-
-	/**
 	 * Set the language
 	 *
 	 * @param string $value The (interface-)language, will be used to parse labels.
@@ -141,11 +132,7 @@ class FrontendAJAX extends KernelLoader
 			// multiple languages available but none selected
 			else
 			{
-				// create fake action
-				$fakeAction = new FrontendBaseAJAXAction('', '');
-
-				// output error
-				$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Language not provided.');
+				throw new BackendException('Language invalid.');
 			}
 		}
 
@@ -166,7 +153,6 @@ class FrontendAJAX extends KernelLoader
 	 */
 	public function setModule($value)
 	{
-		// set property
 		$this->module = (string) $value;
 	}
 }
@@ -176,29 +162,30 @@ class FrontendAJAX extends KernelLoader
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class FrontendAJAXAction
+class FrontendAJAXAction extends FrontendBaseAJAXAction
 {
 	/**
 	 * The current action
 	 *
 	 * @var	string
 	 */
-	private $action;
+	protected $action;
 
 	/**
 	 * The config file
 	 *
 	 * @var	FrontendBaseConfig
 	 */
-	private $config;
+	protected $config;
 
 	/**
 	 * The current module
 	 *
 	 * @var	string
 	 */
-	private $module;
+	protected $module;
 
 	/**
 	 * @param string $action The action that should be executed.
@@ -216,7 +203,7 @@ class FrontendAJAXAction
 
 	/**
 	 * Execute the action.
-	 * We will build the classname, require the class and call the execute method.
+	 * We will build the classname, require the class and call the execute method
 	 */
 	public function execute()
 	{
@@ -243,7 +230,9 @@ class FrontendAJAXAction
 		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
-		call_user_func(array($object, 'execute'));
+		$object->execute();
+
+		return $object->getContent();
 	}
 
 	/**
@@ -302,7 +291,7 @@ class FrontendAJAXAction
 	 *
 	 * @param string $action The action that should be executed.
 	 */
-	private function setAction($action)
+	protected function setAction($action)
 	{
 		$this->action = (string) $action;
 	}
@@ -312,7 +301,7 @@ class FrontendAJAXAction
 	 *
 	 * @param string $module The module wherin the action is available.
 	 */
-	private function setModule($module)
+	protected function setModule($module)
 	{
 		$this->module = (string) $module;
 	}

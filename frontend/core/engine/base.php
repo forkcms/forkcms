@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -950,6 +951,11 @@ class FrontendBaseAJAXAction
 	protected $action;
 
 	/**
+	 * @var array
+	 */
+	protected $content;
+
+	/**
 	 * The current module
 	 *
 	 * @var	string
@@ -972,7 +978,7 @@ class FrontendBaseAJAXAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the children
+		return $this->getContent();
 	}
 
 	/**
@@ -983,6 +989,27 @@ class FrontendBaseAJAXAction
 	public function getAction()
 	{
 		return $this->action;
+	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getContent()
+	{
+		$statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
+
+		return new Response(
+			json_encode($this->content),
+			$statusCode,
+			array('content-type' => 'application/json')
+		);
 	}
 
 	/**
@@ -1004,22 +1031,12 @@ class FrontendBaseAJAXAction
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
-		// redefine
 		$statusCode = (int) $statusCode;
 		if($message !== null) $message = (string) $message;
 
-		// create response array
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 
-		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
-
-		// output JSON to the browser
-		echo json_encode($response);
-
-		// stop script execution
-		exit;
+		$this->content = $response;
 	}
 
 	/**
