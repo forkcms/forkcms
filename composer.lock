@@ -1,5 +1,5 @@
 {
-    "hash": "df3130ef0e54aad829b7967991e78425",
+    "hash": "05439c581b19251cb7c178ef6a0ed412",
     "packages": [
         {
             "name": "facebook/php-sdk",
@@ -43,6 +43,38 @@
                 "facebook",
                 "sdk"
             ]
+        },
+        {
+            "name": "spoon/library",
+            "version": "1.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/forkcms/library",
+                "reference": "1.3.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/forkcms/library/archive/1.3.3.zip",
+                "reference": "1.3.3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "time": "2012-11-06 15:45:28",
+            "type": "library",
+            "installation-source": "dist",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Davy Hellemans",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP5 library that is fast, easy to learn and fun!",
+            "homepage": "http://www.spoon-library.com"
         },
         {
             "name": "symfony/config",

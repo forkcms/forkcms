@@ -60,7 +60,7 @@ class BackendInit extends KernelLoader
 		$this->setDebugging();
 
 		// require spoon
-		require_once 'spoon/spoon.php';
+		require_once PATH_WWW . '/vendor/spoon/library/spoon/spoon.php';
 
 		SpoonFilter::disableMagicQuotes();
 	}
@@ -283,6 +283,7 @@ class BackendInit extends KernelLoader
 	 */
 	private function setIncludePath()
 	{
-		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
+		$spoonFolder = realpath(PATH_WWW . '/vendor/spoon/library');
+		set_include_path($spoonFolder . PATH_SEPARATOR . PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }

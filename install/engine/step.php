@@ -68,11 +68,13 @@ class InstallerStep extends KernelLoader
 		// skip step 1
 		if($this->step > 1)
 		{
+			$spoonFolder = realpath(dirname(__FILE__) . '/../../vendor/spoon/library');
+
 			// include path
-			set_include_path($_SESSION['path_library'] . PATH_SEPARATOR . get_include_path());
+			set_include_path($spoonFolder . PATH_SEPARATOR . $_SESSION['path_library'] . PATH_SEPARATOR . get_include_path());
 
 			// load spoon
-			require_once $_SESSION['path_library'] . '/spoon/spoon.php';
+			require_once 'spoon/spoon.php';
 
 			// create template
 			$this->tpl = new SpoonTemplate();
