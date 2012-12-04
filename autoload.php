@@ -102,6 +102,6 @@ spl_autoload_register(array(new Autoloader(), 'load'));
 // use vender generated autoloader
 require_once 'vendor/autoload.php';
 
-// @todo we also need the autoloader of spoon before we start our application (so we can define services)
-set_include_path(__DIR__ . '/library' . PATH_SEPARATOR . get_include_path());
+// Spoon is not autoloaded via Composer but uses its own oldskool autoloader
+set_include_path(__DIR__ . '/vendor/spoon/library' . PATH_SEPARATOR . get_include_path());
 require_once 'spoon/spoon.php';
