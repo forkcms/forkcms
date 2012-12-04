@@ -21,6 +21,7 @@ Improvements:
 * Core: one frontcontroller which routes all requests (actions, ajax, cronjobs, ...)
 * Core: replaced globals*.php config files with app/config/config.yml.
 * Core: removed js.php
+* Spoon: Spoon dependency is now handled via composer.
 
 Bugfixes:
 
