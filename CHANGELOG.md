@@ -30,6 +30,7 @@ Bugfixes:
 * DataGrid: do not overwrite existing row attributes when greying out a row.
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
+* Location: Google Maps JS needs to be loaded before location.js, thx to siesqo.
 
 
 3.4.4 (2012-09-12)
