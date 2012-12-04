@@ -20,6 +20,7 @@ Improvements:
 * Core: the AppKernel is passed to all actions/models which contains the DI container.
 * Core: one frontcontroller which routes all requests (actions, ajax, cronjobs, ...)
 * Core: replaced globals*.php config files with app/config/config.yml.
+* Core: removed js.php
 
 Bugfixes:
 
