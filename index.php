@@ -7,6 +7,13 @@
  * file that was distributed with this source code.
  */
 
+// vendors not installed
+if(!is_dir(__DIR__ . '/vendor'))
+{
+	echo 'You are missing some dependencies. Please run <code>composer install</code>.';
+	exit;
+}
+
 // Fork has not yet been installed
 $installer = dirname(__FILE__) . '/install/cache';
 if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
