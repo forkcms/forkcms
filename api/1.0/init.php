@@ -46,14 +46,6 @@ class APIInit extends KernelLoader
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		// Fork has not yet been installed
-		$installer = dirname(__FILE__) . '/../install/cache';
-		if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
-		{
-			// redirect to installer
-			header('Location: /install');
-		}
-
 		$this->definePaths();
 		$this->setIncludePath();
 		$this->setDebugging();
