@@ -68,6 +68,8 @@ class AppKernel extends Kernel
 	 * and do its best to convert them to a Response instance.
 	 *
 	 * We intercept this object so we can load all functionality involved with Fork.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 	{

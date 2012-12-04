@@ -76,7 +76,7 @@ class ApplicationRouting
 	/**
 	 * Handle the actual request and deligate it to other parts of Fork.
 	 *
-	 * @return Response
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function handleRequest()
 	{

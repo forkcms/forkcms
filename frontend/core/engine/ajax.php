@@ -52,7 +52,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 	private $output;
 
 	/**
-	 * @return array
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function display()
 	{
