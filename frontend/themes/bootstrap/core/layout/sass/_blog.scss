@@ -1,0 +1,56 @@
+#blogDetail {
+	
+	header {
+	    .title {
+			border-bottom: 1px solid darken($bodyBackground, 10%);
+			position: relative;
+			
+			.commentCount {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				text-align: right;
+			}
+	    }
+	    
+	    .meta {
+		    padding: $basePadding 0 ($basePadding * 1.5);
+	    }
+	}
+	
+	footer {
+		margin: $baseMargin 0;
+	
+		.social {
+			
+			.well {
+				padding: $basePadding/2;
+				margin-bottom: 0;
+			}
+			
+			.shareButton {
+				float: left;
+				margin-right: $baseMargin/2;
+				height: 21px;
+			}
+		}
+		
+		.pager {
+				
+			li {
+			
+			    & > a {
+			    	max-width: 45%;
+			    	
+			    	.title {
+				    	max-width: 95%;
+				    	text-overflow: ellipsis;
+				    	overflow: hidden;
+				    	white-space: nowrap;
+				    	display: inline-block;
+			    	}
+			    }
+			}
+		}
+	}
+}

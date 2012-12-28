@@ -1,3 +1,12 @@
 .hideText {
 	@include squish-text;
 }
+
+.tag {
+	@extend .label;
+	border-bottom: none;
+}
+
+.alignTextRight {
+	text-align: right;
+}

@@ -4,7 +4,7 @@ $LOAD_PATH << "/Users/mathias/Sites/dev/compass-twitter-bootstrap/lib"
 require 'compass_twitter_bootstrap'
 
 # Set this to the root of your project when deployed:
-http_path = "/"
+http_path = "/frontend/themes/bootstrap/core/layout"
 css_dir = "css"
 sass_dir = "sass"
 images_dir = "images"
