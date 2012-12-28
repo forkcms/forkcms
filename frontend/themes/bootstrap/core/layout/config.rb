@@ -1,4 +1,4 @@
-$LOAD_PATH << "/Users/tijs/Sites/sumocoders/compass-twitter-bootstrap/lib"
+$LOAD_PATH << "/Users/mathias/Sites/dev/compass-twitter-bootstrap/lib"
 
 # Require any additional compass plugins here.
 require 'compass_twitter_bootstrap'

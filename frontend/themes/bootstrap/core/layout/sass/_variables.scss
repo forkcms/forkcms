@@ -19,3 +19,7 @@ $altFontFamily: $serifFontFamily;
 // Sprite icons path
 $iconSpritePath: image-url("glyphicons-halflings.png");
 $iconWhiteSpritePath: image-url("glyphicons-halflings-white.png");
+
+// Margins and paddings
+$baseMargin: ($baseFontSize * 2);
+$basePadding: $baseFontSize;
