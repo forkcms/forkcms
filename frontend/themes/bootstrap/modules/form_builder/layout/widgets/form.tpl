@@ -7,7 +7,7 @@
 
 		{option:fields}
 			<form id="{$formName}" method="post" action="{$formAction}">
-				<fieldset class="form-horizontal">
+				<fieldset class="form">
 					<input type="hidden" name="form" value="{$formName}" />
 
 					{iteration:fields}
