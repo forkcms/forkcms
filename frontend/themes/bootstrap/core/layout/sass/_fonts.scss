@@ -1,1 +1,12 @@
+@mixin load-font($fontName, $fontFile, $weight: "normal", $style: "normal") {
+	@include font-face($fontName,
+		font-files("#{$fontFile}.woff",
+		"#{$fontFile}.ttf",
+		"#{$fontFile}.svg##{$fontName}"),
+		"#{$fontFile}.eot",
+		$weight,
+		$style
+	);
+}
+
 /*@include load-font("", "");*/

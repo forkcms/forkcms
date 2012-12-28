@@ -13,3 +13,10 @@
 
 {* Site wide HTML *}
 {$siteHTMLFooter}
+
+
+<address>
+	SumoCoders
+	Kerkstraat 108
+
+</address>
