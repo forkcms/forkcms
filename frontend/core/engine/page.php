@@ -161,13 +161,10 @@ class FrontendPage extends FrontendBaseObject
 		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
 		foreach($unusedPositions as $position) $this->tpl->assign('position' . SpoonFilter::ucfirst($position), array());
 
-		// only overwrite when status code is 404
-		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
-
 		// output
 		return new Response(
 			$this->tpl->getContent($this->templatePath, false, true),
-			200, SpoonHttp::getHeadersList()
+			$this->statusCode, SpoonHttp::getHeadersList()
 		);
 	}
 
