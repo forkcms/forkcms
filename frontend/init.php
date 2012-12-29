@@ -47,7 +47,7 @@ class FrontendInit extends KernelLoader
 		ini_set('display_errors', 'On');
 
 		// get last modified time for globals
-		$lastModifiedTime = @filemtime(PATH_LIBRARY . '/globals.php');
+		$lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
 		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
 		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
