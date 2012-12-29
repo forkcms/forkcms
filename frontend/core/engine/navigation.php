@@ -398,7 +398,7 @@ class FrontendNavigation extends FrontendBaseObject
 						$return['parent_id'] = $parentId;
 
 						// return
-						return $return;;
+						return $return;
 					}
 				}
 			}
