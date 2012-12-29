@@ -16,7 +16,12 @@ if(!is_dir(__DIR__ . '/vendor'))
 
 // Fork has not yet been installed
 $installer = dirname(__FILE__) . '/install/cache';
-if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
+if(
+	file_exists($installer) &&
+	is_dir($installer) &&
+	!file_exists($installer . '/installed.txt') &&
+	substr($_SERVER['REQUEST_URI'], 0, 8) != '/install'
+)
 {
 	header('Location: /install');
 }
