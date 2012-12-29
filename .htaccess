@@ -3,6 +3,12 @@
 # you should either find another hosting company (advised) or remove the line below.
 Options +FollowSymlinks -Indexes
 
+# Don't allow visitors to see the raw content of the yaml-files
+<FilesMatch ".(yml|yaml)">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+
 # file etags (used when comparing local cached file to server file)
 FileETag MTime Size
 
