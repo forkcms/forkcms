@@ -26,8 +26,8 @@ class InstallerStep1 extends InstallerStep
 		$variables = array();
 
 		// head
-		$variables['head'] = file_get_contents('layout/templates/head.tpl');
-		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
+		$variables['head'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/head.tpl');
+		$variables['foot'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/foot.tpl');
 		$hasError = false;
 
 		// was the form submitted?
