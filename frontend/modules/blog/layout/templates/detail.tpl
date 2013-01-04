@@ -33,14 +33,16 @@
 							</span>
 						{/option:item.tags}
 					</li>
-					<li>
-						{* Comments *}
-						{option:!comments}<a href="{$item.full_url}#{$actComment}" itemprop="discussionUrl">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
-						{option:comments}
-							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
-							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
-						{/option:comments}
-					</li>
+					{* Comments *}
+					{option:item.allow_comments}
+						<li>
+							{option:!comments}<a href="{$item.full_url}#{$actComment}" itemprop="discussionUrl">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
+							{option:comments}
+								{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+								{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
+							{/option:comments}
+						</li>
+					{/option:item.allow_comments}
 					<li>
 						<a href="{$item.full_url}" class="share">{$lblShare|ucfirst}</a>
 					</li>
@@ -68,38 +70,40 @@
 	</article>
 
 	{option:comments}
-		<section id="blogComments" class="mod" itemscope itemtype="http://schema.org/Article">
-			<div class="inner">
-				<header class="hd">
-					<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
-				</header>
-				<div class="bd content">
-					{iteration:comments}
-						{* Do not alter the id! It is used as an anchor *}
-						<div id="comment-{$comments.id}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
-							<meta itemprop="discusses" content="{$item.title}" />
-							<div class="imageHolder">
-								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
-									<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
-								{option:comments.website}</a>{/option:comments.website}
-							</div>
-							<div class="commentContent">
-								<p class="commentAuthor" itemscope itemtype="http://schema.org/Person">
-									{option:comments.website}<a href="{$comments.website}" itemprop="url">{/option:comments.website}
-										<span itemprop="creator name">{$comments.author}</span>
+		{option:item.allow_comments}
+			<section id="blogComments" class="mod" itemscope itemtype="http://schema.org/Article">
+				<div class="inner">
+					<header class="hd">
+						<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
+					</header>
+					<div class="bd content">
+						{iteration:comments}
+							{* Do not alter the id! It is used as an anchor *}
+							<div id="comment-{$comments.id}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+								<meta itemprop="discusses" content="{$item.title}" />
+								<div class="imageHolder">
+									{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
+										<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
 									{option:comments.website}</a>{/option:comments.website}
-									{$lblWrote}
-									<time itemprop="commentTime" datetime="{$comments.created_on|date:'Y-m-d\TH:i:s'}">{$comments.created_on|timeago}</time>
-								</p>
-								<div class="commentText content" itemprop="commentText">
-									{$comments.text|cleanupplaintext}
+								</div>
+								<div class="commentContent">
+									<p class="commentAuthor" itemscope itemtype="http://schema.org/Person">
+										{option:comments.website}<a href="{$comments.website}" itemprop="url">{/option:comments.website}
+											<span itemprop="creator name">{$comments.author}</span>
+										{option:comments.website}</a>{/option:comments.website}
+										{$lblWrote}
+										<time itemprop="commentTime" datetime="{$comments.created_on|date:'Y-m-d\TH:i:s'}">{$comments.created_on|timeago}</time>
+									</p>
+									<div class="commentText content" itemprop="commentText">
+										{$comments.text|cleanupplaintext}
+									</div>
 								</div>
 							</div>
-						</div>
-					{/iteration:comments}
+						{/iteration:comments}
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		{/option:item.allow_comments}
 	{/option:comments}
 	{option:item.allow_comments}
 		<section id="blogCommentForm" class="mod">
