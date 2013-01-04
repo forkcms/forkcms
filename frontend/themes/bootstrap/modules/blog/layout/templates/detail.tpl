@@ -24,7 +24,7 @@
 		    </div>
 		    <div class="row-fluid muted meta">
 		    	<div class="span6">
-		    		<span class="hideText">{$msgWrittenBy|ucfirst|sprintf:''}</span> {$item.user_id|usersetting:'nickname'}
+		    		<span class="hideText">{$msgWrittenBy|ucfirst|sprintf:''} </span>{$item.user_id|usersetting:'nickname'}
 		    		<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 		    	</div>
 		    	
