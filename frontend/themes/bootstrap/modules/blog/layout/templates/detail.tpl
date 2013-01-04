@@ -7,77 +7,75 @@
 *}
 <div id="blogDetail">
 	<article class="article" itemscope itemtype="http://schema.org/Blog">
-		<div class="inner">
-			<meta itemprop="interactionCount" content="UserComments:{$commentsCount}">
-			<meta itemprop="author" content="{$item.user_id|usersetting:'nickname'}">
-			<header>
-				<div class="row-fluid title">
-					<div class="span10">
-						<h1 itemprop="name">{$item.title}</h1>
-					</div>
-					<div class="span2 commentCount">
-						{option:comments}
-							<i class="icon-comment"></i>
-						    {option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
-						    {option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
-						{/option:comments}
-					</div>
-				</div>
-				<div class="row-fluid muted meta">
-					<div class="span6">
-						<span class="hideText">{$msgWrittenBy|ucfirst|sprintf:''}</span> {$item.user_id|usersetting:'nickname'}
-						<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
-					</div>
-					
-					<div class="span6 alignTextRight">
-						{* @todo fix labels *}
-						<span class="hideText">{$lblIn} {$lblThe}</span> {$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$item.category_full_url}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
+		<meta itemprop="interactionCount" content="UserComments:{$commentsCount}">
+		<meta itemprop="author" content="{$item.user_id|usersetting:'nickname'}">
+		<header>
+		    <div class="row-fluid title">
+		    	<div class="span10">
+		    		<h1 itemprop="name">{$item.title}</h1>
+		    	</div>
+		    	<div class="span2 commentCount">
+		    		{option:comments}
+		    			<i class="icon-comment"></i>
+		    		    {option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+		    		    {option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
+		    		{/option:comments}
+		    	</div>
+		    </div>
+		    <div class="row-fluid muted meta">
+		    	<div class="span6">
+		    		<span class="hideText">{$msgWrittenBy|ucfirst|sprintf:''}</span> {$item.user_id|usersetting:'nickname'}
+		    		<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
+		    	</div>
+		    	
+		    	<div class="span6 metaExtra">
+		    		{* @todo fix labels *}
+		    		<span class="hideText">{$lblIn} {$lblThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$item.category_full_url}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
 	
-						{* @todo fix labels *}
-						{option:item.tags}
-						    <span class="hideText">{$lblWith} {$lblThe}</span> {$lblTags|ucfirst}:
-						    <span itemprop="keywords">
-						    	{iteration:item.tags}
-						    		<a class="tag" href="{$item.tags.full_url}" rel="tag">{$item.tags.name}</a>{option:!item.tags.last}<span class="hideText">,</span> {/option:!item.tags.last}
-						    	{/iteration:item.tags}
-						    </span>
-						{/option:item.tags}
-					</div>
-				</div>
-			</header>
+		    		{* @todo fix labels *}
+		    		{option:item.tags}
+		    		    <span class="hideText">{$lblWith} {$lblThe}</span> {$lblTags|ucfirst}:
+		    		    <span itemprop="keywords">
+		    		    	{iteration:item.tags}
+		    		    		<a class="tag" href="{$item.tags.full_url}" rel="tag">{$item.tags.name}</a>{option:!item.tags.last}<span class="hideText">,</span> {/option:!item.tags.last}
+		    		    	{/iteration:item.tags}
+		    		    </span>
+		    		{/option:item.tags}
+		    	</div>
+		    </div>
+		</header>
 
-			<div class="bd content" itemprop="articleBody">
-				{option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
-				{$item.text}
-			</div>
-			<footer>
-				<div class="row-fluid social">
-					<div class="span12 well">
-						<div class="shareButton">
-							{$lblShare|ucfirst}:
-						</div>
-						<div class="facebook shareButton">
-							<div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
-						</div>
-						<div class="twitter shareButton">
-							<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-						</div>
-					</div>
-				</div>
-				<ul class="pager">
-					{option:navigation.previous}
-						<li class="previous">
-							<a href="{$navigation.previous.url}" rel="prev" title="{$navigation.previous.title}">&larr; <span class="hideText">{$lblPreviousArticle|ucfirst}: </span><span class="title">{$navigation.previous.title}</span></a>
-						</li>
-					{/option:navigation.previous}
-					{option:navigation.next}
-						<li class="next">
-							<a href="{$navigation.next.url}" rel="next" title="{$navigation.next.title}"><span class="hideText">{$lblNextArticle|ucfirst}: </span><span class="title">{$navigation.next.title}</span> &rarr;</a>
-						</li>
-					{/option:navigation.next}
-				</ul>
-			</footer>
+		<div class="bd content" itemprop="articleBody">
+		    {option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
+		    {$item.text}
 		</div>
+		<footer>
+		    <div class="row-fluid social">
+		    	<div class="span12 well">
+		    		<div class="shareButton">
+		    			{$lblShare|ucfirst}:
+		    		</div>
+		    		<div class="facebook shareButton">
+		    			<div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+		    		</div>
+		    		<div class="twitter shareButton">
+		    			<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+		    		</div>
+		    	</div>
+		    </div>
+		    <ul class="pager">
+		    	{option:navigation.previous}
+		    		<li class="previous">
+		    			<a href="{$navigation.previous.url}" rel="prev" title="{$navigation.previous.title}">&larr; <span class="hideText">{$lblPreviousArticle|ucfirst}: </span><span class="title">{$navigation.previous.title}</span></a>
+		    		</li>
+		    	{/option:navigation.previous}
+		    	{option:navigation.next}
+		    		<li class="next">
+		    			<a href="{$navigation.next.url}" rel="next" title="{$navigation.next.title}"><span class="hideText">{$lblNextArticle|ucfirst}: </span><span class="title">{$navigation.next.title}</span> &rarr;</a>
+		    		</li>
+		    	{/option:navigation.next}
+		    </ul>
+		</footer>
 	</article>
 
 		<section id="{$actComments}" class="comments" itemscope itemtype="http://schema.org/Article">

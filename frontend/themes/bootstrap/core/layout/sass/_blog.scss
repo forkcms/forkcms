@@ -1,4 +1,6 @@
-#blogDetail {
+#blogDetail,
+#blogIndex,
+#blogRecentArticlesFullWidget {
 	
 	header {
 	    .title {
@@ -6,10 +8,7 @@
 			position: relative;
 			
 			.commentCount {
-				position: absolute;
-				right: 0;
-				bottom: 0;
-				text-align: right;
+				
 			}
 	    }
 	    
@@ -53,4 +52,31 @@
 			}
 		}
 	}
+}
+
+@media screen and (min-width: 700px) {
+
+	#blogDetail,
+	#blogIndex,
+	#blogRecentArticlesFullWidget {
+	
+		header {
+			.title {
+				.commentCount {
+					position: absolute;
+					right: 0;
+					bottom: 0;
+					text-align: right;
+				}
+			}
+			
+			.meta {
+				
+				.metaExtra {
+					text-align: right;
+				}
+			}
+		}
+	}
+	
 }
