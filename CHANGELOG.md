@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Core: Upgraded to CKFinder 2.3.1
 * Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
