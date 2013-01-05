@@ -2,8 +2,8 @@
 /*
 * CKFinder
 * ========
-* http://ckfinder.com
-* Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+* http://cksource.com/ckfinder
+* Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
 *
 * The software, this file and its contents are subject to the CKFinder
 * License. Please read the license.txt file before using, installing, copying,
@@ -356,7 +356,7 @@ class CKFinder_Connector_CommandHandler_UnzipHere extends CKFinder_Connector_Com
             {
               if ( $checkedFiles[$fileName]['options'] == 'autorename')
               {
-                $sFileName = CKFinder_Connector_Utils_FileSystem::autoRename($extractPath,$sFileName,$sFileName);
+                $sFileName = CKFinder_Connector_Utils_FileSystem::autoRename($extractPath,$sFileName);
                 $this->extractTo($extractPath,$extractClientPath,$filePathInfo,$sFileName,$fileName);
               }
               elseif ( $checkedFiles[$fileName]['options'] == 'overwrite')
@@ -801,7 +801,7 @@ class CKFinder_Connector_CommandHandler_CreateZip extends CKFinder_Connector_Com
         if ( !$this->_currentFolder->checkAcl(CKFINDER_CONNECTOR_ACL_FILE_UPLOAD | CKFINDER_CONNECTOR_ACL_FILE_RENAME )) {
           $this->_errorHandler->throwError(CKFINDER_CONNECTOR_ERROR_UNAUTHORIZED);
         }
-        $zip_filename = CKFinder_Connector_Utils_FileSystem::autoRename($dest_dir, $zip_filename, $zip_filename);
+        $zip_filename = CKFinder_Connector_Utils_FileSystem::autoRename($dest_dir, $zip_filename);
         $zipFilePath = CKFinder_Connector_Utils_FileSystem::combinePaths($dest_dir, $zip_filename);
       }
       elseif ( isset($_POST['fileExistsAction']) && $_POST['fileExistsAction'] == 'overwrite' )

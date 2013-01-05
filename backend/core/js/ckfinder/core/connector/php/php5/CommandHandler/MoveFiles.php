@@ -2,8 +2,8 @@
 /*
  * CKFinder
  * ========
- * http://ckfinder.com
- * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -205,21 +205,8 @@ class CKFinder_Connector_CommandHandler_MoveFiles extends CKFinder_Connector_Com
                         }
                     }
                     else if (strpos($options, "autorename") !== false) {
-                        $iCounter = 1;
-                        while (true)
-                        {
-                            $fileName = CKFinder_Connector_Utils_FileSystem::getFileNameWithoutExtension($name) .
-                                "(" . $iCounter . ")" . "." .
-                                CKFinder_Connector_Utils_FileSystem::getExtension($name);
-
-                            $destinationFilePath = $sServerDir.$fileName;
-                            if (!file_exists($destinationFilePath)) {
-                                break;
-                            }
-                            else {
-                                $iCounter++;
-                            }
-                        }
+                        $fileName = CKFinder_Connector_Utils_FileSystem::autoRename($sServerDir, $name);
+                        $destinationFilePath = $sServerDir.$fileName;
                         if (!@rename($sourceFilePath, $destinationFilePath)) {
                             $errorCode = CKFINDER_CONNECTOR_ERROR_ACCESS_DENIED;
                             $this->appendErrorNode($oErrorsNode, $errorCode, $name, $type, $path);

@@ -1,5 +1,5 @@
 <?php
-// Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+// Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.html or http://ckfinder.com/license
 
 //  Defines the object for the Catalan language.
@@ -16,7 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'La extensió del fitxer no es vàlida.',
 		'109' => 'Petició invàlida.',
 		'110' => 'Error desconegut.',
-		'111' => 'It was not possible to complete the request due to resulting file size.',
+		'111' => 'No ha estat possible completar l\'operació a causa de la grandària del fitxer resultant.',
 		'115' => 'Ja existeix un fitxer o carpeta amb aquest nom.',
 		'116' => 'No s\'ha trobat la carpeta. Si us plau, actualitzi i torni-ho a provar.',
 		'117' => 'No s\'ha trobat el fitxer. Si us plau, actualitzi i torni-ho a provar.',
