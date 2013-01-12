@@ -10,13 +10,20 @@
 		<div id="map" class="parseMap span12 well" style="height: {$locationSettings.height}px;">
 
 		</div>
-	
-		{* Store item text in a div because JS goes bananas with multiline HTML *}
+
 		{iteration:locationItems}
-			<div id="markerText{$locationItems.id}" style="display: none;">
-				<address>
-					{$locationItems.street} {$locationItems.number}<br />
-					{$locationItems.zip} {$locationItems.city}
+			{* @remark: do not remove the id *}
+			<div id="markerText{$locationItems.id}" class="hide" itemscope itemtype="http://schema.org/Place">
+				<div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+					<meta itemprop="latitude" content="{$locationItems.lat}" />
+					<meta itemprop="longitude" content="{$locationItems.lng}" />
+				</div>
+
+				<div itemprop="name" class="hide"><strong>{$locationItems.title}</strong></div>
+				<address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+					<span itemprop="streetAddress">{$locationItems.street} {$locationItems.number}</span><br>
+					<span itemprop="postalCode">{$locationItems.zip}</span> <span itemprop="addressLocality">{$locationItems.city}</span><br>
+					<span itemprop="addressCountry">{$locationItems.country}</span>
 				</address>
 			</div>
 		{/iteration:locationItems}
