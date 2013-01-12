@@ -19,6 +19,9 @@
 		<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
 
+	{* humans.txt, see http://humanstxt.org *}
+	<link rel="author" href="/humans.txt" />
+
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />
 	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
