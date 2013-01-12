@@ -36,7 +36,7 @@ class Sumo
 	public function initErrbit()
 	{
 		// only initialize if we know the API key
-		if(!defined('ERRBIT_API_KEY') && ERRBIT_API_KEY != '') return;
+		if(!defined('ERRBIT_API_KEY') || ERRBIT_API_KEY == '') return;
 
 		require_once dirname(__FILE__) . '/errbit/Errbit.php';
 
