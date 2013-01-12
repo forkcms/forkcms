@@ -1,5 +1,5 @@
 <?php
-// Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+// Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.html or http://ckfinder.com/license
 
 //  Defines the object for the Hungarian language.
@@ -16,21 +16,21 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Érvénytelen fájl kiterjesztés.',
 		'109' => 'Érvénytelen kérés.',
 		'110' => 'Ismeretlen hiba.',
-		'111' => 'It was not possible to complete the request due to resulting file size.',
+		'111' => 'A kérés nem teljesíthető a létrejövő fájl mérete miatt.',
 		'115' => 'A fálj vagy mappa már létezik ezen a néven.',
-		'116' => 'Mappa nem található. Kérjük frissítsen és próbálja újra.',
-		'117' => 'Fájl nem található. Kérjük frissítsen és próbálja újra.',
-		'118' => 'Source and target paths are equal.',
+		'116' => 'Mappa nem található. Kérem frissítsen és próbálja újra.',
+		'117' => 'Fájl nem található. Kérem frissítsen és próbálja újra.',
+		'118' => 'A forrás és a cél azonos.',
 		'201' => 'Ilyen nevű fájl már létezett. A feltöltött fájl a következőre lett átnevezve: "%1".',
 		'202' => 'Érvénytelen fájl.',
 		'203' => 'Érvénytelen fájl. A fájl mérete túl nagy.',
 		'204' => 'A feltöltött fájl hibás.',
 		'205' => 'A szerveren nem található a feltöltéshez ideiglenes mappa.',
-		'206' => 'Upload cancelled due to security reasons. The file contains HTML-like data.',
+		'206' => 'A fájl feltötése biztonsági okból megszakadt. A fájl HTML adatokat tartalmaz.',
 		'207' => 'El fichero subido ha sido renombrado como "%1".',
-		'300' => 'Moving file(s) failed.',
-		'301' => 'Copying file(s) failed.',
-		'500' => 'A fájl-tallózó biztonsági okok miatt nincs engedélyezve. Kérjük vegye fel a kapcsolatot a rendszer üzemeltetőjével és ellenőrizze a CKFinder konfigurációs fájlt.',
+		'300' => 'A fájl(ok) áthelyezése sikertelen.',
+		'301' => 'A fájl(ok) másolása sikertelen.',
+		'500' => 'A fájl-tallózó biztonsági okok miatt nincs engedélyezve. Kérem vegye fel a kapcsolatot a rendszer üzemeltetőjével és ellenőrizze a CKFinder konfigurációs fájlt.',
 		'501' => 'A bélyegkép támogatás nincs engedélyezve.',
 	)
 );
