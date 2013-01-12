@@ -18,6 +18,7 @@ Improvements:
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
 * Blog: enabled Flip ahead for blogposts.
+* Core: enabled Flip ahead for paginated pages.
 
 Bugfixes:
 
