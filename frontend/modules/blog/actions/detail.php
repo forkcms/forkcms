@@ -198,8 +198,30 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// assign settings
 		$this->tpl->assign('settings', $this->settings);
 
+		$navigation = FrontendBlogModel::getNavigation($this->record['id']);
+
+		// set previous and next link for usage with Flip ahead
+		if(!empty($navigation['previous']))
+		{
+			$this->header->addLink(
+				array(
+				     'rel' => 'previous',
+				     'href' => $navigation['previous']['url'],
+				)
+			);
+		}
+		if(!empty($navigation['next']))
+		{
+			$this->header->addLink(
+				array(
+				     'rel' => 'next',
+				     'href' => $navigation['next']['url'],
+				)
+			);
+		}
+
 		// assign navigation
-		$this->tpl->assign('navigation', FrontendBlogModel::getNavigation($this->record['id']));
+		$this->tpl->assign('navigation', $navigation);
 	}
 
 	/**

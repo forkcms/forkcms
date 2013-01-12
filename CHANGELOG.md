@@ -25,6 +25,7 @@ Improvements:
 * Core: removed js.php
 * Spoon: Spoon dependency is now handled via composer.
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
+* Blog: enabled Flip ahead for blogposts.
 
 Bugfixes:
 
