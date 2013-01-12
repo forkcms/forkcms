@@ -541,27 +541,28 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// init var
 		$navigation = array();
+		$detailLink = FrontendNavigation::getURLForBlock('blog', 'detail') . '/';
 
 		// get previous post
 		$navigation['previous'] = $db->getRecord(
-			'SELECT i.id, i.title, m.url
+			'SELECT i.id, i.title, CONCAT(?, m.url) AS url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ?
 			 ORDER BY i.publish_on DESC
 			 LIMIT 1',
-			array($id, 'active', 'N', FRONTEND_LANGUAGE, $date)
+			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date)
 		);
 
 		// get next post
 		$navigation['next'] = $db->getRecord(
-			'SELECT i.id, i.title, m.url
+			'SELECT i.id, i.title, CONCAT(?, m.url) AS url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on > ?
 			 ORDER BY i.publish_on ASC
 			 LIMIT 1',
-			array($id, 'active', 'N', FRONTEND_LANGUAGE, $date)
+			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date)
 		);
 
 		return $navigation;
