@@ -34,7 +34,7 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 		$this->frm = new FrontendForm('subscribe', null, null, 'subscribeForm');
 
 		// create & add elements
-		$this->frm->addText('email');
+		$this->frm->addText('email')->setAttribute('type', 'email');
 	}
 
 	/**
