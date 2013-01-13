@@ -36,19 +36,20 @@ class Sumo
 	public function initErrbit()
 	{
 		// only initialize if we know the API key
-		if(!defined('ERRBIT_API_KEY') || ERRBIT_API_KEY == '') return;
+		if(defined('ERRBIT_API_KEY') && ERRBIT_API_KEY != '')
+		{
+			require_once dirname(__FILE__) . '/errbit/Errbit.php';
 
-		require_once dirname(__FILE__) . '/errbit/Errbit.php';
+			Errbit::instance()->configure(array(
+			   'api_key' => ERRBIT_API_KEY,
+			   'host' => 'errors.sumocoders.be',
+			   'secure' => true,
+			   'port' => 443,
+			))->start();
 
-		Errbit::instance()->configure(array(
-		   'api_key' => ERRBIT_API_KEY,
-		   'host' => 'errors.sumocoders.be',
-		   'secure' => true,
-		   'port' => 443,
-		))->start();
-
-		// overrule the exceptionhandler
-		define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+			// overrule the exceptionhandler
+			define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
+		}
 	}
 }
 
