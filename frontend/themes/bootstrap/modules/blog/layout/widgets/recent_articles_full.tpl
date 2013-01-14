@@ -44,9 +44,9 @@
 		    	</article>
 		    {/iteration:widgetBlogRecentArticlesFull}
 		<footer>
-		    <p>
-		    	<a href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
-		    	<a id="RSSfeed" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblSubscribeToTheRSSFeed|ucfirst}</a>
+		    <p class="btn-group">
+		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
+		    	<a class="btn" id="RSSfeed" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblSubscribeToTheRSSFeed|ucfirst}</a>
 		    </p>
 		</footer>
 	</section>

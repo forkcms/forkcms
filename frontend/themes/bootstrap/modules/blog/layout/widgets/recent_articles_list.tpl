@@ -15,8 +15,10 @@
 		</ul>
 		<footer>
 		    <p>
-		    	<a href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a><br/>
-		    	<a id="RSSfeed" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblSubscribeToTheRSSFeed|ucfirst}</a>
+		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a><br/>
+		    </p>
+		    <p>
+		    	<a class="btn" id="RSSfeed" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblRSSFeed|ucfirst}</a>
 		    </p>
 		</footer>
 	</section>

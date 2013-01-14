@@ -1,6 +1,6 @@
 {* Note: we can use general variables names here since this template is parsed within its own scope *}
 
-<section class="row">
+<section class="row" id="formbuilder{$formName|camelcase}">
 	<div class="span12">
 		{option:successMessage}<div class="alert alert-success">{$successMessage}</div>{/option:successMessage}
 		{option:formBuilderError}<div class="alert alert-error">{$formBuilderError}</div>{/option:formBuilderError}
@@ -11,7 +11,7 @@
 					<input type="hidden" name="form" value="{$formName}" />
 
 					{iteration:fields}
-						<div class="row">
+						<div class="row" id="field{$fields.name|camelcase}">
 							<div class="span12">
 								{* Headings and paragraphs *}
 								{option:fields.plaintext}
