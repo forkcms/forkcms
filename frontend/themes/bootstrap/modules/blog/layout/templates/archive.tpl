@@ -12,7 +12,7 @@
 	</section>
 {/option:!items}
 {option:items}
-	<section id="blogArchive" class="mod">
+	<section id="blogArchive">
 		<header>
 			<h3>
 				{$lblArticlesFor|ucfirst}
@@ -25,7 +25,7 @@
 			</h3>
 		</header>
 		<div class="bd content">
-			<table class="dataGrid table table-hover" width="100%">
+			<table class="dataGrid table table-hover" width="100%" itemscope itemtype="http://schema.org/Blog">
 				<thead class="hide">
 					<tr>
 						<th class="date">{$lblDate|ucfirst}</th>
@@ -36,11 +36,11 @@
 				<tbody>
 					{iteration:items}
 						<tr {option:items.first}class="firstChild"{/option:items.first}>
-							<td class="date">{$items.publish_on|date:{$dateFormatShort}:{$LANGUAGE}}</td>
+							<td class="date muted"><time itemprop="datePublished" datetime="{$items.publish_on|date:'Y-m-d\TH:i:s'}">{$items.publish_on|date:{$dateFormatShort}:{$LANGUAGE}}</time></td>
 							<td class="title"><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></td>
 							<td class="comments">
-								{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
 								{option:items.comments}
+									<i class="icon-comment"></i>
 									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
 									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
 								{/option:items.comments}

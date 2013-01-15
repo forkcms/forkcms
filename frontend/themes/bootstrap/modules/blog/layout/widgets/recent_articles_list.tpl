@@ -14,10 +14,8 @@
 		    {/iteration:widgetBlogRecentArticlesList}
 		</ul>
 		<footer>
-		    <p>
-		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a><br/>
-		    </p>
-		    <p>
+		    <p class="btn-group">
+		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
 		    	<a class="btn" id="RSSfeed" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblRSSFeed|ucfirst}</a>
 		    </p>
 		</footer>

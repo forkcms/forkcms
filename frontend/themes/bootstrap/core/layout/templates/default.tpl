@@ -16,22 +16,24 @@
 	<![endif]-->
 	<a href="#main" class="muted hide">{$lblSkipToContent|ucfirst}</a>
 
-	<div class="container navbar-wrapper">
+	<div class="navbar-wrapper navbar-fixed-top">
 		<div class="navbar navbar-inverse">
 			<div class="navbar-inner">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
-				<a class="brand" href="/">{$siteTitle}</a>
-
-				<div class="nav-collapse collapse">
-					{$var|getnavigation:'page':0:1}
-					{iteration:positionTop}
-						{$positionTop.blockContent}
-					{/iteration:positionTop}
-					{* @todo {include:core/layout/templates/languages.tpl} *}
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="/">{$siteTitle}</a>
+	
+					<div class="nav-collapse collapse">
+						{$var|getnavigation:'page':0:1}
+						{iteration:positionTop}
+							{$positionTop.blockContent}
+						{/iteration:positionTop}
+						{* @todo {include:core/layout/templates/languages.tpl} *}
+					</div>
 				</div>
 			</div>
 		</div>

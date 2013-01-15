@@ -55,6 +55,19 @@
 	}
 }
 
+#blogArchive {
+	
+	.firstChild {
+		td {
+			border-top: none;
+		}
+	}
+	
+	.comments {
+		text-align: right;
+	}
+}
+
 @media screen and (min-width: 700px) {
 
 	#blogDetail,
