@@ -11,7 +11,15 @@
 		}
 	}
 	
+	label {
+		margin-bottom: 0;
+	}
+	
 	.bd {
 		padding: 0 0 20px 0;
+	}
+	
+	.row-fluid [class*="span"] {
+		min-height: 0;
 	}
 }
