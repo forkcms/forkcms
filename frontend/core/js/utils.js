@@ -308,6 +308,17 @@ utils.string =
 	},
 
 	/**
+	 * Ucfirst a string
+	 * 
+	 * @return	string
+	 * @param	string value
+	 */ 
+	ucfirst: function(value)
+	{
+		return value.substring(0, 1).toUpperCase() + value.substring(1);
+	},
+
+	/**
 	 * PHP-like urlencode
 	 *
 	 * @see		https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURIComponent#Description
