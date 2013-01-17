@@ -32,7 +32,10 @@ class CommonUri
 		// decode as url
 		$value = urldecode($value);
 
-		// reserved characters (RFC 3986)
+		/*
+		 * in addition to RFC 3986, make sure the local filename is valid
+		 * @see http://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
+		 */
 		$reservedCharacters = array(
 			'.', '/', '?', ':', '@', '#', '[', ']',
 			'!', '$', '&', '\'', '(', ')', '*',
