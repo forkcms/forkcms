@@ -48,8 +48,8 @@ class CommonUri
 		// to lowercase
 		$value = mb_strtolower($value, $charset);
 
-		// remove special characters
-		$value = htmlentities($value, ENT_COMPAT, $charset);
+		// replace special characters by their normal character
+		$value = SpoonFilter::htmlentities($value, $charset);
 		$value = preg_replace( "`&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);`i","\\1", $value);
 
 		// convert "--" to "-"
