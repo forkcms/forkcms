@@ -37,7 +37,7 @@ class CommonUri
 		 * @see http://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
 		 */
 		$reservedCharacters = array(
-			'.', '/', '?', ':', '@', '#', '[', ']',
+			'|', '.', '/', '?', ':', '@', '#', '[', ']',
 			'!', '$', '&', '\'', '(', ')', '*',
 			'<', '>', '+', ',', ';', '=', '%', '"'
 		);
