@@ -68,6 +68,6 @@ class CommonUri
 	 */
 	public static function getUrl($value, $charset = null)
 	{
-		SpoonFilter::urlise($value, $charset);
+		return SpoonFilter::urlise($value, $charset);
 	}
 }
