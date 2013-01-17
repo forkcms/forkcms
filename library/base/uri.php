@@ -26,7 +26,10 @@ class CommonUri
 		// define charset
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
-		// decode value
+		// decode htmlspecial characters
+		$value = SpoonFilter::htmlspecialcharsDecode($value);
+
+		// decode as url
 		$value = urldecode($value);
 
 		// reserved characters (RFC 3986)
