@@ -18,7 +18,7 @@ class CommonUri
 	 * Prepares a string for a filename so that it can be used in urls.
 	 *
 	 * @return	string						The urlised string.
-	 * @param	string $value				The value that should be urlised.
+	 * @param	string $value				The value (without extension) that should be urlised.
 	 * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
 	 */
 	public static function getFilename($value, $charset = null)
