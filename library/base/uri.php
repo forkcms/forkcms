@@ -33,14 +33,20 @@ class CommonUri
 		$value = urldecode($value);
 
 		/*
+		 * reserved characters in URI, according to RFC 3986
+		 * @see http://www.ietf.org/rfc/rfc3986.txt
+		 */
+		$reservedCharacters = array(
+			'/', '?', ':', '@', '#', '[', ']',
+			'!', '$', '&', '\'', '(', ')', '*',
+			'+', ',', ';', '='
+		);
+
+		/*
 		 * in addition to RFC 3986, make sure the local filename is valid
 		 * @see http://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
 		 */
-		$reservedCharacters = array(
-			'|', '.', '/', '?', ':', '@', '#', '[', ']',
-			'!', '$', '&', '\'', '(', ')', '*',
-			'<', '>', '+', ',', ';', '=', '%', '"'
-		);
+		$reservedCharacters = array_merge(array('.', '<', '>', '%', '"', '|'), $reservedCharacters);
 
 		// remove reserved characters
 		$value = str_replace($reservedCharacters, ' ', $value);
