@@ -53,7 +53,7 @@ class CommonUri
 
 		// replace special characters by their normal character
 		$value = SpoonFilter::htmlentities($value, $charset);
-		$value = preg_replace( "`&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);`i","\\1", $value);
+		$value = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $value);
 
 		// convert "--" to "-"
 		$value = preg_replace('/\-+/', '-', $value);
