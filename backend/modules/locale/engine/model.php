@@ -1278,7 +1278,7 @@ class BackendLocaleModel
 	public static function insert(array $item)
 	{
 		// actions should be urlized
-		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = SpoonFilter::urlise($item['value']);
+		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl($item['value']);
 
 		// insert item
 		$item['id'] = (int) BackendModel::getDB(true)->insert('locale', $item);
@@ -1298,7 +1298,7 @@ class BackendLocaleModel
 	public static function update(array $item)
 	{
 		// actions should be urlized
-		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = SpoonFilter::urlise($item['value']);
+		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl($item['value']);
 
 		// update category
 		$updated = BackendModel::getDB(true)->update('locale', $item, 'id = ?', array($item['id']));

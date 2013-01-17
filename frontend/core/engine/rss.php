@@ -31,7 +31,7 @@ class FrontendRSS extends SpoonFeedRSS
 		$description = SpoonFilter::htmlspecialcharsDecode($description);
 
 		// call the parent
-		parent::__construct($title, FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title))), $description, $items);
+		parent::__construct($title, FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title))), $description, $items);
 
 		// set feed properties
 		$this->setLanguage(FRONTEND_LANGUAGE);
@@ -67,7 +67,7 @@ class FrontendRSS extends SpoonFeedRSS
 	public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
 	{
 		// add UTM-parameters
-		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($this->getTitle())));
+		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($this->getTitle())));
 
 		// call the parent
 		parent::setImage($URL, $title, $link, $width, $height, $description);
@@ -101,7 +101,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		$description = SpoonFilter::htmlspecialcharsDecode($description);
 
 		// set UTM-campaign
-		$this->utm['utm_campaign'] = SpoonFilter::urlise($title);
+		$this->utm['utm_campaign'] = CommonUri::getUrl($title);
 
 		// call parent
 		parent::__construct($title, FrontendModel::addURLParameters($link, $this->utm), $description);
@@ -166,7 +166,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		$author = (string) SpoonFilter::htmlspecialcharsDecode($author);
 
 		// add fake-emailaddress
-		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
+		if(!SpoonFilter::isEmail($author)) $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
 
 		// set author
 		parent::setAuthor($author);

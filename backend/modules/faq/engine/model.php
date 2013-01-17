@@ -312,7 +312,7 @@ class BackendFaqModel
 	 */
 	public static function getURL($url, $id = null)
 	{
-		$url = SpoonFilter::urlise((string) $url);
+		$url = CommonUri::getUrl((string) $url);
 		$db = BackendModel::getDB();
 
 		// new item
@@ -360,7 +360,7 @@ class BackendFaqModel
 	 */
 	public static function getURLForCategory($url, $id = null)
 	{
-		$url = SpoonFilter::urlise((string) $url);
+		$url = CommonUri::getUrl((string) $url);
 		$db = BackendModel::getDB();
 
 		// new category

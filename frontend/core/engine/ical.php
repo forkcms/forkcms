@@ -51,7 +51,7 @@ class FrontendIcal extends SpoonIcal
 		$this->setXProperties($properties);
 
 		// set the filename
-		$this->setFilename(str_replace('-', '_', SpoonFilter::urlise($title)) . '.ics');
+		$this->setFilename(str_replace('-', '_', CommonUri::getUrl($title)) . '.ics');
 	}
 
 	/**
@@ -72,7 +72,7 @@ class FrontendIcal extends SpoonIcal
 	public function parse($headers = true)
 	{
 		// set headers
-		if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename=' . SpoonFilter::urlise($this->getTitle()) . '.ics');
+		if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename=' . CommonUri::getUrl($this->getTitle()) . '.ics');
 
 		// call the parent
 		parent::parse($headers);
@@ -113,7 +113,7 @@ class FrontendIcalEvent extends SpoonIcalEvent
 	public function __construct($title, $link, $description)
 	{
 		// set UTM-campaign
-		$this->utm['utm_campaign'] = SpoonFilter::urlise($title);
+		$this->utm['utm_campaign'] = CommonUri::getUrl($title);
 
 		// convert to plain text
 		$description = FrontendModel::convertToPlainText($description);

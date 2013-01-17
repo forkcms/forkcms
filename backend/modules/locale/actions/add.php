@@ -141,7 +141,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				// in case this is a 'act' type, there are special rules concerning possible values
 				if($this->frm->getField('type')->getValue() == 'act')
 				{
-					if(urlencode($txtValue->getValue()) != SpoonFilter::urlise($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+					if(urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
 				}
 			}
 

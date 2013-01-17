@@ -35,7 +35,7 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 		// build array
 		$item['id'] = $id;
 		$item['tag'] = SpoonFilter::htmlspecialchars($tag);
-		$item['url'] = BackendTagsModel::getURL(SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $id);
+		$item['url'] = BackendTagsModel::getURL(CommonUri::getUrl(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $id);
 
 		// update
 		BackendTagsModel::update($item);
