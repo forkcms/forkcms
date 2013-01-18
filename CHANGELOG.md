@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Core: Pagination for 6 pages showed 7 instead.
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
 * Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
