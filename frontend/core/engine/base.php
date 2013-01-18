@@ -477,7 +477,7 @@ class FrontendBaseBlock
 		{
 			// init vars
 			$pagesStart = 1;
-			$pagesEnd = ($this->pagination['num_pages'] >= 6) ? 7 : $this->pagination['num_pages'];
+			$pagesEnd = ($this->pagination['num_pages'] == 6) ? 6 : (($this->pagination['num_pages'] >= 6) ? 7 : $this->pagination['num_pages']);
 
 			// show last pages
 			if($this->pagination['num_pages'] > 6) $showLastPages = true;
