@@ -306,6 +306,9 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// post/get data
 		$data = $this->getMethod(true);
 
+		// This is needed to get values for multiple selections
+		$name = rtrim($this->attributes['name'], '[]');
+
 		// loop initial values and fill the array of allowed values
 		$allowedValues = array();
 		foreach($this->values as $key => $value)
@@ -321,7 +324,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		}
 
 		// submitted field
-		if($this->isSubmitted() && isset($data[$this->attributes['name']]))
+		if($this->isSubmitted() && isset($data[$name]))
 		{
 			// multiple selection allowed
 			if(!$this->single)
@@ -330,7 +333,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 				$values = array();
 
 				// loop choices
-				foreach((array) $data[$this->attributes['name']] as $value)
+				foreach((array) $data[$name] as $value)
 				{
 					// external data is allowed
 					if($this->allowExternalData) $values[] = $value;
@@ -350,12 +353,12 @@ class SpoonFormDropdown extends SpoonFormAttributes
 				$values = null;
 
 				// external data is allowed
-				if($this->allowExternalData) $values = (string) $data[$this->attributes['name']];
+				if($this->allowExternalData) $values = (string) $data[$name];
 
 				// external data is NOT allowed
 				else
 				{
-					if(isset($allowedValues[(string) $data[$this->attributes['name']]]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $data[$this->attributes['name']] && $this->defaultElement[1] != '')) $values = (string) $data[$this->attributes['name']];
+					if(isset($allowedValues[(string) $data[$name]]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $data[$name] && $this->defaultElement[1] != '')) $values = (string) $data[$this->attributes['name']];
 				}
 			}
 		}
