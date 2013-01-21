@@ -39,7 +39,7 @@
 		</div>
 	</div>
 
-	<div id="main" class="container marketing">
+	<div id="main" class="container">
 		{include:core/layout/templates/breadcrumb.tpl}
 
 		<div class="row">

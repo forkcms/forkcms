@@ -5,11 +5,9 @@
 
 {option:!items}
 	<div id="blogIndex">
-		<section class="mod">
-			<div class="inner">
-				<div class="bd content">
-					<p>{$msgBlogNoItems}</p>
-				</div>
+		<section>
+			<div class="alert">
+				{$msgBlogNoItems}
 			</div>
 		</section>
 	</div>
@@ -41,7 +39,6 @@
 				    	</div>
 				    	<div class="span6 metaExtra">
 				    		<span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$items.category_full_url}">{$items.category_title}</a>{option:!items.tags}.{/option:!items.tags}
-
 				    		{option:items.tags}
 				    			<span class="hideText">{$lblWithThe}</span> {$lblTags|ucfirst}:
 				    			<span itemprop="keywords">
@@ -53,8 +50,8 @@
 				    	</div>
 				    </div>
 				</header>
-				<div class="bd content" itemprop="articleBody">
-				    {option:items.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$items.image}" alt="{$items.title}" />{/option:items.image}
+				<div class="articleBody" itemprop="articleBody">
+				    {option:items.image}<img itemprop="image" class="img-polaroid span4 pull-right" src="{$FRONTEND_FILES_URL}/blog/images/source/{$items.image}" alt="{$items.title}" />{/option:items.image}
 				    {option:!items.introduction}{$items.text}{/option:!items.introduction}
 				    {option:items.introduction}{$items.introduction}{/option:items.introduction}
 				</div>

@@ -37,74 +37,69 @@
 		<div class="bd content">
 			{$item.answer}
 		</div>
-	</article>
+	
 
-	{option:settings.allow_feedback}
-		<section id="faqFeedbackForm">
-			{form:feedback}
-				<div class="row-fluid">
-					<div class="span12 well">
-						{$hidQuestionId}
-						<div class="options form-inline">
-							<div class="span3">
-								{$msgFeedback|ucfirst}
+		{option:settings.allow_feedback}
+			<aside id="faqFeedbackForm">
+				{option:success}<div class="alert alert-success">{$msgFeedbackSuccess}</div>{/option:success}
+				{option:spam}<div class="alert alert-error">{$errFeedbackSpam}</div>{/option:spam}
+				{form:feedback}
+					<div class="row-fluid">
+						<div class="span12 well">
+							{$hidQuestionId}
+							<div class="options form-inline">
+								<div class="span3">
+									{$msgFeedback|ucfirst}
+								</div>
+								<div class="span9">
+									{iteration:useful}
+										<div class="span2">
+											<label for="{$useful.id}">{$useful.rbtUseful} {$useful.label|ucfirst}</label>
+										</div>
+									{/iteration:useful}
+								</div>
 							</div>
-							<div class="span9">
-								{iteration:useful}
-									<div class="span2">
-										<label for="{$useful.id}">{$useful.rbtUseful} {$useful.label|ucfirst}</label>
-									</div>
-								{/iteration:useful}
+			
+							<div id="feedbackNoInfo"{option:hideFeedbackNoInfo} style="display: none;"{/option:hideFeedbackNoInfo}>
+								<p class="bigInput{option:txtMessageError} errorArea{/option:txtMessageError}">
+									<label for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+										{$txtMessage} {$txtMessageError}
+								</p>
+								<p>
+									<input class="btn" type="submit" name="comment" value="{$lblSend|ucfirst}" />
+								</p>
 							</div>
-						</div>
-		
-						<div id="feedbackNoInfo"{option:hideFeedbackNoInfo} style="display: none;"{/option:hideFeedbackNoInfo}>
-							<p class="bigInput{option:txtMessageError} errorArea{/option:txtMessageError}">
-								<label for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-									{$txtMessage} {$txtMessageError}
-							</p>
-							<p>
-								<input class="btn" type="submit" name="comment" value="{$lblSend|ucfirst}" />
-							</p>
 						</div>
 					</div>
-				</div>
-			{/form:feedback}
-			<div class="bd">
-				{option:success}<div class="alert alert-success">{$msgFeedbackSuccess}</div>{/option:success}
-				{option:spam}<div class="alert alert-error">{$errFeedbackSpam}</div>{/option:spam}	
-			</div>
-		</section>
-	{/option:settings.allow_feedback}
+				{/form:feedback}	
+			</aside>
+		{/option:settings.allow_feedback}
+	</article>
 
 	{option:inSameCategory}
-		<section id="faqRelatedItems">
+		<section id="faqOtherQuestions" class="faqOtherQuestions">
 			<header>
             	{option:settings.allow_multiple_categories}<h3>{$msgQuestionsInSameCategory|ucfirst}</h3>{/option:settings.allow_multiple_categories}
             	{option:!settings.allow_multiple_categories}<h3>{$msgOtherQuestions|ucfirst}</h3>{/option:!settings.allow_multiple_categories}
 			</header>
-			<div class="bd content">
-				<ul>
-					{iteration:inSameCategory}
-						<li><a href="{$inSameCategory.full_url}" title="{$inSameCategory.question}">{$inSameCategory.question}</a></li>
-					{/iteration:inSameCategory}
-				</ul>
-			</div>
+			<ul>
+				{iteration:inSameCategory}
+					<li><a href="{$inSameCategory.full_url}" title="{$inSameCategory.question}">{$inSameCategory.question}</a></li>
+				{/iteration:inSameCategory}
+			</ul>
 		</section>
 	{/option:inSameCategory}
 
 	{option:related}
-		<section id="faqRelatedItems">
+		<section id="faqAlsoRead" class="faqAlsoRead">
 			<header>
 				<h3>{$msgRelatedQuestions|ucfirst}</h3>
 			</header>
-			<div class="bd content">
-				<ul>
-					{iteration:related}
-						<li><a href="{$related.full_url}" title="{$related.question}">{$related.question}</a></li>
-					{/iteration:related}
-				</ul>
-			</div>
+			<ul>
+				{iteration:related}
+					<li><a href="{$related.full_url}" title="{$related.question}">{$related.question}</a></li>
+				{/iteration:related}
+			</ul>
 		</section>
 	{/option:related}
 	

@@ -2,38 +2,29 @@
 	variables that are available:
 	- {$faqCategories}: contains all categories, along with all questions inside a category
 *}
-
-
 {option:!faqCategories}
 	<div id="faqIndex">
-		<div class="bd content">
-			<p>{$msgFaqNoItems}</p>
+		<div class="alert">
+			{$msgFaqNoItems}
 		</div>
 	</div>
 {/option:!faqCategories}
 
 {option:faqCategories}
-	<section id="faqIndex">
-		<div class="bd">
-			{iteration:faqCategories}
-				<section class="mod">
-					<div class="inner">
-                    	{option:allowMultipleCategories}
-						<header class="hd">
-							<h3 id="{$faqCategories.url}"><a href="{$faqCategories.full_url}" title="{$faqCategories.title}">{$faqCategories.title}</a></h3>
-						</header>
-                        {/option:allowMultipleCategories}
-
-						<div class="bd content">
-							<ul>
-								{iteration:faqCategories.questions}
-									<li><a href="{$faqCategories.questions.full_url}">{$faqCategories.questions.question}</a></li>
-								{/iteration:faqCategories.questions}
-							</ul>
-						</div>
-					</div>
-				</section>
-			{/iteration:faqCategories}
-		</div>
-	</section>
+	<div id="faqIndex">
+		{iteration:faqCategories}
+			<section>
+            	{option:allowMultipleCategories}
+					<header>
+						<h3 id="{$faqCategories.url}"><a href="{$faqCategories.full_url}" title="{$faqCategories.title}">{$faqCategories.title}</a></h3>
+					</header>
+                {/option:allowMultipleCategories}
+				<ul>
+					{iteration:faqCategories.questions}
+						<li><a href="{$faqCategories.questions.full_url}">{$faqCategories.questions.question}</a></li>
+					{/iteration:faqCategories.questions}
+				</ul>
+			</section>
+		{/iteration:faqCategories}
+	</div>
 {/option:faqCategories}

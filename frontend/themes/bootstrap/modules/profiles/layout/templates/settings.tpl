@@ -1,65 +1,89 @@
 {* Success *}
 {option:updateSettingsSuccess}
-	<div class="message success"><p>{$msgUpdateSettingsIsSuccess}</p></div>
+	<div class="alert alert-success"><p>{$msgUpdateSettingsIsSuccess}</p></div>
 {/option:updateSettingsSuccess}
 
 {* Error *}
 {option:updateSettingsHasFormError}
-	<div class="message error"><p>{$errFormError}</p></div>
+	<div class="alert alert-error"><p>{$errFormError}</p></div>
 {/option:updateSettingsHasFormError}
 
-<section id="settingsForm" class="mod">
-	<div class="inner">
-		<div class="bd">
-			{form:updateSettings}
-				<fieldset>
-					<legend>{$lblYourData|ucfirst}</legend>
-
-					<p{option:txtDisplayNameError} class="errorArea"{/option:txtDisplayNameError}>
-						<label for="displayName">{$lblDisplayName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+<section id="settingsForm">
+	<div class="bd">
+		{form:updateSettings}
+			<fieldset class="form-horizontal">
+				<legend>{$lblYourData|ucfirst}</legend>
+				
+				<div class="control-group{option:txtDisplayNameError} error{/option:txtDisplayNameError}">
+					<label class="control-label" for="displayName">{$lblDisplayName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					<div class="controls">
 						{$txtDisplayName}{$txtDisplayNameError}
-						<small class="helpTxt">{$msgHelpDisplayNameChanges|sprintf:{$maxDisplayNameChanges}:{$displayNameChangesLeft}}</small>
-					</p>
-					<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
-						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<small class="helpTxt muted">{$msgHelpDisplayNameChanges|sprintf:{$maxDisplayNameChanges}:{$displayNameChangesLeft}}</small>
+					</div>
+				</div>
+				<div class="control-group{option:txtEmailError} error{/option:txtEmailError}">
+					<label class="control-label" for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					<div class="controls">
 						{$txtEmail}{$txtEmailError}
-					</p>
-					<p>
 						<a href="{$var|geturlforblock:'profiles':'change_email'}">{$msgChangeEmail}</a>
-					</p>
-					<p{option:txtFirstNameError} class="errorArea"{/option:txtFirstNameError}>
-						<label for="firstName">{$lblFirstName|ucfirst}</label>
+					</div>
+				</div>
+				<div class="control-group{option:txtFirstNameError} error{/option:txtFirstNameError}">
+					<label class="control-label" for="firstName">{$lblFirstName|ucfirst}</label>
+					<div class="controls">
 						{$txtFirstName}{$txtFirstNameError}
-					</p>
-					<p{option:txtLastNameError} class="errorArea"{/option:txtLastNameError}>
-						<label for="lastName">{$lblLastName|ucfirst}</label>
+					</div>
+				</div>
+				<div class="control-group{option:txtLastNameError} error{/option:txtLastNameError}">
+					<label class="control-label" for="lastName">{$lblLastName|ucfirst}</label>
+					<div class="controls">
 						{$txtLastName}{$txtLastNameError}
-					</p>
-					<p{option:ddmGenderError} class="errorArea"{/option:ddmGenderError}>
-						<label for="gender">{$lblGender|ucfirst}</label>
+					</div>
+				</div>
+				<div class="control-group{option:ddmGenderError} error{/option:ddmGenderError}">
+					<label class="control-label" for="gender">{$lblGender|ucfirst}</label>
+					<div class="controls">
 						{$ddmGender} {$ddmGenderError}
-					</p>
-					<p{option:ddmYearError} class="errorArea"{/option:ddmYearError}>
-						<label for="day">{$lblBirthDate|ucfirst}</label>
-						{$ddmDay} {$ddmMonth} {$ddmYear} {$ddmYearError}
-					</p>
-				</fieldset>
-				<fieldset>
-					<legend>{$lblYourLocationData|ucfirst}</legend>
+					</div>
+				</div>
+				<div class="birthDate control-group{option:ddmYearError} error{/option:ddmYearError}">
+					<label class="control-label" for="day">{$lblBirthDate|ucfirst}</label>
+					<div class="controls row-fluid">
+						<div class="span1">
+							{$ddmDay}
+						</div>
+						<div class="span1">
+							{$ddmMonth}
+						</div>
+						<div class="span1">
+							{$ddmYear}
+						</div>
+						 {$ddmYearError}
+					</div>
+				</div>
+			</fieldset>
+			
+			<fieldset class="form-horizontal">
+				<legend>{$lblYourLocationData|ucfirst}</legend>
 
-					<p{option:txtCityError} class="errorArea"{/option:txtCityError}>
-						<label for="city">{$lblCity|ucfirst}</label>
+				<div class="control-group{option:txtCityError} error{/option:txtCityError}">
+					<label class="control-label" for="city">{$lblCity|ucfirst}</label>
+					<div class="controls">
 						{$txtCity}{$txtCityError}
-					</p>
-					<p{option:ddmCountryError} class="errorArea"{/option:ddmCountryError}>
-						<label for="country">{$lblCountry|ucfirst}</label>
+					</div>
+				</div>
+				<div class="control-group{option:ddmCountryError} error{/option:ddmCountryError}">
+					<label class="control-label" for="country">{$lblCountry|ucfirst}</label>
+					<div class="controls">
 						{$ddmCountry} {$ddmCountryError}
-					</p>
-				</fieldset>
-				<p>
-					<input class="inputSubmit" type="submit" value="{$lblSave|ucfirst}" />
-				</p>
-			{/form:updateSettings}
-		</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<input class="btn" type="submit" value="{$lblSave|ucfirst}" />
+					</div>
+				</div>
+			</fieldset>
+		{/form:updateSettings}
 	</div>
 </section>

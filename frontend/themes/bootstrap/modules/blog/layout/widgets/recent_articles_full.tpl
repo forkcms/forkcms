@@ -37,6 +37,7 @@
 		    			</div>
 		    		</header>
 		    		<div class="bd content" itemprop="articleBody">
+		    			{option:widgetBlogRecentArticlesFull.image}<img itemprop="image" class="img-polaroid span4 pull-right" src="{$FRONTEND_FILES_URL}/blog/images/source/{$widgetBlogRecentArticlesFull.image}" alt="{$widgetBlogRecentArticlesFull.title}" />{/option:widgetBlogRecentArticlesFull.image}
 		    		    {option:!widgetBlogRecentArticlesFull.introduction}{$widgetBlogRecentArticlesFull.text}{/option:!widgetBlogRecentArticlesFull.introduction}
 		    		    {option:widgetBlogRecentArticlesFull.introduction}{$widgetBlogRecentArticlesFull.introduction}{/option:widgetBlogRecentArticlesFull.introduction}
 		    		</div>
@@ -45,7 +46,7 @@
 		<footer>
 		    <p class="btn-group">
 		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
-		    	<a class="btn" id="RSSfeed" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblSubscribeToTheRSSFeed|ucfirst}</a>
+		    	<a class="btn" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblSubscribeToTheRSSFeed|ucfirst}</a>
 		    </p>
 		</footer>
 	</section>

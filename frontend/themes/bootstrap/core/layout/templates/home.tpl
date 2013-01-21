@@ -8,6 +8,7 @@
 		</div>
 	</noscript>
 	<!-- Warning for people that still use IE7 or below -->
+	<!-- @todo: labels -->
 	<!--[if lt IE 8 ]>
 		<div id="ie" class="fullWidthAlert alert">
 			<button type="button" class="close" data-dismiss="alert">×</button>
@@ -25,8 +26,9 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="/">{$siteTitle}</a>
-
+					<h1>
+						<a class="brand" itemprop="name" href="/">{$siteTitle}</a>
+					</h1>
 					<div class="nav-collapse collapse">
 						{$var|getnavigation:'page':0:1}
 						{iteration:positionTop}
@@ -44,22 +46,16 @@
 			<div class="carousel-inner">
 				{* Slideshow position *}
 				{iteration:positionSlideshow}
-					{option:positionSlideshow.blockIsHTML}
-						{$positionSlideshow.blockContent}
-					{/option:positionSlideshow.blockIsHTML}
-					{option:!positionSlideshow.blockIsHTML}
-						{$positionSlideshow.blockContent}
-					{/option:!positionSlideshow.blockIsHTML}
+					{$positionSlideshow.blockContent}
 				{/iteration:positionSlideshow}
 			</div>
 
-			<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-			<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+			<a class="left carousel-control" rel="previous" href="#myCarousel" data-slide="prev">&lsaquo;<span class="hideText"> {$lblPrevious}</span></a>
+			<a class="right carousel-control" rel="next" href="#myCarousel" data-slide="next"><span class="hideText">{$lblNext} </span>&rsaquo;</a>
 		</div>
 	{/option:positionSlideshow}
 
-	<div id="main" class="container marketing">
-		{include:core/layout/templates/breadcrumb.tpl}
+	<div id="main" class="container">
 
 		{option:positionFeatures}
 			<div class="row">

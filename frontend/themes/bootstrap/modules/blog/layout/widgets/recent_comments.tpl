@@ -15,6 +15,7 @@
 		    			{$widgetBlogRecentComments.author}
 		    		{option:widgetBlogRecentComments.website}</a>{/option:widgetBlogRecentComments.website}
 		    		{$lblCommentedOn} <a href="{$widgetBlogRecentComments.full_url}">{$widgetBlogRecentComments.post_title}</a>
+		    		<time class="muted" itemprop="commentTime" datetime="{$widgetBlogRecentComments.created_on|date:'Y-m-d\TH:i:s'}">{$widgetBlogRecentComments.created_on|timeago}</time>
 		    	</li>
 		    {/iteration:widgetBlogRecentComments}
 		</ul>

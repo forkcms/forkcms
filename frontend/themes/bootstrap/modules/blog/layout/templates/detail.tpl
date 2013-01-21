@@ -30,7 +30,6 @@
 
 		    	<div class="span6 metaExtra">
 		    		<span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$item.category_full_url}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
-
 		    		{option:item.tags}
 		    		    <span class="hideText">{$lblWithThe}</span> {$lblTags|ucfirst}:
 		    		    <span itemprop="keywords">
@@ -43,8 +42,8 @@
 		    </div>
 		</header>
 
-		<div class="bd content" itemprop="articleBody">
-		    {option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
+		<div class="articleBody" itemprop="articleBody">
+		    {option:item.image}<img class="img-polaroid span4 pull-right" src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
 		    {$item.text}
 		</div>
 		<footer>
@@ -61,53 +60,55 @@
 		    		</div>
 		    	</div>
 		    </div>
-		    <ul class="pager">
-		    	{option:navigation.previous}
-		    		<li class="previous">
-		    			<a href="{$navigation.previous.url}" rel="prev" title="{$navigation.previous.title}">&larr; <span class="hideText">{$lblPreviousArticle|ucfirst}: </span><span class="title">{$navigation.previous.title}</span></a>
-		    		</li>
-		    	{/option:navigation.previous}
-		    	{option:navigation.next}
-		    		<li class="next">
-		    			<a href="{$navigation.next.url}" rel="next" title="{$navigation.next.title}"><span class="hideText">{$lblNextArticle|ucfirst}: </span><span class="title">{$navigation.next.title}</span> &rarr;</a>
-		    		</li>
-		    	{/option:navigation.next}
-		    </ul>
+		    <nav>
+			    <ul class="pager">
+			    	{option:navigation.previous}
+			    		<li class="previous">
+			    			<a href="{$navigation.previous.url}" rel="prev" title="{$navigation.previous.title}">&larr; <span class="hideText">{$lblPreviousArticle|ucfirst}: </span><span class="title">{$navigation.previous.title}</span></a>
+			    		</li>
+			    	{/option:navigation.previous}
+			    	{option:navigation.next}
+			    		<li class="next">
+			    			<a href="{$navigation.next.url}" rel="next" title="{$navigation.next.title}"><span class="hideText">{$lblNextArticle|ucfirst}: </span><span class="title">{$navigation.next.title}</span> &rarr;</a>
+			    		</li>
+			    	{/option:navigation.next}
+			    </ul>
+		    </nav>
 		</footer>
 	</article>
 
-		<section id="{$actComments}" class="comments" itemscope itemtype="http://schema.org/Article">
-			<header>
-			    <h3>{$lblComments|ucfirst}</h3>
-			</header>
-			{option:!comments}
-				<div class="alert">{$msgBlogNoComments}</div>
-			{/option:!comments}
-			{option:comments}
-				{iteration:comments}
-				    {* Do not alter the id! It is used as an anchor *}
-				    <div id="comment-{$comments.id}" class="comment row-fluid {option:comments.last}lastChild{/option:comments.last}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
-				    	<div class="span1 avatar">
-				    		<meta itemprop="discusses" content="{$item.title}" />
-				    		{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
-				    			<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar img-circle" data-gravatar-id="{$comments.gravatar_id}" />
-				    		{option:comments.website}</a>{/option:comments.website}
-				    	</div>
-				    	<div class="span7">
-				    		<div class="meta" itemscope itemtype="http://schema.org/Person">
-				    			{option:comments.website}<a href="{$comments.website}" itemprop="url">{/option:comments.website}
-				    				<span itemprop="creator name">{$comments.author}</span>{option:comments.website}</a>{/option:comments.website}
-				    			<span class="hideText">{$lblWrote}</span><time class="muted" itemprop="commentTime" datetime="{$comments.created_on|date:'Y-m-d\TH:i:s'}">{$comments.created_on|timeago}</time>
-				    		</div>
-				    		<div class="commentText content" itemprop="commentText">
-				    			{$comments.text|cleanupplaintext}
-				    		</div>
-				    	</div>
-				    </div>
-				{/iteration:comments}
-			{/option:comments}
-		</section>
-
+	<section id="{$actComments}" class="comments">
+		<header>
+		    <h3>{$lblComments|ucfirst}</h3>
+		</header>
+		{option:!comments}
+			<div class="alert">{$msgBlogNoComments}</div>
+		{/option:!comments}
+		{option:comments}
+			{iteration:comments}
+			    {* Do not alter the id! It is used as an anchor *}
+			    <div id="comment-{$comments.id}" class="comment row-fluid {option:comments.last}lastChild{/option:comments.last}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+			    	<div class="span1 avatar">
+			    		<meta itemprop="discusses" content="{$item.title}" />
+			    		{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
+			    			<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar img-circle" data-gravatar-id="{$comments.gravatar_id}" />
+			    		{option:comments.website}</a>{/option:comments.website}
+			    	</div>
+			    	<div class="span7">
+			    		<div class="meta" itemscope itemtype="http://schema.org/Person">
+			    			{option:comments.website}<a href="{$comments.website}" itemprop="url">{/option:comments.website}
+			    				<span itemprop="creator name">{$comments.author}</span>{option:comments.website}</a>{/option:comments.website}
+			    			<span class="hideText">{$lblWrote}</span><time class="muted" itemprop="commentTime" datetime="{$comments.created_on|date:'Y-m-d\TH:i:s'}">{$comments.created_on|timeago}</time>
+			    		</div>
+			    		<div class="commentText content" itemprop="commentText">
+			    			{$comments.text|cleanupplaintext}
+			    		</div>
+			    	</div>
+			    </div>
+			{/iteration:comments}
+		{/option:comments}
+	</section>	
+	
 	{option:item.allow_comments}
 		<section id="{$actComment}" class="commentForm">
 			<header>

@@ -16,7 +16,7 @@
 		<footer>
 		    <p class="btn-group">
 		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
-		    	<a class="btn" id="RSSfeed" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblRSSFeed|ucfirst}</a>
+		    	<a class="btn" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblRSSFeed|ucfirst}</a>
 		    </p>
 		</footer>
 	</section>

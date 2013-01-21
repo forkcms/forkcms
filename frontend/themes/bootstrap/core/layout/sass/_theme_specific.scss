@@ -11,6 +11,10 @@ body { padding-bottom: 40px; }
 }
 */
 
+.alert.fullWidthAlert {
+	margin-top: 40px;
+}
+
 .navbar {
 	.navbar-inner {
 		border: 0;
@@ -38,6 +42,10 @@ body { padding-bottom: 40px; }
 	.btn-navbar {
 		margin-top: 10px;
 	}
+}
+
+.breadcrumb {
+	margin-top: 55px;
 }
 
 /* Carousel */

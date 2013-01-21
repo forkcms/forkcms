@@ -1,32 +1,32 @@
 {* Success *}
 {option:resetPasswordSuccess}
-	<div class="message success"><p>{$msgResetPasswordIsSuccess}</p></div>
+	<div class="alert alert-success"><p>{$msgResetPasswordIsSuccess}</p></div>
 {/option:resetPasswordSuccess}
 
 {* Error *}
 {option:resetPasswordHasError}
-	<div class="message error"><p>{$errFormError}</p></div>
+	<div class="alert alert-error"><p>{$errFormError}</p></div>
 {/option:resetPasswordHasError}
 
 {option:!resetPasswordHideForm}
-	<section id="resetPasswordForm" class="mod">
-		<div class="inner">
+	<section id="resetPasswordForm">
 			<div class="bd">
 				{form:resetPassword}
-					<fieldset>
-						<p{option:txtPasswordError} class="errorArea"{/option:txtPasswordError}>
-							<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtPassword}{$txtPasswordError}
-						</p>
-						<p>
-							<label for="showPassword">{$chkShowPassword} {$lblShowPassword|ucfirst}</label>
-						</p>
-						<p>
-							<input class="inputSubmit" type="submit" value="{$lblSave|ucfirst}" />
-						</p>
+					<fieldset class="form-horizontal">
+						<div class="control-group{option:txtPasswordError} error{/option:txtPasswordError}">
+							<label class="control-label" for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<div class="controls">
+								{$txtPassword}{$txtPasswordError}
+								<label for="showPassword">{$chkShowPassword} {$lblShowPassword|ucfirst}</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<input class="btn" type="submit" value="{$lblSave|ucfirst}" />
+							</div>
+						</div>
 					</fieldset>
 				{/form:resetPassword}
 			</div>
-		</div>
 	</section>
 {/option:!resetPasswordHideForm}
