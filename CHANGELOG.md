@@ -26,6 +26,7 @@ Bugfixes:
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
 * Blog: Use full links for the navigation below the blogposts.
+* Extensions: Ticket 316: Link to default action
 
 
 3.4.4 (2012-09-12)
