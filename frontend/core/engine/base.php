@@ -482,7 +482,7 @@ class FrontendBaseBlock
 			// show first pages
 			if($this->pagination['num_pages'] > 7) $showFirstPages = true;
 		}
-		
+
 		// as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
 		elseif($this->pagination['requested_page'] <= 5)
 		{
@@ -493,7 +493,7 @@ class FrontendBaseBlock
 			// when we have 7 pages, show 7 as end
 			if($this->pagination['num_pages'] == 7) $pagesEnd = 7;
 
-			// when we have less pages then 6, show the maximum page
+			// when we have less then 6 pages, show the maximum page
 			elseif($this->pagination['num_pages'] <= 6) $pagesEnd = $this->pagination['num_pages'];
 
 			// show last pages
