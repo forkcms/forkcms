@@ -548,10 +548,10 @@ class FrontendBlogModel implements FrontendTagsInterface
 			'SELECT i.id, i.title, CONCAT(?, m.url) AS url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
-			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ?
-			 ORDER BY i.publish_on DESC
+			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
+			 ORDER BY i.publish_on DESC, i.id DESC
 			 LIMIT 1',
-			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date)
+			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
 		);
 
 		// get next post
@@ -559,10 +559,10 @@ class FrontendBlogModel implements FrontendTagsInterface
 			'SELECT i.id, i.title, CONCAT(?, m.url) AS url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
-			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on > ?
-			 ORDER BY i.publish_on ASC
+			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND ((i.publish_on = ? AND i.id > ?) OR i.publish_on > ?)
+			 ORDER BY i.publish_on ASC, i.id ASC
 			 LIMIT 1',
-			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date)
+			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
 		);
 
 		return $navigation;
