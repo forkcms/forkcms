@@ -79,8 +79,8 @@
 	{option:inSameCategory}
 		<section id="faqOtherQuestions" class="faqOtherQuestions">
 			<header role="banner">
-            	{option:settings.allow_multiple_categories}<h3>{$msgQuestionsInSameCategory|ucfirst}</h3>{/option:settings.allow_multiple_categories}
-            	{option:!settings.allow_multiple_categories}<h3>{$msgOtherQuestions|ucfirst}</h3>{/option:!settings.allow_multiple_categories}
+            	{option:settings.allow_multiple_categories}<h2>{$msgQuestionsInSameCategory|ucfirst}</h2>{/option:settings.allow_multiple_categories}
+            	{option:!settings.allow_multiple_categories}<h2>{$msgOtherQuestions|ucfirst}</h2>{/option:!settings.allow_multiple_categories}
 			</header>
 			<ul>
 				{iteration:inSameCategory}
@@ -93,7 +93,7 @@
 	{option:related}
 		<section id="faqAlsoRead" class="faqAlsoRead">
 			<header role="banner">
-				<h3>{$msgRelatedQuestions|ucfirst}</h3>
+				<h2>{$msgRelatedQuestions|ucfirst}</h2>
 			</header>
 			<ul>
 				{iteration:related}

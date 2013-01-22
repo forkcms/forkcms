@@ -16,7 +16,7 @@
 			<section>
             	{option:allowMultipleCategories}
 					<header role="banner">
-						<h3 id="{$faqCategories.url}"><a href="{$faqCategories.full_url}" title="{$faqCategories.title}">{$faqCategories.title}</a></h3>
+						<h2 id="{$faqCategories.url}"><a href="{$faqCategories.full_url}" title="{$faqCategories.title}">{$faqCategories.title}</a></h2>
 					</header>
                 {/option:allowMultipleCategories}
 				<ul>

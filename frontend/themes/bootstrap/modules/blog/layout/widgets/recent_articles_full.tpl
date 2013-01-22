@@ -6,7 +6,7 @@
 {option:widgetBlogRecentArticlesFull}
 	<section id="blogRecentArticlesFullWidget" class="blog">
 		<header role="banner">
-		    <h3>{$lblRecentArticles|ucfirst}</h3>
+		    <h2>{$lblRecentArticles|ucfirst}</h2>
 		</header>
 		{iteration:widgetBlogRecentArticlesFull}
 			<article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
@@ -15,7 +15,7 @@
 				<header role="banner">
 					<div class="row-fluid title">
 						<div class="span10">
-							<h4><a href="{$widgetBlogRecentArticlesFull.full_url}" title="{$widgetBlogRecentArticlesFull.title}">{$widgetBlogRecentArticlesFull.title}</a></h4>
+							<h3><a href="{$widgetBlogRecentArticlesFull.full_url}" title="{$widgetBlogRecentArticlesFull.title}">{$widgetBlogRecentArticlesFull.title}</a></h3>
 						</div>
 						<div class="span2 commentCount">
 							<i class="icon-comment"></i>

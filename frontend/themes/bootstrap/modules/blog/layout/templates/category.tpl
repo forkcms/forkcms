@@ -13,7 +13,7 @@
 				<header role="banner">
 					<div class="row-fluid title">
 						<div class="span10">
-							<h3><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h3>
+							<h2><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h2>
 						</div>
 						<div class="span2 commentCount">
 							{option:items.comments}
