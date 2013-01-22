@@ -70,8 +70,8 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
 	private function loadForm()
 	{
 		$this->frm = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
-		$this->frm->addPassword('password');
-		$this->frm->addText('email', $this->profile->getEmail());
+		$this->frm->addPassword('password')->setAttributes(array('required' => null));
+		$this->frm->addText('email', $this->profile->getEmail())->setAttributes(array('required' => null, 'type' => 'email'));
 	}
 
 	/**
