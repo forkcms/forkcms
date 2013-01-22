@@ -4,7 +4,7 @@
 *}
 <section id="tagsIndex" class="tags">
 	{option:!tags}
-		<div class="alert alert-info">{$msgTagsNoItems}</div>
+		<div class="alert alert-info" role="alert">{$msgTagsNoItems}</div>
 	{/option:!tags}
 	{option:tags}
 		<ul>

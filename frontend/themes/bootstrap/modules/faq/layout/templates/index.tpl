@@ -4,7 +4,7 @@
 *}
 {option:!faqCategories}
 	<div id="faqIndex" class="faq">
-		<div class="alert">
+		<div class="alert" role="alert">
 			{$msgFaqNoItems}
 		</div>
 	</div>

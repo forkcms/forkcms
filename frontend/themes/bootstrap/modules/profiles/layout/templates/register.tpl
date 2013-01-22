@@ -1,12 +1,5 @@
-{* Success *}
-{option:registerIsSuccess}
-	<div class="alert alert-success"><p>{$msgRegisterIsSuccess}</p></div>
-{/option:registerIsSuccess}
-
-{* Error *}
-{option:registerHasFormError}
-	<div class="alert alert-error"><p>{$errFormError}</p></div>
-{/option:registerHasFormError}
+{option:registerIsSuccess}<div class="alert alert-success" role="alert">{$msgRegisterIsSuccess}</div>{/option:registerIsSuccess}
+{option:registerHasFormError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:registerHasFormError}
 
 {option:!registerHideForm}
 	{form:register}

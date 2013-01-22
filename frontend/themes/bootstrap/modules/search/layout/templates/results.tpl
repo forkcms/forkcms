@@ -6,7 +6,7 @@
 {option:searchTerm}
 	<section id="searchResults" itemscope itemtype="http://schema.org/SearchResultsPage" class="search">
 		{option:!searchResults}
-			<div class="alert">
+			<div class="alert" role="alert">
 				{$msgSearchNoItems}
 			</div>
 		{/option:!searchResults}

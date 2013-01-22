@@ -1,12 +1,5 @@
-{* Success *}
-{option:updateEmailSuccess}
-	<div class="alert alert-success"><p>{$msgUpdateEmailIsSuccess}</p></div>
-{/option:updateEmailSuccess}
-
-{* Error *}
-{option:updateEmailHasFormError}
-	<div class="alert alert-error"><p>{$errFormError}</p></div>
-{/option:updateEmailHasFormError}
+{option:updateEmailSuccess}<div class="alert alert-success" role="alert">{$msgUpdateEmailIsSuccess}</div>{/option:updateEmailSuccess}
+{option:updateEmailHasFormError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:updateEmailHasFormError}
 
 <section id="updateEmailForm" class="profiles">
 	<div class="bd">

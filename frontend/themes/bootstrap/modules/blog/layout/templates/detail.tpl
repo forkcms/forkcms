@@ -82,7 +82,7 @@
 		    <h3>{$lblComments|ucfirst}</h3>
 		</header>
 		{option:!comments}
-			<div class="alert">{$msgBlogNoComments}</div>
+			<div class="alert" role="alert">{$msgBlogNoComments}</div>
 		{/option:!comments}
 		{option:comments}
 			{iteration:comments}
@@ -115,9 +115,9 @@
 			    <h3>{$msgComment|ucfirst}</h3>
 			</header>
 			<div class="well">
-			    {option:commentIsInModeration}<div class="alert">{$msgBlogCommentInModeration}</div>{/option:commentIsInModeration}
-			    {option:commentIsSpam}<div class="alert alert-error">{$msgBlogCommentIsSpam}</div>{/option:commentIsSpam}
-			    {option:commentIsAdded}<div class="alert alert-success">{$msgBlogCommentIsAdded}</div>{/option:commentIsAdded}
+			    {option:commentIsInModeration}<div class="alert" role="alert">{$msgBlogCommentInModeration}</div>{/option:commentIsInModeration}
+			    {option:commentIsSpam}<div class="alert alert-error" role="alert">{$msgBlogCommentIsSpam}</div>{/option:commentIsSpam}
+			    {option:commentIsAdded}<div class="alert alert-success" role="alert">{$msgBlogCommentIsAdded}</div>{/option:commentIsAdded}
 			    {form:commentsForm}
 			    	<div class="row-fluid">
 			    		<div class="span7">

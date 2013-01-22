@@ -2,8 +2,8 @@
 
 <section class="row" id="formbuilder{$formName|camelcase}">
 	<div class="span12">
-		{option:successMessage}<div class="alert alert-success">{$successMessage}</div>{/option:successMessage}
-		{option:formBuilderError}<div class="alert alert-error">{$formBuilderError}</div>{/option:formBuilderError}
+		{option:successMessage}<div class="alert alert-success" role="alert">{$successMessage}</div>{/option:successMessage}
+		{option:formBuilderError}<div class="alert alert-error" role="alert">{$formBuilderError}</div>{/option:formBuilderError}
 
 		{option:fields}
 			<form id="{$formName}" method="post" action="{$formAction}">

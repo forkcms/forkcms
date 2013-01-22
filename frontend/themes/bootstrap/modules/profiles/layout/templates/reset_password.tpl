@@ -1,12 +1,5 @@
-{* Success *}
-{option:resetPasswordSuccess}
-	<div class="alert alert-success"><p>{$msgResetPasswordIsSuccess}</p></div>
-{/option:resetPasswordSuccess}
-
-{* Error *}
-{option:resetPasswordHasError}
-	<div class="alert alert-error"><p>{$errFormError}</p></div>
-{/option:resetPasswordHasError}
+{option:resetPasswordSuccess}<div class="alert alert-success" role="alert">{$msgResetPasswordIsSuccess}</div>{/option:resetPasswordSuccess}
+{option:resetPasswordHasError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:resetPasswordHasError}
 
 {option:!resetPasswordHideForm}
 	<section id="resetPasswordForm" class="profiles">

@@ -1,12 +1,5 @@
-{* Success *}
-{option:updatePasswordSuccess}
-	<div class="alert alert-success"><p>{$msgUpdatePasswordIsSuccess}</p></div>
-{/option:updatePasswordSuccess}
-
-{* Error *}
-{option:updatePasswordHasFormError}
-	<div class="alert alert-error"><p>{$errFormError}</p></div>
-{/option:updatePasswordHasFormError}
+{option:updatePasswordSuccess}<div class="alert alert-success" role="alert">{$msgUpdatePasswordIsSuccess}</div>{/option:updatePasswordSuccess}
+{option:updatePasswordHasFormError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:updatePasswordHasFormError}
 
 <section id="updatePasswordForm" class="profiles">
 	<div class="bd">

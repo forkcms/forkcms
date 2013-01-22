@@ -1,19 +1,12 @@
-{* Success *}
-{option:updateSettingsSuccess}
-	<div class="alert alert-success"><p>{$msgUpdateSettingsIsSuccess}</p></div>
-{/option:updateSettingsSuccess}
-
-{* Error *}
-{option:updateSettingsHasFormError}
-	<div class="alert alert-error"><p>{$errFormError}</p></div>
-{/option:updateSettingsHasFormError}
+{option:updateSettingsSuccess}<div class="alert alert-success" role="alert">{$msgUpdateSettingsIsSuccess}</div>{/option:updateSettingsSuccess}
+{option:updateSettingsHasFormError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:updateSettingsHasFormError}
 
 <section id="settingsForm" class="profiles">
 	<div class="bd">
 		{form:updateSettings}
 			<fieldset class="form-horizontal">
 				<legend>{$lblYourData|ucfirst}</legend>
-				
+
 				<div class="control-group{option:txtDisplayNameError} error{/option:txtDisplayNameError}">
 					<label class="control-label" for="displayName">{$lblDisplayName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					<div class="controls">
@@ -62,7 +55,7 @@
 					</div>
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="form-horizontal">
 				<legend>{$lblYourLocationData|ucfirst}</legend>
 

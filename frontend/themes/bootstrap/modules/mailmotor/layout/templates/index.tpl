@@ -5,6 +5,6 @@
 	{/option:dataGrid}
 
 	{option:!dataGrid}
-		<div class="alert">{$msgNoSentMailings}</div>
+		<div class="alert" role="alert">{$msgNoSentMailings}</div>
 	{/option:!dataGrid}
 </div>

@@ -6,7 +6,7 @@
 {option:!items}
 	<div id="blogIndex" class="blog">
 		<section>
-			<div class="alert">
+			<div class="alert" role="alert">
 				{$msgBlogNoItems}
 			</div>
 		</section>

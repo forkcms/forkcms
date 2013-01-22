@@ -41,8 +41,8 @@
 
 		{option:settings.allow_feedback}
 			<aside id="faqFeedbackForm" role="complementary">
-				{option:success}<div class="alert alert-success">{$msgFeedbackSuccess}</div>{/option:success}
-				{option:spam}<div class="alert alert-error">{$errFeedbackSpam}</div>{/option:spam}
+				{option:success}<div class="alert alert-success" role="alert">{$msgFeedbackSuccess}</div>{/option:success}
+				{option:spam}<div class="alert alert-error" role="alert">{$errFeedbackSpam}</div>{/option:spam}
 				{form:feedback}
 					<div class="row-fluid">
 						<div class="span12 well">

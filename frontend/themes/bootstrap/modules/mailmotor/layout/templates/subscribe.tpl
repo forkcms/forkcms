@@ -1,7 +1,7 @@
 <div id="mailmotorSubscribe">
-	{option:subscribeHasFormError}<div class="alert alert-error">{$errFormError}</div>{/option:subscribeHasFormError}
-	{option:subscribeHasError}<div class="alert alert-error">{$errSubscribeFailed}</div>{/option:subscribeHasError}
-	{option:subscribeIsSuccess}<div class="alert alert-success">{$msgSubscribeSuccess}</div>{/option:subscribeIsSuccess}
+	{option:subscribeHasFormError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:subscribeHasFormError}
+	{option:subscribeHasError}<div class="alert alert-error" role="alert">{$errSubscribeFailed}</div>{/option:subscribeHasError}
+	{option:subscribeIsSuccess}<div class="alert alert-success" role="alert">{$msgSubscribeSuccess}</div>{/option:subscribeIsSuccess}
 
 	{option:!subscribeHideForm}
 		{form:subscribe}
