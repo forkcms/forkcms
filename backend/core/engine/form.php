@@ -121,7 +121,7 @@ class BackendForm extends SpoonForm
 	public function addDate($name, $value = null, $type = null, $date = null, $date2 = null, $class = null, $classError = null)
 	{
 		$name = (string) $name;
-		$value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
+		$value = empty($value) ? null : (is_numeric($value)) ? (int) $value : strtotime($value);
 		$type = SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
 		$date = ($date !== null) ? (int) $date : null;
 		$date2 = ($date2 !== null) ? (int) $date2 : null;
