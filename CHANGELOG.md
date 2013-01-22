@@ -2,7 +2,6 @@
 --
 Improvements:
 
-* Core: Pagination for 6 pages showed 7 instead.
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
 * Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
@@ -18,6 +17,7 @@ Improvements:
 * Core: upgraded Spoon
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
+* Core: Pagination for 6 pages showed 7 instead.
 
 Bugfixes:
 
