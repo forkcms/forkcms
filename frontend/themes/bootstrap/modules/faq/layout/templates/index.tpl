@@ -15,7 +15,7 @@
 		{iteration:faqCategories}
 			<section>
             	{option:allowMultipleCategories}
-					<header>
+					<header role="banner">
 						<h3 id="{$faqCategories.url}"><a href="{$faqCategories.full_url}" title="{$faqCategories.title}">{$faqCategories.title}</a></h3>
 					</header>
                 {/option:allowMultipleCategories}

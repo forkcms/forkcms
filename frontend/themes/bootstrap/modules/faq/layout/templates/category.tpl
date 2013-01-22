@@ -4,7 +4,7 @@
 *}
 
 <section id="faqCategory" class="faq">
-	<header>
+	<header role="banner">
 		<h1>{$category.title}</h1>
 	</header>
 		{option:questions}

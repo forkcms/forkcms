@@ -13,7 +13,7 @@
 		{/option:isLoggedIn}
 
 		{option:!isLoggedIn}
-			<header class="hd">
+			<header role="banner">
 				<h3>{$lblLogin|ucfirst}</h3>
 			</header>
 			<div class="bd content">

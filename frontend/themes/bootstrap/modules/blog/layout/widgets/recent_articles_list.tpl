@@ -5,7 +5,7 @@
 
 {option:widgetBlogRecentArticlesList}
 	<section id="blogRecentArticlesListWidget" class="well blog">
-		<header>
+		<header role="banner">
 		    <h3>{$lblRecentArticles|ucfirst}</h3>
 		</header>
 		<ul>
@@ -13,7 +13,7 @@
 		    	<li><a href="{$widgetBlogRecentArticlesList.full_url}" title="{$widgetBlogRecentArticlesList.title}">{$widgetBlogRecentArticlesList.title}</a></li>
 		    {/iteration:widgetBlogRecentArticlesList}
 		</ul>
-		<footer>
+		<footer role="contentinfo">
 		    <p class="btn-group">
 		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
 		    	<a class="btn" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblRSSFeed|ucfirst}</a>

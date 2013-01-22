@@ -3,13 +3,13 @@
 	- {$tagsModules}: contains all tags, grouped per module
 *}
 <section id="tagsDetail" class="tags">
-	<header class="hd">
+	<header role="banner">
 		<h1>{$lblItemsWithTag|sprintf:{$tag.name}|ucfirst}</h1>
 	</header>
 	{option:tagsModules}
 		{iteration:tagsModules}
 			<section>
-				<header class="hd">
+				<header role="banner">
 					<h2>{$tagsModules.label|ucfirst}</h2>
 				</header>
 				<ul>

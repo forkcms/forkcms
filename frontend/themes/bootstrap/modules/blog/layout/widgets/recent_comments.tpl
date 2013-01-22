@@ -5,7 +5,7 @@
 
 {option:widgetBlogRecentComments}
 	<section id="blogRecentCommentsWidget" class="well blog">
-		<header>
+		<header role="banner">
 		    <h3>{$lblRecentComments|ucfirst}</h3>
 		</header>
 		<ul>

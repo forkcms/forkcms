@@ -14,7 +14,7 @@
 			<div class="media">
 				{iteration:searchResults}
 					<section class="media-body" >
-						<header>
+						<header role="banner">
 							<h3 class="media-heading" itemprop="name">
 								<a href="{$searchResults.full_url}" itemprop="url">
 									{$searchResults.title}

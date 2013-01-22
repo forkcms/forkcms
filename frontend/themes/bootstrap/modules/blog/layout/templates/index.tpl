@@ -15,10 +15,10 @@
 {option:items}
 	<div id="blogIndex" class="blog">
 		{iteration:items}
-			<article class="article" itemscope itemtype="http://schema.org/Blog">
+			<article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
 				<meta itemprop="interactionCount" content="UserComments:{$items.comments_count}">
 				<meta itemprop="author" content="{$items.user_id|usersetting:'nickname'}">
-				<header>
+				<header role="banner">
 				    <div class="row-fluid title">
 				    	<div class="span10">
 				    		<h3 itemprop="name"><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h3>

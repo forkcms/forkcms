@@ -6,10 +6,10 @@
 	- {$navigation}: contains an array with data for previous and next post
 *}
 <div id="blogDetail" class="blog">
-	<article class="article" itemscope itemtype="http://schema.org/Blog" role="article">
+	<article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
 		<meta itemprop="interactionCount" content="UserComments:{$commentsCount}">
 		<meta itemprop="author" content="{$item.user_id|usersetting:'nickname'}">
-		<header>
+		<header role="banner">
 		    <div class="row-fluid title">
 		    	<div class="span10">
 		    		<h1 itemprop="name">{$item.title}</h1>
@@ -46,7 +46,7 @@
 		    {option:item.image}<img class="img-polaroid span4 pull-right" src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
 		    {$item.text}
 		</div>
-		<footer>
+		<footer role="contentinfo">
 		    <div class="row-fluid social">
 		    	<div class="span12 well">
 		    		<div class="shareButton">
@@ -78,7 +78,7 @@
 	</article>
 
 	<section id="{$actComments}" class="comments">
-		<header>
+		<header role="banner">
 		    <h3>{$lblComments|ucfirst}</h3>
 		</header>
 		{option:!comments}
@@ -111,7 +111,7 @@
 
 	{option:item.allow_comments}
 		<section id="{$actComment}" class="commentForm">
-			<header>
+			<header role="banner">
 			    <h3>{$msgComment|ucfirst}</h3>
 			</header>
 			<div class="well">

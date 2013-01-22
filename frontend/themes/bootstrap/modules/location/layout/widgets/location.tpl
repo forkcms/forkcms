@@ -18,7 +18,7 @@
 		{/option:widgetLocationSettings.full_url}
 
 		{option:widgetLocationSettings.directions}
-			<aside id="locationSearch{$widgetLocationItem.id}">
+			<aside id="locationSearch{$widgetLocationItem.id}" role="complementary">
 				<form method="get" action="#" class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label" for="locationSearchAddress{$widgetLocationItem.id}">

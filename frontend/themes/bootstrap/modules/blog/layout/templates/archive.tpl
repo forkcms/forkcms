@@ -13,7 +13,7 @@
 {/option:!items}
 {option:items}
 	<section id="blogArchive" class="blog">
-		<header>
+		<header role="banner">
 			<h3>
 				{option:archive.month}
 					{$msgArticlesFor|ucfirst|sprintf:{$archive.start_date|date:'F Y':{$LANGUAGE}}}

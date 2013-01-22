@@ -46,7 +46,7 @@
 			<div class="span12">
 				{* Page title *}
 				{option:!hideContentTitle}
-					<header class="page-header">
+					<header class="page-header" role="banner">
 						<h1 itemprop="name">{$page.title}</h1>
 					</header>
 				{/option:!hideContentTitle}

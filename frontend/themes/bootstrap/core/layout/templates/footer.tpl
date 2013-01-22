@@ -1,7 +1,7 @@
-<footer>
+<footer role="contentinfo">
 	<p class="pull-right"><a class="backToTop" href="#">Back to top</a></p>
 	<nav>
-		<ul class="nav nav-pills">
+		<ul class="nav nav-pills" role="navigation">
 			<li class="disabled"><a>© <span itemprop="copyrightYear">{$now|date:'Y'}</span> {$siteTitle}</a></li>
 			{iteration:footerLinks}
 			<li>

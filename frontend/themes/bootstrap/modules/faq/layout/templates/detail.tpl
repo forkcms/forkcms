@@ -4,8 +4,8 @@
 	- {$related}: the related items
 *}
 <div id="faqDetail" class="faq">
-	<article class="article">
-		<header>
+	<article class="article" role="main">
+		<header role="banner">
 			<h1>{$item.question}</h1>
             {option:settings.allow_multiple_categories}
 					{* Category*}
@@ -37,10 +37,10 @@
 		<div class="bd content">
 			{$item.answer}
 		</div>
-	
+
 
 		{option:settings.allow_feedback}
-			<aside id="faqFeedbackForm">
+			<aside id="faqFeedbackForm" role="complementary">
 				{option:success}<div class="alert alert-success">{$msgFeedbackSuccess}</div>{/option:success}
 				{option:spam}<div class="alert alert-error">{$errFeedbackSpam}</div>{/option:spam}
 				{form:feedback}
@@ -59,7 +59,7 @@
 									{/iteration:useful}
 								</div>
 							</div>
-			
+
 							<div id="feedbackNoInfo"{option:hideFeedbackNoInfo} style="display: none;"{/option:hideFeedbackNoInfo}>
 								<p class="bigInput{option:txtMessageError} errorArea{/option:txtMessageError}">
 									<label for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
@@ -71,14 +71,14 @@
 							</div>
 						</div>
 					</div>
-				{/form:feedback}	
+				{/form:feedback}
 			</aside>
 		{/option:settings.allow_feedback}
 	</article>
 
 	{option:inSameCategory}
 		<section id="faqOtherQuestions" class="faqOtherQuestions">
-			<header>
+			<header role="banner">
             	{option:settings.allow_multiple_categories}<h3>{$msgQuestionsInSameCategory|ucfirst}</h3>{/option:settings.allow_multiple_categories}
             	{option:!settings.allow_multiple_categories}<h3>{$msgOtherQuestions|ucfirst}</h3>{/option:!settings.allow_multiple_categories}
 			</header>
@@ -92,7 +92,7 @@
 
 	{option:related}
 		<section id="faqAlsoRead" class="faqAlsoRead">
-			<header>
+			<header role="banner">
 				<h3>{$msgRelatedQuestions|ucfirst}</h3>
 			</header>
 			<ul>
@@ -102,7 +102,7 @@
 			</ul>
 		</section>
 	{/option:related}
-	
+
 	<ul class="pager">
 		<li class="previous">
 			<a href="{$var|geturlforblock:'faq'}" title="{$lblToFaqOverview|ucfirst}">&larr; {$lblToFaqOverview|ucfirst}</a>

@@ -5,7 +5,7 @@
 
 {option:widgetBlogCategories}
 	<section id="blogCategoriesWidget" class="well blog">
-		<header>
+		<header role="banner">
 		    <h3>{$lblCategories|ucfirst}</h3>
 		</header>
 		<ul>
