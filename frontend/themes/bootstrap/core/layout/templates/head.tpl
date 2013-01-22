@@ -24,6 +24,7 @@
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />
 	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
 	<link rel="image_src" href="{$THEME_URL}/image_src.png" />
+	<meta property="og:image" content="{$THEME_URL}/image_src.png" />
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>

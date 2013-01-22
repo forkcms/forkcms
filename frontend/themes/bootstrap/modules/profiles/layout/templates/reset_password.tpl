@@ -9,7 +9,7 @@
 {/option:resetPasswordHasError}
 
 {option:!resetPasswordHideForm}
-	<section id="resetPasswordForm">
+	<section id="resetPasswordForm" class="profiles">
 			<div class="bd">
 				{form:resetPassword}
 					<fieldset class="form-horizontal">
@@ -22,7 +22,7 @@
 						</div>
 						<div class="control-group">
 							<div class="controls">
-								<input class="btn" type="submit" value="{$lblSave|ucfirst}" />
+								<input class="btn btn-primary" type="submit" value="{$lblSave|ucfirst}" />
 							</div>
 						</div>
 					</fieldset>

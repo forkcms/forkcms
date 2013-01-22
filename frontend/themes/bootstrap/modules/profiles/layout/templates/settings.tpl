@@ -8,7 +8,7 @@
 	<div class="alert alert-error"><p>{$errFormError}</p></div>
 {/option:updateSettingsHasFormError}
 
-<section id="settingsForm">
+<section id="settingsForm" class="profiles">
 	<div class="bd">
 		{form:updateSettings}
 			<fieldset class="form-horizontal">
@@ -80,7 +80,7 @@
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<input class="btn" type="submit" value="{$lblSave|ucfirst}" />
+						<input class="btn btn-primary" type="submit" value="{$lblSave|ucfirst}" />
 					</div>
 				</div>
 			</fieldset>

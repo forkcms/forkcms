@@ -5,14 +5,14 @@
 *}
 
 {option:!items}
-	<section id="blogArchive">
+	<section id="blogArchive" class="blog">
 		<div class="bd content">
 			<p>{$msgBlogNoItems}</p>
 		</div>
 	</section>
 {/option:!items}
 {option:items}
-	<section id="blogArchive">
+	<section id="blogArchive" class="blog">
 		<header>
 			<h3>
 				{option:archive.month}

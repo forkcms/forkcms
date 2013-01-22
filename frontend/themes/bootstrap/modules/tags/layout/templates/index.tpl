@@ -2,7 +2,7 @@
 	variables that are available:
 	- {$tags}: contains an array with all tags that are used on the site, each element contains data about the tag
 *}
-<section id="tagsIndex">
+<section id="tagsIndex" class="tags">
 	{option:!tags}
 		<div class="alert alert-info">{$msgTagsNoItems}</div>
 	{/option:!tags}

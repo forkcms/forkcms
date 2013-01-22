@@ -4,7 +4,7 @@
 *}
 
 {option:widgetBlogRecentArticlesFull}
-	<section id="blogRecentArticlesFullWidget" class="mod">
+	<section id="blogRecentArticlesFullWidget" class="blog">
 		<header>
 		    <h3>{$lblRecentArticles|ucfirst}</h3>
 		</header>

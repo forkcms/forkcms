@@ -5,7 +5,7 @@
 *}
 
 {option:items}
-	<section id="blogCategory">
+	<section id="blogCategory" class="blog">
 		{iteration:items}
 			<article class="article" itemscope itemtype="http://schema.org/Blog">
 			<meta itemprop="interactionCount" content="UserComments:{$items.comment_count}">

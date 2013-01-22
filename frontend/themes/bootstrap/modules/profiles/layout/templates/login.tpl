@@ -11,7 +11,7 @@
 	</div>
 {/option:formError}
 
-<section id="loginForm">
+<section id="loginForm" class="profiles">
 	{form:login}
 		<fieldset class="form-horizontal">
 			<div class="control-group{option:txtEmailError} error{/option:txtEmailError}">
@@ -31,7 +31,7 @@
 				<div class="controls">
 					<label for="remember">{$chkRemember} {$lblRememberMe|ucfirst}</label>
 					{$chkRememberError}
-					<input class="btn" type="submit" value="{$lblLogin|ucfirst}" />
+					<input class="btn btn-primary" type="submit" value="{$lblLogin|ucfirst}" />
 					<small><a href="{$var|geturlforblock:'profiles':'forgot_password'}" title="{$msgForgotPassword}">{$msgForgotPassword}</a></small>
 				</div>
 			</div>

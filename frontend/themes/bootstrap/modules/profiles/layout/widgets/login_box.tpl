@@ -4,7 +4,7 @@
 	- {$widgetProfilesLoginBox}:
 *}
 
-<section id="profilesLoginBoxWidget">
+<section id="profilesLoginBoxWidget" class="profiles">
 		{option:isLoggedIn}
 			<div class="bd content">
 				{$msgProfilesLoggedInAs|sprintf:{$profile.display_name}:{$profile.url.dashboard}} -

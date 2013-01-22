@@ -3,7 +3,7 @@
 	- {$faqCategories}: contains all categories, along with all questions inside a category
 *}
 {option:!faqCategories}
-	<div id="faqIndex">
+	<div id="faqIndex" class="faq">
 		<div class="alert">
 			{$msgFaqNoItems}
 		</div>
@@ -11,7 +11,7 @@
 {/option:!faqCategories}
 
 {option:faqCategories}
-	<div id="faqIndex">
+	<div id="faqIndex" class="faq">
 		{iteration:faqCategories}
 			<section>
             	{option:allowMultipleCategories}

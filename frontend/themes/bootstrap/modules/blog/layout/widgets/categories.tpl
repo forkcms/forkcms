@@ -4,7 +4,7 @@
 *}
 
 {option:widgetBlogCategories}
-	<section id="blogCategoriesWidget" class="well">
+	<section id="blogCategoriesWidget" class="well blog">
 		<header>
 		    <h3>{$lblCategories|ucfirst}</h3>
 		</header>

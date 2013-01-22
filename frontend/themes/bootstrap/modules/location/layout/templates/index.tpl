@@ -5,7 +5,7 @@
 *}
 
 {option:locationItems}
-	<div id="locationIndex" class="row-fluid">
+	<div id="locationIndex" class="row-fluid location">
 		{* @remark: do not remove the parseMap-class, it is used by JS *}
 		<div id="map" class="parseMap span12 well" style="height: {$locationSettings.height}px;">
 			<span class="hideText">{$lblLoading|ucfirst}</span>

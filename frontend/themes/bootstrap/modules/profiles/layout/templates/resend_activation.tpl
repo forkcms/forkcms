@@ -9,14 +9,14 @@
 {/option:resendActivationHasError}
 
 {option:!resendActivationHideForm}
-	<section id="resendActivationForm">
+	<section id="resendActivationForm" class="profiles">
 		<div class="bd">
 			{form:resendActivation}
 				<fieldset class="control-group {option:txtEmailError} error{/option:txtEmailError}">
 					<p class="form-inline">
 						<label for="email">{$lblEmail|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail}
-						<input class="btn" type="submit" value="{$lblSave|ucfirst}" />
+						<input class="btn btn-primary" type="submit" value="{$lblSave|ucfirst}" />
 						{$txtEmailError}
 					</p>
 				</fieldset>

@@ -4,7 +4,7 @@
 	- {$searchTerm}: the term that has been searched for
 *}
 {option:searchTerm}
-	<section id="searchResults" itemscope itemtype="http://schema.org/SearchResultsPage">
+	<section id="searchResults" itemscope itemtype="http://schema.org/SearchResultsPage" class="search">
 		{option:!searchResults}
 			<div class="alert">
 				{$msgSearchNoItems}

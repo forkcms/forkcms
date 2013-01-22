@@ -5,7 +5,7 @@
 
 {cache:{$LANGUAGE}_blogWidgetArchiveCache}
 	{option:widgetBlogArchive}
-		<section id="blogArchiveWidget" class="well">
+		<section id="blogArchiveWidget" class="well blog">
 			<header>
 			    <h3>{$lblArchive|ucfirst}</h3>
 			</header>

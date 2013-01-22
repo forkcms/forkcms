@@ -2,7 +2,7 @@
 	Variables that are available:
 	- {$tagsModules}: contains all tags, grouped per module
 *}
-<section id="tagsDetail">
+<section id="tagsDetail" class="tags">
 	<header class="hd">
 		<h1>{$lblItemsWithTag|sprintf:{$tag.name}|ucfirst}</h1>
 	</header>

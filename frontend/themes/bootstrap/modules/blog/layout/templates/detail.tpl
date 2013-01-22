@@ -5,7 +5,7 @@
 	- {$commentsCount}: contains a variable with the number of comments for this blog post.
 	- {$navigation}: contains an array with data for previous and next post
 *}
-<div id="blogDetail">
+<div id="blogDetail" class="blog">
 	<article class="article" itemscope itemtype="http://schema.org/Blog">
 		<meta itemprop="interactionCount" content="UserComments:{$commentsCount}">
 		<meta itemprop="author" content="{$item.user_id|usersetting:'nickname'}">

@@ -5,7 +5,7 @@
 *}
 
 {option:widgetLocationItem}
-	<div class="locationLocationWidget well">
+	<div class="locationLocationWidget well location">
 		{* @remark: do not remove the parseMap-class, it is used by JS *}
 		<div id="map{$widgetLocationItem.id}" class="parseMap well" style="height: {$widgetLocationSettings.height}px;">
 			<span class="hideText">{$lblLoading|ucfirst}</span>
@@ -22,9 +22,9 @@
 				<form method="get" action="#" class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label" for="locationSearchAddress{$widgetLocationItem.id}">
-							{$lblStart|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>
+							{$lblStart|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>&nbsp;
 						</label>
-						<div class="controls">
+						<div class="input-append">
 							{* @remark: do not remove the id *}
 							<input type="text" id="locationSearchAddress{$widgetLocationItem.id}" name="locationSearchAddress" class="inputText" />
 							{* @remark: do not remove the id *}

@@ -4,8 +4,8 @@
 *}
 
 {option:widgetFaqOwnQuestion}
-	<section id="faqOwnQuestionForm" class="well">
-		<header class="hd">
+	<section id="faqOwnQuestionForm" class="well faq">
+		<header>
 			<h3 id="{$actOwnQuestion}">{$msgAskOwnQuestion|ucfirst}</h3>
 		</header>
 		{option:errorSpam}<div class="alert alert-error">{$errOwnQuestionSpam}</div>{/option:errorSpam}

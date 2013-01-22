@@ -4,7 +4,7 @@
 *}
 
 {option:!items}
-	<div id="blogIndex">
+	<div id="blogIndex" class="blog">
 		<section>
 			<div class="alert">
 				{$msgBlogNoItems}
@@ -13,7 +13,7 @@
 	</div>
 {/option:!items}
 {option:items}
-	<div id="blogIndex">
+	<div id="blogIndex" class="blog">
 		{iteration:items}
 			<article class="article" itemscope itemtype="http://schema.org/Blog">
 				<meta itemprop="interactionCount" content="UserComments:{$items.comments_count}">

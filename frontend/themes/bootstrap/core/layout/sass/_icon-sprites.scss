@@ -23,6 +23,7 @@ $icons2x: sprite-map("icons-retina/*.png", $spacing: 2px);
   @if $dimensions == true {
     @include sprite-dimensions($icons, $name);
   }
+  display: block;
   background-image: sprite-url($icons);
   background-position: sprite-position($icons, $name, -$pad, -$pad);
   background-repeat: no-repeat;

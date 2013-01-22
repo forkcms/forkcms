@@ -34,6 +34,7 @@
 						{iteration:positionTop}
 							{$positionTop.blockContent}
 						{/iteration:positionTop}
+						{include:core/layout/templates/languages.tpl}
 						{* @todo {include:core/layout/templates/languages.tpl} *}
 					</div>
 				</div>

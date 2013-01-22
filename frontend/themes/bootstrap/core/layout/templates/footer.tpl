@@ -1,14 +1,18 @@
 <footer>
 	<p class="pull-right"><a class="backToTop" href="#">Back to top</a></p>
-	<p>
-		© <span itemprop="copyrightYear">{$now|date:'Y'}</span> {$siteTitle} &middot;
-		{iteration:footerLinks}
-			<a href="{$footerLinks.url}" title="{$footerLinks.title}"{option:footerLinks.rel} rel="{$footerLinks.rel}"{/option:footerLinks.rel}>
-				{$footerLinks.navigation_title}
-			</a> &middot;
-		{/iteration:footerLinks}
-		<a href="http://www.sumocoders.be/?utm_source={$siteTitle|urlencode}&amp;utm_medium=credits&amp;utm_campaign=client_sites" rel="external">SumoCoders</a>
-	</p>
+	<nav>
+		<ul class="nav nav-pills">
+			<li class="disabled"><a>© <span itemprop="copyrightYear">{$now|date:'Y'}</span> {$siteTitle}</a></li>
+			{iteration:footerLinks}
+			<li>
+				<a href="{$footerLinks.url}" title="{$footerLinks.title}"{option:footerLinks.rel} rel="{$footerLinks.rel}"{/option:footerLinks.rel}>
+					{$footerLinks.navigation_title}
+				</a>
+			</li>
+			{/iteration:footerLinks}
+			<li><a href="http://www.sumocoders.be/?utm_source={$siteTitle|urlencode}&amp;utm_medium=credits&amp;utm_campaign=client_sites" rel="external">SumoCoders</a></li>
+		</ul>
+	</nav>
 </footer>
 
 {* Site wide HTML *}

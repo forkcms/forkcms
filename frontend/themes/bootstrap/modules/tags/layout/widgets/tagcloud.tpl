@@ -3,7 +3,7 @@
 	- {$widgetTagsTagCloud}: contains an array with the most popular tag
 *}
 {option:widgetTagsTagCloud}
-	<aside id="tagCloudWidget" class="well">
+	<aside id="tagCloudWidget" class="well tags">
 		<header>
 			<h3>{$lblTags|ucfirst}</h3>
 		</header>

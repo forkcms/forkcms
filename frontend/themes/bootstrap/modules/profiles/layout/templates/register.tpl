@@ -10,7 +10,7 @@
 
 {option:!registerHideForm}
 	{form:register}
-		<section id="registerForm">
+		<section id="registerForm" class="profiles">
 			<div class="bd">
 				<fieldset class="form-horizontal">
 					<div class="control-group{option:txtDisplayNameError} error{/option:txtDisplayNameError}">
@@ -38,7 +38,7 @@
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<input class="btn" type="submit" value="{$lblRegister|ucfirst}" />
+							<input class="btn btn-primary" type="submit" value="{$lblRegister|ucfirst}" />
 						</div>
 					</div>
 				</fieldset>

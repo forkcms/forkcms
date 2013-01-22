@@ -8,7 +8,7 @@
 	<div class="alert alert-error"><p>{$errFormError}</p></div>
 {/option:updatePasswordHasFormError}
 
-<section id="updatePasswordForm">
+<section id="updatePasswordForm" class="profiles">
 	<div class="bd">
 		{form:updatePassword}
 			<fieldset class="form-horizontal">
@@ -27,7 +27,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<label for="showPassword">{$chkShowPassword} {$lblShowPassword|ucfirst}</label>
-						<input class="btn" type="submit" value="{$lblSave|ucfirst}" />
+						<input class="btn btn-primary" type="submit" value="{$lblSave|ucfirst}" />
 					</div>
 				</div>
 			</fieldset>

@@ -3,7 +3,7 @@
 	- {$widgetTagsRelated}: contains an array with all related items
 *}
 {option:widgetTagsRelated}
-	<section id="tagRelatedWidget" class="mod">
+	<section id="tagRelatedWidget" class="tags">
 		<div class="inner">
 			<header class="hd">
 				<h3>{$lblRelated|ucfirst}</h3>
