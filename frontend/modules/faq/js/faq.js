@@ -26,8 +26,16 @@ jsFrontend.faq.feedback =
 			var useful = ($('#usefulY').attr('checked') ? true : false);
 
 			// show or hide the form
-			if(useful) { $('form#feedback').submit(); }
-			else { $('#feedbackNoInfo').show(); }
+			if(useful)
+			{
+				$('#message').prop('required', false);
+				$('form#feedback').submit();
+			}
+			else
+			{
+				$('#feedbackNoInfo').show();
+				$('#message').prop('required', true);
+			}
 		});
 	}
 }
