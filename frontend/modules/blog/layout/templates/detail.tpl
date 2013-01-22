@@ -33,6 +33,7 @@
 							</span>
 						{/option:item.tags}
 					</li>
+					{option:item.allowComments}
 					<li>
 						{* Comments *}
 						{option:!comments}<a href="{$item.full_url}#{$actComment}" itemprop="discussionUrl">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
@@ -41,6 +42,7 @@
 							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
+					{/option:item.allowComments}
 					<li>
 						<a href="{$item.full_url}" class="share">{$lblShare|ucfirst}</a>
 					</li>
