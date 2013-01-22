@@ -8,7 +8,6 @@
 
 ## FAQ
 * onder de vraag staat "usefull", als je No selecteert komt er message onder, maybe dat nog eens stijlen
-* error-labels voor faq/widgets/own_question zijn niet gestijld
 
 # Later
 * oplossing zoeken voor datagrids
