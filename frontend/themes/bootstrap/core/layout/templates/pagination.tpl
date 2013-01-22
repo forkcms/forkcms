@@ -1,6 +1,6 @@
 {option:pagination}
 	{option:pagination.multiple_pages}
-		<nav class="pagination pagination-centered">
+		<nav class="pagination pagination-centered" role="navigation">
 			<ul>
 				<li{option:!pagination.show_previous} class="disabled"{/option:!pagination.show_previous}>
 					{option:pagination.show_previous}<a href="{$pagination.previous_url}" rel="prev nofollow" title="{$lblPreviousPage|ucfirst}">{/option:pagination.show_previous}

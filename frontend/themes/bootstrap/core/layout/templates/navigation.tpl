@@ -1,6 +1,6 @@
 {option:navigation}
 	<nav>
-		<ul class="nav">
+		<ul class="nav" role="navigation">
 			{iteration:navigation}
 				<li{option:navigation.selected} class="active"{/option:navigation.selected}>
 					<a href="{$navigation.link}" title="{$navigation.navigation_title}"{option:navigation.nofollow} rel="nofollow"{/option:navigation.nofollow}>

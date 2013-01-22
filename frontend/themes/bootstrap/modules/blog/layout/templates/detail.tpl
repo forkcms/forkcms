@@ -6,7 +6,7 @@
 	- {$navigation}: contains an array with data for previous and next post
 *}
 <div id="blogDetail" class="blog">
-	<article class="article" itemscope itemtype="http://schema.org/Blog">
+	<article class="article" itemscope itemtype="http://schema.org/Blog" role="article">
 		<meta itemprop="interactionCount" content="UserComments:{$commentsCount}">
 		<meta itemprop="author" content="{$item.user_id|usersetting:'nickname'}">
 		<header>
@@ -22,13 +22,13 @@
 		    		{/option:comments}
 		    	</div>
 		    </div>
-		    <div class="row-fluid muted meta">
+		    <div class="row-fluid muted meta" role="contentinfo">
 		    	<div class="span6">
 		    		<span class="hideText">{$msgWrittenBy|ucfirst|sprintf:''} </span>{$item.user_id|usersetting:'nickname'}
 		    		<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 		    	</div>
 
-		    	<div class="span6 metaExtra">
+		    	<div class="span6 metaExtra" role="contentinfo">
 		    		<span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$item.category_full_url}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
 		    		{option:item.tags}
 		    		    <span class="hideText">{$lblWithThe}</span> {$lblTags|ucfirst}:
@@ -61,7 +61,7 @@
 		    	</div>
 		    </div>
 		    <nav>
-			    <ul class="pager">
+			    <ul class="pager" role="navigation">
 			    	{option:navigation.previous}
 			    		<li class="previous">
 			    			<a href="{$navigation.previous.url}" rel="prev" title="{$navigation.previous.title}">&larr; <span class="hideText">{$lblPreviousArticle|ucfirst}: </span><span class="title">{$navigation.previous.title}</span></a>
@@ -107,8 +107,8 @@
 			    </div>
 			{/iteration:comments}
 		{/option:comments}
-	</section>	
-	
+	</section>
+
 	{option:item.allow_comments}
 		<section id="{$actComment}" class="commentForm">
 			<header>

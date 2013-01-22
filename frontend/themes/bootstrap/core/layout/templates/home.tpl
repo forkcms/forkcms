@@ -8,7 +8,6 @@
 		</div>
 	</noscript>
 	<!-- Warning for people that still use IE7 or below -->
-	<!-- @todo: labels -->
 	<!--[if lt IE 8 ]>
 		<div id="ie" class="fullWidthAlert alert">
 			<button type="button" class="close" data-dismiss="alert">×</button>
