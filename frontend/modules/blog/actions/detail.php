@@ -116,10 +116,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$website = (CommonCookie::exists('comment_website') && SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
 		// create elements
-		$this->frm->addText('author', $author);
-		$this->frm->addText('email', $email);
+		$this->frm->addText('author', $author)->setAttributes(array('required' => null));
+		$this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->addText('website', $website, null);
-		$this->frm->addTextarea('message');
+		$this->frm->addTextarea('message')->setAttributes(array('required' => null));
 	}
 
 	/**
