@@ -5,9 +5,14 @@
  */
 jsFrontend.theme = {
 	init: function() {
+		jsFrontend.theme.aria();
 		jsFrontend.theme.hijackSubmit();
 
 		// insert your code here
+	},
+
+	aria: function() {
+		$('*[required]').attr('aria-required', 'true');
 	},
 
 	// add a loading class on the submit-button when a form is submitted
