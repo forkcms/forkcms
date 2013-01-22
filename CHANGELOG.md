@@ -22,6 +22,7 @@ Improvements:
 * Core: Added validation for module and action in the frontend ajax.
 * Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
 * Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
+* Pages: Widget had invalid parent url
 
 Bugfixes:
 
