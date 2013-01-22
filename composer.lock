@@ -22,13 +22,11 @@
             },
             "time": "2012-11-27 22:34:17",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "src"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
@@ -65,7 +63,6 @@
             },
             "time": "2012-10-13 10:59:41",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     ""
@@ -104,7 +101,6 @@
             },
             "time": "2012-10-13 11:39:35",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     ""
