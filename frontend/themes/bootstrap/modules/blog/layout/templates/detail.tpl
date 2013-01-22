@@ -27,14 +27,12 @@
 		    		<span class="hideText">{$msgWrittenBy|ucfirst|sprintf:''} </span>{$item.user_id|usersetting:'nickname'}
 		    		<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 		    	</div>
-		    	
+
 		    	<div class="span6 metaExtra">
-		    		{* @todo fix labels *}
-		    		<span class="hideText">{$lblIn} {$lblThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$item.category_full_url}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
-	
-		    		{* @todo fix labels *}
+		    		<span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$item.category_full_url}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
+
 		    		{option:item.tags}
-		    		    <span class="hideText">{$lblWith} {$lblThe}</span> {$lblTags|ucfirst}:
+		    		    <span class="hideText">{$lblWithThe}</span> {$lblTags|ucfirst}:
 		    		    <span itemprop="keywords">
 		    		    	{iteration:item.tags}
 		    		    		<a class="tag" href="{$item.tags.full_url}" rel="tag">{$item.tags.name}</a>{option:!item.tags.last}<span class="hideText">,</span> {/option:!item.tags.last}
@@ -108,8 +106,8 @@
 				    </div>
 				{/iteration:comments}
 			{/option:comments}
-		</section>	
-	
+		</section>
+
 	{option:item.allow_comments}
 		<section id="{$actComment}" class="commentForm">
 			<header>

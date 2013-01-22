@@ -15,12 +15,11 @@
 	<section id="blogArchive">
 		<header>
 			<h3>
-				{$lblArticlesFor|ucfirst}
 				{option:archive.month}
-					{$archive.start_date|date:'F Y':{$LANGUAGE}}
+					{$msgArticlesFor|ucfirst|sprintf:{$archive.start_date|date:'F Y':{$LANGUAGE}}}
 				{/option:archive.month}
 				{option:!archive.month}
-					{$archive.start_date|date:'Y'}
+					{$msgArticlesFor|ucfirst|sprintf:{$archive.start_date|date:'Y'}}
 				{/option:!archive.month}
 			</h3>
 		</header>

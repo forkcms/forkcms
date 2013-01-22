@@ -6,7 +6,6 @@
 * headers checken
 * aria-stuff
 * Sams pictures module toevoegen
-* locale.xml maken
 * spinner on submit
 * Scrollto voor anchors
 

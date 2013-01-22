@@ -11,7 +11,7 @@
 	<!--[if lt IE 8 ]>
 		<div id="ie" class="fullWidthAlert alert">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong>Opgelet:</strong> Je gebruikt een verouderde browser. Indien je de website wil zien zoals deze bedoeld is, kan je beter een nieuwe versie downloaden of een degelijke browser zoals <a href="http://www.getfirefox.com">Firefox</a> installeren.
+			<strong>{$lblWarning|ucfirst}:</strong> {$msgOldBrowser}
 		</div>
 	<![endif]-->
 	<a href="#main" class="muted hide">{$lblSkipToContent|ucfirst}</a>
@@ -26,7 +26,7 @@
 						<span class="icon-bar"></span>
 					</a>
 					<a class="brand" href="/">{$siteTitle}</a>
-	
+
 					<div class="nav-collapse collapse">
 						{$var|getnavigation:'page':0:1}
 						{iteration:positionTop}

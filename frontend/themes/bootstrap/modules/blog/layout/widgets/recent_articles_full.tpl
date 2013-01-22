@@ -32,8 +32,7 @@
 		    					<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$widgetBlogRecentArticlesFull.publish_on|date:'Y-m-d\TH:i:s'}">{$widgetBlogRecentArticlesFull.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 		    				</div>
 		    				<div class="span6 metaExtra">
-		    					{* @todo fix labels *}
-		    					<span class="hideText">{$lblIn} {$lblThe} </span>{$lblCategory|ucfirst}: <a href="{$widgetBlogRecentArticlesFull.category_full_url}" title="{$widgetBlogRecentArticlesFull.category_title}">{$widgetBlogRecentArticlesFull.category_title}</a>
+		    					<span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}: <a href="{$widgetBlogRecentArticlesFull.category_full_url}" title="{$widgetBlogRecentArticlesFull.category_title}">{$widgetBlogRecentArticlesFull.category_title}</a>
 		    				</div>
 		    			</div>
 		    		</header>

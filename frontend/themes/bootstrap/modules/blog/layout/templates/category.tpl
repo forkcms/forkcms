@@ -29,12 +29,10 @@
 							<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$items.publish_on|date:'Y-m-d\TH:i:s'}">{$items.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 						</div>
 						<div class="span6 metaExtra">
-							{* @todo fix labels *}
-							<span class="hideText">{$lblIn} {$lblThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$items.category_full_url}">{$items.category_title}</a>{option:!item.tags}.{/option:!item.tags}
-	
-							{* @todo fix labels *}
+							<span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$items.category_full_url}">{$items.category_title}</a>{option:!item.tags}.{/option:!item.tags}
+
 							{option:items.tags}
-								<span class="hideText">{$lblWith} {$lblThe}</span> {$lblTags|ucfirst}:
+								<span class="hideText">{$lblWithThe}</span> {$lblTags|ucfirst}:
 								<span itemprop="keywords">
 		    		    			{iteration:items.tags}
 		    		    				<a class="tag" href="{$item.tags.full_url}" rel="tag">{$items.tags.name}</a>{option:!items.tags.last}<span class="hideText">,</span> {/option:!items.tags.last}
