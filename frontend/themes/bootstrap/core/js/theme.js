@@ -13,6 +13,7 @@ jsFrontend.theme = {
 
 	aria: function() {
 		$('*[required]').attr('aria-required', 'true');
+		$('.error input').attr('aria-invalid', 'true');
 	},
 
 	// add a loading class on the submit-button when a form is submitted
