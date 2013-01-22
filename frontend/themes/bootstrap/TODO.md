@@ -5,7 +5,6 @@
 * Sams pictures module toevoegen
 * spinner on submit
 	* @mathias: zodra een form gesubmit is staat er een extra class "loading" op, kan jij zorgen dat er dan een spinner voor of achter de tekst komt? Of een ander effect waardoor het duidelijk is.
-* Scrollto voor anchors
 
 ## FAQ
 * onder de vraag staat "usefull", als je No selecteert komt er message onder, maybe dat nog eens stijlen
