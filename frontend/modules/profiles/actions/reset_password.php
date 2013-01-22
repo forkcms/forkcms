@@ -72,7 +72,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
 		$this->frm = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
 
 		// create & add elements
-		$this->frm->addPassword('password', null, null, 'inputText showPasswordInput');
+		$this->frm->addPassword('password', null, null, 'inputText showPasswordInput')->setAttributes(array('required' => null));
 		$this->frm->addCheckbox('show_password');
 	}
 

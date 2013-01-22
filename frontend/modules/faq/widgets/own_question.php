@@ -51,9 +51,9 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 	{
 		// create form
 		$this->frm = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
-		$this->frm->addText('name')->setAttribute('placeholder', FL::getLabel('YourName'));
-		$this->frm->addText('email')->setAttribute('placeholder', FL::getLabel('YourEmail'));
-		$this->frm->addTextarea('message')->setAttribute('placeholder', FL::getLabel('YourQuestion'));
+		$this->frm->addText('name')->setAttributes(array('required' => null));
+		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->addTextarea('message')->setAttributes(array('required' => null));
 	}
 
 	/**

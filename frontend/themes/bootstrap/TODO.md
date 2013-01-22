@@ -16,5 +16,4 @@
 
 # Later
 * oplossing zoeken voor datagrids
-* input-types nakijken
 * events module toevoegen
