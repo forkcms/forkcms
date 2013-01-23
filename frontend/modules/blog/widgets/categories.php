@@ -39,7 +39,11 @@ class FrontendBlogWidgetCategories extends FrontendBaseWidget
 			$link = FrontendNavigation::getURLForBlock('blog', 'category');
 
 			// loop and reset url
-			foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];
+			foreach($categories as &$row)
+			{
+				$row['url'] = $link . '/' . $row['url'];
+				$row['active'] = ('/' . $this->URL->getQueryString() == $row['url']);
+			}
 		}
 
 		// assign comments
