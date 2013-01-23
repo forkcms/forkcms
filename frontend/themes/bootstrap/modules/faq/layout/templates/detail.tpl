@@ -61,13 +61,13 @@
 							</div>
 
 							<div id="feedbackNoInfo"{option:hideFeedbackNoInfo} style="display: none;"{/option:hideFeedbackNoInfo}>
-								<p class="bigInput{option:txtMessageError} errorArea{/option:txtMessageError}">
-									<label for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								<div class="control-group{option:txtMessageError} error{/option:txtMessageError}">
+									<label class="control-label" for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 										{$txtMessage} {$txtMessageError}
-								</p>
-								<p>
+								</div>
+								<div class="controls pull-right">
 									<input class="btn" type="submit" name="comment" value="{$lblSend|ucfirst}" />
-								</p>
+								</div>
 							</div>
 						</div>
 					</div>

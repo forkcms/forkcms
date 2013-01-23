@@ -63,7 +63,7 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 	{
 		// parse the form or a status
 		if(empty($this->status)) $this->frm->parse($this->tpl);
-		else $this->tpl->assign($this->status, true);
+		else $this->tpl->assign('ownQuestion' . $this->status, true);
 
 		// parse an option so the stuff can be shown
 		$this->tpl->assign('widgetFaqOwnQuestion', true);

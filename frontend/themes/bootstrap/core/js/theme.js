@@ -20,7 +20,7 @@ jsFrontend.theme = {
 	// add a loading class on the submit-button when a form is submitted
 	hijackSubmit: function() {
 		$('form').on('submit', function(e) {
-			$(this).find('input:submit').addClass('loading');
+			$(this).find('input:submit').addClass('loading disabled');
 		});
 	},
 

@@ -10,3 +10,9 @@
 .alignTextRight {
 	text-align: right;
 }
+
+.btn.loading {
+	@include background(image-url('spinner.gif') no-repeat);
+	background-position: 5px center;
+	padding-left: 30px;
+}

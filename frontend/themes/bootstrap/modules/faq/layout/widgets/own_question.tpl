@@ -8,8 +8,8 @@
 		<header role="banner">
 			<h3 id="{$actOwnQuestion}">{$msgAskOwnQuestion|ucfirst}</h3>
 		</header>
-		{option:errorSpam}<div class="alert alert-error" role="alert">{$errOwnQuestionSpam}</div>{/option:errorSpam}
-		{option:success}<div class="alert alert-success" role="alert">{$msgOwnQuestionSuccess}</div>{/option:success}
+		{option:ownQuestionerrorSpam}<div class="alert alert-error" role="alert">{$errOwnQuestionSpam}</div>{/option:ownQuestionerrorSpam}
+		{option:ownQuestionsuccess}<div class="alert alert-success" role="alert">{$msgOwnQuestionSuccess}</div>{/option:ownQuestionsuccess}
 
 		{form:own_question}
 			<div class="control-group{option:txtNameError} error{/option:txtNameError}">
