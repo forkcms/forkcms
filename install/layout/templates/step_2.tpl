@@ -167,6 +167,9 @@
 
 				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install</h4>
 				<p>This location must be writable for the installer.</p>
+				
+				<h4><span class="{$fileSystemAppConfig}">{$fileSystemAppConfig}</span> {$PATH_WWW}/app/config/</h4>
+				<p>In this location the global configuration will be stored.</p>
 
 				<h4><span class="{$fileSystemParameters}">{$fileSystemParameters}</span> {$PATH_LIBRARY}/parameters.base.yml</h4>
 				<p>This file is used to create the global configuration file.</p>

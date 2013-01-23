@@ -117,6 +117,7 @@ class InstallerStep2 extends InstallerStep
 		self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemLibraryExternal', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external'), self::STATUS_WARNING);
 		self::checkRequirement('fileSystemInstaller', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'), self::STATUS_ERROR);
+		self::checkRequirement('fileSystemAppConfig', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/app/config/'), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemParameters', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/parameters.base.yml') && is_readable(PATH_LIBRARY . '/parameters.base.yml'), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemPathLibrary', defined('PATH_LIBRARY') && PATH_LIBRARY != '', self::STATUS_ERROR);
 
