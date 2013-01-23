@@ -162,10 +162,10 @@
 				<h4><span class="{$fileSystemLibrary}">{$fileSystemLibrary}</span> {$PATH_LIBRARY}</h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 
-				<h4><span class="{$fileSystemLibraryExternal}">{$fileSystemLibraryExternal}</span> {$PATH_LIBRARY}/external</h4>
+				<h4><span class="{$fileSystemLibraryExternal}">{$fileSystemLibraryExternal}</span> {$PATH_LIBRARY}/external/</h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 
-				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install</h4>
+				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install/cache/</h4>
 				<p>This location must be writable for the installer.</p>
 				
 				<h4><span class="{$fileSystemAppConfig}">{$fileSystemAppConfig}</span> {$PATH_WWW}/app/config/</h4>
