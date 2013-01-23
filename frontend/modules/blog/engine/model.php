@@ -779,7 +779,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$data = array('data' => array('endpoint' => SITE_URL . '/api/1.0', 'comment_id' => $comment['id']));
 
 		// push it
-		FrontendModel::pushToAppleApp($alert, $badge, null, $data);
+		FrontendModel::pushToAppleApp($alert, $badge, 'default', $data);
 
 		// get settings
 		$notifyByMailOnComment = FrontendModel::getModuleSetting('blog', 'notify_by_email_on_new_comment', false);
