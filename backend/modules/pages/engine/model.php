@@ -365,7 +365,7 @@ class BackendPagesModel
 					if(!isset($cachedTitles[$pageId])) continue;
 
 					// get the title
-					$title = html_entity_decode($cachedTitles[$pageId]);
+					$title = SpoonFilter::htmlspecialcharsDecode($cachedTitles[$pageId]);
 
 					// split into chunks
 					$urlChunks = explode('/', $url);
