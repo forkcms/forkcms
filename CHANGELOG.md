@@ -38,6 +38,7 @@ Bugfixes:
 * Location: Google Maps JS needs to be loaded before location.js, thx to siesqo.
 * Core: when fetching parameters take the index in account when computing the differences.
 * Blog: Use full links for the navigation below the blogposts.
+* FormBuilder: validation (email, numeric) was inherited from previously added fields causing errors on checkboxes.
 
 
 3.4.4 (2012-09-12)
