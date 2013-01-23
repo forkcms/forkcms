@@ -764,7 +764,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 		);
 
 		// build data
-		$data = array('data' => array('endpoint' => SITE_URL . '/api/1.0', 'comment_id' => $comment['id']));
+		$data = array(
+			'data' => array(
+				'endpoint' => SITE_URL . '/api/1.0',
+				'module' => 'blog',
+				'comment_id' => $comment['id']
+			)
+		);
 
 		// push it
 		FrontendModel::pushToAppleApp($alert, null, 'default', $data);
