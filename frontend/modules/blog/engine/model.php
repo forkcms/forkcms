@@ -752,8 +752,16 @@ class FrontendBlogModel implements FrontendTagsInterface
 		if($comment['status'] == 'spam') return;
 
 		// build data for pushnotification
-		if($comment['status'] == 'moderation') $alert = array('loc-key' => 'NEW_COMMENT_TO_MODERATE');
-		else $alert = array('loc-key' => 'NEW_COMMENT');
+		if($comment['status'] == 'moderation') $key = 'NEW_COMMENT_TO_MODERATE';
+		else $key = 'NEW_COMMENT';
+
+		$alert = array(
+			'loc-key' => $key,
+			'loc-args' => array(
+				$comment['author'],
+				$comment['text'],
+			)
+		);
 
 		// get count of unmoderated items
 		$badge = (int) FrontendModel::getDB()->getVar(
