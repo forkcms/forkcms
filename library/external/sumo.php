@@ -38,7 +38,7 @@ class Sumo
 		// only initialize if we know the API key
 		if(!defined('ERRBIT_API_KEY') && ERRBIT_API_KEY != '') return;
 
-		require_once dirname(__FILE__) . '/errbit/Errbit.php';
+		require_once 'library/external/errbit/Errbit.php';
 
 		Errbit::instance()->configure(array(
 		   'api_key' => ERRBIT_API_KEY,
