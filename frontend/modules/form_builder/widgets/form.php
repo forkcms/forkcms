@@ -400,6 +400,14 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					FrontendFormBuilderModel::insertDataField($fieldData);
 				}
 
+				// notify the admin
+				FrontendFormBuilderModel::notifyAdmin(
+					array(
+					     'form_id' => $this->item['id'],
+					     'entry_id' => $dataId
+					)
+				);
+
 				// need to send mail
 				if($this->item['method'] == 'database_email')
 				{
