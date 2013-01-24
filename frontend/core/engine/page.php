@@ -339,7 +339,7 @@ class FrontendPage extends FrontendBaseObject
 						// parse extra
 						$positions[$position][$i] = array(
 							'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
-							'blockIsHTML' => false,
+							'blockIsHTML' => ($block['extra']->getModule() == 'content_blocks'),
 							'blockContent' => $block['extra']->getContent()
 						);
 					}
