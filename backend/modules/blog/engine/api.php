@@ -71,7 +71,19 @@ class BackendBlogAPI
 				array('active', $offset, $limit)
 			);
 
-			$return = array('comments' => null);
+			$totalCount = (int) BackendModel::getDB()->getVar(
+				'SELECT COUNT(i.id)
+				 FROM blog_comments AS i
+				 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+				 INNER JOIN meta AS m ON p.meta_id = m.id
+				 WHERE p.status = ?',
+				array('active')
+			);
+
+			$return = array(
+				'comments' => null,
+				'total_count' => $totalCount,
+			);
 
 			// build return array
 			foreach($comments as $row)
