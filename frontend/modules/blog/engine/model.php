@@ -73,7 +73,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
-			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
 			 m.url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
@@ -103,7 +103,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
-
+			
+			// allow comments as boolean
+			$items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+			
+			// reset allow comments
+			if(!FrontendModel::getModuleSetting('blog', 'allow_comments')) $items[$key]['allow_comments'] = false;
+			
 			// image?
 			if(isset($row['image']))
 			{
@@ -201,7 +207,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
-			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
 			 m.url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
@@ -231,6 +237,12 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
+
+			// allow comments as boolean
+			$items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+
+			// reset allow comments
+			if(!FrontendModel::getModuleSetting('blog', 'allow_comments')) $items[$key]['allow_comments'] = false;
 
 			// image?
 			if(isset($row['image']))
@@ -287,7 +299,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
-			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
 			 m.url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
@@ -315,6 +327,12 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
+
+			// allow comments as boolean
+			$items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+
+			// reset allow comments
+			if(!FrontendModel::getModuleSetting('blog', 'allow_comments')) $items[$key]['allow_comments'] = false;
 
 			// image?
 			if(isset($row['image']))

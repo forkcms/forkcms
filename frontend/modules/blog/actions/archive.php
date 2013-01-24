@@ -146,6 +146,9 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		// assign items
 		$this->tpl->assign('items', $this->items);
 
+		// assign allowComments
+		$this->tpl->assign('allowComments', FrontendModel::getModuleSetting('blog', 'allow_comments'));
+
 		// parse the pagination
 		$this->parsePagination();
 	}
