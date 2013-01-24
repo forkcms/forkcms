@@ -574,18 +574,38 @@ class SpoonThumbnail
 		// recalculate
 		if($tempWidth < $this->width || $tempHeight < $this->height)
 		{
+			$recalculatedWidth = (int) floor($currentWidth * ($this->height / $currentHeight));
+			$recalculatedHeight = (int) floor($currentHeight * ($this->width / $currentWidth));
+
 			// current width is smaller than the current height
 			if($currentWidth < $currentHeight)
 			{
 				$tempHeight = $this->height;
-				$tempWidth = (int) floor($currentWidth * ($this->height / $currentHeight));
+				$tempWidth = $recalculatedWidth;
 			}
 
 			// current width is greater than the current height
 			if($currentWidth > $currentHeight)
 			{
 				$tempWidth = $this->width;
-				$tempHeight = (int) floor($currentHeight * ($this->width / $currentWidth));
+				$tempHeight = $recalculatedHeight;
+			}
+
+			// when we're dealing with a square we have to see what's smallest, the width
+			// or the height. The smallest will be recalculated. This is needed so we won't have
+			// any black stripes when resizing the image!
+			if($currentWidth == $currentHeight)
+			{
+				if($this->width >= $this->height)
+				{
+					$tempWidth = $this->width;
+					$tempHeight = $recalculatedHeight;
+				}
+				else
+				{
+					$tempHeight = $this->height;
+					$tempWidth = $recalculatedWidth;
+				}
 			}
 		}
 
