@@ -101,17 +101,14 @@ class FrontendFormBuilderModel
 	public static function notifyAdmin(array $data)
 	{
 		$alert = array(
-			'loc-key' => 'FORM_BUILDER_NEW_SUBMISSION'
+			'loc-key' => 'FORMBUILDER_SUBMISSION'
 		);
 
 		// build data
 		$data = array(
-			'data' => array(
-				'endpoint' => SITE_URL . '/api/1.0',
-				'module' => 'form_builder',
-				'form_id' => $data['form_id'],
-				'entry_id' => $data['entry_id']
-			)
+			'api' => SITE_URL . '/api/1.0',
+			'form_id' => $data['form_id'],
+			'id' => $data['entry_id']
 		);
 
 		// push it

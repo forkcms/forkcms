@@ -752,24 +752,26 @@ class FrontendBlogModel implements FrontendTagsInterface
 		if($comment['status'] == 'spam') return;
 
 		// build data for pushnotification
-		if($comment['status'] == 'moderation') $key = 'BLOG_NEW_COMMENT_TO_MODERATE';
-		else $key = 'BLOG_NEW_COMMENT';
+		if($comment['status'] == 'moderation') $key = 'BLOG_COMMENT_MOD';
+		else $key = 'BLOG_COMMENT';
+
+		$author = $comment['author'];
+		if(mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . '…';
+		$text = $comment['text'];
+		if(mb_strlen($text) > 120) $text = mb_substr($text, 0, 119) . '…';
 
 		$alert = array(
 			'loc-key' => $key,
 			'loc-args' => array(
-				$comment['author'],
-				$comment['text'],
+				$author,
+				$text
 			)
 		);
 
 		// build data
 		$data = array(
-			'data' => array(
-				'endpoint' => SITE_URL . '/api/1.0',
-				'module' => 'blog',
-				'comment_id' => $comment['id']
-			)
+			'api' => SITE_URL . '/api/1.0',
+			'id' => $comment['id']
 		);
 
 		// push it
