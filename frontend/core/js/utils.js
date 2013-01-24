@@ -373,6 +373,17 @@ utils.string =
 	},
 
 	/**
+	 * Adds a capital letter to a string
+	 *
+	 * @return	string
+	 * @param	string $value
+	 */
+	ucfirst: function(value)
+	{
+		return value.charAt(0).toUpperCase() + value.slice(1);
+	},
+
+	/**
 	 * Convert a HTML string to a XHTML string.
 	 *
 	 * @return	string
