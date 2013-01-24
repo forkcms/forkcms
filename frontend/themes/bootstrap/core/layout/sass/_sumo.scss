@@ -11,8 +11,27 @@
 	text-align: right;
 }
 
+.loading {
+	@include background-image(image-url('spinner.gif') !important);
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	padding-left: 30px;
+}
+
+.btn.loading.disabled,
+.btn.loading[disabled],
 .btn.loading {
-	@include background(image-url('spinner.gif') no-repeat);
+	@include background-image(image-url('spinner.gif') !important);
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	padding-left: 30px;
+}
+
+.btn.btn-primary.loading.disabled,
+.btn.btn-primary.loading[disabled],
+.btn.btn-primary.loading {
+	@include background-image(image-url('spinner_primary.gif') !important);
+	background-repeat: no-repeat;
 	background-position: 5px center;
 	padding-left: 30px;
 }
