@@ -42,7 +42,7 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
 		$this->frm = new FrontendForm('resendActivation', null, null, 'resendActivation');
 
 		// create & add elements
-		$this->frm->addText('email');
+		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
 	}
 
 	/**
