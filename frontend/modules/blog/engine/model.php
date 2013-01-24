@@ -758,7 +758,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$author = $comment['author'];
 		if(mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . '…';
 		$text = $comment['text'];
-		if(mb_strlen($text) > 120) $text = mb_substr($text, 0, 119) . '…';
+		if(mb_strlen($text) > 50) $text = mb_substr($text, 0, 49) . '…';
 
 		$alert = array(
 			'loc-key' => $key,
