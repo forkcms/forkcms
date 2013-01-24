@@ -26,6 +26,7 @@ Bugfixes:
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
 * Blog: Use full links for the navigation below the blogposts.
+* Blog: Hide comment link when comments are disabled
 
 
 3.4.4 (2012-09-12)

@@ -30,6 +30,7 @@
 									{/iteration:items.tags}
 								{/option:items.tags}
 							</li>
+							{option:items.allowComments}
 							<li>
 								{* Comments *}
 								{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
@@ -38,6 +39,7 @@
 									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
 								{/option:items.comments}
 							</li>
+							{/option:items.allowComments}
 						</ul>
 					</header>
 					<div class="bd content">
