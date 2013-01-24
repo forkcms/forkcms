@@ -68,19 +68,19 @@ FileETag MTime Size
 
 # gzip on Apache 1
 <IfModule mod_gzip.c>
-    mod_gzip_on Yes
+	mod_gzip_on Yes
 
-    mod_gzip_item_include mime ^application/javascript$
-    mod_gzip_item_include mime ^application/x-javascript$
-    mod_gzip_item_include mime ^application/xhtml+xml$
-    mod_gzip_item_include mime ^application/xml$
-    mod_gzip_item_include mime ^text/css$
-    mod_gzip_item_include mime ^text/html$
-    mod_gzip_item_include mime ^text/javascript$
-    mod_gzip_item_include mime ^text/plain$
-    mod_gzip_item_include mime ^text/xml$
-    mod_gzip_item_exclude mime ^image/
+	mod_gzip_item_include mime ^application/javascript$
+	mod_gzip_item_include mime ^application/x-javascript$
+	mod_gzip_item_include mime ^application/xhtml+xml$
+	mod_gzip_item_include mime ^application/xml$
+	mod_gzip_item_include mime ^text/css$
+	mod_gzip_item_include mime ^text/html$
+	mod_gzip_item_include mime ^text/javascript$
+	mod_gzip_item_include mime ^text/plain$
+	mod_gzip_item_include mime ^text/xml$
+	mod_gzip_item_exclude mime ^image/
 
-    # browser issues
-    mod_gzip_item_exclude reqheader "User-agent: Mozilla/4.0[678]"
+	# browser issues
+	mod_gzip_item_exclude reqheader "User-agent: Mozilla/4.0[678]"
 </IfModule>
