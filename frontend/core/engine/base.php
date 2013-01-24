@@ -472,6 +472,9 @@ class FrontendBaseBlock
 		$pagination['num_pages'] = $this->pagination['num_pages'];
 		$pagination['current_page'] = $this->pagination['requested_page'];
 
+		// define anchor
+		$anchor = (isset($this->pagination['anchor'])) ? '#' . $this->pagination['anchor'] : '';
+
 		// as long as we are below page 5 we should show all pages starting from 1
 		if($this->pagination['requested_page'] <= 6)
 		{
@@ -513,7 +516,7 @@ class FrontendBaseBlock
 
 			// set
 			$pagination['show_previous'] = true;
-			$pagination['previous_url'] = $URL;
+			$pagination['previous_url'] = $URL . $anchor;
 		}
 
 		// show first pages?
@@ -531,7 +534,7 @@ class FrontendBaseBlock
 				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
-				$pagination['first'][] = array('url' => $URL, 'label' => $i);
+				$pagination['first'][] = array('url' => $URL . $anchor, 'label' => $i);
 			}
 		}
 
@@ -546,7 +549,7 @@ class FrontendBaseBlock
 			else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 			// add
-			$pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
+			$pagination['pages'][] = array('url' => $URL . $anchor, 'label' => $i, 'current' => $current);
 		}
 
 		// show last pages?
@@ -564,7 +567,7 @@ class FrontendBaseBlock
 				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
-				$pagination['last'][] = array('url' => $URL, 'label' => $i);
+				$pagination['last'][] = array('url' => $URL . $anchor, 'label' => $i);
 			}
 		}
 
@@ -577,7 +580,7 @@ class FrontendBaseBlock
 
 			// set
 			$pagination['show_next'] = true;
-			$pagination['next_url'] = $URL;
+			$pagination['next_url'] = $URL . $anchor;
 		}
 
 		// multiple pages
