@@ -66,6 +66,7 @@ class BackendBlogAPI
 				 INNER JOIN meta AS m ON p.meta_id = m.id
 				 WHERE p.status = ?
 				 GROUP BY i.id
+				 ORDER BY i.id DESC
 				 LIMIT ?, ?',
 				array('active', $offset, $limit)
 			);
