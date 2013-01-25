@@ -366,7 +366,7 @@ class BackendExtensionsModel
 			// remove items that are not for the current language
 			if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) $itemsToRemove[] = $id;
 
-			// set URL if needed
+			// set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
 
 			// build name
