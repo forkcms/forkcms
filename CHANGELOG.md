@@ -30,6 +30,7 @@ Bugfixes:
 * Blog: Ticket 294: Next and previous don't work when blog-items has same publish_on date
 * TagBox: Ticket 333: Tags should be handled as strings
 * Extensions: Ticket 316: Link to default action
+* API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 
 
 3.4.4 (2012-09-12)
