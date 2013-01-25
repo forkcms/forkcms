@@ -37,12 +37,13 @@ class FrontendBlogWidgetCategories extends FrontendBaseWidget
 		{
 			// build link
 			$link = FrontendNavigation::getURLForBlock('blog', 'category');
+			$pageUrl = strtok($this->URL->getQueryString(), '?');
 
 			// loop and reset url
 			foreach($categories as &$row)
 			{
 				$row['url'] = $link . '/' . $row['url'];
-				$row['active'] = ('/' . $this->URL->getQueryString() == $row['url']);
+				$row['active'] = ('/' . $pageUrl == $row['url']);
 			}
 		}
 
