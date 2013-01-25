@@ -367,7 +367,7 @@ class BackendExtensionsModel
 			if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) $itemsToRemove[] = $id;
 
 			// set URL if needed
-			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
+			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
 
 			// build name
 			$name = SpoonFilter::ucfirst(BL::lbl($row['label']));

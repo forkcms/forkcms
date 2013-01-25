@@ -56,7 +56,7 @@ class SearchInstaller extends ModuleInstaller
 		$this->setNavigation($navigationModulesId, 'Search', 'search/settings');
 
 		// add extra's
-		$searchId = $this->insertExtra('search', 'block', 'Search', null, 'a:1:{s:3:"url";s:40:"/private/nl/search/statistics?token=true";}', 'N', 2000);
+		$searchId = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
 		// loop languages
