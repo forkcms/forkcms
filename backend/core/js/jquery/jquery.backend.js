@@ -1017,7 +1017,7 @@
 			function remove(value)
 			{
 				// get index for element
-				var index = $.inArray(value, elements);
+				var index = $.inArray(String(value), elements);
 
 				// remove element
 				if(index > -1) elements.splice(index, 1);
