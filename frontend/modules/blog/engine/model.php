@@ -103,13 +103,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
-			
+
 			// allow comments as boolean
 			$items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
-			
+
 			// reset allow comments
 			if(!FrontendModel::getModuleSetting('blog', 'allow_comments')) $items[$key]['allow_comments'] = false;
-			
+
 			// image?
 			if(isset($row['image']))
 			{
@@ -770,27 +770,30 @@ class FrontendBlogModel implements FrontendTagsInterface
 		if($comment['status'] == 'spam') return;
 
 		// build data for pushnotification
-		if($comment['status'] == 'moderation') $alert = array('loc-key' => 'NEW_COMMENT_TO_MODERATE');
-		else $alert = array('loc-key' => 'NEW_COMMENT');
+		if($comment['status'] == 'moderation') $key = 'BLOG_COMMENT_MOD';
+		else $key = 'BLOG_COMMENT';
 
-		// get count of unmoderated items
-		$badge = (int) FrontendModel::getDB()->getVar(
-			'SELECT COUNT(i.id)
-			 FROM blog_comments AS i
-			 WHERE i.status = ? AND i.language = ?
-			 GROUP BY i.status',
-			array('moderation', FRONTEND_LANGUAGE)
+		$author = $comment['author'];
+		if(mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . '…';
+		$text = $comment['text'];
+		if(mb_strlen($text) > 50) $text = mb_substr($text, 0, 49) . '…';
+
+		$alert = array(
+			'loc-key' => $key,
+			'loc-args' => array(
+				$author,
+				$text
+			)
 		);
 
-		// reset if needed
-		if($badge == 0) $badge = null;
-
 		// build data
-		$data = array('data' => array('endpoint' => SITE_URL . '/api/1.0', 'comment_id' => $comment['id']));
+		$data = array(
+			'api' => SITE_URL . '/api/1.0',
+			'id' => $comment['id']
+		);
 
 		// push it
-		FrontendModel::pushToAppleApp($alert, $badge, null, $data);
-		FrontendModel::pushToMicrosoftApp('NEW_COMMENT', $badge, null, null, null, null, '/MainPage.xaml?website=' . SITE_URL, null); // @todo: clean this up
+		FrontendModel::pushToAppleApp($alert, null, 'default', $data);
 
 		// get settings
 		$notifyByMailOnComment = FrontendModel::getModuleSetting('blog', 'notify_by_email_on_new_comment', false);

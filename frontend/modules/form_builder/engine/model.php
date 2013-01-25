@@ -92,4 +92,26 @@ class FrontendFormBuilderModel
 	{
 		return FrontendModel::getDB(true)->insert('forms_data_fields', $data);
 	}
+
+	/**
+	 * Notify the admin
+	 *
+	 * @param array $data
+	 */
+	public static function notifyAdmin(array $data)
+	{
+		$alert = array(
+			'loc-key' => 'FORMBUILDER_SUBMISSION'
+		);
+
+		// build data
+		$data = array(
+			'api' => SITE_URL . '/api/1.0',
+			'form_id' => $data['form_id'],
+			'id' => $data['entry_id']
+		);
+
+		// push it
+		FrontendModel::pushToAppleApp($alert, 1, 'default', $data);
+	}
 }

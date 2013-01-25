@@ -27,7 +27,7 @@ class BackendLocaleModel
 	public static function buildCache($language, $application)
 	{
 		// get db
-		$db = Spoon::get('database');
+		$db = BackendModel::getDB();
 
 		// get types
 		$types = $db->getEnumValues('locale', 'type');
@@ -1164,8 +1164,8 @@ class BackendLocaleModel
 		if($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
 		if($date === null) $date = BackendModel::getUTCDate();
 
-		// get database instance (don't use BackendModel::getDB() here because this function will also be called during install)
-		$db = Spoon::get('database');
+		// get database instance
+		$db = BackendModel::getDB();
 
 		// possible values
 		$possibleApplications = array('frontend', 'backend');

@@ -328,7 +328,7 @@ class BackendAnalyticsHelper
 		$apiKey = BackendModel::getModuleSetting('analytics', 'api_key', null);
 
 		// require the GoogleAnalytics class
-		require_once 'external/google_analytics.php';
+		require_once PATH_LIBRARY . '/external/google_analytics.php';
 
 		$ga = new GoogleAnalytics($sessionToken, $tableId);
 		$ga->setApiKey($apiKey);

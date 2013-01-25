@@ -1,7 +1,5 @@
 /**
- * Javascript for building forms
- *
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  * @author	Thomas Deceuninck <thomas@fronto.be>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -117,7 +115,7 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.paramsDelete,
+					data: $.extend({}, jsBackend.formBuilder.fields.paramsDelete,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						field_id: id
@@ -316,7 +314,7 @@ jsBackend.formBuilder.fields =
 				// make ajax call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.paramsSequence,
+					data: $.extend({}, jsBackend.formBuilder.fields.paramsSequence,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						new_id_sequence: newIdSequence.join('|')
@@ -372,7 +370,7 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.paramsGet,
+					data: $.extend({}, jsBackend.formBuilder.fields.paramsGet,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						field_id: id
@@ -724,7 +722,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -793,7 +791,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -858,7 +856,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -916,7 +914,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -978,7 +976,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -1043,7 +1041,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -1107,7 +1105,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -1180,7 +1178,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,

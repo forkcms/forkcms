@@ -7,83 +7,41 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * This class will handle cronjob related stuff
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class BackendCronjob extends BackendBaseObject
+class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 {
 	/**
-	 * The id
-	 *
+	 * @var BackendBaseCronjob
+	 */
+	private $cronjob;
+
+	/**
 	 * @var	int
 	 */
 	private $id;
 
 	/**
-	 * The working language
-	 *
 	 * @var	string
 	 */
 	private $language;
 
-	public function __construct()
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
 	{
-		// because some cronjobs will be run on the command line we should pass parameters
-		if(isset($_SERVER['argv']))
-		{
-			// init var
-			$first = true;
+		$this->cronjob->execute();
 
-			// loop all passes arguments
-			foreach($_SERVER['argv'] as $parameter)
-			{
-				// ignore first, because this is the scripts name.
-				if($first)
-				{
-					// reset
-					$first = false;
-
-					// skip
-					continue;
-				}
-
-				// split into chunks
-				$chunks = explode('=', $parameter, 2);
-
-				// valid paramters?
-				if(count($chunks) == 2)
-				{
-					// build key and value
-					$key = trim($chunks[0], '--');
-					$value = $chunks[1];
-
-					// set in GET
-					if($key != '' && $value != '') $_GET[$key] = $value;
-				}
-			}
-		}
-
-		// define the Named Application
-		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
-
-		// set the module
-		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
-
-		// set the requested file
-		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
-
-		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
-
-		// mark cronjob as run
-		$cronjobs = (array) BackendModel::getModuleSetting('core', 'cronjobs');
-		$cronjobs[] = $this->getModule() . '.' . $this->getAction();
-		BackendModel::setModuleSetting('core', 'cronjobs', array_unique($cronjobs));
-
-		// create new action
-		$this->execute();
+		// a cronjob does not have output, so we return a empty string as response
+		// this is not a correct solution, in time cronjobs should have there own frontcontroller.
+		return new Response('');
 	}
 
 	/**
@@ -138,10 +96,70 @@ class BackendCronjob extends BackendBaseObject
 		}
 
 		// create action-object
-		$object = new $actionClassName();
-		$object->setModule($this->getModule());
-		$object->setAction($this->getAction());
-		$object->execute();
+		$this->cronjob = new $actionClassName($this->getKernel());
+		$this->cronjob->setModule($this->getModule());
+		$this->cronjob->setAction($this->getAction());
+	}
+
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the page's functionality gets loaded.
+	 */
+	public function initialize()
+	{
+		// because some cronjobs will be run on the command line we should pass parameters
+		if(isset($_SERVER['argv']))
+		{
+			// init var
+			$first = true;
+
+			// loop all passes arguments
+			foreach($_SERVER['argv'] as $parameter)
+			{
+				// ignore first, because this is the scripts name.
+				if($first)
+				{
+					// reset
+					$first = false;
+
+					// skip
+					continue;
+				}
+
+				// split into chunks
+				$chunks = explode('=', $parameter, 2);
+
+				// valid paramters?
+				if(count($chunks) == 2)
+				{
+					// build key and value
+					$key = trim($chunks[0], '--');
+					$value = $chunks[1];
+
+					// set in GET
+					if($key != '' && $value != '') $_GET[$key] = $value;
+				}
+			}
+		}
+
+		// define the Named Application
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
+
+		// set the module
+		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
+
+		// set the requested file
+		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
+
+		// set the language
+		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
+
+		// mark cronjob as run
+		$cronjobs = (array) BackendModel::getModuleSetting('core', 'cronjobs');
+		$cronjobs[] = $this->getModule() . '.' . $this->getAction();
+		BackendModel::setModuleSetting('core', 'cronjobs', array_unique($cronjobs));
+
+		$this->execute();
 	}
 
 	/**

@@ -7,11 +7,14 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Frontend page class, this class will handle everything on a page
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class FrontendPage extends FrontendBaseObject
 {
@@ -74,12 +77,16 @@ class FrontendPage extends FrontendBaseObject
 	public function __construct()
 	{
 		parent::__construct();
+		Spoon::set('page', $this);
+	}
 
+	/**
+	 * Loads the actual components on the page
+	 */
+	public function load()
+	{
 		// set tracking cookie
 		FrontendModel::getVisitorId();
-
-		// add reference
-		Spoon::set('page', $this);
 
 		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
@@ -107,9 +114,6 @@ class FrontendPage extends FrontendBaseObject
 
 		// store statistics
 		$this->storeStatistics();
-
-		// display
-		$this->display();
 
 		// trigger event
 		FrontendModel::triggerEvent(
@@ -157,11 +161,11 @@ class FrontendPage extends FrontendBaseObject
 		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
 		foreach($unusedPositions as $position) $this->tpl->assign('position' . SpoonFilter::ucfirst($position), array());
 
-		// only overwrite when status code is 404
-		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
-
 		// output
-		$this->tpl->display($this->templatePath, false, true);
+		return new Response(
+			$this->tpl->getContent($this->templatePath, false, true),
+			$this->statusCode, SpoonHttp::getHeadersList()
+		);
 	}
 
 	/**
@@ -361,7 +365,8 @@ class FrontendPage extends FrontendBaseObject
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
-			// execute
+			// all extras extend FrontendBaseObject, which extends KernelLoader
+			$extra->setKernel($this->getKernel());
 			$extra->execute();
 
 			// overwrite the template

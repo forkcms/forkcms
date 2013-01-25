@@ -12,6 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class BackendAction extends BackendBaseObject
 {
@@ -73,7 +74,9 @@ class BackendAction extends BackendBaseObject
 
 		// create action-object
 		$object = new $actionClassName();
+		$object->setKernel($this->getKernel());
 		$object->execute();
+		return $object->getContent();
 	}
 
 	/**

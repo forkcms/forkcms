@@ -117,10 +117,8 @@ class InstallerStep2 extends InstallerStep
 		self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemLibraryExternal', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external'), self::STATUS_WARNING);
 		self::checkRequirement('fileSystemInstaller', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'), self::STATUS_ERROR);
-		self::checkRequirement('fileSystemConfig', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/config.base.php') && is_readable(PATH_LIBRARY . '/config.base.php'), self::STATUS_ERROR);
-		self::checkRequirement('fileSystemGlobals', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals.base.php') && is_readable(PATH_LIBRARY . '/globals.base.php'), self::STATUS_ERROR);
-		self::checkRequirement('fileSystemGlobalsBackend', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_backend.base.php') && is_readable(PATH_LIBRARY . '/globals_backend.base.php'), self::STATUS_ERROR);
-		self::checkRequirement('fileSystemGlobalsFrontend', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_frontend.base.php') && is_readable(PATH_LIBRARY . '/globals_frontend.base.php'), self::STATUS_ERROR);
+		self::checkRequirement('fileSystemAppConfig', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/app/config/'), self::STATUS_ERROR);
+		self::checkRequirement('fileSystemParameters', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/parameters.base.yml') && is_readable(PATH_LIBRARY . '/parameters.base.yml'), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemPathLibrary', defined('PATH_LIBRARY') && PATH_LIBRARY != '', self::STATUS_ERROR);
 
 		/*
@@ -140,8 +138,15 @@ class InstallerStep2 extends InstallerStep
 	private static function defineConstants($step)
 	{
 		// define constants
-		if(!defined('PATH_WWW')) define('PATH_WWW', dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME']))));
-		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', (string) $_SESSION['path_library']);
+		if(!defined('PATH_WWW'))
+		{
+			define('PATH_WWW', dirname(realpath($_SERVER['SCRIPT_FILENAME'])));
+		}
+
+		if(!defined('PATH_LIBRARY'))
+		{
+			define('PATH_LIBRARY', (string) $_SESSION['path_library']);
+		}
 
 		// update session
 		if(!isset($_SESSION['path_library'])) $_SESSION['path_library'] = PATH_LIBRARY;
@@ -157,8 +162,8 @@ class InstallerStep2 extends InstallerStep
 		self::$variables = array();
 
 		// head
-		self::$variables['head'] = file_get_contents('layout/templates/head.tpl');
-		self::$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
+		self::$variables['head'] = file_get_contents(__DIR__ . '/../layout/templates/head.tpl');
+		self::$variables['foot'] = file_get_contents(__DIR__ . '/../layout/templates/foot.tpl');
 
 		// next step
 		self::$variables['step3'] = 'index.php?step=3';
@@ -167,7 +172,7 @@ class InstallerStep2 extends InstallerStep
 		self::checkRequirements();
 
 		// get template contents
-		$tpl = file_get_contents('layout/templates/step_2.tpl');
+		$tpl = file_get_contents(__DIR__ . '/../layout/templates/step_2.tpl');
 
 		// has errors
 		if(in_array(self::STATUS_ERROR, self::$variables)) self::$variables[self::STATUS_ERROR] = true;

@@ -12,16 +12,16 @@
  * advanced features of CKFinder.
  */
 
-// require
+/*
+ * Create a Kernel and load the DI container to be able to access the Backend Model methods and
+ * the configuration. This should be refactored in time.
+ */
 require '../../../../../../../autoload.php';
-require '../../../../../../init.php';
-
-// define the application
-define('APPLICATION', 'backend');
-
-// initialize components
-new BackendInit(APPLICATION);
-
+require '../../../../../../../app/AppKernel.php';
+require '../../../../../../../app/KernelLoader.php';
+$kernel = new AppKernel();
+$loader = new KernelLoader($kernel);
+$loader->passContainerToModels();
 
 /**
  * This function must check the user session to be sure that he/she is
@@ -73,7 +73,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseDir = FRONTEND_FILES_PATH . '/userfiles/';
+$baseDir = $kernel->getContainer()->getParameter('site.path_www') . '/frontend/files/userfiles/';
 
 /*
  * ### Advanced Settings

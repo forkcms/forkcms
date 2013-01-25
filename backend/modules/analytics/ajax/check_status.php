@@ -43,7 +43,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		}
 
 		// busy status
-		if(strpos($status, 'busy') !== false)
+		elseif(strpos($status, 'busy') !== false)
 		{
 			// get counter
 			$counter = (int) substr($status, 4) + 1;
@@ -66,7 +66,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		}
 
 		// unauthorized status
-		if($status == 'unauthorized')
+		elseif($status == 'unauthorized')
 		{
 			// remove file
 			SpoonFile::delete($filename);
@@ -84,7 +84,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		}
 
 		// done status
-		if($status == 'done')
+		elseif($status == 'done')
 		{
 			// remove file
 			SpoonFile::delete($filename);
@@ -94,7 +94,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		}
 
 		// missing status
-		if(strpos($status, 'missing') !== false)
+		elseif(strpos($status, 'missing') !== false)
 		{
 			// get counter
 			$counter = (int) substr($status, 7) + 1;
@@ -114,7 +114,10 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		}
 
 		/* FALLBACK - SOMETHING WENT WRONG */
-		SpoonFile::delete($filename);
-		$this->output(self::ERROR, array('status' => 'error'), 'Error while retrieving data.');
+		else
+		{
+			SpoonFile::delete($filename);
+			$this->output(self::ERROR, array('status' => 'error', 'a' => ($status == 'done')), 'Error while retrieving data.');
+		}
 	}
 }

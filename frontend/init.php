@@ -14,7 +14,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendInit
+class FrontendInit extends KernelLoader
 {
 	/**
 	 * Current type
@@ -26,7 +26,7 @@ class FrontendInit
 	/**
 	 * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
 	 */
-	public function __construct($type)
+	public function initialize($type)
 	{
 		$allowedTypes = array('frontend', 'frontend_ajax', 'frontend_js');
 		$type = (string) $type;
@@ -46,10 +46,8 @@ class FrontendInit
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		$this->requireGlobals();
-
 		// get last modified time for globals
-		$lastModifiedTime = @filemtime(PATH_LIBRARY . '/globals.php');
+		$lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
 		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
 		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
@@ -59,7 +57,6 @@ class FrontendInit
 
 		$this->definePaths();
 		$this->defineURLs();
-		$this->setIncludePath();
 		$this->setDebugging();
 
 		// require spoon
@@ -74,10 +71,6 @@ class FrontendInit
 	 */
 	private function definePaths()
 	{
-		// fix the Application setting
-		if($this->type == 'frontend_js') define('APPLICATION', 'frontend');
-		elseif($this->type == 'frontend_ajax') define('APPLICATION', 'frontend');
-
 		// general paths
 		define('FRONTEND_PATH', PATH_WWW . '/' . APPLICATION);
 		define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
@@ -221,41 +214,6 @@ class FrontendInit
 	}
 
 	/**
-	 * Require globals-file
-	 */
-	private function requireGlobals()
-	{
-		// fetch config
-		@include_once dirname(__FILE__) . '/cache/config/config.php';
-
-		// config doest not exist, use standard library location
-		if(!defined('INIT_PATH_LIBRARY')) define('INIT_PATH_LIBRARY', dirname(__FILE__) . '/../library');
-
-		// load the globals
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_backend.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_frontend.php';
-
-		// something could not be loaded
-		if(in_array(false, $installed))
-		{
-			// installation folder
-			$installer = dirname(__FILE__) . '/../install/cache';
-
-			// Fork has not yet been installed
-			if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
-			{
-				// redirect to installer
-				header('Location: /install');
-			}
-
-			// we can nog load configuration file, however we can not run installer
-			echo 'Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.';
-			exit;
-		}
-	}
-
-	/**
 	 * Set debugging
 	 */
 	private function setDebugging()
@@ -301,14 +259,5 @@ class FrontendInit
 				}
 			}
 		}
-	}
-
-	/**
-	 * Set include path
-	 */
-	private function setIncludePath()
-	{
-		// prepend the libary and document_root to the existing include path
-		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }

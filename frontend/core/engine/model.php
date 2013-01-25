@@ -9,12 +9,15 @@ use \TijsVerkoyen\Akismet\Akismet;
  * file that was distributed with this source code.
  */
 
+require_once __DIR__ . '/../../../app/BaseModel.php';
+
 /**
  * In this file we store all generic functions that we will be using in the frontend.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendModel
+class FrontendModel extends BaseModel
 {
 	/**
 	 * Cached modules
@@ -239,34 +242,6 @@ class FrontendModel
 			if($folder['width'] !== null && $folder['height'] !== null) $thumbnail->setForceOriginalAspectRatio(false);
 			$thumbnail->parseToFile($folder['path'] . '/' . $filename);
 		}
-	}
-
-	/**
-	 * Get (or create and get) a database-connection
-	 * @later split the write and read connection
-	 *
-	 * @param bool[optional] $write Do you want the write-connection or not?
-	 * @return SpoonDatabase
-	 */
-	public static function getDB($write = false)
-	{
-		$write = (bool) $write;
-
-		// do we have a db-object ready?
-		if(!Spoon::exists('database'))
-		{
-			// create instance
-			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
-
-			// utf8 compliance & MySQL-timezone
-			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-			// store
-			Spoon::set('database', $db);
-		}
-
-		// return db-object
-		return Spoon::get('database');
 	}
 
 	/**
@@ -711,73 +686,6 @@ class FrontendModel
 					}
 				}
 			}
-		}
-
-		catch(Exception $e)
-		{
-			if(SPOON_DEBUG) throw $e;
-		}
-	}
-
-	/**
-	 * Push a notification to Microsoft's notifications-server
-	 *
-	 * @param string $title The title for the tile to send.
-	 * @param string[optional] $count The count for the tile to send.
-	 * @param string[optional] $image The image for the tile to send.
-	 * @param string[optional] $backTitle The title for the tile backtround to send.
-	 * @param string[optional] $backText The text for the tile background to send.
-	 * @param string[optional] $backImage The image for the tile background to send.
-	 * @param string[optional] $tile The secondary tile to update.
-	 * @param string[optional] $uri The application uri to navigate to.
-	 */
-	public static function pushToMicrosoftApp($title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $tile = null, $uri = null)
-	{
-		// get ForkAPI-keys
-		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
-		$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
-
-		// no keys, so stop here
-		if($publicKey == '' || $privateKey == '') return;
-
-		// get all microsoft channel uri's
-		$channelUris = (array) FrontendModel::getDB()->getColumn(
-			'SELECT s.value
-			 FROM users AS i
-			 INNER JOIN users_settings AS s
-			 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
-			array('Y', 'N', 'microsoft_channel_uri', 'N;')
-		);
-
-		// no devices, so stop here
-		if(empty($channelUris)) return;
-
-		// init var
-		$uris = array();
-
-		// loop devices
-		foreach($channelUris as $row)
-		{
-			// unserialize
-			$row = unserialize($row);
-
-			// loop and add
-			foreach($row as $item) $uris[] = $item;
-		}
-
-		// no channel uri's, so stop here
-		if(empty($uris)) return;
-
-		// require the class
-		require_once PATH_LIBRARY . '/external/fork_api.php';
-
-		// create instance
-		$forkAPI = new ForkAPI($publicKey, $privateKey);
-
-		try
-		{
-			// push
-			$forkAPI->microsoftPush($uris, $title, $count, $image, $backTitle, $backText, $backImage, $tile, $uri);
 		}
 
 		catch(Exception $e)

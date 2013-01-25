@@ -40,7 +40,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 			parent::execute();
 
 			// add js
-			$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, false, true);
+			$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
 
 			$this->loadData();
 

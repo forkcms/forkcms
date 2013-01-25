@@ -7,12 +7,16 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * This class will be the base of the objects used in onsite
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendBaseObject
+class FrontendBaseObject extends KernelLoader
 {
 	/**
 	 * Template instance
@@ -192,8 +196,9 @@ class FrontendBaseConfig
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendBaseBlock
+class FrontendBaseBlock extends FrontendBaseObject
 {
 	/**
 	 * The current action
@@ -311,10 +316,9 @@ class FrontendBaseBlock
 	 * @param  string $file The path to the javascript-file that should be loaded.
 	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
 	 * @param bool[optional] $minify Should the file be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
+	public function addJS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
 	{
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
@@ -323,7 +327,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJS($file, $minify, $parseThroughPHP, $addTimestamp);
+		$this->header->addJS($file, $minify, $addTimestamp);
 	}
 
 	/**
@@ -517,6 +521,14 @@ class FrontendBaseBlock
 			// set
 			$pagination['show_previous'] = true;
 			$pagination['previous_url'] = $URL . $anchor;
+
+			// flip ahead
+			$this->header->addLink(
+				array(
+				     'rel' => 'prev',
+				     'href' => SITE_URL . $URL . $anchor,
+				)
+			);
 		}
 
 		// show first pages?
@@ -581,6 +593,14 @@ class FrontendBaseBlock
 			// set
 			$pagination['show_next'] = true;
 			$pagination['next_url'] = $URL . $anchor;
+
+			// flip ahead
+			$this->header->addLink(
+				array(
+				     'rel' => 'next',
+				     'href' => SITE_URL . $URL . $anchor,
+				)
+			);
 		}
 
 		// multiple pages
@@ -594,11 +614,19 @@ class FrontendBaseBlock
 	 * Redirect to a given URL
 	 *
 	 * @param string $URL The URL whereto will be redirected.
-	 * @param int[optional] $code The redirect code, default is 307 which means this is a temporary redirect.
+	 * @param int[optional] $code The redirect code, default is 302 which means this is a temporary redirect.
 	 */
 	public function redirect($URL, $code = 302)
 	{
-		SpoonHTTP::redirect((string) $URL, (int) $code);
+		$response = new RedirectResponse(
+			$URL, $code, SpoonHTTP::getHeadersList()
+		);
+
+		/*
+		 * Since we've got some nested action structure, we'll send this
+		 * response directly after creating.
+		 */
+		$response->send();
 	}
 
 	/**
@@ -668,7 +696,7 @@ class FrontendBaseBlock
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendBaseWidget
+class FrontendBaseWidget extends FrontendBaseObject
 {
 	/**
 	 * The current action
@@ -764,9 +792,8 @@ class FrontendBaseWidget
 	 * @param  string $file The path to the javascript-file that should be loaded.
 	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
 	 * @param bool[optional] $minify Should the file be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 */
-	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	public function addJS($file, $overwritePath = false, $minify = true)
 	{
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
@@ -775,7 +802,7 @@ class FrontendBaseWidget
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJS($file, $minify, $parseThroughPHP);
+		$this->header->addJS($file, $minify);
 	}
 
 	/**
@@ -941,6 +968,11 @@ class FrontendBaseAJAXAction
 	protected $action;
 
 	/**
+	 * @var array
+	 */
+	protected $content;
+
+	/**
 	 * The current module
 	 *
 	 * @var	string
@@ -963,7 +995,7 @@ class FrontendBaseAJAXAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the children
+		return $this->getContent();
 	}
 
 	/**
@@ -974,6 +1006,27 @@ class FrontendBaseAJAXAction
 	public function getAction()
 	{
 		return $this->action;
+	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getContent()
+	{
+		$statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
+
+		return new Response(
+			json_encode($this->content),
+			$statusCode,
+			array('content-type' => 'application/json')
+		);
 	}
 
 	/**
@@ -995,22 +1048,12 @@ class FrontendBaseAJAXAction
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
-		// redefine
 		$statusCode = (int) $statusCode;
 		if($message !== null) $message = (string) $message;
 
-		// create response array
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 
-		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
-
-		// output JSON to the browser
-		echo json_encode($response);
-
-		// stop script execution
-		exit;
+		$this->content = $response;
 	}
 
 	/**

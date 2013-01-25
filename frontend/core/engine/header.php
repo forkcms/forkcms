@@ -139,14 +139,12 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @param  string $file The path to the javascript-file that should be loaded.
 	 * @param bool[optional] $minify Should the file be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addJS($file, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
+	public function addJS($file, $minify = true, $addTimestamp = null)
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
-		$parseThroughPHP = (bool) $parseThroughPHP;
 		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
@@ -154,29 +152,6 @@ class FrontendHeader extends FrontendBaseObject
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
-
-		// no minifying when parsing through PHP
-		if($parseThroughPHP) $minify = false;
-
-		// if parse through PHP we should alter the path
-		if($parseThroughPHP)
-		{
-			// process the path
-			$chunks = explode('/', str_replace(array('/frontend/modules/', '/frontend/core'), '', $file));
-
-			// validate
-			if(!isset($chunks[count($chunks) - 3])) throw new FrontendException('Invalid file (' . $file . ').');
-
-			// fetch values
-			$module = $chunks[count($chunks) - 3];
-			$file = $chunks[count($chunks) - 1];
-
-			// reset module for core
-			if($module == '') $module = 'core';
-
-			// alter the file
-			$file = '/frontend/js.php?module=' . $module . '&amp;file=' . $file . '&amp;language=' . FRONTEND_LANGUAGE;
-		}
 
 		// try to minify
 		if($minify) $file = $this->minifyJS($file);
@@ -924,10 +899,10 @@ class FrontendHeader extends FrontendBaseObject
 			else
 			{
 				// if the current pagetitle is empty we should add the sitetitle
-				if($this->pageTitle == '') $this->pageTitle = $value . SITE_TITLE_SEPERATOR . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+				if($this->pageTitle == '') $this->pageTitle = $value . ' -  ' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 
 				// prepend the value to the current pagetitle
-				else $this->pageTitle = $value . SITE_TITLE_SEPERATOR . $this->pageTitle;
+				else $this->pageTitle = $value . ' - ' . $this->pageTitle;
 			}
 		}
 	}

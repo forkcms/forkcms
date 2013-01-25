@@ -26,10 +26,9 @@ class FrontendLocationIndex extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
-		parent::execute();
-
-		// add Google Maps
 		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+
+		parent::execute();
 
 		$this->loadTemplate();
 		$this->loadData();

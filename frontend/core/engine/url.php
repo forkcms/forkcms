@@ -148,7 +148,7 @@ class FrontendURL
 	 */
 	public function getParameters($includeGET = true)
 	{
-		return ($includeGET) ? $this->parameters : array_diff($this->parameters, $_GET);
+		return ($includeGET) ? $this->parameters : array_diff_assoc($this->parameters, $_GET);
 	}
 
 	/**

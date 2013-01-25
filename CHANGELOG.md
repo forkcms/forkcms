@@ -4,7 +4,7 @@ Improvements:
 
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
-* Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
+* Core: added utils.string.sprintf to backend and frontend, thx to Jeroen Desloovere.
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
@@ -16,16 +16,30 @@ Improvements:
 * Core: starting to use namespaces for the external classes that use namespaces.
 * Core: upgraded Spoon
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
+* Core: merged all autoloaders in to one autoload.php.
+* Core: added the Symfony HttpFoundation and HttpKernel components via an AppKernel.
+* Core: added the Symfony DependencyInjection component to handle our services and config.
+* Core: the AppKernel is passed to all actions/models which contains the DI container.
+* Core: one frontcontroller which routes all requests (actions, ajax, cronjobs, ...)
+* Core: replaced globals*.php config files with app/config/config.yml.
+* Core: removed js.php
+* Spoon: Spoon dependency is now handled via composer.
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
-* Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
+* Blog: enabled Flip ahead for blogposts.
+* Core: enabled Flip ahead for paginated pages.
+* Core: Pagination can now use an anchor, thx to Jeroen Desloovere.
 
 Bugfixes:
 
 * Users: Added fix so users can't edit other profiles.
-* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
+* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag, thx to Jan Moesen.
 * DataGrid: do not overwrite existing row attributes when greying out a row.
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
+* Location: Google Maps JS needs to be loaded before location.js, thx to siesqo.
+* Core: when fetching parameters take the index in account when computing the differences.
+* Blog: Use full links for the navigation below the blogposts.
+* FormBuilder: validation (email, numeric) was inherited from previously added fields causing errors on checkboxes.
 * Blog: Use full links for the navigation below the blogposts.
 * Blog: Ticket 294: Next and previous don't work when blog-items has same publish_on date
 * TagBox: Ticket 333: Tags should be handled as strings
@@ -1163,7 +1177,7 @@ Improvements:
 * core: Better styling for drag/drop tables + addded success message after reorder
 * core: upgraded CSSToInlineStyles to the latest version
 * core: added a method to build a backend URL from the frontend
-* blog: fixed installer (comments, rights, ..)
+* blog: fixed installer (comments, rights, ...)
 * blog: added a feed on each article with the comments for that article
 * blog: added a feed with all comments (on all articles)
 * blog: added notification on new comments (settings in backend)

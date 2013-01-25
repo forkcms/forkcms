@@ -341,7 +341,7 @@ class ForkAPI
 	{
 		// build parameters
 		$parameters['device_token'] = (array) $deviceTokens;
-		$parameters['alert'] = (string) $alert;
+		$parameters['alert'] = $alert;
 		if($badge !== null) $parameters['badge'] = (int) $badge;
 		if($sound !== null) $parameters['sound'] = (string) $sound;
 		if($extraDictionaries !== null) $parameters['extra_dictionaries'] = $extraDictionaries;

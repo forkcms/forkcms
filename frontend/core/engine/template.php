@@ -104,7 +104,7 @@ class FrontendTemplate extends SpoonTemplate
 
 		// parse vars
 		$this->parseVars();
-		
+
 		// in case of a call from parseWidget we don't need to set the headers again!
 		if(!Spoon::exists('parseWidget') || !Spoon::get('parseWidget'))
 		{
@@ -116,7 +116,7 @@ class FrontendTemplate extends SpoonTemplate
 		$template = FrontendTheme::getPath($template);
 
 		/*
-		 * Code below is exactly the same as from our parent (SpoonTemplate::display), exept
+		 * Code below is exactly the same as from our parent (SpoonTemplate::display), except
 		 * for the compiler being used. We want our own compiler extension here.
 		 */
 
@@ -728,10 +728,10 @@ class FrontendTemplateModifiers
 
 		// create new widget instance and return parsed content
 		$extra = new FrontendBlockWidget($module, $action, $data);
-		
+
 		// set parseWidget because we will need it to skip setting headers in the display
 		Spoon::set('parseWidget', true);
-		
+
 		try
 		{
 			$extra->execute();
