@@ -153,6 +153,19 @@ class FrontendAJAX
 	 */
 	public function setModule($value)
 	{
+		// get the possible modules
+		$possibleModules = FrontendModel::getModules();
+		
+		// validate
+		if(!in_array($value, $possibleModules))
+		{
+			// create fake action
+			$fakeAction = new FrontendBaseAJAXAction('', '');
+
+			// output error
+			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Module not correct.');
+		}
+	
 		// set property
 		$this->module = (string) $value;
 	}
