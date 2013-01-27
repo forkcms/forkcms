@@ -18,6 +18,7 @@ Improvements:
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
 * Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
+* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 
 Bugfixes:
 
