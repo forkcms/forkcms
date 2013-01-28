@@ -106,6 +106,27 @@ class FrontendAJAX
 	 */
 	public function setAction($value)
 	{
+		// check if module is set
+		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
+	
+		// build the path (core is a special case)
+		if($this->getModule() == 'core') $path = FRONTEND_PATH . '/core/ajax/';
+		else $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/';
+	
+		// get the possible actions
+		$possibleActions = SpoonFile::getList($path);
+		
+		// validate
+		if(!in_array($value.'.php', $possibleActions))
+		{
+			// create fake action
+			$fakeAction = new FrontendBaseAJAXAction('', '');
+
+			// output error
+			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Action not correct.');
+		}
+	
+		// set property
 		$this->action = (string) $value;
 	}
 
@@ -153,6 +174,19 @@ class FrontendAJAX
 	 */
 	public function setModule($value)
 	{
+		// get the possible modules
+		$possibleModules = FrontendModel::getModules();
+		
+		// validate
+		if(!in_array($value, $possibleModules))
+		{
+			// create fake action
+			$fakeAction = new FrontendBaseAJAXAction('', '');
+
+			// output error
+			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Module not correct.');
+		}
+	
 		// set property
 		$this->module = (string) $value;
 	}
