@@ -28,6 +28,7 @@ Improvements:
 * Blog: enabled Flip ahead for blogposts.
 * Core: enabled Flip ahead for paginated pages.
 * Core: Pagination can now use an anchor, thx to Jeroen Desloovere.
+* Core: Added validation for module and action in the frontend ajax.
 
 Bugfixes:
 
