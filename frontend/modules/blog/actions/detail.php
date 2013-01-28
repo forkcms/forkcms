@@ -140,6 +140,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// add RSS-feed into the metaCustom
 		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])), 'href' => $rssCommentsLink), true);
 		
+		// add specified image
+		if(isset($this->record['image']) && $this->record['image'] != '') $this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
+		
 		// Open Graph-data: add images from content
 		$this->header->extractOpenGraphImages($this->record['text']);
 
