@@ -139,23 +139,16 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// add RSS-feed into the metaCustom
 		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])), 'href' => $rssCommentsLink), true);
+		
+		// Open Graph-data: add images from content
+		$this->header->extractOpenGraphImages($this->record['text']);
 
-		// build Facebook Open Graph-data
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
-		{
-			// add specified image
-			if(isset($this->record['image']) && $this->record['image'] != '') $this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
-
-			// add images from content
-			$this->header->extractOpenGraphImages($this->record['text']);
-
-			// add additional OpenGraph data
-			$this->header->addOpenGraphData('title', $this->record['title'], true);
-			$this->header->addOpenGraphData('type', 'article', true);
-			$this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
-			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
-			$this->header->addOpenGraphData('description', $this->record['title'], true);
-		}
+		// Open Graph-data: add additional OpenGraph data
+		$this->header->addOpenGraphData('title', $this->record['title'], true);
+		$this->header->addOpenGraphData('type', 'article', true);
+		$this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
+		$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
+		$this->header->addOpenGraphData('description', ($this->record['meta_description_overwrite'] == 'Y') ? $this->record['meta_description'] : $this->record['title'], true);
 
 		// when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb
 		if(count(FrontendBlogModel::getAllCategories()) > 1) $this->breadcrumb->addElement($this->record['category_title'], FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url']);
