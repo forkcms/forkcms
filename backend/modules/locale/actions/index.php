@@ -51,7 +51,14 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$langWidth = (80 / count($this->filter['language']));
 
 		// get all the translations for the selected languages
-		$translations = BackendLocaleModel::getTranslations($this->filter['application'], $this->filter['module'], $this->filter['type'], $this->filter['language'], $this->filter['name'], $this->filter['value']);
+		$translations = BackendLocaleModel::getTranslations(
+			$this->filter['application'],
+			$this->filter['module'],
+			$this->filter['type'],
+			$this->filter['language'],
+			$this->filter['name'],
+			$this->filter['value']
+		);
 
 		// create datagrids
 		$this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : array());
@@ -92,6 +99,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 				// set column attributes
 				$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
+
+				// set datagrid url
+				$dataGrid->setURL($this->filterQuery, true);
 
 				// hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
 				if(count($this->filter['language']) == 1) $dataGrid->setColumnHidden('translation_id');

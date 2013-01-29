@@ -32,7 +32,9 @@ Bugfixes:
 * TagBox: Ticket 333: Tags should be handled as strings
 * Extensions: Ticket 316: Link to default action
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
-
+* Locale: also get translations from other languages
+* Locale: order the results so the odd/even classes are correct
+* Locale: set datagrid url
 
 3.4.4 (2012-09-12)
 --
