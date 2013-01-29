@@ -932,18 +932,18 @@ class BackendLocaleModel
 		// get db
 		$db = BackendModel::getDB();
 
-		// build the query
+		// build the query to get the translation names
 		$query =
-			'SELECT l.id, l.module, l.type, l.name, l.value, l.language
+			'SELECT l.name
 			 FROM locale AS l
 			 WHERE
-			 	l.language IN (' . implode(',', $aLanguages) . ') AND
-			 	l.application = ? AND
-			 	l.name LIKE ? AND
-			 	l.value LIKE ? AND
-			 	l.type IN (' . implode(',', $types) . ')';
+				l.language IN (' . implode(',', $aLanguages) . ') AND
+				l.application = ? AND
+				l.name LIKE ? AND
+				l.value LIKE ? AND
+				l.type IN (' . implode(',', $types) . ')';
 
-		// add the paremeters
+		// create query parameters
 		$parameters = array($application, '%' . $name . '%', '%' . $value . '%');
 
 		// add module to the query if needed
@@ -953,8 +953,37 @@ class BackendLocaleModel
 			$parameters[] = $module;
 		}
 
-		// get the translations
-		$translations = (array) $db->getRecords($query, $parameters);
+		$translationNames = (array) $db->getColumn($query, $parameters);
+
+		// anything found?
+		if(!empty($translationNames))
+		{
+			$parameters = array($application);
+
+			// build the query to get all the translation from the selected languages that are in the found translation names
+			$query =
+				'SELECT l.id, l.module, l.type, l.name, l.value, l.language
+				 FROM locale AS l
+				 WHERE
+					l.language IN (' . implode(',', $aLanguages) . ') AND
+					l.application = ? AND
+					l.name  IN ("' . implode('", "', $translationNames) . '") AND
+					l.type IN (' . implode(',', $types) . ')';
+
+			// add module to the query if needed
+			if($module)
+			{
+				$query .= ' AND l.module = ?';
+				$parameters[] = $module;
+			}
+
+			$translations = (array) $db->getRecords($query, $parameters);
+		}
+
+		else
+		{
+			$translations = array();
+		}
 
 		// create an array for the sorted translations
 		$sortedTranslations = array();
@@ -969,7 +998,7 @@ class BackendLocaleModel
 		// create an array to use in the datagrid
 		$dataGridTranslations = array();
 
-		// an id that is used for in the datagrid, this is not the id of the translation!
+		// an id that is used in the datagrid, this is not the id of the translation!
 		$id = 0;
 
 		// loop the sorted translations

@@ -51,7 +51,14 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$langWidth = (80 / count($this->filter['language']));
 
 		// get all the translations for the selected languages
-		$translations = BackendLocaleModel::getTranslations($this->filter['application'], $this->filter['module'], $this->filter['type'], $this->filter['language'], $this->filter['name'], $this->filter['value']);
+		$translations = BackendLocaleModel::getTranslations(
+			$this->filter['application'],
+			$this->filter['module'],
+			$this->filter['type'],
+			$this->filter['language'],
+			$this->filter['name'],
+			$this->filter['value']
+		);
 
 		// create datagrids
 		$this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : array());
