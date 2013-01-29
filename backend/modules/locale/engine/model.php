@@ -977,6 +977,9 @@ class BackendLocaleModel
 				$parameters[] = $module;
 			}
 
+			// add order by
+			$query .= ' ORDER BY l.name ASC';
+
 			$translations = (array) $db->getRecords($query, $parameters);
 		}
 
