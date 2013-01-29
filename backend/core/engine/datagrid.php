@@ -528,29 +528,38 @@ class BackendDataGridPaging implements iSpoonDataGridPaging
 		$pagination['num_pages'] = $numPages;
 		$pagination['current_page'] = $currentPage;
 
-		// as long as we are below page 6 we should show all pages starting from 1
-		if($currentPage < 6)
+		// as long as we have more then 5 pages and are 5 pages from the end we should show all pages till the end
+		if($currentPage > 5 && $currentPage >= ($numPages - 4))
+		{
+			// init vars
+			$pagesStart = ($numPages > 7) ? $numPages - 5 : $numPages - 6;
+			$pagesEnd = $numPages;
+
+			// fix for page 6
+			if($numPages == 6) $pagesStart = 1;
+
+			// show first pages
+			if($numPages > 7) $showFirstPages = true;
+		}
+
+		// as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
+		elseif($currentPage <= 5)
 		{
 			// init vars
 			$pagesStart = 1;
-			$pagesEnd = ($numPages >= 7) ? 7 : $numPages;
+			$pagesEnd = 6;
+
+			// when we have 7 pages, show 7 as end
+			if($numPages == 7) $pagesEnd = 7;
+
+			// when we have less then 6 pages, show the maximum page
+			elseif($numPages <= 6) $pagesEnd = $numPages;
 
 			// show last pages
-			if($numPages > 8) $showLastPages = true;
+			if($numPages > 6 && $numPages != 7) $showLastPages = true;
 		}
 
-		// as long as we are 6 pages from the end we should show all pages till the end
-		elseif($currentPage > ($numPages - 6))
-		{
-			// init vars
-			$pagesStart = ($numPages == 9) ? ($numPages - 6) : ($numPages - 7);
-			$pagesEnd = $numPages;
-
-			// show first pages
-			$showFirstPages = true;
-		}
-
-		// page 7
+		// page 6
 		else
 		{
 			// init vars
