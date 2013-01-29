@@ -100,6 +100,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 				// set column attributes
 				$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
 
+				// set datagrid url
+				$dataGrid->setURL($this->filterQuery, true);
+
 				// hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
 				if(count($this->filter['language']) == 1) $dataGrid->setColumnHidden('translation_id');
 
