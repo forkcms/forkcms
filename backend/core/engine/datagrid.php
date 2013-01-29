@@ -556,7 +556,7 @@ class BackendDataGridPaging implements iSpoonDataGridPaging
 			elseif($numPages <= 6) $pagesEnd = $numPages;
 
 			// show last pages
-			if($numPages > 6 && $numPages != 7) $showLastPages = true;
+			if($numPages > 7) $showLastPages = true;
 		}
 
 		// page 6

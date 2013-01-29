@@ -500,7 +500,7 @@ class FrontendBaseBlock
 			elseif($this->pagination['num_pages'] <= 6) $pagesEnd = $this->pagination['num_pages'];
 
 			// show last pages
-			if($this->pagination['num_pages'] > 6 && $this->pagination['num_pages'] != 7) $showLastPages = true;
+			if($this->pagination['num_pages'] > 7) $showLastPages = true;
 		}
 
 		// page 6
