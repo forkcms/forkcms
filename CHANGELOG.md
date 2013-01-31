@@ -26,6 +26,7 @@ Bugfixes:
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
 * Blog: Use full links for the navigation below the blogposts.
+* Core: A search term should only be saved when it's not empty
 
 
 3.4.4 (2012-09-12)
