@@ -112,7 +112,7 @@ class APIClient extends API
 		 * that, rather shamefully, do not contain PHPDoc.
 		 */
 		preg_match_all('/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um', $PHPDoc, $matches);
-		if(array_key_exists(0, $matches) && empty($matches[0])) continue;
+		if(array_key_exists(0, $matches) && empty($matches[0])) return;
 		$phpdoc = array();
 
 		// we have to build up a custom stack of parameters
