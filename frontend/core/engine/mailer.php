@@ -293,6 +293,9 @@ class FrontendMailer
 			foreach($attachments as $attachment) $message->attach(Swift_Attachment::fromPath($attachment));
 		}
 
+		// Create the Mailer using your created Transport
+		$mailer = Swift_Mailer::newInstance($transport);
+
 		// send the email
 		if($mailer->send($message))
 		{
