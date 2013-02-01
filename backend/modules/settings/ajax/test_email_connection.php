@@ -75,6 +75,9 @@ class BackendSettingsAjaxTestEmailConnection extends BackendBaseAJAXAction
 			->setBody(BL::msg('TestMessage'), 'text/html')
 			->setCharset(SPOON_CHARSET);
 
+		// Create the Mailer using your created Transport
+		$mailer = Swift_Mailer::newInstance($transport);
+
 		try
 		{
 			if($mailer->send($message)) $this->output(self::OK, null, '');
