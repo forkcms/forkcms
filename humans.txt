@@ -1,0 +1,29 @@
+/* TEAM */
+	Developer: Sam Tubbax
+	Contact: sam-is-a-human [at] sumocoders.be
+	Twitter: @el_sakke
+	Github: https://github.com/samtubbax
+	From: Belgium, Leuven
+
+	Developer: Tijs Verkoyen
+	Contact: tijs-is-a-human [at] sumocoders.be
+	Twitter: @tijsverkoyen
+	Github: https://github.com/tijsverkoyen
+	From: Belgium, Ghent
+
+	Frontender: Mathias Helin
+	Contact: mathias-is-a-human [at] sumocoders.be
+	Twitter: @mathiashelin
+	Github: https://github.com/mathiashelin
+	From: Belgium, Kortrijk
+
+	Designer: Niels De Paepe
+	Contact: niels-is-a-human [at] sumocoders.be
+	Twitter: @nielsdepaepe
+	From: Belgium, Merelbeke
+
+/* SITE */
+	Doctype: HTML5
+	IDE: Coda, PHPStorm, Photoshop
+	Components: jQuery, Compass, Twitter Bootstrap
+	Runs on: Fork CMS, PHP, MySQL

@@ -116,10 +116,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$website = (CommonCookie::exists('comment_website') && SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
 		// create elements
-		$this->frm->addText('author', $author);
-		$this->frm->addText('email', $email);
+		$this->frm->addText('author', $author)->setAttributes(array('required' => null));
+		$this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->addText('website', $website, null);
-		$this->frm->addTextarea('message');
+		$this->frm->addTextarea('message')->setAttributes(array('required' => null));
 	}
 
 	/**
@@ -198,8 +198,30 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// assign settings
 		$this->tpl->assign('settings', $this->settings);
 
+		$navigation = FrontendBlogModel::getNavigation($this->record['id']);
+
+		// set previous and next link for usage with Flip ahead
+		if(!empty($navigation['previous']))
+		{
+			$this->header->addLink(
+				array(
+				     'rel' => 'previous',
+				     'href' => SITE_URL . $navigation['previous']['url'],
+				)
+			);
+		}
+		if(!empty($navigation['next']))
+		{
+			$this->header->addLink(
+				array(
+				     'rel' => 'next',
+				     'href' => SITE_URL . $navigation['next']['url'],
+				)
+			);
+		}
+
 		// assign navigation
-		$this->tpl->assign('navigation', FrontendBlogModel::getNavigation($this->record['id']));
+		$this->tpl->assign('navigation', $navigation);
 	}
 
 	/**

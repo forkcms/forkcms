@@ -1,0 +1,53 @@
+.navbar {
+	h1 {
+		/* Main title needs to be h1-tag. This fix is for text logo */
+		margin: 0;
+		line-height: 1;
+	}
+}
+
+a {
+	text-decoration: none;
+	border-bottom: 1px solid $linkColor;	/* Border instead of text-decoration */
+
+	&:hover {
+		text-decoration: none;
+		@include transition-property("color");
+		@include transition-duration(500ms);
+		@include transition-timing-function(ease-in);
+	}
+
+	&:focus {
+		/* Use a huge contrast and make it slightly larger for disabled people */
+		color: #FFF;
+		background-color: rgba(0, 0, 0, 0.4);
+		padding: 3px 5px;
+		@include border-radius();
+	}
+}
+
+.nav {
+	a {
+		border: none;
+	}
+}
+
+h1, h2, h3, h4 {
+	margin-top: 0;
+}
+
+.alert {
+	&.fullWidthAlert {
+		margin: 0;
+		width: 100%; /* Reset the width, make sure we use the full available width */
+	}
+}
+
+.formError {
+	@extend .help-inline;
+}
+
+abbr[title],
+abbr[data-original-title] {
+	border-bottom: none;
+}

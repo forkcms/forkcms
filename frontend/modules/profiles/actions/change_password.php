@@ -70,8 +70,8 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
 	private function loadForm()
 	{
 		$this->frm = new FrontendForm('updatePassword', null, null, 'updatePasswordForm');
-		$this->frm->addPassword('old_password');
-		$this->frm->addPassword('new_password', null, null, 'inputText showPasswordInput');
+		$this->frm->addPassword('old_password')->setAttributes(array('required' => null));
+		$this->frm->addPassword('new_password', null, null, 'inputText showPasswordInput')->setAttributes(array('required' => null));
 		$this->frm->addCheckbox('show_password');
 	}
 

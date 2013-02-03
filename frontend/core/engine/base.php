@@ -514,6 +514,14 @@ class FrontendBaseBlock
 			// set
 			$pagination['show_previous'] = true;
 			$pagination['previous_url'] = $URL;
+
+			// flip ahead
+			$this->header->addLink(
+				array(
+				     'rel' => 'prev',
+				     'href' => SITE_URL . $URL,
+				)
+			);
 		}
 
 		// show first pages?
@@ -578,6 +586,14 @@ class FrontendBaseBlock
 			// set
 			$pagination['show_next'] = true;
 			$pagination['next_url'] = $URL;
+
+			// flip ahead
+			$this->header->addLink(
+				array(
+				     'rel' => 'next',
+				     'href' => SITE_URL . $URL,
+				)
+			);
 		}
 
 		// multiple pages

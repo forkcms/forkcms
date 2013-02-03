@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<frontend>
+		<core>
+			<item type="label" name="For">
+				<translation language="en"><![CDATA[for]]></translation>
+				<translation language="nl"><![CDATA[voor]]></translation>
+			</item>
+			<item type="label" name="InThe">
+				<translation language="en"><![CDATA[in the]]></translation>
+				<translation language="nl"><![CDATA[in de]]></translation>
+			</item>
+			<item type="label" name="Loading">
+				<translation language="en"><![CDATA[loading]]></translation>
+				<translation language="nl"><![CDATA[laden]]></translation>
+			</item>
+			<item type="label" name="RSSFeed">
+				<translation language="en"><![CDATA[RSS-feed]]></translation>
+				<translation language="nl"><![CDATA[RSS-feed]]></translation>
+			</item>
+			<item type="label" name="Warning">
+				<translation language="en"><![CDATA[]]></translation>
+			</item>
+			<item type="label" name="WithThe">
+				<translation language="en"><![CDATA[with the]]></translation>
+				<translation language="en"><![CDATA[met de]]></translation>
+			</item>
+			<item type="message" name="ArticlesFor">
+				<translation language="en"><![CDATA[articles for %1$s]]></translation>
+				<translation language="nl"><![CDATA[artikels voor %1$s]]></translation>
+			</item>
+			<item type="message" name="OldBrowser">
+				<translation language="en"><![CDATA[You are using an outdated browsers. If you want to see the website like it was intended, you should upgrade your browser or install a decent browser such as <a href="https://www.google.com/chrome">Google Chrome</a>.]]></translation>
+				<translation language="nl"><![CDATA[Je gebruikt een verouderde browser. Indien je de website wil zien zoals deze bedoeld is, kan je beter een nieuwe versie downloaden of een degelijke browser zoals <a href="https://www.google.com/chrome">Google Chrome</a> installeren.]]></translation>
+			</item>
+		</core>
+	</frontend>
+</locale>

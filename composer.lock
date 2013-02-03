@@ -1,18 +1,18 @@
 {
-    "hash": "1a11e32aae4662840345a1be216579a1",
+    "hash": "7fbb094d226ac32f3c34af4d7c7a65f4",
     "packages": [
         {
             "name": "facebook/php-sdk",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "git://github.com/facebook/facebook-php-sdk.git",
-                "reference": "v3.2.0"
+                "reference": "v3.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/facebook/facebook-php-sdk/zipball/v3.2.0",
-                "reference": "v3.2.0",
+                "url": "https://github.com/facebook/facebook-php-sdk/archive/v3.2.1.zip",
+                "reference": "v3.2.1",
                 "shasum": ""
             },
             "require": {
@@ -20,9 +20,8 @@
                 "ext-curl": "*",
                 "ext-json": "*"
             },
-            "time": "2012-08-14 10:28:20",
+            "time": "2012-11-27 22:34:17",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "src"
@@ -64,7 +63,6 @@
             },
             "time": "2012-10-13 10:59:41",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     ""
@@ -103,7 +101,6 @@
             },
             "time": "2012-10-13 11:39:35",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     ""
