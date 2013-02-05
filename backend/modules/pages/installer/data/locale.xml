@@ -310,6 +310,19 @@
         <translation language="hu"><![CDATA[<p><strong>Fontos:</strong> Ez a tartalom nem frissül, míg az oldalt nem mentetted.</p>]]></translation>
         <translation language="es"><![CDATA[<p><strong>Importante:</strong> Este contenido no sera actualizado antes de que la página no sea guardada.</p>]]></translation>
       </item>
+      <item type="message" name="CopyAdded">
+        <translation language="nl"><![CDATA[Kopie toegevoegd]]></translation>
+        <translation language="en"><![CDATA[Copy added]]></translation>
+        <translation language="it"><![CDATA[Copia aggiunto]]></translation>
+        <translation language="ru"><![CDATA[Копировать добавил]]></translation>
+        <translation language="zh"><![CDATA[复制添加]]></translation>
+        <translation language="de"><![CDATA[Kopie hinzugefügt]]></translation>
+        <translation language="fr"><![CDATA[Copier ajoutée]]></translation>
+        <translation language="hu"><![CDATA[Copy hozzáadott]]></translation>
+        <translation language="es"><![CDATA[Copia añadido]]></translation>
+        <translation language="uk"><![CDATA[Копіювати додав]]></translation>
+        <translation language="lt"><![CDATA[Kopija pridėta]]></translation>
+      </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De pagina "%1$s" werd verwijderd.]]></translation>
         <translation language="en"><![CDATA[The page "%1$s" was deleted.]]></translation>
