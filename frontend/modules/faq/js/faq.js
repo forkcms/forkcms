@@ -3,7 +3,7 @@
  *
  * @author	Annelies Van Extergem <annelies@netlash.com>
  * @author	Jelmer Snoeck <jelmer.snoeck@netlash.com>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 jsFrontend.faq =
 {

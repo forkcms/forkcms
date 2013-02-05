@@ -329,7 +329,7 @@ class FrontendHeader extends FrontendBaseObject
 		$image = str_replace(SITE_URL, '', $image);
 
 		// check if it no longer points to an absolute uri
-		if(substr($image, 0, 7) != 'http://')
+		if(substr($image, 0, 7) != SITE_PROTOCOL . '://')
 		{
 			// check if image exists
 			if(!SpoonFile::exists(PATH_WWW . $image)) return;
@@ -340,6 +340,10 @@ class FrontendHeader extends FrontendBaseObject
 
 		// add to metadata
 		$this->addMetaData(array('property' => 'og:image', 'content' => $image), $overwrite, array('property', 'content'));
+		if(SITE_PROTOCOL == 'https')
+		{
+			$this->addMetaData(array('property' => 'og:image:secure_url', 'content' => $image), $overwrite, array('property', 'content'));
+		}
 	}
 
 	/**
@@ -820,6 +824,14 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private function parseSeo()
 	{
+		// when on the homepage of the default language, set the clean site url as canonical, because of redirect fix
+		$queryString = trim($this->URL->getQueryString(), '/');
+		$language = FrontendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+		if($queryString == $language)
+		{
+			$this->canonical = rtrim(SITE_URL, '/');
+		}
+
 		// any canonical URL provided?
 		if($this->canonical != '') $url = $this->canonical;
 

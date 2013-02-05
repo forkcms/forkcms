@@ -1,12 +1,5 @@
 # README
 
-## General
-
-If you are using git instead of the zip-file from http://www.fork-cms.com, you
-should install our dependencies. The dependencies are handled by composer, see:
-[getcomposer.org](http://getcomposer.org/)
-
-
 ## Installation
 
 1. Upload all of the content into your document root
@@ -14,6 +7,14 @@ should install our dependencies. The dependencies are handled by composer, see:
 4. Follow the steps on-screen
 5. Have fun!
 
+### Dependencies
+
+**Remark**: If you are using GIT instead of the zip-file from [http://www.fork-cms.com](http://www.fork-cms.com), you
+should install our dependencies. The dependencies are handled by [composer](http://getcomposer.org/)
+
+To install the dependencies, you can run the command below in the document-root:
+
+	composer install
 
 ## Bugs
 

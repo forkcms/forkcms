@@ -2,7 +2,7 @@
  * Interaction for the analytics module
  *
  * @author	Annelies Vanextergem <annelies@netlash.com>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.analytics =

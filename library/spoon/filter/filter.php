@@ -816,8 +816,8 @@ class SpoonFilter
 		if($stripTabs) $string = preg_replace("/\t/", '', $string);
 
 		// remove the style- and head-tags and all their contents
-		$string = preg_replace('|\<style.*\>(.*\n*)\</style\>|is', '', $string);
-		$string = preg_replace('|\<head.*\>(.*\n*)\</head\>|is', '', $string);
+		$string = preg_replace('|\<style.*\>(.*\n*)\</style\>|isU', '', $string);
+		$string = preg_replace('|\<head.*\>(.*\n*)\</head\>|isU', '', $string);
 
 		// replace images with their alternative content
 		// eg. <img src="path/to/the/image.jpg" alt="My image" /> => My image

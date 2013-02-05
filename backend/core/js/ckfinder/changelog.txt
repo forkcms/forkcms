@@ -1,7 +1,17 @@
 CKFinder Changelog
 ==================
-http://ckfinder.com
-Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+http://cksource.com/ckfinder
+Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+
+### Version 2.3.1
+Security Release:
+It was possible to perform DOS attack by users authorized to use the sever connector and with permissions to upload files (ASP, PHP, ColdFusion).
+It was possible to cause Denial of Service to files and folders on certain servers (like Apache) by users authorized to use the sever connector and with permissions to create folders. The attack was possible only inside a folder to which user had create folder permissions.
+- Added new translation: Serbian.
+- Updated translations: Catalan, Chinese, Japanese.
+- Folders that start with a dot character are now disallowed by default.
+- Fixed auto-renaming of files with multiple extensions: foo.tar.gz will be renamed to foo(1).tar.gz on second upload.
+- Maximize did not work when CKFinder was added with appendTo()
 
 ### Version 2.3
 - Added the new Maximize plugin.

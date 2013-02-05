@@ -1649,7 +1649,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor no URL can be applied.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefore no URL can be applied.');
 
 			// exists
 			$this->columns[(string) $column]->setURL($URL, $title);

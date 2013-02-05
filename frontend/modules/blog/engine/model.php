@@ -54,7 +54,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		{
 			$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
-			foreach($folders as $folder) $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
+			foreach($folders as $folder) $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $return['image'];
 		}
 
 		// return
@@ -73,7 +73,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
-			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
 			 m.url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
@@ -103,11 +103,17 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
-
+			
+			// allow comments as boolean
+			$items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+			
+			// reset allow comments
+			if(!FrontendModel::getModuleSetting('blog', 'allow_comments')) $items[$key]['allow_comments'] = false;
+			
 			// image?
 			if(isset($row['image']))
 			{
-				foreach($folders as $folder) $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+				foreach($folders as $folder) $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $row['image'];
 			}
 		}
 
@@ -201,7 +207,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
-			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
 			 m.url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
@@ -231,6 +237,12 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
+
+			// allow comments as boolean
+			$items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+
+			// reset allow comments
+			if(!FrontendModel::getModuleSetting('blog', 'allow_comments')) $items[$key]['allow_comments'] = false;
 
 			// image?
 			if(isset($row['image']))
@@ -287,7 +299,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords(
 			'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
 			 c.title AS category_title, m2.url AS category_url, i.image,
-			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+			 UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
 			 m.url
 			 FROM blog_posts AS i
 			 INNER JOIN blog_categories AS c ON i.category_id = c.id
@@ -315,6 +327,12 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
 			if($row['comments_count'] > 1) $items[$key]['comments_multiple'] = true;
+
+			// allow comments as boolean
+			$items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+
+			// reset allow comments
+			if(!FrontendModel::getModuleSetting('blog', 'allow_comments')) $items[$key]['allow_comments'] = false;
 
 			// image?
 			if(isset($row['image']))
@@ -481,11 +499,15 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// reset url
 			foreach($items as &$row)
 			{
-				$row['full_url'] = $link . '/' . $row['url'] . '?gn=' . str_pad($row['id'], 3, '0', STR_PAD_LEFT);
-							// image?
+				$row['full_url'] = $link . '/' . $row['url'];
+
+				// image?
 				if(isset($row['image']))
 				{
-					foreach($folders as $folder) $row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+					foreach($folders as $folder)
+					{
+						$row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
+					}
 				}
 			}
 		}
@@ -537,27 +559,28 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// init var
 		$navigation = array();
+		$detailLink = FrontendNavigation::getURLForBlock('blog', 'detail') . '/';
 
 		// get previous post
 		$navigation['previous'] = $db->getRecord(
-			'SELECT i.id, i.title, m.url
+			'SELECT i.id, i.title, CONCAT(?, m.url) AS url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
-			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ?
-			 ORDER BY i.publish_on DESC
+			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
+			 ORDER BY i.publish_on DESC, i.id DESC
 			 LIMIT 1',
-			array($id, 'active', 'N', FRONTEND_LANGUAGE, $date)
+			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
 		);
 
 		// get next post
 		$navigation['next'] = $db->getRecord(
-			'SELECT i.id, i.title, m.url
+			'SELECT i.id, i.title, CONCAT(?, m.url) AS url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
-			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on > ?
-			 ORDER BY i.publish_on ASC
+			 WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND ((i.publish_on = ? AND i.id > ?) OR i.publish_on > ?)
+			 ORDER BY i.publish_on ASC, i.id ASC
 			 LIMIT 1',
-			array($id, 'active', 'N', FRONTEND_LANGUAGE, $date)
+			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
 		);
 
 		return $navigation;

@@ -2,6 +2,9 @@
 --
 Improvements:
 
+* Core: Upgraded to CKEditor 3.6.6
+* Core: Upgraded to CKFinder 2.3.1
+* Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
@@ -9,12 +12,27 @@ Improvements:
 * Core: Akismet and CssToinlineStyles are now installed with Composer.
 * Core: Upgraded Highcharts to 2.3.3
 * Core: Upgraded to jQuery UI 1.8.24
-* Core: Upgraded to CKEditor 3.6.5
+* FormBuilder: do not prefix the site URL to the form action to prevent submitting to another domain.
+* Core: starting to use namespaces for the external classes that use namespaces.
+* Core: upgraded Spoon
+* Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
+* Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
+* Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
+* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 
 Bugfixes:
 
 * Users: Added fix so users can't edit other profiles.
 * SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
+* DataGrid: do not overwrite existing row attributes when greying out a row.
+* Form: encode html entities in hidden field values to prevent XSS.
+* Mailmotor: add jsData to iframe template.
+* Blog: Use full links for the navigation below the blogposts.
+* Blog: Ticket 294: Next and previous don't work when blog-items has same publish_on date
+* TagBox: Ticket 333: Tags should be handled as strings
+* Extensions: Ticket 316: Link to default action
+* API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
+* Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
 
 
 3.4.4 (2012-09-12)

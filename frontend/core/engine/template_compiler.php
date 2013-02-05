@@ -56,7 +56,7 @@ class FrontendTemplateCompiler extends SpoonTemplateCompiler
 				?>' . $this->variables['FRONTEND_PATH'] . '/' . $match[1] . '<?php
 				$includes[] = str_replace(\'//\', \'/\', eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\'));
 				foreach($includes as $include) if(@file_exists($include) && is_file($include)) break;
-				if($this->getForceCompile()) $this->compile(\'' . dirname(realpath($this->template)) . '\', $include);
+				if($this->getForceCompile() || !file_exists($this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' . dirname(realpath($this->template)) . '\'))) $this->compile(\'' . dirname(realpath($this->template)) . '\', $include);
 				$return = @include $this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' . dirname(realpath($this->template)) . '\');
 				if($return === false && $this->compile(\'' . dirname(realpath($this->template)) . '\', $include))
 				{

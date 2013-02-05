@@ -3,5 +3,6 @@
 .buildpath
 .settings
 .*.swp
+.DS_Store
 backend/cache/navigation/
 vendor

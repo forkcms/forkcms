@@ -680,6 +680,7 @@ class BackendDataGridDB extends BackendDataGrid
  * A set of commonly used functions that will be applied on rows or columns
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class BackendDataGridFunctions
 {
@@ -846,22 +847,36 @@ class BackendDataGridFunctions
 	 */
 	public static function greyOut($type, $value, array $attributes = array())
 	{
-		// the base class
 		$grayedOutClass = 'grayedOut';
+		$greyOut = false;
 
 		switch($type)
 		{
 			case 'visible':
 			case 'active':
 			case 'published':
-				if($value == 'N') return array('class' => $grayedOutClass);
+				if($value == 'N') $greyOut = true;
 				break;
 			case 'hidden':
-				if($value == 'Y') return array('class' => $grayedOutClass);
+				if($value == 'Y') $greyOut = true;
 				break;
 		}
 
-		return array();
+		// add the grayedOut class to any existing attributes
+		if($greyOut)
+		{
+			if(array_key_exists('class', $attributes))
+			{
+				$attributes['class'] .= ' ' . $grayedOutClass;
+			}
+
+			else
+			{
+				$attributes['class'] = $grayedOutClass;
+			}
+		}
+
+		return $attributes;
 	}
 
 	/**

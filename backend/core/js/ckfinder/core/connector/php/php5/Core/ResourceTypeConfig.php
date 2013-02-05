@@ -2,8 +2,8 @@
 /*
  * CKFinder
  * ========
- * http://ckfinder.com
- * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -234,8 +234,6 @@ class CKFinder_Connector_Core_ResourceTypeConfig
         if (is_null($this->_config)) {
             $this->_config =& CKFinder_Connector_Core_Factory::getInstance("Core_Config");
         }
-
-        $toCheck = array();
 
         if ($this->_config->getCheckDoubleExtension()) {
             $pieces = explode('.', $fileName);

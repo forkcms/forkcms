@@ -1,7 +1,10 @@
 {
+	"name": "forkcms/forkcms",
+	"description": "Fork is an open source CMS that will rock your world.",
+	"license": "MIT",
 	"require": {
 		"facebook/php-sdk": "3.2.*",
-		"tijsverkoyen/akismet": "1.0.*",
-		"tijsverkoyen/css-to-inline-styles": "1.0.*"
+		"tijsverkoyen/akismet": "1.1.*",
+		"tijsverkoyen/css-to-inline-styles": "1.1.*"
 	}
 }

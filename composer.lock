@@ -1,5 +1,5 @@
 {
-    "hash": "962a3776a1f0463d53ea1bcd4d0d656e",
+    "hash": "1a11e32aae4662840345a1be216579a1",
     "packages": [
         {
             "name": "facebook/php-sdk",
@@ -22,7 +22,7 @@
             },
             "time": "2012-08-14 10:28:20",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "src"
@@ -46,25 +46,25 @@
         },
         {
             "name": "tijsverkoyen/akismet",
-            "version": "1.0.8",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/Akismet",
-                "reference": "1.0.8"
+                "reference": "1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/tijsverkoyen/Akismet/zipball/1.0.8",
-                "reference": "1.0.8",
+                "url": "https://github.com/tijsverkoyen/Akismet/zipball/1.1.0",
+                "reference": "1.1.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0",
                 "ext-curl": "*"
             },
-            "time": "2012-10-13 10:45:14",
+            "time": "2012-10-13 10:59:41",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     ""
@@ -85,25 +85,25 @@
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
-            "version": "1.0.6",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/CssToInlineStyles",
-                "reference": "1.0.6"
+                "reference": "1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/tijsverkoyen/CssToInlineStyles/zipball/1.0.6",
-                "reference": "1.0.6",
+                "url": "https://github.com/tijsverkoyen/CssToInlineStyles/zipball/1.1.0",
+                "reference": "1.1.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0",
                 "ext-curl": "*"
             },
-            "time": "2012-10-13 10:49:09",
+            "time": "2012-10-13 11:39:35",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     ""

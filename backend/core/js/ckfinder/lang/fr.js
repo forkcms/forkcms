@@ -1,8 +1,8 @@
 ﻿/*
  * CKFinder
  * ========
- * http://ckfinder.com
- * Copyright (C) 2007-2012, CKSource - Frederico Knabben. All rights reserved.
+ * http://cksource.com/ckfinder
+ * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file, and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -29,7 +29,7 @@ CKFinder.lang['fr'] =
 	{
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, Inaccessible</span>',
-		confirmCancel	: 'Certaines options ont été modifiées. Êtes vous sûr de vouloir fermer cette fenêtre?',
+		confirmCancel	: 'Certaines options ont été modifiées. Êtes-vous sûr de vouloir fermer cette fenêtre ?',
 		ok				: 'OK',
 		cancel			: 'Annuler',
 		confirmationTitle	: 'Confirmation',
@@ -39,7 +39,7 @@ CKFinder.lang['fr'] =
 		redo			: 'Rétablir',
 		skip			: 'Passer',
 		skipAll			: 'Passer tout',
-		makeDecision	: 'Quelle action choisir?',
+		makeDecision	: 'Quelle action choisir ?',
 		rememberDecision: 'Se rappeler de la décision'
 	},
 
@@ -75,41 +75,41 @@ CKFinder.lang['fr'] =
 	FolderDelete	: 'Êtes-vous sûr de vouloir effacer le dossier "%1"?',
 	FolderRenaming	: ' (Renommage en cours...)',
 	FolderDeleting	: ' (Suppression en cours...)',
-	DestinationFolder	: 'Destination Folder', // MISSING
+	DestinationFolder	: 'Dossier de destination',
 
 	// Files
 	FileRename		: 'Entrez le nouveau nom du fichier: ',
 	FileRenameExt	: 'Êtes-vous sûr de vouloir changer l\'extension de ce fichier? Le fichier pourrait devenir inutilisable.',
 	FileRenaming	: 'Renommage en cours...',
 	FileDelete		: 'Êtes-vous sûr de vouloir effacer le fichier "%1"?',
-	FilesDelete	: 'Are you sure you want to delete %1 files?', // MISSING
+	FilesDelete	: 'Êtes-vous sûr de vouloir supprimer %1 fichiers ?',
 	FilesLoading	: 'Chargement...',
 	FilesEmpty		: 'Répertoire vide',
-	DestinationFile	: 'Destination File', // MISSING
-	SkippedFiles	: 'List of skipped files:', // MISSING
+	DestinationFile	: 'Fichier de destination',
+	SkippedFiles	: 'Liste des fichiers ignorés : ',
 
 	// Basket
 	BasketFolder		: 'Corbeille',
 	BasketClear			: 'Vider la corbeille',
 	BasketRemove		: 'Retirer de la corbeille',
 	BasketOpenFolder	: 'Ouvrir le répertiore parent',
-	BasketTruncateConfirm : 'Êtes vous sûr de vouloir supprimer tous les fichiers de la corbeille?',
-	BasketRemoveConfirm	: 'Êtes vous sûr de vouloir supprimer le fichier "%1" de la corbeille?',
-	BasketRemoveConfirmMultiple	: 'Do you really want to remove %1 files from the basket?', // MISSING
+	BasketTruncateConfirm : 'Êtes-vous sûr de vouloir supprimer tous les fichiers de la corbeille ?',
+	BasketRemoveConfirm	: 'Êtes-vous sûr de vouloir supprimer le fichier "%1" de la corbeille ?',
+	BasketRemoveConfirmMultiple	: 'Êtes-vous sûr de vouloir supprimer %1 fichiers de la corbeille ?',
 	BasketEmpty			: 'Aucun fichier dans la corbeille, déposez en queques uns.',
 	BasketCopyFilesHere	: 'Copier des fichiers depuis la corbeille',
 	BasketMoveFilesHere	: 'Déplacer des fichiers depuis la corbeille',
 
 	// Global messages
-	OperationCompletedSuccess	: 'Operation completed successfully.', // MISSING
-	OperationCompletedErrors		: 'Operation completed with errors.', // MISSING
-	FileError				: '%s: %e', // MISSING
+	OperationCompletedSuccess	: 'Operation terminée avec succès.',
+	OperationCompletedErrors		: 'Operation terminée avec des erreurs.',
+	FileError				: '%s: %e',
 
 	// Move and Copy files
-	MovedFilesNumber		: 'Number of files moved: %s.', // MISSING
-	CopiedFilesNumber	: 'Number of files copied: %s.', // MISSING
-	MoveFailedList		: 'The following files could not be moved:<br />%s', // MISSING
-	CopyFailedList		: 'The following files could not be copied:<br />%s', // MISSING
+	MovedFilesNumber		: 'Nombre de fichiers déplacés : %s.',
+	CopiedFilesNumber	: 'Nombre de fichiers copiés : %s.',
+	MoveFailedList		: 'Les fichiers suivants ne peuvent être déplacés :<br />%s',
+	CopyFailedList		: 'Les fichiers suivants ne peuvent être copiés :<br />%s',
 
 	// Toolbar Buttons (some used elsewhere)
 	Upload		: 'Envoyer',
@@ -128,7 +128,7 @@ CKFinder.lang['fr'] =
 	NewSubFolder	: 'Nouveau sous-dossier',
 	Rename			: 'Renommer',
 	Delete			: 'Effacer',
-	DeleteFiles		: 'Delete Files', // MISSING
+	DeleteFiles		: 'Supprimer les fichiers',
 
 	CopyDragDrop	: 'Copier ici',
 	MoveDragDrop	: 'Déplacer ici',
@@ -141,7 +141,7 @@ CKFinder.lang['fr'] =
 
 	FileOverwrite	: 'Ré-écrire',
 	FileAutorename	: 'Re-nommage automatique',
-	ManuallyRename	: 'Manually rename', // MISSING
+	ManuallyRename	: 'Renommage manuel',
 
 	// Generic
 	OkBtn		: 'OK',
@@ -163,8 +163,8 @@ CKFinder.lang['fr'] =
 
 	// Flash Uploads
 	UploadLabel			: 'Fichier à envoyer',
-	UploadTotalFiles	: 'Nombre de fichiers:',
-	UploadTotalSize		: 'Poids total:',
+	UploadTotalFiles	: 'Nombre de fichiers :',
+	UploadTotalSize		: 'Poids total :',
 	UploadSend			: 'Envoyer',
 	UploadAddFiles		: 'Ajouter des fichiers',
 	UploadClearFiles	: 'Supprimer les fichiers',
@@ -176,14 +176,14 @@ CKFinder.lang['fr'] =
 
 	// Settings Panel
 	SetTitle		: 'Configuration',
-	SetView			: 'Voir:',
+	SetView			: 'Voir :',
 	SetViewThumb	: 'Miniatures',
 	SetViewList		: 'Liste',
-	SetDisplay		: 'Affichage:',
+	SetDisplay		: 'Affichage :',
 	SetDisplayName	: 'Nom du fichier',
 	SetDisplayDate	: 'Date',
 	SetDisplaySize	: 'Taille du fichier',
-	SetSort			: 'Classement:',
+	SetSort			: 'Classement :',
 	SetSortName		: 'par nom de fichier',
 	SetSortDate		: 'par date',
 	SetSortSize		: 'par taille',
@@ -237,8 +237,8 @@ CKFinder.lang['fr'] =
 		FileEmpty		: 'Le nom du fichier ne peut être vide.',
 		FileExists		: 'Le fichier %s existes déjà.',
 		FolderEmpty		: 'Le nom du dossier ne peut être vide.',
-		FolderExists	: 'Folder %s already exists.', // MISSING
-		FolderNameExists	: 'Folder already exists.', // MISSING
+		FolderExists	: 'Le dossier %s existe déjà.',
+		FolderNameExists	: 'Le dossier existe déjà.',
 
 		FileInvChar		: 'Le nom du fichier ne peut pas contenir les charactères suivants : \n\\ / : * ? " < > |',
 		FolderInvChar	: 'Le nom du dossier ne peut pas contenir les charactères suivants : \n\\ / : * ? " < > |',
@@ -246,7 +246,7 @@ CKFinder.lang['fr'] =
 		PopupBlockView	: 'Il n\'a pas été possible d\'ouvrir la nouvelle fenêtre. Désactiver votre bloqueur de fenêtres pour ce site.',
 		XmlError		: 'Impossible de charger correctement la réponse XML du serveur web.',
 		XmlEmpty		: 'Impossible de charger la réponse XML du serveur web. Le serveur a renvoyé une réponse vide.',
-		XmlRawResponse	: 'Réponse du serveur: %s'
+		XmlRawResponse	: 'Réponse du serveur : %s'
 	},
 
 	// Imageresize plugin
@@ -254,7 +254,7 @@ CKFinder.lang['fr'] =
 	{
 		dialogTitle		: 'Redimensionner %s',
 		sizeTooBig		: 'Impossible de modifier la hauteur ou la largeur de cette image pour une valeur plus grande que l\'original (%size).',
-		resizeSuccess	: 'L\'image a été redimensionné avec succès.',
+		resizeSuccess	: 'L\'image a été redimensionnée avec succès.',
 		thumbnailNew	: 'Créer une nouvelle vignette',
 		thumbnailSmall	: 'Petit (%s)',
 		thumbnailMedium	: 'Moyen (%s)',
@@ -296,12 +296,12 @@ CKFinder.lang['fr'] =
 
 	Zip :
 	{
-		extractHereLabel	: 'Extract here', // MISSING
-		extractToLabel		: 'Extract to...', // MISSING
-		downloadZipLabel	: 'Download as zip', // MISSING
-		compressZipLabel	: 'Compress to zip', // MISSING
-		removeAndExtract	: 'Remove existing and extract', // MISSING
-		extractAndOverwrite	: 'Extract overwriting existing files', // MISSING
-		extractSuccess		: 'File extracted successfully.' // MISSING
+		extractHereLabel	: 'Décompresser ici',
+		extractToLabel		: 'Décompresser vers...',
+		downloadZipLabel	: 'Zipper et télécharger',
+		compressZipLabel	: 'Zipper',
+		removeAndExtract	: 'Supprimer les fichiers existants et décompresser',
+		extractAndOverwrite	: 'Décompresser et remplacer les fichier existants',
+		extractSuccess		: 'Les fichiers ont été décompressés avec succès.'
 	}
 };

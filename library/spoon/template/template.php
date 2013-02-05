@@ -123,7 +123,6 @@ class SpoonTemplate
 	 */
 	public function assign($variable, $value = null)
 	{
-
 		// regular function use
 		if($value !== null && $variable != '')
 		{

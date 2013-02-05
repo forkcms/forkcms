@@ -26,6 +26,18 @@
 	<script type="text/javascript" src="/frontend/cache/navigation/editor_link_list_{$LANGUAGE}.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
+			{$jsData}
+
+			// reports
+			$(function()
+			{
+				{option:formError}jsBackend.messages.add('error', "{$errFormError|addslashes}");{/option:formError}
+				{option:usingRevision}jsBackend.messages.add('notice', "{$msgUsingARevision|addslashes}");{/option:usingRevision}
+				{option:usingDraft}jsBackend.messages.add('notice', "{$msgUsingADraft|addslashes}");{/option:usingDraft}
+				{option:report}jsBackend.messages.add('success', "{$reportMessage|addslashes}");{/option:report}
+				{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage|addslashes}");{/option:errorMessage}
+			});
+
 			var variables = new Array();
 			variables =
 			{

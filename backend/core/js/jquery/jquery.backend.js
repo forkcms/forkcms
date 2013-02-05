@@ -6,7 +6,7 @@
  * Meta-handler
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
- * @author	Thomas Deceuninck <thomasdeceuninck@netlash.com>
+ * @author	Thomas Deceuninck <thomas@fronto.be>
  */
 (function($)
 {
@@ -1017,7 +1017,7 @@
 			function remove(value)
 			{
 				// get index for element
-				var index = $.inArray(value, elements);
+				var index = $.inArray(String(value), elements);
 
 				// remove element
 				if(index > -1) elements.splice(index, 1);
@@ -1256,7 +1256,7 @@
 				if(index > -1) elements.splice(index, 1);
 
 				// set new value
-				$('#' + id).val(elements.join(options.splitChar));
+				$('#' + id).val(elements);
 
 				$('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', false);
 
