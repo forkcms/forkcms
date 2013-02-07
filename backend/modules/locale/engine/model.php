@@ -112,11 +112,26 @@ class BackendLocaleModel
 		$daysLong = SpoonLocale::getWeekDays($language, false, 'sunday');
 		$daysShort = SpoonLocale::getWeekDays($language, true, 'sunday');
 
+		// temporary array to store the loc translations
+		$jsonLoc = array();
+
 		// build labels
-		foreach($monthsLong as $key => $value) $json['loc']['core']['MonthLong' . SpoonFilter::ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $json['loc']['core']['MonthShort' . SpoonFilter::ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $json['loc']['core']['DayLong' . SpoonFilter::ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $json['loc']['core']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $jsonLoc['MonthLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $jsonLoc['MonthShort' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $jsonLoc['DayLong' . SpoonFilter::ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $jsonLoc['DayShort' . SpoonFilter::ucfirst($key)] = $value;
+
+		// check if we're creating the cache file for the frontend or not,
+		// when creating the cache for the frontend we don't want to store the data in another
+		// core array like we do for the backend.
+		if($application == 'frontend')
+		{
+			$json['loc'] = $jsonLoc;
+		}
+		else
+		{
+			$json['loc']['core'] = $jsonLoc;
+		}
 
 		// store
 		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json', json_encode($json));
