@@ -19,6 +19,7 @@ Improvements:
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
 * Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
+* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere. Tx to Jeroen Desloovere.
 
 Bugfixes:
 
