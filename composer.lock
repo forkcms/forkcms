@@ -1,5 +1,5 @@
 {
-    "hash": "38a12245b3f81ad242623158d1236b84",
+    "hash": "90badc619e5498a146fa925d07f21e7e",
     "packages": [
         {
             "name": "facebook/php-sdk",
@@ -27,7 +27,6 @@
                     "src"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
@@ -389,7 +388,6 @@
                     ""
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD"
             ],
@@ -405,28 +403,28 @@
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
-            "version": "1.1.0",
+            "version": "1.2.1",
+            "target-dir": "TijsVerkoyen/CssToInlineStyles",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/CssToInlineStyles",
-                "reference": "1.1.0"
+                "reference": "1.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/tijsverkoyen/CssToInlineStyles/zipball/1.1.0",
-                "reference": "1.1.0",
+                "url": "https://api.github.com/repos/tijsverkoyen/CssToInlineStyles/zipball/1.2.1",
+                "reference": "1.2.1",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "php": ">=5.2.0"
+                "php": ">=5.3.0"
             },
-            "time": "2012-10-13 11:39:35",
+            "time": "2013-02-09 17:48:44",
             "type": "library",
             "autoload": {
-                "classmap": [
-                    ""
-                ]
+                "psr-0": {
+                    "TijsVerkoyen\\CssToInlineStyles": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
