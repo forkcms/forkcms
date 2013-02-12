@@ -73,7 +73,7 @@ class BackendFormBuilderAPI
 			}
 
 			$entries = (array) BackendModel::getDB()->getRecords(
-				'SELECT i.*, f.*, UNIX_TIMESTAMP(i.sent_on) AS sent_on
+				'SELECT i.*, f.data_id, f.label, f.value, UNIX_TIMESTAMP(i.sent_on) AS sent_on
 				 FROM forms_data AS i
 				 INNER JOIN forms_data_fields AS f ON i.id = f.data_id
 				 WHERE i.form_id = ?
