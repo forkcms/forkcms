@@ -19,6 +19,9 @@ Improvements:
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
 * Blog: enabled Flip ahead for blogposts.
 * Core: enabled Flip ahead for paginated pages.
+* Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
+* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
+* Core: Added validation for module and action in the frontend ajax.
 
 Bugfixes:
 
@@ -28,6 +31,11 @@ Bugfixes:
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
 * Blog: Use full links for the navigation below the blogposts.
+* Blog: Ticket 294: Next and previous don't work when blog-items has same publish_on date
+* TagBox: Ticket 333: Tags should be handled as strings
+* Extensions: Ticket 316: Link to default action
+* API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
+* Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
 
 
 3.4.4 (2012-09-12)

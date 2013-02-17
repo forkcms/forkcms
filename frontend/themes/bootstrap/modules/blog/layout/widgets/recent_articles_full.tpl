@@ -17,14 +17,16 @@
 						<div class="span10">
 							<h3><a href="{$widgetBlogRecentArticlesFull.full_url}" title="{$widgetBlogRecentArticlesFull.title}">{$widgetBlogRecentArticlesFull.title}</a></h3>
 						</div>
-						<div class="span2 commentCount">
-							<i class="icon-comment"></i>
-							{option:!widgetBlogRecentArticlesFull.comments}<a href="{$widgetBlogRecentArticlesFull.full_url}#{$actComment}">{$msgBlogNumberOfComments|sprintf:{$widgetBlogRecentArticlesFull.comments_count}}</a>{/option:!widgetBlogRecentArticlesFull.comments}
-							{option:widgetBlogRecentArticlesFull.comments}
-								{option:widgetBlogRecentArticlesFull.comments_multiple}<a href="{$widgetBlogRecentArticlesFull.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$widgetBlogRecentArticlesFull.comments_count}}</a>{/option:widgetBlogRecentArticlesFull.comments_multiple}
-								{option:!widgetBlogRecentArticlesFull.comments_multiple}<a href="{$widgetBlogRecentArticlesFull.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!widgetBlogRecentArticlesFull.comments_multiple}
-							{/option:widgetBlogRecentArticlesFull.comments}
-						</div>
+						{option:widgetBlogRecentArticlesFull.allow_comments}
+							<div class="span2 commentCount">
+								<i class="icon-comment"></i>
+								{option:!widgetBlogRecentArticlesFull.comments}<a href="{$widgetBlogRecentArticlesFull.full_url}#{$actComment}">{$msgBlogNumberOfComments|sprintf:{$widgetBlogRecentArticlesFull.comments_count}}</a>{/option:!widgetBlogRecentArticlesFull.comments}
+								{option:widgetBlogRecentArticlesFull.comments}
+									{option:widgetBlogRecentArticlesFull.comments_multiple}<a href="{$widgetBlogRecentArticlesFull.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$widgetBlogRecentArticlesFull.comments_count}}</a>{/option:widgetBlogRecentArticlesFull.comments_multiple}
+									{option:!widgetBlogRecentArticlesFull.comments_multiple}<a href="{$widgetBlogRecentArticlesFull.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!widgetBlogRecentArticlesFull.comments_multiple}
+								{/option:widgetBlogRecentArticlesFull.comments}
+							</div>
+						{/option:widgetBlogRecentArticlesFull.allow_comments}
 					</div>
 					<div class="row-fluid muted meta">
 						<div class="span6">

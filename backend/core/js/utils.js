@@ -315,7 +315,7 @@ utils.string =
 	 */ 
 	ucfirst: function(value)
 	{
-		return value.substring(0, 1).toUpperCase() + value.substring(1);
+		return value.charAt(0).toUpperCase() + value.slice(1);
 	},
 	
 	/**

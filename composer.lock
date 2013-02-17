@@ -16,9 +16,9 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0",
                 "ext-curl": "*",
-                "ext-json": "*"
+                "ext-json": "*",
+                "php": ">=5.2.0"
             },
             "time": "2012-11-27 22:34:17",
             "type": "library",
@@ -58,8 +58,8 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0",
-                "ext-curl": "*"
+                "ext-curl": "*",
+                "php": ">=5.2.0"
             },
             "time": "2012-10-13 10:59:41",
             "type": "library",
@@ -96,8 +96,8 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0",
-                "ext-curl": "*"
+                "ext-curl": "*",
+                "php": ">=5.2.0"
             },
             "time": "2012-10-13 11:39:35",
             "type": "library",

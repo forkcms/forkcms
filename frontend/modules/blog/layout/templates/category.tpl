@@ -30,14 +30,16 @@
 									{/iteration:items.tags}
 								{/option:items.tags}
 							</li>
+							{* Comments *}
+							{option:items.allow_comments}
 							<li>
-								{* Comments *}
 								{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
 								{option:items.comments}
 									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
 									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
 								{/option:items.comments}
 							</li>
+							{/option:items.allow_comments}
 						</ul>
 					</header>
 					<div class="bd content">

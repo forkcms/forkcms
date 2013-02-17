@@ -52,7 +52,11 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 		$this->frm = new FrontendForm('unsubscribe', null, null, 'unsubscribeForm');
 
 		// create & add elements
+<<<<<<< HEAD
 		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+=======
+		$this->frm->addText('email');
+>>>>>>> upstream/master
 	}
 
 	/**
@@ -122,7 +126,7 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 				try
 				{
 					// unsubscribe the user from our default group
-					FrontendMailmotorCMHelper::unsubscribe($email->getValue(), $this->group);
+					if(!FrontendMailmotorCMHelper::unsubscribe($email->getValue(), $this->group)) throw new FrontendException('Could not unsubscribe');
 
 					// trigger event
 					FrontendModel::triggerEvent('mailmotor', 'after_unsubscribe', array('email' => $email->getValue()));

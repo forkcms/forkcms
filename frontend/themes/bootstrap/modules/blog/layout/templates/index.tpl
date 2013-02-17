@@ -23,14 +23,16 @@
 				    	<div class="span10">
 				    		<h2 itemprop="name"><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h2>
 				    	</div>
-				    	<div class="span2 commentCount">
-				    		<i class="icon-comment"></i>
-				    		{option:!items.comments}<a href="{$items.full_url}#{$actComment}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:!items.comments}
-				    		{option:items.comments}
-				    			{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
-				    			{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
-				    		{/option:items.comments}
-				    	</div>
+						{option:items.allow_comments}
+							<div class="span2 commentCount">
+								<i class="icon-comment"></i>
+								{option:!items.comments}<a href="{$items.full_url}#{$actComment}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:!items.comments}
+								{option:items.comments}
+									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
+								{/option:items.comments}
+							</div>
+						{/option:items.allow_comments}
 				    </div>
 				    <div class="row-fluid muted meta">
 				    	<div class="span6">

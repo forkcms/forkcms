@@ -29,7 +29,7 @@
 					<tr>
 						<th class="date">{$lblDate|ucfirst}</th>
 						<th class="title">{$lblTitle|ucfirst}</th>
-						<th class="comments">{$lblComments|ucfirst}</th>
+						{option:allowComments}<th class="comments">{$lblComments|ucfirst}</th>{/option:allowComments}
 					</tr>
 				</thead>
 				<tbody>
@@ -37,13 +37,15 @@
 						<tr {option:items.first}class="firstChild"{/option:items.first}>
 							<td class="date muted"><time itemprop="datePublished" datetime="{$items.publish_on|date:'Y-m-d\TH:i:s'}">{$items.publish_on|date:{$dateFormatShort}:{$LANGUAGE}}</time></td>
 							<td class="title"><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></td>
-							<td class="comments">
-								{option:items.comments}
-									<i class="icon-comment"></i>
-									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
-									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
-								{/option:items.comments}
-							</td>
+							{option:allowComments}
+								<td class="comments">
+									{option:items.comments}
+										<i class="icon-comment"></i>
+										{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+										{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
+									{/option:items.comments}
+								</td>
+							{/option:allowComments}
 						</tr>
 					{/iteration:items}
 				</tbody>

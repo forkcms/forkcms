@@ -15,13 +15,15 @@
 						<div class="span10">
 							<h2><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h2>
 						</div>
-						<div class="span2 commentCount">
-							{option:items.comments}
-								<i class="icon-comment"></i>
-								{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
-								{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
-							{/option:items.comments}
-						</div>
+						{option:items.allow_comments}
+							<div class="span2 commentCount">
+								{option:items.comments}
+									<i class="icon-comment"></i>
+									{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+									{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
+								{/option:items.comments}
+							</div>
+						{/option:items.allow_comments}
 					</div>
 					<div class="row-fluid muted meta">
 						<div class="span6">

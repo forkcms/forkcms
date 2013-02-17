@@ -1764,6 +1764,12 @@ jsBackend.locale =
 			return missingTranslation;
 		}
 
+		// this is for the labels prefixed with "loc"
+		if(typeof(data[type][key]) == 'string')
+		{
+			return data[type][key];
+		}
+
 		// if the translation does not exist for the given module, try to fall back to the core
 		if(!data[type].hasOwnProperty(module) || data[type][module] == null || !data[type][module].hasOwnProperty(key) || data[type][module][key] == null)
 		{

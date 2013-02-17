@@ -52,12 +52,24 @@ class BackendFormBuilderAPI
 			// validate
 			if($limit > 10000) API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
 
+			$dataIDs = (array) BackendModel::getDB()->getColumn(
+				'SELECT a.id
+				 FROM forms_data AS a
+				 WHERE a.form_id = ?
+				 ORDER BY a.sent_on DESC
+				 LIMIT ?,?',
+				array($id, $offset, $limit)
+			);
+
+			if(empty($dataIDs)) return array();
+
 			$fields = (array) BackendModel::getDB()->getRecords(
 				'SELECT i.type, i.settings
 				 FROM forms_fields AS i
 				 WHERE i.form_id = ?',
 				array($id)
 			);
+
 			$fieldTypes = array();
 			foreach($fields as $row)
 			{
@@ -73,10 +85,8 @@ class BackendFormBuilderAPI
 				'SELECT i.*, f.*, UNIX_TIMESTAMP(i.sent_on) AS sent_on
 				 FROM forms_data AS i
 				 INNER JOIN forms_data_fields AS f ON i.id = f.data_id
-				 WHERE i.form_id = ?
-				 ORDER BY i.sent_on DESC
-				 LIMIT ?, ?',
-				array($id, $offset, $limit)
+				 WHERE i.id IN('. implode(',', $dataIDs) .')
+				 ORDER BY i.sent_on DESC'
 			);
 
 			$return = array('entries' => null);
