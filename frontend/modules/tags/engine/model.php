@@ -56,8 +56,8 @@ class FrontendTagsModel
 		return (array) FrontendModel::getDB()->getRecord(
 			'SELECT id, language, tag AS name, number, url
 			 FROM tags
-			 WHERE url = ?',
-			array((string) $URL)
+			 WHERE url = ? AND language = ?',
+			array((string) $URL, FRONTEND_LANGUAGE)
 		);
 	}
 
