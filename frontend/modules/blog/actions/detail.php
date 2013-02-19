@@ -205,7 +205,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		{
 			$this->header->addLink(
 				array(
-				     'rel' => 'previous',
+				     'rel' => 'prev',
 				     'href' => SITE_URL . $navigation['previous']['url'],
 				)
 			);
