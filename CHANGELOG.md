@@ -35,6 +35,7 @@ Bugfixes:
 * Extensions: Ticket 316: Link to default action
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 * Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
+* Core: A search term should only be saved when it's not empty
 
 
 3.4.4 (2012-09-12)
