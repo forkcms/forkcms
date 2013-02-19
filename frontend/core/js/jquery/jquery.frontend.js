@@ -47,7 +47,9 @@
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
 			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
 			isDropdown: true,
-
+		}
+		var settings =
+		{
 			delicious: { name: 'delicious', show: true, label: 'Delicious'},
 			digg: { name: 'digg', show: true, label: 'Digg' },
 			facebook: { name: 'facebook', show: true, width: 90, verb: 'like', colorScheme: 'light', font : 'arial' },
@@ -59,7 +61,8 @@
 		};
 
 		// extend options
-		var options = $.extend(true, defaults, options);
+		var options = $.extend(defaults, options);
+		options = $.extend(true, settings, options);
 
 		return this.each(function()
 		{
