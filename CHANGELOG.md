@@ -4,7 +4,7 @@ Improvements:
 
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
-* Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
+* Core: added utils.string.sprintf to backend and frontend. Thx to Jeroen Desloovere.
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
@@ -17,9 +17,10 @@ Improvements:
 * Core: upgraded Spoon
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
-* Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
+* Core: Pagination can now use an anchor. Thx to Jeroen Desloovere.
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: Added validation for module and action in the frontend ajax.
+* Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
 
 Bugfixes:
 
