@@ -21,7 +21,7 @@
 	<link rel="author" href="/humans.txt" />
 
 	{* Apple touch icon *}
-	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
+	<link rel="apple-touch-icon-precomposed" href="{$THEME_URL}/apple-touch-icon.png" /> {* @todo create a 144x144 png file *}
 
 	{* Favicon *}
 	<link rel="icon" href="{$THEME_URL}/favicon.png"> {* @todo create a 96x96 png file *}
@@ -30,7 +30,7 @@
 	{* Windows 8 tile *}
 	<meta name="application-name" content="{$siteTitle}"/>
 	<meta name="msapplication-TileColor" content="#3380aa"/> {* @todo choose a decent color *}
-	<meta name="msapplication-TileImage" content="{$THEME_URL}/metro-tile.png"/> {* @todo create a monochrome version (144x144) of the logo of the site *}
+	<meta name="msapplication-TileImage" content="{$THEME_URL}/metro-tile.png"/> {* @todo create a white monochrome version (144x144) of the logo of the site *}
 
 	{* Facebook *}
 	<link rel="image_src" href="{$THEME_URL}/image_src.png" />
