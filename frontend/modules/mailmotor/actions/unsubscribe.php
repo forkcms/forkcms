@@ -52,11 +52,7 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 		$this->frm = new FrontendForm('unsubscribe', null, null, 'unsubscribeForm');
 
 		// create & add elements
-<<<<<<< HEAD
 		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
-=======
-		$this->frm->addText('email');
->>>>>>> upstream/master
 	}
 
 	/**

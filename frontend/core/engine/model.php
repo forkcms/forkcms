@@ -553,6 +553,41 @@ class FrontendModel
 	}
 
 	/**
+	 * Get the UTC timestamp for a date/time object combination.
+	 *
+	 * @param SpoonFormDate $date An instance of SpoonFormDate.
+	 * @param SpoonFormTime[optional] $time An instance of SpoonFormTime.
+	 * @return int
+	 */
+	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
+	{
+		// validate date/time object
+		if(!$date->isValid() || ($time !== null && !$time->isValid())) throw new FrontendException('You need to provide two objects that actaully contain valid data.');
+
+		// init vars
+		$year = gmdate('Y', $date->getTimestamp());
+		$month = gmdate('m', $date->getTimestamp());
+		$day = gmdate('j', $date->getTimestamp());
+
+		// time object was given
+		if($time !== null)
+		{
+			// define hour & minute
+			list($hour, $minute) = explode(':', $time->getValue());
+		}
+
+		// user default time
+		else
+		{
+			$hour = 0;
+			$minute = 0;
+		}
+
+		// make and return timestamp
+		return mktime($hour, $minute, 0, $month, $day, $year);
+	}
+
+	/**
 	 * Get the visitor's id (using a tracking cookie)
 	 *
 	 * @return string

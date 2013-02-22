@@ -4,7 +4,7 @@ Improvements:
 
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
-* Core: added utils.string.sprintf to backend and frontend. Tx to Jeroen Desloovere
+* Core: added utils.string.sprintf to backend and frontend. Thx to Jeroen Desloovere.
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
@@ -22,6 +22,10 @@ Improvements:
 * Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: Added validation for module and action in the frontend ajax.
+* Core: Pagination can now use an anchor. Thx to Jeroen Desloovere.
+* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
+* Core: Added validation for module and action in the frontend ajax.
+* Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
 
 Bugfixes:
 
@@ -36,6 +40,7 @@ Bugfixes:
 * Extensions: Ticket 316: Link to default action
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 * Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
+* Core: A search term should only be saved when it's not empty
 
 
 3.4.4 (2012-09-12)

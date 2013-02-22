@@ -486,19 +486,21 @@ jsFrontend.search =
 				window.location.href = ui.item.url
 			}
 		})
-		// ok, so, when we have been typing in the search textfield and we blur out of it,
-		// I suppose we have entered our full search query and we're ready to save it
+		// when we have been typing in the search textfield and we blur out of it, we're ready to save it
 		.on('blur', function()
 		{
-			// ajax call!
-			$.ajax(
+			if($(this).val() != '')
 			{
-				data:
+				// ajax call!
+				$.ajax(
 				{
-					fork: { module: 'search', action: 'save' },
-					term: $(this).val()
-				}
-			});
+					data:
+					{
+						fork: { module: 'search', action: 'save' },
+						term: $(this).val()
+					}
+				});
+			}
 		});
 	},
 
@@ -549,19 +551,21 @@ jsFrontend.search =
 				window.location.href = ui.item.url
 			}
 		})
-		// ok, so, when we have been typing in the search textfield and we blur out of it,
-		// I suppose we have entered our full search query and we're ready to save it
+		// when we have been typing in the search textfield and we blur out of it, we're ready to save it
 		.on('blur', function()
 		{
-			// ajax call!
-			$.ajax(
+			if($(this).val() != '')
 			{
-				data:
+				// ajax call!
+				$.ajax(
 				{
-					fork: { module: 'search', action: 'save' },
-					term: $(this).val()
-				}
-			});
+					data:
+					{
+						fork: { module: 'search', action: 'save' },
+						term: $(this).val()
+					}
+				});
+			}
 		})
 		// and also: alter the autocomplete style: add description!
 		.data('autocomplete')._renderItem = function(ul, item)

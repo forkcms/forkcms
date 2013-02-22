@@ -34,13 +34,13 @@ FileETag MTime Size
 
 	# backend is an existing folder, but it should be handled as all urls
 	RewriteCond %{REQUEST_URI} ^/backend/$
-	RewriteRule . /index.php [NC,L]
+	RewriteRule . index.php [NC,L]
 
 	# handle urls
 	RewriteCond %{REQUEST_URI} !^$
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . /index.php [NC,L]
+	RewriteRule . index.php [NC,L]
 
 	# set environment variable to let PHP know that urls are being rewritten
 	RewriteRule .* - [E=MOD_REWRITE:1]
