@@ -20,17 +20,21 @@
 	{* humans.txt, see http://humanstxt.org *}
 	<link rel="author" href="/humans.txt" />
 
-	{* Favicon and Apple touch icon *}
-	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />
+	{* Apple touch icon *}
 	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
-	<link rel="image_src" href="{$THEME_URL}/image_src.png" />
-	<meta property="og:image" content="{$THEME_URL}/image_src.png" />
+
+	{* Favicon *}
+	<link rel="icon" href="{$THEME_URL}/favicon.png"> {* @todo create a 96x96 png file *}
+	<!--[if IE]><link rel="shortcut icon" href="{$THEME_URL}/favicon.ico"><![endif]--> {* @todo	create a 32x32 ico file and store it in the root of the website.  *}
 
 	{* Windows 8 tile *}
 	<meta name="application-name" content="{$siteTitle}"/>
 	<meta name="msapplication-TileColor" content="#3380aa"/> {* @todo choose a decent color *}
-	<meta name="msapplication-TileImage" content="{$THEME_URL}/metro-tile.png"/> {* @todo create a monochrome version of the logo of the site *}
+	<meta name="msapplication-TileImage" content="{$THEME_URL}/metro-tile.png"/> {* @todo create a monochrome version (144x144) of the logo of the site *}
 
+	{* Facebook *}
+	<link rel="image_src" href="{$THEME_URL}/image_src.png" />
+	<meta property="og:image" content="{$THEME_URL}/image_src.png" />
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
