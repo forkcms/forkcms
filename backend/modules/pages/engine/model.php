@@ -414,77 +414,19 @@ class BackendPagesModel
 	/**
 	 * Copy pages
 	 *
-	 * @param string $from
-	 * @param string $to
+	 * @param string $from 	The language code to copy the pages from.
+	 * @param string $to 	The language code we want to copy the pages to.
 	 */
 	public static function copy($from, $to)
 	{
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// init variables
-		$contentBlockIds = array();
-		$oldIds = array();
-		$newIds = array();
+		// copy contentBlocks and get copied contentBlockIds
+		$contentBlockIds = BackendContentBlocksModel::copy($from, $to);
 
-		// copy the contentblocks
-		$contentBlocks = (array) $db->getRecords(
-			'SELECT * FROM content_blocks WHERE language = ? AND status = "active"',
-			array($from)
-		);
-
-		// define counter
-		$i = 1;
-
-		// loop existing content blocks
-		foreach($contentBlocks as $contentBlock)
-		{
-			// define old id
-			$oldId = $contentBlock['extra_id'];
-
-			// init new block
-			$newBlock = array();
-
-			// build new block
-			$newBlock['id'] = BackendContentBlocksModel::getMaximumId() + $i;
-			$newBlock['language'] = $to;
-			$newBlock['created_on'] = BackendModel::getUTCDate();
-			$newBlock['edited_on'] = BackendModel::getUTCDate();
-			$newBlock['status'] = $contentBlock['status'];
-			$newBlock['user_id'] = BackendAuthentication::getUser()->getUserId();
-			$newBlock['template'] = $contentBlock['template'];
-			$newBlock['title'] = $contentBlock['title'];
-			$newBlock['text'] = $contentBlock['text'];
-			$newBlock['hidden'] = $contentBlock['hidden'];
-
-			// inset content block
-			$newId = BackendContentBlocksModel::insert($newBlock);
-
-			// save ids for later
-			$oldIds[] = $oldId;
-			$newIds[$oldId] = $newId;
-
-			// redefine counter
-			$i++;
-		}
-
-		// get the extra Ids for the content blocks
-		if(!empty($newIds))
-		{
-			// get content block extra ids
-			$contenBlockExtraIds = (array) $db->getRecords(
-				'SELECT revision_id, extra_id FROM content_blocks WHERE revision_id IN (' . implode(',', $newIds) . ')'
-			);
-
-			// loop new ids
-			foreach($newIds as $oldId => $newId)
-			{
-				foreach($contenBlockExtraIds as $extraId)
-				{
-					if($extraId['revision_id'] == $newId) $contentBlockIds[$oldId] = $extraId['extra_id'];
-				}
-			}
-		}
+		// define old block ids
+		$contentBlockOldIds = array_keys($contentBlockIds);
 
 		// get all old pages
 		$ids = $db->getColumn(
@@ -603,7 +545,7 @@ class BackendPagesModel
 				$block['created_on'] = BackendModel::getUTCDate();
 				$block['edited_on'] = BackendModel::getUTCDate();
 
-				if(in_array($block['extra_id'], $oldIds))
+				if(in_array($block['extra_id'], $contentBlockOldIds))
 				{
 					$block['extra_id'] = $contentBlockIds[$block['extra_id']];
 				}
