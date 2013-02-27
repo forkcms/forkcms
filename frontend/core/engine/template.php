@@ -595,6 +595,10 @@ class FrontendTemplateModifiers
 
 		// split URL into chunks
 		$chunks = (array) explode('/', $pageInfo['full_url']);
+		
+		// remove language chunk
+		$chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks,2) : (array) array_slice($chunks,1);
+		if( count($chunks) == 0 ) $chunks[0] = '';
 
 		// init var
 		$parentURL = '';

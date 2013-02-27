@@ -7,7 +7,7 @@
 
 	{option:widgetPagesNavigation.parent}
 		<li class="parentLink">
-			<a href="{$widgetPagesNavigation.parent.url}" rel="prev">{$lblParentPage|ucfirst}: {$widgetPagesNavigation.parent.title}</a>
+			<a href="{$widgetPagesNavigation.parent.full_url}" rel="prev">{$lblParentPage|ucfirst}: {$widgetPagesNavigation.parent.title}</a>
 		</li>
 	{/option:widgetPagesNavigation.parent}
 

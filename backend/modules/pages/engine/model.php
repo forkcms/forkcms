@@ -106,12 +106,18 @@ class BackendPagesModel
 			{
 				// init var
 				$parentID = (int) $page['parent_id'];
+				
+				// init URL
+				$languageURL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
 
 				// get URL for parent
 				$URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
 				// home is special
-				if($pageID == 1) $page['url'] = '';
+				if($pageID == 1) {
+					$page['url'] = '';
+					if(SITE_MULTILANGUAGE) $languageURL = rtrim($languageURL, '/');
+				}
 
 				// add it
 				$keys[$pageID] = trim($URL . '/' . $page['url'], '/');
@@ -123,7 +129,7 @@ class BackendPagesModel
 				$temp = array();
 				$temp['page_id'] = (int) $pageID;
 				$temp['url'] = $page['url'];
-				$temp['full_url'] = $keys[$pageID];
+				$temp['full_url'] = $languageURL . $keys[$pageID];
 				$temp['title'] = addslashes($page['title']);
 				$temp['navigation_title'] = addslashes($page['navigation_title']);
 				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
@@ -370,10 +376,12 @@ class BackendPagesModel
 
 					// split into chunks
 					$urlChunks = explode('/', $url);
-					$count = count($urlChunks);
+					
+					// remove the language chunk
+					$urlChunks = (SITE_MULTILANGUAGE) ? array_slice($urlChunks,2) : array_slice($urlChunks,1);
 
 					// subpage?
-					if($count > 1)
+					if(count($urlChunks) > 1)
 					{
 						// loop while we have more then 1 chunk
 						while(count($urlChunks) > 1)
@@ -394,8 +402,7 @@ class BackendPagesModel
 					}
 
 					// add
-					if(SITE_MULTILANGUAGE) $links[] = array($title, '/' . $language . '/' . $url);
-					else $links[] = array($title, '/' . $url);
+					$links[] = array($title, $url);
 				}
 			}
 		}
