@@ -21,6 +21,7 @@ Improvements:
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: Added validation for module and action in the frontend ajax.
 * Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
+* Core: isModuleInstalled() added in BackendModel. Thx to Jeroen Desloovere.
 
 Bugfixes:
 
