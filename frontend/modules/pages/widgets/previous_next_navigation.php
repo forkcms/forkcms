@@ -91,9 +91,6 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
 
 			// get parent page
 			$this->navigation['parent'] = FrontendNavigation::getPageInfo($pageInfo['parent_id']);
-			
-			// parent url is another level
-			$this->navigation['parent']['url'] = FrontendNavigation::getURL($pageInfo['parent_id']);
 		}
 	}
 
