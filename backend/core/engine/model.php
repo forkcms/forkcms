@@ -1001,14 +1001,14 @@ class BackendModel
 	}
 
 	/**
-	 * Is module installed
+	 * Is installed module
 	 *
 	 * @param string $module
 	 * @return bool
 	 */
-	public static function isModuleInstalled($module)
+	public static function isInstalledModule($module)
 	{
-		// get modules
+		// get installed modules
 		$modules = self::getModules();
 
 		// return if module is installed or not
