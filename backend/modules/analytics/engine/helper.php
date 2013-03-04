@@ -511,7 +511,7 @@ class BackendAnalyticsHelper
 		// there are some records to be inserted
 		if(!empty($insertArray))
 		{
-			$db = BackendModel::getDB(true);
+			$db = BackendModel::getContainer()->get('database');
 
 			// remove old data and insert array into database
 			$db->truncate('analytics_keywords');
@@ -561,7 +561,7 @@ class BackendAnalyticsHelper
 		// there are some records to be inserted
 		if(!empty($insertArray))
 		{
-			$db = BackendModel::getDB(true);
+			$db = BackendModel::getContainer()->get('database');
 
 			// remove old data and insert array into database
 			$db->truncate('analytics_referrers');

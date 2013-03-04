@@ -38,7 +38,7 @@ class BackendGroupsModel
 		{
 			if(!self::existsActionPermission($permission))
 			{
-				BackendModel::getDB(true)->insert('groups_rights_actions', $permission);
+				BackendModel::getContainer()->get('database')->insert('groups_rights_actions', $permission);
 			}
 		}
 	}
@@ -54,7 +54,7 @@ class BackendGroupsModel
 		{
 			if(!self::existsModulePermission($permission))
 			{
-				BackendModel::getDB(true)->insert('groups_rights_modules', $permission);
+				BackendModel::getContainer()->get('database')->insert('groups_rights_modules', $permission);
 			}
 		}
 	}
@@ -67,7 +67,7 @@ class BackendGroupsModel
 	 */
 	public static function alreadyExists($name)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.*
 			 FROM groups AS i
 			 WHERE i.name = ?',
@@ -82,7 +82,7 @@ class BackendGroupsModel
 	 */
 	public static function delete($id)
 	{
-		BackendModel::getDB(true)->delete('groups', 'id = ?', array((int) $id));
+		BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', array((int) $id));
 	}
 
 	/**
@@ -96,7 +96,7 @@ class BackendGroupsModel
 		{
 			if(self::existsActionPermission($permission))
 			{
-				BackendModel::getDB(true)->delete(
+				BackendModel::getContainer()->get('database')->delete(
 					'groups_rights_actions',
 					'group_id = ? AND module = ? AND action = ?',
 					array($permission['group_id'], $permission['module'], $permission['action'])
@@ -116,7 +116,7 @@ class BackendGroupsModel
 		{
 			if(self::existsModulePermission($permission))
 			{
-				BackendModel::getDB(true)->delete(
+				BackendModel::getContainer()->get('database')->delete(
 					'groups_rights_modules',
 					'group_id = ? AND module = ?',
 					array($permission['group_id'], $permission['module'])
@@ -132,7 +132,7 @@ class BackendGroupsModel
 	 */
 	public static function deleteMultipleGroups($userId)
 	{
-		BackendModel::getDB(true)->delete('users_groups', 'user_id = ?', array($userId));
+		BackendModel::getContainer()->get('database')->delete('users_groups', 'user_id = ?', array($userId));
 	}
 
 	/**
@@ -143,7 +143,7 @@ class BackendGroupsModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.*
 			 FROM groups AS i
 			 WHERE i.id = ?',
@@ -159,7 +159,7 @@ class BackendGroupsModel
 	 */
 	public static function existsActionPermission($permission)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.*
 			 FROM groups_rights_actions AS i
 			 WHERE i.module = ? AND i.group_id = ? AND i.action = ?',
@@ -175,7 +175,7 @@ class BackendGroupsModel
 	 */
 	public static function existsModulePermission($permission)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.*
 			 FROM groups_rights_modules AS i
 			 WHERE i.module = ? AND i.group_id = ?',
@@ -191,7 +191,7 @@ class BackendGroupsModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*
 			 FROM groups AS i
 			 WHERE i.id = ?',
@@ -207,7 +207,7 @@ class BackendGroupsModel
 	 */
 	public static function getActionPermissions($id)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.module, i.action
 			 FROM groups_rights_actions AS i
 			 WHERE i.group_id = ?',
@@ -222,7 +222,7 @@ class BackendGroupsModel
 	 */
 	public static function getAll()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id AS value, i.name AS label FROM groups AS i'
 		);
 	}
@@ -235,7 +235,7 @@ class BackendGroupsModel
 	 */
 	public static function getGroupsByUser($id)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.name
 			 FROM groups AS i
 			 INNER JOIN users_groups AS ug ON i.id = ug.group_id
@@ -252,7 +252,7 @@ class BackendGroupsModel
 	 */
 	public static function getModulePermissions($id)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.*
 			 FROM groups_rights_modules AS i
 			 WHERE i.group_id = ?',
@@ -269,7 +269,7 @@ class BackendGroupsModel
 	 */
 	public static function getSetting($groupId, $name)
 	{
-		$setting = (array) BackendModel::getDB()->getRecord(
+		$setting = (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*
 			 FROM groups_settings AS i
 			 WHERE i.group_id = ? AND i.name = ?',
@@ -290,7 +290,7 @@ class BackendGroupsModel
 	 */
 	public static function getUsers($groupId)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.*
 			 FROM users AS i
 			 INNER JOIN users_groups AS ug ON i.id = ug.user_id
@@ -308,7 +308,7 @@ class BackendGroupsModel
 	public static function insert($group, $setting)
 	{
 		// insert group
-		$id = BackendModel::getDB(true)->insert('groups', $group);
+		$id = BackendModel::getContainer()->get('database')->insert('groups', $group);
 
 		// build setting
 		$setting['group_id'] = $id;
@@ -342,7 +342,7 @@ class BackendGroupsModel
 			$item['group_id'] = $group;
 
 			// insert item
-			BackendModel::getDB(true)->insert('users_groups', $item);
+			BackendModel::getContainer()->get('database')->insert('users_groups', $item);
 		}
 	}
 
@@ -354,7 +354,7 @@ class BackendGroupsModel
 	 */
 	public static function insertSetting($setting)
 	{
-		return BackendModel::getDB(true)->insert('groups_settings', $setting);
+		return BackendModel::getContainer()->get('database')->insert('groups_settings', $setting);
 	}
 
 	/**
@@ -366,7 +366,7 @@ class BackendGroupsModel
 	public static function update($group, $setting)
 	{
 		// update group
-		BackendModel::getDB(true)->update('groups', array('name' => $group['name']), 'id = ?', array($group['id']));
+		BackendModel::getContainer()->get('database')->update('groups', array('name' => $group['name']), 'id = ?', array($group['id']));
 
 		// update setting
 		self::updateSetting($setting);
@@ -379,6 +379,6 @@ class BackendGroupsModel
 	 */
 	public static function updateSetting($setting)
 	{
-		BackendModel::getDB(true)->update('groups_settings', array('value' => $setting['value']), 'group_id = ? AND name = ?', array($setting['group_id'], $setting['name']));
+		BackendModel::getContainer()->get('database')->update('groups_settings', array('value' => $setting['value']), 'group_id = ? AND name = ?', array($setting['group_id'], $setting['name']));
 	}
 }

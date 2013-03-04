@@ -23,7 +23,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		set_time_limit(0);
 
 		// get database
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// create log
 		$log = new SpoonLog('custom', BACKEND_CACHE_PATH . '/logs/events');

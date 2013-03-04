@@ -142,7 +142,7 @@ class BackendMailer
 		}
 
 		// insert the email into the database
-		$id = BackendModel::getDB(true)->insert('emails', $email);
+		$id = BackendModel::getContainer()->get('database')->insert('emails', $email);
 
 		// trigger event
 		BackendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
@@ -161,7 +161,7 @@ class BackendMailer
 	 */
 	public static function getQueuedMailIds()
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT e.id
 			 FROM emails AS e
 			 WHERE e.send_on < ? OR e.send_on IS NULL',
@@ -215,7 +215,7 @@ class BackendMailer
 	public static function send($id)
 	{
 		$id = (int) $id;
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get record
 		$emailRecord = (array) $db->getRecord(

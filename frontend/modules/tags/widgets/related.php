@@ -57,7 +57,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		foreach($this->tags as $tag)
 		{
 			// fetch entries
-			$items = (array) FrontendModel::getDB()->getRecords(
+			$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 				'SELECT mt.module, mt.other_id
 				 FROM modules_tags AS mt
 				 INNER JOIN tags AS t ON t.id = mt.tag_id

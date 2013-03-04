@@ -174,7 +174,7 @@ class BackendTemplate extends SpoonTemplate
 	private function parseAuthentication()
 	{
 		// init var
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get allowed actions
 		$allowedActions = (array) $db->getRecords(

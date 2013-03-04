@@ -95,7 +95,7 @@ class BackendAuthentication
 	public static function cleanupOldSessions()
 	{
 		// remove all sessions that are invalid (older then 30 min)
-		BackendModel::getDB(true)->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+		BackendModel::getContainer()->get('database')->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
 	}
 
 	/**
@@ -187,7 +187,7 @@ class BackendAuthentication
 		if(empty(self::$allowedActions))
 		{
 			// init var
-			$db = BackendModel::getDB();
+			$db = BackendModel::getContainer()->get('database');
 
 			// get modules
 			$modules = BackendModel::getModules();
@@ -250,7 +250,7 @@ class BackendAuthentication
 		if(empty(self::$allowedModules))
 		{
 			// init var
-			$db = BackendModel::getDB();
+			$db = BackendModel::getContainer()->get('database');
 
 			// get allowed modules
 			$allowedModules = $db->getColumn(
@@ -286,7 +286,7 @@ class BackendAuthentication
 		if(SpoonSession::exists('backend_logged_in', 'backend_secret_key') && (bool) SpoonSession::get('backend_logged_in') && (string) SpoonSession::get('backend_secret_key') != '')
 		{
 			// get database instance
-			$db = BackendModel::getDB(true);
+			$db = BackendModel::getContainer()->get('database');
 
 			// get the row from the tables
 			$sessionData = $db->getRecord(
@@ -342,7 +342,7 @@ class BackendAuthentication
 		$login = (string) $login;
 		$password = (string) $password;
 
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// fetch the encrypted password
 		$passwordEncrypted = BackendAuthentication::getEncryptedPassword($login, $password);
@@ -398,7 +398,7 @@ class BackendAuthentication
 	public static function logout()
 	{
 		// remove all rows owned by the current user
-		BackendModel::getDB(true)->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
+		BackendModel::getContainer()->get('database')->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
 
 		// reset values. We can't destroy the session because session-data can be used on the site.
 		SpoonSession::set('backend_logged_in', false);

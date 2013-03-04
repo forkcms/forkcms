@@ -285,7 +285,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$item['text'] = preg_replace('|<a(.*)href="(.*)"(.*)>(.*)</a>|Ui', '$4 ($2)', $item['text']);
 
 		// insert comment
-		BackendModel::getDB(true)->insert('blog_comments', $item);
+		BackendModel::getContainer()->get('database')->insert('blog_comments', $item);
 
 		// return
 		return true;
@@ -438,7 +438,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		}
 
 		// insert meta
-		$item['meta_id'] = BackendModel::getDB(true)->insert('meta', $meta);
+		$item['meta_id'] = BackendModel::getContainer()->get('database')->insert('meta', $meta);
 
 		// insert
 		BackendBlogModel::insert($item);

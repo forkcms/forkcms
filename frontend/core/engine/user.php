@@ -123,7 +123,7 @@ class FrontendUser
 		$userId = (int) $userId;
 
 		// get database instance
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// get user-data
 		$userData = (array) $db->getRecord(

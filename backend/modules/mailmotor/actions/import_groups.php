@@ -102,7 +102,7 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
 				foreach($this->externalGroups as $group)
 				{
 					// insert them in our database
-					$groupID = BackendModel::getDB(true)->insert('mailmotor_groups', array('name' => $group['name'], 'custom_fields' => $group['custom_fields'], 'created_on' => BackendModel::getUTCDate()));
+					$groupID = BackendModel::getContainer()->get('database')->insert('mailmotor_groups', array('name' => $group['name'], 'custom_fields' => $group['custom_fields'], 'created_on' => BackendModel::getUTCDate()));
 
 					// insert the CM ID
 					BackendMailmotorCMHelper::insertCampaignMonitorID('list', $group['id'], $groupID);
