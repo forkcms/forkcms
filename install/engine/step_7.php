@@ -143,7 +143,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($languages as $language)
 		{
 			// get applications
-			$applications = $this->db->getColumn(
+			$applications = $this->getContainer()->get('database')->getColumn(
 				'SELECT DISTINCT application
 				 FROM locale
 				 WHERE language = ?',
@@ -154,7 +154,7 @@ class InstallerStep7 extends InstallerStep
 			foreach((array) $applications as $application)
 			{
 				// build application locale cache
-				$this->buildCache($this->db, $language, $application);
+				$this->buildCache($this->getContainer()->get('database'), $language, $application);
 			}
 		}
 	}
@@ -240,9 +240,6 @@ class InstallerStep7 extends InstallerStep
 		// create configuration files
 		$this->createYAMLConfig();
 
-		// init database
-		$this->initDatabase();
-
 		// define paths
 		$this->definePaths();
 
@@ -288,24 +285,6 @@ class InstallerStep7 extends InstallerStep
 	}
 
 	/**
-	 * Init database.
-	 */
-	public function initDatabase()
-	{
-		// get port
-		$port = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? SpoonSession::get('db_port') : 3306;
-
-		// database instance
-		$this->db = new SpoonDatabase('mysql', SpoonSession::get('db_hostname'), SpoonSession::get('db_username'), SpoonSession::get('db_password'), SpoonSession::get('db_database'), $port);
-
-		// utf8 compliance & MySQL-timezone
-		$this->db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-		// store
-		Spoon::set('database', $this->db);
-	}
-
-	/**
 	 * Installs the required and optional modules
 	 */
 	private function installModules()
@@ -324,7 +303,7 @@ class InstallerStep7 extends InstallerStep
 
 		// create the core installer
 		$installer = new CoreInstaller(
-			$this->db,
+			$this->getContainer()->get('database'),
 			SpoonSession::get('languages'),
 			SpoonSession::get('interface_languages'),
 			SpoonSession::get('example_data'),
@@ -381,7 +360,7 @@ class InstallerStep7 extends InstallerStep
 
 				// create installer
 				$installer = new $class(
-					$this->db,
+					$this->getContainer()->get('database'),
 					SpoonSession::get('languages'),
 					SpoonSession::get('interface_languages'),
 					SpoonSession::get('example_data'),
@@ -405,7 +384,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($defaultExtras as $extra)
 		{
 			// get pages without this extra
-			$revisionIds = $this->db->getColumn(
+			$revisionIds = $this->getContainer()->get('database')->getColumn(
 				'SELECT i.revision_id
 				 FROM pages AS i
 				 WHERE i.revision_id NOT IN (
@@ -432,7 +411,7 @@ class InstallerStep7 extends InstallerStep
 			}
 
 			// insert block
-			$this->db->insert('pages_blocks', $insertExtras);
+			$this->getContainer()->get('database')->insert('pages_blocks', $insertExtras);
 		}
 
 		// parse the warnings
