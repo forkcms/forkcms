@@ -670,7 +670,7 @@ class BackendDataGridDB extends BackendDataGrid
 		$results = ($resultsQuery !== null) ? array($resultsQuery, $resultsParameters) : null;
 
 		// create a new source-object
-		$source = new SpoonDataGridSourceDB(BackendModel::getDB(), array($query, (array) $parameters), $results);
+		$source = new SpoonDataGridSourceDB(BackendModel::getContainer()->get('database'), array($query, (array) $parameters), $results);
 
 		parent::__construct($source);
 	}

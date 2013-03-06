@@ -255,7 +255,7 @@ class FrontendModel extends BaseModel
 		if(empty(self::$modules))
 		{
 			// get all modules
-			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
+			$modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
 
 			// add modules to the cache
 			foreach($modules as $module) self::$modules[] = $module;
@@ -282,7 +282,7 @@ class FrontendModel extends BaseModel
 		if(empty(self::$moduleSettings))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->getRecords(
+			$settings = (array) self::getContainer()->get('database')->getRecords(
 				'SELECT ms.module, ms.name, ms.value
 				 FROM modules_settings AS ms
 				 INNER JOIN modules AS m ON ms.module = m.name'
@@ -313,7 +313,7 @@ class FrontendModel extends BaseModel
 		if(empty(self::$moduleSettings[$module]))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->getRecords(
+			$settings = (array) self::getContainer()->get('database')->getRecords(
 				'SELECT ms.module, ms.name, ms.value
 				 FROM modules_settings AS ms'
 			);
@@ -341,7 +341,7 @@ class FrontendModel extends BaseModel
 		$pageId = (int) $pageId;
 
 		// get database instance
-		$db = self::getDB();
+		$db = self::getContainer()->get('database');
 
 		// get data
 		$record = (array) $db->getRecord(
@@ -411,7 +411,7 @@ class FrontendModel extends BaseModel
 		$revisionId = (int) $revisionId;
 
 		// get database instance
-		$db = self::getDB();
+		$db = self::getContainer()->get('database');
 
 		// get data
 		$record = (array) $db->getRecord(
@@ -646,7 +646,7 @@ class FrontendModel extends BaseModel
 		if($publicKey == '' || $privateKey == '') return;
 
 		// get all apple-device tokens
-		$deviceTokens = (array) FrontendModel::getDB()->getColumn(
+		$deviceTokens = (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT s.value
 			 FROM users AS i
 			 INNER JOIN users_settings AS s
@@ -687,7 +687,7 @@ class FrontendModel extends BaseModel
 			if(!empty($response))
 			{
 				// get db
-				$db = FrontendModel::getDB(true);
+				$db = FrontendModel::getContainer()->get('database');
 
 				// loop the failed keys and remove them
 				foreach($response as $deviceToken)
@@ -743,7 +743,7 @@ class FrontendModel extends BaseModel
 		$value = serialize($value);
 
 		// store
-		self::getDB(true)->execute(
+		self::getContainer()->get('database')->execute(
 			'INSERT INTO modules_settings (module, name, value)
 			 VALUES (?, ?, ?)
 			 ON DUPLICATE KEY UPDATE value = ?',
@@ -861,7 +861,7 @@ class FrontendModel extends BaseModel
 		$item['created_on'] = FrontendModel::getUTCDate();
 
 		// get db
-		$db = self::getDB(true);
+		$db = self::getContainer()->get('database');
 
 		// check if the subscription already exists
 		$exists = (bool) $db->getVar(
@@ -898,7 +898,7 @@ class FrontendModel extends BaseModel
 		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
 
 		// get all items that subscribe to this event
-		$subscriptions = (array) self::getDB()->getRecords(
+		$subscriptions = (array) self::getContainer()->get('database')->getRecords(
 			'SELECT i.module, i.callback
 			 FROM hooks_subscriptions AS i
 			 WHERE i.event_module = ? AND i.event_name = ?',
@@ -922,7 +922,7 @@ class FrontendModel extends BaseModel
 				$item['created_on'] = FrontendModel::getUTCDate();
 
 				// add
-				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
+				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
 				// logging when we are in debugmode
 				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subcribed to event (' . $module . '/' . $eventName . ').');
@@ -946,7 +946,7 @@ class FrontendModel extends BaseModel
 		$eventName = (string) $eventName;
 		$module = (string) $module;
 
-		self::getDB(true)->delete(
+		self::getContainer()->get('database')->delete(
 			'hooks_subscriptions',
 			'event_module = ? AND event_name = ? AND module = ?',
 			array($eventModule, $eventName, $module)

@@ -171,7 +171,7 @@ class BackendNavigation
 		$prefix = str_repeat("\t", $depth);
 
 		// get navigation for backend
-		$navigation = (array) BackendModel::getDB()->getRecords(
+		$navigation = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT bn.*, COUNT(bn2.id) AS num_children
 			 FROM backend_navigation AS bn
 			 LEFT OUTER JOIN backend_navigation AS bn2 ON bn2.parent_id = bn.id
@@ -470,7 +470,7 @@ class BackendNavigation
 		$id = (int) $id;
 
 		// get url
-		$item = (array) BackendModel::getDB()->getRecord('SELECT id, url FROM backend_navigation WHERE id = ?',	array($id));
+		$item = (array) BackendModel::getContainer()->get('database')->getRecord('SELECT id, url FROM backend_navigation WHERE id = ?',	array($id));
 
 		// item doesnt exist
 		if(empty($item)) return '';
@@ -482,7 +482,7 @@ class BackendNavigation
 		else
 		{
 			// get the first child
-			$childId = (int) BackendModel::getDB()->getVar('SELECT id FROM backend_navigation WHERE parent_id = ? ORDER BY sequence ASC LIMIT 1', array($id));
+			$childId = (int) BackendModel::getContainer()->get('database')->getVar('SELECT id FROM backend_navigation WHERE parent_id = ? ORDER BY sequence ASC LIMIT 1', array($id));
 
 			// get its url
 			return $this->getNavigationUrl($childId);

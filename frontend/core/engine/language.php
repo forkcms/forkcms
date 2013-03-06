@@ -36,7 +36,7 @@ class FrontendLanguage
 	 */
 	public static function buildCache($language, $application)
 	{
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// get types
 		$types = $db->getEnumValues('locale', 'type');

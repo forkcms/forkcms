@@ -58,7 +58,7 @@ class BackendBlogAPI
 			}
 
 			// get comments
-			$comments = (array) BackendModel::getDB()->getRecords(
+			$comments = (array) BackendModel::getContainer()->get('database')->getRecords(
 				'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
 				 p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
 				 FROM blog_comments AS i
@@ -71,7 +71,7 @@ class BackendBlogAPI
 				array('active', $offset, $limit)
 			);
 
-			$totalCount = (int) BackendModel::getDB()->getVar(
+			$totalCount = (int) BackendModel::getContainer()->get('database')->getVar(
 				'SELECT COUNT(i.id)
 				 FROM blog_comments AS i
 				 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language

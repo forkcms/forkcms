@@ -64,7 +64,7 @@ class FrontendProfilesAuthentication
 	public static function cleanupOldSessions()
 	{
 		// remove all sessions with date older then 1 month
-		FrontendModel::getDB(true)->delete('profiles_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 1 MONTH)');
+		FrontendModel::getContainer()->get('database')->delete('profiles_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 1 MONTH)');
 	}
 
 	/**
@@ -86,7 +86,7 @@ class FrontendProfilesAuthentication
 		$encryptedPassword = FrontendProfilesModel::getEncryptedString($password, FrontendProfilesModel::getSetting($profileId, 'salt'));
 
 		// get the status
-		$loginStatus = FrontendModel::getDB()->getVar(
+		$loginStatus = FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT p.status
 			 FROM profiles AS p
 			 WHERE p.email = ? AND p.password = ?',
@@ -123,7 +123,7 @@ class FrontendProfilesAuthentication
 			$sessionId = SpoonSession::getSessionId();
 
 			// get profile id
-			$profileId = (int) FrontendModel::getDB()->getVar(
+			$profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
 				'SELECT p.id
 				 FROM profiles AS p
 				 INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
@@ -135,7 +135,7 @@ class FrontendProfilesAuthentication
 			if($profileId !== 0)
 			{
 				// update session date
-				FrontendModel::getDB(true)->update('profiles_sessions', array('date' => FrontendModel::getUTCDate()), 'session_id = ?', $sessionId);
+				FrontendModel::getContainer()->get('database')->update('profiles_sessions', array('date' => FrontendModel::getUTCDate()), 'session_id = ?', $sessionId);
 
 				// new user object
 				self::$profile = new FrontendProfilesProfile($profileId);
@@ -155,7 +155,7 @@ class FrontendProfilesAuthentication
 			$secret = (string) CommonCookie::get('frontend_profile_secret_key');
 
 			// get profile id
-			$profileId = (int) FrontendModel::getDB()->getVar(
+			$profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
 				'SELECT p.id
 				 FROM profiles AS p
 				 INNER JOIN profiles_sessions AS ps ON ps.profile_id = p.id
@@ -170,7 +170,7 @@ class FrontendProfilesAuthentication
 				$profileSecret = FrontendProfilesModel::getEncryptedString(SpoonSession::getSessionId(), FrontendProfilesModel::getRandomString());
 
 				// update session record
-				FrontendModel::getDB(true)->update(
+				FrontendModel::getContainer()->get('database')->update(
 					'profiles_sessions',
 					array(
 						'session_id' => SpoonSession::getSessionId(),
@@ -236,10 +236,10 @@ class FrontendProfilesAuthentication
 		}
 
 		// delete all records for this session to prevent duplicate keys (this should never happen)
-		FrontendModel::getDB(true)->delete('profiles_sessions', 'session_id = ?', SpoonSession::getSessionId());
+		FrontendModel::getContainer()->get('database')->delete('profiles_sessions', 'session_id = ?', SpoonSession::getSessionId());
 
 		// insert new session record
-		FrontendModel::getDB(true)->insert(
+		FrontendModel::getContainer()->get('database')->insert(
 			'profiles_sessions',
 			array(
 				'profile_id' => $profileId,
@@ -262,7 +262,7 @@ class FrontendProfilesAuthentication
 	public static function logout()
 	{
 		// delete session records
-		FrontendModel::getDB(true)->delete('profiles_sessions', 'session_id = ?', array(SpoonSession::getSessionId()));
+		FrontendModel::getContainer()->get('database')->delete('profiles_sessions', 'session_id = ?', array(SpoonSession::getSessionId()));
 
 		// set is_logged_in to false
 		SpoonSession::set('frontend_profile_logged_in', false);

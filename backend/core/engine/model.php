@@ -187,7 +187,7 @@ class BackendModel extends BaseModel
 		}
 
 		// get extras
-		$extras = (array) BackendModel::getDB(true)->getRecords($query, $parameters);
+		$extras = (array) BackendModel::getContainer()->get('database')->getRecords($query, $parameters);
 
 		// loop found extras
 		foreach($extras as $extra)
@@ -221,17 +221,17 @@ class BackendModel extends BaseModel
 		// delete the blocks
 		if($deleteBlock)
 		{
-			BackendModel::getDB(true)->delete('pages_blocks', 'extra_id = ?', $id);
+			BackendModel::getContainer()->get('database')->delete('pages_blocks', 'extra_id = ?', $id);
 		}
 
 		// unset blocks
 		else
 		{
-			BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
+			BackendModel::getContainer()->get('database')->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
 		}
 
 		// delete extra
-		BackendModel::getDB(true)->delete('modules_extras', 'id = ?', $id);
+		BackendModel::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
 	}
 
 	/**
@@ -251,7 +251,7 @@ class BackendModel extends BaseModel
 		if(!empty($ids))
 		{
 			// delete extras
-			BackendModel::getDB(true)->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+			BackendModel::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
 
 			// invalidate the cache for the module
 			BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
@@ -412,7 +412,7 @@ class BackendModel extends BaseModel
 	public static function getExtras($ids)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// loop and cast to integers
 		foreach($ids as &$id) $id = (int) $id;
@@ -463,7 +463,7 @@ class BackendModel extends BaseModel
 		}
 
 		// get items
-		$items = (array) BackendModel::getDB(true)->getPairs($query, $parameters);
+		$items = (array) BackendModel::getContainer()->get('database')->getPairs($query, $parameters);
 
 		// stop here when no items
 		if(empty($items)) return $result;
@@ -529,7 +529,7 @@ class BackendModel extends BaseModel
 		if(empty(self::$modules))
 		{
 			// get all modules
-			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
+			$modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
 
 			// add modules to the cache
 			foreach($modules as $module) self::$modules[] = $module;
@@ -577,7 +577,7 @@ class BackendModel extends BaseModel
 		if(empty(self::$moduleSettings))
 		{
 			// get all settings
-			$moduleSettings = (array) self::getDB()->getRecords(
+			$moduleSettings = (array) self::getContainer()->get('database')->getRecords(
 				'SELECT ms.module, ms.name, ms.value
 				 FROM modules_settings AS ms'
 			);
@@ -1112,7 +1112,7 @@ class BackendModel extends BaseModel
 		$valueToStore = serialize($value);
 
 		// store
-		self::getDB(true)->execute(
+		self::getContainer()->get('database')->execute(
 			'INSERT INTO modules_settings(module, name, value)
 			 VALUES(?, ?, ?)
 			 ON DUPLICATE KEY UPDATE value = ?',
@@ -1325,7 +1325,7 @@ class BackendModel extends BaseModel
 		$item['created_on'] = BackendModel::getUTCDate();
 
 		// get db
-		$db = self::getDB(true);
+		$db = self::getContainer()->get('database');
 
 		// check if the subscription already exists
 		$exists = (bool) $db->getVar(
@@ -1362,7 +1362,7 @@ class BackendModel extends BaseModel
 		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
 
 		// get all items that subscribe to this event
-		$subscriptions = (array) self::getDB()->getRecords(
+		$subscriptions = (array) self::getContainer()->get('database')->getRecords(
 			'SELECT i.module, i.callback
 			 FROM hooks_subscriptions AS i
 			 WHERE i.event_module = ? AND i.event_name = ?',
@@ -1386,7 +1386,7 @@ class BackendModel extends BaseModel
 				$item['created_on'] = BackendModel::getUTCDate();
 
 				// add
-				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
+				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
 				// logging when we are in debugmode
 				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subcribed to event (' . $module . '/' . $eventName . ').');
@@ -1410,7 +1410,7 @@ class BackendModel extends BaseModel
 		$eventName = (string) $eventName;
 		$module = (string) $module;
 
-		self::getDB(true)->delete(
+		self::getContainer()->get('database')->delete(
 			'hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?',
 			array($eventModule, $eventName, $module)
 		);
@@ -1438,7 +1438,7 @@ class BackendModel extends BaseModel
 		$item[(string) $key] = (string) $value;
 
 		// update the extra
-		BackendModel::getDB(true)->update('modules_extras', $item, 'id = ?', array((int) $id));
+		BackendModel::getContainer()->get('database')->update('modules_extras', $item, 'id = ?', array((int) $id));
 	}
 
 	/**
@@ -1451,7 +1451,7 @@ class BackendModel extends BaseModel
 	public static function updateExtraData($id, $key, $value)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get data
 		$data = (string) $db->getVar(

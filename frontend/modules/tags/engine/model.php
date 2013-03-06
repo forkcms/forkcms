@@ -53,7 +53,7 @@ class FrontendTagsModel
 	public static function get($URL)
 	{
 		// exists
-		return (array) FrontendModel::getDB()->getRecord(
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT id, language, tag AS name, number, url
 			 FROM tags
 			 WHERE url = ?',
@@ -68,7 +68,7 @@ class FrontendTagsModel
 	 */
 	public static function getAll()
 	{
-		return (array) FrontendModel::getDB()->getRecords(
+		return (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT t.tag AS name, t.url, t.number
 			 FROM tags AS t
 			 WHERE t.language = ? AND t.number > 0
@@ -93,7 +93,7 @@ class FrontendTagsModel
 		$return = array();
 
 		// get tags
-		$linkedTags = (array) FrontendModel::getDB()->getRecords(
+		$linkedTags = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT t.tag AS name, t.url
 			 FROM modules_tags AS mt
 			 INNER JOIN tags AS t ON mt.tag_id = t.id
@@ -133,7 +133,7 @@ class FrontendTagsModel
 		$module = (string) $module;
 
 		// get db
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// init var
 		$return = array();
@@ -174,7 +174,7 @@ class FrontendTagsModel
 	 */
 	public static function getIdByURL($URL)
 	{
-		return (int) FrontendModel::getDB()->getVar(
+		return (int) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT id
 			 FROM tags
 			 WHERE url = ?',
@@ -190,7 +190,7 @@ class FrontendTagsModel
 	 */
 	public static function getModulesForTag($id)
 	{
-		return (array) FrontendModel::getDB()->getColumn(
+		return (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT module
 			 FROM modules_tags
 			 WHERE tag_id = ?
@@ -208,7 +208,7 @@ class FrontendTagsModel
 	 */
 	public static function getName($id)
 	{
-		return FrontendModel::getDB()->getVar(
+		return FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT tag
 			 FROM tags
 			 WHERE id = ?',
@@ -227,7 +227,7 @@ class FrontendTagsModel
 	 */
 	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
 	{
-		return (array) FrontendModel::getDB()->getColumn(
+		return (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT t2.other_id
 			 FROM modules_tags AS t
 			 INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
