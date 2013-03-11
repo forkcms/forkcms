@@ -228,9 +228,8 @@ class BackendMailer
 		// mailer type
 		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
 
-		// create new SpoonEmail-instance
-		$email = new SpoonEmail();
-		$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
+		// default transport instance
+		$transport = Swift_MailTransport::newInstance();
 
 		// send via SMTP
 		if($mailerType == 'smtp')
@@ -242,21 +241,23 @@ class BackendMailer
 			$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
 
 			// set server and connect with SMTP
-			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+			$transport = Swift_SmtpTransport::newInstance($SMTPServer, $SMTPPort);
 
 			// set authentication if needed
-			if($SMTPUsername !== null && $SMTPPassword !== null) $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+			if($SMTPUsername !== null && $SMTPPassword !== null) $transport->setUsername($SMTPUsername)->setPassword($SMTPPassword);
 		}
 
 		// set some properties
-		$email->setFrom($emailRecord['from_email'], $emailRecord['from_name']);
-		$email->addRecipient($emailRecord['to_email'], $emailRecord['to_name']);
-		$email->setReplyTo($emailRecord['reply_to_email']);
-		$email->setSubject($emailRecord['subject']);
-		$email->setHTMLContent($emailRecord['html']);
-		$email->setCharset(SPOON_CHARSET);
-		$email->setContentTransferEncoding('base64');
-		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
+		// set some properties
+		$message = Swift_Message::newInstance($emailRecord['subject'])
+				->setFrom(array($emailRecord['from_email'] => $emailRecord['from_name']))
+				->setTo(array($emailRecord['to_email'] => $emailRecord['to_name']))
+				->setReplyTo(array($emailRecord['reply_to_email']))
+				->setBody($emailRecord['html'], 'text/html')
+				->setCharset(SPOON_CHARSET)
+				->setEncoder(Swift_Encoding::getBase64Encoding());
+				
+		if($emailRecord['plain_text'] != '') $message->addPart($emailRecord['plain_text'], 'text/plain');
 
 		// attachments added
 		if(isset($emailRecord['attachments']) && $emailRecord['attachments'] !== null)
@@ -265,11 +266,14 @@ class BackendMailer
 			$attachments = (array) unserialize($emailRecord['attachments']);
 
 			// add attachments to email
-			foreach($attachments as $attachment) $email->addAttachment($attachment);
+			foreach($attachments as $attachment) $message->attach(Swift_Attachment::fromPath($attachment));
 		}
 
+		// Create the Mailer using your created Transport
+		$mailer = Swift_Mailer::newInstance($transport);
+
 		// send the email
-		if($email->send())
+		if($mailer->send($message))
 		{
 			// remove the email
 			$db->delete('emails', 'id = ?', array($id));
