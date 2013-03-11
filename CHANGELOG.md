@@ -36,6 +36,7 @@ Bugfixes:
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 * Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
 * Core: A search term should only be saved when it's not empty
+* Core: BackendModel::invalidateFrontendCache() should listen to the given language. Tx to Jeroen Desloovere.
 
 
 3.4.4 (2012-09-12)
