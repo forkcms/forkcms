@@ -529,14 +529,14 @@
         <translation language="sv"><![CDATA[uppladdad fil är inte en giltig ZIP fil och kan inte extraherad.]]></translation>
       </item>
       <item type="error" name="CronjobsNotSet">
-        <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld. <a href="%1$s">Configureer</a>]]></translation>
-        <translation language="en"><![CDATA[Not all cronjobs are set. <a href="%1$s">Configure</a>]]></translation>
-        <translation language="ru"><![CDATA[Планировщик задач не установлен. <a href="%1$s">Сконфигурировать</a>]]></translation>
-        <translation language="de"><![CDATA[Es wurden noch nicht alle Cronjobs eingestestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
-        <translation language="es"><![CDATA[No todos los cronjobs están configurados. <a href="%1$s">Configurar</a>]]></translation>
-        <translation language="lt"><![CDATA[Ne visi cron darbai yra <a href="%1$s">įjungti</a>]]></translation>
-        <translation language="hu"><![CDATA[Nincs minden cronjobs beállítva. <a href="%1$s">Beállítás</a>]]></translation>
-        <translation language="sv"><![CDATA[Inte alla cronjobs är satta. <en href="%1$s">Konfigurera</en>]]></translation>
+        <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld.]]></translation>
+        <translation language="en"><![CDATA[Not all cronjobs are set.]]></translation>
+        <translation language="ru"><![CDATA[Планировщик задач не установлен.]]></translation>
+        <translation language="de"><![CDATA[Es wurden noch nicht alle Cronjobs eingestestellt.]]></translation>
+        <translation language="es"><![CDATA[No todos los cronjobs están configurados.]]></translation>
+        <translation language="lt"><![CDATA[Ne visi cron darbai yra.]]></translation>
+        <translation language="hu"><![CDATA[Nincs minden cronjobs beállítva.]]></translation>
+        <translation language="sv"><![CDATA[Inte alla cronjobs är satta.]]></translation>
       </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
