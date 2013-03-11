@@ -24,6 +24,7 @@ Improvements:
 * Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
 * Pages: Widget had invalid parent url
 * Blog: Show always Open Graph Tags
+* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere. Tx to Jeroen Desloovere.
 
 Bugfixes:
 
