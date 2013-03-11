@@ -23,6 +23,7 @@ Improvements:
 * Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
 * Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
 * Pages: Widget had invalid parent url
+* Blog: Show always Open Graph Tags
 
 Bugfixes:
 
