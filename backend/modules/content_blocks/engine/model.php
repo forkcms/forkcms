@@ -36,7 +36,7 @@ class BackendContentBlocksModel
 	public static function delete($id)
 	{
 		$id = (int) $id;
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get item
 		$item = self::get($id);
@@ -66,7 +66,7 @@ class BackendContentBlocksModel
 	 */
 	public static function exists($id, $activeOnly = true)
 	{
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// if the item should also be active, there should be at least one row to return true
 		if((bool) $activeOnly) return (bool) $db->getVar(
@@ -95,7 +95,7 @@ class BackendContentBlocksModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 			 FROM content_blocks AS i
 			 WHERE i.id = ? AND i.status = ? AND i.language = ?
@@ -111,7 +111,7 @@ class BackendContentBlocksModel
 	 */
 	public static function getMaximumId()
 	{
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT MAX(i.id) FROM content_blocks AS i WHERE i.language = ? LIMIT 1',
 			array(BL::getWorkingLanguage())
 		);
@@ -126,7 +126,7 @@ class BackendContentBlocksModel
 	 */
 	public static function getRevision($id, $revisionId)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 			 FROM content_blocks AS i
 			 WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
@@ -166,7 +166,7 @@ class BackendContentBlocksModel
 	 */
 	public static function insert(array $item)
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// build extra
 		$extra = array(
@@ -221,7 +221,7 @@ class BackendContentBlocksModel
 	 */
 	public static function update(array $item)
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// build extra
 		$extra = array(

@@ -206,7 +206,7 @@ class BackendUser
 		$userId = (int) $userId;
 
 		// get database instance
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get user-data
 		$userData = (array) $db->getRecord(
@@ -259,7 +259,7 @@ class BackendUser
 	public function loadUserByEmail($email)
 	{
 		$email = (string) $email;
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get user-data
 		$userData = (array) $db->getRecord(
@@ -367,7 +367,7 @@ class BackendUser
 		$valueToStore = serialize($value);
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// store
 		$db->execute(

@@ -31,6 +31,7 @@ Improvements:
 * Core: Added validation for module and action in the frontend ajax.
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
+* Core: Replace getDB() in the models with getContainer()->get('database')
 
 Bugfixes:
 

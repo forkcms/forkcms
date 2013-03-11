@@ -72,7 +72,7 @@ class BackendAnalyticsModel
 	 */
 	public static function clearTables()
 	{
-		BackendModel::getDB(true)->truncate(
+		BackendModel::getContainer()->get('database')->truncate(
 			array(
 				'analytics_keywords',
 				'analytics_landing_pages',
@@ -89,7 +89,7 @@ class BackendAnalyticsModel
 	 */
 	public static function deleteLandingPage($ids)
 	{
-		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
+		BackendModel::getContainer()->get('database')->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
 	}
 
 	/**
@@ -100,7 +100,7 @@ class BackendAnalyticsModel
 	 */
 	public static function existsLandingPage($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM analytics_landing_pages
 			 WHERE id = ?
@@ -289,7 +289,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getDataForPage($page, $startTimestamp, $endTimestamp)
 	{
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get id for this page
 		$id = (int) $db->getVar(
@@ -410,7 +410,7 @@ class BackendAnalyticsModel
 	public static function getLandingPages($startTimestamp, $endTimestamp, $limit = null)
 	{
 		$results = array();
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get data from database
 		if($limit === null) $items = (array) $db->getRecords(
@@ -545,7 +545,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getPageByPath($path)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM analytics_pages
 			 WHERE page = ?',
@@ -561,7 +561,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getPageForId($pageId)
 	{
-		return (string) BackendModel::getDB()->getVar(
+		return (string) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT page
 			 FROM analytics_pages
 			 WHERE id = ?',
@@ -617,7 +617,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentKeywords()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT *
 			 FROM analytics_keywords
 			 ORDER BY entrances DESC, id'
@@ -631,7 +631,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentReferrers()
 	{
-		$items = (array) BackendModel::getDB()->getRecords(
+		$items = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT *
 			 FROM analytics_referrers
 			 ORDER BY entrances DESC, id'
@@ -885,7 +885,7 @@ class BackendAnalyticsModel
 	 */
 	public static function insertLandingPage(array $item)
 	{
-		return (int) BackendModel::getDB(true)->insert('analytics_landing_pages', $item);
+		return (int) BackendModel::getContainer()->get('database')->insert('analytics_landing_pages', $item);
 	}
 
 	/**
@@ -1063,7 +1063,7 @@ class BackendAnalyticsModel
 	 */
 	public static function updatePageDateViewed($pageId)
 	{
-		BackendModel::getDB(true)->update(
+		BackendModel::getContainer()->get('database')->update(
 			'analytics_pages',
 			array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')),
 			'id = ?',

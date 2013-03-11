@@ -41,7 +41,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		if($this->to == '') throw new BackendException('Specify a to-parameter.');
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 
 		// copy the contentblocks
@@ -136,7 +136,7 @@ class BackendPagesCopy extends BackendBaseActionDelete
 		$db->delete('search_index', 'module = ? AND language = ?', array('pages', $this->to));
 
 		// get all active pages
-		$ids = BackendModel::getDB()->getColumn(
+		$ids = BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT id
 			 FROM pages AS i
 			 WHERE i.language = ? AND i.status = ?',

@@ -69,7 +69,7 @@ class FrontendLocationModel
 	 */
 	public static function get($id)
 	{
-		return (array) FrontendModel::getDB()->getRecord(
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM location
 			 WHERE id = ? AND language = ?',
@@ -84,7 +84,7 @@ class FrontendLocationModel
 	 */
 	public static function getAll()
 	{
-		return (array) FrontendModel::getDB()->getRecords(
+		return (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT * FROM location WHERE language = ? AND show_overview = ?',
 			array(FRONTEND_LANGUAGE, 'Y')
 		);
@@ -99,7 +99,7 @@ class FrontendLocationModel
 	 */
 	public static function getMapSetting($mapId, $name)
 	{
-		$serializedData = (string) FrontendModel::getDB()->getVar(
+		$serializedData = (string) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT s.value
 			 FROM location_settings AS s
 			 WHERE s.map_id = ? AND s.name = ?',
@@ -118,7 +118,7 @@ class FrontendLocationModel
 	 */
 	public static function getMapSettings($mapId)
 	{
-		$mapSettings = (array) FrontendModel::getDB()->getPairs(
+		$mapSettings = (array) FrontendModel::getContainer()->get('database')->getPairs(
 			'SELECT s.name, s.value
 			 FROM location_settings AS s
 			 WHERE s.map_id = ?',

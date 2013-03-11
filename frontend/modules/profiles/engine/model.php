@@ -27,7 +27,7 @@ class FrontendProfilesModel
 	 */
 	public static function deleteSetting($id, $name)
 	{
-		return (int) FrontendModel::getDB(true)->delete('profiles_settings', 'profile_id = ? AND name = ?', array((int) $id, (string) $name));
+		return (int) FrontendModel::getContainer()->get('database')->delete('profiles_settings', 'profile_id = ? AND name = ?', array((int) $id, (string) $name));
 	}
 
 	/**
@@ -39,7 +39,7 @@ class FrontendProfilesModel
 	 */
 	public static function existsByEmail($email, $ignoreId = null)
 	{
-		return (bool) FrontendModel::getDB()->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles AS p
 			 WHERE p.email = ? AND p.id != ?
@@ -57,7 +57,7 @@ class FrontendProfilesModel
 	 */
 	public static function existsDisplayName($displayName, $id = null)
 	{
-		return (bool) FrontendModel::getDB()->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles AS p
 			 WHERE p.id != ? AND p.display_name = ?
@@ -97,7 +97,7 @@ class FrontendProfilesModel
 	 */
 	public static function getIdByEmail($email)
 	{
-		return (int) FrontendModel::getDB()->getVar('SELECT p.id FROM profiles AS p WHERE p.email = ?', (string) $email);
+		return (int) FrontendModel::getContainer()->get('database')->getVar('SELECT p.id FROM profiles AS p WHERE p.email = ?', (string) $email);
 	}
 
 	/**
@@ -109,7 +109,7 @@ class FrontendProfilesModel
 	 */
 	public static function getIdBySetting($name, $value)
 	{
-		return (int) FrontendModel::getDB()->getVar(
+		return (int) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT ps.profile_id
 			 FROM profiles_settings AS ps
 			 WHERE ps.name = ? AND ps.value = ?',
@@ -161,7 +161,7 @@ class FrontendProfilesModel
 	 */
 	public static function getSetting($id, $name)
 	{
-		return unserialize((string) FrontendModel::getDB()->getVar(
+		return unserialize((string) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT ps.value
 			 FROM profiles_settings AS ps
 			 WHERE ps.profile_id = ? AND ps.name = ?',
@@ -178,7 +178,7 @@ class FrontendProfilesModel
 	public static function getSettings($id)
 	{
 		// get settings
-		$settings = (array) FrontendModel::getDB()->getPairs(
+		$settings = (array) FrontendModel::getContainer()->get('database')->getPairs(
 			'SELECT ps.name, ps.value
 			 FROM profiles_settings AS ps
 			 WHERE ps.profile_id = ?',
@@ -208,7 +208,7 @@ class FrontendProfilesModel
 		$url = (string) SpoonFilter::urlise($displayName);
 
 		// get db
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// new item
 		if($id === null)
@@ -267,7 +267,7 @@ class FrontendProfilesModel
 	 */
 	public static function insert(array $values)
 	{
-		return (int) FrontendModel::getDB(true)->insert('profiles', $values);
+		return (int) FrontendModel::getContainer()->get('database')->insert('profiles', $values);
 	}
 
 	/**
@@ -334,7 +334,7 @@ class FrontendProfilesModel
 	public static function setSetting($id, $name, $value)
 	{
 		// insert or update
-		FrontendModel::getDB(true)->execute(
+		FrontendModel::getContainer()->get('database')->execute(
 			'INSERT INTO profiles_settings(profile_id, name, value)
 			 VALUES(?, ?, ?)
 			 ON DUPLICATE KEY UPDATE value = ?',
@@ -365,7 +365,7 @@ class FrontendProfilesModel
 		$query .= rtrim(str_repeat('(?, ?, ?), ', count($values)), ', ') . ' ';
 		$query .= 'ON DUPLICATE KEY UPDATE value = VALUES(value)';
 
-		FrontendModel::getDB(true)->execute($query, $parameters);
+		FrontendModel::getContainer()->get('database')->execute($query, $parameters);
 	}
 
 	/**
@@ -377,6 +377,6 @@ class FrontendProfilesModel
 	 */
 	public static function update($id, array $values)
 	{
-		return (int) FrontendModel::getDB(true)->update('profiles', $values, 'id = ?', (int) $id);
+		return (int) FrontendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', (int) $id);
 	}
 }

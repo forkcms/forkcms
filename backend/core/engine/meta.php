@@ -322,7 +322,7 @@ class BackendMeta
 		$this->id = (int) $id;
 
 		// get item
-		$this->data = (array) BackendModel::getDB()->getRecord(
+		$this->data = (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM meta AS m
 			 WHERE m.id = ?',
@@ -385,7 +385,7 @@ class BackendMeta
 		if(isset($meta['data'])) $meta['data'] = serialize($meta['data']);
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// should we update the record
 		if($update)

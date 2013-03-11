@@ -10,11 +10,10 @@
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * The base model's responsability is to provide getDB() functionality to
+ * The base model's responsability is to provide the service container to
  * both FrontendModel and BackendModel.
  *
- * This class exists for the sole purpose of not breaking the current models implementation.
- * In the long run models should not be a collection of static methods.
+ * In the long run models should not be a collection of static methods, and this will disappear.
  *
  * @author Dave Lens <dave.lens@wijs.be>
  */
@@ -26,15 +25,19 @@ class BaseModel
 	private static $container;
 
 	/**
-	 * @deprecated
+	 * @return ContainerInterface
 	 */
-	public static function getDB()
+	public static function getContainer()
 	{
-		return self::$container->get('database');
+		return self::$container;
 	}
 
+	/**
+	 * @param ContainerInterface[optional] $container
+	 */
 	public static function setContainer(ContainerInterface $container = null)
 	{
 		self::$container = $container;
 	}
 }
+

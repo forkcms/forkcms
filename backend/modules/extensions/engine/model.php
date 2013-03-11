@@ -267,7 +267,7 @@ class BackendExtensionsModel
 		if(BackendExtensionsModel::isTemplateInUse($id)) return false;
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// delete
 		$db->delete('themes_templates', 'id = ?', $id);
@@ -317,7 +317,7 @@ class BackendExtensionsModel
 		$id = (int) $id;
 
 		// get data
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.id FROM themes_templates AS i	WHERE i.id = ?',
 			array($id)
 		);
@@ -346,7 +346,7 @@ class BackendExtensionsModel
 	public static function getExtras()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords(
+		$extras = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.module, i.type, i.label, i.data
 			 FROM modules_extras AS i
 			 INNER JOIN modules AS m ON i.module = m.name
@@ -399,7 +399,7 @@ class BackendExtensionsModel
 	public static function getExtrasData()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords(
+		$extras = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.module, i.type, i.label, i.data
 			 FROM modules_extras AS i
 			 INNER JOIN modules AS m ON i.module = m.name
@@ -530,7 +530,7 @@ class BackendExtensionsModel
 	public static function getModules()
 	{
 		// get installed modules
-		$installedModules = (array) BackendModel::getDB()->getRecords('SELECT name FROM modules', null, 'name');
+		$installedModules = (array) BackendModel::getContainer()->get('database')->getRecords('SELECT name FROM modules', null, 'name');
 
 		// get modules present on the filesystem
 		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH, false, null, '/^[a-zA-Z0-9_]+$/');
@@ -656,7 +656,7 @@ class BackendExtensionsModel
 		$id = (int) $id;
 
 		// fetch data
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.* FROM themes_templates AS i WHERE i.id = ?',
 			array($id));
 	}
@@ -670,7 +670,7 @@ class BackendExtensionsModel
 	public static function getTemplates($theme = null)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// validate input
 		$theme = SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
@@ -809,7 +809,7 @@ class BackendExtensionsModel
 	 */
 	public static function insertTemplate(array $template)
 	{
-		return (int) BackendModel::getDB(true)->insert('themes_templates', $template);
+		return (int) BackendModel::getContainer()->get('database')->insert('themes_templates', $template);
 	}
 
 	/**
@@ -832,7 +832,7 @@ class BackendExtensionsModel
 
 		// run installer
 		$installer = new $class(
-			BackendModel::getDB(true),
+			BackendModel::getContainer()->get('database'),
 			BL::getActiveLanguages(),
 			array_keys(BL::getInterfaceLanguages()),
 			false,
@@ -902,7 +902,7 @@ class BackendExtensionsModel
 				foreach($position['widgets'] as $widget)
 				{
 					// fetch extra_id for this extra
-					$extraId = (int) BackendModel::getDB()->getVar(
+					$extraId = (int) BackendModel::getContainer()->get('database')->getVar(
 						'SELECT i.id
 						 FROM modules_extras AS i
 						 WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
@@ -936,7 +936,7 @@ class BackendExtensionsModel
 	 */
 	public static function isModuleInstalled($module)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM modules
 			 WHERE name = ?
@@ -1211,7 +1211,7 @@ class BackendExtensionsModel
 	 */
 	public static function updateTemplate(array $item)
 	{
-		BackendModel::getDB(true)->update('themes_templates', $item, 'id = ?', array((int) $item['id']));
+		BackendModel::getContainer()->get('database')->update('themes_templates', $item, 'id = ?', array((int) $item['id']));
 	}
 
 	/**
