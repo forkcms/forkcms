@@ -24,12 +24,12 @@ Improvements:
 * Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
 * Pages: Widget had invalid parent url
 * Blog: Show always Open Graph Tags
-* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere. Tx to Jeroen Desloovere.
+* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere. Thx to Jeroen Desloovere.
 
 Bugfixes:
 
 * Users: Added fix so users can't edit other profiles.
-* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
+* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Thx to Jan Moesen.
 * DataGrid: do not overwrite existing row attributes when greying out a row.
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
@@ -40,7 +40,7 @@ Bugfixes:
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 * Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
 * Core: A search term should only be saved when it's not empty
-* Core: BackendModel::invalidateFrontendCache() should listen to the given language. Tx to Jeroen Desloovere.
+* Core: BackendModel::invalidateFrontendCache() should listen to the given language. Thx to Jeroen Desloovere.
 
 
 3.4.4 (2012-09-12)
@@ -246,7 +246,7 @@ Improvements:
 Bugfixes:
 
 * Spoon: session should be started before we can access the session.
-* Mailmotor: set action and module when initializing an AJAX action. Tx to @DoFken.
+* Mailmotor: set action and module when initializing an AJAX action. Thx to @DoFken.
 * FormBulder: sort submissions by insert sequence. Reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/266-formbuilder-submissions-view-bug/
 
 
