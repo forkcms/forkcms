@@ -309,6 +309,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					{
 						// delete the image
 						SpoonFile::delete($imagePath . '/source/' . $item['image']);
+						SpoonFile::delete($imagePath . '/128x128/' . $item['image']);
 
 						// reset the name
 						$item['image'] = null;
