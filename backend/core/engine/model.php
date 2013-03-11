@@ -14,7 +14,7 @@ use \TijsVerkoyen\Akismet\Akismet;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Reclamebureau Siesqo <info@siesqo.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class BackendModel
 {
@@ -998,6 +998,21 @@ class BackendModel
 
 		// delete files
 		foreach($files as $file) SpoonFile::delete($path . '/' . $file);
+	}
+
+	/**
+	 * Is installed module
+	 *
+	 * @param string $module
+	 * @return bool
+	 */
+	public static function isInstalledModule($module)
+	{
+		// get installed modules
+		$modules = self::getModules();
+
+		// return if module is installed or not
+		return (in_array((string) $module, $modules));
 	}
 
 	/**

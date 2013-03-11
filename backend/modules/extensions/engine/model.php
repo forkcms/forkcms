@@ -929,23 +929,6 @@ class BackendExtensionsModel
 	}
 
 	/**
-	 * Checks if a module is already installed.
-	 *
-	 * @param string $module
-	 * @return bool
-	 */
-	public static function isModuleInstalled($module)
-	{
-		return (bool) BackendModel::getDB()->getVar(
-			'SELECT 1
-			 FROM modules
-			 WHERE name = ?
-			 LIMIT 1',
-			(string) $module
-		);
-	}
-
-	/**
 	 * Is the provided template id in use by active versions of pages?
 	 *
 	 * @param int $templateId The id of the template to check.
