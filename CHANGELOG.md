@@ -36,6 +36,7 @@ Improvements:
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: Added validation for module and action in the frontend ajax.
 * Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
+* Core: Pagination for 6 pages showed 7 instead. Thx to Jeroen Desloovere.
 * Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
 * Pages: Widget had invalid parent url
 * Blog: Show always Open Graph Tags
