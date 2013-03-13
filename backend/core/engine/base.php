@@ -171,7 +171,7 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function __construct()
 	{
-		// get objects from the reference so they are accessable from the action-object
+		// get objects from the reference so they are accessible from the action-object
 		$this->tpl = Spoon::get('template');
 		$this->URL = Spoon::get('url');
 		$this->header = Spoon::get('header');
@@ -349,7 +349,7 @@ class BackendBaseActionIndex extends BackendBaseAction
 
 	/**
 	 * Execute the current action
-	 * This method will be overwriten in most of the actions, but still be called to add general stuff
+	 * This method will be overwritten in most of the actions, but still be called to add general stuff
 	 */
 	public function execute()
 	{
@@ -468,7 +468,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	protected $id;
 
 	/**
-	 * The data of the item to edite
+	 * The data of the item to edit
 	 *
 	 * @var	array
 	 */
@@ -476,7 +476,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 
 	/**
 	 * Execute the current action
-	 * This method will be overwriten in most of the actions, but still be called to add general stuff
+	 * This method will be overwritten in most of the actions, but still be called to add general stuff
 	 */
 	public function execute()
 	{
@@ -588,7 +588,7 @@ class BackendBaseConfig extends BackendBaseObject
 	protected $possibleAJAXActions = array();
 
 	/**
-	 * @param string $module The module wherefor this is the configuration-file.
+	 * @param string $module The module wherefore this is the configuration-file.
 	 */
 	public function __construct($module)
 	{
@@ -843,7 +843,7 @@ class BackendBaseCronjob extends BackendBaseObject
 class BackendBaseWidget
 {
 	/**
-	 * The column wherin the widget should be shown
+	 * The column wherein the widget should be shown
 	 *
 	 * @var	string
 	 */

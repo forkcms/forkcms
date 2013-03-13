@@ -112,7 +112,7 @@ class UsersInstaller extends ModuleInstaller
 		// more then 6 chars is good
 		if(mb_strlen($password) >= 6) $score++;
 
-		// more then 8 is beter
+		// more then 8 is better
 		if(mb_strlen($password) >= 8) $score++;
 
 		// @todo

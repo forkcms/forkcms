@@ -141,7 +141,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// init account settings form
 		$this->frmClient = new BackendForm('settingsClient');
 
-		// an account was succesfully made
+		// an account was successfully made
 		if($this->accountLinked)
 		{
 			// get all clients linked to the active account

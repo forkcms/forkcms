@@ -82,7 +82,7 @@ class ProfilesInstaller extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// only add pages if profiles isnt linked anywhere
+			// only add pages if profiles isn't linked anywhere
 			// @todo refactor me, syntax sucks atm
 			if(!(bool) $this->getDB()->getVar(
 				'SELECT 1

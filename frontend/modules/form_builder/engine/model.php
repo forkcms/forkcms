@@ -38,7 +38,7 @@ class FrontendFormBuilderModel
 	/**
 	 * Get all fields of a form.
 	 *
-	 * @param int $id The id of the form wherefor we fetch the fields.
+	 * @param int $id The id of the form wherefore we fetch the fields.
 	 * @return array
 	 */
 	public static function getFields($id)

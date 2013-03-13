@@ -99,7 +99,7 @@ class BackendFaqModel
 	}
 
 	/**
-	 * Does the question exsist?
+	 * Does the question exist?
 	 *
 	 * @param int $id
 	 * @return bool

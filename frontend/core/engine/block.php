@@ -74,7 +74,6 @@ class FrontendBlockExtra extends FrontendBaseObject
 	protected $templatePath = '';
 
 	/**
-	 * @param ContainerInterface $container The service container to load
 	 * @param string $module The module to load.
 	 * @param string $action The action to load.
 	 * @param mixed[optional] $data The data that was passed from the database.
@@ -174,7 +173,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 */
 	public function getContent()
 	{
-		// set path to template if the widget didnt return any data
+		// set path to template if the widget didn't return any data
 		if($this->output === null) return $this->object->getContent();
 
 		// return possible output
@@ -244,7 +243,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 	/**
 	 * Load the config file for the requested block.
-	 * In the config file we have to find dissabled actions, the constructor will read the folder and set possible actions
+	 * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
 	 * Other configurations will also be stored in it.
 	 */
 	public function loadConfig()
@@ -445,7 +444,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 */
 	public function getContent()
 	{
-		// set path to template if the widget didnt return any data
+		// set path to template if the widget didn't return any data
 		if($this->output === null) return $this->object->getContent();
 
 		// return possible output
@@ -485,7 +484,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 	/**
 	 * Load the config file for the requested block.
-	 * In the config file we have to find dissabled actions, the constructor will read the folder and set possible actions
+	 * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
 	 * Other configurations will be stored in it also.
 	 */
 	public function loadConfig()

@@ -74,7 +74,7 @@ class ApplicationRouting
 	}
 
 	/**
-	 * Handle the actual request and deligate it to other parts of Fork.
+	 * Handle the actual request and delegate it to other parts of Fork.
 	 *
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */

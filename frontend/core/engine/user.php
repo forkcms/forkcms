@@ -59,7 +59,7 @@ class FrontendUser
 	 */
 	public static function getBackendUser($userId)
 	{
-		// create new instance if neccessary and cache it
+		// create new instance if necessary and cache it
 		if(!isset(self::$cache[$userId])) self::$cache[$userId] = new FrontendUser($userId);
 
 		return self::$cache[$userId];

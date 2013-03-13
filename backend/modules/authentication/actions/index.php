@@ -132,7 +132,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				// too soon!
 				if(time() < $previousAttempt + $timeout)
 				{
-					// sleep untill the user can login again
+					// sleep until the user can login again
 					sleep($timeout);
 
 					// set a correct header, so bots understand they can't mess with us.

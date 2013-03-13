@@ -59,7 +59,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addDropDown('csv_split_character', BackendUsersModel::getCSVSplitCharacters());
 		$this->frm->addDropDown('csv_line_ending', BackendUsersModel::getCSVLineEndings());
 
-		// permissons
+		// permissions
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
 		$this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);

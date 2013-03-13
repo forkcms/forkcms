@@ -194,7 +194,7 @@ class BackendMailmotorModel
 	/**
 	 * Checks if an e-mailaddress exists
 	 *
-	 * @param string $email The emailaddress to check for existance.
+	 * @param string $email The emailaddress to check for existence.
 	 * @return bool
 	 */
 	public static function existsAddress($email)
@@ -228,7 +228,7 @@ class BackendMailmotorModel
 	/**
 	 * Checks if a campaign exists
 	 *
-	 * @param string $name The name of the campaign to check for existance.
+	 * @param string $name The name of the campaign to check for existence.
 	 * @return bool
 	 */
 	public static function existsCampaignByName($name)
@@ -799,7 +799,7 @@ class BackendMailmotorModel
 	/**
 	 * Returns the default group ID
 	 *
-	 * @param string[optional] $language The language wherfor the default should be returned.
+	 * @param string[optional] $language The language wherefore the default should be returned.
 	 * @return int
 	 */
 	public static function getDefaultGroupID($language = null)

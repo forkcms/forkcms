@@ -99,7 +99,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		// sorting columns
 		$this->dataGrid->setSortingColumns(array('link', 'clicks'), 'link');
 
-		// set colunn functions
+		// set column functions
 		$this->dataGrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 		$this->dataGrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 

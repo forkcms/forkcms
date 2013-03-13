@@ -33,7 +33,7 @@ class BackendUsersModel
 	/**
 	 * Deletes the reset_password_key and reset_password_timestamp for a given user ID
 	 *
-	 * @param int $id The userId wherfore the reset-stuff should be deleted.
+	 * @param int $id The userId wherefore the reset-stuff should be deleted.
 	 */
 	public static function deleteResetPasswordSettings($id)
 	{
@@ -43,7 +43,7 @@ class BackendUsersModel
 	/**
 	 * Was a user deleted before?
 	 *
-	 * @param string $email The e-mail adress to check.
+	 * @param string $email The e-mail address to check.
 	 * @return bool
 	 */
 	public static function emailDeletedBefore($email)
@@ -61,7 +61,7 @@ class BackendUsersModel
 	/**
 	 * Does the user exist.
 	 *
-	 * @param int $id The userId to check for existance.
+	 * @param int $id The userId to check for existence.
 	 * @param bool[optional] $active Should the user be active also?
 	 * @return bool
 	 */
@@ -372,7 +372,7 @@ class BackendUsersModel
 	 * Restores a user
 	 * @later	this method should check if all needed data is present
 	 *
-	 * @param string $email The e-mail adress of the user to restore.
+	 * @param string $email The e-mail address of the user to restore.
 	 * @return bool
 	 */
 	public static function undoDelete($email)

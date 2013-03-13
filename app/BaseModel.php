@@ -10,7 +10,7 @@
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * The base model's responsability is to provide the service container to
+ * The base model's responsibility is to provide the service container to
  * both FrontendModel and BackendModel.
  *
  * In the long run models should not be a collection of static methods, and this will disappear.

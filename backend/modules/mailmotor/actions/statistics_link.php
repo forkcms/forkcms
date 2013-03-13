@@ -163,7 +163,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 				// update the item
 				$item['id'] = BackendMailmotorCMHelper::insertGroup($item);
 
-				// loop the adresses
+				// loop the addresses
 				foreach($this->statistics['clicked_links_by'][$this->linkURL] as $clicker)
 				{
 					// subscribe the user to the created group

@@ -91,7 +91,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	 */
 	private function loadDataGridCronjobs()
 	{
-		// no cronjobs = dont bother
+		// no cronjobs = don't bother
 		if(!isset($this->information['cronjobs'])) return;
 
 		// create data grid
@@ -112,7 +112,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	 */
 	private function loadDataGridEvents()
 	{
-		// no hooks = dont bother
+		// no hooks = don't bother
 		if(!isset($this->information['events'])) return;
 
 		// create data grid

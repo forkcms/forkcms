@@ -56,7 +56,7 @@ class InstallerStep extends KernelLoader
 	 */
 	public function __construct($step)
 	{
-		// set setp
+		// set setup
 		$this->step = (int) $step;
 	}
 

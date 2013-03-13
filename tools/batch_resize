@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# This script will resize a batch of files (be carefull the original images will be altered)
+# This script will resize a batch of files (be careful the original images will be altered)
 #
 # @version	1.0.0
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
@@ -73,7 +73,7 @@ if [[ -n "$WIDTH" ]]; then
 	SIZE=$WIDTH
 fi
 
-# append height if povided
+# append height if provided
 if [[ -n "$HEIGHT" ]]; then
 	SIZE=$SIZE"x"$HEIGHT
 fi
