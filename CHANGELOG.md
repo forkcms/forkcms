@@ -32,11 +32,19 @@ Improvements:
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
 * Core: Replace getDB() in the models with getContainer()->get('database')
+* Core: Pagination can now use an anchor. Thx to Jeroen Desloovere.
+* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
+* Core: Added validation for module and action in the frontend ajax.
+* Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
+* Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
+* Pages: Widget had invalid parent url
+* Blog: Show always Open Graph Tags
+* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere. Thx to Jeroen Desloovere.
 
 Bugfixes:
 
 * Users: Added fix so users can't edit other profiles.
-* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag, thx to Jan Moesen.
+* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Thx to Jan Moesen.
 * DataGrid: do not overwrite existing row attributes when greying out a row.
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
@@ -50,6 +58,8 @@ Bugfixes:
 * Extensions: Ticket 316: Link to default action
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 * Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
+* Core: A search term should only be saved when it's not empty
+* Core: BackendModel::invalidateFrontendCache() should listen to the given language. Thx to Jeroen Desloovere.
 
 
 3.4.4 (2012-09-12)
@@ -255,7 +265,7 @@ Improvements:
 Bugfixes:
 
 * Spoon: session should be started before we can access the session.
-* Mailmotor: set action and module when initializing an AJAX action. Tx to @DoFken.
+* Mailmotor: set action and module when initializing an AJAX action. Thx to @DoFken.
 * FormBulder: sort submissions by insert sequence. Reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/266-formbuilder-submissions-view-bug/
 
 

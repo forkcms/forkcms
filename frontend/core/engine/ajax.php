@@ -185,7 +185,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 	{
 		// get the possible modules
 		$possibleModules = FrontendModel::getModules();
-
+		
 		// validate
 		if(!in_array($value, $possibleModules))
 		{
@@ -195,7 +195,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 			// output error
 			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Module not correct.');
 		}
-
+	
 		// set property
 		$this->module = (string) $value;
 	}

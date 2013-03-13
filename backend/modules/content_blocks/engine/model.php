@@ -14,6 +14,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class BackendContentBlocksModel
 {
@@ -27,6 +28,83 @@ class BackendContentBlocksModel
 		 FROM content_blocks AS i
 		 WHERE i.status = ? AND i.id = ? AND i.language = ?
 		 ORDER BY i.edited_on DESC';
+
+	/**
+	 * Copy content blocks
+	 *
+	 * @param string $from 	The language code to copy the content blocks from.
+	 * @param string $to 	The language code we want to copy the content blocks to.
+	 */
+	public static function copy($from, $to)
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// init variables
+		$contentBlockIds = $oldIds = $newIds = array();
+
+		// copy the contentblocks
+		$contentBlocks = (array) $db->getRecords(
+			'SELECT * FROM content_blocks WHERE language = ? AND status = "active"',
+			array($from)
+		);
+
+		// define counter
+		$i = 1;
+
+		// loop existing content blocks
+		foreach($contentBlocks as $contentBlock)
+		{
+			// define old id
+			$oldId = $contentBlock['extra_id'];
+
+			// init new block
+			$newBlock = array();
+
+			// build new block
+			$newBlock['id'] = BackendContentBlocksModel::getMaximumId() + $i;
+			$newBlock['language'] = $to;
+			$newBlock['created_on'] = BackendModel::getUTCDate();
+			$newBlock['edited_on'] = BackendModel::getUTCDate();
+			$newBlock['status'] = $contentBlock['status'];
+			$newBlock['user_id'] = BackendAuthentication::getUser()->getUserId();
+			$newBlock['template'] = $contentBlock['template'];
+			$newBlock['title'] = $contentBlock['title'];
+			$newBlock['text'] = $contentBlock['text'];
+			$newBlock['hidden'] = $contentBlock['hidden'];
+
+			// inset content block
+			$newId = BackendContentBlocksModel::insert($newBlock);
+
+			// save ids for later
+			$oldIds[] = $oldId;
+			$newIds[$oldId] = $newId;
+
+			// redefine counter
+			$i++;
+		}
+
+		// get the extra Ids for the content blocks
+		if(!empty($newIds))
+		{
+			// get content block extra ids
+			$contenBlockExtraIds = (array) $db->getRecords(
+				'SELECT revision_id, extra_id FROM content_blocks WHERE revision_id IN (' . implode(',', $newIds) . ')'
+			);
+
+			// loop new ids
+			foreach($newIds as $oldId => $newId)
+			{
+				foreach($contenBlockExtraIds as $extraId)
+				{
+					if($extraId['revision_id'] == $newId) $contentBlockIds[$oldId] = $extraId['extra_id'];
+				}
+			}
+		}
+
+		// return contentBlockIds
+		return $contentBlockIds;
+	}
 
 	/**
 	 * Delete an item.

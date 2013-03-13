@@ -48,16 +48,20 @@ class FrontendTagsModel
 	 * Get the tag for a given URL
 	 *
 	 * @param string $URL The URL to get the tag for.
+	 * @param string[optional] $language
 	 * @return array
 	 */
-	public static function get($URL)
+	public static function get($URL, $language = null)
 	{
+		// redefine language
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
 		// exists
 		return (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT id, language, tag AS name, number, url
 			 FROM tags
-			 WHERE url = ?',
-			array((string) $URL)
+			 WHERE url = ? AND language = ?',
+			array((string) $URL, $language)
 		);
 	}
 
