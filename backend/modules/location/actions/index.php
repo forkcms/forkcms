@@ -68,7 +68,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 			$this->settings['center']['lng'] = $firstMarker['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $firstMarker['lat'];

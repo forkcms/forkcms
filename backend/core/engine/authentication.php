@@ -8,7 +8,7 @@
  */
 
 /**
- * The class below will handle all authentication stuff. It will handle module-access, action-acces, ...
+ * The class below will handle all authentication stuff. It will handle module-access, action-access, ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
@@ -66,7 +66,7 @@ class BackendAuthentication
 		// more then 6 chars is good
 		if(mb_strlen($password) >= 6) $score++;
 
-		// more then 8 is beter
+		// more then 8 is better
 		if(mb_strlen($password) >= 8) $score++;
 
 		// @todo
@@ -127,7 +127,7 @@ class BackendAuthentication
 
 	/**
 	 * Returns a string encrypted like sha1(md5($salt) . md5($string))
-	 * 	The salt is an optional extra string you can strenghten your encryption with
+	 * 	The salt is an optional extra string you can strengthen your encryption with
 	 *
 	 * @param string $string The string to encrypt.
 	 * @param string[optional] $salt The salt to use.
@@ -158,7 +158,7 @@ class BackendAuthentication
 	 * Is the given action allowed for the current user
 	 *
 	 * @param string $action The action to check for.
-	 * @param string $module The module wherin the action is located.
+	 * @param string $module The module wherein the action is located.
 	 * @return bool
 	 */
 	public static function isAllowedAction($action = null, $module = null)
@@ -393,7 +393,7 @@ class BackendAuthentication
 	}
 
 	/**
-	 * Logsout the current user
+	 * Logout the current user
 	 */
 	public static function logout()
 	{

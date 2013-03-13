@@ -83,7 +83,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 			$this->settings['center']['lng'] = $this->record['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $this->record['lat'];
@@ -186,7 +186,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				$item['city'] = $this->frm->getField('city')->getValue();
 				$item['country'] = $this->frm->getField('country')->getValue();
 
-				// check if it's neccessary to geocode again
+				// check if it's necessary to geocode again
 				if($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country'])
 				{
 					// geocode address

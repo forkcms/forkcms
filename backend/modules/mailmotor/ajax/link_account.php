@@ -61,7 +61,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 
 		catch(Exception $e)
 		{
-			// timeout occured
+			// timeout occurred
 			if($e->getMessage() == 'Error Fetching http headers') $this->output(self::BAD_REQUEST, null, BL::err('CmTimeout', $this->getModule()));
 
 			// other error

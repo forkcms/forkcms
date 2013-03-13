@@ -334,7 +334,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// notify the admin
 				FrontendBlogModel::notifyAdmin($comment);
 
-				// store timestamp in session so we can block excesive usage
+				// store timestamp in session so we can block excessive usage
 				SpoonSession::set('blog_comment_' . $this->record['id'], time());
 
 				// store author-data in cookies

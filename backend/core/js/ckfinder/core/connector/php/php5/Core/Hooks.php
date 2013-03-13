@@ -24,7 +24,6 @@ class CKFinder_Connector_Core_Hooks
      * Run user defined hooks
      *
      * @param string $event
-     * @param object $errorHandler
      * @param array $args
      * @return boolean (true to continue processing, false otherwise)
      */

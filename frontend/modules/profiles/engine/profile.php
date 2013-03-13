@@ -316,7 +316,7 @@ class FrontendProfilesProfile
 	}
 
 	/**
-	 * Insegirt or update multiple profile settings.
+	 * Insert or update multiple profile settings.
 	 *
 	 * @param array $values Settings in key=>value form.
 	 */

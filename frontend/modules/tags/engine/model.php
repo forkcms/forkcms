@@ -18,7 +18,7 @@ class FrontendTagsModel
 	/**
 	 * Calls a method that has to be implemented though the tags interface
 	 *
-	 * @param string $module The module wherin to search.
+	 * @param string $module The module wherein to search.
 	 * @param string $class The class that should contain the method.
 	 * @param string $method The method to call.
 	 * @param mixed[optional] $parameter The parameters to pass.
@@ -66,7 +66,7 @@ class FrontendTagsModel
 	}
 
 	/**
-	 * Fetch the list of all tags, ordered by their occurence
+	 * Fetch the list of all tags, ordered by their occurrence
 	 *
 	 * @return array
 	 */
@@ -84,7 +84,7 @@ class FrontendTagsModel
 	/**
 	 * Get tags for an item
 	 *
-	 * @param string $module The module wherin the otherId occurs.
+	 * @param string $module The module wherein the otherId occurs.
 	 * @param int $otherId The id of the item.
 	 * @return array
 	 */
@@ -128,7 +128,7 @@ class FrontendTagsModel
 	/**
 	 * Get tags for multiple items.
 	 *
-	 * @param string $module The module wherefor you want to retrieve the tags.
+	 * @param string $module The module wherefore you want to retrieve the tags.
 	 * @param array $otherIds The ids for the items.
 	 * @return array
 	 */

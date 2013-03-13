@@ -639,7 +639,7 @@ class BackendBlogModel
 	/**
 	 * Retrieve the unique URL for a category
 	 *
-	 * @param string $URL The string wheron the URL will be based.
+	 * @param string $URL The string whereon the URL will be based.
 	 * @param int[optional] $id The id of the category to ignore.
 	 * @return string
 	 */
@@ -734,7 +734,7 @@ class BackendBlogModel
 	/**
 	 * Recalculate the commentcount
 	 *
-	 * @param array $ids The id(s) of the post wherefor the commentcount should be recalculated.
+	 * @param array $ids The id(s) of the post wherefore the commentcount should be recalculated.
 	 * @return bool
 	 */
 	public static function reCalculateCommentCount(array $ids)

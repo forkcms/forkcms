@@ -49,7 +49,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 			if(!empty($item))
 			{
 				// init var
-				$processedSuccesfully = true;
+				$processedSuccessfully = true;
 
 				// set item as busy
 				$db->update('hooks_queue', array('status' => 'busy'), 'id = ?', array($item['id']));
@@ -68,7 +68,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
 					// reset state
-					$processedSuccesfully = false;
+					$processedSuccessfully = false;
 
 					// logging when we are in debugmode
 					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
@@ -89,7 +89,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 						$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
 						// reset state
-						$processedSuccesfully = false;
+						$processedSuccessfully = false;
 
 						// logging when we are in debugmode
 						if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
@@ -101,14 +101,14 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
 					// reset state
-					$processedSuccesfully = false;
+					$processedSuccessfully = false;
 
 					// logging when we are in debugmode
 					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
 				}
 
 				// everything went fine so delete the item
-				if($processedSuccesfully) $db->delete('hooks_queue', 'id = ?', $item['id']);
+				if($processedSuccessfully) $db->delete('hooks_queue', 'id = ?', $item['id']);
 
 				// logging when we are in debugmode
 				if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') finished.');

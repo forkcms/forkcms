@@ -883,7 +883,7 @@ class BackendMailmotorCMHelper
 	 * Subscribes an e-mail address and send him/her to CampaignMonitor
 	 *
 	 * @param string $email The emailaddress.
-	 * @param string[optional] $groupId The group wherin the emailaddress should be added.
+	 * @param string[optional] $groupId The group wherein the emailaddress should be added.
 	 * @param array[optional] $customFields Any optional custom fields.
 	 * @return bool
 	 */

@@ -8,7 +8,7 @@
  */
 
 /**
- * This is a widget wherin the sitemap lives
+ * This is a widget wherein the sitemap lives
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <matthias.mullie@netlash.com>

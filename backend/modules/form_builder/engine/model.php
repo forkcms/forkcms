@@ -51,7 +51,7 @@ class BackendFormBuilderModel
 			// one minute
 			elseif($minutes == 1) return BL::getLabel('OneMinuteAgo');
 
-			// more than one seconde
+			// more than one second
 			elseif($seconds > 1) return sprintf(BL::getLabel('SecondsAgo'), $seconds);
 
 			// one second
@@ -264,7 +264,7 @@ class BackendFormBuilderModel
 	/**
 	 * Formats the recipients based on the serialized string
 	 *
-	 * @param string $string The serialized string that should be formated
+	 * @param string $string The serialized string that should be formatted
 	 * @return string
 	 */
 	public static function formatRecipients($string)

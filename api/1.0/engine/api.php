@@ -70,7 +70,7 @@ class API extends KernelLoader implements ApplicationInterface
 		if($chunks[0] == 'core') $path = BACKEND_CORE_PATH . '/engine/api.php';
 		else $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
 
-		// check if the fille is present? If it isn't present there is a problem
+		// check if the file is present? If it isn't present there is a problem
 		if(!SpoonFile::exists($path)) return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
 
 		// build config-object-name
@@ -228,7 +228,7 @@ class API extends KernelLoader implements ApplicationInterface
 				// characters that require a cdata wrapper
 				$illegalCharacters = array('&', '<', '>', '"', '\'');
 
-				// default we dont wrap with cdata tags
+				// default we don't wrap with cdata tags
 				$wrapCdata = false;
 
 				// find illegal characters in input string

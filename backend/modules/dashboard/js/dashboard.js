@@ -165,7 +165,7 @@ jsBackend.dashboard =
 			},
 			success: function(data, textStatus)
 			{
-				// not a succes so revert the changes
+				// not a success so revert the changes
 				if(data.code != 200)
 				{
 					// refresh page

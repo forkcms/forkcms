@@ -51,7 +51,7 @@ class FrontendLocationIndex extends FrontendBaseBlock
 			$this->settings['center']['lng'] = $firstMarker['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $firstMarker['lat'];
