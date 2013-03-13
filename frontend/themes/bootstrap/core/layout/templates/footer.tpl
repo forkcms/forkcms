@@ -18,7 +18,7 @@
 {* Site wide HTML *}
 {$siteHTMLFooter}
 
-{* @TODO Remove when needed *}
+{* @todo Remove when needed *}
 <div id="fb-root"></div>
 <script>
 	(function(d, s, id) {
