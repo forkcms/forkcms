@@ -953,7 +953,7 @@ class BackendExtensionsModel
 	 */
 	public static function isTemplateInUse($templateId)
 	{
-		return (bool) BackendModel::getDB(false)->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM pages AS i
 			 WHERE i.template_id = ? AND i.status = ?
@@ -970,7 +970,7 @@ class BackendExtensionsModel
 	 */
 	public static function isThemeInstalled($theme)
 	{
-		return (bool) BackendModeL::getDB()->getVar(
+		return (bool) BackendModeL::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM themes_templates
 			 WHERE theme = ?

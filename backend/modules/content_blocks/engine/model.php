@@ -38,7 +38,7 @@ class BackendContentBlocksModel
 	public static function copy($from, $to)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// init variables
 		$contentBlockIds = $oldIds = $newIds = array();

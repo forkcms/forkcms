@@ -107,7 +107,7 @@ class BackendPagesModel
 			{
 				// init var
 				$parentID = (int) $page['parent_id'];
-				
+
 				// init URL
 				$languageURL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
 
@@ -377,7 +377,7 @@ class BackendPagesModel
 
 					// split into chunks
 					$urlChunks = explode('/', $url);
-					
+
 					// remove the language chunk
 					$urlChunks = (SITE_MULTILANGUAGE) ? array_slice($urlChunks,2) : array_slice($urlChunks,1);
 
@@ -427,7 +427,7 @@ class BackendPagesModel
 	public static function copy($from, $to)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// copy contentBlocks and get copied contentBlockIds
 		$contentBlockIds = BackendContentBlocksModel::copy($from, $to);
@@ -483,7 +483,7 @@ class BackendPagesModel
 		$db->delete('search_index', 'module = ? AND language = ?', array('pages', $to));
 
 		// get all active pages
-		$ids = BackendModel::getDB()->getColumn(
+		$ids = BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT id
 			 FROM pages AS i
 			 WHERE i.language = ? AND i.status = ?',

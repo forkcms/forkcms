@@ -73,7 +73,7 @@ class BackendFormBuilderModel
 	public static function createIdentifier()
 	{
 		// get last id
-		$id = (int) BackendModel::getDb()->getVar('SELECT i.id FROM forms AS i ORDER BY i.id DESC LIMIT 1');
+		$id = (int) BackendModel::getContainer()->get('database')->getVar('SELECT i.id FROM forms AS i ORDER BY i.id DESC LIMIT 1');
 
 		// create identifier
 		do
