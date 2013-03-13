@@ -45,7 +45,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			}
 
 			// require CampaignMonitor class
-			require_once 'external/campaignmonitor.php';
+			require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
 			// init CampaignMonitor object
 			new CampaignMonitor($url, $username, $password, 10);
