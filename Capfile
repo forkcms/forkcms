@@ -23,3 +23,6 @@ require "capistrano/ext/multistage"
 require "sumodev_deploy"
 require "forkcms_deploy"
 require "forkcms_deploy/defaults"
+
+# UNCOMMENT THIS IF YOU'RE USING Compass 
+#after 'deploy:update_code', 'assets:precompile'
