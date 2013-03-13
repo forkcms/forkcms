@@ -80,7 +80,7 @@ class BackendURL extends BackendBaseObject
 		// store the querystring local, so we don't alter it.
 		$queryString = $this->getQueryString();
 
-		// find the position of ? (which seperates real URL and GET-parameters)
+		// find the position of ? (which separates real URL and GET-parameters)
 		$positionQuestionMark = strpos($queryString, '?');
 
 		// remove the GET-chunk from the parameters
@@ -201,7 +201,7 @@ class BackendURL extends BackendBaseObject
 	 *
 	 * @param string $module The requested module.
 	 * @param string $action The requested action.
-	 * @param strring $language The requested language.
+	 * @param string $language The requested language.
 	 */
 	private function processRegularRequest($module, $action, $language)
 	{

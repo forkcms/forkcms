@@ -43,10 +43,10 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 	 */
 	private function loadData()
 	{
-		// get all managable modules
+		// get all manageable modules
 		$modules = BackendExtensionsModel::getModules();
 
-		// split the modules in 2 seperate data grid sources
+		// split the modules in 2 separate data grid sources
 		foreach($modules as $module)
 		{
 			if($module['installed']) $this->installedModules[] = $module;

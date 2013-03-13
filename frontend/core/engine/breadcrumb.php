@@ -143,7 +143,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		$items = array();
 		$numItems = count($this->items);
 
-		// loop items and add the seperator
+		// loop items and add the separator
 		foreach($this->items as $i => $row)
 		{
 			// remove URL from last element

@@ -51,7 +51,7 @@ class FrontendSearchModel
 	 *
 	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
 	 * Simple search: all search index fields will be searched for the given term
-	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
+	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
 	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @param int[optional] $limit The number of articles to get.
@@ -207,11 +207,11 @@ class FrontendSearchModel
 	 *
 	 * Note: please be aware that this is an approximate amount. It IS possible that this is not the exact amount of search results,
 	 * since search results may vary in time (entries may not yet/no longer be shown) and we will not rebuild the entire search index
-	 * on every search (would be a great performance killer and huge scalibility loss)
+	 * on every search (would be a great performance killer and huge scalability loss)
 	 *
 	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
 	 * Simple search: all search index fields will be searched for the given term
-	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
+	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
 	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @return int
@@ -302,7 +302,7 @@ class FrontendSearchModel
 	 *
 	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
 	 * Simple search: all search index fields will be searched for the given term
-	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
+	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
 	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @param int[optional] $limit The number of articles to get.

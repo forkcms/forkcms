@@ -151,7 +151,7 @@ class APIInit extends KernelLoader
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
 		}
 
 		echo '<html><body>Something went wrong.</body></html>';

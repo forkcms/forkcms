@@ -173,7 +173,7 @@ class BackendMailer
 	 * Returns the content from a given template
 	 *
 	 * @param string $template The template to use.
-	 * @param array[optional] $variables The variabled to assign.
+	 * @param array[optional] $variables The variables to assign.
 	 * @return string
 	 */
 	private static function getTemplateContent($template, $variables = null)

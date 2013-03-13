@@ -246,9 +246,9 @@ class BackendLocaleModel
 	 *
 	 * @param string $name The name of the locale.
 	 * @param string $type The type of the locale.
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param string $language The language to use.
-	 * @param string $application The application wherin will be searched.
+	 * @param string $application The application wherein will be searched.
 	 * @param int[optional] $id The id to exclude in the check.
 	 * @return bool
 	 */
@@ -304,9 +304,9 @@ class BackendLocaleModel
 	 *
 	 * @param string $name The name of the locale.
 	 * @param string $type The type of the locale.
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param string $language The language to use.
-	 * @param string $application The application wherin will be searched.
+	 * @param string $application The application wherein will be searched.
 	 * @return bool
 	 */
 	public static function getByName($name, $type, $module, $language, $application)
@@ -349,7 +349,7 @@ class BackendLocaleModel
 		// add the interface languages if needed
 		if($includeInterfaceLanguages) $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
 
-		// create a new array to redefine the langauges for the multicheckbox
+		// create a new array to redefine the languages for the multicheckbox
 		$languages = array();
 
 		// loop the languages
@@ -943,7 +943,7 @@ class BackendLocaleModel
 			 	l.value LIKE ? AND
 			 	l.type IN (' . implode(',', $types) . ')';
 
-		// add the paremeters
+		// add the parameters
 		$parameters = array($application, '%' . $name . '%', '%' . $value . '%');
 
 		// add module to the query if needed
@@ -1158,7 +1158,7 @@ class BackendLocaleModel
 		);
 
 		// set defaults if necessary
-		// we can't simply use these right away, because this function is also calles by the installer, which does not have Backend-functions
+		// we can't simply use these right away, because this function is also calls by the installer, which does not have Backend-functions
 		if($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
 		if($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
 		if($userId === null) $userId = BackendAuthentication::getUser()->getUserId();

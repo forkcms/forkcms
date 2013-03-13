@@ -58,7 +58,7 @@ class BackendModel extends BaseModel
 		// get last chunk
 		$last = $chunks[$count - 1];
 
-		// is nummeric
+		// is numeric
 		if(SpoonFilter::isNumeric($last))
 		{
 			// remove last chunk
@@ -149,7 +149,7 @@ class BackendModel extends BaseModel
 			$i++;
 		}
 
-		// some applications aren't real seperate applications, they are virtual applications inside the backend.
+		// some applications aren't real separate applications, they are virtual applications inside the backend.
 		$namedApplication = NAMED_APPLICATION;
 		if(in_array($namedApplication, array('backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob'))) $namedApplication = 'backend';
 
@@ -343,7 +343,7 @@ class BackendModel extends BaseModel
 	 *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
 	 *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
 	 *
-	 * @param string $path The path wherin the thumbnail-folders will be stored.
+	 * @param string $path The path wherein the thumbnail-folders will be stored.
 	 * @param string $sourceFile The location of the source file.
 	 */
 	public static function generateThumbnails($path, $sourcefile)
@@ -752,7 +752,7 @@ class BackendModel extends BaseModel
 		// get the menuItems
 		$keys = self::getKeys($language);
 
-		// get the URL, if it doens't exist return 404
+		// get the URL, if it doesn't exist return 404
 		if(!isset($keys[$pageId])) return self::getURL(404);
 
 		// add URL
@@ -798,7 +798,7 @@ class BackendModel extends BaseModel
 						// direct link?
 						if($extra['module'] == $module && $extra['action'] == $action)
 						{
-							// exacte page was found, so return
+							// exact page was found, so return
 							return self::getURL($properties['page_id'], $language);
 						}
 
@@ -857,7 +857,7 @@ class BackendModel extends BaseModel
 	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
 	{
 		// validate date/time object
-		if(!$date->isValid() || ($time !== null && !$time->isValid())) throw new BackendException('You need to provide two objects that actaully contain valid data.');
+		if(!$date->isValid() || ($time !== null && !$time->isValid())) throw new BackendException('You need to provide two objects that actually contain valid data.');
 
 		// init vars
 		$year = gmdate('Y', $date->getTimestamp());
@@ -956,7 +956,7 @@ class BackendModel extends BaseModel
 		// get cache path
 		$path = FRONTEND_CACHE_PATH . '/cached_templates';
 
-		// build regular expresion
+		// build regular expression
 		if($module !== null)
 		{
 			if($language === null) $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
@@ -1221,7 +1221,7 @@ class BackendModel extends BaseModel
 	 * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @param string[optional] $referrer The content of the HTTP_REFERER header should be sent here.
 	 * @param array[optional] $others Other data (the variables from $_SERVER).
-	 * @return bool If everthing went fine, true will be returned, otherwise an exception will be triggered.
+	 * @return bool If everything went fine, true will be returned, otherwise an exception will be triggered.
 	 */
 	public static function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
@@ -1305,11 +1305,11 @@ class BackendModel extends BaseModel
 	}
 
 	/**
-	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
+	 * Subscribe to an event, when the subscription already exists, the callback will be updated.
 	 *
 	 * @param string $eventModule The module that triggers the event.
 	 * @param string $eventName The name of the event.
-	 * @param string $module The module that subsribes to the event.
+	 * @param string $module The module that subscribes to the event.
 	 * @param mixed $callback The callback that should be executed when the event is triggered.
 	 */
 	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
@@ -1389,7 +1389,7 @@ class BackendModel extends BaseModel
 				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
 				// logging when we are in debugmode
-				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subcribed to event (' . $module . '/' . $eventName . ').');
+				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
 			}
 
 			// start processing
@@ -1402,7 +1402,7 @@ class BackendModel extends BaseModel
 	 *
 	 * @param string $eventModule The module that triggers the event.
 	 * @param string $eventName The name of the event.
-	 * @param string $module The module that subsribes to the event.
+	 * @param string $module The module that subscribes to the event.
 	 */
 	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
 	{

@@ -212,7 +212,7 @@ class BackendAnalyticsModel
 			// load cache xml file
 			self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-			// doesnt exist in cache after loading the xml file so set to empty
+			// doesn't exist in cache after loading the xml file so set to empty
 			if(!isset(self::$data[$type]['attributes'])) self::$data[$type]['attributes'] = array();
 		}
 
@@ -270,7 +270,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getDashboardDataFromCache($startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache - load cache xml file
+		// doesn't exist in cache - load cache xml file
 		if(!isset(self::$dashboardData) || empty(self::$dashboardData))
 		{
 			self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
@@ -347,13 +347,13 @@ class BackendAnalyticsModel
 	 */
 	public static function getDataFromCacheByType($type, $startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache
+		// doesn't exist in cache
 		if(!isset(self::$data[$type]))
 		{
 			// load cache xml file
 			self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-			// doesnt exist in cache after loading the xml file so set to false to get live data
+			// doesn't exist in cache after loading the xml file so set to false to get live data
 			if(!isset(self::$data[$type])) return false;
 		}
 
@@ -512,7 +512,7 @@ class BackendAnalyticsModel
 	 * @param array $metrics The metrics to collect.
 	 * @param int $startTimestamp The start timestamp for the cache file.
 	 * @param int $endTimestamp The end timestamp for the cache file.
-	 * @param string[optional] $forceCache Should the data be forced from cache.
+	 * @param boolean[optional] $forceCache Should the data be forced from cache.
 	 * @return array
 	 */
 	public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)

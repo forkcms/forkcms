@@ -93,7 +93,7 @@ class BackendLanguage
 	 * Get an error from the language-file
 	 *
 	 * @param string $key The key to get.
-	 * @param string[optional] $module The module wherin we should search.
+	 * @param string[optional] $module The module wherein we should search.
 	 * @return string
 	 */
 	public static function getError($key, $module = null)
@@ -166,7 +166,7 @@ class BackendLanguage
 	 * Get a label from the language-file
 	 *
 	 * @param string $key The key to get.
-	 * @param string[optional] $module The module wherin we should search.
+	 * @param string[optional] $module The module wherein we should search.
 	 * @return string
 	 */
 	public static function getLabel($key, $module = null)
@@ -206,7 +206,7 @@ class BackendLanguage
 	 * Get a message from the language-file
 	 *
 	 * @param string $key The key to get.
-	 * @param string[optional] $module The module wherin we should search.
+	 * @param string[optional] $module The module wherein we should search.
 	 * @return string
 	 */
 	public static function getMessage($key, $module = null)

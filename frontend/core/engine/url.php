@@ -8,7 +8,7 @@
  */
 
 /**
- * This class will handle the incomming URL.
+ * This class will handle the incoming URL.
  *
  * @author 	Tijs Verkoyen <tijs@sumocoders.be>
  * @author 	Davy Hellemans <davy.hellemans@netlash.com>

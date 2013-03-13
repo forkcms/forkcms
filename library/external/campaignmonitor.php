@@ -145,6 +145,7 @@ class CampaignMonitor
 	 * @param	string $URL						The base URL of your CreateSend site. e.g. http://example.createsend.com/.
 	 * @param	string $username				The username you use to login to Campaign Monitor.
 	 * @param	string $password				The password you use to login to Campaign Monitor.
+     * @param	int[optional] $timeOut			The default timeout
 	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
 	 * @param	string[optional] $listId		The default list ID to use throughout the class.
 	 */
@@ -177,8 +178,8 @@ class CampaignMonitor
 	 * @param	string $email					The email address of the new subscriber.
 	 * @param	string $name					The name of the new subscriber. If the name is unknown, an empty string can be passed in.
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
-	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
-	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
+	 * @param	string[optional] $listId		The list you want to add the subscriber to.
 	 */
 	public function addSubscriber($email, $name, $customFields = array(), $resubscribe = true, $listId = null)
 	{

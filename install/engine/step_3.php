@@ -41,7 +41,7 @@ class InstallerStep3 extends InstallerStep
 	 */
 	private function loadForm()
 	{
-		// seperate frontend/backend languages?
+		// separate frontend/backend languages?
 		$this->frm->addCheckbox('same_interface_language', (SpoonSession::exists('same_interface_language') ? SpoonSession::get('same_interface_language') : true));
 
 		// multiple or single language (frontend)

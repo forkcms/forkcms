@@ -115,7 +115,7 @@ class BackendSearchModel
 	/**
 	 * Insert module search settings
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param string $searchable Is the module searchable?
 	 * @param string $weight Weight of this module's results.
 	 */
@@ -162,7 +162,7 @@ class BackendSearchModel
 	/**
 	 * Remove an index
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param int $otherId The id of the record.
 	 * @param string[optional] $language The language to use.
 	 */
@@ -184,7 +184,7 @@ class BackendSearchModel
 	/**
 	 * Edit an index
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param int $otherId The id of the record.
 	 * @param  array $fields A key/value pair of fields to index.
 	 * @param string[optional] $language The frontend language for this entry.

@@ -55,7 +55,7 @@ jsBackend.translations.controls =
 			$('select#module option[value=core]').prop('disabled', false).prop('selected', true);
 		}
 
-		// remove the disbaled stuff
+		// remove the disabled stuff
 		else
 		{
 			$('select#module option').prop('disabled', false);

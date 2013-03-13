@@ -43,7 +43,7 @@ jsBackend.controls =
 				// hide all
 				$('#'+ wrapperId +' p.strength').hide();
 
-				// excecute function directly
+				// execute function directly
 				var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
 
 				// show
@@ -55,7 +55,7 @@ jsBackend.controls =
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
 
-					// excecute function directly
+					// execute function directly
 					var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
 
 					// show
@@ -90,7 +90,7 @@ jsBackend.controls =
 		// more then 6 chars is good
 		if(string.length >= 6) score++;
 
-		// more then 8 is beter
+		// more then 8 is better
 		if(string.length >= 8) score++;
 
 		// upper and lowercase?
@@ -162,7 +162,7 @@ jsBackend.forms =
 						else $('form#'+ formId).submit();
 					});
 
-					// dont submit the form on certain elements
+					// don't submit the form on certain elements
 					$('form#'+ formId + ' .dontSubmit').on('focus', function() { dontSubmit = true; })
 					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
 
@@ -188,7 +188,7 @@ jsBackend.layout =
 
 		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 
-		// fix last childs
+		// fix last children
 		$('.options p:last').addClass('lastChild');
 	},
 

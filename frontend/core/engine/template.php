@@ -150,7 +150,7 @@ class FrontendTemplate extends SpoonTemplate
 	}
 
 	/**
-	 * Retrives the already assigned variables.
+	 * Retrieves the already assigned variables.
 	 *
 	 * @return array
 	 */
@@ -561,7 +561,7 @@ class FrontendTemplateModifiers
 	 */
 	public static function getPath($var, $file)
 	{
-		// trick codensiffer
+		// trick codesniffer
 		$var = (string) $var;
 
 		return FrontendTheme::getPath($file);
@@ -576,7 +576,7 @@ class FrontendTemplateModifiers
 	 * @param string[optional] $var The variable.
 	 * @param string[optional] $type The type of navigation, possible values are: page, footer.
 	 * @param int[optional] $pageId The parent wherefore the navigation should be build.
-	 * @param int[optional] $startDepth The depth to strat from.
+	 * @param int[optional] $startDepth The depth to start from.
 	 * @param int[optional] $endDepth The maximum depth that has to be build.
 	 * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
 	 * @param string[optional] $tpl The template that will be used.
@@ -653,8 +653,8 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|geturlforblock:module[:action[:language]]}
 	 *
 	 * @param string $var The string passed from the template.
-	 * @param string $module The module wherefor the URL should be build.
-	 * @param string[optional] $action A specific action wherefor the URL should be build, otherwise the default will be used.
+	 * @param string $module The module wherefore the URL should be build.
+	 * @param string[optional] $action A specific action wherefore the URL should be build, otherwise the default will be used.
 	 * @param string[optional] $language The language to use, if not provided we will use the loaded language.
 	 * @return string
 	 */
@@ -782,7 +782,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|rand:min:max}
 	 *
 	 * @param string[optional] $var The string passed from the template.
-	 * @param int $min The miminum random number.
+	 * @param int $min The minimum random number.
 	 * @param int $max The maximum random number.
 	 * @return int
 	 */
@@ -811,7 +811,7 @@ class FrontendTemplateModifiers
 	 * Formats a timestamp as a string that indicates the time ago
 	 * 	syntax: {$var|timeago}
 	 *
-	 * @param string[optional] $var A UNIX-timestamp that will be formated as a time-ago-string.
+	 * @param string[optional] $var A UNIX-timestamp that will be formatted as a time-ago-string.
 	 * @return string
 	 */
 	public static function timeAgo($var = null)

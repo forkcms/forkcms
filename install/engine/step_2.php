@@ -133,7 +133,7 @@ class InstallerStep2 extends InstallerStep
 	/**
 	 * Define path constants
 	 *
-	 * @param int $step The step wherefor the constant should be defined.
+	 * @param int $step The step wherefore the constant should be defined.
 	 */
 	private static function defineConstants($step)
 	{

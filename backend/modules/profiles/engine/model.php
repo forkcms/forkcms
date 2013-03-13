@@ -260,7 +260,7 @@ class BackendProfilesModel
 		// init db
 		$db = BackendModel::getContainer()->get('database');
 
-		// get groups already linked but dont include the includeId
+		// get groups already linked but don't include the includeId
 		if($includeId !== null) $groupIds = (array) $db->getColumn(
 			'SELECT group_id
 			 FROM profiles_groups_rights

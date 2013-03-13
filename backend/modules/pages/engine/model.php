@@ -636,7 +636,7 @@ class BackendPagesModel
 	 * Delete a page
 	 *
 	 * @param int $id The id of the page to delete.
-	 * @param string[optional] $language The language wherin the page will be deleted, if not provided we will use the working language.
+	 * @param string[optional] $language The language wherein the page will be deleted, if not provided we will use the working language.
 	 * @param int[optional] $revisionId If specified the given revision will be deleted, used for deleting drafts.
 	 * @return bool
 	 */
@@ -884,7 +884,7 @@ class BackendPagesModel
 			return $URL;
 		}
 
-		// not availble
+		// not available
 		else
 		{
 			return false;
@@ -996,7 +996,7 @@ class BackendPagesModel
 			// add to array
 			$order[$id] = $page['full_url'];
 
-			// childs of root/footer/meta-pages are stored under the page type
+			// children of root/footer/meta-pages are stored under the page type
 			if(($type == 'root' || $type == 'footer' || $type == 'meta') && isset($navigation['page'][$id]))
 			{
 				// process subpages

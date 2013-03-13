@@ -55,7 +55,7 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 		$this->dataGrid->setSortingColumns(array('name', 'send_on'), 'name');
 		$this->dataGrid->setSortParameter('desc');
 
-		// set colum URLs
+		// set column URLs
 		$this->dataGrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
 
 		// set column functions

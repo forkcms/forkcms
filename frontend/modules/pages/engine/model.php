@@ -59,7 +59,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 	/**
 	 * Fetch a list of subpages of a page.
 	 *
-	 * @param int $ids The id of the item to grab the subpages for.
+	 * @param int $id The id of the item to grab the subpages for.
 	 * @return array
 	 */
 	public static function getSubpages($id)

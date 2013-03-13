@@ -96,7 +96,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 				SpoonFile::setContent($filename, 'busy1');
 			}
 
-			// no longer auhtorized
+			// no longer authorized
 			else
 			{
 				// set status in cache

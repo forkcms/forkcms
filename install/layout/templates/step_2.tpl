@@ -105,10 +105,10 @@
 
 				<h3>PHP ini-settings</h3>
 				<h4><span class="{$settingsSafeMode}">{$settingsSafeMode}</span> Safe Mode</h4>
-				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>
+				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compatibility we highly recommend you to disable Safe Mode.</p>
 
 				<h4><span class="{$settingsOpenBasedir}">{$settingsOpenBasedir}</span> Open Basedir</h4>
-				<p>For forward compability we highly recommend you not to use open_basedir.</p>
+				<p>For forward compatibility we highly recommend you not to use open_basedir.</p>
 
                 <h4><span class="{$settingsDateTimezone}">{$settingsDateTimezone}</span> date.timezone</h4>
                 <p>date.timezone setting must be set. Make sure your default timezone is supported by your installation of PHP. Check for typos in your php.ini file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.</p>

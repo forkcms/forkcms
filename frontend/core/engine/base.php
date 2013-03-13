@@ -277,7 +277,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 	 */
 	public function __construct($module, $action, $data = null)
 	{
-		// get objects from the reference so they are accessable
+		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
 		$this->URL = Spoon::get('url');
@@ -350,7 +350,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
-		// buil URL to the module
+		// build URL to the module
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
@@ -765,7 +765,7 @@ class FrontendBaseWidget extends FrontendBaseObject
 	 */
 	public function __construct($module, $action, $data = null)
 	{
-		// get objects from the reference so they are accessable
+		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
 		$this->URL = Spoon::get('url');
@@ -836,7 +836,7 @@ class FrontendBaseWidget extends FrontendBaseObject
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
-		// buil URL to the module
+		// build URL to the module
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
