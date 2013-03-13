@@ -24,5 +24,5 @@ require "sumodev_deploy"
 require "forkcms_deploy"
 require "forkcms_deploy/defaults"
 
-# UNCOMMENT THIS IF YOU'RE USING Compass 
-#after 'deploy:update_code', 'assets:precompile'
+# compile sass on deploy
+after 'deploy:update_code', 'assets:precompile'
