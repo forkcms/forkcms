@@ -976,12 +976,12 @@ class BackendModel extends BaseModel
 	}
 
 	/**
-	 * Is installed module
+	 * Is module installed?
 	 *
 	 * @param string $module
 	 * @return bool
 	 */
-	public static function isInstalledModule($module)
+	public static function isModuleInstalled($module)
 	{
 		// get installed modules
 		$modules = self::getModules();
