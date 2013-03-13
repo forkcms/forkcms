@@ -9,7 +9,7 @@ parameters:
     fork.debug:             <debug-mode>
     fork.debug_email:       <debug-email>
     fork.debug_message:     'Internal error.'
-    fork.version:           '3.5'
+    fork.version:           '3.5.0'
     fork.charset:           'utf-8'
 
     site.protocol:          <site-protocol>
