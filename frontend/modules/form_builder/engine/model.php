@@ -63,9 +63,14 @@ class FrontendFormBuilderModel
 					//Make sure the quotes of a checkbox are the right entities before validating the form
 					if($field['type'] == 'checkbox')
 					{
+						$fieldValues = $field['settings']['values'];
+						$counter = 0;
+
 						//Traverse all values of the checkbox and convert them to the correct entities
-						for ($i=0; $i < count($field['settings']['values']); $i++) { 
-							$field['settings']['values'][$i] = html_entity_decode($field['settings']['values'][$i], ENT_QUOTES);
+						foreach($fieldValues as $key => $value)
+						{
+							$field['settings']['values'][$counter] = html_entity_decode($value, ENT_QUOTES);
+							$counter++;
 						}
 						
 						$field['settings']['default_values'] = html_entity_decode($field['settings']['default_values'], ENT_QUOTES);
