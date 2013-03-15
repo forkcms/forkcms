@@ -56,7 +56,21 @@ class FrontendFormBuilderModel
 		foreach($fields as &$field)
 		{
 			// unserialize
-			if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
+			if($field['settings'] !== null) 
+				{
+					$field['settings'] = unserialize($field['settings']);
+
+					//Make sure the quotes of a checkbox are the right entities before validating the form
+					if($field['type'] == 'checkbox')
+					{
+						//Traverse all values of the checkbox and convert them to the correct entities
+						for ($i=0; $i < count($field['settings']['values']); $i++) { 
+							$field['settings']['values'][$i] = html_entity_decode($field['settings']['values'][$i], ENT_QUOTES);
+						}
+						
+						$field['settings']['default_values'] = html_entity_decode($field['settings']['default_values'], ENT_QUOTES);
+					}
+				}
 
 			// get validation
 			$field['validations'] = (array) FrontendModel::getContainer()->get('database')->getRecords(
