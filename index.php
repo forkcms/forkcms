@@ -24,6 +24,7 @@ if(
 )
 {
 	header('Location: /install');
+	exit;
 }
 
 use Symfony\Component\HttpFoundation\Request;
