@@ -380,7 +380,7 @@ jsBackend.mailmotor.step4 =
 		var sendDate = oSendDate.val();
 		var sendTime = oSendTime.val();
 
-		// initalize the confirmation modal
+		// initialize the confirmation modal
 		$confirmBox.dialog(
 		{
 			autoOpen: false,

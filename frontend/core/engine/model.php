@@ -57,7 +57,7 @@ class FrontendModel extends BaseModel
 		// get last chunk
 		$last = $chunks[$count - 1];
 
-		// is nummeric
+		// is numeric
 		if(SpoonFilter::isNumeric($last))
 		{
 			// remove last chunk
@@ -163,7 +163,7 @@ class FrontendModel extends BaseModel
 		// replace 3 and more line breaks in a row by 2 line breaks
 		$text = preg_replace('/\n{3,}/', "\n\n", $text);
 
-		// use php contant for new lines
+		// use php constant for new lines
 		$text = str_replace("\n", PHP_EOL, $text);
 
 		// trim line breaks at the beginning and ending of the text
@@ -222,7 +222,7 @@ class FrontendModel extends BaseModel
 	 *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
 	 *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
 	 *
-	 * @param string $path The path wherin the thumbnail-folders will be stored.
+	 * @param string $path The path wherein the thumbnail-folders will be stored.
 	 * @param string $sourceFile The location of the source file.
 	 */
 	public static function generateThumbnails($path, $sourcefile)
@@ -511,7 +511,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
-	 * @param string[optional] $format The format wherin the data will be returned, if not provided we will return it in MySQL-datetime-format.
+	 * @param string[optional] $format The format wherein the data will be returned, if not provided we will return it in MySQL-datetime-format.
 	 * @param int[optional] $timestamp A UNIX-timestamp that will be used as base.
 	 * @return string
 	 */
@@ -537,7 +537,7 @@ class FrontendModel extends BaseModel
 	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
 	{
 		// validate date/time object
-		if(!$date->isValid() || ($time !== null && !$time->isValid())) throw new FrontendException('You need to provide two objects that actaully contain valid data.');
+		if(!$date->isValid() || ($time !== null && !$time->isValid())) throw new FrontendException('You need to provide two objects that actually contain valid data.');
 
 		// init vars
 		$year = gmdate('Y', $date->getTimestamp());
@@ -631,7 +631,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Push a notification to Apple's notifications-server
 	 *
-	 * @param mixed $alert The message/dictonary to send.
+	 * @param mixed $alert The message/dictionary to send.
 	 * @param int[optional] $badge The number for the badge.
 	 * @param string[optional] $sound The sound that should be played.
 	 * @param array[optional] $extraDictionaries Extra dictionaries.
@@ -692,7 +692,7 @@ class FrontendModel extends BaseModel
 				// loop the failed keys and remove them
 				foreach($response as $deviceToken)
 				{
-					// get setting wherin the token is available
+					// get setting wherein the token is available
 					$row = $db->getRecord(
 						'SELECT i.*
 						 FROM users_settings AS i
@@ -841,11 +841,11 @@ class FrontendModel extends BaseModel
 	}
 
 	/**
-	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
+	 * Subscribe to an event, when the subscription already exists, the callback will be updated.
 	 *
 	 * @param string $eventModule The module that triggers the event.
 	 * @param string $eventName The name of the event.
-	 * @param string $module The module that subsribes to the event.
+	 * @param string $module The module that subscribes to the event.
 	 * @param mixed $callback The callback that should be executed when the event is triggered.
 	 */
 	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
@@ -925,7 +925,7 @@ class FrontendModel extends BaseModel
 				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
 				// logging when we are in debugmode
-				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subcribed to event (' . $module . '/' . $eventName . ').');
+				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
 			}
 
 			// start processing
@@ -938,7 +938,7 @@ class FrontendModel extends BaseModel
 	 *
 	 * @param string $eventModule The module that triggers the event.
 	 * @param string $eventName The name of the event.
-	 * @param string $module The module that subsribes to the event.
+	 * @param string $module The module that subscribes to the event.
 	 */
 	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
 	{

@@ -437,7 +437,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 				// trigger event
 				FrontendModel::triggerEvent('form_builder', 'after_submission', array('form_id' => $this->item['id'], 'data_id' => $dataId, 'data' => $data, 'fields' => $fields, 'visitorId' => FrontendModel::getVisitorId()));
 
-				// store timestamp in session so we can block excesive usage
+				// store timestamp in session so we can block excessive usage
 				SpoonSession::set('formbuilder_' . $this->item['id'], time());
 
 				// redirect

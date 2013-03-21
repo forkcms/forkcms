@@ -78,7 +78,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction('add'))
 		{
-			// set colum URLs
+			// set column URLs
 			$this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
 		}
 

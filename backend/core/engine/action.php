@@ -56,7 +56,7 @@ class BackendAction extends BackendBaseObject
 		// build action-class-name
 		$actionClassName = SpoonFilter::toCamelCase('backend_' . $this->getModule() . '_' . $this->getAction());
 
-		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
+		// require the config file, we know it is there because we validated it before (possible actions are defined by existence off the file).
 		require_once BACKEND_MODULE_PATH . '/actions/' . $this->getAction() . '.php';
 
 		// validate if class exists (aka has correct name)
@@ -81,7 +81,7 @@ class BackendAction extends BackendBaseObject
 
 	/**
 	 * Load the config file for the requested module.
-	 * In the config file we have to find dissabled actions, the constructor will read the folder and set possible actions
+	 * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
 	 * Other configurations will be stored in it also.
 	 */
 	public function loadConfig()

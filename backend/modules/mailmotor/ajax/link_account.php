@@ -45,7 +45,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			}
 
 			// require CampaignMonitor class
-			require_once 'external/campaignmonitor.php';
+			require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
 			// init CampaignMonitor object
 			new CampaignMonitor($url, $username, $password, 10);
@@ -61,7 +61,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 
 		catch(Exception $e)
 		{
-			// timeout occured
+			// timeout occurred
 			if($e->getMessage() == 'Error Fetching http headers') $this->output(self::BAD_REQUEST, null, BL::err('CmTimeout', $this->getModule()));
 
 			// other error

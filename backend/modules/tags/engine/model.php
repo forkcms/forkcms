@@ -104,7 +104,7 @@ class BackendTagsModel
 	/**
 	 * Get tags for an item
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param int $otherId The id of the record.
 	 * @param string[optional] $type The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
 	 * @param string[optional] $language The language to use, of not provided the working language will be used.
@@ -205,7 +205,7 @@ class BackendTagsModel
 	 * Insert a new tag
 	 *
 	 * @param string $tag The data for the tag.
-	 * @param string[optional] $language The language wherin the tag will be inserted, if not provided the workinglanguage will be used.
+	 * @param string[optional] $language The language wherein the tag will be inserted, if not provided the workinglanguage will be used.
 	 * @return int
 	 */
 	public static function insert($tag, $language = null)
@@ -228,8 +228,8 @@ class BackendTagsModel
 	 *
 	 * @param int $otherId The id of the item to tag.
 	 * @param mixed $tags The tags for the item.
-	 * @param string $module The module wherin the item is located.
-	 * @param string[optional] $language The language wherin the tags will be inserted, if not provided the workinglanguage will be used.
+	 * @param string $module The module wherein the item is located.
+	 * @param string[optional] $language The language wherein the tags will be inserted, if not provided the workinglanguage will be used.
 	 */
 	public static function saveTags($otherId, $tags, $module, $language = null)
 	{

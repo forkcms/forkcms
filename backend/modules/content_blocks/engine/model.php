@@ -38,7 +38,7 @@ class BackendContentBlocksModel
 	public static function copy($from, $to)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// init variables
 		$contentBlockIds = $oldIds = $newIds = array();
@@ -88,14 +88,14 @@ class BackendContentBlocksModel
 		if(!empty($newIds))
 		{
 			// get content block extra ids
-			$contenBlockExtraIds = (array) $db->getRecords(
+			$contentBlockExtraIds = (array) $db->getRecords(
 				'SELECT revision_id, extra_id FROM content_blocks WHERE revision_id IN (' . implode(',', $newIds) . ')'
 			);
 
 			// loop new ids
 			foreach($newIds as $oldId => $newId)
 			{
-				foreach($contenBlockExtraIds as $extraId)
+				foreach($contentBlockExtraIds as $extraId)
 				{
 					if($extraId['revision_id'] == $newId) $contentBlockIds[$oldId] = $extraId['extra_id'];
 				}
@@ -198,7 +198,7 @@ class BackendContentBlocksModel
 	/**
 	 * Get all data for a given revision.
 	 *
-	 * @param int $id The Id for the item wherefor you want a revision.
+	 * @param int $id The Id for the item wherefore you want a revision.
 	 * @param int $revisionId The Id of the revision.
 	 * @return array
 	 */

@@ -107,7 +107,6 @@ class Ckfinder_Connector_Utils_XmlNode
     /**
      * Set element value
      *
-     * @param string $name
      * @param string $value
      * @access public
      */
@@ -119,8 +118,6 @@ class Ckfinder_Connector_Utils_XmlNode
     /**
      * Get element value
      *
-     * @param string $name
-     * @param string $value
      * @access public
      */
     public function getValue()

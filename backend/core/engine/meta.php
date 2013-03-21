@@ -29,7 +29,7 @@ class BackendMeta
 	protected $callback = array();
 
 	/**
-	 * Do we need meta ustom
+	 * Do we need meta custom
 	 *
 	 * @var	bool
 	 */
@@ -71,7 +71,7 @@ class BackendMeta
 	 */
 	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
 	{
-		// check if URL is available from the referene
+		// check if URL is available from the reference
 		if(!Spoon::exists('url')) throw new BackendException('URL should be available in the reference.');
 
 		// get BackendURL instance

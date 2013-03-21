@@ -158,7 +158,7 @@ class BackendAnalyticsHelper
 	public static function getDataForPage($pageId, $startTimestamp, $endTimestamp)
 	{
 		// get page
-		$page = BackendModel::getDB(false)->getVar(
+		$page = BackendModel::getContainer()->get('database')->getVar(
 			'SELECT page
 			 FROM analytics_pages
 			 WHERE id = ?',

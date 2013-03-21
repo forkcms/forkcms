@@ -36,7 +36,7 @@ class FrontendIcal extends SpoonIcal
 		// convert to plain text
 		$description = FrontendModel::convertToPlainText($description);
 
-		// set some basic stuf
+		// set some basic stuff
 		$this->setProductIdentifier('Fork v' . FORK_VERSION);
 
 		// build properties
@@ -188,7 +188,7 @@ class FrontendIcalEvent extends SpoonIcalEvent
 	/**
 	 * Set the url
 	 *
-	 * @param string $url The url to assiociate the item with.
+	 * @param string $url The url to associate the item with.
 	 */
 	public function setUrl($url)
 	{

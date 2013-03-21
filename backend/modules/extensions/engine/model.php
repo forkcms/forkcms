@@ -39,7 +39,7 @@ class BackendExtensionsModel
 	/**
 	 * Build HTML for a template (visual representation)
 	 *
-	 * @param array $template The template format.
+	 * @param array $format The template format.
 	 * @param bool[optional] $large Will the HTML be used in a large version?
 	 * @return string
 	 */
@@ -74,7 +74,7 @@ class BackendExtensionsModel
 				// init var
 				$colspan = 1;
 
-				// reset items in the same collumn
+				// reset items in the same column
 				while($x + $colspan < $cells && $table[$y][$x + $colspan] === $value) $table[$y][$x + $colspan++] = null;
 
 				// init var
@@ -536,7 +536,7 @@ class BackendExtensionsModel
 		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH, false, null, '/^[a-zA-Z0-9_]+$/');
 
 		// all modules that are managable in the backend
-		$managableModules = array();
+		$manageableModules = array();
 
 		// get more information for each module
 		foreach($modules as $moduleName)
@@ -588,11 +588,11 @@ class BackendExtensionsModel
 				// don't act upon error, we simply won't possess some info
 			}
 
-			// add to list of managable modules
-			$managableModules[] = $module;
+			// add to list of manageable modules
+			$manageableModules[] = $module;
 		}
 
-		return $managableModules;
+		return $manageableModules;
 	}
 
 	/**
@@ -816,7 +816,7 @@ class BackendExtensionsModel
 	 * Install a module.
 	 *
 	 * @param string $module The name of the module to be installed.
-	 * @param array $information Warnings from the upload of the module.
+	 * @param array $warnings Warnings from the upload of the module.
 	 */
 	public static function installModule($module, array $warnings = array())
 	{
@@ -953,7 +953,7 @@ class BackendExtensionsModel
 	 */
 	public static function isTemplateInUse($templateId)
 	{
-		return (bool) BackendModel::getDB(false)->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM pages AS i
 			 WHERE i.template_id = ? AND i.status = ?
@@ -970,7 +970,7 @@ class BackendExtensionsModel
 	 */
 	public static function isThemeInstalled($theme)
 	{
-		return (bool) BackendModeL::getDB()->getVar(
+		return (bool) BackendModeL::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM themes_templates
 			 WHERE theme = ?

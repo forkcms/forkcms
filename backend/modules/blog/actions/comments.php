@@ -209,7 +209,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->tpl->assign('dgPublished', ($this->dgPublished->getNumResults() != 0) ? $this->dgPublished->getContent() : false);
 		$this->tpl->assign('numPublished', $this->dgPublished->getNumResults());
 
-		// moderaton datagrid and num results
+		// moderation datagrid and num results
 		$this->tpl->assign('dgModeration', ($this->dgModeration->getNumResults() != 0) ? $this->dgModeration->getContent() : false);
 		$this->tpl->assign('numModeration', $this->dgModeration->getNumResults());
 

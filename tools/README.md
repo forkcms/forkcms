@@ -1,6 +1,6 @@
 # Tools
 In the tools folder you will find scripts, stuff that can come in handy.
-There are some scripts that enable you to perform tasks that recure on a regular base. For now these scripts are only available on *NIX-systems. In the future they may be ported to Windows.
+There are some scripts that enable you to perform tasks that recurs on a regular base. For now these scripts are only available on *NIX-systems. In the future they may be ported to Windows.
 
 ## Install
 Their is no real installation of the scripts the only thing you should do is make them executable, this can be done with the following command. Make sure to replace `<script_name>` with the name of the script.
@@ -30,7 +30,7 @@ It can be executed with the following command
 	
 
 ### check_code
-The check_code-script will run PHP CodeSniffer with all settings that are needed. It will check your code against the styleguide, will detect wierd/faulty code, ...
+The check_code-script will run PHP CodeSniffer with all settings that are needed. It will check your code against the styleguide, will detect weird/faulty code, ...
 
 It can be executed with the following command
 
@@ -58,7 +58,7 @@ The remove_cache-script will clear folders that contain cached files. And can be
 
 
 ### stats
-The stats-script will run severals scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend & PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
+The stats-script will run several scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend & PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
 
 #### PHP Code Sniffer (phpcs.xml)
 Will contain the same as running `check_code`. It will check the code against the styleguide, it will detect deprecated stuff, ... 
@@ -66,7 +66,7 @@ Will contain the same as running `check_code`. It will check the code against th
 Most warnings will be about CyclomaticComplexity or NestingLevel, you can't ignore them, but some of the reported methods are complicated for a reason.
 
 #### PHP Mess Detection (phpmd.xml)
-Basicaly PHP Mess Detection is a spin-off of PHP Depend (see below) it will also check the code for possible bugs, suboptimal code, ... Once again it is important to intepret the result, not everything that is reported means that the code is bad.
+Basically PHP Mess Detection is a spin-off of PHP Depend (see below) it will also check the code for possible bugs, suboptimal code, ... Once again it is important to intepret the result, not everything that is reported means that the code is bad.
 
 <small>Remark: it seems like PHP Mess Detection ignores the --ignore parameter, so all editor-crap-code is included, you can ignore all the errors about files inside the ckeditor and ckfinder-folder</small>
 
@@ -75,7 +75,7 @@ PHP Depend is a tool that performs code analysis. It calculates the software met
 
 below you can find a list, so you can interpret the results
 
-* ahh:		Average Hierarchy Height	The average of the maximum lenght from a root class to ist deepest subclass subclass
+* ahh:		Average Hierarchy Height	The average of the maximum length from a root class to ist deepest subclass subclass
 * andc:		Average Number of Derived Classes	The average of direct subclasses of a class
 * calls:	Number of Method or Function Calls
 * ccn:		Cyclomatic Complexity Number

@@ -221,7 +221,7 @@ class CKFinder_Connector_Core_ResourceTypeConfig
      * If allowed extensions are defined, return false if extension isn't on allowed list.
      *
      * @access public
-     * @param string $extension extension
+     * @param string $fileName extension
      * @param boolean $renameIfRequired whether try to rename file or not
      * @return boolean
      */
@@ -312,7 +312,7 @@ class CKFinder_Connector_Core_ResourceTypeConfig
      * Check given path
      * Return true if path contains folder name that matches hidden folder names list
      *
-     * @param string $folderName
+     * @param string $path
      * @access public
      * @return boolean
      */

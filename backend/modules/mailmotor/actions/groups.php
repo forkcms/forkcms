@@ -56,7 +56,7 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction('addresses'))
 		{
-			// set colum URLs
+			// set column URLs
 			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
 		}
 

@@ -65,7 +65,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
 			}
 
-			// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
+			// require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
 			require_once BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php';
 		}
 
@@ -81,7 +81,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
 			}
 
-			// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
+			// require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
 			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php';
 		}
 
@@ -129,7 +129,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 				// split into chunks
 				$chunks = explode('=', $parameter, 2);
 
-				// valid paramters?
+				// valid parameters?
 				if(count($chunks) == 2)
 				{
 					// build key and value

@@ -69,11 +69,11 @@ class BackendHeader
 	 *   /backend/modules/MODULE/layout/css/FILE (for modules)
 	 *   /backend/core/layout/css/FILE (for core)
 	 *
-	 * If you set overwritePath to true, the above-described automatic path creation will not happend, instead the
+	 * If you set overwritePath to true, the above-described automatic path creation will not happen, instead the
 	 * file-parameter will be used as path; which we then expect to be a full path (It has to start with a slash '/')
 	 *
 	 * @param string $file The name of the file to load.
-	 * @param string[optional] $module The module wherin the file is located.
+	 * @param string[optional] $module The module wherein the file is located.
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
 	 * @param bool[optional] $minify Should the CSS be minified?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
@@ -129,7 +129,7 @@ class BackendHeader
 	 * If you set overwritePath to true we expect a full path (It has to start with a /)
 	 *
 	 * @param string $file The file to load.
-	 * @param string[optional] $module The module wherin the file is located.
+	 * @param string[optional] $module The module wherein the file is located.
 	 * @param bool[optional] $minify Should the module be minified?
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
