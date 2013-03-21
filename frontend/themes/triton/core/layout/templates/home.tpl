@@ -33,7 +33,7 @@
 				{/iteration:positionTop}
 
 				{* Breadcrumb *}
-				<div id="breadcrumb">
+				<div id="breadcrumb" itemprop="breadcrumb">
 					<h4>{$lblBreadcrumb|ucfirst}</h4>
 					{include:core/layout/templates/breadcrumb.tpl}
 				</div>
@@ -71,7 +71,7 @@
 						{option:positionMain.blockIsHTML}
 							<section class="mod">
 								<div class="inner">
-									<div class="bd content">
+									<div class="bd content" itemprop="mainContentOfPage">
 										{$positionMain.blockContent}
 									</div>
 								</div>
