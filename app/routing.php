@@ -112,7 +112,12 @@ class ApplicationRouting
 				$applicationClass = $this->initializeAPI($applicationName);
 				break;
 			case 'install':
-				$applicationClass = $this->initializeInstaller();
+				// install directory might be deleted after install, handle it as a normal frontend request
+				if(file_exists(__DIR__ . '/../install'))
+				{
+					$applicationClass = $this->initializeInstaller();
+				}
+				else $applicationClass = 'frontend';
 				break;
 		}
 
