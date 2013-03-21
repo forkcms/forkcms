@@ -78,6 +78,63 @@ class FrontendProfilesModel
 	}
 
 	/**
+	 * Get avatar
+	 *
+	 * @param int $id 					The id for the profile we want to get the avatar from.
+	 * @param string[optional] $email 	The email from the user we can use for gravatar.
+	 * @return string $avatar 			The absolute path to the avatar.
+	 */
+	public static function getAvatar($id, $email = null, $size = '240x240')
+	{
+		// redefine id
+		$id = (int) $id;
+
+		// return avatar from cache
+		if(isset(self::$avatars[$id])) return self::$avatars[$id];
+
+		// define avatar path
+		$avatarPath = FRONTEND_FILES_URL . '/profiles/avatars/' . $size . '/';
+
+		// get user
+		$user = self::get($id);
+		
+		// if no email is given
+		if(!$email)
+		{
+			// redefine email
+			$email = $user->getEmail();
+		}
+
+		// define avatar
+		$avatar = $user->getSetting('avatar');
+
+		// no custom avatar defined, get gravatar if allowed
+		if(empty($avatar) && FrontendModel::getModuleSetting('profiles', 'allow_gravatar', true))
+		{
+			// define hash
+			$hash = md5(strtolower(trim('d' . $email)));
+
+			// define avatar url
+			$avatar = 'http://www.gravatar.com/avatar/' . $hash;
+
+			// when email not exists, it has to show our custom no-avatar image
+			$avatar .= '?d=' . urlencode(SITE_URL . $avatarPath) . 'no-avatar.gif';
+		}
+
+		// define avatar as not found
+		elseif(empty($avatar)) $avatar = SITE_URL . $avatarPath . 'no-avatar.gif';
+
+		// define custom avatar path
+		else $avatar = $avatarPath . $avatar;
+
+		// set avatar in cache
+		self::$avatars[$id] = $avatar;
+
+		// return avatar image path
+		return $avatar;
+	}
+
+	/**
 	 * Get an encrypted string.
 	 *
 	 * @param string $string String to encrypt.
