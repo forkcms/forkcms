@@ -1,7 +1,7 @@
 <footer id="footer">
 	<div class="container">
 		<div id="footerLogo">
-			<p>&copy; {$now|date:'Y'} {$siteTitle}</p>
+			<p>&copy; <span itemprop="copyrightYear">{$now|date:'Y'}</span> <span itemprop="copyrightHolder">{$siteTitle}</span></p>
 		</div>
 		<nav id="footerNavigation">
 			<h4>{$lblFooterNavigation}</h4>
@@ -13,7 +13,7 @@
 						</a>
 					</li>
 				{/iteration:footerLinks}
-				<li><a href="http://www.fork-cms.com" title="Fork CMS">Fork CMS</a></li>
+				<li><a href="http://www.fork-cms.com" title="Fork CMS" itemprop="mentions">Fork CMS</a></li>
 			</ul>
 		</nav>
 	</div>
