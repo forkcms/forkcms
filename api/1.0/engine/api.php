@@ -351,7 +351,7 @@ class API extends KernelLoader implements ApplicationInterface
 	public function display()
 	{
 		return new Response(
-			self::$content, 200, SpoonHttp::getHeadersList()
+			self::$content, 200
 		);
 	}
 

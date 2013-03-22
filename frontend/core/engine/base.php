@@ -630,7 +630,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 	public function redirect($URL, $code = 302)
 	{
 		$response = new RedirectResponse(
-			$URL, $code, SpoonHTTP::getHeadersList()
+			$URL, $code
 		);
 
 		/*

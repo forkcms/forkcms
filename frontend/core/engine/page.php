@@ -164,7 +164,7 @@ class FrontendPage extends FrontendBaseObject
 		// output
 		return new Response(
 			$this->tpl->getContent($this->templatePath, false, true),
-			$this->statusCode, SpoonHttp::getHeadersList()
+			$this->statusCode
 		);
 	}
 
