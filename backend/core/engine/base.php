@@ -123,7 +123,7 @@ class BackendBaseObject extends KernelLoader
 	{
 		return new Response(
 			$this->content,
-			200, SpoonHttp::getHeadersList()
+			200
 		);
 	}
 }
@@ -321,7 +321,7 @@ class BackendBaseAction extends BackendBaseObject
 	public function redirect($URL)
 	{
 		$response = new RedirectResponse(
-			$URL, 302, SpoonHTTP::getHeadersList()
+			$URL, 302
 		);
 
 		/*
