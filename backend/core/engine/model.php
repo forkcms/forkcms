@@ -257,7 +257,27 @@ class BackendModel extends BaseModel
 			BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
 		}
 	}
-
+	
+	/**
+	 * Delete thumbnails based on the folders in the path
+	 *
+	 * @param string $path The path wherein the thumbnail-folders exist.
+	 * @param string $thumbNail The filename to be deleted.
+	 */
+	public static function deleteThumbnails($path, $thumbNail)
+	{
+		// get folder listing
+		$folders = self::getThumbnailFolders($path);
+		$filename = basename($thumbNail);
+	
+		// loop folders
+		foreach($folders as $folder)
+		{
+			// delete file but check for existance at first.
+			if(SpoonFile::exists($folder['path'] . '/' . $thumbNail)) SpoonFile::delete($folder['path'] . '/' . $thumbNail);
+		}
+	}
+	
 	/**
 	 * Generate a totally random but readable/speakable password
 	 *
