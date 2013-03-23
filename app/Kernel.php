@@ -108,7 +108,6 @@ abstract class Kernel implements KernelInterface
 
 		// load parameters config
 		$this->registerContainerConfiguration($this->getContainerLoader($this->container));
-		$this->registerServices();
 	}
 
 	/**

@@ -1,2 +1,13 @@
 imports:
     - { resource: parameters.yml }
+
+services:
+    database:
+        class: SpoonDatabase
+        arguments:
+            - %database.driver%
+            - %database.host%
+            - %database.user%
+            - %database.password%
+            - %database.name%
+            - %database.port%
