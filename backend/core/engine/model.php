@@ -17,6 +17,7 @@ require_once __DIR__ . '/../../../app/BaseModel.php';
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Reclamebureau Siesqo <info@siesqo.be>
+ * @author John Poelman <john.poelman@bloobz.be>
  */
 class BackendModel extends BaseModel
 {
