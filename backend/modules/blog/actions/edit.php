@@ -15,6 +15,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author John Poelman <john.poelman@bloobz.be>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
