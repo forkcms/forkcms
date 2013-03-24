@@ -74,6 +74,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	{
 		if($this->frm->isSubmitted())
 		{
+            $logger = self::getContainer()->get('logger');
 			$txtEmail = $this->frm->getField('backend_email');
 			$txtPassword = $this->frm->getField('backend_password');
 
@@ -108,6 +109,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 
 					// store attempt in session
 					$current = (SpoonSession::exists('backend_login_attempts')) ? (int) SpoonSession::get('backend_login_attempts') : 0;
+
+					$logger->warning('Failed private login.', array('email' => $txtEmail->getValue(), 'attempt' => $current + 1));
 
 					// increment and store
 					SpoonSession::set('backend_login_attempts', ++$current);
