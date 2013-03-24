@@ -84,7 +84,7 @@ class BackendFormBuilderModel
 
 		// @todo refactor me...
 		// keep trying till its unique
-		while((int) BackendModel::getDb()->getVar(
+		while((int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM forms AS i
 			 WHERE i.identifier = ?
