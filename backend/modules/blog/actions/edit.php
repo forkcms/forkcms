@@ -309,6 +309,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					{
 						// delete the image
 						SpoonFile::delete($imagePath . '/source/' . $item['image']);
+						
+						// delete generated thumbnails
+						BackendModel::deleteThumbnails($imagePath, $item['image']);
 
 						// reset the name
 						$item['image'] = null;
