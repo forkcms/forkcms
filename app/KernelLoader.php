@@ -22,7 +22,7 @@ class KernelLoader
 	/**
 	 * @param Kernel $kernel
 	 */
-	public function __construct($kernel)
+	public function __construct(Kernel $kernel)
 	{
 		$this->setKernel($kernel);
 	}
