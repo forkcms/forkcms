@@ -210,6 +210,8 @@ class BackendURL extends BackendBaseObject
 	 */
 	private function processRegularRequest($module, $action, $language)
 	{
+		$logger = self::getContainer()->get('logger');
+
 		// the person isn't logged in? or the module doesn't require authentication
 		if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
 		{
@@ -243,6 +245,15 @@ class BackendURL extends BackendBaseObject
 						}
 					}
 				}
+
+				$logger->warning(
+					'Unauthorized attempt to access "' . $module . '" module',
+					array(
+						'user_id' => BackendAuthentication::getUser()->getUserId(),
+						'module' => $module,
+					)
+				);
+
 				// the user doesn't have access, redirect to error page
 				SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
 			}
@@ -253,6 +264,15 @@ class BackendURL extends BackendBaseObject
 				// can our user execute the requested action?
 				if(!BackendAuthentication::isAllowedAction($action, $module))
 				{
+					$logger->warning(
+						'Unauthorized attempt to access "' . $action . '" action in "' . $module . '" module',
+						array(
+							'user_id' => BackendAuthentication::getUser()->getUserId(),
+							'module' => $module,
+							'action' => $action
+						)
+					);
+
 					// the user hasn't access, redirect to error page
 					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
 				}
