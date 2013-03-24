@@ -14,6 +14,6 @@
         "symfony/config": "2.1.*",
         "symfony/yaml": "2.1.*",
         "spoon/library": "dev-master",
-        "monolog/monolog": "1.4.*"
+        "jelmersnoeck/fork-monolog": "dev-master"
     }
 }
