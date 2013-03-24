@@ -7,3 +7,4 @@
 backend/cache/navigation/
 vendor/
 app/config/parameters.yml
+app/logs/*.log
