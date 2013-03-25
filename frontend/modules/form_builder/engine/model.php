@@ -57,23 +57,23 @@ class FrontendFormBuilderModel
 		{
 			// unserialize
 			if($field['settings'] !== null) 
+			{
+				$field['settings'] = unserialize($field['settings']);
+
+				// Make sure the quotes of a checkbox are the right entities before validating the form
+				if($field['type'] == 'checkbox' || $field['type'] == 'dropdown' || $field['type'] == 'radiobutton')
 				{
-					$field['settings'] = unserialize($field['settings']);
+					$fieldValues = $field['settings']['values'];
 
-					//Make sure the quotes of a checkbox are the right entities before validating the form
-					if($field['type'] == 'checkbox' || $field['type'] == 'dropdown' || $field['type'] == 'radiobutton')
+					// Traverse all values of the checkbox and decode the entities
+					foreach($fieldValues as $key => $value)
 					{
-						$fieldValues = $field['settings']['values'];
-
-						//Traverse all values of the checkbox and convert them to the correct entities
-						foreach($fieldValues as $key => $value)
-						{
-							$field['settings']['values'][$key] = html_entity_decode($value, ENT_QUOTES);
-						}
-						
-						$field['settings']['default_values'] = html_entity_decode($field['settings']['default_values'], ENT_QUOTES);
+						$field['settings']['values'][$key] = SpoonFilter::htmlentitiesDecode($value);
 					}
+
+					$field['settings']['default_values'] = SpoonFilter::htmlentitiesDecode($field['settings']['default_values']);
 				}
+			}
 
 			// get validation
 			$field['validations'] = (array) FrontendModel::getContainer()->get('database')->getRecords(
