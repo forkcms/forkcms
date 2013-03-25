@@ -13,6 +13,7 @@
         "symfony/http-kernel": "2.1.*",
         "symfony/config": "2.1.*",
         "symfony/yaml": "2.1.*",
-		"spoon/library": "dev-master"
+		"spoon/library": "dev-master",
+        "swiftmailer/swiftmailer": "4.1.*"
     }
 }
