@@ -265,17 +265,17 @@ class BackendModel extends BaseModel
 	 * @param string $path The path wherein the thumbnail-folders exist.
 	 * @param string $thumbNail The filename to be deleted.
 	 */
-	public static function deleteThumbnails($path, $thumbNail)
+	public static function deleteThumbnails($path, $thumbnail)
 	{
 		// get folder listing
 		$folders = self::getThumbnailFolders($path);
-		$filename = basename($thumbNail);
+		$filename = basename($thumbnail);
 
 		// loop folders
 		foreach($folders as $folder)
 		{
 			// delete file but check for existance at first.
-			if(SpoonFile::exists($folder['path'] . '/' . $thumbNail)) SpoonFile::delete($folder['path'] . '/' . $thumbNail);
+			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail)) SpoonFile::delete($folder['path'] . '/' . $thumbnail);
 		}
 	}
 	
