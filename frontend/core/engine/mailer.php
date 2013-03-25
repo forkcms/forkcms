@@ -282,8 +282,7 @@ class FrontendMailer
 		$email->setCharset(SPOON_CHARSET);
 		$email->setContentTransferEncoding('base64');
 		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
-		else $email->setPlainContent('');
-
+		
 		// attachments added
 		if(isset($emailRecord['attachments']) && $emailRecord['attachments'] !== null)
 		{
