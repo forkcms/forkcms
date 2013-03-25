@@ -113,7 +113,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 					SpoonSession::set('backend_login_attempts', ++$current);
 
 					// save the failed login attempt in the user's settings
-					BackendUsersModel::setSetting($userId, 'last_failed_login_attempt', time());
+					if($userId !== false) BackendUsersModel::setSetting($userId, 'last_failed_login_attempt', time());
 
 					// show error
 					$this->tpl->assign('hasError', true);
