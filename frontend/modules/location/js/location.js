@@ -76,23 +76,24 @@ jsFrontend.location =
 	// add a marker
 	addMarker: function(mapId, id, lat, lng, title)
 	{
-		$markerText = $('#markerText' + id);
-		
 		// add the marker
 		var marker = new google.maps.Marker(
 			{
 				position: new google.maps.LatLng(lat, lng),
 				map: jsFrontend.location.map[mapId],
-				title: title
+				title: title,
+				locationId: id
 			}
 		);
-
-		// apparently JS goes bananas with multiline HTMl, so we grab it from the div, this seems like a good idea for SEO
-		if($markerText.length > 0) text = $markerText.html();
-		
+				
 		// show infowindow on click
 		google.maps.event.addListener(marker, 'click', function()
 		{
+			$markerText = $('#markerText' + marker.locationId);
+			
+			// apparently JS goes bananas with multiline HTMl, so we grab it from the div, this seems like a good idea for SEO
+			if($markerText.length > 0) text = $markerText.html();
+		
 			var content = '<h1>' + title + '</h1>';
 			if(typeof text != 'undefined') content += text;
 			
