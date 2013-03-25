@@ -1,6 +1,6 @@
 {* Note: we can use general variables names here since this template is parsed within its own scope *}
 
-<section class="row" id="formbuilder{$formName|camelcase}">
+<section class="row-fluid" id="formbuilder{$formName|camelcase}">
 	<div class="span12">
 		{option:successMessage}<div class="alert alert-success" role="alert">{$successMessage}</div>{/option:successMessage}
 		{option:formBuilderError}<div class="alert alert-error" role="alert">{$formBuilderError}</div>{/option:formBuilderError}
@@ -11,7 +11,7 @@
 					<input type="hidden" name="form" value="{$formName}" />
 
 					{iteration:fields}
-						<div class="row" id="field{$fields.name|camelcase}">
+						<div class="row-fluid" id="field{$fields.name|camelcase}">
 							<div class="span12">
 								{* Headings and paragraphs *}
 								{option:fields.plaintext}
@@ -52,7 +52,7 @@
 							</div>
 						</div>
 					{/iteration:fields}
-					<div class="row">
+					<div class="row-fluid">
 						<div class="span12">
 							<div class="form-actions">
 								<input type="submit" value="{$submitValue}" name="submit" class="inputSubmit btn btn-primary" />
