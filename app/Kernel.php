@@ -105,6 +105,7 @@ abstract class Kernel implements KernelInterface
 	protected function initializeContainer()
 	{
 		$this->container = $this->getContainerBuilder();
+		$this->container->setParameter('kernel.log_path', __DIR__ . '/logs');
 
 		// load parameters config
 		$this->registerContainerConfiguration($this->getContainerLoader($this->container));
