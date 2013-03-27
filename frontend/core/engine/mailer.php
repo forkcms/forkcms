@@ -267,10 +267,9 @@ class FrontendMailer
 			$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
 
 
-			$secure_layer = FrontendModel::getModuleSetting('core','smtp_secure_layer');
+			$secureLayer = FrontendModel::getModuleSetting('core','smtp_secure_layer');
 
-			if($secure_layer === 'ssl' or $secure_layer === 'tls')
-			$email->setSMTPSecurity($secure_layer);
+			if($secureLayer === 'ssl' or $secureLayer === 'tls') $email->setSMTPSecurity($secureLayer);
 		
 			// set server and connect with SMTP
 			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
