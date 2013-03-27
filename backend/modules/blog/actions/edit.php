@@ -15,6 +15,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author John Poelman <john.poelman@bloobz.be>
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
@@ -309,6 +310,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					{
 						// delete the image
 						SpoonFile::delete($imagePath . '/source/' . $item['image']);
+						
+						// delete generated thumbnails
+						BackendModel::deleteThumbnails($imagePath, $item['image']);
 
 						// reset the name
 						$item['image'] = null;
