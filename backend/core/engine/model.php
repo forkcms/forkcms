@@ -263,7 +263,7 @@ class BackendModel extends BaseModel
 	 * Delete thumbnails based on the folders in the path
 	 *
 	 * @param string $path The path wherein the thumbnail-folders exist.
-	 * @param string $thumbNail The filename to be deleted.
+	 * @param string $thumbnail The filename to be deleted.
 	 */
 	public static function deleteThumbnails($path, $thumbnail)
 	{
