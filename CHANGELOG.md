@@ -9,6 +9,7 @@ Bugfixes:
 * Installer: after removing the install folder an errors was throw when accessing the /install url.
 * Installer: after sending Location headers we need to exit to prevent further execution of the application.
 * Core: do not add headers set by Spoon to Response. Otherwise they will be send twice.
+* Core: removed line of code from frontend pagination.
 
 
 3.5.0 (2013-03-13)
