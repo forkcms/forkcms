@@ -37,10 +37,9 @@ class BackendSettingsAjaxTestEmailConnection extends BackendBaseAJAXAction
 			$SMTPUsername = SpoonFilter::getPostValue('smtp_username', null, '');
 			$SMTPPassword = SpoonFilter::getPostValue('smtp_password', null, '');
 
-			$secure_layer = SpoonFilter::getPostValue('smtp_secure_layer',null,'');
+			$secureLayer = SpoonFilter::getPostValue('smtp_secure_layer',null,'');
 
-			if($secure_layer === 'ssl' or $secure_layer === 'tls')
-				$email->setSMTPSecurity($secure_layer);
+			if($secureLayer === 'ssl' or $secureLayer === 'tls') $email->setSMTPSecurity($secureLayer);
 
 			if($SMTPServer == '') $this->output(self::BAD_REQUEST, null, BL::err('ServerIsRequired'));
 			if($SMTPPort == '') $this->output(self::BAD_REQUEST, null, BL::err('PortIsRequired'));
