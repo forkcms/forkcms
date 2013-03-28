@@ -50,7 +50,7 @@ class FrontendInit extends KernelLoader
 		$lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
 		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
-		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
+		if($lastModifiedTime === false || Spoon::getDebug()) $lastModifiedTime = time();
 
 		// define as a constant
 		define('LAST_MODIFIED_TIME', $lastModifiedTime);
@@ -240,23 +240,18 @@ class FrontendInit extends KernelLoader
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// don't overrule if there is already an exception handler defined
-			if(!defined('SPOON_EXCEPTION_CALLBACK'))
+			switch($this->type)
 			{
-				// add callback for the spoon exceptionhandler
-				switch($this->type)
-				{
-					case 'backend_ajax':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-						break;
+				case 'backend_ajax':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
+					break;
 
-					case 'backend_js':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-						break;
+				case 'backend_js':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
+					break;
 
-					default:
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
-				}
+				default:
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
 			}
 		}
 	}

@@ -35,6 +35,15 @@ class AppKernel extends Kernel
 	{
 		$container = $this->getContainer();
 
+		Spoon::setDebug($container->getParameter('fork.debug'));
+		Spoon::setDebugMessage($container->getParameter('fork.debug_email'));
+		Spoon::setDebugMessage($container->getParameter('fork.debug_message'));
+		Spoon::setCharset($container->getParameter('fork.charset'));
+
+		/**
+		 * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
+		 * Will be removed in the next major release.
+		 */
 		if(!defined('SPOON_DEBUG'))
 		{
 			define('SPOON_DEBUG', $container->getParameter('fork.debug'));
