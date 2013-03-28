@@ -10,7 +10,7 @@
 // vendors not installed
 if(!is_dir(__DIR__ . '/vendor'))
 {
-	echo 'You are missing some dependencies. Please run <code>composer install</code>.';
+	echo 'You are missing some dependencies. Please run <code>php composer.phar install</code>.<br>You can install composer by executing <code>sudo curl -s getcomposer.org/installer</code> in your command line interface.';
 	exit;
 }
 
