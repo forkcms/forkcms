@@ -1,5 +1,9 @@
 3.5.1 (xxxx-xx-xx)
 --
+Improvements:
+
+* Symfony: upgrade components to 2.2.
+
 Bugfixes:
 
 * Core: fault Chinese translations fixed.
