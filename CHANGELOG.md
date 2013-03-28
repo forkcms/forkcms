@@ -10,6 +10,7 @@ Bugfixes:
 * Installer: after sending Location headers we need to exit to prevent further execution of the application.
 * Core: do not add headers set by Spoon to Response. Otherwise they will be send twice.
 * Core: removed line of code from frontend pagination.
+* Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
 
 
 3.5.0 (2013-03-13)
