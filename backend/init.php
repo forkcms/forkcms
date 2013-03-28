@@ -253,23 +253,19 @@ class BackendInit extends KernelLoader
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// don't overrule if there is already an exception handler defined
-			if(!defined('SPOON_EXCEPTION_CALLBACK'))
+			// add callback for the spoon exceptionhandler
+			switch($this->type)
 			{
-				// add callback for the spoon exceptionhandler
-				switch($this->type)
-				{
-					case 'backend_ajax':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-						break;
+				case 'backend_ajax':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
+					break;
 
-					case 'backend_js':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-						break;
+				case 'backend_js':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
+					break;
 
-					default:
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
-				}
+				default:
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
 			}
 		}
 	}

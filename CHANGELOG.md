@@ -1,8 +1,18 @@
-3.5.1 (xxxx-xx-xx)
+3.5.1 (2013-04-15)
 --
+Improvements:
+
+* Symfony: upgrade components to 2.2.
+* Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
+* Core: use remote html5-shiv.
+* Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
+* Analytics: better grouping for Google Analytics profiles.
+* Core: deleteThumbnails() added in BackendModel. Thx to John Poelman.
+* Core: Minify is now installed with Composer.
+
 Bugfixes:
 
-* Core: fault Chinese translations fixed.
+* Core: faulty Chinese translations fixed.
 * Extensions: removed deprecated getDB().
 * FormBuilder: removed deprecated getDB().
 * MailMotor: CampaignMonitor wrapper class could not be loaded due to a faulty include path.
@@ -10,6 +20,14 @@ Bugfixes:
 * Installer: after sending Location headers we need to exit to prevent further execution of the application.
 * Core: do not add headers set by Spoon to Response. Otherwise they will be send twice.
 * Core: removed line of code from frontend pagination.
+* Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
+* Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
+* Share-widget: fixed the whitespace added by Pinterest. Fixes #392.
+* Core: CKEditor is nov available in Chinese. Fixed #381
+* Extensions: Removed html entities out of header.
+* Installer: used correct path for checking if Fork is installed.
+* Core: Login sql error on wrong email fixed. Thx to Gertjan Meire.
+* Location: Address in widget fixed.
 
 
 3.5.0 (2013-03-13)
@@ -1165,7 +1183,7 @@ Improvements:
 * Core: added a modifier to format a string as currency (frontend)
 * Core: added a modifier to format a string as a float (backend)
 * Blog: when the rss_image.png exists in your theme, it will automatically be used in your rss feed.
-	* moved the code for default RSS-image into FrontendRSS
+    * moved the code for default RSS-image into FrontendRSS
 * Pages: added sorting for extras in dropdowns
 * Bugfix: extra's weren't populated when the template was changed
 * Bugfix: URL was changed when moved if the page was an direct subaction as reported in http://forkcms.lighthouseapp.com/projects/61890/tickets/29-url-gets-changed-when-dragging-a-page-with-isaction-checked
