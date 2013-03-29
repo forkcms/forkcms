@@ -16,7 +16,7 @@ require_once __DIR__ . '/../../../app/BaseModel.php';
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Reclamebureau Siesqo <info@siesqo.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class BackendModel extends BaseModel
 {
@@ -973,6 +973,21 @@ class BackendModel extends BaseModel
 
 		// delete files
 		foreach($files as $file) SpoonFile::delete($path . '/' . $file);
+	}
+
+	/**
+	 * Is module installed?
+	 *
+	 * @param string $module
+	 * @return bool
+	 */
+	public static function isModuleInstalled($module)
+	{
+		// get installed modules
+		$modules = self::getModules();
+
+		// return if module is installed or not
+		return (in_array((string) $module, $modules));
 	}
 
 	/**

@@ -3,6 +3,7 @@
 Improvements:
 
 * Symfony: upgrade components to 2.2.
+* Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
 
 Bugfixes:
 
