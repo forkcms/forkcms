@@ -1016,6 +1016,8 @@
 			// remove an item
 			function remove(value)
 			{
+				value = String(value);
+
 				// get index for element
 				var index = $.inArray(String(value), elements);
 
