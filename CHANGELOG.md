@@ -15,6 +15,7 @@ Bugfixes:
 * Core: do not add headers set by Spoon to Response. Otherwise they will be send twice.
 * Core: removed line of code from frontend pagination.
 * Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
+* Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
 
 
 3.5.0 (2013-03-13)
