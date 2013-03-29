@@ -28,10 +28,14 @@ class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 		// validate
 		if($term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
 
-		// get tags
-		$tags = BackendTagsModel::getStartsWith($term);
-
-		// output
-		$this->output(self::OK, $tags);
+		// validated
+		else
+		{
+			// get tags
+			$tags = BackendTagsModel::getStartsWith($term);
+	
+			// output
+			$this->output(self::OK, $tags);
+		}
 	}
 }

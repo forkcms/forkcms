@@ -37,22 +37,34 @@ class BackendSettingsAjaxTestEmailConnection extends BackendBaseAJAXAction
 			$SMTPUsername = SpoonFilter::getPostValue('smtp_username', null, '');
 			$SMTPPassword = SpoonFilter::getPostValue('smtp_password', null, '');
 
+			// validate server
 			if($SMTPServer == '') $this->output(self::BAD_REQUEST, null, BL::err('ServerIsRequired'));
-			if($SMTPPort == '') $this->output(self::BAD_REQUEST, null, BL::err('PortIsRequired'));
-
-			try
+			
+			// validated server
+			else
 			{
-				// set server and connect with SMTP
-				$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+				// validated port
+				if($SMTPPort == '') $this->output(self::BAD_REQUEST, null, BL::err('PortIsRequired'));
+	
+				// validated port
+				else
+				{
+					try
+					{
+						// set server and connect with SMTP
+						$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+					}
+		
+					catch(SpoonEmailException $e)
+					{
+						$this->output(self::ERROR, null, $e->getMessage());
+						return;
+					}
+		
+					// set authentication if needed
+					if($SMTPUsername != '' && $SMTPPassword != '') $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+				}
 			}
-
-			catch(SpoonEmailException $e)
-			{
-				$this->output(self::ERROR, null, $e->getMessage());
-			}
-
-			// set authentication if needed
-			if($SMTPUsername != '' && $SMTPPassword != '') $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
 		}
 
 		$fromEmail = SpoonFilter::getPostValue('mailer_from_email', null, '');
@@ -62,28 +74,38 @@ class BackendSettingsAjaxTestEmailConnection extends BackendBaseAJAXAction
 		$replyToEmail = SpoonFilter::getPostValue('mailer_reply_to_email', null, '');
 		$replyToName = SpoonFilter::getPostValue('mailer_reply_to_name', null, '');
 
+		// init validation
+		$errors = array();
+
 		// validate
-		if($fromEmail == '' || !SpoonFilter::isEmail($fromEmail)) $this->output(self::BAD_REQUEST, null, BL::err('EmailIsInvalid'));
-		if($toEmail == '' || !SpoonFilter::isEmail($toEmail)) $this->output(self::BAD_REQUEST, null, BL::err('EmailIsInvalid'));
-		if($replyToEmail == '' || !SpoonFilter::isEmail($replyToEmail)) $this->output(self::BAD_REQUEST, null, BL::err('EmailIsInvalid'));
-
-		// set some properties
-		$email->setFrom($fromEmail, $fromName);
-		$email->addRecipient($toEmail, $toName);
-		$email->setReplyTo($replyToEmail, $replyToName);
-		$email->setSubject('Test');
-		$email->setHTMLContent(BL::msg('TestMessage'));
-		$email->setCharset(SPOON_CHARSET);
-
-		try
+		if($fromEmail == '' || !SpoonFilter::isEmail($fromEmail)) $errors['from'] = BL::err('EmailIsInvalid');
+		if($toEmail == '' || !SpoonFilter::isEmail($toEmail)) $errors['to'] = BL::err('EmailIsInvalid');
+		if($replyToEmail == '' || !SpoonFilter::isEmail($replyToEmail)) $errors['reply'] = BL::err('EmailIsInvalid');
+		
+		// got errors?
+		if(!empty($errors)) $this->output(self::BAD_REQUEST, array('errors' => $errors), 'invalid fields');
+		
+		// validated
+		else
 		{
-			if($email->send()) $this->output(self::OK, null, '');
-			else $this->output(self::ERROR, null, 'unknown');
-		}
-
-		catch(SpoonEmailException $e)
-		{
-			$this->output(self::ERROR, null, $e->getMessage());
+			// set some properties
+			$email->setFrom($fromEmail, $fromName);
+			$email->addRecipient($toEmail, $toName);
+			$email->setReplyTo($replyToEmail, $replyToName);
+			$email->setSubject('Test');
+			$email->setHTMLContent(BL::msg('TestMessage'));
+			$email->setCharset(SPOON_CHARSET);
+	
+			try
+			{
+				if($email->send()) $this->output(self::OK, null, '');
+				else $this->output(self::ERROR, null, 'unknown');
+			}
+	
+			catch(SpoonEmailException $e)
+			{
+				$this->output(self::ERROR, null, $e->getMessage());
+			}
 		}
 	}
 }

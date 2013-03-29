@@ -28,23 +28,31 @@ class BackendFormBuilderAjaxDeleteField extends BackendBaseAJAXAction
 		// invalid form id
 		if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
 
-		// invalid fieldId
-		if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
-
-		// get field
-		$field = BackendFormBuilderModel::getField($fieldId);
-
-		// submit button cannot be deleted
-		if($field['type'] == 'submit') $this->output(self::BAD_REQUEST, null, 'submit button cannot be deleted');
-
-		// delete
+		// validated form
 		else
 		{
-			// delete field
-			BackendFormBuilderModel::deleteField($fieldId);
-
-			// success output
-			$this->output(self::OK, null, 'field deleted');
+			// invalid fieldId
+			if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
+			
+			// validated field
+			else
+			{
+				// get field
+				$field = BackendFormBuilderModel::getField($fieldId);
+		
+				// submit button cannot be deleted
+				if($field['type'] == 'submit') $this->output(self::BAD_REQUEST, null, 'submit button cannot be deleted');
+		
+				// delete
+				else
+				{
+					// delete field
+					BackendFormBuilderModel::deleteField($fieldId);
+		
+					// success output
+					$this->output(self::OK, null, 'field deleted');
+				}
+			}
 		}
 	}
 }
