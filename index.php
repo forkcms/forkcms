@@ -37,25 +37,12 @@ $kernel = new AppKernel();
 /**
  * @remark only for SumoCoders
  *
- * Here we define our Sumo class, which will set an error handler that pushes
- * to our Errbit-install.
+ * Here we initialize our Sumo class, which will add some Sumo specific stuff
+ * into this Fork instance.
  */
-try {
-	$debug = $kernel->getContainer()->getParameter('fork.debug');
-	$errbitApiKey = $kernel->getContainer()->getParameter('sumo.errbit_api_key');
-
-	// only activate the error handler when we aren't in debug-mode and an api key is provided
-	if(!$debug && $errbitApiKey != '')
-	{
-		require_once __DIR__ . '/library/external/sumo.php';
-		$sumo = new Sumo();
-		$sumo->initErrbit($errbitApiKey);
-	}
-}
-catch (\Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException $e)
-{
-	// do nothing
-}
+$sumo = new SumoCoders\SumoForkClass\SumoForkClass();
+$sumo->setContainer($kernel->getContainer());
+$sumo->init();
 
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
