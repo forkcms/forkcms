@@ -18,8 +18,8 @@
 	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
 
 	{* Windows 8 tile *}
-	<meta name="application-name" content="{$siteTitle}"/> 
-	<meta name="msapplication-TileColor" content="#3380aa"/> 
+	<meta name="application-name" content="{$siteTitle}"/>
+	<meta name="msapplication-TileColor" content="#3380aa"/>
 	<meta name="msapplication-TileImage" content="{$THEME_URL}/tile.png"/>
 
 	{* Stylesheets *}
@@ -27,8 +27,10 @@
 		<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
 
-	{* HTML5 Javascript *}
-	<!--[if lt IE 9]> <script src="{$THEME_URL}/core/js/html5.js"></script> <![endif]-->
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 
 	{* Site wide HTML *}
 	{$siteHTMLHeader}
