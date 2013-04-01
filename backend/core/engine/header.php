@@ -356,6 +356,9 @@ class BackendHeader
 			$this->jsData['editor']['language'] = (string) BackendAuthentication::getUser()->getSetting('interface_language');
 		}
 
+		// CKeditor has support for simplified Chinese, but the language is called zh-cn instead of zn
+		if($this->jsData['editor']['language'] == 'zh') $this->jsData['editor']['language'] = 'zh-cn';
+
 		// theme
 		if(BackendModel::getModuleSetting('core', 'theme') !== null)
 		{
