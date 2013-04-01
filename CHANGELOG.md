@@ -21,6 +21,7 @@ Bugfixes:
 * Core: removed line of code from frontend pagination.
 * Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
 * Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
+* Share-widget: fixed the whitespace added by Pinterest. Fixes #392.
 
 
 3.5.0 (2013-03-13)
