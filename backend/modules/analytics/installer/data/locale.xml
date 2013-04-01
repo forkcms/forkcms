@@ -536,6 +536,10 @@
         <translation language="es"><![CDATA[Aún no hay ningun perfil de sitio web analytics vinculado. <a href="%1$s">Configurar</a>]]></translation>
         <translation language="sv"><![CDATA[Det finns ingen länk med ett analytics webbplats profil än. <en href="%1$s">Konfigurera</en>]]></translation>
       </item>
+      <item type="error" name="InvalidApiKey">
+        <translation language="nl"><![CDATA[Dit is een ongeldige API key.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid API-key]]></translation>
+      </item>
       <item type="error" name="NoSessionToken">
         <translation language="nl"><![CDATA[Er is nog geen Google account gekoppeld.]]></translation>
         <translation language="en"><![CDATA[There is no link with a Google analytics account yet.]]></translation>

@@ -1,5 +1,12 @@
 3.5.1 (xxxx-xx-xx)
 --
+Improvements:
+
+* Symfony: upgrade components to 2.2.
+* Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
+* Core: use remote html5-shiv.
+* Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
+
 Bugfixes:
 
 * Core: fault Chinese translations fixed.
@@ -10,6 +17,8 @@ Bugfixes:
 * Installer: after sending Location headers we need to exit to prevent further execution of the application.
 * Core: do not add headers set by Spoon to Response. Otherwise they will be send twice.
 * Core: removed line of code from frontend pagination.
+* Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
+* Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
 
 
 3.5.0 (2013-03-13)

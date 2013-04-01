@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `emails` (
  `reply_to_name` varchar(255) default NULL,
  `subject` varchar(255) NOT NULL,
  `html` text NOT NULL,
- `plain_text` text NOT NULL,
+ `plain_text` text NULL,
  `attachments` text,
  `send_on` datetime default NULL,
  `created_on` datetime NOT NULL,

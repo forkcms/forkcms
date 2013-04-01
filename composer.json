@@ -9,10 +9,10 @@
         "facebook/php-sdk": "3.2.*",
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.2.*",
-        "symfony/dependency-injection": "2.1.*",
-        "symfony/http-kernel": "2.1.*",
-        "symfony/config": "2.1.*",
-        "symfony/yaml": "2.1.*",
-		"spoon/library": "dev-master"
+        "symfony/dependency-injection": "2.2.*",
+        "symfony/http-kernel": "2.2.*",
+        "symfony/config": "2.2.*",
+        "symfony/yaml": "2.2.*",
+		"spoon/library": "1.3.*"
     }
 }

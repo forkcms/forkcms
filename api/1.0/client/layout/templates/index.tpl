@@ -5,12 +5,12 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" media="screen" href="layout/css/screen.css" />
 
-	<!--[if lte IE 8]>
-	<script src="js/html5.js" type="text/javascript"></script>
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
 	<script type="text/javascript" src="/frontend/core/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="/frontend/core/js/html5.js"></script>
 	<script type="text/javascript" src="js/client.js"></script>
 </head>
 <body class="en onsite">
