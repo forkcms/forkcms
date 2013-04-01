@@ -241,6 +241,13 @@ class BackendMailer
 			$SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
 			$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
 
+			// set security if needed
+			$secureLayer = BackendModel::getModuleSetting('core','smtp_secure_layer');
+			if(in_array($secureLayer, array('ssl', 'tls')))
+			{
+				$email->setSMTPSecurity($secureLayer);
+			}
+
 			// set server and connect with SMTP
 			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
 
