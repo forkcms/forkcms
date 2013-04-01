@@ -27,7 +27,6 @@ class Sumo
 	 */
 	public function initErrbit($errbitApiKey)
 	{
-		require_once dirname(__FILE__) . '/errbit/Errbit.php';
 		Errbit::instance()->configure(array(
 		   'api_key' => $errbitApiKey,
 		   'host' => 'errors.sumocoders.be',
