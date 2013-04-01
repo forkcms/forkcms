@@ -13,6 +13,7 @@
         "symfony/http-kernel": "2.2.*",
         "symfony/config": "2.2.*",
         "symfony/yaml": "2.2.*",
-		"spoon/library": "1.3.*"
+		"spoon/library": "1.3.*",
+	    "errbit/errbit-php": "dev-master"
     }
 }

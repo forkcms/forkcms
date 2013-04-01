@@ -1,6 +1,53 @@
 {
-    "hash": "3a53521d39df7029795d4c4c5cda920d",
+    "hash": "e333696d21bea1df70b83f66d0f45019",
     "packages": [
+        {
+            "name": "errbit/errbit-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wasilak/errbit-php.git",
+                "reference": "d40f2f0fd2480ff6551c8c7278135527757085ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wasilak/errbit-php/zipball/d40f2f0fd2480ff6551c8c7278135527757085ce",
+                "reference": "d40f2f0fd2480ff6551c8c7278135527757085ce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Errbit": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Flippa.com Pty. Ltd.",
+                    "homepage": "https://flippa.com/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Piotr Wasilewski",
+                    "email": "piotr.m.wasilewski@gmail.com",
+                    "role": "Packager"
+                }
+            ],
+            "description": "Logging for PHP 5.3",
+            "homepage": "https://github.com/flippa/errbit-php",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "time": "2012-11-05 22:42:56"
+        },
         {
             "name": "facebook/php-sdk",
             "version": "v3.2.2",
@@ -515,14 +562,16 @@
             "time": "2013-02-09 17:48:44"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+
+    ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "errbit/errbit-php": 20
+    },
     "platform": {
         "php": ">=5.3.2"
     },
