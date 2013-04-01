@@ -237,9 +237,21 @@ class GoogleAnalytics
 			$profile['id'] = (string) $entry->id;
 			$profile['title'] = (string) $entry->title;
 			$profile['tableId'] = 'ga:'. (string) $entry->tableId;
+			$profile['accountName'] = '';
 
 			// loop properties and save them
-			foreach($entry->property as $property) $profile[(string) $property['name']] = (string) $property['value'];
+			foreach($entry->property as $property)
+			{
+				if((string) $property['name'] == 'accountId')
+				{
+					if(isset($accountNames[(string) $property['value']]))
+					{
+						$profile['accountName'] = $accountNames[(string) $property['value']];
+					}
+				}
+
+				$profile[(string) $property['name']] = (string) $property['value'];
+			}
 
 			// save profile in profiles array
 			$profiles[$i] = $profile;
