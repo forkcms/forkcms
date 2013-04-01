@@ -35,8 +35,9 @@ class CKFinder_Connector_ErrorHandler_FileUpload extends CKFinder_Connector_Erro
     /**
      * Throw file upload error, return true if error has been thrown, false if error has been catched
      *
-     * @param int $number
-     * @param string $text
+     * @param int     $number
+     * @param boolean $uploaded
+     * @param boolean $exit
      * @access public
      */
     public function throwError($number, $uploaded = false, $exit = true) {

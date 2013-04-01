@@ -8,7 +8,7 @@
  */
 
 /**
- * This class will handle the incomming URL.
+ * This class will handle the incoming URL.
  *
  * @author 	Tijs Verkoyen <tijs@sumocoders.be>
  * @author 	Davy Hellemans <davy.hellemans@netlash.com>
@@ -148,7 +148,7 @@ class FrontendURL
 	 */
 	public function getParameters($includeGET = true)
 	{
-		return ($includeGET) ? $this->parameters : array_diff($this->parameters, $_GET);
+		return ($includeGET) ? $this->parameters : array_diff_assoc($this->parameters, $_GET);
 	}
 
 	/**

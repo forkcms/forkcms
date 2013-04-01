@@ -7,28 +7,105 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * This class will handle cronjob related stuff
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class BackendCronjob extends BackendBaseObject
+class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 {
 	/**
-	 * The id
-	 *
+	 * @var BackendBaseCronjob
+	 */
+	private $cronjob;
+
+	/**
 	 * @var	int
 	 */
 	private $id;
 
 	/**
-	 * The working language
-	 *
 	 * @var	string
 	 */
 	private $language;
 
-	public function __construct()
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
+	{
+		$this->cronjob->execute();
+
+		// a cronjob does not have output, so we return a empty string as response
+		// this is not a correct solution, in time cronjobs should have there own frontcontroller.
+		return new Response('');
+	}
+
+	/**
+	 * Execute the action
+	 * We will build the classname, require the class and call the execute method.
+	 */
+	protected function execute()
+	{
+		// build action-class-name
+		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_cronjob_' . $this->getAction());
+
+		if($this->getModule() == 'core')
+		{
+			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
+			if(!SpoonFile::exists(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php'))
+			{
+				// set correct headers
+				SpoonHTTP::setHeadersByCode(500);
+
+				// throw exception
+				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
+			}
+
+			// require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
+			require_once BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php';
+		}
+
+		else
+		{
+			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
+			if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php'))
+			{
+				// set correct headers
+				SpoonHTTP::setHeadersByCode(500);
+
+				// throw exception
+				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
+			}
+
+			// require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
+			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php';
+		}
+
+		// validate if class exists (aka has correct name)
+		if(!class_exists($actionClassName))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(500);
+
+			// throw exception
+			throw new BackendException('The cronjobfile is present, but the classname should be: ' . $actionClassName . '.');
+		}
+
+		// create action-object
+		$this->cronjob = new $actionClassName($this->getKernel());
+		$this->cronjob->setModule($this->getModule());
+		$this->cronjob->setAction($this->getAction());
+	}
+
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the page's functionality gets loaded.
+	 */
+	public function initialize()
 	{
 		// because some cronjobs will be run on the command line we should pass parameters
 		if(isset($_SERVER['argv']))
@@ -52,7 +129,7 @@ class BackendCronjob extends BackendBaseObject
 				// split into chunks
 				$chunks = explode('=', $parameter, 2);
 
-				// valid paramters?
+				// valid parameters?
 				if(count($chunks) == 2)
 				{
 					// build key and value
@@ -82,66 +159,7 @@ class BackendCronjob extends BackendBaseObject
 		$cronjobs[] = $this->getModule() . '.' . $this->getAction();
 		BackendModel::setModuleSetting('core', 'cronjobs', array_unique($cronjobs));
 
-		// create new action
 		$this->execute();
-	}
-
-	/**
-	 * Execute the action
-	 * We will build the classname, require the class and call the execute method.
-	 */
-	protected function execute()
-	{
-		// build action-class-name
-		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_cronjob_' . $this->getAction());
-
-		if($this->getModule() == 'core')
-		{
-			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php'))
-			{
-				// set correct headers
-				SpoonHTTP::setHeadersByCode(500);
-
-				// throw exception
-				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
-			}
-
-			// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
-			require_once BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php';
-		}
-
-		else
-		{
-			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php'))
-			{
-				// set correct headers
-				SpoonHTTP::setHeadersByCode(500);
-
-				// throw exception
-				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
-			}
-
-			// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
-			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php';
-		}
-
-		// validate if class exists (aka has correct name)
-		if(!class_exists($actionClassName))
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(500);
-
-			// throw exception
-			throw new BackendException('The cronjobfile is present, but the classname should be: ' . $actionClassName . '.');
-		}
-
-		// create action-object
-		$object = new $actionClassName();
-		$object->setModule($this->getModule());
-		$object->setAction($this->getAction());
-		$object->execute();
 	}
 
 	/**

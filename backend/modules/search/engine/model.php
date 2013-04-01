@@ -33,7 +33,7 @@ class BackendSearchModel
 	public static function deleteSynonym($id)
 	{
 		// delete synonym
-		BackendModel::getDB(true)->delete('search_synonyms', 'id = ?', array((int) $id));
+		BackendModel::getContainer()->get('database')->delete('search_synonyms', 'id = ?', array((int) $id));
 
 		// invalidate the cache for search
 		self::invalidateCache();
@@ -47,7 +47,7 @@ class BackendSearchModel
 	 */
 	public static function existsSynonymById($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM search_synonyms
 			 WHERE id = ?
@@ -65,7 +65,7 @@ class BackendSearchModel
 	 */
 	public static function existsSynonymByTerm($term, $exclude = null)
 	{
-		if($exclude == null) return (bool) BackendModel::getDB()->getVar(
+		if($exclude == null) return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM search_synonyms
 			 WHERE term = ?
@@ -73,7 +73,7 @@ class BackendSearchModel
 			array((string) $term)
 		);
 
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM search_synonyms
 			 WHERE term = ? AND id != ?
@@ -89,7 +89,7 @@ class BackendSearchModel
 	 */
 	public static function getModuleSettings()
 	{
-		return BackendModel::getDB()->getRecords(
+		return BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT module, searchable, weight
 			 FROM search_modules',
 			array(), 'module'
@@ -104,7 +104,7 @@ class BackendSearchModel
 	 */
 	public static function getSynonym($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM search_synonyms
 			 WHERE id = ?',
@@ -115,14 +115,14 @@ class BackendSearchModel
 	/**
 	 * Insert module search settings
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param string $searchable Is the module searchable?
 	 * @param string $weight Weight of this module's results.
 	 */
 	public static function insertModuleSettings($module, $searchable, $weight)
 	{
 		// insert or update
-		BackendModel::getDB(true)->execute(
+		BackendModel::getContainer()->get('database')->execute(
 			'INSERT INTO search_modules (module, searchable, weight)
 			 VALUES (?, ?, ?)
 			 ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
@@ -142,7 +142,7 @@ class BackendSearchModel
 	public static function insertSynonym($item)
 	{
 		// insert into db
-		$id = BackendModel::getDB(true)->insert('search_synonyms', $item);
+		$id = BackendModel::getContainer()->get('database')->insert('search_synonyms', $item);
 
 		// invalidate the cache for search
 		self::invalidateCache();
@@ -162,7 +162,7 @@ class BackendSearchModel
 	/**
 	 * Remove an index
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param int $otherId The id of the record.
 	 * @param string[optional] $language The language to use.
 	 */
@@ -175,7 +175,7 @@ class BackendSearchModel
 		if(!$language) $language = BL::getWorkingLanguage();
 
 		// delete indexes
-		BackendModel::getDB(true)->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((string) $module, (int) $otherId, (string) $language));
+		BackendModel::getContainer()->get('database')->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((string) $module, (int) $otherId, (string) $language));
 
 		// invalidate the cache for search
 		self::invalidateCache();
@@ -184,7 +184,7 @@ class BackendSearchModel
 	/**
 	 * Edit an index
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param int $otherId The id of the record.
 	 * @param  array $fields A key/value pair of fields to index.
 	 * @param string[optional] $language The frontend language for this entry.
@@ -201,7 +201,7 @@ class BackendSearchModel
 		if(!$language) $language = BL::getWorkingLanguage();
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// insert search index
 		foreach($fields as $field => $value)
@@ -230,7 +230,7 @@ class BackendSearchModel
 	public static function updateSynonym($item)
 	{
 		// update
-		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($item['id']));
+		BackendModel::getContainer()->get('database')->update('search_synonyms', $item, 'id = ?', array($item['id']));
 
 		// invalidate the cache for search
 		self::invalidateCache();

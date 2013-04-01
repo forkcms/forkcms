@@ -35,7 +35,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// add js
-		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, false, true);
+		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
 
 		$this->loadData();
 
@@ -68,7 +68,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 			$this->settings['center']['lng'] = $firstMarker['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $firstMarker['lat'];

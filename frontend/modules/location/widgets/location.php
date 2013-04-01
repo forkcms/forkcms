@@ -26,10 +26,9 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 	 */
 	public function execute()
 	{
-		parent::execute();
-
-		// add Google Maps
 		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+
+		parent::execute();
 
 		$this->loadTemplate();
 		$this->loadData();
@@ -56,7 +55,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 			$this->settings['center']['lng'] = $this->item['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $this->item['lat'];

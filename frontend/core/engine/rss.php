@@ -33,10 +33,12 @@ class FrontendRSS extends SpoonFeedRSS
 		// call the parent
 		parent::__construct($title, FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title))), $description, $items);
 
+		$siteTitle = SpoonFilter::htmlspecialcharsDecode(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE));
+
 		// set feed properties
 		$this->setLanguage(FRONTEND_LANGUAGE);
-		$this->setCopyright(SpoonDate::getDate('Y') . ' ' . SpoonFilter::htmlspecialcharsDecode(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE)));
-		$this->setGenerator(SITE_RSS_GENERATOR);
+		$this->setCopyright(SpoonDate::getDate('Y') . ' ' . $siteTitle);
+		$this->setGenerator($siteTitle);
 		$this->setImage(SITE_URL . FRONTEND_CORE_URL . '/layout/images/rss_image.png', $title, $link);
 
 		// theme was set

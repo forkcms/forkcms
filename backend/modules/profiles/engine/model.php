@@ -33,7 +33,7 @@ class BackendProfilesModel
 	public static function delete($ids)
 	{
 		// init db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// redefine
 		$ids = (array) $ids;
@@ -63,10 +63,10 @@ class BackendProfilesModel
 		$id = (int) $id;
 
 		// delete rights
-		BackendModel::getDB(true)->delete('profiles_groups_rights', 'group_id = ?', $id);
+		BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'group_id = ?', $id);
 
 		// delete group
-		BackendModel::getDB(true)->delete('profiles_groups', 'id = ?', $id);
+		BackendModel::getContainer()->get('database')->delete('profiles_groups', 'id = ?', $id);
 	}
 
 	/**
@@ -76,7 +76,7 @@ class BackendProfilesModel
 	 */
 	public static function deleteProfileGroup($id)
 	{
-		BackendModel::getDB(true)->delete('profiles_groups_rights', 'id = ?', (int) $id);
+		BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'id = ?', (int) $id);
 	}
 
 	/**
@@ -86,7 +86,7 @@ class BackendProfilesModel
 	 */
 	public static function deleteSession($id)
 	{
-		BackendModel::getDB(true)->delete('profiles_sessions', 'profile_id = ?', (int) $id);
+		BackendModel::getContainer()->get('database')->delete('profiles_sessions', 'profile_id = ?', (int) $id);
 	}
 
 	/**
@@ -97,7 +97,7 @@ class BackendProfilesModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles AS p
 			 WHERE p.id = ?
@@ -115,7 +115,7 @@ class BackendProfilesModel
 	 */
 	public static function existsByEmail($email, $id = null)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles AS p
 			 WHERE p.email = ? AND p.id != ?
@@ -133,7 +133,7 @@ class BackendProfilesModel
 	 */
 	public static function existsDisplayName($displayName, $id = null)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles AS p
 			 WHERE p.display_name = ? AND p.id != ?
@@ -150,7 +150,7 @@ class BackendProfilesModel
 	 */
 	public static function existsGroup($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles_groups AS pg
 			 WHERE pg.id = ?
@@ -168,7 +168,7 @@ class BackendProfilesModel
 	 */
 	public static function existsGroupName($groupName, $id = null)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles_groups AS pg
 			 WHERE pg.name = ? AND pg.id != ?
@@ -185,7 +185,7 @@ class BackendProfilesModel
 	 */
 	public static function existsProfileGroup($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles_groups_rights AS gr
 			 WHERE gr.id = ?
@@ -202,7 +202,7 @@ class BackendProfilesModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT p.id, p.email, p.status, p.display_name, p.url
 			 FROM profiles AS p
 			 WHERE p.id = ?',
@@ -230,7 +230,7 @@ class BackendProfilesModel
 	 */
 	public static function getGroup($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT pg.id, pg.name
 			 FROM profiles_groups AS pg
 			 WHERE pg.id = ?',
@@ -245,7 +245,7 @@ class BackendProfilesModel
 	 */
 	public static function getGroups()
 	{
-		return (array) BackendModel::getDB()->getPairs('SELECT id, name FROM profiles_groups ORDER BY name');
+		return (array) BackendModel::getContainer()->get('database')->getPairs('SELECT id, name FROM profiles_groups ORDER BY name');
 	}
 
 	/**
@@ -258,9 +258,9 @@ class BackendProfilesModel
 	public static function getGroupsForDropDown($profileId, $includeId = null)
 	{
 		// init db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
-		// get groups already linked but dont include the includeId
+		// get groups already linked but don't include the includeId
 		if($includeId !== null) $groupIds = (array) $db->getColumn(
 			'SELECT group_id
 			 FROM profiles_groups_rights
@@ -292,7 +292,7 @@ class BackendProfilesModel
 	 */
 	public static function getProfileGroup($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT gr.id, gr.profile_id, g.id AS group_id, g.name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
 			 FROM profiles_groups_rights AS gr
 			 INNER JOIN profiles_groups AS g ON g.id = gr.group_id
@@ -309,7 +309,7 @@ class BackendProfilesModel
 	 */
 	public static function getProfileGroups($id)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT gr.id, gr.group_id, g.name AS group_name, gr.expires_on
 			 FROM profiles_groups AS g
 			 INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
@@ -363,7 +363,7 @@ class BackendProfilesModel
 	 */
 	public static function getSetting($id, $name)
 	{
-		return unserialize((string) BackendModel::getDB()->getVar(
+		return unserialize((string) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT ps.value
 			 FROM profiles_settings AS ps
 			 WHERE ps.profile_id = ? AND ps.name = ?',
@@ -379,7 +379,7 @@ class BackendProfilesModel
 	public static function getStatusForDropDown()
 	{
 		// fetch types
-		$status = BackendModel::getDB()->getEnumValues('profiles', 'status');
+		$status = BackendModel::getContainer()->get('database')->getEnumValues('profiles', 'status');
 
 		// init
 		$labels = $status;
@@ -407,7 +407,7 @@ class BackendProfilesModel
 		$url = SpoonFilter::urlise($displayName);
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// new item
 		if($id === null)
@@ -467,7 +467,7 @@ class BackendProfilesModel
 	 */
 	public static function insert(array $values)
 	{
-		return (int) BackendModel::getDB(true)->insert('profiles', $values);
+		return (int) BackendModel::getContainer()->get('database')->insert('profiles', $values);
 	}
 
 	/**
@@ -478,7 +478,7 @@ class BackendProfilesModel
 	 */
 	public static function insertGroup(array $values)
 	{
-		return (int) BackendModel::getDB(true)->insert('profiles_groups', $values);
+		return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups', $values);
 	}
 
 	/**
@@ -489,7 +489,7 @@ class BackendProfilesModel
 	 */
 	public static function insertProfileGroup(array $values)
 	{
-		return (int) BackendModel::getDB(true)->insert('profiles_groups_rights', $values);
+		return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups_rights', $values);
 	}
 
 	/**
@@ -501,7 +501,7 @@ class BackendProfilesModel
 	 */
 	public static function setSetting($id, $name, $value)
 	{
-		BackendModel::getDB(true)->execute(
+		BackendModel::getContainer()->get('database')->execute(
 			'INSERT INTO profiles_settings(profile_id, name, value)
 			 VALUES(?, ?, ?)
 			 ON DUPLICATE KEY UPDATE value = ?',
@@ -518,7 +518,7 @@ class BackendProfilesModel
 	 */
 	public static function update($id, array $values)
 	{
-		return (int) BackendModel::getDB(true)->update('profiles', $values, 'id = ?', (int) $id);
+		return (int) BackendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', (int) $id);
 	}
 
 	/**
@@ -530,7 +530,7 @@ class BackendProfilesModel
 	 */
 	public static function updateGroup($id, array $values)
 	{
-		return (int) BackendModel::getDB(true)->update('profiles_groups', $values, 'id = ?', (int) $id);
+		return (int) BackendModel::getContainer()->get('database')->update('profiles_groups', $values, 'id = ?', (int) $id);
 	}
 
 	/**
@@ -542,6 +542,6 @@ class BackendProfilesModel
 	 */
 	public static function updateProfileGroup($id, array $values)
 	{
-		return (int) BackendModel::getDB(true)->update('profiles_groups_rights', $values, 'id = ?', (int) $id);
+		return (int) BackendModel::getContainer()->get('database')->update('profiles_groups_rights', $values, 'id = ?', (int) $id);
 	}
 }

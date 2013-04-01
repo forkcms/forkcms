@@ -24,13 +24,13 @@ class Autoloader
 
 		// exceptions
 		$exceptions = array();
-		$exceptions['frontend'] = PATH_WWW . '/frontend/core/engine/frontend.php';
-		$exceptions['frontendtemplatecompiler'] = PATH_WWW . '/frontend/core/engine/template_compiler.php';
-		$exceptions['backend'] = PATH_WWW . '/backend/core/engine/backend.php';
-		$exceptions['backendajaxaction'] = PATH_WWW . '/backend/core/engine/ajax_action.php';
-		$exceptions['fl'] = PATH_WWW . '/frontend/core/engine/language.php';
-		$exceptions['bl'] = PATH_WWW . '/backend/core/engine/language.php';
-		$exceptions['api'] = PATH_WWW . '/api/1.0/engine/api.php';
+		$exceptions['frontend'] = __DIR__ . '/frontend/core/engine/frontend.php';
+		$exceptions['frontendtemplatecompiler'] = __DIR__ . '/frontend/core/engine/template_compiler.php';
+		$exceptions['backend'] = __DIR__ . '/backend/core/engine/backend.php';
+		$exceptions['backendajaxaction'] = __DIR__ . '/backend/core/engine/ajax_action.php';
+		$exceptions['fl'] = __DIR__ . '/frontend/core/engine/language.php';
+		$exceptions['bl'] = __DIR__ . '/backend/core/engine/language.php';
+		$exceptions['api'] = __DIR__ . '/api/1.0/engine/api.php';
 
 		// is it an exception?
 		if(isset($exceptions[$unifiedClassName])) $pathToLoad = $exceptions[$unifiedClassName];
@@ -38,16 +38,16 @@ class Autoloader
 		// if it is a Spoon-class we can stop using this autoloader
 		elseif(substr($unifiedClassName, 0, 5) == 'spoon') return;
 
-		elseif(substr($unifiedClassName, 0, 12) == 'frontendbase') $pathToLoad = PATH_WWW . '/frontend/core/engine/base.php';
-		elseif(substr($unifiedClassName, 0, 13) == 'frontendblock') $pathToLoad = PATH_WWW . '/frontend/core/engine/block.php';
-		elseif(substr($unifiedClassName, 0, 8) == 'frontend') $pathToLoad = PATH_WWW . '/frontend/core/engine/' . str_replace('frontend', '', $unifiedClassName) . '.php';
-		elseif(substr($unifiedClassName, 0, 11) == 'backendbase') $pathToLoad = PATH_WWW . '/backend/core/engine/base.php';
-		elseif(substr($unifiedClassName, 0, 15) == 'backenddatagrid') $pathToLoad = PATH_WWW . '/backend/core/engine/datagrid.php';
-		elseif(substr($unifiedClassName, 0, 7) == 'backend') $pathToLoad = PATH_WWW . '/backend/core/engine/' . str_replace('backend', '', $unifiedClassName) . '.php';
-		elseif(substr($unifiedClassName, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $unifiedClassName) . '.php';
+		elseif(substr($unifiedClassName, 0, 12) == 'frontendbase') $pathToLoad = __DIR__ . '/frontend/core/engine/base.php';
+		elseif(substr($unifiedClassName, 0, 13) == 'frontendblock') $pathToLoad = __DIR__ . '/frontend/core/engine/block.php';
+		elseif(substr($unifiedClassName, 0, 8) == 'frontend') $pathToLoad = __DIR__ . '/frontend/core/engine/' . str_replace('frontend', '', $unifiedClassName) . '.php';
+		elseif(substr($unifiedClassName, 0, 11) == 'backendbase') $pathToLoad = __DIR__ . '/backend/core/engine/base.php';
+		elseif(substr($unifiedClassName, 0, 15) == 'backenddatagrid') $pathToLoad = __DIR__ . '/backend/core/engine/datagrid.php';
+		elseif(substr($unifiedClassName, 0, 7) == 'backend') $pathToLoad = __DIR__ . '/backend/core/engine/' . str_replace('backend', '', $unifiedClassName) . '.php';
+		elseif(substr($unifiedClassName, 0, 6) == 'common') $pathToLoad = __DIR__ . '/library/base/' . str_replace('common', '', $unifiedClassName) . '.php';
 
 		// file check in core
-		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
+		if($pathToLoad != '' && file_exists($pathToLoad)) require_once $pathToLoad;
 
 		// check if module file exists
 		else
@@ -60,7 +60,7 @@ class Autoloader
 
 			// root path based on the application we are trying to load
 			$root = array_shift($parts);
-			$root = PATH_WWW . '/' . strtolower($root);
+			$root = __DIR__ . '/' . strtolower($root);
 
 			foreach($parts as $i => $part)
 			{
@@ -96,8 +96,12 @@ class Autoloader
 	}
 }
 
-// require the composer autoloader
-require_once 'vendor/autoload.php';
-
 // register the autoloader
 spl_autoload_register(array(new Autoloader(), 'load'));
+
+// use vender generated autoloader
+require_once 'vendor/autoload.php';
+
+// Spoon is not autoloaded via Composer but uses its own oldskool autoloader
+set_include_path(__DIR__ . '/vendor/spoon/library' . PATH_SEPARATOR . get_include_path());
+require_once 'spoon/spoon.php';

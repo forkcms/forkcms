@@ -159,7 +159,7 @@ class BackendDataGrid extends SpoonDataGrid
 	}
 
 	/**
-	 * Enable the grey out functionallity. This will see if we have a column that matches our set.
+	 * Enable the grey out functionality. This will see if we have a column that matches our set.
 	 * If so, it will call the BackendDatagridFunction with the type and value so we can parse the data.
 	 */
 	public function enableGreyingOut()
@@ -192,7 +192,7 @@ class BackendDataGrid extends SpoonDataGrid
 		// hide the sequence column
 		$this->setColumnHidden('sequence');
 
-		// add a column for the handle, so users have something to hold while draging
+		// add a column for the handle, so users have something to hold while dragging
 		$this->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
 
 		// make sure the column with the handler is the first one
@@ -259,7 +259,7 @@ class BackendDataGrid extends SpoonDataGrid
 		// has results
 		if($this->source->getNumResults() > 0)
 		{
-			// column doesnt exist
+			// column doesn't exist
 			if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefore no confirm message/script can be added.');
 
 			// exists
@@ -314,8 +314,8 @@ class BackendDataGrid extends SpoonDataGrid
 	 *
 	 * @param mixed $function The function to execute.
 	 * @param mixed[optional] $arguments The arguments to pass to the function.
-	 * @param mixed $columns The column wherin the result will be printed.
-	 * @param bool[optional] $overwrite Should the orginal value be overwritten.
+	 * @param mixed $columns The column wherein the result will be printed.
+	 * @param bool[optional] $overwrite Should the original value be overwritten.
 	 */
 	public function setColumnFunction($function, $arguments = null, $columns, $overwrite = true)
 	{
@@ -358,7 +358,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 */
 	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
-		// buid HTML
+		// build HTML
 		$HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' . SpoonFilter::ucfirst(BL::lbl('WithSelected')) . '</label></p>
 				<p>
 					' . $actionDropDown->parse() . '
@@ -478,7 +478,7 @@ class BackendDataGrid extends SpoonDataGrid
 }
 
 /**
- * This is our implementation of iSpoonDatagGridPaging
+ * This is our implementation of iSpoonDataGridPaging
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
@@ -528,29 +528,38 @@ class BackendDataGridPaging implements iSpoonDataGridPaging
 		$pagination['num_pages'] = $numPages;
 		$pagination['current_page'] = $currentPage;
 
-		// as long as we are below page 6 we should show all pages starting from 1
-		if($currentPage < 6)
+		// as long as we have more then 5 pages and are 5 pages from the end we should show all pages till the end
+		if($currentPage > 5 && $currentPage >= ($numPages - 4))
+		{
+			// init vars
+			$pagesStart = ($numPages > 7) ? $numPages - 5 : $numPages - 6;
+			$pagesEnd = $numPages;
+
+			// fix for page 6
+			if($numPages == 6) $pagesStart = 1;
+
+			// show first pages
+			if($numPages > 7) $showFirstPages = true;
+		}
+
+		// as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
+		elseif($currentPage <= 5)
 		{
 			// init vars
 			$pagesStart = 1;
-			$pagesEnd = ($numPages >= 7) ? 7 : $numPages;
+			$pagesEnd = 6;
+
+			// when we have 7 pages, show 7 as end
+			if($numPages == 7) $pagesEnd = 7;
+
+			// when we have less then 6 pages, show the maximum page
+			elseif($numPages <= 6) $pagesEnd = $numPages;
 
 			// show last pages
-			if($numPages > 8) $showLastPages = true;
+			if($numPages > 7) $showLastPages = true;
 		}
 
-		// as long as we are 6 pages from the end we should show all pages till the end
-		elseif($currentPage > ($numPages - 6))
-		{
-			// init vars
-			$pagesStart = ($numPages == 9) ? ($numPages - 6) : ($numPages - 7);
-			$pagesEnd = $numPages;
-
-			// show first pages
-			$showFirstPages = true;
-		}
-
-		// page 7
+		// page 6
 		else
 		{
 			// init vars
@@ -662,7 +671,7 @@ class BackendDataGridDB extends BackendDataGrid
 	 * @param string $query The query to retrieve the data.
 	 * @param array[optional] $parameters The parameters to be used inside the query.
 	 * @param string[optional] $resultsQuery The optional count query, used to calculate the number of results.
-	 * @param array[optional] $resultsParameters  Theh parameters to be used inside the results query.
+	 * @param array[optional] $resultsParameters  The parameters to be used inside the results query.
 	 */
 	public function __construct($query, $parameters = array(), $resultsQuery = null, $resultsParameters = array())
 	{
@@ -670,7 +679,7 @@ class BackendDataGridDB extends BackendDataGrid
 		$results = ($resultsQuery !== null) ? array($resultsQuery, $resultsParameters) : null;
 
 		// create a new source-object
-		$source = new SpoonDataGridSourceDB(BackendModel::getDB(), array($query, (array) $parameters), $results);
+		$source = new SpoonDataGridSourceDB(BackendModel::getContainer()->get('database'), array($query, (array) $parameters), $results);
 
 		parent::__construct($source);
 	}
@@ -837,7 +846,7 @@ class BackendDataGridFunctions
 	}
 
 	/**
-	 * This will grey out certain rows from comon columns. These columns are:
+	 * This will grey out certain rows from common columns. These columns are:
 	 *
 	 * 'visible', 'hidden', 'active', 'published'
 	 *

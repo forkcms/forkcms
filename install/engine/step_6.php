@@ -24,7 +24,6 @@ class InstallerStep6 extends InstallerStep
 		$this->loadForm();
 		$this->validateForm();
 		$this->parseForm();
-		$this->tpl->display('layout/templates/step_6.tpl');
 	}
 
 	/**

@@ -7,9 +7,41 @@
  * file that was distributed with this source code.
  */
 
-// require
-require_once 'autoload.php';
-require_once 'routing.php';
+// vendors not installed
+if(!is_dir(__DIR__ . '/vendor'))
+{
+	echo 'You are missing some dependencies. Please run <code>composer install</code>.';
+	exit;
+}
 
-// create new instance
-$app = new ApplicationRouting();
+// Fork has not yet been installed
+$installer = dirname(__FILE__) . '/install/cache';
+if(
+	file_exists($installer) &&
+	is_dir($installer) &&
+	!file_exists($installer . '/installed.txt') &&
+	substr($_SERVER['REQUEST_URI'], 0, 8) != '/install'
+)
+{
+	header('Location: /install');
+	exit;
+}
+
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * @remark only for SumoCoders
+ *
+ * Here we define our Sumo class, which will set an errorhandler that pushes
+ * to our Errbit-install.
+ */
+define('ERRBIT_API_KEY', '');
+require_once PATH_LIBRARY . '/external/sumo.php';
+
+require_once __DIR__ . '/autoload.php';
+require_once __DIR__ . '/app/AppKernel.php';
+
+$kernel = new AppKernel();
+$request = Request::createFromGlobals();
+$response = $kernel->handle($request);
+$response->send();

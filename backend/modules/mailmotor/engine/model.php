@@ -112,7 +112,7 @@ class BackendMailmotorModel
 		if(empty($ids)) return;
 
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// if $ids is not an array, make it one
 		$ids = (array) $ids;
@@ -136,7 +136,7 @@ class BackendMailmotorModel
 		if(empty($emails)) return;
 
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// if $ids is not an array, make one
 		$emails = (array) $emails;
@@ -157,7 +157,7 @@ class BackendMailmotorModel
 		if(empty($ids)) return;
 
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// if $ids is not an array, make it one
 		$ids = (array) $ids;
@@ -180,7 +180,7 @@ class BackendMailmotorModel
 		if(empty($ids)) return;
 
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// if $ids is not an array, make one
 		$ids = (array) $ids;
@@ -194,12 +194,12 @@ class BackendMailmotorModel
 	/**
 	 * Checks if an e-mailaddress exists
 	 *
-	 * @param string $email The emailaddress to check for existance.
+	 * @param string $email The emailaddress to check for existence.
 	 * @return bool
 	 */
 	public static function existsAddress($email)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_addresses AS ma
 			 WHERE ma.email = ?
@@ -216,7 +216,7 @@ class BackendMailmotorModel
 	 */
 	public static function existsCampaign($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_campaigns AS mc
 			 WHERE mc.id = ?
@@ -228,12 +228,12 @@ class BackendMailmotorModel
 	/**
 	 * Checks if a campaign exists
 	 *
-	 * @param string $name The name of the campaign to check for existance.
+	 * @param string $name The name of the campaign to check for existence.
 	 * @return bool
 	 */
 	public static function existsCampaignByName($name)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_campaigns AS mc
 			 WHERE mc.name = ?
@@ -250,7 +250,7 @@ class BackendMailmotorModel
 	 */
 	public static function existsGroup($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_groups AS mg
 			 WHERE mg.id = ?
@@ -267,7 +267,7 @@ class BackendMailmotorModel
 	 */
 	public static function existsGroupByName($name)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_groups AS mg
 			 WHERE mg.name = ? AND mg.language = ?
@@ -284,7 +284,7 @@ class BackendMailmotorModel
 	 */
 	public static function existsMailing($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_mailings AS mm
 			 WHERE mm.id = ?
@@ -301,7 +301,7 @@ class BackendMailmotorModel
 	 */
 	public static function existsMailingByName($name)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_mailings AS mm
 			 WHERE mm.name = ?
@@ -317,7 +317,7 @@ class BackendMailmotorModel
 	 */
 	public static function existsMailingsWithoutCampaign()
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_mailings AS mm
 			 WHERE mm.campaign_id IS NOT NULL
@@ -333,7 +333,7 @@ class BackendMailmotorModel
 	 */
 	public static function existsSentMailingsByCampaignID($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_mailings AS mm
 			 WHERE mm.campaign_id = ? AND mm.status = ?
@@ -509,7 +509,7 @@ class BackendMailmotorModel
 		$csv = BackendCSV::arrayToString($records, $columns);
 
 		// fetch all mailings in this campaign
-		$mailings = BackendModel::getDB()->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
+		$mailings = BackendModel::getContainer()->get('database')->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
 
 		// mailings set
 		if(!empty($mailings))
@@ -545,7 +545,7 @@ class BackendMailmotorModel
 	 */
 	public static function getActiveCampaigns()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT mc.*
 			 FROM mailmotor_campaigns AS mc
 			 INNER JOIN mailmotor_mailings AS mm ON mm.campaign_id = mc.id
@@ -561,7 +561,7 @@ class BackendMailmotorModel
 	 */
 	public static function getAddress($email)
 	{
-		$record = BackendModel::getDB()->getRecord(
+		$record = BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT ma.*
 			 FROM mailmotor_addresses AS ma
 			 WHERE ma.email = ?',
@@ -609,7 +609,7 @@ class BackendMailmotorModel
 			$parameters[] = $limit;
 		}
 
-		return (array) BackendModel::getDB()->getRecords($query, $parameters);
+		return (array) BackendModel::getContainer()->get('database')->getRecords($query, $parameters);
 	}
 
 	/**
@@ -619,7 +619,7 @@ class BackendMailmotorModel
 	 */
 	public static function getAddressesAsPairs()
 	{
-		return BackendModel::getDB()->getColumn(
+		return BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT ma.email
 			 FROM mailmotor_addresses AS ma'
 		);
@@ -641,7 +641,7 @@ class BackendMailmotorModel
 		$ids = (array) $ids;
 
 		// get DB
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// build query
 		$query =
@@ -676,7 +676,7 @@ class BackendMailmotorModel
 	 */
 	public static function getCampaign($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM mailmotor_campaigns
 			 WHERE id = ?',
@@ -692,7 +692,7 @@ class BackendMailmotorModel
 	 */
 	public static function getCampaignID($name)
 	{
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT mc.id
 			 FROM mailmotor_campaigns AS mc
 			 WHERE mc.name = ?',
@@ -707,7 +707,7 @@ class BackendMailmotorModel
 	 */
 	public static function getCampaignIDs()
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mc.id FROM mailmotor_campaigns AS mc'
 		);
 	}
@@ -719,7 +719,7 @@ class BackendMailmotorModel
 	 */
 	public static function getCampaigns()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT * FROM mailmotor_campaigns'
 		);
 	}
@@ -731,7 +731,7 @@ class BackendMailmotorModel
 	 */
 	public static function getCampaignsAsPairs()
 	{
-		$record = BackendModel::getDB()->getPairs(
+		$record = BackendModel::getContainer()->get('database')->getPairs(
 			'SELECT mc.id AS value, mc.name AS label
 			 FROM mailmotor_campaigns AS mc'
 		);
@@ -775,7 +775,7 @@ class BackendMailmotorModel
 		if(empty($groupIds)) return array();
 
 		// fetch address group records
-		$records = BackendModel::getDB()->getRecords(
+		$records = BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT mag.group_id, mag.custom_fields
 			 FROM mailmotor_addresses_groups AS mag
 			 WHERE mag.email = ? AND mag.group_id IN (' . implode(',', $groupIds) . ')',
@@ -799,7 +799,7 @@ class BackendMailmotorModel
 	/**
 	 * Returns the default group ID
 	 *
-	 * @param string[optional] $language The language wherfor the default should be returned.
+	 * @param string[optional] $language The language wherefore the default should be returned.
 	 * @return int
 	 */
 	public static function getDefaultGroupID($language = null)
@@ -808,7 +808,7 @@ class BackendMailmotorModel
 		$language = empty($language) ? BL::getWorkingLanguage() : (string) $language;
 
 		// return the group ID
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT mg.id
 			 FROM mailmotor_groups AS mg
 			 WHERE mg.is_default = ? AND mg.language = ?
@@ -824,7 +824,7 @@ class BackendMailmotorModel
 	 */
 	public static function getDefaultGroupIDs()
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mg.id
 			 FROM mailmotor_groups AS mg
 			 WHERE mg.is_default = ?',
@@ -839,7 +839,7 @@ class BackendMailmotorModel
 	 */
 	public static function getDefaultGroups()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT mg.id, mg.language, mg.name, mg.created_on
 			 FROM mailmotor_groups AS mg
 			 WHERE mg.is_default = ?',
@@ -855,7 +855,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroup($id)
 	{
-		$record = (array) BackendModel::getDB()->getRecord(
+		$record = (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT mg.*, mci.cm_id
 			 FROM mailmotor_groups AS mg
 			 INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
@@ -881,7 +881,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupID($name)
 	{
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT mg.id
 			 FROM mailmotor_groups AS mg
 			 WHERE mg.name = ?',
@@ -896,7 +896,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupIDs()
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mg.id FROM mailmotor_groups AS mg'
 		);
 	}
@@ -909,7 +909,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupIDsByEmail($email)
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mg.id
 			 FROM mailmotor_groups AS mg
 			 LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
@@ -927,7 +927,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupIDsByMailingID($id)
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mmg.group_id
 			 FROM mailmotor_mailings AS mm
 			 LEFT OUTER JOIN mailmotor_mailings_groups AS mmg ON mmg.mailing_id = mm.id
@@ -944,7 +944,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroups()
 	{
-		$records = (array) BackendModel::getDB()->getRecords(
+		$records = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT mg.id, mg.name, mci.cm_id, mg.custom_fields
 			 FROM mailmotor_groups AS mg
 			 INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
@@ -973,7 +973,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupsAsPairs()
 	{
-		return (array) BackendModel::getDB()->getPairs(
+		return (array) BackendModel::getContainer()->get('database')->getPairs(
 			'SELECT mg.id, mg.name FROM mailmotor_groups AS mg'
 		);
 	}
@@ -986,7 +986,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupsByEmailAsPairs($email)
 	{
-		return (array) BackendModel::getDB()->getPairs(
+		return (array) BackendModel::getContainer()->get('database')->getPairs(
 			'SELECT mg.id, mg.name
 			 FROM mailmotor_groups AS mg
 			 INNER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
@@ -1009,7 +1009,7 @@ class BackendMailmotorModel
 		// check if an array was given
 		$ids = (array) $ids;
 
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT mg.id, mg.name, mci.cm_id
 			 FROM mailmotor_groups AS mg
 			 INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
@@ -1025,7 +1025,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupsForCheckboxes()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT mg.id AS value, mg.name AS label
 			 FROM mailmotor_groups AS mg
 			 GROUP BY mg.id'
@@ -1039,7 +1039,7 @@ class BackendMailmotorModel
 	 */
 	public static function getGroupsWithRecipientsForCheckboxes()
 	{
-		$records = (array) BackendModel::getDB()->getRecords(
+		$records = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT
 			 	mg.id AS value, mg.name AS label, COUNT(mag.email) AS recipients
 			 FROM mailmotor_groups AS mg
@@ -1102,7 +1102,7 @@ class BackendMailmotorModel
 	public static function getMailing($id)
 	{
 		// get record and return it
-		$record = (array) BackendModel::getDB()->getRecord(
+		$record = (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT mm.*, UNIX_TIMESTAMP(mm.send_on) AS send_on
 			 FROM mailmotor_mailings AS mm
 			 WHERE mm.id = ?',
@@ -1130,7 +1130,7 @@ class BackendMailmotorModel
 	 */
 	public static function getMailingIDs()
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mm.id
 			 FROM mailmotor_mailings AS mm
 			 WHERE mm.language = ?',
@@ -1162,7 +1162,7 @@ class BackendMailmotorModel
 	 */
 	public static function getMaximumId()
 	{
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT MAX(id) FROM mailmotor_mailings LIMIT 1'
 		);
 	}
@@ -1174,7 +1174,7 @@ class BackendMailmotorModel
 	 */
 	public static function getMaximumIdForGroups()
 	{
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT MAX(id) FROM mailmotor_groups LIMIT 1'
 		);
 	}
@@ -1206,7 +1206,7 @@ class BackendMailmotorModel
 		}
 
 		// get record and return it
-		return (array) BackendModel::getDB()->getRecords($query, $parameters);
+		return (array) BackendModel::getContainer()->get('database')->getRecords($query, $parameters);
 	}
 
 	/**
@@ -1236,7 +1236,7 @@ class BackendMailmotorModel
 		}
 
 		// get record and return it
-		return (array) BackendModel::getDB()->getRecords($query, $parameters);
+		return (array) BackendModel::getContainer()->get('database')->getRecords($query, $parameters);
 	}
 
 	/**
@@ -1256,7 +1256,7 @@ class BackendMailmotorModel
 			$parameters[] = $limit;
 		}
 
-		return (array) BackendModel::getDB()->getRecords($query, $parameters);
+		return (array) BackendModel::getContainer()->get('database')->getRecords($query, $parameters);
 	}
 
 	/**
@@ -1267,7 +1267,7 @@ class BackendMailmotorModel
 	 */
 	public static function getSubscriptions($email)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT mag.*
 			 FROM mailmotor_addresses_groups AS mag
 			 WHERE mag.email = ?',
@@ -1357,7 +1357,7 @@ class BackendMailmotorModel
 		$ids = (array) $ids;
 
 		// get record and return it
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT ma.email, UNIX_TIMESTAMP(ma.created_on) AS created_on
 			 FROM mailmotor_addresses AS ma
 			 INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
@@ -1376,7 +1376,7 @@ class BackendMailmotorModel
 	public static function insertAddress(array $item)
 	{
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// set record values
 		$record = array();
@@ -1416,7 +1416,7 @@ class BackendMailmotorModel
 	 */
 	public static function insertCampaign(array $item)
 	{
-		return (int) BackendModel::getDB(true)->insert('mailmotor_campaigns', $item);
+		return (int) BackendModel::getContainer()->get('database')->insert('mailmotor_campaigns', $item);
 	}
 
 	/**
@@ -1431,7 +1431,7 @@ class BackendMailmotorModel
 	 */
 	public static function insertCustomFields(array $fields, $groupId, $email = null, $customFieldsGroup = null, $import = false)
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// no fields given
 		if(empty($fields)) return false;
@@ -1483,7 +1483,7 @@ class BackendMailmotorModel
 	public static function insertGroup(array $item)
 	{
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// check if there is a default group set for this language
 		// @todo refactor, this looks like shite
@@ -1509,7 +1509,7 @@ class BackendMailmotorModel
 	 */
 	public static function insertMailing(array $item)
 	{
-		return (int) BackendModel::getDB(true)->insert('mailmotor_mailings', $item);
+		return (int) BackendModel::getContainer()->get('database')->insert('mailmotor_mailings', $item);
 	}
 
 	/**
@@ -1522,7 +1522,7 @@ class BackendMailmotorModel
 	public static function insertSubscription(array $item, array $fields = null)
 	{
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// if groups are empty, add the user to the default group for this working language
 		if(empty($item['groups'])) return array();
@@ -1556,7 +1556,7 @@ class BackendMailmotorModel
 	{
 		$groupId = (int) (empty($groupId) ? self::getDefaultGroupID() : $groupId);
 
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_addresses AS ma
 			 INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
@@ -1576,7 +1576,7 @@ class BackendMailmotorModel
 	 */
 	public static function saveAddress(array $item, $groupId, $fields = array())
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// set record values
 		$record['email'] = $item['email'];
@@ -1619,7 +1619,7 @@ class BackendMailmotorModel
 	 */
 	public static function updateCampaign(array $item)
 	{
-		return BackendModel::getDB(true)->update('mailmotor_campaigns', $item, 'id = ?', array($item['id']));
+		return BackendModel::getContainer()->get('database')->update('mailmotor_campaigns', $item, 'id = ?', array($item['id']));
 	}
 
 	/**
@@ -1633,7 +1633,7 @@ class BackendMailmotorModel
 	public static function updateCustomFields($fields, $groupId, $email = null)
 	{
 		// get DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// set values to update
 		$values = array();
@@ -1666,7 +1666,7 @@ class BackendMailmotorModel
 	 */
 	public static function updateGroup(array $item)
 	{
-		return BackendModel::getDB(true)->update('mailmotor_groups', $item, 'id = ?', array($item['id']));
+		return BackendModel::getContainer()->get('database')->update('mailmotor_groups', $item, 'id = ?', array($item['id']));
 	}
 
 	/**
@@ -1677,7 +1677,7 @@ class BackendMailmotorModel
 	 */
 	public static function updateGroups($email, $groupIds)
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// stop here if groups are empty
 		if(empty($groupIds)) return false;
@@ -1708,7 +1708,7 @@ class BackendMailmotorModel
 	 */
 	public static function updateGroupsForMailing($mailingId, $groupIds)
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// delete all groups for this mailing
 		$db->delete('mailmotor_mailings_groups', 'mailing_id = ?', array((int) $mailingId));
@@ -1737,7 +1737,7 @@ class BackendMailmotorModel
 	 */
 	public static function updateMailing(array $item)
 	{
-		return BackendModel::getDB(true)->update('mailmotor_mailings', $item, 'id = ?', array($item['id']));
+		return BackendModel::getContainer()->get('database')->update('mailmotor_mailings', $item, 'id = ?', array($item['id']));
 	}
 
 	/**
@@ -1747,7 +1747,7 @@ class BackendMailmotorModel
 	 */
 	public static function updateQueuedMailings()
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// fetch all mailings that aren't sent
 		$records = $db->getRecords(self::QRY_DATAGRID_BROWSE_SENT, array('queued'));

@@ -99,57 +99,36 @@ class InstallerStep7 extends InstallerStep
 	}
 
 	/**
-	 * Creates the configuration files
+	 * Writes a config file to app/config/parameters.yml.
 	 */
-	private function createConfigurationFiles()
+	private function createYAMLConfig()
 	{
-		// build variables
-		$variables = array();
-		$variables['\'<debug-mode>\''] = SpoonSession::get('debug_mode') ? 'true' : 'false';
-		$variables['<spoon-debug-email>'] = SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email');
-		$variables['<database-name>'] = SpoonSession::get('db_database');
-		$variables['<database-hostname>'] = addslashes(SpoonSession::get('db_hostname'));
-		$variables['<database-username>'] = addslashes(SpoonSession::get('db_username'));
-		$variables['<database-password>'] = addslashes(SpoonSession::get('db_password'));
-		$variables['<database-port>'] = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306;
-		$variables['<site-domain>'] = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local';
-		$variables['<site-default-title>'] = 'Fork CMS';
-		$variables['\'<site-multilanguage>\''] = SpoonSession::get('multiple_languages') ? 'true' : 'false';
-		$variables['<path-www>'] = PATH_WWW;
-		$variables['<path-library>'] = PATH_LIBRARY;
-		$variables['<site-default-language>'] = SpoonSession::get('default_language');
-		$variables['<action-group-tag>'] = '@actiongroup';
-		$variables['<action-rights-level>'] = 7;
+		// these variables should be parsed inside the config file(s).
+		$variables = $this->getConfigurationVariables();
 
-		// globals files
-		$configurationFiles = array(
-			'globals.base.php' => 'globals.php',
-			'globals_frontend.base.php' => 'globals_frontend.php',
-			'globals_backend.base.php' => 'globals_backend.php'
+		// map the config templates to their destination filename
+		$yamlFiles = array(
+			PATH_LIBRARY . '/parameters.base.yml' => PATH_WWW . '/app/config/parameters.yml',
 		);
 
-		// loop files
-		foreach($configurationFiles as $sourceFilename => $destinationFilename)
+		foreach($yamlFiles as $sourceFilename => $destinationFilename)
 		{
-			// grab content
-			$globalsContent = SpoonFile::getContent(PATH_LIBRARY . '/' . $sourceFilename);
+			$yamlContent = SpoonFile::getContent($sourceFilename);
+			$yamlContent = str_replace(
+				array_keys($variables),
+				array_values($variables),
+				$yamlContent
+			);
 
-			// assign the variables
-			$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
-
-			// write the file
-			SpoonFile::setContent(PATH_LIBRARY . '/' . $destinationFilename, $globalsContent);
+			// write app/config/parameters.yml
+			SpoonFile::setContent($destinationFilename, $yamlContent);
 		}
 
-		// general configuration file
-		$globalsContent = SpoonFile::getContent(PATH_LIBRARY . '/config.base.php');
-
-		// assign the variables
-		$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
-
-		// write the file
-		SpoonFile::setContent(PATH_WWW . '/backend/cache/config/config.php', $globalsContent);
-		SpoonFile::setContent(PATH_WWW . '/frontend/cache/config/config.php', $globalsContent);
+		// we already went through AppKernel once. Now that our config files are
+		// available, we can register our container configuration.
+		$this->getKernel()->registerContainerConfiguration(
+			$this->getKernel()->getContainerLoader($this->getKernel()->getContainer())
+		);
 	}
 
 	/**
@@ -164,7 +143,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($languages as $language)
 		{
 			// get applications
-			$applications = $this->db->getColumn(
+			$applications = $this->getContainer()->get('database')->getColumn(
 				'SELECT DISTINCT application
 				 FROM locale
 				 WHERE language = ?',
@@ -175,7 +154,7 @@ class InstallerStep7 extends InstallerStep
 			foreach((array) $applications as $application)
 			{
 				// build application locale cache
-				$this->buildCache($this->db, $language, $application);
+				$this->buildCache($this->getContainer()->get('database'), $language, $application);
 			}
 		}
 	}
@@ -259,10 +238,7 @@ class InstallerStep7 extends InstallerStep
 		$this->deleteCachedData();
 
 		// create configuration files
-		$this->createConfigurationFiles();
-
-		// init database
-		$this->initDatabase();
+		$this->createYAMLConfig();
 
 		// define paths
 		$this->definePaths();
@@ -281,27 +257,31 @@ class InstallerStep7 extends InstallerStep
 
 		// clear session
 		SpoonSession::destroy();
-
-		// show output
-		$this->tpl->display('layout/templates/step_7.tpl');
 	}
 
 	/**
-	 * Init database.
+	 * @return array A list of variables that should be parsed into the configuration file(s).
 	 */
-	public function initDatabase()
+	protected function getConfigurationVariables()
 	{
-		// get port
-		$port = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? SpoonSession::get('db_port') : 3306;
-
-		// database instance
-		$this->db = new SpoonDatabase('mysql', SpoonSession::get('db_hostname'), SpoonSession::get('db_username'), SpoonSession::get('db_password'), SpoonSession::get('db_database'), $port);
-
-		// utf8 compliance & MySQL-timezone
-		$this->db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-		// store
-		Spoon::set('database', $this->db);
+		return array(
+			'<debug-mode>'				=> SpoonSession::get('debug_mode') ? 'true' : 'false',
+			'<debug-email>'				=> SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email'),
+			'<database-name>'			=> SpoonSession::get('db_database'),
+			'<database-host>'			=> addslashes(SpoonSession::get('db_hostname')),
+			'<database-user>'			=> addslashes(SpoonSession::get('db_username')),
+			'<database-password>'		=> addslashes(SpoonSession::get('db_password')),
+			'<database-port>'			=> (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306,
+			'<site-protocol>'			=> isset($_SERVER['SERVER_PROTOCOL']) ? (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') : 'http',
+			'<site-domain>'				=> (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
+			'<site-default-title>'		=> 'Fork CMS',
+			'<site-multilanguage>'		=> SpoonSession::get('multiple_languages') ? 'true' : 'false',
+			'<site-default-language>'	=> SpoonSession::get('default_language'),
+			'<path-www>'				=> PATH_WWW,
+			'<path-library>'			=> PATH_LIBRARY,
+			'<action-group-tag>'		=> '@actiongroup',
+			'<action-rights-level>'		=> 7
+		);
 	}
 
 	/**
@@ -323,7 +303,7 @@ class InstallerStep7 extends InstallerStep
 
 		// create the core installer
 		$installer = new CoreInstaller(
-			$this->db,
+			$this->getContainer()->get('database'),
 			SpoonSession::get('languages'),
 			SpoonSession::get('interface_languages'),
 			SpoonSession::get('example_data'),
@@ -380,7 +360,7 @@ class InstallerStep7 extends InstallerStep
 
 				// create installer
 				$installer = new $class(
-					$this->db,
+					$this->getContainer()->get('database'),
 					SpoonSession::get('languages'),
 					SpoonSession::get('interface_languages'),
 					SpoonSession::get('example_data'),
@@ -404,7 +384,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($defaultExtras as $extra)
 		{
 			// get pages without this extra
-			$revisionIds = $this->db->getColumn(
+			$revisionIds = $this->getContainer()->get('database')->getColumn(
 				'SELECT i.revision_id
 				 FROM pages AS i
 				 WHERE i.revision_id NOT IN (
@@ -431,7 +411,7 @@ class InstallerStep7 extends InstallerStep
 			}
 
 			// insert block
-			$this->db->insert('pages_blocks', $insertExtras);
+			$this->getContainer()->get('database')->insert('pages_blocks', $insertExtras);
 		}
 
 		// parse the warnings

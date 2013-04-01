@@ -51,7 +51,7 @@ class FrontendSearchModel
 	 *
 	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
 	 * Simple search: all search index fields will be searched for the given term
-	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
+	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
 	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @param int[optional] $limit The number of articles to get.
@@ -127,7 +127,7 @@ class FrontendSearchModel
 			$params = array_merge($terms, $terms, array(FRONTEND_LANGUAGE, 'Y', 'Y', $offset, $limit));
 		}
 
-		return (array) FrontendModel::getDB()->getRecords($query, $params);
+		return (array) FrontendModel::getContainer()->get('database')->getRecords($query, $params);
 	}
 
 	/**
@@ -143,7 +143,7 @@ class FrontendSearchModel
 		// language given
 		if($language)
 		{
-			return (array) FrontendModel::getDB()->getRecords(
+			return (array) FrontendModel::getContainer()->get('database')->getRecords(
 				'SELECT s1.term, s1.num_results
 				 FROM search_statistics AS s1
 				 INNER JOIN
@@ -162,7 +162,7 @@ class FrontendSearchModel
 		// no language given
 		else
 		{
-			return (array) FrontendModel::getDB()->getRecords(
+			return (array) FrontendModel::getContainer()->get('database')->getRecords(
 				'SELECT s1.term, s1.num_results
 				 FROM search_statistics AS s1
 				 INNER JOIN
@@ -188,7 +188,7 @@ class FrontendSearchModel
 	public static function getSynonyms($term)
 	{
 		// query db for synonyms
-		$synonyms = FrontendModel::getDB()->getVar(
+		$synonyms = FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT synonym
 			 FROM search_synonyms
 			 WHERE term = ?',
@@ -207,11 +207,11 @@ class FrontendSearchModel
 	 *
 	 * Note: please be aware that this is an approximate amount. It IS possible that this is not the exact amount of search results,
 	 * since search results may vary in time (entries may not yet/no longer be shown) and we will not rebuild the entire search index
-	 * on every search (would be a great performance killer and huge scalibility loss)
+	 * on every search (would be a great performance killer and huge scalability loss)
 	 *
 	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
 	 * Simple search: all search index fields will be searched for the given term
-	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
+	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
 	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @return int
@@ -281,7 +281,7 @@ class FrontendSearchModel
 		}
 
 		// get the search results
-		return (int) FrontendModel::getDB()->getVar($query, $params);
+		return (int) FrontendModel::getContainer()->get('database')->getVar($query, $params);
 	}
 
 	/**
@@ -291,7 +291,7 @@ class FrontendSearchModel
 	 */
 	public static function save($item)
 	{
-		FrontendModel::getDB(true)->insert('search_statistics', $item);
+		FrontendModel::getContainer()->get('database')->insert('search_statistics', $item);
 	}
 
 	/**
@@ -302,7 +302,7 @@ class FrontendSearchModel
 	 *
 	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
 	 * Simple search: all search index fields will be searched for the given term
-	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
+	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
 	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @param int[optional] $limit The number of articles to get.
@@ -382,7 +382,7 @@ class FrontendSearchModel
 		$active = ($active && $active !== 'N') ? 'Y' : 'N';
 
 		// deactivate!
-		if($otherIds) FrontendModel::getDB(true)->update('search_index', array('active' => $active), 'module = ? AND other_id IN (' . implode(',', $otherIds) . ')', array((string) $module));
+		if($otherIds) FrontendModel::getContainer()->get('database')->update('search_index', array('active' => $active), 'module = ? AND other_id IN (' . implode(',', $otherIds) . ')', array((string) $module));
 	}
 
 	/**
@@ -397,7 +397,7 @@ class FrontendSearchModel
 		while(1)
 		{
 			// get the inactive indices
-			$searchResults = (array) FrontendModel::getDB()->getRecords(
+			$searchResults = (array) FrontendModel::getContainer()->get('database')->getRecords(
 				'SELECT module, other_id
 				 FROM search_index
 				 WHERE language = ? AND active = ?

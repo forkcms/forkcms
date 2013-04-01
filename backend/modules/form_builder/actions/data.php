@@ -38,7 +38,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		$parameters = array($this->id);
 
 		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
-		// wherin we allow the query to be in the actionfile itself
+		// wherein we allow the query to be in the actionfile itself
 		$query =
 			'SELECT i.id, UNIX_TIMESTAMP(i.sent_on) AS sent_on
 			 FROM forms_data AS i

@@ -10,7 +10,7 @@
 /**
  * Save a field via ajax.
  *
- * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 {
@@ -42,6 +42,14 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 
 		// invalid type
 		if($type == '') $this->output(self::BAD_REQUEST, null, 'invalid type provided');
+
+		// extra validation is only possible for textfields
+		if($type != 'textbox')
+		{
+			$validation = '';
+			$validationParameter = '';
+			$errorMessage = '';
+		}
 
 		// init
 		$errors = array();

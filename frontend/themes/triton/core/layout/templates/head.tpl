@@ -17,6 +17,11 @@
 	<link rel="shortcut icon" href="{$THEME_URL}/favicon.ico" />
 	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" />
 
+	{* Windows 8 tile *}
+	<meta name="application-name" content="{$siteTitle}"/> 
+	<meta name="msapplication-TileColor" content="#3380aa"/> 
+	<meta name="msapplication-TileImage" content="{$THEME_URL}/tile.png"/>
+
 	{* Stylesheets *}
 	{iteration:cssFiles}
 		<link rel="stylesheet" href="{$cssFiles.file}" />

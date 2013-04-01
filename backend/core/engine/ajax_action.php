@@ -25,6 +25,8 @@ class BackendAJAXAction extends BackendBaseObject
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function execute()
 	{
@@ -33,7 +35,7 @@ class BackendAJAXAction extends BackendBaseObject
 		// build action-class-name
 		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_ajax_' . $this->getAction());
 
-		// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
+		// require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
 		require_once BACKEND_MODULE_PATH . '/ajax/' . $this->getAction() . '.php';
 
 		// validate if class exists (aka has correct name)
@@ -41,11 +43,10 @@ class BackendAJAXAction extends BackendBaseObject
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
-		
-		// set action and module!
 		$object->setAction($this->getAction(), $this->getModule());
-		
 		$object->execute();
+
+		return $object->getContent();
 	}
 
 	/**

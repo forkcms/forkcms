@@ -174,7 +174,7 @@ class BackendTemplate extends SpoonTemplate
 	private function parseAuthentication()
 	{
 		// init var
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get allowed actions
 		$allowedActions = (array) $db->getRecords(
@@ -218,7 +218,7 @@ class BackendTemplate extends SpoonTemplate
 		// we should only assign constants if there are constants to assign
 		if(!empty($realConstants)) $this->assign($realConstants);
 
-		// we use some abbrviations and common terms, these should also be assigned
+		// we use some abbreviations and common terms, these should also be assigned
 		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
 		if($this->URL instanceof BackendURL)
@@ -236,7 +236,7 @@ class BackendTemplate extends SpoonTemplate
 			// assign the authenticated users secret key
 			$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
 
-			// assign the authentiated users preferred interface language
+			// assign the authenticated users preferred interface language
 			$this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
@@ -316,7 +316,7 @@ class BackendTemplate extends SpoonTemplate
 			foreach($realMessages as &$value) $value = addslashes($value);
 		}
 
-		// sort the arrays (just to make it look beautifull)
+		// sort the arrays (just to make it look beautiful)
 		ksort($realErrors);
 		ksort($realLabels);
 		ksort($realMessages);
@@ -501,7 +501,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a date
-	 * syntac: {$var|formatdate}
+	 * syntax: {$var|formatdate}
 	 *
 	 * @param int $var The UNIX-timestamp to format.
 	 * @return string
@@ -574,7 +574,7 @@ class BackendTemplateModifiers
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param int $min The minimum number.
-	 * @param int $max The maximim number.
+	 * @param int $max The maximum number.
 	 * @return int
 	 */
 	public static function random($var = null, $min, $max)

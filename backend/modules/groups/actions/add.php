@@ -421,7 +421,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			// execute instance
 			$instance->execute();
 
-			// create module array if no existance
+			// create module array if no existence
 			if(!isset($this->dashboardSequence[$widget['module']])) $this->dashboardSequence[$widget['module']] = array();
 
 			// create dashboard sequence

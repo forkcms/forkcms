@@ -94,7 +94,7 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
 						if($profile->getStatus() != FrontendProfilesAuthentication::LOGIN_INACTIVE) $txtEmail->addError(FL::getError('ProfileIsActive'));
 					}
 
-					// email no existo
+					// email don't exist
 					else $txtEmail->addError(FL::getError('EmailIsInvalid'));
 				}
 			}

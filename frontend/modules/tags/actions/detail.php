@@ -67,7 +67,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 			$class = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
 
 			// get the ids of the items linked to the tag
-			$otherIds = (array) FrontendModel::getDB()->getColumn(
+			$otherIds = (array) FrontendModel::getContainer()->get('database')->getColumn(
 				'SELECT other_id
 				 FROM modules_tags
 				 WHERE module = ? AND tag_id = ?',

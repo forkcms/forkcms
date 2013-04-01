@@ -31,7 +31,7 @@ class BackendTagsModel
 	public static function delete($ids)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// make sure $ids is an array
 		$ids = (array) $ids;
@@ -49,7 +49,7 @@ class BackendTagsModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.id
 			 FROM tags AS i
 			 WHERE i.id = ?',
@@ -65,7 +65,7 @@ class BackendTagsModel
 	 */
 	public static function existsTag($tag)
 	{
-		return (BackendModel::getDB()->getVar('SELECT i.tag FROM tags AS i  WHERE i.tag = ?', array((string) $tag)) != '');
+		return (BackendModel::getContainer()->get('database')->getVar('SELECT i.tag FROM tags AS i  WHERE i.tag = ?', array((string) $tag)) != '');
 	}
 
 	/**
@@ -76,7 +76,7 @@ class BackendTagsModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.tag AS name
 			 FROM tags AS i
 			 WHERE i.id = ?',
@@ -92,7 +92,7 @@ class BackendTagsModel
 	 */
 	public static function getStartsWith($term)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.tag AS name, i.tag AS value
 			 FROM tags AS i
 			 WHERE i.tag LIKE ?
@@ -104,7 +104,7 @@ class BackendTagsModel
 	/**
 	 * Get tags for an item
 	 *
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param int $otherId The id of the record.
 	 * @param string[optional] $type The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
 	 * @param string[optional] $language The language to use, of not provided the working language will be used.
@@ -118,7 +118,7 @@ class BackendTagsModel
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// fetch tags
-		$tags = (array) BackendModel::getDB()->getColumn(
+		$tags = (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT i.tag
 			 FROM tags AS i
 			 INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
@@ -147,7 +147,7 @@ class BackendTagsModel
 		$language = BL::getWorkingLanguage();
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// no specific id
 		if($id === null)
@@ -205,7 +205,7 @@ class BackendTagsModel
 	 * Insert a new tag
 	 *
 	 * @param string $tag The data for the tag.
-	 * @param string[optional] $language The language wherin the tag will be inserted, if not provided the workinglanguage will be used.
+	 * @param string[optional] $language The language wherein the tag will be inserted, if not provided the workinglanguage will be used.
 	 * @return int
 	 */
 	public static function insert($tag, $language = null)
@@ -220,7 +220,7 @@ class BackendTagsModel
 		$item['url'] = self::getURL($tag);
 
 		// insert and return id
-		return (int) BackendModel::getDB(true)->insert('tags', $item);
+		return (int) BackendModel::getContainer()->get('database')->insert('tags', $item);
 	}
 
 	/**
@@ -228,8 +228,8 @@ class BackendTagsModel
 	 *
 	 * @param int $otherId The id of the item to tag.
 	 * @param mixed $tags The tags for the item.
-	 * @param string $module The module wherin the item is located.
-	 * @param string[optional] $language The language wherin the tags will be inserted, if not provided the workinglanguage will be used.
+	 * @param string $module The module wherein the item is located.
+	 * @param string[optional] $language The language wherein the tags will be inserted, if not provided the workinglanguage will be used.
 	 */
 	public static function saveTags($otherId, $tags, $module, $language = null)
 	{
@@ -245,7 +245,7 @@ class BackendTagsModel
 		$tags = array_unique($tags);
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get current tags for item
 		$currentTags = (array) $db->getPairs(
@@ -342,6 +342,6 @@ class BackendTagsModel
 	 */
 	public static function update($item)
 	{
-		return BackendModel::getDB(true)->update('tags', $item, 'id = ?', $item['id']);
+		return BackendModel::getContainer()->get('database')->update('tags', $item, 'id = ?', $item['id']);
 	}
 }

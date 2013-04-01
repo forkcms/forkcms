@@ -20,7 +20,7 @@ class BackendAnalyticsModel
 	 *
 	 * @var	string
 	 */
-	const GOOGLE_ACCOUNT_AUTHENTICATION_URL = 'https://www.google.com/accounts/AuthSubRequest?next=%1$s&amp;scope=%2$s&amp;secure=0&amp;session=1';
+	const GOOGLE_ACCOUNT_AUTHENTICATION_URL = 'https://www.google.com/accounts/AuthSubRequest?next=%1$s&scope=%2$s&secure=0&session=1';
 	const GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE = 'https://www.google.com/analytics/feeds/';
 
 	/**
@@ -72,7 +72,7 @@ class BackendAnalyticsModel
 	 */
 	public static function clearTables()
 	{
-		BackendModel::getDB(true)->truncate(
+		BackendModel::getContainer()->get('database')->truncate(
 			array(
 				'analytics_keywords',
 				'analytics_landing_pages',
@@ -89,7 +89,7 @@ class BackendAnalyticsModel
 	 */
 	public static function deleteLandingPage($ids)
 	{
-		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
+		BackendModel::getContainer()->get('database')->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
 	}
 
 	/**
@@ -100,7 +100,7 @@ class BackendAnalyticsModel
 	 */
 	public static function existsLandingPage($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM analytics_landing_pages
 			 WHERE id = ?
@@ -212,7 +212,7 @@ class BackendAnalyticsModel
 			// load cache xml file
 			self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-			// doesnt exist in cache after loading the xml file so set to empty
+			// doesn't exist in cache after loading the xml file so set to empty
 			if(!isset(self::$data[$type]['attributes'])) self::$data[$type]['attributes'] = array();
 		}
 
@@ -270,7 +270,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getDashboardDataFromCache($startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache - load cache xml file
+		// doesn't exist in cache - load cache xml file
 		if(!isset(self::$dashboardData) || empty(self::$dashboardData))
 		{
 			self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
@@ -289,7 +289,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getDataForPage($page, $startTimestamp, $endTimestamp)
 	{
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get id for this page
 		$id = (int) $db->getVar(
@@ -347,13 +347,13 @@ class BackendAnalyticsModel
 	 */
 	public static function getDataFromCacheByType($type, $startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache
+		// doesn't exist in cache
 		if(!isset(self::$data[$type]))
 		{
 			// load cache xml file
 			self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-			// doesnt exist in cache after loading the xml file so set to false to get live data
+			// doesn't exist in cache after loading the xml file so set to false to get live data
 			if(!isset(self::$data[$type])) return false;
 		}
 
@@ -410,7 +410,7 @@ class BackendAnalyticsModel
 	public static function getLandingPages($startTimestamp, $endTimestamp, $limit = null)
 	{
 		$results = array();
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get data from database
 		if($limit === null) $items = (array) $db->getRecords(
@@ -512,7 +512,7 @@ class BackendAnalyticsModel
 	 * @param array $metrics The metrics to collect.
 	 * @param int $startTimestamp The start timestamp for the cache file.
 	 * @param int $endTimestamp The end timestamp for the cache file.
-	 * @param string[optional] $forceCache Should the data be forced from cache.
+	 * @param boolean[optional] $forceCache Should the data be forced from cache.
 	 * @return array
 	 */
 	public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
@@ -545,7 +545,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getPageByPath($path)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM analytics_pages
 			 WHERE page = ?',
@@ -561,7 +561,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getPageForId($pageId)
 	{
-		return (string) BackendModel::getDB()->getVar(
+		return (string) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT page
 			 FROM analytics_pages
 			 WHERE id = ?',
@@ -617,7 +617,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentKeywords()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT *
 			 FROM analytics_keywords
 			 ORDER BY entrances DESC, id'
@@ -631,7 +631,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentReferrers()
 	{
-		$items = (array) BackendModel::getDB()->getRecords(
+		$items = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT *
 			 FROM analytics_referrers
 			 ORDER BY entrances DESC, id'
@@ -885,7 +885,7 @@ class BackendAnalyticsModel
 	 */
 	public static function insertLandingPage(array $item)
 	{
-		return (int) BackendModel::getDB(true)->insert('analytics_landing_pages', $item);
+		return (int) BackendModel::getContainer()->get('database')->insert('analytics_landing_pages', $item);
 	}
 
 	/**
@@ -1063,7 +1063,7 @@ class BackendAnalyticsModel
 	 */
 	public static function updatePageDateViewed($pageId)
 	{
-		BackendModel::getDB(true)->update(
+		BackendModel::getContainer()->get('database')->update(
 			'analytics_pages',
 			array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')),
 			'id = ?',

@@ -1,6 +1,13 @@
 <?php
 
-require_once '../../../autoload.php';
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Client for the Fork CMS API.
@@ -19,7 +26,11 @@ class APIClient extends API
 	 */
 	private $modules;
 
-	public function __construct()
+	/**
+	 * This method exists because the service container needs to be set before
+	 * the rest of API functionality gets loaded.
+	 */
+	public function initialize()
 	{
 		$this->tpl = new SpoonTemplate();
 		$this->tpl->setForceCompile(true);
@@ -28,15 +39,18 @@ class APIClient extends API
 		$this->loadModules();
 		$this->parse();
 		$this->display();
-
 	}
 
 	/**
-	 * Displays the parsed client template.
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
-	protected function display()
+	public function display()
 	{
-		$this->tpl->display('layout/templates/index.tpl');
+		$content = $this->tpl->getContent(__DIR__ . '/../client/layout/templates/index.tpl');
+
+		return new Response(
+			$content, 200
+		);
 	}
 
 	/**
@@ -98,7 +112,7 @@ class APIClient extends API
 		 * that, rather shamefully, do not contain PHPDoc.
 		 */
 		preg_match_all('/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um', $PHPDoc, $matches);
-		if(array_key_exists(0, $matches) && empty($matches[0])) continue;
+		if(array_key_exists(0, $matches) && empty($matches[0])) return;
 		$phpdoc = array();
 
 		// we have to build up a custom stack of parameters

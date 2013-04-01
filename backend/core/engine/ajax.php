@@ -12,10 +12,25 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Dave Lens <dave.lens@wijs.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class BackendAJAX extends BackendBaseObject
+class BackendAJAX extends BackendBaseObject implements ApplicationInterface
 {
-	public function __construct()
+	/**
+	 * @var BackendAJAXAction
+	 */
+	private $ajaxAction;
+
+	/**
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function display()
+	{
+		return $this->ajaxAction->execute();
+	}
+
+	public function initialize()
 	{
 		// check if the user is logged in
 		$this->validateLogin();
@@ -36,102 +51,45 @@ class BackendAJAX extends BackendBaseObject
 		$action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
 		$language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
 
-		// create URL instance, since the template modifiers need this object
-		$URL = new BackendURL();
-		$URL->setModule($module);
-
-		$this->setModule($module);
-		$this->setAction($action);
-		$this->setLanguage($language);
-
-		// create a new action
-		$action = new BackendAJAXAction();
-		$action->setModule($this->getModule());
-		$action->setAction($this->getAction());
-
 		try
 		{
-			$action->execute();
+			// create URL instance, since the template modifiers need this object
+			$URL = new BackendURL();
+			$URL->setModule($module);
+
+			$this->setModule($module);
+			$this->setAction($action);
+			$this->setLanguage($language);
+
+			// create a new action
+			$this->ajaxAction = new BackendAJAXAction($this->getKernel());
+			$this->ajaxAction->setModule($this->getModule());
+			$this->ajaxAction->setAction($this->getAction());
 		}
 
 		catch(Exception $e)
 		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(500);
-
-			// if we are debugging we should see the exceptions
-			if(SPOON_DEBUG) throw $e;
-
-			// output
-			$fakeAction = new BackendBaseAJAXAction();
-			$fakeAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
+			$this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
+			$this->ajaxAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
 		}
 	}
 
 	/**
-	 * Set action
-	 *
-	 * @param string $action The action to use.
-	 * @param string[optional] $module The module to use.
+	 * @param string $language
 	 */
-	public function setAction($action, $module = null)
-	{
-		try
-		{
-			parent::setAction($action, $module);
-		}
-
-		catch(Exception $e)
-		{
-			// output
-			$fakeAction = new BackendBaseAJAXAction();
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Action not allowed.');
-		}
-	}
-
-	/**
-	 * Set the language
-	 *
-	 * @param string $value The language to set.
-	 */
-	public function setLanguage($value)
+	public function setLanguage($language)
 	{
 		// get the possible languages
 		$possibleLanguages = BackendLanguage::getWorkingLanguages();
 
 		// validate
-		if(!in_array($value, array_keys($possibleLanguages)))
+		if(!in_array($language, array_keys($possibleLanguages)))
 		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(500);
-
-			// output
-			$fakeAction = new BackendBaseAJAXAction();
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Languages not provided.');
+			throw new BackendException('Language invalid.');
 		}
 
 		// set working language
-		BackendLanguage::setWorkingLanguage($value);
-	}
-
-	/**
-	 * Set module
-	 *
-	 * @param string $module The module to use.
-	 */
-	public function setModule($module)
-	{
-		try
-		{
-			parent::setModule($module);
-		}
-
-		catch(Exception $e)
-		{
-			// output
-			$fakeAction = new BackendBaseAJAXAction();
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Module not allowed.');
-		}
+		BackendLanguage::setWorkingLanguage($language);
 	}
 
 	/**
@@ -143,12 +101,7 @@ class BackendAJAX extends BackendBaseObject
 		// check if the user is logged on, if not he shouldn't load any JS-file
 		if(!BackendAuthentication::isLoggedIn())
 		{
-			// set the correct header
-			SpoonHTTP::setHeadersByCode(403);
-
-			// output
-			$fakeAction = new BackendBaseAJAXAction();
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not logged in.');
+			throw new BackendException('Not logged in.');
 		}
 
 		// set interface language

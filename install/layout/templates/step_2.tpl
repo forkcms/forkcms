@@ -105,10 +105,10 @@
 
 				<h3>PHP ini-settings</h3>
 				<h4><span class="{$settingsSafeMode}">{$settingsSafeMode}</span> Safe Mode</h4>
-				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>
+				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compatibility we highly recommend you to disable Safe Mode.</p>
 
 				<h4><span class="{$settingsOpenBasedir}">{$settingsOpenBasedir}</span> Open Basedir</h4>
-				<p>For forward compability we highly recommend you not to use open_basedir.</p>
+				<p>For forward compatibility we highly recommend you not to use open_basedir.</p>
 
                 <h4><span class="{$settingsDateTimezone}">{$settingsDateTimezone}</span> date.timezone</h4>
                 <p>date.timezone setting must be set. Make sure your default timezone is supported by your installation of PHP. Check for typos in your php.ini file and have a look at the list of deprecated timezones at <a href="http://php.net/manual/en/timezones.others.php">http://php.net/manual/en/timezones.others.php</a>.</p>
@@ -162,23 +162,17 @@
 				<h4><span class="{$fileSystemLibrary}">{$fileSystemLibrary}</span> {$PATH_LIBRARY}</h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 
-				<h4><span class="{$fileSystemLibraryExternal}">{$fileSystemLibraryExternal}</span> {$PATH_LIBRARY}/external</h4>
+				<h4><span class="{$fileSystemLibraryExternal}">{$fileSystemLibraryExternal}</span> {$PATH_LIBRARY}/external/</h4>
 				<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 
-				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install</h4>
+				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install/cache/</h4>
 				<p>This location must be writable for the installer.</p>
+				
+				<h4><span class="{$fileSystemAppConfig}">{$fileSystemAppConfig}</span> {$PATH_WWW}/app/config/</h4>
+				<p>In this location the global configuration will be stored.</p>
 
-				<h4><span class="{$fileSystemConfig}">{$fileSystemConfig}</span> {$PATH_LIBRARY}/config.base.php</h4>
-				<p>This file is used to create the application config file.</p>
-
-				<h4><span class="{$fileSystemGlobals}">{$fileSystemGlobals}</span> {$PATH_LIBRARY}/globals.base.php</h4>
+				<h4><span class="{$fileSystemParameters}">{$fileSystemParameters}</span> {$PATH_LIBRARY}/parameters.base.yml</h4>
 				<p>This file is used to create the global configuration file.</p>
-
-				<h4><span class="{$fileSystemGlobalsBackend}">{$fileSystemGlobalsBackend}</span> {$PATH_LIBRARY}/globals_backend.base.php</h4>
-				<p>This file is used to create the global backend configuration file.</p>
-
-				<h4><span class="{$fileSystemGlobalsFrontend}">{$fileSystemGlobalsFrontend}</span> {$PATH_LIBRARY}/globals_frontend.base.php</h4>
-				<p>This file is used to create the global frontend configuration file.</p>
 
 				<h4><span class="{$fileSystemPathLibrary}">{$fileSystemPathLibrary}</span> {$PATH_LIBRARY}</h4>
 				<p>This directory is used to store your configuration files. The installer tries to find this directory automatically.</p>

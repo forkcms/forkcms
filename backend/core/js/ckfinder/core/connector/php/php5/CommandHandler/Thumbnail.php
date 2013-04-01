@@ -131,6 +131,7 @@ class CKFinder_Connector_CommandHandler_Thumbnail extends CKFinder_Connector_Com
      * @param string $targetFile
      * @param int $maxWidth
      * @param int $maxHeight
+     * @param int $quality
      * @param boolean $preserverAspectRatio
      * @param boolean $bmpSupported
      * @return boolean

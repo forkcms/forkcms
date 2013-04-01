@@ -26,7 +26,6 @@ class InstallerStep4 extends InstallerStep
 		$this->loadForm();
 		$this->validateForm();
 		$this->parseForm();
-		$this->tpl->display('layout/templates/step_4.tpl');
 	}
 
 	/**
@@ -73,10 +72,10 @@ class InstallerStep4 extends InstallerStep
 
 		// debug mode
 		$this->frm->addCheckbox('debug_mode', (SpoonSession::exists('debug_mode') ? SpoonSession::get('debug_mode') : false));
-		
+
 		// specific debug email address
 		$this->frm->addCheckbox('different_debug_email', (SpoonSession::exists('different_debug_email') ? SpoonSession::get('different_debug_email') : false));
-		
+
 		// specific debug email address text
 		$this->frm->addText('debug_email', (SpoonSession::exists('debug_email')) ? SpoonSession::get('debug_email') : '');
 	}
@@ -111,7 +110,7 @@ class InstallerStep4 extends InstallerStep
 		{
 			// validate email address
 			if($this->frm->getField('different_debug_email')->isChecked()) $this->frm->getField('debug_email')->isEmail('Please provide a valid e-mailaddress.');
-			
+
 			// all valid
 			if($this->frm->isCorrect())
 			{
@@ -129,10 +128,10 @@ class InstallerStep4 extends InstallerStep
 
 				// debug mode
 				SpoonSession::set('debug_mode', $this->frm->getField('debug_mode')->getChecked());
-				
+
 				// specific debug email address
 				SpoonSession::set('different_debug_email', $this->frm->getField('different_debug_email')->getChecked());
-				
+
 				// specific debug email address text
 				SpoonSession::set('debug_email', $this->frm->getField('debug_email')->getValue());
 

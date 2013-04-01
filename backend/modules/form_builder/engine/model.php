@@ -51,7 +51,7 @@ class BackendFormBuilderModel
 			// one minute
 			elseif($minutes == 1) return BL::getLabel('OneMinuteAgo');
 
-			// more than one seconde
+			// more than one second
 			elseif($seconds > 1) return sprintf(BL::getLabel('SecondsAgo'), $seconds);
 
 			// one second
@@ -73,7 +73,7 @@ class BackendFormBuilderModel
 	public static function createIdentifier()
 	{
 		// get last id
-		$id = (int) BackendModel::getDb()->getVar('SELECT i.id FROM forms AS i ORDER BY i.id DESC LIMIT 1');
+		$id = (int) BackendModel::getContainer()->get('database')->getVar('SELECT i.id FROM forms AS i ORDER BY i.id DESC LIMIT 1');
 
 		// create identifier
 		do
@@ -84,7 +84,7 @@ class BackendFormBuilderModel
 
 		// @todo refactor me...
 		// keep trying till its unique
-		while((int) BackendModel::getDb()->getVar(
+		while((int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM forms AS i
 			 WHERE i.identifier = ?
@@ -102,7 +102,7 @@ class BackendFormBuilderModel
 	public static function delete($id)
 	{
 		$id = (int) $id;
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get field ids
 		$fieldIds = (array) $db->getColumn('SELECT i.id FROM forms_fields AS i WHERE i.form_id = ?', $id);
@@ -135,7 +135,7 @@ class BackendFormBuilderModel
 	 */
 	public static function deleteData(array $ids)
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		$db->delete('forms_data', 'id IN(' . implode(',', $ids) . ')');
 		$db->delete('forms_data_fields', 'data_id IN(' . implode(',', $ids) . ')');
@@ -154,7 +154,7 @@ class BackendFormBuilderModel
 		self::deleteFieldValidation($id);
 
 		// delete field
-		BackendModel::getDB(true)->delete('forms_fields', 'id = ?', $id);
+		BackendModel::getContainer()->get('database')->delete('forms_fields', 'id = ?', $id);
 	}
 
 	/**
@@ -164,7 +164,7 @@ class BackendFormBuilderModel
 	 */
 	public static function deleteFieldValidation($id)
 	{
-		BackendModel::getDB(true)->delete('forms_fields_validation', 'field_id = ?', (int) $id);
+		BackendModel::getContainer()->get('database')->delete('forms_fields_validation', 'field_id = ?', (int) $id);
 	}
 
 	/**
@@ -175,7 +175,7 @@ class BackendFormBuilderModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM forms AS f
 			 WHERE f.id = ?
@@ -191,7 +191,7 @@ class BackendFormBuilderModel
 	 */
 	public static function existsData($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM forms_data AS fd
 			 WHERE fd.id = ?
@@ -213,7 +213,7 @@ class BackendFormBuilderModel
 		// exists
 		if($formId === null)
 		{
-			return (bool) BackendModel::getDB()->getVar(
+			return (bool) BackendModel::getContainer()->get('database')->getVar(
 				'SELECT 1
 				 FROM forms_fields AS ff
 				 WHERE ff.id = ?
@@ -222,7 +222,7 @@ class BackendFormBuilderModel
 		}
 
 		// exists and ignore an id
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM forms_fields AS ff
 			 WHERE ff.id = ? AND ff.form_id = ?
@@ -244,7 +244,7 @@ class BackendFormBuilderModel
 		// exists
 		if($ignoreId === null)
 		{
-			return (bool) BackendModel::getDB()->getVar(
+			return (bool) BackendModel::getContainer()->get('database')->getVar(
 				'SELECT 1
 				 FROM forms AS f
 				 WHERE f.identifier = ?
@@ -253,7 +253,7 @@ class BackendFormBuilderModel
 		}
 
 		// exists and ignore an id
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM forms AS f
 			 WHERE f.identifier = ? AND f.id != ?
@@ -264,7 +264,7 @@ class BackendFormBuilderModel
 	/**
 	 * Formats the recipients based on the serialized string
 	 *
-	 * @param string $string The serialized string that should be formated
+	 * @param string $string The serialized string that should be formatted
 	 * @return string
 	 */
 	public static function formatRecipients($string)
@@ -280,7 +280,7 @@ class BackendFormBuilderModel
 	 */
 	public static function get($id)
 	{
-		$return = (array) BackendModel::getDB()->getRecord('SELECT f.*	FROM forms AS f WHERE f.id = ?', (int) $id);
+		$return = (array) BackendModel::getContainer()->get('database')->getRecord('SELECT f.*	FROM forms AS f WHERE f.id = ?', (int) $id);
 
 		// unserialize the emailaddresses
 		if(isset($return['email'])) $return['email'] = (array) unserialize($return['email']);
@@ -297,7 +297,7 @@ class BackendFormBuilderModel
 	public static function getData($id)
 	{
 		// get data
-		$data = (array) BackendModel::getDB()->getRecord(
+		$data = (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT fd.id, fd.form_id, UNIX_TIMESTAMP(fd.sent_on) AS sent_on
 			 FROM forms_data AS fd
 			 WHERE fd.id = ?',
@@ -305,7 +305,7 @@ class BackendFormBuilderModel
 		);
 
 		// get fields
-		$data['fields'] = (array) BackendModel::getDB()->getRecords(
+		$data['fields'] = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT fdf.label, fdf.value
 			 FROM forms_data_fields AS fdf
 			 WHERE fdf.data_id = ?
@@ -364,7 +364,7 @@ class BackendFormBuilderModel
 	 */
 	public static function getField($id)
 	{
-		$field = (array) BackendModel::getDB()->getRecord(
+		$field = (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT ff.id, ff.form_id, ff.type, ff.settings
 			 FROM forms_fields AS ff
 			 WHERE ff.id = ?',
@@ -375,7 +375,7 @@ class BackendFormBuilderModel
 		if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
 
 		// get validation
-		$field['validations'] = (array) BackendModel::getDB()->getRecords(
+		$field['validations'] = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT ffv.type, ffv.parameter, ffv.error_message
 			 FROM forms_fields_validation AS ffv
 			 WHERE ffv.field_id = ?',
@@ -393,7 +393,7 @@ class BackendFormBuilderModel
 	 */
 	public static function getFields($id)
 	{
-		$fields = (array) BackendModel::getDB()->getRecords(
+		$fields = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT ff.id, ff.type, ff.settings
 			 FROM forms_fields AS ff
 			 WHERE ff.form_id = ?
@@ -407,7 +407,7 @@ class BackendFormBuilderModel
 			if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
 
 			// get validation
-			$field['validations'] = (array) BackendModel::getDB()->getRecords(
+			$field['validations'] = (array) BackendModel::getContainer()->get('database')->getRecords(
 				'SELECT ffv.type, ffv.parameter, ffv.error_message
 				 FROM forms_fields_validation AS ffv
 				 WHERE ffv.field_id = ?', $field['id'],
@@ -445,7 +445,7 @@ class BackendFormBuilderModel
 	 */
 	public static function getMaximumSequence($formId)
 	{
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT MAX(ff.sequence)
 			 FROM forms_fields AS ff
 			 WHERE ff.form_id = ?',
@@ -461,7 +461,7 @@ class BackendFormBuilderModel
 	 */
 	public static function insert(array $values)
 	{
-		$insertId = BackendModel::getDB(true)->insert('forms', $values);
+		$insertId = BackendModel::getContainer()->get('database')->insert('forms', $values);
 
 		// build array
 		$extra['module'] = 'form_builder';
@@ -473,7 +473,7 @@ class BackendFormBuilderModel
 		$extra['sequence'] = '400' . $insertId;
 
 		// insert extra
-		BackendModel::getDB(true)->insert('modules_extras', $extra);
+		BackendModel::getContainer()->get('database')->insert('modules_extras', $extra);
 
 		return $insertId;
 	}
@@ -486,7 +486,7 @@ class BackendFormBuilderModel
 	 */
 	public static function insertField(array $values)
 	{
-		return BackendModel::getDB(true)->insert('forms_fields', $values);
+		return BackendModel::getContainer()->get('database')->insert('forms_fields', $values);
 	}
 
 	/**
@@ -497,7 +497,7 @@ class BackendFormBuilderModel
 	 */
 	public static function insertFieldValidation(array $values)
 	{
-		return BackendModel::getDB(true)->insert('forms_fields_validation', $values);
+		return BackendModel::getContainer()->get('database')->insert('forms_fields_validation', $values);
 	}
 
 	/**
@@ -510,7 +510,7 @@ class BackendFormBuilderModel
 	public static function update($id, array $values)
 	{
 		$id = (int) $id;
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// update item
 		$db->update('forms', $values, 'id = ?', $id);
@@ -533,7 +533,7 @@ class BackendFormBuilderModel
 	 */
 	public static function updateField($id, array $values)
 	{
-		BackendModel::getDB(true)->update('forms_fields', $values, 'id = ?', (int) $id);
+		BackendModel::getContainer()->get('database')->update('forms_fields', $values, 'id = ?', (int) $id);
 		return $id;
 	}
 }

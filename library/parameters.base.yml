@@ -1,0 +1,24 @@
+parameters:
+    database.driver:        mysql
+    database.host:          <database-host>
+    database.port:          <database-port>
+    database.name:          <database-name>
+    database.user:          <database-user>
+    database.password:      <database-password>
+
+    fork.debug:             <debug-mode>
+    fork.debug_email:       <debug-email>
+    fork.debug_message:     'Internal error.'
+    fork.version:           '3.5.0'
+    fork.charset:           'utf-8'
+
+    site.protocol:          <site-protocol>
+    site.domain:            <site-domain>
+    site.default_title:     <site-default-title>
+    site.multilanguage:     <site-multilanguage>
+    site.default_language:  <site-default-language>
+    site.path_www:          <path-www>
+    site.path_library:      <path-library>
+
+    action.group_tag:       <action-group-tag>
+    action.rights_level:    <action-rights-level>

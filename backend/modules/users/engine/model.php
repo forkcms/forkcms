@@ -27,29 +27,29 @@ class BackendUsersModel
 	 */
 	public static function delete($id)
 	{
-		BackendModel::getDB(true)->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', array((int) $id));
+		BackendModel::getContainer()->get('database')->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', array((int) $id));
 	}
 
 	/**
 	 * Deletes the reset_password_key and reset_password_timestamp for a given user ID
 	 *
-	 * @param int $id The userId wherfore the reset-stuff should be deleted.
+	 * @param int $id The userId wherefore the reset-stuff should be deleted.
 	 */
 	public static function deleteResetPasswordSettings($id)
 	{
-		BackendModel::getDB(true)->delete('users_settings', '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?', array((int) $id));
+		BackendModel::getContainer()->get('database')->delete('users_settings', '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?', array((int) $id));
 	}
 
 	/**
 	 * Was a user deleted before?
 	 *
-	 * @param string $email The e-mail adress to check.
+	 * @param string $email The e-mail address to check.
 	 * @return bool
 	 */
 	public static function emailDeletedBefore($email)
 	{
 		// no user to ignore
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM users AS i
 			 WHERE i.email = ? AND i.deleted = ?
@@ -61,7 +61,7 @@ class BackendUsersModel
 	/**
 	 * Does the user exist.
 	 *
-	 * @param int $id The userId to check for existance.
+	 * @param int $id The userId to check for existence.
 	 * @param bool[optional] $active Should the user be active also?
 	 * @return bool
 	 */
@@ -71,7 +71,7 @@ class BackendUsersModel
 		$active = (bool) $active;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// if the user should also be active, there should be at least one row to return true
 		if($active) return (bool) $db->getVar(
@@ -106,7 +106,7 @@ class BackendUsersModel
 		$id = ($id !== null) ? (int) $id : null;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// userid specified?
 		if($id !== null) return (bool) $db->getVar(
@@ -139,7 +139,7 @@ class BackendUsersModel
 		$id = (int) $id;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get general user data
 		$user = (array) $db->getRecord(
@@ -217,7 +217,7 @@ class BackendUsersModel
 	 */
 	public static function getGroups()
 	{
-		return (array) BackendModel::getDB()->getPairs(
+		return (array) BackendModel::getContainer()->get('database')->getPairs(
 			'SELECT i.id, i.name
 			 FROM groups AS i'
 		);
@@ -232,7 +232,7 @@ class BackendUsersModel
 	public static function getIdByEmail($email)
 	{
 		// get user-settings
-		$userId = BackendModel::getDB()->getVar(
+		$userId = BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.id
 			 FROM users AS i
 			 WHERE i.email = ?',
@@ -272,7 +272,7 @@ class BackendUsersModel
 	 */
 	public static function getSetting($userId, $setting)
 	{
-		return @unserialize(BackendModel::getDB()->getVar(
+		return @unserialize(BackendModel::getContainer()->get('database')->getVar(
 			'SELECT value
 			 FROM users_settings
 			 WHERE user_id = ? AND name = ?',
@@ -308,7 +308,7 @@ class BackendUsersModel
 	public static function getUsers()
 	{
 		// fetch users
-		$users = (array) BackendModel::getDB()->getPairs(
+		$users = (array) BackendModel::getContainer()->get('database')->getPairs(
 			'SELECT i.id, s.value
 			 FROM users AS i
 			 INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
@@ -333,7 +333,7 @@ class BackendUsersModel
 	public static function insert(array $user, array $settings)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// update user
 		$userId = (int) $db->insert('users', $user);
@@ -360,7 +360,7 @@ class BackendUsersModel
 	public static function setSetting($userId, $setting, $value)
 	{
 		// insert or update
-		BackendModel::getDB(true)->execute(
+		BackendModel::getContainer()->get('database')->execute(
 			'INSERT INTO users_settings(user_id, name, value)
 			 VALUES(?, ?, ?)
 			 ON DUPLICATE KEY UPDATE value = ?',
@@ -372,7 +372,7 @@ class BackendUsersModel
 	 * Restores a user
 	 * @later	this method should check if all needed data is present
 	 *
-	 * @param string $email The e-mail adress of the user to restore.
+	 * @param string $email The e-mail address of the user to restore.
 	 * @return bool
 	 */
 	public static function undoDelete($email)
@@ -381,7 +381,7 @@ class BackendUsersModel
 		$email = (string) $email;
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get id
 		$id = $db->getVar(
@@ -415,7 +415,7 @@ class BackendUsersModel
 	public static function update(array $user, array $settings)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// update user
 		$updated = $db->update('users', $user, 'id = ?', array($user['id']));
@@ -448,7 +448,7 @@ class BackendUsersModel
 		$key = $user->getSetting('password_key');
 
 		// update user
-		BackendModel::getDB(true)->update('users', array('password' => BackendAuthentication::getEncryptedString((string) $password, $key)), 'id = ?', $userId);
+		BackendModel::getContainer()->get('database')->update('users', array('password' => BackendAuthentication::getEncryptedString((string) $password, $key)), 'id = ?', $userId);
 
 		// remove the user settings linked to the resetting of passwords
 		self::deleteResetPasswordSettings($userId);

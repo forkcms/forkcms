@@ -48,7 +48,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 
 		/*
 		 * Start query, as you can see this query is build in the wrong place, because of the filter
-		 * it is a special case wherin we allow the query to be in the actionfile itself
+		 * it is a special case wherein we allow the query to be in the actionfile itself
 		 */
 		$query =
 			'SELECT i.*, UNIX_TIMESTAMP(i.sent_on) AS sent_on, d.*
@@ -159,7 +159,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 		list($query, $parameters) = $this->buildQuery();
 
 		// get the data
-		$records = (array) BackendModel::getDB()->getRecords($query, $parameters);
+		$records = (array) BackendModel::getContainer()->get('database')->getRecords($query, $parameters);
 		$data = array();
 
 		// reformat data

@@ -26,10 +26,9 @@ class FrontendLocationIndex extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
-		parent::execute();
-
-		// add Google Maps
 		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+
+		parent::execute();
 
 		$this->loadTemplate();
 		$this->loadData();
@@ -52,7 +51,7 @@ class FrontendLocationIndex extends FrontendBaseBlock
 			$this->settings['center']['lng'] = $firstMarker['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $firstMarker['lat'];

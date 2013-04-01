@@ -64,7 +64,7 @@ class FrontendTheme
 	 */
 	public static function getTheme()
 	{
-		// theme nama has not yet been saved, fetch and save it
+		// theme name has not yet been saved, fetch and save it
 		if(!self::$theme) self::$theme = FrontendModel::getModuleSetting('core', 'theme', null);
 
 		// return theme name

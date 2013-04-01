@@ -52,7 +52,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		// get the record
 		$this->record = (array) BackendMailmotorModel::getMailing($this->id);
 
-		// get the campagins
+		// get the campaigns
 		$this->campaigns = (array) BackendMailmotorModel::getCampaignsAsPairs();
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL

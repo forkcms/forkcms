@@ -75,7 +75,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	private function loadData()
 	{
 		// inform that the module is not installed yet
-		if(!BackendExtensionsModel::isModuleInstalled($this->currentModule))
+		if(!BackendModel::isModuleInstalled($this->currentModule))
 		{
 			$this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
 		}
@@ -91,7 +91,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	 */
 	private function loadDataGridCronjobs()
 	{
-		// no cronjobs = dont bother
+		// no cronjobs = don't bother
 		if(!isset($this->information['cronjobs'])) return;
 
 		// create data grid
@@ -112,7 +112,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 	 */
 	private function loadDataGridEvents()
 	{
-		// no hooks = dont bother
+		// no hooks = don't bother
 		if(!isset($this->information['events'])) return;
 
 		// create data grid
@@ -133,7 +133,7 @@ class BackendExtensionsDetailModule extends BackendBaseActionIndex
 		$this->tpl->assign('name', $this->currentModule);
 		$this->tpl->assign('warnings', $this->warnings);
 		$this->tpl->assign('information', $this->information);
-		$this->tpl->assign('showExtensionsInstallModule', !BackendExtensionsModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('install_module'));
+		$this->tpl->assign('showExtensionsInstallModule', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('install_module'));
 
 		// data grids
 		$this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);

@@ -127,7 +127,7 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 		$this->type = SpoonFilter::getGetValue('type', array('html', 'plain'), 'html');
 		$this->forCM = SpoonFilter::getGetValue('cm', array(0, 1), 0, 'bool');
 
-		// no point continueing if the mailing record is not set
+		// no point continuing if the mailing record is not set
 		if(empty($this->mailing))
 		{
 			$this->redirect(FrontendNavigation::getURL(404));

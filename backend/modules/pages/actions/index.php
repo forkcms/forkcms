@@ -51,7 +51,7 @@ class BackendPagesIndex extends BackendBaseActionIndex
 	}
 
 	/**
-	 * Load the datagird with the drafts
+	 * Load the datagrid with the drafts
 	 */
 	private function loadDataGridDrafts()
 	{

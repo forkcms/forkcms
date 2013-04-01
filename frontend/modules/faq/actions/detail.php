@@ -50,7 +50,7 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	{
 		parent::execute();
 
-		// hide contenTitle, in the template the title is wrapped with an inverse-option
+		// hide contentTitle, in the template the title is wrapped with an inverse-option
 		$this->tpl->assign('hideContentTitle', true);
 
 		$this->loadTemplate();

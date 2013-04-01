@@ -36,7 +36,7 @@ class FrontendLanguage
 	 */
 	public static function buildCache($language, $application)
 	{
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// get types
 		$types = $db->getEnumValues('locale', 'type');
@@ -181,7 +181,7 @@ class FrontendLanguage
 	}
 
 	/**
-	 * Get the prefered language by using the browser-language
+	 * Get the preferred language by using the browser-language
 	 *
 	 * @param bool[optional] $forRedirect Only look in the languages to redirect?
 	 * @return string
@@ -194,7 +194,7 @@ class FrontendLanguage
 			// get languages
 			$redirectLanguages = self::getRedirectLanguages();
 
-			// prefered languages
+			// preferred languages
 			$acceptedLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$browserLanguages = array();
 

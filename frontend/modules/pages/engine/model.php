@@ -24,7 +24,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 	public static function getForTags(array $ids)
 	{
 		// fetch items
-		$items = (array) FrontendModel::getDB()->getRecords(
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.title
 			 FROM pages AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
@@ -59,13 +59,13 @@ class FrontendPagesModel implements FrontendTagsInterface
 	/**
 	 * Fetch a list of subpages of a page.
 	 *
-	 * @param int $ids The id of the item to grab the subpages for.
+	 * @param int $id The id of the item to grab the subpages for.
 	 * @return array
 	 */
 	public static function getSubpages($id)
 	{
 		// fetch items
-		$items = (array) FrontendModel::getDB()->getRecords(
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.title, m.description, i.parent_id
 			 FROM pages AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
@@ -98,7 +98,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 	public static function search(array $ids)
 	{
 		// get db
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// define ids's to ignore
 		$ignore = array(404);

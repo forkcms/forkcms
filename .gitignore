@@ -5,4 +5,5 @@
 .*.swp
 .DS_Store
 backend/cache/navigation/
-vendor
+vendor/
+app/config/parameters.yml

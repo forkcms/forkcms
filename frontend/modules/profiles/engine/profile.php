@@ -194,7 +194,7 @@ class FrontendProfilesProfile
 	private function loadProfile($id)
 	{
 		// get profile data
-		$profileData = (array) FrontendModel::getDB()->getRecord(
+		$profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT p.id, p.email, p.status, p.display_name, p.url, UNIX_TIMESTAMP(p.registered_on) AS registered_on
 			 FROM profiles AS p
 			 WHERE p.id = ?',
@@ -210,7 +210,7 @@ class FrontendProfilesProfile
 		$this->setRegisteredOn($profileData['registered_on']);
 
 		// get the groups (only the ones we still have access to)
-		$this->groups = (array) FrontendModel::getDB()->getPairs(
+		$this->groups = (array) FrontendModel::getContainer()->get('database')->getPairs(
 			'SELECT pg.id, pg.name
 			 FROM profiles_groups AS pg
 			 INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
@@ -227,7 +227,7 @@ class FrontendProfilesProfile
 	public function loadProfileByUrl($url)
 	{
 		// get profile data
-		$profileData = (array) FrontendModel::getDB()->getRecord(
+		$profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT p.id, p.email, p.status, p.display_name, UNIX_TIMESTAMP(p.registered_on) AS registered_on
 			 FROM profiles AS p
 			 WHERE p.url = ?',
@@ -242,7 +242,7 @@ class FrontendProfilesProfile
 		$this->setRegisteredOn($profileData['registered_on']);
 
 		// get the groups (only the ones we still have access to)
-		$this->groups = (array) FrontendModel::getDB()->getPairs(
+		$this->groups = (array) FrontendModel::getContainer()->get('database')->getPairs(
 			'SELECT pg.id, pg.name
 			 FROM profiles_groups AS pg
 			 INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
@@ -250,7 +250,7 @@ class FrontendProfilesProfile
 			array(':id' => (int) $this->getId())
 		);
 
-		$this->settings = (array) FrontendModel::getDB()->getPairs(
+		$this->settings = (array) FrontendModel::getContainer()->get('database')->getPairs(
 			'SELECT i.name, i.value
 			 FROM profiles_settings AS i
 			 WHERE i.profile_id = ?',
@@ -316,7 +316,7 @@ class FrontendProfilesProfile
 	}
 
 	/**
-	 * Insegirt or update multiple profile settings.
+	 * Insert or update multiple profile settings.
 	 *
 	 * @param array $values Settings in key=>value form.
 	 */

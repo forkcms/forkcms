@@ -139,7 +139,7 @@ class BackendBlogModel
 		$idPlaceHolders = array_fill(0, count($ids), '?');
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get used meta ids
 		$metaIds = (array) $db->getColumn(
@@ -171,7 +171,7 @@ class BackendBlogModel
 	public static function deleteCategory($id)
 	{
 		$id = (int) $id;
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get item
 		$item = self::getCategory($id);
@@ -200,7 +200,7 @@ class BackendBlogModel
 	 */
 	public static function deleteCategoryAllowed($id)
 	{
-		return !(bool) BackendModel::getDB()->getVar(
+		return !(bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM blog_posts AS i
 			 WHERE i.category_id = ? AND i.language = ? AND i.status = ?
@@ -226,7 +226,7 @@ class BackendBlogModel
 		$idPlaceHolders = array_fill(0, count($ids), '?');
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get ids
 		$itemIds = (array) $db->getColumn(
@@ -251,7 +251,7 @@ class BackendBlogModel
 	 */
 	public static function deleteSpamComments()
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get ids
 		$itemIds = (array) $db->getColumn(
@@ -279,7 +279,7 @@ class BackendBlogModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.id
 			 FROM blog_posts AS i
 			 WHERE i.id = ? AND i.language = ?',
@@ -295,7 +295,7 @@ class BackendBlogModel
 	 */
 	public static function existsCategory($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM blog_categories AS i
 			 WHERE i.id = ? AND i.language = ?
@@ -312,7 +312,7 @@ class BackendBlogModel
 	 */
 	public static function existsComment($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM blog_comments AS i
 			 WHERE i.id = ? AND i.language = ?
@@ -329,7 +329,7 @@ class BackendBlogModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
@@ -355,7 +355,7 @@ class BackendBlogModel
 		// no status passed
 		if($status === null)
 		{
-			return (array) BackendModel::getDB()->getRecords(
+			return (array) BackendModel::getContainer()->get('database')->getRecords(
 				'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
 				 p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
 				 FROM blog_comments AS i
@@ -368,7 +368,7 @@ class BackendBlogModel
 			);
 		}
 
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
 			 p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
 			 FROM blog_comments AS i
@@ -389,7 +389,7 @@ class BackendBlogModel
 	 */
 	public static function getByTag($tagId)
 	{
-		$items = (array) BackendModel::getDB()->getRecords(
+		$items = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id AS url, i.title AS name, mt.module
 			 FROM modules_tags AS mt
 			 INNER JOIN tags AS t ON mt.tag_id = t.id
@@ -415,7 +415,7 @@ class BackendBlogModel
 	 */
 	public static function getCategories($includeCount = false)
 	{
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		if($includeCount)
 		{
@@ -445,7 +445,7 @@ class BackendBlogModel
 	 */
 	public static function getCategory($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*
 			 FROM blog_categories AS i
 			 WHERE i.id = ? AND i.language = ?',
@@ -465,7 +465,7 @@ class BackendBlogModel
 		$title = (string) $title;
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
-		return (int) BackendModel::getDB()->getVar(
+		return (int) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.id
 			 FROM blog_categories AS i
 			 WHERE i.title = ? AND i.language = ?',
@@ -481,7 +481,7 @@ class BackendBlogModel
 	 */
 	public static function getComment($id)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
 			 p.id AS post_id, p.title AS post_title, m.url AS post_url
 			 FROM blog_comments AS i
@@ -501,7 +501,7 @@ class BackendBlogModel
 	 */
 	public static function getComments(array $ids)
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT *
 			 FROM blog_comments AS i
 			 WHERE i.id IN (' . implode(', ', array_fill(0, count($ids), '?')) . ')',
@@ -516,7 +516,7 @@ class BackendBlogModel
 	 */
 	public static function getCommentStatusCount()
 	{
-		return (array) BackendModel::getDB()->getPairs(
+		return (array) BackendModel::getContainer()->get('database')->getPairs(
 			'SELECT i.status, COUNT(i.id)
 			 FROM blog_comments AS i
 			 WHERE i.language = ?
@@ -535,7 +535,7 @@ class BackendBlogModel
 	public static function getLatestComments($status, $limit = 10)
 	{
 		// get the comments (order by id, this is faster then on date, the higher the id, the more recent
-		$comments = (array) BackendModel::getDB()->getRecords(
+		$comments = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.created_on) AS created_in,
 			 p.title, p.language, m.url
 			 FROM blog_comments AS i
@@ -563,7 +563,7 @@ class BackendBlogModel
 	 */
 	public static function getMaximumId()
 	{
-		return (int) BackendModel::getDB()->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1');
+		return (int) BackendModel::getContainer()->get('database')->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1');
 	}
 
 	/**
@@ -575,7 +575,7 @@ class BackendBlogModel
 	 */
 	public static function getRevision($id, $revisionId)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
@@ -596,7 +596,7 @@ class BackendBlogModel
 		$URL = (string) $URL;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// new item
 		if($id === null)
@@ -639,7 +639,7 @@ class BackendBlogModel
 	/**
 	 * Retrieve the unique URL for a category
 	 *
-	 * @param string $URL The string wheron the URL will be based.
+	 * @param string $URL The string whereon the URL will be based.
 	 * @param int[optional] $id The id of the category to ignore.
 	 * @return string
 	 */
@@ -649,7 +649,7 @@ class BackendBlogModel
 		$URL = (string) $URL;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// new category
 		if($id === null)
@@ -697,7 +697,7 @@ class BackendBlogModel
 	public static function insert(array $item)
 	{
 		// insert and return the new revision id
-		$item['revision_id'] = BackendModel::getDB(true)->insert('blog_posts', $item);
+		$item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
@@ -716,7 +716,7 @@ class BackendBlogModel
 	public static function insertCategory(array $item, $meta = null)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// meta given?
 		if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
@@ -734,7 +734,7 @@ class BackendBlogModel
 	/**
 	 * Recalculate the commentcount
 	 *
-	 * @param array $ids The id(s) of the post wherefor the commentcount should be recalculated.
+	 * @param array $ids The id(s) of the post wherefore the commentcount should be recalculated.
 	 * @return bool
 	 */
 	public static function reCalculateCommentCount(array $ids)
@@ -746,7 +746,7 @@ class BackendBlogModel
 		$ids = array_unique($ids);
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get counts
 		$commentCounts = (array) $db->getPairs(
@@ -782,7 +782,7 @@ class BackendBlogModel
 		if($item['status'] == 'active')
 		{
 			// archive all older active versions
-			BackendModel::getDB(true)->update('blog_posts', array('status' => 'archived'), 'id = ? AND status = ?', array($item['id'], $item['status']));
+			BackendModel::getContainer()->get('database')->update('blog_posts', array('status' => 'archived'), 'id = ? AND status = ?', array($item['id'], $item['status']));
 
 			// get the record of the exact item we're editing
 			$revision = self::getRevision($item['id'], $item['revision_id']);
@@ -792,7 +792,7 @@ class BackendBlogModel
 			$item['num_comments'] = $revision['num_comments'];
 
 			// if it used to be a draft that we're now publishing, remove drafts
-			if($revision['status'] == 'draft') BackendModel::getDB(true)->delete('blog_posts', 'id = ? AND status = ?', array($item['id'], $revision['status']));
+			if($revision['status'] == 'draft') BackendModel::getContainer()->get('database')->delete('blog_posts', 'id = ? AND status = ?', array($item['id'], $revision['status']));
 		}
 
 		// don't want revision id
@@ -805,7 +805,7 @@ class BackendBlogModel
 		$archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);
 
 		// get revision-ids for items to keep
-		$revisionIdsToKeep = (array) BackendModel::getDB()->getColumn(
+		$revisionIdsToKeep = (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT i.revision_id
 			 FROM blog_posts AS i
 			 WHERE i.id = ? AND i.status = ? AND i.language = ?
@@ -815,10 +815,10 @@ class BackendBlogModel
 		);
 
 		// delete other revisions
-		if(!empty($revisionIdsToKeep)) BackendModel::getDB(true)->delete('blog_posts', 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')', array($item['id'], $archiveType));
+		if(!empty($revisionIdsToKeep)) BackendModel::getContainer()->get('database')->delete('blog_posts', 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')', array($item['id'], $archiveType));
 
 		// insert new version
-		$item['revision_id'] = BackendModel::getDB(true)->insert('blog_posts', $item);
+		$item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
@@ -837,7 +837,7 @@ class BackendBlogModel
 	public static function updateCategory(array $item, $meta = null)
 	{
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// update category
 		$updated = $db->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
@@ -867,7 +867,7 @@ class BackendBlogModel
 	public static function updateComment(array $item)
 	{
 		// update category
-		return BackendModel::getDB(true)->update('blog_comments', $item, 'id = ?', array((int) $item['id']));
+		return BackendModel::getContainer()->get('database')->update('blog_comments', $item, 'id = ?', array((int) $item['id']));
 	}
 
 	/**
@@ -888,7 +888,7 @@ class BackendBlogModel
 		$idPlaceHolders = array_fill(0, count($ids), '?');
 
 		// get the items and their languages
-		$items = (array) BackendModel::getDB()->getPairs(
+		$items = (array) BackendModel::getContainer()->get('database')->getPairs(
 			'SELECT i.post_id, i.language
 			 FROM blog_comments AS i
 			 WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
@@ -905,7 +905,7 @@ class BackendBlogModel
 			$languages = array_unique(array_values($items));
 
 			// update records
-			BackendModel::getDB(true)->execute(
+			BackendModel::getContainer()->get('database')->execute(
 				'UPDATE blog_comments
 				 SET status = ?
 				 WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',

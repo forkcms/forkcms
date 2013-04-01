@@ -103,7 +103,7 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 	 */
 	private function loadDataGridTemplates()
 	{
-		// no hooks so dont bother
+		// no hooks so don't bother
 		if(!isset($this->information['templates'])) return;
 
 		// build data for display in datagrid

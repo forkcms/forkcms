@@ -18,7 +18,7 @@ class FrontendTagsModel
 	/**
 	 * Calls a method that has to be implemented though the tags interface
 	 *
-	 * @param string $module The module wherin to search.
+	 * @param string $module The module wherein to search.
 	 * @param string $class The class that should contain the method.
 	 * @param string $method The method to call.
 	 * @param mixed[optional] $parameter The parameters to pass.
@@ -48,27 +48,31 @@ class FrontendTagsModel
 	 * Get the tag for a given URL
 	 *
 	 * @param string $URL The URL to get the tag for.
+	 * @param string[optional] $language
 	 * @return array
 	 */
-	public static function get($URL)
+	public static function get($URL, $language = null)
 	{
+		// redefine language
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
 		// exists
-		return (array) FrontendModel::getDB()->getRecord(
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT id, language, tag AS name, number, url
 			 FROM tags
-			 WHERE url = ?',
-			array((string) $URL)
+			 WHERE url = ? AND language = ?',
+			array((string) $URL, $language)
 		);
 	}
 
 	/**
-	 * Fetch the list of all tags, ordered by their occurence
+	 * Fetch the list of all tags, ordered by their occurrence
 	 *
 	 * @return array
 	 */
 	public static function getAll()
 	{
-		return (array) FrontendModel::getDB()->getRecords(
+		return (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT t.tag AS name, t.url, t.number
 			 FROM tags AS t
 			 WHERE t.language = ? AND t.number > 0
@@ -80,7 +84,7 @@ class FrontendTagsModel
 	/**
 	 * Get tags for an item
 	 *
-	 * @param string $module The module wherin the otherId occurs.
+	 * @param string $module The module wherein the otherId occurs.
 	 * @param int $otherId The id of the item.
 	 * @return array
 	 */
@@ -93,7 +97,7 @@ class FrontendTagsModel
 		$return = array();
 
 		// get tags
-		$linkedTags = (array) FrontendModel::getDB()->getRecords(
+		$linkedTags = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT t.tag AS name, t.url
 			 FROM modules_tags AS mt
 			 INNER JOIN tags AS t ON mt.tag_id = t.id
@@ -124,7 +128,7 @@ class FrontendTagsModel
 	/**
 	 * Get tags for multiple items.
 	 *
-	 * @param string $module The module wherefor you want to retrieve the tags.
+	 * @param string $module The module wherefore you want to retrieve the tags.
 	 * @param array $otherIds The ids for the items.
 	 * @return array
 	 */
@@ -133,7 +137,7 @@ class FrontendTagsModel
 		$module = (string) $module;
 
 		// get db
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// init var
 		$return = array();
@@ -174,7 +178,7 @@ class FrontendTagsModel
 	 */
 	public static function getIdByURL($URL)
 	{
-		return (int) FrontendModel::getDB()->getVar(
+		return (int) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT id
 			 FROM tags
 			 WHERE url = ?',
@@ -190,7 +194,7 @@ class FrontendTagsModel
 	 */
 	public static function getModulesForTag($id)
 	{
-		return (array) FrontendModel::getDB()->getColumn(
+		return (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT module
 			 FROM modules_tags
 			 WHERE tag_id = ?
@@ -208,7 +212,7 @@ class FrontendTagsModel
 	 */
 	public static function getName($id)
 	{
-		return FrontendModel::getDB()->getVar(
+		return FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT tag
 			 FROM tags
 			 WHERE id = ?',
@@ -227,7 +231,7 @@ class FrontendTagsModel
 	 */
 	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
 	{
-		return (array) FrontendModel::getDB()->getColumn(
+		return (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT t2.other_id
 			 FROM modules_tags AS t
 			 INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id

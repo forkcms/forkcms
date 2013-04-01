@@ -56,7 +56,7 @@ class BackendExtensionsInstallModule extends BackendBaseActionIndex
 	private function validateInstall()
 	{
 		// already installed
-		if(BackendExtensionsModel::isModuleInstalled($this->currentModule))
+		if(BackendModel::isModuleInstalled($this->currentModule))
 		{
 			$this->redirect(BackendModel::createURLForAction('modules') . '&error=already-installed&var=' . $this->currentModule);
 		}

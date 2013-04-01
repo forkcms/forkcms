@@ -44,7 +44,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	 */
 	private function cleanupDatabase()
 	{
-		BackendModel::getDB(true)->delete(
+		BackendModel::getContainer()->get('database')->delete(
 			'analytics_pages',
 			'date_viewed < ?',
 			array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week')))
@@ -96,7 +96,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 				SpoonFile::setContent($filename, 'busy1');
 			}
 
-			// no longer auhtorized
+			// no longer authorized
 			else
 			{
 				// set status in cache

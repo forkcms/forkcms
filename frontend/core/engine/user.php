@@ -59,7 +59,7 @@ class FrontendUser
 	 */
 	public static function getBackendUser($userId)
 	{
-		// create new instance if neccessary and cache it
+		// create new instance if necessary and cache it
 		if(!isset(self::$cache[$userId])) self::$cache[$userId] = new FrontendUser($userId);
 
 		return self::$cache[$userId];
@@ -123,7 +123,7 @@ class FrontendUser
 		$userId = (int) $userId;
 
 		// get database instance
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// get user-data
 		$userData = (array) $db->getRecord(

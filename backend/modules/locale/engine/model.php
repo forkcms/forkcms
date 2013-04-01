@@ -27,7 +27,7 @@ class BackendLocaleModel
 	public static function buildCache($language, $application)
 	{
 		// get db
-		$db = Spoon::get('database');
+		$db = BackendModel::getContainer()->get('database');
 
 		// get types
 		$types = $db->getEnumValues('locale', 'type');
@@ -217,7 +217,7 @@ class BackendLocaleModel
 		$idPlaceHolders = array_fill(0, count($ids), '?');
 
 		// delete records
-		BackendModel::getDB(true)->delete('locale', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
+		BackendModel::getContainer()->get('database')->delete('locale', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
 		// rebuild cache
 		self::buildCache(BL::getWorkingLanguage(), 'backend');
@@ -232,7 +232,7 @@ class BackendLocaleModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM locale
 			 WHERE id = ?
@@ -246,9 +246,9 @@ class BackendLocaleModel
 	 *
 	 * @param string $name The name of the locale.
 	 * @param string $type The type of the locale.
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param string $language The language to use.
-	 * @param string $application The application wherin will be searched.
+	 * @param string $application The application wherein will be searched.
 	 * @param int[optional] $id The id to exclude in the check.
 	 * @return bool
 	 */
@@ -262,7 +262,7 @@ class BackendLocaleModel
 		$id = ($id !== null) ? (int) $id : null;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// return
 		if($id !== null) return (bool) $db->getVar(
@@ -273,7 +273,7 @@ class BackendLocaleModel
 			array($name, $type, $module, $language, $application, $id)
 		);
 
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM locale
 			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?
@@ -291,7 +291,7 @@ class BackendLocaleModel
 	public static function get($id)
 	{
 		// fetch record from db
-		$record = (array) BackendModel::getDB()->getRecord('SELECT * FROM locale WHERE id = ?', array((int) $id));
+		$record = (array) BackendModel::getContainer()->get('database')->getRecord('SELECT * FROM locale WHERE id = ?', array((int) $id));
 
 		// actions are urlencoded
 		if($record['type'] == 'act') $record['value'] = urldecode($record['value']);
@@ -304,9 +304,9 @@ class BackendLocaleModel
 	 *
 	 * @param string $name The name of the locale.
 	 * @param string $type The type of the locale.
-	 * @param string $module The module wherin will be searched.
+	 * @param string $module The module wherein will be searched.
 	 * @param string $language The language to use.
-	 * @param string $application The application wherin will be searched.
+	 * @param string $application The application wherein will be searched.
 	 * @return bool
 	 */
 	public static function getByName($name, $type, $module, $language, $application)
@@ -317,7 +317,7 @@ class BackendLocaleModel
 		$language = (string) $language;
 		$application = (string) $application;
 
-		return BackendModel::getDB()->getVar(
+		return BackendModel::getContainer()->get('database')->getVar(
 			'SELECT l.id
 			 FROM locale AS l
 			 WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
@@ -332,7 +332,7 @@ class BackendLocaleModel
 	 */
 	private static function getLabelsFromBackendNavigation()
 	{
-		return (array) BackendModel::getDB()->getColumn('SELECT label FROM backend_navigation');
+		return (array) BackendModel::getContainer()->get('database')->getColumn('SELECT label FROM backend_navigation');
 	}
 
 	/**
@@ -349,7 +349,7 @@ class BackendLocaleModel
 		// add the interface languages if needed
 		if($includeInterfaceLanguages) $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
 
-		// create a new array to redefine the langauges for the multicheckbox
+		// create a new array to redefine the languages for the multicheckbox
 		$languages = array();
 
 		// loop the languages
@@ -387,7 +387,7 @@ class BackendLocaleModel
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
 
 		// get labels from table
-		$lbl = (array) BackendModel::getDB()->getColumn('SELECT label FROM modules_extras');
+		$lbl = (array) BackendModel::getContainer()->get('database')->getColumn('SELECT label FROM modules_extras');
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
 
 		// loop files
@@ -930,7 +930,7 @@ class BackendLocaleModel
 		foreach($types as $key => $val) $types[$key] = '\'' . $val . '\'';
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// build the query
 		$query =
@@ -943,7 +943,7 @@ class BackendLocaleModel
 			 	l.value LIKE ? AND
 			 	l.type IN (' . implode(',', $types) . ')';
 
-		// add the paremeters
+		// add the parameters
 		$parameters = array($application, '%' . $name . '%', '%' . $value . '%');
 
 		// add module to the query if needed
@@ -1092,7 +1092,7 @@ class BackendLocaleModel
 	public static function getTypesForDropDown()
 	{
 		// fetch types
-		$types = BackendModel::getDB()->getEnumValues('locale', 'type');
+		$types = BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type');
 
 		// init
 		$labels = $types;
@@ -1112,7 +1112,7 @@ class BackendLocaleModel
 	public static function getTypesForMultiCheckbox()
 	{
 		// fetch types
-		$aTypes = BackendModel::getDB()->getEnumValues('locale', 'type');
+		$aTypes = BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type');
 
 		// init
 		$labels = $aTypes;
@@ -1158,14 +1158,14 @@ class BackendLocaleModel
 		);
 
 		// set defaults if necessary
-		// we can't simply use these right away, because this function is also calles by the installer, which does not have Backend-functions
+		// we can't simply use these right away, because this function is also calls by the installer, which does not have Backend-functions
 		if($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
 		if($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
 		if($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
 		if($date === null) $date = BackendModel::getUTCDate();
 
-		// get database instance (don't use BackendModel::getDB() here because this function will also be called during install)
-		$db = Spoon::get('database');
+		// get database instance
+		$db = BackendModel::getContainer()->get('database');
 
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
@@ -1281,7 +1281,7 @@ class BackendLocaleModel
 		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = SpoonFilter::urlise($item['value']);
 
 		// insert item
-		$item['id'] = (int) BackendModel::getDB(true)->insert('locale', $item);
+		$item['id'] = (int) BackendModel::getContainer()->get('database')->insert('locale', $item);
 
 		// rebuild the cache
 		self::buildCache($item['language'], $item['application']);
@@ -1301,7 +1301,7 @@ class BackendLocaleModel
 		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = SpoonFilter::urlise($item['value']);
 
 		// update category
-		$updated = BackendModel::getDB(true)->update('locale', $item, 'id = ?', array($item['id']));
+		$updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', array($item['id']));
 
 		// rebuild the cache
 		self::buildCache($item['language'], $item['application']);

@@ -7,12 +7,17 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * This class will be the base of the objects used in the cms
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class BackendBaseObject
+class BackendBaseObject extends KernelLoader
 {
 	/**
 	 * The current action
@@ -20,6 +25,13 @@ class BackendBaseObject
 	 * @var	string
 	 */
 	protected $action;
+
+	/**
+	 * The actual output
+	 *
+	 * @var string
+	 */
+	protected $content;
 
 	/**
 	 * The current module
@@ -96,6 +108,24 @@ class BackendBaseObject
 		// set property
 		$this->module = $module;
 	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Response
+	 */
+	public function getContent()
+	{
+		return new Response(
+			$this->content,
+			200
+		);
+	}
 }
 
 /**
@@ -141,7 +171,7 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function __construct()
 	{
-		// get objects from the reference so they are accessable from the action-object
+		// get objects from the reference so they are accessible from the action-object
 		$this->tpl = Spoon::get('template');
 		$this->URL = Spoon::get('url');
 		$this->header = Spoon::get('header');
@@ -174,7 +204,7 @@ class BackendBaseAction extends BackendBaseObject
 			$template = BACKEND_MODULE_PATH . '/layout/templates/' . $this->URL->getAction() . '.tpl';
 		}
 
-		$this->tpl->display($template);
+		$this->content = $this->tpl->getContent($template);
 	}
 
 	/**
@@ -290,7 +320,15 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function redirect($URL)
 	{
-		SpoonHTTP::redirect(str_replace('&amp;', '&', (string) $URL));
+		$response = new RedirectResponse(
+			$URL, 302
+		);
+
+		/*
+		 * Since we've got some nested action structure, we'll send this
+		 * response directly after creating.
+		 */
+		$response->send();
 	}
 }
 
@@ -311,7 +349,7 @@ class BackendBaseActionIndex extends BackendBaseAction
 
 	/**
 	 * Execute the current action
-	 * This method will be overwriten in most of the actions, but still be called to add general stuff
+	 * This method will be overwritten in most of the actions, but still be called to add general stuff
 	 */
 	public function execute()
 	{
@@ -430,7 +468,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	protected $id;
 
 	/**
-	 * The data of the item to edite
+	 * The data of the item to edit
 	 *
 	 * @var	array
 	 */
@@ -438,7 +476,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 
 	/**
 	 * Execute the current action
-	 * This method will be overwriten in most of the actions, but still be called to add general stuff
+	 * This method will be overwritten in most of the actions, but still be called to add general stuff
 	 */
 	public function execute()
 	{
@@ -450,6 +488,7 @@ class BackendBaseActionDelete extends BackendBaseAction
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
 class BackendBaseAJAXAction extends BackendBaseObject
 {
@@ -460,10 +499,33 @@ class BackendBaseAJAXAction extends BackendBaseObject
 
 	/**
 	 * Execute the action
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the children
+		return $this->getContent();
+	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getContent()
+	{
+		$statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
+
+		return new Response(
+			json_encode($this->content),
+			$statusCode,
+			array('content-type' => 'application/json')
+		);
 	}
 
 	/**
@@ -475,20 +537,11 @@ class BackendBaseAJAXAction extends BackendBaseObject
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
-		// redefine
 		$statusCode = (int) $statusCode;
 		if($message !== null) $message = (string) $message;
 
-		// create response array
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
-
-		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json');
-
-		// output JSON to the browser
-		echo json_encode($response);
-		exit;
+		$this->content = $response;
 	}
 }
 
@@ -535,7 +588,7 @@ class BackendBaseConfig extends BackendBaseObject
 	protected $possibleAJAXActions = array();
 
 	/**
-	 * @param string $module The module wherefor this is the configuration-file.
+	 * @param string $module The module wherefore this is the configuration-file.
 	 */
 	public function __construct($module)
 	{
@@ -661,17 +714,8 @@ class BackendBaseCronjob extends BackendBaseObject
 		SpoonFile::delete($path);
 	}
 
-	/**
-	 * Execute the action
-	 */
 	public function execute()
 	{
-		// check if model exists
-		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
-		{
-			// the model exists, so we require it
-			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
-		}
 	}
 
 	/**
@@ -799,7 +843,7 @@ class BackendBaseCronjob extends BackendBaseObject
 class BackendBaseWidget
 {
 	/**
-	 * The column wherin the widget should be shown
+	 * The column wherein the widget should be shown
 	 *
 	 * @var	string
 	 */

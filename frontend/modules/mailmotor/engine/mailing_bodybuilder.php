@@ -253,7 +253,7 @@ class MailingBodyBuilder
 	/**
 	 * Set the Google UTM GET parameters.
 	 *
-	 * @param string $html What the user entered in the editor in the CMS.
+	 * @param string $campaign What the user entered in the editor in the CMS.
 	 * @param string[optional] $source
 	 * @param string[optional] $medium
 	 */

@@ -35,7 +35,7 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	private function loadDataGrid()
 	{
 		// create a new source-object
-		$source = new SpoonDataGridSourceDB(FrontendModel::getDB(), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
+		$source = new SpoonDataGridSourceDB(FrontendModel::getContainer()->get('database'), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
 
 		// create datagrid
 		$this->dataGrid = new SpoonDataGrid($source);
@@ -55,7 +55,7 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 		$this->dataGrid->setSortingColumns(array('name', 'send_on'), 'name');
 		$this->dataGrid->setSortParameter('desc');
 
-		// set colum URLs
+		// set column URLs
 		$this->dataGrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
 
 		// set column functions

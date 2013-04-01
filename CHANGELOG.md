@@ -1,4 +1,25 @@
-3.5.0 (xxxx-xx-xx)
+3.5.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Symfony: upgrade components to 2.2.
+* Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
+
+Bugfixes:
+
+* Core: fault Chinese translations fixed.
+* Extensions: removed deprecated getDB().
+* FormBuilder: removed deprecated getDB().
+* MailMotor: CampaignMonitor wrapper class could not be loaded due to a faulty include path.
+* Installer: after removing the install folder an errors was throw when accessing the /install url.
+* Installer: after sending Location headers we need to exit to prevent further execution of the application.
+* Core: do not add headers set by Spoon to Response. Otherwise they will be send twice.
+* Core: removed line of code from frontend pagination.
+* Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
+* Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
+
+
+3.5.0 (2013-03-13)
 --
 Improvements:
 
@@ -16,24 +37,43 @@ Improvements:
 * Core: starting to use namespaces for the external classes that use namespaces.
 * Core: upgraded Spoon
 * Core: new CKFinder license, see: http://www.fork-cms.com/blog/detail/new-ck-finder-license
+* Core: merged all autoloaders in to one autoload.php.
+* Core: added the Symfony HttpFoundation and HttpKernel components via an AppKernel.
+* Core: added the Symfony DependencyInjection component to handle our services and config.
+* Core: the AppKernel is passed to all actions/models which contains the DI container.
+* Core: one frontcontroller which routes all requests (actions, ajax, cronjobs, ...)
+* Core: replaced globals*.php config files with app/config/config.yml.
+* Core: removed js.php
+* Spoon: Spoon dependency is now handled via composer.
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
 * Blog: enabled Flip ahead for blogposts.
 * Core: enabled Flip ahead for paginated pages.
-* Core: Pagination can now use an anchor. Tx to Jeroen Desloovere.
-* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
+* Core: Pagination can now use an anchor, thx to Jeroen Desloovere.
 * Core: Added validation for module and action in the frontend ajax.
+* Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
+* Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
+* Core: Replace getDB() in the models with getContainer()->get('database')
 * Core: Pagination can now use an anchor. Thx to Jeroen Desloovere.
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: Added validation for module and action in the frontend ajax.
 * Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
+* Core: Pagination for 6 pages showed 7 instead. Thx to Jeroen Desloovere.
+* Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
+* Pages: Widget had invalid parent url
+* Blog: Show always Open Graph Tags
+* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere. Thx to Jeroen Desloovere.
 
 Bugfixes:
 
 * Users: Added fix so users can't edit other profiles.
-* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Tx to Jan Moesen.
+* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Thx to Jan Moesen.
 * DataGrid: do not overwrite existing row attributes when greying out a row.
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
+* Location: Google Maps JS needs to be loaded before location.js, thx to siesqo.
+* Core: when fetching parameters take the index in account when computing the differences.
+* Blog: Use full links for the navigation below the blogposts.
+* FormBuilder: validation (email, numeric) was inherited from previously added fields causing errors on checkboxes.
 * Blog: Use full links for the navigation below the blogposts.
 * Blog: Ticket 294: Next and previous don't work when blog-items has same publish_on date
 * TagBox: Ticket 333: Tags should be handled as strings
@@ -41,6 +81,7 @@ Bugfixes:
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 * Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
 * Core: A search term should only be saved when it's not empty
+* Core: BackendModel::invalidateFrontendCache() should listen to the given language. Thx to Jeroen Desloovere.
 
 
 3.4.4 (2012-09-12)
@@ -246,7 +287,7 @@ Improvements:
 Bugfixes:
 
 * Spoon: session should be started before we can access the session.
-* Mailmotor: set action and module when initializing an AJAX action. Tx to @DoFken.
+* Mailmotor: set action and module when initializing an AJAX action. Thx to @DoFken.
 * FormBulder: sort submissions by insert sequence. Reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/266-formbuilder-submissions-view-bug/
 
 
@@ -1174,7 +1215,7 @@ Improvements:
 * core: Better styling for drag/drop tables + addded success message after reorder
 * core: upgraded CSSToInlineStyles to the latest version
 * core: added a method to build a backend URL from the frontend
-* blog: fixed installer (comments, rights, ..)
+* blog: fixed installer (comments, rights, ...)
 * blog: added a feed on each article with the comments for that article
 * blog: added a feed with all comments (on all articles)
 * blog: added notification on new comments (settings in backend)

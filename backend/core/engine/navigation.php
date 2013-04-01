@@ -140,7 +140,7 @@ class BackendNavigation
 					// start ul if needed
 					if($currentDepth != 0) $HTML .= '<ul>' . "\n";
 
-					// loop childs
+					// loop children
 					foreach($value['children'] as $subKey => $row)
 					{
 						$HTML .= '	' . $this->buildHTML($row, $subKey, $selectedKeys, $startDepth, $endDepth, $currentDepth + 1);
@@ -163,7 +163,7 @@ class BackendNavigation
 	 *
 	 * @param int $parentId The id of the parent.
 	 * @param string $output The output, will all output.
-	 * @param string[optional] $depth The current depth.
+	 * @param int[optional] $depth The current depth.
 	 */
 	private function buildNavigation($parentId, &$output, $depth = 1)
 	{
@@ -171,7 +171,7 @@ class BackendNavigation
 		$prefix = str_repeat("\t", $depth);
 
 		// get navigation for backend
-		$navigation = (array) BackendModel::getDB()->getRecords(
+		$navigation = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT bn.*, COUNT(bn2.id) AS num_children
 			 FROM backend_navigation AS bn
 			 LEFT OUTER JOIN backend_navigation AS bn2 ON bn2.parent_id = bn.id
@@ -309,7 +309,7 @@ class BackendNavigation
 							// no rights for this action?
 							if(!BackendAuthentication::isAllowedAction($action, $module)) $allowed = false;
 
-							// error occured
+							// error occurred
 							if(!$allowed)
 							{
 								unset($navigation[$key]['children'][$keyB]['children'][$keyC]);
@@ -321,7 +321,7 @@ class BackendNavigation
 						}
 					}
 
-					// error occured and no allowed children on level B
+					// error occurred and no allowed children on level B
 					if(!$allowed && empty($allowedChildrenB))
 					{
 						unset($navigation[$key]['children'][$keyB]);
@@ -336,7 +336,7 @@ class BackendNavigation
 				}
 			}
 
-			// error occured and no allowed children
+			// error occurred and no allowed children
 			if(!$allowed && empty($allowedChildren))
 			{
 				unset($navigation[$key]);
@@ -400,7 +400,7 @@ class BackendNavigation
 		{
 			if(isset($value['children']))
 			{
-				// loop the childs
+				// loop the children
 				foreach($value['children'] as $key => $value)
 				{
 					// recursive here...
@@ -418,7 +418,7 @@ class BackendNavigation
 		// any children
 		if(isset($value['children']))
 		{
-			// loop the childs
+			// loop the children
 			foreach($value['children'] as $key => $value)
 			{
 				// recursive here...
@@ -460,7 +460,7 @@ class BackendNavigation
 
 	/**
 	 * Get the url of a navigation item.
-	 * If the item doesnt have an id, it will search recursively until it finds one.
+	 * If the item doesn't have an id, it will search recursively until it finds one.
 	 *
 	 * @param int $id The id to search for.
 	 * @return string
@@ -470,9 +470,9 @@ class BackendNavigation
 		$id = (int) $id;
 
 		// get url
-		$item = (array) BackendModel::getDB()->getRecord('SELECT id, url FROM backend_navigation WHERE id = ?',	array($id));
+		$item = (array) BackendModel::getContainer()->get('database')->getRecord('SELECT id, url FROM backend_navigation WHERE id = ?',	array($id));
 
-		// item doesnt exist
+		// item doesn't exist
 		if(empty($item)) return '';
 
 		// yay, has a url
@@ -482,7 +482,7 @@ class BackendNavigation
 		else
 		{
 			// get the first child
-			$childId = (int) BackendModel::getDB()->getVar('SELECT id FROM backend_navigation WHERE parent_id = ? ORDER BY sequence ASC LIMIT 1', array($id));
+			$childId = (int) BackendModel::getContainer()->get('database')->getVar('SELECT id FROM backend_navigation WHERE parent_id = ? ORDER BY sequence ASC LIMIT 1', array($id));
 
 			// get its url
 			return $this->getNavigationUrl($childId);

@@ -165,7 +165,7 @@ class FrontendMailer
 		}
 
 		// insert the email into the database
-		$id = FrontendModel::getDB(true)->insert('emails', $email);
+		$id = FrontendModel::getContainer()->get('database')->insert('emails', $email);
 
 		// trigger event
 		FrontendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
@@ -184,7 +184,7 @@ class FrontendMailer
 	 */
 	public static function getQueuedMailIds()
 	{
-		return (array) FrontendModel::getDB()->getColumn(
+		return (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT e.id
 			 FROM emails AS e
 			 WHERE e.send_on < ?',
@@ -196,7 +196,7 @@ class FrontendMailer
 	 * Returns the content from a given template
 	 *
 	 * @param string $template The template to use.
-	 * @param array[optional] $variables The variabled to assign.
+	 * @param array[optional] $variables The variables to assign.
 	 * @return string
 	 */
 	private static function getTemplateContent($template, $variables = null)
@@ -240,7 +240,7 @@ class FrontendMailer
 		$id = (int) $id;
 
 		// get db
-		$db = FrontendModel::getDB(true);
+		$db = FrontendModel::getContainer()->get('database');
 
 		// get record
 		$emailRecord = (array) $db->getRecord(
