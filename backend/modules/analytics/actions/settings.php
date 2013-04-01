@@ -242,7 +242,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 				// prepare accounts array
 				foreach((array) $this->profiles as $profile)
 				{
-					$accounts[$profile['profileName']][$profile['tableId']] = $profile['title'];
+					$accounts[$profile['accountName']][$profile['tableId']] = $profile['profileName'] . ' (' . $profile['webPropertyId'] . ')';
 				}
 
 				// there are accounts
