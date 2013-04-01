@@ -1,5 +1,5 @@
 {
-    "hash": "e333696d21bea1df70b83f66d0f45019",
+    "hash": "4e2918ebf941cc8ba30a4b1e6c9b7da6",
     "packages": [
         {
             "name": "errbit/errbit-php",
@@ -160,6 +160,46 @@
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
             "time": "2013-03-28 13:40:22"
+        },
+        {
+            "name": "sumocoders/sumo-fork-class",
+            "version": "dev-master",
+            "target-dir": "SumoCoders/SumoForkClass",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sumocoders/Sumo-specific-Fork-stuff.git",
+                "reference": "59d24413fa333b75cae50dcb62a413b282398f77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sumocoders/Sumo-specific-Fork-stuff/zipball/59d24413fa333b75cae50dcb62a413b282398f77",
+                "reference": "59d24413fa333b75cae50dcb62a413b282398f77",
+                "shasum": ""
+            },
+            "require": {
+                "errbit/errbit-php": "dev-master",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SumoCoders\\SumoForkClass": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "tijs@sumocoders.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Fork is great, but we like to implemented our internal tools into the website we create for our clients",
+            "homepage": "https://github.com/sumocoders/Sumo-specific-Fork-stuff",
+            "time": "2013-04-01 12:40:04"
         },
         {
             "name": "symfony/config",
@@ -570,6 +610,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "sumocoders/sumo-fork-class": 20,
         "errbit/errbit-php": 20
     },
     "platform": {
