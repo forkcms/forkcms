@@ -82,6 +82,10 @@
 				<label for="smtpPassword">{$lblPassword|ucfirst}</label>
 				{$txtSmtpPassword} {$txtSmtpPasswordError}
 			</p>
+			<p>
+		   <label for="smtpSecureLayer">{$lblSmtpSecureLayer|ucfirst}</label>
+			   {$ddmSmtpSecureLayer} 
+			</p>
 		</div>
 	</div>
 	{/option:isGod}
