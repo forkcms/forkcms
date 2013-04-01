@@ -276,7 +276,7 @@
 							'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>';
 							html += '</li>';
 						break;
-						
+
 						// pinterest
 						case 'pinterest':
 							if(image != '')
@@ -288,21 +288,21 @@
 									{
 										if($(this).attr('src') == '//assets.pinterest.com/js/pinit.js') pinterestLoaded = true;
 									});
-	
+
 									// not loaded?
 									if(!pinterestLoaded)
 									{
 										// create the script tag
 										var script = document.createElement('script')
 										script.src = '//assets.pinterest.com/js/pinit.js';
-	
+
 										// add into head
 										$('head').after(script);
-	
+
 										// reset var
 										pinterestLoaded = true;
 									}
-									
+
 									if(typeof options[options.sequence[i]].countLayout != 'undefined') countLayout = options[options.sequence[i]].countLayout;
 									else countLayout = 'none';
 									if(countLayout != 'horizontal' || countLayout != 'vertical' || countLayout != 'none') countLayout = 'none';
