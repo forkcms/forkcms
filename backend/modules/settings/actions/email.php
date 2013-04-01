@@ -71,7 +71,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 			$this->frm->addText('smtp_port', BackendModel::getModuleSetting('core', 'smtp_port', 25));
 			$this->frm->addText('smtp_username', BackendModel::getModuleSetting('core', 'smtp_username', ''));
 			$this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('core', 'smtp_password', ''));
-			$this->frm->addDropdown('smtp_secure_layer',array('no' => 'no','ssl' => 'ssl','tls' => 'tls'),
+			$this->frm->addDropdown('smtp_secure_layer',array('no' => ucfirst(BL::lbl('None')),'ssl' => 'SSL','tls' => 'TLS'),
 
 			BackendModel::getModuleSetting('core','smtp_secure_layer','no'));
 		}
@@ -116,7 +116,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 					$this->frm->getField('smtp_port')->isFilled(BL::err('FieldIsRequired'));
 				}
 			}
-			
+
 			// no errors ?
 			if($this->frm->isCorrect())
 			{
@@ -125,7 +125,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 				BackendModel::setModuleSetting('core', 'mailer_to', array('name' => $this->frm->getField('mailer_to_name')->getValue(), 'email' => $this->frm->getField('mailer_to_email')->getValue()));
 				BackendModel::setModuleSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
 
-				
+
 				if($this->isGod)
 				{
 					BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
@@ -137,7 +137,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 					BackendModel::setModuleSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
 					BackendModel::setModuleSetting('core', 'smtp_secure_layer', $this->frm->getField('smtp_secure_layer')->getValue());
 				}
-			
+
 				// assign report
 				$this->tpl->assign('report', true);
 				$this->tpl->assign('reportMessage', BL::msg('Saved'));
