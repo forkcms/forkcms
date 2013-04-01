@@ -9,7 +9,7 @@ Improvements:
 
 Bugfixes:
 
-* Core: fault Chinese translations fixed.
+* Core: faulty Chinese translations fixed.
 * Extensions: removed deprecated getDB().
 * FormBuilder: removed deprecated getDB().
 * MailMotor: CampaignMonitor wrapper class could not be loaded due to a faulty include path.
@@ -19,6 +19,7 @@ Bugfixes:
 * Core: removed line of code from frontend pagination.
 * Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
 * Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
+* Core: CKEditor is nov available in Chinese. Fixed #381
 
 
 3.5.0 (2013-03-13)
