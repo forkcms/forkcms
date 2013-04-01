@@ -299,6 +299,9 @@
 										// add into head
 										$('head').after(script);
 
+										// ugly hack, for some stupid reason Pinterests adds an iframe at the bottom of the page
+										// therefor we set it to display none.
+										$('head').append('<style>iframe[src^="//assets.pinterest"] { display: none; }</style>');
 										// reset var
 										pinterestLoaded = true;
 									}
