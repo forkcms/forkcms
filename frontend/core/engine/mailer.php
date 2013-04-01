@@ -266,6 +266,11 @@ class FrontendMailer
 			$SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
 			$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
 
+
+			$secureLayer = FrontendModel::getModuleSetting('core','smtp_secure_layer');
+
+			if($secureLayer === 'ssl' or $secureLayer === 'tls') $email->setSMTPSecurity($secureLayer);
+		
 			// set server and connect with SMTP
 			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
 

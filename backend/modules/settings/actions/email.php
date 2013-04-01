@@ -71,6 +71,9 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 			$this->frm->addText('smtp_port', BackendModel::getModuleSetting('core', 'smtp_port', 25));
 			$this->frm->addText('smtp_username', BackendModel::getModuleSetting('core', 'smtp_username', ''));
 			$this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('core', 'smtp_password', ''));
+			$this->frm->addDropdown('smtp_secure_layer',array('no' => 'no','ssl' => 'ssl','tls' => 'tls'),
+
+			BackendModel::getModuleSetting('core','smtp_secure_layer','no'));
 		}
 
 		$this->tpl->assign('isGod', $this->isGod);
@@ -132,6 +135,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 					BackendModel::setModuleSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
 					BackendModel::setModuleSetting('core', 'smtp_username', $this->frm->getField('smtp_username')->getValue());
 					BackendModel::setModuleSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
+					BackendModel::setModuleSetting('core', 'smtp_secure_layer', $this->frm->getField('smtp_secure_layer')->getValue());
 				}
 			
 				// assign report
