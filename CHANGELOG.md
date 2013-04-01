@@ -5,6 +5,7 @@ Improvements:
 * Symfony: upgrade components to 2.2.
 * Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
 * Core: use remote html5-shiv.
+* Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
 
 Bugfixes:
 
