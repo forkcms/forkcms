@@ -36,24 +36,29 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 			$this->output(self::OK, array('status' => 'unauthorized', 'message' => BL::msg('Redirecting')), 'No longer authorized.');
 		}
 
-		$this->getData();
-
-		// get html
-		$referrersHtml = $this->parseReferrers();
-		$keywordsHtml = $this->parseKeywords();
-
-		// return status
-		$this->output(
-			self::OK,
-			array(
-				'status' => 'success',
-				'referrersHtml' => $referrersHtml,
-				'keywordsHtml' => $keywordsHtml,
-				'date' => BL::lbl('Today'),
-				'message' => BL::msg('RefreshedTrafficSources')
-			),
-			'Data has been retrieved.'
-		);
+		// authorized
+		else
+		{
+			// get data
+			$this->getData();
+	
+			// get html
+			$referrersHtml = $this->parseReferrers();
+			$keywordsHtml = $this->parseKeywords();
+	
+			// return status
+			$this->output(
+				self::OK,
+				array(
+					'status' => 'success',
+					'referrersHtml' => $referrersHtml,
+					'keywordsHtml' => $keywordsHtml,
+					'date' => BL::lbl('Today'),
+					'message' => BL::msg('RefreshedTrafficSources')
+				),
+				'Data has been retrieved.'
+			);
+		}
 	}
 
 	/**
