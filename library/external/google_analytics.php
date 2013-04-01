@@ -181,6 +181,7 @@ class GoogleAnalytics
 			 * return webproperties. We need the webproperty to be able to set the GA tracking code.
 			 */
 			$response = $this->doCall(self::API_URL . '/management/accounts/~all/webproperties/~all/profiles', $sessionToken);
+			$accounts = $this->doCall(self::API_URL . '/management/accounts/', $sessionToken);
 		}
 
 		// catch possible exception
@@ -194,6 +195,27 @@ class GoogleAnalytics
 
 		// unauthorized
 		if($response == 'UNAUTHORIZED') return $response;
+
+		// load with SimpleXML
+		$simpleXMLAccounts = @simplexml_load_string(str_replace(array('dxp:', 'openSearch:', 'ga:'), '', $accounts));
+		$accountNames = array();
+
+		foreach($simpleXMLAccounts->entry as $entry)
+		{
+			$id = null;
+			$name = null;
+
+			foreach($entry->property as $property)
+			{
+				if((string) $property['name'] == 'accountId') $id = (string)  $property['value'];
+				if((string) $property['name'] == 'accountName') $name = (string)  $property['value'];
+			}
+
+			if($id !== null && $name !== null)
+			{
+				$accountNames[$id] = $name;
+			}
+		}
 
 		// load with SimpleXML
 		$simpleXML = @simplexml_load_string(str_replace(array('dxp:', 'openSearch:', 'ga:'), '', $response));
