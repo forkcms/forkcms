@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will be used to build the navigation
  *
@@ -38,9 +40,12 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	private static $selectedPageIds = array();
 
-	public function __construct()
+	/**
+	 * @param KernelInterface $kernel
+	 */
+	public function __construct(KernelInterface $kernel)
 	{
-		parent::__construct();
+		parent::__construct($kernel);
 
 		// set selected ids
 		$this->setSelectedPageIds();

@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -74,9 +75,12 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	protected $statusCode = 200;
 
-	public function __construct()
+	/**
+	 * @param KernelInterface $kernel
+	 */
+	public function __construct(KernelInterface $kernel)
 	{
-		parent::__construct();
+		parent::__construct($kernel);
 		Spoon::set('page', $this);
 	}
 
@@ -95,13 +99,13 @@ class FrontendPage extends FrontendBaseObject
 		if($this->pageId == 404) $this->statusCode = 404;
 
 		// create breadcrumb instance
-		$this->breadcrumb = new FrontendBreadcrumb();
+		$this->breadcrumb = new FrontendBreadcrumb($this->getKernel());
 
 		// create header instance
-		$this->header = new FrontendHeader();
+		$this->header = new FrontendHeader($this->getKernel());
 
 		// new footer instance
-		$this->footer = new FrontendFooter();
+		$this->footer = new FrontendFooter($this->getKernel());
 
 		// get pagecontent
 		$this->getPageContent();
@@ -395,7 +399,7 @@ class FrontendPage extends FrontendBaseObject
 		if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
 
 		// create navigation instance
-		new FrontendNavigation();
+		new FrontendNavigation($this->getKernel());
 
 		// assign content
 		$this->tpl->assign('page', $this->record);
@@ -422,14 +426,14 @@ class FrontendPage extends FrontendBaseObject
 					if($block['extra_type'] == 'block')
 					{
 						// create new instance
-						$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
+						$extra = new FrontendBlockExtra($this->getKernel(), $block['extra_module'], $block['extra_action'], $block['extra_data']);
 					}
 
 					// widget
 					else
 					{
 						// create new instance
-						$extra = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
+						$extra = new FrontendBlockWidget($this->getKernel(), $block['extra_module'], $block['extra_action'], $block['extra_data']);
 					}
 
 					// add to list of extras

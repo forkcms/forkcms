@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * FrontendAJAX
  * This class will handle AJAX-related stuff
@@ -80,13 +82,13 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 			$this->setAction($action);
 			$this->setLanguage($language);
 
-			$this->ajaxAction = new FrontendAJAXAction($this->getAction(), $this->getModule());
+			$this->ajaxAction = new FrontendAJAXAction($this->getKernel(), $this->getAction(), $this->getModule());
 			$this->output = $this->ajaxAction->execute();
 		}
 
 		catch(Exception $e)
 		{
-			$this->ajaxAction = new FrontendBaseAJAXAction('', '');
+			$this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
 			$this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $e->getMessage());
 			$this->output = $this->ajaxAction->execute();
 		}
@@ -121,14 +123,14 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 	{
 		// check if module is set
 		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
-	
+
 		// build the path (core is a special case)
 		if($this->getModule() == 'core') $path = FRONTEND_PATH . '/core/ajax/';
 		else $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/';
-	
+
 		// get the possible actions
 		$possibleActions = SpoonFile::getList($path);
-		
+
 		// validate
 		if(!in_array($value.'.php', $possibleActions))
 		{
@@ -138,7 +140,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 			// output error
 			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Action not correct.');
 		}
-	
+
 		// set property
 		$this->action = (string) $value;
 	}
@@ -185,17 +187,17 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 	{
 		// get the possible modules
 		$possibleModules = FrontendModel::getModules();
-		
+
 		// validate
 		if(!in_array($value, $possibleModules))
 		{
 			// create fake action
-			$fakeAction = new FrontendBaseAJAXAction('', '');
+			$fakeAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
 
 			// output error
 			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Module not correct.');
 		}
-	
+
 		// set property
 		$this->module = (string) $value;
 	}
@@ -232,11 +234,14 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 	protected $module;
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $action The action that should be executed.
 	 * @param string $module The module that wherein the action is available.
 	 */
-	public function __construct($action, $module)
+	public function __construct(KernelInterface $kernel, $action, $module)
 	{
+		parent::__construct($kernel, $action, $module);
+
 		// set properties
 		$this->setModule($module);
 		$this->setAction($action);
@@ -268,7 +273,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$object = new $actionClassName($this->getAction(), $this->getModule());
+		$object = new $actionClassName($this->getKernel(), $this->getAction(), $this->getModule());
 
 		// validate if the execute-method is callable
 		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
@@ -327,7 +332,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName($this->getModule());
+		$this->config = new $configClassName($this->getKernel(), $this->getModule());
 	}
 
 	/**

@@ -43,8 +43,7 @@ class Frontend extends KernelLoader implements ApplicationInterface
 		new FrontendTemplate();
 
 		// Load the rest of the page.
-		$this->page = new FrontendPage();
-		$this->page->setKernel($this->getKernel());
+		$this->page = new FrontendPage($this->getKernel());
 		$this->page->load();
 	}
 

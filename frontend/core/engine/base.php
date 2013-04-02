@@ -9,6 +9,7 @@
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will be the base of the objects used in onsite
@@ -34,9 +35,13 @@ class FrontendBaseObject extends KernelLoader
 
 	/**
 	 * It will grab stuff from the reference.
+	 *
+	 * @param KernelInterface $kernel
 	 */
-	public function __construct()
+	public function __construct(KernelInterface $kernel)
 	{
+		parent::__construct($kernel);
+
 		// get template from reference
 		$this->tpl = Spoon::get('template');
 
@@ -50,7 +55,7 @@ class FrontendBaseObject extends KernelLoader
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendBaseConfig
+class FrontendBaseConfig extends KernelLoader
 {
 	/**
 	 * The default action
@@ -95,10 +100,13 @@ class FrontendBaseConfig
 	protected $possibleAJAXActions = array();
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $module The module wherefor this is the configuration-file.
 	 */
-	public function __construct($module)
+	public function __construct(KernelInterface $kernel, $module)
 	{
+		parent::__construct($kernel);
+
 		$this->module = (string) $module;
 
 		// check if model exists
@@ -271,12 +279,15 @@ class FrontendBaseBlock extends FrontendBaseObject
 	public $URL;
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $module The name of the module.
 	 * @param string $action The name of the action.
 	 * @param string[optional] $data The data that should be available in this block.
 	 */
-	public function __construct($module, $action, $data = null)
+	public function __construct(KernelInterface $kernel, $module, $action, $data = null)
 	{
+		parent::__construct($kernel);
+
 		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
@@ -757,12 +768,15 @@ class FrontendBaseWidget extends FrontendBaseObject
 	public $URL;
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $module The module to use.
 	 * @param string $action The action to use.
 	 * @param string[optional] $data The data that should be available.
 	 */
-	public function __construct($module, $action, $data = null)
+	public function __construct(KernelInterface $kernel, $module, $action, $data = null)
 	{
+		parent::__construct($kernel);
+
 		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
@@ -962,7 +976,7 @@ class FrontendBaseWidget extends FrontendBaseObject
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendBaseAJAXAction
+class FrontendBaseAJAXAction extends KernelLoader
 {
 	const OK = 200;
 	const BAD_REQUEST = 400;
@@ -989,11 +1003,14 @@ class FrontendBaseAJAXAction
 	protected $module;
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $action The action to use.
 	 * @param string $module The module to use.
 	 */
-	public function __construct($action, $module)
+	public function __construct(KernelInterface $kernel, $action, $module)
 	{
+		parent::__construct($kernel);
+
 		// store the current module and action (we grab them from the URL)
 		$this->setModule($module);
 		$this->setAction($action);
