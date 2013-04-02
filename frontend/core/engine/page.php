@@ -81,7 +81,8 @@ class FrontendPage extends FrontendBaseObject
 	public function __construct(KernelInterface $kernel)
 	{
 		parent::__construct($kernel);
-		Spoon::set('page', $this);
+
+		$this->getContainer()->set('page', $this);
 	}
 
 	/**
