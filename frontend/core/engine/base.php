@@ -287,7 +287,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 
 		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
-		$this->header = Spoon::get('header');
+		$this->header = $this->getContainer()->get('header');
 		$this->URL = $this->getContainer()->get('url');
 		$this->breadcrumb = $this->getContainer()->get('breadcrumb');
 
@@ -776,7 +776,7 @@ class FrontendBaseWidget extends FrontendBaseObject
 
 		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
-		$this->header = Spoon::get('header');
+		$this->header = $this->getContainer()->get('header');
 		$this->URL = $this->getContainer()->get('url');
 
 		// set properties

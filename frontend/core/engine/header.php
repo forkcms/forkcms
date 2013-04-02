@@ -82,7 +82,7 @@ class FrontendHeader extends FrontendBaseObject
 		parent::__construct($kernel);
 
 		// store in reference
-		Spoon::set('header', $this);
+		$this->getContainer()->set('header', $this);
 
 		// add some default CSS files
 		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css', false);
