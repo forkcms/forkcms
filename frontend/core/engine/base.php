@@ -636,6 +636,13 @@ class FrontendBaseBlock extends FrontendBaseObject
 		 * response directly after creating.
 		 */
 		$response->send();
+
+		/*
+		 * Stop code executing here
+		 * I know this is ugly as hell, but if we don't do this the code after
+		 * this call is executed and possibly will trigger errors.
+		 */
+		exit;
 	}
 
 	/**
