@@ -71,7 +71,7 @@ class Frontend extends KernelLoader implements ApplicationInterface
 			$facebook->getSignedRequest();
 
 			// store in reference
-			Spoon::set('facebook', $facebook);
+			$this->getContainer()->set('facebook', $facebook);
 
 			// trigger event
 			FrontendModel::triggerEvent('core', 'after_facebook_initialization');
