@@ -7,6 +7,7 @@ Improvements:
 * Core: use remote html5-shiv.
 * Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
 * Analytics: better grouping for Google Analytics profiles.
+* Core: GetURLForWidget added to find the pageId where the widget is on.
 
 Bugfixes:
 
