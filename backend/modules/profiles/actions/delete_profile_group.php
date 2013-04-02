@@ -39,7 +39,7 @@ class BackendProfilesDeleteProfileGroup extends BackendBaseActionDelete
 			BackendModel::triggerEvent($this->getModule(), 'after_profile_delete_from_group', array('id' => $this->id));
 
 			// profile group was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $profileGroup['profile_id'] . '&report=membership-deleted#tabGroups');
+			$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $profileGroup['profile_id'] . '&report=membership-deleted#tabGroups');
 		}
 
 		// group does not exists
