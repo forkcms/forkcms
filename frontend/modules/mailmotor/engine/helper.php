@@ -99,7 +99,7 @@ class FrontendMailmotorCMHelper
 		}
 
 		// return the CampaignMonitor object
-		return Spoon::get('campaignmonitor');
+		return FrontendModel::getContainer()->get('campaignmonitor');
 	}
 
 	/**
