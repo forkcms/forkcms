@@ -6,6 +6,7 @@ Improvements:
 * Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
 * Core: use remote html5-shiv.
 * Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
+* Analytics: better grouping for Google Analytics profiles.
 
 Bugfixes:
 
