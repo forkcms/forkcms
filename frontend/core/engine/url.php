@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will handle the incoming URL.
  *
@@ -14,7 +16,7 @@
  * @author 	Davy Hellemans <davy.hellemans@netlash.com>
  * @author 	Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendURL
+class FrontendURL extends KernelLoader
 {
 	/**
 	 * The pages
@@ -44,8 +46,13 @@ class FrontendURL
 	 */
 	private $queryString;
 
-	public function __construct()
+	/**
+	 * @param KernelInterface $kernel
+	 */
+	public function __construct(KernelInterface $kernel)
 	{
+		parent::__construct($kernel);
+
 		// add ourself to the reference so other classes can retrieve us
 		Spoon::set('url', $this);
 

@@ -39,7 +39,7 @@ class Frontend extends KernelLoader implements ApplicationInterface
 	public function initialize()
 	{
 		$this->initializeFacebook();
-		new FrontendURL();
+		new FrontendURL($this->getKernel());
 		new FrontendTemplate();
 
 		// Load the rest of the page.
