@@ -552,6 +552,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @param string $module
 	 * @param string[optional] $action
+	 * @param array[optional] $equalsData
 	 * @param string[optional] $language
 	 * @return string URL
 	 */
@@ -573,7 +574,7 @@ class FrontendNavigation extends FrontendBaseObject
 			 WHERE i.module = ? AND i.data != ? AND p.language = ?';
 
 		// init parameters
-		$parameters = array($module, 'NULL', $language);
+		$parameters = array($module, 'IS NULL', $language);
 
 		// we have an action
 		if($action)
@@ -582,11 +583,11 @@ class FrontendNavigation extends FrontendBaseObject
 			$query .= ' AND i.action = ?';
 
 			// add action to parameters
-			$parameters[] = (string) $action;
+			$parameters[] = $action;
 		}
 
 		// get items
-		$items = (array) FrontendModel::getDB(true)->getPairs($query, $parameters);
+		$items = (array) FrontendModel::getContainer()->get('database')->getPairs($query, $parameters);
 
 		// stop here when no items
 		if(empty($items)) return $result;
