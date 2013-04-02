@@ -46,7 +46,7 @@ class FrontendBaseObject extends KernelLoader
 		$this->tpl = Spoon::get('template');
 
 		// get URL from reference
-		$this->URL = Spoon::get('url');
+		$this->URL = $this->getContainer()->get('url');
 	}
 }
 
@@ -291,7 +291,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
-		$this->URL = Spoon::get('url');
+		$this->URL = $this->getContainer()->get('url');
 		$this->breadcrumb = Spoon::get('breadcrumb');
 
 		// set properties
@@ -780,7 +780,7 @@ class FrontendBaseWidget extends FrontendBaseObject
 		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
-		$this->URL = Spoon::get('url');
+		$this->URL = $this->getContainer()->get('url');
 
 		// set properties
 		$this->setModule($module);
