@@ -548,6 +548,78 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
+	 * Get url for widget
+	 *
+	 * @param string $module
+	 * @param string[optional] $action
+	 * @param string[optional] $language
+	 * @return string URL
+	 */
+	public static function getURLForWidget($module, $action = null, $equalsData = null, $language = null)
+	{
+		// define variables
+		$result = array();
+		$module = (string) $module;
+		$action = ($action !== null) ? (string) $action : null;
+		$equalsData = ($equalsData !== null) ? (array) $equalsData : null;
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// init query
+		$query =
+			'SELECT p.id, i.data
+			 FROM modules_extras AS i
+			 INNER JOIN pages_blocks AS b ON b.extra_id = i.id
+			 INNER JOIN pages AS p ON p.revision_id = b.revision_id
+			 WHERE i.module = ? AND i.data != ? AND p.language = ?';
+
+		// init parameters
+		$parameters = array($module, 'NULL', $language);
+
+		// we have an action
+		if($action)
+		{
+			// redefine query
+			$query .= ' AND i.action = ?';
+
+			// add action to parameters
+			$parameters[] = (string) $action;
+		}
+
+		// get items
+		$items = (array) FrontendModel::getDB(true)->getPairs($query, $parameters);
+
+		// stop here when no items
+		if(empty($items)) return $result;
+
+		// loop items
+		foreach($items as $id => $data)
+		{
+			// unserialize data
+			$data = unserialize($data);
+
+			// loop equals data
+			foreach($equalsData as $key => $value)
+			{
+				// check if the field is present in the data and add it to result
+				if(isset($data[$key]) && $data[$key] == $value)
+				{
+					// add id to result
+					$result[] = $id;
+				}
+			}
+		}
+
+		// no pageId found
+		if(empty($result)) return FrontendNavigation::getURL(404, $language);
+
+		// get page results
+		foreach($result as $pageIdForURL)
+		{
+			return FrontendNavigation::getURL($pageIdForURL);
+		}
+	}
+
+	/**
 	 * This function lets you add ignored pages
 	 *
 	 * @param mixed $pageIds This can be a single page id or this can be an array with page ids.
