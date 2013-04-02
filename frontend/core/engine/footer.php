@@ -23,8 +23,7 @@ class FrontendFooter extends FrontendBaseObject
 	{
 		parent::__construct($kernel);
 
-		// store in reference
-		Spoon::set('footer', $this);
+		$this->getContainer()->set('footer', $this);
 	}
 
 	/**
