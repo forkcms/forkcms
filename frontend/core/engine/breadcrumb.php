@@ -33,7 +33,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		parent::__construct($kernel);
 
 		// store in reference
-		Spoon::set('breadcrumb', $this);
+		$this->getContainer()->set('breadcrumb', $this);
 
 		// get more information for the homepage
 		$homeInfo = FrontendNavigation::getPageInfo(1);

@@ -289,7 +289,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
 		$this->URL = $this->getContainer()->get('url');
-		$this->breadcrumb = Spoon::get('breadcrumb');
+		$this->breadcrumb = $this->getContainer()->get('breadcrumb');
 
 		// set properties
 		$this->setModule($module);
