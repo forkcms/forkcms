@@ -248,7 +248,6 @@ class BackendMailer
 		}
 
 		// set some properties
-		// set some properties
 		$message = Swift_Message::newInstance($emailRecord['subject'])
 				->setFrom(array($emailRecord['from_email'] => $emailRecord['from_name']))
 				->setTo(array($emailRecord['to_email'] => $emailRecord['to_name']))
