@@ -268,16 +268,18 @@ class BackendModel extends BaseModel
 	{
 		// get folder listing
 		$folders = self::getThumbnailFolders($path);
-		$filename = basename($thumbnail);
-	
+
 		// loop folders
 		foreach($folders as $folder)
 		{
-			// delete file but check for existance at first.
-			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail)) SpoonFile::delete($folder['path'] . '/' . $thumbnail);
+			// delete file but check for existence at first
+			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail))
+			{
+				SpoonFile::delete($folder['path'] . '/' . $thumbnail);
+			}
 		}
 	}
-	
+
 	/**
 	 * Generate a totally random but readable/speakable password
 	 *
