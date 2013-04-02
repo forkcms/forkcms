@@ -20,6 +20,7 @@ Bugfixes:
 * Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
 * Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
 * Core: CKEditor is nov available in Chinese. Fixed #381
+* Extensions: Removed html entities out of header
 
 
 3.5.0 (2013-03-13)

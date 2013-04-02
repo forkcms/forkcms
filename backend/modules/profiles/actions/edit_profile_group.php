@@ -136,7 +136,7 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_profile_edit_groups', array('id' => $this->id));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');
 			}
 		}
 	}
