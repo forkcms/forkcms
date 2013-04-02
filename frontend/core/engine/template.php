@@ -109,7 +109,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->parseVars();
 
 		// in case of a call from parseWidget we don't need to set the headers again!
-		if(!Spoon::exists('parseWidget') || !Spoon::get('parseWidget'))
+		if(!FrontendModel::getContainer()->has('parseWidget') || !FrontendModel::getContainer()->get('parseWidget'))
 		{
 			// parse headers
 			if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
@@ -737,13 +737,13 @@ class FrontendTemplateModifiers
 		$extra = new FrontendBlockWidget($module, $action, $data);
 
 		// set parseWidget because we will need it to skip setting headers in the display
-		Spoon::set('parseWidget', true);
+		FrontendModel::getContainer()->set('parseWidget', true);
 
 		try
 		{
 			$extra->execute();
 			$content = $extra->getContent();
-			Spoon::set('parseWidget', null);
+			FrontendModel::getContainer()->set('parseWidget', null);
 			return $content;
 		}
 		catch(Exception $e)
