@@ -42,10 +42,7 @@ class FrontendBaseObject extends KernelLoader
 	{
 		parent::__construct($kernel);
 
-		// get template from reference
-		$this->tpl = Spoon::get('template');
-
-		// get URL from reference
+		$this->tpl = $this->getContainer()->get('template');
 		$this->URL = $this->getContainer()->get('url');
 	}
 }

@@ -38,7 +38,10 @@ class FrontendTemplate extends SpoonTemplate
 	{
 		parent::__construct();
 
-		if($addToReference) Spoon::set('template', $this);
+		if($addToReference)
+		{
+			FrontendModel::getContainer()->set('template', $this);
+		}
 
 		$this->setCacheDirectory(FRONTEND_CACHE_PATH . '/cached_templates');
 		$this->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
@@ -595,7 +598,7 @@ class FrontendTemplateModifiers
 
 		// split URL into chunks
 		$chunks = (array) explode('/', $pageInfo['full_url']);
-		
+
 		// remove language chunk
 		$chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks,2) : (array) array_slice($chunks,1);
 		if( count($chunks) == 0 ) $chunks[0] = '';
