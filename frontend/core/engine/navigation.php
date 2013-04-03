@@ -550,13 +550,14 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get url for widget
 	 *
-	 * @param string $module
-	 * @param string[optional] $action
-	 * @param array[optional] $equalsData
-	 * @param string[optional] $language
+	 * @param string $module 					The module wherefor you want to find the module.
+	 * @param string[optional] $action 			The action for the widget.
+	 * @param array[optional] $equalsData 		Key-value array which you want to search for.
+	 * @param string[optional] $language 		The language you want to find the widget for.
+	 * @param int[optional] $skipNumResults 	The amount of results to skip.
 	 * @return string URL
 	 */
-	public static function getURLForWidget($module, $action = null, $equalsData = null, $language = null)
+	public static function getURLForWidget($module, $action = null, $equalsData = null, $language = null, $skipNumResults = 0)
 	{
 		// define variables
 		$result = array();
@@ -571,10 +572,10 @@ class FrontendNavigation extends FrontendBaseObject
 			 FROM modules_extras AS i
 			 INNER JOIN pages_blocks AS b ON b.extra_id = i.id
 			 INNER JOIN pages AS p ON p.revision_id = b.revision_id
-			 WHERE i.module = ? AND i.data != ? AND p.language = ?';
+			 WHERE i.module = ? AND p.language = ?';
 
 		// init parameters
-		$parameters = array($module, 'IS NULL', $language);
+		$parameters = array($module, $language);
 
 		// we have an action
 		if($action)
@@ -586,6 +587,13 @@ class FrontendNavigation extends FrontendBaseObject
 			$parameters[] = $action;
 		}
 
+		// we have data to match
+		if($equalsData)
+		{
+			// redefine query
+			$query .= ' AND i.data IS NOT NULL';
+		}
+
 		// get items
 		$items = (array) FrontendModel::getContainer()->get('database')->getPairs($query, $parameters);
 
@@ -595,6 +603,16 @@ class FrontendNavigation extends FrontendBaseObject
 		// loop items
 		foreach($items as $id => $data)
 		{
+			// we don't have data to match for
+			if(!$equalsData)
+			{
+				// add id
+				$result[] = $id;
+
+				// skip
+				continue;
+			}
+
 			// unserialize data
 			$data = unserialize($data);
 
@@ -613,9 +631,27 @@ class FrontendNavigation extends FrontendBaseObject
 		// no pageId found
 		if(empty($result)) return FrontendNavigation::getURL(404, $language);
 
+		// define counter
+		$counter = 0;
+		$countResults = count($result);
+
+		// redefine skip num results to last item
+		if($skipNumResults > $countResults) $skipNumResults = $countResults - 1;
+
 		// get page results
 		foreach($result as $pageIdForURL)
 		{
+			// we have to skip some results if necessairy
+			if($skipNumResults > $counter)
+			{
+				// redefine counter
+				$counter += 1;
+
+				// skip this result
+				continue;
+			}
+
+			// return url
 			return FrontendNavigation::getURL($pageIdForURL);
 		}
 	}
