@@ -561,7 +561,7 @@ class FrontendNavigation extends FrontendBaseObject
 	public static function getURLForWidget($module, $action = null, $equalsData = null, $language = null, $skipNumResults = 0)
 	{
 		// define variables
-		$result = array();
+		$results = array();
 		$module = (string) $module;
 		$action = ($action !== null) ? (string) $action : null;
 		$equalsData = ($equalsData !== null) ? (array) $equalsData : null;
@@ -608,7 +608,7 @@ class FrontendNavigation extends FrontendBaseObject
 			if(!$equalsData)
 			{
 				// add id
-				$result[] = $id;
+				$results[] = $id;
 
 				// skip
 				continue;
@@ -624,7 +624,7 @@ class FrontendNavigation extends FrontendBaseObject
 				if(isset($data[$key]) && $data[$key] == $value)
 				{
 					// add id to result
-					$result[] = $id;
+					$results[] = $id;
 				}
 			}
 		}
@@ -640,7 +640,7 @@ class FrontendNavigation extends FrontendBaseObject
 		if($skipNumResults > $countResults) $skipNumResults = $countResults - 1;
 
 		// get page results
-		foreach($result as $pageIdForURL)
+		foreach($results as $pageIdForURL)
 		{
 			// we have to skip some results if necessairy
 			if($skipNumResults > $counter)
