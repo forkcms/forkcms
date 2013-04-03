@@ -599,7 +599,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$items = (array) FrontendModel::getContainer()->get('database')->getPairs($query, $parameters);
 
 		// stop here when no items
-		if(empty($items)) return $result;
+		if(empty($items)) return '';
 
 		// loop items
 		foreach($items as $id => $data)
