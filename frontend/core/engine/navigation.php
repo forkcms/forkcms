@@ -573,10 +573,10 @@ class FrontendNavigation extends FrontendBaseObject
 			 FROM modules_extras AS i
 			 INNER JOIN pages_blocks AS b ON b.extra_id = i.id
 			 INNER JOIN pages AS p ON p.revision_id = b.revision_id
-			 WHERE i.module = ? AND p.language = ?';
+			 WHERE i.type = ? AND i.module = ? AND p.language = ?';
 
 		// init parameters
-		$parameters = array($module, $language);
+		$parameters = array('widget', $module, $language);
 
 		// we have an action
 		if($action)
