@@ -36,7 +36,7 @@ class PagesInstaller extends ModuleInstaller
 		// get extra ids
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
-		$extras['search_notfound'] = $this->insertExtra('search', 'widget', 'SearchNotfound', 'notfound', null, 'N', 2002);
+		$extras['search_notfound'] = $this->insertExtra('search', 'widget', 'Notfound', 'notfound', null, 'N', 2002);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 		$this->insertExtra('pages', 'widget', 'Navigation', 'previous_next_navigation');
 
