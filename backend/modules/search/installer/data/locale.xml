@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
+    <core>
+      <item type="label" name="Notfound">
+	      <translation language="en"><![CDATA[Not found]]></translation>
+      </item>
+    </core>
     <search>
       <item type="message" name="AddedSynonym">
         <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd toegevoegd.]]></translation>
@@ -249,4 +254,20 @@
       </item>
     </search>
   </backend>
+  <frontend>
+    <search>
+      <item type="label" name="SearchedOn">
+        <translation language="nl"><![CDATA[gezocht op]]></translation>
+        <translation language="en"><![CDATA[searched on]]></translation>
+        <translation language="it"><![CDATA[cercato su]]></translation>
+        <translation language="ru"><![CDATA[Поиск по]]></translation>
+        <translation language="zh"><![CDATA[搜索于]]></translation>
+        <translation language="fr"><![CDATA[recherché le]]></translation>
+        <translation language="hu"><![CDATA[keresett a]]></translation>
+        <translation language="de"><![CDATA[gesucht am]]></translation>
+        <translation language="es"><![CDATA[búsqueda en]]></translation>
+        <translation language="uk"><![CDATA[Пошук по]]></translation>
+      </item>
+    </search>
+  </frontend>
 </locale>
