@@ -6,7 +6,6 @@
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
 
 rm -f `find ../install/cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f ../install/installed.txt
 
 rm -f `find ../frontend/cache/cached_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ../frontend/cache/config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
