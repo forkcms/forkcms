@@ -14,10 +14,6 @@
         "symfony/config": "2.2.*",
         "symfony/yaml": "2.2.*",
         "symfony/filesystem": "2.2.*",
-<<<<<<< HEAD
 		"spoon/library": "1.3.*"
-=======
-        "spoon/library": "1.3.*"
->>>>>>> a7e83592e9ca8f25bb7ab59c8a6a2c7078fcca98
     }
 }
