@@ -1,5 +1,9 @@
 imports:
     - { resource: parameters.yml }
+<<<<<<< HEAD
+=======
+
+>>>>>>> a7e83592e9ca8f25bb7ab59c8a6a2c7078fcca98
 services:
     filesystem:
         class: Symfony\Component\Filesystem\Filesystem
