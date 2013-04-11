@@ -630,11 +630,11 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// no pageId found
-		if(empty($result)) return FrontendNavigation::getURL(404, $language);
+		if(empty($results)) return FrontendNavigation::getURL(404, $language);
 
 		// define counter
 		$counter = 0;
-		$countResults = count($result);
+		$countResults = count($results);
 
 		// redefine skip num results to last item
 		if($skipNumResults > $countResults) $skipNumResults = $countResults - 1;
