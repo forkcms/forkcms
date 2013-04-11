@@ -652,8 +652,14 @@ class FrontendNavigation extends FrontendBaseObject
 				continue;
 			}
 
+			// define url
+			$url = FrontendNavigation::getURL($pageIdForURL);
+
+			// when widget is on homepage and we have more then 1 result, skip homepage
+			if($url == '/' && $countResults > 1) continue;
+
 			// return url
-			return FrontendNavigation::getURL($pageIdForURL);
+			return $url;
 		}
 	}
 
