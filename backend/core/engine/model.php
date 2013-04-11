@@ -273,9 +273,9 @@ class BackendModel extends BaseModel
 		foreach($folders as $folder)
 		{
 			// delete file but check for existence at first
-			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail))
+			if(BackendModel::getContainer()->get('filesystem')->exists($folder['path'] . '/' . $thumbnail))
 			{
-				SpoonFile::delete($folder['path'] . '/' . $thumbnail);
+				BackendModel::getContainer()->get('filesystem')->remove($folder['path'] . '/' . $thumbnail);
 			}
 		}
 	}
@@ -521,7 +521,7 @@ class BackendModel extends BaseModel
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
+			if(!BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -656,7 +656,7 @@ class BackendModel extends BaseModel
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php'))
+			if(!BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -922,10 +922,10 @@ class BackendModel extends BaseModel
 		}
 
 		// loop all directories
-		foreach(array_keys($fileSizes) as $sizeDir) SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
+		foreach(array_keys($fileSizes) as $sizeDir) BackendModel::getContainer()->get('filesystem')->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
 
 		// delete original
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+		BackendModel::getContainer()->get('filesystem')->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
 	}
 
 	/**
@@ -994,7 +994,7 @@ class BackendModel extends BaseModel
 		$files = SpoonFile::getList($path, $regexp);
 
 		// delete files
-		foreach($files as $file) SpoonFile::delete($path . '/' . $file);
+		foreach($files as $file) BackendModel::getContainer()->get('filesystem')->remove($path . '/' . $file);
 	}
 
 	/**
@@ -1166,7 +1166,7 @@ class BackendModel extends BaseModel
 	public static function startProcessingHooks()
 	{
 		// is the queue already running?
-		if(SpoonFile::exists(BACKEND_CACHE_PATH . '/hooks/pid'))
+		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
 			$pid = trim(SpoonFile::getContent(BACKEND_CACHE_PATH . '/hooks/pid'));
@@ -1181,7 +1181,7 @@ class BackendModel extends BaseModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+					BackendModel::getContainer()->get('filesystem')->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1198,7 +1198,7 @@ class BackendModel extends BaseModel
 				if($output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+					BackendModel::getContainer()->get('filesystem')->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1209,10 +1209,10 @@ class BackendModel extends BaseModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!SpoonFile::exists('/proc/' . $pid))
+				if(!BackendModel::getContainer()->get('filesystem')->exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+					BackendModel::getContainer()->get('filesystem')->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
