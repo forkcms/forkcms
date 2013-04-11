@@ -40,7 +40,7 @@ class BackendNavigation
 		$this->URL = Spoon::get('url');
 
 		// check if navigation cache file exists
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/navigation/navigation.php'))
+		if(!BackendModel::getContainer()->get('filesystem')->exists(BACKEND_CACHE_PATH . '/navigation/navigation.php'))
 		{
 			$this->buildCache();
 		}
