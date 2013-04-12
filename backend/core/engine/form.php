@@ -586,8 +586,10 @@ class BackendFormImage extends SpoonFormImage
 	 */
 	public function generateThumbnails($path, $filename)
 	{
+		$fs = BackendModel::getContainer()->get('filesystem');
+		
 		// create folder if needed
-		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+		if(!$fs->exists($path . '/source')) $fs->mkdir($path . '/source');
 
 		// move the source file
 		$this->moveFile($path . '/source/' . $filename);
