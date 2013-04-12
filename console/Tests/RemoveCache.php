@@ -23,7 +23,7 @@ class RemoveCacheCommandTest extends \PHPUnit_Framework_TestCase
         );
 
         // check the output
-        $this->assertRegExp('/All done/', $commandTester->getDisplay());
+        $this->assertRegExp('/Cache is removed/', $commandTester->getDisplay());
 
         // create some instances
         $finder = new Finder();

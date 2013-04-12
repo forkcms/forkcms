@@ -51,6 +51,6 @@ class RemoveCache extends Command
         $fs->remove($finder);
         $output->writeln('<comment>Backend cache is cleared</comment>');
 
-        $output->writeln('<info>All done</info>');
+        $output->writeln('<info>Cache is removed</info>');
     }
 }
