@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: introduction of the Console component.
+* Console: added command which prepares for a reinstall.
 
 
 3.5.1 (xxxx-xx-xx)

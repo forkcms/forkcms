@@ -23,3 +23,5 @@ As you will see a nice help is shown.
 #### Available commands
 
 * cache:remove, this will clear all the caches.
+* core:prepare_for_reinstall, this will remove all caches and configuration
+	files, so you can easily reinstall.
