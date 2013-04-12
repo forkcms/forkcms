@@ -705,7 +705,7 @@ class BackendModel extends BaseModel
 	{
 		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
 
-		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
+		if($includeSource && BackendModel::getContainer()->get('filesystem')->exists($path . '/source')) $folders[] = 'source';
 
 		$return = array();
 
