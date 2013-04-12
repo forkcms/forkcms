@@ -38,6 +38,11 @@ class RemoveCache extends Command
 		$fs->remove($finder);
 		$output->writeln('<comment>Frontend cache is cleared</comment>');
 
+		// remove the backend cache
+		$finder->files()->in($rootPath . '/backend/cache');
+		$fs->remove($finder);
+		$output->writeln('<comment>Backend cache is cleared</comment>');
+
 		$output->writeln('<info>All done</info>');
 	}
 }
