@@ -325,16 +325,21 @@ class BackendBlogModel
 	 * Get all data for a given id
 	 *
 	 * @param int $id The Id of the item to fetch?
+	 * @param string $language The language of the item to fetch.
 	 * @return array
 	 */
-	public static function get($id)
+	public static function get($id, $language = null)
 	{
+		// redefine language
+		$language = ($language != null) ? $language : BL::getWorkingLanguage();
+
+		// return items
 		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
 			 WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?',
-			array((int) $id, 'active', 'draft', BL::getWorkingLanguage())
+			array((int) $id, 'active', 'draft', $language)
 		);
 	}
 
