@@ -31,7 +31,12 @@ class RemoveCache extends Command
 		$finder->files()->in($rootPath . '/install/cache');
 		$finder->files()->notName('installed.txt');
 		$fs->remove($finder);
-		$output->writeln('<comment>Installers cache is cleared</comment>');
+		$output->writeln('<comment>Installer cache is cleared</comment>');
+
+		// remove the frontend cache
+		$finder->files()->in($rootPath . '/frontend/cache');
+		$fs->remove($finder);
+		$output->writeln('<comment>Frontend cache is cleared</comment>');
 
 		$output->writeln('<info>All done</info>');
 	}
