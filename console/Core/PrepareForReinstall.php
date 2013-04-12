@@ -28,31 +28,31 @@ class PrepareForReinstall extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-	    // call the command that removes the caches
-	    $command = $this->getApplication()->find('cache:remove');
-	    $arguments = array(
-		    'command' => 'cache:remove',
-	    );
+        // call the command that removes the caches
+        $command = $this->getApplication()->find('cache:remove');
+        $arguments = array(
+            'command' => 'cache:remove',
+        );
 
-	    $command->run(
-			new ArrayInput($arguments),
-			$output
-		);
+        $command->run(
+            new ArrayInput($arguments),
+            $output
+        );
 
-	    // create some instances
-	    $fs = new Filesystem();
+        // create some instances
+        $fs = new Filesystem();
 
-	    // build path to the rootdirectory
-	    $rootPath = __DIR__ . '/../..';
+        // build path to the rootdirectory
+        $rootPath = __DIR__ . '/../..';
 
-	    // remove config files
-	    $fs->remove($rootPath . '/app/config/parameters.yml');
-	    $output->writeln('<comment>Configuration files are removed</comment>');
+        // remove config files
+        $fs->remove($rootPath . '/app/config/parameters.yml');
+        $output->writeln('<comment>Configuration files are removed</comment>');
 
-	    // remove installed.txt file
-	    $fs->remove($rootPath . '/install/cache/installed.txt');
-	    $output->writeln('<comment>installed.txt is removed</comment>');
+        // remove installed.txt file
+        $fs->remove($rootPath . '/install/cache/installed.txt');
+        $output->writeln('<comment>installed.txt is removed</comment>');
 
-	    $output->writeln('<info>Ready for reinstall</info>');
+        $output->writeln('<info>Ready for reinstall</info>');
     }
 }

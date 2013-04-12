@@ -5,7 +5,6 @@ require_once __DIR__.'/../Cache/RemoveCache.php';
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Console\Cache\RemoveCache;
 
@@ -27,7 +26,6 @@ class RemoveCacheCommandTest extends \PHPUnit_Framework_TestCase
 
         // create some instances
         $finder = new Finder();
-        $fs = new Filesystem();
 
         // build path to the rootdirectory
         $rootPath = __DIR__ . '/../..';

@@ -15,28 +15,28 @@ class PrepareForReinstallCommandTest extends \PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $application = new Application();
-	    $application->add(new RemoveCache);
-	    $application->add(new PrepareForReinstall);
+        $application->add(new RemoveCache);
+        $application->add(new PrepareForReinstall);
 
-	    $command = $application->find('core:prepare_for_reinstall');
-	    $commandTester = new CommandTester($command);
-	    $commandTester->execute(
-		    array('command' => $command->getName())
-	    );
+        $command = $application->find('core:prepare_for_reinstall');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(
+            array('command' => $command->getName())
+        );
 
-	    // check the output
-	    $this->assertRegExp('/Ready for reinstall/', $commandTester->getDisplay());
+        // check the output
+        $this->assertRegExp('/Ready for reinstall/', $commandTester->getDisplay());
 
-	    // create some instances
-	    $fs = new Filesystem();
+        // create some instances
+        $fs = new Filesystem();
 
-	    // build path to the rootdirectory
-	    $rootPath = __DIR__ . '/../..';
+        // build path to the rootdirectory
+        $rootPath = __DIR__ . '/../..';
 
-	    // check if configuration files are removed
-	    $this->assertFalse($fs->exists($rootPath . '/app/config/parameters.yml'));
+        // check if configuration files are removed
+        $this->assertFalse($fs->exists($rootPath . '/app/config/parameters.yml'));
 
-	    // check if installed.txt is removed
-	    $this->assertFalse($fs->exists($rootPath . '/install/cache/installed.txt'));
+        // check if installed.txt is removed
+        $this->assertFalse($fs->exists($rootPath . '/install/cache/installed.txt'));
     }
 }
