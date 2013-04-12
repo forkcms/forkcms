@@ -52,7 +52,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			if($counter > 100)
 			{
 				// remove file
-				SpoonFile::delete($filename);
+				BackendModel::getContainer()->get('filesystem')->remove($filename);
 
 				// return status
 				$this->output(self::ERROR, array('status' => 'timeout'), 'Error while retrieving data - the script took too long to retrieve data.');
@@ -69,7 +69,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		elseif($status == 'unauthorized')
 		{
 			// remove file
-			SpoonFile::delete($filename);
+			BackendModel::getContainer()->get('filesystem')->remove($filename);
 
 			// remove all parameters from the module settings
 			BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
@@ -87,7 +87,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		elseif($status == 'done')
 		{
 			// remove file
-			SpoonFile::delete($filename);
+			BackendModel::getContainer()->get('filesystem')->remove($filename);
 
 			// return status
 			$this->output(self::OK, array('status' => 'done'), 'Data retrieved.');
@@ -102,7 +102,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			// file's been missing for more than ten cycles - just stop here
 			if($counter > 10)
 			{
-				SpoonFile::delete($filename);
+				BackendModel::getContainer()->get('filesystem')->remove($filename);
 				$this->output(self::ERROR, array('status' => 'missing'), 'Error while retrieving data - file was never created.');
 			}
 
@@ -116,7 +116,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		/* FALLBACK - SOMETHING WENT WRONG */
 		else
 		{
-			SpoonFile::delete($filename);
+			BackendModel::getContainer()->get('filesystem')->remove($filename);
 			$this->output(self::ERROR, array('status' => 'error', 'a' => ($status == 'done')), 'Error while retrieving data.');
 		}
 	}

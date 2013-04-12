@@ -34,7 +34,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			// delete file if more than 1 week old
 			if($fileinfo['modification_date'] < strtotime('-1 week'))
 			{
-				SpoonFile::delete($this->cachePath . '/' . $file);
+				BackendModel::getContainer()->get('filesystem')->remove($this->cachePath . '/' . $file);
 			}
 		}
 	}
