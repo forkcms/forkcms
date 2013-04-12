@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class PrepareForReinstall extends Command
 {
@@ -33,11 +34,25 @@ class PrepareForReinstall extends Command
 		    'command' => 'cache:remove',
 	    );
 
-	    $returnCode = $command->run(
+	    $command->run(
 			new ArrayInput($arguments),
 			$output
 		);
 
-        $output->writeln('<info>Ready for reinstall</info>');
+	    // create some instances
+	    $fs = new Filesystem();
+
+	    // build path to the rootdirectory
+	    $rootPath = __DIR__ . '/../..';
+
+	    // remove config files
+	    $fs->remove($rootPath . '/app/config/parameters.yml');
+	    $output->writeln('<comment>Configuration files are removed</comment>');
+
+	    // remove installed.txt file
+	    $fs->remove($rootPath . '/install/cache/installed.txt');
+	    $output->writeln('<comment>installed.txt is removed</comment>');
+
+	    $output->writeln('<info>Ready for reinstall</info>');
     }
 }
