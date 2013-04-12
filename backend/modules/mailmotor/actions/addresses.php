@@ -79,7 +79,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 	private function downloadCSV($path)
 	{
 		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new SpoonFileException('The file ' . $path . ' doesn\'t exist.');
+		if(!BackendModel::getContainer()->get('filesystem')->exists($path)) throw new SpoonFileException('The file ' . $path . ' doesn\'t exist.');
 
 		// fetch the filename from the path string
 		$explodedFilename = explode('/', $path);
