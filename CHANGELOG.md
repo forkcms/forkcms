@@ -29,7 +29,8 @@ Bugfixes:
 * Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
 * Share-widget: fixed the whitespace added by Pinterest. Fixes #392.
 * Core: CKEditor is nov available in Chinese. Fixed #381
-* Extensions: Removed html entities out of header
+* Extensions: Removed html entities out of header.
+* Installer: used correct path for checking if Fork is installed.
 
 
 3.5.0 (2013-03-13)
