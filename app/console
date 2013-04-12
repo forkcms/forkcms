@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+// if you don't want to setup permissions the proper way, just uncomment the following PHP line
+// read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
+//umask(0000);
+
+set_time_limit(0);
+
+require_once __DIR__.'/../autoload.php';
+require_once __DIR__.'/../console/Cache/RemoveCache.php';
+require_once __DIR__.'/../console/Core/PrepareForReinstall.php';
+
+use Console\Cache\RemoveCache;
+use Console\Core\PrepareForReinstall;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+$application->add(new RemoveCache);
+$application->add(new PrepareForReinstall);
+$application->run();
