@@ -240,7 +240,7 @@ class BackendExtensionsModel
 		}
 
 		// delete the files
-		foreach($filesToDelete as $file) SpoonFile::delete($file);
+		foreach($filesToDelete as $file) BackendModel::getContainer()->get('filesystem')->remove($file);
 	}
 
 	/**
@@ -303,7 +303,7 @@ class BackendExtensionsModel
 		$module = (string) $module;
 
 		// check if modules directory exists
-		return SpoonDirectory::exists(BACKEND_MODULES_PATH . '/' . $module);
+		return BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULES_PATH . '/' . $module);
 	}
 
 	/**
@@ -335,7 +335,7 @@ class BackendExtensionsModel
 		$theme = (string) $theme;
 
 		// check if modules directory exists
-		return SpoonDirectory::exists(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
+		return BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
 	}
 
 	/**
@@ -466,7 +466,7 @@ class BackendExtensionsModel
 		$information = array('data' => array(), 'warnings' => array());
 
 		// information needs to exists
-		if(SpoonFile::exists($pathInfoXml))
+		if(BackendModel::getContainer()->get('filesystem')->exists($pathInfoXml))
 		{
 			try
 			{
@@ -999,7 +999,7 @@ class BackendExtensionsModel
 		if($return === false) return false;
 
 		// unlink the random file
-		SpoonFile::delete($path . '/' . $file);
+		BackendModel::getContainer()->get('filesystem')->remove($path . '/' . $file);
 
 		return true;
 	}

@@ -73,7 +73,7 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 		$pathInfoXml = FRONTEND_PATH . '/themes/' . $this->currentTheme . '/info.xml';
 
 		// information needs to exists
-		if(SpoonFile::exists($pathInfoXml))
+		if(BackendModel::getContainer()->get('filesystem')->exists($pathInfoXml))
 		{
 			try
 			{
