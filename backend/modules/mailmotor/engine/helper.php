@@ -306,7 +306,7 @@ class BackendMailmotorCMHelper
 		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
+			if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
 				throw new SpoonFileException(BL::err('ClassDoesNotExist', 'mailmotor'));
