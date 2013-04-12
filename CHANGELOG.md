@@ -1,3 +1,10 @@
+3.6.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: introduction of the Console component.
+
+
 3.5.1 (xxxx-xx-xx)
 --
 Improvements:
