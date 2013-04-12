@@ -127,7 +127,7 @@ class BackendMailer
 			foreach($attachments as $attachment)
 			{
 				// only add existing files
-				if(SpoonFile::exists($attachment)) $email['attachments'][] = $attachment;
+				if(BackendModel::getContainer()->get('filesystem')->exists($attachment)) $email['attachments'][] = $attachment;
 			}
 
 			// serialize :)

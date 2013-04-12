@@ -74,7 +74,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			foreach($this->actions[$module['value']] as $key => $action)
 			{
 				// ajax action?
-				if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $module['value'] . '/ajax/' . $action['value'] . '.php'))
+				if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULES_PATH . '/' . $module['value'] . '/ajax/' . $action['value'] . '.php'))
 				{
 					// create reflection class
 					$reflection = new ReflectionClass('Backend' . $module['label'] . 'Ajax' . $action['label']);
@@ -141,7 +141,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				$pathName = BACKEND_MODULES_PATH . '/' . $module;
 
 				// module has actions?
-				if(SpoonDirectory::exists($pathName . '/actions'))
+				if(BackendModel::getContainer()->get('filesystem')->exists($pathName . '/actions'))
 				{
 					// get actions
 					$actions = (array) SpoonFile::getList($pathName . '/actions', '/(.*)\.php/i');
@@ -246,7 +246,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 				$pathName = BACKEND_MODULES_PATH . '/' . $module;
 
 				// check if the folder exists
-				if(SpoonDirectory::exists($pathName . '/widgets'))
+				if(BackendModel::getContainer()->get('filesystem')->exists($pathName . '/widgets'))
 				{
 					// get widgets
 					$widgets = (array) SpoonFile::getList($pathName . '/widgets', '/(.*)\.php/i');
@@ -291,7 +291,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 						}
 
 						// check if model file exists
-						if(SpoonFile::exists($pathName . '/engine/model.php'))
+						if(BackendModel::getContainer()->get('filesystem')->exists($pathName . '/engine/model.php'))
 						{
 							// require model
 							require_once $pathName . '/engine/model.php';

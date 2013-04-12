@@ -224,13 +224,13 @@ class BackendBaseAction extends BackendBaseObject
 		$this->header->addJS('backend.js', 'core');
 
 		// add module js
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
+		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
 		{
 			$this->header->addJS($this->getModule() . '.js');
 		}
 
 		// add action js
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
+		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
 		{
 			$this->header->addJS($this->getAction() . '.js');
 		}
@@ -242,7 +242,7 @@ class BackendBaseAction extends BackendBaseObject
 		$this->header->addCSS('debug.css', 'core');
 
 		// add module specific css
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
+		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
 		{
 			$this->header->addCSS($this->getModule() . '.css');
 		}
@@ -718,7 +718,7 @@ class BackendBaseCronjob extends BackendBaseObject
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
 		// remove the file
-		SpoonFile::delete($path);
+		BackendModel::getContainer()->get('filesystem')->remove($path);
 	}
 
 	public function execute()
@@ -785,7 +785,7 @@ class BackendBaseCronjob extends BackendBaseObject
 		$isBusy = false;
 
 		// does the busy file already exists.
-		if(SpoonFile::exists($path))
+		if(BackendModel::getContainer()->get('filesystem')->exists($path))
 		{
 			$isBusy = true;
 
