@@ -3,6 +3,7 @@
 namespace Console\Core;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -26,6 +27,17 @@ class PrepareForReinstall extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>All done</info>');
+	    // call the command that removes the caches
+	    $command = $this->getApplication()->find('cache:remove');
+	    $arguments = array(
+		    'command' => 'cache:remove',
+	    );
+
+	    $returnCode = $command->run(
+			new ArrayInput($arguments),
+			$output
+		);
+
+        $output->writeln('<info>Ready for reinstall</info>');
     }
 }
