@@ -8,3 +8,15 @@ component allows us to interact with the filesystem
 
 More info about the Console component can be found on:
 http://symfony.com/doc/current/components/filesystem.html
+
+#### Upgrading your module
+
+There are several pieces of code that should be replaced
+
+##### Backend
+
+	SpoonFile::exists(...)
+
+Should become
+
+	BackendModel::getContainer()->get('filesystem')->exists(...)
