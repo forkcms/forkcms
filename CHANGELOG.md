@@ -1,3 +1,9 @@
+3.6.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: introduction of the Filesystem component.
+
 3.5.1 (xxxx-xx-xx)
 --
 Improvements:
