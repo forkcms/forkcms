@@ -10,6 +10,9 @@ use Symfony\Component\Finder\Finder;
 
 class RemoveCache extends Command
 {
+	/**
+	 * Configure the command
+	 */
 	protected function configure()
 	{
 		$this
@@ -18,6 +21,13 @@ class RemoveCache extends Command
 		;
 	}
 
+	/**
+	 * Execute the command
+	 *
+	 * @param InputInterface $input
+	 * @param OutputInterface $output
+	 * @return int|null|void
+	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		// create some instances
