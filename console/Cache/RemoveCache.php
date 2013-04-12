@@ -27,7 +27,12 @@ class RemoveCache extends Command
 		// build path to the rootdirectory
 		$rootPath = __DIR__ . '/../..';
 
-		$text = '<info>All done</info>';
-		$output->writeln($text);
+		// remove the installers cache
+		$finder->files()->in($rootPath . '/install/cache');
+		$finder->files()->notName('installed.txt');
+		$fs->remove($finder);
+		$output->writeln('<comment>Installers cache is cleared</comment>');
+
+		$output->writeln('<info>All done</info>');
 	}
 }
