@@ -8,6 +8,8 @@ Improvements:
 * Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
 * Core: deleteThumbnails() added in BackendModel. Thx to John Poelman
 * Analytics: better grouping for Google Analytics profiles.
+* Core: deleteThumbnails() added in BackendModel. Thx to John Poelman.
+* Core: Minify is now installed with Composer.
 
 Bugfixes:
 
