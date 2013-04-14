@@ -1,5 +1,7 @@
 <?php
 
+use \MatthiasMullie\Minify;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -85,9 +87,6 @@ class BackendHeader
 		$overwritePath = (bool) $overwritePath;
 		$minify = (bool) $minify;
 		$addTimestamp = (bool) $addTimestamp;
-
-		// init var
-		$realPath = '';
 
 		// no actual path given: create
 		if(!$overwritePath)
@@ -216,8 +215,7 @@ class BackendHeader
 		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$css = new MinifyCSS(PATH_WWW . $file);
+			$css = new Minify\CSS(PATH_WWW . $file);
 			$css->minify($finalPath);
 		}
 
@@ -241,8 +239,7 @@ class BackendHeader
 		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$js = new MinifyJS(PATH_WWW . $file);
+			$js = new Minify\JS(PATH_WWW . $file);
 			$js->minify($finalPath);
 		}
 

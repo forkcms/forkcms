@@ -1,5 +1,7 @@
 <?php
 
+use \MatthiasMullie\Minify;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -490,8 +492,7 @@ class FrontendHeader extends FrontendBaseObject
 			}
 
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$css = new MinifyCSS(PATH_WWW . $file);
+			$css = new Minify\CSS(PATH_WWW . $file);
 			$css->minify($finalPath);
 		}
 
@@ -521,8 +522,7 @@ class FrontendHeader extends FrontendBaseObject
 			}
 
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$js = new MinifyJS(PATH_WWW . $file);
+			$js = new Minify\JS(PATH_WWW . $file);
 			$js->minify($finalPath);
 		}
 
