@@ -1,4 +1,4 @@
-3.5.1 (xxxx-xx-xx)
+3.5.1 (2013-04-15)
 --
 Improvements:
 
@@ -6,6 +6,9 @@ Improvements:
 * Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
 * Core: use remote html5-shiv.
 * Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
+* Core: deleteThumbnails() added in BackendModel. Thx to John Poelman.
+* Composer: Minify is now installed with Composer.
+* Composer: Better install message.
 
 Bugfixes:
 
@@ -20,7 +23,9 @@ Bugfixes:
 * Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
 * Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
 * Core: CKEditor is nov available in Chinese. Fixed #381
-
+* Location: Address in widget fixed.
+* Analytics: Accounts grouped. Fixes #425.
+* Core: Login sql error on wrong email fixed. Thx to Gertjan Meire.
 
 3.5.0 (2013-03-13)
 --
