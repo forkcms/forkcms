@@ -107,6 +107,33 @@ class BackendForm extends SpoonForm
 	}
 
 	/**
+	 * Adds a dropdown with the chosen plugin.
+	 *
+	 * @param string $name Name of the element.
+	 * @param array[optional] $values Values for the dropdown.
+	 * @param string[optional] $selected The selected elements.
+	 * @param bool[optional] $multipleSelection Is it possible to select multiple items?
+	 * @param string[optional] $class Class(es) that will be applied on the element.
+	 * @param string[optional] $classError Class(es) that will be applied on the element when an error occurs.
+	 * @return SpoonFormDropdown
+	 */
+	public function addChosen($name, array $values = null, $selected = null, $multipleSelection = false, $class = null, $classError = null)
+	{
+		// Let's add the chosen plugin when this function is called from an action with a header
+		if($this->header)
+		{
+			$this->header->addJS('jquery/chosen.jquery.min.js', 'core');
+			$this->header->addCSS('chosen.css', 'core');
+		}
+
+		if($class) $class .= ' jsChosen';
+		else $class = 'jsChosen';
+
+		// create and return a dropdown
+		return self::addDropdown($name, $values, $selected, $multipleSelection, $class, $classError);
+	}
+
+	/**
 	 * Adds a datefield to the form
 	 *
 	 * @param string $name Name of the element.

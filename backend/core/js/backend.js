@@ -1299,6 +1299,7 @@ jsBackend.forms =
 		jsBackend.forms.datefields();
 		jsBackend.forms.submitWithLinks();
 		jsBackend.forms.tagBoxes();
+		jsBackend.forms.dropdowns();
 	},
 
 	datefields: function()
@@ -1603,6 +1604,15 @@ jsBackend.forms =
 
 		// return if needed
 		if(changed) return jsBackend.locale.msg('ValuesAreChanged');
+	},
+
+	dropdowns: function()
+	{
+		// add chosen to the fields with the jsChosen class
+		if($.isFunction($.fn.chosen))
+		{
+			$('.jsChosen').chosen({allow_single_deselect:true});
+		}
 	}
 }
 
