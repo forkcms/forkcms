@@ -1,4 +1,4 @@
-3.5.1 (xxxx-xx-xx)
+3.5.1 (2013-04-15)
 --
 Improvements:
 
@@ -27,6 +27,8 @@ Bugfixes:
 * Core: CKEditor is nov available in Chinese. Fixed #381
 * Extensions: Removed html entities out of header.
 * Installer: used correct path for checking if Fork is installed.
+* Core: Login sql error on wrong email fixed. Thx to Gertjan Meire.
+* Location: Address in widget fixed.
 
 
 3.5.0 (2013-03-13)
