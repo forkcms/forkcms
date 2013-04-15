@@ -71,7 +71,10 @@ class FrontendFormBuilderModel
 						$field['settings']['values'][$key] = SpoonFilter::htmlentitiesDecode($value, null, ENT_QUOTES);
 					}
 
-					$field['settings']['default_values'] = SpoonFilter::htmlentitiesDecode($field['settings']['default_values'], null, ENT_QUOTES);
+					if(!empty($field['settings']['default_values'])) 
+					{
+						$field['settings']['default_values'] = SpoonFilter::htmlentitiesDecode($field['settings']['default_values'], null, ENT_QUOTES);
+					}
 				}
 			}
 
