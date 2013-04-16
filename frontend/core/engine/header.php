@@ -687,7 +687,7 @@ class FrontendHeader extends FrontendBaseObject
 					break;
 
 				default:
-					$locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+					$locale = strtolower(substr(FRONTEND_LANGUAGE, 0, 2)) . '_' . strtoupper(substr(FRONTEND_LANGUAGE, 3));
 			}
 
 			// add the locale property
