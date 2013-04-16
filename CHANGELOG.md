@@ -2,7 +2,7 @@
 --
 Bugfixes:
 
-* Core: fixed addOpenGraphData for international locale. Thx to Jeroen Desloovere.
+* Core: fixed addOpenGraphData for international locale.
 
 
 3.5.1 (2013-04-15)
