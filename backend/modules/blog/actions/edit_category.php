@@ -34,7 +34,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 			$this->display();
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our URL
+		// no item found, throw an exception, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 

@@ -6,9 +6,9 @@ Improvements:
 * Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
 * Core: use remote html5-shiv.
 * Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
+* Analytics: better grouping for Google Analytics profiles.
 * Core: deleteThumbnails() added in BackendModel. Thx to John Poelman.
-* Composer: Minify is now installed with Composer.
-* Composer: Better install message.
+* Core: Minify is now installed with Composer.
 
 Bugfixes:
 
@@ -22,10 +22,19 @@ Bugfixes:
 * Core: removed line of code from frontend pagination.
 * Spoon: SPOON_DEBUG level did not reflect the parameters.yml settings.
 * Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
+* Share-widget: fixed the whitespace added by Pinterest. Fixes #392.
 * Core: CKEditor is nov available in Chinese. Fixed #381
+<<<<<<< HEAD
 * Location: Address in widget fixed.
 * Analytics: Accounts grouped. Fixes #425.
 * Core: Login sql error on wrong email fixed. Thx to Gertjan Meire.
+=======
+* Extensions: Removed html entities out of header.
+* Installer: used correct path for checking if Fork is installed.
+* Core: Login sql error on wrong email fixed. Thx to Gertjan Meire.
+* Location: Address in widget fixed.
+
+>>>>>>> upstream/master
 
 3.5.0 (2013-03-13)
 --

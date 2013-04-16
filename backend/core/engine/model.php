@@ -259,6 +259,28 @@ class BackendModel extends BaseModel
 	}
 
 	/**
+	 * Delete thumbnails based on the folders in the path
+	 *
+	 * @param string $path The path wherein the thumbnail-folders exist.
+	 * @param string $thumbnail The filename to be deleted.
+	 */
+	public static function deleteThumbnails($path, $thumbnail)
+	{
+		// get folder listing
+		$folders = self::getThumbnailFolders($path);
+
+		// loop folders
+		foreach($folders as $folder)
+		{
+			// delete file but check for existence at first
+			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail))
+			{
+				SpoonFile::delete($folder['path'] . '/' . $thumbnail);
+			}
+		}
+	}
+
+	/**
 	 * Generate a totally random but readable/speakable password
 	 *
 	 * @param int[optional] $length The maximum length for the password to generate.
