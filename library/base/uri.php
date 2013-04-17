@@ -24,7 +24,7 @@ class CommonUri
 	public static function getFilename($value, $charset = null)
 	{
 		// define charset
-		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$charset = ($charset !== null) ? SpoonFilter::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// decode htmlspecial characters
 		$value = SpoonFilter::htmlspecialcharsDecode($value);
