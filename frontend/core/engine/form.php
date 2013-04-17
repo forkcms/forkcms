@@ -662,7 +662,8 @@ class FrontendFormImage extends SpoonFormImage
 	public function generateThumbnails($path, $filename)
 	{
 		// create folder if needed
-		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+		$fs = FrontendModel::getContainer()->get('filesystem');
+		if(!$fs->exists($path . '/source')) $fs->mkdir($path . '/source');
 
 		// move the source file
 		$this->moveFile($path . '/source/' . $filename);

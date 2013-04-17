@@ -255,7 +255,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 		else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
 
 		// build config-object-name
 		$configClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
@@ -496,7 +496,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 		else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
 
 		// build config-object-name
 		$configClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_config');

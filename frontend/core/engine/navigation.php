@@ -169,7 +169,7 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
+			if(!FrontendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// require BackendPagesModel
 				require_once PATH_WWW . '/backend/core/engine/model.php';
@@ -214,7 +214,7 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file @later: the file should be regenerated
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
+			if(!FrontendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
 
 			// init var
 			$navigation = array();
