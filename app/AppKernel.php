@@ -82,8 +82,6 @@ class AppKernel extends Kernel
 	 */
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 	{
-		$this->boot();
-
 		$this->router = new ApplicationRouting($request, $this);
 		return $this->router->handleRequest();
 	}

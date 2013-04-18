@@ -18,6 +18,8 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Config\Loader\DelegatingLoader;
+use Symfony\Component\Config\ConfigCache;
+use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
@@ -53,6 +55,13 @@ abstract class Kernel implements KernelInterface
 	protected $bundles = array();
 
 	/**
+	 * Set the root dir for our project.
+	 *
+	 * @var string
+	 */
+	protected $rootDir;
+
+	/**
 	 * To mirror symfony, $environment should not be optional, but for now we have no reason
 	 * to actually do this because we can't use the profiler.
 	 *
@@ -65,6 +74,9 @@ abstract class Kernel implements KernelInterface
 	{
 		$this->environment = $environment;
 		$this->debug = $debug;
+		$this->rootDir = $this->getRootDir();
+
+		$this->boot();
 	}
 
 	/**
@@ -116,6 +128,7 @@ abstract class Kernel implements KernelInterface
 	 */
 	protected function initializeContainer()
 	{
+/*
 		$this->container = $this->getContainerBuilder();
 		$this->container->setParameter('kernel.log_path', __DIR__ . '/logs');
 
@@ -124,12 +137,36 @@ abstract class Kernel implements KernelInterface
 		$this->registerServices();
 
 		foreach ($this->getBundles() as $bundle) {
-var_dump($bundle->getPath());
+			if ($extension = $bundle->getContainerExtension()) {
+				$this->container->registerExtension($extension);
+			}
 		}
 
 		foreach ($this->bundles as $bundle) {
 			$bundle->build($this->container);
 		}
+*/
+
+		$this->container = $this->getContainerBuilder();
+		$class = 'DevProjectContainer';
+        $cache = new ConfigCache($this->getCacheDir().$class.'.php', true);
+        $fresh = true;
+        if (!$cache->isFresh()) {
+            $container = $this->buildContainer();
+            $container->compile();
+            $this->dumpContainer($cache, $container, $class, $this->getContainerBaseClass());
+
+            $fresh = false;
+        }
+
+        require_once $cache;
+
+        $this->container = new $class();
+        $this->container->set('kernel', $this);
+
+        if (!$fresh && $this->container->has('cache_warmer')) {
+            $this->container->get('cache_warmer')->warmUp($this->container->getParameter('kernel.cache_dir'));
+        }
 	}
 
 	/**
@@ -261,16 +298,112 @@ var_dump($bundle->getPath());
 		return $this->bundleMap[$name];
 	}
 
+
+    /**
+     * Builds the service container.
+     *
+     * @return ContainerBuilder The compiled service container
+     *
+     * @throws \RuntimeException
+     */
+    protected function buildContainer()
+    {
+        foreach (array('cache' => $this->getCacheDir(), 'logs' => $this->getLogDir()) as $name => $dir) {
+            if (!is_dir($dir)) {
+                if (false === @mkdir($dir, 0777, true)) {
+                    throw new \RuntimeException(sprintf("Unable to create the %s directory (%s)\n", $name, $dir));
+                }
+            } elseif (!is_writable($dir)) {
+                throw new \RuntimeException(sprintf("Unable to write in the %s directory (%s)\n", $name, $dir));
+            }
+        }
+
+        $container = $this->getContainerBuilder();
+        $container->addObjectResource($this);
+        $this->prepareContainer($container);
+
+        if (null !== $cont = $this->registerContainerConfiguration($this->getContainerLoader($container))) {
+            $container->merge($cont);
+        }
+
+        $container->addCompilerPass(new AddClassesToCachePass($this));
+
+        return $container;
+    }
+
+
+    /**
+     * Prepares the ContainerBuilder before it is compiled.
+     *
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     */
+    protected function prepareContainer(ContainerBuilder $container)
+    {
+        $extensions = array();
+        foreach ($this->bundles as $bundle) {
+            if ($extension = $bundle->getContainerExtension()) {
+                $container->registerExtension($extension);
+                $extensions[] = $extension->getAlias();
+            }
+
+            if ($this->debug) {
+                $container->addObjectResource($bundle);
+            }
+        }
+        foreach ($this->bundles as $bundle) {
+            $bundle->build($container);
+        }
+
+        // ensure these extensions are implicitly loaded
+        $container->getCompilerPassConfig()->setMergePass(new MergeExtensionConfigurationPass($extensions));
+    }
+
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function getCacheDir()
+    {
+        return $this->rootDir.'/cache/'.$this->environment;
+    }
+
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function getLogDir()
+    {
+        return $this->rootDir.'/logs';
+    }
+
+
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function getRootDir()
+    {
+        if (null === $this->rootDir) {
+            $r = new \ReflectionObject($this);
+            $this->rootDir = str_replace('\\', '/', dirname($r->getFileName()));
+        }
+
+        return $this->rootDir;
+    }
+
 	/**
 	 * @todo
 	 * These methods need to be present in order to answer to interface requirements.
 	 * Most are only relevant when bundles are present, so we can't use them yet.
 	 */
-	public function getCacheDir(){}
 	public function getCharset(){}
-	public function getLogDir(){}
 	public function getName(){}
-	public function getRootDir(){}
 	public function getStartTime(){}
 	public function isClassInActiveBundle($class){}
 	public function isDebug(){}
