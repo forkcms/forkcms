@@ -2,10 +2,3 @@ imports:
     - { resource: parameters.yml }
 
 services:
-    monolog.logger:
-        class: Monolog\Logger
-        arguments: [ 'fork-cms' ]
-
-    logger:
-        class: JelmerSnoeck\ForkLogger\Logger
-        arguments: [ @monolog.logger, %kernel.log_path%, %fork.debug% ]

@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Application routing
@@ -51,7 +52,7 @@ class ApplicationRouting
 	 * @param Request $request
 	 * @param Kernel $kernel
 	 */
-	public function __construct(Request $request, Kernel $kernel)
+	public function __construct(Request $request, KernelInterface $kernel)
 	{
 		// this class is used in most Fork applications to bubble down the Kernel object
 		require_once __DIR__ . '/ApplicationInterface.php';

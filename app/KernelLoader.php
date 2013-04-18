@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class is used in several Fork applications to bubble down the AppKernel/Kernel object.
  *
@@ -22,7 +24,7 @@ class KernelLoader
 	/**
 	 * @param Kernel $kernel
 	 */
-	public function __construct(Kernel $kernel)
+	public function __construct(KernelInterface $kernel)
 	{
 		$this->setKernel($kernel);
 	}

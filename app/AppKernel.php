@@ -82,8 +82,22 @@ class AppKernel extends Kernel
 	 */
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 	{
+		$this->boot();
+
 		$this->router = new ApplicationRouting($request, $this);
 		return $this->router->handleRequest();
+	}
+
+	/**
+	 * Register all the bundles we'll be using.
+	 *
+	 * @return array
+	 */
+	public function registerBundles()
+	{
+		return array(
+			new Symfony\Bundle\MonologBundle\MonologBundle(),
+		);
 	}
 
 	/**
