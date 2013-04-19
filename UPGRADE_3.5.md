@@ -4,31 +4,34 @@ UPGRADE FROM 3.5 to 3.6
 ## Filesystem component
 
 With this release we introduce the Filesystem component into Fork CMS. This
-component allows us to interact with the filesystem
+component allows us to interact with the filesystem.
 
-More info about the Console component can be found on:
+More info about the Filesystem component can be found on:
 http://symfony.com/doc/current/components/filesystem.html
 
 ### Upgrading your module
 
-There are several pieces of code that should be replaced
-
-#### Backend
+There are several pieces of code that should be replaced.
 
 In the backend the filesystem component is available through the container. So
-each time you need the filesystem-object you should use:
+each time you need the filesystem-object in the backend you should use:
 
 	BackendModel::getContainer()->get('filesystem');
 
+In the frontend the filesystem component is available through the containser. 
+So each time you need the filesystem-object in the backend you should use:
+
+	FrontendModel::getContainer()->get('filesystem');
 
 Below you can find all changes you should apply to make your module compatible
-with this release.
+with this release. Make sure you use the correct method to retrieve the 
+container.
 
 ##### SpoonFile::exists
 
 	SpoonFile::exists(...);
 
-Should become
+Should become:
 
 	BackendModel::getContainer()->get('filesystem')->exists(...);
 
@@ -36,7 +39,7 @@ Should become
 
 	SpoonFile::delete(...);
 
-Should become
+Should become:
 
 	BackendModel::getContainer()->get('filesystem')->remove(...);
 
@@ -44,7 +47,7 @@ Should become
 
 	SpoonFile::move(...);
 
-Should become
+Should become:
 
 	BackendModel::getContainer()->get('filesystem')->rename(...);
 
@@ -52,7 +55,7 @@ Should become
 
 	SpoonDirectory::exists(...);
 
-Should become
+Should become:
 
 	BackendModel::getContainer()->get('filesystem')->exists(...);
 
@@ -60,7 +63,7 @@ Should become
 
 	SpoonDirectory::create(...);
 
-Should become
+Should become:
 
 	BackendModel::getContainer()->get('filesystem')->mkdir(...);
 
@@ -68,8 +71,10 @@ Should become
 
 	SpoonFileException(...);
 
-Should become
+Should become:
 
 	IOException(...);
 
-Also don't forget to add the `use Symfony\Component\Filesystem\Exception\IOException;`-statement at the top the file where you throw an IOException
+Also don't forget to add the 
+`use Symfony\Component\Filesystem\Exception\IOException;`-statement at the top 
+the file where you throw an IOException.
