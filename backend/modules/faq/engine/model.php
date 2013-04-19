@@ -58,7 +58,7 @@ class BackendFaqModel
 			$db->delete('faq_categories', 'id = ?', array((int) $id));
 			$db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
-			// invalidate the cache for blog
+			// invalidate the cache for the faq
 			BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
 		}
 	}
