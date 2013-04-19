@@ -632,6 +632,9 @@
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '');
 				var inElements = false;
 
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
+
 				// a value should contain the split char
 				if(value.split(options.secondSplitChar).length == 1) value = '';
 
@@ -931,6 +934,9 @@
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
 
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
+
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
@@ -1122,7 +1128,7 @@
 				e.stopPropagation();
 
 				if(options.maxItems !== null && elements.length >= options.maxItems) return;
-				
+
 				// add element
 				add();
 			});
@@ -1146,6 +1152,9 @@
 				// init some vars
 				var value = $('#addValue-' + id).val();
 				var inElements = false;
+
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// reset box
 				$('#addValue-' + id).focus();
@@ -1461,6 +1470,9 @@
 				// init some vars
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
+
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// reset box
 				$('#addValue-' + id).val('').focus();
