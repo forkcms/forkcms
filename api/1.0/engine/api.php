@@ -71,7 +71,7 @@ class API extends KernelLoader implements ApplicationInterface
 		else $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
 
 		// check if the file is present? If it isn't present there is a problem
-		if(!SpoonFile::exists($path)) return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+		if(!$this->getContainer()->get('filesystem')->exists($path)) return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
 
 		// build config-object-name
 		$className = 'Backend' . SpoonFilter::toCamelCase($chunks[0]) . 'API';
