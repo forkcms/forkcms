@@ -222,8 +222,30 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				}
 			}
 
+			// ckfinder
 			if($this->frm->getField('ckfinder_image_max_width')->isFilled()) $this->frm->getField('ckfinder_image_max_width')->isInteger(BL::err('InvalidInteger'));
 			if($this->frm->getField('ckfinder_image_max_height')->isFilled()) $this->frm->getField('ckfinder_image_max_height')->isInteger(BL::err('InvalidInteger'));
+			
+			// Facebook
+			if($this->frm->getField('facebook_admin_ids')->isFilled())
+			{
+				// split ids on comma's
+				$admins = explode(",", trim($this->frm->getField('facebook_admin_ids')->getValue()));
+			
+				// loop admins
+				foreach($admins as $admin)
+				{
+					// invalid admin
+					if( !SpoonFilter::isInteger($admin) && !SpoonFilter::isEmail($admin) )
+				    {
+				    	// set error
+					    $this->frm->getField('facebook_admin_ids')->setError(BL::err('InvalidValue').": ".$admin);
+					    
+					    // stop looping facebook admins
+					    break;
+				    }
+				}
+			}
 
 			// no errors ?
 			if($this->frm->isCorrect())
