@@ -185,6 +185,23 @@ class BackendBaseAction extends BackendBaseObject
 	}
 
 	/**
+	 * Check if the token is ok
+	 *
+	 * @return bool
+	 */
+	public function checkToken()
+	{
+		$fromSession = (SpoonSession::exists('csfr_token')) ? SpoonSession::get('csfr_token') : '';
+		$fromGet = SpoonFilter::getGetValue('token', null, '');
+
+		if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return true;
+
+		// halt here, because something is wrong with the token
+		SpoonHTTP::setHeadersByCode(403);
+		exit;
+	}
+
+	/**
 	 * Display, this wil output the template to the browser
 	 * If no template is specified we build the path form the current module and action
 	 *
@@ -395,6 +412,15 @@ class BackendBaseActionAdd extends BackendBaseAction
 	protected $meta;
 
 	/**
+	 * Execute the current action
+	 */
+	public function execute()
+	{
+		parent::execute();
+		parent::checkToken();
+	}
+
+	/**
 	 * Parse the form
 	 */
 	protected function parse()
@@ -449,6 +475,15 @@ class BackendBaseActionEdit extends BackendBaseAction
 	protected $record;
 
 	/**
+	 * Execute the current action
+	 */
+	public function execute()
+	{
+		parent::execute();
+		parent::checkToken();
+	}
+
+	/**
 	 * Parse the form
 	 */
 	protected function parse()
@@ -488,6 +523,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	public function execute()
 	{
 		parent::parse();
+		parent::checkToken();
 	}
 }
 
