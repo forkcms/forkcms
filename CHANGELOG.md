@@ -1,3 +1,10 @@
+3.5.2 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Security: prevent csfr
+
+
 3.5.1 (2013-04-15)
 --
 Improvements:
