@@ -192,14 +192,10 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 		if($this->getModule() == 'core') $path = BACKEND_CORE_PATH . '/cronjobs';
 		else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
 
-		// does this module exist?
-		$actions = SpoonFile::getList($path);
-		if(!in_array($action . '.php', $actions))
+		// check if file exists
+		if(!$this->getContainer()->get('filesystem')->exists($path . '/' . $action . '.php'))
 		{
-			// set correct headers
 			SpoonHTTP::setHeadersByCode(403);
-
-			// throw exception
 			throw new BackendException('Action not allowed.');
 		}
 
