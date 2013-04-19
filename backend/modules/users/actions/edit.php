@@ -300,10 +300,11 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					// delete old avatar if it isn't the default-image
 					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
 					{
-						SpoonFile::delete($avatarsPath . '/source/' . $this->record['settings']['avatar']);
-						SpoonFile::delete($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
-						SpoonFile::delete($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
-						SpoonFile::delete($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
+						$fs = BackendModel::getContainer()->get('filesystem');
+						$fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+						$fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+						$fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+						$fs->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
 					}
 
 					// create new filename

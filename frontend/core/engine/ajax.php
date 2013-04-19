@@ -259,7 +259,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		else $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/' . $this->getAction() . '.php';
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists($path)) throw new FrontendException('The actionfile (' . $path . ') can\'t be found.');
+		if(!FrontendModel::getContainer()->get('filesystem')->exists($path)) throw new FrontendException('The actionfile (' . $path . ') can\'t be found.');
 
 		// require the ajax file, we know it is there because we validated it before (possible actions are defined by existance of the file).
 		require_once $path;
@@ -315,7 +315,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
 
 		// build config-object-name
 		$configClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_config');

@@ -115,7 +115,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if(SPOON_DEBUG) return false;
 
 		// check if cachefile exists
-		if(!SpoonFile::exists($this->cacheFile)) return false;
+		if(!FrontendModel::getContainer()->get('filesystem')->exists($this->cacheFile)) return false;
 
 		// get cachefile modification time
 		$cacheInfo = @filemtime($this->cacheFile);

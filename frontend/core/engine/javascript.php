@@ -158,7 +158,7 @@ class FrontendJavascript
 		}
 
 		// check if the path exists, if not whe should given an error
-		if(!SpoonFile::exists($path))
+		if(!FrontendModel::getContainer()->get('filesystem')->exists($path))
 		{
 			// set correct headers
 			SpoonHTTP::setHeadersByCode(404);
