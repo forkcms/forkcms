@@ -26,7 +26,6 @@ with this release.
 
 ##### SpoonFile::exists
 
-
 	SpoonFile::exists(...);
 
 Should become
@@ -64,3 +63,13 @@ Should become
 Should become
 
 	BackendModel::getContainer()->get('filesystem')->mkdir(...);
+
+##### SpoonFileException
+
+	SpoonFileException(...);
+
+Should become
+
+	IOException(...);
+
+Also don't forget to add the `use Symfony\Component\Filesystem\Exception\IOException;`-statement at the top the file where you throw an IOException
