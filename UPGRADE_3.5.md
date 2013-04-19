@@ -16,15 +16,21 @@ There are several pieces of code that should be replaced.
 In the backend the filesystem component is available through the container. So
 each time you need the filesystem-object in the backend you should use:
 
-	BackendModel::getContainer()->get('filesystem');
+	$this->getContainer()->get('filesystem');
 
-In the frontend the filesystem component is available through the containser. 
+In the frontend the filesystem component is available through the containser.
 So each time you need the filesystem-object in the backend you should use:
 
 	FrontendModel::getContainer()->get('filesystem');
 
+Inside an action you can access the container by using:
+
+	$this->getContainer()->get('filesystem');
+
+The method above is the method we prefer to use, and you should also.
+
 Below you can find all changes you should apply to make your module compatible
-with this release. Make sure you use the correct method to retrieve the 
+with this release. Make sure you use the correct method to retrieve the
 container.
 
 #### SpoonFile::exists
@@ -33,7 +39,7 @@ container.
 
 Should become:
 
-	BackendModel::getContainer()->get('filesystem')->exists(...);
+	$this->getContainer()->get('filesystem')->exists(...);
 
 #### SpoonFile::delete
 
@@ -41,7 +47,7 @@ Should become:
 
 Should become:
 
-	BackendModel::getContainer()->get('filesystem')->remove(...);
+	$this->getContainer()->get('filesystem')->remove(...);
 
 #### SpoonFile::move
 
@@ -49,7 +55,7 @@ Should become:
 
 Should become:
 
-	BackendModel::getContainer()->get('filesystem')->rename(...);
+	$this->getContainer()->get('filesystem')->rename(...);
 
 #### SpoonDirectory::exists
 
@@ -57,7 +63,7 @@ Should become:
 
 Should become:
 
-	BackendModel::getContainer()->get('filesystem')->exists(...);
+	$this->getContainer()->get('filesystem')->exists(...);
 
 #### SpoonDirectory::create
 
@@ -65,7 +71,7 @@ Should become:
 
 Should become:
 
-	BackendModel::getContainer()->get('filesystem')->mkdir(...);
+	$this->getContainer()->get('filesystem')->mkdir(...);
 
 #### SpoonFileException
 
@@ -75,8 +81,8 @@ Should become:
 
 	IOException(...);
 
-Also don't forget to add the 
-`use Symfony\Component\Filesystem\Exception\IOException;`-statement at the top 
+Also don't forget to add the
+`use Symfony\Component\Filesystem\Exception\IOException;`-statement at the top
 the file where you throw an IOException.
 
 
