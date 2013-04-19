@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -309,7 +311,7 @@ class BackendMailmotorCMHelper
 			if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
-				throw new SpoonFileException(BL::err('ClassDoesNotExist', 'mailmotor'));
+				throw new IOException(BL::err('ClassDoesNotExist', 'mailmotor'));
 			}
 
 			// require CampaignMonitor class
