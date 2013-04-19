@@ -219,7 +219,7 @@ class InstallerStep7 extends InstallerStep
 		if(!empty($filesToDelete))
 		{
 			// loop files and delete them
-			foreach($filesToDelete as $file) SpoonFile::delete($file);
+			foreach($filesToDelete as $file) BackendModel::getContainer()->get('filesystem')->remove($file);
 		}
 	}
 
@@ -344,7 +344,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($modules as $module)
 		{
 			// install exists
-			if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
+			if(BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
 			{
 				// users module needs custom variables
 				if($module == 'users')

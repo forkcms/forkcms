@@ -68,7 +68,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		foreach($modules as $module)
 		{
 			// check if their is a model-file
-			if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php'))
+			if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php'))
 			{
 				// require the model-file
 				require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';

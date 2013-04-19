@@ -307,7 +307,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(substr($image, 0, 7) != SITE_PROTOCOL . '://')
 		{
 			// check if image exists
-			if(!SpoonFile::exists(PATH_WWW . $image)) return;
+			if(!FrontendModel::getContainer()->get('filesystem')->exists(PATH_WWW . $image)) return;
 
 			// convert to absolute path
 			$image = SITE_URL . $image;
@@ -481,12 +481,13 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = FrontendModel::getContainer()->get('filesystem');
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file
@@ -512,12 +513,13 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = FrontendModel::getContainer()->get('filesystem');
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file

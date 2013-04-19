@@ -89,7 +89,7 @@ class SearchInstaller extends ModuleInstaller
 		$this->searchPages();
 
 		// create module cache path
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/cache/search')) SpoonDirectory::create(PATH_WWW . '/frontend/cache/search');
+		if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/frontend/cache/search')) BackendModel::getContainer()->get('filesystem')->mkdir(PATH_WWW . '/frontend/cache/search');
 	}
 
 	/**

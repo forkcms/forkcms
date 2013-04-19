@@ -46,12 +46,12 @@ class FrontendTheme
 				$themeTemplate = str_replace(array('frontend/'), array('frontend/themes/' . $theme . '/'), $file);
 
 				// check if this template exists
-				if(SpoonFile::exists(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) $file = $themeTemplate;
+				if(FrontendModel::getContainer()->get('filesystem')->exists(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) $file = $themeTemplate;
 			}
 		}
 
 		// check if the file exists
-		if(!SpoonFile::exists(PATH_WWW . str_replace(PATH_WWW, '', $file))) throw new FrontendException('The template (' . $file . ') doesn\'t exists.');
+		if(!FrontendModel::getContainer()->get('filesystem')->exists(PATH_WWW . str_replace(PATH_WWW, '', $file))) throw new FrontendException('The template (' . $file . ') doesn\'t exists.');
 
 		// return template path
 		return $file;

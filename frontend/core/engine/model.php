@@ -476,7 +476,7 @@ class FrontendModel extends BaseModel
 	{
 		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
 
-		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
+		if($includeSource && FrontendModel::getContainer()->get('filesystem')->exists($path . '/source')) $folders[] = 'source';
 
 		$return = array();
 
@@ -759,8 +759,9 @@ class FrontendModel extends BaseModel
 	 */
 	public static function startProcessingHooks()
 	{
+		$fs = FrontendModel::getContainer()->get('filesystem');
 		// is the queue already running?
-		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
+		if($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
 			$pid = trim(SpoonFile::getContent(FRONTEND_CACHE_PATH . '/hooks/pid'));
@@ -775,7 +776,7 @@ class FrontendModel extends BaseModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -792,7 +793,7 @@ class FrontendModel extends BaseModel
 				if($output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -803,10 +804,10 @@ class FrontendModel extends BaseModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!SpoonFile::exists('/proc/' . $pid))
+				if(!$fs->exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
