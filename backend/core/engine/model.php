@@ -1,6 +1,7 @@
 <?php
 
 use \TijsVerkoyen\Akismet\Akismet;
+use Symfony\Component\Finder\Finder;
 
 /*
  * This file is part of Fork CMS.
@@ -978,23 +979,27 @@ class BackendModel extends BaseModel
 		// get cache path
 		$path = FRONTEND_CACHE_PATH . '/cached_templates';
 
-		// build regular expression
-		if($module !== null)
+		if(BackendModel::getContainer()->get('filesystem')->exists($path))
 		{
-			if($language === null) $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
-			else $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
-		}
-		else
-		{
-			if($language === null) $regexp = '/(.*)_cache\.tpl/i';
-			else $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
-		}
+			// build regular expression
+			if($module !== null)
+			{
+				if($language === null) $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
+				else $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
+			}
+			else
+			{
+				if($language === null) $regexp = '/(.*)_cache\.tpl/i';
+				else $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
+			}
 
-		// get files to delete
-		$files = SpoonFile::getList($path, $regexp);
-
-		// delete files
-		foreach($files as $file) BackendModel::getContainer()->get('filesystem')->remove($path . '/' . $file);
+			$finder = new Finder();
+			$filesystem = BackendModel::getContainer()->get('filesystem');
+			foreach($finder->files()->name($regexp)->in($path) as $file)
+			{
+				$filesystem->remove($file->getRealPath());
+			}
+		}
 	}
 
 	/**

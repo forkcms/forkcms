@@ -9,6 +9,7 @@
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This class will be the base of the objects used in the cms
@@ -666,30 +667,30 @@ class BackendBaseConfig extends BackendBaseObject
 	 */
 	public function setPossibleActions()
 	{
-		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/actions', '/(.*).php/');
+		$path = BACKEND_MODULES_PATH . '/' . $this->getModule();
 
-		// loop filelist
-		foreach($actionFiles as $file)
+		if(BackendModel::getContainer()->get('filesystem')->exists($path . '/actions'))
 		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
+			$finder = new Finder();
+			foreach($finder->files()->name('*.php')->in($path . '/actions') as $file)
+			{
+				$action = strtolower(str_replace('.php', '', $file->getBasename()));
 
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file] = $action;
+				// if the action isn't disabled add it to the possible actions
+				if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+			}
 		}
 
-		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/ajax', '/(.*).php/');
-
-		// loop filelist
-		foreach($AJAXActionFiles as $file)
+		if(BackendModel::getContainer()->get('filesystem')->exists($path . '/ajax'))
 		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
+			$finder = new Finder();
+			foreach($finder->files()->name('*.php')->in($path . '/ajax') as $file)
+			{
+				$action = strtolower(str_replace('.php', '', $file->getBasename()));
 
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file] = $action;
+				// if the action isn't disabled add it to the possible actions
+				if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+			}
 		}
 	}
 }
