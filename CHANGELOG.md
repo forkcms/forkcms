@@ -1,8 +1,8 @@
-3.x.x (xxxx-xx-xx)
+3.5.2 (xxxx-xx-xx)
 --
-Improvements:
+Bugfixes:
 
-* Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
+* Security: prevent csfr
 
 
 3.5.1 (2013-04-15)
