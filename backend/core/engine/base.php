@@ -412,6 +412,15 @@ class BackendBaseActionAdd extends BackendBaseAction
 	protected $meta;
 
 	/**
+	 * Execute the current action
+	 */
+	public function execute()
+	{
+		parent::execute();
+		parent::checkToken();
+	}
+
+	/**
 	 * Parse the form
 	 */
 	protected function parse()
@@ -466,6 +475,15 @@ class BackendBaseActionEdit extends BackendBaseAction
 	protected $record;
 
 	/**
+	 * Execute the current action
+	 */
+	public function execute()
+	{
+		parent::execute();
+		parent::checkToken();
+	}
+
+	/**
 	 * Parse the form
 	 */
 	protected function parse()
@@ -505,6 +523,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	public function execute()
 	{
 		parent::parse();
+		parent::checkToken();
 	}
 }
 
