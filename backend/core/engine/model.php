@@ -42,6 +42,13 @@ class BackendModel extends BaseModel
 	private static $moduleSettings;
 
 	/**
+	 * A token to protect us agains csfr
+	 *
+	 * @var string
+	 */
+	private static $token;
+
+	/**
 	 * Add a number to the string
 	 *
 	 * @param string $string The string where the number will be appended to.
@@ -754,6 +761,22 @@ class BackendModel extends BaseModel
 		}
 
 		return $possibleFormats;
+	}
+
+	/**
+	 * Get the token which will protect us
+	 *
+	 * @return string
+	 */
+	public static function getToken()
+	{
+		if(self::$token == '')
+		{
+			self::$token = self::generateRandomString(10, true, true, false, false);
+			SpoonSession::set('csfr_token', self::$token);
+		}
+
+		return self::$token;
 	}
 
 	/**
