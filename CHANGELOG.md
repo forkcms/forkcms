@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Security: prevent csfr
+* Core: jQuery-plugins should escape data when using the raw data.
 
 
 3.5.1 (2013-04-15)
