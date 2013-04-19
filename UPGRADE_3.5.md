@@ -78,3 +78,16 @@ Should become:
 Also don't forget to add the 
 `use Symfony\Component\Filesystem\Exception\IOException;`-statement at the top 
 the file where you throw an IOException.
+
+
+## Finder component
+
+With this release we introduce the Finder component into Fork CMS. This
+component allows us to find files and directories via an intuitive fluent
+interface.
+
+More info about the Finder component can be found on:
+http://symfony.com/doc/master/components/finder.html
+
+### Upgrading your module
+
