@@ -91,3 +91,23 @@ http://symfony.com/doc/master/components/finder.html
 
 ### Upgrading your module
 
+#### SpoonFile::getList
+
+Wherever you need to deal with a list of files you will probably loop them.
+Symfony has a nice way of iterating through the files in a path. So take the
+old code below:
+
+	$files = SpoonFile::getList($path, '/(.*).php/');
+	foreach($files as $file)
+	{
+		Spoon::dump($file);
+	}
+
+Would become:
+
+	$finder = new Finder();
+	foreach($finder->files()->name('*.php')->in($path) as $file)
+	{
+		Spoon::dump($file->basename());
+	}
+
