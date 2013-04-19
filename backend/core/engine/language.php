@@ -286,8 +286,14 @@ class BackendLanguage
 		require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
 
 		// validate file, generate it if needed
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/en.php')) BackendLocaleModel::buildCache('en', APPLICATION);
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/' . $language . '.php')) BackendLocaleModel::buildCache($language, APPLICATION);
+		if(!BackendModel::getContainer()->get('filesystem')->exists(BACKEND_CACHE_PATH . '/locale/en.php'))
+		{
+			BackendLocaleModel::buildCache('en', APPLICATION);
+		}
+		if(!BackendModel::getContainer()->get('filesystem')->exists(BACKEND_CACHE_PATH . '/locale/' . $language . '.php'))
+		{
+			BackendLocaleModel::buildCache($language, APPLICATION);
+		}
 
 		// store
 		self::$currentInterfaceLanguage = $language;
