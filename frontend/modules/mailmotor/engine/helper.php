@@ -74,7 +74,7 @@ class FrontendMailmotorCMHelper
 			if(!FrontendModel::getContainer()->get('filesystem')->exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
-				throw new SpoonFileException('The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external');
+				throw new IOException('The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external');
 			}
 
 			// require CampaignMonitor class
