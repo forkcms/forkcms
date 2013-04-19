@@ -27,7 +27,7 @@ Below you can find all changes you should apply to make your module compatible
 with this release. Make sure you use the correct method to retrieve the 
 container.
 
-##### SpoonFile::exists
+#### SpoonFile::exists
 
 	SpoonFile::exists(...);
 
@@ -35,7 +35,7 @@ Should become:
 
 	BackendModel::getContainer()->get('filesystem')->exists(...);
 
-##### SpoonFile::delete
+#### SpoonFile::delete
 
 	SpoonFile::delete(...);
 
@@ -43,7 +43,7 @@ Should become:
 
 	BackendModel::getContainer()->get('filesystem')->remove(...);
 
-##### SpoonFile::move
+#### SpoonFile::move
 
 	SpoonFile::move(...);
 
@@ -51,7 +51,7 @@ Should become:
 
 	BackendModel::getContainer()->get('filesystem')->rename(...);
 
-##### SpoonDirectory::exists
+#### SpoonDirectory::exists
 
 	SpoonDirectory::exists(...);
 
@@ -59,7 +59,7 @@ Should become:
 
 	BackendModel::getContainer()->get('filesystem')->exists(...);
 
-##### SpoonDirectory::create
+#### SpoonDirectory::create
 
 	SpoonDirectory::create(...);
 
@@ -67,7 +67,7 @@ Should become:
 
 	BackendModel::getContainer()->get('filesystem')->mkdir(...);
 
-##### SpoonFileException
+#### SpoonFileException
 
 	SpoonFileException(...);
 
