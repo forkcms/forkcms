@@ -479,8 +479,6 @@ class FrontendBaseBlock extends FrontendBaseObject
 		// define anchor
 		$anchor = (isset($this->pagination['anchor'])) ? '#' . $this->pagination['anchor'] : '';
 
-		// as long as we are below page 5 we should show all pages starting from 1
-		if($this->pagination['requested_page'] <= 6)
 		// as long as we have more then 5 pages and are 5 pages from the end we should show all pages till the end
 		if($this->pagination['requested_page'] > 5 && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4))
 		{
@@ -630,7 +628,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 	public function redirect($URL, $code = 302)
 	{
 		$response = new RedirectResponse(
-			$URL, $code, SpoonHTTP::getHeadersList()
+			$URL, $code
 		);
 
 		/*
@@ -638,6 +636,13 @@ class FrontendBaseBlock extends FrontendBaseObject
 		 * response directly after creating.
 		 */
 		$response->send();
+
+		/*
+		 * Stop code executing here
+		 * I know this is ugly as hell, but if we don't do this the code after
+		 * this call is executed and possibly will trigger errors.
+		 */
+		exit;
 	}
 
 	/**

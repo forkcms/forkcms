@@ -55,7 +55,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -68,7 +68,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->record = (array) BackendMailmotorModel::getMailing($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
+		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -189,7 +189,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$templates = BackendMailmotorModel::getTemplatesForCheckboxes($this->record['language']);
 
 		// no templates found
-		if(empty($templates)) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-templates');
+		if(empty($templates)) $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=1&error=no-templates');
 
 		// loop the templates
 		foreach($templates as &$record)
@@ -217,7 +217,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadFormForStep3()
 	{
 		// check if we have to redirect back to step 2 (template is not set)
-		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=2&amp;error=complete-step-2');
+		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=2&error=complete-step-2');
 
 		// check if we should show the plain text box
 		$this->showPlainTextBox = BackendModel::getModuleSetting($this->getModule(), 'plain_text_editable');
@@ -244,7 +244,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadFormForStep4()
 	{
 		// check if we have to redirect back to step 3 (HTML content is not set)
-		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=3&amp;error=complete-step-3');
+		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=3&error=complete-step-3');
 
 		// get preview URL
 		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id'], 'html', true);
@@ -435,7 +435,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step1', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&step=2');
 			}
 		}
 	}
@@ -475,7 +475,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step2', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=3');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&step=3');
 			}
 		}
 	}
@@ -515,10 +515,10 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				BackendMailmotorCMHelper::sendPreviewMailing($this->id, $txtEmail->getValue());
 
 				// build URL
-				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';
+				$url = BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=4';
 
 				// send the preview
-				$this->redirect($url . '&amp;report=preview-sent&amp;var=' . $txtEmail->getValue());
+				$this->redirect($url . '&report=preview-sent&var=' . $txtEmail->getValue());
 			}
 		}
 	}

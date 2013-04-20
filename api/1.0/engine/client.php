@@ -49,7 +49,7 @@ class APIClient extends API
 		$content = $this->tpl->getContent(__DIR__ . '/../client/layout/templates/index.tpl');
 
 		return new Response(
-			$content, 200, SpoonHttp::getHeadersList()
+			$content, 200
 		);
 	}
 

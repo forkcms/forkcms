@@ -123,7 +123,7 @@ class BackendBaseObject extends KernelLoader
 	{
 		return new Response(
 			$this->content,
-			200, SpoonHttp::getHeadersList()
+			200
 		);
 	}
 }
@@ -321,7 +321,7 @@ class BackendBaseAction extends BackendBaseObject
 	public function redirect($URL)
 	{
 		$response = new RedirectResponse(
-			$URL, 302, SpoonHTTP::getHeadersList()
+			$URL, 302
 		);
 
 		/*
@@ -329,6 +329,13 @@ class BackendBaseAction extends BackendBaseObject
 		 * response directly after creating.
 		 */
 		$response->send();
+
+		/*
+		 * Stop code executing here
+		 * I know this is ugly as hell, but if we don't do this the code after
+		 * this call is executed and possibly will trigger errors.
+		 */
+		exit;
 	}
 }
 

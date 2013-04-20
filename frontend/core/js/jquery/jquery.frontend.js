@@ -241,9 +241,8 @@
 							html += '<li class="shareMenuTwitter">' +
 									'	<a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
 							if(title != '') html += ' data-text="' + title + '"';
-							html += ' data-lang="' + jsFrontend.current.language + '"';
-							html += ' >' + options.twitter.label  + '</a>';
-							html += '</li>';
+							html += ' data-lang="' + jsFrontend.current.language + '">' + options.twitter.label  + '</a>' +
+									'</li>';
 						break;
 
 						// google plus
@@ -273,10 +272,10 @@
 
 							// build & add html
 							html += '<li class="shareMenuGoogleplus">' +
-							'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>';
-							html += '</li>';
+									'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>' +
+									'</li>';
 						break;
-						
+
 						// pinterest
 						case 'pinterest':
 							if(image != '')
@@ -288,33 +287,37 @@
 									{
 										if($(this).attr('src') == '//assets.pinterest.com/js/pinit.js') pinterestLoaded = true;
 									});
-	
+
 									// not loaded?
 									if(!pinterestLoaded)
 									{
 										// create the script tag
 										var script = document.createElement('script')
 										script.src = '//assets.pinterest.com/js/pinit.js';
-	
+
 										// add into head
 										$('head').after(script);
-	
+
+										// ugly hack, for some stupid reason Pinterests adds an iframe at the bottom of the page
+										// therefor we set it to display none.
+										$('head').append('<style>iframe[src^="//assets.pinterest"] { display: none; }</style>');
+
 										// reset var
 										pinterestLoaded = true;
 									}
-									
+
 									if(typeof options[options.sequence[i]].countLayout != 'undefined') countLayout = options[options.sequence[i]].countLayout;
 									else countLayout = 'none';
 									if(countLayout != 'horizontal' || countLayout != 'vertical' || countLayout != 'none') countLayout = 'none';
 
 									// build & add html
 									html += '<li class="shareMenuPinterest">' +
-									'	<a href="http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(link) + 
-										'&media=' + encodeURIComponent(image) + 
-										'&description=' + encodeURIComponent(description) + 
-										'" class="pin-it-button" count-layout="' + countLayout + '">' +
-										'<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>';
-									html += '</li>';
+											'	<a href="http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(link) +
+													'&media=' + encodeURIComponent(image) +
+													'&description=' + encodeURIComponent(description) +
+													'" class="pin-it-button" count-layout="' + countLayout + '">' +
+												'<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>' +
+											'</li>';
 								}
 							}
 						break;

@@ -16,7 +16,7 @@ require_once __DIR__ . '/../../../app/BaseModel.php';
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Reclamebureau Siesqo <info@siesqo.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class BackendModel extends BaseModel
 {
@@ -255,6 +255,28 @@ class BackendModel extends BaseModel
 
 			// invalidate the cache for the module
 			BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+		}
+	}
+
+	/**
+	 * Delete thumbnails based on the folders in the path
+	 *
+	 * @param string $path The path wherein the thumbnail-folders exist.
+	 * @param string $thumbnail The filename to be deleted.
+	 */
+	public static function deleteThumbnails($path, $thumbnail)
+	{
+		// get folder listing
+		$folders = self::getThumbnailFolders($path);
+
+		// loop folders
+		foreach($folders as $folder)
+		{
+			// delete file but check for existence at first
+			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail))
+			{
+				SpoonFile::delete($folder['path'] . '/' . $thumbnail);
+			}
 		}
 	}
 
@@ -973,6 +995,21 @@ class BackendModel extends BaseModel
 
 		// delete files
 		foreach($files as $file) SpoonFile::delete($path . '/' . $file);
+	}
+
+	/**
+	 * Is module installed?
+	 *
+	 * @param string $module
+	 * @return bool
+	 */
+	public static function isModuleInstalled($module)
+	{
+		// get installed modules
+		$modules = self::getModules();
+
+		// return if module is installed or not
+		return (in_array((string) $module, $modules));
 	}
 
 	/**

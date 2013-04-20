@@ -23,7 +23,7 @@ require_once __DIR__ . '/routing.php';
 class AppKernel extends Kernel
 {
 	/**
-	 * Register all the bundles we'll be using.
+	 * Load all the bundles we'll be using in our application.
 	 *
 	 * @return array
 	 */

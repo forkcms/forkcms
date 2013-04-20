@@ -6,7 +6,7 @@
 # @author	Johan Ronsse <johan@netlash.com>
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
 
-rm -f `find ../install/cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../install/cache/ ! \( -name .gitignore -o -name installed.txt \) -type f ! -path *.svn/* -type f`
 
 rm -f `find ../frontend/cache/cached_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ../frontend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`

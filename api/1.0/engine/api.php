@@ -317,7 +317,14 @@ class API extends KernelLoader implements ApplicationInterface
 		}
 
 		// get the user
-		$user = new BackendUser(null, $email);
+		try
+		{
+			$user = new BackendUser(null, $email);
+		}
+		catch(Exception $e)
+		{
+			return self::output( self::FORBIDDEN, array('message' => 'This account does not exist.'));
+		}
 
 		// user is god!
 		if($user->isGod()) return true;
@@ -351,7 +358,7 @@ class API extends KernelLoader implements ApplicationInterface
 	public function display()
 	{
 		return new Response(
-			self::$content, 200, SpoonHttp::getHeadersList()
+			self::$content, 200
 		);
 	}
 
