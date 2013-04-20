@@ -186,15 +186,13 @@ class BackendBaseAction extends BackendBaseObject
 
 	/**
 	 * Check if the token is ok
-	 *
-	 * @return bool
 	 */
 	public function checkToken()
 	{
 		$fromSession = (SpoonSession::exists('csrf_token')) ? SpoonSession::get('csrf_token') : '';
 		$fromGet = SpoonFilter::getGetValue('token', null, '');
 
-		if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return true;
+		if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return;
 
 		// halt here, because something is wrong with the token
 		SpoonHTTP::setHeadersByCode(403);
