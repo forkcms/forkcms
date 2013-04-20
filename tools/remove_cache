@@ -23,4 +23,6 @@ rm -f `find ../backend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.
 rm -f `find ../backend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 rm -f `find ../backend/cache/logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
+rm -f `find ../app/cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+
 echo 'All done! Cache files removed.'
