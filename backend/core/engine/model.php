@@ -772,14 +772,14 @@ class BackendModel extends BaseModel
 	{
 		if(self::$token == '')
 		{
-			if(SpoonSession::exists('csfr_token'))
+			if(SpoonSession::exists('csrf_token'))
 			{
-				self::$token = SpoonSession::get('csfr_token');
+				self::$token = SpoonSession::get('csrf_token');
 			}
 			else
 			{
 				self::$token = self::generateRandomString(10, true, true, false, false);
-				SpoonSession::set('csfr_token', self::$token);
+				SpoonSession::set('csrf_token', self::$token);
 			}
 		}
 
