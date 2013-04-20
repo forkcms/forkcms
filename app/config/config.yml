@@ -1,6 +1,13 @@
 imports:
     - { resource: parameters.yml }
 
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %site.path_www%/app/logs/logs.log
+            level: debug
+
 services:
     database:
         class: SpoonDatabase

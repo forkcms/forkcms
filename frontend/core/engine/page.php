@@ -365,6 +365,10 @@ class FrontendPage extends FrontendBaseObject
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
+			$this->getContainer()->get('logger')->info(
+				"Executing action '{$extra->getAction()}' for module '{$extra->getModule()}'."
+			);
+
 			// all extras extend FrontendBaseObject, which extends KernelLoader
 			$extra->setKernel($this->getKernel());
 			$extra->execute();
