@@ -191,7 +191,7 @@ class BackendBaseAction extends BackendBaseObject
 	 */
 	public function checkToken()
 	{
-		$fromSession = (SpoonSession::exists('csfr_token')) ? SpoonSession::get('csfr_token') : '';
+		$fromSession = (SpoonSession::exists('csrf_token')) ? SpoonSession::get('csrf_token') : '';
 		$fromGet = SpoonFilter::getGetValue('token', null, '');
 
 		if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return true;

@@ -2,7 +2,7 @@
 --
 Bugfixes:
 
-* Security: prevent csfr
+* Security: prevent CSRF
 
 
 3.5.1 (2013-04-15)
