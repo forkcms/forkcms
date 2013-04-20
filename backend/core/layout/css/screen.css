@@ -43,3 +43,6 @@
 
 	/* Editor related */
 	@import url("imports/editor.css");
+
+	/* Chosen */
+	@import url("imports/chosen.css");

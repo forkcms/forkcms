@@ -120,11 +120,7 @@ class BackendForm extends SpoonForm
 	public function addChosen($name, array $values = null, $selected = null, $multipleSelection = false, $class = null, $classError = null)
 	{
 		// Let's add the chosen plugin when this function is called from an action with a header
-		if($this->header)
-		{
-			$this->header->addJS('jquery/chosen.jquery.min.js', 'core');
-			$this->header->addCSS('chosen.css', 'core');
-		}
+		if($this->header) $this->header->addJS('jquery/chosen.jquery.min.js', 'core');
 
 		if($class) $class .= ' jsChosen';
 		else $class = 'jsChosen';
