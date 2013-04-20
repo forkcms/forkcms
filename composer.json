@@ -14,5 +14,8 @@
         "symfony/config": "2.1.*",
         "symfony/yaml": "2.1.*",
         "spoon/library": "dev-master"
+    },
+    "scripts": {
+        "post-update-cmd": "cd tools && ./remove_cache"
     }
 }
