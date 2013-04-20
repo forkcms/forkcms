@@ -7,21 +7,25 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Config\ConfigCache;
+use Symfony\Component\Config\Loader\DelegatingLoader;
+use Symfony\Component\Config\Loader\LoaderResolver;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\Loader\ClosureLoader;
+use Symfony\Component\DependencyInjection\Loader\IniFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Config\FileLocator;
-use Symfony\Component\Config\Loader\LoaderResolver;
-use Symfony\Component\Config\Loader\DelegatingLoader;
-use Symfony\Component\Config\ConfigCache;
-use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\DependencyInjection\AddClassesToCachePass;
+use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
@@ -236,7 +240,11 @@ abstract class Kernel implements KernelInterface
 		 */
 		$locator = new FileLocator($this);
 		$resolver = new LoaderResolver(array(
-			new YamlFileLoader($container, $locator)
+			new XmlFileLoader($container, $locator),
+			new YamlFileLoader($container, $locator),
+			new IniFileLoader($container, $locator),
+			new PhpFileLoader($container, $locator),
+			new ClosureLoader($container),
 			// @todo depending on what we need, this should be expanded.
 		));
 		return new DelegatingLoader($resolver);
