@@ -100,32 +100,5 @@ class AppKernel extends Kernel
 		// define Fork constants
 		$this->defineForkConstants();
 	}
-
-	/**
-	 * Register our services here. This will move to bundle-level
-	 * once we use the full-stack Symfony framework.
-	 */
-	public function registerServices()
-	{
-		/**
-		 * @todo
-		 * In symfony, the doctrine layer gets registered through app/config/config.yml.
-		 * The bundles itself call it into life when needed.
-		 */
-		$this->getContainer()->register('database', 'SpoonDatabase')
-			->addArgument('%database.driver%')
-			->addArgument('%database.host%')
-			->addArgument('%database.user%')
-			->addArgument('%database.password%')
-			->addArgument('%database.name%')
-			->addArgument('%database.port%')
-			->addMethodCall(
-				'execute',
-				array(
-					'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-					array('charset' => 'utf8')
-				)
-			);
-	}
 }
 
