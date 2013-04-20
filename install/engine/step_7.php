@@ -123,12 +123,6 @@ class InstallerStep7 extends InstallerStep
 			// write app/config/parameters.yml
 			SpoonFile::setContent($destinationFilename, $yamlContent);
 		}
-
-		// we already went through AppKernel once. Now that our config files are
-		// available, we can register our container configuration.
-		$this->getKernel()->registerContainerConfiguration(
-			$this->getKernel()->getContainerLoader($this->getKernel()->getContainer())
-		);
 	}
 
 	/**
