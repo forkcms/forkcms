@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -20,6 +21,7 @@ use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Config\Loader\DelegatingLoader;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
+use Symfony\Component\HttpKernel\DependencyInjection\AddClassesToCachePass;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
@@ -61,6 +63,13 @@ abstract class Kernel implements KernelInterface
 	 */
 	protected $rootDir;
 
+    /**
+     * The name of our application. We'll hardcode this to Fork for now.
+     *
+     * @var string
+     */
+    protected $name = 'ForkCMS';
+
 	/**
 	 * To mirror symfony, $environment should not be optional, but for now we have no reason
 	 * to actually do this because we can't use the profiler.
@@ -77,6 +86,9 @@ abstract class Kernel implements KernelInterface
 		$this->rootDir = $this->getRootDir();
 
 		$this->boot();
+
+		// define Fork constants
+		$this->defineForkConstants();
 	}
 
 	/**
@@ -86,6 +98,59 @@ abstract class Kernel implements KernelInterface
 	{
 		return $this->container;
 	}
+
+
+    /**
+     * Gets the container's base class.
+     *
+     * All names except Container must be fully qualified.
+     *
+     * @return string
+     */
+    protected function getContainerBaseClass()
+    {
+        return 'Container';
+    }
+
+    /**
+     * Removes comments from a PHP source string.
+     *
+     * We don't use the PHP php_strip_whitespace() function
+     * as we want the content to be readable and well-formatted.
+     *
+     * @param string $source A PHP string
+     *
+     * @return string The PHP string with the comments removed
+     */
+    public static function stripComments($source)
+    {
+        if (!function_exists('token_get_all')) {
+            return $source;
+        }
+
+        $rawChunk = '';
+        $output = '';
+        $tokens = token_get_all($source);
+        for (reset($tokens); false !== $token = current($tokens); next($tokens)) {
+            if (is_string($token)) {
+                $rawChunk .= $token;
+            } elseif (T_START_HEREDOC === $token[0]) {
+                $output .= preg_replace(array('/\s+$/Sm', '/\n+/S'), "\n", $rawChunk).$token[1];
+                do {
+                    $token = next($tokens);
+                    $output .= $token[1];
+                } while ($token[0] !== T_END_HEREDOC);
+                $rawChunk = '';
+            } elseif (!in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
+                $rawChunk .= $token[1];
+            }
+        }
+
+        // replace multiple new lines with a single newline
+        $output .= preg_replace(array('/\s+$/Sm', '/\n+/S'), "\n", $rawChunk);
+
+        return $output;
+    }
 
 	/**
 	 * @return ContainerBuilder
@@ -123,33 +188,24 @@ abstract class Kernel implements KernelInterface
 		);
 	}
 
+    /**
+     * Gets the container class.
+     *
+     * @return string The container class
+     */
+    protected function getContainerClass()
+    {
+        return $this->name.ucfirst($this->environment).($this->debug ? 'Debug' : '').'ProjectContainer';
+    }
+
 	/**
 	 * This will load a cached version of the service container, or build one from scratch.
 	 */
 	protected function initializeContainer()
 	{
-/*
-		$this->container = $this->getContainerBuilder();
-		$this->container->setParameter('kernel.log_path', __DIR__ . '/logs');
+        $class = $this->getContainerClass();
 
-		// load parameters config
-		$this->registerContainerConfiguration($this->getContainerLoader($this->container));
-		$this->registerServices();
-
-		foreach ($this->getBundles() as $bundle) {
-			if ($extension = $bundle->getContainerExtension()) {
-				$this->container->registerExtension($extension);
-			}
-		}
-
-		foreach ($this->bundles as $bundle) {
-			$bundle->build($this->container);
-		}
-*/
-
-		$this->container = $this->getContainerBuilder();
-		$class = 'DevProjectContainer';
-        $cache = new ConfigCache($this->getCacheDir().$class.'.php', true);
+        $cache = new ConfigCache($this->getCacheDir().$class.'.php', $this->debug);
         $fresh = true;
         if (!$cache->isFresh()) {
             $container = $this->buildContainer();
@@ -326,11 +382,28 @@ abstract class Kernel implements KernelInterface
             $container->merge($cont);
         }
 
-        $container->addCompilerPass(new AddClassesToCachePass($this));
-
         return $container;
     }
 
+    /**
+     * Dumps the service container to PHP code in the cache.
+     *
+     * @param ConfigCache      $cache     The config cache
+     * @param ContainerBuilder $container The service container
+     * @param string           $class     The name of the class to generate
+     * @param string           $baseClass The name of the container's base class
+     */
+    protected function dumpContainer(ConfigCache $cache, ContainerBuilder $container, $class, $baseClass)
+    {
+        // cache the container
+        $dumper = new PhpDumper($container);
+        $content = $dumper->dump(array('class' => $class, 'base_class' => $baseClass));
+        if (!$this->debug) {
+            $content = self::stripComments($content);
+        }
+
+        $cache->write($content, $container->getResources());
+    }
 
     /**
      * Prepares the ContainerBuilder before it is compiled.

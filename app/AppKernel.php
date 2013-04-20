@@ -67,7 +67,7 @@ class AppKernel extends Kernel
 
 		define('FORK_VERSION', $container->getParameter('fork.version'));
 
-		define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
+//		define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
 		define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
 	}
 
@@ -103,41 +103,7 @@ class AppKernel extends Kernel
 	 */
 	public function registerContainerConfiguration(LoaderInterface $loader)
 	{
-		// this prevents the installer from bitching that config.yml cannot load parameters.yml
-		if(!file_exists(__DIR__ . '/config/parameters.yml')) return;
-
 		// load the general config.yml
 		$loader->load(__DIR__ . '/config/config.yml');
-
-		// define Fork constants
-		$this->defineForkConstants();
-	}
-
-	/**
-	 * Register our services here. This will move to bundle-level
-	 * once we use the full-stack Symfony framework.
-	 */
-	public function registerServices()
-	{
-		/**
-		 * @todo
-		 * In symfony, the doctrine layer gets registered through app/config/config.yml.
-		 * The bundles itself call it into life when needed.
-		 */
-		$this->getContainer()->register('database', 'SpoonDatabase')
-			->addArgument('%database.driver%')
-			->addArgument('%database.host%')
-			->addArgument('%database.user%')
-			->addArgument('%database.password%')
-			->addArgument('%database.name%')
-			->addArgument('%database.port%')
-			->addMethodCall(
-				'execute',
-				array(
-					'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-					array('charset' => 'utf8')
-				)
-			);
 	}
 }
-

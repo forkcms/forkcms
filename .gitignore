@@ -6,5 +6,6 @@
 .DS_Store
 backend/cache/navigation/
 vendor/
+app/cache/*
 app/config/parameters.yml
 app/logs/*.log
