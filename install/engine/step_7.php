@@ -273,7 +273,7 @@ class InstallerStep7 extends InstallerStep
 			'<site-default-language>'	=> SpoonSession::get('default_language'),
 			'<path-www>'				=> PATH_WWW,
 			'<path-library>'			=> PATH_LIBRARY,
-			'<action-group-tag>'		=> '@actiongroup',
+			'<action-group-tag>'		=> '\@actiongroup',
 			'<action-rights-level>'		=> 7
 		);
 	}
