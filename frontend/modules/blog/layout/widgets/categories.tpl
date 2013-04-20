@@ -12,7 +12,7 @@
 			<div class="bd content">
 				<ul>
 					{iteration:widgetBlogCategories}
-						<li>
+						<li{option:widgetBlogCategories.active} class="selected"{/option:widgetBlogCategories.active}>
 							<a href="{$widgetBlogCategories.url}">
 								{$widgetBlogCategories.label}&nbsp;({$widgetBlogCategories.total})
 							</a>
