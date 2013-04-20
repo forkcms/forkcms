@@ -29,7 +29,9 @@ class AppKernel extends Kernel
 	 */
 	public function registerBundles()
 	{
-		$bundles = array();
+		$bundles = array(
+			new Symfony\Bundle\MonologBundle\MonologBundle(),
+		);
 
 		return $bundles;
 	}
