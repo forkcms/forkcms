@@ -13,7 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class FrontendNavigation extends FrontendBaseObject
 {

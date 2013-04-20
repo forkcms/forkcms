@@ -4,7 +4,7 @@
  * This is the detail-action it will display the details of a module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendExtensionsDetailModule extends BackendBaseActionIndex
 {
