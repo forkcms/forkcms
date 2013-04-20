@@ -245,7 +245,6 @@ abstract class Kernel implements KernelInterface
 			new IniFileLoader($container, $locator),
 			new PhpFileLoader($container, $locator),
 			new ClosureLoader($container),
-			// @todo depending on what we need, this should be expanded.
 		));
 		return new DelegatingLoader($resolver);
 	}
@@ -517,7 +516,7 @@ abstract class Kernel implements KernelInterface
 
 		define('FORK_VERSION', $container->getParameter('fork.version'));
 
-//		define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
+		define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
 		define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
 	}
 
