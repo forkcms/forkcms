@@ -74,6 +74,9 @@ class BackendAction extends BackendBaseObject
 
 		// create action-object
 		$object = new $actionClassName();
+        $this->getContainer()->get('logger')->info(
+            "Executing backend action '{$object->getAction()}' for module '{$object->getModule()}'."
+        );
 		$object->setKernel($this->getKernel());
 		$object->execute();
 		return $object->getContent();
