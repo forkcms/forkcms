@@ -194,6 +194,9 @@ class BackendBaseAction extends BackendBaseObject
 
 		if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return;
 
+		// clear the token
+		SpoonSession::set('csrf_token', '');
+
 		// halt here, because something is wrong with the token
 		SpoonHTTP::setHeadersByCode(403);
 		exit;
