@@ -198,7 +198,8 @@ class BackendBaseAction extends BackendBaseObject
 		SpoonSession::set('csrf_token', '');
 
 		// halt here, because something is wrong with the token
-		SpoonHTTP::setHeadersByCode(403);
+		$response = new Response('', 403);
+		$response->send();
 		exit;
 	}
 
