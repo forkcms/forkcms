@@ -197,10 +197,16 @@ class BackendBaseAction extends BackendBaseObject
 		// clear the token
 		SpoonSession::set('csrf_token', '');
 
-		// halt here, because something is wrong with the token
-		$response = new Response('', 403);
-		$response->send();
-		exit;
+		$this->redirect(
+			BackendModel::createURLForAction(
+				'index',
+				null,
+				null,
+				array(
+				     'error' => 'csrf'
+				)
+			)
+		);
 	}
 
 	/**
