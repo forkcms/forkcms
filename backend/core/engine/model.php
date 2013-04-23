@@ -42,13 +42,6 @@ class BackendModel extends BaseModel
 	private static $moduleSettings;
 
 	/**
-	 * A token to protect us agains csfr
-	 *
-	 * @var string
-	 */
-	private static $token;
-
-	/**
 	 * Add a number to the string
 	 *
 	 * @param string $string The string where the number will be appended to.
@@ -770,20 +763,17 @@ class BackendModel extends BaseModel
 	 */
 	public static function getToken()
 	{
-		if(self::$token == '')
+		if(SpoonSession::exists('csrf_token') && SpoonSession::get('csrf_token') != '')
 		{
-			if(SpoonSession::exists('csrf_token'))
-			{
-				self::$token = SpoonSession::get('csrf_token');
-			}
-			else
-			{
-				self::$token = self::generateRandomString(10, true, true, false, false);
-				SpoonSession::set('csrf_token', self::$token);
-			}
+			$token = SpoonSession::get('csrf_token');
+		}
+		else
+		{
+			$token = self::generateRandomString(10, true, true, false, false);
+			SpoonSession::set('csrf_token', $token);
 		}
 
-		return self::$token;
+		return $token;
 	}
 
 	/**
