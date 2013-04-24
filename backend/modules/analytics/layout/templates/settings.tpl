@@ -98,9 +98,9 @@
 	<div class="options">
 		<p>{$msgHelpTrackingUrl}</p>
 		{iteration:url}
-            <label for="{$url.id}">{$url.rbtUrl} {$url.label}</label><br />
-        {/iteration:url}
-        {$rbtUrlError}
+			<label for="{$url.id}">{$url.rbtUrl} {$url.label}</label><br />
+		{/iteration:url}
+		{$rbtUrlError}
 	</div>
 </div>
 
