@@ -25,6 +25,17 @@ class BaseModel
 	private static $container;
 
 	/**
+	 * Get a service from the container
+	 * 
+	 * @param string reference to the service
+	 * @return mixed
+	 */
+	public static function get($reference)
+	{
+		return self::$container->get($reference);
+	}
+
+	/**
 	 * @return ContainerInterface
 	 */
 	public static function getContainer()
