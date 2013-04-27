@@ -307,8 +307,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// if the image should be deleted
 					if($this->frm->getField('delete_image')->isChecked())
 					{
-						// delete the image
+						// delete the images
 						SpoonFile::delete($imagePath . '/source/' . $item['image']);
+						BackendModel::deleteThumbnails($imagePath, $item['image']);
 
 						// reset the name
 						$item['image'] = null;
@@ -319,6 +320,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					{
 						// delete the old image
 						SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
+						BackendModel::deleteThumbnails($imagePath, $this->record['image']);
 
 						// build the image name
 						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
