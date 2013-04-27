@@ -464,8 +464,7 @@ abstract class Kernel implements KernelInterface
 	public function getRootDir()
 	{
 		if (null === $this->rootDir) {
-			$r = new \ReflectionObject($this);
-			$this->rootDir = str_replace('\\', '/', dirname($r->getFileName()));
+			$this->rootDir = __DIR__;
 		}
 
 		return $this->rootDir;
