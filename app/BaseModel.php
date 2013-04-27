@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * In the long run models should not be a collection of static methods, and this will disappear.
  *
  * @author Dave Lens <dave.lens@wijs.be>
+ * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class BaseModel
 {
@@ -41,6 +42,17 @@ class BaseModel
 	public static function getContainer()
 	{
 		return self::$container;
+	}
+
+	/**
+	 * Get a parameter from the container
+	 * 
+	 * @param string reference to the parameter
+	 * @return mixed
+	 */
+	public static function getParameter($reference)
+	{
+		return self::getContainer()->getParameter($reference);
 	}
 
 	/**
