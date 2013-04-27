@@ -51,7 +51,7 @@ abstract class Kernel implements KernelInterface
 	 *
 	 * @var boolean
 	 */
-	protected $booted;
+	protected $booted = false;
 
 	/**
 	 * All the available bundles.
