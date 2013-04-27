@@ -11,6 +11,7 @@
  * This class is used in several Fork applications to bubble down the AppKernel/Kernel object.
  *
  * @author Dave Lens <dave.lens@wijs.be>
+ * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class KernelLoader
 {
@@ -28,6 +29,17 @@ class KernelLoader
 	}
 
 	/**
+	 * Get a service from the container
+	 * 
+	 * @param string reference to the service
+	 * @return mixed
+	 */
+	public function get($reference)
+	{
+		return $this->getKernel()->getContainer()->get($reference);
+	}
+
+	/**
 	 * @return ContainerInterface
 	 */
 	public function getContainer()
@@ -41,6 +53,17 @@ class KernelLoader
 	public function getKernel()
 	{
 		return $this->kernel;
+	}
+
+	/**
+	 * Get a parameter from the container
+	 * 
+	 * @param string reference to the parameter
+	 * @return mixed
+	 */
+	public function getParameter($reference)
+	{
+		return $this->getKernel()->getContainer()->getParameter($reference);
 	}
 
 	/**
