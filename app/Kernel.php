@@ -188,6 +188,7 @@ abstract class Kernel implements KernelInterface
 		return array(
 			//'kernel.debug' => $this->debug,
 			//'kernel.environment' => $this->environment,
+			'kernel.root_dir' => $this->getRootDir(),
 		);
 	}
 
@@ -464,7 +465,7 @@ abstract class Kernel implements KernelInterface
 	public function getRootDir()
 	{
 		if (null === $this->rootDir) {
-			$this->rootDir = __DIR__;
+			$this->rootDir = rtrim(__DIR__, '/');
 		}
 
 		return $this->rootDir;
