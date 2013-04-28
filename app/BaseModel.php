@@ -26,10 +26,10 @@ class BaseModel
 	private static $container;
 
 	/**
-	 * Get a service from the container
+	 * Gets a service by id.
 	 * 
-	 * @param string reference to the service
-	 * @return mixed
+	 * @param string $id The service id
+	 * @return object The service
 	 */
 	public static function get($reference)
 	{
@@ -45,14 +45,14 @@ class BaseModel
 	}
 
 	/**
-	 * Get a parameter from the container
-	 * 
-	 * @param string reference to the parameter
-	 * @return mixed
+	 * Returns true if the service id is defined.
+	 *
+	 * @param string $id The service id
+	 * @return Boolean true if the service id is defined, false otherwise
 	 */
-	public static function getParameter($reference)
+	public static function has($reference)
 	{
-		return self::getContainer()->getParameter($reference);
+		return self::$container->has($reference);
 	}
 
 	/**

@@ -29,10 +29,10 @@ class KernelLoader
 	}
 
 	/**
-	 * Get a service from the container
+	 * Gets a service by id.
 	 * 
-	 * @param string reference to the service
-	 * @return mixed
+	 * @param string $id The service id
+	 * @return object The service
 	 */
 	public function get($reference)
 	{
@@ -56,14 +56,14 @@ class KernelLoader
 	}
 
 	/**
-	 * Get a parameter from the container
-	 * 
-	 * @param string reference to the parameter
-	 * @return mixed
+	 * Returns true if the service id is defined.
+	 *
+	 * @param string $id The service id
+	 * @return Boolean true if the service id is defined, false otherwise
 	 */
-	public function getParameter($reference)
+	public static function has($reference)
 	{
-		return $this->getKernel()->getContainer()->getParameter($reference);
+		return $this->getKernel()->getContainer()->has($reference);
 	}
 
 	/**
