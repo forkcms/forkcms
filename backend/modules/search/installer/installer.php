@@ -58,6 +58,7 @@ class SearchInstaller extends ModuleInstaller
 		// add extra's
 		$searchId = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
+		$this->insertExtra('search', 'widget', 'Notfound', 'notfound', null, 'N', 2002);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)

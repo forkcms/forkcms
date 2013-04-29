@@ -36,6 +36,7 @@ class PagesInstaller extends ModuleInstaller
 		// get extra ids
 		$extras['search'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
+		$extras['search_notfound'] = $this->insertExtra('search', 'widget', 'Notfound', 'notfound', null, 'N', 2002);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 		$this->insertExtra('pages', 'widget', 'Navigation', 'previous_next_navigation');
 
@@ -111,6 +112,7 @@ class PagesInstaller extends ModuleInstaller
 					null,
 					array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/404.txt'),
 					array('extra_id' => $extras['sitemap_widget_sitemap']),
+					array('extra_id' => $extras['search_notfound']),
 					array('extra_id' => $extras['search_form'], 'position' => 'top')
 				);
 			}
