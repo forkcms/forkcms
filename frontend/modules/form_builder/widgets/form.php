@@ -253,8 +253,9 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 	private function parse()
 	{
 		// form name
-		$this->tpl->assign('formName', 'form' . $this->item['id']);
-		$this->tpl->assign('formAction', $this->createAction());
+		$formName = 'form' . $this->item['id'];
+		$this->tpl->assign('formName', $formName);
+		$this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
 
 		// got fields
 		if(!empty($this->fieldsHTML))
