@@ -84,11 +84,11 @@
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { 
 	background: url(images/bg_fallback.png) 0 0 repeat-x;
 	background: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(1, rgb(237,237,237)),
-    color-stop(0, rgb(196,196,196))
+		linear,
+		left bottom,
+		left top,
+		color-stop(1, rgb(237,237,237)),
+		color-stop(0, rgb(196,196,196))
 	);
 	background: -moz-linear-gradient(
 		center top,
@@ -106,11 +106,11 @@
 	color: #1c4257; border: 1px solid #7096ab;
 	background: url(images/bg_fallback.png) 0 -50px repeat-x;
 	background: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(1, rgb(185,224,245)),
-    color-stop(0, rgb(146,189,214))
+		linear,
+		left bottom,
+		left top,
+		color-stop(1, rgb(185,224,245)),
+		color-stop(0, rgb(146,189,214))
 	);
 	background: -moz-linear-gradient(
 		center top,
