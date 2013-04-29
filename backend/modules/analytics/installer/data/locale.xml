@@ -378,6 +378,9 @@
         <translation language="uk"><![CDATA[Часу на сайті]]></translation>
         <translation language="sv"><![CDATA[tid på sajt]]></translation>
       </item>
+      <item type="label" name="TrackingUrl">
+      	<translation language="en"><![CDATA[tracking url]]></translation>
+      </item>
       <item type="label" name="TopContent">
         <translation language="nl"><![CDATA[belangrijkste inhoud]]></translation>
         <translation language="en"><![CDATA[top content]]></translation>
@@ -799,6 +802,9 @@
         <translation language="de"><![CDATA[Entferne die Verbindung mit deinem Analytics-Website-Profil.]]></translation>
         <translation language="es"><![CDATA[Eliminar el vinculo con tu perfil web de Analytics]]></translation>
         <translation language="sv"><![CDATA[Ta bort länken från ditt Analytics webbplats profil]]></translation>
+      </item>
+      <item type="message" name="HelpTrackingUrl">
+      	<translation language="en"><![CDATA[If you choose to support Display Advertising, for example to enable Remarketing with Google Analytics, you'll need the doubleclick tracking url.]]></translation>
       </item>
     </analytics>
   </backend>
