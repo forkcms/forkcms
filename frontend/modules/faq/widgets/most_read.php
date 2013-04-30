@@ -8,7 +8,7 @@
  */
 
 /**
- * This is a widget with recent blog-articles
+ * This is a widget with most read faq-questions
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */

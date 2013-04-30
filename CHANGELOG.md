@@ -4,17 +4,21 @@ Bugfixes:
 
 * Core: jQuery-plugins should escape data when using the raw data.
 
+Improvements:
+
+* Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
+
 
 3.5.1 (2013-04-15)
 --
 Improvements:
 
 * Symfony: upgrade components to 2.2.
-* Core: isInstalledModule() added in BackendModel. Thx to Jeroen Desloovere.
+* Core: isInstalledModule() added in BackendModel.
 * Core: use remote html5-shiv.
-* Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
+* Core: mailer supports SSL/TLS from now on.
 * Analytics: better grouping for Google Analytics profiles.
-* Core: deleteThumbnails() added in BackendModel. Thx to John Poelman.
+* Core: deleteThumbnails() added in BackendModel.
 * Core: Minify is now installed with Composer.
 
 Bugfixes:
@@ -33,7 +37,7 @@ Bugfixes:
 * Core: CKEditor is nov available in Chinese. Fixed #381
 * Extensions: Removed html entities out of header.
 * Installer: used correct path for checking if Fork is installed.
-* Core: Login sql error on wrong email fixed. Thx to Gertjan Meire.
+* Core: Login sql error on wrong email fixed.
 * Location: Address in widget fixed.
 
 
@@ -43,7 +47,7 @@ Improvements:
 
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
-* Core: added utils.string.sprintf to backend and frontend. Thx to Jeroen Desloovere.
+* Core: added utils.string.sprintf to backend and frontend.
 * With the 3.5.0 release, Fork CMS will be available under the MIT-license.
 * Core: allow people to define their own errorhandler.
 * Core: switched to the official Facebook SDK, inspired on the pull request of Jeroen.
@@ -66,47 +70,46 @@ Improvements:
 * Core: Include a non-official patch for CKeditor to fix an issue with the stylesheetparser on FF/Safari on Macs.
 * Blog: enabled Flip ahead for blogposts.
 * Core: enabled Flip ahead for paginated pages.
-* Core: Pagination can now use an anchor, thx to Jeroen Desloovere.
+* Core: Pagination can now use an anchor.
 * Core: Added validation for module and action in the frontend ajax.
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
-* Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
+* Core: getUTCTimestamp() added in FrontendModel.
 * Core: Replace getDB() in the models with getContainer()->get('database')
-* Core: Pagination can now use an anchor. Thx to Jeroen Desloovere.
+* Core: Pagination can now use an anchor.
 * Core: added $action to BackendModel::getExtrasForData + deleteExtrasForData.
 * Core: Added validation for module and action in the frontend ajax.
-* Core: getUTCTimestamp() added in FrontendModel. Thx to Jeroen Desloovere.
-* Core: Pagination for 6 pages showed 7 instead. Thx to Jeroen Desloovere.
-* Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE. Thx to Jeroen Desloovere.
+* Core: getUTCTimestamp() added in FrontendModel.
+* Core: Pagination for 6 pages showed 7 instead.
+* Tags: FrontendTagsModel::get() should use FRONTEND_LANGUAGE.
 * Pages: Widget had invalid parent url
 * Blog: Show always Open Graph Tags
-* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere. Thx to Jeroen Desloovere.
+* Pages: BackendPagesModel::copy() added, so it can be called from elsewhere.
 
 Bugfixes:
 
 * Users: Added fix so users can't edit other profiles.
-* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag. Thx to Jan Moesen.
+* SpoonDate: only replace full matches of date abbreviations, otherwise Montag becomes Mo.tag.
 * DataGrid: do not overwrite existing row attributes when greying out a row.
 * Form: encode html entities in hidden field values to prevent XSS.
 * Mailmotor: add jsData to iframe template.
-* Location: Google Maps JS needs to be loaded before location.js, thx to siesqo.
+* Location: Google Maps JS needs to be loaded before location.js.
 * Core: when fetching parameters take the index in account when computing the differences.
 * Blog: Use full links for the navigation below the blogposts.
 * FormBuilder: validation (email, numeric) was inherited from previously added fields causing errors on checkboxes.
-* Blog: Use full links for the navigation below the blogposts.
 * Blog: Ticket 294: Next and previous don't work when blog-items has same publish_on date
 * TagBox: Ticket 333: Tags should be handled as strings
 * Extensions: Ticket 316: Link to default action
 * API: Fix bug in form_builder.entriesGet where limit/offset would be applied to fields instead of the form submissions.
 * Locale: Fix jsBackend.locale.get() so the {$loc...} labels get fetched correctly.
 * Core: A search term should only be saved when it's not empty
-* Core: BackendModel::invalidateFrontendCache() should listen to the given language. Thx to Jeroen Desloovere.
+* Core: BackendModel::invalidateFrontendCache() should listen to the given language.
 
 
 3.4.4 (2012-09-12)
 --
 Improvements:
 
-* Location: Fixed location widget. When debug = false, google wasn't loaded correctly. Thx to siesqo
+* Location: Fixed location widget. When debug = false, google wasn't loaded correctly.
 * Users: User can't change its own rights when not allowed to view the index.
 * Core: Upgraded Highcharts to 2.3.2
 * Core: Upgraded CKFinder to 2.3.0
@@ -116,7 +119,7 @@ Improvements:
 
 Bugfixes:
 
-* Mailer: The names are now decoded, so bugs with apostrofs in names are fixed. Thx to siesqo
+* Mailer: The names are now decoded, so bugs with apostrofs in names are fixed.
 * Analytics: all calls now require an API key as is described in the migration to Gdata v2.4 on https://developers.google.com/analytics/resources/articles/gdata-migration-guide.
 * Themes: templates extras_data from other languages was overwritten.
 * Themes: incorrect block index was set when deleting a position causing all default blocks to be unlinked.
@@ -255,8 +258,8 @@ Bugfixes:
 --
 Improvements:
 
-* Search: don't add utm_* parameters when a search is performed, thx to timbakker79.
-* Core: detecting the browser language now use the weight, thx to Atticus.
+* Search: don't add utm_* parameters when a search is performed.
+* Core: detecting the browser language now use the weight.
 
 Bugfixes:
 
@@ -305,7 +308,7 @@ Improvements:
 Bugfixes:
 
 * Spoon: session should be started before we can access the session.
-* Mailmotor: set action and module when initializing an AJAX action. Thx to @DoFken.
+* Mailmotor: set action and module when initializing an AJAX action.
 * FormBulder: sort submissions by insert sequence. Reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/266-formbuilder-submissions-view-bug/
 
 
@@ -469,7 +472,7 @@ Improvements:
 
 Bugfixes:
 
-* Core: module specific locale are now parsed in the templates when used in cronjobs, thanks to annelyze.
+* Core: module specific locale are now parsed in the templates when used in cronjobs.
 * Core: Click To Edit above the editor should behave from now on.
 * Core: added the options for the theme-specific editor_content.css and and screen.css that will be loaded in the editor.
 * Analytics: Fixed the labels for keywords and referrers when updating through ajax.
@@ -589,7 +592,7 @@ Improvements:
 * Core: automagic canonical-urls.
 * Core: added a new modifier stripnewlines which will remove all newlines in a string, so JS can handle it.
 * Core: added schema.org properties in the default HTML and in the Triton-theme.
-* Locale: added some missing locale, thx to wouter H, http://forkcms.lighthouseapp.com/projects/61890/tickets/237
+* Locale: added some missing locale, see http://forkcms.lighthouseapp.com/projects/61890/tickets/237
 * Locale: the missing items are now sorted by application, type, module and name.
 * Locale: added translations for Spanish (by Alberto Aguayo - http://www.bikumo.com)
 * Location: rewrote most of the JS, because the map wasn't showing the markers correctly, as mentioned by Wouter H on http://forkcms.lighthouseapp.com/projects/61890/tickets/238
@@ -625,7 +628,7 @@ Bugfixes:
 * Profiles: display name was not being urilized.
 * Tags: it is no longer impossible to fetch related items with the same id as your source item.
 * Core: fixed js issue in triton.
-* Core: fixed a typo, thx to Danny Korpan.
+* Core: fixed a typo.
 * Extensions: when using spaces in the format-part of the template XML, the templates weren't build correctly.
 
 
@@ -702,11 +705,11 @@ Bugfixes:
 * Core: fix issue in template compiler; nested iterations where child ends in name of parent, did not work.
 * Core: removed the guessing of the library path in the installer. When Spoon can't be located a textbox will be shown wherin you can enter the path to Spoon.
 * Core: fixed issue when displaying empty pages without blocks linked.
-* ContentBlocks: fixed a database exception when deleting content blocks, thx to Sam Tubbax.
+* ContentBlocks: fixed a database exception when deleting content blocks.
 * Extensions: fixed typo, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/207 by Bart.
 * Extensions: editing a template without default-data was triggering a notices, as mentioned by Bart on http://forkcms.lighthouseapp.com/projects/61890/tickets/204.
-* Extensions: confirmmessages through pure Javascript don't support sprintf through the template-engine, thx to Bart, see http://forkcms.lighthouseapp.com/projects/61890/tickets/203.
-* Extensions: ignore hidden files when validating the uploaded zip-files, thx to Dieter W, see http://forkcms.lighthouseapp.com/projects/61890/tickets/208.
+* Extensions: confirmmessages through pure Javascript don't support sprintf through the template-engine, see http://forkcms.lighthouseapp.com/projects/61890/tickets/203.
+* Extensions: ignore hidden files when validating the uploaded zip-files, see http://forkcms.lighthouseapp.com/projects/61890/tickets/208.
 * Formbuilder: when a field isn't required, but should be validated as an emailaddress it was forced to be filled in.
 * Formbuilder: the language wasn't saved correctly into the extras after editing a form, so it was shown for all languages, as mentioned by Simon on http://forkcms.lighthouseapp.com/projects/61890/tickets/201.
 * Location: invalid item was used in the template, and the JS should only be excuted after jQuery is loaded, as mentioned by Floris on http://forkcms.lighthouseapp.com/projects/61890/tickets/205.
@@ -777,7 +780,7 @@ Bugfixes:
 
 * Content Blocks: some backend functions didn't take into account the current working language.
 * Content Blocks: exclude invalid templates.
-* Installer: some very specific Apache-version will prepend the Apache-variables with REDIRECT_, thx to Steve De Veirman.
+* Installer: some very specific Apache-version will prepend the Apache-variables with REDIRECT_.
 * Pages: when adding more then 1 module to a page you will get a nice error message instead of a PHP error.
 
 
@@ -800,10 +803,10 @@ Improvements:
 
 Bugfixes:
 
-* Core: re-added some missing locale into the imagemanager, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/185-268-moxicode-unassigned-literals.
+* Core: re-added some missing locale into the imagemanager, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/185-268-moxicode-unassigned-literals.
 * Core: fixed some errors in the api-methods for blog.
 * Core: fixed a bug where updating a page template tried to input data in a non-existing database column.
-* Core: fixed a typo in the dutch disclaimer, thx to Bart Deslagmulder, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/190.
+* Core: fixed a typo in the dutch disclaimer, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/190.
 
 
 2.6.10 (2011-09-27)
@@ -812,7 +815,7 @@ Improvements:
 
 * Search: IP address is no longer shown in statistics.
 * Core: Improved config to let TinyMCE cleanup Internet Explorer HTML.
-* Search: Search won't show the 404 page anymore, thx to carroarmato0, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/186-268-search-finds-404-page.
+* Search: Search won't show the 404 page anymore, see: http://forkcms.lighthouseapp.com/projects/61890/tickets/186-268-search-finds-404-page.
 
 Bugfixes:
 
@@ -826,7 +829,7 @@ Bugfixes:
 Improvements:
 
 * Core: Upgraded jQuery to 1.6.4.
-* Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, thx to Martijn Dierckx, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
+* Core: When an image/filefield is added in the backend the max_upload_size is added as a helpmessage, see: http://forum.fork-cms.com/discussions/general/59-display-max-upload-size-backend.
 * Core: Added an api-method to remove an apple-device token.
 * Core: Emails are now send base64 encoded. This to prevent that linebreaks, which are added when the max text line length is reached, corrupt the content.
 * Blog: Added an api-method to grab a single comment.
@@ -835,7 +838,7 @@ Improvements:
 
 Bugfixes:
 
-* Blog: Fixed a bug in the blog module where it called an unexisting FrontendTag-function, thx to jelmersnoeck.
+* Blog: Fixed a bug in the blog module where it called an unexisting FrontendTag-function.
 
 
 2.6.8 (2011-09-13)
@@ -843,7 +846,7 @@ Bugfixes:
 Improvements:
 
 * Core: TinyMCE link-list is now sorted according the pages-tree, as requested by Frederik (http://forum.fork-cms.com/discussions/feature-requests/11-tinymce-linklist-sort).
-* Core: Mails from formbuilder will contain the sitetitle instead of Fork CMS, thx to Frederik.
+* Core: Mails from formbuilder will contain the sitetitle instead of Fork CMS.
 * Core: Updated the schema.
 
 Bugfixes:
@@ -871,7 +874,7 @@ Improvements:
 Bugfixes:
 
 * Facebook-class: fixed oAuth-calls.
-* Autoloader was replacing too much, when using the module name inside an action (eg: mass_files_action in the module files), thx to freshface.
+* Autoloader was replacing too much, when using the module name inside an action (eg: mass_files_action in the module files).
 
 Improvements:
 
@@ -918,7 +921,7 @@ Improvements:
 * Core: when adding new default blocks to an existing template, update all corresponding pages that have no content in those blocks to the new default.
 * Core: when Akismet can't tell us if a comment is spam, we mark it as an item in moderation.
 * Core: added functionality to set a callback after an item is saved with inline editing.
-* Pages: internal redirect can have children from now on, thx to Annelyze.
+* Pages: internal redirect can have children from now on.
 * Pages: added an experimental copy-action.
 * Locale: highlight empty items in the overview.
 
@@ -980,7 +983,7 @@ Bugfixes:
 --
 Bugfixes:
 
-* Installer: Installer now uses `is_writable` to check if a folder is writable. Thx to Mattias Geniar (http://forkcms.lighthouseapp.com/projects/61890/tickets/172).
+* Installer: Installer now uses `is_writable` to check if a folder is writable, see http://forkcms.lighthouseapp.com/projects/61890/tickets/172.
 * Spoon: On rare occasions iconv would trow an error that it can't convert strings.
 * Core: js.php could be misused.
 
@@ -995,7 +998,7 @@ Bugfixes:
 
 Improvements
 
-* Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default, thx to Mattias Geniar.
+* Core: Removed code to initialize the session, this is just useless and prevents caching-proxies to work by default.
 * Core: upgraded TinyMCE to 3.4.3.2
 * Core: Pub/sub-system, see: http://www.fork-cms.com/blog/detail/pubsub-in-fork
 

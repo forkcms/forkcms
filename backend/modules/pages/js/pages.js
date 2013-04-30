@@ -119,7 +119,7 @@ jsBackend.pages.extras =
 			// link to edit this block/widget
 			var editLink = '';
 			if(extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
-			if(extrasById[extraId].type == 'widget' && typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
+			if(typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
 
 			// title, description & visibility
 			var title = extrasById[extraId].human_name;
