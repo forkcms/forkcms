@@ -28,6 +28,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 * @var string
 	 */
 	private $apiKey;
+	
+	/**
+	 * The forms used on this page
+	 *
+	 * @var BackendForm
+	 */
+	private $frmApiKey, $frmProfiles, $frmTrackingUrl;
 
 	/**
 	 * All website profiles
@@ -63,6 +70,8 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	public function execute()
 	{
 		parent::execute();
+		$this->loadTrackingUrlForm();
+		$this->validateTrackingUrlForm();
 		$this->getAnalyticsParameters();
 		$this->parse();
 		$this->display();
@@ -189,6 +198,48 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			}
 		}
 	}
+	
+	/**
+	 * Load settings form
+	 */
+	private function loadTrackingUrlForm() 
+	{
+		$this->frmTrackingUrl = new BackendForm('trackingUrl');
+		
+		$trackingUrls = array();
+		$trackingUrls[] = array('label' => 'google-analytics.com/ga.js', 'value' => '//google-analytics.com/ga.js');
+		$trackingUrls[] = array('label' => 'stats.g.doubleclick.net/dc.js', 'value' => '//stats.g.doubleclick.net/dc.js');
+		
+		$setting = BackendModel::getModuleSetting($this->URL->getModule(), 'tracking_url', '//google-analytics.com/ga.js');
+		
+		$this->frmTrackingUrl->addRadiobutton('url', $trackingUrls, $setting);
+	}
+	
+	/**
+	 * Validates the tracking url form.
+	 */
+	private function validateTrackingUrlForm()
+	{
+		// form is submitted
+		if($this->frmTrackingUrl->isSubmitted())
+		{
+			// cleanup the submitted fields, ignore fields that were added by hackers
+			$this->frmTrackingUrl->cleanupFields();
+		
+			// form is validated
+			if($this->frmTrackingUrl->isCorrect())
+			{
+				// set the setting
+				BackendModel::setModuleSetting($this->getModule(), 'tracking_url', $this->frmTrackingUrl->getField('url')->getValue());
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_tracking_url_settings');
+
+				// redirect to the settings page
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
+			}
+		}
+	}
 
 	/**
 	 * Parse
@@ -208,21 +259,21 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$googleAccountAuthenticationForm = sprintf(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_URL, urlencode($redirectUrl), urlencode(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE));
 
 			// create form
-			$frm = new BackendForm('apiKey');
-			$frm->addText('key', $this->apiKey);
+			$this->frmApiKey = new BackendForm('apiKey');
+			$this->frmApiKey->addText('key', $this->apiKey);
 
-			if($frm->isSubmitted())
+			if($this->frmApiKey->isSubmitted())
 			{
-				$frm->getField('key')->isFilled(BL::err('FieldIsRequired'));
+				$this->frmApiKey->getField('key')->isFilled(BL::err('FieldIsRequired'));
 
-				if($frm->isCorrect())
+				if($this->frmApiKey->isCorrect())
 				{
-					BackendModel::setModuleSetting($this->getModule(), 'api_key', $frm->getField('key')->getValue());
+					BackendModel::setModuleSetting($this->getModule(), 'api_key', $this->frmApiKey->getField('key')->getValue());
 					$this->redirect($googleAccountAuthenticationForm);
 				}
 			}
 
-			$frm->parse($this->tpl);
+			$this->frmApiKey->parse($this->tpl);
 		}
 
 		// session token is present but no table id
@@ -252,13 +303,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 					uksort($accounts, array('BackendAnalyticsSettings', 'sortAccounts'));
 
 					// create form
-					$frm = new BackendForm('linkProfile', BackendModel::createURLForAction(), 'get');
-					$frm->addDropdown('table_id', $accounts);
-					$frm->parse($this->tpl);
+					$this->frmLinkProfile = new BackendForm('linkProfile', BackendModel::createURLForAction(), 'get');
+					$this->frmLinkProfile->addDropdown('table_id', $accounts);
+					$this->frmLinkProfile->parse($this->tpl);
 
-					if($frm->isSubmitted())
+					if($this->frmLinkProfile->isSubmitted())
 					{
-						if($frm->getField('table_id')->getValue() == '0') $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
+						if($this->frmLinkProfile->getField('table_id')->getValue() == '0') $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
 					}
 
 					// parse accounts
@@ -277,6 +328,9 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$this->tpl->assign('accountName', $this->accountName);
 			$this->tpl->assign('profileTitle', $this->profileTitle);
 		}
+		
+		// Parse tracking url form
+		$this->frmTrackingUrl->parse($this->tpl);
 	}
 
 	/**

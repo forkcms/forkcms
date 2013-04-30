@@ -88,5 +88,29 @@
 	</div>
 </div>
 
+{option:EverythingIsPresent}
+{form:trackingUrl}
+<div class="box">
+	<div class="heading">
+		<h3>{$lblTrackingUrl|ucfirst}</h3>
+	</div>
+	
+	<div class="options">
+		<p>{$msgHelpTrackingUrl}</p>
+		{iteration:url}
+			<label for="{$url.id}">{$url.rbtUrl} {$url.label}</label><br />
+		{/iteration:url}
+		{$rbtUrlError}
+	</div>
+</div>
+
+<div class="fullwidthOptions">
+	<div class="buttonHolderRight">
+		<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+	</div>
+</div>
+{/form:trackingUrl}
+{/option:EverythingIsPresent}
+
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

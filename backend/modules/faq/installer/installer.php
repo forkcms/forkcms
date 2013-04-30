@@ -121,7 +121,7 @@ class FaqInstaller extends ModuleInstaller
 				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
 			}
 
-			// check if a page for blog already exists in this language
+			// check if a page for the faq already exists in this language
 			if(!(bool) $this->getDB()->getVar(
 				'SELECT 1
 				 FROM pages AS p
@@ -142,9 +142,9 @@ class FaqInstaller extends ModuleInstaller
 
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
-		$navigationBlogId = $this->setNavigation($navigationModulesId, 'Faq');
-		$this->setNavigation($navigationBlogId, 'Questions', 'faq/index', array('faq/add',	'faq/edit'));
-		$this->setNavigation($navigationBlogId, 'Categories', 'faq/categories', array('faq/add_category',	'faq/edit_category'));
+		$navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
+		$this->setNavigation($navigationFaqId, 'Questions', 'faq/index', array('faq/add', 'faq/edit'));
+		$this->setNavigation($navigationFaqId, 'Categories', 'faq/categories', array('faq/add_category', 'faq/edit_category'));
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');
