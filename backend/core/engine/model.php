@@ -724,12 +724,10 @@ class BackendModel extends BaseModel
 	{
 		$return = array();
 		$finder = new Finder();
-		$directories = $finder->directories()
-			->in($path)
-			->name('/^([0-9]*)x([0-9]*)$/');
-		if($includeSource) $directories->name('source');
+		$finder->name('/^([0-9]*)x([0-9]*)$/');
+		if($includeSource) $finder->name('source');
 
-		foreach($directories as $directory) {
+		foreach($finder->directories()->in($path) as $directory) {
 			$chunks = explode('x', $directory->getBasename(), 2);
 			if(count($chunks) != 2 && !$includeSource) continue;
 

@@ -18,7 +18,6 @@ General rule of thumb is: use the filesystem-component if you are generating
 files or are working with directories, in other cases the native PHP-methods
 are prefered.
 
-
 * SpoonFile::exists / SpoonDirectory::exists
 
    Before:
@@ -117,23 +116,26 @@ http://symfony.com/doc/master/components/finder.html
 
 ### Upgrading your module
 
-#### SpoonFile::getList
+* SpoonFile::getList
 
-Wherever you need to deal with a list of files you will probably loop them.
-Symfony has a nice way of iterating through the files in a path. So take the
-old code below:
+   Wherever you need to deal with a list of files you will probably loop them.
+   Symfony has a nice way of iterating through the files in a path.
 
-	$files = SpoonFile::getList($path, '/(.*).php/');
+   Before:
+    ```
+    $files = SpoonFile::getList($path, '/(.*).php/');
 	foreach($files as $file)
 	{
 		Spoon::dump($file);
 	}
+    ```
 
-Would become:
-
+   After:
+	```
 	$finder = new Finder();
-	foreach($finder->files()->name('*.php')->in($path) as $file)
-	{
-		Spoon::dump($file->basename());
+	$finder->name('*.php');
+	foreach ($finder->files()->in($path) as $file) {
+		Spoon::dump($file->getRealPath());
 	}
+	```
 

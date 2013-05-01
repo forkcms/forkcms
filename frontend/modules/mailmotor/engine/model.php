@@ -194,12 +194,6 @@ class FrontendMailmotorModel
 		$path = PATH_WWW . '/backend/modules/mailmotor/templates/' . $language;
 
 		// load all templates in the 'templates' folder for this language
-		$templates = SpoonDirectory::getList($path, false, array('.svn'));
-
-		// stop here if no directories were found
-		if(empty($templates) || !in_array($name, $templates)) return array();
-
-		// load all templates in the 'templates' folder for this language
 		if(!is_file($path . '/' . $name . '/template.tpl')) {
 			throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
 		}
@@ -216,8 +210,8 @@ class FrontendMailmotorModel
 		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
 
 		// check if the template file actually exists
-		if($fs->exists($record['path_content'])) $record['content'] = SpoonFile::getContent($record['path_content']);
-		if($fs->exists($record['path_css'])) $record['css'] = SpoonFile::getContent($record['path_css']);
+		if(is_file($record['path_content'])) $record['content'] = SpoonFile::getContent($record['path_content']);
+		if(is_file($record['path_css'])) $record['css'] = SpoonFile::getContent($record['path_css']);
 
 		return $record;
 	}
