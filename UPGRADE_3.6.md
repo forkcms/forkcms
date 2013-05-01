@@ -77,7 +77,7 @@ are prefered.
 
    Before:
 	```
-	SpoonFile::getCOntent(...)
+	SpoonFile::getContent(...)
 	```
 
    After:
@@ -86,6 +86,21 @@ are prefered.
 	```
 
 Just make sure you test if the file exists, otherwise this will trigger warnings.
+
+* SpoonFile::getExtension
+
+   Before:
+	```
+	$extension = SpoonFile::getExtension(...)
+	```
+
+   After:
+	```
+	use Symfony\Component\HttpFoundation\File\File;
+	...
+	$file = new File(...);
+	$extension = $file->getExtension();
+	```
 
 * SpoonDirectory::create
 

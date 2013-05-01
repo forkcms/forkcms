@@ -9,6 +9,7 @@
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
@@ -336,11 +337,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// rename the old image
 					elseif($item['image'] != null)
 					{
-						// get the old file extension
-						$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
-
-						// get the new image name
-						$newName = $this->meta->getURL() . '.' . $imageExtension;
+						$image = new File($imagePath . '/source/' . $item['image']);
+						$newName = $this->meta->getURL() . '.' . $image->getExtension();
 
 						// only change the name if there is a difference
 						if($newName != $item['image'])
