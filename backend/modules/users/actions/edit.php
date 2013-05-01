@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
@@ -300,7 +303,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					// delete old avatar if it isn't the default-image
 					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
 					{
-						$fs = BackendModel::getContainer()->get('filesystem');
+						$fs = new Filesystem();
 						$fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
 						$fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
 						$fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);

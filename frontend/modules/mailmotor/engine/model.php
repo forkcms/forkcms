@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
  *
@@ -197,7 +200,7 @@ class FrontendMailmotorModel
 		if(empty($templates) || !in_array($name, $templates)) return array();
 
 		// load all templates in the 'templates' folder for this language
-		$fs = FrontendModel::getContainer()->get('filesystem');
+		$fs = new Filesystem();
 		if(!$fs->exists($path . '/' . $name . '/template.tpl')) throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
 		if(!$fs->exists($path . '/' . $name . '/css/screen.css')) throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
 

@@ -1012,10 +1012,10 @@ class BackendModel extends BaseModel
 			}
 
 			$finder = new Finder();
-			$filesystem = BackendModel::getContainer()->get('filesystem');
+			$fs = new Filesystem();
 			foreach($finder->files()->name($regexp)->in($path) as $file)
 			{
-				$filesystem->remove($file->getRealPath());
+				$fs->remove($file->getPathName());
 			}
 		}
 	}
