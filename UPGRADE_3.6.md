@@ -67,19 +67,21 @@ Should become:
 
 	$this->getContainer()->get('filesystem')->exists(...);
 
-#### SpoonDirectory::create
+* SpoonDirectory::create
 
+   Before:
+	```
 	SpoonDirectory::create(...);
+	```
 
-Should become:
-
-	$this->getContainer()->get('filesystem')->mkdir(...);
-
-#### SpoonFileException
-
-	SpoonFileException(...);
-
-Should become:
+   After:
+	```
+	use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Exception\IOException;
+    ...
+	$fs = new Filesystem();
+	$fs->mkdir(...)
+	```
 
 	IOException(...);
 
