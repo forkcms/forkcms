@@ -236,8 +236,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 	public function setModule($module)
 	{
 		// does this module exist?
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
-		$modules[] = 'core';
+		$modules = BackendModel::getModulesOnFilesystem();
 		if(!in_array($module, $modules))
 		{
 			// set correct headers

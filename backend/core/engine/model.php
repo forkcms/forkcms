@@ -561,6 +561,22 @@ class BackendModel extends BaseModel
 	}
 
 	/**
+	 * Get the modules that are available on the filesystem
+	 *
+	 * @return array
+	 */
+	public static function getModulesOnFilesystem()
+	{
+		$return = array('core');
+		$finder = new Finder();
+		foreach($finder->directories()->in(BACKEND_MODULES_PATH)->depth('==0') as $folder)
+		{
+			$return[] = $folder->getBasename();
+		}
+		return $return;
+	}
+
+	/**
 	 * Get a certain module-setting
 	 *
 	 * @param string $module The module in which the setting is stored.
