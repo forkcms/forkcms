@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
  *
@@ -1288,12 +1290,6 @@ class BackendMailmotorModel
 		$path = BACKEND_MODULE_PATH . '/templates/' . $language;
 
 		// load all templates in the 'templates' folder for this language
-		$templates = SpoonDirectory::getList($path, false, array('.svn'));
-
-		// stop here if no directories were found
-		if(empty($templates) || !in_array($name, $templates)) return array();
-
-		// load all templates in the 'templates' folder for this language
 		if(!is_file($path . '/' . $name . '/template.tpl')) {
 			throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
 		}
@@ -1329,22 +1325,17 @@ class BackendMailmotorModel
 	 */
 	public static function getTemplatesForCheckboxes($language)
 	{
-		// load all templates in the 'templates' folder for this language
-		$records = SpoonDirectory::getList(BACKEND_MODULE_PATH . '/templates/' . $language . '/', false, array('.svn'));
-
-		// stop here if no directories were found
-		if(empty($records)) return array();
-
-		// loop and complete the records
-		foreach($records as $key => $record)
+		$records = array();
+		$finder = new Finder();
+		$finder->depth(0);
+		foreach($finder->directories()->in(BACKEND_MODULE_PATH . '/templates/' . $language) as $directory)
 		{
-			// add additional values
-			$records[$record]['language'] = $language;
-			$records[$record]['value'] = $record;
-			$records[$record]['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase($record, array('-', '_')));
+			$item = array();
+			$item['language'] = $language;
+			$item['value'] = $directory->getBaseName();
+			$item['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_')));
 
-			// unset the key
-			unset($records[$key]);
+			$records[$item['value']] = $item;
 		}
 
 		return (array) $records;

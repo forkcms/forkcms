@@ -520,7 +520,7 @@ class BackendExtensionsModel
 		$installedModules = (array) BackendModel::getContainer()->get('database')->getRecords('SELECT name FROM modules', null, 'name');
 
 		// get modules present on the filesystem
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH, false, null, '/^[a-zA-Z0-9_]+$/');
+		$modules = BackendModel::getModulesOnFilesystem(false);
 
 		// all modules that are managable in the backend
 		$manageableModules = array();
@@ -724,21 +724,22 @@ class BackendExtensionsModel
 	 */
 	public static function getThemes()
 	{
-		// fetch themes
-		$records = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
+		$records = array();
+		$records['core'] = array(
+			'value' => 'core',
+			'label' => BL::lbl('NoTheme'),
+			'thumbnail' => '/frontend/core/layout/images/thumbnail.png',
+			'installed' => self::isThemeInstalled('core'),
+			'installable' => false,
+		);
 
-		// loop and complete the records
-		foreach($records as $key => $record)
+		$finder = new Finder();
+		foreach($finder->directories()->in(FRONTEND_PATH . '/themes')->depth(0) as $directory)
 		{
 			try
 			{
-				// path to info.xml
-				$pathInfoXml = PATH_WWW . '/frontend/themes/' . $record . '/info.xml';
-
-				// load info.xml
+				$pathInfoXml = PATH_WWW . '/frontend/themes/' . $directory->getBasename() . '/info.xml';
 				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
-
-				// convert xml to useful array
 				$information = self::processThemeXml($infoXml);
 				if(!$information) throw new BackendException('Invalid info.xml');
 			}
@@ -750,27 +751,15 @@ class BackendExtensionsModel
 				$information['thumbnail'] = 'thumbnail.png';
 			}
 
-			// add additional values
-			$records[$record]['value'] = $record;
-			$records[$record]['label'] = $record;
-			$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/' . $information['thumbnail'];
+			$item = array();
+			$item['value'] = $directory->getBasename();
+			$item['label'] = $directory->getBasename();
+			$item['thumbnail'] =  '/frontend/themes/' . $item['value'] . '/' . $information['thumbnail'];
+			$item['installed'] = self::isThemeInstalled($item['value']);
+			$item['installable'] = isset($information['templates']);
 
-			// doublecheck if templates for this theme are installed already
-			$records[$record]['installed'] = self::isThemeInstalled($record);
-			$records[$record]['installable'] = isset($information['templates']);
-
-			// unset the key
-			unset($records[$key]);
+			$records[$item['value']] = $item;
 		}
-
-		// add core theme
-		$core = array('core' => array());
-		$core['core']['value'] = 'core';
-		$core['core']['label'] = BL::lbl('NoTheme');
-		$core['core']['thumbnail'] = '/frontend/core/layout/images/thumbnail.png';
-		$core['core']['installed'] = self::isThemeInstalled('core');
-		$core['core']['installable'] = false;
-		$records = array_merge($core, $records);
 
 		return (array) $records;
 	}
