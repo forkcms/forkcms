@@ -301,7 +301,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					$avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
 
 					// delete old avatar if it isn't the default-image
-					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
+					if($this->record['settings']['avatar'] != 'no-avatar.jpg' && $this->record['settings']['avatar'] != '')
 					{
 						$fs = new Filesystem();
 						$fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);

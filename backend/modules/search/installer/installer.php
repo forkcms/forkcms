@@ -91,9 +91,8 @@ class SearchInstaller extends ModuleInstaller
 		// activate search on 'pages'
 		$this->searchPages();
 
-		$fs = new Filesystem();
-
 		// create module cache path
+		$fs = new Filesystem();
 		if(!$fs->exists(PATH_WWW . '/frontend/cache/search')) {
 			$fs->mkdir(PATH_WWW . '/frontend/cache/search');
 		}

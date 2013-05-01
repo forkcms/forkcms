@@ -200,9 +200,12 @@ class FrontendMailmotorModel
 		if(empty($templates) || !in_array($name, $templates)) return array();
 
 		// load all templates in the 'templates' folder for this language
-		$fs = new Filesystem();
-		if(!$fs->exists($path . '/' . $name . '/template.tpl')) throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
-		if(!$fs->exists($path . '/' . $name . '/css/screen.css')) throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		if(!is_file($path . '/' . $name . '/template.tpl')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
+		}
+		if(!is_file($path . '/' . $name . '/css/screen.css')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		}
 
 		// set template data
 		$record = array();
