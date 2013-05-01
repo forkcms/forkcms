@@ -759,7 +759,7 @@ class FrontendModel extends BaseModel
 	 */
 	public static function startProcessingHooks()
 	{
-		$fs = FrontendModel::getContainer()->get('filesystem');
+		$fs = new Filesystem();
 		// is the queue already running?
 		if($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
 		{

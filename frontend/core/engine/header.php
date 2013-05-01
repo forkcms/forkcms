@@ -1,13 +1,15 @@
 <?php
 
-use \MatthiasMullie\Minify;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use \MatthiasMullie\Minify;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
@@ -483,7 +485,7 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		$fs = FrontendModel::getContainer()->get('filesystem');
+		$fs = new Filesystem();
 		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
@@ -514,7 +516,7 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		$fs = FrontendModel::getContainer()->get('filesystem');
+		$fs = new Filesystem();
 		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
