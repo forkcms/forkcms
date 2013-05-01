@@ -563,16 +563,19 @@ class BackendModel extends BaseModel
 	/**
 	 * Get the modules that are available on the filesystem
 	 *
+	 * @param bool[optional] $includeCore   Should core be included as a module?
 	 * @return array
 	 */
-	public static function getModulesOnFilesystem()
+	public static function getModulesOnFilesystem($includeCore = true)
 	{
-		$return = array('core');
+		if($includeCore) $return = array('core');
+		else $return = array();
 		$finder = new Finder();
-		foreach($finder->directories()->in(BACKEND_MODULES_PATH)->depth('==0') as $folder)
+		foreach($finder->directories()->in(PATH_WWW . '/backend/modules')->depth('==0') as $folder)
 		{
 			$return[] = $folder->getBasename();
 		}
+
 		return $return;
 	}
 
