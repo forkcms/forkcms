@@ -58,13 +58,22 @@ are prefered.
 	$fs->remove(...)
 	```
 
-#### SpoonFile::move
+* SpoonFile::move
 
-	SpoonFile::move(...);
+   Before:
+	```
+	SpoonFile::move(...)
+	```
 
-Should become:
-
-	$this->getContainer()->get('filesystem')->rename(...);
+   After:
+	```
+	use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Exception\IOException;
+    ...
+	$fs = new Filesystem();
+	$fs->rename(...)
+	```
+	;
 
 * SpoonDirectory::create
 
