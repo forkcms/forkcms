@@ -1,10 +1,15 @@
 3.5.2 (xxxx-xx-xx)
 --
+Improvements:
+
+* Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
+
 Bugfixes:
 
 * Security: prevent csfr
 * Core: jQuery-plugins should escape data when using the raw data.
 * Security: prevent CSRF
+* Mailmotor: fixed linking your account.
 
 
 3.5.1 (2013-04-15)
