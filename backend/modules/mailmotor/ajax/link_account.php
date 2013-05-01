@@ -57,6 +57,12 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 
 			// account was linked
 			BackendModel::setModuleSetting($this->getModule(), 'cm_account', true);
+
+			// trigger event
+			BackendModel::triggerEvent($this->getModule(), 'after_account_linked');
+
+			// CM was successfully initialized
+			$this->output(self::OK, array('message' => 'account-linked'), BL::msg('AccountLinked', $this->getModule()));
 		}
 
 		catch(Exception $e)
@@ -67,11 +73,5 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			// other error
 			$this->output(self::ERROR, array('field' => 'url'), sprintf(BL::err('CampaignMonitorError', $this->getModule()), $e->getMessage()));
 		}
-
-		// trigger event
-		BackendModel::triggerEvent($this->getModule(), 'after_account_linked');
-
-		// CM was successfully initialized
-		$this->output(self::OK, array('message' => 'account-linked'), BL::msg('AccountLinked', $this->getModule()));
 	}
 }
