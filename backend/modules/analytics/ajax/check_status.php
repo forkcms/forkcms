@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This edit-action will check the status using Ajax
  *
@@ -22,6 +25,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		parent::execute();
 		$page = trim(SpoonFilter::getPostValue('page', null, ''));
 		$identifier = trim(SpoonFilter::getPostValue('identifier', null, ''));
+		$fs = new Filesystem();
 
 		// validate
 		if($page == '' || $identifier == '') $this->output(self::BAD_REQUEST, null, 'No page provided.');
@@ -52,7 +56,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			if($counter > 100)
 			{
 				// remove file
-				BackendModel::getContainer()->get('filesystem')->remove($filename);
+				$fs->remove($filename);
 
 				// return status
 				$this->output(self::ERROR, array('status' => 'timeout'), 'Error while retrieving data - the script took too long to retrieve data.');
@@ -69,7 +73,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		elseif($status == 'unauthorized')
 		{
 			// remove file
-			BackendModel::getContainer()->get('filesystem')->remove($filename);
+			$fs->remove($filename);
 
 			// remove all parameters from the module settings
 			BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
@@ -87,7 +91,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		elseif($status == 'done')
 		{
 			// remove file
-			BackendModel::getContainer()->get('filesystem')->remove($filename);
+			$fs->remove($filename);
 
 			// return status
 			$this->output(self::OK, array('status' => 'done'), 'Data retrieved.');
@@ -102,7 +106,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			// file's been missing for more than ten cycles - just stop here
 			if($counter > 10)
 			{
-				BackendModel::getContainer()->get('filesystem')->remove($filename);
+				$fs->remove($filename);
 				$this->output(self::ERROR, array('status' => 'missing'), 'Error while retrieving data - file was never created.');
 			}
 
@@ -116,7 +120,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		/* FALLBACK - SOMETHING WENT WRONG */
 		else
 		{
-			BackendModel::getContainer()->get('filesystem')->remove($filename);
+			$fs->remove($filename);
 			$this->output(self::ERROR, array('status' => 'error', 'a' => ($status == 'done')), 'Error while retrieving data.');
 		}
 	}

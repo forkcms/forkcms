@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * In this file we store all generic data communication functions
  *
@@ -1047,12 +1051,11 @@ class BackendAnalyticsModel
 	 */
 	public static function removeCacheFiles()
 	{
-		$cachePath = BACKEND_CACHE_PATH . '/analytics';
-
-		// delete all cache files
-		foreach(SpoonFile::getList($cachePath) as $file)
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files->in(BACKEND_CACHE_PATH . '/analytics') as $file)
 		{
-			BackendModel::getContainer()->get('filesystem')->remove($cachePath . '/' . $file);
+			$fs->remove($file->getPathName());
 		}
 	}
 

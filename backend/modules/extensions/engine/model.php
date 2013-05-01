@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
  *
@@ -215,32 +219,19 @@ class BackendExtensionsModel
 	 */
 	public static function clearCache()
 	{
-		// list of cache files to be deleted
-		$filesToDelete = array();
-
-		// backend navigation
-		$filesToDelete[] = BACKEND_CACHE_PATH . '/navigation/navigation.php';
-
-		// backend locale
-		foreach(SpoonFile::getList(BACKEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = BACKEND_CACHE_PATH . '/locale/' . $file;
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()
+			        ->name('*.php')
+			        ->name('*.js')
+			        ->in(BACKEND_CACHE_PATH . '/locale')
+			        ->in(FRONTEND_CACHE_PATH . '/navigation')
+			        ->in(FRONTEND_CACHE_PATH . '/locale')
+		        as $file
+		) {
+			$fs->remove($file->getPathName());
 		}
-
-		// frontend navigation
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/navigation', '/\.(php|js)$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH . '/navigation/' . $file;
-		}
-
-		// frontend locale
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH . '/locale/' . $file;
-		}
-
-		// delete the files
-		foreach($filesToDelete as $file) BackendModel::getContainer()->get('filesystem')->remove($file);
+		$fs->remove(BACKEND_CACHE_PATH . '/navigation/navigation.php');
 	}
 
 	/**
@@ -995,7 +986,7 @@ class BackendExtensionsModel
 		if($return === false) return false;
 
 		// unlink the random file
-		BackendModel::getContainer()->get('filesystem')->remove($path . '/' . $file);
+		unlink($path . '/' . $file);
 
 		return true;
 	}

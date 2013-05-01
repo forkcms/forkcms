@@ -1,14 +1,16 @@
 <?php
 
-use \TijsVerkoyen\Akismet\Akismet;
-use Symfony\Component\Finder\Finder;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use \TijsVerkoyen\Akismet\Akismet;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
 
 require_once __DIR__ . '/../../../app/BaseModel.php';
 
@@ -267,17 +269,14 @@ class BackendModel extends BaseModel
 	 */
 	public static function deleteThumbnails($path, $thumbnail)
 	{
-		// get folder listing
-		$folders = self::getThumbnailFolders($path);
+		// if there is no image provided we can't do anything
+		if($thumbnail == '') return;
 
-		// loop folders
-		foreach($folders as $folder)
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->directories()->in($path) as $directory)
 		{
-			// delete file but check for existence at first
-			if(is_file($folder['path'] . '/' . $thumbnail))
-			{
-				BackendModel::getContainer()->get('filesystem')->remove($folder['path'] . '/' . $thumbnail);
-			}
+			$fs->remove($directory->getPathName() . '/' . $thumbnail);
 		}
 	}
 
@@ -935,18 +934,17 @@ class BackendModel extends BaseModel
 	 */
 	public static function imageDelete($module, $filename, $subDirectory = '', $fileSizes = null)
 	{
-		// get fileSizes var from model
 		if(empty($fileSizes))
 		{
 			$model = get_class_vars('Backend' . SpoonFilter::toCamelCase($module) . 'Model');
 			$fileSizes = $model['fileSizes'];
 		}
 
-		// loop all directories
-		foreach(array_keys($fileSizes) as $sizeDir) BackendModel::getContainer()->get('filesystem')->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
-
-		// delete original
-		BackendModel::getContainer()->get('filesystem')->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+		$fs = new Filesystem();
+		foreach(array_keys($fileSizes) as $sizeDir) {
+			$fs->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
+		}
+		$fs->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
 	}
 
 	/**
@@ -1190,8 +1188,10 @@ class BackendModel extends BaseModel
 	 */
 	public static function startProcessingHooks()
 	{
+		$fs = new Filesystem();
+
 		// is the queue already running?
-		if(file_exists(BACKEND_CACHE_PATH . '/hooks/pid'))
+		if($fs->exists(BACKEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
 			$pid = trim(SpoonFile::getContent(BACKEND_CACHE_PATH . '/hooks/pid'));
@@ -1206,7 +1206,7 @@ class BackendModel extends BaseModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					BackendModel::getContainer()->get('filesystem')->remove(BACKEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1223,7 +1223,7 @@ class BackendModel extends BaseModel
 				if($output === false)
 				{
 					// delete the pid file
-					BackendModel::getContainer()->get('filesystem')->remove(BACKEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1234,10 +1234,10 @@ class BackendModel extends BaseModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!file_exists('/proc/' . $pid))
+				if(!$fs->exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					BackendModel::getContainer()->get('filesystem')->remove(BACKEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running

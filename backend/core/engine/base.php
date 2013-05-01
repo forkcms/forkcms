@@ -9,6 +9,8 @@
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -741,11 +743,9 @@ class BackendBaseCronjob extends BackendBaseObject
 	 */
 	protected function clearBusyFile()
 	{
-		// build path
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
-
-		// remove the file
-		BackendModel::getContainer()->get('filesystem')->remove($path);
+		$fs = new Filesystem();
+		$fs->remove($path);
 	}
 
 	public function execute()

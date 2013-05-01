@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * The base-class for the installer
  *
@@ -162,9 +166,10 @@ class ModuleInstaller
 		}
 
 		// invalidate the cache for search
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/search/') as $file)
-		{
-			BackendModel::getContainer()->get('filesystem')->remove(FRONTEND_CACHE_PATH . '/search/' . $file);
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()->in(FRONTEND_CACHE_PATH . '/search/') as $file) {
+			$fs->remove($file->getPathName());
 		}
 	}
 

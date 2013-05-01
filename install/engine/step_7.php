@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * Step 7 of the Fork installer
  *
@@ -182,44 +186,14 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function deleteCachedData()
 	{
-		// init some vars
-		$foldersToLoop = array('/backend/cache', '/frontend/cache');
-		$foldersToIgnore = array('/backend/cache/navigation');
-		$filesToIgnore = array('.gitignore');
-		$filesToDelete = array();
-
-		// loop folders
-		foreach($foldersToLoop as $folder)
-		{
-			// get folderlisting
-			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn', '.gitignore'));
-
-			// loop folders
-			foreach($subfolders as $subfolder)
-			{
-				// not in ignore list?
-				if(!in_array($folder . '/' . $subfolder, $foldersToIgnore))
-				{
-					// get the filelisting
-					$files = (array) SpoonFile::getList(PATH_WWW . $folder . '/' . $subfolder);
-
-					// loop the files
-					foreach($files as $file)
-					{
-						if(!in_array($file, $filesToIgnore))
-						{
-							$filesToDelete[] = PATH_WWW . $folder . '/' . $subfolder . '/' . $file;
-						}
-					}
-				}
-			}
-		}
-
-		// delete cached files
-		if(!empty($filesToDelete))
-		{
-			// loop files and delete them
-			foreach($filesToDelete as $file) BackendModel::getContainer()->get('filesystem')->remove($file);
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()
+			        ->in(PATH_WWW . '/backend/cache')
+			        ->in(PATH_WWW . '/frontend/cache')
+		        as $file
+		) {
+			$fs->remove($file->getPathName());
 		}
 	}
 

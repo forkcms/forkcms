@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * This cronjob will fetch the requested data
  *
@@ -26,15 +30,14 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	 */
 	private function cleanupCache()
 	{
-		$files = SpoonFile::getList($this->cachePath);
-		foreach($files as $file)
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files->in($this->cachePath) as $file)
 		{
-			$fileinfo = SpoonFile::getInfo($this->cachePath . '/' . $file);
-
 			// delete file if more than 1 week old
-			if($fileinfo['modification_date'] < strtotime('-1 week'))
+			if($file->getMTime() < strtotime('-1 week'))
 			{
-				BackendModel::getContainer()->get('filesystem')->remove($this->cachePath . '/' . $file);
+				$fs->remove($file->getPathName());
 			}
 		}
 	}

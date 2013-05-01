@@ -44,11 +44,19 @@ are prefered.
 
 * SpoonFile::delete
 
-	SpoonFile::delete(...);
+   Before:
+	```
+	SpoonFile::delete(...)
+	```
 
-Should become:
-
-	$this->getContainer()->get('filesystem')->remove(...);
+   After:
+	```
+	use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Exception\IOException;
+    ...
+	$fs = new Filesystem();
+	$fs->remove(...)
+	```
 
 #### SpoonFile::move
 
