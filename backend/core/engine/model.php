@@ -722,30 +722,26 @@ class BackendModel extends BaseModel
 	 */
 	public static function getThumbnailFolders($path, $includeSource = false)
 	{
-		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
-
-		if($includeSource && is_dir($path . '/source')) $folders[] = 'source';
-
 		$return = array();
+		$finder = new Finder();
+		$directories = $finder->directories()
+			->in($path)
+			->name('/^([0-9]*)x([0-9]*)$/');
+		if($includeSource) $directories->name('source');
 
-		foreach($folders as $folder)
-		{
-			$item = array();
-			$chunks = explode('x', $folder, 2);
-
-			// skip invalid items
+		foreach($directories as $directory) {
+			$chunks = explode('x', $directory->getBasename(), 2);
 			if(count($chunks) != 2 && !$includeSource) continue;
 
-			$item['dirname'] = $folder;
-			$item['path'] = $path . '/' . $folder;
+			$item = array();
+			$item['dirname'] = $directory->getBasename();
+			$item['path'] = $directory->getRealPath();
 			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
-			if($folder == 'source')
-			{
+
+			if($item['dirname'] == 'source') {
 				$item['width'] = null;
 				$item['height'] = null;
-			}
-			else
-			{
+			} else {
 				$item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
 				$item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
 			}
