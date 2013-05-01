@@ -9,6 +9,7 @@
         "facebook/php-sdk": "3.2.*",
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.2.*",
+        "matthiasmullie/minify": "1.1.*",
         "symfony/dependency-injection": "2.2.*",
         "symfony/http-kernel": "2.2.*",
         "symfony/config": "2.2.*",

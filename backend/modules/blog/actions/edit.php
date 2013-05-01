@@ -310,6 +310,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					{
 						// delete the image
 						$fs->remove($imagePath . '/source/' . $item['image']);
+						BackendModel::deleteThumbnails($imagePath, $item['image']);
 
 						// reset the name
 						$item['image'] = null;
@@ -320,6 +321,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					{
 						// delete the old image
 						$fs->remove($imagePath . '/source/' . $this->record['image']);
+						BackendModel::deleteThumbnails($imagePath, $this->record['image']);
 
 						// build the image name
 						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();

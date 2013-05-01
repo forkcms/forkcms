@@ -403,5 +403,6 @@ class BackendAuthentication
 		// reset values. We can't destroy the session because session-data can be used on the site.
 		SpoonSession::set('backend_logged_in', false);
 		SpoonSession::set('backend_secret_key', '');
+		SpoonSession::set('csrf_token', '');
 	}
 }

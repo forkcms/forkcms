@@ -83,11 +83,13 @@ class BackendURL extends BackendBaseObject
 		// find the position of ? (which separates real URL and GET-parameters)
 		$positionQuestionMark = strpos($queryString, '?');
 
-		// remove the GET-chunk from the parameters
+		// separate the GET-chunk from the parameters
+		$getParameters = '';
 		if($positionQuestionMark === false) $processedQueryString = $queryString;
 		else
 		{
 			$processedQueryString = substr($queryString, 0, $positionQuestionMark);
+			$getParameters = substr($queryString, $positionQuestionMark);
 		}
 
 		// split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
@@ -110,7 +112,7 @@ class BackendURL extends BackendBaseObject
 			array_shift($chunks);
 
 			// redirect to login
-			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks));
+			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters);
 		}
 
 		// get the module, null will be the default

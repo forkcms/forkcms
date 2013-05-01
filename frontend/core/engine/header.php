@@ -1,5 +1,7 @@
 <?php
 
+use \MatthiasMullie\Minify;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -491,8 +493,7 @@ class FrontendHeader extends FrontendBaseObject
 			}
 
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$css = new MinifyCSS(PATH_WWW . $file);
+			$css = new Minify\CSS(PATH_WWW . $file);
 			$css->minify($finalPath);
 		}
 
@@ -523,8 +524,7 @@ class FrontendHeader extends FrontendBaseObject
 			}
 
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$js = new MinifyJS(PATH_WWW . $file);
+			$js = new Minify\JS(PATH_WWW . $file);
 			$js->minify($finalPath);
 		}
 
@@ -599,6 +599,7 @@ class FrontendHeader extends FrontendBaseObject
 		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
+		$trackingUrl = FrontendModel::getModuleSetting('analytics', 'tracking_url', '//www.google-analytics.com/ga.js');
 
 		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
 		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
@@ -613,7 +614,7 @@ class FrontendHeader extends FrontendBaseObject
 								(function(d, t) {
 									var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
 									g.async = true;
-									g.src = \'//www.google-analytics.com/ga.js\';
+									g.src = \'' . $trackingUrl . '\';
 									s.parentNode.insertBefore(g, s);
 								}(document, \'script\'));
 							</script>';
