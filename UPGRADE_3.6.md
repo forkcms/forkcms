@@ -26,7 +26,6 @@ are prefered.
 	SpoonFile::exists(...)
 	```
 
-
    After:
 	```
 	// depending on the situation you should use
@@ -83,12 +82,20 @@ Should become:
 	$fs->mkdir(...)
 	```
 
-	IOException(...);
+* SpoonFileException
 
-Also don't forget to add the
-`use Symfony\Component\Filesystem\Exception\IOException;`-statement at the top
-the file where you throw an IOException.
+   Before:
+	```
+	SpoonFileException(...)
+	```
 
+   After:
+	```
+	use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Exception\IOException;
+    ...
+	IOException(...)
+	```
 
 ## Finder component
 

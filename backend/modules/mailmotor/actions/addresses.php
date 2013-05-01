@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\Filesystem\Exception\IOException;
-
 /*
  * This file is part of Fork CMS.
  *
