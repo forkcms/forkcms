@@ -238,7 +238,7 @@ class BackendForm extends SpoonForm
 		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 
 		// add the internal link lists-file
-		if(BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
+		if(is_file(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
 		{
 			$timestamp = @filemtime(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js');
 			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js?m=' . $timestamp, null, false, true, false);
@@ -587,7 +587,7 @@ class BackendFormImage extends SpoonFormImage
 	public function generateThumbnails($path, $filename)
 	{
 		$fs = BackendModel::getContainer()->get('filesystem');
-		
+
 		// create folder if needed
 		if(!$fs->exists($path . '/source')) $fs->mkdir($path . '/source');
 

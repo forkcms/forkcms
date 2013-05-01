@@ -354,8 +354,8 @@ class FrontendLanguage
 		if(!$force && !in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language (' . $language . ').');
 
 		// validate file, generate it if needed
-		if(!FrontendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/locale/en.php')) self::buildCache('en', 'frontend');
-		if(!FrontendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, 'frontend');
+		if(!is_file(FRONTEND_CACHE_PATH . '/locale/en.php')) self::buildCache('en', 'frontend');
+		if(!is_file(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, 'frontend');
 
 		// init vars
 		$act = array();

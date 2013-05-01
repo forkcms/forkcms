@@ -62,7 +62,7 @@ class BackendExtensionsInstallModule extends BackendBaseActionIndex
 		}
 
 		// no installer class present
-		if(!BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/installer.php'))
+		if(!is_file(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/installer.php'))
 		{
 			$this->redirect(BackendModel::createURLForAction('modules') . '&error=no-installer-file&var=' . $this->currentModule);
 		}

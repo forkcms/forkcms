@@ -274,7 +274,7 @@ class BackendModel extends BaseModel
 		foreach($folders as $folder)
 		{
 			// delete file but check for existence at first
-			if(BackendModel::getContainer()->get('filesystem')->exists($folder['path'] . '/' . $thumbnail))
+			if(is_file($folder['path'] . '/' . $thumbnail))
 			{
 				BackendModel::getContainer()->get('filesystem')->remove($folder['path'] . '/' . $thumbnail);
 			}
@@ -522,7 +522,7 @@ class BackendModel extends BaseModel
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -657,7 +657,7 @@ class BackendModel extends BaseModel
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file
-			if(!BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php'))
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -706,7 +706,7 @@ class BackendModel extends BaseModel
 	{
 		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
 
-		if($includeSource && BackendModel::getContainer()->get('filesystem')->exists($path . '/source')) $folders[] = 'source';
+		if($includeSource && is_dir($path . '/source')) $folders[] = 'source';
 
 		$return = array();
 
@@ -999,7 +999,7 @@ class BackendModel extends BaseModel
 		// get cache path
 		$path = FRONTEND_CACHE_PATH . '/cached_templates';
 
-		if(BackendModel::getContainer()->get('filesystem')->exists($path))
+		if(is_dir($path))
 		{
 			// build regular expression
 			if($module !== null)
@@ -1191,7 +1191,7 @@ class BackendModel extends BaseModel
 	public static function startProcessingHooks()
 	{
 		// is the queue already running?
-		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_CACHE_PATH . '/hooks/pid'))
+		if(file_exists(BACKEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
 			$pid = trim(SpoonFile::getContent(BACKEND_CACHE_PATH . '/hooks/pid'));
@@ -1234,7 +1234,7 @@ class BackendModel extends BaseModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!BackendModel::getContainer()->get('filesystem')->exists('/proc/' . $pid))
+				if(!file_exists('/proc/' . $pid))
 				{
 					// delete the pid file
 					BackendModel::getContainer()->get('filesystem')->remove(BACKEND_CACHE_PATH . '/hooks/pid');

@@ -250,13 +250,13 @@ class BackendBaseAction extends BackendBaseObject
 		$this->header->addJS('backend.js', 'core');
 
 		// add module js
-		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
+		if(is_file(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
 		{
 			$this->header->addJS($this->getModule() . '.js');
 		}
 
 		// add action js
-		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
+		if(is_file(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
 		{
 			$this->header->addJS($this->getAction() . '.js');
 		}
@@ -268,7 +268,7 @@ class BackendBaseAction extends BackendBaseObject
 		$this->header->addCSS('debug.css', 'core');
 
 		// add module specific css
-		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
+		if(is_file(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
 		{
 			$this->header->addCSS($this->getModule() . '.css');
 		}
@@ -695,7 +695,7 @@ class BackendBaseConfig extends BackendBaseObject
 	{
 		$path = BACKEND_MODULES_PATH . '/' . $this->getModule();
 
-		if(BackendModel::getContainer()->get('filesystem')->exists($path . '/actions'))
+		if(is_dir($path . '/actions'))
 		{
 			$finder = new Finder();
 			foreach($finder->files()->name('*.php')->in($path . '/actions') as $file)
@@ -707,7 +707,7 @@ class BackendBaseConfig extends BackendBaseObject
 			}
 		}
 
-		if(BackendModel::getContainer()->get('filesystem')->exists($path . '/ajax'))
+		if(is_dir($path . '/ajax'))
 		{
 			$finder = new Finder();
 			foreach($finder->files()->name('*.php')->in($path . '/ajax') as $file)
@@ -783,7 +783,7 @@ class BackendBaseCronjob extends BackendBaseObject
 		else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
 
 		// check if file exists
-		if(!$this->getContainer()->get('filesystem')->exists($path . '/' . $action . '.php'))
+		if(!is_file($path . '/' . $action . '.php'))
 		{
 			SpoonHTTP::setHeadersByCode(403);
 			throw new BackendException('Action not allowed.');
@@ -808,7 +808,7 @@ class BackendBaseCronjob extends BackendBaseObject
 		$isBusy = false;
 
 		// does the busy file already exists.
-		if(BackendModel::getContainer()->get('filesystem')->exists($path))
+		if(file_exists($path))
 		{
 			$isBusy = true;
 

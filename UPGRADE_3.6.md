@@ -11,35 +11,37 @@ http://symfony.com/doc/current/components/filesystem.html
 
 ### Upgrading your module
 
-There are several pieces of code that should be replaced.
+There are several pieces of code that should be altered. Below you can find all
+changes you should apply to make your module compatible with this release.
 
-In the backend the filesystem component is available through the container. So
-each time you need the filesystem-object in the backend you should use:
+General rule of thumb is: use the filesystem-component if you are generating
+files or are working with directories, in other cases the native PHP-methods
+are prefered.
 
-	$this->getContainer()->get('filesystem');
 
-In the frontend the filesystem component is available through the containser.
-So each time you need the filesystem-object in the backend you should use:
+* SpoonFile::exists
 
-	FrontendModel::getContainer()->get('filesystem');
+   Before:
+	```
+	SpoonFile::exists(...)
+	```
 
-Inside an action you can access the container by using:
 
-	$this->getContainer()->get('filesystem');
-
-The method above is the method we prefer to use, and you should also.
-
-Below you can find all changes you should apply to make your module compatible
-with this release. Make sure you use the correct method to retrieve the
-container.
-
-#### SpoonFile::exists
-
-	SpoonFile::exists(...);
-
-Should become:
-
-	$this->getContainer()->get('filesystem')->exists(...);
+   After:
+	```
+	// depending on the situation you should use
+	is_file(...)
+	// or
+	is_dir(...)
+	// or
+	file_exists(...)
+	// or create a filesystem-object
+	use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Exception\IOException;
+    ...
+	$fs = new Filesystem();
+	$fs->exists(...)
+	```
 
 #### SpoonFile::delete
 

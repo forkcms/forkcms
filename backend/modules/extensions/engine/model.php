@@ -301,9 +301,7 @@ class BackendExtensionsModel
 	public static function existsModule($module)
 	{
 		$module = (string) $module;
-
-		// check if modules directory exists
-		return BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULES_PATH . '/' . $module);
+		return is_dir(BACKEND_MODULES_PATH . '/' . $module);
 	}
 
 	/**
@@ -333,9 +331,7 @@ class BackendExtensionsModel
 	public static function existsTheme($theme)
 	{
 		$theme = (string) $theme;
-
-		// check if modules directory exists
-		return BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
+		return is_dir(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
 	}
 
 	/**
@@ -466,7 +462,7 @@ class BackendExtensionsModel
 		$information = array('data' => array(), 'warnings' => array());
 
 		// information needs to exists
-		if(BackendModel::getContainer()->get('filesystem')->exists($pathInfoXml))
+		if(is_file($pathInfoXml))
 		{
 			try
 			{

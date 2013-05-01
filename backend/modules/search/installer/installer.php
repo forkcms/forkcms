@@ -1,5 +1,8 @@
 <?php
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -88,8 +91,12 @@ class SearchInstaller extends ModuleInstaller
 		// activate search on 'pages'
 		$this->searchPages();
 
+		$fs = new Filesystem();
+
 		// create module cache path
-		if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/frontend/cache/search')) BackendModel::getContainer()->get('filesystem')->mkdir(PATH_WWW . '/frontend/cache/search');
+		if(!$fs->exists(PATH_WWW . '/frontend/cache/search')) {
+			$fs->mkdir(PATH_WWW . '/frontend/cache/search');
+		}
 	}
 
 	/**

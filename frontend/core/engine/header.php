@@ -309,7 +309,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(substr($image, 0, 7) != SITE_PROTOCOL . '://')
 		{
 			// check if image exists
-			if(!FrontendModel::getContainer()->get('filesystem')->exists(PATH_WWW . $image)) return;
+			if(!is_file(PATH_WWW . $image)) return;
 
 			// convert to absolute path
 			$image = SITE_URL . $image;

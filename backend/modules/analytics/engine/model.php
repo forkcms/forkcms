@@ -231,7 +231,7 @@ class BackendAnalyticsModel
 		$filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
 		// file exists
-		if(BackendModel::getContainer()->get('filesystem')->exists(BACKEND_CACHE_PATH . '/analytics/' . $filename))
+		if(is_file(BACKEND_CACHE_PATH . '/analytics/' . $filename))
 		{
 			// get the xml (cast is important otherwise we cant use array_walk_recursive)
 			$xml = simplexml_load_file(BACKEND_CACHE_PATH . '/analytics/' . $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -476,7 +476,7 @@ class BackendAnalyticsModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// there is no cache file
-		if(!BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
+		if(!is_file(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
 
 		// read the cache file
 		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');

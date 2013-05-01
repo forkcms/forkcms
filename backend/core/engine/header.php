@@ -212,7 +212,7 @@ class BackendHeader
 		$finalPath = BACKEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!BackendModel::getContainer()->get('filesystem')->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
 			$css = new Minify\CSS(PATH_WWW . $file);
@@ -236,7 +236,7 @@ class BackendHeader
 		$finalPath = BACKEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!BackendModel::getContainer()->get('filesystem')->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
 			$js = new Minify\JS(PATH_WWW . $file);
@@ -361,8 +361,8 @@ class BackendHeader
 		{
 			$this->jsData['theme']['theme'] = BackendModel::getModuleSetting('core', 'theme');
 			$this->jsData['theme']['path'] = FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme');
-			$this->jsData['theme']['has_css'] = (BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css'));
-			$this->jsData['theme']['has_editor_css'] = (BackendModel::getContainer()->get('filesystem')->exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css'));
+			$this->jsData['theme']['has_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css'));
+			$this->jsData['theme']['has_editor_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css'));
 		}
 
 		// encode and add

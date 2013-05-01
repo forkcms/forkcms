@@ -321,7 +321,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadWizardSteps()
 	{
 		// check if this template path exists
-		$templatePath = BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/templates/' . $this->record['language'] . '/' . $this->record['template']);
+		$templatePath = file_exists(BACKEND_MODULE_PATH . '/templates/' . $this->record['language'] . '/' . $this->record['template']);
 
 		// set wizard values
 		$wizard = array();

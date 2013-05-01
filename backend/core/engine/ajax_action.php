@@ -67,7 +67,9 @@ class BackendAJAXAction extends BackendBaseObject
 		}
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!is_file(BACKEND_MODULE_PATH . '/config.php')) {
+			throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		}
 
 		// build config-object-name
 		$configClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_config');

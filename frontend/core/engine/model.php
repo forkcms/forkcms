@@ -476,7 +476,7 @@ class FrontendModel extends BaseModel
 	{
 		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
 
-		if($includeSource && FrontendModel::getContainer()->get('filesystem')->exists($path . '/source')) $folders[] = 'source';
+		if($includeSource && is_dir($path . '/source')) $folders[] = 'source';
 
 		$return = array();
 

@@ -1294,8 +1294,12 @@ class BackendMailmotorModel
 		if(empty($templates) || !in_array($name, $templates)) return array();
 
 		// load all templates in the 'templates' folder for this language
-		if(!BackendModel::getContainer()->get('filesystem')->exists($path . '/' . $name . '/template.tpl')) throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
-		if(!BackendModel::getContainer()->get('filesystem')->exists($path . '/' . $name . '/css/screen.css')) throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		if(!is_file($path . '/' . $name . '/template.tpl')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
+		}
+		if(!is_file($path . '/' . $name . '/css/screen.css')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		}
 
 		// set template data
 		$record = array();
@@ -1307,8 +1311,12 @@ class BackendMailmotorModel
 		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
 
 		// check if the template file actually exists
-		if(BackendModel::getContainer()->get('filesystem')->exists($record['path_content'])) $record['content'] = SpoonFile::getContent($record['path_content']);
-		if(BackendModel::getContainer()->get('filesystem')->exists($record['path_css'])) $record['css'] = SpoonFile::getContent($record['path_css']);
+		if(is_file($record['path_content'])) {
+			$record['content'] = SpoonFile::getContent($record['path_content']);
+		}
+		if(is_file($record['path_css'])) {
+			$record['css'] = SpoonFile::getContent($record['path_css']);
+		}
 
 		return $record;
 	}

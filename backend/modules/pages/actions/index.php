@@ -37,8 +37,12 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
 		// check if the cached files exists
-		if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) BackendPagesModel::buildCache(BL::getWorkingLanguage());
-		if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) BackendPagesModel::buildCache(BL::getWorkingLanguage());
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			BackendPagesModel::buildCache(BL::getWorkingLanguage());
+		}
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			BackendPagesModel::buildCache(BL::getWorkingLanguage());
+		}
 
 		// load the dgRecentlyEdited
 		$this->loadDataGrids();

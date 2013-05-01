@@ -56,7 +56,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 		if($this->getModule() == 'core')
 		{
 			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!BackendModel::getContainer()->get('filesystem')->exists(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php'))
+			if(!is_file(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php'))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(500);
@@ -72,7 +72,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 		else
 		{
 			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!BackendModel::getContainer()->get('filesystem')->exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php'))
+			if(!is_file(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php'))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(500);
@@ -193,7 +193,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 		else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
 
 		// check if file exists
-		if(!$this->getContainer()->get('filesystem')->exists($path . '/' . $action . '.php'))
+		if(!is_file($path . '/' . $action . '.php'))
 		{
 			SpoonHTTP::setHeadersByCode(403);
 			throw new BackendException('Action not allowed.');

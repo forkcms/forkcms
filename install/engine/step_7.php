@@ -344,7 +344,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($modules as $module)
 		{
 			// install exists
-			if(BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
+			if(is_file(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
 			{
 				// users module needs custom variables
 				if($module == 'users')

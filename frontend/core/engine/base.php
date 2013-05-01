@@ -102,7 +102,7 @@ class FrontendBaseConfig
 		$this->module = (string) $module;
 
 		// check if model exists
-		if(FrontendModel::getContainer()->get('filesystem')->exists(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
+		if(is_file(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
 		{
 			// the model exists, so we require it
 			require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
@@ -354,10 +354,14 @@ class FrontendBaseBlock extends FrontendBaseObject
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		}
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		}
 	}
 
 	/**
@@ -845,10 +849,14 @@ class FrontendBaseWidget extends FrontendBaseObject
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		}
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		}
 	}
 
 	/**

@@ -614,7 +614,7 @@ class ModuleInstaller
 			// build block
 			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
 			if(!isset($block['html'])) $block['html'] = '';
-			elseif(BackendModel::getContainer()->get('filesystem')->exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
+			elseif(file_exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['extra_id'])) $block['extra_id'] = null;

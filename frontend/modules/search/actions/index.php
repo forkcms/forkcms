@@ -1,5 +1,9 @@
 <?php
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -120,7 +124,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		if(SPOON_DEBUG) return false;
 
 		// check if cachefile exists
-		if(!FrontendModel::getContainer()->get('filesystem')->exists($this->cacheFile)) return false;
+		if(!is_file($this->cacheFile)) return false;
 
 		// get cachefile modification time
 		$cacheInfo = @filemtime($this->cacheFile);

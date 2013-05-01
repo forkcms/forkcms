@@ -255,7 +255,9 @@ class FrontendBlockExtra extends FrontendBaseObject
 		else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!is_file($frontendModulePath . '/config.php')) {
+			throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		}
 
 		// build config-object-name
 		$configClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
@@ -264,7 +266,9 @@ class FrontendBlockExtra extends FrontendBaseObject
 		require_once $frontendModulePath . '/config.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+		if(!class_exists($configClassName)) {
+			throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+		}
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName($this->getModule());
@@ -496,7 +500,10 @@ class FrontendBlockWidget extends FrontendBaseObject
 		else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!FrontendModel::getContainer()->get('filesystem')->exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!is_file($frontendModulePath . '/config.php'))
+		{
+			throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		}
 
 		// build config-object-name
 		$configClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
@@ -505,7 +512,9 @@ class FrontendBlockWidget extends FrontendBaseObject
 		require_once $frontendModulePath . '/config.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+		if(!class_exists($configClassName)) {
+			throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+		}
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName($this->getModule());

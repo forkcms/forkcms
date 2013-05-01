@@ -860,7 +860,9 @@ class BackendPagesModel
 	public static function getFullURL($id)
 	{
 		// generate the cache files if needed
-		if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) self::buildCache(BL::getWorkingLanguage());
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			self::buildCache(BL::getWorkingLanguage());
+		}
 
 		// init var
 		$keys = array();
@@ -1185,7 +1187,9 @@ class BackendPagesModel
 	public static function getTreeHTML()
 	{
 		// check if the cached file exists, if not we generated it
-		if(!BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) self::buildCache(BL::getWorkingLanguage());
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			self::buildCache(BL::getWorkingLanguage());
+		}
 
 		// init var
 		$navigation = array();
@@ -1411,7 +1415,7 @@ class BackendPagesModel
 		}
 
 		// check if folder exists
-		if(BackendModel::getContainer()->get('filesystem')->exists(PATH_WWW . '/' . $fullURL))
+		if(is_dir(PATH_WWW . '/' . $fullURL) || is_file(PATH_WWW . '/' . $fullURL))
 		{
 			// add a number
 			$URL = BackendModel::addNumber($URL);

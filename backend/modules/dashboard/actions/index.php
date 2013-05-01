@@ -63,7 +63,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 				$pathName = BACKEND_MODULES_PATH . '/' . $module;
 
 				// check if the folder exists
-				if(BackendModel::getContainer()->get('filesystem')->exists($pathName . '/widgets'))
+				if(is_dir($pathName . '/widgets'))
 				{
 					// get widgets
 					$widgets = (array) SpoonFile::getList($pathName . '/widgets', '/(.*)\.php/i');
@@ -84,7 +84,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						if(!class_exists($className)) throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
 
 						// check if model file exists
-						if(BackendModel::getContainer()->get('filesystem')->exists($pathName . '/engine/model.php'))
+						if(is_file($pathName . '/engine/model.php'))
 						{
 							// require model
 							require_once $pathName . '/engine/model.php';
