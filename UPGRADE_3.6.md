@@ -19,7 +19,7 @@ files or are working with directories, in other cases the native PHP-methods
 are prefered.
 
 
-* SpoonFile::exists
+* SpoonFile::exists / SpoonDirectory::exists
 
    Before:
 	```
@@ -42,7 +42,7 @@ are prefered.
 	$fs->exists(...)
 	```
 
-#### SpoonFile::delete
+* SpoonFile::delete
 
 	SpoonFile::delete(...);
 
@@ -57,14 +57,6 @@ Should become:
 Should become:
 
 	$this->getContainer()->get('filesystem')->rename(...);
-
-#### SpoonDirectory::exists
-
-	SpoonDirectory::exists(...);
-
-Should become:
-
-	$this->getContainer()->get('filesystem')->exists(...);
 
 * SpoonDirectory::create
 
