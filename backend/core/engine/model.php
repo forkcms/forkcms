@@ -276,7 +276,7 @@ class BackendModel extends BaseModel
 		$fs = new Filesystem();
 		foreach($finder->directories()->in($path) as $directory)
 		{
-			$fs->remove($directory->getPathName() . '/' . $thumbnail);
+			$fs->remove($directory->getRealPath() . '/' . $thumbnail);
 		}
 	}
 
@@ -1031,7 +1031,7 @@ class BackendModel extends BaseModel
 			$fs = new Filesystem();
 			foreach($finder->files()->name($regexp)->in($path) as $file)
 			{
-				$fs->remove($file->getPathName());
+				$fs->remove($file->getRealPath());
 			}
 		}
 	}

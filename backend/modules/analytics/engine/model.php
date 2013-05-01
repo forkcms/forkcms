@@ -1055,7 +1055,7 @@ class BackendAnalyticsModel
 		$fs = new Filesystem();
 		foreach($finder->files->in(BACKEND_CACHE_PATH . '/analytics') as $file)
 		{
-			$fs->remove($file->getPathName());
+			$fs->remove($file->getRealPath());
 		}
 	}
 

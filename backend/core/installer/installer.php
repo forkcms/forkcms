@@ -169,7 +169,7 @@ class ModuleInstaller
 		$finder = new Finder();
 		$fs = new Filesystem();
 		foreach($finder->files()->in(FRONTEND_CACHE_PATH . '/search/') as $file) {
-			$fs->remove($file->getPathName());
+			$fs->remove($file->getRealPath());
 		}
 	}
 

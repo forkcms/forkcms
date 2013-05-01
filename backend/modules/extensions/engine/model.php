@@ -229,7 +229,7 @@ class BackendExtensionsModel
 			        ->in(FRONTEND_CACHE_PATH . '/locale')
 		        as $file
 		) {
-			$fs->remove($file->getPathName());
+			$fs->remove($file->getRealPath());
 		}
 		$fs->remove(BACKEND_CACHE_PATH . '/navigation/navigation.php');
 	}

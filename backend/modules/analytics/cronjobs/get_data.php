@@ -37,7 +37,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			// delete file if more than 1 week old
 			if($file->getMTime() < strtotime('-1 week'))
 			{
-				$fs->remove($file->getPathName());
+				$fs->remove($file->getRealPath());
 			}
 		}
 	}

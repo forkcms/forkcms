@@ -193,7 +193,7 @@ class InstallerStep7 extends InstallerStep
 			        ->in(PATH_WWW . '/frontend/cache')
 		        as $file
 		) {
-			$fs->remove($file->getPathName());
+			$fs->remove($file->getRealPath());
 		}
 	}
 
