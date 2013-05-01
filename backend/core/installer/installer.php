@@ -345,13 +345,13 @@ class ModuleInstaller
 		$overwriteConflicts = (bool) $overwriteConflicts;
 
 		// load the file content and execute it
-		$content = trim(SpoonFile::getContent($filename));
+		$content = trim(file_get_contents($filename));
 
 		// file actually has content
 		if(!empty($content))
 		{
 			// load xml
-			$xml = @simplexml_load_file($filename);
+			$xml = @simplexml_load_string($content);
 
 			// import if it's valid xml
 			if($xml !== false)
@@ -372,7 +372,7 @@ class ModuleInstaller
 	protected function importSQL($filename)
 	{
 		// load the file content and execute it
-		$content = trim(SpoonFile::getContent($filename));
+		$content = trim(file_get_contents($filename));
 
 		// file actually has content
 		if(!empty($content))
@@ -619,7 +619,7 @@ class ModuleInstaller
 			// build block
 			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
 			if(!isset($block['html'])) $block['html'] = '';
-			elseif(file_exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
+			elseif(file_exists($block['html'])) $block['html'] = file_get_contents($block['html']);
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['extra_id'])) $block['extra_id'] = null;

@@ -97,7 +97,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		SpoonHTTP::setHeaders($headers);
 
 		// get the file contents
-		$content = SpoonFile::getContent($path);
+		$content = file_get_contents($path);
 
 		// output the file contents
 		echo $content;

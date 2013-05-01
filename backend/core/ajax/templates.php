@@ -62,7 +62,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 		if(!file_exists($file)) return array();
 
 		// fetch content from file
-		$content = SpoonFile::getContent($file);
+		$content = file_get_contents($file);
 		$json = @json_decode($content, true);
 
 		// skip invalid JSON
@@ -80,7 +80,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 			{
 				if(file_exists(PATH_WWW . $template['file']))
 				{
-					$template['html'] = SpoonFile::getContent(PATH_WWW . $template['file']);
+					$template['html'] = file_get_contents(PATH_WWW . $template['file']);
 				}
 			}
 

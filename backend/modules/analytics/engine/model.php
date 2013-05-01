@@ -483,7 +483,7 @@ class BackendAnalyticsModel
 		if(!is_file(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
 
 		// read the cache file
-		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
+		$cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
 
 		// get the array
 		preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);

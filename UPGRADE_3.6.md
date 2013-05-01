@@ -72,7 +72,20 @@ are prefered.
 	$fs = new Filesystem();
 	$fs->rename(...)
 	```
-	;
+
+* SpoonFile::getContent
+
+   Before:
+	```
+	SpoonFile::getCOntent(...)
+	```
+
+   After:
+	```
+	file_get_contents(...)
+	```
+
+Just make sure you test if the file exists, otherwise this will trigger warnings.
 
 * SpoonDirectory::create
 
@@ -104,7 +117,6 @@ are prefered.
     ...
 	IOException(...)
 	```
-
 ## Finder component
 
 With this release we introduce the Finder component into Fork CMS. This

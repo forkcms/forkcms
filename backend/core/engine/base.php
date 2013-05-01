@@ -812,7 +812,7 @@ class BackendBaseCronjob extends BackendBaseObject
 			$isBusy = true;
 
 			// grab counter
-			$counter = (int) SpoonFile::getContent($path);
+			$counter = (int) file_get_contents($path);
 
 			// check the counter
 			if($counter > 9)

@@ -34,7 +34,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		$filename = BACKEND_CACHE_PATH . '/analytics/' . $page . '_' . $identifier . '.txt';
 
 		// does the temporary file still exist?
-		$status = SpoonFile::getContent($filename);
+		$status = file_get_contents($filename);
 
 		// no file - create one
 		if($status === false)

@@ -1308,10 +1308,10 @@ class BackendMailmotorModel
 
 		// check if the template file actually exists
 		if(is_file($record['path_content'])) {
-			$record['content'] = SpoonFile::getContent($record['path_content']);
+			$record['content'] = file_get_contents($record['path_content']);
 		}
 		if(is_file($record['path_css'])) {
-			$record['css'] = SpoonFile::getContent($record['path_css']);
+			$record['css'] = file_get_contents($record['path_css']);
 		}
 
 		return $record;

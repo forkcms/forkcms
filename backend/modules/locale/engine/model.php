@@ -401,7 +401,7 @@ class BackendLocaleModel
 
 		foreach($finder->files()->in(BACKEND_PATH) as $file) {
 			// grab content
-			$content = SpoonFile::getContent($file);
+			$content = $file->getContents();
 
 			// process based on extension
 			switch($file->getExtension())
@@ -797,9 +797,9 @@ class BackendLocaleModel
 			->name('*.js');
 
 		// loop files
-		foreach($finder->files()->in(FRONTEND_PATH) as $file) {
+		foreach ($finder->files()->in(FRONTEND_PATH) as $file) {
 			// grab content
-			$content = SpoonFile::getContent($file->getRealPath());
+			$content = $file->getContents();
 
 			// process the file based on extension
 			switch($file->getExtension())

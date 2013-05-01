@@ -117,7 +117,7 @@ class InstallerStep7 extends InstallerStep
 
 		foreach($yamlFiles as $sourceFilename => $destinationFilename)
 		{
-			$yamlContent = SpoonFile::getContent($sourceFilename);
+			$yamlContent = file_get_contents($sourceFilename);
 			$yamlContent = str_replace(
 				array_keys($variables),
 				array_values($variables),

@@ -1207,7 +1207,7 @@ class BackendModel extends BaseModel
 		if($fs->exists(BACKEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
-			$pid = trim(SpoonFile::getContent(BACKEND_CACHE_PATH . '/hooks/pid'));
+			$pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/hooks/pid'));
 
 			// running on windows?
 			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
