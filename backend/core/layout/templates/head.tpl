@@ -2,7 +2,6 @@
 <html lang="{$INTERFACE_LANGUAGE}">
 <head>
 	<meta charset="utf-8" />
-	<!--[if lte IE 9]><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /><![endif]-->
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 	<meta name="robots" content="noindex, nofollow" />
 

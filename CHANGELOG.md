@@ -3,6 +3,7 @@
 Improvements:
 
 * Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
+* The backend in Internet Explorer doesn't need to be emulated anymore.
 
 Bugfixes:
 

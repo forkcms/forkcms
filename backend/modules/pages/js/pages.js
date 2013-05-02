@@ -242,18 +242,11 @@ jsBackend.pages.extras =
 				// remove placeholder
 				blockPlaceholder.remove();
 			},
-			// jQuery's dialog & CKEditor don't play nicely!
+			// Open dialag with CKEditor
 			open: function()
 			{
-				// reload the editors
-				jsBackend.ckeditor.destroy();
-				jsBackend.ckeditor.load();
-
-				// resize the editor, so we have space to edit the content
-				CKEDITOR.instances['html'].resize('100%', 375);
-
 				// set content in editor
-				$('#html').val(previousContent);
+				CKEDITOR.instances['html'].setData(previousContent);
 			}
 		});
 	},
