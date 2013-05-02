@@ -147,14 +147,18 @@ class BackendCoreAPI
 		// validate password
 		if(!BackendAuthentication::loginUser($email, $password)) API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
 
-		// does the user have access?
-		if($user->getSetting('api_access', false) == false) API::output(API::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
+		else {
+			// does the user have access?
+			if($user->getSetting('api_access', false) == false) API::output(API::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
 
-		// create the key if needed
-		if($user->getSetting('api_key', null) == null) $user->setSetting('api_key', uniqid());
+			else {
+				// create the key if needed
+				if($user->getSetting('api_key', null) == null) $user->setSetting('api_key', uniqid());
 
-		// return the key
-		return array('api_key' => $user->getSetting('api_key'));
+				// return the key
+				return array('api_key' => $user->getSetting('api_key'));
+			}
+		}
 	}
 
 	/**
