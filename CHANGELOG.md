@@ -3,6 +3,7 @@
 Improvements:
 
 * Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
+* The backend in Internet Explorer doesn't need to be emulated anymore.
 
 Bugfixes:
 
@@ -37,17 +38,11 @@ Bugfixes:
 * Email: allow null as plain_text value to prevent MySQL errors to be thrown. Fixes #429.
 * Share-widget: fixed the whitespace added by Pinterest. Fixes #392.
 * Core: CKEditor is nov available in Chinese. Fixed #381
-<<<<<<< HEAD
-* Location: Address in widget fixed.
-* Analytics: Accounts grouped. Fixes #425.
-* Core: Login sql error on wrong email fixed. Thx to Gertjan Meire.
-=======
 * Extensions: Removed html entities out of header.
 * Installer: used correct path for checking if Fork is installed.
 * Core: Login sql error on wrong email fixed.
 * Location: Address in widget fixed.
 
->>>>>>> upstream/master
 
 3.5.0 (2013-03-13)
 --
