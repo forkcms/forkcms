@@ -14,8 +14,8 @@
         "symfony/http-kernel": "2.2.*",
         "symfony/config": "2.2.*",
         "symfony/yaml": "2.2.*",
-        "symfony/filesystem": "2.2.*",
-        "symfony/finder": "2.2.*",
+        "symfony/filesystem": "dev-master",
+        "symfony/finder": "dev-master",
         "spoon/library": "1.3.*"
     }
 }
