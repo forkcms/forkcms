@@ -1,13 +1,16 @@
 <?php
 
-use \TijsVerkoyen\Akismet\Akismet;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use TijsVerkoyen\Akismet\Akismet;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
 
 require_once __DIR__ . '/../../../app/BaseModel.php';
 
@@ -475,6 +478,8 @@ class FrontendModel extends BaseModel
 	public static function getThumbnailFolders($path, $includeSource = false)
 	{
 		$return = array();
+		$fs = new Filesystem();
+		if(!$fs->exists($path)) return $return;
 		$finder = new Finder();
 		$finder->name('/^([0-9]*)x([0-9]*)$/');
 		if($includeSource) $finder->name('source');
