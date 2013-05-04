@@ -28,13 +28,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 * @var string
 	 */
 	private $apiKey;
-	
+
 	/**
 	 * The forms used on this page
 	 *
 	 * @var BackendForm
 	 */
-	private $frmApiKey, $frmProfiles, $frmTrackingUrl;
+	private $frmApiKey, $frmLinkProfile, $frmTrackingType;
 
 	/**
 	 * All website profiles
@@ -70,8 +70,8 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	public function execute()
 	{
 		parent::execute();
-		$this->loadTrackingUrlForm();
-		$this->validateTrackingUrlForm();
+		$this->loadTrackingTypeForm();
+		$this->validateTrackingTypeForm();
 		$this->getAnalyticsParameters();
 		$this->parse();
 		$this->display();
@@ -198,44 +198,43 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			}
 		}
 	}
-	
+
 	/**
 	 * Load settings form
 	 */
-	private function loadTrackingUrlForm() 
+	private function loadTrackingTypeForm()
 	{
-		$this->frmTrackingUrl = new BackendForm('trackingUrl');
-		
-		$trackingUrls = array();
-		$trackingUrls[] = array('label' => 'google-analytics.com/ga.js', 'value' => '//google-analytics.com/ga.js');
-		$trackingUrls[] = array('label' => 'stats.g.doubleclick.net/dc.js', 'value' => '//stats.g.doubleclick.net/dc.js');
-		
-		$setting = BackendModel::getModuleSetting($this->URL->getModule(), 'tracking_url', '//google-analytics.com/ga.js');
-		
-		$this->frmTrackingUrl->addRadiobutton('url', $trackingUrls, $setting);
+		$this->frmTrackingType = new BackendForm('trackingType');
+
+		$types = array();
+		$types[] = array('label' => 'Universal Analytics', 'value' => 'universal_analytics');
+		$types[] = array('label' => 'Classic Google Analytics', 'value' => 'classic_analytics');
+		$types[] = array('label' => 'Display Advertising (stats.g.doubleclick.net/dc.js)', 'value' => 'display_advertising');
+
+		$this->frmTrackingType->addRadiobutton(
+			'type',
+			$types,
+			BackendModel::getModuleSetting($this->URL->getModule(), 'tracking_type', 'universal_analytics')
+		);
 	}
-	
+
 	/**
 	 * Validates the tracking url form.
 	 */
-	private function validateTrackingUrlForm()
+	private function validateTrackingTypeForm()
 	{
 		// form is submitted
-		if($this->frmTrackingUrl->isSubmitted())
+		if($this->frmTrackingType->isSubmitted())
 		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
-			$this->frmTrackingUrl->cleanupFields();
-		
 			// form is validated
-			if($this->frmTrackingUrl->isCorrect())
+			if($this->frmTrackingType->isCorrect())
 			{
-				// set the setting
-				BackendModel::setModuleSetting($this->getModule(), 'tracking_url', $this->frmTrackingUrl->getField('url')->getValue());
-
-				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'after_saved_tracking_url_settings');
-
-				// redirect to the settings page
+				BackendModel::setModuleSetting(
+					$this->getModule(),
+					'tracking_type',
+					$this->frmTrackingType->getField('type')->getValue()
+				);
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_tracking_type_settings');
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}
 		}
@@ -328,9 +327,9 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$this->tpl->assign('accountName', $this->accountName);
 			$this->tpl->assign('profileTitle', $this->profileTitle);
 		}
-		
+
 		// Parse tracking url form
-		$this->frmTrackingUrl->parse($this->tpl);
+		$this->frmTrackingType->parse($this->tpl);
 	}
 
 	/**
