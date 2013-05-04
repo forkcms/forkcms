@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is the livesuggest-action, it will output a list of results for a certain search
  *
@@ -167,7 +170,11 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if(!SPOON_DEBUG)
 		{
 			// set cache content
-			SpoonFile::setContent($this->cacheFile, "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>");
+			$fs = new Filesystem();
+			$fs->dumpFile(
+				$this->cacheFile,
+				"<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>"
+			);
 		}
 	}
 

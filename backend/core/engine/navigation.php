@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This class will be used to build the navigation
  *
@@ -92,7 +95,11 @@ class BackendNavigation
 		$value .= '?>';
 
 		// store
-		SpoonFile::setContent(BACKEND_CACHE_PATH . '/navigation/navigation.php', $value);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			BACKEND_CACHE_PATH . '/navigation/navigation.php',
+			$value
+		);
 	}
 
 	/**

@@ -8,6 +8,8 @@
  */
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module
@@ -103,8 +105,11 @@ class BackendLocaleModel
 		$value .= "\n";
 		$value .= '?>';
 
-		// store
-		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php', $value);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php',
+			$value
+		);
 
 		// get months
 		$monthsLong = SpoonLocale::getMonths($language, false);
@@ -120,8 +125,10 @@ class BackendLocaleModel
 		foreach($daysLong as $key => $value) $json['loc']['DayLong' . SpoonFilter::ucfirst($key)] = $value;
 		foreach($daysShort as $key => $value) $json['loc']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
 
-		// store
-		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json', json_encode($json));
+		$fs->dumpFile(
+			constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json',
+			json_encode($json)
+		);
 	}
 
 	/**

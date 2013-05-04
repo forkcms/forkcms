@@ -35,7 +35,11 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		$pid = getmypid();
 
 		// store PID
-		SpoonFile::setContent(BACKEND_CACHE_PATH . '/hooks/pid', $pid);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			BACKEND_CACHE_PATH . '/hooks/pid',
+			$pid
+		);
 
 		while(true)
 		{

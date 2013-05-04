@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * In this file we store all generic functions that we will be using in the PagesModule
  *
@@ -244,8 +247,10 @@ class BackendPagesModel
 		// end file
 		$keysString .= "\n" . '?>';
 
+		$fs = new Filesystem();
+
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php', $keysString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php', $keysString);
 
 		// write the navigation-file
 		$navigationString = '<?php' . "\n\n";
@@ -330,7 +335,7 @@ class BackendPagesModel
 		$navigationString .= '?>';
 
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php', $navigationString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php', $navigationString);
 
 		// get the order
 		foreach(array_keys($navigation) as $type)
@@ -412,7 +417,7 @@ class BackendPagesModel
 		$editorLinkListString .= 'var linkList = ' . json_encode($links) . ';';
 
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
 
 		// trigger an event
 		BackendModel::triggerEvent('pages', 'after_recreated_cache');

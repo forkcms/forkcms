@@ -87,6 +87,22 @@ are prefered.
 
 Just make sure you test if the file exists, otherwise this will trigger warnings.
 
+* SpoonFile::setContent
+
+   Before:
+	```
+	SpoonFile::setContent(...)
+	```
+
+   After:
+	```
+	use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Exception\IOException;
+	...
+	$fs = new Filesystem();
+	$fs->dumpFile(...)
+	```
+
 * SpoonFile::getExtension
 
    Before:

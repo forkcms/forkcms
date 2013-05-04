@@ -1,13 +1,15 @@
 <?php
 
-use Symfony\Component\Finder\Finder;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This action will display a form to search
@@ -174,7 +176,11 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		if(!SPOON_DEBUG)
 		{
 			// set cache content
-			SpoonFile::setContent($this->cacheFile, "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>");
+			$fs = new Filesystem();
+			$fs->dumpFile(
+				$this->cacheFile,
+				"<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>"
+			);
 		}
 	}
 

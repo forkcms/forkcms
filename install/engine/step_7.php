@@ -99,7 +99,11 @@ class InstallerStep7 extends InstallerStep
 		$value .= '?>';
 
 		// store
-		SpoonFile::setContent(PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php', $value);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php',
+			$value
+		);
 	}
 
 	/**
@@ -109,6 +113,7 @@ class InstallerStep7 extends InstallerStep
 	{
 		// these variables should be parsed inside the config file(s).
 		$variables = $this->getConfigurationVariables();
+		$fs = new Filesystem();
 
 		// map the config templates to their destination filename
 		$yamlFiles = array(
@@ -125,7 +130,7 @@ class InstallerStep7 extends InstallerStep
 			);
 
 			// write app/config/parameters.yml
-			SpoonFile::setContent($destinationFilename, $yamlContent);
+			$fs->dumpFile($destinationFilename, $yamlContent);
 		}
 
 		// we already went through AppKernel once. Now that our config files are
@@ -224,7 +229,11 @@ class InstallerStep7 extends InstallerStep
 		$this->createLocaleFiles();
 
 		// already installed
-		SpoonFile::setContent(dirname(__FILE__) . '/../cache/installed.txt', date('Y-m-d H:i:s'));
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			dirname(__FILE__) . '/../cache/installed.txt',
+			date('Y-m-d H:i:s')
+		);
 
 		// show success message
 		$this->showSuccess();

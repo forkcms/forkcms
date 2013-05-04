@@ -10,6 +10,8 @@
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be the base of the objects used in the cms
@@ -832,7 +834,8 @@ class BackendBaseCronjob extends BackendBaseObject
 		$counter++;
 
 		// store content
-		SpoonFile::setContent($path, $counter, true, false);
+		$fs = new Filesystem();
+		$fs->dumpFile($path, $counter);
 
 		// if the cronjob is busy we should NOT proceed
 		if($isBusy) exit;

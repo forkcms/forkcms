@@ -40,7 +40,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		if($status === false)
 		{
 			// create file with initial counter
-			SpoonFile::setContent($filename, 'missing1');
+			$fs->dumpFile($filename, 'missing1');
 
 			// return status
 			$this->output(self::OK, array('status' => false), 'Temporary file was missing. We created one.');
@@ -63,7 +63,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			}
 
 			// change file content to increase counter
-			SpoonFile::setContent($filename, 'busy' . $counter);
+			$fs->dumpFile($filename, 'busy' . $counter);
 
 			// return status
 			$this->output(self::OK, array('status' => 'busy', 'temp' => $status), 'Data is being retrieved. (' . $counter . ')');
@@ -111,7 +111,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			}
 
 			// change file content to increase counter
-			SpoonFile::setContent($filename, 'missing' . $counter);
+			$fs->dumpFile($filename, 'missing' . $counter);
 
 			// return status
 			$this->output(self::OK, array('status' => 'busy'), 'Temporary file was still in status missing. (' . $counter . ')');

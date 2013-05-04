@@ -1205,7 +1205,11 @@ class BackendAnalyticsModel
 		$simpleXml = @simplexml_load_string($xml);
 		if($simpleXml === false) throw new BackendException('The xml of the cache file is invalid.');
 
-		$filename = $startTimestamp . '_' . $endTimestamp . '.xml';
-		SpoonFile::setContent(BACKEND_CACHE_PATH . '/analytics/' . $filename, $xml);
+		// store
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			BACKEND_CACHE_PATH . '/analytics/' . $startTimestamp . '_' . $endTimestamp . '.xml',
+			$xml
+		);
 	}
 }
