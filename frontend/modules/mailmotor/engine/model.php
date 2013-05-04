@@ -192,12 +192,13 @@ class FrontendMailmotorModel
 	{
 		// set the path to the template folders for this language
 		$path = PATH_WWW . '/backend/modules/mailmotor/templates/' . $language;
+		$fs = new Filesystem();
 
 		// load all templates in the 'templates' folder for this language
-		if(!is_file($path . '/' . $name . '/template.tpl')) {
+		if(!$fs->exists($path . '/' . $name . '/template.tpl')) {
 			throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
 		}
-		if(!is_file($path . '/' . $name . '/css/screen.css')) {
+		if(!$fs->exists($path . '/' . $name . '/css/screen.css')) {
 			throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
 		}
 
@@ -210,8 +211,8 @@ class FrontendMailmotorModel
 		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
 
 		// check if the template file actually exists
-		if(is_file($record['path_content'])) $record['content'] = file_get_contents($record['path_content']);
-		if(is_file($record['path_css'])) $record['css'] = file_get_contents($record['path_css']);
+		if($fs->exists($record['path_content'])) $record['content'] = file_get_contents($record['path_content']);
+		if($fs->exists($record['path_css'])) $record['css'] = file_get_contents($record['path_css']);
 
 		return $record;
 	}

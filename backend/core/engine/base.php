@@ -803,13 +803,14 @@ class BackendBaseCronjob extends BackendBaseObject
 		if(SPOON_DEBUG) return;
 
 		// build path
+		$fs = new Filesystem();
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
 		// init var
 		$isBusy = false;
 
 		// does the busy file already exists.
-		if(file_exists($path))
+		if($fs->exists($path))
 		{
 			$isBusy = true;
 
@@ -834,7 +835,6 @@ class BackendBaseCronjob extends BackendBaseObject
 		$counter++;
 
 		// store content
-		$fs = new Filesystem();
 		$fs->dumpFile($path, $counter);
 
 		// if the cronjob is busy we should NOT proceed

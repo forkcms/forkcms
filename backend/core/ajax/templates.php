@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This action will generate JS that represents the templates that will be available in CK Editor
  *
@@ -58,8 +61,10 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 	 */
 	private function processFile($file)
 	{
+		$fs = new Filesystem();
+
 		// if the files doesn't exists we can stop here and just return an empty string
-		if(!file_exists($file)) return array();
+		if(!$fs->exists($file)) return array();
 
 		// fetch content from file
 		$content = file_get_contents($file);
@@ -78,7 +83,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 
 			if(isset($template['file']))
 			{
-				if(file_exists(PATH_WWW . $template['file']))
+				if($fs->exists(PATH_WWW . $template['file']))
 				{
 					$template['html'] = file_get_contents(PATH_WWW . $template['file']);
 				}

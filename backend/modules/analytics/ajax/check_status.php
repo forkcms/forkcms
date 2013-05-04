@@ -33,8 +33,11 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		// init vars
 		$filename = BACKEND_CACHE_PATH . '/analytics/' . $page . '_' . $identifier . '.txt';
 
-		// does the temporary file still exist?
-		$status = file_get_contents($filename);
+		if($fs->exists($filename))
+		{
+			$status = file_get_contents($filename);
+		}
+		else $status = false;
 
 		// no file - create one
 		if($status === false)
