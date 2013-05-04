@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: introduction of the Filesystem component.
+* Core: introduction of the Finder component.
 
 3.5.2 (xxxx-xx-xx)
 --
