@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+
 /**
  * FrontendAJAX
  * This class will handle AJAX-related stuff
@@ -122,20 +124,16 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 		// check if module is set
 		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
 
-		// build the path (core is a special case)
-		if($this->getModule() == 'core') $path = FRONTEND_PATH . '/core/ajax/';
-		else $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/';
-
-		// get the possible actions
-		$possibleActions = SpoonFile::getList($path);
+		// grab the file
+		$finder = new Finder();
+		$finder->name($value . '.php');
+		if($this->getModule() == 'core') $finder->in(FRONTEND_PATH . '/core/ajax/');
+		else $finder->in(FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/');
 
 		// validate
-		if(!in_array($value.'.php', $possibleActions))
+		if(count($finder->files()) != 1)
 		{
-			// create fake action
 			$fakeAction = new FrontendBaseAJAXAction('', '');
-
-			// output error
 			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Action not correct.');
 		}
 

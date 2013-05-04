@@ -9,6 +9,7 @@
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This class will be the base of the objects used in onsite
@@ -161,30 +162,20 @@ class FrontendBaseConfig
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
-		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList($frontendModulePath . '/actions', '/(.*).php/');
-
-		// loop filelist
-		foreach($actionFiles as $file)
-		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
-
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file] = $action;
+		// get regular actions
+		$finder = new Finder();
+		$finder->name('*.php');
+		foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
+			$action = $file->getBasename('.php');
+			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
 		}
 
-		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList($frontendModulePath . '/ajax', '/(.*).php/');
-
-		// loop filelist
-		foreach($AJAXActionFiles as $file)
-		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
-
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file] = $action;
+		// get ajax-actions
+		$finder = new Finder();
+		$finder->name('*.php');
+		foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
+			$action = $file->getBasename('.php');
+			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
 		}
 	}
 }

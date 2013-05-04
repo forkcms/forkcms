@@ -159,7 +159,7 @@ http://symfony.com/doc/master/components/finder.html
 
 ### Upgrading your module
 
-* SpoonFile::getList
+* SpoonDirectory::getList / SpoonFile::getList
 
    Wherever you need to deal with a list of files you will probably loop them.
    Symfony has a nice way of iterating through the files in a path.
