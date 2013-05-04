@@ -148,6 +148,7 @@ Just make sure you test if the file exists, otherwise this will trigger warnings
     ...
 	IOException(...)
 	```
+
 ## Finder component
 
 With this release we introduce the Finder component into Fork CMS. This
