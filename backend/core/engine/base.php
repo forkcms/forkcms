@@ -746,7 +746,8 @@ class BackendBaseCronjob extends BackendBaseObject
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
 		// remove the file
-		BackendModel::getContainer()->get('filesystem')->remove($path);
+		$fs = new Filesystem();
+		$fs->remove($path);
 	}
 
 	public function execute()
