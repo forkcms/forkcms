@@ -10,6 +10,9 @@
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 
 /**
  * This class will be the base of the objects used in onsite
@@ -161,21 +164,26 @@ class FrontendBaseConfig
 	{
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
+		$fs = new Filesystem();
 
-		// get regular actions
-		$finder = new Finder();
-		$finder->name('*.php');
-		foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
-			$action = $file->getBasename('.php');
-			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+		if($fs->exists($frontendModulePath . '/actions')) {
+			// get regular actions
+			$finder = new Finder();
+			$finder->name('*.php');
+			foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
+				$action = $file->getBasename('.php');
+				if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+			}
 		}
 
-		// get ajax-actions
-		$finder = new Finder();
-		$finder->name('*.php');
-		foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
-			$action = $file->getBasename('.php');
-			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+		if($fs->exists($frontendModulePath . '/ajax')) {
+			// get ajax-actions
+			$finder = new Finder();
+			$finder->name('*.php');
+			foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
+				$action = $file->getBasename('.php');
+				if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+			}
 		}
 	}
 }
