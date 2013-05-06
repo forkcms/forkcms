@@ -131,7 +131,7 @@ class BackendModel extends BaseModel
 		if(isset($_GET['sort']) && !isset($parameters['sort'])) $parameters['sort'] = (string) $_GET['sort'];
 
 		// add at least one parameter
-		if(empty($parameters)) $parameters['token'] = 'true';
+		if(empty($parameters)) $parameters['token'] = self::getToken();
 
 		// init counter
 		$i = 1;
@@ -754,6 +754,26 @@ class BackendModel extends BaseModel
 		}
 
 		return $possibleFormats;
+	}
+
+	/**
+	 * Get the token which will protect us
+	 *
+	 * @return string
+	 */
+	public static function getToken()
+	{
+		if(SpoonSession::exists('csrf_token') && SpoonSession::get('csrf_token') != '')
+		{
+			$token = SpoonSession::get('csrf_token');
+		}
+		else
+		{
+			$token = self::generateRandomString(10, true, true, false, false);
+			SpoonSession::set('csrf_token', $token);
+		}
+
+		return $token;
 	}
 
 	/**

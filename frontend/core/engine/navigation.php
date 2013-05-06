@@ -527,7 +527,7 @@ class FrontendNavigation extends FrontendBaseObject
 				foreach($pages as $properties)
 				{
 					// no extra_blocks available, so skip this item
-					if(isset($properties['extra_blocks'])) continue;
+					if(!isset($properties['extra_blocks'])) continue;
 
 					// loop extras
 					foreach($properties['extra_blocks'] as $extra)
