@@ -14,6 +14,10 @@
         "symfony/http-kernel": "2.2.*",
         "symfony/config": "2.2.*",
         "symfony/yaml": "2.2.*",
-        "spoon/library": "1.3.*"
+        "spoon/library": "1.3.*",
+        "symfony/monolog-bundle": "2.2.*"
+    },
+    "scripts": {
+        "post-update-cmd": "cd tools && ./remove_cache"
     }
 }

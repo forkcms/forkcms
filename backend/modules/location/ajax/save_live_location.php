@@ -10,7 +10,7 @@
 /**
  * This is an ajax handler that will set a new position for a certain map
  *
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 {

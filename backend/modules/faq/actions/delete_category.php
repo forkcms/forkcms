@@ -12,7 +12,7 @@
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendFaqDeleteCategory extends BackendBaseActionDelete
 {

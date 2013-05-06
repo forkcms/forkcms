@@ -562,7 +562,7 @@ class BackendFormDate extends SpoonFormDate
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFormImage extends SpoonFormImage
