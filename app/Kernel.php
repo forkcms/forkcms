@@ -89,10 +89,12 @@ abstract class Kernel implements KernelInterface
 		$this->debug = $debug;
 		$this->rootDir = $this->getRootDir();
 
-		$this->boot();
+		if (file_exists(__DIR__ . '/config/parameters.yml')) {
+			$this->boot();
 
-		// define Fork constants
-		$this->defineForkConstants();
+			// define Fork constants
+			$this->defineForkConstants();
+		}
 	}
 
 	/**
