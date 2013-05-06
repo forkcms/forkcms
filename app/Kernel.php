@@ -477,10 +477,10 @@ abstract class Kernel implements KernelInterface
 	{
 		$container = $this->getContainer();
 
-		Spoon::setDebug($container->getParameter('fork.debug'));
+		Spoon::setDebug($container->getParameter('kernel.debug'));
 		Spoon::setDebugMessage($container->getParameter('fork.debug_email'));
 		Spoon::setDebugMessage($container->getParameter('fork.debug_message'));
-		Spoon::setCharset($container->getParameter('fork.charset'));
+		Spoon::setCharset($container->getParameter('kernel.charset'));
 
 		/**
 		 * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
@@ -488,10 +488,10 @@ abstract class Kernel implements KernelInterface
 		 */
 		if(!defined('SPOON_DEBUG'))
 		{
-			define('SPOON_DEBUG', $container->getParameter('fork.debug'));
+			define('SPOON_DEBUG', $container->getParameter('kernel.debug'));
 			define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
 			define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
-			define('SPOON_CHARSET', $container->getParameter('fork.charset'));
+			define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
 		}
 
 		if(!defined('PATH_WWW'))
