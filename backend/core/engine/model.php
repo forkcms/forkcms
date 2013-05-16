@@ -1385,12 +1385,13 @@ class BackendModel extends BaseModel
 		$db = self::getContainer()->get('database');
 
 		// check if the subscription already exists
+		// allow more than one unique callback on any one event
 		$exists = (bool) $db->getVar(
 			'SELECT 1
 			 FROM hooks_subscriptions AS i
 			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
 			 LIMIT 1',
-			array($eventModule, $eventName, $module)
+			array($eventModule, $eventName, $module, serialize($callback))
 		);
 
 		// update
@@ -1441,6 +1442,10 @@ class BackendModel extends BaseModel
 				$item['data'] = serialize($data);
 				$item['status'] = 'queued';
 				$item['created_on'] = BackendModel::getUTCDate();
+
+				// build a link between subscription and queue
+				$item['event_module'] = $module;
+				$item['event_name'] = $eventName;
 
 				// add
 				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
