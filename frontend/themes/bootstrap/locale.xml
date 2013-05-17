@@ -10,6 +10,14 @@
 				<translation language="en"><![CDATA[in the]]></translation>
 				<translation language="nl"><![CDATA[in de]]></translation>
 			</item>
+			<item type="label" name="IAgree">
+				<translation language="en"><![CDATA[I agree]]></translation>
+				<translation language="nl"><![CDATA[ik ga akkoord]]></translation>
+			</item>
+			<item type="label" name="IDisagree">
+				<translation language="en"><![CDATA[I disagree]]></translation>
+				<translation language="nl"><![CDATA[ik ga niet akkoord]]></translation>
+			</item>
 			<item type="label" name="Loading">
 				<translation language="en"><![CDATA[loading]]></translation>
 				<translation language="nl"><![CDATA[laden]]></translation>
@@ -19,7 +27,8 @@
 				<translation language="nl"><![CDATA[RSS-feed]]></translation>
 			</item>
 			<item type="label" name="Warning">
-				<translation language="en"><![CDATA[]]></translation>
+				<translation language="en"><![CDATA[Warning]]></translation>
+				<translation language="nl"><![CDATA[Let op]]></translation>
 			</item>
 			<item type="label" name="WithThe">
 				<translation language="en"><![CDATA[with the]]></translation>
@@ -32,6 +41,10 @@
 			<item type="message" name="OldBrowser">
 				<translation language="en"><![CDATA[You are using an outdated browsers. If you want to see the website like it was intended, you should upgrade your browser or install a decent browser such as <a href="https://www.google.com/chrome">Google Chrome</a>.]]></translation>
 				<translation language="nl"><![CDATA[Je gebruikt een verouderde browser. Indien je de website wil zien zoals deze bedoeld is, kan je beter een nieuwe versie downloaden of een degelijke browser zoals <a href="https://www.google.com/chrome">Google Chrome</a> installeren.]]></translation>
+			</item>
+			<item type="message" name="Cookies">
+				<translation language="en"><![CDATA[To enchance the user experience on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
+				<translation language="nl"><![CDATA[Om de gebruikerservaring op deze site te verbeteren gebruiken we <a href="/cookies">cookies</a>.]]></translation>
 			</item>
 		</core>
 	</frontend>
