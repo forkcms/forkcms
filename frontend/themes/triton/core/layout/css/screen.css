@@ -1955,3 +1955,10 @@ a.button:visited {
 		color: #000;
 	}
 }
+
+#cookieBar {
+	padding: 8px 15px;
+	background-color: #fcf8e3;
+	width: 100%;
+	color: #c09853;
+}
