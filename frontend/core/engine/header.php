@@ -599,7 +599,7 @@ class FrontendHeader extends FrontendBaseObject
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
 		$trackingUrl = FrontendModel::getModuleSetting('analytics', 'tracking_url', '//google-analytics.com/ga.js');
 
-		$this->tpl->assign('cookieBarHide', (SpoonCookie::exists('cookie_bar_hide') && SpoonCookie::get('cookie_bar_hide')));
+		$this->tpl->assign('cookieBarHide', CommonCookie::hasHiddenCookieBar());
 
 		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
 		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
@@ -611,7 +611,7 @@ class FrontendHeader extends FrontendBaseObject
 											[\'_trackPageview\'],
 											[\'_trackPageLoadTime\']];
 							';
-			if(!(SpoonCookie::exists('cookie_bar_agree') && SpoonCookie::get('cookie_bar_agree'))) {
+			if(!CommonCookie::hasAllowedCookies()) {
 				$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
 			}
 
