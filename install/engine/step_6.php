@@ -93,7 +93,7 @@ class InstallerStep6 extends InstallerStep
 
 		// map the config templates to their destination filename
 		$yamlFiles = array(
-			PATH_WWW . '/app/config/parameters.base.yml' => PATH_WWW . '/app/config/parameters.yml',
+			PATH_WWW . '/app/config/parameters.yml.dist' => PATH_WWW . '/app/config/parameters.yml',
 		);
 
 		foreach($yamlFiles as $sourceFilename => $destinationFilename)
