@@ -1,20 +1,7 @@
 {include:core/layout/templates/head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-	<noscript>
-		<div class="fullWidthAlert alert">
-			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong>{$lblWarning|ucfirst}:</strong> {$msgEnableJavascript}
-		</div>
-	</noscript>
-	<!-- Warning for people that still use IE7 or below -->
-	<!--[if lt IE 8 ]>
-		<div id="ie" class="fullWidthAlert alert">
-			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong>{$lblWarning|ucfirst}:</strong> {$msgOldBrowser}
-		</div>
-	<![endif]-->
-	<a href="#main" class="muted hide">{$lblSkipToContent|ucfirst}</a>
+	{include:core/layout/templates/notifications.tpl}
 
 	<div class="navbar-wrapper navbar-fixed-top">
 		<div class="navbar navbar-inverse">
