@@ -3,7 +3,7 @@
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 	{include:core/layout/templates/notifications.tpl}
 
-	<div class="navbar-wrapper navbar-fixed-top">
+	<div class="navbar-wrapper">
 		<div class="navbar navbar-inverse">
 			<div class="navbar-inner">
 				<div class="container">
