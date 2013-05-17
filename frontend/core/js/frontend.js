@@ -18,6 +18,8 @@ var jsFrontend =
 		// init stuff
 		jsFrontend.initAjax();
 
+		jsFrontend.cookieBar.init();
+
 		// init controls
 		jsFrontend.controls.init();
 
@@ -74,11 +76,42 @@ jsFrontend.controls =
 }
 
 /**
+ * Handles the cookieBar
+ */
+jsFrontend.cookieBar =
+{
+	init: function()
+	{
+		// if there is no cookiebar we shouldn't do anything
+		if($('#cookieBar').length == 0) return;
+
+		$cookieBar = $('#cookieBar');
+
+		// @remark: as you can see we use PHP-serialized values so we can use them in PHP too.
+		// hide the cookieBar if needed
+		if(utils.cookies.readCookie('cookie_bar_hide') == 'b%3A1%3B') {
+			$cookieBar.hide();
+		}
+
+		$cookieBar.on('click', '#cookieBarAgree', function(e) {
+			utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
+			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+			$cookieBar.hide();
+		});
+		$cookieBar.on('click', '#cookieBarDisagree', function(e) {
+			utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
+			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+			$cookieBar.hide();
+		});
+	}
+}
+
+/**
  * Data related methods
- * 
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend.data = 
+jsFrontend.data =
 {
 	initialized: false,
 	data: {},
@@ -97,7 +130,7 @@ jsFrontend.data =
 	{
 		return (typeof eval('jsFrontend.data.data.' + key) != 'undefined');
 	},
-	
+
 	get: function(key)
 	{
 		// init if needed
@@ -174,7 +207,7 @@ jsFrontend.forms =
 			var dayNamesShort = [jsFrontend.locale.loc('DayShortSun'), jsFrontend.locale.loc('DayShortMon'), jsFrontend.locale.loc('DayShortTue'), jsFrontend.locale.loc('DayShortWed'), jsFrontend.locale.loc('DayShortThu'), jsFrontend.locale.loc('DayShortFri'), jsFrontend.locale.loc('DayShortSat')];
 			var monthNames = [jsFrontend.locale.loc('MonthLong1'), jsFrontend.locale.loc('MonthLong2'), jsFrontend.locale.loc('MonthLong3'), jsFrontend.locale.loc('MonthLong4'), jsFrontend.locale.loc('MonthLong5'), jsFrontend.locale.loc('MonthLong6'), jsFrontend.locale.loc('MonthLong7'), jsFrontend.locale.loc('MonthLong8'), jsFrontend.locale.loc('MonthLong9'), jsFrontend.locale.loc('MonthLong10'), jsFrontend.locale.loc('MonthLong11'), jsFrontend.locale.loc('MonthLong12')];
 			var monthNamesShort = [jsFrontend.locale.loc('MonthShort1'), jsFrontend.locale.loc('MonthShort2'), jsFrontend.locale.loc('MonthShort3'), jsFrontend.locale.loc('MonthShort4'), jsFrontend.locale.loc('MonthShort5'), jsFrontend.locale.loc('MonthShort6'), jsFrontend.locale.loc('MonthShort7'), jsFrontend.locale.loc('MonthShort8'), jsFrontend.locale.loc('MonthShort9'), jsFrontend.locale.loc('MonthShort10'), jsFrontend.locale.loc('MonthShort11'), jsFrontend.locale.loc('MonthShort12')];
-		
+
 			$inputDatefields.datepicker({
 				dayNames: dayNames,
 				dayNamesMin: dayNamesMin,
@@ -186,42 +219,42 @@ jsFrontend.forms =
 				prevText: jsFrontend.locale.lbl('Previous'),
 				showAnim: 'slideDown'
 			});
-	
+
 			// the default, nothing special
 			$inputDatefieldNormal.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option', {
 					dateFormat: data.mask,
 					firstDay: data.firstday
 				}).datepicker('setDate', value);
 			});
-	
+
 			// datefields that have a certain startdate
 			$inputDatefieldFrom.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option', {
 					dateFormat: data.mask, firstDay: data.firstday,
 					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 				}).datepicker('setDate', value);
 			});
-	
+
 			// datefields that have a certain enddate
 			$inputDatefieldTill.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option',
 				{
@@ -230,14 +263,14 @@ jsFrontend.forms =
 					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
 				}).datepicker('setDate', value);
 			});
-	
+
 			// datefields that have a certain range
 			$inputDatefieldRange.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option',
 				{
@@ -352,10 +385,10 @@ jsFrontend.gravatar =
 
 /**
  * Locale
- * 
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend.locale = 
+jsFrontend.locale =
 {
 	initialized: false,
 	data: {},
@@ -368,12 +401,12 @@ jsFrontend.locale =
 			type: 'GET',
 			dataType: 'json',
 			async: false,
-			success: function(data) 
+			success: function(data)
 			{
 				jsFrontend.locale.data = data;
 				jsFrontend.locale.initialized = true;
 			},
-			error: function(jqXHR, textStatus, errorThrown) 
+			error: function(jqXHR, textStatus, errorThrown)
 			{
 				throw 'Regenerate your locale-files.';
 			}
@@ -409,7 +442,7 @@ jsFrontend.locale =
 	{
 		return jsFrontend.locale.get('lbl', key);
 	},
-	
+
 	// get localization
 	loc: function(key)
 	{
