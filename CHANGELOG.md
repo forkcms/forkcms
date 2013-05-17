@@ -10,6 +10,8 @@ Bugfixes:
 * Security: prevent csfr
 * Core: jQuery-plugins should escape data when using the raw data.
 * Security: prevent CSRF
+* Core: jQuery-plugins should escape data when using the raw data.
+* Security: prevent CSRF.
 * Mailmotor: fixed linking your account.
 
 
