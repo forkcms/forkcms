@@ -570,6 +570,8 @@ CREATE TABLE IF NOT EXISTS `hooks_queue` (
   `data` text ,
   `status` enum('busy','error','queued') NOT NULL DEFAULT 'queued',
   `created_on` datetime NOT NULL,
+  `event_module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `event_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
