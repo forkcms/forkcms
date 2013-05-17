@@ -8,6 +8,7 @@ jsFrontend.theme = {
 		jsFrontend.theme.aria();
 		jsFrontend.theme.hijackSubmit();
 		jsFrontend.theme.scrollTo();
+		jsFrontend.theme.cookieBar();
 
 		// insert your code here
 	},
@@ -15,6 +16,27 @@ jsFrontend.theme = {
 	aria: function() {
 		$('*[required]').attr('aria-required', 'true');
 		$('.error input').attr('aria-invalid', 'true');
+	},
+
+	//
+	cookieBar: function() {
+		$cookieBar = $('#cookieBar');
+
+		// hide the cookie if needed
+		if(utils.cookies.readCookie('cookie_bar_hide') == 'b%3A1%3B') {
+			$cookieBar.hide();
+		}
+
+		$cookieBar.on('click', '#cookieBarAgree', function(e) {
+			utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
+			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+			$cookieBar.alert('close');
+		});
+		$cookieBar.on('click', '#cookieBarDisagree', function(e) {
+			utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
+			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+			$cookieBar.alert('close');
+		});
 	},
 
 	// add a loading class on the submit-button when a form is submitted
