@@ -1,4 +1,8 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
     "hash": "3e7b89fd81e3fbc8125a79e2e8093f4d",
     "packages": [
         {
@@ -46,16 +50,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "1.1.1"
+                "reference": "1.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/1.1.1",
-                "reference": "1.1.1",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/1.1.2",
+                "reference": "1.1.2",
                 "shasum": ""
             },
             "require": {
@@ -81,20 +85,20 @@
             ],
             "description": "CSS & JS minifier",
             "homepage": "https://github.com/matthiasmullie/minify",
-            "time": "2013-04-14 22:00:23"
+            "time": "2013-04-22 08:16:03"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1.4.1"
+                "reference": "1.5.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.4.1",
-                "reference": "1.4.1",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.5.0",
+                "reference": "1.5.0",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +147,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-04-01 10:04:58"
+            "time": "2013-04-23 10:09:48"
         },
         {
             "name": "psr/log",
