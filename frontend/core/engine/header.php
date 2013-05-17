@@ -608,7 +608,12 @@ class FrontendHeader extends FrontendBaseObject
 											[\'_setDomainName\', \'none\'],
 											[\'_trackPageview\'],
 											[\'_trackPageLoadTime\']];
+							';
+			if(!CommonCookie::hasAllowedCookies()) {
+				$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
+			}
 
+			$trackingCode .= '
 								(function(d, t) {
 									var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
 									g.async = true;
