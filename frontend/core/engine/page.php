@@ -154,6 +154,9 @@ class FrontendPage extends FrontendBaseObject
 		// assign the id so we can use it as an option
 		$this->tpl->assign('isPage' . $this->pageId, true);
 
+		// hide the cookiebar from within the code to prevent flickering
+		$this->tpl->assign('cookieBarHide', CommonCookie::hasHiddenCookieBar());
+
 		// the the positions to the template
 		$this->parsePositions();
 
