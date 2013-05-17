@@ -131,7 +131,7 @@ class BackendModel extends BaseModel
 		if(isset($_GET['sort']) && !isset($parameters['sort'])) $parameters['sort'] = (string) $_GET['sort'];
 
 		// add at least one parameter
-		if(empty($parameters)) $parameters['token'] = 'true';
+		if(empty($parameters)) $parameters['token'] = self::getToken();
 
 		// init counter
 		$i = 1;
@@ -255,6 +255,28 @@ class BackendModel extends BaseModel
 
 			// invalidate the cache for the module
 			BackendModel::invalidateFrontendCache((string) $module, BL::getWorkingLanguage());
+		}
+	}
+
+	/**
+	 * Delete thumbnails based on the folders in the path
+	 *
+	 * @param string $path The path wherein the thumbnail-folders exist.
+	 * @param string $thumbnail The filename to be deleted.
+	 */
+	public static function deleteThumbnails($path, $thumbnail)
+	{
+		// get folder listing
+		$folders = self::getThumbnailFolders($path);
+
+		// loop folders
+		foreach($folders as $folder)
+		{
+			// delete file but check for existence at first
+			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail))
+			{
+				SpoonFile::delete($folder['path'] . '/' . $thumbnail);
+			}
 		}
 	}
 
@@ -732,6 +754,26 @@ class BackendModel extends BaseModel
 		}
 
 		return $possibleFormats;
+	}
+
+	/**
+	 * Get the token which will protect us
+	 *
+	 * @return string
+	 */
+	public static function getToken()
+	{
+		if(SpoonSession::exists('csrf_token') && SpoonSession::get('csrf_token') != '')
+		{
+			$token = SpoonSession::get('csrf_token');
+		}
+		else
+		{
+			$token = self::generateRandomString(10, true, true, false, false);
+			SpoonSession::set('csrf_token', $token);
+		}
+
+		return $token;
 	}
 
 	/**

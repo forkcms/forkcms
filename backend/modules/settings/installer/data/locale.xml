@@ -93,6 +93,10 @@
         <translation language="uk"><![CDATA[Налаштування SEO]]></translation>
         <translation language="tr"><![CDATA[SEO ayarları]]></translation>
       </item>
+      <item type="label" name="SmtpSecureLayer">
+        <translation language="nl"><![CDATA[beveiliging]]></translation>
+        <translation language="en"><![CDATA[security]]></translation>
+      </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
         <translation language="en"><![CDATA[Some settings are not yet configured.]]></translation>

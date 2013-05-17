@@ -378,6 +378,9 @@
         <translation language="uk"><![CDATA[Часу на сайті]]></translation>
         <translation language="sv"><![CDATA[tid på sajt]]></translation>
       </item>
+      <item type="label" name="TrackingUrl">
+      	<translation language="en"><![CDATA[tracking url]]></translation>
+      </item>
       <item type="label" name="TopContent">
         <translation language="nl"><![CDATA[belangrijkste inhoud]]></translation>
         <translation language="en"><![CDATA[top content]]></translation>
@@ -535,6 +538,10 @@
         <translation language="de"><![CDATA[Es wurde noch keine Verbindung zu einem Analytics-Website-Profil hergestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
         <translation language="es"><![CDATA[Aún no hay ningun perfil de sitio web analytics vinculado. <a href="%1$s">Configurar</a>]]></translation>
         <translation language="sv"><![CDATA[Det finns ingen länk med ett analytics webbplats profil än. <en href="%1$s">Konfigurera</en>]]></translation>
+      </item>
+      <item type="error" name="InvalidApiKey">
+        <translation language="nl"><![CDATA[Dit is een ongeldige API key.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid API-key]]></translation>
       </item>
       <item type="error" name="NoSessionToken">
         <translation language="nl"><![CDATA[Er is nog geen Google account gekoppeld.]]></translation>
@@ -795,6 +802,9 @@
         <translation language="de"><![CDATA[Entferne die Verbindung mit deinem Analytics-Website-Profil.]]></translation>
         <translation language="es"><![CDATA[Eliminar el vinculo con tu perfil web de Analytics]]></translation>
         <translation language="sv"><![CDATA[Ta bort länken från ditt Analytics webbplats profil]]></translation>
+      </item>
+      <item type="message" name="HelpTrackingUrl">
+      	<translation language="en"><![CDATA[If you choose to support Display Advertising, for example to enable Remarketing with Google Analytics, you'll need the doubleclick tracking url.]]></translation>
       </item>
     </analytics>
   </backend>

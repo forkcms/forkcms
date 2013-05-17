@@ -185,6 +185,31 @@ class BackendBaseAction extends BackendBaseObject
 	}
 
 	/**
+	 * Check if the token is ok
+	 */
+	public function checkToken()
+	{
+		$fromSession = (SpoonSession::exists('csrf_token')) ? SpoonSession::get('csrf_token') : '';
+		$fromGet = SpoonFilter::getGetValue('token', null, '');
+
+		if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return;
+
+		// clear the token
+		SpoonSession::set('csrf_token', '');
+
+		$this->redirect(
+			BackendModel::createURLForAction(
+				'index',
+				null,
+				null,
+				array(
+				     'error' => 'csrf'
+				)
+			)
+		);
+	}
+
+	/**
 	 * Display, this wil output the template to the browser
 	 * If no template is specified we build the path form the current module and action
 	 *
@@ -329,6 +354,13 @@ class BackendBaseAction extends BackendBaseObject
 		 * response directly after creating.
 		 */
 		$response->send();
+
+		/*
+		 * Stop code executing here
+		 * I know this is ugly as hell, but if we don't do this the code after
+		 * this call is executed and possibly will trigger errors.
+		 */
+		exit;
 	}
 }
 
@@ -481,6 +513,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	public function execute()
 	{
 		parent::parse();
+		parent::checkToken();
 	}
 }
 
