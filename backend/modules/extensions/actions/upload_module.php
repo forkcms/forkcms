@@ -12,7 +12,7 @@
  * It will install a module via a compressed zip file.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendExtensionsUploadModule extends BackendBaseActionAdd
 {

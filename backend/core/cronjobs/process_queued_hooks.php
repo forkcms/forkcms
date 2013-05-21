@@ -26,7 +26,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		$db = BackendModel::getContainer()->get('database');
 
 		// create log
-		$log = new SpoonLog('custom', BACKEND_CACHE_PATH . '/logs/events');
+		$log = BackendModel::getContainer()->get('logger');
 
 		// get process-id
 		$pid = getmypid();
@@ -70,14 +70,12 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 					// reset state
 					$processedSuccessfully = false;
 
-					// logging when we are in debugmode
-					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+					$log->info('Callback (' . serialize($item['callback']) . ') failed.');
 				}
 
 				try
 				{
-					// logging when we are in debugmode
-					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') called.');
+					$log->info('Callback (' . serialize($item['callback']) . ') called.');
 
 					// call the callback
 					$return = call_user_func($item['callback'], $item['data']);
@@ -91,8 +89,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 						// reset state
 						$processedSuccessfully = false;
 
-						// logging when we are in debugmode
-						if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+						$log->info('Callback (' . serialize($item['callback']) . ') failed.');
 					}
 				}
 				catch(Exception $e)

@@ -11,7 +11,7 @@
  * This is the edit-action, it will display a form to create a new item
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationEdit extends BackendBaseActionEdit
 {
