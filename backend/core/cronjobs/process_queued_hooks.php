@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is the cronjob that processes the queued hooks.
  *
@@ -32,7 +35,11 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		$pid = getmypid();
 
 		// store PID
-		SpoonFile::setContent(BACKEND_CACHE_PATH . '/hooks/pid', $pid);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			BACKEND_CACHE_PATH . '/hooks/pid',
+			$pid
+		);
 
 		while(true)
 		{
@@ -114,8 +121,8 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 			// stop it
 			else
 			{
-				// remove the file
-				SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+				$fs = new Filesystem();
+				$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 
 				// stop the script
 				exit;

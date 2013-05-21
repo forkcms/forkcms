@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
@@ -149,8 +152,9 @@ class BackendBlogAdd extends BackendBaseActionAdd
 					$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
 					// create folders if needed
-					if(!SpoonDirectory::exists($imagePath . '/source')) SpoonDirectory::create($imagePath . '/source');
-					if(!SpoonDirectory::exists($imagePath . '/128x128')) SpoonDirectory::create($imagePath . '/128x128');
+					$fs = new Filesystem();
+					if(!$fs->exists($imagePath . '/source')) $fs->mkdir($imagePath . '/source');
+					if(!$fs->exists($imagePath . '/128x128')) $fs->mkdir($imagePath . '/128x128');
 
 					// image provided?
 					if($this->frm->getField('image')->isFilled())

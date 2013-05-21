@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\File\File;
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
@@ -301,14 +305,15 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					$imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
 					// create folders if needed
-					if(!SpoonDirectory::exists($imagePath . '/source')) SpoonDirectory::create($imagePath . '/source');
-					if(!SpoonDirectory::exists($imagePath . '/128x128')) SpoonDirectory::create($imagePath . '/128x128');
+					$fs = new Filesystem();
+					if(!$fs->exists($imagePath . '/source')) $fs->mkdir($imagePath . '/source');
+					if(!$fs->exists($imagePath . '/128x128')) $fs->mkdir($imagePath . '/128x128');
 
 					// if the image should be deleted
 					if($this->frm->getField('delete_image')->isChecked())
 					{
-						// delete the images
-						SpoonFile::delete($imagePath . '/source/' . $item['image']);
+						// delete the image
+						$fs->remove($imagePath . '/source/' . $item['image']);
 						BackendModel::deleteThumbnails($imagePath, $item['image']);
 
 						// reset the name
@@ -319,7 +324,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					if($this->frm->getField('image')->isFilled())
 					{
 						// delete the old image
-						SpoonFile::delete($imagePath . '/source/' . $this->record['image']);
+						$fs->remove($imagePath . '/source/' . $this->record['image']);
 						BackendModel::deleteThumbnails($imagePath, $this->record['image']);
 
 						// build the image name
@@ -332,11 +337,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// rename the old image
 					elseif($item['image'] != null)
 					{
-						// get the old file extension
-						$imageExtension = SpoonFile::getExtension($imagePath . '/source/' . $item['image']);
-
-						// get the new image name
-						$newName = $this->meta->getURL() . '.' . $imageExtension;
+						$image = new File($imagePath . '/source/' . $item['image']);
+						$newName = $this->meta->getURL() . '.' . $image->getExtension();
 
 						// only change the name if there is a difference
 						if($newName != $item['image'])
@@ -345,7 +347,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 							foreach(BackendModel::getThumbnailFolders($imagePath, true) as $folder)
 							{
 								// move the old file to the new name
-								SpoonFile::move($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
+								$fs->rename($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
 							}
 
 							// assign the new name to the database

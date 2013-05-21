@@ -150,7 +150,7 @@ class FrontendMailer
 			foreach($attachments as $attachment)
 			{
 				// only add existing files
-				if(SpoonFile::exists($attachment)) $email['attachments'][] = $attachment;
+				if(is_file($attachment)) $email['attachments'][] = $attachment;
 			}
 
 			// serialize :)

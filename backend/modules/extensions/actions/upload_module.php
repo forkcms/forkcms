@@ -103,7 +103,7 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
 					// we have a library file
 					if($directory == 'library/external/')
 					{
-						if(!SpoonFile::exists(PATH_WWW . '/' . $fileName)) $files[] = $fileName;
+						if(!is_file(PATH_WWW . '/' . $fileName)) $files[] = $fileName;
 						else $warnings[] = sprintf(BL::getError('LibraryFileAlreadyExists'), $fileName);
 						break;
 					}

@@ -138,7 +138,7 @@ class BackendURL extends BackendBaseObject
 			 * check if the config is present? If it isn't present there is a huge problem, so we
 			 * will stop our code by throwing an error
 			 */
-			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php'))
+			if(!is_file(BACKEND_MODULE_PATH . '/config.php'))
 			{
 				// in debug mode we want to see the error
 				if(SPOON_DEBUG) throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
