@@ -100,7 +100,9 @@ class BackendAction extends BackendBaseObject
 		}
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!is_file(BACKEND_MODULE_PATH . '/config.php')) {
+			throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		}
 
 		// build config-object-name
 		$configClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
@@ -118,7 +120,7 @@ class BackendAction extends BackendBaseObject
 		$action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'index';
 
 		// require the model if it exists
-		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php'))
+		if(is_file(BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php'))
 		{
 			require_once BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php';
 		}

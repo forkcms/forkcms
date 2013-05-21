@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is the autosuggest-action, it will output a list of results for a certain search
  *
@@ -110,7 +113,7 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		if(SPOON_DEBUG) return false;
 
 		// check if cachefile exists
-		if(!SpoonFile::exists($this->cacheFile)) return false;
+		if(!is_file($this->cacheFile)) return false;
 
 		// get cachefile modification time
 		$cacheInfo = @filemtime($this->cacheFile);
@@ -162,7 +165,11 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		if(!SPOON_DEBUG)
 		{
 			// set cache content
-			SpoonFile::setContent($this->cacheFile, "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>");
+			$fs = new Filesystem();
+			$fs->dumpFile(
+				$this->cacheFile,
+				"<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>"
+			);
 		}
 	}
 

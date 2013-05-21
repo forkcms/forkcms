@@ -58,7 +58,7 @@ class FrontendTemplate extends SpoonTemplate
 		if(realpath($template) === false) $template = $path . '/' . $template;
 
 		// source file does not exist
-		if(!SpoonFile::exists($template)) return false;
+		if(!is_file($template)) return false;
 
 		// create object
 		$compiler = new FrontendTemplateCompiler($template, $this->variables);
@@ -124,13 +124,15 @@ class FrontendTemplate extends SpoonTemplate
 		$template = (string) $template;
 
 		// validate name
-		if(trim($template) == '' || !SpoonFile::exists($template)) throw new SpoonTemplateException('Please provide an existing template.');
+		if(trim($template) == '' || !is_file($template)) {
+			throw new SpoonTemplateException('Please provide an existing template.');
+		}
 
 		// compiled name
 		$compileName = $this->getCompileName((string) $template);
 
 		// compiled if needed
-		if($this->forceCompile || !SpoonFile::exists($this->compileDirectory . '/' . $compileName))
+		if($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName))
 		{
 			// create compiler
 			$compiler = new FrontendTemplateCompiler((string) $template, $this->variables);

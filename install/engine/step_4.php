@@ -86,9 +86,7 @@ class InstallerStep4 extends InstallerStep
 	private function loadModules()
 	{
 		// fetch modules
-		$tmpModules = SpoonDirectory::getList(PATH_WWW . '/backend/modules', false, null, '/^[a-z0-9_]+$/i');
-
-		// loop modules
+		$tmpModules = BackendModel::getModulesOnFilesystem(false);
 		foreach($tmpModules as $module)
 		{
 			// not required nor hidden

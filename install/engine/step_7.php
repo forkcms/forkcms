@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * Step 7 of the Fork installer
  *
@@ -95,7 +99,11 @@ class InstallerStep7 extends InstallerStep
 		$value .= '?>';
 
 		// store
-		SpoonFile::setContent(PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php', $value);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php',
+			$value
+		);
 	}
 
 	/**
@@ -149,44 +157,14 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function deleteCachedData()
 	{
-		// init some vars
-		$foldersToLoop = array('/backend/cache', '/frontend/cache');
-		$foldersToIgnore = array('/backend/cache/navigation');
-		$filesToIgnore = array('.gitignore');
-		$filesToDelete = array();
-
-		// loop folders
-		foreach($foldersToLoop as $folder)
-		{
-			// get folderlisting
-			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn', '.gitignore'));
-
-			// loop folders
-			foreach($subfolders as $subfolder)
-			{
-				// not in ignore list?
-				if(!in_array($folder . '/' . $subfolder, $foldersToIgnore))
-				{
-					// get the filelisting
-					$files = (array) SpoonFile::getList(PATH_WWW . $folder . '/' . $subfolder);
-
-					// loop the files
-					foreach($files as $file)
-					{
-						if(!in_array($file, $filesToIgnore))
-						{
-							$filesToDelete[] = PATH_WWW . $folder . '/' . $subfolder . '/' . $file;
-						}
-					}
-				}
-			}
-		}
-
-		// delete cached files
-		if(!empty($filesToDelete))
-		{
-			// loop files and delete them
-			foreach($filesToDelete as $file) SpoonFile::delete($file);
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()
+			        ->in(PATH_WWW . '/backend/cache')
+			        ->in(PATH_WWW . '/frontend/cache')
+		        as $file
+		) {
+			$fs->remove($file->getRealPath());
 		}
 	}
 
@@ -214,7 +192,11 @@ class InstallerStep7 extends InstallerStep
 		$this->createLocaleFiles();
 
 		// already installed
-		SpoonFile::setContent(dirname(__FILE__) . '/../cache/installed.txt', date('Y-m-d H:i:s'));
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			dirname(__FILE__) . '/../cache/installed.txt',
+			date('Y-m-d H:i:s')
+		);
 
 		// show success message
 		$this->showSuccess();
@@ -283,7 +265,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($modules as $module)
 		{
 			// install exists
-			if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
+			if(is_file(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
 			{
 				// users module needs custom variables
 				if($module == 'users')

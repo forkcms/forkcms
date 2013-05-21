@@ -1,13 +1,16 @@
 <?php
 
-use \TijsVerkoyen\Akismet\Akismet;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use TijsVerkoyen\Akismet\Akismet;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
 
 require_once __DIR__ . '/../../../app/BaseModel.php';
 
@@ -474,30 +477,26 @@ class FrontendModel extends BaseModel
 	 */
 	public static function getThumbnailFolders($path, $includeSource = false)
 	{
-		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
-
-		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
-
 		$return = array();
+		$fs = new Filesystem();
+		if(!$fs->exists($path)) return $return;
+		$finder = new Finder();
+		$finder->name('/^([0-9]*)x([0-9]*)$/');
+		if($includeSource) $finder->name('source');
 
-		foreach($folders as $folder)
-		{
-			$item = array();
-			$chunks = explode('x', $folder, 2);
-
-			// skip invalid items
+		foreach($finder->directories()->in($path) as $directory) {
+			$chunks = explode('x', $directory->getBasename(), 2);
 			if(count($chunks) != 2 && !$includeSource) continue;
 
-			$item['dirname'] = $folder;
-			$item['path'] = $path . '/' . $folder;
-			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($item['path'], strlen(PATH_WWW));
-			if($folder == 'source')
-			{
+			$item = array();
+			$item['dirname'] = $directory->getBasename();
+			$item['path'] = $directory->getRealPath();
+			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
+
+			if($item['dirname'] == 'source') {
 				$item['width'] = null;
 				$item['height'] = null;
-			}
-			else
-			{
+			} else {
 				$item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
 				$item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
 			}
@@ -759,11 +758,12 @@ class FrontendModel extends BaseModel
 	 */
 	public static function startProcessingHooks()
 	{
+		$fs = new Filesystem();
 		// is the queue already running?
-		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
+		if($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
-			$pid = trim(SpoonFile::getContent(FRONTEND_CACHE_PATH . '/hooks/pid'));
+			$pid = trim(file_get_contents(FRONTEND_CACHE_PATH . '/hooks/pid'));
 
 			// running on windows?
 			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
@@ -775,7 +775,7 @@ class FrontendModel extends BaseModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -792,7 +792,7 @@ class FrontendModel extends BaseModel
 				if($output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -803,10 +803,10 @@ class FrontendModel extends BaseModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!SpoonFile::exists('/proc/' . $pid))
+				if(!$fs->exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
