@@ -11,6 +11,16 @@
 	text-align: right;
 }
 
+.alignLeft {
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+.alignRight {
+	float: right;
+	margin: 0 0 20px 20px;
+}
+
 .loading {
 	@include background-image(image-url('spinner.gif') !important);
 	background-repeat: no-repeat;
