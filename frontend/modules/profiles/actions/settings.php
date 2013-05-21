@@ -99,7 +99,6 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 		$this->frm = new FrontendForm('updateSettings', null, null, 'updateSettingsForm');
 
 		// create & add elements
-		$this->frm->addImage('avatar');
 		$this->frm->addText('display_name', $this->profile->getDisplayName());
 		$this->frm->addText('first_name', $this->profile->getSetting('first_name'));
 		$this->frm->addText('last_name', $this->profile->getSetting('last_name'));
