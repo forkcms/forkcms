@@ -10,7 +10,7 @@
 /**
  * This is an ajax handler
  *
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationAjaxUpdateMarker extends BackendBaseAJAXAction
 {

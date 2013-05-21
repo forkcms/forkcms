@@ -14,25 +14,26 @@ if(!is_dir(__DIR__ . '/vendor'))
 	exit;
 }
 
+require_once __DIR__ . '/autoload.php';
+
+use Symfony\Component\HttpFoundation\Request;
+
 // Fork has not yet been installed
 $installer = dirname(__FILE__) . '/install/cache';
+$request = Request::createFromGlobals();
 if(
 	file_exists($installer) &&
 	is_dir($installer) &&
 	!file_exists($installer . '/installed.txt') &&
-	substr($_SERVER['REQUEST_URI'], 0, 8) != '/install'
+	substr($request->getRequestURI(), 0, 8) != '/install'
 )
 {
 	header('Location: /install');
 	exit;
 }
 
-use Symfony\Component\HttpFoundation\Request;
-
-require_once __DIR__ . '/autoload.php';
 require_once __DIR__ . '/app/AppKernel.php';
 
 $kernel = new AppKernel();
-$request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
