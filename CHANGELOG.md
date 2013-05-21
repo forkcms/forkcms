@@ -10,12 +10,14 @@ Improvements:
 Improvements:
 
 * Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
+* Analytics: let the user chose between GA & DC for tracking-code.
 
 Bugfixes:
 
 * Core: jQuery-plugins should escape data when using the raw data.
 * Security: prevent CSRF.
 * Mailmotor: fixed linking your account.
+* Core: remove all entities instead of just the special chars before truncating a string. Fixes #386.
 
 
 3.5.1 (2013-04-15)

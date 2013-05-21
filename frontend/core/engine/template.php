@@ -838,8 +838,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
-		// remove special chars
-		$var = htmlspecialchars_decode($var, ENT_QUOTES);
+		// remove special chars, all of them, also the ones that shouldn't be there.
+		$var = SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
 
 		// remove HTML
 		$var = strip_tags($var);

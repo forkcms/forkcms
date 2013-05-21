@@ -601,7 +601,7 @@ class FrontendHeader extends FrontendBaseObject
 		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
-		$trackingUrl = FrontendModel::getModuleSetting('analytics', 'tracking_url', '//www.google-analytics.com/ga.js');
+		$trackingUrl = FrontendModel::getModuleSetting('analytics', 'tracking_url', '//google-analytics.com/ga.js');
 
 		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
 		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
