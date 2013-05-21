@@ -187,7 +187,7 @@ class GoogleAnalytics
 		// catch possible exception
 		catch(Exception $e)
 		{
-			throw $e;
+			throw new Exception($e->getMessage(), $e->getCode());
 		}
 
 		// no accounts - return an empty array
