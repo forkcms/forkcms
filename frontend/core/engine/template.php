@@ -595,7 +595,7 @@ class FrontendTemplateModifiers
 
 		// split URL into chunks
 		$chunks = (array) explode('/', $pageInfo['full_url']);
-		
+
 		// remove language chunk
 		$chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks,2) : (array) array_slice($chunks,1);
 		if( count($chunks) == 0 ) $chunks[0] = '';
@@ -836,8 +836,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
-		// remove special chars
-		$var = htmlspecialchars_decode($var, ENT_QUOTES);
+		// remove special chars, all of them, also the ones that shouldn't be there.
+		$var = SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
 
 		// remove HTML
 		$var = strip_tags($var);
