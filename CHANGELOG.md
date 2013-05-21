@@ -4,6 +4,7 @@ Improvements:
 
 * Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
 * Analytics: let the user chose between GA & DC for tracking-code.
+* Analytics: added the possibility to choose Universal analytics, which is also the new default.
 
 Bugfixes:
 
