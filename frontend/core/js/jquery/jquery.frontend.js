@@ -46,8 +46,8 @@
 			debug: false,
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
 			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
-			isDropdown: true,
-		}
+			isDropdown: true
+		};
 		var settings =
 		{
 			delicious: { name: 'delicious', show: true, label: 'Delicious'},
