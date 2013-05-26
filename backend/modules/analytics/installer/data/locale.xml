@@ -380,7 +380,7 @@
       </item>
       <item type="label" name="TrackingType">
       	<translation language="en"><![CDATA[tracking type]]></translation>
-      	<translation language="nl"><![CDATA[traceringstype]]></translation>
+      	<translation language="nl"><![CDATA[type tracking]]></translation>
       </item>
       <item type="label" name="TopContent">
         <translation language="nl"><![CDATA[belangrijkste inhoud]]></translation>
