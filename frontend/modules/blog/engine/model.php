@@ -644,7 +644,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$limit = (int) $limit;
 
 		// get the related IDs
-		$relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'blog', 'blog');
+		$relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'blog', 'blog', $limit);
 
 		// no items
 		if(empty($relatedIDs)) return array();
