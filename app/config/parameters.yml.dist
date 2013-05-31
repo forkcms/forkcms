@@ -8,7 +8,6 @@ parameters:
 
     kernel.debug:           <debug-mode>
     kernel.charset:         'utf-8'
-    kernel.cache_dir:       %kernel.root_dir%/cache
 
     secret:         'NotVerySecret'
     locale:         'en'
