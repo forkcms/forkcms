@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+
 /**
  * This class is the real code, it creates an action, loads the configfile, ...
  *
@@ -67,14 +70,26 @@ class BackendAction extends BackendBaseObject
 	{
 		if ($this->isSymfonyBundle($this->getModule())) {
 
-			$parameters = $this->url->symfonyParameters;
+			$request = $this->getContainer()->get('request');
+			$controllerResolver = new ControllerResolver(
+				$this->getContainer()->get('logger')
+			);
 
-			$bundleController = new $parameters['_controller'];
+			if (false === $controller = $controllerResolver->getController($request)) {
+				throw new NotFoundHttpException(sprintf('Unable to find the controller for path "%s". Maybe you forgot to add the matching route in your routing configuration?', $request->getPathInfo()));
+			}
+
+			$arguments = $controllerResolver->getArguments(
+				$this->getContainer()->get('request'), $controller
+			);
+
+			$bundleController = new $controller[0];
+			$controllerMethod = $controller[1];
 			$bundleController->setContainer($this->getContainer());
 
-			$controllerAction = $parameters['_action'] . 'Action';
+			$response = call_user_func_array(array($bundleController, $controllerMethod), $arguments);
 
-			return $bundleController->$controllerAction();
+			return $response;
 		}
 
 		return $this->handleForkModule();

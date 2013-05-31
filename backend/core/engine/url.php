@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Route;
 
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Routing\Router;
 
 /**
  * This class will handle the incoming URL.
@@ -157,16 +158,49 @@ class BackendURL extends BackendBaseObject
 			$symfonyBundle->getPath() . '/Resources/config'
 		));
 		$fileLoader = new YamlFileLoader($fileLocator);
-		$routes = $fileLoader->load('routing.yml');
 
-		// store the symfony routing parameters so we can use them later on
-		$context = new RequestContext();
-		$matcher = new UrlMatcher($routes, $context);
-		$this->symfonyParameters = $matcher->match(
-			$this->getActionQueryString($language, $queryString)
+		$router = new Router($fileLoader, 'routing.yml');
+
+		$parameters = $router->match(
+			$this->getActionQueryString($language)
 		);
 
+		// add the request to the request attributes
+		$this->getContainer()->get('request')->attributes
+			->set('request', $this->getContainer()->get('request'));
+
+		// add all our parameters to the request attributes
+		$this->addRequestAttributes($parameters);
+
 		// @todo add validation?
+	}
+
+	/**
+	 * Add all the proper parameters to the request attributes.
+	 *
+	 * @param array $parameters
+	 */
+	protected function addRequestAttributes(array $parameters)
+	{
+		// set all the available parameters as proper attributes
+		foreach ($parameters as $name => $parameter) {
+			// no get parameters
+			if (strpos($parameter, '?') === false) {
+				$this->getContainer()->get('request')->attributes
+					->set($name, $parameter);
+				continue;
+			}
+
+			/*
+			 * Symfony doens't seperate get parameters properly in the url
+			 * matching. This is bogos so we need to fix this. Here we'll
+			 * seperate these items and add them as attributes.
+			 */
+			list($parameter, $chunks) = explode('?', $parameter);
+			parse_str($chunks, $chunks);
+			$parameterList = array($name => $parameter) + $chunks;
+			$this->addRequestAttributes($parameterList);
+		}
 	}
 
 	/**
@@ -178,9 +212,10 @@ class BackendURL extends BackendBaseObject
 	 * @param string $queryString
 	 * @return string
 	 */
-	protected function getActionQueryString($language, $queryString)
+	protected function getActionQueryString($language)
 	{
 		$baseString = "private/{$language}/{$this->getModule()}";
+		$queryString = $this->getContainer()->get('request')->getRequestUri();
 
 		return str_replace($baseString, '', ltrim($queryString, '/'));
 	}
