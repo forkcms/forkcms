@@ -28,8 +28,10 @@ class BackendURL extends BackendBaseObject
 	 */
 	private $queryString;
 
-	public function __construct()
+	public function __construct($kernel)
 	{
+		parent::__construct($kernel);
+
 		// add to registry
 		Spoon::set('url', $this);
 

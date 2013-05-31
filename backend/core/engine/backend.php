@@ -37,7 +37,7 @@ class Backend extends KernelLoader implements ApplicationInterface
 	 */
 	public function initialize()
 	{
-		$URL = new BackendURL();
+		$URL = new BackendURL($this->kernel);
 		new BackendTemplate();
 		new BackendNavigation();
 		new BackendHeader();
