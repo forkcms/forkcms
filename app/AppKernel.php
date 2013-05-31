@@ -22,6 +22,11 @@ require_once __DIR__ . '/routing.php';
  */
 class AppKernel extends Kernel
 {
+	public function __construct()
+	{
+		parent::__construct('dev', true);
+	}
+
 	/**
 	 * Load all the bundles we'll be using in our application.
 	 *
@@ -30,7 +35,17 @@ class AppKernel extends Kernel
 	public function registerBundles()
 	{
 		$bundles = array(
+			// Symfony dependencies
+			new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+			new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+			new Symfony\Bundle\TwigBundle\TwigBundle(),
 			new Symfony\Bundle\MonologBundle\MonologBundle(),
+			new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
+			new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+			new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+			new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+
+			// Fork dependencies
 			new ForkCMS\Bundle\ContentBlocksBundle\ContentBlocksBundle(),
 		);
 

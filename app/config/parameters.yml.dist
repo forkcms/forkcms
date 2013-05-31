@@ -8,6 +8,10 @@ parameters:
 
     kernel.debug:           <debug-mode>
     kernel.charset:         'utf-8'
+    kernel.cache_dir:       %kernel.root_dir%/cache
+
+    secret:         'NotVerySecret'
+    locale:         'en'
 
     fork.debug_email:       <debug-email>
     fork.debug_message:     'Internal error.'
