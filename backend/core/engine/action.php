@@ -68,6 +68,8 @@ class BackendAction extends BackendBaseObject
 	 */
 	public function execute()
 	{
+		$this->loadConfig();
+
 		if ($this->isSymfonyBundle($this->getModule())) {
 
 			$request = $this->getContainer()->get('request');
@@ -89,16 +91,44 @@ class BackendAction extends BackendBaseObject
 
 			$response = call_user_func_array(array($bundleController, $controllerMethod), $arguments);
 
-			return $response;
+			// @todo distinction between redirects and displays
+			//Initiate Spoon Template
+			//Parse Spoon Template with Twig Content
+			//Set Response Content with new HTML
+			if ($redirect = false) {
+				// code...
+			} else {
+				return $this->buildSpoonTwigWrapper($response);
+			}
 		}
 
 		return $this->handleForkModule();
 	}
 
+	/**
+	 * Build a wrapper for Twig inside our Spoon Templates.
+	 *
+	 * @return string
+	 */
+	protected function buildSpoonTwigWrapper($response)
+	{
+		require_once __DIR__ . '/../action/twig_bootstrap.php';
+		$object = new BackendTwigBootstrap;
+		$object->assignContent($response->getContent());
+		$object->execute();
+		return $object->getContent();
+
+		if (!empty($content)) {
+			$template->assign('twigData', $content);
+		}
+
+		$response->setContent($content);
+
+		return $response;
+	}
+
 	private function handleForkModule()
 	{
-		$this->loadConfig();
-
 		// is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
 		if(!in_array($this->getAction(), $this->config->getPossibleActions()))
 		{

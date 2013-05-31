@@ -129,6 +129,9 @@ class BackendURL extends BackendBaseObject
 			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters);
 		}
 
+		BackendLanguage::setWorkingLanguage($language);
+		$this->setLocale();
+
 		// get the module, null will be the default
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
 		$this->setModule($module);
@@ -158,10 +161,11 @@ class BackendURL extends BackendBaseObject
 			$symfonyBundle->getPath() . '/Resources/config'
 		));
 		$fileLoader = new YamlFileLoader($fileLocator);
+		$routes = $fileLoader->load('routing.yml');
 
-		$router = new Router($fileLoader, 'routing.yml');
-
-		$parameters = $router->match(
+		$context = new RequestContext();
+		$matcher = new UrlMatcher($routes, $context);
+		$parameters = $matcher->match(
 			$this->getActionQueryString($language)
 		);
 
@@ -297,7 +301,6 @@ class BackendURL extends BackendBaseObject
 
 			$this->setModule($module);
 			$this->setAction($action);
-			BackendLanguage::setWorkingLanguage($language);
 		}
 
 		// regular request
@@ -363,10 +366,6 @@ class BackendURL extends BackendBaseObject
 				// let's do it
 				else
 				{
-					// set the working language, this is not the interface language
-					BackendLanguage::setWorkingLanguage($language);
-
-					$this->setLocale();
 					$this->setModule($module);
 					$this->setAction($action);
 				}
