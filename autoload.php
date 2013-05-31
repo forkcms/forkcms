@@ -31,6 +31,7 @@ class Autoloader
 		$exceptions['fl'] = __DIR__ . '/frontend/core/engine/language.php';
 		$exceptions['bl'] = __DIR__ . '/backend/core/engine/language.php';
 		$exceptions['api'] = __DIR__ . '/api/1.0/engine/api.php';
+		$exceptions['commonfilesessionhandler'] = __DIR__ . '/library/base/CommonFileSessionHandler.php';
 
 		// is it an exception?
 		if(isset($exceptions[$unifiedClassName])) $pathToLoad = $exceptions[$unifiedClassName];
@@ -47,7 +48,9 @@ class Autoloader
 		elseif(substr($unifiedClassName, 0, 6) == 'common') $pathToLoad = __DIR__ . '/library/base/' . str_replace('common', '', $unifiedClassName) . '.php';
 
 		// file check in core
-		if($pathToLoad != '' && file_exists($pathToLoad)) require_once $pathToLoad;
+		if($pathToLoad != '' && file_exists($pathToLoad)) {
+			require_once $pathToLoad;
+		}
 
 		// check if module file exists
 		else
