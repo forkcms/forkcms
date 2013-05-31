@@ -69,10 +69,10 @@ class BackendAction extends BackendBaseObject
 
 			$parameters = $this->url->symfonyParameters;
 
-			$bundleController = new $parameters['controller'];
+			$bundleController = new $parameters['_controller'];
 			$bundleController->setContainer($this->getContainer());
 
-			$controllerAction = $parameters['action'] . 'Action';
+			$controllerAction = $parameters['_action'] . 'Action';
 
 			return $bundleController->$controllerAction();
 		}

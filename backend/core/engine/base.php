@@ -132,6 +132,11 @@ class BackendBaseObject extends KernelLoader
 		);
 	}
 
+	public function getBundleNameForModule($module)
+	{
+		return SpoonFilter::toCamelCase($module) . 'Bundle';
+	}
+
 	/**
 	 * Check if the module is a Symfony bundle or not.
 	 *
@@ -140,10 +145,9 @@ class BackendBaseObject extends KernelLoader
 	 */
 	public function isSymfonyBundle($bundleSlug)
 	{
-		$bundleName = SpoonFilter::toCamelCase($bundleSlug) . 'Bundle';
 		$bundles = $this->kernel->getBundles();
 
-		return isset($bundles[$bundleName]);
+		return isset($bundles[$this->getBundleNameForModule($bundleSlug)]);
 	}
 }
 

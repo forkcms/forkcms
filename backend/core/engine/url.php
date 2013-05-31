@@ -13,6 +13,9 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 
+use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
+
 /**
  * This class will handle the incoming URL.
  *
@@ -129,33 +132,57 @@ class BackendURL extends BackendBaseObject
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
 		$this->setModule($module);
 
-		// @todo
 		if ($this->isSymfonyBundle($module)) {
-			$this->handleSymfonyRouting($module);
+			$this->handleSymfonyRouting($language, $queryString);
 		} else {
 			// @todo refactor
 			$this->handleForkRouting($isAJAX, $language, $chunks);
 		}
 	}
 
-	private function handleSymfonyRouting($module)
+	/**
+	 * Handle a symfony request.
+	 *
+	 * @param string $language
+	 * @param string $queryString
+	 */
+	private function handleSymfonyRouting($language, $queryString)
 	{
-		$routes = new RouteCollection();
-		$routes->add('hello', new Route(
-			'/index', array(
-				'controller' => 'ForkCMS\Bundle\ContentBlocksBundle\Controller\DefaultController',
-				'action' => 'view',
-			)
+		// load the bundle information
+		$symfonyBundle = $this->getContainer()->get('kernel')
+			->getBundle($this->getBundleNameForModule($this->getModule()));
+
+		// initiate the YAML File loader to read the routing data
+		$fileLocator = new FileLocator(array(
+			$symfonyBundle->getPath() . '/Resources/config'
 		));
+		$fileLoader = new YamlFileLoader($fileLocator);
+		$routes = $fileLoader->load('routing.yml');
 
+		// store the symfony routing parameters so we can use them later on
 		$context = new RequestContext();
-
-		// this is optional and can be done without a Request instance
-		$context->fromRequest(Request::createFromGlobals());
-
 		$matcher = new UrlMatcher($routes, $context);
+		$this->symfonyParameters = $matcher->match(
+			$this->getActionQueryString($language, $queryString)
+		);
 
-		$this->symfonyParameters = $matcher->match('/index');
+		// @todo add validation?
+	}
+
+	/**
+	 * From our QueryString, retrieve the action data for our module. This is
+	 * the data that comes right after the /private/<language>/<module>
+	 * query data.
+	 *
+	 * @param string $language
+	 * @param string $queryString
+	 * @return string
+	 */
+	protected function getActionQueryString($language, $queryString)
+	{
+		$baseString = "private/{$language}/{$this->getModule()}";
+
+		return str_replace($baseString, '', ltrim($queryString, '/'));
 	}
 
 	private function handleForkRouting($isAJAX, $language, $chunks)
