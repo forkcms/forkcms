@@ -158,10 +158,10 @@ class BackendURL extends BackendBaseObject
 
 		// initiate the YAML File loader to read the routing data
 		$fileLocator = new FileLocator(array(
-			$symfonyBundle->getPath() . '/Resources/config'
+			$symfonyBundle->getPath() . '/Resources/config/routing/'
 		));
 		$fileLoader = new YamlFileLoader($fileLocator);
-		$routes = $fileLoader->load('routing.yml');
+		$routes = $fileLoader->load('backend.yml');
 
 		$context = new RequestContext();
 		$matcher = new UrlMatcher($routes, $context);
