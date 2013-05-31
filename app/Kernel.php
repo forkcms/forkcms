@@ -153,6 +153,8 @@ abstract class Kernel extends SymfonyKernel
 	 */
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 	{
+		$this->getContainer()->set('request', $request);
+
 		$this->router = new ApplicationRouting($request, $this);
 
 		return $this->router->handleRequest();
