@@ -115,6 +115,7 @@ class BackendAction extends BackendBaseObject
 		require_once __DIR__ . '/../action/twig_bootstrap.php';
 		$object = new BackendTwigBootstrap;
 		$object->assignContent($response->getContent());
+		$object->setKernel($this->kernel);
 		$object->execute();
 		return $object->getContent();
 
