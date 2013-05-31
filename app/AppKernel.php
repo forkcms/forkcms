@@ -9,6 +9,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 // hardcode this for now, this should be autoloaded
 require_once __DIR__ . '/Kernel.php';
@@ -25,6 +26,9 @@ class AppKernel extends Kernel
 	public function __construct()
 	{
 		parent::__construct('dev', true);
+		AnnotationRegistry::registerFile(
+			__DIR__ . "/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php"
+		);
 	}
 
 	/**
