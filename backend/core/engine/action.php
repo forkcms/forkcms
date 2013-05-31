@@ -31,12 +31,32 @@ class BackendAction extends BackendBaseObject
 	public $tpl;
 
 	/**
+	 * The URL instance
+	 *
+	 * @var BackendURL
+	 */
+	protected $url;
+
+	/**
 	 * You have to specify the action and module so we know what to do with this instance
 	 */
-	public function __construct()
+	public function __construct($URL)
 	{
+		parent::__construct($URL->getKernel());
+
 		// grab stuff from the reference and store them in this object (for later/easy use)
 		$this->tpl = Spoon::get('template');
+		$this->url = $URL;
+	}
+
+	public function getModule()
+	{
+		return $this->url->getModule();
+	}
+
+	public function getAction()
+	{
+		return $this->url->getAction();
 	}
 
 	/**
@@ -44,6 +64,23 @@ class BackendAction extends BackendBaseObject
 	 * We will build the classname, require the class and call the execute method.
 	 */
 	public function execute()
+	{
+		if ($this->isSymfonyBundle($this->getModule())) {
+
+			$parameters = $this->url->symfonyParameters;
+
+			$bundleController = new $parameters['controller'];
+			$bundleController->setContainer($this->getContainer());
+
+			$controllerAction = $parameters['action'] . 'Action';
+
+			return $bundleController->$controllerAction();
+		}
+
+		return $this->handleForkModule();
+	}
+
+	private function handleForkModule()
 	{
 		$this->loadConfig();
 
@@ -79,6 +116,7 @@ class BackendAction extends BackendBaseObject
 		);
 		$object->setKernel($this->getKernel());
 		$object->execute();
+
 		return $object->getContent();
 	}
 

@@ -7,6 +7,12 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
+
 /**
  * This class will handle the incoming URL.
  *
@@ -27,6 +33,8 @@ class BackendURL extends BackendBaseObject
 	 * @var	string
 	 */
 	private $queryString;
+
+	public $symfonyParameters;
 
 	public function __construct($kernel)
 	{
@@ -123,11 +131,31 @@ class BackendURL extends BackendBaseObject
 
 		// @todo
 		if ($this->isSymfonyBundle($module)) {
-			// symfony routing
+			$this->handleSymfonyRouting($module);
 		} else {
 			// @todo refactor
 			$this->handleForkRouting($isAJAX, $language, $chunks);
 		}
+	}
+
+	private function handleSymfonyRouting($module)
+	{
+		$routes = new RouteCollection();
+		$routes->add('hello', new Route(
+			'/index', array(
+				'controller' => 'ForkCMS\Bundle\ContentBlocksBundle\Controller\DefaultController',
+				'action' => 'view',
+			)
+		));
+
+		$context = new RequestContext();
+
+		// this is optional and can be done without a Request instance
+		$context->fromRequest(Request::createFromGlobals());
+
+		$matcher = new UrlMatcher($routes, $context);
+
+		$this->symfonyParameters = $matcher->match('/index');
 	}
 
 	private function handleForkRouting($isAJAX, $language, $chunks)

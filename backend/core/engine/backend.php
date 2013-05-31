@@ -42,9 +42,6 @@ class Backend extends KernelLoader implements ApplicationInterface
 		new BackendNavigation();
 		new BackendHeader();
 
-		$this->action = new BackendAction();
-		$this->action->setModule($URL->getModule());
-		$this->action->setAction($URL->getAction());
-		$this->action->setKernel($this->getKernel());
+		$this->action = new BackendAction($URL);
 	}
 }

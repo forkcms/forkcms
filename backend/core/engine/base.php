@@ -29,6 +29,8 @@ class BackendBaseObject extends KernelLoader
 	 */
 	protected $action;
 
+	protected $symfonyParameters;
+
 	/**
 	 * The actual output
 	 *
