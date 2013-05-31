@@ -129,6 +129,20 @@ class BackendBaseObject extends KernelLoader
 			200
 		);
 	}
+
+	/**
+	 * Check if the module is a Symfony bundle or not.
+	 *
+	 * @param string $bundleSlug
+	 * @return boolean
+	 */
+	public function isSymfonyBundle($bundleSlug)
+	{
+		$bundleName = SpoonFilter::toCamelCase($bundleSlug) . 'Bundle';
+		$bundles = $this->kernel->getBundles();
+
+		return isset($bundles[$bundleName]);
+	}
 }
 
 /**

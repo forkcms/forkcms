@@ -119,6 +119,20 @@ class BackendURL extends BackendBaseObject
 
 		// get the module, null will be the default
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
+		$this->setModule($module);
+
+		// @todo
+		if ($this->isSymfonyBundle($module)) {
+			// symfony routing
+		} else {
+			// @todo refactor
+			$this->handleForkRouting($isAJAX, $language, $chunks);
+		}
+	}
+
+	private function handleForkRouting($isAJAX, $language, $chunks)
+	{
+		$module = $this->getModule();
 
 		// get the requested action, if it is passed
 		if(isset($chunks[3]) && $chunks[3] != '') $action = $chunks[3];
