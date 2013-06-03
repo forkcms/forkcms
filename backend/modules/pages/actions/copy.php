@@ -16,7 +16,7 @@
  * @author Sam Tubbax <sam@sumocoders.be>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-class BackendPagesCopy extends BackendBaseActionDelete
+class BackendPagesCopy extends BackendBaseActionIndex
 {
 	/**
 	 * The languages
