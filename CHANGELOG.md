@@ -6,7 +6,7 @@ Improvements:
 * Analytics: let the user chose between GA & DC for tracking-code.
 * Analytics: added the possibility to choose Universal analytics, which is also the new default.
 * The backend in Internet Explorer doesn't need to be emulated anymore.
-* Profiles: a user can now upload his avatar, fallback is Gravatar. #490
+* Profiles: a user can now upload his avatar in Frontend and we can also integrate the avatar in a Backend DataGrid. Fallback for avatar is Gravatar.
 
 Bugfixes:
 
