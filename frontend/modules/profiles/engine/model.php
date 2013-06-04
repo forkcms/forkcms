@@ -19,6 +19,13 @@ class FrontendProfilesModel
 	const MAX_DISPLAY_NAME_CHANGES = 2;
 
 	/**
+	 * Avatars cache
+	 *
+	 * @param array
+	 */
+	private $avatars;
+
+	/**
 	 * Delete a setting.
 	 *
 	 * @param int $id Profile id.
