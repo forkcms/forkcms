@@ -89,6 +89,7 @@ class FrontendProfilesModel
 	 *
 	 * @param int $id 					The id for the profile we want to get the avatar from.
 	 * @param string[optional] $email 	The email from the user we can use for gravatar.
+	 * @param string[optional] $size	The resolution you want to use. Default: 240x240 pixels.
 	 * @return string $avatar 			The absolute path to the avatar.
 	 */
 	public static function getAvatar($id, $email = null, $size = '240x240')
