@@ -21,9 +21,9 @@ class FrontendProfilesModel
 	/**
 	 * Avatars cache
 	 *
-	 * @param array
+	 * @var array
 	 */
-	private $avatars;
+	private static $avatars = array();
 
 	/**
 	 * Delete a setting.
