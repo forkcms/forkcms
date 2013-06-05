@@ -191,7 +191,7 @@ class InstallerStep7 extends InstallerStep
 		// loop folders
 		foreach($foldersToLoop as $folder)
 		{
-			// get folderlisting
+			// get folder listing
 			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn', '.gitignore'));
 
 			// loop folders
@@ -200,7 +200,7 @@ class InstallerStep7 extends InstallerStep
 				// not in ignore list?
 				if(!in_array($folder . '/' . $subfolder, $foldersToIgnore))
 				{
-					// get the filelisting
+					// get the file listing
 					$files = (array) SpoonFile::getList(PATH_WWW . $folder . '/' . $subfolder);
 
 					// loop the files

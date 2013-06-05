@@ -107,7 +107,7 @@ class APIInit extends KernelLoader
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in AJAX-actions
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
@@ -131,7 +131,7 @@ class APIInit extends KernelLoader
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler
+	 * This method will be called by the Spoon Exception handler
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
@@ -159,7 +159,7 @@ class APIInit extends KernelLoader
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions
 	 * thrown in JS-files parsed through PHP
 	 *
 	 * @param object $exception The exception that was thrown.
@@ -201,7 +201,7 @@ class APIInit extends KernelLoader
 
 			/*
 			 * in debug mode notices are triggered when using non existing locale, so we use a custom
-			 * errorhandler to cleanup the message
+			 * error handler to cleanup the message
 			 */
 			set_error_handler(array('APIInit', 'errorHandler'));
 		}

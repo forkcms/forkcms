@@ -109,7 +109,7 @@ class InstallerStep4 extends InstallerStep
 		if($this->frm->isSubmitted())
 		{
 			// validate email address
-			if($this->frm->getField('different_debug_email')->isChecked()) $this->frm->getField('debug_email')->isEmail('Please provide a valid e-mailaddress.');
+			if($this->frm->getField('different_debug_email')->isChecked()) $this->frm->getField('debug_email')->isEmail('Please provide a valid e-mail address.');
 
 			// all valid
 			if($this->frm->isCorrect())

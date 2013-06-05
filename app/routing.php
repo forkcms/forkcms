@@ -232,7 +232,7 @@ class ApplicationRouting
 	}
 
 	/**
-	 * Process the querystring to define the application
+	 * Process the query string to define the application
 	 */
 	private function processQueryString()
 	{

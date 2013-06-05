@@ -49,7 +49,7 @@ jsBackend.controls =
 				// show
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
-				// bind keypress
+				// bind key press
 				$(document).on('keyup', '#'+ id, function()
 				{
 					// hide all
@@ -65,7 +65,7 @@ jsBackend.controls =
 		}
 	},
 
-	// check a string for passwordstrength
+	// check a string for password strength
 	checkPassword: function(string)
 	{
 		// init vars
@@ -192,7 +192,7 @@ jsBackend.layout =
 		$('.options p:last').addClass('lastChild');
 	},
 
-	// datafilter layout fixes
+	// data filter layout fixes
 	dataFilter: function()
 	{
 		// add last child and first child for IE
@@ -213,7 +213,7 @@ jsBackend.layout =
 		$('.dataFilter tbody .options').height(tallest);
 	},
 
-	// datagrid layout
+	// data grid layout
 	dataGrid: function()
 	{
 		if(jQuery.browser.msie)
