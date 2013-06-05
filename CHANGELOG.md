@@ -13,6 +13,7 @@ Bugfixes:
 * Security: prevent CSRF.
 * Mailmotor: fixed linking your account.
 * Core: remove all entities instead of just the special chars before truncating a string. Fixes #386.
+* Groups: double usage of variable cause unexpected behavior.
 
 
 3.5.1 (2013-04-15)

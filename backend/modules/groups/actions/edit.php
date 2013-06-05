@@ -636,8 +636,8 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		}
 
 		// build group
-		$group['name'] = $this->frm->getField('name')->getValue();
-		$group['id'] = $this->id;
+		$userGroup['name'] = $this->frm->getField('name')->getValue();
+		$userGroup['id'] = $this->id;
 
 		// build setting
 		$setting['group_id'] = $this->id;
@@ -645,7 +645,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 		$setting['value'] = serialize($this->dashboardSequence);
 
 		// update group
-		BackendGroupsModel::update($group, $setting);
+		BackendGroupsModel::update($userGroup, $setting);
 
 		// loop through all widgets
 		foreach($this->widgetInstances as $widget)
@@ -724,7 +724,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 			foreach($userObjects as $user) $user->setSetting('dashboard_sequence', $userSequences[$user->getUserId()]);
 		}
 
-		return $group;
+		return $userGroup;
 	}
 
 	/**
