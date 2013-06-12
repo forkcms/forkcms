@@ -11,9 +11,17 @@
  * In this file we store all generic functions that we will be using in the profiles module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class BackendProfilesModel
 {
+	/**
+	 * Cache avatars
+	 *
+	 * @param string
+	 */
+	protected static $avatars;
+
 	/**
 	 * Browse groups for datagrid.
 	 *
@@ -208,6 +216,63 @@ class BackendProfilesModel
 			 WHERE p.id = ?',
 			(int) $id
 		);
+	}
+
+	/**
+	 * Get avatar
+	 *
+	 * @param int $id 					The id for the profile we want to get the avatar from.
+	 * @param string[optional] $email 	The email from the user we can use for gravatar.
+	 * @return string $avatar 			The absolute path to the avatar.
+	 */
+	public static function getAvatar($id, $email = null)
+	{
+		// redefine id
+		$id = (int) $id;
+
+		// return avatar from cache
+		if(isset(self::$avatars[$id])) return self::$avatars[$id];
+
+		// define avatar path
+		$avatarPath = FRONTEND_FILES_URL . '/profiles/avatars/32x32/';
+
+		// get avatar for profile
+		$avatar = self::getSetting($id, 'avatar');
+
+		// if no email is given
+		if(!$email)
+		{
+			// get user
+			$user = self::get($id);
+
+			// redefine email
+			$email = $user['email'];
+		}
+
+		// no custom avatar defined, get gravatar if allowed
+		if(empty($avatar) && BackendModel::getModuleSetting('profiles', 'allow_gravatar', true) && DB_HOSTNAME != 'localhost')
+		{
+			// define hash
+			$hash = md5(strtolower(trim('d' . $email)));
+
+			// define avatar url
+			$avatar = 'http://www.gravatar.com/avatar/' . $hash;
+
+			// when email not exists, it has to show our custom no-avatar image
+			$avatar .= '?d=' . SITE_URL . $avatarPath . 'no-avatar.gif';
+		}
+
+		// define avatar as not found
+		elseif(empty($avatar)) $avatar = SITE_URL . $avatarPath . 'no-avatar.gif';
+
+		// define custom avatar path
+		else $avatar = $avatarPath . $avatar;
+
+		// set avatar in cache
+		self::$avatars[$id] = $avatar;
+
+		// return avatar image path
+		return $avatar;
 	}
 
 	/**
@@ -457,6 +522,42 @@ class BackendProfilesModel
 
 		// cough up new url
 		return $url;
+	}
+
+	/**
+	 * Get the HTML for a user to use in a datagrid
+	 *
+	 * @param int $id The Id of the user.
+	 * @return string
+	 */
+	public static function getUser($id)
+	{
+		$id = (int) $id;
+
+		// create user instance
+		$user = self::get($id);
+
+		// no user found, stop here
+		if(empty($user)) return '';
+
+		// get settings
+		$nickname = $user['display_name'];
+		$allowed = BackendAuthentication::isAllowedAction('edit', 'profiles');
+
+		// get avatar
+		$avatar = self::getAvatar($id, $user['email']);
+
+		// build html
+		$html = '<div class="dataGridAvatar">' . "\n";
+		$html .= '	<div class="avatar av24">' . "\n";
+		if($allowed) $html .= '		<a href="' . BackendModel::createURLForAction('edit', 'profiles') . '&amp;id=' . $id . '">' . "\n";
+		$html .= '			<img src="' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+		if($allowed) $html .= '		</a>' . "\n";
+		$html .= '	</div>';
+		$html .= '	<p><a href="' . BackendModel::createURLForAction('edit', 'profiles') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
+		$html .= '</div>';
+
+		return $html;
 	}
 
 	/**
