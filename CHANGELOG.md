@@ -12,6 +12,7 @@ Improvements:
 * Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
 * Analytics: let the user chose between GA & DC for tracking-code.
 * Analytics: added the possibility to choose Universal analytics, which is also the new default.
+* The backend in Internet Explorer doesn't need to be emulated anymore.
 
 Bugfixes:
 
@@ -19,6 +20,7 @@ Bugfixes:
 * Security: prevent CSRF.
 * Mailmotor: fixed linking your account.
 * Core: remove all entities instead of just the special chars before truncating a string. Fixes #386.
+* Groups: double usage of variable cause unexpected behavior.
 
 
 3.5.1 (2013-04-15)
