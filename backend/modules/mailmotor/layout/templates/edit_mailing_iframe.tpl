@@ -38,7 +38,7 @@
 				{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage|addslashes}");{/option:errorMessage}
 			});
 
-			var variables = new Array();
+			var variables = [];
 			variables =
 			{
 				mailingId: '{$mailing.id}',
