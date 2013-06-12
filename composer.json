@@ -25,6 +25,5 @@
     },
     "scripts": {
         "post-update-cmd": "cd tools && ./remove_cache"
-    },
-    "minimum-stability": "dev"
+    }
 }
