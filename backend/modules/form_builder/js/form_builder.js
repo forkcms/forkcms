@@ -306,7 +306,7 @@ jsBackend.formBuilder.fields =
 			{
 				// init var
 				var rowIds = $(this).sortable('toArray');
-				var newIdSequence = new Array();
+				var newIdSequence = [];
 
 				// loop rowIds
 				for(var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1]);

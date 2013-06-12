@@ -79,7 +79,7 @@ jsClient.parameters =
 {
 	get: function(object)
 	{
-		var parameters = new Array();
+		var parameters = [];
 		var method = object.parents('.method').find('a[rel]').attr('rel');
 
 		// loop all the textfields in the active form
