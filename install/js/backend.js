@@ -186,7 +186,7 @@ jsBackend.layout =
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.dataGrid();
 
-		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
+		if($('.dataFilter').length > 0) { jsBackend.layout.dataFilter(); }
 
 		// fix last children
 		$('.options p:last').addClass('lastChild');

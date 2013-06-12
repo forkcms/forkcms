@@ -264,8 +264,8 @@ jsBackend.ckeditor =
 		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
 		{
 			// language options
-			jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language,
-			jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language'),
+			jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language;
+			jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language');
 
 			// content Css
 			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/screen.css');

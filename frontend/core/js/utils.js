@@ -50,7 +50,7 @@ utils.cookies =
 	isEnabled: function()
 	{
 		// try to grab the property
-		var cookiesEnabled = (navigator.cookieEnabled) ? true : false;
+		var cookiesEnabled = !!(navigator.cookieEnabled);
 
 		// unknown property?
 		if(typeof navigator.cookieEnabled == 'undefined' && !cookiesEnabled)
