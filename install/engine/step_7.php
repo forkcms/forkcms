@@ -38,6 +38,9 @@ class InstallerStep7 extends InstallerStep
 	 */
 	public function buildCache(SpoonDatabase $db, $language, $application)
 	{
+		// set timezone
+		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
+	
 		// get types
 		$types = $db->getEnumValues('locale', 'type');
 
