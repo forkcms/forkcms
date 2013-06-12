@@ -32,7 +32,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	{
 		$finder = new Finder();
 		$fs = new Filesystem();
-		foreach($finder->files->in($this->cachePath) as $file)
+		foreach($finder->files()->in($this->cachePath) as $file)
 		{
 			// delete file if more than 1 week old
 			if($file->getMTime() < strtotime('-1 week'))

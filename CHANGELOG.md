@@ -17,6 +17,7 @@ Bugfixes:
 * Core: remove all entities instead of just the special chars before truncating a string. Fixes #386.
 * Groups: double usage of variable cause unexpected behavior.
 * Core: don't reassign values when passing them to Akismet.
+* Blog: getRelated now listens to $limit.
 
 
 3.5.1 (2013-04-15)
