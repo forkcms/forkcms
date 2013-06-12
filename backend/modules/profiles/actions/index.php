@@ -30,6 +30,11 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 	private $frm;
 
 	/**
+	 * @var BackendDataGridDB
+	 */
+	private $dgProfiles;
+
+	/**
 	 * Builds the query for this datagrid.
 	 *
 	 * @return array		An array with two arguments containing the query and its parameters.

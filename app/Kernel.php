@@ -37,6 +37,11 @@ use Symfony\Component\HttpKernel\KernelInterface;
 abstract class Kernel implements KernelInterface
 {
 	/**
+	 * @var array
+	 */
+	protected $bundleMap = array();
+
+	/**
 	 * @var ContainerBuilder
 	 */
 	protected $container;
@@ -289,7 +294,6 @@ abstract class Kernel implements KernelInterface
 		}
 
 		// inheritance
-		$this->bundleMap = array();
 		foreach ($topMostBundles as $name => $bundle) {
 			$bundleMap = array($bundle);
 			$hierarchy = array($name);

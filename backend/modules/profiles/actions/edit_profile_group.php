@@ -23,6 +23,11 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 	private $profileGroup;
 
 	/**
+	 * @var int
+	 */
+	private $profileId;
+
+	/**
 	 * Execute the action.
 	 */
 	public function execute()
