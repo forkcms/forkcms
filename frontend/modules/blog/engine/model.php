@@ -121,9 +121,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
-		foreach($tags as $postId => $tags)
+		foreach($tags as $postId => $data)
 		{
-			if(isset($items[$postId])) $items[$postId]['tags'] = $tags;
+			if(isset($items[$postId])) $items[$postId]['tags'] = $data;
 		}
 
 		// return
@@ -255,7 +255,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
-		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
+		foreach($tags as $postId => $data) $items[$postId]['tags'] = $data;
 
 		// return
 		return $items;
@@ -345,7 +345,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
-		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
+		foreach($tags as $postId => $data) $items[$postId]['tags'] = $data;
 
 		// return
 		return $items;
@@ -806,17 +806,18 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// notify on all comments
 		if($notifyByMailOnComment)
 		{
+			// init var
+			$variables = null;
+
 			// comment to moderate
 			if($comment['status'] == 'moderation')
 			{
-				// set variables
 				$variables['message'] = vsprintf(FL::msg('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
 			}
 
 			// comment was published
 			elseif($comment['status'] == 'published')
 			{
-				// set variables
 				$variables['message'] = vsprintf(FL::msg('BlogEmailNotificationsNewComment'), array($comment['author'], $URL, $comment['post_title']));
 			}
 

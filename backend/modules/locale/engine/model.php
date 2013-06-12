@@ -135,7 +135,7 @@ class BackendLocaleModel
 	 * Build a query for the URL based on the filter
 	 *
 	 * @param array $filter The filter.
-	 * @return array
+	 * @return string
 	 */
 	public static function buildURLQueryByFilter($filter)
 	{

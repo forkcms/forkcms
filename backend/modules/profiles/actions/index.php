@@ -171,7 +171,7 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 	{
 		parent::parse();
 
-		// parse datagrid
+		// parse data grid
 		$this->tpl->assign('dgProfiles', ($this->dgProfiles->getNumResults() != 0) ? $this->dgProfiles->getContent() : false);
 
 		// parse paging & sorting

@@ -751,7 +751,12 @@ class ModuleInstaller
 		if($sequence === null)
 		{
 			// get maximum sequence for this parent
-			$maxSequence = (int) $this->getDB()->getVar('SELECT MAX(sequence) FROM backend_navigation WHERE parent_id = ?', $parentId);
+			$maxSequence = (int) $this->getDB()->getVar(
+				'SELECT MAX(sequence)
+				 FROM backend_navigation
+				 WHERE parent_id = ?',
+				array($parentId)
+			);
 
 			// add at the end
 			$sequence = $maxSequence + 1;

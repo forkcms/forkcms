@@ -608,9 +608,6 @@ class FrontendModel extends BaseModel
 			// return unknown status
 			return 'unknown';
 		}
-
-		// when everything fails
-		return false;
 	}
 
 	/**

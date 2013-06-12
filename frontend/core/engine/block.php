@@ -423,7 +423,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
-		$this->output = $this->object->execute();
+		$this->object->execute();
 	}
 
 	/**
