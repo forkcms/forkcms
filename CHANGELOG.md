@@ -2,13 +2,8 @@
 --
 Improvements:
 
-* Core: introduction of the Filesystem component.
-* Core: introduction of the Finder component.
-
-3.5.2 (xxxx-xx-xx)
---
-Improvements:
-
+* Core: introduction of the Filesystem component, see UPGRADE_3.6.md.
+* Core: introduction of the Finder component, see UPGRADE_3.6.md.
 * Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
 * Analytics: let the user chose between GA & DC for tracking-code.
 * Analytics: added the possibility to choose Universal analytics, which is also the new default.
