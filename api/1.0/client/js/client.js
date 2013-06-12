@@ -1,4 +1,4 @@
-if(!jsClient) { var jsClient = new Object(); }
+if(!jsClient) { var jsClient = {}; }
 
 /**
  * @author Dave Lens <dave@netlash.com>
