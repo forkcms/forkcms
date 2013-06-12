@@ -85,11 +85,11 @@ utils.cookies =
 		// fallback
 		return null;
 	},
-	
+
 	setCookie: function(name, value, days)
 	{
 		if(typeof days == 'undefined') days = 7;
-		
+
 		var expireDate = new Date();
 		expireDate.setDate(expireDate.getDate() + days);
 		document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/';
