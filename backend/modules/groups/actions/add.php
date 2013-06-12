@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+
 /**
  * This is the add-action, it will display a form to create a new group
  *
@@ -74,7 +76,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 			foreach($this->actions[$module['value']] as $key => $action)
 			{
 				// ajax action?
-				if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $module['value'] . '/ajax/' . $action['value'] . '.php'))
+				if(is_file(BACKEND_MODULES_PATH . '/' . $module['value'] . '/ajax/' . $action['value'] . '.php'))
 				{
 					// create reflection class
 					$reflection = new ReflectionClass('Backend' . $module['label'] . 'Ajax' . $action['label']);
@@ -125,97 +127,58 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	private function getActions()
 	{
-		// create filter with modules which may not be displayed
 		$filter = array('authentication', 'error', 'core');
+		$modules = array();
 
-		// get all modules
-		$modules = array_diff(BackendModel::getModules(), $filter);
+		$finder = new Finder();
+		$finder->name('*.php')
+			->in(BACKEND_MODULES_PATH . '/*/actions')
+			->in(BACKEND_MODULES_PATH . '/*/ajax');
+		foreach($finder->files() as $file) {
+			$module = $file->getPathInfo()->getPathInfo()->getBasename();
 
-		// loop all modules
+			// skip some modules
+			if(in_array($module, $filter)) continue;
+
+			if(BackendAuthentication::isAllowedModule($module)) {
+				$actionName = $file->getBasename('.php');
+				$isAjax = $file->getPathInfo()->getBasename() == 'ajax';
+				$modules[] = $module;
+
+				// ajax-files should be required
+				if($isAjax) {
+					require_once $file->getRealPath();
+					$className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Ajax' . SpoonFilter::toCamelCase($actionName);
+				}
+				else $className = 'Backend' . SpoonFilter::toCamelCase($module) . SpoonFilter::toCamelCase($actionName);
+
+				$reflection = new ReflectionClass($className);
+				$phpDoc = trim($reflection->getDocComment());
+				if($phpDoc != '')
+				{
+					$offset = strpos($reflection->getDocComment(), '*', 7);
+					$description = substr($reflection->getDocComment(), 0, $offset);
+					$description = str_replace('*', '', $description);
+					$description = trim(str_replace('/', '', $description));
+				}
+
+				else $description = '';
+
+				$this->actions[$module][] = array(
+					'label' => SpoonFilter::toCamelCase($actionName),
+					'value' => $actionName,
+					'description' => $description
+				);
+			}
+		}
+
+		$modules = array_unique($modules);
 		foreach($modules as $module)
 		{
-			// you have sufficient rights?
-			if(BackendAuthentication::isAllowedModule($module))
-			{
-				// build pathName
-				$pathName = BACKEND_MODULES_PATH . '/' . $module;
-
-				// module has actions?
-				if(SpoonDirectory::exists($pathName . '/actions'))
-				{
-					// get actions
-					$actions = (array) SpoonFile::getList($pathName . '/actions', '/(.*)\.php/i');
-					$ajaxActions = (array) SpoonFile::getList($pathName . '/ajax', '/(.*)\.php/i');
-
-					// loop through actions
-					foreach($actions as $action)
-					{
-						// get action name
-						$actionName = str_replace('.php', '', $action);
-
-						// create reflection class
-						$reflection = new ReflectionClass('Backend' . SpoonFilter::toCamelCase($module) . SpoonFilter::toCamelCase($actionName));
-
-						// get the comment
-						$phpDoc = trim($reflection->getDocComment());
-
-						if($phpDoc != '')
-						{
-							// get the offset
-							$offset = strpos($reflection->getDocComment(), '*', 7);
-
-							// get the first sentence
-							$description = substr($reflection->getDocComment(), 0, $offset);
-
-							// replacements
-							$description = str_replace('*', '', $description);
-							$description = trim(str_replace('/', '', $description));
-						}
-
-						else $description = '';
-
-						// assign actions to array
-						$this->actions[$module][] = array('label' => SpoonFilter::toCamelCase($actionName), 'value' => $actionName, 'description' => $description);
-					}
-
-					// loop through ajax actions
-					foreach($ajaxActions as $action)
-					{
-						// get action name
-						$actionName = str_replace('.php', '', $action);
-
-						// require file
-						require_once BACKEND_MODULES_PATH . '/' . $module . '/ajax/' . $action;
-
-						// create reflection class
-						$reflection = new ReflectionClass('Backend' . SpoonFilter::toCamelCase($module) . 'Ajax' . SpoonFilter::toCamelCase($actionName));
-
-						// get the comment
-						$phpDoc = trim($reflection->getDocComment());
-
-						if($phpDoc != '')
-						{
-							// get the offset
-							$offset = strpos($reflection->getDocComment(), '*', 7);
-
-							// get the first sentence
-							$description = substr($reflection->getDocComment(), 0, $offset);
-
-							// replacements
-							$description = str_replace('*', '', $description);
-							$description = trim(str_replace('/', '', $description));
-						}
-
-						else $description = '';
-
-						// assign actions to array
-						$this->actions[$module][] = array('label' => SpoonFilter::toCamelCase($actionName), 'value' => $actionName, 'description' => $description);
-					}
-
-					// module has actions?
-					if(!empty($this->actions[$module])) $this->modules[] = array('label' => SpoonFilter::toCamelCase($module), 'value' => $module);
-				}
-			}
+			$this->modules[] = array(
+				'label' => SpoonFilter::toCamelCase($module),
+				'value' => $module
+			);
 		}
 	}
 
@@ -234,72 +197,53 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 	 */
 	private function getWidgets()
 	{
-		// get all modules
-		$modules = BackendModel::getModules();
+		$finder = new Finder();
+		$finder->name('*.php')
+			->in(BACKEND_MODULES_PATH . '/*/widgets');
+		foreach($finder->files() as $file) {
+			$module = $file->getPathInfo()->getPathInfo()->getBasename();
+			if(BackendAuthentication::isAllowedModule($module)) {
+				$widgetName = $file->getBasename('.php');
+				$className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase($widgetName);
+				require_once $file->getRealPath();
 
-		foreach($modules as $module)
-		{
-			// you have sufficient rights?
-			if(BackendAuthentication::isAllowedModule($module))
-			{
-				// build pathName
-				$pathName = BACKEND_MODULES_PATH . '/' . $module;
+				if(class_exists($className)) {
+					// add to array
+					$this->widgetInstances[] = array(
+						'module' => $module,
+						'widget' => $widgetName,
+						'className' => $className
+					);
 
-				// check if the folder exists
-				if(SpoonDirectory::exists($pathName . '/widgets'))
-				{
-					// get widgets
-					$widgets = (array) SpoonFile::getList($pathName . '/widgets', '/(.*)\.php/i');
-
-					// loop through widgets
-					foreach($widgets as $widget)
+					// create reflection class
+					$reflection = new ReflectionClass($className);
+					$phpDoc = trim($reflection->getDocComment());
+					if($phpDoc != '')
 					{
-						// require the classes
-						require_once $pathName . '/widgets/' . $widget;
-
-						// init var
-						$widgetName = str_replace('.php', '', $widget);
-
-						// build classname
-						$className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase($widgetName);
-
-						// validate if the class exists
-						if(!class_exists($className))
-						{
-							// throw exception
-							throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
-						}
-
-						// class exists
-						else
-						{
-							// add to array
-							$this->widgetInstances[] = array('module' => $module, 'widget' => $widgetName, 'className' => $className);
-
-							// create reflection class
-							$reflection = new ReflectionClass('Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase($widgetName));
-
-							// get the offset
-							$offset = strpos($reflection->getDocComment(), '*', 7);
-
-							// get the first sentence
-							$description = substr($reflection->getDocComment(), 0, $offset);
-
-							// replacements
-							$description = str_replace('*', '', $description);
-							$description = trim(str_replace('/', '', $description));
-						}
-
-						// check if model file exists
-						if(SpoonFile::exists($pathName . '/engine/model.php'))
-						{
-							// require model
-							require_once $pathName . '/engine/model.php';
-						}
-
-						// add to array
-						$this->widgets[] = array('label' => SpoonFilter::toCamelCase($widgetName), 'value' => $widgetName, 'description' => $description);
+						$offset = strpos($reflection->getDocComment(), '*', 7);
+						$description = substr($reflection->getDocComment(), 0, $offset);
+						$description = str_replace('*', '', $description);
+						$description = trim(str_replace('/', '', $description));
 					}
+
+					else $description = '';
+
+					// check if model file exists
+					$pathName = $file->getPathInfo()->getPathInfo()->getRealPath();
+					if(is_file($pathName . '/engine/model.php'))
+					{
+						// require model
+						require_once $pathName . '/engine/model.php';
+					}
+
+					// add to array
+					$this->widgets[] = array(
+						'label' => SpoonFilter::toCamelCase($widgetName),
+						'value' => $widgetName,
+						'description' => $description
+					);
+
+
 				}
 			}
 		}

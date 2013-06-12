@@ -1,13 +1,15 @@
 <?php
 
-use \MatthiasMullie\Minify;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use \MatthiasMullie\Minify;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
@@ -309,7 +311,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(substr($image, 0, 7) != SITE_PROTOCOL . '://')
 		{
 			// check if image exists
-			if(!SpoonFile::exists(PATH_WWW . $image)) return;
+			if(!is_file(PATH_WWW . $image)) return;
 
 			// convert to absolute path
 			$image = SITE_URL . $image;
@@ -483,12 +485,13 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = new Filesystem();
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file
@@ -513,12 +516,13 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = new Filesystem();
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file

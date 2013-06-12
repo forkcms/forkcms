@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is our extended version of SpoonForm
  *
@@ -238,7 +241,7 @@ class BackendForm extends SpoonForm
 		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 
 		// add the internal link lists-file
-		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
+		if(is_file(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
 		{
 			$timestamp = @filemtime(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js');
 			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js?m=' . $timestamp, null, false, true, false);
@@ -562,7 +565,7 @@ class BackendFormDate extends SpoonFormDate
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFormImage extends SpoonFormImage
@@ -586,10 +589,8 @@ class BackendFormImage extends SpoonFormImage
 	 */
 	public function generateThumbnails($path, $filename)
 	{
-		// create folder if needed
-		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
-
-		// move the source file
+		$fs = new Filesystem();
+		if(!$fs->exists($path . '/source')) $fs->mkdir($path . '/source');
 		$this->moveFile($path . '/source/' . $filename);
 
 		// generate the thumbnails

@@ -11,7 +11,7 @@
  * This is the detail-action
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class FrontendFaqDetail extends FrontendBaseBlock
 {

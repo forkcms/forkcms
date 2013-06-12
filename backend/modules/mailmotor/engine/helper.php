@@ -82,6 +82,7 @@ class BackendMailmotorCMHelper
 	 *
 	 * @param string $name The name of the custom field.
 	 * @param string $groupId The CampaignMonitor ID of the list you want to remove the custom field from.
+	 * @return bool
 	 */
 	public static function deleteCustomField($name, $groupId)
 	{
@@ -306,10 +307,10 @@ class BackendMailmotorCMHelper
 		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
+			if(!is_file(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
-				throw new SpoonFileException(BL::err('ClassDoesNotExist', 'mailmotor'));
+				throw new BackendException(BL::err('ClassDoesNotExist', 'mailmotor'));
 			}
 
 			// require CampaignMonitor class

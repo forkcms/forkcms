@@ -7,11 +7,16 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
+
 /**
  * In this file we store all generic functions that we will be using in the search module
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendSearchModel
 {
@@ -156,7 +161,11 @@ class BackendSearchModel
 	 */
 	public static function invalidateCache()
 	{
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/search/') as $file) SpoonFile::delete(FRONTEND_CACHE_PATH . '/search/' . $file);
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/search/') as $file) {
+			$fs->remove($file->getRealPath());
+		}
 	}
 
 	/**

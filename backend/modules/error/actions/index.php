@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\File\File;
+
 /**
  * This is the index-action (default), it will display an error depending on a given parameters
  *
@@ -55,7 +57,8 @@ class BackendErrorIndex extends BackendBaseActionIndex
 			$chunks = explode('?', $this->getParameter('querystring'));
 
 			// get extension
-			$extension = SpoonFile::getExtension($chunks[0]);
+			$file = new File($chunks[0]);
+			$extension = $file->getExtension();
 
 			// if the file has an extension it is a non-existing-file
 			if($extension != '' && $extension != $chunks[0])

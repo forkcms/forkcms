@@ -250,7 +250,7 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Get the content of the page
 	 *
-	 * @var	array
+	 * @return	array
 	 */
 	public function getRecord()
 	{
@@ -365,6 +365,10 @@ class FrontendPage extends FrontendBaseObject
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
+			$this->getContainer()->get('logger')->info(
+				"Executing frontend action '{$extra->getAction()}' for module '{$extra->getModule()}'."
+			);
+
 			// all extras extend FrontendBaseObject, which extends KernelLoader
 			$extra->setKernel($this->getKernel());
 			$extra->execute();

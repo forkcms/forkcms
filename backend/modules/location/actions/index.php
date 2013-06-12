@@ -11,7 +11,7 @@
  * This is the index-action (default), it will display the overview of location items
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationIndex extends BackendBaseActionIndex
 {

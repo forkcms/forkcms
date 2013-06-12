@@ -178,6 +178,7 @@ class BackendBlogAPI
 	 * @param string[optional] $authorName The new author for the comment.
 	 * @param string[optional] $authorEmail The new email for the comment.
 	 * @param string[optional] $authorWebsite The new website for the comment.
+	 * @return null|bool
 	 */
 	public static function commentsUpdate($id, $status = null, $text = null, $authorName = null, $authorEmail = null, $authorWebsite = null)
 	{

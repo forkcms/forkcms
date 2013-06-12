@@ -47,8 +47,7 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			// delete item
 			BackendBlogModel::delete($this->id);
 
-			// delete the images
-			SpoonFile::delete(FRONTEND_FILES_PATH . '/blog/images/source/' . $this->record['image']);
+			// delete the image
 			BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $this->record['image']);
 
 			// trigger event
