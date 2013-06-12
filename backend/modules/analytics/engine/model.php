@@ -57,14 +57,14 @@ class BackendAnalyticsModel
 			if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 
 			// analytics table id (only show this error if no other exist)
 			if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 		}
 
@@ -1048,7 +1048,7 @@ class BackendAnalyticsModel
 	{
 		$finder = new Finder();
 		$fs = new Filesystem();
-		foreach($finder->files->in(BACKEND_CACHE_PATH . '/analytics') as $file)
+		foreach($finder->files()->in(BACKEND_CACHE_PATH . '/analytics') as $file)
 		{
 			$fs->remove($file->getRealPath());
 		}
