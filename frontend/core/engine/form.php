@@ -43,16 +43,10 @@ class FrontendForm extends SpoonForm
 	{
 		$this->URL = Spoon::get('url');
 		$this->header = Spoon::get('header');
-
-		$name = (string) $name;
-		$hash = ($hash !== null) ? (string) $hash : null;
-		$useToken = (bool) $useToken;
-
-		// build the action if it wasn't provided
 		$action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
 
 		// call the real form-class
-		parent::__construct($name, $action, $method, $useToken);
+		parent::__construct((string) $name, $action, $method, (bool) $useToken);
 
 		// add default classes
 		$this->setParameter('id', $name);

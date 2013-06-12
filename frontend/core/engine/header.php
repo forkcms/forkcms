@@ -328,7 +328,7 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Sort function for CSS-files
 	 *
-	 * @param $cssFiles The css files to sort.
+	 * @param array $cssFiles The css files to sort.
 	 * @return array
 	 */
 	private function cssSort($cssFiles)

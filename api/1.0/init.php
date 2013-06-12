@@ -83,9 +83,6 @@ class APIInit extends KernelLoader
 	 */
 	public static function errorHandler($errorNumber, $errorString)
 	{
-		$errorNumber = (int) $errorNumber;
-		$errorString = (string) $errorString;
-
 		// is this an undefined index?
 		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
@@ -114,18 +111,11 @@ class APIInit extends KernelLoader
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
-		$output = (string) $output;
-
-		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
-
-		// create response array
 		$response = array(
 			'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
 			'message' => $exception->getMessage()
 		);
-
-		// output JSON to the browser
 		echo json_encode($response);
 		exit;
 	}
@@ -167,12 +157,7 @@ class APIInit extends KernelLoader
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
-		$output = (string) $output;
-
-		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
-
-		// output exception
 		echo '// ' . $exception->getMessage();
 		exit;
 	}

@@ -14,7 +14,7 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	 *
 	 * @var	SpoonDataGrid
 	 */
-	private $datagrid;
+	private $dataGrid;
 
 	/**
 	 * Execute the extra

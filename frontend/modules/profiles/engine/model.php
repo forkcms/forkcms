@@ -186,7 +186,7 @@ class FrontendProfilesModel
 		);
 
 		// unserialize values
-		foreach($settings as $key => &$value) $value = unserialize($value);
+		foreach($settings as &$value) $value = unserialize($value);
 
 		// return
 		return $settings;

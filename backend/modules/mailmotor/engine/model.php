@@ -379,7 +379,7 @@ class BackendMailmotorModel
 		$path = BACKEND_CACHE_PATH . '/mailmotor/' . $filename;
 
 		// fetch the addresses by group
-		$records = self::getAddressesByGroupID($id);
+		$records = self::getAddressesByGroupID(array($id));
 
 		// fetch the group fields
 		$groupFields = array_flip(self::getCustomFields($id));
@@ -731,7 +731,7 @@ class BackendMailmotorModel
 	/**
 	 * Get all campaigns in key/value format for id/name
 	 *
-	 * @return int
+	 * @return array
 	 */
 	public static function getCampaignsAsPairs()
 	{

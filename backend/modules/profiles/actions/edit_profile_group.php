@@ -130,7 +130,7 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 				else $values['expires_on'] = null;
 
 				// update values
-				$id = BackendProfilesModel::updateProfileGroup($this->id, $values);
+				BackendProfilesModel::updateProfileGroup($this->id, $values);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_profile_edit_groups', array('id' => $this->id));

@@ -1317,7 +1317,7 @@ class BackendModel extends BaseModel
 		try
 		{
 			// check with Akismet if the item is spam
-			return $akismet->submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null);
+			return $akismet->submitHam($userIp, $userAgent, $content, $author, $email, $url, $permalink, $type, $referrer, $others);
 		}
 
 		// catch exceptions

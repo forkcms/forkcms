@@ -259,9 +259,6 @@ class BackendAnalyticsModel
 	 */
 	public static function getDashboardData(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
 	{
-		$metrics = (array) $metrics;
-		$forceCache = (bool) $forceCache;
-
 		return self::getDataFromCacheByType('dashboard_data', $startTimestamp, $endTimestamp);
 	}
 
@@ -521,8 +518,6 @@ class BackendAnalyticsModel
 	 */
 	public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
 	{
-		$metrics = (array) $metrics;
-
 		// get data from cache
 		$items = self::getDataFromCacheByType('metrics_per_day', $startTimestamp, $endTimestamp);
 
@@ -617,7 +612,7 @@ class BackendAnalyticsModel
 	/**
 	 * Get the most recent keywords
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public static function getRecentKeywords()
 	{
@@ -631,7 +626,7 @@ class BackendAnalyticsModel
 	/**
 	 * Get the most recent referrers
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public static function getRecentReferrers()
 	{

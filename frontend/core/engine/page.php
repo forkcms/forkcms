@@ -213,7 +213,7 @@ class FrontendPage extends FrontendBaseObject
 		$redirect = true;
 
 		// loop blocks, if all are empty we should redirect to the first child
-		foreach($this->record['positions'] as $position => $blocks)
+		foreach($this->record['positions'] as $blocks)
 		{
 			// loop blocks in position
 			foreach($blocks as $block)
@@ -416,9 +416,6 @@ class FrontendPage extends FrontendBaseObject
 			// loop blocks in position
 			foreach($blocks as $index => &$block)
 			{
-				// build templateVariable
-				$templateVariable = 'block' . ($index + 1);
-
 				// an extra
 				if($block['extra_id'] !== null)
 				{

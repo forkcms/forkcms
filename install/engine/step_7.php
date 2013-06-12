@@ -23,13 +23,6 @@ use Symfony\Component\Finder\Finder;
 class InstallerStep7 extends InstallerStep
 {
 	/**
-	 * Database connection, needed for installation
-	 *
-	 * @var	SpoonDatabases
-	 */
-	private $db;
-
-	/**
 	 * Build the language files
 	 *
 	 * @param SpoonDatabase $db The database connection instance.

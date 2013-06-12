@@ -80,41 +80,30 @@ class FrontendModel extends BaseModel
 	/**
 	 * Add parameters to an URL
 	 *
-	 * @param string $URL The URL to append the parameters too.
+	 * @param string $url The URL to append the parameters too.
 	 * @param array $parameters The parameters as key-value-pairs.
 	 * @return string
 	 */
-	public static function addURLParameters($URL, array $parameters)
+	public static function addURLParameters($url, array $parameters)
 	{
-		// redefine
-		$URL = (string) $URL;
+		$url = (string) $url;
 
-		// no parameters means no appending
-		if(empty($parameters)) return $URL;
+		if(empty($parameters)) return $url;
 
-		// split to remove the hash
-		$chunks = explode('#', $URL, 2);
-
-		// init var
+		$chunks = explode('#', $url, 2);
 		$hash = '';
-
 		if(isset($chunks[1]))
 		{
-			// reset URL
-			$URL = $chunks[0];
-
-			// store has
+			$url = $chunks[0];
 			$hash = '#' . $chunks[1];
 		}
 
-		// build querystring
+		// build query string
 		$queryString = http_build_query($parameters, null, '&amp;');
+		if(mb_strpos($url, '?') !== false) $url .= '&' . $queryString . $hash;
+		else $url .= '?' . $queryString . $hash;
 
-		// already GET parameters?
-		if(mb_strpos($URL, '?') !== false) return $URL .= '&' . $queryString . $hash;
-
-		// no GET-parameters defined before
-		else return $URL .= '?' . $queryString . $hash;
+		return $url;
 	}
 
 	/**
@@ -371,9 +360,6 @@ class FrontendModel extends BaseModel
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
 		if(isset($record['meta_data']) && $record['meta_data'] != '') $record['meta_data'] = unserialize($record['meta_data']);
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
-
-		// determine amount of blocks needed
-		$numBlocks = count($record['template_data']['names']);
 
 		// get blocks
 		$blocks = (array) $db->getRecords(

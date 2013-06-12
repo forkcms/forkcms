@@ -103,7 +103,7 @@ class BackendPagesModel
 		$navigation = array();
 
 		// loop levels
-		foreach($levels as $level => $pages)
+		foreach($levels as $pages)
 		{
 			// loop all items on this level
 			foreach($pages as $pageID => $page)
@@ -1043,7 +1043,7 @@ class BackendPagesModel
 		$return = array();
 
 		// loop levels
-		foreach($levels as $level => $pages)
+		foreach($levels as $pages)
 		{
 			// loop all items on this level
 			foreach($pages as $pageID => $page)
@@ -1076,7 +1076,7 @@ class BackendPagesModel
 			ksort($sequences['pages']);
 
 			// loop to add the titles in the correct order
-			foreach($sequences['pages'] as $URL => $id)
+			foreach($sequences['pages'] as $id)
 			{
 				if(isset($titles[$id])) $return[$id] = $titles[$id];
 			}
@@ -1084,7 +1084,7 @@ class BackendPagesModel
 
 		if(isset($sequences['footer']))
 		{
-			foreach($sequences['footer'] as $URL => $id)
+			foreach($sequences['footer'] as $id)
 			{
 				if(isset($titles[$id])) $return[$id] = $titles[$id];
 			}

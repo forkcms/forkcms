@@ -98,27 +98,17 @@ class FrontendInit extends KernelLoader
 	 */
 	public static function errorHandler($errorNumber, $errorString)
 	{
-		// redefine
-		$errorNumber = (int) $errorNumber;
 		$errorString = (string) $errorString;
 
 		// is this an undefined index?
 		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
-			// cleanup
 			$index = trim(str_replace('Undefined index:', '', $errorString));
-
-			// get the type
 			$type = mb_substr($index, 0, 3);
 
-			// is the index locale?
 			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$' . $index . '}';
-
-			// return false, so the standard error handler isn't bypassed
 			else return false;
 		}
-
-		// return false, so the standard error handler isn't bypassed
 		else return false;
 	}
 
@@ -130,19 +120,13 @@ class FrontendInit extends KernelLoader
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
-		// redefine
-		$output = (string) $output;
-
-		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
+		$response = array(
+			'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
+			'message' => $exception->getMessage()
+		);
 
-		// create response array
-		$response = array('code' => ($exception->getCode() != 0) ? $exception->getCode() : 500, 'message' => $exception->getMessage());
-
-		// output to the browser
 		echo json_encode($response);
-
-		// stop script execution
 		exit;
 	}
 
@@ -187,9 +171,6 @@ class FrontendInit extends KernelLoader
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
-		// redefine
-		$output = (string) $output;
-
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
