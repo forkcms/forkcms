@@ -250,7 +250,7 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Get the content of the page
 	 *
-	 * @var	array
+	 * @return	array
 	 */
 	public function getRecord()
 	{

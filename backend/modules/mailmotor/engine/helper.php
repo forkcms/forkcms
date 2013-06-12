@@ -82,6 +82,7 @@ class BackendMailmotorCMHelper
 	 *
 	 * @param string $name The name of the custom field.
 	 * @param string $groupId The CampaignMonitor ID of the list you want to remove the custom field from.
+	 * @return bool
 	 */
 	public static function deleteCustomField($name, $groupId)
 	{

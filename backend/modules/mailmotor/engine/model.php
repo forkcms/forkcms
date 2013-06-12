@@ -1676,6 +1676,7 @@ class BackendMailmotorModel
 	 *
 	 * @param string $email The emailaddress to update.
 	 * @param mixed $groupIds The ids of the groups.
+	 * @return null|bool
 	 */
 	public static function updateGroups($email, $groupIds)
 	{
@@ -1707,6 +1708,7 @@ class BackendMailmotorModel
 	 *
 	 * @param int $mailingId The id of the mailing.
 	 * @param array $groupIds A list of group-ids.
+	 * @return null|bool
 	 */
 	public static function updateGroupsForMailing($mailingId, $groupIds)
 	{

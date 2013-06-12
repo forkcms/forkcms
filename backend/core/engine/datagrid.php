@@ -853,6 +853,7 @@ class BackendDataGridFunctions
 	 * @param string $type The type of column. This is given since some columns can have different meanings than others.
 	 * @param string $value
 	 * @param array $attributes
+	 * @return array
 	 */
 	public static function greyOut($type, $value, array $attributes = array())
 	{

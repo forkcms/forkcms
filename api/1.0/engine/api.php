@@ -385,6 +385,7 @@ class API extends KernelLoader implements ApplicationInterface
 	 *
 	 * @param int $statusCode The status code.
 	 * @param array[optional] $data The data to return.
+	 * @return bool
 	 */
 	public static function output($statusCode, array $data = null)
 	{

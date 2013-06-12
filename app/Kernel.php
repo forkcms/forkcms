@@ -522,6 +522,9 @@ abstract class Kernel implements KernelInterface
 	 *
 	 * We intercept this object so we can load all functionality involved with Fork.
 	 *
+	 * @param Request $request
+	 * @param int[optional] $type
+	 * @param bool[optional] $catch
 	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)

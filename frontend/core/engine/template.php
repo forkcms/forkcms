@@ -51,6 +51,7 @@ class FrontendTemplate extends SpoonTemplate
 	 *
 	 * @param string $path The path to the template, excluding the template filename.
 	 * @param  string $template The filename of the template within the path.
+	 * @return bool
 	 */
 	public function compile($path, $template)
 	{
@@ -727,6 +728,7 @@ class FrontendTemplateModifiers
 	 * @param string $module The module whose module we want to execute.
 	 * @param string $action The action to execute.
 	 * @param string $id The widget id (saved in data-column).
+	 * @return string|null
 	 */
 	public static function parseWidget($var, $module, $action, $id = null)
 	{
