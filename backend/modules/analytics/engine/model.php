@@ -1053,7 +1053,7 @@ class BackendAnalyticsModel
 	{
 		$finder = new Finder();
 		$fs = new Filesystem();
-		foreach($finder->files->in(BACKEND_CACHE_PATH . '/analytics') as $file)
+		foreach($finder->files()->in(BACKEND_CACHE_PATH . '/analytics') as $file)
 		{
 			$fs->remove($file->getRealPath());
 		}
