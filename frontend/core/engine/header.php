@@ -648,6 +648,8 @@ class FrontendHeader extends FrontendBaseObject
 										ga(\'send\', \'pageview\');
 									</script>';
 					break;
+				default:
+					throw new Exception('Unknown type. (' . $type . ')');
 			}
 
 			$siteHTMLHeader .= "\n" . $trackingCode;
