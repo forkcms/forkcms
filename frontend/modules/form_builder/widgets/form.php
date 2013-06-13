@@ -5,6 +5,7 @@
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 {
@@ -414,8 +415,8 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 				// notify the admin
 				FrontendFormBuilderModel::notifyAdmin(
 					array(
-					     'form_id' => $this->item['id'],
-					     'entry_id' => $dataId
+						'form_id' => $this->item['id'],
+						'entry_id' => $dataId
 					)
 				);
 
