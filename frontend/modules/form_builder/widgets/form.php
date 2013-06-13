@@ -427,11 +427,26 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$variables['name'] = $this->item['name'];
 					$variables['fields'] = $emailFields;
 
+					// check if we have a replyTo email set
+					$replyTo = null;
+					foreach($this->item['fields'] as $field)
+					{
+						if(array_key_exists('reply_to', $field['settings']) && $field['settings']['reply_to'] === true)
+						{
+							$email = $this->frm->getField('field' . $field['id'])->getValue();
+							if(SpoonFilter::isEmail($email)) $replyTo = $email;
+						}
+					}
+
 					// loop recipients
 					foreach($this->item['email'] as $address)
 					{
 						// add email
-						FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $address, $this->item['name']);
+						FrontendMailer::addEmail(
+							sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
+							FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
+							$variables, $address, $this->item['name'], null, null, $replyTo
+						);
 					}
 				}
 
