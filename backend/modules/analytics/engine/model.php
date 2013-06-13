@@ -600,15 +600,18 @@ class BackendAnalyticsModel
 		// build pages array
 		foreach($items as $i => $item)
 		{
-			// build array
-			$results[$i] = array();
-			$results[$i]['page'] = $item['pagePath'];
-			$results[$i]['page_encoded'] = urlencode($item['pagePath']);
-			$results[$i]['pageviews'] = (int) $item['pageviews'];
-			$results[$i]['pages_per_visit'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['pageviews'] / $item['visits']), 2));
-			$results[$i]['time_on_site'] = BackendAnalyticsModel::getTimeFromSeconds(($item['entrances'] == 0 ? 0 : number_format(((int) $item['timeOnSite'] / $item['entrances']), 2)));
-			$results[$i]['new_visits_percentage'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['newVisits'] / $item['visits']) * 100, 2)) . '%';
-			$results[$i]['bounce_rate'] = ($item['entrances'] == 0 ? 0 : number_format(((int) $item['bounces'] / $item['entrances']) * 100, 2)) . '%';
+			if(array_key_exists('pagePath', $item))
+			{
+				// build array
+				$results[$i] = array();
+				$results[$i]['page'] = $item['pagePath'];
+				$results[$i]['page_encoded'] = urlencode($item['pagePath']);
+				$results[$i]['pageviews'] = (int) $item['pageviews'];
+				$results[$i]['pages_per_visit'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['pageviews'] / $item['visits']), 2));
+				$results[$i]['time_on_site'] = BackendAnalyticsModel::getTimeFromSeconds(($item['entrances'] == 0 ? 0 : number_format(((int) $item['timeOnSite'] / $item['entrances']), 2)));
+				$results[$i]['new_visits_percentage'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['newVisits'] / $item['visits']) * 100, 2)) . '%';
+				$results[$i]['bounce_rate'] = ($item['entrances'] == 0 ? 0 : number_format(((int) $item['bounces'] / $item['entrances']) * 100, 2)) . '%';
+			}
 		}
 
 		return $results;
@@ -912,7 +915,7 @@ class BackendAnalyticsModel
 			if($name == '@attributes') continue;
 
 			// empty item
-			if(trim((string) $children) == '')
+			if(empty($children))
 			{
 				// save empty array
 				$data[$name] = array();
@@ -1114,7 +1117,7 @@ class BackendAnalyticsModel
 				foreach($items as $key => $value)
 				{
 					// skip empty items
-					if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
+					if((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) continue;
 
 					// value contains an array
 					if(is_array($value))
