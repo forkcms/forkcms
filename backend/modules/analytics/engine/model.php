@@ -912,7 +912,7 @@ class BackendAnalyticsModel
 			if($name == '@attributes') continue;
 
 			// empty item
-			if(trim((string) $children) == '')
+			if(empty($children))
 			{
 				// save empty array
 				$data[$name] = array();
@@ -1114,7 +1114,7 @@ class BackendAnalyticsModel
 				foreach($items as $key => $value)
 				{
 					// skip empty items
-					if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
+					if((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) continue;
 
 					// value contains an array
 					if(is_array($value))
