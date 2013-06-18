@@ -24,6 +24,11 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 	private $filter;
 
 	/**
+	 * @var BackendForm
+	 */
+	private $frm;
+
+	/**
 	 * The passed group record
 	 *
 	 * @var	array

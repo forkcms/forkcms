@@ -53,11 +53,8 @@ class InstallerStep2 extends InstallerStep
 	 */
 	public static function checkRequirements()
 	{
-		// define step
-		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5', '6', '7'))) ? (int) $_GET['step'] : 1;
-
 		// define constants
-		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants($step);
+		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants();
 
 		/*
 		 * At first we're going to check to see if the PHP version meets the minimum requirements
@@ -137,7 +134,7 @@ class InstallerStep2 extends InstallerStep
 	 *
 	 * @param int $step The step wherefore the constant should be defined.
 	 */
-	private static function defineConstants($step)
+	private static function defineConstants()
 	{
 		// define constants
 		if(!defined('PATH_WWW'))

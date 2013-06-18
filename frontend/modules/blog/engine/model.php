@@ -121,9 +121,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
-		foreach($tags as $postId => $tags)
+		foreach($tags as $postId => $data)
 		{
-			if(isset($items[$postId])) $items[$postId]['tags'] = $tags;
+			if(isset($items[$postId])) $items[$postId]['tags'] = $data;
 		}
 
 		// return
@@ -255,7 +255,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
-		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
+		foreach($tags as $postId => $data) $items[$postId]['tags'] = $data;
 
 		// return
 		return $items;
@@ -345,7 +345,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
 
 		// loop tags and add to correct item
-		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
+		foreach($tags as $postId => $data) $items[$postId]['tags'] = $data;
 
 		// return
 		return $items;
@@ -354,8 +354,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 	/**
 	 * Get the number of items in a date range
 	 *
-	 * @param int $start The startdate as a UNIX-timestamp.
-	 * @param int $end The enddate as a UNIX-timestamp.
+	 * @param int $start The start date as a UNIX-timestamp.
+	 * @param int $end The end date as a UNIX-timestamp.
 	 * @return int
 	 */
 	public static function getAllForDateRangeCount($start, $end)
@@ -745,7 +745,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Get moderation status for an author
 	 *
 	 * @param string $author The name for the author.
-	 * @param string $email The emailaddress for the author.
+	 * @param string $email The email address for the author.
 	 * @return bool
 	 */
 	public static function isModerated($author, $email)
@@ -769,7 +769,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// don't notify admin in case of spam
 		if($comment['status'] == 'spam') return;
 
-		// build data for pushnotification
+		// build data for push notification
 		if($comment['status'] == 'moderation') $key = 'BLOG_COMMENT_MOD';
 		else $key = 'BLOG_COMMENT';
 
@@ -806,17 +806,18 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// notify on all comments
 		if($notifyByMailOnComment)
 		{
+			// init var
+			$variables = null;
+
 			// comment to moderate
 			if($comment['status'] == 'moderation')
 			{
-				// set variables
 				$variables['message'] = vsprintf(FL::msg('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
 			}
 
 			// comment was published
 			elseif($comment['status'] == 'published')
 			{
-				// set variables
 				$variables['message'] = vsprintf(FL::msg('BlogEmailNotificationsNewComment'), array($comment['author'], $URL, $comment['post_title']));
 			}
 

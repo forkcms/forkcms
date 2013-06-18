@@ -19,7 +19,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 class FrontendSearchIndex extends FrontendBaseBlock
 {
 	/**
-	 * Name of the cachefile
+	 * Name of the cache file
 	 *
 	 * @var	string
 	 */
@@ -123,10 +123,10 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		// debug mode = no cache
 		if(SPOON_DEBUG) return false;
 
-		// check if cachefile exists
+		// check if cache file exists
 		if(!is_file($this->cacheFile)) return false;
 
-		// get cachefile modification time
+		// get cache file modification time
 		$cacheInfo = @filemtime($this->cacheFile);
 
 		// check if cache file is recent enough (1 hour)

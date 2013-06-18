@@ -47,9 +47,7 @@ class BackendBlogAPI
 		if(API::authorize() && API::isValidRequestMethod('GET'))
 		{
 			// redefine
-			if($status !== null) $status = (string) $status;
 			$limit = (int) $limit;
-			$offset = (int) $offset;
 
 			// validate
 			if($limit > 10000)
@@ -68,7 +66,7 @@ class BackendBlogAPI
 				 GROUP BY i.id
 				 ORDER BY i.id DESC
 				 LIMIT ?, ?',
-				array('active', $offset, $limit)
+				array('active', (int) $offset, $limit)
 			);
 
 			$totalCount = (int) BackendModel::getContainer()->get('database')->getVar(

@@ -65,7 +65,7 @@ class InstallerStep6 extends InstallerStep
 		if($this->frm->isSubmitted())
 		{
 			// required fields
-			$this->frm->getField('email')->isEmail('Please provide a valid e-mailaddress.');
+			$this->frm->getField('email')->isEmail('Please provide a valid e-mail address.');
 			$this->frm->getField('password')->isFilled('This field is required.');
 			$this->frm->getField('confirm')->isFilled('This field is required.');
 			if($this->frm->getField('password')->getValue() != $this->frm->getField('confirm')->getValue()) $this->frm->getField('confirm')->addError('The passwords do not match.');

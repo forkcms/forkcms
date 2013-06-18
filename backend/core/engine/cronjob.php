@@ -23,11 +23,6 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 	private $cronjob;
 
 	/**
-	 * @var	int
-	 */
-	private $id;
-
-	/**
 	 * @var	string
 	 */
 	private $language;

@@ -79,7 +79,13 @@ class BackendSearchSettings extends BackendBaseActionEdit
 				}
 
 				// add to list of modules
-				$this->modules[] = array('module' => $module, 'id' => $this->frm->getField('search_' . $module)->getAttribute('id'), 'label' => $label, 'chk' => $this->frm->getField('search_' . $module)->parse(), 'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(), 'txtError' => '');
+				$this->modules[] = array(
+					'module' => $module,
+					'id' => $this->frm->getField('search_' . $module)->getAttribute('id'),
+					'label' => $label, 'chk' => $this->frm->getField('search_' . $module)->parse(),
+					'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
+					'txtError' => ''
+				);
 			}
 		}
 	}

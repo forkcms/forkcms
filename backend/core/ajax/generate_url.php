@@ -15,6 +15,11 @@
 class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
 {
 	/**
+	 * @var BackendMeta
+	 */
+	private $meta;
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()

@@ -16,7 +16,7 @@ changes you should apply to make your module compatible with this release.
 
 General rule of thumb is: use the filesystem-component if you are generating
 files or are working with directories, in other cases the native PHP-methods
-are prefered.
+are preferred.
 
 * SpoonFile::exists / SpoonDirectory::exists
 

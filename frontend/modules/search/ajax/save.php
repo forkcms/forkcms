@@ -15,6 +15,11 @@
 class FrontendSearchAjaxSave extends FrontendBaseAJAXAction
 {
 	/**
+	 * @var array
+	 */
+	private $statistics;
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()

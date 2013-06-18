@@ -15,6 +15,16 @@
 class BackendLocaleImport extends BackendBaseActionAdd
 {
 	/**
+	 * @var array
+	 */
+	private $filter;
+
+	/**
+	 * @var string
+	 */
+	private $filterQuery;
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()

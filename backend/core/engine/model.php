@@ -1159,7 +1159,7 @@ class BackendModel extends BaseModel
 				// check if the error should not be ignored
 				if(strpos($e->getMessage(), 'Operation timed out') === false && strpos($e->getMessage(), 'Invalid headers') === false)
 				{
-					// in debugmode we want to see the exceptions
+					// in debug mode we want to see the exceptions
 					if(SPOON_DEBUG) throw $e;
 				}
 
@@ -1317,7 +1317,7 @@ class BackendModel extends BaseModel
 		try
 		{
 			// check with Akismet if the item is spam
-			return $akismet->submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null);
+			return $akismet->submitHam($userIp, $userAgent, $content, $author, $email, $url, $permalink, $type, $referrer, $others);
 		}
 
 		// catch exceptions

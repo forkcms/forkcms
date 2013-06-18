@@ -41,7 +41,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 		// profile already logged in
 		else
 		{
-			// querystring
+			// query string
 			$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
 			// redirect
@@ -124,7 +124,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 				// trigger event
 				FrontendModel::triggerEvent('profiles', 'after_logged_in', array('id' => $profileId));
 
-				// querystring
+				// query string
 				$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
 				// redirect
