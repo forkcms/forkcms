@@ -1159,7 +1159,7 @@ class BackendModel extends BaseModel
 				// check if the error should not be ignored
 				if(strpos($e->getMessage(), 'Operation timed out') === false && strpos($e->getMessage(), 'Invalid headers') === false)
 				{
-					// in debugmode we want to see the exceptions
+					// in debug mode we want to see the exceptions
 					if(SPOON_DEBUG) throw $e;
 				}
 

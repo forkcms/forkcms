@@ -1347,7 +1347,7 @@ class BackendPagesModel
 		$URL = (string) $URL;
 		$parentIds = array((int) $parentId);
 
-		// 0, 1, 2, 3, 4 are all toplevels, so we should place them on the same level
+		// 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
 		if($parentId == 0 || $parentId == 1 || $parentId == 2 || $parentId == 3 || $parentId == 4) $parentIds = array(0, 1, 2, 3, 4);
 
 		// get db
@@ -1399,13 +1399,13 @@ class BackendPagesModel
 		// get info about parent page
 		$parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
 
-		// does the parent have extra's?
+		// does the parent have extras?
 		if($parentPageInfo['has_extra'] == 'Y' && !$isAction)
 		{
 			// set locale
 			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage(), true);
 
-			// get all onsite action
+			// get all on-site action
 			$actions = FrontendLanguage::getActions();
 
 			// if the new URL conflicts with an action we should rebuild the URL
@@ -1429,7 +1429,7 @@ class BackendPagesModel
 			return self::getURL($URL, $id, $parentId, $isAction);
 		}
 
-		// check if it is an appliation
+		// check if it is an application
 		if(in_array(trim($fullURL, '/'), array_keys(ApplicationRouting::getRoutes())))
 		{
 			// add a number

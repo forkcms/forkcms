@@ -1141,16 +1141,16 @@ class BackendAnalyticsModel
 			else
 			{
 				// loop data
-				foreach($records as $subkey => $subitems)
+				foreach($records as $subKey => $subItems)
 				{
 					// build xml
-					$xml .= "\t\t<" . $subkey . ">\n";
+					$xml .= "\t\t<" . $subKey . ">\n";
 
-					// subitems is an array
-					if(is_array($subitems))
+					// sub items is an array
+					if(is_array($subItems))
 					{
 						// loop data
-						foreach($subitems as $key => $value)
+						foreach($subItems as $key => $value)
 						{
 							// skip empty items
 							if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
@@ -1182,10 +1182,10 @@ class BackendAnalyticsModel
 					}
 
 					// not an array
-					else $xml .= "<![CDATA[" . (string) $subitems . "]]>";
+					else $xml .= "<![CDATA[" . (string) $subItems . "]]>";
 
 					// end xml element
-					$xml .= "\t\t</" . $subkey . ">\n";
+					$xml .= "\t\t</" . $subKey . ">\n";
 				}
 			}
 

@@ -53,7 +53,7 @@ class FrontendSearchModel
 	 * Simple search: all search index fields will be searched for the given term
 	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
-	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
+	 * @param mixed $term The search term (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @param int[optional] $limit The number of articles to get.
 	 * @param int[optional] $offset The offset.
 	 * @return array
@@ -135,7 +135,7 @@ class FrontendSearchModel
 	 *
 	 * @param string $term The first letters of the term we're looking for.
 	 * @param string[optional] $language The language to search in.
-	 * @param int[optional] $limit Limit resultset.
+	 * @param int[optional] $limit Limit result set.
 	 * @return array
 	 */
 	public static function getStartsWith($term, $language = '', $limit = 10)
@@ -213,7 +213,7 @@ class FrontendSearchModel
 	 * Simple search: all search index fields will be searched for the given term
 	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
-	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
+	 * @param mixed $term The search term (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @return int
 	 */
 	public static function getTotal($term)
@@ -304,7 +304,7 @@ class FrontendSearchModel
 	 * Simple search: all search index fields will be searched for the given term
 	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
 	 *
-	 * @param mixed $term The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
+	 * @param mixed $term The search term (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
 	 * @param int[optional] $limit The number of articles to get.
 	 * @param int[optional] $offset The offset.
 	 * @return array
@@ -326,7 +326,7 @@ class FrontendSearchModel
 		// prepare to send to modules
 		$moduleResults = array();
 
-		// loop the resultset
+		// loop the result set
 		foreach($searchResults as $searchResult) $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
 
 		// pass the results to the modules
@@ -343,7 +343,7 @@ class FrontendSearchModel
 			else unset($moduleResults[$module]);
 		}
 
-		// now place the prepared data back in our original resultset, which has our results in correct order
+		// now place the prepared data back in our original result set, which has our results in correct order
 		foreach($searchResults as $i => $result)
 		{
 			// loop parsed results for this specific module to find the one we want here
@@ -412,7 +412,7 @@ class FrontendSearchModel
 			// prepare to send to modules
 			$moduleResults = array();
 
-			// loop the resultset
+			// loop the result set
 			foreach($searchResults as $searchResult) $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
 
 			// pass the results to the modules

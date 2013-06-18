@@ -1160,7 +1160,7 @@ jsBackend.formBuilder.fields =
 	},
 
 	/**
-	 * Handle textbox save
+	 * Handle text box save
 	 */
 	saveTextbox: function()
 	{

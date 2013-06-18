@@ -107,7 +107,7 @@ class FrontendProfilesAuthentication
 	}
 
 	/**
-	 * Check if a profile is loggedin.
+	 * Check if a profile is logged in.
 	 *
 	 * @return bool
 	 */

@@ -780,7 +780,7 @@ class FrontendTemplateModifiers
 	}
 
 	/**
-	 * Convert a multiline string into a string without newlines so it can be handles by JS
+	 * Convert a multi line string into a string without newlines so it can be handles by JS
 	 * syntax: {$var|stripnewlines}
 	 *
 	 * @param string $var The variable that should be processed.
@@ -861,7 +861,7 @@ class FrontendTemplateModifiers
 		$setting = (string) $setting;
 
 		// validate
-		if($userId === 0) throw new FrontendException('Invalid userid');
+		if($userId === 0) throw new FrontendException('Invalid user id');
 
 		// get user
 		$user = FrontendUser::getBackendUser($userId);

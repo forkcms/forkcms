@@ -103,7 +103,7 @@ class FrontendPage extends FrontendBaseObject
 		// new footer instance
 		$this->footer = new FrontendFooter();
 
-		// get pagecontent
+		// get page content
 		$this->getPageContent();
 
 		// process page
@@ -258,7 +258,7 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
-	 * Fetch the statuscode for the current page.
+	 * Fetch the status code for the current page.
 	 *
 	 * @return int
 	 */
@@ -321,7 +321,7 @@ class FrontendPage extends FrontendBaseObject
 				// loop all blocks in this position
 				foreach($blocks as $i => $block)
 				{
-					// check for extra's that need to be reparsed
+					// check for extras that need to be reparsed
 					if(isset($block['extra']))
 					{
 						// fetch extra-specific variables

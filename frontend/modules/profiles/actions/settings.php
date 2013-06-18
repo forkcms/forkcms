@@ -110,7 +110,7 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 		$this->frm->addDropdown('month', $months, $birthMonth);
 		$this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
 
-		// set default elements dropdowns
+		// set default elements drop-downs
 		$this->frm->getField('gender')->setDefaultElement('');
 		$this->frm->getField('day')->setDefaultElement('');
 		$this->frm->getField('month')->setDefaultElement('');

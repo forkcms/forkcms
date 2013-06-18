@@ -8,7 +8,7 @@
 	{* @remark: do not remove the parseMap-class, it is used by JS *}
 	<div id="map" class="parseMap" style="height: {$locationSettings.height}px; width: {$locationSettings.width}px;"></div>
 
-	{* Store item text in a div because JS goes bananas with multiline HTML *}
+	{* Store item text in a div because JS goes bananas with multi line HTML *}
 	{iteration:locationItems}
 		<div id="markerText{$locationItems.id}" style="display: none;">
 			<address>

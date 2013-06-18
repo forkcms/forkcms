@@ -70,7 +70,7 @@ class FrontendHeader extends FrontendBaseObject
 	private $metaCustom = '';
 
 	/**
-	 * Pagetitle
+	 * Page title
 	 *
 	 * @var	string
 	 */
@@ -375,7 +375,7 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Extract images from content that can be added add Open Graph image
 	 *
-	 * @param string $content The content (wherefrom to extract the images).
+	 * @param string $content The content (where from to extract the images).
 	 */
 	public function extractOpenGraphImages($content)
 	{
@@ -397,7 +397,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getCSSFiles()
 	{
-		// sort the cssfiles
+		// sort the css files
 		$this->cssFiles = $this->cssSort($this->cssFiles);
 
 		// fetch files
@@ -462,7 +462,7 @@ class FrontendHeader extends FrontendBaseObject
 	}
 
 	/**
-	 * Get the pagetitle
+	 * Get the page title
 	 *
 	 * @return string
 	 */
@@ -544,7 +544,7 @@ class FrontendHeader extends FrontendBaseObject
 		// parse SEO
 		$this->parseSeo();
 
-		// in debugmode we don't want our pages to be indexed.
+		// in debug mode we don't want our pages to be indexed.
 		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 
 		// parse meta tags
@@ -755,16 +755,16 @@ class FrontendHeader extends FrontendBaseObject
 			// loop the JS-files
 			foreach($existingJSFiles as $file)
 			{
-				// some files shouldn't be uncachable
+				// some files shouldn't be uncacheable
 				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $file = array('file' => $file['file']);
 
-				// make the file uncachable
+				// make the file uncacheable
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
 					if(substr($file['file'], 0, 11) == '/frontend/js') $file = array('file' => $file['file'] . '&amp;m=' . time());
 
-					// add lastmodified time
+					// add last modified time
 					else
 					{
 						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
@@ -911,10 +911,10 @@ class FrontendHeader extends FrontendBaseObject
 	}
 
 	/**
-	 * Set the pagetitle
+	 * Set the page title
 	 *
-	 * @param string $value The pagetitle to be set or to be prepended.
-	 * @param bool[optional] $overwrite Should the existing pagetitle be overwritten?
+	 * @param string $value The page title to be set or to be prepended.
+	 * @param bool[optional] $overwrite Should the existing page title be overwritten?
 	 */
 	public function setPageTitle($value, $overwrite = false)
 	{
@@ -933,10 +933,10 @@ class FrontendHeader extends FrontendBaseObject
 			// value isn't empty
 			else
 			{
-				// if the current pagetitle is empty we should add the sitetitle
+				// if the current page title is empty we should add the site title
 				if($this->pageTitle == '') $this->pageTitle = $value . ' -  ' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 
-				// prepend the value to the current pagetitle
+				// prepend the value to the current page title
 				else $this->pageTitle = $value . ' - ' . $this->pageTitle;
 			}
 		}

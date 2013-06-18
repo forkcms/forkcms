@@ -82,7 +82,7 @@ jsClient.parameters =
 		var parameters = [];
 		var method = object.parents('.method').find('a[rel]').attr('rel');
 
-		// loop all the textfields in the active form
+		// loop all the text fields in the active form
 		object.parents('form').find('.input-text').each(function(index, item)
 		{
 			var self = $(this);

@@ -65,7 +65,7 @@ class FrontendIcal extends SpoonIcal
 	}
 
 	/**
-	 * Parse the ical and output into the browser.
+	 * Parse the iCal and output into the browser.
 	 *
 	 * @param bool[optional] $headers Should the headers be set? (Use false if you're debugging).
 	 */

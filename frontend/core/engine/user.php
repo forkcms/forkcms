@@ -15,7 +15,7 @@
 class FrontendUser
 {
 	/**
-	 * An array that will store all userobjects
+	 * An array that will store all user objects
 	 *
 	 * @var	array
 	 */
@@ -47,7 +47,7 @@ class FrontendUser
 	 */
 	public function __construct($userId = null)
 	{
-		// if a userid is given we will load the user in this object
+		// if a user id is given we will load the user in this object
 		if($userId !== null) $this->loadUser($userId);
 	}
 
@@ -104,7 +104,7 @@ class FrontendUser
 	}
 
 	/**
-	 * Get userid
+	 * Get user id
 	 *
 	 * @return int
 	 */
@@ -164,7 +164,7 @@ class FrontendUser
 	}
 
 	/**
-	 * Set userid
+	 * Set user id
 	 *
 	 * @param int $value The user's id.
 	 */

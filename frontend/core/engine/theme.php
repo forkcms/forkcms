@@ -54,7 +54,7 @@ class FrontendTheme
 
 		// check if the file exists
 		if(!is_file(PATH_WWW . str_replace(PATH_WWW, '', $file))) {
-			throw new FrontendException('The template (' . $file . ') doesn\'t exists.');
+			throw new FrontendException('The template (' . $file . ') does not exists.');
 		}
 
 		// return template path

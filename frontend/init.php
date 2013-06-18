@@ -49,7 +49,7 @@ class FrontendInit extends KernelLoader
 		// get last modified time for globals
 		$lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
-		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
+		// reset last modified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
 		if($lastModifiedTime === false || Spoon::getDebug()) $lastModifiedTime = time();
 
 		// define as a constant
@@ -113,7 +113,7 @@ class FrontendInit extends KernelLoader
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in AJAX-actions
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
@@ -131,7 +131,7 @@ class FrontendInit extends KernelLoader
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler
+	 * This method will be called by the Spoon Exception handler
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
@@ -152,7 +152,7 @@ class FrontendInit extends KernelLoader
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
 		}
 
 		// build HTML for nice error
@@ -164,7 +164,7 @@ class FrontendInit extends KernelLoader
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in JS-files parsed through PHP
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in JS-files parsed through PHP
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
@@ -208,7 +208,7 @@ class FrontendInit extends KernelLoader
 			// show errors on the screen
 			ini_set('display_errors', 'On');
 
-			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
+			// in debug mode notices are triggered when using non existing locale, so we use a custom error handler to cleanup the message
 			set_error_handler(array('FrontendInit', 'errorHandler'));
 		}
 

@@ -1,5 +1,5 @@
 /***
- * Pacth for dialog-fix ckeditor problem [ by ticket #4727 ]
+ * Patch for dialog-fix ckeditor problem [ by ticket #4727 ]
  * 	http://dev.jqueryui.com/ticket/4727
  */
 

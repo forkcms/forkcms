@@ -8,7 +8,7 @@
  */
 
 /**
- * This class is the real code, it creates an action, loads the configfile, ...
+ * This class is the real code, it creates an action, loads the config file, ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>

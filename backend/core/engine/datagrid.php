@@ -10,7 +10,7 @@
 /**
  * This is our extended version of SpoonDataGrid
  * This class will handle a lot of stuff for you, for example:
- * 	- it will set debugmode
+ * 	- it will set debug mode
  *	- it will set the compile-directory
  * 	- ...
  *

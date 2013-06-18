@@ -1435,7 +1435,7 @@
 				remove($(this).data('id'));
 			});
 
-			// bind keypress on inputfields (we need to rebuild so new values are saved)
+			// bind keypress on input fields (we need to rebuild so new values are saved)
 			$('.inputField-' + id).live('keyup', function(e)
 			{
 				// clear elements

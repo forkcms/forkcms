@@ -115,7 +115,7 @@ utils.form =
 	},
 
 	/**
-	 * Is the value inside the element a valid emailaddress
+	 * Is the value inside the element a valid email address
 	 *
 	 * @return	bool
 	 * @param	object element
@@ -296,14 +296,14 @@ utils.string =
 	 *
 	 * @return	string
 	 * @param	string value
-	 * @param	string[optional] charlist
+	 * @param	string[optional] charList
 	 */
-	trim: function(value, charlist)
+	trim: function(value, charList)
 	{
 		if(value == undefined) return '';
-		if(charlist == undefined) charlist = ' ';
+		if(charList == undefined) charList = ' ';
 
-		var pattern = new RegExp('^[' + charlist + ']*|[' + charlist + ']*$', 'g');
+		var pattern = new RegExp('^[' + charList + ']*|[' + charList + ']*$', 'g');
 		return value.replace(pattern, '');
 	},
 

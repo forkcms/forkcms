@@ -210,9 +210,9 @@ class FrontendModel extends BaseModel
 	/**
 	 * Generate thumbnails based on the folders in the path
 	 * Use
-	 *  - 128x128 as foldername to generate an image where the width will be 128px and the height will be 128px
-	 *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
-	 *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
+	 *  - 128x128 as folder name to generate an image where the width will be 128px and the height will be 128px
+	 *  - 128x as folder name to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as folder name to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
 	 *
 	 * @param string $path The path wherein the thumbnail-folders will be stored.
 	 * @param string $sourceFile The location of the source file.
@@ -259,7 +259,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Get a module setting
 	 *
-	 * @param string $module The module wherefor a setting has to be retrieved.
+	 * @param string $module The module wherefore a setting has to be retrieved.
 	 * @param string $name The name of the setting to be retrieved.
 	 * @param mixed[optional] $defaultValue A value that will be stored if the setting isn't present.
 	 * @return mixed
@@ -294,7 +294,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Get all module settings at once
 	 *
-	 * @param string $module The module wherefor all settings has to be retrieved.
+	 * @param string $module The module wherefore all settings has to be retrieved.
 	 * @return array
 	 */
 	public static function getModuleSettings($module)
@@ -324,7 +324,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Get all data for a page
 	 *
-	 * @param int $pageId The pageId wherefor the data will be retrieved.
+	 * @param int $pageId The pageId wherefore the data will be retrieved.
 	 * @return array
 	 */
 	public static function getPage($pageId)
@@ -571,9 +571,9 @@ class FrontendModel extends BaseModel
 	 *
 	 * @param string $content The content that was submitted.
 	 * @param string $permaLink The permanent location of the entry the comment was submitted to.
-	 * @param string[optional] $author Commenters name.
-	 * @param string[optional] $email Commenters email address.
-	 * @param string[optional] $URL Commenters URL.
+	 * @param string[optional] $author Commenter's name.
+	 * @param string[optional] $email Commenter's email address.
+	 * @param string[optional] $URL Commenter's URL.
 	 * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @return bool|string Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
 	 */
@@ -712,9 +712,9 @@ class FrontendModel extends BaseModel
 	}
 
 	/**
-	 * Store a modulesetting
+	 * Store a module setting
 	 *
-	 * @param string $module The module wherefor a setting has to be stored.
+	 * @param string $module The module wherefore a setting has to be stored.
 	 * @param string $name The name of the setting.
 	 * @param mixed $value The value (will be serialized so make sure the type is correct).
 	 */

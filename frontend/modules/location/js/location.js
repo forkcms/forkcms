@@ -85,18 +85,18 @@ jsFrontend.location =
 				locationId: id
 			}
 		);
-				
-		// show infowindow on click
+
+		// show info window on click
 		google.maps.event.addListener(marker, 'click', function()
 		{
 			$markerText = $('#markerText' + marker.locationId);
-			
-			// apparently JS goes bananas with multiline HTMl, so we grab it from the div, this seems like a good idea for SEO
+
+			// apparently JS goes bananas with multi line HTMl, so we grab it from the div, this seems like a good idea for SEO
 			if($markerText.length > 0) text = $markerText.html();
-		
+
 			var content = '<h1>' + title + '</h1>';
 			if(typeof text != 'undefined') content += text;
-			
+
 			new google.maps.InfoWindow(
 				{
 					content: content
@@ -104,20 +104,20 @@ jsFrontend.location =
 			).open(jsFrontend.location.map[mapId], marker);
 		});
 	},
-	
+
 	// calculate the route
 	setRoute: function(id, mapId, item)
 	{
 		$error = $('#locationSearchError' + id);
 		$search = $('#locationSearchAddress' + id);
-		
+
 		// validate
 		if($search.val() == '') $error.show();
 		else $error.hide();
-		
+
 		// build the position
 		var position = new google.maps.LatLng(item.lat, item.lng);
-		
+
 		// build request
 		var request =
 		{
