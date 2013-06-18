@@ -7,7 +7,6 @@
  */
 var jsBackend =
 {
-	// datamembers
 	debug: false,
 	current:
 	{

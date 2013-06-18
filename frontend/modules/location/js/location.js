@@ -8,7 +8,7 @@ jsFrontend.location =
 	map: {},
 	directionService: null,
 	directionsDisplay: null,
-		
+
 	// init, something like a constructor
 	init: function()
 	{
@@ -21,7 +21,7 @@ jsFrontend.location =
 			});
 		}
 	},
-	
+
 	// init the map
 	initMap: function(id)
 	{
@@ -36,10 +36,10 @@ jsFrontend.location =
 			center: new google.maps.LatLng(jsFrontend.data.get('location.settings' + suffix + '.center.lat'), jsFrontend.data.get('location.settings' + suffix + '.center.lng')),
 			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('location.settings' + suffix + '.map_type')]
 		};
-		
+
 		// create map
 		jsFrontend.location.map[mapId] = new google.maps.Map(document.getElementById('map' + id), options);
-		
+
 		// get the items
 		var items = jsFrontend.data.get('location.items' + suffix);
 
@@ -53,26 +53,26 @@ jsFrontend.location =
 				jsFrontend.location.addMarker(mapId, items[i].id, items[i].lat, items[i].lng, items[i].title);
 			}
 		}
-		
+
 		// are directions enabled?
 		if(jsFrontend.data.get('location.settings' + suffix + '.directions'))
 		{
 			// create direction variables if needed
 			if(jsFrontend.location.directionsService == null) jsFrontend.location.directionsService = new google.maps.DirectionsService();
 			if(jsFrontend.location.directionsDisplay == null) jsFrontend.location.directionsDisplay = new google.maps.DirectionsRenderer();
-			
+
 			// bind events
 			$('#locationSearch' + id + ' form').on('submit', function(e)
 			{
 				// prevent default
 				e.preventDefault();
-				
+
 				// calculate & display the route
 				jsFrontend.location.setRoute(id, mapId, items[0]);
 			});
 		}
 	},
-	
+
 	// add a marker
 	addMarker: function(mapId, id, lat, lng, title)
 	{
@@ -134,11 +134,11 @@ jsFrontend.location =
 			{
 				// change the map
 				jsFrontend.location.directionsDisplay.setMap(jsFrontend.location.map[mapId]);
-				
+
 				// render the route
 				jsFrontend.location.directionsDisplay.setDirections(response);
 			}
-			
+
 			// show error
 			else $error.show();
 		});

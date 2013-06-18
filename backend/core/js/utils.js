@@ -6,7 +6,6 @@
  */
 var utils =
 {
-	// datamembers
 	debug: false
 }
 

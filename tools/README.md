@@ -11,7 +11,7 @@ Their is no real installation of the scripts the only thing you should do is mak
 After making the scripts executable you can execute them with the following command. Make sure to replace `<script_name>` with the name of the script. **The scripts should be executed from this folder**
 
 	./<script_name>
-	
+
 For example
 
 	./minify
@@ -26,8 +26,8 @@ The batch_resize-script will resize the images in the provided folder. You can s
 It can be executed with the following command
 
 	./batch-resize -w 75 -h 75 ./
-	
-	
+
+
 
 ### check_code
 The check_code-script will run PHP CodeSniffer with all settings that are needed. It will check your code against the styleguide, will detect weird/faulty code, ...

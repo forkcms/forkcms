@@ -1,6 +1,5 @@
 jsBackend =
 {
-	// datamembers
 	debug: false,
 
 	// init, something like a constructor
