@@ -127,8 +127,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 				$message = $e->getMessage();
 			}
 
-			// stop the script and show our error
-			$this->output(902, null, $message);
+			// error
+			$this->output(500, null, $message);
+			return;
 		}
 
 		// trigger event
