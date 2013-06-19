@@ -11,6 +11,7 @@ jsFrontend.theme = {
 		jsFrontend.theme.cookieBar();
 
 		// insert your code here
+		jsFrontend.theme.removeImageDimenions();
 	},
 
 	aria: function() {
@@ -66,6 +67,12 @@ jsFrontend.theme = {
 				}, 600);
 			}
 		});
+	},
+	
+	removeImageDimensions: function() {
+    $('img').each(function() {
+      $(this).removeAttr('style');
+    });
 	}
 }
 
