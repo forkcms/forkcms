@@ -180,9 +180,9 @@ class BackendBaseAction extends BackendBaseObject
 		parent::__construct($kernel);
 
 		// get objects from the reference so they are accessible from the action-object
-		$this->tpl = Spoon::get('template');
-		$this->URL = Spoon::get('url');
-		$this->header = Spoon::get('header');
+		$this->tpl = $this->getContainer()->get('template');
+		$this->URL = $this->getContainer()->get('url');
+		$this->header = $this->getContainer()->get('header');
 
 		// store the current module and action (we grab them from the URL)
 		$this->setModule($this->URL->getModule());
@@ -934,8 +934,8 @@ class BackendBaseWidget extends KernelLoader
 	{
 		parent::__construct($kernel);
 
-		$this->tpl = Spoon::get('template');
-		$this->header = Spoon::get('header');
+		$this->tpl = $this->getContainer()->get('template');
+		$this->header = $this->getContainer()->get('header');
 	}
 
 	/**

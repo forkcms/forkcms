@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use \Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This is the configuration-object for the analytics module
  *
@@ -31,14 +33,15 @@ class BackendAnalyticsConfig extends BackendBaseConfig
 	/**
 	 * Check if all required settings have been set
 	 *
+	 * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
 	 * @param string $module The module.
 	 */
-	public function __construct($module)
+	public function __construct(KernelInterface $kernel, $module)
 	{
-		parent::__construct($module);
+		parent::__construct($kernel, $module);
 
 		$error = false;
-		$action = Spoon::exists('url') ? Spoon::get('url')->getAction() : null;
+		$action = $this->getContainer()->has('url') ? $this->getContainer()->get('url')->getAction() : null;
 
 		// analytics session token
 		if(BackendModel::getModuleSetting('analytics', 'session_token') === null) $error = true;

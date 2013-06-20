@@ -48,8 +48,8 @@ class BackendForm extends SpoonForm
 	 */
 	public function __construct($name = null, $action = null, $method = 'post', $useToken = true, $useGlobalError = true)
 	{
-		if(Spoon::exists('url')) $this->URL = Spoon::get('url');
-		if(Spoon::exists('header')) $this->header = Spoon::get('header');
+		if(BackendModel::getContainer()->has('url')) $this->URL = BackendModel::getContainer()->get('url');
+		if(BackendModel::getContainer()->has('header')) $this->header = BackendModel::getContainer()->get('header');
 		$this->useGlobalError = (bool) $useGlobalError;
 
 		// build a name if there wasn't one provided

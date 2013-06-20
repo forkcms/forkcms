@@ -38,7 +38,7 @@ class BackendURL extends BackendBaseObject
 		parent::__construct($kernel);
 
 		// add to registry
-		Spoon::set('url', $this);
+		$this->getContainer()->set('url', $this);
 
 		$this->setQueryString($_SERVER['REQUEST_URI']);
 		$this->setHost($_SERVER['HTTP_HOST']);

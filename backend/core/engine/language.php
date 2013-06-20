@@ -101,7 +101,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
+			if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}
@@ -174,7 +174,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
+			if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}
@@ -213,7 +213,7 @@ class BackendLanguage
 	{
 		if($module === null)
 		{
-			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
+			if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}

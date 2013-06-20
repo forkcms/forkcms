@@ -792,7 +792,7 @@ class BackendAnalyticsHelper
 			if(BackendAuthentication::isAllowedAction('loading', 'analytics'))
 			{
 				// url of current action
-				$liveDataUrl = BackendModel::createURLForAction('loading') . '&amp;redirect_action=' . Spoon::get('url')->getAction();
+				$liveDataUrl = BackendModel::createURLForAction('loading') . '&amp;redirect_action=' . BackendModel::getContainer()->get('url')->getAction();
 
 				// page id set
 				if(isset($_GET['page_id']) && $_GET['page_id'] != '') $liveDataUrl .= '&amp;page_id=' . (int) $_GET['page_id'];

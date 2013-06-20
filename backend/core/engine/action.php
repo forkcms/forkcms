@@ -42,7 +42,7 @@ class BackendAction extends BackendBaseObject
 		parent::__construct($kernel);
 
 		// grab stuff from the reference and store them in this object (for later/easy use)
-		$this->tpl = Spoon::get('template');
+		$this->tpl = $this->getContainer()->get('template');
 	}
 
 	/**
