@@ -167,11 +167,17 @@
 
 				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install/cache/</h4>
 				<p>This location must be writable for the installer.</p>
+
+				<h4><span class="{$fileSystemAppCache}">{$fileSystemAppCache}</span> {$PATH_WWW}/app/cache/</h4>
+				<p>In this location the global cache will be stored.</p>
 				
+				<h4><span class="{$fileSystemAppLogs}">{$fileSystemAppLogs}</span> {$PATH_WWW}/app/logs/</h4>
+				<p>In this location the global logs will be stored.</p>
+
 				<h4><span class="{$fileSystemAppConfig}">{$fileSystemAppConfig}</span> {$PATH_WWW}/app/config/</h4>
 				<p>In this location the global configuration will be stored.</p>
 
-				<h4><span class="{$fileSystemParameters}">{$fileSystemParameters}</span> {$PATH_LIBRARY}/parameters.base.yml</h4>
+				<h4><span class="{$fileSystemParameters}">{$fileSystemParameters}</span> {$PATH_LIBRARY}/../app/config/parameters.yml.dist</h4>
 				<p>This file is used to create the global configuration file.</p>
 
 				<h4><span class="{$fileSystemPathLibrary}">{$fileSystemPathLibrary}</span> {$PATH_LIBRARY}</h4>

@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Finder\Finder;
 
 /**
  * FrontendAJAX
@@ -124,20 +125,16 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 		// check if module is set
 		if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
 
-		// build the path (core is a special case)
-		if($this->getModule() == 'core') $path = FRONTEND_PATH . '/core/ajax/';
-		else $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/';
-
-		// get the possible actions
-		$possibleActions = SpoonFile::getList($path);
+		// grab the file
+		$finder = new Finder();
+		$finder->name($value . '.php');
+		if($this->getModule() == 'core') $finder->in(FRONTEND_PATH . '/core/ajax/');
+		else $finder->in(FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/');
 
 		// validate
-		if(!in_array($value.'.php', $possibleActions))
+		if(count($finder->files()) != 1)
 		{
-			// create fake action
 			$fakeAction = new FrontendBaseAJAXAction('', '');
-
-			// output error
 			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Action not correct.');
 		}
 
@@ -264,7 +261,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		else $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/' . $this->getAction() . '.php';
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists($path)) throw new FrontendException('The actionfile (' . $path . ') can\'t be found.');
+		if(!is_file($path)) throw new FrontendException('The actionfile (' . $path . ') can\'t be found.');
 
 		// require the ajax file, we know it is there because we validated it before (possible actions are defined by existance of the file).
 		require_once $path;
@@ -320,7 +317,9 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists($frontendModulePath . '/config.php')) throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!is_file($frontendModulePath . '/config.php')) {
+			throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		}
 
 		// build config-object-name
 		$configClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
@@ -329,7 +328,9 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		require_once $frontendModulePath . '/config.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+		if(!class_exists($configClassName)) {
+			throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+		}
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName($this->getKernel(), $this->getModule());

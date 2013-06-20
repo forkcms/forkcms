@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is our extended version of SpoonForm.
  *
@@ -662,7 +665,8 @@ class FrontendFormImage extends SpoonFormImage
 	public function generateThumbnails($path, $filename)
 	{
 		// create folder if needed
-		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+		$fs = new Filesystem();
+		if(!$fs->exists($path . '/source')) $fs->mkdir($path . '/source');
 
 		// move the source file
 		$this->moveFile($path . '/source/' . $filename);

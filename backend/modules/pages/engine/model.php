@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * In this file we store all generic functions that we will be using in the PagesModule
  *
@@ -244,8 +247,10 @@ class BackendPagesModel
 		// end file
 		$keysString .= "\n" . '?>';
 
+		$fs = new Filesystem();
+
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php', $keysString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php', $keysString);
 
 		// write the navigation-file
 		$navigationString = '<?php' . "\n\n";
@@ -330,7 +335,7 @@ class BackendPagesModel
 		$navigationString .= '?>';
 
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php', $navigationString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php', $navigationString);
 
 		// get the order
 		foreach(array_keys($navigation) as $type)
@@ -412,7 +417,7 @@ class BackendPagesModel
 		$editorLinkListString .= 'var linkList = ' . json_encode($links) . ';';
 
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
 
 		// trigger an event
 		BackendModel::triggerEvent('pages', 'after_recreated_cache');
@@ -860,7 +865,9 @@ class BackendPagesModel
 	public static function getFullURL($id)
 	{
 		// generate the cache files if needed
-		if(!SpoonFile::exists(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) self::buildCache(BL::getWorkingLanguage());
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			self::buildCache(BL::getWorkingLanguage());
+		}
 
 		// init var
 		$keys = array();
@@ -1185,7 +1192,9 @@ class BackendPagesModel
 	public static function getTreeHTML()
 	{
 		// check if the cached file exists, if not we generated it
-		if(!SpoonFile::exists(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) self::buildCache(BL::getWorkingLanguage());
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			self::buildCache(BL::getWorkingLanguage());
+		}
 
 		// init var
 		$navigation = array();
@@ -1411,7 +1420,7 @@ class BackendPagesModel
 		}
 
 		// check if folder exists
-		if(SpoonDirectory::exists(PATH_WWW . '/' . $fullURL))
+		if(is_dir(PATH_WWW . '/' . $fullURL) || is_file(PATH_WWW . '/' . $fullURL))
 		{
 			// add a number
 			$URL = BackendModel::addNumber($URL);

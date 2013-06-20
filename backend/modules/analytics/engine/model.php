@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * In this file we store all generic data communication functions
  *
@@ -53,14 +57,14 @@ class BackendAnalyticsModel
 			if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 
 			// analytics table id (only show this error if no other exist)
 			if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 		}
 
@@ -231,7 +235,7 @@ class BackendAnalyticsModel
 		$filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
 		// file exists
-		if(SpoonFile::exists(BACKEND_CACHE_PATH . '/analytics/' . $filename))
+		if(is_file(BACKEND_CACHE_PATH . '/analytics/' . $filename))
 		{
 			// get the xml (cast is important otherwise we cant use array_walk_recursive)
 			$xml = simplexml_load_file(BACKEND_CACHE_PATH . '/analytics/' . $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -476,10 +480,10 @@ class BackendAnalyticsModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// there is no cache file
-		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
+		if(!is_file(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
 
 		// read the cache file
-		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
+		$cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
 
 		// get the array
 		preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
@@ -908,7 +912,7 @@ class BackendAnalyticsModel
 			if($name == '@attributes') continue;
 
 			// empty item
-			if(trim((string) $children) == '')
+			if(empty($children))
 			{
 				// save empty array
 				$data[$name] = array();
@@ -1047,12 +1051,11 @@ class BackendAnalyticsModel
 	 */
 	public static function removeCacheFiles()
 	{
-		$cachePath = BACKEND_CACHE_PATH . '/analytics';
-
-		// delete all cache files
-		foreach(SpoonFile::getList($cachePath) as $file)
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()->in(BACKEND_CACHE_PATH . '/analytics') as $file)
 		{
-			SpoonFile::delete($cachePath . '/' . $file);
+			$fs->remove($file->getRealPath());
 		}
 	}
 
@@ -1111,7 +1114,7 @@ class BackendAnalyticsModel
 				foreach($items as $key => $value)
 				{
 					// skip empty items
-					if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
+					if((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) continue;
 
 					// value contains an array
 					if(is_array($value))
@@ -1202,7 +1205,11 @@ class BackendAnalyticsModel
 		$simpleXml = @simplexml_load_string($xml);
 		if($simpleXml === false) throw new BackendException('The xml of the cache file is invalid.');
 
-		$filename = $startTimestamp . '_' . $endTimestamp . '.xml';
-		SpoonFile::setContent(BACKEND_CACHE_PATH . '/analytics/' . $filename, $xml);
+		// store
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			BACKEND_CACHE_PATH . '/analytics/' . $startTimestamp . '_' . $endTimestamp . '.xml',
+			$xml
+		);
 	}
 }

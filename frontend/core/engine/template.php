@@ -54,6 +54,7 @@ class FrontendTemplate extends SpoonTemplate
 	 *
 	 * @param string $path The path to the template, excluding the template filename.
 	 * @param  string $template The filename of the template within the path.
+	 * @return bool
 	 */
 	public function compile($path, $template)
 	{
@@ -61,7 +62,7 @@ class FrontendTemplate extends SpoonTemplate
 		if(realpath($template) === false) $template = $path . '/' . $template;
 
 		// source file does not exist
-		if(!SpoonFile::exists($template)) return false;
+		if(!is_file($template)) return false;
 
 		// create object
 		$compiler = new FrontendTemplateCompiler($template, $this->variables);
@@ -127,13 +128,15 @@ class FrontendTemplate extends SpoonTemplate
 		$template = (string) $template;
 
 		// validate name
-		if(trim($template) == '' || !SpoonFile::exists($template)) throw new SpoonTemplateException('Please provide an existing template.');
+		if(trim($template) == '' || !is_file($template)) {
+			throw new SpoonTemplateException('Please provide an existing template.');
+		}
 
 		// compiled name
 		$compileName = $this->getCompileName((string) $template);
 
 		// compiled if needed
-		if($this->forceCompile || !SpoonFile::exists($this->compileDirectory . '/' . $compileName))
+		if($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName))
 		{
 			// create compiler
 			$compiler = new FrontendTemplateCompiler((string) $template, $this->variables);
@@ -728,6 +731,7 @@ class FrontendTemplateModifiers
 	 * @param string $module The module whose module we want to execute.
 	 * @param string $action The action to execute.
 	 * @param string $id The widget id (saved in data-column).
+	 * @return string|null
 	 */
 	public static function parseWidget($var, $module, $action, $id = null)
 	{
@@ -839,8 +843,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
-		// remove special chars
-		$var = htmlspecialchars_decode($var, ENT_QUOTES);
+		// remove special chars, all of them, also the ones that shouldn't be there.
+		$var = SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
 
 		// remove HTML
 		$var = strip_tags($var);

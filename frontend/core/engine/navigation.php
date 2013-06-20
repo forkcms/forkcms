@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class FrontendNavigation extends FrontendBaseObject
 {
@@ -174,7 +174,7 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// require BackendPagesModel
 				require_once PATH_WWW . '/backend/core/engine/model.php';
@@ -219,7 +219,9 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file @later: the file should be regenerated
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) {
+				throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
+			}
 
 			// init var
 			$navigation = array();
@@ -532,7 +534,7 @@ class FrontendNavigation extends FrontendBaseObject
 				foreach($pages as $properties)
 				{
 					// no extra_blocks available, so skip this item
-					if(isset($properties['extra_blocks'])) continue;
+					if(!isset($properties['extra_blocks'])) continue;
 
 					// loop extras
 					foreach($properties['extra_blocks'] as $extra)

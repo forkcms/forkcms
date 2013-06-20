@@ -7,11 +7,14 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Siesqo <info@siesqo.be>
  */
@@ -298,12 +301,13 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					$avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
 
 					// delete old avatar if it isn't the default-image
-					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
+					if($this->record['settings']['avatar'] != 'no-avatar.jpg' && $this->record['settings']['avatar'] != '')
 					{
-						SpoonFile::delete($avatarsPath . '/source/' . $this->record['settings']['avatar']);
-						SpoonFile::delete($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
-						SpoonFile::delete($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
-						SpoonFile::delete($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
+						$fs = new Filesystem();
+						$fs->remove($avatarsPath . '/source/' . $this->record['settings']['avatar']);
+						$fs->remove($avatarsPath . '/128x128/' . $this->record['settings']['avatar']);
+						$fs->remove($avatarsPath . '/64x64/' . $this->record['settings']['avatar']);
+						$fs->remove($avatarsPath . '/32x32/' . $this->record['settings']['avatar']);
 					}
 
 					// create new filename

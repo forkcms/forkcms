@@ -7,7 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use \MatthiasMullie\Minify;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
@@ -312,7 +315,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(substr($image, 0, 7) != SITE_PROTOCOL . '://')
 		{
 			// check if image exists
-			if(!SpoonFile::exists(PATH_WWW . $image)) return;
+			if(!is_file(PATH_WWW . $image)) return;
 
 			// convert to absolute path
 			$image = SITE_URL . $image;
@@ -486,17 +489,17 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = new Filesystem();
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$css = new MinifyCSS(PATH_WWW . $file);
+			$css = new Minify\CSS(PATH_WWW . $file);
 			$css->minify($finalPath);
 		}
 
@@ -517,17 +520,17 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = new Filesystem();
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$js = new MinifyJS(PATH_WWW . $file);
+			$js = new Minify\JS(PATH_WWW . $file);
 			$js->minify($finalPath);
 		}
 
@@ -602,26 +605,55 @@ class FrontendHeader extends FrontendBaseObject
 		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
+		$type = FrontendModel::getModuleSetting('analytics', 'tracking_type', 'universal_analytics');
 
 		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
-		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
-		{
-			// build GA-tracking code
-			$trackingCode = '<script>
-								var _gaq = [[\'_setAccount\', \'' . $webPropertyId . '\'],
-											[\'_setDomainName\', \'none\'],
-											[\'_trackPageview\'],
-											[\'_trackPageLoadTime\']];
+		if(
+			$webPropertyId != '' &&
+			strpos($siteHTMLHeader, $webPropertyId) === false &&
+			strpos($siteHTMLFooter, $webPropertyId) === false
+		) {
+			switch($type)
+			{
+				case 'classic_analytics':
+					$trackingCode = '<script>
+										var _gaq = _gaq || [];
+										_gaq.push([\'_setAccount\', \'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setDomainName\', \'none\']);
+										_gaq.push([\'_trackPageview\']);
+										(function() {
+											var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+											ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+											var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+										})();
+									</script>';
+					break;
+				case 'display_advertising':
+					$trackingCode = '<script>
+										var _gaq = _gaq || [];
+										_gaq.push([\'_setAccount\', \'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setDomainName\', \'none\']);
+										_gaq.push([\'_trackPageview\']);
+										(function() {
+											var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+											ga.src = (\'https:\' == document.location.protocol ? \'https://\' : \'http://\') + \'stats.g.doubleclick.net/dc.js\';
+											var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+										})();
+									</script>';
+					break;
+				case 'universal_analytics':
+					$url = Spoon::get('url');
+					$trackingCode = '<script>
+										(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
+										(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+										m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+										})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
+										ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
+										ga(\'send\', \'pageview\');
+									</script>';
+					break;
+			}
 
-								(function(d, t) {
-									var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-									g.async = true;
-									g.src = \'//www.google-analytics.com/ga.js\';
-									s.parentNode.insertBefore(g, s);
-								}(document, \'script\'));
-							</script>';
-
-			// add to the header
 			$siteHTMLHeader .= "\n" . $trackingCode;
 		}
 

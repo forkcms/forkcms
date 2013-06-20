@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * Installer for the search module
  *
@@ -89,7 +92,10 @@ class SearchInstaller extends ModuleInstaller
 		$this->searchPages();
 
 		// create module cache path
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/cache/search')) SpoonDirectory::create(PATH_WWW . '/frontend/cache/search');
+		$fs = new Filesystem();
+		if(!$fs->exists(PATH_WWW . '/frontend/cache/search')) {
+			$fs->mkdir(PATH_WWW . '/frontend/cache/search');
+		}
 	}
 
 	/**

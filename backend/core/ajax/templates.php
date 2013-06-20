@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This action will generate JS that represents the templates that will be available in CK Editor
  *
@@ -28,7 +31,7 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 		$files[] = BACKEND_PATH . '/core/layout/editor_templates/templates.js';
 		$themePath = FRONTEND_PATH . '/themes/' . $theme . '/core/layout/editor_templates/templates.js';
 
-		if(SpoonFile::exists($themePath)) $files[] = $themePath;
+		if(is_file($themePath)) $files[] = $themePath;
 
 		// loop all files
 		foreach($files as $file)
@@ -58,11 +61,13 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 	 */
 	private function processFile($file)
 	{
+		$fs = new Filesystem();
+
 		// if the files doesn't exists we can stop here and just return an empty string
-		if(!SpoonFile::exists($file)) return array();
+		if(!$fs->exists($file)) return array();
 
 		// fetch content from file
-		$content = SpoonFile::getContent($file);
+		$content = file_get_contents($file);
 		$json = @json_decode($content, true);
 
 		// skip invalid JSON
@@ -78,9 +83,9 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 
 			if(isset($template['file']))
 			{
-				if(SpoonFile::exists(PATH_WWW . $template['file']))
+				if($fs->exists(PATH_WWW . $template['file']))
 				{
-					$template['html'] = SpoonFile::getContent(PATH_WWW . $template['file']);
+					$template['html'] = file_get_contents(PATH_WWW . $template['file']);
 				}
 			}
 

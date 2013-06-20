@@ -88,5 +88,29 @@
 	</div>
 </div>
 
+{option:EverythingIsPresent}
+	{form:trackingType}
+		<div class="box">
+			<div class="heading">
+				<h3>{$lblTrackingType|ucfirst}</h3>
+			</div>
+
+			<div class="options">
+				<p>{$msgHelpTrackingType}</p>
+				{iteration:type}
+					<label for="{$type.id}">{$type.rbtType} {$type.label}</label><br />
+				{/iteration:type}
+				{$rbtTypeError}
+			</div>
+		</div>
+
+		<div class="fullwidthOptions">
+			<div class="buttonHolderRight">
+				<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+			</div>
+		</div>
+	{/form:trackingType}
+{/option:EverythingIsPresent}
+
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

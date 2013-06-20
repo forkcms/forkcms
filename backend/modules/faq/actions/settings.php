@@ -11,7 +11,7 @@
  * This is the settings-action, it will display a form to set general faq settings
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendFaqSettings extends BackendBaseActionEdit
 {

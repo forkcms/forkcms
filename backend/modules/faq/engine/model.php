@@ -13,7 +13,7 @@
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendFaqModel
 {
@@ -58,7 +58,7 @@ class BackendFaqModel
 			$db->delete('faq_categories', 'id = ?', array((int) $id));
 			$db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
-			// invalidate the cache for blog
+			// invalidate the cache for the faq
 			BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
 		}
 	}

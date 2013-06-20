@@ -9,6 +9,9 @@
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be the base of the objects used in the cms
@@ -185,6 +188,31 @@ class BackendBaseAction extends BackendBaseObject
 	}
 
 	/**
+	 * Check if the token is ok
+	 */
+	public function checkToken()
+	{
+		$fromSession = (SpoonSession::exists('csrf_token')) ? SpoonSession::get('csrf_token') : '';
+		$fromGet = SpoonFilter::getGetValue('token', null, '');
+
+		if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return;
+
+		// clear the token
+		SpoonSession::set('csrf_token', '');
+
+		$this->redirect(
+			BackendModel::createURLForAction(
+				'index',
+				null,
+				null,
+				array(
+				     'error' => 'csrf'
+				)
+			)
+		);
+	}
+
+	/**
 	 * Display, this wil output the template to the browser
 	 * If no template is specified we build the path form the current module and action
 	 *
@@ -224,13 +252,13 @@ class BackendBaseAction extends BackendBaseObject
 		$this->header->addJS('backend.js', 'core');
 
 		// add module js
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
+		if(is_file(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js'))
 		{
 			$this->header->addJS($this->getModule() . '.js');
 		}
 
 		// add action js
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
+		if(is_file(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js'))
 		{
 			$this->header->addJS($this->getAction() . '.js');
 		}
@@ -242,7 +270,7 @@ class BackendBaseAction extends BackendBaseObject
 		$this->header->addCSS('debug.css', 'core');
 
 		// add module specific css
-		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
+		if(is_file(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css'))
 		{
 			$this->header->addCSS($this->getModule() . '.css');
 		}
@@ -329,6 +357,13 @@ class BackendBaseAction extends BackendBaseObject
 		 * response directly after creating.
 		 */
 		$response->send();
+
+		/*
+		 * Stop code executing here
+		 * I know this is ugly as hell, but if we don't do this the code after
+		 * this call is executed and possibly will trigger errors.
+		 */
+		exit;
 	}
 }
 
@@ -481,6 +516,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	public function execute()
 	{
 		parent::parse();
+		parent::checkToken();
 	}
 }
 
@@ -638,8 +674,7 @@ class BackendBaseConfig extends BackendBaseObject
 	public function setModule($module)
 	{
 		// does this module exist?
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
-		$modules[] = 'core';
+		$modules = BackendModel::getModulesOnFilesystem();
 		if(!in_array($module, $modules))
 		{
 			// set correct headers
@@ -659,30 +694,30 @@ class BackendBaseConfig extends BackendBaseObject
 	 */
 	public function setPossibleActions()
 	{
-		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/actions', '/(.*).php/');
+		$path = BACKEND_MODULES_PATH . '/' . $this->getModule();
 
-		// loop filelist
-		foreach($actionFiles as $file)
+		if(is_dir($path . '/actions'))
 		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
+			$finder = new Finder();
+			foreach($finder->files()->name('*.php')->in($path . '/actions') as $file)
+			{
+				$action = strtolower(str_replace('.php', '', $file->getBasename()));
 
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file] = $action;
+				// if the action isn't disabled add it to the possible actions
+				if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+			}
 		}
 
-		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/ajax', '/(.*).php/');
-
-		// loop filelist
-		foreach($AJAXActionFiles as $file)
+		if(is_dir($path . '/ajax'))
 		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
+			$finder = new Finder();
+			foreach($finder->files()->name('*.php')->in($path . '/ajax') as $file)
+			{
+				$action = strtolower(str_replace('.php', '', $file->getBasename()));
 
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file] = $action;
+				// if the action isn't disabled add it to the possible actions
+				if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+			}
 		}
 	}
 }
@@ -711,7 +746,8 @@ class BackendBaseCronjob extends BackendBaseObject
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
 		// remove the file
-		SpoonFile::delete($path);
+		$fs = new Filesystem();
+		$fs->remove($path);
 	}
 
 	public function execute()
@@ -748,14 +784,10 @@ class BackendBaseCronjob extends BackendBaseObject
 		if($this->getModule() == 'core') $path = BACKEND_CORE_PATH . '/cronjobs';
 		else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
 
-		// does this module exist?
-		$actions = SpoonFile::getList($path);
-		if(!in_array($action . '.php', $actions))
+		// check if file exists
+		if(!is_file($path . '/' . $action . '.php'))
 		{
-			// set correct headers
 			SpoonHTTP::setHeadersByCode(403);
-
-			// throw exception
 			throw new BackendException('Action not allowed.');
 		}
 
@@ -772,18 +804,19 @@ class BackendBaseCronjob extends BackendBaseObject
 		if(SPOON_DEBUG) return;
 
 		// build path
+		$fs = new Filesystem();
 		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
 		// init var
 		$isBusy = false;
 
 		// does the busy file already exists.
-		if(SpoonFile::exists($path))
+		if($fs->exists($path))
 		{
 			$isBusy = true;
 
 			// grab counter
-			$counter = (int) SpoonFile::getContent($path);
+			$counter = (int) file_get_contents($path);
 
 			// check the counter
 			if($counter > 9)
@@ -803,7 +836,7 @@ class BackendBaseCronjob extends BackendBaseObject
 		$counter++;
 
 		// store content
-		SpoonFile::setContent($path, $counter, true, false);
+		$fs->dumpFile($path, $counter);
 
 		// if the cronjob is busy we should NOT proceed
 		if($isBusy) exit;
@@ -819,8 +852,7 @@ class BackendBaseCronjob extends BackendBaseObject
 	public function setModule($module)
 	{
 		// does this module exist?
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
-		$modules[] = 'core';
+		$modules = BackendModel::getModulesOnFilesystem();
 		if(!in_array($module, $modules))
 		{
 			// set correct headers

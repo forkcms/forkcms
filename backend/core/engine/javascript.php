@@ -157,7 +157,7 @@ class BackendJavascript
 		}
 
 		// check if the path exists, if not whe should given an error
-		if(!SpoonFile::exists($path))
+		if(!is_file($path))
 		{
 			// set correct headers
 			SpoonHTTP::setHeadersByCode(404);

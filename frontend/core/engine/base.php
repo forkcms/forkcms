@@ -10,6 +10,9 @@
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be the base of the objects used in onsite
@@ -107,7 +110,7 @@ class FrontendBaseConfig extends KernelLoader
 		$this->module = (string) $module;
 
 		// check if model exists
-		if(SpoonFile::exists(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
+		if(is_file(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
 		{
 			// the model exists, so we require it
 			require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
@@ -165,31 +168,26 @@ class FrontendBaseConfig extends KernelLoader
 	{
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
+		$fs = new Filesystem();
 
-		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList($frontendModulePath . '/actions', '/(.*).php/');
-
-		// loop filelist
-		foreach($actionFiles as $file)
-		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
-
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file] = $action;
+		if($fs->exists($frontendModulePath . '/actions')) {
+			// get regular actions
+			$finder = new Finder();
+			$finder->name('*.php');
+			foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
+				$action = $file->getBasename('.php');
+				if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+			}
 		}
 
-		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList($frontendModulePath . '/ajax', '/(.*).php/');
-
-		// loop filelist
-		foreach($AJAXActionFiles as $file)
-		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
-
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file] = $action;
+		if($fs->exists($frontendModulePath . '/ajax')) {
+			// get ajax-actions
+			$finder = new Finder();
+			$finder->name('*.php');
+			foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
+				$action = $file->getBasename('.php');
+				if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+			}
 		}
 	}
 }
@@ -362,10 +360,14 @@ class FrontendBaseBlock extends FrontendBaseObject
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		}
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		}
 	}
 
 	/**
@@ -644,6 +646,13 @@ class FrontendBaseBlock extends FrontendBaseObject
 		 * response directly after creating.
 		 */
 		$response->send();
+
+		/*
+		 * Stop code executing here
+		 * I know this is ugly as hell, but if we don't do this the code after
+		 * this call is executed and possibly will trigger errors.
+		 */
+		exit;
 	}
 
 	/**
@@ -849,10 +858,14 @@ class FrontendBaseWidget extends FrontendBaseObject
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		}
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		}
 	}
 
 	/**
