@@ -36,7 +36,10 @@ class CommonCookie extends SpoonCookie
 		$httpOnly = (bool) $httpOnly;
 
 		// when the domain isn't passed and the url-object is available we can set the cookies for all subdomains
-		if($domain === null && Spoon::exists('url')) $domain = '.' . Spoon::get('url')->getDomain();
+		if($domain === null && FrontendModel::getContainer()->has('url'))
+		{
+			$domain = '.' . FrontendModel::getContainer()->get('url')->getDomain();
+		}
 
 		// when the secure-parameter isn't set
 		if($secure === null)
