@@ -42,7 +42,7 @@ class BackendAJAXAction extends BackendBaseObject
 		if(!class_exists($actionClassName)) throw new BackendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$object = new $actionClassName($this->getAction(), $this->getModule());
+		$object = new $actionClassName($this->getKernel(), $this->getAction(), $this->getModule());
 		$object->setAction($this->getAction(), $this->getModule());
 		$object->execute();
 
@@ -81,6 +81,6 @@ class BackendAJAXAction extends BackendBaseObject
 		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: ' . $configClassName . '.');
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName($this->getModule());
+		$this->config = new $configClassName($this->getKernel(), $this->getModule());
 	}
 }
