@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * Step 6 of the Fork installer
  *
@@ -98,7 +101,7 @@ class InstallerStep6 extends InstallerStep
 
 		foreach($yamlFiles as $sourceFilename => $destinationFilename)
 		{
-			$yamlContent = SpoonFile::getContent($sourceFilename);
+			$yamlContent = file_get_contents($sourceFilename);
 			$yamlContent = str_replace(
 				array_keys($variables),
 				array_values($variables),
@@ -106,7 +109,8 @@ class InstallerStep6 extends InstallerStep
 			);
 
 			// write app/config/parameters.yml
-			SpoonFile::setContent($destinationFilename, $yamlContent);
+			$fs = new Filesystem();
+			$fs->dumpFile($destinationFilename, $yamlContent);
 		}
 	}
 

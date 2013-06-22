@@ -1,18 +1,14 @@
-3.6.0 (xxxx-xx-xx)
+3.6.0 (2013-06-18)
 --
 Improvements:
 
-* Core: introduction of the Filesystem component.
-* Core: introduction of the Finder component.
-
-3.5.2 (xxxx-xx-xx)
---
-Improvements:
-
+* Core: introduction of the Filesystem component, see UPGRADE_3.6.md.
+* Core: introduction of the Finder component, see UPGRADE_3.6.md.
 * Removed "thx to" from CHANGELOG.md; changelog is for change announcements, attributions are in git log.
 * Analytics: let the user chose between GA & DC for tracking-code.
 * Analytics: added the possibility to choose Universal analytics, which is also the new default.
 * The backend in Internet Explorer doesn't need to be emulated anymore.
+* Core: Upgraded Highcharts to 3.0.2
 
 Bugfixes:
 
@@ -20,6 +16,9 @@ Bugfixes:
 * Security: prevent CSRF.
 * Mailmotor: fixed linking your account.
 * Core: remove all entities instead of just the special chars before truncating a string. Fixes #386.
+* Groups: double usage of variable cause unexpected behavior.
+* Core: don't reassign values when passing them to Akismet.
+* Blog: getRelated now listens to $limit.
 
 
 3.5.1 (2013-04-15)

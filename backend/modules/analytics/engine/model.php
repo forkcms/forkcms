@@ -57,14 +57,14 @@ class BackendAnalyticsModel
 			if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 
 			// analytics table id (only show this error if no other exist)
 			if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 		}
 
@@ -912,7 +912,7 @@ class BackendAnalyticsModel
 			if($name == '@attributes') continue;
 
 			// empty item
-			if(trim((string) $children) == '')
+			if(empty($children))
 			{
 				// save empty array
 				$data[$name] = array();
@@ -1053,7 +1053,7 @@ class BackendAnalyticsModel
 	{
 		$finder = new Finder();
 		$fs = new Filesystem();
-		foreach($finder->files->in(BACKEND_CACHE_PATH . '/analytics') as $file)
+		foreach($finder->files()->in(BACKEND_CACHE_PATH . '/analytics') as $file)
 		{
 			$fs->remove($file->getRealPath());
 		}
@@ -1114,7 +1114,7 @@ class BackendAnalyticsModel
 				foreach($items as $key => $value)
 				{
 					// skip empty items
-					if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
+					if((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) continue;
 
 					// value contains an array
 					if(is_array($value))

@@ -30,6 +30,11 @@
     },
     "scripts": {
         "post-update-cmd": "cd tools && ./remove_cache"
-    },
-    "minimum-stability": "dev"
+    }
+    "repositories": [
+        {
+            "type":"vcs",
+            "url":"/Users/jelmersnoeck/Projects/ContentBlocks"
+        }
+    ],
 }

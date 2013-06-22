@@ -547,6 +547,7 @@ class ModuleInstaller
 	 * @param array $revision An array with the revision data.
 	 * @param array[optional] $meta The meta-data.
 	 * @param array[optional] $block The blocks.
+	 * @return int
 	 */
 	protected function insertPage(array $revision, array $meta = null, array $block = null)
 	{

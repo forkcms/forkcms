@@ -368,17 +368,17 @@ class BackendModel extends BaseModel
 	 * @param string $path The path wherein the thumbnail-folders will be stored.
 	 * @param string $sourceFile The location of the source file.
 	 */
-	public static function generateThumbnails($path, $sourcefile)
+	public static function generateThumbnails($path, $sourceFile)
 	{
 		// get folder listing
 		$folders = self::getThumbnailFolders($path);
-		$filename = basename($sourcefile);
+		$filename = basename($sourceFile);
 
 		// loop folders
 		foreach($folders as $folder)
 		{
 			// generate the thumbnail
-			$thumbnail = new SpoonThumbnail($sourcefile, $folder['width'], $folder['height']);
+			$thumbnail = new SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
 			$thumbnail->setAllowEnlargement(true);
 
 			// if the width & height are specified we should ignore the aspect ratio
@@ -1365,7 +1365,7 @@ class BackendModel extends BaseModel
 		try
 		{
 			// check with Akismet if the item is spam
-			return $akismet->submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null);
+			return $akismet->submitSpam($userIp, $userAgent, $content, $author, $email, $url, $permalink, $type, $referrer, $others);
 		}
 
 		// catch exceptions

@@ -36,6 +36,7 @@ class BackendContentBlocksModel
 	 *
 	 * @param string $from 	The language code to copy the content blocks from.
 	 * @param string $to 	The language code we want to copy the content blocks to.
+	 * @return array
 	 */
 	public static function copy($from, $to)
 	{
