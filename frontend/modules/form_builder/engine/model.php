@@ -56,7 +56,27 @@ class FrontendFormBuilderModel
 		foreach($fields as &$field)
 		{
 			// unserialize
-			if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
+			if($field['settings'] !== null) 
+			{
+				$field['settings'] = unserialize($field['settings']);
+
+				// Make sure the quotes of a checkbox are the right entities before validating the form
+				if($field['type'] == 'checkbox' || $field['type'] == 'dropdown' || $field['type'] == 'radiobutton')
+				{
+					$fieldValues = $field['settings']['values'];
+
+					// Traverse all values of the checkbox and decode the entities
+					foreach($fieldValues as $key => $value)
+					{
+						$field['settings']['values'][$key] = SpoonFilter::htmlentitiesDecode($value, null, ENT_QUOTES);
+					}
+
+					if(!empty($field['settings']['default_values'])) 
+					{
+						$field['settings']['default_values'] = SpoonFilter::htmlentitiesDecode($field['settings']['default_values'], null, ENT_QUOTES);
+					}
+				}
+			}
 
 			// get validation
 			$field['validations'] = (array) FrontendModel::getContainer()->get('database')->getRecords(
