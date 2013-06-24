@@ -39,6 +39,19 @@
 				[/,/,/,top,/],[/,main,main,main,/]
 			</format>
 		</template>
+		<template label="Error" path="core/layout/templates/error.tpl">
+			<positions>
+				<position name="main" />
+				<position name="top">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,/,top,/],[/,main,main,main,/]
+			</format>
+		</template>
 		<template label="Home" path="core/layout/templates/home.tpl">
 			<positions>
 				<position name="slideshow" />
