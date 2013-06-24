@@ -29,7 +29,7 @@
 	<div id="main" class="container">
 		{include:core/layout/templates/breadcrumb.tpl}
 
-		<div class="row">
+		<div class="row-fluid">
 			<div class="span12">
 				{* Page title *}
 				{option:!hideContentTitle}
@@ -40,7 +40,7 @@
 
 				{* Main position *}
 				{iteration:positionMain}
-					<div class="row">
+					<div class="row-fluid">
 						<div class="span12">
 							{option:positionMain.blockIsHTML}
 								{$positionMain.blockContent}
