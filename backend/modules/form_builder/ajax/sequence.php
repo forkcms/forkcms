@@ -8,7 +8,7 @@
  */
 
 /**
- * Resequence the fields via ajax.
+ * Re-sequence the fields via ajax.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */

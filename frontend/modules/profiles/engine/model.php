@@ -186,7 +186,7 @@ class FrontendProfilesModel
 		);
 
 		// unserialize values
-		foreach($settings as $key => &$value) $value = unserialize($value);
+		foreach($settings as &$value) $value = unserialize($value);
 
 		// return
 		return $settings;
@@ -201,7 +201,7 @@ class FrontendProfilesModel
 	 */
 	public static function getUrl($displayName, $id = null)
 	{
-		// decode specialchars
+		// decode special chars
 		$displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
 		// urlise
@@ -294,20 +294,20 @@ class FrontendProfilesModel
 			$tpl->assign('isLoggedIn', true);
 		}
 
-		// ignore these url's in the querystring
+		// ignore these urls in the query string
 		$ignoreUrls = array(
 			FrontendNavigation::getURLForBlock('profiles', 'login'),
 			FrontendNavigation::getURLForBlock('profiles', 'register'),
 			FrontendNavigation::getURLForBlock('profiles', 'forgot_password')
 		);
 
-		// querystring
+		// query string
 		$queryString = (isset($_GET['queryString'])) ? SITE_URL . '/' . urldecode($_GET['queryString']) : SELF;
 
 		// check all ignore urls
 		foreach($ignoreUrls as $url)
 		{
-			// querystring contains a boeboe url
+			// query string contains a boeboe url
 			if(stripos($queryString, $url) !== false)
 			{
 				$queryString = '';

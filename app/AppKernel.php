@@ -10,7 +10,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-// hardcode this for now, this should be autoloaded
+// hardcoded this for now, this should be autoloaded
 require_once __DIR__ . '/Kernel.php';
 require_once __DIR__ . '/routing.php';
 

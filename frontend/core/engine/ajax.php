@@ -239,13 +239,13 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		$this->setModule($module);
 		$this->setAction($action);
 
-		// load the configfile for the required module
+		// load the config file for the required module
 		$this->loadConfig();
 	}
 
 	/**
 	 * Execute the action.
-	 * We will build the classname, require the class and call the execute method
+	 * We will build the class name, require the class and call the execute method
 	 */
 	public function execute()
 	{
@@ -257,19 +257,19 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		else $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/' . $this->getAction() . '.php';
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!is_file($path)) throw new FrontendException('The actionfile (' . $path . ') can\'t be found.');
+		if(!is_file($path)) throw new FrontendException('The action file (' . $path . ') can\'t be found.');
 
 		// require the ajax file, we know it is there because we validated it before (possible actions are defined by existance of the file).
 		require_once $path;
 
 		// validate if class exists
-		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
+		if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
 
 		// validate if the execute-method is callable
-		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
+		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
 		$object->execute();
@@ -314,7 +314,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
 		if(!is_file($frontendModulePath . '/config.php')) {
-			throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+			throw new FrontendException('The config file for the module (' . $this->getModule() . ') can\'t be found.');
 		}
 
 		// build config-object-name
@@ -325,7 +325,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) {
-			throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+			throw new FrontendException('The config file is present, but the class name should be: ' . $configClassName . '.');
 		}
 
 		// create config-object, the constructor will do some magic
@@ -345,7 +345,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 	/**
 	 * Set the module
 	 *
-	 * @param string $module The module wherin the action is available.
+	 * @param string $module The module wherein the action is available.
 	 */
 	protected function setModule($module)
 	{

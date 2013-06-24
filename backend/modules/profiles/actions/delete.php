@@ -8,7 +8,7 @@
  */
 
 /**
- * This action will delete or undelete a profile.
+ * This action will delete or restore a profile.
  *
  * @author Lester Lievens <lester@netlash.com>
  */

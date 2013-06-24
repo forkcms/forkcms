@@ -49,7 +49,7 @@ class FrontendInit extends KernelLoader
 		// get last modified time for globals
 		$lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
-		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
+		// reset last modified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
 		if($lastModifiedTime === false || Spoon::getDebug()) $lastModifiedTime = time();
 
 		// define as a constant
@@ -98,56 +98,40 @@ class FrontendInit extends KernelLoader
 	 */
 	public static function errorHandler($errorNumber, $errorString)
 	{
-		// redefine
-		$errorNumber = (int) $errorNumber;
 		$errorString = (string) $errorString;
 
 		// is this an undefined index?
 		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
-			// cleanup
 			$index = trim(str_replace('Undefined index:', '', $errorString));
-
-			// get the type
 			$type = mb_substr($index, 0, 3);
 
-			// is the index locale?
 			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$' . $index . '}';
-
-			// return false, so the standard error handler isn't bypassed
 			else return false;
 		}
-
-		// return false, so the standard error handler isn't bypassed
 		else return false;
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in AJAX-actions
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
-		// redefine
-		$output = (string) $output;
-
-		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
+		$response = array(
+			'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
+			'message' => $exception->getMessage()
+		);
 
-		// create response array
-		$response = array('code' => ($exception->getCode() != 0) ? $exception->getCode() : 500, 'message' => $exception->getMessage());
-
-		// output to the browser
 		echo json_encode($response);
-
-		// stop script execution
 		exit;
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler
+	 * This method will be called by the Spoon Exception handler
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
@@ -168,7 +152,7 @@ class FrontendInit extends KernelLoader
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
 		}
 
 		// build HTML for nice error
@@ -180,16 +164,13 @@ class FrontendInit extends KernelLoader
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in JS-files parsed through PHP
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in JS-files parsed through PHP
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
-		// redefine
-		$output = (string) $output;
-
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
@@ -227,7 +208,7 @@ class FrontendInit extends KernelLoader
 			// show errors on the screen
 			ini_set('display_errors', 'On');
 
-			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
+			// in debug mode notices are triggered when using non existing locale, so we use a custom error handler to cleanup the message
 			set_error_handler(array('FrontendInit', 'errorHandler'));
 		}
 

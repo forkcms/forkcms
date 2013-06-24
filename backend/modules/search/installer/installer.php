@@ -118,7 +118,7 @@ class SearchInstaller extends ModuleInstaller
 		);
 
 		// loop menu items
-		foreach($menu as $id => $page)
+		foreach($menu as $page)
 		{
 			// get blocks
 			$blocks = $db->getColumn('SELECT html FROM pages_blocks WHERE revision_id = ?', array($page['revision_id']));

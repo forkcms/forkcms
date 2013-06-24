@@ -158,7 +158,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$item['html'] = $ddm->parse();
 				}
 
-				// radiobutton
+				// radio button
 				elseif($field['type'] == 'radiobutton')
 				{
 					// reset
@@ -190,7 +190,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$item['html'] = $chk->parse();
 				}
 
-				// textbox
+				// text box
 				elseif($field['type'] == 'textbox')
 				{
 					// create element
@@ -333,7 +333,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 			// validate fields
 			foreach($this->item['fields'] as $field)
 			{
-				// fieldname
+				// field name
 				$fieldName = 'field' . $field['id'];
 
 				// skip

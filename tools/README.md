@@ -11,7 +11,7 @@ Their is no real installation of the scripts the only thing you should do is mak
 After making the scripts executable you can execute them with the following command. Make sure to replace `<script_name>` with the name of the script. **The scripts should be executed from this folder**
 
 	./<script_name>
-	
+
 For example
 
 	./minify
@@ -26,8 +26,8 @@ The batch_resize-script will resize the images in the provided folder. You can s
 It can be executed with the following command
 
 	./batch-resize -w 75 -h 75 ./
-	
-	
+
+
 
 ### check_code
 The check_code-script will run PHP CodeSniffer with all settings that are needed. It will check your code against the styleguide, will detect weird/faulty code, ...
@@ -61,12 +61,12 @@ The remove_cache-script will clear folders that contain cached files. And can be
 The stats-script will run several scripts (PHP Code Sniffer, PHP Mess Detection, PHP Depend & PHP Loc). Each of this script will generate an XML file (in the `reports`-folder) that contains useful numbers.
 
 #### PHP Code Sniffer (phpcs.xml)
-Will contain the same as running `check_code`. It will check the code against the styleguide, it will detect deprecated stuff, ... 
+Will contain the same as running `check_code`. It will check the code against the styleguide, it will detect deprecated stuff, ...
 
 Most warnings will be about CyclomaticComplexity or NestingLevel, you can't ignore them, but some of the reported methods are complicated for a reason.
 
 #### PHP Mess Detection (phpmd.xml)
-Basically PHP Mess Detection is a spin-off of PHP Depend (see below) it will also check the code for possible bugs, suboptimal code, ... Once again it is important to intepret the result, not everything that is reported means that the code is bad.
+Basically PHP Mess Detection is a spin-off of PHP Depend (see below) it will also check the code for possible bugs, suboptimal code, ... Once again it is important to interpret the result, not everything that is reported means that the code is bad.
 
 <small>Remark: it seems like PHP Mess Detection ignores the --ignore parameter, so all editor-crap-code is included, you can ignore all the errors about files inside the ckeditor and ckfinder-folder</small>
 

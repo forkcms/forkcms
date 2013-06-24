@@ -53,7 +53,7 @@ jsBackend.settings =
 		$success.hide();
 
 		// fetch email parameters
-		var settings = new Object();
+		var settings = {};
 		$.each($email.serializeArray(), function() { settings[this.name] = this.value; });
 
 		// make the call

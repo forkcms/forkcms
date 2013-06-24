@@ -10,11 +10,11 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	const MAILINGS_PAGING_LIMIT = 10;
 
 	/**
-	 * The datagrid object
+	 * The data grid object
 	 *
 	 * @var	SpoonDataGrid
 	 */
-	private $datagrid;
+	private $dataGrid;
 
 	/**
 	 * Execute the extra
@@ -30,14 +30,14 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	}
 
 	/**
-	 * Load the datagrid
+	 * Load the data grid
 	 */
 	private function loadDataGrid()
 	{
 		// create a new source-object
 		$source = new SpoonDataGridSourceDB(FrontendModel::getContainer()->get('database'), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
 
-		// create datagrid
+		// create data grid
 		$this->dataGrid = new SpoonDataGrid($source);
 		$this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
 
@@ -69,11 +69,11 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 	}
 
 	/**
-	 * parse the datagrid
+	 * parse the data grid
 	 */
 	private function parseDataGrid()
 	{
-		// parse the datagrid in the template
+		// parse the data grid in the template
 		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 	}
 }

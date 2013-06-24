@@ -15,7 +15,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 
 
 /**
- * This class will be the base of the objects used in onsite
+ * This class will be the base of the objects used in on-site
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@wijs.be>
@@ -99,7 +99,7 @@ class FrontendBaseConfig
 	protected $possibleAJAXActions = array();
 
 	/**
-	 * @param string $module The module wherefor this is the configuration-file.
+	 * @param string $module The module wherefore this is the configuration-file.
 	 */
 	public function __construct($module)
 	{
@@ -352,12 +352,12 @@ class FrontendBaseBlock extends FrontendBaseObject
 		// build URL to the module
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
-		// add javascriptfile with same name as module (if the file exists)
+		// add javascript file with same name as module (if the file exists)
 		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
 			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
 		}
 
-		// add javascriptfile with same name as the action (if the file exists)
+		// add javascript file with same name as the action (if the file exists)
 		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
 			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
 		}
@@ -847,12 +847,12 @@ class FrontendBaseWidget extends FrontendBaseObject
 		// build URL to the module
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
-		// add javascriptfile with same name as module (if the file exists)
+		// add javascript file with same name as module (if the file exists)
 		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
 			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
 		}
 
-		// add javascriptfile with same name as the action (if the file exists)
+		// add javascript file with same name as the action (if the file exists)
 		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
 			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
 		}

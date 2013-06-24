@@ -11,14 +11,14 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
- * This is the autosuggest-action, it will output a list of results for a certain search
+ * This is the auto suggest-action, it will output a list of results for a certain search
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
 class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 {
 	/**
-	 * Name of the cachefile
+	 * Name of the cache file
 	 *
 	 * @var	string
 	 */
@@ -112,10 +112,10 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 		// debug mode = no cache
 		if(SPOON_DEBUG) return false;
 
-		// check if cachefile exists
+		// check if cache file exists
 		if(!is_file($this->cacheFile)) return false;
 
-		// get cachefile modification time
+		// get cache file modification time
 		$cacheInfo = @filemtime($this->cacheFile);
 
 		// check if cache file is recent enough (1 hour)

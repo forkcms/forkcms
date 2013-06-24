@@ -1358,7 +1358,7 @@ label,
 		margin-left: 134px; /* This value should be the same as the width value in "Normal width" */
 	}
 
-	/* Maximum width for inputlist (horizontal) */
+	/* Maximum width for inputList (horizontal) */
 
 	.horizontal .inputList li label {
 		width: 278px; /* This value should be the same as the width value in "Double width" */
@@ -1431,7 +1431,7 @@ label,
 			padding-bottom: 0;
 		}
 
-/* Oneliners */
+/* OneLiners */
 
 .oneLiner {
 	padding-bottom: 12px;
@@ -1514,7 +1514,7 @@ label,
 		margin-left: 0;
 	}
 
-	/* Inputlists */
+	/* InputLists */
 
 	.horizontal .inputList:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 	.ie6 .horizontal .inputList, .ie7 .horizontal .inputList { zoom: 1; }
@@ -1527,7 +1527,7 @@ label,
 			float: none;
 		}
 
-	/* Oneliners */
+	/* OneLiners */
 
 	.horizontal .oneLiner label,
 	.horizontal .oneLiner .label {
