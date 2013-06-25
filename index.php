@@ -28,6 +28,13 @@ if(
 	substr($request->getRequestURI(), 0, 8) != '/install'
 )
 {
+	// check .htaccess
+	if(!file_exists('.htaccess') && !isset($_GET['skiphtaccess']))
+	{
+		echo 'Your install is missing the .htaccess file. Make sure you show hidden files while uploading Fork CMS. <a href="?skiphtaccess">Skip .htaccess check</a>';
+		exit;
+	}
+
 	header('Location: /install');
 	exit;
 }
