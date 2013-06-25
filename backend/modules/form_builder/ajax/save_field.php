@@ -34,6 +34,9 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 		$validationParameter = trim(SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
 		$errorMessage = trim(SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
+		// special field for textbox: reply to
+		$replyTo = SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
+
 		// invalid form id
 		if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
 
@@ -127,6 +130,7 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 		if($label != '') $settings['label'] = SpoonFilter::htmlspecialchars($label);
 		if($values != '') $settings['values'] = $values;
 		if($defaultValues != '') $settings['default_values'] = $defaultValues;
+		if($replyTo == 'Y') $settings['reply_to'] = true;
 
 		// build array
 		$field = array();
