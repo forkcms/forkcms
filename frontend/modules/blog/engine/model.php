@@ -583,6 +583,11 @@ class FrontendBlogModel implements FrontendTagsInterface
 			array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
 		);
 
+		// if empty, unset it
+		if(empty($navigation['previous'])) unset($navigation['previous']);
+		if(empty($navigation['next'])) unset($navigation['next']);
+
+		// return
 		return $navigation;
 	}
 

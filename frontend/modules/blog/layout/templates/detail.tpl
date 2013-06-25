@@ -53,6 +53,7 @@
 				{$item.text}
 			</div>
 			<footer class="ft">
+				{option:navigation}
 				<ul class="pageNavigation">
 					{option:navigation.previous}
 						<li class="previousLink">
@@ -65,6 +66,7 @@
 						</li>
 					{/option:navigation.next}
 				</ul>
+				{/option:navigation}
 			</footer>
 		</div>
 	</article>
