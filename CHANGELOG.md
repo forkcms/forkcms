@@ -1,3 +1,10 @@
+3.6.1 (2013-06-25)
+--
+Improvements:
+* Form-builder: Reply-to checkbox added
+* Blog: hide navigation when there are no items to show.
+* Speed enhancements
+
 3.6.0 (2013-06-18)
 --
 Improvements:
