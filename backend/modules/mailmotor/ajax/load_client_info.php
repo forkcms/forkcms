@@ -26,11 +26,15 @@ class BackendMailmotorAjaxLoadClientInfo extends BackendBaseAJAXAction
 
 		// check input
 		if(empty($clientId)) $this->output(self::BAD_REQUEST);
-
-		// get basic details for this client
-		$client = BackendMailmotorCMHelper::getCM()->getClient($clientId);
-
-		// CM was successfully initialized
-		$this->output(self::OK, $client);
+		
+		// validated
+		else
+		{
+			// get basic details for this client
+			$client = BackendMailmotorCMHelper::getCM()->getClient($clientId);
+	
+			// CM was successfully initialized
+			$this->output(self::OK, $client);
+		}
 	}
 }
